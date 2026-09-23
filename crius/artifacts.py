@@ -214,14 +214,16 @@ class BlockStore:
         b.local_state[int(slot) % STATE_SLOTS] = value
         return True
 
-    def log_invocation(self, block_id: int, entry_regs, actions):
+    def log_invocation(self, block_id: int, entry_regs, actions, arg=None):
         if len(self.invocation_log) >= 5000:
             self.dropped["invocation_log"] += 1
             return
-        if True:
-            self.invocation_log.append({"task": self.current_task, "block": block_id,
-                                        "entry": [list(r) if isinstance(r, tuple) else (r if isinstance(r, int) else str(r)) for r in entry_regs],
-                                        "actions": list(actions)})
+        if arg is None:
+            arg = entry_regs[0] if entry_regs else 0
+        self.invocation_log.append({"task": self.current_task, "block": block_id,
+                                    "entry": [list(r) if isinstance(r, tuple) else (r if isinstance(r, int) else str(r)) for r in entry_regs],
+                                    "arg": (arg if isinstance(arg, int) else str(arg)),
+                                    "actions": list(actions)})
 
     def note_invocation(self, block_id: int, from_block: int):
         self.cost += COSTS["invoke"]

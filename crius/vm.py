@@ -295,6 +295,8 @@ def invoke_block(block_id: int, st: VMState, from_block: int = -1) -> bool:
     st.blocks.note_invocation(b.block_id, from_block)
     st.depth += 1
     entry = tuple(st.regs[:4])
+    # the effective argument: typed procedures read parg (set by PINVOKE); other blocks read R0 by convention
+    arg = st.parg if b.origin == PROC_ORIGIN else entry[0]
     t0 = len(st.env.trajectory)
     was_success = st.env.success
     try:
@@ -303,7 +305,7 @@ def invoke_block(block_id: int, st: VMState, from_block: int = -1) -> bool:
         st.depth -= 1
         if st.env.success and not was_success:
             st.env.success_in_block = True  # the solving action was emitted inside an invoked block
-        st.blocks.log_invocation(b.block_id, entry, [a for a, _ in st.env.trajectory[t0:]])
+        st.blocks.log_invocation(b.block_id, entry, [a for a, _ in st.env.trajectory[t0:]], arg=arg)
     return True
 
 
