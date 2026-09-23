@@ -43,3 +43,7 @@ D = 8.0M units (~40%), 40 energy at kappa 5e-6.
 ## 4. OUTER
 Selected on training seeds 4000-4063 (16 per family, all families mixed)
 after this commit; appended below before any confirmatory row.
+OUTER = ('LR', 2) (training EFF 1.49; next LR 1 1.01, LR 0 0.35, CP 0.11,
+best TT 0.02; rows e2_outer.jsonl). With structure random per instance
+the best fixed architecture is a coin-flip matrix partition -- the
+baseline the in-life arms must beat.
