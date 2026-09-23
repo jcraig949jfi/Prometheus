@@ -28,3 +28,13 @@ M2  BA(code = 3) >= BA(code = 1) - 0.05   (the law is not specific to the refere
 M3  reported, not gated: BA of the law if the code = 3 worlds are (wrongly) given code = 1
     coordinates -- how much the mechanism-level coordinates matter.
 Precommitments: M1 holds (conf 0.6); M2 holds (conf 0.6); M3 BA drops by >= 0.1 (conf 0.5).
+
+## RESULT (appended 2026-09-23T13:01Z; C0M.json, receipts.jsonl)
+300 matched pairs (code 1 / code 3). PAYS rate 0.18 / 0.19; the mechanism changed the verdict in
+43 / 300 worlds. Frozen-law BA: code 1 0.958, code 3 0.961 (mechanism-level coordinates);
+code 3 scored with the code-1 hazard: 0.866.
+M1 PASS. M2 PASS. M3 reported: drop 0.095.
+Precommitments: M1 HELD, M2 HELD, M3 (drop >= 0.10) LOST by 0.005.
+INFERRED: the law is stated at the level of the carrier's effective coordinates, not of the
+reference register program; a different mechanism doing the same function is predicted once its
+own coordinates are declared. Caveat: the code-3 hazard formula was written by the same author.
