@@ -71,3 +71,25 @@ def test_atlas_export_shapes(chamber, tmp_path):
     assert n == {"edges": 1, "facts": 2}
     e = json.loads((tmp_path / "atlas" / "atlas_edge.jsonl").read_text().splitlines()[0])
     assert e["relation"] == "DEFORMATION_OF" and e["dst_key"] == base["world_id"] and e["basis"] == "DECLARED"
+
+
+def test_null_pool_crash_falls_back_to_serial(monkeypatch):
+    """A broken process pool must not kill a campaign: the null is recomputed with fewer workers / serially."""
+    import numpy as np
+    import concurrent.futures
+    from concurrent.futures.process import BrokenProcessPool
+    from prometheus.cosmos import miner
+
+    class Boom:
+        def __init__(self, *a, **k):
+            raise BrokenProcessPool("simulated child death")
+
+    monkeypatch.setattr(concurrent.futures, "ProcessPoolExecutor", Boom)
+    rng = np.random.default_rng(0)
+    n = 60
+    X = {"C": rng.uniform(0, 1, n), "N": rng.uniform(0, 1, n), "K": rng.integers(0, 5, n).astype(float), "G": np.full(n, 0.5)}
+    y = (X["C"] < 0.4).astype(int)
+    M = miner.Miner(X, y, np.repeat(["a", "b", "c"], 20), max_size=3, conj=False)
+    before = len(miner.NULL_POOL_FAILURES)
+    got = M._null_scores([rng.permutation(y) for _ in range(3)], workers=4)
+    assert len(got) == 3 and len(miner.NULL_POOL_FAILURES) > before

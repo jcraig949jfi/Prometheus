@@ -491,9 +491,17 @@ class Miner:
         if workers is None or workers <= 1 or len(perms) < 2:
             return [max([c.score for c in self.search(yp)[1]], default=-np.inf) for yp in perms]
         from concurrent.futures import ProcessPoolExecutor
+        from concurrent.futures.process import BrokenProcessPool
         init = (self.X, self.y, self.groups, self._terminals, self._max_size, self.conj)
-        with ProcessPoolExecutor(max_workers=min(workers, len(perms)), initializer=_null_init, initargs=init) as ex:
-            return list(ex.map(_null_one, perms))
+        w = min(workers, len(perms))
+        while w > 1:
+            try:
+                with ProcessPoolExecutor(max_workers=w, initializer=_null_init, initargs=init) as ex:
+                    return list(ex.map(_null_one, perms))
+            except (BrokenProcessPool, OSError) as e:          # Windows spawn/pipe exhaustion: retry smaller
+                NULL_POOL_FAILURES.append({"workers": w, "error": repr(e)[:200]})
+                w //= 2
+        return [max([c.score for c in self.search(yp)[1]], default=-np.inf) for yp in perms]
 
     def family_dependence(self, L: Law, n_perm: int = 49, seed: int = 0) -> Dict[str, Any]:
         """Bits/row gained by refitting the law's thresholds per family, against permuted family labels."""
@@ -529,6 +537,7 @@ class Miner:
 
 
 _WORKER_MINER = None
+NULL_POOL_FAILURES: List[Dict[str, Any]] = []     # engineering record: pool crashes and the fallback taken
 
 
 def _null_init(X, y, groups, terminals, max_size, conj):
@@ -542,4 +551,4 @@ def _null_one(yp) -> float:
 
 def default_workers() -> int:
     import os
-    return max(1, min(20, (os.cpu_count() or 2) - 4))
+    return max(1, min(10, (os.cpu_count() or 2) // 3))

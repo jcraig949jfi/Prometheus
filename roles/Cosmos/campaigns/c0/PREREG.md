@@ -107,3 +107,21 @@ Any of these may be wrong; the calibration ledger records the outcome.
   family has never been run except the controls-only selftest on two fixed non-sealed worlds.
 - Clock: the Hour-1 status of this campaign carried an ESTIMATED timestamp (12:21Z); the
   true time was ~11:1xZ. Recorded in roles/Cosmos/calibration/LEDGER.md.
+
+## Amendment A1 (2026-09-23 ~11:55Z, BEFORE any main-dataset law was computed)
+
+Run 1 (c0_main_1d4465df9, code 1d4465df9) crashed at the first mining call with
+BrokenProcessPool (a null-search worker died at spawn; the machine was resource-starved:
+`tasklist` hung at the same time). Outputs that existed at the crash: identity, oracle
+summary, G1 (PASS), sampler_eta (read; P4 LOST, recorded in the calibration ledger). No law
+on the main dataset was computed or seen. Run 2 reruns the SAME procedure with the SAME
+seeds (the main dataset is deterministic: G0), changed only as follows:
+- engineering: the null pool retries with half the workers, then serially, on a crash
+  (miner._null_scores); default workers 10 (was 20); crashes listed in REPORT.
+- attack composition: each coordinate-preserving attack also observes its base world
+  ("coordpres_base", counted inside the same per-family quarter of 48 attacks), and the
+  report adds metamorphic pair statistics (same declared coordinates, different
+  microphysics: verdict flips). Kill rule, confirmation rule and thresholds unchanged.
+- reporting: world quotient and all-observation log. No gate threshold changed.
+The sampler_eta results of run 1 are the preregistered eta result; run 2 recomputes them
+identically (same seeds) and both are kept.

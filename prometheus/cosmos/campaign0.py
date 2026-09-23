@@ -304,6 +304,8 @@ def run(out: Path, quick: bool = False) -> Dict[str, Any]:
     report["quotient"] = quotient(ch.log + ctl.log, ch.edges + ctl.edges)
     _dump(out, "quotient", report["quotient"])
     report["n_queries"] = ch.n_queries
+    from prometheus.cosmos import miner as _m
+    report["null_pool_failures"] = list(_m.NULL_POOL_FAILURES)
     report["t_total_s"] = round(time.time() - t0, 1)
     report["laws"] = [{"law_id": l["law_id"], "version": l["version"], "parent": l["parent"],
                        "law": l["body"]["law"]["law"], "cmap": l["body"]["cmap"], "freeze_hash": l["freeze_hash"],
