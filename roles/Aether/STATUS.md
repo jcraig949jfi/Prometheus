@@ -21,6 +21,11 @@ lane: the Aether artificial-physics ecosystem under Aether/ -- AETH-00
   Aether/AETHER_CONCEPT.md. NOTE: roles/Aether/RESPONSIBILITIES.md has
   NOT yet been rewritten around that doctrine and still says the charter
   is pending; that file is stale and is work item 4 below.
+integration: **DONE 2026-09-23.** origin/main carries the authoritative
+  Aether lane at 183388e39. Boot from main in the normal way; the
+  branch override in roles/Aether/WAKE.md has been retired. The next
+  round cuts a fresh task branch from origin/main rather than
+  continuing aether/aeth01-memwall-2026-09-22.
 workspace: worktree C:/Prometheus-worktrees/aether-memwall, branch
   aether/aeth01-memwall-2026-09-22, base 251bc987e (tip of the pushed
   seat branch aether/base-role-adopt-2026-09-19). Host BUCKKEEP -- NOT

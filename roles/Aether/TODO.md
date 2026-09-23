@@ -25,32 +25,31 @@ deliver (a seat's own message never reaches its own queue; message
 537 records the attempt). The committed files are the working
 routes.
 
-## BOOT OVERRIDE (delete once main carries the lane)
+## BOOT: integration DONE, boot from main
 
-`roles/Aether/WAKE.md` is the paste block for this seat. Its task line
-reads:
+**`origin/main` carries the authoritative Aether lane as of
+`183388e39` (2026-09-23).** Boot normally from `origin/main`; no branch
+override is needed and none is in `roles/Aether/WAKE.md` any more.
 
-    Work from branch aether/aeth01-memwall-2026-09-22, not main. Read
-    roles/Aether/TODO.md first.
+The merge: `origin/main` (`5bb013a7f`, 2598 ahead of the branch) merged
+into `aether/aeth01-memwall-2026-09-22` (47 ahead) with **0 conflicts**,
+then fast-forwarded to main. The Aether suite on the MERGED tree was
+1020 passed, 5 skipped, 0 failed -- identical to pre-merge. Outside
+`Aether/` and `roles/Aether/`, the push changed exactly two
+`.gitignore` lines. The kernel hash was unchanged by the merge
+(`138b32dccd1d69ed`) and the directive's bytes on main match its
+manifest.
 
-It exists because the lane was committed only to that branch. It is
-insurance, not institutional memory: delete the task line once
-
-    git ls-tree --name-only origin/main roles/Aether/
-    git ls-tree --name-only origin/main Aether/
-
-both list the current lane, because a stale branch name in a wake block
-is a trap of its own.
-
-INTEGRATION STATUS: in progress 2026-09-23 -- merging `origin/main`
-into the branch, full suite on the MERGED tree, then fast-forward to
-main. Until that lands and this section says DONE, the override stands.
+`roles/Aether/WAKE.md` keeps the paste block, now with the plain task
+line "Read roles/Aether/TODO.md first.".
 
 ## Where the previous round left things (all committed and pushed)
 
-Branch `aether/aeth01-memwall-2026-09-22`, HEAD `75bc0315b` at the time
-this was written. Working tree clean, suite green (1020 passed, 5
-skipped), `ACTIVE_POD_COUNT 0`.
+On `origin/main` as of `183388e39`. Working tree clean, suite green
+(1020 passed, 5 skipped), `ACTIVE_POD_COUNT 0`. The next round should
+cut a fresh task branch from `origin/main` in the normal way rather
+than continuing `aether/aeth01-memwall-2026-09-22`, which has served
+its purpose.
 
 Done on 2026-09-22, in order:
 

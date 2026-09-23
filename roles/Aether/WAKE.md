@@ -22,36 +22,45 @@ shell first. Then boot in that worktree
 (python -m comms boot Aether --model <id>), read
 roles/base-role/RESPONSIBILITIES.md, and follow its boot sequence.
 
-Work from branch aether/aeth01-memwall-2026-09-22, not main. Read
-roles/Aether/TODO.md first.
+Read roles/Aether/TODO.md first.
 
 ----------------------------------------------------------------------
 
-## Why the task line exists, and when to delete it
+## The branch clause was RETIRED 2026-09-23
 
-The AETH-01 lane, the AETH-02 directive, `TODO.md`, and the
-`CURRENT DIRECTIVE` block in `RESPONSIBILITIES.md` were committed only
-to `aether/aeth01-memwall-2026-09-22`. On `origin/main`, `Aether/` did
-not exist at all and `roles/Aether/RESPONSIBILITIES.md` was still the
-stale pre-charter version with no pointer in it. A seat that followed
-the base wake block literally would create its worktree from
-`origin/main`, find none of the lane, and reasonably conclude it had no
-standing work.
+The task line briefly read:
 
-The line is INSURANCE, not institutional memory. A future instance
-should not have to be told by hand where its own work lives; that is
-oral tradition, and oral tradition is exactly what a lane with this
-much durable state must not depend on.
+    Work from branch aether/aeth01-memwall-2026-09-22, not main. Read
+    roles/Aether/TODO.md first.
 
-**Delete the task line once the branch is integrated to main** and a
-boot from `origin/main` finds `roles/Aether/TODO.md` and the directive
-on its own. The check is one command:
+It is gone because the condition it named has been met. The branch was
+merged to main at `183388e39` and `origin/main` now carries the whole
+lane; the check it set for itself passes:
 
     git ls-tree --name-only origin/main roles/Aether/
+      -> BACKLOG_H0H5, RESPONSIBILITIES, STATUS, TODO, WAKE,
+         calibration, journal, prompts
     git ls-tree --name-only origin/main Aether/
+      -> AETH-01, AETHER_*, notes, observatory, production, runpod, test
 
-When both list the current lane, the override has done its job and
-keeping it is worse than removing it, because a stale branch name in a
-wake block is a trap of its own.
+A boot from `origin/main` now finds `roles/Aether/TODO.md` and the
+standing directive without being told where to look, which is the whole
+point: a seat should not need oral tradition to find its own work. The
+clause was removed rather than left as a comfort, because the next task
+branch will have a different name and a wake block naming a dead branch
+is a trap of its own.
 
-Integration status is recorded in `roles/Aether/TODO.md`.
+## The history it came from
+
+For about an hour on 2026-09-23 the AETH-01 lane, the AETH-02
+directive, `TODO.md` and the `CURRENT DIRECTIVE` block existed only on
+a task branch. `origin/main` had no `Aether/` directory at all and a
+`roles/Aether/RESPONSIBILITIES.md` that was still the stale pre-charter
+version with no pointer in it, so a seat following the base wake block
+literally would have built its worktree from `origin/main`, found none
+of the lane, and reasonably concluded it had no standing work.
+
+That is recorded because the failure mode is general and will recur:
+any lane that accumulates durable state on a long-lived task branch is
+one bootstrap away from looking empty. Integration is not housekeeping
+for such a lane; it is recoverability.
