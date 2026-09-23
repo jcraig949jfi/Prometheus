@@ -35,7 +35,7 @@ class Config:
     def __init__(self, n_hidden=8, ticks=2, allow_topology=True,
                  allow_keep=True, allow_plasticity=True, reset_each_step=False,
                  forbid_self_loops=False, forbid_recurrence=False,
-                 keep_mut_weight=1.0, recur_mut_noise=0.0):
+                 keep_mut_weight=1.0, recur_mut_noise=0.0, keep_mut_sigma=0.3):
         self.n_hidden = int(n_hidden)
         self.ticks = int(ticks)
         self.allow_topology = bool(allow_topology)
@@ -49,6 +49,10 @@ class Config:
         self.keep_mut_weight = float(keep_mut_weight)
         # heritability attack on recurrence: extra jitter on recurrent edges
         self.recur_mut_noise = float(recur_mut_noise)
+        # step size of alter_keep. Default 0.3 cannot reach a USABLE keep
+        # (~0.9) in one mutation; this is the cycle-2 causal hypothesis
+        # and c3_keep_reachable is its falsification test.
+        self.keep_mut_sigma = float(keep_mut_sigma)
         # reset_each_step: hidden/output values zeroed at every world step
         # (the "no persistent state" ablation; with keep forced to 0 the
         # only carrier left is within-step recurrence across ticks).
@@ -66,7 +70,8 @@ class Config:
                     forbid_self_loops=self.forbid_self_loops,
                     forbid_recurrence=self.forbid_recurrence,
                     keep_mut_weight=self.keep_mut_weight,
-                    recur_mut_noise=self.recur_mut_noise)
+                    recur_mut_noise=self.recur_mut_noise,
+                    keep_mut_sigma=self.keep_mut_sigma)
 
 
 class Population:
@@ -292,7 +297,7 @@ def _apply(pop, p, m, rng):
     if m == "alter_keep":
         hs = np.flatnonzero(pop.alive[p, OBS_DIM:]) + OBS_DIM
         i = rng.choice(hs)
-        pop.keep[p, i] = float(np.clip(pop.keep[p, i] + rng.normal(0, 0.3), 0.0, 0.98))
+        pop.keep[p, i] = float(np.clip(pop.keep[p, i] + rng.normal(0, cfg.keep_mut_sigma), 0.0, 0.98))
         return True
     if m == "perturb_weight":
         e = _existing_edges(pop, p)
