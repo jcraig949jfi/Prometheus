@@ -1,6 +1,10 @@
 """Arm factory and a parallel runner that writes JSONL rows (PREREG_E0 s3)."""
 import json
 import os
+
+# one BLAS thread per worker: 24 workers x full OpenBLAS pools exhausted host RAM (2026-09-23)
+for _v in ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS"):
+    os.environ.setdefault(_v, "1")
 import time
 from concurrent.futures import ProcessPoolExecutor
 
@@ -96,7 +100,7 @@ def run_one(job):
     return r
 
 
-def run_jobs(jobs, out_path, workers=24):
+def run_jobs(jobs, out_path, workers=int(os.environ.get("ENSORAIN_WORKERS", "12"))):
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     rows = []
     with ProcessPoolExecutor(max_workers=workers) as ex, open(out_path, "a") as f:

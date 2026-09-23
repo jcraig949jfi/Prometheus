@@ -105,3 +105,27 @@ H1 FAILS: LOWRANK beats TT_TUNED at both caps (dev: 10.4k/15.3k vs
 secondary: H2's order recovery PASSES (selection finds physics) even
 though the harvest gate is moot. Probability of verdict A under the
 frozen rule: <= 0.1.
+
+## 7. Addendum A6 (written 2026-09-23 BEFORE any confirmatory row; evolution
+## was running, no confirmatory seed touched). A declared LOOSENING, with
+## the literal reading still scored and reported beside it.
+
+Two control clauses of part 1 s5 test the wrong property, as dev_r2 shows:
+
+- NEGATIVE "every structural learner's unvisited-cell R^2 is within 0.05
+  of 0 in R": a learner that is merely miscalibrated in R has R^2 << 0
+  (dev_r2: TT_FIXED -83, LOWRANK -33) without having found any signal.
+  The property the control exists for is "no false signal". GOVERNING
+  reading: median R^2_unv in R <= 0.05 for every structural learner.
+- NEGATIVE "no learner beats LRU on harvest in R by more than the
+  run-to-run sd": LRU is handicapped in every world by the depletion trap
+  (dev: LRU < NOMEM in C and R), so beating LRU is not evidence of signal.
+  GOVERNING reading: no learner beats NOMEM (same policy, no memory) in R
+  by more than one sd of NOMEM's per-instance harvest.
+- POSITIVE "ORACLE has the top harvest": TT_SVD_INJECT is a cheat control
+  carrying the true field and is excluded from that comparison.
+- CHEAT (SVD inject within 10% of ORACLE) is scored at C=168 and C=384,
+  where the true ranks fit (at 168 exactly).
+
+The scorer prints the literal part-1 reading AND the governing reading for
+each clause; a disagreement is reported in the verdict, not buried.
