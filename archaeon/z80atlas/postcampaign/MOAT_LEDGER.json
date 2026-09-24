@@ -20,5 +20,12 @@
   "not_searched_limitation": "controls are not replayed: an advantage the original scorer missed (control crossed only via its own witness) cannot be added; the number of such seeded pairs is reported as an upper bound",
   "ranking_output": "family table recomputed twice: LOWER = seeded moat flags count only if QUALIFIED and unreplayed seeded moat_crossed does not count; UPPER = unreplayed seeded moat_crossed counts. Families whose top-tier membership differs between the bounds are listed",
   "closure": "after the replay the seeded moat_advantage ledger is CLOSED; seeded moat_crossed outside the 932 runs stays UNADJUDICATED by design (about 1040 CPU-hours to replay; not bounded)"
+ },
+ "status_closure_2026-09-24": {
+  "seeded_world_moat_advantage": "CLOSED: 932/932 replays admitted; 828 QUALIFIED, 104 VOID_INSERTED_ONLY (MOAT_LEDGER_CLOSURE_2026-09-24.json)",
+  "seeded_world_moat_crossed_outside_the_932": "UNADJUDICATED by design; does not change the top tier (LOWER and UPPER top tiers identical, 33 families at 14)",
+  "random_world_moat_flags": "USABLE",
+  "allocation": "use the LOWER-bound ranking; corrected top-30 (35-way tie) is superseded",
+  "not_searched": "18,596 seeded treatments crossed where their control also crossed: upper bound on advantages the scorer could have missed"
  }
 }
