@@ -320,3 +320,6 @@ These generalise beyond either campaign and should survive into any successor.
    the task; four arms were one experiment. Identical arms are a defect signature, not a null.
 10. **A swapped module in a reused worker leaks.** X-DENSE-OPS: set every run's configuration
     explicitly, one job per process when modules are swapped.
+11. **Before building a mechanism on a measurement, reproduce the discrepancy with the real
+    inputs.** X-POSITION "showed" copying needs register state; a captured real event with
+    fresh registers passed. The cause was partner sabotage in the assay draw. Withdrawn.
