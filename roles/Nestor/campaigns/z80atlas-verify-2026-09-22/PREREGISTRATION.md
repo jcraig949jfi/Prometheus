@@ -1,6 +1,9 @@
 # Z80 x Atlas VERIFICATION campaign - 24 hours - PREREGISTRATION
 
-Status: **rev C (operator final rulings 2026-09-24). NOT FROZEN. NOT LAUNCHED.** No
+Status: **rev D (operator final rulings + promotion directive 2026-09-24). NOT FROZEN.
+NOT LAUNCHED.** Under the seat's autonomous charter this is the INNER experiment `C9` of
+the Cycle-9 campaign (`roles/Nestor/EXPERIMENT_GRAPH.jsonl`); freeze and launch are the
+seat's decision once every gate passes. No
 grammar, protocol, manifest, panel or constants hash is written as final here. The
 proposed values are in `PROPOSED_HASHES.json`, recomputed by `proposed_hashes.py`, and are
 written into this file only at freeze. Governing rulings:
@@ -41,7 +44,12 @@ each change is recorded here so the diff is auditable.
 | A-20 | H3 cells = RESERVOIR specimens of the H2 panel, 16 seeds | **Two RESERVOIR cells repicked prospectively from the P-11 record** (cells of `4931614d912c52b2-s1190-tL-a0`, same-cell survivor `-s9368-tM-a0`, and `a62116831aa6d956-s7926-tM-a0`); **32 shared seeds**; 192 runs | Operator ruling |
 | A-21 | H3 arm B = `NICHES_HIGH_MIG` | **Arm B = RESERVOIR structure with the easy-niche modifier off** | C9-D13: NICHES_HIGH_MIG migrates at 0.08, the reservoir at 0.02; "identical migration" was false |
 | A-22 | H4 four blocks x 16 seed-pairs | **WITHHELD. Removed from this campaign.** A-4 is withdrawn; the S1-B autopsy is preserved | Operator ruling. The endogenous arm never reproduces (C9-D07), and the historical control was unmatched (Z80A-D04) |
-| A-23 | thresholds as literals in several modules | **One hash-covered constants object** (`constants.py`), including the H2 and H3 decision thresholds | S3-2 |
+| A-23 | thresholds as literals in several modules | **One hash-covered constants object** (`constants.py`), including the H1, H2 and H3 decision thresholds | S3-2 |
+| A-24 | H3 certificate = organism-id ancestry (repaired by A-19) | **Ruler R3, MATERIAL certificate**: a crossing outside the easy niche by a genome whose bytes are >= 0.50 easy-niche MATERIAL. Every byte carries the niche in which its value was made; the tag moves with the data through the VM (`z8taint.run_tainted`, bit-identical to `z8.run`) and through mutation (sequence alignment). The id certificate is kept as `id_certificate_legacy`, a sensitivity reading | C9-D14: on the pair tape an organism keeps its id while its bytes are replaced (0.97 -> 0.00 identity over 600 epochs with no lineage event). Bounded repair tournament over R0 (id), R1 (founder fidelity), R2 (causal edge + window), R3 (material) on 9 adversarial fixtures run through the real pair-interaction code: R3 9/9, R1 7, R0 4, R2 4 (`H3_RULER_TOURNAMENT.json`, T-H3-MAT) |
+| A-25 | H3 arms read as: C isolates transport | **C removes ORGANISM migration only.** On the pair tape, pairing is niche-blind, so material also crosses niches through pair writes in every arm; A vs C isolates migration as one transport route | Consequence of the physics, stated before any result |
+| A-26 | H3 decision per cell, unspecified | **Primary = POOLED over the two cells** (64 bundles per arm); per-cell verdicts are secondary | Declared before launch; pooling maximises power for a rare event |
+| A-27 | adjudication rules existed only as prose | **`hypotheses.py`** implements H1 (readout `held_max_final`), H2 and H3; **`adjudicate_c9.py`** applies them to the bundle store; **`report_c9.py`** renders the report from a machine block; **`report_audit_c9.py`** recomputes every number independently from the raw bundle files. **`run_campaign.py`** consumes the frozen manifest: resume from the P-7 store, one identical retry per failing job, no replacement jobs. T-H2, T-INFRA (kill/resume byte-identity, freeze refusal, error path, 7 audit negative controls) | Launch blockers found pre-freeze (INFRASTRUCTURE) |
+| A-28 | P-11 literal sensitivity only in the forensic reassay | **Every pair edge also carries `pass_literal`**; `max_causal_replication_depth_literal` is recorded and the H2 panel rule is re-read on it as the mandatory sensitivity | A-16 applied to the campaign itself |
 
 ---
 
@@ -301,8 +309,17 @@ Three arms, **32 shared seeds per cell**, everything else held fixed (192 runs):
   easy-niche modifier off (A-21)
 - **C** easy niche + migration disabled
 
-**Certificate (A-19).** The P-1 certificate additionally requires every hereditary
-PAIR_EXECUTION edge on its chain to be P-11 causal. A non-P-11 pair edge breaks it.
+**Certificate (A-24, supersedes A-19 for the verdict).** Ruler R3: the first crossing
+(held >= 0.90) outside the easy niche by a genome at least 0.50 easy-niche MATERIAL,
+material provenance carried by dataflow through the VM. The A-19 id certificate (every
+pair edge P-11 causal) is recorded as `id_certificate_legacy`, a sensitivity reading only.
+Arm C removes organism migration; material can still move through pair writes (A-25).
+Primary verdict pooled over both cells (A-26).
+
+**Eligibility, recorded before launch:** in the frozen record, 50 of 194 random-start
+pair-tape RESERVOIR runs crossed at least once; the `4931614d912c52b2` family never did, and
+the `a62116831aa6d956` family crossed in both of its runs. The bar of >= 5 arm-A
+certificates is attainable but not assured.
 
 **Decision rule** (unchanged). A reservoir-supporting result requires **both** a complete
 hard-niche ancestry certificate in A **and** preregistered separation from B and C: a
@@ -353,6 +370,14 @@ All three negatives are publishable. None triggers a follow-up campaign by defau
 ---
 
 ## 5. Gate before launch
+
+Freeze block, written only by `freeze.py` after every gate passes, and excluded from the
+preregistration hash it records:
+
+<!-- FREEZE-BEGIN -->
+NOT FROZEN.
+<!-- FREEZE-END -->
+
 
 | # | Gate | State |
 |---|---|---|

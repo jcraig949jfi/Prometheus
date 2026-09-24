@@ -1,0 +1,91 @@
+{
+ "gate": "T-INFRA",
+ "ok": true,
+ "checks": [
+  {
+   "check": "uninterrupted run drains",
+   "pass": true,
+   "detail": "rc=0 bundles=5/5 jobs=17"
+  },
+  {
+   "check": "kill injection actually killed mid-drain",
+   "pass": true,
+   "detail": "rc=3 bundle files after kill=2"
+  },
+  {
+   "check": "resume completes and is byte-identical",
+   "pass": true,
+   "detail": "identical=True"
+  },
+  {
+   "check": "re-run of a drained observatory is a no-op",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit PASS on the honest report",
+   "pass": true,
+   "detail": "21 checks"
+  },
+  {
+   "check": "H2/H3 incomplete bundles are reported, not dropped",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verify_freeze refuses without FREEZE.json",
+   "pass": true,
+   "detail": "FREEZE.json missing: the campaign is not frozen"
+  },
+  {
+   "check": "verify_freeze refuses a drifted protocol hash",
+   "pass": true,
+   "detail": "protocol hash drifted since freeze: 5819bc6d20f14218 != 0000"
+  },
+  {
+   "check": "failing job: exactly one identical retry, then recorded",
+   "pass": true,
+   "detail": "errors=2"
+  },
+  {
+   "check": "failing job leaves its bundle INCOMPLETE (other arms stored)",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: H1 M sign flipped",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: H2 per-specimen count altered",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: H3 verdict word changed in prose only",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: prose-only number added",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: machine block removed",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: H2 table row altered in prose only",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "audit catches: stale report (raw bundle changed after report)",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

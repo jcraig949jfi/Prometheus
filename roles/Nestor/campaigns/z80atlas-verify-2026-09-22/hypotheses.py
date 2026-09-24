@@ -67,3 +67,72 @@ def h2_panel(specimens):
             "distinct_supporting_strata": len(strata),
             "incomplete": sorted(s for s, v in per.items() if v["verdict"] == "INCOMPLETE"),
             "specimens": per}
+
+
+# --------------------------------------------------------------------------- H1
+H1_ARMS = ("gate_off_cost_vm", "gate_on_cost_vm", "gate_off_cost_free", "gate_on_cost_free")
+
+
+def h1(bundles):
+    """bundles: list of {"results": {arm: summary}}. Complete bundles only are used; the
+    readout is final held-out competence (`held_max_final`), with crossed_ever and
+    crossed_at_final reported beside it and never substituted for it."""
+    comp = [b for b in bundles if set(H1_ARMS) <= set(b["results"])]
+    if not comp:
+        return {"verdict": "INCOMPLETE", "n_complete": 0}
+    mean = {a: sum((b["results"][a].get("held_max_final") or 0.0) for b in comp) / len(comp)
+            for a in H1_ARMS}
+    M = ((mean["gate_on_cost_vm"] + mean["gate_on_cost_free"])
+         - (mean["gate_off_cost_vm"] + mean["gate_off_cost_free"])) / 2
+    I = ((mean["gate_on_cost_free"] - mean["gate_off_cost_free"])
+         - (mean["gate_on_cost_vm"] - mean["gate_off_cost_vm"]))
+    rates = {a: {"crossed_ever": sum(bool(b["results"][a].get("crossed_ever")) for b in comp) / len(comp),
+                 "crossed_at_final": sum(bool(b["results"][a].get("crossed_at_final")) for b in comp) / len(comp)}
+             for a in H1_ARMS}
+    if abs(M) >= C["H1_THRESHOLD"] and abs(I) >= C["H1_THRESHOLD"]:
+        v = "GATE_EFFECT_AND_COST_INTERACTION"
+    elif abs(M) >= C["H1_THRESHOLD"]:
+        v = "GATE_EFFECT"
+    elif abs(I) >= C["H1_THRESHOLD"]:
+        v = "COST_INTERACTION_ONLY"
+    else:
+        v = "NO_DETECTED_EFFECT"
+    return {"verdict": v, "n_complete": len(comp), "n_bundles": len(bundles),
+            "M": round(M, 4), "I": round(I, 4), "means_held_final": {a: round(x, 4) for a, x in mean.items()},
+            "readouts_only": rates}
+
+
+# --------------------------------------------------------------------------- H3
+H3_ARMS = ("A_easy_plus_migration", "B_homogeneous_same_migration", "C_easy_no_migration")
+
+
+def _h3_rates(comp, key):
+    return {a: sum(bool(b["results"][a].get(key)) for b in comp) for a in H3_ARMS}
+
+
+def h3(bundles):
+    """Primary: POOLED over both pinned cells (declared before launch). Certificate = ruler
+    R3 (`has_reservoir_certificate`, material). RESERVOIR_SUPPORTED iff arm A has >=
+    H3_MIN_CERTIFICATES certificates AND A's rate exceeds both B's and C's by >=
+    H3_SEPARATION. Fewer than the minimum in A is NOT_DEMONSTRATED. The legacy id
+    certificate is reported as a sensitivity reading only."""
+    comp = [b for b in bundles if set(H3_ARMS) <= set(b["results"])]
+    if not comp:
+        return {"verdict": "INCOMPLETE", "n_complete": 0}
+    n = len(comp)
+    cnt = _h3_rates(comp, "has_reservoir_certificate")
+    rate = {a: cnt[a] / n for a in H3_ARMS}
+    sep_b = rate[H3_ARMS[0]] - rate[H3_ARMS[1]]
+    sep_c = rate[H3_ARMS[0]] - rate[H3_ARMS[2]]
+    if cnt[H3_ARMS[0]] < C["H3_MIN_CERTIFICATES"]:
+        v = "NOT_DEMONSTRATED"
+    elif sep_b >= C["H3_SEPARATION"] and sep_c >= C["H3_SEPARATION"]:
+        v = "RESERVOIR_SUPPORTED"
+    else:
+        v = "NO_SEPARATION"
+    legacy = {a: sum(bool(b["results"][a].get("id_certificate_legacy")) for b in comp) for a in H3_ARMS}
+    cross = {a: sum(bool(b["results"][a].get("crossed_ever")) for b in comp) for a in H3_ARMS}
+    return {"verdict": v, "n_complete": n, "n_bundles": len(bundles), "certificates": cnt,
+            "rates": {a: round(x, 4) for a, x in rate.items()},
+            "separation_vs_B": round(sep_b, 4), "separation_vs_C": round(sep_c, 4),
+            "sensitivity_id_certificate_counts": legacy, "readout_crossed_ever_counts": cross}

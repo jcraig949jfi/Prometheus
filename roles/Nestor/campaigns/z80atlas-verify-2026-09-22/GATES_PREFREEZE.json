@@ -1,6 +1,6 @@
 {
  "ok": true,
- "written": "2026-09-24 06:16:09",
+ "written": "2026-09-24 07:04:46",
  "gates": [
   {
    "gate": "VM selftest",
@@ -74,7 +74,7 @@
    "outcome": "PASS",
    "seconds": 0.2,
    "tail": [
-    "caught   S3-2e world literal 0.90 restored            bare threshold comparisons: ['world.py:701 fid >= 0.90']",
+    "caught   S3-2e world literal 0.90 restored            bare threshold comparisons: ['world.py:715 fid >= 0.90']",
     "----------------------------------------------------------------------------------------------------",
     "T-S3: PASS  (12 checks)"
    ]
@@ -102,10 +102,32 @@
    ]
   },
   {
+   "gate": "T-H3-MAT material ruler tournament",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.1,
+   "tail": [
+    "fail-on-old-code: R0 (current id certificate) certifies the overwritten id: True",
+    "run_tainted == z8.run on 400 random programs, mismatches: 0",
+    "T-H3-MAT: PASS"
+   ]
+  },
+  {
+   "gate": "T-INFRA runner/adjudicator/report/audit",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 10.0,
+   "tail": [
+    "PASS   audit catches: H2 table row altered in prose only          ",
+    "PASS   audit catches: stale report (raw bundle changed after report) ",
+    "T-INFRA: PASS"
+   ]
+  },
+  {
    "gate": "P-6 report audit (predecessor)",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 19.5,
+   "seconds": 22.1,
    "tail": [
     "banned_phrase_proves             caught   CHK-LANGUAGE:\\bproves\\b|\\bproven\\b  unsupported phrase 'proves",
     "----------------------------------------------------------------------------------------------------",
@@ -116,10 +138,10 @@
    "gate": "calibration controls (PREFREEZE)",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 9.0,
+   "seconds": 10.4,
    "tail": [
     " \"gate\": \"PASS\",",
-    " \"seconds\": 9.0",
+    " \"seconds\": 10.3",
     "}"
    ]
   },
@@ -127,10 +149,10 @@
    "gate": "T-MAN/T-HASH manifest + hash repro",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.3,
+   "seconds": 0.4,
    "tail": [
-    "PASS   T-HASH 3 processes, 3 hash seeds agree       protocol d70495cc6bcf66e7..",
     "PASS   T-HASH PROPOSED_HASHES.json is current       stale: none",
+    "PASS   T-HASH at most one freeze block excluded from the prereg hash blocks 1",
     "T-MAN/T-HASH: PASS"
    ]
   }

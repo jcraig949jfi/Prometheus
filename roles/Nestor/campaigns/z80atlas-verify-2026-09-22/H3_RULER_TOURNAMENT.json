@@ -1,0 +1,103 @@
+{
+ "fixtures": [
+  {
+   "fixture": "f1_same_id_overwritten",
+   "desc": "id kept, all 64 bytes rewritten by a hard-niche partner",
+   "expected": false,
+   "easy_material_share": 0.0,
+   "R0_id": true,
+   "R1_founder_fidelity": false,
+   "R2_causal_edge_window": false,
+   "R3_material": false
+  },
+  {
+   "fixture": "f2_genome_retained",
+   "desc": "easy genome migrates unchanged",
+   "expected": true,
+   "easy_material_share": 1.0,
+   "R0_id": true,
+   "R1_founder_fidelity": true,
+   "R2_causal_edge_window": false,
+   "R3_material": true
+  },
+  {
+   "fixture": "f3_gradual_mutation",
+   "desc": "carried easy genome, ~20% point mutations in the hard niche",
+   "expected": true,
+   "easy_material_share": 0.6875,
+   "R0_id": true,
+   "R1_founder_fidelity": true,
+   "R2_causal_edge_window": false,
+   "R3_material": true
+  },
+  {
+   "fixture": "f3b_structural_mutation",
+   "desc": "carried easy genome, ~20% mutations incl. frame-shifting indels",
+   "expected": true,
+   "easy_material_share": 0.6032,
+   "R0_id": true,
+   "R1_founder_fidelity": false,
+   "R2_causal_edge_window": false,
+   "R3_material": true
+  },
+  {
+   "fixture": "f4_noncausal_overwrite",
+   "desc": "70% of the carried genome overwritten by a hard partner, no copy",
+   "expected": false,
+   "easy_material_share": 0.2969,
+   "R0_id": true,
+   "R1_founder_fidelity": false,
+   "R2_causal_edge_window": false,
+   "R3_material": false
+  },
+  {
+   "fixture": "f5_p11_copy",
+   "desc": "easy-niche donor copies itself into a hard-niche victim (P-11)",
+   "expected": true,
+   "easy_material_share": 1.0,
+   "R0_id": false,
+   "R1_founder_fidelity": true,
+   "R2_causal_edge_window": true,
+   "R3_material": true
+  },
+  {
+   "fixture": "f6a_mixed_light",
+   "desc": "P-11 copy, then 30% noncausal hard overwrite",
+   "expected": true,
+   "easy_material_share": 0.7031,
+   "R0_id": false,
+   "R1_founder_fidelity": true,
+   "R2_causal_edge_window": true,
+   "R3_material": true
+  },
+  {
+   "fixture": "f6b_mixed_heavy",
+   "desc": "P-11 copy, then 70% noncausal hard overwrite",
+   "expected": false,
+   "easy_material_share": 0.2969,
+   "R0_id": false,
+   "R1_founder_fidelity": false,
+   "R2_causal_edge_window": true,
+   "R3_material": false
+  },
+  {
+   "fixture": "f7_partial_copy_no_edge",
+   "desc": "easy donor copies 40/64 bytes into a hard victim; no lineage edge",
+   "expected": true,
+   "easy_material_share": 0.625,
+   "R0_id": false,
+   "R1_founder_fidelity": false,
+   "R2_causal_edge_window": false,
+   "R3_material": true
+  }
+ ],
+ "score": {
+  "R0_id": 4,
+  "R1_founder_fidelity": 7,
+  "R2_causal_edge_window": 4,
+  "R3_material": 9
+ },
+ "selected": "R3_material",
+ "k_window_R2": 50,
+ "share_threshold": 0.5
+}

@@ -66,6 +66,10 @@ def main():
                          "grammar_hash", "constants_sha256")
              if outs[0] and f.get(k) != outs[0].get(k)]
     rec("T-HASH PROPOSED_HASHES.json is current", outs[0] and not stale, "stale: %s" % (stale or "none"))
+    pre = (ROOT / "PREREGISTRATION.md").read_bytes()
+    rec("T-HASH at most one freeze block excluded from the prereg hash",
+        pre.count(b"<!-- FREEZE-BEGIN -->") <= 1 and pre.count(b"<!-- FREEZE-END -->") <= 1,
+        "blocks %d" % pre.count(b"<!-- FREEZE-BEGIN -->"))
     print("T-MAN/T-HASH:", "PASS" if ok else "FAIL")
     return 0 if ok else 1
 
