@@ -375,7 +375,17 @@ Freeze block, written only by `freeze.py` after every gate passes, and excluded 
 preregistration hash it records:
 
 <!-- FREEZE-BEGIN -->
-NOT FROZEN.
+**FROZEN 2026-09-24T07:05:54.**
+
+| hash | value |
+|---|---|
+| protocol | `5819bc6d20f1421802db5fca99e32564139cc604bafe3689f4003ac2f4134c8d` |
+| grammar | `61da6513ea0b36e04d4b2164a208fe4e1fd700e078076db847dc037f1c327f4e` |
+| manifest | `8d88cf06123b6e62c85c356a65c85a5d9903b220d09979ba71b20509241ea67a` |
+| specimen panel | `d52426aff80d509cd6a16e8ddad3aea25a9265ee8ef079b7b1da8da81a4006fb` |
+| constants | `c0e488deabebd03afd398b5aa5665a1e6dbce4ddc2683385113ca4bd7b655719` |
+
+1200 runs in 380 bundles ({"H1": 60, "H2": 256, "H3": 64, "H4": 0}). Calibration: `CALIBRATION.json` PASS.
 <!-- FREEZE-END -->
 
 

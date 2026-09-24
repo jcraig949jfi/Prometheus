@@ -1,6 +1,6 @@
 {
  "ok": true,
- "written": "2026-09-24 07:04:46",
+ "written": "2026-09-24 07:05:54",
  "gates": [
   {
    "gate": "VM selftest",
@@ -17,7 +17,7 @@
    "gate": "T-P1,2,3,8,9,10 repairs",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.3,
+   "seconds": 0.4,
    "tail": [
     "caught T-P9  env x structure            niche0 easy=False, niche1 hard=True, coevo=True, deterministic=True",
     "--------------------------------------------------------------------------------------------",
@@ -39,7 +39,7 @@
    "gate": "T-P5 index-only",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.0,
+   "seconds": 0.1,
    "tail": [
     "PASS: adjudicate.py contains no per-run read path",
     "",
@@ -72,7 +72,7 @@
    "gate": "T-S3 engineering repairs",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.2,
+   "seconds": 0.3,
    "tail": [
     "caught   S3-2e world literal 0.90 restored            bare threshold comparisons: ['world.py:715 fid >= 0.90']",
     "----------------------------------------------------------------------------------------------------",
@@ -116,7 +116,7 @@
    "gate": "T-INFRA runner/adjudicator/report/audit",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 10.0,
+   "seconds": 11.5,
    "tail": [
     "PASS   audit catches: H2 table row altered in prose only          ",
     "PASS   audit catches: stale report (raw bundle changed after report) ",
@@ -138,10 +138,10 @@
    "gate": "calibration controls (PREFREEZE)",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 10.4,
+   "seconds": 9.3,
    "tail": [
     " \"gate\": \"PASS\",",
-    " \"seconds\": 10.3",
+    " \"seconds\": 9.1",
     "}"
    ]
   },
@@ -149,7 +149,7 @@
    "gate": "T-MAN/T-HASH manifest + hash repro",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.4,
+   "seconds": 0.3,
    "tail": [
     "PASS   T-HASH PROPOSED_HASHES.json is current       stale: none",
     "PASS   T-HASH at most one freeze block excluded from the prereg hash blocks 1",
