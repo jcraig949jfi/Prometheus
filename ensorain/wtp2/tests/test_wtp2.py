@@ -60,3 +60,19 @@ def test_planted_panel_sees_structure_not_noise():
     real, _ = planted_panel(x, 128, 256, 0.0, rng)
     fake, _ = planted_panel(rng.permutation(x.reshape(-1)).reshape(x.shape), 128, 256, 0.0, rng)
     assert real > 0.5 and fake < 0.2
+
+
+def test_mutation_branch_with_seeded_archive():
+    """A6 regression: the mutate-admitted branch must run on normalized WTP-02 genomes."""
+    import numpy as np
+    from ensorain.wtp2.genome2 import candidate
+    rng = np.random.default_rng(7)
+    adm = [candidate(rng, [], []) for _ in range(3)]
+    for a in adm:
+        a["resource"]["calibrated"] = True
+    arch = list(adm)
+    for _ in range(200):
+        g = candidate(rng, arch, adm)
+        assert "band" in g["memory"] and g["time"]["lifetime"] == g["time"]["lifetime2"]
+        assert "calibrated" not in g["resource"] or g in adm
+        arch.append(g)
