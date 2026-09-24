@@ -164,6 +164,7 @@ def run_life(g, seed, *, twin=None, transplant=None, freeze=False, reskin=False,
     status = "OK"
     degenerate_reason = None
     reach_full = reachable(adj, 0)
+    init_digest = _digest(np.asarray(battery), np.array(sorted((v, u) for v in range(N) for u in adj[v])))  # at birth
 
     def mark_store(o):
         return shared_marks if B["marks"] == "shared" else o.marks
@@ -419,7 +420,7 @@ def run_life(g, seed, *, twin=None, transplant=None, freeze=False, reskin=False,
                band=mg["band"], CA=float(eff_last / eff_first), flops=o0.total_flops, probes=o0.probes,
                rollouts=o0.rollouts, conversions=o0.conversions, mark_writes=sum(o.writes for o in orgs),
                final_kind=o0.mem.kind, dims=dims, n_nodes=N, V0=V0, trace=trace, stream_seeds=seeds,
-               init_digest=_digest(np.asarray(battery), np.array(sorted((v, u) for v in range(N) for u in adj[v]))),
+               init_digest=init_digest,
                event_digest=ev_hash.hexdigest()[:16], secs=None)
     # reachability gain (s3): matched 40-step excursions, trained vs birth memory, frozen world
     if excursions and status == "OK":
