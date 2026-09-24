@@ -103,8 +103,17 @@ def _pick_at(g, Mrow: np.ndarray, d: int, exclude=()) -> int:
     if cand.size == 0:
         ok = np.flatnonzero((Mrow <= d) & (Mrow > 0))
         ok = np.setdiff1d(ok, np.asarray(exclude, dtype=np.int64))
-        best = Mrow[ok].max()
-        cand = ok[Mrow[ok] == best]
+        if ok.size:
+            best = Mrow[ok].max()
+            cand = ok[Mrow[ok] == best]
+        else:
+            # nothing reachable within d (sparse directed graphs): any other
+            # site, nearest first
+            ok = np.setdiff1d(np.flatnonzero(Mrow > 0), np.asarray(exclude, dtype=np.int64))
+            if ok.size == 0:
+                ok = np.setdiff1d(np.arange(Mrow.size), np.asarray(exclude, dtype=np.int64))
+            best = Mrow[ok].min()
+            cand = ok[Mrow[ok] == best]
     return int(cand[g.integers(cand.size)])
 
 
@@ -183,8 +192,9 @@ def build(ph: Physics, env: EnvSpec, world_seeds) -> Episode:
             s1 = int(g.integers(N))
             s2 = _pick_at(g, M[s1], env.d)
             half = max(1, env.d // 2)
-            ok = np.flatnonzero((M[s1] >= half) & (M[s2] >= half))
-            a = int(ok[g.integers(ok.size)]) if ok.size else _pick_at(g, M[s1], half, (s2,))
+            ok = np.flatnonzero((M[s1] >= half) & (M[s2] >= half) & (M[s1] < 10 ** 6))
+            ok = np.setdiff1d(ok, [s1, s2])
+            a = int(ok[g.integers(ok.size)]) if ok.size else _pick_at(g, M[s1], half, (s1, s2))
             sidx[b] = (s1, s2)
             ridx[b, 0] = a
             combos = np.stack([_coin(g, tr), _coin(g, tr)], 1)

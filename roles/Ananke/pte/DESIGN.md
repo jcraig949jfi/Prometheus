@@ -305,3 +305,16 @@ adopted as normative, verbatim as written there. Notes:
 - A7/A17: stats vocabulary differs between implementations (the oracle
   also counts `saturated`); conformance compares state, traces and the
   attempted/delivered/lost/collided counters only.
+
+## 10. Preflight observation: integer decay is sign-asymmetric (2026-09-24)
+
+Arithmetic shift floors toward -infinity, so step 9's decay
+S := S - (S >> k) behaves differently by sign: a positive value stalls at
+2^k - 1 (S >> k = 0 below 2^k) and is kept forever, while a negative value
+keeps moving (S >> k = -1 for -2^k <= S < 0) and reaches 0. Under decay,
+positive memories persist and negative memories are erased. The same floor
+makes SHR and MULQ asymmetric too. It is a property of PTE-SUB-1, found by
+the plant probe, and is kept rather than "fixed": it is exactly the kind of
+unplanned dial the mission asks the campaign to expose. Mirror twins are
+therefore NOT physically symmetric; the pair average still cancels every
+constant policy (envs.py), which is the only property scoring relies on.
