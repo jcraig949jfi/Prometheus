@@ -25,6 +25,7 @@ from . import cost as cost_mod
 from . import secrets as secrets_mod
 
 SCHEMA = "prometheus-gpu/run-plan/1"
+STAGE_FILE = "stages.jsonl"
 STOCK_IMAGE = "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
 
 
@@ -52,28 +53,45 @@ def build_bootstrap(spec, run_meta, transport):
     workdir = run_meta["workdir"]
     artifacts = run_meta["artifact_dir"]
     pip = spec["dependencies"].get("pip", [])
+    stages = "%s/%s" % (artifacts, STAGE_FILE)
+    # A shell function, so a stage marker is one short word at each step
+    # rather than a repeated one-liner nobody will keep in step.
+    # printf, not echo: the format is fixed here and the two values are
+    # arguments, so a stage name can never be read as a format string.
+    mark = ('stage() { printf %s "$1" "$(date +%s)" >> %s; }'
+            % ("'" + '{"stage": "%s", "epoch": %s}' + chr(92) + "n'",
+               "%s", stages))
     lines = [
         "set -euo pipefail",
         "mkdir -p %s %s" % (workdir, artifacts),
         "cd %s" % workdir,
+        mark,
+        "stage boot",
         transport["fetch_cmd"],
+        "stage fetched",
         "printf '%%s  %%s\\n' '%s' '%s' > bundle.sha256"
         % (transport["bundle_sha256"], transport["local_name"]),
         "sha256sum -c bundle.sha256",
+        "stage verified",
         "tar -xzf %s" % transport["local_name"],
+        "stage unpacked",
     ]
     if pip:
         lines.append("pip install --no-cache-dir " +
                      " ".join("'%s'" % p for p in pip))
+        lines.append("stage installed")
     if spec["canary"]:
         lines.append("# health check before the real workload")
         lines.append(spec["canary"])
+        lines.append("stage canary")
     lines.append("# secrets boundary")
     lines.append(secrets_mod.unset_prelude())
     lines.append(secrets_mod.verification_snippet())
     entry = spec["entrypoint"]
     args = " ".join("'%s'" % a for a in spec["args"])
+    lines.append("stage module_start")
     lines.append("python3 -u %s %s" % (entry, args))
+    lines.append("stage module_end")
     return "\n".join(lines)
 
 

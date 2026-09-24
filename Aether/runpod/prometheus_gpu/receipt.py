@@ -140,6 +140,12 @@ def from_plan(plan, result="NOT_RUN"):
         "transport": plan.get("transport", {}).get("kind"),
         "guardrails": plan.get("guardrails"),
         "plan_cost_projection": plan.get("cost_projection"),
+        # Both estimates travel in the receipt. The gap between what was
+        # preregistered and what a representative scout measured is the
+        # number that tells a later reader whether the planning worked;
+        # keeping only one of them hides exactly that.
+        "preregistered_estimate": plan.get("preregistered_estimate"),
+        "calibrated_estimate": plan.get("calibrated_estimate"),
         "created_utc": _utc(),
         "started_utc": None,
         "ended_utc": None,
@@ -211,6 +217,21 @@ def validate(rec):
             "cost.billing_reconciled must stay false; reconciliation is a "
             "cleanup claim backed by billing_evidence, not a cost estimate")
 
+    cal = rec.get("calibrated_estimate")
+    if cal is not None:
+        for field in ("expected_usd", "requested_units", "margin"):
+            if field not in cal:
+                raise ReceiptError(
+                    "calibrated_estimate needs `%s`; an estimate without its "
+                    "workload and its margin cannot be checked against what "
+                    "actually happened" % field)
+        if rec.get("preregistered_estimate") is None:
+            raise ReceiptError(
+                "a receipt carrying a calibrated_estimate must also carry the "
+                "preregistered_estimate it replaced, even when they agree. "
+                "Keeping only the one that turned out right is how a "
+                "calibration miss disappears from the record.")
+
     if rec["result"] != "NOT_RUN" and not rec.get("bundle_sha256"):
         raise ReceiptError(
             "a run that happened must carry bundle_sha256; without it the "
@@ -225,6 +246,14 @@ def render(rec):
            "  bundle        %s" % (rec.get("bundle_sha256") or "-"),
            "  window        %s -> %s" % (rec.get("started_utc") or "-",
                                          rec.get("ended_utc") or "-")]
+    cal = rec.get("calibrated_estimate")
+    if cal and rec.get("cost"):
+        actual = rec["cost"].get("usd_estimated")
+        if actual:
+            out.append("  calibration   predicted $%.4f, ran $%.4f (%+.1f%%)"
+                       % (cal["expected_usd"], actual,
+                          100.0 * (actual - cal["expected_usd"])
+                          / cal["expected_usd"]))
     cost = rec.get("cost") or {}
     if cost:
         out.append("  cost          $%.4f estimated over %.1f s (%s)"

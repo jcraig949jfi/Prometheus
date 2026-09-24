@@ -49,9 +49,56 @@ from prometheus_gpu import receipt as rc           # noqa: E402
 from prometheus_gpu import spec as spec_mod        # noqa: E402
 
 MODULE_DIR = os.path.join(HERE, "examples", "hello_gpu")
+BUNDLE_DIR = os.path.join(HERE, "examples", "dist")
+REPO_BUNDLE_PATH = "Aether/runpod/examples/dist/hello_gpu-%s.tar.gz"
 SPEC_PATH = os.path.join(MODULE_DIR, "module_spec.json")
 RECEIPT_DIR = os.path.join(HERE, "receipts")
 DEFAULT_BUDGET_USD = 0.30
+
+
+def git_head():
+    """The commit the pod will fetch from. Must be pushed to be reachable."""
+    import subprocess
+    out = subprocess.run(["git", "rev-parse", "HEAD"], cwd=HERE,
+                         capture_output=True, text=True)
+    if out.returncode:
+        raise RuntimeError("cannot determine HEAD: %s" % out.stderr.strip())
+    return out.stdout.strip()
+
+
+def repo_transport_factory(commit):
+    """A transport_factory bound to one commit, for launch.Controller."""
+    def factory(bundle, run_meta):
+        return dryrun.repo_transport(
+            bundle, REPO_BUNDLE_PATH % bundle.sha256[:12], commit)
+    return factory
+
+
+def ensure_bundle_committed(spec, commit):
+    """Refuse before spending if the pod could not fetch the bundle.
+
+    Three ways this fails and all of them are free to discover here: the
+    bundle was never built, it was built but not committed, or it was
+    committed but not pushed. The third is the one that looks fine
+    locally and fails on the pod.
+    """
+    from prometheus_gpu import bundle as bundle_mod
+    built = bundle_mod.build(MODULE_DIR, spec)
+    local = os.path.join(BUNDLE_DIR, "hello_gpu-%s.tar.gz" % built.sha256[:12])
+    if not os.path.exists(local):
+        raise RuntimeError(
+            "bundle %s is not in %s. Build it and commit it: the pod fetches "
+            "it from the pinned commit, not from this machine."
+            % (built.sha256[:12], BUNDLE_DIR))
+    transport = dryrun.repo_transport(
+        built, REPO_BUNDLE_PATH % built.sha256[:12], commit)
+    check = dryrun.check_retrievable(transport)
+    if not check.get("ok"):
+        raise RuntimeError(
+            "the pod could not fetch %s (%s). Commit AND PUSH the bundle "
+            "before launching; a pod that cannot fetch its module still bills."
+            % (transport["url"], check))
+    return built, transport
 
 
 def log(message):
@@ -63,7 +110,14 @@ def load_spec():
 
 
 def show_plan(spec, workload_seconds=60.0):
+    factory = dryrun.local_transport
+    try:
+        factory = repo_transport_factory(git_head())
+    except Exception as exc:
+        print("(no git HEAD: %s; planning with the controller-served "
+              "transport)" % exc)
     plan = dryrun.plan(spec, MODULE_DIR, inventory=None,
+                       transport_factory=factory,
                        workload_seconds=workload_seconds)
     print(dryrun.render(plan))
     projected = cost_mod.project(spec, workload_seconds=workload_seconds)
@@ -100,9 +154,15 @@ def fly(spec, budget_usd, poll_s):
     source = credentials.install_into_environ()
     log("credential source: %s" % source)        # provenance, never the value
 
+    commit = git_head()
+    built, transport = ensure_bundle_committed(spec, commit)
+    log("bundle %s reachable at the pinned commit %s"
+        % (built.sha256[:12], commit[:12]))
+
     api = prov.RunPodProvider()
     ctl = launch.Controller(api, spec, MODULE_DIR, budget_usd=budget_usd,
                             poll_s=poll_s, ready_timeout_s=600.0,
+                            transport_factory=repo_transport_factory(commit),
                             artifact_token=os.environ.get(
                                 "AGE_ARTIFACT_TOKEN"),
                             log=log)

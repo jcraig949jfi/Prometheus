@@ -6,11 +6,22 @@ Preregistration: `NATIVE_CIRCUITRY_01_PREREGISTRATION_2026-09-23.md`
 Calibration: `AETH02_CALIBRATION_2026-09-23.md`
 Run: `aeth02-20260924T070408Z-efe7be17`, pinned to `f4fb349b849e`
 
+> **AMENDED 2026-09-24, and closed.** Two changes were directed after this
+> report was written, and both narrow it. (1) The four-part statement in
+> §7 is a list of useful evidentiary dimensions, **not** a definition of
+> circuitry and **not** jointly necessary. (2) The negative conclusion is
+> narrow: no evidence was found that the measured persistent-edge and
+> cycle structures perform a demonstrated nontrivial function **under the
+> assays run**. It does not say Aether contains no possible circuitry.
+> The preregistered falsifiers H1–H4 were then run at zero dollars; see
+> `AETH-02_CLOSE_2026-09-24.md`, which supersedes §4 and §7 where they
+> differ.
+
 The question this round was set to answer: **does `aeth01.v1` spontaneously
 produce persistent functional circuitry?**
 
-The short answer is **no**, and the interesting part is what it produces
-instead. Persistent structure exists, is reproducible across seeds to
+The short answer, **for the structures measured and the assays run**, is
+**no**, and the interesting part is what it produces instead. Persistent structure exists, is reproducible across seeds to
 four decimal places, and is quantitatively well described — but what
 makes an edge persist is the absence of anything opposing it, not any
 function it performs.
@@ -428,14 +439,24 @@ sense that an edge whose writes never change anything gives its target no
 way to point back, so a stable same-value edge is less likely to close a
 loop. That is a structural constraint, not a function.
 
-**Verdict.** On the preregistered question, the answer is negative.
-`aeth01.v1` under B-balanced parameters produces a stationary state
-containing durable, spatially unorganised, uncontested write channels and
-a small stable set of cycles. It does not produce circuitry in any sense
-that holds up against the preregistered prohibitions: no localisation, no growth,
-no resource routing, no contested gating, and no evidence that anything
-maintains the persistent set against disturbance — a question no
-measurement here addressed.
+**Verdict.** On the preregistered question, the answer is negative, and
+the scope of that negative matters. `aeth01.v1` under B-balanced
+parameters produces a stationary state containing durable, spatially
+unorganised, uncontested write channels and a small stable set of cycles.
+**No evidence was found that these structures perform a demonstrated
+nontrivial function under the assays run**: no localisation above a
+matched-random null, no growth, no persistent resource routing, no
+persisting contested gating.
+
+> **AMENDMENT (operator directive, 2026-09-24).** That is a statement
+> about these structures and these assays. It is not a statement that
+> `aeth01.v1` contains no possible circuitry, and it must not be quoted as
+> one. These assays can see localisation, contest, persistence and
+> resource routing. They cannot see a structure that is spatially
+> distributed, informational rather than resource-routing, uncontested in
+> normal operation, stateful without being self-repairing, or dynamically
+> reconfigurable rather than topologically persistent — and any of those
+> would be circuitry this round was not built to detect.
 
 ---
 
@@ -526,6 +547,17 @@ run, which are definitionally time-dependent. Consequence: future rounds
 should buy *more seeds*, not longer trajectories. At $0.044 per 2,500-tick
 2048² trajectory, the $2.608 spent here would have bought ~59 seeds.
 
+> **AMENDMENT (operator directive, 2026-09-24) — H5 is a campaign-design
+> lesson, and it is REGIME-SPECIFIC.** What was established is narrow:
+> *for B-balanced `aeth01.v1` and the observables measured here, the
+> stationary statistics were already settled by approximately tick 2,500.*
+> Nothing establishes that 2,500 ticks suffices for another parameter
+> regime, other semantics, other observables or a future substrate, and
+> assuming it would be the same class of error as carrying a throughput
+> figure across workloads. The transferable lesson is the procedure, not
+> the number: **measure time-to-information with cheap scouts before
+> buying long trajectories.**
+
 **H6 — B-balanced is a degenerate corner.** The stationary state is so
 reproducible, so spatially featureless and so quickly reached that the
 parameter point may simply be uninteresting. Prediction: varying
@@ -556,14 +588,25 @@ and that is the smallest change that could make persistence something
 other than the absence of opposition. Whether that is still `aeth01.v1`
 is a semantics question, and it would need a new id.
 
-**What would count as circuitry, stated in advance.** A persistent
-structure that (a) contains contested edges that persist, (b) is
-spatially localised above a matched-random null, (c) is repaired after
-targeted disruption at a rate above background, and (d) routes energy
-through edges that themselves persist. This round measured (a) as zero,
-(b) as null-indistinguishable, (d) as 3–6 edges out of 54,000, and did
-not measure (c). Any future positive claim should be stated against these
-four.
+**Four evidentiary dimensions, NOT a definition.** This round measured
+whether a persistent structure (a) contains persisting CONTESTED edges,
+(b) is spatially localised above a matched-random null, (c) is repaired
+after targeted disruption above background, (d) routes energy through
+edges that themselves persist. It found (a) ZERO, (b)
+null-indistinguishable, (d) 3–6 edges of 54,000, and (c) was answered
+afterwards by H1 — see `AETH-02_CLOSE_2026-09-24.md`.
+
+> **AMENDMENT (operator directive, 2026-09-24).** These four are useful
+> evidentiary dimensions. They are **not jointly necessary**, and freezing
+> them as the definition of circuitry would make this round's instruments
+> into the criterion — which is the error of verifying the label instead
+> of the property. Circuitry in a future round may legitimately be
+> spatially distributed rather than localised; informational rather than
+> resource-routing; uncontested under normal operation; stateful without
+> being self-repairing; or dynamically reconfigurable rather than
+> topologically persistent. A positive claim should be stated against
+> whatever dimensions its own mechanism implies, declared in advance, each
+> carrying a matched null.
 
 **Budget discipline.** H5 says the expensive axis was the wrong one.
 Future rounds should buy seeds and parameter points at 2,500 ticks, keep

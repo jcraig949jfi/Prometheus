@@ -608,3 +608,20 @@ def test_render_names_what_is_still_unresolved():
                             observed_absent=False)
     text = rc_mod.render(_receipt([pod]))
     assert "UNRESOLVED" in text and "p1" in text
+
+
+def test_a_bundle_never_contains_a_previous_bundle(module_dir):
+    """Deterministic hashing dies quietly if a build product lands inside
+    the module: the next build sweeps it in and the hash changes every
+    time. Real hazard -- it happened while preparing Iteration 1."""
+    first = bundle_mod.build(module_dir, spec_mod.from_dict(dict(MINIMAL)))
+    dist = os.path.join(module_dir, "dist")
+    os.makedirs(dist, exist_ok=True)
+    with open(os.path.join(dist, "module-%s.tar.gz" % first.sha256[:12]),
+              "wb") as fh:
+        fh.write(first.blob)
+    second = bundle_mod.build(module_dir, spec_mod.from_dict(dict(MINIMAL)))
+    assert second.sha256 == first.sha256, (
+        "a bundle left in the module directory changed the next bundle's hash")
+    assert not any(f["path"].startswith("dist/")
+                   for f in second.manifest["files"])

@@ -4,6 +4,8 @@
     python -m prometheus_gpu.cli dry-run   spec.json [--out plan.json]
     python -m prometheus_gpu.cli bundle    spec.json [--out bundle.tar.gz]
     python -m prometheus_gpu.cli rehearse  spec.json [--verbose]
+    python -m prometheus_gpu.cli scout     spec.json --scale 0.02
+    python -m prometheus_gpu.cli campaign  spec.json --calibration cal.json                                            --units 1e11 --ceiling 3.00
     python -m prometheus_gpu.cli inventory
     python -m prometheus_gpu.cli cleanup   [--pod ID ...] [--all]
     python -m prometheus_gpu.cli validate-telemetry telemetry.jsonl
@@ -186,6 +188,67 @@ def cmd_rehearse(args):
     return 0 if receipt_obj["result"] == "OK" else 1
 
 
+def cmd_scout(args):
+    """Emit the reduced spec for a representative calibration run.
+
+    Only the work-unit count and the runtime bound shrink. GPU class,
+    dependencies, entrypoint, args and environment are carried over
+    unchanged, because a scout that quietly dropped the instrumentation
+    would reproduce the AETH-02 miss exactly.
+    """
+    from . import scout as scout_mod
+    spec = _load(args.spec)
+    try:
+        reduced = scout_mod.scout_spec(spec, args.scale)
+    except ValueError as exc:
+        print("SCOUT REFUSED: %s" % exc, file=sys.stderr)
+        return 2
+    rep = scout_mod.representativeness(reduced, spec)
+    print(json.dumps(reduced.to_dict(), indent=2, sort_keys=True))
+    print("\nrepresentative: %s%s"
+          % (rep["representative"],
+             "" if rep["representative"]
+             else "  DIFFERS IN: " + ", ".join(sorted(rep["differences"]))),
+          file=sys.stderr)
+    projected = cost_mod.project(reduced, workload_seconds=None)
+    print("scout ceiling cost $%.4f" % projected["usd_total"], file=sys.stderr)
+    if args.out:
+        with open(args.out, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump(reduced.to_dict(), fh, indent=2, sort_keys=True)
+            fh.write("\n")
+        print("wrote %s" % args.out, file=sys.stderr)
+    return 0
+
+
+def cmd_campaign(args):
+    """Plan a campaign from a MEASURED calibration, or refuse it.
+
+    The calibration JSON is what `scout.calibrate` produced from a scout
+    run. The decision is taken on the estimate PLUS its margin, because a
+    ceiling met by the bare estimate is a ceiling that a 7% miss turns
+    into a truncated run -- which is what happened to AETH-02.
+    """
+    from . import scout as scout_mod
+    spec = _load(args.spec)
+    with open(args.calibration, encoding="utf-8") as fh:
+        calibration = json.load(fh)
+    try:
+        plan = scout_mod.plan_campaign(
+            spec, calibration, args.units, args.ceiling, pods=args.pods,
+            margin=args.margin,
+            accept_differences=args.accept_differences,
+            preregistered_usd=args.preregistered)
+    except scout_mod.CampaignRefused as exc:
+        print("CAMPAIGN REFUSED: %s" % exc, file=sys.stderr)
+        return 3
+    print(scout_mod.render(plan))
+    if args.out:
+        with open(args.out, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump(plan, fh, indent=2, sort_keys=True)
+            fh.write("\n")
+    return 0 if plan["decision"] == "PROCEED" else 1
+
+
 def cmd_validate_telemetry(args):
     from . import telemetry as tel
     try:
@@ -220,6 +283,8 @@ def build_parser():
                                  ("dry-run", cmd_dry_run, True),
                                  ("bundle", cmd_bundle, True),
                                  ("rehearse", cmd_rehearse, True),
+                                 ("scout", cmd_scout, True),
+                                 ("campaign", cmd_campaign, True),
                                  ("inventory", cmd_inventory, False),
                                  ("cleanup", cmd_cleanup, False),
                                  ("validate-telemetry",
@@ -237,6 +302,17 @@ def build_parser():
             sp.add_argument("--out", default=None)
         if name == "dry-run":
             sp.add_argument("--no-inventory", action="store_true")
+        if name == "scout":
+            sp.add_argument("--scale", type=float, default=0.02)
+        if name == "campaign":
+            sp.add_argument("--calibration", required=True)
+            sp.add_argument("--units", type=float, required=True)
+            sp.add_argument("--ceiling", type=float, required=True)
+            sp.add_argument("--pods", type=int, default=1)
+            sp.add_argument("--margin", type=float, default=0.20)
+            sp.add_argument("--preregistered", type=float, default=None)
+            sp.add_argument("--accept-differences", action="store_true",
+                            dest="accept_differences")
         if name == "rehearse":
             sp.add_argument("--budget", type=float, default=None)
             sp.add_argument("--verbose", action="store_true")

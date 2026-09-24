@@ -430,3 +430,74 @@ def test_the_flight_budget_is_well_above_the_projection():
     spec = flight.load_spec()
     projected = cost_mod.project(spec, workload_seconds=60.0)
     assert flight.DEFAULT_BUDGET_USD > 5 * projected["usd_total"]
+
+
+# ---------------------------------------------------- lifecycle instrumentation
+
+def test_stage_markers_parse_and_bad_lines_are_skipped():
+    text = ('{"stage": "boot", "epoch": 1000}\n'
+            'not json\n'
+            '{"stage": "fetched", "epoch": 1004.5}\n'
+            '{"no_stage": true}\n'
+            '{"stage": "module_start", "epoch": 1060}\n')
+    stages = launch.parse_stages(text)
+    assert stages == {"boot": 1000.0, "fetched": 1004.5,
+                      "module_start": 1060.0}
+
+
+def test_lifecycle_keeps_the_two_clocks_apart():
+    """The controller and the pod do not share a clock. An interval that
+    spans both is reported, and labelled, never quietly averaged in."""
+    stages = {"boot": 5000.0, "fetched": 5004.0, "verified": 5004.5,
+              "unpacked": 5005.0, "installed": 5041.0, "canary": 5053.0,
+              "module_start": 5053.5, "module_end": 5083.5}
+    marks = {"create_requested": 100.0, "create_answered": 101.0,
+             "first_telemetry": 135.0, "retrieve_start": 200.0,
+             "retrieve_end": 203.0, "terminate_requested": 203.5,
+             "terminate_acknowledged": 204.0, "absence_confirmed": 209.0}
+    life = launch.lifecycle(marks, stages, {"elapsed_s": 30.0})
+
+    pod = life["pod_clock"]
+    assert pod["dependency_install_s"] == 36.0
+    assert pod["canary_s"] == 12.0
+    assert pod["execution_s"] == 30.0
+    assert pod["bootstrap_total_s"] == 53.5
+
+    ctl = life["controller_clock"]
+    assert ctl["create_call_s"] == 1.0
+    assert ctl["artifact_transfer_s"] == 3.0
+    assert ctl["terminate_ack_s"] == 0.5
+    assert ctl["absence_confirm_s"] == 5.5
+    assert ctl["total_wall_s"] == 109.0
+
+    # Provisioning is the one genuinely cross-clock interval.
+    assert "provision_s" in life["cross_clock"]
+    assert "not synchronised" in life["cross_clock"]["note"]
+    assert "provision_s" not in pod and "provision_s" not in ctl
+
+
+def test_lifecycle_reports_only_what_it_has():
+    """A run that died early has no module_end and no absence. It must
+    still produce a lifecycle block rather than raising."""
+    life = launch.lifecycle({"create_requested": 1.0}, {"boot": 10.0})
+    assert life["pod_clock"] == {}
+    assert life["controller_clock"] == {}
+    assert "provision_s" not in life["cross_clock"]
+
+
+def test_the_bootstrap_marks_every_stage_it_claims():
+    """The stage names the controller derives intervals from have to be the
+    ones the bootstrap actually emits."""
+    from prometheus_gpu import dryrun as dr
+    spec = spec_mod.from_dict(dict(SPEC))
+    meta = {"run_id": "r", "seat": "Aether", "workdir": "/app/module",
+            "artifact_dir": "/app/out",
+            "telemetry_path": "/app/out/telemetry.jsonl", "image": "img"}
+    transport = {"fetch_cmd": "curl -o b.tar.gz http://x",
+                 "local_name": "b.tar.gz", "bundle_sha256": "a" * 64}
+    boot = dr.build_bootstrap(spec, meta, transport)
+    for stage in launch.STAGE_ORDER:
+        assert ("stage %s" % stage) in boot, stage
+    # The scrub still precedes the module, with the marker between them.
+    assert boot.index("unset RUNPOD_API_KEY") < boot.index("stage module_start")
+    assert boot.index("stage module_start") < boot.index(spec["entrypoint"])

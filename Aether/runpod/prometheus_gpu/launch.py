@@ -43,10 +43,90 @@ from . import secrets as secrets_mod
 from . import telemetry as tel_mod
 
 TELEMETRY_PATH = "out/telemetry.jsonl"
+STAGES_PATH = "out/stages.jsonl"
+
+# Pod stages, in order. The intervals between consecutive
+# stages are what the cost model's overhead terms are made of.
+STAGE_ORDER = ("boot", "fetched", "verified", "unpacked",
+               "installed", "canary", "module_start",
+               "module_end")
 
 
 class LaunchRefused(RuntimeError):
     """A precondition failed. Nothing was created, so nothing is billing."""
+
+
+def parse_stages(text):
+    """Pod-side stage markers -> {stage: epoch_seconds}. Pod clock."""
+    import json as _json
+    out = {}
+    for line in str(text).splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            rec = _json.loads(line)
+        except ValueError:
+            continue
+        if isinstance(rec, dict) and "stage" in rec and "epoch" in rec:
+            try:
+                out[str(rec["stage"])] = float(rec["epoch"])
+            except (TypeError, ValueError):
+                continue
+    return out
+
+
+def lifecycle(marks, stages, telemetry_summary=None):
+    """Named intervals, each labelled with the clock it came from.
+
+    Pod-to-pod intervals are sound. Controller-to-controller intervals are
+    sound. An interval spanning both is reported with `cross_clock: true`,
+    because the two machines' clocks are not the same clock and the
+    difference is not something this measures.
+    """
+    stages = stages or {}
+    out = {"pod_clock": {}, "controller_clock": {}, "cross_clock": {}}
+
+    def pod_gap(name, a, b):
+        if a in stages and b in stages:
+            out["pod_clock"][name] = round(stages[b] - stages[a], 3)
+
+    pod_gap("fetch_s", "boot", "fetched")
+    pod_gap("verify_s", "fetched", "verified")
+    pod_gap("unpack_s", "verified", "unpacked")
+    pod_gap("dependency_install_s", "unpacked", "installed")
+    pod_gap("canary_s", "installed", "canary")
+    pod_gap("bootstrap_total_s", "boot", "module_start")
+    pod_gap("execution_s", "module_start", "module_end")
+
+    def ctl_gap(name, a, b):
+        if a in marks and b in marks:
+            out["controller_clock"][name] = round(marks[b] - marks[a], 3)
+
+    ctl_gap("create_call_s", "create_requested", "create_answered")
+    ctl_gap("accepted_to_first_telemetry_s", "create_answered",
+            "first_telemetry")
+    ctl_gap("artifact_transfer_s", "retrieve_start", "retrieve_end")
+    ctl_gap("terminate_ack_s", "terminate_requested", "terminate_acknowledged")
+    ctl_gap("absence_confirm_s", "terminate_requested", "absence_confirmed")
+    ctl_gap("teardown_total_s", "retrieve_start", "absence_confirmed")
+    if "create_requested" in marks and "absence_confirmed" in marks:
+        out["controller_clock"]["total_wall_s"] = round(
+            marks["absence_confirmed"] - marks["create_requested"], 3)
+
+    # Provisioning is the one interval that genuinely spans both clocks:
+    # from the controller seeing an accepted create to the pod's shell
+    # starting. Reported, and labelled as such.
+    if "create_answered" in marks and "boot" in stages:
+        out["cross_clock"]["provision_s"] = round(
+            stages["boot"] - marks["create_answered"], 3)
+        out["cross_clock"]["note"] = (
+            "controller instant subtracted from a pod instant; the two "
+            "clocks are not synchronised and the offset is not measured here")
+
+    if telemetry_summary and telemetry_summary.get("elapsed_s"):
+        out["module_reported_elapsed_s"] = telemetry_summary["elapsed_s"]
+    return out
 
 
 class Controller(object):
@@ -69,6 +149,9 @@ class Controller(object):
         self.pod_id = None
         self.creation_outcome = None
         self.telemetry_text = ""
+        # Controller-clock instants. Kept apart from pod-clock stages,
+        # because an interval spanning both is not a measurement.
+        self.marks = {}
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -184,6 +267,9 @@ class Controller(object):
             receipt_obj["telemetry_summary"] = tel_mod.summarise(
                 tel_mod.read_jsonl(self.telemetry_text, is_text=True)
                 if self.telemetry_text else [])
+            receipt_obj["lifecycle"] = lifecycle(
+                self.marks, receipt_obj.get("pod_stages"),
+                receipt_obj.get("telemetry_summary"))
         rc.validate(receipt_obj)
         return receipt_obj
 
@@ -197,9 +283,14 @@ class Controller(object):
                  "AMBIGUOUS_UNRECONCILED": "unknown",
                  "FAILED_CLEAN": None}
 
+    def _mark(self, name):
+        self.marks[name] = self._now()
+
     def _create(self, request):
+        self._mark("create_requested")
         pod, label = prov.create_with_reconcile(
             self.provider, request, log=self._log, sleep=self._sleep)
+        self._mark("create_answered")
         outcome = self._OUTCOMES.get(label, "unknown")
         pod_id = pod.get("id") if isinstance(pod, dict) else pod
         self._log("create %s -> %s pod=%s" % (label, outcome, pod_id))
@@ -211,6 +302,7 @@ class Controller(object):
         deadline = started + self.ready_timeout_s
         while self._now() < deadline:
             if self._fetch(TELEMETRY_PATH) is not None:
+                self._mark("first_telemetry")
                 return True
             try:
                 if self.provider.get_pod(self.pod_id) is None:
@@ -251,6 +343,10 @@ class Controller(object):
 
     def _retrieve(self, receipt_obj):
         """Before teardown, always. A dead pod hands back nothing."""
+        self._mark("retrieve_start")
+        stages = self._fetch(STAGES_PATH)
+        if stages:
+            receipt_obj["pod_stages"] = parse_stages(stages)
         text = self._fetch(TELEMETRY_PATH)
         if text is not None:
             self.telemetry_text = text
@@ -262,8 +358,10 @@ class Controller(object):
                 continue
             got.append({"path": path, "bytes": len(blob),
                         "sha256": hashlib.sha256(blob).hexdigest()})
+        self._mark("retrieve_end")
         receipt_obj["artifacts"] = got
         receipt_obj["artifacts_missing"] = missing
+        receipt_obj["artifact_bytes_total"] = sum(a["bytes"] for a in got)
         if missing:
             self._log("artifacts NOT retrieved: %s" % ", ".join(missing))
 
@@ -280,10 +378,12 @@ class Controller(object):
                     False
             return [], True
         acked = False
+        self._mark("terminate_requested")
         for attempt in range(3):
             try:
                 self.provider.terminate_pod(self.pod_id)
                 acked = True
+                self._mark("terminate_acknowledged")
                 break
             except prov.ProviderError as exc:
                 self._log("terminate attempt %d failed (status=%s)"
@@ -296,6 +396,7 @@ class Controller(object):
                 inventory_ok = True
                 absent = self.pod_id not in ids
                 if absent:
+                    self._mark("absence_confirmed")
                     break
             except prov.ProviderError:
                 inventory_ok = False

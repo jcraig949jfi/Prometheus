@@ -29,7 +29,14 @@ import subprocess
 import tarfile
 
 DEFAULT_EXCLUDES = ("__pycache__/*", "*.pyc", ".git/*", ".pytest_cache/*",
-                    "*.egg-info/*", ".DS_Store")
+                    "*.egg-info/*", ".DS_Store",
+                    # A built bundle left inside the module directory would
+                    # be swept into the NEXT bundle, so the hash would
+                    # change on every rebuild and "same content, same
+                    # hash" would quietly stop being true. Build products
+                    # belong outside the module; this is the guard for
+                    # when someone forgets.
+                    "dist/*", "build/*", "*.tar.gz")
 TEXT_SUFFIXES = (".py", ".json", ".txt", ".md", ".yaml", ".yml", ".cfg",
                  ".ini", ".sh", ".csv")
 # Fixed epoch for every archive member and for gzip itself.
