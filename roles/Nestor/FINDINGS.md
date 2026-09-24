@@ -238,6 +238,18 @@ hypothesis (d), "a first faithful child that immediately dies", in mechanical fo
 the same depth-1 wall the 72-hour record showed. Evidence:
 `campaigns/c9x-explore-2026-09-24/c_energy_confirm/`.
 
+### E-8 Spontaneous non-pair heredity: the discovery barrier is encoding length -- HOLDS (CONFIRM)
+Graph: X-SPONTANEOUS (CLEAN_NULL, 0/47 with every confirmed barrier relieved) -> X-NEARMISS
+(near-misses were slot residue: no partial copying exists) -> X-DENSE-OPS (INVALID: VM module
+leaked across reused pool workers, control contaminated; preserved) -> X-DENSE-OPS-R (23/47 vs
+0/47) -> C-DENSE. In the permissive FREE non-pair world (in-place search, free self-location,
+energy inheritance), giving ALLOC/LDIR/BIRTH ADDITIONAL 1-byte encodings (semantics
+unchanged, no program supplied) yields evidence-backed replication from random bytes:
+**CONFIRMED 13/40 vs 0/40 fresh cells, Fisher p = 3.8e-5** (depth >= 2 in 4; max 5). The
+remaining probability mass is consumed by assembling a 6-byte ordered op chain; at 3 bytes it
+is found. Scope: this permissive world; which relieved barriers remain necessary is
+X-DENSE-ABLATE. Evidence: `campaigns/c9x-explore-2026-09-24/c_dense_confirm/`.
+
 ---
 
 ## D. Standing methodological lessons
