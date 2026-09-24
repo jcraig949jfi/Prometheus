@@ -171,7 +171,7 @@ def run(spec: dict, seed: int, progress=None) -> dict:
     # predicate read the label. The sets are conservative (any founder that COULD have contributed bytes is included), so a lineage
     # is called random-only only when no seeded or transplanted material could have entered it. No RNG draw is added or reordered:
     # every historical (spec, seed) replays byte-identically in all pre-existing outputs.
-    founders: Dict[int, dict] = {}; inserted_founders: set = set(); anc: List[frozenset] = [frozenset()] * N; gen = [0] * N; cross_prov: Dict[str, dict] = {}
+    founders: Dict[int, dict] = {}; inserted_founders: set = set(); anc: List[frozenset] = [frozenset()] * N; gen = [0] * N; cross_prov: Dict[str, dict] = {}; clean_cross: Dict[str, dict] = {}
     # init: random tapes everywhere, or a seeded replicator in a fraction of cells (never counted as spontaneous)
     seeded = spec["init"] == "seeded_replicator"; repl = T.pad(T.replicator(copy_prim), G)
     if task_spec["name"] != "none" and seeded and spec["init_hybrid"]:
@@ -290,6 +290,13 @@ def run(spec: dict, seed: int, progress=None) -> dict:
                 cross_prov[tname] = {"epoch": epoch, "id": oid[i], "generation": gen[i], "inserted_ancestry": is_inserted(anc[i]),
                                      "origins": sorted({founders[f]["origin"] for f in anc[i]}), "is_unmodified_founder_tape": gen[i] == 0 and oid[i] in founders
                                      and hashlib.sha256(genomes[i]).hexdigest()[:16] == founders[oid[i]]["tape_sha"]}
+            # provenance-QUALIFIED crossing (operator ruling 1, 2026-09-23): the first crossing by an organism with random-only ancestry,
+            # recorded even when an inserted organism crossed first. Observation only: no snapshot, no event, no RNG draw (the forced-case
+            # check draws from its own case stream), so every pre-existing output is unchanged.
+            if sc >= F["cross_score"] and tname != "none" and tname not in clean_cross and not is_inserted(anc[i]) \
+                    and _crossed_forced(tname, genomes[i], nbr, tparams, step_cap, copy_prim, layout, G, seed, epoch, i):
+                clean_cross[tname] = {"epoch": epoch, "id": oid[i], "generation": gen[i], "lineage": lin[i], "origins": sorted({founders[f]["origin"] for f in anc[i]}),
+                                      "tape": genomes[i].hex()}
             # energy / resources
             if "metabolic" in press: energy[i] = res0["energy"] if res0 else energy[i]
             if "exec_time" in press: energy[i] -= steps_i * F["exec_cost"]
@@ -448,7 +455,7 @@ def run(spec: dict, seed: int, progress=None) -> dict:
                               "donor_mixed_births": pv["donor_mixed"], "recombination_mixed_births": pv["recomb_mixed"], "max_generation_clean": pv["max_gen_clean"],
                               "max_generation_inserted": pv["max_gen_inserted"], "first_replication": pv["first_replication"],
                               "first_clean_replication": pv["first_clean_replication"], "first_inserted_replication": pv["first_inserted_replication"],
-                              "first_crossing": cross_prov, "births_endo_clean_hifi": pv["endo_clean_hifi"],
+                              "first_crossing": cross_prov, "first_clean_crossing": clean_cross, "births_endo_clean_hifi": pv["endo_clean_hifi"],
                               "first_clean_hifi_replication": pv["first_clean_hifi_replication"]},
                "ruler": ruler, "exploits": len(exploits), "neighbour_dependence": dependence, "cap_hit_frac": round(cap_hits / max(1, execs), 3), "extinct_epoch": extinct_epoch, "epochs": epoch, "vm_steps": steps_total}
     final_population = [{"cell": i, "id": oid[i], "lineage": lin[i], "parent": parent[i], "born": born[i], "niche": W.niche[i], "score": round(score[i], 3), "tape": genomes[i].hex(),

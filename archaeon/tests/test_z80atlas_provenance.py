@@ -238,6 +238,21 @@ def test_repair_is_rng_neutral_against_the_campaign_engine(kw):
     assert [{k: o[k] for k in o if k not in ("generation", "founders", "inserted_ancestry", "origin_class")} for o in b["final_population"]] == a["final_population"]
 
 
+@pytest.mark.parametrize("phys", ["EXTERNAL", "ENDOGENOUS_COPY"])
+def test_first_clean_crossing_is_random_only_and_consistent_with_first_crossing(phys):
+    """Ruling 1: a crossing counts as provenance-qualified only if the crosser has random-only ancestry; recorded even when an
+    inserted organism (the seeded witness) crossed first."""
+    s = _spec(init="seeded_replicator", reproduction=phys, task="CONST_atomic", pressure=("implicit_survival",), epochs=150)
+    p = _prov(E.run(s, 41))
+    fc, cc = p["first_crossing"], p["first_clean_crossing"]
+    for t, c in cc.items():
+        assert c["origins"] == ["random"]
+        assert t in fc and fc[t]["epoch"] <= c["epoch"]
+        if not fc[t]["inserted_ancestry"]:
+            assert fc[t]["epoch"] == c["epoch"] and fc[t]["id"] == c["id"]
+    assert any(c["inserted_ancestry"] for c in fc.values()), "fixture should have the seeded witness cross first"
+
+
 # ---------------------------------------------------------------------------------------------------------------- historical replay
 HIST = Path(os.environ.get("Z80ATLAS_HISTORICAL_RUNS", r"D:\Prometheus-worktrees\archaeon-wse-2026-09-16\archaeon\z80atlas\campaign\runs"))
 
