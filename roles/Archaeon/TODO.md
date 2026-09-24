@@ -1,6 +1,16 @@
 # Archaeon — TODO
 
-## 2026-09-23 DIRECTIVE COMPLETE (session m2-db608f52) -- awaiting operator rulings
+## 2026-09-24 OPERATOR RULINGS 1-4 DONE (session m2-db608f52)
+Rulings: roles/Archaeon/prompts/2026-09-23_postcampaign_rulings/00_OPERATOR_RULINGS.md
+Packet:  archaeon/z80atlas/pivot/Z80ATLAS_RULINGS_FOLLOWUP_REVIEW_2026-09-24.md
+- [x] R1 seeded moat ledger CLOSED (828 QUALIFIED / 104 VOID); use LOWER ranking only
+- [x] R2 copier census: LOTTERY_CONSISTENT (lambda 6.86 vs 1 survivor); input-gating is the norm
+- [x] R3 evidence bundle verified on C: (NOT yet off-machine: needs operator destination)
+- [x] R4 random_spec fix + preflight gate (PASS_WITH_RESTRICTIONS: matched control changes pressure)
+- [ ] proposed next: environmental-gating pair (input stream with/without 120..135), random founders at inflow scale
+- [ ] matched_controls / scorer: make the reproduction contrast clean before any future campaign
+
+## (superseded) 2026-09-23 DIRECTIVE COMPLETE -- awaiting operator rulings
 Packet: archaeon/z80atlas/pivot/Z80ATLAS_POSTCAMPAIGN_REVIEW_2026-09-23.md
 - [x] Phase 1 audit receipt; [x] Phase 2 provenance repair + tests; [x] Phase 3 adjudication;
       [x] Phase 4 DENOVO-01: NO_DETECTABLE_DE_NOVO_REPLICATION (0/80, controls 21/21)
