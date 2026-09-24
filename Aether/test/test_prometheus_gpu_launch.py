@@ -178,10 +178,56 @@ def test_max_runtime_stops_the_run(module_dir):
 
 def test_a_pod_that_never_becomes_ready_is_a_failure_not_a_hang(module_dir):
     fake = prov.FakeProvider(served={})          # nothing ever served
-    ctl = controller(fake, module_dir, ready_timeout_s=120.0)
+    ctl = controller(fake, module_dir, ready_timeout_s=120.0,
+                     stall_timeout_s=120.0)
     r = ctl.run()
     assert r["result"] == "FAILED"
-    assert any("never reported ready" in n for n in r["notes"])
+    assert any("furthest bootstrap stage" in n for n in r["notes"])
+    assert r["last_stage"] is None
+    assert fake.leaked() == []
+
+
+def stage_log(*names):
+    """Stage markers as the pod writes them, one JSON object per line."""
+    out = []
+    for index, name in enumerate(names):
+        out.append('{"stage": "%s", "epoch": %d}' % (name, 100 + index * 10))
+    return chr(10).join(out) + chr(10)
+
+
+def test_a_slow_dependency_install_is_not_mistaken_for_a_dead_pod(module_dir):
+    """Iteration 1's fifth flight called a healthy pod dead because a 1 GB
+    CUDA wheel had not finished installing inside a fixed deadline. Progress,
+    not elapsed time, is what distinguishes the two."""
+    order = ["boot", "fetched", "verified", "unpacked", "installed",
+             "canary", "module_start"]
+    stages = [stage_log(*order[:n + 1]) for n in range(len(order))]
+    # Telemetry appears only at the end; stages advance at every check, so
+    # the total wait far exceeds the stall timeout without ever stalling.
+    fake = prov.FakeProvider(served={
+        TEL: frames(*([None] * len(order) + [START + END])),
+        launch.STAGES_PATH: frames(*stages),
+        "result.json": "{}"})
+    # A stall timeout SHORTER than the total wait: the run must still
+    # succeed, because something advanced at every check.
+    ctl = controller(fake, module_dir, ready_timeout_s=3000.0,
+                     stall_timeout_s=200.0)
+    r = ctl.run()
+    assert r["result"] == "OK", r["notes"]
+    assert r["last_stage"] == "module_start"
+
+
+def test_a_pod_that_stops_advancing_is_given_up_on(module_dir):
+    """The other half: stages that stop moving mean a stuck pod, and the
+    receipt must say WHERE it stuck."""
+    fake = prov.FakeProvider(served={
+        launch.STAGES_PATH: stage_log("boot", "fetched", "unpacked")})
+    ctl = controller(fake, module_dir, ready_timeout_s=3000.0,
+                     stall_timeout_s=90.0)
+    r = ctl.run()
+    assert r["result"] == "FAILED"
+    assert r["last_stage"] == "unpacked"
+    assert "unpacked" in " ".join(r["notes"])
     assert fake.leaked() == []
 
 

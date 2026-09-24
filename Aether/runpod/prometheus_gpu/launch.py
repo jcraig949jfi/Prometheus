@@ -136,7 +136,8 @@ def lifecycle(marks, stages, telemetry_summary=None):
 class Controller(object):
     def __init__(self, provider, spec, module_dir, budget_usd,
                  transport_factory=dryrun.local_transport, seat="Aether",
-                 poll_s=30.0, ready_timeout_s=600.0, artifact_token=None,
+                 poll_s=30.0, ready_timeout_s=900.0,
+                 stall_timeout_s=300.0, artifact_token=None,
                  now=time.time, sleep=time.sleep, log=None):
         self.provider = provider
         self.spec = spec
@@ -146,6 +147,10 @@ class Controller(object):
         self.seat = seat
         self.poll_s = float(poll_s)
         self.ready_timeout_s = float(ready_timeout_s)
+        # How long with NO bootstrap progress before the pod is given up on.
+        # This, not the total elapsed time, is what distinguishes a stuck pod
+        # from a slow dependency install.
+        self.stall_timeout_s = float(stall_timeout_s)
         self.artifact_token = artifact_token
         self._now = now
         self._sleep = sleep
@@ -158,6 +163,7 @@ class Controller(object):
         self.marks = {}
         self.create_attempts = []
         self.gpu_used = None
+        self.stages_seen = {}
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -263,8 +269,8 @@ class Controller(object):
                 if not ready:
                     result = "FAILED"
                     receipt_obj["notes"].append(
-                        "pod never reported ready within %.0f s"
-                        % self.ready_timeout_s)
+                        "pod never served telemetry; furthest bootstrap stage "
+                        "reached was %s" % (self.last_stage() or "none"))
                 else:
                     result = self._watch(started)
                 self._retrieve(receipt_obj)
@@ -296,6 +302,7 @@ class Controller(object):
                 tel_mod.read_jsonl(self.telemetry_text, is_text=True)
                 if self.telemetry_text else [])
             receipt_obj["create_attempts"] = self.create_attempts
+            receipt_obj["last_stage"] = self.last_stage()
             receipt_obj["gpu_used"] = self.gpu_used
             receipt_obj["lifecycle"] = lifecycle(
                 self.marks, receipt_obj.get("pod_stages"),
@@ -352,22 +359,50 @@ class Controller(object):
         return pod_id, outcome
 
     def _await_ready(self, started):
+        """Wait on PROGRESS, not on a fixed clock.
+
+        Iteration 1's fifth flight reported "pod never reported ready within
+        300 s" when the pod was healthy and had simply not finished
+        installing a 1 GB CUDA wheel. A fixed deadline cannot tell a slow
+        dependency install from a dead pod, so it calls both dead and throws
+        away the one that was about to work.
+
+        The pod emits a stage marker after each bootstrap step, so the
+        controller can see where it is. While stages keep advancing it keeps
+        waiting; it gives up when nothing has advanced for `stall_timeout_s`,
+        or at the hard ceiling, and it says which stage it got to.
+        """
         deadline = started + self.ready_timeout_s
+        last_progress = self._now()
         reported = set()
         while self._now() < deadline:
             if self._fetch(TELEMETRY_PATH) is not None:
                 self._mark("first_telemetry")
                 return True
-            # Say why, once per distinct reason. "Not ready" with no
-            # explanation turned a ten-minute flight into no information.
-            last = getattr(self.provider, "last_fetch", None)
-            if last:
-                reason = "%s status=%s %s" % (
-                    last.get("url", "").rsplit("/", 2)[0].rsplit("//", 1)[-1],
-                    last.get("status"), last.get("error") or "")
-                if reason not in reported:
-                    reported.add(reason)
-                    self._log("not reachable yet: %s" % reason.strip())
+
+            stages_text = self._fetch(STAGES_PATH)
+            if stages_text is not None:
+                stages = parse_stages(stages_text)
+                self.stages_seen = stages
+                fresh = [st for st in STAGE_ORDER
+                         if st in stages and st not in reported]
+                for st in fresh:
+                    reported.add(st)
+                    self._log("stage %s" % st)
+                if fresh:
+                    last_progress = self._now()
+            else:
+                last = getattr(self.provider, "last_fetch", None)
+                if last and "no-server" not in reported:
+                    reported.add("no-server")
+                    self._log("artifact server not answering yet (status=%s)"
+                              % last.get("status"))
+
+            stalled = self._now() - last_progress
+            if stalled >= self.stall_timeout_s:
+                self._log("STALLED: no stage advanced for %.0f s; last stage "
+                          "was %s" % (stalled, self.last_stage() or "none"))
+                return False
             try:
                 if self.provider.get_pod(self.pod_id) is None:
                     self._log("pod vanished before it was ready")
@@ -375,7 +410,14 @@ class Controller(object):
             except prov.ProviderError:
                 pass            # a control-plane blip is not a verdict
             self._sleep(self.poll_s)
+        self._log("ready ceiling %.0f s reached; last stage was %s"
+                  % (self.ready_timeout_s, self.last_stage() or "none"))
         return False
+
+    def last_stage(self):
+        """The furthest bootstrap stage the pod reported reaching."""
+        reached = [st for st in STAGE_ORDER if st in (self.stages_seen or {})]
+        return reached[-1] if reached else None
 
     def _watch(self, started):
         """Poll until the module finishes, the budget runs out, or time does."""

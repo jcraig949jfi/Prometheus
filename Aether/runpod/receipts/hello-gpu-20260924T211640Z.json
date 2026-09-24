@@ -1,0 +1,137 @@
+{
+  "args": [],
+  "artifact_bytes_total": 0,
+  "artifact_dir_listing": "<!DOCTYPE HTML>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Directory listing for /</title>\n</head>\n<body>\n<h1>Directory listing for /</h1>\n<hr>\n<ul>\n<li><a href=\"stages.jsonl\">stages.jsonl</a></li>\n</ul>\n<hr>\n</body>\n</html>\n",
+  "artifacts": [],
+  "artifacts_missing": [
+    "result.json",
+    "telemetry.jsonl"
+  ],
+  "bundle_sha256": "d363c477cf1bda385836415e7f784079b0fecf295e3dad208ecf31f9d66139ba",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 311.7,
+    "hourly_usd": 0.34,
+    "usd_estimated": 0.02944
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A5000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA GeForce RTX 4090",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-24T21:16:41Z",
+  "ended_utc": "2026-09-24T21:21:53Z",
+  "entrypoint": "run.py",
+  "git": {
+    "available": true,
+    "commit": "162f1ce4a340a65e258e7a9b144ed3ad47968859",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA GeForce RTX 4090",
+  "guardrails": {
+    "disk_gb": 10,
+    "max_runtime_s": 300,
+    "telemetry_interval_s": 10
+  },
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 0.986,
+      "artifact_transfer_s": 1.805,
+      "create_call_s": 2.947,
+      "teardown_total_s": 4.078,
+      "terminate_ack_s": 0.783,
+      "total_wall_s": 312.689
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 2.751
+    },
+    "pod_clock": {
+      "fetch_s": 0.0,
+      "unpack_s": 0.0,
+      "verify_s": 0.0
+    }
+  },
+  "module": "hello-gpu@1",
+  "notes": [
+    "pod never reported ready within 300 s"
+  ],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 300.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.0,
+      "bootstrap": 40.0,
+      "canary": 12.0,
+      "provision": 20.0,
+      "teardown": 5.0
+    },
+    "overhead_fraction": 0.2063,
+    "overhead_s": 78.0,
+    "total_s": 378.0,
+    "usd_compute": 0.0142,
+    "usd_overhead": 0.0037,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.0179,
+    "work_units": {
+      "estimate": 200.0,
+      "name": "steps",
+      "units_per_usd": 11204.481792717086,
+      "usd_per_1e9_units": 89250.0,
+      "usd_per_unit": 8.925e-05
+    }
+  },
+  "pod_stages": {
+    "boot": 1790284607.0,
+    "fetched": 1790284607.0,
+    "server_up": 1790284607.0,
+    "unpacked": 1790284607.0,
+    "verified": 1790284607.0
+  },
+  "pods": [
+    {
+      "created_utc": "2026-09-24T21:21:53Z",
+      "creation_outcome": "confirmed",
+      "id": "iervkm9qrz3k26",
+      "observed_absent": true,
+      "terminate_acknowledged": true
+    }
+  ],
+  "preregistered_estimate": null,
+  "result": "FAILED",
+  "run_id": "hello-gpu-20260924T211640Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "4a487e24de50c852a78ccd04dfe9a60afc06e9463e2a8e159026805ec4b8b047",
+  "started_utc": "2026-09-24T21:16:41Z",
+  "telemetry_summary": {
+    "complete": false,
+    "note": "no telemetry; the workload may never have started",
+    "records": 0
+  },
+  "transport": "repo-pinned"
+}
