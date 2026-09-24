@@ -31,7 +31,12 @@ cp -r examples/hello_gpu /tmp/my_module
 
 python -m prometheus_gpu.cli estimate /tmp/my_module/module_spec.json
 python -m prometheus_gpu.cli dry-run  /tmp/my_module/module_spec.json
+python -m prometheus_gpu.cli rehearse /tmp/my_module/module_spec.json
 ```
+
+`examples/param_sweep/` is the fuller one to copy if your experiment is a
+sweep or a scan: it counts its own work units, records its seed so the run
+can be re-derived, and emits its effective configuration in telemetry.
 
 The dry run prints the bundle hash, the exact sanitized pod request, the
 cost breakdown, the current pod inventory, and a findings list. It

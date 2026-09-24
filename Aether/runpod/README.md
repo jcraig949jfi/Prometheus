@@ -15,6 +15,19 @@ GPU experiments on RunPod, for any Prometheus seat.
 
 Copy `examples/hello_gpu/` and edit it. It is two files.
 
+Two examples ship, and the second one is the honest check:
+
+| example | what it is |
+|:--|:--|
+| `examples/hello_gpu/` | the smallest useful module; copy this |
+| `examples/param_sweep/` | an ordinary experiment written from ANOTHER seat's point of view: counts `evaluations`, unrelated to Aether's physics, imports nothing from the platform |
+
+Both are EXECUTED by `Aether/test/test_prometheus_gpu_examples.py`, which
+validates their telemetry and checks every declared artifact was actually
+written. `hello_gpu` shipped emitting `utc`/`monotonic_s`, which the
+telemetry validator rejects, and nothing caught it until the example was
+run through the validator rather than trusted.
+
 ## Commands
 
 ```bash
@@ -49,6 +62,7 @@ hardware — see the guide, s8.
 ```bash
 python -m pytest Aether/test/test_prometheus_gpu.py -q
 python -m pytest Aether/test/test_prometheus_gpu_launch.py -q
+python -m pytest Aether/test/test_prometheus_gpu_examples.py -q
 ```
 
 Run it as its own command and read the result. Piping a gate into `tail`

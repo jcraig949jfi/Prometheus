@@ -18,9 +18,23 @@ import time
 FORBIDDEN = ("RUNPOD_API_KEY", "RUNPOD_API_TOKEN", "RUNPOD_TOKEN")
 
 
+ORIGIN = time.monotonic()
+
+
 def telemetry(path, record):
-    record.setdefault("utc", time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
-    record.setdefault("monotonic_s", round(time.monotonic(), 3))
+    """Append one JSON line. See TELEMETRY_SCHEMA.md.
+
+    Both clocks are required. `t_utc` answers when, `t_elapsed_s`
+    answers how far in. The pod and the controller keep different
+    clocks, so a progress curve can only be placed against a cost
+    curve using an origin the pod itself agrees with.
+
+    This imports nothing from the platform, which is the point: a
+    module is not obliged to depend on us in order to be observable.
+    """
+    record.setdefault("t_utc", time.strftime("%Y-%m-%dT%H:%M:%SZ",
+                                             time.gmtime()))
+    record.setdefault("t_elapsed_s", round(time.monotonic() - ORIGIN, 3))
     with open(path, "a", encoding="utf-8") as fh:
         fh.write(json.dumps(record) + "\n")
         fh.flush()
@@ -57,8 +71,10 @@ def main():
         a = xp.arange(1 << 18, dtype=xp.float32)
         total += float((a * a).sum())
         if step % 50 == 0:
+            # `units` is the reserved progress counter the
+            # platform reads for cost per unit of useful work.
             telemetry(tel, {"kind": "progress", "step": step,
-                            "checksum": total})
+                            "units": step, "checksum": total})
     elapsed = time.monotonic() - t0
 
     result = {"run_id": run_id, "device": device, "steps": steps,
@@ -66,7 +82,8 @@ def main():
               "steps_per_s": round(steps / elapsed, 2) if elapsed else None}
     with open(os.path.join(out_dir, "result.json"), "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=2, sort_keys=True)
-    telemetry(tel, {"kind": "end", **result})
+    telemetry(tel, {"kind": "end", "units": steps, "status": "ok",
+                    **result})
     print("HELLO_GPU_OK " + json.dumps(result))
     return 0
 
