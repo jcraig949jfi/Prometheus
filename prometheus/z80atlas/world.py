@@ -29,6 +29,7 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 from prometheus.z80atlas import vm
+from prometheus.z80atlas.coupling import Ledger, Competence
 from prometheus.z80atlas.tasks import Environment, Task, score as task_score, verify_tape, panel as task_panel
 
 INIT_ENERGY = 12.0
@@ -67,6 +68,14 @@ class Config:
     ldir: str = "on"                    # on | off | cost4
     undefined_op: str = "NOP"           # NOP | HALT
     target_fill: str = "preserve"       # preserve (unwritten window bytes keep the target's contents) | zero (fresh memory)
+    # physics v3 (2026-09-24): computation -> copy resource -> reproduction (prometheus/z80atlas/coupling.py)
+    coupling: str = "NONE"              # NONE (v1/v2: no copy resource) | OFF | ON | SHUFFLED | RANDOM_REWARD | YOKED | IRRELEVANT | DELAYED
+    base_income: int = 16               # copy-resource units paid per interaction, unconditionally
+    bonus: int = 64                     # units paid per rewarded event
+    copy_cost: int = 1                  # units per window write
+    resource_cap: int = 256
+    yoke: tuple = ()                    # YOKED: per-tick bonus totals of the matched ON run
+    delay: int = 60                     # DELAYED: ticks between a correct output and its credit
 
     @property
     def L(self) -> int:
@@ -116,6 +125,7 @@ class Org:
     novelty: float = 0.0
     last_out: Optional[int] = None
     glineage: int = 0                 # GENETIC lineage: whose bytes this tape descends from (lineage = CAUSAL: who wrote it)
+    res: int = 0                      # v3 copy resource (World ledger; not in VM memory; newborns start at 0)
 
 
 class World:
@@ -179,6 +189,14 @@ class World:
         self.extinct_tick: Optional[int] = None
         self._tick_sr = 0
         self._pre_tape: bytes = b""
+        # physics v3 ledger (None unless coupled) and measurement-only competence tracking
+        self.ledger: Optional[Ledger] = None
+        self.competence: Optional[Competence] = None
+        self.noncompetent_earners: Dict[str, dict] = {}
+        self.comp = {"correct_by_competent": 0, "correct_by_noncompetent": 0, "sr_births": 0, "sr_births_comp_parent": 0, "sr_comp_parent_comp_child": 0, "sr_noncomp_parent_comp_child": 0,
+                     "births_all": 0, "births_comp_writer": 0}
+        self.comp_samples: List[tuple] = []
+        self._birth_ctr = 0
         self.escape_events: List[dict] = []
         self.best_ema = 0.0; self.plateau_since = 0
         self.stat_ema: Dict[str, float] = {}
@@ -186,6 +204,12 @@ class World:
         self.novelty_archive: List[Tuple[int, ...]] = []
         self.resource_pool: List[float] = [1.0] * cfg.n_niches
         self._init_population()
+        if cfg.coupling != "NONE":
+            if cfg.reproduction == "EXTERNAL":
+                raise ValueError("coupled physics is defined for endogenous reproduction only")
+            self.ledger = Ledger(cfg, seed)
+        if cfg.physics == "v3":
+            self.competence = Competence(self)
 
     # ---- init -----------------------------------------------------------------------------------------------------
     def _random_tape(self) -> bytearray:
@@ -393,6 +417,17 @@ class World:
                     copy_attempts += 1
                     self._apply_reproduction(o, j, mem, tr)
             s = task_score(task, tr.outputs, expected, cfg.scoring, cfg.read_gate, tr.first_out_step, tr.first_in_step)
+            if self.ledger is not None:
+                correct = task_score(task, tr.outputs, expected, "ATOMIC", cfg.read_gate, tr.first_out_step, tr.first_in_step) >= 0.999
+                self.ledger.after_interaction(self, o, task, inputs, tr.outputs, tr.first_out_step, tr.first_in_step, correct)
+                if correct and self.competence is not None:                          # Lane I automated exploit probe (measurement)
+                    if self.competence.of(self._pre_tape)[0]:
+                        self.comp["correct_by_competent"] += 1
+                    else:
+                        self.comp["correct_by_noncompetent"] += 1
+                        if len(self.noncompetent_earners) < 20 and self._pre_tape.hex() not in self.noncompetent_earners:
+                            self.noncompetent_earners[self._pre_tape.hex()] = {"tick": self.tick, "partner_present": partner is not None,
+                                                                               "win_steps": None}
             o.last_score = s; o.score_ema = 0.7 * o.score_ema + 0.3 * s
             o.last_out = tr.outputs[0] if tr.outputs else None
             scores.append(s); steps_total += tr.steps
@@ -411,6 +446,7 @@ class World:
             o.energy += self._inflow(o, s, tr)
             o.energy -= self._cost(o, tr)
             o.age += 1
+        coup_rec = self.ledger.end_tick(self) if self.ledger is not None else None
         # 4. death + background mutation
         deaths = 0
         for i, o in enumerate(self.cells):
@@ -420,6 +456,8 @@ class World:
             if cfg.pressure == "MINIMAL_CRITERION" and cfg.reproduction in ENDOGENOUS and o.age > 15 and o.replications == 0:
                 dead = True
             if dead:
+                if self.ledger is not None:
+                    self.ledger.on_death(o)
                 self.cells[i] = None; deaths += 1
                 continue
             self._mutate(o.tape, cfg.mut_rate)
@@ -433,6 +471,12 @@ class World:
         # telemetry
         alive = [o for o in self.cells if o is not None]
         rec = self._telemetry(alive, scores, steps_total, copy_attempts, interactions, deaths, ext_births)
+        if coup_rec is not None:
+            rec.update(coup_rec)
+        if self.competence is not None and (self.tick % 10 == 0 or self.tick == cfg.ticks - 1):
+            cs = [self.competence.of(bytes(o.tape)) for o in alive]
+            self.comp_samples.append((self.tick, len(alive), sum(c[0] for c in cs),
+                                      sum(1 for o, c in zip(alive, cs) if c[0] and self.sr_depth.get(o.id, 0) > 0), sum(c[1] for c in cs)))
         self.ticks_log.append(rec)
         self._serendipity(rec, alive)
         if self.tick % 50 == 0 or self.tick == cfg.ticks - 1:
@@ -458,6 +502,8 @@ class World:
                   "PAIR_EXECUTION": n_written >= L // 2}[physics]                 # pair physics with an EMPTY partner: construct into it
         if not viable:
             self.refused_writes += 1; return
+        if self.ledger is not None and not self.ledger.can_pay(o, n_written):
+            self.ledger.refuse(); return                   # v3: the organism cannot pay for constructing this offspring
         child = bytearray(mem[L:2 * L])
         if cfg.target_fill == "zero":                  # ablation: only the bytes the writer wrote survive; the rest is fresh memory
             wr = {a - L for a in tr.writes if L <= a < 2 * L}
@@ -465,6 +511,8 @@ class World:
         if target is not None and child == target.tape:
             self.null_rewrites += 1; return              # the partner was rewritten as EXACTLY itself: nothing was caused, no birth
         fid = 1.0 - sum(1 for x, y in zip(child, o.tape) if x != y) / L
+        if self.ledger is not None:
+            self.ledger.pay_birth(o, n_written)             # v3: the construction is charged before the child exists
         self._register_offspring(j, child, o, physics, fid, tr, replaced=target)
 
     def _register_offspring(self, j: int, child: bytearray, parent: Org, mechanism: str, fidelity: float, tr, replaced: Optional[Org]) -> None:
@@ -481,6 +529,8 @@ class World:
                 fidelity = fid_target                      # copy fidelity is measured against the GENETIC source
         if replaced is not None:
             self.overwrite_deaths += 1
+            if self.ledger is not None:
+                self.ledger.on_death(replaced, overwritten=True)
         # measurement (2026-09-23): is this birth a SELF_REPLICATION? (forensics M1/M2/C8; frozen definition in
         # roles/Bellerophon/forensics_2026-09-23/POST_CAMPAIGN_FORENSICS.md s3.1)
         self_copy, fid_pre = self._is_self_copy(child, parent, material, tr)
@@ -492,6 +542,17 @@ class World:
         self.endogenous_births += 1
         self.sr_depth[c.id] = self.sr_depth.get(parent.id, 0) + 1 if self_copy else 0
         self.birth_class[c.id] = (mechanism, self_copy, round(fid_pre, 3), material)
+        self._birth_ctr += 1
+        if self.competence is not None and self._birth_ctr % 8 == 0:              # measurement only; deterministic 1-in-8 birth sample
+            pc_ = self.competence.of(self._pre_tape)[0]
+            self.comp["births_all"] += 1; self.comp["births_comp_writer"] += pc_
+            if self_copy:
+                cc_ = self.competence.of(bytes(child))[0]
+                self.comp["sr_births"] += 1; self.comp["sr_births_comp_parent"] += pc_
+                if pc_:
+                    self.comp["sr_comp_parent_comp_child"] += cc_
+                else:
+                    self.comp["sr_noncomp_parent_comp_child"] += cc_
         if self_copy and bytes(child) != self._pre_tape:
             self.sr_variant.add(c.id)
         if self_copy and parent.id in self.sr_variant:
@@ -824,7 +885,23 @@ class World:
             "dominant_sr_tape": (max(((bytes(o.tape), 1) for o in alive if self.sr_depth.get(o.id, 0) > 0), default=(b"", 0),
                                      key=lambda kv: sum(1 for p in alive if bytes(p.tape) == kv[0]))[0]).hex(),
             "verified": self._verified(alive),
+            "coupling": (self.ledger.close(self) if self.ledger is not None else None),
+            "competence": (self._competence_summary(alive) if self.competence is not None else None),
         }
+
+    def _competence_summary(self, alive: List[Org]) -> dict:
+        cs = {o.id: self.competence.of(bytes(o.tape)) for o in alive}
+        comp_sr = [o for o in alive if cs[o.id][0] and self.sr_depth.get(o.id, 0) > 0]
+        cnt: Dict[bytes, int] = {}
+        for o in comp_sr:
+            cnt[bytes(o.tape)] = cnt.get(bytes(o.tape), 0) + 1
+        dom = max(cnt, key=cnt.get).hex() if cnt else None
+        return dict(self.comp, samples=[list(x) for x in self.comp_samples], final_alive=len(alive),
+                    final_competent=sum(1 for v in cs.values() if v[0]), final_competent_sr=len(comp_sr),
+                    final_irrelevant_emitters=sum(1 for v in cs.values() if v[1]), dominant_competent_sr_tape=dom,
+                    noncompetent_earners=self.noncompetent_earners,
+                    fixture_lineage_share=round(sum(1 for o in alive if o.glineage in self.seed_lineages) / len(alive), 4) if alive else 0.0,
+                    task=self.competence.task.to_dict())
 
     def _tail_over_horizon(self, k: int = 20) -> dict:
         """Tail means over the last k ticks of the CONFIGURED horizon; ticks after an extinction count as an empty world

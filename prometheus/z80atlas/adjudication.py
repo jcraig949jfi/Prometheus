@@ -74,3 +74,31 @@ def repro_descriptor(tape: bytes, cfg: Config, task: Optional[Task] = None) -> D
             "exec_own_bytes": len(pcs), "exec_before_copy": len([p for p in pcs if copy_pc is not None and p < copy_pc]),
             "uses_io": bool(tr.opcodes.get(vm.IN_A) or tr.opcodes.get(vm.OUT_A)),
             "task_accuracy": verify_tape(t, cfg, task)["accuracy"]}
+
+
+# ---- coupling campaign frozen architecture descriptor (Lane D/E; frozen in COUPLING_CAMPAIGN_PREREG.md) ----------------
+def arch_descriptor(tape: bytes, cfg: Config, task: Optional[Task] = None) -> Dict:
+    """repro_descriptor plus the preservation-relevant geometry of ONE isolated execution (panel input 42):
+      copy_len          window bytes written
+      copy_src_lo/hi    source address range of the window writes that came from own-tape bytes
+      task_pcs          own-tape PCs of executed IN/OUT instructions (where the computation sits)
+      task_before_copy  every executed IN/OUT PC precedes the first window write in address order (min PC)
+      copy_covers_task  every task PC lies inside the copied source range (offspring inherit the task code)
+      n_copy_ops        distinct copy-instruction PCs that wrote the window (routine redundancy)
+      nonzero_bytes     genome size proxy"""
+    from prometheus.z80atlas import vm
+    L = cfg.L
+    t = bytes(tape[:L]) + bytes(max(0, L - len(tape)))
+    d = repro_descriptor(t, cfg, task)
+    mem = bytearray(256); mem[:L] = t; mem[vm.IN_BASE] = 42
+    tr = vm.execute(mem, L, 0, cfg.budget, [42], allow_copyall=cfg.allow_copyall, trace_pcs=True, ldir=cfg.ldir, undefined=cfg.undefined_op)
+    prov = tr.win_prov
+    srcs = [src for (src, pc, op) in prov.values() if src is not None and src < L]
+    task_pcs = sorted(p for p in (tr.pcs or ()) if p < L and t[p] in (vm.IN_A, vm.OUT_A))
+    lo, hi = (min(srcs), max(srcs)) if srcs else (None, None)
+    copy_pcs = {pc for (src, pc, op) in prov.values() if op in vm.COPY_OPS}
+    d.update({"copy_len": len(prov), "copy_src_lo": lo, "copy_src_hi": hi, "task_pcs": task_pcs,
+              "task_before_copy": bool(task_pcs) and d["copy_pc"] is not None and max(task_pcs) < d["copy_pc"],
+              "copy_covers_task": bool(task_pcs) and lo is not None and all(lo <= p <= hi for p in task_pcs),
+              "n_copy_ops": len(copy_pcs), "nonzero_bytes": sum(1 for b in t if b)})
+    return d
