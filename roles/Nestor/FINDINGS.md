@@ -277,6 +277,18 @@ C9 (frozen, protocol 5819bc6d; 1,200/1,200 runs; audit PASS 21/21). Frozen verdi
 - **H3 -- NOT_DEMONSTRATED** (R3 material certificates 1/1/0 of 64): crossings are frequent in
   one cell but made of hard-niche material; the easy niche does not raise them.
 
+### E-10 The recombination splice prevents runaway pair-tape heredity -- HOLDS (CONFIRM)
+Graph: X-H2-TERMINATION (causal children overwritten a median 3 epochs after birth) ->
+X-H2-NORECOMB -> C-NORECOMB (threshold endpoint NOT confirmed, 5/48 vs 5/48) -> X-RUNAWAY
+(runaways are population-wide copying ecologies: 70-97% of organisms descend through P-11
+copies, ~75 causal copies/epoch for 1,800+ epochs, the implanted sequence itself lost) ->
+C-RUNAWAY. **CONFIRMED on 150 fresh seeds per arm:** runaway causal heredity (P-11 depth >= 20)
+in 7/150 implants with the world's RECOMBINATION splice off vs 0/150 with it on, Fisher
+p = 0.0073; max depth 549 vs 13. The operator that manufactured ~88% of the predecessor's
+"replicators" (Z80A-D05) is the operator that prevents real ones from running away.
+Scope: specimen 7ae3's cell, single founder. Evidence:
+`campaigns/c9x-explore-2026-09-24/c_runaway_confirm/`.
+
 ---
 
 ## D. Standing methodological lessons
