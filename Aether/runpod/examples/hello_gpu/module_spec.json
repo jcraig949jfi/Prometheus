@@ -1,8 +1,8 @@
 {
   "args": [],
   "artifacts": [
-    "out/result.json",
-    "out/telemetry.jsonl"
+    "result.json",
+    "telemetry.jsonl"
   ],
   "canary": "python3 -c \"import cupy; cupy.arange(8).sum()\"",
   "dependencies": {

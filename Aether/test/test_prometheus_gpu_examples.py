@@ -109,10 +109,13 @@ def test_the_example_writes_every_artifact_it_declares(name, tmp_path):
     spec = spec_mod.load(os.path.join(example_dir(name), "module_spec.json"))
     _proc, out_dir = run_example(name, tmp_path)
     for declared in spec["artifacts"]:
-        # Declared relative to the artifact dir, which is `out/` here.
-        rel = declared.split("/", 1)[1] if declared.startswith("out/") \
-            else declared
-        assert (out_dir / rel).exists(), (
+        # Declared relative to the artifact dir, and nothing here may
+        # rewrite that: the "out/" prefix this test used to strip is the
+        # mismatch that cost Iteration 1 two flights.
+        assert "/" not in declared, (
+            "artifact %r is not relative to the artifact directory; the "
+            "artifact server's document root IS that directory" % declared)
+        assert (out_dir / declared).exists(), (
             "declared artifact %r was never written; the run would return "
             "nothing for it" % declared)
     with open(str(out_dir / EXAMPLES[name]["result"]), encoding="utf-8") as fh:

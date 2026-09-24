@@ -32,7 +32,7 @@ default runtime bound is 1800 s, the default disk is 20 GB.
 | `gpu.min_memory_mib` | int | unset | Advisory; recorded in the plan so a reader can check the SKU actually satisfies it. |
 | `disk_gb` | int | `20` | At least 5. Container disk on the pod. |
 | `max_runtime_s` | int | `1800` | Positive, at most 24 h. A hard bound, not a hint. |
-| `artifacts` | list of string | `[]` | Relative POSIX paths under `$PROMETHEUS_ARTIFACT_DIR`, retrieved after the run. |
+| `artifacts` | list of string | `[]` | Paths relative to `$PROMETHEUS_ARTIFACT_DIR` itself, with NO directory prefix. `result.json`, not `out/result.json`. |
 | `canary` | string or null | `null` | A shell command that must succeed before the workload starts. |
 | `env_allowlist` | list of string | `[]` | Host environment variable names the module may inherit. |
 | `env` | object | `{}` | Literal non-secret values to set. |
@@ -126,6 +126,14 @@ Append JSON lines to `$PROMETHEUS_TELEMETRY_PATH`; see
 `TELEMETRY_SCHEMA.md`. Write declared artifacts under
 `$PROMETHEUS_ARTIFACT_DIR`; see the size limit in
 `PROMETHEUS_GPU_RUNPOD_GUIDE.md` s10.
+
+**Artifact paths carry no directory prefix.** The pod serves its artifact
+directory, and that directory is the document root, so a file written to
+`$PROMETHEUS_ARTIFACT_DIR/result.json` is declared as `result.json`.
+Declaring `out/result.json` asks the platform for
+`<artifact-dir>/out/result.json`, which does not exist. Iteration 1 spent
+two flights and twenty minutes of pod time collecting 404s from exactly
+that prefix, and a test now refuses an artifact path containing `/`.
 
 ## Bundle identity
 

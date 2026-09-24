@@ -34,7 +34,13 @@ import time
 # The pod serves telemetry and artifacts on this port. The default Python
 # User-Agent is Cloudflare-blocked on this account, so it is set
 # explicitly everywhere a request leaves the controller.
-ARTIFACT_PORT = 8080
+# 8081, not 8080. Iteration 1's second flight created a pod that never
+# became reachable on 8080; the qualified AETH-01/02 orchestrators have
+# always served artifacts on 8081 and declared 8080 alongside it. The stock
+# image is a plausible occupant of 8080, and a failed bind under `set -e`
+# takes the script down before it can report anything.
+ARTIFACT_PORT = 8081
+DECLARED_PORTS = ("8080/http", "8081/http")
 USER_AGENT = "prometheus-gpu/1 (+Prometheus Aether)"
 
 
@@ -79,6 +85,7 @@ class RunPodProvider(Provider):
     """Thin adapter over the already-qualified RunPod client."""
 
     def __init__(self, api=None):
+        self.last_fetch = None
         if api is None:
             import runpod_api
             api = runpod_api.RunPodAPI()
@@ -123,11 +130,17 @@ class RunPodProvider(Provider):
                       headers={"Accept": "*/*", "User-Agent": USER_AGENT})
         if token:
             req.add_unredirected_header("Authorization", "Bearer " + token)
+        self.last_fetch = {"url": url, "status": None, "error": None}
         try:
             with build_opener(ProxyHandler({})).open(req, timeout=timeout) as r:
+                self.last_fetch["status"] = r.getcode()
                 if r.getcode() == 200:
                     return r.read()
-        except Exception:
+        except Exception as exc:
+            self.last_fetch["error"] = "%s: %s" % (type(exc).__name__, exc)
+            status = getattr(exc, "code", None)
+            if status is not None:
+                self.last_fetch["status"] = status
             return None
         return None
 

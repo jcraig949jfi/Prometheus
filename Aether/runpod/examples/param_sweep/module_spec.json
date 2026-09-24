@@ -1,17 +1,42 @@
 {
-  "name": "param-sweep",
-  "version": "1",
-  "description": "A parameter sweep from another seat's point of view: counts evaluations, not site-ticks, and imports nothing from the platform.",
-  "entrypoint": "run.py",
   "args": [],
-  "dependencies": {"pip": ["cupy-cuda12x==13.3.0", "numpy==2.2.0"]},
-  "gpu": {"class": "NVIDIA RTX A4000", "count": 1, "cloud": "SECURE"},
-  "disk_gb": 10,
-  "max_runtime_s": 900,
-  "artifacts": ["out/sweep.json", "out/telemetry.jsonl"],
+  "artifacts": [
+    "sweep.json",
+    "telemetry.jsonl"
+  ],
   "canary": "python3 -c \"import cupy; cupy.linspace(-1,1,8).sum()\"",
-  "env_allowlist": ["SWEEP_CANDIDATES", "SWEEP_GRID", "SWEEP_SEED"],
-  "env": {"SWEEP_CANDIDATES": "64", "SWEEP_GRID": "65536", "SWEEP_SEED": "20260924"},
-  "telemetry": {"interval_s": 15},
-  "work_units": {"name": "evaluations", "estimate": 64.0}
+  "dependencies": {
+    "pip": [
+      "cupy-cuda12x==13.3.0",
+      "numpy==2.2.0"
+    ]
+  },
+  "description": "A parameter sweep from another seat's point of view: counts evaluations, not site-ticks, and imports nothing from the platform.",
+  "disk_gb": 10,
+  "entrypoint": "run.py",
+  "env": {
+    "SWEEP_CANDIDATES": "64",
+    "SWEEP_GRID": "65536",
+    "SWEEP_SEED": "20260924"
+  },
+  "env_allowlist": [
+    "SWEEP_CANDIDATES",
+    "SWEEP_GRID",
+    "SWEEP_SEED"
+  ],
+  "gpu": {
+    "class": "NVIDIA RTX A4000",
+    "cloud": "SECURE",
+    "count": 1
+  },
+  "max_runtime_s": 900,
+  "name": "param-sweep",
+  "telemetry": {
+    "interval_s": 15
+  },
+  "version": "1",
+  "work_units": {
+    "estimate": 64.0,
+    "name": "evaluations"
+  }
 }

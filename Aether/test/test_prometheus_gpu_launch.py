@@ -33,12 +33,13 @@ SPEC = {
     "dependencies": {"pip": ["numpy==2.2.0"]},
     "gpu": {"class": "NVIDIA RTX A4000", "count": 1},
     "max_runtime_s": 600,
-    "artifacts": ["out/result.json"],
+    "artifacts": ["result.json"],
     "canary": "python3 -c 'import numpy'",
     "work_units": {"name": "steps", "estimate": 100},
 }
 
-TEL = "out/telemetry.jsonl"
+# Artifact-dir relative, matching launch.TELEMETRY_PATH.
+TEL = "telemetry.jsonl"
 
 START = '{"kind":"start","t_utc":"a","t_elapsed_s":0,"seq":1}\n'
 PROG = '{"kind":"progress","t_utc":"b","t_elapsed_s":30,"seq":2,"units":50}\n'
@@ -90,7 +91,7 @@ def controller(fake, module_dir, budget_usd=1.0, spec=None, **kw):
 def happy_fake(**kw):
     return prov.FakeProvider(served={
         TEL: frames(None, START, START + PROG, START + PROG + END),
-        "out/result.json": '{"answer": 42}',
+        "result.json": '{"answer": 42}',
     }, **kw)
 
 
@@ -130,7 +131,7 @@ def test_a_clean_run_retrieves_then_terminates(module_dir):
     # The artifact was retrieved. Since the fake serves nothing for a pod
     # that no longer exists, this ALSO proves retrieval happened before
     # termination -- the ordering that a failed run depends on.
-    assert [a["path"] for a in r["artifacts"]] == ["out/result.json"]
+    assert [a["path"] for a in r["artifacts"]] == ["result.json"]
     assert r["artifacts"][0]["bytes"] == len('{"answer": 42}')
     assert r["artifacts_missing"] == []
 
@@ -186,7 +187,7 @@ def test_a_pod_that_never_becomes_ready_is_a_failure_not_a_hang(module_dir):
 
 def test_a_module_that_reports_failure_is_not_recorded_as_ok(module_dir):
     fake = prov.FakeProvider(served={
-        TEL: frames(START, START + END_BAD), "out/result.json": "{}"})
+        TEL: frames(START, START + END_BAD), "result.json": "{}"})
     r = controller(fake, module_dir).run()
     assert r["result"] == "FAILED"
     assert r["telemetry_summary"]["module_status"] == "failed"
@@ -276,7 +277,7 @@ def test_an_unresolvable_create_is_not_a_clean_non_event(module_dir):
 def test_a_lost_create_response_is_adopted_not_duplicated(module_dir):
     fake = prov.FakeProvider(
         create_faults=[prov.Fault.lost_response()],
-        served={TEL: frames(START, START + END), "out/result.json": "{}"})
+        served={TEL: frames(START, START + END), "result.json": "{}"})
     r = controller(fake, module_dir).run()
     assert fake.calls["create"] == 1, "a second create would bill twice"
     assert r["pods"][0]["creation_outcome"] == "adopted"
@@ -338,7 +339,7 @@ def test_a_truncated_telemetry_tail_does_not_lose_the_run(module_dir):
 def test_a_missing_artifact_is_reported_not_silently_dropped(module_dir):
     fake = prov.FakeProvider(served={TEL: frames(START, START + END)})
     r = controller(fake, module_dir).run()
-    assert r["artifacts_missing"] == ["out/result.json"]
+    assert r["artifacts_missing"] == ["result.json"]
     assert r["artifacts"] == []
     rc.validate(r)
 
@@ -359,7 +360,7 @@ def test_rehearse_flies_the_whole_path_without_a_provider(module_dir, capsys,
     spec_path = tmp_path / "module_spec.json"
     spec_path.write_text(
         '{"name": "rehearsal", "entrypoint": "run.py",'
-        ' "artifacts": ["out/result.json"],'
+        ' "artifacts": ["result.json"],'
         ' "work_units": {"name": "steps", "estimate": 10}}')
     (tmp_path / "run.py").write_text("print('hi')\n")
 
@@ -379,7 +380,7 @@ def test_rehearse_does_not_overwrite_a_declared_telemetry_artifact(tmp_path):
     spec_path = tmp_path / "module_spec.json"
     spec_path.write_text(
         '{"name": "rehearsal2", "entrypoint": "run.py",'
-        ' "artifacts": ["%s", "out/result.json"]}' % launch.TELEMETRY_PATH)
+        ' "artifacts": ["%s", "result.json"]}' % launch.TELEMETRY_PATH)
     (tmp_path / "run.py").write_text("print('hi')\n")
     assert cli.main(["rehearse", str(spec_path)]) == 0
 
@@ -595,7 +596,7 @@ def test_capacity_refusal_walks_the_declared_alternatives(module_dir):
     fake = prov.FakeProvider(
         create_faults=[prov.Fault.http(400), prov.Fault.http(400)],
         served={TEL: frames(None, START, START + END),
-                "out/result.json": "{}"})
+                "result.json": "{}"})
     ctl = controller(fake, module_dir, spec=spec)
     r = ctl.run()
     assert r["result"] == "OK"
@@ -613,7 +614,7 @@ def test_cost_follows_the_gpu_that_actually_ran(module_dir):
                    "alternatives": ["NVIDIA A40"]}
     fake = prov.FakeProvider(
         create_faults=[prov.Fault.http(400)],
-        served={TEL: frames(None, START, START + END), "out/result.json": "{}"})
+        served={TEL: frames(None, START, START + END), "result.json": "{}"})
     ctl = controller(fake, module_dir, spec=spec)
     r = ctl.run()
     assert r["gpu_used"] == "NVIDIA A40"

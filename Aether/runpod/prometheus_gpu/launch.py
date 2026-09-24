@@ -42,8 +42,12 @@ from . import receipt as rc
 from . import secrets as secrets_mod
 from . import telemetry as tel_mod
 
-TELEMETRY_PATH = "out/telemetry.jsonl"
-STAGES_PATH = "out/stages.jsonl"
+# Relative to the ARTIFACT DIRECTORY, which is the artifact server's
+# document root -- not to the module's working directory. Iteration 1's
+# third flight spent ten minutes collecting 404s because these carried an
+# "out/" prefix that the server root already accounted for.
+TELEMETRY_PATH = "telemetry.jsonl"
+STAGES_PATH = "stages.jsonl"
 
 # Pod stages, in order. The intervals between consecutive
 # stages are what the cost model's overhead terms are made of.
@@ -349,10 +353,21 @@ class Controller(object):
 
     def _await_ready(self, started):
         deadline = started + self.ready_timeout_s
+        reported = set()
         while self._now() < deadline:
             if self._fetch(TELEMETRY_PATH) is not None:
                 self._mark("first_telemetry")
                 return True
+            # Say why, once per distinct reason. "Not ready" with no
+            # explanation turned a ten-minute flight into no information.
+            last = getattr(self.provider, "last_fetch", None)
+            if last:
+                reason = "%s status=%s %s" % (
+                    last.get("url", "").rsplit("/", 2)[0].rsplit("//", 1)[-1],
+                    last.get("status"), last.get("error") or "")
+                if reason not in reported:
+                    reported.add(reason)
+                    self._log("not reachable yet: %s" % reason.strip())
             try:
                 if self.provider.get_pod(self.pod_id) is None:
                     self._log("pod vanished before it was ready")

@@ -231,7 +231,7 @@ def build_request(spec, run_meta, transport, module_env):
         "gpu": {"id": gpu.get("class"), "count": int(gpu.get("count", 1))},
         "cloud": gpu.get("cloud", "SECURE"),
         "disk": int(spec["disk_gb"]),
-        "ports": run_meta.get("ports", ["8080/http"]),
+        "ports": run_meta.get("ports", list(prov_mod.DECLARED_PORTS)),
         "env": env,
         "entrypoint": ["/bin/bash", "-c"],
         "cmd": [build_bootstrap(spec, run_meta, transport)],
