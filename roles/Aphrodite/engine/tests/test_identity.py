@@ -55,8 +55,18 @@ def test_near_neighbours_have_real_witnesses_and_stay_apart():
 
 def test_failure_is_part_of_behavior():
     a = ("fold", "0", "(acc + v)", "acc")
-    b = ("fold", "0", "(acc + v)", "(acc + (0 * (first // last)))")
+    b = ("fold", "0", "(acc + (v + (0 * (last // (v - first)))))", "acc")
     assert not I.same_behavior(a, b)
+
+
+def test_batteries_lie_in_the_declared_domain():
+    assert all(I.in_task_domain(x) for x in I.B1)
+    assert all(I.in_task_domain(x) for x in I.b2())
+
+
+def test_internal_overflow_on_valid_input_is_behavior():
+    a = ("fold", "1", "(acc * v)", "(0 * acc)")
+    assert not I.same_behavior(a, ("expr", "0"))
 
 
 def test_battery_is_frozen():

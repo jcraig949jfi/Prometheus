@@ -45,7 +45,7 @@ def _t3c_libs():
 
 def main():
     t0 = time.perf_counter()
-    s1 = json.loads((HERE / "S1_GATE_RUN2_2026-09-23.json").read_text(encoding="utf-8"))
+    s1 = json.loads((HERE / "S1_GATE_RUN3_2026-09-24.json").read_text(encoding="utf-8"))
     if s1.get("OUTCOME") != "S1_PASS":
         print("S1 has not passed -- S2 does not run")
         return 2
@@ -128,7 +128,7 @@ def main():
     smp = random.Random(I._seed("APHRODITE/S2/CONF/v1"))
     progs = [("fold", smp.choice(G.INIT_SPACE), smp.choice(G.BODY_SPACE), smp.choice(G.FINAL_SPACE))
              for _ in range(40)]
-    p2 = [CF.check_whole_program(p, I.B1, 2) for p in progs]
+    p2 = [CF.check_whole_program(p, bat, 2) for p in progs for bat in (I.B1, I.B1_BOUNDARY)]
     p2m = sum(len(x["mismatches"]) for x in p2)
     rep["G_S2_6_conformance"] = {"part1_GREEN": std["GREEN"], "part1_checked": std["checked"],
                                  "part2_programs": len(progs),

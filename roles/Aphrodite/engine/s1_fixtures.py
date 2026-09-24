@@ -23,18 +23,18 @@ import improver as T3A               # noqa: E402
 import semantics as S                # noqa: E402
 import tier3b as T3B                 # noqa: E402
 import tier3c as T3C                 # noqa: E402
+import tier3d as T3D                 # noqa: E402
 
 C = I.C
 
 
 # ---------------------------------------------------------------- catalog witnesses
 def catalog_witnesses() -> List[Dict]:
-    """EVERY declared witness program, not a selection."""
+    """EVERY declared witness program inside D_TASK_T3_v1, not a selection.
+    ADDENDUM 2 s2/s4: the basis_v4 catalog (PLAIN, wider supports) is outside
+    the domain and leaves; the Tier-3D catalog joins."""
     out = []
-    for fam in G.CATALOG:
-        out.append({"catalog": "basis_v4", "family": fam, "program": CX.witness_for(fam),
-                    "trailing": G.uses_query_param(fam)})
-    for name, mod in (("tier3a", T3A), ("tier3b", T3B), ("tier3c", T3C)):
+    for name, mod in (("tier3a", T3A), ("tier3b", T3B), ("tier3c", T3C), ("tier3d", T3D)):
         for fam in sorted(mod.FAMILY_SPEC):
             out.append({"catalog": name, "family": fam, "program": mod.witness(fam),
                         "trailing": True})
@@ -171,6 +171,9 @@ def collapse_pairs() -> List[Dict]:
                     "kind": "historical",
                     "argument": "recorded observation of the family; equivalence argued "
                                 "per program in AMENDMENT 12 fixtures notes"})
+    for r in RECLASSIFIED_EQUIVALENT:
+        out.append({"name": "reclassified:" + r["name"], "a": r["a"], "b": r["b"],
+                    "trailing": True, "kind": "general", "argument": r["argument"]})
     for h in historical_body_lifts():
         out.append({"name": "lifted:%s:%s|%s" % (h["source"], h["a"][2], h["b"][2])
                             + ":init=%s:final=%s" % (h["a"][1], h["a"][3]),
@@ -181,15 +184,7 @@ def collapse_pairs() -> List[Dict]:
 
 
 # ---------------------------------------------------------------- separation set
-NEAR_NEIGHBOURS = [
-    {"name": "offset_conjugate_differs_only_near_ceiling",
-     "a": ("fold", "0", "(acc + v)", "(acc * last)"),
-     "b": ("fold", "first", "(acc + v)", "((acc - first) * last)"),
-     "trailing": True, "witness": [5, C - 7, 1]},
-    {"name": "identity_body_fold_vs_inlined_differs_beyond_ceiling",
-     "a": ("fold", "first", "acc", "(acc - first)"),
-     "b": ("expr", "(first - first)"),
-     "trailing": True, "witness": [C + 1, 1]},
+NEAR_NEIGHBOURS = [                      # ADDENDUM 2 s4: in-domain witnesses only
     {"name": "naive_sign_flip_across_floor_division",
      "a": ("fold", "first", "(acc // last)", "acc"),
      "b": ("fold", "(0 - first)", "(acc // last)", "(0 - acc)"),
@@ -197,19 +192,44 @@ NEAR_NEIGHBOURS = [
     {"name": "naive_sign_flip_across_modulo",
      "a": ("fold", "0", "(acc - v)", "(acc % last)"),
      "b": ("fold", "0", "(acc - v)", "(0 - ((0 - acc) % last))"),
-     "trailing": True, "witness": [5, 3]},
+     "trailing": True, "witness": [5, 5, 3]},
     {"name": "guarded_pow_vs_unguarded_expansion",
      "a": ("fold", "0", "(acc + pow(v, last))", "acc"),
      "b": ("fold", "0", "(acc + (v * pow(v, (last - 1))))", "acc"),
-     "trailing": True, "witness": [2, 33]},
-    {"name": "zero_times_possibly_failing_term",
-     "a": ("fold", "0", "(acc + v)", "acc"),
-     "b": ("fold", "0", "(acc + v)", "(acc + (0 * (first // last)))"),
-     "trailing": True, "witness": [3, 0]},
+     "trailing": True, "witness": [2, 2, 33]},
     {"name": "tier3b_alias_in_negative_accumulator_context",
      "a": ("fold", "(0 - first)", "(v + math.gcd(abs(acc), abs(acc)))", "acc"),
      "b": ("fold", "(0 - first)", "(v + acc)", "acc"),
-     "trailing": True, "witness": [5, 1, 1]},
+     "trailing": True, "witness": [5, 2, 2]},
+    {"name": "product_overflow_on_valid_input_vs_constant",
+     "a": ("fold", "1", "(acc * v)", "(0 * acc)"),
+     "b": ("expr", "0"),
+     "trailing": True, "witness": [30] * 28 + [7]},
+    {"name": "scale_conjugate_of_product_crosses_ceiling_earlier",
+     "a": ("fold", "1", "(acc * v)", "(acc - first)"),
+     "b": ("fold", "2", "(acc * v)", "((acc // 2) - first)"),
+     "trailing": True, "witness": [30] * 27 + [5]},
+    {"name": "failure_disposition_on_valid_input",
+     "a": ("fold", "0", "(acc + v)", "acc"),
+     "b": ("fold", "0", "(acc + (v + (0 * (last // (v - first)))))", "acc"),
+     "trailing": True, "witness": [5, 5, 3]},
+]
+
+# ADDENDUM 2 s4: equivalent INSIDE D_TASK_T3_v1 (their only witnesses were
+# impossible external inputs), so now asserted to COLLAPSE.
+RECLASSIFIED_EQUIVALENT = [
+    {"name": "offset_conjugate_of_sum",
+     "a": ("fold", "0", "(acc + v)", "(acc * last)"),
+     "b": ("fold", "first", "(acc + v)", "((acc - first) * last)"),
+     "argument": "a sum of valid inputs is at most 6,000, far below the ceiling"},
+    {"name": "identity_body_fold_vs_inlined",
+     "a": ("fold", "first", "acc", "(acc - first)"),
+     "b": ("expr", "(first - first)"),
+     "argument": "valid inputs are at most 97, so the init never exceeds the ceiling"},
+    {"name": "zero_times_first_div_last",
+     "a": ("fold", "0", "(acc + v)", "acc"),
+     "b": ("fold", "0", "(acc + v)", "(acc + (0 * (first // last)))"),
+     "argument": "last >= 1 in the domain, so first // last never fails"},
 ]
 
 

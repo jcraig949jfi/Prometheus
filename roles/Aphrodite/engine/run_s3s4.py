@@ -75,7 +75,7 @@ def lib_with(entries):
 
 # ---------------------------------------------------------------- stage 0
 def stage_preconditions():
-    s1 = json.loads((HERE / "S1_GATE_RUN2_2026-09-23.json").read_text(encoding="utf-8"))
+    s1 = json.loads((HERE / "S1_GATE_RUN3_2026-09-24.json").read_text(encoding="utf-8"))
     s2 = json.loads((HERE / "S2_GATE_2026-09-23.json").read_text(encoding="utf-8"))
     if s1.get("OUTCOME") != "S1_PASS" or s2.get("OUTCOME") != "S2_PASS":
         raise SystemExit("STOP: S1_PASS and S2_PASS are preconditions (AMENDMENT 14)")
@@ -84,7 +84,8 @@ def stage_preconditions():
     progs = [T.witness(f) for f in T.FAMILY_SPEC] + [
         ("fold", rng.choice(G.INIT_SPACE), rng.choice(G.BODY_SPACE), rng.choice(G.FINAL_SPACE))
         for _ in range(40)]
-    p2 = [CF.check_whole_program(p, I.B1, EMITTER) for p in progs]
+    # conformance domain = valid inputs + ceiling/failure edges (ADDENDUM 2)
+    p2 = [CF.check_whole_program(p, bat, EMITTER) for p in progs for bat in (I.B1, I.B1_BOUNDARY)]
     gate = {"part1_GREEN": std["GREEN"], "part1_checked": std["checked"],
             "part2_programs": len(progs), "part2_checked": sum(x["checked"] for x in p2),
             "part2_mismatches": sum(len(x["mismatches"]) for x in p2)}

@@ -1,4 +1,6 @@
-"""THE S1 GATE, G-S1.1 .. G-S1.7 (AMENDMENT 12 s6, frozen at 287d208ea), run 2
+"""THE S1 GATE, G-S1.1 .. G-S1.7 (AMENDMENT 12 s6, frozen at 287d208ea). Run 3
+under ADDENDUM 2 (18ab82c50): identity over D_TASK_T3_v1 (B1 v3, B2 v3),
+conformance over B1 v3 + the boundary battery. Run 2 was
 under AMENDMENT 12 ADDENDUM 1 (frozen at d72595bb0): B1 v2, B2 v2 (fresh,
 10,000), emitter v2. Run 1's code is at d72595bb0 and its report is
 S1_GATE_RUN1_2026-09-23.json.
@@ -48,7 +50,12 @@ def _ids(item):
 
 
 def _conf(prog):
-    return prog, CF.check_whole_program(prog, I.B1, EMITTER)
+    """Conformance domain = valid inputs + ceiling/failure edges (ADDENDUM 2)."""
+    a = CF.check_whole_program(prog, I.B1, EMITTER)
+    b = CF.check_whole_program(prog, I.B1_BOUNDARY, EMITTER)
+    return prog, {"checked": a["checked"] + b["checked"],
+                  "checked_boundary": b["checked"],
+                  "mismatches": a["mismatches"] + b["mismatches"]}
 
 
 def pooled(fn, items, chunks=16):
@@ -166,11 +173,13 @@ def gate_conformance(programs):
     res = pooled(_conf, live, chunks=4)
     mism = [m for r in res.values() for m in r["mismatches"]]
     checked = sum(r["checked"] for r in res.values())
+    checked_boundary = sum(r["checked_boundary"] for r in res.values())
     return {"standing_gate_part1": {"GREEN": std["GREEN"], "checked": std["checked"],
                                     "mismatches": std["mismatches"][:5]},
             "whole_program_B1_part2": {"emitter": EMITTER, "programs": len(live),
                                        "excluded_non_trailing_or_expr": excluded,
-                                       "comparisons": checked, "mismatch_count": len(mism),
+                                       "comparisons": checked, "of_which_boundary_battery": checked_boundary,
+                                       "mismatch_count": len(mism),
                                        "mismatches": mism[:25]},
             "PASS": std["GREEN"] and not mism}
 
@@ -204,11 +213,11 @@ def gate_old_fixtures():
     return {"returncode": r.returncode, "summary": tail[0], "PASS": r.returncode == 0}
 
 
-def main(out_name="S1_GATE_RUN2_2026-09-23.json"):
+def main(out_name="S1_GATE_RUN3_2026-09-24.json"):
     t0 = time.perf_counter()
-    rep = {"amendment": "AMENDMENT_12 @ 287d208ea + ADDENDUM_1 @ d72595bb0", "run": 2,
-           "domain": I.DOMAIN, "B1_version": "v2", "B1_inputs": len(I.B1), "B1_sha256": I.B1_SHA,
-           "B2_version": "v2", "B2_inputs": len(I.b2()), "emitter": EMITTER, "workers": WORKERS,
+    rep = {"amendment": "AMENDMENT_12 @ 287d208ea + ADDENDUM_1 @ d72595bb0 + ADDENDUM_2 @ 18ab82c50",
+           "run": 3, "domain": I.DOMAIN, "B1_version": "v3", "B1_boundary_inputs": len(I.B1_BOUNDARY), "B1_inputs": len(I.B1), "B1_sha256": I.B1_SHA,
+           "B2_version": "v3", "B2_inputs": len(I.b2()), "emitter": EMITTER, "workers": WORKERS,
            "started_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
     rep["G_S1_6_no_target"] = gate_no_target()
     _log("G-S1.6 no target PASS=%s" % rep["G_S1_6_no_target"]["PASS"])

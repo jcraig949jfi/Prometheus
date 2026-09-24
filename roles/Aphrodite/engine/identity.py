@@ -28,7 +28,7 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 import basis_v4 as G
 
-DOMAIN = "D_NONNEG_v1"
+DOMAIN = "D_TASK_T3_v1"          # ADDENDUM 2 (18ab82c50); runs 1-2 used D_NONNEG_v1
 C = 10 ** 40
 TRAILING, PLAIN = "TRAILING", "PLAIN"
 FAIL = "FAIL"
@@ -256,8 +256,9 @@ V17 = [0, 1, 2, 7, 97] + CEILING_BAND
 V7 = [0, 1, 7, C - 1, C + 1, C // 2, 10 ** 20]
 
 
-def build_b1() -> List[List[int]]:
-    """PRIMARY battery B1 v2 (AMENDMENT 12 ADDENDUM 1 s3): v1 sections (a),
+def build_b1_v2() -> List[List[int]]:
+    """B1 v2, now the CONFORMANCE BOUNDARY battery (ADDENDUM 2 s3); it was the
+    primary battery of run 2 only. Formerly: PRIMARY battery B1 v2 (AMENDMENT 12 ADDENDUM 1 s3): v1 sections (a),
     (b), (d) unchanged; (c) replaced by an EXHAUSTIVE short-input cross, so
     every band value occurs in every position, the query included, beside
     every partner, zero included. The cross is exhaustive, so it consumes no
@@ -273,6 +274,69 @@ def build_b1() -> List[List[int]]:
     cross = [list(t) for n in (2, 3) for t in itertools.product(V17, repeat=n)]
     cross += [list(t) for t in itertools.product(V7, repeat=4)]
     return _dedupe(keep + cross)
+
+
+
+# ---------------------------------------------------------------- D_TASK_T3_v1 (ADDENDUM 2)
+TASK_LENGTHS = list(range(2, 61)) + [80, 150, 200]
+TASK_VALUES = (2, 30)
+TASK_QUERY = (1, 97)
+
+
+def in_task_domain(inp: Sequence[int]) -> bool:
+    xs, m = inp[:-1], inp[-1]
+    return (len(xs) in TASK_LENGTHS and all(TASK_VALUES[0] <= x <= TASK_VALUES[1] for x in xs)
+            and TASK_QUERY[0] <= m <= TASK_QUERY[1])
+
+
+def _gen_shaped(rng: random.Random) -> List[int]:
+    L = rng.choice(TASK_LENGTHS)
+    return [rng.randint(*TASK_VALUES) for _ in range(L)] + [rng.randint(*TASK_QUERY)]
+
+
+def build_b1() -> List[List[int]]:
+    """PRIMARY battery B1 v3 (ADDENDUM 2 s3), entirely inside D_TASK_T3_v1."""
+    rng = random.Random(_seed("APHRODITE/S1/B1/v3"))
+    vals = range(2, 31)
+    out: List[List[int]] = []
+    for x1 in vals:                                            # a
+        for x2 in vals:
+            for q in (1, 2, 3, 7, 32, 33, 97):
+                out.append([x1, x2, q])
+    for x1 in vals:
+        for q in range(1, 98):
+            out.append([x1, rng.randint(2, 30), q])
+    for c in vals:                                             # b
+        for L in (2, 3, 4, 5, 8, 9, 13, 20, 27, 28, 40, 60, 80, 150, 200):
+            for q in (1, 2, 33, 97):
+                out.append([c] * L + [q])
+    for _ in range(2000):                                      # c
+        out.append(_gen_shaped(rng))
+    out = _dedupe(out)
+    assert all(in_task_domain(x) for x in out)
+    return out
+
+
+def build_b2_v3(n: int = 10000) -> List[List[int]]:
+    """AUDIT battery B2 v3 (ADDENDUM 2 s3): fresh seed, inside the domain."""
+    rng = random.Random(_seed("APHRODITE/S1/B2/v3"))
+    out = []
+    for _ in range(n):
+        r = rng.random()
+        if r < 0.40:
+            inp = _gen_shaped(rng)
+        elif r < 0.70:
+            inp = [rng.randint(2, 30) for _ in range(rng.randint(2, 4))] + [rng.randint(1, 97)]
+        elif r < 0.85:
+            a, b = rng.randint(2, 30), rng.randint(2, 30)
+            L = rng.choice(TASK_LENGTHS)
+            inp = [rng.choice((a, b)) for _ in range(L)] + [rng.randint(1, 97)]
+        else:
+            L = rng.choice(TASK_LENGTHS)
+            inp = [rng.choice((2, 3, 29, 30)) for _ in range(L)] +                   [rng.choice((1, 2, 3, 32, 33, 96, 97))]
+        out.append(inp)
+    assert all(in_task_domain(x) for x in out)
+    return out
 
 
 def _b2_value(rng: random.Random) -> int:
@@ -312,6 +376,7 @@ def build_b1_neg() -> List[List[int]]:
 
 B1 = build_b1()
 B1_SHA = _sha(B1)
+B1_BOUNDARY = build_b1_v2()          # conformance only, never identity
 _B2: Optional[List[List[int]]] = None
 _B1N: Optional[List[List[int]]] = None
 
@@ -319,7 +384,7 @@ _B1N: Optional[List[List[int]]] = None
 def b2() -> List[List[int]]:
     global _B2
     if _B2 is None:
-        _B2 = build_b2()
+        _B2 = build_b2_v3()
     return _B2
 
 
