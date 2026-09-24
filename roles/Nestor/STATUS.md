@@ -1,15 +1,16 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-24 ~14:40 EDT. Charter: budgeted autonomous scientific loop
+Currency: 2026-09-24 ~19:50 EDT. Charter: budgeted autonomous scientific loop
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
 (`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
-claim (E-6..E-9).
+claim (E-6..E-10). Consolidated report:
+`campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
 
 ## Budget ledger (seat decision)
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 40 h left) |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 35 h left) |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -25,13 +26,17 @@ claim (E-6..E-9).
   - **C-ENERGY**: the depth-1 wall is newborn starvation (20/40 vs 4/40).
   - **C-DENSE**: spontaneous non-pair heredity appears once world-op encodings are 1 byte
     (13/40 vs 0/40).
+  - **C-ABLATE**: under dense encodings, self-location and search remain necessary.
+  - **C-RUNAWAY**: the recombination splice prevents runaway pair-tape heredity
+    (7/150 vs 0/150, p = 0.007).
+- Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
+- Latest EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64).
 
 ## Running
 
 | experiment | lane | what |
 |---|---|---|
-| X-DENSE-ABLATE | EXPLORE | under dense encodings, which relieved barrier (search, self-location, energy) is still necessary |
-| X-H2-TERMINATION | EXPLORE | why 7ae3's causal lineages stop at depth 1-4 |
+| C-CRITICAL-MASS | CONFIRM | frozen at e2bcf6e2b: 4 founders vs 1, 80 fresh seeds, depth >= 5; launched 19:43 via schtask NestorCCM (disabled), ~1 h |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
