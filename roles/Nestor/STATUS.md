@@ -1,43 +1,43 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-24. Charter: budgeted autonomous scientific loop (RESPONSIBILITIES.md
-section 2; `prompts/2026-09-24_promotion_autonomous_loop/DIRECTIVE_VERBATIM.md`).
+Currency: 2026-09-24 ~14:40 EDT. Charter: budgeted autonomous scientific loop
+(RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
+(`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
+claim (E-6..E-9).
 
-**Resume from `EXPERIMENT_GRAPH.jsonl`** (`python graph.py open`). The last line per
-experiment_id wins.
-
-## Budget ledger (seat decision; the directive set none)
+## Budget ledger (seat decision)
 
 | item | value |
 |---|---|
-| campaign window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT |
-| concurrency cap | 12 worker processes (host shared with other seats) |
-| reserve | 20% for repairs and unforeseen follow-ups |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 40 h left) |
+| concurrency cap | 12 workers |
+| reserve | 20% |
 | external spend | none |
 
-## Now running
+## Done
 
-| experiment | lane | what | where |
-|---|---|---|---|
-| C9 | CONFIRM | **FROZEN** inner experiment: protocol `5819bc6d...`, manifest `8d88cf06...`, 1,200 runs (H1 240, H2 768, H3 192), 6 workers. Launched 07:06:42 from commit `df336f912`; ETA ~6.7 wall-h. Launched as the one-shot scheduled task `PM_Nestor_C9` (disabled after firing); detached and resumable: `python run_campaign.py --workers 6` resumes from `observatory/bundles` | `campaigns/z80atlas-verify-2026-09-22/observatory/` (log `run.log`, progress `STATE.json`) |
-| X-NONPAIR-SEARCH | EXPLORE | 48 non-pair cells x (CONTROL, INPLACE per-epoch mutation), tier M, 6 workers | `campaigns/c9x-explore-2026-09-24/x_nonpair_search/` |
+- **C9 inner experiment (frozen 5819bc6d)**: 1,200/1,200 runs, audit PASS. After mining: H1
+  INVALID (C9-D16), repaired and rerun as **C9-H1R: COST_INTERACTION_ONLY** (confirmatory). H2:
+  weak signal in specimen 7ae3. H3: retired structurally. See
+  `campaigns/z80atlas-verify-2026-09-22/observatory/C9_OUTCOME_AND_ADDENDUM.md`.
+- **Confirmed (CONFIRM lane):**
+  - **C-SELFLOC**: self-location gates non-pair heredity (13/36 vs 0/36).
+  - **C-ENERGY**: the depth-1 wall is newborn starvation (20/40 vs 4/40).
+  - **C-DENSE**: spontaneous non-pair heredity appears once world-op encodings are 1 byte
+    (13/40 vs 0/40).
 
-## After C9 drains (the loop, not a return point)
+## Running
 
-1. `python adjudicate_c9.py`, `python report_c9.py`, `python report_audit_c9.py` (the
-   audit must PASS).
-2. Classify H1, H2 and H3 (SIGNAL / WEAK_SIGNAL / CLEAN_NULL / INVALID) and write graph
-   nodes.
-3. Mine every null and partial result per charter section 2: trajectories,
-   near-threshold cases, P-11 depth distribution (secondary depth >= 2 and >= 3), H3
-   material shares at crossings, H1 crossed_ever versus final.
-4. Design EXPLORE children, and a CONFIRM child for any exploratory candidate.
+| experiment | lane | what |
+|---|---|---|
+| X-DENSE-ABLATE | EXPLORE | under dense encodings, which relieved barrier (search, self-location, energy) is still necessary |
+| X-H2-TERMINATION | EXPLORE | why 7ae3's causal lineages stop at depth 1-4 |
 
-## Frozen evidence (read-only forever)
+Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
+committed, before it runs.
 
-- `z80atlas-2026-09-19` (72-hour record). Per-run files exist only in the
-  `nestor-sidequest-graphworld` worktree; point `Z80A_FROZEN_OBS` there.
-- The C9 freeze artifacts: `FREEZE.json`, `MANIFEST_FROZEN.json`, `CALIBRATION.json`.
-  Never edit a campaign module in `z80atlas-verify-2026-09-22` while C9 exists: the
-  protocol hash covers every `.py`, and `verify_freeze` would refuse. Children get their
-  own directories.
+## Rules learned this campaign
+
+- Never edit a `.py` in `z80atlas-verify-2026-09-22`: `verify_freeze` would refuse.
+- If a job swaps a module, use one job per process (X-DENSE-OPS).
+- Identical arms are a defect signature, not a null (C9-D16).
