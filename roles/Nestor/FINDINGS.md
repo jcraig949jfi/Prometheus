@@ -250,6 +250,22 @@ remaining probability mass is consumed by assembling a 6-byte ordered op chain; 
 is found. Scope: this permissive world; which relieved barriers remain necessary is
 X-DENSE-ABLATE. Evidence: `campaigns/c9x-explore-2026-09-24/c_dense_confirm/`.
 
+### E-9 Cycle 9 outcome
+C9 (frozen, protocol 5819bc6d; 1,200/1,200 runs; audit PASS 21/21). Frozen verdicts stand in
+`observatory/REPORT_C9.md`; mining classified them (`C9_OUTCOME_AND_ADDENDUM.md`):
+- **H1 -- INVALID in C9 (C9-D16)**: `world.Runner` never passed output_gate/cue_cost into the
+  task spec; all four arms were one experiment (identical to the last decimal). Repaired and
+  rerun as **C9-H1R** (fresh seeds, rule unchanged, fail-on-old-code gate PASS):
+  **COST_INTERACTION_ONLY** -- I = +0.20, M = -0.10. Gating the answer on cue consumption abolishes
+  competence when consuming the cue costs instructions (0.000 vs 0.200; crossings 0 vs 11.7%)
+  and is harmless when the cue is free (0.197 vs 0.197). The cycle-8 answer-before-read
+  obstruction is the price of reading the cue, not the ordering itself.
+- **H2 -- REPLICATION_EVENTS_WITHOUT_PROPAGATION** (both authorship readings); WEAK_SIGNAL
+  concentrated in one specimen, `7ae3f9c1437c8000`: implanted genome reaches depth >= 5 in 4/16
+  seeds, random bytes 0/16, in situ 0/16.
+- **H3 -- NOT_DEMONSTRATED** (R3 material certificates 1/1/0 of 64): crossings are frequent in
+  one cell but made of hard-niche material; the easy niche does not raise them.
+
 ---
 
 ## D. Standing methodological lessons
@@ -276,3 +292,8 @@ These generalise beyond either campaign and should survive into any successor.
    "replicators" into splice artifacts.
 8. **A control inherited from a sibling is not a control.** Match seed and tier per run, and
    store the pairing on the run, not on the family (Z80A-D04).
+9. **An intervention must be tested at the measurement, not only at the mechanism.** C9-D16:
+   the H1 gate worked in the VM and in the task code, and was never handed from the world to
+   the task; four arms were one experiment. Identical arms are a defect signature, not a null.
+10. **A swapped module in a reused worker leaks.** X-DENSE-OPS: set every run's configuration
+    explicitly, one job per process when modules are swapped.
