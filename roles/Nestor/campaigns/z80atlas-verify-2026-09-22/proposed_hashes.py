@@ -29,7 +29,8 @@ def lf_sha(path):
     return hashlib.sha256(pathlib.Path(path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
-def main():
+def compute():
+    """Every proposed value, recomputed from source. Pure: writes nothing."""
     import constants
     import grammar as G
     import manifest as M
@@ -51,6 +52,11 @@ def main():
             "modules": mods}
     protocol = hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":"))
                               .encode("ascii")).hexdigest()
+    return body, protocol, m, bad, panel
+
+
+def main():
+    body, protocol, m, bad, panel = compute()
     old = json.loads((HERE / "PROPOSED_HASHES.json").read_text()) \
         if (HERE / "PROPOSED_HASHES.json").exists() else {}
     if old.get("status", "").startswith("PROPOSED"):

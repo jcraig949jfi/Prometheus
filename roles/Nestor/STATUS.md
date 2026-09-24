@@ -1,23 +1,20 @@
 # Nestor status
 
-Currency: 2026-09-24. S1 through S4 of the operator directive of 2026-09-23 are COMPLETE.
-**Stopped for operator review after S4, as directed.** Nothing is frozen, no final hash is
-written, no production observatory exists, nothing is launched.
+Currency: 2026-09-24. The operator's final Cycle-9 rulings have all been applied, and all
+12 pre-freeze gates pass. **STOPPED BEFORE FREEZE** on a new scientific-validity defect
+(C9-D14), as the ruling requires. Nothing is frozen, no final hash is written, no
+production observatory exists, nothing is launched.
 
-Directive: `prompts/2026-09-23_s1_s4_execution/DIRECTIVE_VERBATIM.md`.
-Workspace: worktree `nestor-s1-forensics`, branch `nestor/s1-forensics-2026-09-23` (pushed,
-NOT merged to main - the directive asks for review first).
+Read `campaigns/z80atlas-verify-2026-09-22/PREFREEZE_STOP_2026-09-24.md` first.
+Rulings: `prompts/2026-09-24_cycle9_final_rulings/DIRECTIVE_VERBATIM.md`.
+Branch `nestor/s1-forensics-2026-09-23` is pushed; main was last merged at d64e85e4e.
 
-Read in this order: `campaigns/z80atlas-verify-2026-09-22/S4_CANDIDATE.md` (the review
-document), then `campaigns/z80atlas-forensics-2026-09-23/{S1A_FUNNEL,H4_AUTOPSY,S1C_P11_REASSAY}.md`,
-then FINDINGS section E.
-
-Headline: P-11 keeps 57 of the 1,031 (max causal depth 2); non-pair physics never
-searched (zero births, so zero mutation); A-4 withdrawn; candidate manifest 1,352 runs,
-7.6 wall-h (5.95 without H4).
-
-Open operator decisions: H4-0 vs H4-R; H2 16-seed decision rule; H3 certificate edges
-(C9-D11); P-11 authorship reading; then freeze (S5) and launch (S6).
+Open for operator:
+1. C9-D14: choose an H3 certificate option, or withhold H3.
+2. Authorize building the launch pipeline (runner, H1/H3 adjudicators, report and
+   audit). It does not exist and must be built before freeze.
+3. Confirm how same-stratum H2 candidates are labelled.
+Manifest: 1,200 runs, 6.7 wall-hours at 6 workers.
 
 ---
 

@@ -1,8 +1,8 @@
 {
  "gate": "T-S3",
  "ok": true,
- "constants_sha256": "ade1f755eaff9598e32eb9c768bd57b7094b4e0c7de555b0ebf2eb34b0b019ce",
- "pinned": "ade1f755eaff9598e32eb9c768bd57b7094b4e0c7de555b0ebf2eb34b0b019ce",
+ "constants_sha256": "b1c8a904d092dd61eff970f581424635c591475f8d441351d6a01caf89cccffb",
+ "pinned": "b1c8a904d092dd61eff970f581424635c591475f8d441351d6a01caf89cccffb",
  "checks": [
   {
    "kind": "REPAIRED",
@@ -14,7 +14,7 @@
    "kind": "REPAIRED",
    "check": "S3-2a constants hash == pin",
    "result": "PASS",
-   "detail": "live ade1f755eaff.. pinned ade1f755eaff.."
+   "detail": "live b1c8a904d092.. pinned b1c8a904d092.."
   },
   {
    "kind": "REPAIRED",
@@ -50,7 +50,7 @@
    "kind": "INJECTED",
    "check": "S3-2a MARGIN drifted to 0.20",
    "result": "caught",
-   "detail": "live 6a579c9c5459.. pinned ade1f755eaff.."
+   "detail": "live 9db26d7b6882.. pinned b1c8a904d092.."
   },
   {
    "kind": "INJECTED",
@@ -74,7 +74,7 @@
    "kind": "INJECTED",
    "check": "S3-2e world literal 0.90 restored",
    "result": "caught",
-   "detail": "bare threshold comparisons: ['world.py:687 fid >= 0.90']"
+   "detail": "bare threshold comparisons: ['world.py:701 fid >= 0.90']"
   }
  ]
 }

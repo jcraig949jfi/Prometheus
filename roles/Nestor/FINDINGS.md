@@ -213,6 +213,8 @@ not extinction. Evidence: `H4_AUTOPSY.md`.
 | C9-D10 | H2 arm B resolved implant bytes at run time from the predecessor first_replicator (fixed: embedded) |
 | C9-D11 | H3 certificate walks non-causal pair edges in RECOMBINATION cells (NOT repaired; operator decision) |
 | C9-D12 | H2 bar depth >= 5 has no precedent: max P-11 depth over 1,031 runs is 2 |
+| C9-D13 | H3 arm B (NICHES_HIGH_MIG) migrated at 0.08 vs the reservoir's 0.02; "identical migration" was false (fixed as ruled: RESERVOIR, easy niche off) |
+| C9-D14 | **validity, open, freeze stopped**: on the pair tape an organism keeps its id while its bytes are replaced (identity to its birth genome 0.97 after 1 epoch, 0.00 by 600, with no lineage event); the H3 certificate follows id, so it certifies identity, not heredity |
 
 ---
 

@@ -84,7 +84,7 @@ class Runner:
     def __init__(self, cell, seed, tier=None, max_epochs=None, observer=None, invaders=0,
                  init_niche_policy="BALANCED", output_gate="UNRESTRICTED", cue_cost="VM",
                  implant=None, implant_bytes=None, implant_len=None,
-                 migration_disabled=False):
+                 migration_disabled=False, easy_niche_disabled=False):
         self.cell = cell
         self.invaders = invaders
         # H2 arms B and C. ONE organism is implanted into an otherwise identical world:
@@ -99,6 +99,12 @@ class Runner:
         # H3 arm C. Migration suppressed while the easy niche is kept, isolating
         # transport from the existence of the reservoir.
         self.migration_disabled = migration_disabled
+        # H3 arm B (C9-D13). "Homogeneous niches + IDENTICAL migration": the RESERVOIR
+        # structure is kept - same four niches, same 0.02 migration rate, same P-8
+        # placement - and only the easy-niche task modifier is switched off. Rev B used
+        # NICHES_HIGH_MIG for this arm, which migrates at 0.08, four times the reservoir's
+        # rate, so the arms differed in transport as well as in the easy niche.
+        self.easy_niche_disabled = easy_niche_disabled
         # P-8. The predecessor left _place's niche=0 default in run(), so the entire
         # initial population began in niche 0. Under NICHES_ISOLATED that leaves three
         # niches permanently empty, because isolated means no migration can ever fill
@@ -397,10 +403,18 @@ class Runner:
         """
         if not self.lineage_complete:
             return None
+        # H3 / C9-D11 (operator ruling 2026-09-24). Every hereditary PAIR_EXECUTION edge
+        # the chain traverses must itself be P-11 causal. A pair edge that only the
+        # predecessor criterion accepted - in RECOMBINATION cells almost always a splice,
+        # not a copy - BREAKS the certificate; it is never walked past.
+        noncausal_pair = {e["child"] for e in self.lineage
+                          if e["kind"] == "birth" and "p11" in e and not e["causal"]}
         chain, cur, seen = [], oid, set()
         while cur is not None and cur not in seen:
             seen.add(cur)
             chain.append(cur)
+            if cur in noncausal_pair and cur in parent:
+                return None
             cur = parent.get(cur)
         founder = chain[-1]
         if birth_niche.get(founder) != easy_niche:
@@ -1018,6 +1032,8 @@ class Runner:
 
     def _apply_niche_modifier(self, spec, niche):
         """The structural modifier, applied to whatever task the environment proposed."""
+        if self.easy_niche_disabled:
+            return spec
         if self.cell["structure"] == "RESERVOIR" and niche == 0:
             return tasks.TaskSpec(transform=spec.transform, read_order="FORCED_READ",
                                   bridge="NEUTRAL_BRIDGE", n_episodes=spec.n_episodes,

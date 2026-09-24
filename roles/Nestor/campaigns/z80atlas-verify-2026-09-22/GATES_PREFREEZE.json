@@ -1,6 +1,6 @@
 {
  "ok": true,
- "written": "2026-09-24 01:00:53",
+ "written": "2026-09-24 06:16:09",
  "gates": [
   {
    "gate": "VM selftest",
@@ -74,16 +74,38 @@
    "outcome": "PASS",
    "seconds": 0.2,
    "tail": [
-    "caught   S3-2e world literal 0.90 restored            bare threshold comparisons: ['world.py:687 fid >= 0.90']",
+    "caught   S3-2e world literal 0.90 restored            bare threshold comparisons: ['world.py:701 fid >= 0.90']",
     "----------------------------------------------------------------------------------------------------",
     "T-S3: PASS  (12 checks)"
+   ]
+  },
+  {
+   "gate": "T-H3-P11 causal ancestry + arm B",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.1,
+   "tail": [
+    "        founder = crossing organism, no hereditary edge: cert=FORMED, lineage_len 1",
+    "----------------------------------------------------------------------------------------------------",
+    "T-H3-P11: PASS"
+   ]
+  },
+  {
+   "gate": "T-H2 ruled decision rule",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.0,
+   "tail": [
+    "PASS   none supporting                                        got REPLICATION_EVENTS_WITHOUT_PROPAGATION   want REPLICATION_EVENTS_WITHOUT_PROPAGATION",
+    "caught specimen-count panel rule                              injected rule says PANEL_POSITIVE",
+    "T-H2: PASS"
    ]
   },
   {
    "gate": "P-6 report audit (predecessor)",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 24.7,
+   "seconds": 19.5,
    "tail": [
     "banned_phrase_proves             caught   CHK-LANGUAGE:\\bproves\\b|\\bproven\\b  unsupported phrase 'proves",
     "----------------------------------------------------------------------------------------------------",
@@ -99,6 +121,17 @@
     " \"gate\": \"PASS\",",
     " \"seconds\": 9.0",
     "}"
+   ]
+  },
+  {
+   "gate": "T-MAN/T-HASH manifest + hash repro",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.3,
+   "tail": [
+    "PASS   T-HASH 3 processes, 3 hash seeds agree       protocol d70495cc6bcf66e7..",
+    "PASS   T-HASH PROPOSED_HASHES.json is current       stale: none",
+    "T-MAN/T-HASH: PASS"
    ]
   }
  ]

@@ -1,8 +1,10 @@
 # Z80 x Atlas VERIFICATION campaign - 24 hours - PREREGISTRATION
 
-Status: **DRAFT rev B. NOT FROZEN. NOT LAUNCHED.** No grammar hash, no protocol hash and
-no manifest hash is written as final here; the proposed values live in the review packet
-and are written into this file only at freeze, by the operator's instruction.
+Status: **rev C (operator final rulings 2026-09-24). NOT FROZEN. NOT LAUNCHED.** No
+grammar, protocol, manifest, panel or constants hash is written as final here. The
+proposed values are in `PROPOSED_HASHES.json`, recomputed by `proposed_hashes.py`, and are
+written into this file only at freeze. Governing rulings:
+`roles/Nestor/prompts/2026-09-24_cycle9_final_rulings/DIRECTIVE_VERBATIM.md`.
 
 Predecessor: `z80atlas-2026-09-19`, 23,471 runs, closed 2026-09-22. **That evidence is
 frozen and is not read-modify-written by anything in this campaign.** This directory
@@ -31,6 +33,15 @@ each change is recorded here so the diff is auditable.
 | A-12 | - | **New P-8** deterministic multi-niche initialization | Predecessor places the entire initial population in niche 0 |
 | A-13 | - | **New P-9** explicit environment x structure composition | `COEVO_ENV` silently bypasses the reservoir's niche-0 modification |
 | A-14 | - | **New P-10** ENV_MIG semantic validity | Its gate is `env_difficulty(niche) < 0.5`, and that function returns 1.0 for every structure except RESERVOIR, so under ENV_MIG the gate never fires |
+| A-15 | pair-tape causal edge = predecessor write-count criterion | **New P-11**: the predecessor criterion AND a matched randomized-victim assay (`P11_SPEC.md`) | The write count does not show the donor's bytes were carried; S1-C: 57 of 1,031 survive, and in 6,287 of 6,547 RECOMBINATION events the post-interaction splice made the match |
+| A-16 | - | P-11 authorship: **primary = causal_value_authorship** (last context to CHANGE a byte into its final donor-matching value; a later same-value rewrite does not erase it); **literal last-write attribution = mandatory sensitivity analysis**, reported beside every P-11 result | Operator ruling 2026-09-24. Reassay: primary 57, literal 48 |
+| A-17 | H2 panel: 16 specimens from the predecessor's 1,031 | **16-specimen panel rebuilt from P-11 survivors** (`specimens.manifest_p11`, rule committed before S1-C results); arm B implants the donor of the first P-11-causal event, embedded in the manifest | Operator ruling; none of the rev-B specimens is retained |
+| A-18 | H2 5 seeds; B >= 3/5 and C <= 1/5 | **16 shared seeds; B >= 8/16 and C <= 2/16; panel positive needs >= 2 supporting specimens from different strata; depth >= 2 and >= 3 secondary readouts only** | Operator ruling 2026-09-24 |
+| A-19 | P-1 certificate walked every lineage edge | **Every hereditary PAIR_EXECUTION edge on the certificate chain must be P-11 causal; a non-P-11 pair edge breaks the certificate** | Operator ruling (C9-D11); test T-H3-P11 fails on the old code |
+| A-20 | H3 cells = RESERVOIR specimens of the H2 panel, 16 seeds | **Two RESERVOIR cells repicked prospectively from the P-11 record** (cells of `4931614d912c52b2-s1190-tL-a0`, same-cell survivor `-s9368-tM-a0`, and `a62116831aa6d956-s7926-tM-a0`); **32 shared seeds**; 192 runs | Operator ruling |
+| A-21 | H3 arm B = `NICHES_HIGH_MIG` | **Arm B = RESERVOIR structure with the easy-niche modifier off** | C9-D13: NICHES_HIGH_MIG migrates at 0.08, the reservoir at 0.02; "identical migration" was false |
+| A-22 | H4 four blocks x 16 seed-pairs | **WITHHELD. Removed from this campaign.** A-4 is withdrawn; the S1-B autopsy is preserved | Operator ruling. The endogenous arm never reproduces (C9-D07), and the historical control was unmatched (Z80A-D04) |
+| A-23 | thresholds as literals in several modules | **One hash-covered constants object** (`constants.py`), including the H2 and H3 decision thresholds | S3-2 |
 
 ---
 
@@ -43,7 +54,7 @@ Four questions the 72-hour campaign raised and cannot close from its own record.
 | H1 | Does requiring the cue to be consumed before answering change accessibility? | The predecessor's `read_order` factor changes the task itself, so its two arms are not the same experiment measured twice |
 | H2 | Do evidence-backed replication events become self-sustaining lineages? | Ancestry depth was never an endpoint. Reconstruction shows depth 1 in 911 of 1,031 admissible runs |
 | H3 | Does an easy niche act as a genetic reservoir? | The lineage record keeps a 400-event tail, logs no migration, and stores only the parent's niche at birth |
-| H4 | Is the single admissible endogenous-only instance real? | n = 1 |
+| H4 | ~~Is the single admissible endogenous-only instance real?~~ **WITHHELD (A-22).** A-4 is withdrawn: its control was unmatched and its endogenous population never reproduced | - |
 
 ---
 
@@ -192,6 +203,19 @@ not use. **T-P10** demonstrates the inertness on the predecessor code (migration
 behaviour under `ENV_MIG` is statistically indistinguishable from a plain rate) and
 asserts the level is absent from the Cycle-9 grammar.
 
+### P-11 PAIR_EXECUTION copy causality (H2, H3)
+
+Specified in `P11_SPEC.md` and implemented in `p11.py` (commit `f28e5fd72`, before any of
+the 1,031 was inspected). A pair-tape edge is causal iff it passes the predecessor
+criterion AND the randomized-victim assay (3 draws, majority 2: rebuild >= 0.90, donor
+authorship >= 0.90 of donor-directed changes, donor-disabled control < 0.90).
+**Authorship, primary: causal_value_authorship** (A-16). **Literal last-write
+authorship is a mandatory sensitivity analysis.** Every P-11 result is reported under
+both. `max_causal_replication_depth` on the pair tape uses P-11 edges;
+`max_predecessor_replication_depth` is kept beside it. **T-P11** (14 checks) fails the
+predecessor detector on three negative controls. The frozen predecessor result, 1,031
+admissible under its historical criterion, is not rewritten.
+
 ---
 
 ## 2. Hypotheses and decision rules
@@ -231,65 +255,65 @@ detected effect of cue gating**, which is publishable and promotes nothing.
 
 ### H2 — Do replication events become self-sustaining lineages?
 
-**Specimen panel frozen before launch.** Deterministic selection from the frozen
-predecessor record, recorded as run IDs in `SPECIMENS.manifest.json`:
+**Specimen panel (A-17).** 16 specimens chosen from the 57 P-11 survivors by a
+deterministic rule committed before any S1-C result was read (`specimens.select_p11`):
+coverage round-robin over (reproduction, structure, representation), then P-11 events
+descending, first P-11 donor fidelity descending, ties by sha256(run_id). There were 52
+eligible candidates; the panel covers 13 strata. Panel hash in `PROPOSED_HASHES.json`.
 
-1. maximize coverage over `(reproduction, structure, representation)` strata;
-2. within a stratum, rank by replication evidence (`replication_events` desc, then
-   `first_replicator.fidelity` desc);
-3. break remaining ties by ascending `sha256(run_id)`.
+Three arms per specimen, **16 shared seeds**, identical background and RNG seed:
 
-Target **16 mechanism-diverse specimens**.
+- **A in situ** — the specimen's own cell.
+- **B actual-genome reimplant** — the donor genome of the specimen's first P-11-causal
+  event, implanted alone. The bytes are embedded in the manifest.
+- **C length-matched random-byte implant** — identical to B except for the bytes.
 
-Three arms per specimen, **shared background and RNG seeds**, differing only in the
-implanted bytes:
+**Primary strong endpoint:** `max_causal_replication_depth >= 5` (P-11 edges).
 
-- **A in situ** — the specimen's own cell, measured directly.
-- **B actual-genome reimplant** — the specimen's first evidence-backed replicator genome
-  implanted alone into a fresh world of the same cell.
-- **C length-matched random-byte implant** — identical to B, random bytes of equal length.
+**Specimen rule.** A specimen SUPPORTS the strong endpoint iff arm B reaches it in
+**>= 8 of 16** seeds AND arm C reaches it in **<= 2 of 16**. A specimen with any
+incomplete bundle is INCOMPLETE and never supports.
 
-**Primary endpoint: `max_causal_replication_depth`.**
+**Panel rule.** PANEL_POSITIVE requires **at least two supporting specimens from
+different frozen strata**. Exactly one supporting specimen is an **ISOLATED_CANDIDATE,
+not a panel-level positive**. Two or more supporting specimens that all share one
+stratum are reported as SAME_STRATUM_CANDIDATES, which is also not panel-level positive;
+the ruling does not name this case, and it is flagged for review. Otherwise the result
+is **replication events without propagation**, the default conclusion.
 
-**Decision rule.** A specimen supports self-sustaining replication only if arm B reaches
-causal depth >= 5 in at least 3 of 5 seeds **and** arm C reaches it in at most 1 of 5.
-Anything else is reported as **replication events without propagation**, which is the
-predecessor's actual result and the default conclusion.
+**Secondary readouts only:** the same counts at depth >= 2 and depth >= 3 for every arm.
+They never change a verdict. Implemented in `hypotheses.py`, test T-H2.
+
+Precedent, recorded before launch: across all 1,031 predecessor runs, the maximum P-11
+depth is 2.
 
 ### H3 — Does the easy niche cause accessibility?
 
-Cells frozen before launch by a deterministic rule over the predecessor record, recorded
-in the manifest. No adaptive replacement after results arrive.
+**Cells (A-20)**, repicked prospectively from the completed P-11 record: the two unique
+RESERVOIR cells among the P-11 survivors, those of `4931614d912c52b2-s1190-tL-a0` (same-cell
+survivor `4931614d912c52b2-s9368-tM-a0`) and `a62116831aa6d956-s7926-tM-a0`. They are pinned
+in `manifest.H3_CELLS`, independent of the H2 panel.
 
-Three arms, shared seeds, everything else held fixed:
+Three arms, **32 shared seeds per cell**, everything else held fixed (192 runs):
 
-- **A** easy niche + migration
-- **B** homogeneous niches + identical migration physics
+- **A** easy niche + migration (RESERVOIR)
+- **B** homogeneous niches + **identical** migration: the RESERVOIR structure with the
+  easy-niche modifier off (A-21)
 - **C** easy niche + migration disabled
 
-**Decision rule.** A reservoir-supporting result requires **both** a complete hard-niche
-ancestry certificate in A **and** preregistered separation from B and C. Separation is a
+**Certificate (A-19).** The P-1 certificate additionally requires every hereditary
+PAIR_EXECUTION edge on its chain to be P-11 causal. A non-P-11 pair edge breaks it.
+
+**Decision rule** (unchanged). A reservoir-supporting result requires **both** a complete
+hard-niche ancestry certificate in A **and** preregistered separation from B and C: a
 certificate rate in A exceeding both controls by >= 0.20. Certificate count alone cannot
 establish causation. Fewer than 5 certificates in A is **not demonstrated**.
 
-### H4 — Is the n=1 endogenous instance real?
+### H4 — WITHHELD (A-22)
 
-Exact cell of `64dea50f417efb02-s1203-tL-a0`. Fixed shared-seed `ENDOGENOUS_PARTIAL` vs
-`EXTERNAL` pairs in four blocks, 16 seed-pairs each unless measured smoke timings force a
-documented reduction before freeze:
-
-- **A** exact historical cell, `SEEDED_READER`
-- **B** same cell, `RANDOM` seeding
-- **C** historical cell, `COEVO_ENV` replaced by the preregistered `STATIC` comparator
-- **D** historical cell, periodic migration replaced by its preregistered topology comparator
-
-No post-result allocation among blocks.
-
-**Decision rule.** Confirmed if block A's endogenous arm reaches final held-out >= 0.90 in
-at least 6 of 16 seed-pairs while its external arm reaches it in at most 1. Between those,
-**seed-dependent**. Below, **retracted as an anecdote**, in those words. Blocks B, C and D
-attribute any confirmed effect to the reader scaffold, coevolution or periodic migration
-respectively.
+Removed from this campaign by operator ruling on 2026-09-24. It is not redesigned before
+Cycle 9. A-4 is withdrawn. The S1-B autopsy
+(`campaigns/z80atlas-forensics-2026-09-23/H4_AUTOPSY.md`) is preserved.
 
 ---
 
@@ -298,6 +322,9 @@ respectively.
 Percentage allocation is replaced by a machine-readable manifest enumerating every
 hypothesis, bundle, cell or specimen, seed, arm, tier and budget, and every expected
 control relationship. The manifest is hashed.
+
+Generated manifest, authoritative for counts: **H1 240, H2 768, H3 192, H4 0; 1,200
+runs** in 380 bundles (`manifest.build()`, validated by T-MAN).
 
 After freeze **the runner consumes the manifest only**. No UCB, no promotion, no
 exploration floor, no replacement sampling, no result-dependent allocation.
@@ -318,9 +345,9 @@ Recorded now so no outcome can be reframed later.
   events are single replication events in worlds that do not sustain lineages.
 - **H3 empty**: zero certificates in arm A, or no separation from B and C. No reservoir
   support in this substrate.
-- **H4 retracted**: block A does not reproduce. One anecdote removed.
+- **H4**: withheld (A-22); A-4 is already withdrawn.
 
-All four negatives are publishable. None triggers a follow-up campaign by default.
+All three negatives are publishable. None triggers a follow-up campaign by default.
 "Not worth continuing" remains a first-class answer.
 
 ---
@@ -330,7 +357,7 @@ All four negatives are publishable. None triggers a follow-up campaign by defaul
 | # | Gate | State |
 |---|---|---|
 | 1 | Operator review of this document (rev B) | **pending** |
-| 2 | Operator review of repair tests T-P1..T-P10 | **pending** |
+| 2 | Operator review of repair tests T-P1..T-P11, T-S3, T-H3-P11, T-H2 | rulings 2026-09-24 |
 | 3 | Every T-P test fails on injected-defect fixture and passes on repaired substrate | see packet |
 | 4 | Predecessor's 10 calibration controls pass | see packet |
 | 5 | Verification smoke: real bundles, same-seed controls, reordered completions, forced restart | see packet |
