@@ -164,6 +164,7 @@ class Controller(object):
         self.create_attempts = []
         self.gpu_used = None
         self.stages_seen = {}
+        self.stages_retrieved = {}
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -414,9 +415,15 @@ class Controller(object):
                   % (self.ready_timeout_s, self.last_stage() or "none"))
         return False
 
-    def last_stage(self):
-        """The furthest bootstrap stage the pod reported reaching."""
-        reached = [st for st in STAGE_ORDER if st in (self.stages_seen or {})]
+    def last_stage(self, stages=None):
+        """The furthest bootstrap stage the pod reported reaching.
+
+        Prefers stages RETRIEVED at the end over those merely seen while
+        waiting: a pod that became ready on the first poll never had its
+        stages read during the wait, and reported None despite having them.
+        """
+        known = stages or self.stages_retrieved or self.stages_seen or {}
+        reached = [st for st in STAGE_ORDER if st in known]
         return reached[-1] if reached else None
 
     def _watch(self, started):
@@ -452,7 +459,8 @@ class Controller(object):
         self._mark("retrieve_start")
         stages = self._fetch(STAGES_PATH)
         if stages:
-            receipt_obj["pod_stages"] = parse_stages(stages)
+            self.stages_retrieved = parse_stages(stages)
+            receipt_obj["pod_stages"] = self.stages_retrieved
         text = self._fetch(TELEMETRY_PATH)
         if text is not None:
             self.telemetry_text = text

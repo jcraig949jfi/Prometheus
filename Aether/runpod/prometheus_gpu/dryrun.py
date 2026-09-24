@@ -107,9 +107,13 @@ def build_bootstrap(spec, run_meta, transport):
     # rather than a repeated one-liner nobody will keep in step.
     # printf, not echo: the format is fixed here and the two values are
     # arguments, so a stage name can never be read as a format string.
-    mark = ('stage() { printf %s "$1" "$(date +%s)" >> %s; }'
-            % ("'" + '{"stage": "%s", "epoch": %s}' + chr(92) + "n'",
-               "%s", stages))
+    # Nanosecond resolution: Iteration 1's module ran in 0.67 s and whole
+    # seconds reported its execution time as 0.0.
+    # Built by concatenation, not %-formatting: the shell needs a
+    # literal %N for nanoseconds and %-formatting rejects it.
+    fmt = chr(39) + '{"stage": "%s", "epoch": %s}' + chr(92) + "n" + chr(39)
+    mark = ("stage() { printf " + fmt + ' "$1" "$(date +%s.%N)" >> '
+            + stages + "; }")
     lines = [
         "set -euo pipefail",
         "mkdir -p %s %s" % (workdir, artifacts),

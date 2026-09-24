@@ -352,9 +352,16 @@ def test_cost_separates_overhead_from_compute():
     short = cost_mod.project(_spec(max_runtime_s=60), workload_seconds=60)
     long = cost_mod.project(_spec(max_runtime_s=7200), workload_seconds=7200)
     assert short["overhead_fraction"] > long["overhead_fraction"]
-    assert short["overhead_fraction"] > 0.5, (
-        "on a one-minute workload the overhead should dominate, which is the "
+    # The PROPERTY is that fixed overhead dominates a short enough job, not
+    # that it dominates at any particular duration. Iteration 1 measured the
+    # overhead at ~35 s where the model had inferred 78 s, and a threshold
+    # pinned to the old figure would fail on the better measurement -- which
+    # is a test asserting a number rather than the thing it cared about.
+    tiny = cost_mod.project(_spec(max_runtime_s=600), workload_seconds=10)
+    assert tiny["overhead_fraction"] > 0.5, (
+        "fixed overhead should dominate a ten-second workload, which is the "
         "whole reason hourly price is not the economics")
+    assert short["overhead_fraction"] > 0.2
     assert abs(short["usd_overhead"] + short["usd_compute"]
                - short["usd_total"]) < 1e-9
 

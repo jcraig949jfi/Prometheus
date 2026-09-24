@@ -64,3 +64,46 @@ next projection starts from observations rather than from recollection.
 Second lesson: set the ceiling ABOVE the projection by more than the
 projection's own uncertainty, or the guard converts a small estimate
 error into lost science at the end of the last replicate.
+
+2026-09-24 | Recorded the GPU flight system's fixed overhead as 78 s, with
+`provision` (20 s) and `bootstrap` (40 s) marked INFERRED, and used that
+total in COST_MODEL.md, in every projection, and in a test threshold. |
+Iteration 1 measured the same path end to end at about 35 s: accept 1.75 s,
+pod-side bootstrap 6.0 s, canary 1.0 s, teardown 2.2 s, total wall 35.4 s.
+The model was 2.3x too high and the error was almost entirely in the two
+terms marked inferred. | The first real flight of the platform's own launch
+path, receipt hello-gpu-20260924T212427Z. | Labelling a number INFERRED was
+right and was NOT ENOUGH: nothing forced it to be measured, and it
+propagated into a document, every estimate, and a test that asserted
+overhead exceeds 50% of a one-minute job -- which was true only of the
+inflated figure, so the better measurement FAILED THE TEST. Two practice
+changes. First, an inferred term now carries what would isolate it, and
+`provision` is recorded as a BOUND (9-24 s, not isolated) rather than a
+value, because 15 s of the interval is my own poll granularity. Second, a
+test must assert the property it cares about, not a figure it did not
+derive; a threshold pinned to an estimate fails exactly when the estimate
+improves. Also found: the cost breakdown's parts were each rounded
+independently of the total, so they did not sum -- small, and still a
+defect in a money report.
+
+2026-09-24 | Treated the AETH-02 trajectory round's four-way edge
+classification and change rates as per-tick measurements, and reported them
+as such in NATIVE_CIRCUITRY_01, including describing an algebraic identity
+between two functions as an "observer consistency check". |
+`aeth02_runner.py` refreshes its `prev` snapshot only when it emits a
+sample, so every comparison was against the state 250 TICKS EARLIER.
+Measured the bias directly on one lattice by classifying the same tick
+against both reference states: STATE_CHANGING +7.3% relative, SAME_VALUE
+-2.7%, change_rate +12.1%, per-field opcode change rate +128%. And
+`changed_by_field` versus `STATE_CHANGING` agree because they are the same
+expression in two functions -- an identity, not a check. | Building H2,
+which needed a per-tick change rate and got an implausible one. | I read
+`change_rate(xp, prev, device)` and saw the right function without checking
+what `prev` HELD. A variable named `prev` that is refreshed on a different
+cadence from its use is a trap, and the cure is to verify the OPERAND, not
+just the operation. The corrected figures move every conclusion slightly
+FURTHER in the direction already reported, which is luck and not
+vindication. Second lesson: when two quantities agree exactly, suspect an
+identity before claiming a validation -- an exact 1.0000 ratio across
+hundreds of samples should have prompted me to look for why it could not
+have come out otherwise.

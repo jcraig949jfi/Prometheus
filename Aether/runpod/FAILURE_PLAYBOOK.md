@@ -284,6 +284,95 @@ prelude leaves" was the real one.
 
 ---
 
+## 15. A valid request the provider cannot fill
+
+**Looked like:** HTTP 400 on create, three times, no pod.
+
+**Cause:** not a malformed request. The body read:
+*"There are no longer any instances available with the requested
+specifications."* There was no RTX A4000 capacity in SECURE cloud.
+
+**Now:** declare `gpu.alternatives` in the order you would rather have
+them. The controller walks the list, reconciling inventory between
+attempts so a failed create is confirmed to have created nothing before
+the next id is tried. An *unresolved* outcome stops the walk: trying
+another GPU there could put a second pod beside one that cannot be named.
+
+**Note:** a 400 creates nothing, so reading the response body is free and
+is usually the fastest way to the cause. The qualified client hides it;
+a one-off direct probe does not.
+
+**Prevention:** `test_capacity_refusal_walks_the_declared_alternatives`,
+`test_no_capacity_anywhere_is_a_named_clean_non_event`,
+`test_an_unresolved_create_stops_the_walk`.
+
+---
+
+## 16. A pod that is fine, and a controller that calls it dead
+
+**Looked like:** `pod never reported ready within 300 s`. The pod was
+healthy.
+
+**Cause:** the bootstrap was installing `cupy-cuda12x` and its `nvidia-*`
+dependencies — about a gigabyte of wheels. It took 6 seconds on one flight
+and over 305 on the next, same image, same GPU class. A fixed deadline
+cannot tell a slow dependency install from a dead pod, so it calls both
+dead and discards the one that was about to work.
+
+**Now:** the controller waits on PROGRESS. Stage markers are read each
+poll, and it gives up only when nothing has advanced for
+`stall_timeout_s`, or at a hard ceiling. The failure names the stage:
+*"furthest bootstrap stage reached was unpacked"*.
+
+**Generalisation:** a timeout on total elapsed time is a guess about the
+slowest acceptable case. A timeout on lack of progress is a statement
+about liveness, and it is almost always the one you wanted.
+
+**Prevention:** `test_a_slow_dependency_install_is_not_mistaken_for_a_dead_pod`,
+`test_a_pod_that_stops_advancing_is_given_up_on`.
+
+---
+
+## 17. The path was right in the document and wrong in the code
+
+**Looked like:** ten minutes of `404` from the pod proxy. The artifact
+server was up the whole time.
+
+**Cause:** `MODULE_CONTRACT.md` says artifact paths are relative to
+`$PROMETHEUS_ARTIFACT_DIR`. The server's document root IS that directory,
+so `/app/out/result.json` is served at `/result.json` — and the
+controller, plus both example specs, asked for `/out/result.json`. Nothing
+tested the agreement between the contract and the implementation, and the
+conformance test actually STRIPPED a leading `out/`, hiding the mismatch
+it should have caught.
+
+**Now:** paths are artifact-dir relative everywhere, and the conformance
+test refuses any artifact path containing a slash.
+
+**Generalisation:** a test that normalises away a discrepancy is worse
+than no test, because it converts a visible defect into a passing suite.
+
+**Prevention:** `test_the_example_writes_every_artifact_it_declares`.
+
+---
+
+## 18. Silence is the most expensive failure mode
+
+**Looked like:** a 600-second flight that reported one uninformative word.
+
+**Cause:** `fetch` returned `None` for every failure — unreachable,
+401, 404, timeout, DNS — so the controller could not say which.
+
+**Now:** a failed fetch records url, status and error; the controller
+reports each distinct reason once; and a missing artifact makes it fetch
+the server's document index, so the pod says which files exist while it is
+still alive.
+
+**Cost of not having this:** two flights and $0.088. The first attempt
+with diagnostics identified the cause in its first second.
+
+---
+
 ## Diagnostics
 
 ```bash

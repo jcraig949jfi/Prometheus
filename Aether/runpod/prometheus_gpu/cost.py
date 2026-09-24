@@ -21,18 +21,39 @@ or evaluations for another seat. The platform must not impose one.
 # Observed on AETH-01/AETH-02 runs on this account, A40 SECURE.
 # Replace from measurement; do not tune to make a projection look good.
 OVERHEAD_S = {
-    "accept": 1.0,        # create request -> pod accepted (measured ~1 s)
-    "provision": 20.0,    # accepted -> machine available (inferred)
-    "bootstrap": 40.0,    # download, checksum, pip install (inferred)
-    "canary": 12.0,       # 300-case GPU canary (measured 10.9-12.9 s)
-    "teardown": 5.0,      # terminate request -> absence confirmed (measured)
+    # MEASURED by Iteration 1 through the platform's own launch path, on an
+    # RTX 4090, receipt hello-gpu-20260924T212427Z. The previous values were
+    # inferred from AETH-01/02 orchestrator timings and were 2.3x too high
+    # in total.
+    "accept": 1.8,        # create call -> id returned
+    "provision": 24.0,    # create accepted -> pod shell running (see below)
+    "bootstrap": 6.0,     # fetch, verify, unpack, dependency install
+    "canary": 1.0,        # the DECLARED canary; scales with what it does
+    "teardown": 2.2,      # terminate request -> absence confirmed
+}
+# The spread that matters more than the median. Iteration 1 measured the
+# same bootstrap at 6 s and at over 300 s on consecutive flights with the
+# same image, wheels and GPU class, so the dependency install is a
+# high-variance term and a point estimate of it is misleading. This is why
+# the controller waits on PROGRESS rather than on a deadline.
+OVERHEAD_OBSERVED_RANGE_S = {
+    "accept": (1.7, 2.9),
+    "bootstrap": (6.0, 305.0),
+    "teardown": (1.1, 4.1),
 }
 OVERHEAD_PROVENANCE = {
-    "accept": "measured, create->201 in AETH-02 launches",
-    "provision": "INFERRED from canary-ready latency, not isolated",
-    "bootstrap": "INFERRED from the same interval; not yet decomposed",
-    "canary": "measured, receipt gpu_kernel_seconds 10.95-12.94",
-    "teardown": "measured, terminate ACK to absence confirmed",
+    "accept": "measured, Iteration 1 create_call_s 1.745-2.947",
+    "provision": "UPPER BOUND. accepted_to_first_telemetry 31.4 s minus 7.0 s "
+                 "of pod-side bootstrap; up to 15 s of the remainder is the "
+                 "controller's own poll interval, so the true value is "
+                 "between about 9 s and 24 s and is not yet isolated",
+    "bootstrap": "measured on the pod's own clock, 6.0 s median; observed up "
+                 "to 305 s on an identical configuration -- see "
+                 "OVERHEAD_OBSERVED_RANGE_S",
+    "canary": "measured, Iteration 1 canary_s 1.0 for `import cupy`. AETH's "
+              "300-case GPU canary measured 10.9-12.9 s; this term is a "
+              "property of the declared canary, not of the platform",
+    "teardown": "measured, Iteration 1 terminate ACK to absence confirmed",
 }
 
 # Quoted hourly rates. Not authoritative: the provider is.
@@ -82,7 +103,11 @@ def project(spec, workload_seconds=None, hourly=None, include_canary=True):
         "compute_s": round(compute_s, 1),
         "compute_is_ceiling": bounded,
         "total_s": round(total_s, 1),
-        "usd_total": round(usd, 4),
+        # The reported total is the sum of the reported PARTS. Rounding each
+        # independently left a breakdown that did not add up, which in a
+        # money report is a defect however small the residue.
+        "usd_total": round(round(over_s / 3600.0 * rate, 4)
+                           + round(compute_s / 3600.0 * rate, 4), 4),
         "usd_overhead": round(over_s / 3600.0 * rate, 4),
         "usd_compute": round(compute_s / 3600.0 * rate, 4),
         "overhead_fraction": round(over_s / total_s, 4) if total_s else None,
