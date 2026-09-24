@@ -169,24 +169,49 @@ def _read(path):
 
 
 def _sha256_of(path):
+    """sha256 over LF-NORMALISED bytes -- the repository artifact.
+
+    Not the checkout's raw bytes. Git may hand a text file over as CRLF
+    depending on core.autocrlf and .gitattributes, and the pod downloads
+    the LF blob from raw.githubusercontent, so a checkout-byte hash makes
+    the pod's `sha256sum -c` fail for a file that is in fact correct.
+    Caught exactly that way: aeth01_observatory.py was CRLF in this
+    worktree and LF in the blob. See base role s4, and comms/manifest.py,
+    which exists for this reason.
+    """
     import hashlib
     with open(path, "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
+        return hashlib.sha256(f.read().replace(b"\r\n", b"\n")).hexdigest()
 
 
 FILES = [(n, _sha256_of(os.path.join(_CANARY, n))) for n in _PINNED]
-SHIPPED = [
-    ("/app/observatory/__init__.py", _read(os.path.join(_OBSERVATORY, "__init__.py"))),
-    ("/app/observatory/aeth01_observatory.py",
-     _read(os.path.join(_OBSERVATORY, "aeth01_observatory.py"))),
-    ("/app/observatory/aeth01_run.py",
-     _read(os.path.join(_OBSERVATORY, "aeth01_run.py"))),
-    ("/app/observatory/aeth01_graph.py",
-     _read(os.path.join(_OBSERVATORY, "aeth01_graph.py"))),
-    ("/app/aeth02_runner.py", _read(os.path.join(_HERE, "aeth02_runner.py"))),
-    ("/app/aeth01_bench_server.py",
-     _read(os.path.join(_CANARY, "aeth01_bench_server.py"))),
-]
+
+# Everything else the pod needs is DOWNLOADED and checksummed, not
+# embedded in the create request.
+#
+# Embedding it as heredocs put ~48 KB of Python into `cmd`, and at
+# 51,251 bytes the provider began rejecting the create with alternating
+# 400 and 500. The calibration run succeeded at 48,728 bytes, so the
+# limit sits between the two. Downloading instead takes `cmd` to a few
+# kilobytes AND upgrades provenance: these files are now verified by
+# sha256 on the pod exactly like the four frozen ones, rather than
+# trusted because the controller pasted them.
+#
+# (repository path, path on the pod relative to /app)
+_FETCHED = (
+    ("Aether/observatory/__init__.py", "observatory/__init__.py"),
+    ("Aether/observatory/aeth01_observatory.py",
+     "observatory/aeth01_observatory.py"),
+    ("Aether/observatory/aeth01_run.py", "observatory/aeth01_run.py"),
+    ("Aether/observatory/aeth01_graph.py", "observatory/aeth01_graph.py"),
+    ("Aether/runpod/aeth02_circuitry/aeth02_runner.py", "aeth02_runner.py"),
+    ("Aether/runpod/aeth01_canary/aeth01_bench_server.py",
+     "aeth01_bench_server.py"),
+)
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(_HERE)))
+RAW_ANY = "https://raw.githubusercontent.com/jcraig949jfi/Prometheus/%s/%s"
+FETCHED = [(repo_path, dest, _sha256_of(os.path.join(_REPO_ROOT, repo_path)))
+           for repo_path, dest in _FETCHED]
 
 GATE = r'''set +e
 touch /app/bench.log
@@ -233,16 +258,15 @@ def build_script(worlds):
     L = ["set -e", "mkdir -p /app/observatory", "cd /app"]
     for name, _h in FILES:
         L.append("curl -fsSL '%s' -o '%s'" % (RAW % (COMMIT, name), name))
+    for repo_path, dest, _h in FETCHED:
+        L.append("curl -fsSL '%s' -o '%s'" % (RAW_ANY % (COMMIT, repo_path), dest))
     L.append("cat > checksums.txt <<'CHKEOF'")
     for name, h in FILES:
         L.append("%s  %s" % (h, name))
+    for _repo_path, dest, h in FETCHED:
+        L.append("%s  %s" % (h, dest))
     L.append("CHKEOF")
     L.append("sha256sum -c checksums.txt")
-    for i, (path, body) in enumerate(SHIPPED):
-        tag = "AETH01_SHIP_%d_EOF" % i
-        L.append("cat > %s <<'%s'" % (path, tag))
-        L.append(body)
-        L.append(tag)
     L.append("pip install --no-cache-dir 'numpy==2.2.0' 'cupy-cuda12x==13.3.0'")
     L.append("unset RUNPOD_API_KEY RUNPOD_API_TOKEN RUNPOD_TOKEN")
     L.append("python3 pod_service.py &")
@@ -453,10 +477,8 @@ def main():
     log("pinned commit %s" % COMMIT)
     for name, digest in FILES:
         log("  downloaded %-24s %s" % (name, digest[:16]))
-    import hashlib as _h
-    for path, body in SHIPPED:
-        digest = _h.sha256(body.encode("utf-8")).hexdigest()
-        log("  shipped    %-24s %s" % (os.path.basename(path), digest[:16]))
+    for _repo_path, dest, digest in FETCHED:
+        log("  fetched    %-24s %s" % (os.path.basename(dest), digest[:16]))
     for w in worlds:
         log("  phase %-18s %5d^2 x %6d ticks" % (w["name"], w["size"], w["ticks"]))
 
