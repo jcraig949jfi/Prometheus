@@ -49,7 +49,11 @@ DEFAULTS = {
     "version": "1",
     "args": [],
     "dependencies": {"pip": []},
-    "gpu": {"class": "NVIDIA A40", "count": 1, "cloud": "SECURE"},
+    "gpu": {"class": "NVIDIA A40", "count": 1, "cloud": "SECURE",
+            # Ordered fallbacks. GPU availability is a runtime condition,
+            # not a property of the module, so the platform walks this list
+            # rather than making a seat guess what has capacity today.
+            "alternatives": []},
     "disk_gb": 20,
     "max_runtime_s": 1800,
     "artifacts": [],
@@ -160,6 +164,12 @@ class ModuleSpec(object):
         gpu = d["gpu"]
         _require(isinstance(gpu, dict), "gpu must be an object")
         _require(int(gpu.get("count", 1)) >= 1, "gpu.count must be >= 1")
+        alts = gpu.get("alternatives", [])
+        _require(isinstance(alts, list),
+                 "gpu.alternatives must be a list of provider GPU ids, in "
+                 "the order you would rather have them")
+        _require(all(isinstance(a, str) and a.strip() for a in alts),
+                 "every gpu.alternatives entry must be a non-empty string")
 
         _require(int(d["disk_gb"]) >= 5, "disk_gb must be at least 5")
         _require(0 < int(d["max_runtime_s"]) <= 24 * 3600,

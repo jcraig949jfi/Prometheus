@@ -268,6 +268,55 @@ class FakeProvider(Provider):
 
 # ----------------------------------------------------------- reconciliation
 
+# A create rejected for CAPACITY is a clean refusal, not an ambiguous
+# outcome: the provider is telling us it made nothing. It is worth
+# distinguishing, because the useful response is to ask for a different
+# GPU rather than to retry the same one.
+CAPACITY_MARKERS = ("no longer any instances available",
+                    "no instances available",
+                    "insufficient capacity",
+                    "currently unavailable")
+
+
+def looks_like_capacity(detail):
+    text = str(detail or "").lower()
+    return any(marker in text for marker in CAPACITY_MARKERS)
+
+
+def create_with_alternatives(provider, body, gpu_ids, log=lambda m: None,
+                             sleep=time.sleep):
+    """Try each GPU id in turn, reconciling between attempts.
+
+    GPU availability is a runtime condition. A seat should not have to know
+    which card happens to have capacity at 4pm on a Tuesday, so it declares
+    the GPUs its workload can run on and the platform walks the list.
+
+    SAFETY: every attempt goes through `create_with_reconcile`, so a failed
+    create is confirmed to have created nothing BEFORE the next id is
+    tried. Without that, walking a list of alternatives would be a loop of
+    blind retries -- the exact failure mode the reconciliation exists to
+    prevent.
+    """
+    attempted = []
+    for index, gpu_id in enumerate(gpu_ids):
+        candidate = dict(body)
+        candidate["gpu"] = dict(body.get("gpu") or {}, id=gpu_id)
+        log("create attempt on %s (%d of %d)" % (gpu_id, index + 1,
+                                                 len(gpu_ids)))
+        pod, label = create_with_reconcile(provider, candidate, log=log,
+                                          attempts=1, sleep=sleep)
+        attempted.append({"gpu_id": gpu_id, "outcome": label})
+        if pod is not None:
+            return pod, label, attempted
+        if label == "AMBIGUOUS_UNRECONCILED":
+            # A pod may exist that we cannot name. Trying another GPU here
+            # could put a second one beside it.
+            log("outcome unresolved on %s; refusing to try further GPUs"
+                % gpu_id)
+            return None, label, attempted
+    return None, "NO_CAPACITY", attempted
+
+
 def create_with_reconcile(provider, body, log=lambda m: None, attempts=3,
                           sleep=time.sleep):
     """Create exactly one pod, treating any failure as AMBIGUOUS.

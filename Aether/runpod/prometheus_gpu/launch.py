@@ -152,11 +152,20 @@ class Controller(object):
         # Controller-clock instants. Kept apart from pod-clock stages,
         # because an interval spanning both is not a measurement.
         self.marks = {}
+        self.create_attempts = []
+        self.gpu_used = None
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
+        """The rate for the GPU that actually ran.
+
+        Falling back to an alternative changes the price, so billing the
+        requested card would misreport the cost of every run that did not
+        get its first choice.
+        """
         gpu = self.spec["gpu"]
-        return cost_mod.hourly_for(gpu.get("class")) * int(gpu.get("count", 1))
+        gpu_id = self.gpu_used or gpu.get("class")
+        return cost_mod.hourly_for(gpu_id) * int(gpu.get("count", 1))
 
     def _fetch_bytes(self, path):
         """None means unreachable, which early in a run is the normal answer.
@@ -233,8 +242,18 @@ class Controller(object):
                     "RECONCILE MANUALLY before creating anything else.")
             elif self.pod_id is None:
                 result = "NOT_RUN"
-                receipt_obj["notes"].append(
-                    "create failed cleanly; provider confirms nothing exists")
+                refused = [a["gpu_id"] for a in self.create_attempts]
+                if all(a["outcome"] == "FAILED_CLEAN"
+                       for a in self.create_attempts) and refused:
+                    receipt_obj["notes"].append(
+                        "no capacity for any declared GPU (%s); provider "
+                        "confirms nothing exists. Declare more "
+                        "gpu.alternatives or try again later."
+                        % ", ".join(refused))
+                else:
+                    receipt_obj["notes"].append(
+                        "create failed cleanly; provider confirms nothing "
+                        "exists")
             else:
                 ready = self._await_ready(started)
                 if not ready:
@@ -272,6 +291,8 @@ class Controller(object):
             receipt_obj["telemetry_summary"] = tel_mod.summarise(
                 tel_mod.read_jsonl(self.telemetry_text, is_text=True)
                 if self.telemetry_text else [])
+            receipt_obj["create_attempts"] = self.create_attempts
+            receipt_obj["gpu_used"] = self.gpu_used
             receipt_obj["lifecycle"] = lifecycle(
                 self.marks, receipt_obj.get("pod_stages"),
                 receipt_obj.get("telemetry_summary"))
@@ -286,19 +307,42 @@ class Controller(object):
     _OUTCOMES = {"CREATED": "confirmed",
                  "ADOPTED": "adopted",
                  "AMBIGUOUS_UNRECONCILED": "unknown",
-                 "FAILED_CLEAN": None}
+                 "FAILED_CLEAN": None,
+                 # Every declared GPU was refused for capacity. The
+                 # provider confirmed nothing exists, so this is a clean
+                 # non-event -- but a distinct one, because the fix is to
+                 # ask for a different card, not to debug the request.
+                 "NO_CAPACITY": None}
 
     def _mark(self, name):
         self.marks[name] = self._now()
 
+    def gpu_candidates(self):
+        """The declared GPU, then its declared alternatives, in order."""
+        gpu = self.spec["gpu"]
+        out = [gpu.get("class")]
+        for alternative in gpu.get("alternatives", []):
+            if alternative not in out:
+                out.append(alternative)
+        return [g for g in out if g]
+
     def _create(self, request):
         self._mark("create_requested")
-        pod, label = prov.create_with_reconcile(
-            self.provider, request, log=self._log, sleep=self._sleep)
+        candidates = self.gpu_candidates()
+        pod, label, attempts = prov.create_with_alternatives(
+            self.provider, request, candidates, log=self._log,
+            sleep=self._sleep)
         self._mark("create_answered")
+        self.create_attempts = attempts
         outcome = self._OUTCOMES.get(label, "unknown")
         pod_id = pod.get("id") if isinstance(pod, dict) else pod
-        self._log("create %s -> %s pod=%s" % (label, outcome, pod_id))
+        if pod_id is not None:
+            # Record which GPU actually ran, not which one was asked for.
+            for attempt in attempts:
+                if attempt["outcome"] in ("CREATED", "ADOPTED"):
+                    self.gpu_used = attempt["gpu_id"]
+        self._log("create %s -> %s pod=%s gpu=%s"
+                  % (label, outcome, pod_id, getattr(self, "gpu_used", None)))
         if pod_id is None:
             return None, outcome
         return pod_id, outcome

@@ -580,3 +580,79 @@ def test_the_controller_holds_the_same_token_the_pod_was_given(module_dir):
     ctl = controller(fake, module_dir)
     ctl.run()
     assert ctl.artifact_token == sent["env"]["PROMETHEUS_ARTIFACT_TOKEN"]
+
+
+# ------------------------------------------------------- GPU capacity fallback
+
+def test_capacity_refusal_walks_the_declared_alternatives(module_dir):
+    """GPU availability is a runtime condition. Iteration 1's first flight
+    was refused with 'no longer any instances available' for an RTX A4000 --
+    a valid request the provider simply could not fill."""
+    spec = dict(SPEC)
+    spec["gpu"] = {"class": "NVIDIA RTX A4000", "count": 1,
+                   "alternatives": ["NVIDIA RTX A5000", "NVIDIA A40"]}
+    # First two creates refused; the third succeeds.
+    fake = prov.FakeProvider(
+        create_faults=[prov.Fault.http(400), prov.Fault.http(400)],
+        served={TEL: frames(None, START, START + END),
+                "out/result.json": "{}"})
+    ctl = controller(fake, module_dir, spec=spec)
+    r = ctl.run()
+    assert r["result"] == "OK"
+    assert [a["gpu_id"] for a in r["create_attempts"]] == [
+        "NVIDIA RTX A4000", "NVIDIA RTX A5000", "NVIDIA A40"]
+    assert r["gpu_used"] == "NVIDIA A40"
+    assert fake.calls["create"] == 3
+    assert fake.leaked() == []
+
+
+def test_cost_follows_the_gpu_that_actually_ran(module_dir):
+    """Billing the requested card would misreport every run that fell back."""
+    spec = dict(SPEC)
+    spec["gpu"] = {"class": "NVIDIA RTX A4000", "count": 1,
+                   "alternatives": ["NVIDIA A40"]}
+    fake = prov.FakeProvider(
+        create_faults=[prov.Fault.http(400)],
+        served={TEL: frames(None, START, START + END), "out/result.json": "{}"})
+    ctl = controller(fake, module_dir, spec=spec)
+    r = ctl.run()
+    assert r["gpu_used"] == "NVIDIA A40"
+    assert r["cost"]["hourly_usd"] == 0.49, "priced as the A4000 it never got"
+
+
+def test_no_capacity_anywhere_is_a_named_clean_non_event(module_dir):
+    spec = dict(SPEC)
+    spec["gpu"] = {"class": "NVIDIA RTX A4000", "count": 1,
+                   "alternatives": ["NVIDIA A40"]}
+    fake = prov.FakeProvider(create_faults=[prov.Fault.http(400)] * 2)
+    r = controller(fake, module_dir, spec=spec).run()
+    assert r["result"] == "NOT_RUN"
+    assert r["pods"] == []
+    assert fake.leaked() == []
+    assert any("no capacity for any declared GPU" in n for n in r["notes"])
+    assert "NVIDIA A40" in " ".join(r["notes"])
+    rc.validate(r)
+
+
+def test_an_unresolved_create_stops_the_walk(module_dir):
+    """Trying the next GPU after an unresolved create could put a second pod
+    beside one we cannot name."""
+    spec = dict(SPEC)
+    spec["gpu"] = {"class": "NVIDIA RTX A4000", "count": 1,
+                   "alternatives": ["NVIDIA A40", "NVIDIA L4"]}
+    fake = prov.FakeProvider(
+        create_faults=[prov.Fault.lost_response()],
+        list_faults=[None, None, prov.Fault.http(500), prov.Fault.http(500)])
+    r = controller(fake, module_dir, spec=spec).run()
+    assert fake.calls["create"] == 1, "a second GPU was tried after an "\
+        "unresolved outcome"
+    assert r["result"] == "UNKNOWN"
+    assert r["pods"][0]["creation_outcome"] == "unknown"
+
+
+def test_capacity_language_is_recognised():
+    assert prov.looks_like_capacity(
+        "There are no longer any instances available with the requested "
+        "specifications. Please refresh and try again.")
+    assert not prov.looks_like_capacity("invalid image name")
+    assert not prov.looks_like_capacity(None)
