@@ -18,17 +18,26 @@ from reference import oracle_aeth01 as ok1
 NO = g.NO_WINNER
 
 
-def _observer(h, w, entries):
-    """Build a side-channel record by hand. entries: {(field, r, c): slot}."""
+def _observer(h, w, entries, differs=None):
+    """Build a side-channel record by hand.
+
+    entries: {(field, r, c): slot}. differs: {(field, r, c): n_differ},
+    the number of valid proposals that would have changed that target.
+    """
     obs = []
+    differs = differs or {}
     for field in range(5):
         ws = np.full((h, w), NO, dtype=np.uint8)
         cs = np.zeros((h, w), dtype=np.uint8)
+        nd = np.zeros((h, w), dtype=np.uint8)
         for (f, r, c), slot in entries.items():
             if f == field:
                 ws[r, c] = slot
                 cs[r, c] = 1
-        obs.append((ws, cs))
+        for (f, r, c), n in differs.items():
+            if f == field:
+                nd[r, c] = n
+        obs.append((ws, cs, nd))
     return obs
 
 
@@ -302,3 +311,114 @@ def test_graph_layer_agrees_with_the_oracle_on_a_real_tick():
         "aggregate edge count disagrees with the oracle's winning proposals")
     # And the map really is a partial function on this real tick.
     assert g.assert_partial_function(np, obs, h, w) <= 1
+
+
+# ------------------------------------------- the four-way edge classes
+#
+# The class names are mechanical and none of them asserts function.
+# "same value" does NOT mean "no function": a contested same-value write
+# may gate a different value out, and a persistent same-value structure
+# may hold state. Only intervention distinguishes those, so these tests
+# check the BOOKKEEPING only.
+
+def _flat(h, w, v=0):
+    return [np.full((h, w), v, dtype=np.uint8) for _ in range(5)]
+
+
+def test_state_changing_is_classified_when_the_target_moves():
+    h = w = 3
+    obs = _observer(h, w, {(3, 1, 1): 0})
+    before = _flat(h, w, 5)
+    after = [b.copy() for b in before]
+    after[3][1, 1] = 9
+    cls = g.edge_classes(np, obs, before, after)["payload"]
+    assert cls["edges"] == 1
+    assert cls["STATE_CHANGING"] == 1
+    assert cls["SAME_VALUE_UNCONTESTED"] == 0
+
+
+def test_same_value_uncontested_is_a_single_contender_rewrite():
+    h = w = 3
+    obs = _observer(h, w, {(3, 1, 1): 0})
+    before = _flat(h, w, 5)
+    cls = g.edge_classes(np, obs, before, before)["payload"]
+    assert cls["STATE_CHANGING"] == 0
+    assert cls["SAME_VALUE_UNCONTESTED"] == 1
+    assert cls["SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE"] == 0
+    assert cls["SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE"] == 0
+
+
+def test_contested_same_value_splits_on_whether_a_loser_would_have_changed_it():
+    h = w = 3
+    before = _flat(h, w, 5)
+
+    # Contested, and at least one valid proposal differed from the stored
+    # value: this winner's victory kept that change out. Whether that
+    # gating matters is a question for intervention, not for this count.
+    gating = _observer(h, w, {(3, 1, 1): 0}, differs={(3, 1, 1): 1})
+    gating[3][1][1, 1] = 3
+    cls = g.edge_classes(np, gating, before, before)["payload"]
+    assert cls["SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE"] == 1
+    assert cls["SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE"] == 0
+    assert cls["SAME_VALUE_UNCONTESTED"] == 0
+
+    # Contested, but nobody proposed anything different: a redundant
+    # multi-way refresh, which gates nothing out.
+    inert = _observer(h, w, {(3, 1, 1): 0}, differs={(3, 1, 1): 0})
+    inert[3][1][1, 1] = 2
+    cls = g.edge_classes(np, inert, before, before)["payload"]
+    assert cls["SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE"] == 1
+    assert cls["SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE"] == 0
+
+
+def test_classes_partition_the_edges_exactly():
+    h = w = 8
+    rng = np.random.default_rng(4)
+    f = [rng.integers(0, 256, size=(h, w), dtype=np.uint8) for _ in range(5)]
+    f[0] = np.where(rng.random((h, w)) < 0.8, np.uint8(1), f[0]).astype(np.uint8)
+    obs = []
+    out = gpu_step(h, w, 0x1234, 9, 1, 0, 0, 0, 1 << 30, *f, observer=obs)
+    cls = g.edge_classes(np, obs, f, list(out[:5]))
+    for name, row in cls.items():
+        total = (row["STATE_CHANGING"] + row["SAME_VALUE_UNCONTESTED"]
+                 + row["SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE"]
+                 + row["SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE"])
+        assert total == row["edges"], (
+            "%s: classes sum to %d over %d edges; the four classes must "
+            "partition the edge set exactly" % (name, total, row["edges"]))
+
+
+def test_energy_is_classified_separately_from_the_template_fields():
+    h = w = 6
+    rng = np.random.default_rng(8)
+    f = [rng.integers(0, 256, size=(h, w), dtype=np.uint8) for _ in range(5)]
+    f[0] = np.where(rng.random((h, w)) < 0.9, np.uint8(1), f[0]).astype(np.uint8)
+    f[2] = np.full((h, w), 4, dtype=np.uint8)      # every writer targets ENERGY
+    obs = []
+    out = gpu_step(h, w, 0xBEEF, 2, 1, 0, 0, 0, 0, *f, observer=obs)
+    cls = g.edge_classes(np, obs, f, list(out[:5]))
+    assert cls["energy"]["edges"] > 0
+    assert all(cls[k]["edges"] == 0
+               for k in ("opcode", "arg0", "arg1", "payload"))
+
+
+def test_classes_can_be_restricted_to_a_persistent_structure():
+    h = w = 4
+    obs = _observer(h, w, {(3, 1, 1): 0, (3, 2, 2): 0})
+    before = _flat(h, w, 5)
+    after = [b.copy() for b in before]
+    after[3][1, 1] = 7
+    after[3][2, 2] = 7
+    keep = np.zeros((h, w), dtype=bool)
+    keep[1, 1] = True
+    assert g.edge_classes(np, obs, before, after)["payload"]["edges"] == 2
+    assert g.edge_classes(np, obs, before, after,
+                          restrict=keep)["payload"]["edges"] == 1
+
+
+def test_cycle_mask_matches_the_cycle_count():
+    nxt = np.array([1, 2, 0, 4, 0, -1, -1, -1], dtype=np.int64)
+    mask, count, _ = g.cycle_node_mask(np, nxt)
+    assert count == 3
+    assert sorted(np.nonzero(np.asarray(mask))[0].tolist()) == [0, 1, 2]
+    assert count == g.cycle_node_count(np, nxt)[0]

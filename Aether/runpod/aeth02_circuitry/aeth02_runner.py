@@ -80,13 +80,15 @@ def pack_edges(edges, cap):
     kept = edges[:cap]
     if not kept:
         return {"count": 0, "kept": 0, "cols":
-                ["tr", "tc", "sr", "sc", "field", "slot", "contenders"],
-                "b64": ""}
+                ["tr", "tc", "sr", "sc", "field", "slot", "contenders",
+                 "n_differ", "run"], "b64": ""}
     rows = np.array([[e["target"][0], e["target"][1], e["source"][0],
-                      e["source"][1], e["field"], e["slot"], e["contenders"]]
+                      e["source"][1], e["field"], e["slot"], e["contenders"],
+                      e["n_differ"], e["run"]]
                      for e in kept], dtype=np.int32)
     return {"count": len(edges), "kept": len(kept),
-            "cols": ["tr", "tc", "sr", "sc", "field", "slot", "contenders"],
+            "cols": ["tr", "tc", "sr", "sc", "field", "slot", "contenders",
+                     "n_differ", "run"],
             "b64": b64encode(zlib.compress(rows.tobytes(), 6)).decode("ascii")}
 
 
@@ -146,6 +148,8 @@ def run_phase(index, spec, deadline, t_run0):
     t_phase = time.time()
     stopped = None
     partial_function_max = 0
+    prev_cycle_mask = None
+    persist_threshold = int(os.environ.get("AETH02_PERSIST_TICKS", "64"))
 
     for step in range(ticks):
         observer = []
@@ -173,6 +177,21 @@ def run_phase(index, spec, deadline, t_run0):
             row["change_rate_by_field"] = rnd(per_field)
             row.update(rnd(graph.edge_aggregates(xp, observer, prev, device)))
             row["persistence"] = rnd(persistence)
+            # The four-way classification, over the whole lattice and
+            # again restricted to PERSISTENT edges. "Same value" is not
+            # "no function": a contested same-value write gates another
+            # value out, which is why the contested classes are split.
+            row["edge_classes"] = graph.edge_classes(xp, observer, prev, device)
+            persistent_mask = state["run"][0] >= persist_threshold
+            row["edge_classes_persistent"] = {}
+            for fi in range(5):
+                keep = state["run"][fi] >= persist_threshold
+                cls = graph.edge_classes(xp, [observer[fi]],
+                                         [prev[fi]], [device[fi]],
+                                         restrict=keep)
+                row["edge_classes_persistent"][graph.FIELD_NAMES[fi]] = \
+                    cls[graph.FIELD_NAMES[0]]
+            row["persist_threshold_ticks"] = persist_threshold
             window = latencies[-SAMPLE_EVERY:]
             row["tick_s_median"] = round(float(np.median(window)), 6)
             row["tick_s_max"] = round(float(np.max(window)), 6)
@@ -183,14 +202,27 @@ def run_phase(index, spec, deadline, t_run0):
                 row["gpu_memory"] = gpu_memory()
             if step % GRAPH_EVERY == 0 or last:
                 nxt = graph.realized_map(xp, observer, size, size)
-                cycles, doublings = graph.cycle_node_count(xp, nxt)
+                mask, cycles, doublings = graph.cycle_node_mask(xp, nxt)
                 row["cycle_nodes"] = cycles
                 row["cycle_doublings"] = doublings
                 row["mapped_nodes"] = int((nxt >= 0).sum())
                 pf = graph.assert_partial_function(xp, observer, size, size)
                 partial_function_max = max(partial_function_max, pf)
                 row["partial_function_max_outdegree"] = pf
-                del nxt
+                # Topology lifetime: how much of the cycle set persists
+                # from one graph sample to the next. A cycle is graph
+                # structure only -- this is NOT a circuitry measure.
+                if prev_cycle_mask is not None:
+                    both = int((mask & prev_cycle_mask).sum())
+                    row["cycle_nodes_retained"] = both
+                    row["cycle_retention"] = (
+                        round(both / cycles, 6) if cycles else None)
+                prev_cycle_mask = mask
+                # Classes restricted to edges whose TARGET sits on a cycle.
+                grid_mask = mask.reshape(size, size) != 0
+                row["edge_classes_on_cycle"] = graph.edge_classes(
+                    xp, observer, prev, device, restrict=grid_mask)
+                del nxt, grid_mask
             if step % DEEP_EVERY == 0 or last:
                 host = [np.asarray(getattr(f, "get", lambda: f)())
                         for f in device]
@@ -203,7 +235,8 @@ def run_phase(index, spec, deadline, t_run0):
         if (step % WINDOW_EVERY == 0 or last) and size >= WINDOW_SIZE:
             for label, origin in (("WINDOW_A", win_a), ("WINDOW_B", win_b)):
                 edges = graph.window_edges(observer, size, size,
-                                           origin[0], origin[1], WINDOW_SIZE)
+                                           origin[0], origin[1], WINDOW_SIZE,
+                                           runs=state["run"])
                 emit({"kind": "window", "phase": index, "tick": step + 1,
                       "label": label, "origin": list(origin),
                       "packed": pack_edges(edges, WINDOW_EDGE_CAP)})

@@ -101,9 +101,24 @@ CALIBRATION = [
     _phase("probe_4096", 4096, 2000),
 ]
 
-# TRAJECTORY: Track 1, B_balanced to ~50,000 ticks. Not run until the
-# calibration numbers say what it costs.
-TRAJECTORY = [_phase("B_balanced_long", 4096, 50000)]
+# TRAJECTORY: Track 1 as the operator resolved it after the calibration
+# measured 4096^2 x 50,000 at $3.24, over the cap. Three INDEPENDENT
+# 2048^2 worlds at the full 50,000 ticks: the requested temporal horizon
+# is preserved, replication is gained, and the measured cost is
+# 3 x 50,000 x 0.1221 s = 18,315 s = 5.09 h = $2.49.
+#
+# Distinct seeds for both the initialization RNG and the physics seed.
+# Seeds 0 and 1 are First Light's own B_balanced seeds, so two of the
+# three trajectories extend worlds whose first 5,000 ticks are already
+# recorded; the third is new.
+_TRAJ_SEEDS = [(0xA37E01, 0x5C011701),
+               (0xA37E02, 0x5C011702),
+               (0xA37E03, 0x5C011703)]
+
+TRAJECTORY = [
+    _phase("B_long_seed%d" % i, 2048, 50000, rng_seed=rng, seed=phys)
+    for i, (rng, phys) in enumerate(_TRAJ_SEEDS)
+]
 
 PLANS = {"calibration": CALIBRATION, "trajectory": TRAJECTORY}
 

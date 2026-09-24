@@ -54,7 +54,8 @@ def _run(world, observe):
 def _gpu_edges(observer, H, W):
     """(source, target, field) set implied by the side-channel."""
     edges = set()
-    for field, (winner_slot, _contenders) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot = entry[0]
         rows, cols = np.nonzero(winner_slot != NO_WINNER)
         for r, c in zip(rows.tolist(), cols.tolist()):
             dr, dc, _required = _NEIGHBOR_SLOTS[int(winner_slot[r, c])]
@@ -64,7 +65,8 @@ def _gpu_edges(observer, H, W):
 
 def _gpu_contenders(observer):
     out = {}
-    for field, (_winner_slot, contenders) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        contenders = entry[1]
         rows, cols = np.nonzero(contenders)
         for r, c in zip(rows.tolist(), cols.tolist()):
             out[((r, c), field)] = int(contenders[r, c])
@@ -122,6 +124,9 @@ def test_observing_does_not_change_the_world(dims):
             "inside the universe" % field)
     assert quiet[5] == watched[5], "counters differ with the observer attached"
     assert observer is not None and len(observer) == 5
+    for entry in observer:
+        assert len(entry) == 3, (
+            'record must be (winner_slot, contenders, n_differ)')
 
 
 @settings(max_examples=60, deadline=None)
@@ -195,7 +200,7 @@ def test_a_world_with_no_writers_reports_no_edges_at_all():
     world = _world(H, W, 42, grid, write_cost=1)
     _out, observer = _run(world, observe=True)
     assert _gpu_edges(observer, H, W) == set()
-    for winner_slot, contenders in observer:
+    for winner_slot, contenders, _n_differ in observer:
         assert np.all(winner_slot == NO_WINNER)
         assert not np.any(contenders)
 
@@ -210,7 +215,8 @@ def test_every_reported_source_actually_qualified_as_a_writer():
     opcode, arg0, arg1, _payload, energy = _arrays(world.grid)
     _out, observer = _run(world, observe=True)
     checked = 0
-    for field, (winner_slot, _c) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot = entry[0]
         rows, cols = np.nonzero(winner_slot != NO_WINNER)
         for r, c in zip(rows.tolist(), cols.tolist()):
             dr, dc, required = _NEIGHBOR_SLOTS[int(winner_slot[r, c])]
@@ -236,7 +242,8 @@ def test_the_edge_comparison_can_actually_fail():
     won, _emitted = _oracle(world)
     assert _gpu_edges(observer, H, W) == won, "fixture must start clean"
 
-    for field, (winner_slot, _c) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot = entry[0]
         rows, cols = np.nonzero(winner_slot != NO_WINNER)
         if rows.size:
             r, c = int(rows[0]), int(cols[0])

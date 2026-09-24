@@ -45,6 +45,22 @@ def _host_int(value):
     return int(_host(value))
 
 
+def unpack(entry):
+    """(winner_slot, contenders, n_differ). n_differ is None on records
+    written before the kernel exported it, so older evidence still loads."""
+    return entry[0], entry[1], (entry[2] if len(entry) > 2 else None)
+
+
+# Edge classes, per the operator's 2026-09-24 directive. Naming is
+# deliberately mechanical: NONE of these names asserts function.
+# "same value" does NOT mean "no function" -- a contested same-value
+# write may gate a different value out, and a persistent same-value
+# structure may hold state. Only intervention can tell.
+CLASSES = ("STATE_CHANGING", "SAME_VALUE_UNCONTESTED",
+           "SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE",
+           "SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE")
+
+
 def realized_map(xp, observer, h, w):
     """Flat int64 array: map[source] = target, or -1 where nothing won.
 
@@ -56,7 +72,8 @@ def realized_map(xp, observer, h, w):
     nxt = xp.full(n, -1, dtype=xp.int64)
     rows = xp.arange(h, dtype=xp.int64).reshape(h, 1)
     cols = xp.arange(w, dtype=xp.int64).reshape(1, w)
-    for field, (winner_slot, _contenders) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot = unpack(entry)[0]
         for slot, (dr, dc) in enumerate(SLOT_OFFSETS):
             mask = winner_slot == slot
             if not _host_int(mask.sum()):
@@ -77,7 +94,8 @@ def assert_partial_function(xp, observer, h, w):
     counts = xp.zeros(n, dtype=xp.int64)
     rows = xp.arange(h, dtype=xp.int64).reshape(h, 1)
     cols = xp.arange(w, dtype=xp.int64).reshape(1, w)
-    for _field, (winner_slot, _c) in enumerate(observer):
+    for _field, entry in enumerate(observer):
+        winner_slot = unpack(entry)[0]
         for slot, (dr, dc) in enumerate(SLOT_OFFSETS):
             mask = winner_slot == slot
             if not _host_int(mask.sum()):
@@ -117,6 +135,74 @@ def cycle_node_count(xp, nxt, max_doublings=None):
     return _host_int(reached.sum()), steps
 
 
+def cycle_node_mask(xp, nxt, max_doublings=None):
+    """The cycle-membership mask itself, not just its count.
+
+    Needed to condition edge classes on "is this edge's target part of a
+    cycle", which is how the directive's "changed-edge fraction within
+    persistent structures" is measured.
+    """
+    n = int(nxt.shape[0])
+    if n == 0:
+        return xp.zeros(0, dtype=xp.uint8), 0, 0
+    safe = xp.where(nxt < 0, xp.arange(n, dtype=nxt.dtype), nxt)
+    dead = nxt < 0
+    steps = max_doublings or max(1, int(np.ceil(np.log2(max(n, 2)))))
+    cur = safe
+    for _ in range(steps):
+        cur = cur[cur]
+    reached = xp.zeros(n, dtype=xp.uint8)
+    live = cur[~dead] if _host_int(dead.sum()) else cur
+    if live.shape[0]:
+        reached[live] = 1
+    reached[dead] = 0
+    return reached, _host_int(reached.sum()), steps
+
+
+def edge_classes(xp, observer, before, after, restrict=None):
+    """The four-way edge classification, per field, energy kept separate.
+
+    `restrict` is an optional boolean (h, w) mask on the TARGET, used to
+    report the classes inside persistent structures rather than over the
+    whole lattice.
+
+    CAVEAT, recorded rather than hidden: an edge whose winner proposed a
+    differing value which perturbation then flipped back to the original
+    would be counted as same-value. That needs the perturbed bit to
+    exactly undo the difference, so it is astronomically rare, but it is
+    not impossible.
+
+    NOTHING HERE ASSERTS FUNCTION. A same-value uncontested edge may be a
+    trivial refresh; a same-value CONTESTED edge may gate a different
+    value out; a persistent same-value structure may hold state. Only
+    intervention distinguishes those.
+    """
+    out = {}
+    for field, entry in enumerate(observer):
+        winner_slot, contenders, n_differ = unpack(entry)
+        has = winner_slot != NO_WINNER
+        if restrict is not None:
+            has = has & restrict
+        changed = before[field] != after[field]
+        same = has & (~changed)
+        contested = contenders >= 2
+        row = {
+            "edges": _host_int(has.sum()),
+            "STATE_CHANGING": _host_int((has & changed).sum()),
+            "SAME_VALUE_UNCONTESTED": _host_int((same & (contenders == 1)).sum()),
+        }
+        if n_differ is None:
+            row["SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE"] = None
+            row["SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE"] = None
+        else:
+            row["SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE"] = _host_int(
+                (same & contested & (n_differ >= 1)).sum())
+            row["SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE"] = _host_int(
+                (same & contested & (n_differ == 0)).sum())
+        out[FIELD_NAMES[field]] = row
+    return out
+
+
 def edge_aggregates(xp, observer, before, after):
     """Per-tick aggregates. No edge list is built.
 
@@ -127,7 +213,8 @@ def edge_aggregates(xp, observer, before, after):
     """
     out = {"edges_total": 0, "edges_by_field": {}, "changed_by_field": {},
            "fan_in_hist": {}, "slot_hist": {}}
-    for field, (winner_slot, contenders) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot, contenders, _nd = unpack(entry)
         name = FIELD_NAMES[field]
         has = winner_slot != NO_WINNER
         edges = _host_int(has.sum())
@@ -170,7 +257,8 @@ def update_runlengths(xp, state, observer):
     understates persistence.
     """
     stats = {}
-    for field, (winner_slot, _c) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot = unpack(entry)[0]
         present = winner_slot != NO_WINNER
         same = present & (winner_slot == state["last"][field])
         run = state["run"][field]
@@ -191,7 +279,7 @@ def update_runlengths(xp, state, observer):
     return stats
 
 
-def window_edges(observer, h, w, r0, c0, size):
+def window_edges(observer, h, w, r0, c0, size, runs=None):
     """Exact edge list inside one window. Host-side, small by construction.
 
     Returns dicts with the fields the directive asks for at edge level.
@@ -200,9 +288,14 @@ def window_edges(observer, h, w, r0, c0, size):
     clipping sources would silently hide inbound edges.
     """
     edges = []
-    for field, (winner_slot, contenders) in enumerate(observer):
+    for field, entry in enumerate(observer):
+        winner_slot, contenders, n_differ = unpack(entry)
         ws = np.asarray(_host(winner_slot))[r0:r0 + size, c0:c0 + size]
         cs = np.asarray(_host(contenders))[r0:r0 + size, c0:c0 + size]
+        nd = (np.asarray(_host(n_differ))[r0:r0 + size, c0:c0 + size]
+              if n_differ is not None else None)
+        rl = (np.asarray(_host(runs[field]))[r0:r0 + size, c0:c0 + size]
+              if runs is not None else None)
         rows, cols = np.nonzero(ws != NO_WINNER)
         for r, c in zip(rows.tolist(), cols.tolist()):
             slot = int(ws[r, c])
@@ -214,6 +307,8 @@ def window_edges(observer, h, w, r0, c0, size):
                 "field": field,
                 "slot": slot,
                 "contenders": int(cs[r, c]),
+                "n_differ": (int(nd[r, c]) if nd is not None else -1),
+                "run": (int(rl[r, c]) if rl is not None else -1),
             })
     return edges
 
