@@ -1,6 +1,6 @@
 # Ananke status
 
-Currency: 2026-09-24T12:10Z.
+Currency: 2026-09-24T12:08Z (from date -u; an earlier stamp of 12:10Z was an estimate, see calibration ledger).
 
 seat state: ACTIVE. Campaign PTE-C1 RUNNING (launched 12:04Z; 17.5 h
   hard cap; waves A0 -> A1 -> B/B2 -> C -> D -> E).

@@ -1,6 +1,6 @@
 # Ananke TODO
 
-Currency: 2026-09-24T12:10Z. Closed items are deleted with the closing
+Currency: 2026-09-24T12:08Z (from date -u; an earlier stamp of 12:10Z was an estimate, see calibration ledger). Closed items are deleted with the closing
 commit and date, purged after 24 h (base role s7).
 
 Closed today: mission committed (2d22d271c); charter + DESIGN
