@@ -286,8 +286,17 @@ def run_recipient(args):
     return (fam, arm, label, i), row
 
 
+def _worker_init():
+    """PLUMBING (incident 2026-09-24): Recipient.fresh() wipes the GLOBAL marker
+    directory as its reset, so parallel workers deleted each other's
+    workspaces (PermissionError). Each worker process gets its OWN marker
+    directory; the reset semantics inside a process are unchanged."""
+    import tempfile
+    E.MARKER_DIR = Path(tempfile.gettempdir()) / ("aphrodite_engine_markers_w%d" % os.getpid())
+
+
 def _pool_rows(jobs):
-    with ProcessPoolExecutor(max_workers=WORKERS) as ex:
+    with ProcessPoolExecutor(max_workers=WORKERS, initializer=_worker_init) as ex:
         return dict(ex.map(run_recipient, jobs, chunksize=1))
 
 
@@ -418,7 +427,36 @@ def criterion(out, art, libs):
             "failed": [k for k, v in c.items() if not v]}
 
 
+def resume_s4():
+    """Resume at S4 from the FROZEN stage artifacts after a plumbing crash: no
+    stage is re-derived. The selected library's hash is re-verified."""
+    t0 = time.perf_counter()
+    q = json.loads((HERE / ("T3D_QUALIFICATION_%s.json" % DATE)).read_text(encoding="utf-8"))
+    shams = json.loads((HERE / ("T3D_SHAMS_%s.json" % DATE)).read_text(encoding="utf-8"))
+    art = json.loads((HERE / ("S3_ARTIFACT_%s.json" % DATE)).read_text(encoding="utf-8"))
+    assert art["ENDOGENOUS_ABSTRACTION"] == "YES"
+    assert lib_with(art["selected_entries"]).sha256() == art["selected_sha256"]
+    for s in shams["shams"]:
+        assert lib_with(s["entries"]).sha256() == s["sha256"]
+    gate = art["conformance_gate"]
+    out = stage_transfer(q["quals"], shams, art)
+    out["resumed_from_frozen_S3"] = True
+    out["conformance_gate_before"] = gate
+    std = CF.check()
+    out["conformance_gate_after"] = {"part1_GREEN": std["GREEN"], "part1_checked": std["checked"]}
+    out["total_seconds"] = round(time.perf_counter() - t0, 1)
+    _write("S4_RESULTS_%s.json" % DATE, out)
+    if "criterion" in out:
+        _log("S4 ABSTRACTION_TRANSPLANT=%s failed=%s" % (out["criterion"]["ABSTRACTION_TRANSPLANT"],
+                                                          out["criterion"]["failed"]))
+    else:
+        _log("S4 %s" % out.get("STOP"))
+    return 0
+
+
 def main():
+    if "--resume-s4" in sys.argv:
+        return resume_s4()
     t0 = time.perf_counter()
     gate = stage_preconditions()
     quals, s6 = stage_qualify()
