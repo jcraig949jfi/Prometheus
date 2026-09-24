@@ -2,6 +2,16 @@
 
 Currency: 2026-09-23.
 
+COUPLING CAMPAIGN (physics v3) -- PAUSED BY HARNESS, AWAITING OPERATOR RESTART (2026-09-24T21:2xZ)
+  Branch bellerophon/coupling-campaign-2026-09-24; prereg frozen c9bed96de (plan a3bc8c8e..., 11,372 Phase-1 runs);
+  artifacts roles/Bellerophon/coupling_2026-09-24/. Started 20:07:31Z from pinned code
+  C:/Users/James/z80atlas_coupling_2026-09-24/code. Stopped by Claude Code's low-memory reaper at 959 results
+  (A 600/600, I 90/90, C 269/1800; 0 voids). Exact resume point: from the pinned code dir run
+    python -m prometheus.z80atlas.coupling_campaign --workdir C:/Users/James/z80atlas_coupling_2026-09-24
+           --inputs C:/Users/James/z80atlas_coupling_2026-09-24/coupling_inputs.json --workers N
+  (re-executes only missing runs; caps from the first start: Phase 1 by 2026-09-25T14:07Z, total by 18:07Z).
+  Memory: ~400 MB per worker; the machine was shared with ~48 other workers at the time.
+
 POST-CAMPAIGN FORENSICS + GROUNDING ROUND COMPLETE (2026-09-23, Bellerophon[m2-9e74888e]; branch
   bellerophon/post-campaign-forensics-2026-09-23; artifacts roles/Bellerophon/forensics_2026-09-23/):
   POST_CAMPAIGN_FORENSICS.md, ISSUE_AND_REPAIR_LEDGER.md (34 rows), SPECIMEN_LEDGER.jsonl (2,188), GROUNDING_PREREG.md
