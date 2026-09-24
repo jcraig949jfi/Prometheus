@@ -1,0 +1,28 @@
+{
+ "written": "2026-09-19 07:22:47",
+ "plateau": "identity with the regime word ingested but unused (P-I02)",
+ "successor": "SUCCESSOR WORLDS A' / B' / C' (constructed in cycle 7, run in cycle 8): identical to A / B / C except that regime 1 expects v XOR 1 (the low bit flipped) instead of 15 - v. Invariant ceiling unchanged (.5 mean; {\"A\": 0.601, \"B\": 0.59, \"C\": 0.5}); the conditional answer is ONE instruction (XOR of the regime register and the value register) away from the identity plateau on which P-I01's populations sat with the regime word already in a register. Same evolution, controls, thresholds and forensics as P-I01 / P-I02. Loophole record: the P-I01 plateau (identity + ingested-but-unused regime word) is provably still the invariant optimum here, but a single mutation now has a fitness path off it.",
+ "ceilings": {
+  "A": {
+   "invariant_best": {
+    "mean": 0.600625,
+    "p95": 0.75
+   },
+   "one_step_from_identity": "XOR r_reg, v_reg (regime word already held in a register per P-I02)"
+  },
+  "B": {
+   "invariant_best": {
+    "mean": 0.59,
+    "p95": 0.75
+   },
+   "one_step_from_identity": "XOR r_reg, v_reg (regime word already held in a register per P-I02)"
+  },
+  "C": {
+   "invariant_best": {
+    "mean": 0.5,
+    "p95": 0.5
+   },
+   "one_step_from_identity": "XOR r_reg, v_reg (regime word already held in a register per P-I02)"
+  }
+ }
+}

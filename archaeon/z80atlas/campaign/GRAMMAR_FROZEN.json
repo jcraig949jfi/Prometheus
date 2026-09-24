@@ -1,0 +1,220 @@
+{
+ "digest": "63ffdeca16db3333",
+ "AXES": {
+  "world.topology": [
+   "well_mixed",
+   "grid_vn",
+   "graph",
+   "ring_soup",
+   "niches"
+  ],
+  "world.migration": [
+   "none",
+   "low",
+   "high",
+   "periodic",
+   "competence",
+   "env_dependent"
+  ],
+  "world.resources": [
+   "unlimited",
+   "limited"
+  ],
+  "world.env_dynamics": [
+   "fixed",
+   "nonstationary",
+   "local_shift",
+   "env_mutate",
+   "env_coevolve"
+  ],
+  "world.reservoir": [
+   false,
+   true
+  ],
+  "representation.substrate": [
+   "z80",
+   "vmcopy"
+  ],
+  "representation.genome": [
+   32,
+   64
+  ],
+  "representation.layout": [
+   "shared",
+   "separated"
+  ],
+  "reproduction": [
+   "EXTERNAL",
+   "ENDOGENOUS_COPY",
+   "ENDOGENOUS_PARTIAL",
+   "OVERWRITE",
+   "CONSTRUCTIVE",
+   "PAIR_EXECUTION"
+  ],
+  "pressure": [
+   "implicit_survival",
+   "explicit_fitness",
+   "competence_gated",
+   "resource_gated",
+   "metabolic",
+   "exec_time",
+   "tape_cost",
+   "novelty",
+   "qd",
+   "minimal_criterion",
+   "resource_competition",
+   "recombination"
+  ],
+  "task": [
+   "none",
+   "CONST_atomic",
+   "CONST_incremental",
+   "ECHO_forced",
+   "ECHO_abr",
+   "INC1",
+   "NEG",
+   "COND_1edit",
+   "COND_multi",
+   "ADD2"
+  ],
+  "mutation": [
+   "local_byte",
+   "operand_bias",
+   "opcode_bias",
+   "structural"
+  ],
+  "init": [
+   "random",
+   "seeded_replicator"
+  ]
+ },
+ "FROZEN": {
+  "cases_per_opportunity": 3,
+  "init_fill_pct": 60,
+  "seed_fraction_pct": 10,
+  "energy_init": 40.0,
+  "intake_base": 2.0,
+  "intake_gain": 12.0,
+  "gate_floor": 0.15,
+  "minimal_criterion": 0.5,
+  "mc_penalty": 0.25,
+  "exec_cost": 0.004,
+  "tape_cost": 0.02,
+  "novelty_bonus": 6.0,
+  "qd_bonus": 4.0,
+  "resource_cap": 30.0,
+  "resource_regen": 3.0,
+  "copy_min_frac": 0.9,
+  "copy_noise": 0.004,
+  "background_mutation": 0.02,
+  "mutation_rate": 0.03,
+  "external_replace_frac": 0.15,
+  "max_age": 60,
+  "death_rate": 0.01,
+  "fitness_death": 0.15,
+  "migration": {
+   "none": 0.0,
+   "low": 0.002,
+   "high": 0.02,
+   "periodic": 0.05,
+   "competence": 0.0,
+   "env_dependent": 0.0
+  },
+  "stress_score": 0.2,
+  "env_period": 100,
+  "env_reproduce_score": 0.8,
+  "cross_score": 0.999,
+  "coexist_frac": 0.1,
+  "compression_ratio": 0.75,
+  "spont_births": 50,
+  "spont_pop_frac": 0.25,
+  "spont_fid": 0.9,
+  "ruler_samples": 64,
+  "snapshot_cap": 24,
+  "snapshot_min_gap": 10,
+  "event_cap": 20000,
+  "budgets": {
+   "early": {
+    "vm_steps": 60000000,
+    "step_cap": 256,
+    "max_epochs": 1500
+   },
+   "middle": {
+    "vm_steps": 150000000,
+    "step_cap": 256,
+    "max_epochs": 4000
+   },
+   "late": {
+    "vm_steps": 150000000,
+    "step_cap": 256,
+    "max_epochs": 4000
+   }
+  },
+  "N": 128,
+  "niches": 4,
+  "campaign_hours": 72.0,
+  "early_until_h": 16.0,
+  "late_from_h": 60.0,
+  "stop_launch_h": 71.6,
+  "exploration_floor": 0.3,
+  "workers": 24,
+  "promotion_weights": {
+   "spontaneous_replication": 5,
+   "moat_crossed": 2,
+   "moat_advantage": 6,
+   "compression": 2,
+   "new_arch_events": 1,
+   "coexistence": 1,
+   "persistence_over_control": 1,
+   "ruler_gain": 2,
+   "transport": 1,
+   "env_lineage": 1,
+   "longevity": 1,
+   "exploit": 0
+  },
+  "promote_min": 3,
+  "promote_children": 3,
+  "retire_after_runs": 3,
+  "verify_top": 12,
+  "verify_seeds": 3,
+  "signal_thresholds": {
+   "coexist_epochs": 200,
+   "new_arch_events": 20,
+   "ruler_gain": 0.15,
+   "longevity": 300,
+   "persistence_delta": 0.15,
+   "env_births": 3,
+   "migrations": 20
+  }
+ },
+ "constraints": [
+  "explicit_fitness only with EXTERNAL",
+  "recombination only with EXTERNAL (PAIR_EXECUTION is the endogenous form)",
+  "separated layout needs a task",
+  "migration / reservoir need niches",
+  "env dynamics that move between niches need niches",
+  "at most two pressures",
+  "CONSTRUCTIVE needs deaths (always true: death_rate > 0)"
+ ],
+ "blocked": {
+  "representation.substrate": {
+   "nestor_tape": "BLOCKED_MISSING_CAPABILITY: Nestor tape organisms not importable in this worktree",
+   "nestor_tree": "BLOCKED_MISSING_CAPABILITY: Nestor tree organisms not importable in this worktree"
+  }
+ },
+ "atlas_axes": [
+  "damage_ruler",
+  "length_robustness(genome 32 vs 64)",
+  "selection_vs_drift(implicit_survival vs explicit_fitness)",
+  "deleterious_load(fidelity, ruler)",
+  "transport(late-stage transplant)",
+  "equal_compute(EXTERNAL control same step_cap/budget)",
+  "implicit_vs_explicit",
+  "stasis_escape(telemetry)",
+  "recombination(pressure; PAIR_EXECUTION)",
+  "transition_detectors(first_crossing, new_arch)",
+  "coevolution_vs_curriculum_vs_randomization(env_dynamics)",
+  "damage_under_alt_substrate(z80 vs vmcopy)"
+ ],
+ "frozen_at": "2026-09-19T14:18:03Z"
+}

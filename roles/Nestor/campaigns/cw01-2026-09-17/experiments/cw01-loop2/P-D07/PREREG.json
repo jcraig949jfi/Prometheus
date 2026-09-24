@@ -1,0 +1,31 @@
+{
+ "perturbation_id": "P-D07",
+ "parent": "T-E07",
+ "also": "T-E01",
+ "claim_type": "reposed-confirmatory",
+ "delta": "absolute retained score above floor as ruler; severity dose at test; 8 lineages per arm",
+ "unchanged": "e01 world/organism/selection; e07 damage family and sham; training sweep (0.1, 0.2, 0.3)",
+ "attacks": "D071 (ill-conditioned ratio) and the dose dependence of the weather effect",
+ "dose": [
+  0.1,
+  0.2,
+  0.3,
+  0.45
+ ],
+ "lineages_per_arm": 8,
+ "statistic": "A_f = mean over top-8 reps and 16 test streams of (S_dmg - F); c_f in A_f = a + b S_int + c[WEATHER], exact relabelling (C(16,8)); sham arm must sit inside its band",
+ "decision": {
+  "POSITIVE_at_f": "c_f > p95 and sham inside",
+  "NEGATIVE_at_f": "c_f < p05",
+  "NULL_at_f": "otherwise",
+  "damage_fires": "STATIC A_f < S_int - F by > 5% at f=.2"
+ },
+ "continuation": [
+  "training severity sweep",
+  "scramble instead of deletion",
+  "damage timing relative to recurrence",
+  "usefulness margin scaled to effect size"
+ ],
+ "written": "2026-09-18 20:18:25",
+ "prereg_sha256": "c81ce311476cdf01f7237d9c43064d39c54eaeadb714321e0e09f3181edca7b3"
+}

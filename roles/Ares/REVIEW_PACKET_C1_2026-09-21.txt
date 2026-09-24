@@ -1,0 +1,117 @@
+======================================================================
+ARES REVIEW PACKET -- cycle 1: VALIDATE, COMPRESS, EXIT
+Seat: Ares (M2). Date: 2026-09-21. Prereg on main 3ea24dda8 before any
+run (ares/DESIGN_C1.md). Results ares/runs/sweep_c1/. Seat PARKED after
+this packet by the operator's directive (roles/Ares/prompts/
+2026-09-21_cycle1_directive/, MANIFEST beside it).
+======================================================================
+
+WHAT WAS ASKED
+  Closure round, not exploration: repair three known instrument
+  defects; rerun W4/W5/W12 at 10 seeds; decide whether the cycle-0
+  GATE+MAX structure is rediscovered, one of several, or idiosyncratic;
+  run W4+W5 only as a carrier stress; ancestry + causal transplant;
+  hand artifacts to Nyx/Harmonia without waiting; end in a hard
+  disposition; then park.
+
+REPAIRS (verified before the prereg commit)
+  R1 no_state retired -> three-way ablation: no_activation_mem /
+     no_plasticity / no_memory; plus a GA arm on a no-memory substrate
+     as the positive control of the semantics.
+  R2 held-out seeds balanced per world on every hidden binary (W5
+     shuffled now 8/8/8/8 on token x pay; a fixed guess scores 0).
+  R3 W12 threshold from its own mode: best of "risky iff energy < k"
+     in PRESENT = 30.28 -> threshold 21.26 (was 31.2, borrowed from
+     the absent mode).
+
+DISPOSITION (mechanical, preregistered rule)
+  W4  hidden regime       MECHANISM_DIVERSE  i 10/10 ii 10/10 iv 10/10
+  W5  delayed revelation  MECHANISM_DIVERSE  i 10/10 ii  8/10 iv 10/10
+  W12 dying lineage       MECHANISM_DIVERSE  i 10/10 ii  9/10
+  W13 carrier stress      PRESERVE           i  9/10; ACT 6, BOTH 2, PLAST 2
+  no-memory arm on W4:    3.4-4.6 in 10/10; threshold 8.0 never reached
+  NEW_CARRIER (the one outcome that could earn another round): 0/10.
+
+THE HEADLINE, COMPRESSED
+  Ten of ten W4 lineages solve the hidden-regime world at the cap by
+  holding the 3-step early cue in RECURRENT ACTIVATION for 37 steps:
+      three-way ablation, every seed:
+        no_activation_mem  2.1-3.8   (collapse to chance)
+        no_plasticity       40.0     (no effect)
+        no_memory           2.1-3.8
+  The implementation differs every time: load-bearing-node signatures
+  (none)x4, DIFF, GATE+MAX, CONST+GATE+GATE, GATE, TANH, ADD+ADD. Post
+  hoc (labelled EXPLORATORY): the carrier is a SELF-LOOP edge in 6/10
+  (three on OUTPUT nodes, invisible to node ablation) and a multi-node
+  recurrent cycle in 4/10; the substrate's designed leak primitive
+  (keep) is used by 0/10; plastic weights by 0/10. Functionally
+  equivalent memory, structurally diverse, converging on recurrence.
+
+INDEPENDENCE COUNT (changes the numbers, stated)
+  GA seeds 1-3 reproduce the cycle-0 lineages byte for byte (verified:
+  identical final genomes). So: 7 NEW independent lineages + 3 re-
+  evaluated. Every claim holds on the 7 alone (7/7 cap, 7/7 ACT, 7/7
+  collapse). GATE+MAX appeared only in seed 3 = the same lineage: it
+  was rediscovered 0 times in 7 independent runs. Idiosyncrasy.
+
+OTHER WORLDS
+  W5: with the repaired control, 9/10 at cap; the 26-step carrier
+      needs plasticity AND activation (BOTH 8/10); accretes over 10-65
+      generations. Cycle-0's "contradicts P-W5" confirmed clean.
+  W12: 10/10 above the own-mode threshold (seed 7 beats the best hand-
+      written threshold policy); state-dependent risk in 9/10; shuffled
+      flat 10/10; needs no memory (NONE 6/10) as expected.
+  W13 stress: 8/10 at cap; ACT majority -> PRESERVE; keep recruited in
+      2, plasticity in 4; nothing outside the enumerated channels.
+
+RETRACTION
+  Cycle 0 said the W4 mechanism "accreted over ~13 generations". That
+  measured mutation-chain length. The functional test (snapshot intact
+  vs no_memory every 5 gens) shows the memory gap co-emerging with
+  fitness onset in 8/10 lineages. In W4 the memory IS the solution.
+  Retracted in the report and the ledger. (W5 does accrete: 9/10.)
+
+WHAT THIS CYCLE FOUND WRONG WITH ITSELF
+  - W4/W13 shuffled controls balance the regime but not the SHOWN cue
+    (a second draw; a reflex scores 0.59, not 0.50). Same class as the
+    W5 defect fixed in R2, missed here. Conservative for criterion
+    (ii); no disposition changes. Ledger row.
+  - Node ablation cannot see output-node self-loops, so criterion
+    (iii) under-counts (W4 6/10 where the carrier is present 10/10).
+  - Every count-prediction (P3, P4, P6) was too pessimistic about the
+    GA on this substrate; the direction predictions held.
+
+CAUSAL TRANSPLANT
+  Load-bearing nodes spliced into 64 random hosts vs a random subgraph
+  of equal size: portable in 1/10 (W4), 0/10 elsewhere. Consistent with
+  cycle-0's W8 null and with an edge-pattern (self-loop) carrier that a
+  hidden-node splice cannot move. Failures preserved in *_transplant.json.
+
+CONFLICTS OF INTEREST / LIMITS
+  - Ares scored its own instruments; the mechanical rule was fixed
+    before the data and is applied by code (ares/validate.py).
+  - Two analyses are post hoc and say so; they explain the disposition
+    and change none of it.
+  - "Functionally equivalent" is measured by ablation class and
+    behaviour, not by any circuit-level equivalence test.
+
+WHAT WOULD FALSIFY THE HEADLINE
+  A cross-step channel outside keep / recurrence / plasticity that the
+  no_memory config leaves open. The no-memory GA arm sitting at 3.4-4.6
+  in 10/10 (threshold 8) is the direct test that none exists in this
+  substrate; a leak would have let the arm climb.
+
+WHAT SHOULD WE STOP
+  Everything, per directive: the seat parks. Reusable residue:
+  PRESSURE_CATALOG.json (12 worlds with falsifiers + 6 unbuilt
+  candidates), the batched sandbox, the three-way memory ablation and
+  per-world balanced seeding, ten W4 lineages as a fossil set. On any
+  reopen: fix the output-node self-loop blind spot first.
+
+ARTIFACTS (code commit: this packet's commit)
+  ares/DESIGN_C1.md, validate.py, calibrate_w12.py, supp_selfloop.py,
+  ARES_CYCLE1_REPORT.md, runs/sweep_c1/ (130 runs, dissect, ancestry,
+  transplant, disposition.json/txt, w12_calibration.json,
+  selfloop.json). roles/Ares/calibration/LEDGER.md (3 new rows),
+  STATUS.md (PARKED), journal/2026-09-21.md.
+======================================================================

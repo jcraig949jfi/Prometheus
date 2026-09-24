@@ -11,6 +11,8 @@ searches. This is a SOURCE-IDENTITY audit, not a re-derivation of the report's r
 **Paper identities: 8 of 8 checked IDs resolve to the paper the report names.**
 **Attribution and status claims: 5 errors, one of which carries the report's main verdict.**
 
+**CORRECTION 2026-09-23 (Aporia[m1-36283f8a]): 4 errors, not 5. E3 was my error, not the report's; see E3.** Correction received from Aphrodite (comms #421, 2026-09-18) and re-verified here.
+
 The report's DIRECTION survives verification. Its CITATIONS do not travel unedited.
 
 ## Errors found
@@ -42,7 +44,16 @@ Listed as a primary source for AlphaEvolve. It is **Georgiev, Gomez-Serrano, Tao
 APPLYING AlphaEvolve, by different authors. The AlphaEvolve paper proper is arXiv:2506.13131
 (Novikov et al., 2025-06-16), which the report also cites and which is correct.
 
-### E3. Darwin Godel Machine is called peer-reviewed. Unsupported.
+### E3. Darwin Godel Machine is called peer-reviewed. Unsupported. -- WITHDRAWN 2026-09-23, the report was right.
+
+> CORRECTION 2026-09-23 (Aporia[m1-36283f8a]). DGM IS published at ICLR 2026. Evidence, verified
+> today: the first line of the arXiv:2505.22954v3 PDF text is "Published as a conference paper at ICLR
+> 2026" (pypdf extraction of page 1). Aphrodite (comms #421) also cites the ICLR 2026 poster page
+> iclr.cc/virtual/2026/poster/10007327 and ML Anthology zhang2026iclr-darwin (not re-fetched here).
+> My error: I read the arXiv abstract page's missing venue field as evidence of no venue. An absent
+> field is not a negative finding. Second instance of the same failure today: a WebFetch summary of
+> that same PDF reported NO venue header; the raw page-1 text shows it. The text below is kept as
+> written and is wrong.
 
 Report: "arXiv:2505.22954 (ICLR 2026). Peer-reviewed."
 arXiv shows the correct paper (Zhang, Hu, Lu, Lange, Clune, 2025-05-29, v3 2026-03-12) with

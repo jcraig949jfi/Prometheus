@@ -1,0 +1,33 @@
+{
+ "perturbation_id": "P-H08",
+ "parent": "T-X17",
+ "requires": [
+  "P-G11"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "anti-gravity",
+ "shapes": {
+  "0": "start_anchored",
+  "4": "periodic",
+  "5": "ask_time",
+  "1": "schedule"
+ },
+ "representatives": 8,
+ "depths": [
+  4,
+  8,
+  16
+ ],
+ "unfiltered_draws": 8,
+ "neutral_walkers": 4,
+ "keep_shape": "curve distance to the representative's own curve < .2",
+ "keep_reward": "reward within the band of the representative's",
+ "reading": "EDIT_ROBUSTNESS if unfiltered mutants keep the shape within .15 of the neutral walkers' share at depth 16 for every shape; NEUTRALITY_PRESERVES if neutral walkers keep it by >= .25 more in >= 2 shapes; MIXED otherwise",
+ "material_rule": "the reading is EDIT_ROBUSTNESS (the heritability claim is not about neutrality) or NEUTRALITY_PRESERVES",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:02:00",
+ "prereg_sha256": "16b4b6db716065e803f930d5ba4803d03627e169128c6dee99fd0c1e532b862f"
+}

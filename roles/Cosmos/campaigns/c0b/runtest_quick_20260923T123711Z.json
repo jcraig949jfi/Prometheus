@@ -1,0 +1,97 @@
+{
+ "utc": "20260923T123711Z",
+ "identity": {
+  "cosmos_src_sha": "39c2f04c8b697fa011a26f0735af35defb9363f200303477cea18739c10e22e4",
+  "n_src": 39,
+  "git_head": "54ca842282b812c6070fad45a02096b131b10283",
+  "cosmos_dirty": true
+ },
+ "steps": {
+  "tests_fast": {
+   "ok": true,
+   "summary": "58 passed, 6 deselected in 1.19s",
+   "s": 1.7
+  },
+  "broker_selftest": {
+   "ok": true,
+   "detail": {
+    "w0": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    },
+    "w1": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    }
+   }
+  },
+  "seal": {
+   "ok": true,
+   "spec_sha": "48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265"
+  },
+  "quick_campaign": {
+   "ok": true,
+   "gates": {
+    "G1": "PASS",
+    "G0": "PASS",
+    "G4": "NOT REACHED",
+    "G2": "FAIL",
+    "G7": "NOT REACHED",
+    "G5": "SKIPPED (quick)",
+    "G6": "SKIPPED (quick)"
+   },
+   "graph": {
+    "nodes": 328,
+    "edges": 190,
+    "runs": 328,
+    "families": 3,
+    "laws": 0,
+    "edge_kinds": {
+     "CONTROL_OF": 60,
+     "DEFORMATION_OF": 130
+    }
+   },
+   "laws": [],
+   "mine_initial": {
+    "v3": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.952,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "v1": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8792456866804691,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "v2": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.9011573498964803,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "raw": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8756656314699792,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    }
+   },
+   "s": 102.7
+  }
+ },
+ "ok": true
+}

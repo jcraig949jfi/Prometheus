@@ -1,0 +1,127 @@
+{
+ "controls": {
+  "NEG_r2_literal": false,
+  "NEG_r2_governing": true,
+  "NEG_harvest_vs_LRU_literal": true,
+  "NEG_harvest_vs_NOMEM_governing": true,
+  "POS_oracle_top_literal": false,
+  "POS_oracle_top_governing": true,
+  "POS_planted_r2unv_168": 0.007406955046385111,
+  "POS_planted_ok": false,
+  "CHEAT_smuggler_refused": true,
+  "CHEAT_smuggler_msg": "CheatSmuggler.secret: undeclared attribute (dict)",
+  "CHEAT_inject_ratio_168": 1.0544151793340926,
+  "CHEAT_inject_ratio_384": 1.0521640387570612,
+  "CHEAT_inject_ok": true
+ },
+ "controls_pass_governing": false,
+ "controls_pass_literal": false,
+ "H1": {
+  "96": {
+   "best_C": "LRU",
+   "best_R": "LRU",
+   "TT_mean": 7605.485610421398,
+   "best_mean": 3234.605644565646,
+   "margin": 1.3512868170495906,
+   "ci_lo": 3237.905134680301,
+   "interaction_mean": 6765.071009207391,
+   "interaction_lo": 5289.420348184388,
+   "pass_": true
+  },
+  "168": {
+   "best_C": "LOWRANK",
+   "best_R": "LRU",
+   "TT_mean": 7058.490884736765,
+   "best_mean": 8718.601544508372,
+   "margin": -0.19041019953679028,
+   "ci_lo": -3010.2779677315357,
+   "interaction_mean": 960.5355275163598,
+   "interaction_lo": -749.8374230881963,
+   "pass_": "False"
+  }
+ },
+ "H1_pass": "False",
+ "H2": {
+  "harvest_96": {
+   "evolved": 8605.15472696433,
+   "tuned": 7605.485610421398,
+   "margin": 0.13144053749482332,
+   "ci_lo": -501.2731724906341,
+   "pass_": false
+  },
+  "harvest_168": {
+   "evolved": 9423.167523734868,
+   "tuned": 7058.490884736765,
+   "margin": 0.3350116445020088,
+   "ci_lo": 1028.4736849388769,
+   "pass_": true
+  },
+  "order_96": {
+   "order": [
+    2,
+    3,
+    0,
+    4,
+    5,
+    1
+   ],
+   "need": 568,
+   "random_median": 1568.0,
+   "latent": 168,
+   "observed": 1824,
+   "exact_latent": false,
+   "pass_": true
+  },
+  "order_168": {
+   "order": [
+    4,
+    5,
+    3,
+    0,
+    1,
+    2
+   ],
+   "need": 1464,
+   "random_median": 1568.0,
+   "latent": 168,
+   "observed": 1824,
+   "exact_latent": false,
+   "pass_": true
+  },
+  "cross_class": {
+   "96": {
+    "gain_class0": 999.6691165429329,
+    "gain_class1": 585.4632265874579,
+    "pass_": false
+   },
+   "168": {
+    "gain_class0": 2364.676638998103,
+    "gain_class1": 2639.346038230997,
+    "pass_": false
+   }
+  }
+ },
+ "H2_pass": false,
+ "H2_parts": {
+  "harvest": true,
+  "order": true,
+  "cross": false
+ },
+ "H3": {
+  "adv": [
+   -1660.110659771609,
+   -1117.8172140633305,
+   -2275.207570885473,
+   -2553.225988281777,
+   -2620.646187287969
+  ],
+  "rho": -0.8999999999999998,
+  "M1_ci": [
+   -3629.769299061536,
+   -1676.293492926443
+  ],
+  "pass_": false
+ },
+ "H3_pass": false,
+ "VERDICT": "INDETERMINATE (controls)"
+}

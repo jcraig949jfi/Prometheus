@@ -1,0 +1,787 @@
+{
+ "raw": {
+  "base_rate": 0.2375,
+  "best_score": 0.8464082364863499,
+  "cmap": "v3",
+  "family_dependence": {
+   "gain_bits_per_row": -0.02116,
+   "mu_bits": -0.03624,
+   "null_median": 0.01509,
+   "p": 1.0,
+   "per_family_acc": {
+    "ca": 0.8375,
+    "regs": 0.8375,
+    "ring": 0.925
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 1.2757032600156444,
+   "atoms": [
+    [
+     [
+      "sub",
+      [
+       "var",
+       "Q"
+      ],
+      [
+       "mul",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ]
+     ],
+     0.7885785310734463,
+     1.0
+    ],
+    [
+     [
+      "sub",
+      [
+       "var",
+       "K"
+      ],
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "N"
+        ]
+       ],
+       [
+        "var",
+        "G"
+       ]
+      ]
+     ],
+     4.935481691072401,
+     -1.0
+    ]
+   ],
+   "complexity": 12,
+   "fold_ba": {
+    "ca": 0.8818181818181818,
+    "regs": 0.8675889328063241,
+    "ring": 0.933817594834544
+   },
+   "law": "(Q - (C * K)) <= 0.7886 AND (K - (log(N) / G)) >= 4.935",
+   "scales": [
+    6.559218601886612,
+    4.5873777742537
+   ],
+   "score": 0.8464082364863499
+  },
+  "n_expr_classes": 11378,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 240,
+  "null_scores": [
+   0.6606,
+   0.6286,
+   0.6009,
+   0.6351,
+   0.6472,
+   0.6509,
+   0.5904,
+   0.6459,
+   0.5937,
+   0.6018,
+   0.6232,
+   0.6322,
+   0.6279,
+   0.6278,
+   0.6078,
+   0.5988,
+   0.636,
+   0.6202,
+   0.5888
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8464,
+    "structure": "(Q - (C * K)) <= AND (K - (log(N) / G)) >="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8424,
+    "structure": "(K - (log(N) / G)) >= AND (log(Q) - (C * K)) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8424,
+    "structure": "exp(-(Q - (C * K))) >= AND (K - (log(N) / G)) >="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8424,
+    "structure": "(K - (log(N) / G)) >= AND (Q + exp(-(C * K))) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8424,
+    "structure": "(K - (log(N) / G)) >= AND (Q * exp(-(C * K))) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8424,
+    "structure": "log((Q - (C * K))) <= AND (K - (log(N) / G)) >="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8818,
+     "regs": 0.8676,
+     "ring": 0.9338
+    },
+    "passes_worst_gate": true,
+    "score": 0.8424,
+    "structure": "exp(-((C * K) - Q)) <= AND (K - (log(N) / G)) >="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8364,
+     "regs": 0.913,
+     "ring": 0.8931
+    },
+    "passes_worst_gate": true,
+    "score": 0.8328,
+    "structure": "(Q - (C * K)) <= AND (log(K) - (N / G)) >="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ },
+ "v1": {
+  "base_rate": 0.2375,
+  "best_score": 0.8241754400516376,
+  "cmap": "v1",
+  "family_dependence": {
+   "gain_bits_per_row": 0.03724,
+   "mu_bits": 0.02196,
+   "null_median": 0.01528,
+   "p": 0.22,
+   "per_family_acc": {
+    "ca": 0.9,
+    "regs": 0.775,
+    "ring": 0.8125
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 7.386888262992555,
+   "atoms": [
+    [
+     [
+      "div",
+      [
+       "var",
+       "C"
+      ],
+      [
+       "mul",
+       [
+        "var",
+        "K"
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "N"
+        ]
+       ]
+      ]
+     ],
+     0.39339718818799785,
+     1.0
+    ],
+    [
+     [
+      "add",
+      [
+       "div",
+       [
+        "var",
+        "K"
+       ],
+       [
+        "log",
+        [
+         "var",
+         "C"
+        ]
+       ]
+      ],
+      [
+       "var",
+       "N"
+      ]
+     ],
+     -0.39737722238585166,
+     1.0
+    ]
+   ],
+   "complexity": 13,
+   "fold_ba": {
+    "ca": 0.9163636363636363,
+    "regs": 0.8768115942028986,
+    "ring": 0.8353510895883778
+   },
+   "law": "(C / (K * exp(-N))) <= 0.3934 AND ((K / log(C)) + N) <= -0.3974",
+   "scales": [
+    2.6674971647529175,
+    3.382391866705575
+   ],
+   "score": 0.8241754400516376
+  },
+  "n_expr_classes": 6118,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 240,
+  "null_scores": [
+   0.6191,
+   0.586,
+   0.6016,
+   0.6073,
+   0.6184,
+   0.6335,
+   0.6096,
+   0.6074,
+   0.5875,
+   0.6236,
+   0.6172,
+   0.6458,
+   0.6097,
+   0.609,
+   0.6674,
+   0.5898,
+   0.593,
+   0.6049,
+   0.6043
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "fold_ba": {
+     "ca": 0.9418,
+     "regs": 0.9855,
+     "ring": 0.7127
+    },
+    "passes_worst_gate": false,
+    "score": 0.828,
+    "structure": "((C * K) * exp(-C)) >= AND ((N + exp(-G)) * C) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9418,
+     "regs": 0.9855,
+     "ring": 0.7127
+    },
+    "passes_worst_gate": false,
+    "score": 0.828,
+    "structure": "(C - log((C * K))) <= AND ((N + exp(-G)) * C) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9218,
+     "regs": 0.9855,
+     "ring": 0.7127
+    },
+    "passes_worst_gate": false,
+    "score": 0.8253,
+    "structure": "((C - K) * C) <= AND ((N + exp(-G)) * C) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9164,
+     "regs": 0.8768,
+     "ring": 0.8354
+    },
+    "passes_worst_gate": true,
+    "score": 0.8242,
+    "structure": "(C / (K * exp(-N))) <= AND ((K / log(C)) + N) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9073,
+     "regs": 0.8841,
+     "ring": 0.8354
+    },
+    "passes_worst_gate": true,
+    "score": 0.8236,
+    "structure": "((N + exp(-G)) * C) <= AND ((K / log(C)) + N) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9218,
+     "regs": 0.9855,
+     "ring": 0.7127
+    },
+    "passes_worst_gate": false,
+    "score": 0.8213,
+    "structure": "exp(-((C - K) * C)) >= AND ((N + exp(-G)) * C) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9218,
+     "regs": 0.9855,
+     "ring": 0.7127
+    },
+    "passes_worst_gate": false,
+    "score": 0.8213,
+    "structure": "log(((K - C) * C)) >= AND ((N + exp(-G)) * C) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9218,
+     "regs": 0.9855,
+     "ring": 0.7127
+    },
+    "passes_worst_gate": false,
+    "score": 0.8213,
+    "structure": "exp(-((K - C) * C)) <= AND ((N + exp(-G)) * C) <="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ },
+ "v2": {
+  "base_rate": 0.2375,
+  "best_score": 0.82000247553969,
+  "cmap": "v2",
+  "family_dependence": {
+   "gain_bits_per_row": 0.04137,
+   "mu_bits": 0.00764,
+   "null_median": 0.03373,
+   "p": 0.3,
+   "per_family_acc": {
+    "ca": 0.875,
+    "regs": 0.8125,
+    "ring": 0.85
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 2.575339038084062,
+   "atoms": [
+    [
+     [
+      "sub",
+      [
+       "var",
+       "C"
+      ],
+      [
+       "add",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "N"
+        ]
+       ]
+      ]
+     ],
+     -1.0547783442543726,
+     1.0
+    ],
+    [
+     [
+      "sub",
+      [
+       "var",
+       "N"
+      ],
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "C"
+        ]
+       ],
+       [
+        "var",
+        "K"
+       ]
+      ]
+     ],
+     2.1138254836388803,
+     1.0
+    ]
+   ],
+   "complexity": 13,
+   "fold_ba": {
+    "ca": 0.9090909090909092,
+    "regs": 0.8768115942028986,
+    "ring": 0.8301049233252623
+   },
+   "law": "(C - (G + exp(-N))) <= -1.055 AND (N - (log(C) / K)) <= 2.114",
+   "scales": [
+    0.7192843537587156,
+    1.9845314952618858
+   ],
+   "score": 0.82000247553969
+  },
+  "n_expr_classes": 5742,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 240,
+  "null_scores": [
+   0.6019,
+   0.5983,
+   0.6024,
+   0.6219,
+   0.6192,
+   0.6113,
+   0.608,
+   0.611,
+   0.609,
+   0.623,
+   0.6062,
+   0.6199,
+   0.62,
+   0.612,
+   0.6184,
+   0.5859,
+   0.593,
+   0.5861,
+   0.5916
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "fold_ba": {
+     "ca": 0.9091,
+     "regs": 0.8768,
+     "ring": 0.8301
+    },
+    "passes_worst_gate": true,
+    "score": 0.82,
+    "structure": "(C - (G + exp(-N))) <= AND (N - (log(C) / K)) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9,
+     "regs": 0.9058,
+     "ring": 0.8063
+    },
+    "passes_worst_gate": true,
+    "score": 0.8187,
+    "structure": "exp(-(C / (N - G))) <= AND (N - (log(C) / K)) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9182,
+     "regs": 0.9058,
+     "ring": 0.7825
+    },
+    "passes_worst_gate": true,
+    "score": 0.8168,
+    "structure": "(C - (G + exp(-N))) <= AND ((K / log(C)) + N) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9,
+     "regs": 0.8696,
+     "ring": 0.8148
+    },
+    "passes_worst_gate": true,
+    "score": 0.8094,
+    "structure": "(C - (G * exp(-N))) <= AND (N - (log(C) / K)) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9182,
+     "regs": 0.8913,
+     "ring": 0.7672
+    },
+    "passes_worst_gate": true,
+    "score": 0.8069,
+    "structure": "((C - G) * exp(-N)) <= AND ((K / log(C)) + N) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.9091,
+     "regs": 0.8986,
+     "ring": 0.7672
+    },
+    "passes_worst_gate": true,
+    "score": 0.8063,
+    "structure": "(C - (G * exp(-N))) <= AND ((K / log(C)) + N) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8909,
+     "regs": 0.8768,
+     "ring": 0.791
+    },
+    "passes_worst_gate": true,
+    "score": 0.8009,
+    "structure": "(C / (G * exp(-N))) <= AND (N - (log(C) / K)) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.8236,
+     "regs": 0.9928,
+     "ring": 0.7296
+    },
+    "passes_worst_gate": false,
+    "score": 0.8007,
+    "structure": "((C - K) * C) <= AND (C - (G + exp(-N))) <="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ },
+ "v3": {
+  "base_rate": 0.2375,
+  "best_score": 0.9427596823057397,
+  "cmap": "v3",
+  "family_dependence": {
+   "gain_bits_per_row": 0.01637,
+   "mu_bits": -0.0039,
+   "null_median": 0.02027,
+   "p": 0.74,
+   "per_family_acc": {
+    "ca": 1.0,
+    "regs": 0.9875,
+    "ring": 0.9875
+   }
+  },
+  "groups": [
+   "ca",
+   "regs",
+   "ring"
+  ],
+  "law": {
+   "alpha": 109.13223641987435,
+   "atoms": [
+    [
+     [
+      "sub",
+      [
+       "var",
+       "C"
+      ],
+      [
+       "add",
+       [
+        "var",
+        "G"
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "N"
+        ]
+       ]
+      ]
+     ],
+     -1.0547783442543726,
+     1.0
+    ],
+    [
+     [
+      "mul",
+      [
+       "sub",
+       [
+        "var",
+        "C"
+       ],
+       [
+        "log",
+        [
+         "var",
+         "Q"
+        ]
+       ]
+      ],
+      [
+       "var",
+       "K"
+      ]
+     ],
+     0.1792,
+     -1.0
+    ]
+   ],
+   "complexity": 13,
+   "fold_ba": {
+    "ca": 1.0,
+    "regs": 0.9927536231884058,
+    "ring": 0.9915254237288136
+   },
+   "law": "(C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792",
+   "scales": [
+    0.7192843537587156,
+    2.1972595300294544
+   ],
+   "score": 0.9427596823057397
+  },
+  "n_expr_classes": 10686,
+  "n_families": 3,
+  "n_lineages": 3,
+  "n_rows": 240,
+  "null_scores": [
+   0.6025,
+   0.6045,
+   0.6024,
+   0.6219,
+   0.6126,
+   0.6107,
+   0.6078,
+   0.6209,
+   0.6099,
+   0.6322,
+   0.6062,
+   0.6241,
+   0.6138,
+   0.628,
+   0.6411,
+   0.5922,
+   0.5998,
+   0.5861,
+   0.5916
+  ],
+  "p_null": 0.05,
+  "top": [
+   {
+    "fold_ba": {
+     "ca": 1.0,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9428,
+    "structure": "(C - (G + exp(-N))) <= AND ((C - log(Q)) * K) >="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.98,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9401,
+    "structure": "(Q - (C * K)) <= AND (C - (G + exp(-N))) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.98,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9361,
+    "structure": "log((Q - (C * K))) <= AND (C - (G + exp(-N))) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.98,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9361,
+    "structure": "(C - (G + exp(-N))) <= AND (log(Q) - (C * K)) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.98,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9361,
+    "structure": "(C - (G + exp(-N))) <= AND (Q + exp(-(C * K))) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.98,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9361,
+    "structure": "(C - (G + exp(-N))) <= AND (Q * exp(-(C * K))) <="
+   },
+   {
+    "fold_ba": {
+     "ca": 0.98,
+     "regs": 0.9928,
+     "ring": 0.9915
+    },
+    "passes_worst_gate": true,
+    "score": 0.9361,
+    "structure": "(C - (G + exp(-N))) <= AND ((C * K) + exp(-Q)) >="
+   },
+   {
+    "fold_ba": {
+     "ca": 1.0,
+     "regs": 0.9783,
+     "ring": 0.9762
+    },
+    "passes_worst_gate": true,
+    "score": 0.9328,
+    "structure": "((C - G) * exp(-N)) <= AND ((C - log(Q)) * K) >="
+   }
+  ],
+  "verdict": "CANDIDATE"
+ }
+}

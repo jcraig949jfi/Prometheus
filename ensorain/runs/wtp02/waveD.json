@@ -1,0 +1,144 @@
+[
+ {
+  "j": 10,
+  "detector": "D3",
+  "base_CGu": 0.21785580040110852,
+  "autopsy": {
+   "transplant_same": 0.32713956643359343,
+   "reset_memory_frozen": 0.0,
+   "reset_then_learn": 0.21785580040110852,
+   "ablate_half": 0.32713956643359343,
+   "no_marks": 0.3744216941703154,
+   "reskin": 0.3271395664335933,
+   "drift_0": 0.21785580040110852,
+   "door_0": 0.3554525094478421,
+   "delay_0": 0.21785580040110852
+  },
+  "artifact_carrier": true,
+  "memory_kind": "none",
+  "n_floats": 1,
+  "genome": {
+   "substrate": {
+    "dims": [
+     2,
+     2,
+     5,
+     11
+    ],
+    "gen": "spectral",
+    "rank": 5,
+    "chain": [
+     {
+      "op": "f_svd_power",
+      "p": {
+       "power": 2.9045166813689045
+      }
+     }
+    ],
+    "reward_chain": []
+   },
+   "geometry": {
+    "kind": "torus",
+    "n_nodes": 440,
+    "k": 3,
+    "p": 0.26129905199836084,
+    "directed": 0.06377912431835804,
+    "map": "sorted"
+   },
+   "observation": {
+    "kind": "marginal",
+    "mode": 5,
+    "k": 1,
+    "chain": [
+     {
+      "op": "v_fft_abs",
+      "p": {}
+     },
+     {
+      "op": "v_tanh",
+      "p": {}
+     }
+    ],
+    "noise_sd": 0.34742139587670046,
+    "noise_dist": "cauchy_clip"
+   },
+   "transition": {
+    "drift": 0.0,
+    "drift_period": 116,
+    "basis_change_period": 338,
+    "rewire_period": 0,
+    "rewire_frac": 0.3890237927106947,
+    "catastrophe_rate": 0.0
+   },
+   "irreversibility": {
+    "oneway": 0.09591172737975828,
+    "door_close": 0.0,
+    "hazard_frac": 0.0,
+    "hazard": "permute"
+   },
+   "resource": {
+    "energy0": 359.73312556394234,
+    "metabolism": 1.1272139045913836,
+    "gain": 4.460176353439172,
+    "theta": -0.039306080630420126,
+    "regrow": 599,
+    "query_every": 5,
+    "query_reward": 9.337540588377763,
+    "tol": 0.05645069576655251,
+    "p_compute": 0.0003541087517343605,
+    "p_read": 3.923980903634933e-05,
+    "p_write": 7.809270057305722e-05,
+    "p_move": 0.14794085392470946,
+    "p_probe": 2.413450183275275,
+    "p_rollout": 0.43260135494471597,
+    "calibrated": true
+   },
+   "memory": {
+    "substrate": "marks",
+    "cap": 49,
+    "bits": 2,
+    "forget": "oldest",
+    "forget_rate": 0.16240340229212594,
+    "fluid": 0,
+    "band": 0.25
+   },
+   "learning": {
+    "rule": "sgd",
+    "lr": 0.15698428571520856,
+    "batch": 95,
+    "sweeps": 1
+   },
+   "credit": {
+    "delay": 0,
+    "radius": 2,
+    "noise": 0.0,
+    "sign_flip": 0.0
+   },
+   "search": {
+    "policy": "novelty",
+    "eps": 0.3582962077157026,
+    "depth": 3,
+    "temp": 2.0625160588376206
+   },
+   "boundary": {
+    "n_org": 4,
+    "marks": "private",
+    "mark_decay": 0.007031311014070879
+   },
+   "time": {
+    "lifetime": 1901,
+    "checkpoints": 10,
+    "lifetime2": 1901
+   },
+   "meta": {
+    "strategy": "mutate:large",
+    "parents": [
+     "2e592945baef7840"
+    ],
+    "mutations": [
+     "law:search"
+    ]
+   }
+  }
+ }
+]

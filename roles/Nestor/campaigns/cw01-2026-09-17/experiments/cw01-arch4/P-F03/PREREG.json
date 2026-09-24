@@ -1,0 +1,59 @@
+{
+ "perturbation_id": "P-F03",
+ "parent": "T-X17",
+ "deformation": "B",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "evolution-transplant",
+ "arms": [
+  [
+   "W0",
+   "plain"
+  ],
+  [
+   "W0",
+   "idle"
+  ],
+  [
+   "W2_K2",
+   "plain"
+  ],
+  [
+   "W2_K2",
+   "idle"
+  ]
+ ],
+ "generations": 40,
+ "transplant_generations": 20,
+ "seeds": [
+  1,
+  2
+ ],
+ "idle": "half the episodes get one empty tick at a random position (before ask / between PUTs / before first PUT)",
+ "vector": [
+  "W0D1.before_ask",
+  "W0D2.between_puts",
+  "W0D2.before_ask",
+  "W0D2.before_first_put",
+  "K2.between_puts",
+  "K2.before_first_ask",
+  "K2.before_second_ask"
+ ],
+ "ruler": "L1 distance between 7-vectors (NaN components skipped); nearest-centroid assignment",
+ "reading_rules": {
+  "TRAVELS": "after transplant, >= 2/3 of tops stay nearest the ORIGIN arm's centroid",
+  "RECONSTRUCTED": ">= 2/3 nearest the HOST world's plain-arm centroid",
+  "MIXED": "otherwise"
+ },
+ "material_rule": "idle vs plain centroids differ by >= .10 L1 in either world, OR the transplant reading is TRAVELS or RECONSTRUCTED",
+ "continuation": [
+  "longer transplant",
+  "idle probability dose",
+  "single-program neutral walk in the host world"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 02:44:18",
+ "prereg_sha256": "085f9eec7d452e0aa2bccce2b9569963249b3d46daee3e575cc5a34734a92d57"
+}

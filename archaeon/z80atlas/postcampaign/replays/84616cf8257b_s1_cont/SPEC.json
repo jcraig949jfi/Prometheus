@@ -1,0 +1,42 @@
+{
+"budget": {
+"max_epochs": 1500,
+"step_cap": 256,
+"vm_steps": 60000000
+},
+"family": "70d24e947c80",
+"grammar": "63ffdeca16db3333",
+"init": "random",
+"init_hybrid": true,
+"mutation": "local_byte",
+"parents": [
+"70d24e947c80"
+],
+"population": {
+"N": 128
+},
+"pressure": [
+"tape_cost"
+],
+"representation": {
+"genome": 32,
+"layout": "shared",
+"substrate": "vmcopy"
+},
+"reproduction": "ENDOGENOUS_COPY",
+"scheduler_reason": "matched_control:accessibility",
+"schema": "archaeon.z80atlas.spec.v1",
+"spec_id": "84616cf8257b",
+"stage": "early",
+"task": {
+"name": "ECHO_forced"
+},
+"world": {
+"env_dynamics": "env_mutate",
+"migration": "none",
+"niches": 4,
+"reservoir": false,
+"resources": "limited",
+"topology": "well_mixed"
+}
+}

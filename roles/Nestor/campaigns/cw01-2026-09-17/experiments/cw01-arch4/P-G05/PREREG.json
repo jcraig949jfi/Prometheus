@@ -1,0 +1,39 @@
+{
+ "perturbation_id": "P-G05",
+ "parent": "T-X17",
+ "deformation": "B",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "transplant-without-selection",
+ "lineages": {
+  "W0_plain": "ask-time bound (P-F03 seed 1 tops) -> host W2_K2",
+  "W0_idle": "immune -> host W2_K2",
+  "W2_plain": "immune (evolver) -> host W0",
+  "C408": "input-schedule bound (C4-08 ordinary top-16) -> host W0"
+ },
+ "neutral_window": "C4-05 neutral-band walk in the host world (reward within band of the program's own host reward), depth 16, archived 0/2/4/8/16; no fitness ordering",
+ "vector": [
+  "W0D1.before_ask",
+  "W0D2.between_puts",
+  "W0D2.before_ask",
+  "W0D2.before_first_put",
+  "K2.between_puts",
+  "K2.before_first_ask",
+  "K2.before_second_ask"
+ ],
+ "centroids": "origin = the lineage's own depth-0 vectors; host-native = the host world's plain-evolved tops (P-F03: W2_plain for host W2, W0_plain for host W0)",
+ "readings_per_lineage": {
+  "TRAVELS_WITH_ORGANISM": "at depth 16 mean distance to origin <= .10 and < distance to host",
+  "DECAYS_WITHOUT_SELECTION": "distance to origin grows by >= .20 from depth 0 to 16 without approaching the host centroid",
+  "CONTEXT_REMAPS_IMMEDIATELY": "not applicable by construction (the vector reads every world at once); recorded as such",
+  "REBUILT_BY_SELECTION": "under host selection the tops' centroid is nearer the host than the origin",
+  "MIXED": "otherwise"
+ },
+ "selection_stage": "C4-08 tops under idle-tick selection in W2_K2 (40 gens, seeds 1-2) and under plain W0 selection (20 gens, seeds 1-2); W0/W2 lineages' selection stage is P-F03's transplant (cited)",
+ "material_rule": "any lineage reads DECAYS or REBUILT, or the origin-vs-host distances separate at depth 16",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:22:26",
+ "prereg_sha256": "060f654f2fcee1d81a089500b3065bac00fe3cd77e9980fb9698ab8a4dbe2463"
+}

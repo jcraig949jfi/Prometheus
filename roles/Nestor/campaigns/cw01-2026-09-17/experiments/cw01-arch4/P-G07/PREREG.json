@@ -1,0 +1,22 @@
+{
+ "perturbation_id": "P-G07",
+ "parent": "T-ARCH4/M1",
+ "deformation": "O",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "deformation-lane",
+ "hit": "two adjacent instructions, one operand slot each, at 8 anchors x 3 slots x 4 draws (P-E04's construction)",
+ "reach": "HALT probe: instruction i reached iff replacing its opcode by HALT changes the answers",
+ "readouts": [
+  "slot and category loss orderings per stratum (parents / walkers / C4-08 tops) with Wilson bands",
+  "category loss by reached vs unreached; halt_yield's unreached share",
+  "held-out families W1_d1 / W2_K2d1: reward delta by slot x category; additivity: interaction sum of squares vs a 2000-permutation band"
+ ],
+ "promotion_rule": "a grammar-level mechanism only if the slot ordering (a > b > c) holds in every stratum with disjoint a-vs-c bands AND on the held-out reward deltas",
+ "material_rule": "any of: slot ordering transfers (disjoint a/c bands in all strata); reach explains halt_yield (reached halt_yield loss >= grand mean); interaction outside its band",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:18:50",
+ "prereg_sha256": "91a4cc58a24c89ee3b5c8eb9fa5cfe28d7314dab004ef81690a3fbb088de8e1c"
+}

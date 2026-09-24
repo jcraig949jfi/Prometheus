@@ -1,0 +1,151 @@
+{
+ "checks_run": 24,
+ "environment": [
+  {
+   "check": "full_suite",
+   "detail": "rc=0 | 1131 passed, 9 skipped, 1 warning in 274.24s (0:04:34)",
+   "ok": true
+  },
+  {
+   "check": "discovered_build_tests",
+   "detail": "11 file(s) rc=0 | 155 passed in 33.08s | ['primordial/cohorts/e/tests/test_d25_signflip_canonical_order.py', 'primordial/metric/tests/test_world_set_r8.py', 'primordial/tests/test_d28_registration_survives_ttl.py', 'primordial/tests/test_r8_f_g1_ge_g6.py', 'primordial/tests/test_r8_g2_binding_precheck.py', 'primordial/tests/test_r8_g4_close_watch_lint.py', 'primordial/tests/test_r8_g7_export_cursor.py', 'primordial/tests/test_r8_g8_round_clock.py', 'primordial/tests/test_r8_p_g3_scheduling.py', 'primordial/tests/test_r8_p_g5_telemetry.py', 'primordial/tests/test_score_anti_prior.py']",
+   "ok": true
+  },
+  {
+   "check": "planted_evidence_refusals",
+   "detail": "rc=0 | 21 passed in 1.11s",
+   "ok": true
+  },
+  {
+   "check": "G1_vocabulary_lint",
+   "detail": "rc=0 | vocabulary lint: PASS",
+   "ok": true
+  },
+  {
+   "check": "G4_protocol_lint",
+   "detail": "rc=0 | PROTOCOL LINT PASS",
+   "ok": true
+  },
+  {
+   "check": "residue_scan_clean",
+   "detail": "residue=0",
+   "ok": true
+  },
+  {
+   "check": "zero_registrations",
+   "detail": "registrations=0",
+   "ok": true
+  },
+  {
+   "check": "zero_stop_flags",
+   "detail": "stop_flags=0",
+   "ok": true
+  },
+  {
+   "check": "capacity_profile",
+   "detail": "NODE_CAPACITY_PROFILE_R7 k*=2 threads=8",
+   "ok": true
+  },
+  {
+   "check": "conductor_worktree_clean",
+   "detail": "dirty_lines=0",
+   "ok": true
+  },
+  {
+   "check": "worktree_current_with_origin",
+   "detail": "behind_origin=0",
+   "ok": true
+  },
+  {
+   "check": "tip_sha_recorded",
+   "detail": "de40df27224e0fd9432d7139d0c88982626a7e93",
+   "ok": true
+  }
+ ],
+ "environment_ok": true,
+ "gates": {
+  "C1": {
+   "blocks": "cross-lane GPU work (kind == 'gpu')",
+   "detail": "C1 D23 gpuq worktree isolation was UNASSIGNED in the build (BUILD_R8 conditionals)",
+   "landed": false,
+   "secs": 0.0
+  },
+  "C2": {
+   "blocks": "any verdict depending on the MC signflip branch",
+   "detail": "MC n=32 order_invariant=True judge_agrees=True p=0.563362",
+   "landed": true,
+   "secs": 0.25
+  },
+  "C3": {
+   "blocks": "long-lived registered services",
+   "detail": "refresh re-created the expired registration",
+   "landed": true,
+   "secs": 0.04
+  },
+  "G1": {
+   "blocks": "ALL row-emitting science (expected_output_rows > 0)",
+   "detail": "primordial/tests/test_r8_f_g1_ge_g6.py: rc=0 | 31 passed in 4.81s",
+   "landed": true,
+   "secs": 6.0
+  },
+  "G2": {
+   "blocks": "all new anti-prior draws (experiment_class ANTI_PRIOR) and the BETA sweep",
+   "detail": "anti_prior.binding_precheck present (cell-binding pre-check)",
+   "landed": true,
+   "secs": 0.0
+  },
+  "G3": {
+   "blocks": "shared-CPU multi-lane science",
+   "detail": "broker imports, primordial/tests/test_r8_p_g3_scheduling.py: rc=0 | 7 passed in 17.52s",
+   "landed": true,
+   "secs": 18.72
+  },
+  "G4": {
+   "blocks": "nothing in-round; blocks CLOSE correctness",
+   "detail": "close/watch protocol lint present",
+   "landed": true,
+   "secs": 0.0
+  },
+  "G5": {
+   "blocks": "nothing; but a round without it fails its own mission",
+   "detail": "QUEUE_FIELDS complete, STREAMS present, primordial/tests/test_r8_p_g5_telemetry.py: rc=0 | 20 passed in 4.20s",
+   "landed": true,
+   "secs": 5.4
+  },
+  "G6": {
+   "blocks": "nothing directly; WHY_NOT_RUN and residue records need hand-written stubs",
+   "detail": "envelope.open_candidate present",
+   "landed": true,
+   "secs": 0.0
+  },
+  "G7": {
+   "blocks": "nothing directly; without it the round's telemetry does not survive the round",
+   "detail": "done-stream export plus per-stream cursor present",
+   "landed": true,
+   "secs": 0.0
+  },
+  "G8": {
+   "blocks": "THE CLOCK ITSELF, therefore everything",
+   "detail": "epochs 12, r9 raises, lane_repos declares 12 lanes",
+   "landed": true,
+   "secs": 0.0
+  },
+  "GE": {
+   "blocks": "nothing directly -- but without it NO gate refusal is enforced at all",
+   "detail": "5/5 behavioural: no-clock, G1 refusal at zero CPU, all-landed admits, fail-closed, C1 gpu-only",
+   "landed": true,
+   "secs": 0.0
+  }
+ },
+ "generated": "2026-09-16 10:20:56",
+ "round_id": "r8",
+ "timings": {
+  "environment_secs": 316.46,
+  "gate_budget_secs": 1200,
+  "probe_secs": 30.43,
+  "total_secs": 346.88,
+  "within_budget": true
+ },
+ "tip_sha": "de40df27224e0fd9432d7139d0c88982626a7e93",
+ "ts": 1789568456.7924194
+}

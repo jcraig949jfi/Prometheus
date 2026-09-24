@@ -1,0 +1,180 @@
+{
+ "note": "EXPLORATORY post-hoc combined-memory ablation; see LEDGER 2026-09-19",
+ "receipt": {
+  "config_hash": "74e04cc62a5188fcd981d16c05288e5472de47c3c5c2ae10a1b265f203b1cb5a",
+  "code_commit": "e19864f522ee5097886e7159b17ca03e4da2e70a",
+  "spec": {
+   "cfg": {
+    "n_hidden": 8,
+    "ticks": 2,
+    "allow_topology": true,
+    "allow_keep": true,
+    "allow_plasticity": true,
+    "reset_each_step": false
+   },
+   "world": "nomem",
+   "mode": "present",
+   "P": 1,
+   "G": 0,
+   "eps": 32,
+   "seed": 0,
+   "eval_seeds": [
+    10000,
+    10001,
+    10002,
+    10003,
+    10004,
+    10005,
+    10006,
+    10007,
+    10008,
+    10009,
+    10010,
+    10011,
+    10012,
+    10013,
+    10014,
+    10015,
+    10016,
+    10017,
+    10018,
+    10019,
+    10020,
+    10021,
+    10022,
+    10023,
+    10024,
+    10025,
+    10026,
+    10027,
+    10028,
+    10032,
+    10033,
+    10034
+   ]
+  },
+  "utc": "2026-09-19T13:08:59Z"
+ },
+ "rows": [
+  {
+   "world": "W4",
+   "seed": 1,
+   "intact": 40.0,
+   "no_activation_mem": 2.25,
+   "no_plasticity": 40.0,
+   "no_memory_at_all": 2.625
+  },
+  {
+   "world": "W4",
+   "seed": 2,
+   "intact": 40.0,
+   "no_activation_mem": 3.25,
+   "no_plasticity": 40.0,
+   "no_memory_at_all": 3.3125
+  },
+  {
+   "world": "W4",
+   "seed": 3,
+   "intact": 40.0,
+   "no_activation_mem": 2.5625,
+   "no_plasticity": 40.0,
+   "no_memory_at_all": 2.5625
+  },
+  {
+   "world": "W3",
+   "seed": 1,
+   "intact": 30.21875,
+   "no_activation_mem": 30.21875,
+   "no_plasticity": 3.21875,
+   "no_memory_at_all": 3.21875
+  },
+  {
+   "world": "W3",
+   "seed": 2,
+   "intact": 30.25,
+   "no_activation_mem": 28.3125,
+   "no_plasticity": 17.625,
+   "no_memory_at_all": 16.5625
+  },
+  {
+   "world": "W3",
+   "seed": 3,
+   "intact": 53.8125,
+   "no_activation_mem": 45.9375,
+   "no_plasticity": 20.8125,
+   "no_memory_at_all": 16.6875
+  },
+  {
+   "world": "W12",
+   "seed": 1,
+   "intact": 29.5625,
+   "no_activation_mem": 12.84375,
+   "no_plasticity": 20.5,
+   "no_memory_at_all": 14.75
+  },
+  {
+   "world": "W12",
+   "seed": 2,
+   "intact": 29.90625,
+   "no_activation_mem": 20.3125,
+   "no_plasticity": 29.90625,
+   "no_memory_at_all": 20.3125
+  },
+  {
+   "world": "W12",
+   "seed": 3,
+   "intact": 27.9375,
+   "no_activation_mem": 27.9375,
+   "no_plasticity": 27.9375,
+   "no_memory_at_all": 27.9375
+  },
+  {
+   "world": "W2",
+   "seed": 1,
+   "intact": 173.90625,
+   "no_activation_mem": 172.90625,
+   "no_plasticity": 172.28125,
+   "no_memory_at_all": 172.90625
+  },
+  {
+   "world": "W2",
+   "seed": 2,
+   "intact": 174.28125,
+   "no_activation_mem": 174.28125,
+   "no_plasticity": 173.1875,
+   "no_memory_at_all": 173.1875
+  },
+  {
+   "world": "W2",
+   "seed": 3,
+   "intact": 173.09375,
+   "no_activation_mem": 167.28125,
+   "no_plasticity": 160.40625,
+   "no_memory_at_all": 158.9375
+  },
+  {
+   "world": "W5",
+   "seed": 1,
+   "intact": 50.0,
+   "no_activation_mem": 6.25,
+   "no_plasticity": 3.125,
+   "no_memory_at_all": 0.0
+  },
+  {
+   "world": "W5",
+   "seed": 2,
+   "intact": 50.0,
+   "no_activation_mem": 0.0,
+   "no_plasticity": 0.0,
+   "no_memory_at_all": 0.0
+  },
+  {
+   "world": "W5",
+   "seed": 3,
+   "intact": 15.625,
+   "no_activation_mem": 0.0,
+   "no_plasticity": 15.625,
+   "no_memory_at_all": 0.0
+  }
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "schema": "archaeon.frontier.execution_gate.v1",
+ "authority": "OPERATOR_EXECUTION_AUTHORIZED",
+ "is_verification": false,
+ "directive": "roles/Archaeon/prompts/2026-09-18_deep_frontier/01_OPERATOR_EXECUTION_DIRECTIVE.md",
+ "written_at": "2026-09-18T23:35:39Z",
+ "G6_0_ALL_COMPONENTS_VERIFIED": false,
+ "G6_0_unverified_items": [
+  "graph-organism checkpointing beyond Archaeon's test (Proteus freeze bundle PROTEUS-47 open)",
+  "freezes across ownership boundaries (engine R2 path, Daedalus schema 10)",
+  "fixture commitments verify (Harmonia registry)",
+  "Harmonia consumes the receipts (pending confirmation)",
+  "Vivarium segment kind + load rehearsal (segments run in-process)"
+ ],
+ "integrity_invariants_covered_by_archaeon_tests": [
+  "deterministic replay",
+  "checkpoint continuity",
+  "evidence write correctness (schemas + append-only registry)",
+  "provenance (spec_hash + provenance per run)",
+  "observation/interpretation separation",
+  "crash recovery (chunks on disk; CLAIMED->PENDING)"
+ ],
+ "scope": "the Deep Frontier loop; narrower gates declare their own scope (PROTEUS-46 covers C4-cliff.T1 only)"
+}

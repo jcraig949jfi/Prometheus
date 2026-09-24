@@ -1,0 +1,58 @@
+{
+ "perturbation_id": "P-G04",
+ "parent": "T-X16",
+ "co_parents": [
+  "T-X18",
+  "T-E06"
+ ],
+ "claim_type": "parameterized-dose",
+ "factors": {
+  "price": [
+   0.0,
+   0.0025,
+   0.005,
+   0.01,
+   0.02
+  ],
+  "damage": [
+   "none",
+   "tape",
+   "tree",
+   "both"
+  ],
+  "rate": [
+   0.6,
+   1.0
+  ],
+  "ids": [
+   "cw01-loop6-PG04-0",
+   "cw01-loop6-PG04-1",
+   "cw01-loop6-PG04-2"
+  ],
+  "generations": 160,
+  "f0": 0.5,
+  "f": 0.1
+ },
+ "ruler": {
+  "family": "blind structural damage (probe)",
+  "geometry": "one unit",
+  "sampling_law": "uniform over units",
+  "normalisation": "ABSOLUTE score change on the generation's items",
+  "denominator": "16 sampled bodies per generation",
+  "price_assumptions": "the price is the factor",
+  "viability_floor": "none",
+  "alters_baseline_function": "no (probe on copies)",
+  "qualification": "absolute change (D086)"
+ },
+ "readouts": [
+  "load (mean dscore, share rising) by label x price x generation band (early 0-40, mid 40-100, late 100-160)",
+  "structural units by label x price",
+  "pruning signature (tree-damaged minus tape-damaged final TREE) by price",
+  "coexistence by price"
+ ],
+ "reading": "load TRACKS_PRICE if the late-band share rising is monotone in price with a range >= .2; GROWS_WITH_GENERATIONS if late - early >= .15 at every price; representation-dependent if TREE and TAPE differ by >= .2; the pruning signature's price dose named from its sign per price",
+ "material_rule": "any of the three load readings, or the signature changes sign inside the dose",
+ "bounded": "runs once; no follow-up this cycle",
+ "written": "2026-09-19 06:06:40",
+ "prereg_sha256": "5526f9758a65777efdf48158ae401a2d2285753ef12e5c8f6d40cd05bc8880d9"
+}

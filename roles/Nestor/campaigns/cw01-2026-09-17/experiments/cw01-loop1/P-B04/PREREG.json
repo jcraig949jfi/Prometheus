@@ -1,0 +1,18 @@
+{
+ "perturbation_id": "P-B04",
+ "parent": "T-X09",
+ "claim_type": "break-null-changed-economics",
+ "delta": "T2 prohibitive (cost 1e6) unless dispersion <= 0.2 (only T1 gets there); elite_fraction 0.5, sigma 0.06; K1 revert executed with a neutral-gene sham",
+ "unchanged": "T1/T3/T4 prices, 9-gene organism, episode, 80 generations, fixation ruler",
+ "attacks": "e02's valley (foundation alone a loss, later gain profitable without it) and the never-run knockout",
+ "replicates": 4,
+ "streams_k1": 24,
+ "statistic": "fixation order p_norm vs p_factor; K1 loss = score(evolved) - score(p_norm reverted to ancestor mean) minus sham loss (neutral_a reverted), paired over streams and organisms",
+ "decision": {
+  "RATCHET_SUPPORTED": "p_norm FIRST in >= 3/4 replicates AND K1 loss exceeds sham loss in >= 3/4 replicates",
+  "NULL": "otherwise, with the order and losses reported",
+  "INCONCLUSIVE": "no gene travels in >= 2 replicates"
+ },
+ "written": "2026-09-18 11:05:48",
+ "prereg_sha256": "9f84d7e8c0ad5255a8a6c5bf86ca93aa78b61ad4f444c3557784e4cc14da1546"
+}

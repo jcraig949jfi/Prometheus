@@ -1,0 +1,32 @@
+{
+ "perturbation_id": "P-I02",
+ "parent": "T-X21",
+ "deformation": "M",
+ "requires": [
+  "P-I01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "mechanism-forensics",
+ "organisms": "top-4 of every P-I01 plain run",
+ "tests": [
+  "stimulus dependence",
+  "cue causality (cue flipped; A: regime word flipped)",
+  "regime-predicting registers and their transplant",
+  "C: adaptation by trials since switch, anticipation on misleading switch trials, recovery after clearing state, transfer to block 3/5, phase 2, p .6/.9"
+ ],
+ "naming": {
+  "CONTEXT_DETECTOR": "A crossed and flipping the regime word flips the answer to the other regime (>= .5)",
+  "HISTORY_DEPENDENT": "B or C crossed and flipping the EARLIER cue changes >= .5 of answers",
+  "ADAPTIVE_STATE": "C crossed with accuracy rising over trials since a switch by >= .1",
+  "PREDICTIVE": "C crossed and correct on >= .5 of misleading switch trials",
+  "UNCLASSIFIED": "crossed without these signatures (-> node)",
+  "NOT_CROSSED": "strategy named from the traces"
+ },
+ "material_rule": "always material",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 07:20:51",
+ "prereg_sha256": "085c54eb3a9d28277f0e7d1f1602ecab32d3de05601abeb3db0a86a13cdebf1a"
+}

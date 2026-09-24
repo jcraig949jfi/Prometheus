@@ -1,0 +1,74 @@
+# C0s -- post-freeze stress on the frozen law -- PREREGISTRATION
+
+Written 2026-09-23 ~13:03Z. Law f852d782cb (cmap v3), frozen; already HOLDOUT_TESTED on D and E.
+Nothing here can change the law. A failure is recorded as a FAILED event on the law (a scar that
+stays beside its holdout successes).
+
+## S1 -- stress adversary
+4 rounds, rng seeds 20260930 + round, 60 attacks per family per round (band / coordpres /
+extreme / errorseek, in the law's v3 coordinates), on fresh pools (1200 per family, seed
+20260926; for regs, every second pool world uses the repetition-code mechanism code = 3).
+Kill rule unchanged: confirmed (two 4x-episode replicates, > 2 SE from 0.10) / confident > 0.05.
+Precommitment: all 4 rounds SURVIVE (conf 0.5). If one fails, I expect the counterexamples at
+the high-cost edge (the D/E error shape) (conf 0.5).
+
+## S2 -- the INFERRED cost-ceiling bias (from D/E error shapes)
+Law ceiling at N = 0 and Q = 1: C <= G + 1 - 1.055 = G - 0.055.
+Task-economics ceiling: G exp(-N) - C >= 0.10 -> C <= G - 0.10.
+Scan: regs (q = 0, K = 7, R = 1), ring (lam = 0, K = 5, n = 64), ca (p = 0, K = 8, r = 1,
+Lc = 510) for V in {2, 4, 16} (G .5 .75 .9375), cost knob on a geometric ladder, 1600 episodes,
+6 replicates; location x0 fitted by boundary._fit; convert to C*.
+Prediction: observed C* within 0.02 of G - 0.10 and NOT within 0.02 of G - 0.055 in >= 7 / 9
+cells (conf 0.7). If it holds, the frozen law has a known systematic bias of ~0.045 in C at its
+cost ceiling; the law is NOT revised (a revision would need a new sealed universe to test).
+
+## S2 RESULT (2026-09-23T13:02Z, S2_ceiling.json) and amendment S2b (written before S2b runs)
+S2 as scored: 6/9 cells near G - 0.10 and not near G - 0.055; prediction (>= 7/9) LOST.
+Resolution defect (own design): the 15-point geometric ladder spans a factor 6.5 in cost, i.e.
+~14% steps; every fitted location sits on a ladder point, so near C ~ 0.85 the resolution is
+~0.11 in C -- coarser than the +/- 0.02 criterion. The rule's attainable resolution was not
+computed before freezing it (base-role doctrine violated). S2 stays LOST as scored.
+S2b: same cells, cost ladder LINEAR in C over [G - 0.20, G + 0.05], 41 points (step 0.00625),
+1600 episodes, 6 replicates; C* = fitted location. Same prediction and threshold (>= 7/9 cells
+within 0.02 of G - 0.10 and not within 0.02 of G - 0.055). Resolution 0.00625 < 0.02.
+
+## S2b RESULT (2026-09-23T13:04Z, S2b_ceiling.json)
+9/9 cells: observed cost ceiling C* = G - 0.100 +/- 0.008 in regs, ring and ca at V = 2, 4, 16;
+the frozen law's ceiling is G - 0.055. Prediction HELD. Transition width (log-knob units) <= 0.018
+at 1600 episodes: a sharp boundary.
+CONCLUDED: the frozen law carries a systematic cost-ceiling bias of ~0.045 in C (too generous) at
+small N -- the shape of its false positives on sealed D and E. The miner preferred the additive
+form C - (G + exp(-N)) over the multiplicative G exp(-N) - C (both size 6; near-tied under LOLO),
+and the confident-contradiction adversary cannot see a location bias inside the transition band.
+The law is NOT revised here (no unspent sealed universe remains to test a revision); the bias is
+recorded as an ATTACKED event on the law.
+
+## S1 RESULT (2026-09-23T13:05Z, S1_stress.json)
+As scored: 4/4 rounds SURVIVED (confirmed/confident 0/89, 1/134, 1/134, 1/134); metamorphic pairs
+0 verdict flips in 4 x ~33 pairs. Precommitment "all 4 survive" HELD -- but WEAKENED:
+ADVERSARY DEFECT (own instrument): band, extreme and error-seek attacks are deterministic given
+the pool, and a world's seed derives from its id, so rounds 1-3 re-fired the SAME worlds (identical
+counterexample, identical band calibration 0.512 predicted / 0.689 observed). Only coordinate-
+preserving transforms drew fresh worlds. Effective independent evidence ~1.5 rounds, not 4.
+The single repeated counterexample: ring, C .432 N .36 K 4 G .75 predicted QUIET (P ~ 0) observed
+PAYS (margin .163) -- consistent with the additive law under-crediting SEL at moderate N.
+Band calibration: law P 0.51 vs observed PAYS rate 0.69 over 45 band worlds (miscalibrated width).
+Fix (for later runs): every attack class excludes worlds already observed in the chamber and
+samples among its candidates with the round's rng (adversary.attack; test_adversary_fresh).
+
+## LOCATE (new instrument, prometheus/cosmos/locate.py; run 2026-09-23T13:07Z, not preregistered --
+## exploratory, reported as such; LOCATE_frozen_law.json)
+Upper-flip location of the frozen law vs observed, 8 random confident-PAYS bases per family, 33-pt
+ladder around the law's flip, 1600 episodes, common random numbers:
+  regs  mean delta log2 -0.147 (se .033)  LOCATION_BIASED   corr(N, delta) -0.85
+  ca    mean delta log2 -0.105 (se .013)  LOCATION_BIASED   corr(N, delta) -0.57
+  ring  mean delta log2 +0.142 (se .082)  (OK by the rule)  corr(N, delta) +0.99
+  pooled -0.037 (se .039) -> LOCATION_OK: the per-family biases CANCEL when pooled.
+OBSERVED: at N ~ 0 every family sits near -0.1 log2 (the S2b law-form bias); in ring the offset
+climbs with N to +0.48 at N = 0.9.
+INFERRED (mechanism, not yet tested): ring's declared C charges the full horizon, but a destroyed
+packet stops costing ("dead memory is free"), so its effective selective cost is ~C (1 - e^-N) / N;
+regs/ca/D/E keep paying after corruption. This is a ring coordinate-DECLARATION defect that the
+pooled family-residual test (G7, mu ~ 0) and LOLO could not see.
+CONCLUDED (instrument): pooled residual tests can hide opposite-signed family biases; location
+must be tested per family.

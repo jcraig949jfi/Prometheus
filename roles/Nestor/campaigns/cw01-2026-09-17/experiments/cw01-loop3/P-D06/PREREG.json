@@ -1,0 +1,31 @@
+{
+ "perturbation_id": "P-D06",
+ "parent": "T-X04",
+ "claim_type": "exploratory-map",
+ "phi": 0.5,
+ "f0": [
+  0.1,
+  0.2,
+  0.3,
+  0.4,
+  0.5,
+  0.6,
+  0.7,
+  0.8,
+  0.9
+ ],
+ "rates": [
+  0.5,
+  1.0
+ ],
+ "ids": [
+  "cw01-loop3-PD06-0",
+  "cw01-loop3-PD06-1"
+ ],
+ "generations": 40,
+ "unchanged": "e06 world, sharing, prices, tournament 3, P-A08's mixture construction",
+ "readout": "final TREE frequency vs f0 per (rate, id); separatrix = f0 interval where sign(final - f0) changes; bistable = final(.1) < .1 and final(.9) > .9 - .05",
+ "material_rule": "a separatrix located (exactly one sign change with falls below and rises above) in >= 2 of the 4 (rate, id) series, or bistability in >= 2",
+ "written": "2026-09-18 23:21:13",
+ "prereg_sha256": "260730671929c3c3c84d8e9ec93e42bf27bbc0d6b94317663a3d8f48e0596641"
+}

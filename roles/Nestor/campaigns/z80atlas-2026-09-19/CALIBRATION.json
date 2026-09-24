@@ -1,0 +1,299 @@
+{
+ "grammar_hash": "570c8037ccf4f86d06bc7ef2a8263dab88fbd6d2bf430cbe52f346c8eb56c901",
+ "written": "2026-09-19 10:41:22",
+ "seconds": 8.4,
+ "controls": [
+  {
+   "control": "vm_semantics",
+   "outcome": "PASS",
+   "detail": {
+    "checks": 52,
+    "failed": 0,
+    "failures": []
+   },
+   "seconds": 0.0
+  },
+  {
+   "control": "task_witness_solves_and_is_one_edit",
+   "outcome": "PASS",
+   "detail": {
+    "XOR1_ANSWER_BEFORE_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 11,
+      "needs": 1,
+      "from": 0
+     }
+    },
+    "XOR1_FORCED_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 15,
+      "needs": 1,
+      "from": 0
+     }
+    },
+    "XOR15_ANSWER_BEFORE_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 11,
+      "needs": 15,
+      "from": 0
+     }
+    },
+    "XOR15_FORCED_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 15,
+      "needs": 15,
+      "from": 0
+     }
+    },
+    "XOR5A_ANSWER_BEFORE_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 11,
+      "needs": 90,
+      "from": 0
+     }
+    },
+    "XOR5A_FORCED_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 15,
+      "needs": 90,
+      "from": 0
+     }
+    },
+    "ADD1_ANSWER_BEFORE_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 11,
+      "needs": 1,
+      "from": 0
+     }
+    },
+    "ADD1_FORCED_READ": {
+     "witness_comp": 1.0,
+     "witness_held": 1.0,
+     "ancestor_comp": 0.5,
+     "one_edit": {
+      "differs": 1,
+      "index": 15,
+      "needs": 1,
+      "from": 0
+     }
+    }
+   },
+   "seconds": 0.0
+  },
+  {
+   "control": "seeded_replicator_BLOCK_PRIMITIVE",
+   "outcome": "PASS",
+   "detail": {
+    "births_endogenous": 1445,
+    "births_external": 0,
+    "first_replicator_epoch": 0,
+    "fidelity": 1.0,
+    "pop_final": 2,
+    "flags": [
+     "SANDBOX_ESCAPE",
+     "STALE_RESIDUE_BIRTH"
+    ]
+   },
+   "seconds": 0.1
+  },
+  {
+   "control": "seeded_replicator_BYTEWISE_PRIMITIVE",
+   "outcome": "PASS",
+   "detail": {
+    "births_endogenous": 806,
+    "births_external": 0,
+    "first_replicator_epoch": 2,
+    "fidelity": 1.0,
+    "pop_final": 4,
+    "flags": [
+     "SANDBOX_ESCAPE",
+     "STALE_RESIDUE_BIRTH"
+    ]
+   },
+   "seconds": 0.2
+  },
+  {
+   "control": "seeded_replicator_BLOCK_PC_RELATIVE",
+   "outcome": "PASS",
+   "detail": {
+    "births_endogenous": 4332,
+    "births_external": 0,
+    "first_replicator_epoch": 0,
+    "fidelity": 1.0,
+    "pop_final": 101,
+    "flags": [
+     "SANDBOX_ESCAPE",
+     "STALE_RESIDUE_BIRTH"
+    ]
+   },
+   "seconds": 0.4
+  },
+  {
+   "control": "seeded_replicator_BYTEWISE_PC_RELATIVE",
+   "outcome": "PASS",
+   "detail": {
+    "births_endogenous": 1056,
+    "births_external": 0,
+    "first_replicator_epoch": 2,
+    "fidelity": 1.0,
+    "pop_final": 10,
+    "flags": [
+     "SANDBOX_ESCAPE",
+     "STALE_RESIDUE_BIRTH"
+    ]
+   },
+   "seconds": 0.3
+  },
+  {
+   "control": "no_general_replicator_without_self_location",
+   "outcome": "PASS",
+   "detail": {
+    "births_endogenous": 119,
+    "first_replicator": null,
+    "pop_final": 128,
+    "note": "a hardcoded base is wrong once the organism is placed elsewhere; only the occupant of the hardcoded address can copy itself, and that is position dependence, not replication"
+   },
+   "seconds": 0.4
+  },
+  {
+   "control": "endogenous_invasion_from_seed",
+   "outcome": "PASS",
+   "detail": {
+    "runs": [
+     {
+      "seed": 1,
+      "invader_share_final": 1.0,
+      "births_endogenous": 5041,
+      "births_external": 0,
+      "pop_final": 75,
+      "flags": [
+       "SANDBOX_ESCAPE",
+       "STALE_RESIDUE_BIRTH"
+      ]
+     },
+     {
+      "seed": 2,
+      "invader_share_final": 1.0,
+      "births_endogenous": 3370,
+      "births_external": 0,
+      "pop_final": 2,
+      "flags": [
+       "SANDBOX_ESCAPE",
+       "STALE_RESIDUE_BIRTH"
+      ]
+     }
+    ],
+    "seeded_share": 0.0156,
+    "shares": [
+     1.0,
+     1.0
+    ]
+   },
+   "seconds": 0.9
+  },
+  {
+   "control": "no_runner_births_in_endogenous",
+   "outcome": "PASS",
+   "detail": {
+    "ENDOGENOUS_COPY": {
+     "births_external": 0,
+     "births_endogenous": 0,
+     "pop_final": 128,
+     "flags": [
+      "SANDBOX_ESCAPE"
+     ]
+    },
+    "CONSTRUCTIVE": {
+     "births_external": 0,
+     "births_endogenous": 0,
+     "pop_final": 128,
+     "flags": [
+      "SANDBOX_ESCAPE"
+     ]
+    },
+    "OVERWRITE": {
+     "births_external": 0,
+     "births_endogenous": 0,
+     "pop_final": 128,
+     "flags": []
+    },
+    "ENDOGENOUS_PARTIAL": {
+     "births_external": 0,
+     "births_endogenous": 0,
+     "pop_final": 128,
+     "flags": [
+      "SANDBOX_ESCAPE"
+     ]
+    }
+   },
+   "seconds": 1.6
+  },
+  {
+   "control": "external_control_crosses_one_edit",
+   "outcome": "PASS",
+   "detail": {
+    "runs": [
+     {
+      "seed": 1,
+      "crossed": true,
+      "held_max": 1.0,
+      "comp_max": 1.0,
+      "births_external": 4800,
+      "first_cross_epoch": 30
+     },
+     {
+      "seed": 2,
+      "crossed": true,
+      "held_max": 1.0,
+      "comp_max": 1.0,
+      "births_external": 4800,
+      "first_cross_epoch": 250
+     },
+     {
+      "seed": 3,
+      "crossed": true,
+      "held_max": 1.0,
+      "comp_max": 1.0,
+      "births_external": 4800,
+      "first_cross_epoch": 140
+     }
+    ],
+    "crossed_of_3": 3,
+    "best_held": 1.0
+   },
+   "seconds": 4.4
+  }
+ ],
+ "passed": 10,
+ "failed": 0,
+ "not_verified": 0,
+ "gate": "PASS"
+}

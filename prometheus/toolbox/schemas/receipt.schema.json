@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus.toolbox.receipt.v1",
+  "title": "Receipt (core.receipt.v1)",
+  "description": "One executed run. What happened, what was measured, by which observer version, under which configuration, on which implementations, at what raw cost, with which replay class. No interpretation. engineering and science key sets are disjoint. receipt_id = sha256(body) so an edit is detectable.",
+  "type": "object",
+  "required": [
+    "schema",
+    "receipt_id",
+    "experiment_id",
+    "experiment_digest",
+    "arm",
+    "sweep_point",
+    "seed",
+    "status",
+    "components",
+    "capabilities",
+    "replay_class",
+    "trace_hashes",
+    "events_total",
+    "engineering",
+    "science",
+    "accounting",
+    "host",
+    "build",
+    "started_utc",
+    "finished_utc"
+  ],
+  "properties": {
+    "schema": {
+      "const": "prometheus.toolbox.receipt.v1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 24,
+      "maxLength": 24
+    },
+    "prev_receipt_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "the previous receipt's id in the same file (null for the first): a hash chain per file (C44)"
+    },
+    "split": {
+      "enum": [
+        "train",
+        "holdout"
+      ]
+    },
+    "series": {
+      "type": "object",
+      "description": "per observer kind: SeriesRecord (series.py) -- inline episodes or a content-addressed artifact"
+    },
+    "experiment": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "description": "SUMMARY only: the job's full IR, so the file alone can be replayed (C32)"
+    },
+    "experiment_id": {
+      "type": "string"
+    },
+    "experiment_digest": {
+      "type": "string"
+    },
+    "arm": {
+      "type": "string",
+      "description": "primary | <control kind> | SUMMARY"
+    },
+    "sweep_point": {
+      "type": "object"
+    },
+    "seed": {
+      "type": "integer"
+    },
+    "status": {
+      "enum": [
+        "COMPLETED",
+        "FAILED",
+        "BLOCKED_MISSING_CAPABILITY",
+        "TARGET_UNSUPPORTED",
+        "CONTROL_NOT_MET",
+        "INTEGRITY_HALT"
+      ]
+    },
+    "components": {
+      "type": "object",
+      "required": [
+        "world",
+        "substrate"
+      ],
+      "properties": {
+        "world": {
+          "type": "object"
+        },
+        "substrate": {
+          "type": "object"
+        },
+        "players": {
+          "type": "array"
+        },
+        "observers": {
+          "type": "array"
+        },
+        "interventions": {
+          "type": "array"
+        }
+      }
+    },
+    "capabilities": {
+      "type": "object"
+    },
+    "replay_class": {
+      "enum": [
+        "BIT",
+        "SEMANTIC",
+        "PARTIAL",
+        "NONDETERMINISTIC",
+        "NOT_RUN"
+      ]
+    },
+    "trace_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "events_total": {
+      "type": "integer"
+    },
+    "engineering": {
+      "type": "object",
+      "description": "wall_s, cpu_s, ticks, steps_per_s (None on a batched receipt: the wall is the batch's), batch {size, wall_s, ticks_total, steps_per_s} on batched receipts (C92)"
+    },
+    "science": {
+      "type": "object",
+      "description": "observations (by observer kind), world_summary, player_fingerprints[pid] = {hash: behavioural class on a fixed probe, silent, spec_hash: manifest identity (C96)}, objective {value: number | {component: number|null} | null, components}, controls"
+    },
+    "accounting": {
+      "type": "object",
+      "description": "raw counters: world_steps, transitions, ops, reads, writes, params, state_bytes, wall_s, cpu_s ..."
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "error": {
+      "type": "string"
+    },
+    "registry_rows": {
+      "type": "array"
+    },
+    "host": {
+      "type": "object",
+      "required": [
+        "platform",
+        "python",
+        "machine"
+      ]
+    },
+    "build": {
+      "type": "object",
+      "required": [
+        "kernel_hash",
+        "n_files"
+      ]
+    },
+    "started_utc": {
+      "type": "string"
+    },
+    "finished_utc": {
+      "type": "string"
+    },
+    "execution": {
+      "type": "object",
+      "required": [
+        "batched",
+        "batch_size",
+        "reason"
+      ],
+      "properties": {
+        "batched": {
+          "type": "boolean"
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reason": {
+          "enum": [
+            "BATCH_NOT_REQUESTED",
+            "SCHEDULE_NOT_BATCHED",
+            "NO_BATCH_IMPLEMENTATION",
+            "BATCHED"
+          ]
+        },
+        "world": {
+          "type": "string",
+          "description": "the ext.batch.v1 world that stepped (batched receipts)"
+        },
+        "requested_world": {
+          "type": "string",
+          "description": "the kind the IR named; capabilities.world was negotiated against it"
+        }
+      },
+      "description": "how the run was executed (policy, never science; C92). Absent only on receipts written before 2026-09-19 C92."
+    }
+  }
+}

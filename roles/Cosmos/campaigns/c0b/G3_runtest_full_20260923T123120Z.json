@@ -1,0 +1,94 @@
+{
+ "utc": "20260923T123120Z",
+ "identity": {
+  "cosmos_src_sha": "77e7a117132e01d641806813e24195b54343e791a365f6d2c49e3281dbb0549e",
+  "n_src": 39,
+  "git_head": "54ca842282b812c6070fad45a02096b131b10283",
+  "cosmos_dirty": true
+ },
+ "steps": {
+  "tests_fast": {
+   "ok": true,
+   "summary": "58 passed, 6 deselected in 1.02s",
+   "s": 1.4
+  },
+  "tests_slow_planted": {
+   "ok": true,
+   "summary": "6 passed, 58 deselected in 263.81s (0:04:23)",
+   "s": 264.2
+  },
+  "broker_selftest": {
+   "ok": true,
+   "detail": {
+    "w0": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    },
+    "w1": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    }
+   }
+  },
+  "seal": {
+   "ok": true,
+   "spec_sha": "48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265"
+  },
+  "quick_campaign": {
+   "ok": false,
+   "gates": {
+    "G1": "FAIL",
+    "G0": "PASS",
+    "G4": "NOT REACHED",
+    "G2": "FAIL",
+    "G7": "NOT REACHED",
+    "G5": "SKIPPED (quick)",
+    "G6": "SKIPPED (quick)"
+   },
+   "graph": {
+    "nodes": 275,
+    "edges": 142,
+    "runs": 275,
+    "families": 3,
+    "laws": 0,
+    "edge_kinds": {
+     "CONTROL_OF": 60,
+     "DEFORMATION_OF": 82
+    }
+   },
+   "laws": [],
+   "mine_initial": {
+    "v1": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8932151616499442,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "v2": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.9391794871794872,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "raw": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8146555183946488,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    }
+   },
+   "s": 73.1
+  }
+ },
+ "ok": false
+}

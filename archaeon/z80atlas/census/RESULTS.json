@@ -1,0 +1,563 @@
+{
+ "schema": "archaeon.z80atlas.copier_census.results.v1",
+ "prereg_sha256": "568e13f4aaac158d14e51b92b5e91e6861583e9ca15c476e53158b340925f5a6",
+ "strata": {
+  "vmcopy32": {
+   "substrate": "vmcopy",
+   "G": 32,
+   "tapes": 10000000,
+   "counts": {
+    "EXACT_UNGATED": 1,
+    "EXACT_GATED": 95,
+    "NEAR_COPIER": 63,
+    "SPAN_COPIER": 17,
+    "WRITER": 592,
+    "TOUCH": 216701,
+    "INERT": 9782531
+   },
+   "density": {
+    "EXACT_UNGATED": {
+     "k": 1,
+     "p": 1e-07,
+     "ci95": [
+      2.5317807952240303e-09,
+      5.571642116990813e-07
+     ]
+    },
+    "EXACT_GATED": {
+     "k": 95,
+     "p": 9.5e-06,
+     "ci95": [
+      7.68607389305389e-06,
+      1.1613245091435161e-05
+     ]
+    },
+    "NEAR_COPIER": {
+     "k": 63,
+     "p": 6.3e-06,
+     "ci95": [
+      4.8410962688531796e-06,
+      8.060429633738028e-06
+     ]
+    },
+    "SPAN_COPIER": {
+     "k": 17,
+     "p": 1.7e-06,
+     "ci95": [
+      9.903129488514723e-07,
+      2.721863290986131e-06
+     ]
+    },
+    "WRITER": {
+     "k": 592,
+     "p": 5.92e-05,
+     "ci95": [
+      5.4526736796736937e-05,
+      6.41666627205703e-05
+     ]
+    },
+    "TOUCH": {
+     "k": 216701,
+     "p": 0.0216701,
+     "ci95": [
+      0.02157994389533355,
+      0.021760533194802156
+     ]
+    },
+    "INERT": {
+     "k": 9782531,
+     "p": 0.9782531,
+     "ci95": [
+      0.9781625106018421,
+      0.9783434123528629
+     ]
+    }
+   },
+   "exact_capable": {
+    "k": 96,
+    "p": 9.6e-06,
+    "ci95": [
+     7.77603752433858e-06,
+     1.1723230654265216e-05
+    ]
+   },
+   "exact_at_input0": {
+    "k": 1,
+    "p": 1e-07,
+    "ci95": [
+     2.5317807952240303e-09,
+     5.571642116990813e-07
+    ]
+   },
+   "frac_tapes_reading_input": 0.1344,
+   "gating_hist_n_exact_inputs": {
+    "1": 94,
+    "2": 1,
+    "256": 1
+   },
+   "gated_share_of_exact": 0.9896,
+   "architectures_all_hits": {
+    "COPY|gated1|reljump|k0|reads_input": 39,
+    "MIXED|gated1|reljump|k0|reads_input": 32,
+    "MIXED|no_exact|reljump|k0|reads_input": 24,
+    "COPY|gated1|absjump|k0|reads_input": 16,
+    "MIXED|no_exact|reljump|shift|reads_input": 12,
+    "COPY|no_exact|reljump|shift|reads_input": 11,
+    "MIXED|gated1|absjump|k0|reads_input": 7,
+    "COPY|no_exact|reljump|k0|reads_input": 6,
+    "MIXED|no_exact|absjump|k0|reads_input": 6,
+    "MIXED|no_exact|absjump|shift|reads_input": 5,
+    "MIXED|no_exact|reljump|shift|input_blind": 5,
+    "COPY|no_exact|absjump|k0|reads_input": 4,
+    "COPY|no_exact|absjump|shift|reads_input": 3,
+    "COPY|no_exact|reljump|shift|input_blind": 2,
+    "MIXED|no_exact|absjump|shift|input_blind": 1,
+    "MIXED|gated|reljump|k0|reads_input": 1,
+    "COPY|no_exact|absjump|shift|input_blind": 1,
+    "COPY|ungated|reljump|k0|input_blind": 1
+   },
+   "architectures_exact": {
+    "COPY|gated1|reljump|k0|reads_input": 39,
+    "MIXED|gated1|reljump|k0|reads_input": 32,
+    "COPY|gated1|absjump|k0|reads_input": 16,
+    "MIXED|gated1|absjump|k0|reads_input": 7,
+    "MIXED|gated|reljump|k0|reads_input": 1,
+    "COPY|ungated|reljump|k0|input_blind": 1
+   },
+   "stage2": {
+    "characterized": 176,
+    "offspring_heritable": 128,
+    "mean_frac_keep_any_exact_EXACT_GATED": 0.7666,
+    "mean_frac_keep_any_exact_EXACT_UNGATED": 0.7109,
+    "mean_frac_keep_any_birth": 0.7712,
+    "occupied_nbr_any_exact": 95,
+    "mean_essential_positions_exact": 4.18
+   },
+   "specimen_found_in_census": false,
+   "steps_exact_median": 256
+  },
+  "z80_32": {
+   "substrate": "z80",
+   "G": 32,
+   "tapes": 10000000,
+   "counts": {
+    "EXACT_UNGATED": 0,
+    "EXACT_GATED": 0,
+    "NEAR_COPIER": 0,
+    "SPAN_COPIER": 0,
+    "WRITER": 35,
+    "TOUCH": 140860,
+    "INERT": 9859105
+   },
+   "density": {
+    "EXACT_UNGATED": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      3.688878773722438e-07
+     ]
+    },
+    "EXACT_GATED": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      3.688878773722438e-07
+     ]
+    },
+    "NEAR_COPIER": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      3.688878773722438e-07
+     ]
+    },
+    "SPAN_COPIER": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      3.688878773722438e-07
+     ]
+    },
+    "WRITER": {
+     "k": 35,
+     "p": 3.5e-06,
+     "ci95": [
+      2.4378794130212696e-06,
+      4.867649408149354e-06
+     ]
+    },
+    "TOUCH": {
+     "k": 140860,
+     "p": 0.014086,
+     "ci95": [
+      0.014013050579080595,
+      0.014159230953093852
+     ]
+    },
+    "INERT": {
+     "k": 9859105,
+     "p": 0.9859105,
+     "ci95": [
+      0.9858372601039016,
+      0.9859834583659831
+     ]
+    }
+   },
+   "exact_capable": {
+    "k": 0,
+    "p": 0.0,
+    "ci95": [
+     0.0,
+     3.688878773722438e-07
+    ]
+   },
+   "exact_at_input0": {
+    "k": 0,
+    "p": 0.0,
+    "ci95": [
+     0.0,
+     3.688878773722438e-07
+    ]
+   },
+   "frac_tapes_reading_input": 0.1323,
+   "gating_hist_n_exact_inputs": {},
+   "gated_share_of_exact": null,
+   "architectures_all_hits": {},
+   "architectures_exact": {},
+   "stage2": {
+    "characterized": 0,
+    "offspring_heritable": 0,
+    "mean_frac_keep_any_exact_EXACT_GATED": null,
+    "mean_frac_keep_any_exact_EXACT_UNGATED": null,
+    "mean_frac_keep_any_birth": null,
+    "occupied_nbr_any_exact": 0,
+    "mean_essential_positions_exact": 0.0
+   },
+   "specimen_found_in_census": false,
+   "steps_exact_median": null
+  },
+  "vmcopy64": {
+   "substrate": "vmcopy",
+   "G": 64,
+   "tapes": 2000000,
+   "counts": {
+    "EXACT_UNGATED": 0,
+    "EXACT_GATED": 9,
+    "NEAR_COPIER": 11,
+    "SPAN_COPIER": 1,
+    "WRITER": 42,
+    "TOUCH": 77026,
+    "INERT": 1922911
+   },
+   "density": {
+    "EXACT_UNGATED": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      1.84443802607906e-06
+     ]
+    },
+    "EXACT_GATED": {
+     "k": 9,
+     "p": 4.5e-06,
+     "ci95": [
+      2.057688547028934e-06,
+      8.542384459805289e-06
+     ]
+    },
+    "NEAR_COPIER": {
+     "k": 11,
+     "p": 5.5e-06,
+     "ci95": [
+      2.7455832784703724e-06,
+      9.840997896627722e-06
+     ]
+    },
+    "SPAN_COPIER": {
+     "k": 1,
+     "p": 5e-07,
+     "ci95": [
+      1.2658903912021014e-08,
+      2.785818511507096e-06
+     ]
+    },
+    "WRITER": {
+     "k": 42,
+     "p": 2.1e-05,
+     "ci95": [
+      1.5134993466400206e-05,
+      2.8385794561279415e-05
+     ]
+    },
+    "TOUCH": {
+     "k": 77026,
+     "p": 0.038513,
+     "ci95": [
+      0.038246727264738115,
+      0.03878061007982456
+     ]
+    },
+    "INERT": {
+     "k": 1922911,
+     "p": 0.9614555,
+     "ci95": [
+      0.961187785295151,
+      0.9617218774522216
+     ]
+    }
+   },
+   "exact_capable": {
+    "k": 9,
+    "p": 4.5e-06,
+    "ci95": [
+     2.057688547028934e-06,
+     8.542384459805289e-06
+    ]
+   },
+   "exact_at_input0": {
+    "k": 0,
+    "p": 0.0,
+    "ci95": [
+     0.0,
+     1.84443802607906e-06
+    ]
+   },
+   "frac_tapes_reading_input": 0.1446,
+   "gating_hist_n_exact_inputs": {
+    "1": 9
+   },
+   "gated_share_of_exact": 1.0,
+   "architectures_all_hits": {
+    "COPY|gated1|reljump|k0|reads_input": 7,
+    "MIXED|no_exact|reljump|k0|reads_input": 5,
+    "COPY|no_exact|reljump|k0|reads_input": 3,
+    "MIXED|gated1|reljump|k0|reads_input": 2,
+    "MIXED|no_exact|reljump|shift|input_blind": 1,
+    "MIXED|no_exact|reljump|shift|reads_input": 1,
+    "MIXED|no_exact|absjump|shift|reads_input": 1,
+    "COPY|no_exact|reljump|shift|input_blind": 1
+   },
+   "architectures_exact": {
+    "COPY|gated1|reljump|k0|reads_input": 7,
+    "MIXED|gated1|reljump|k0|reads_input": 2
+   },
+   "stage2": {
+    "characterized": 21,
+    "offspring_heritable": 14,
+    "mean_frac_keep_any_exact_EXACT_GATED": 0.8665,
+    "mean_frac_keep_any_exact_EXACT_UNGATED": null,
+    "mean_frac_keep_any_birth": 0.8762,
+    "occupied_nbr_any_exact": 9,
+    "mean_essential_positions_exact": 6.11
+   },
+   "specimen_found_in_census": false,
+   "steps_exact_median": 256
+  },
+  "z80_64": {
+   "substrate": "z80",
+   "G": 64,
+   "tapes": 2000000,
+   "counts": {
+    "EXACT_UNGATED": 0,
+    "EXACT_GATED": 0,
+    "NEAR_COPIER": 0,
+    "SPAN_COPIER": 0,
+    "WRITER": 4,
+    "TOUCH": 55267,
+    "INERT": 1944729
+   },
+   "density": {
+    "EXACT_UNGATED": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      1.84443802607906e-06
+     ]
+    },
+    "EXACT_GATED": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      1.84443802607906e-06
+     ]
+    },
+    "NEAR_COPIER": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      1.84443802607906e-06
+     ]
+    },
+    "SPAN_COPIER": {
+     "k": 0,
+     "p": 0.0,
+     "ci95": [
+      0.0,
+      1.84443802607906e-06
+     ]
+    },
+    "WRITER": {
+     "k": 4,
+     "p": 2e-06,
+     "ci95": [
+      5.449329470370753e-07,
+      5.120786347233605e-06
+     ]
+    },
+    "TOUCH": {
+     "k": 55267,
+     "p": 0.0276335,
+     "ci95": [
+      0.02740675623351251,
+      0.02786161293431257
+     ]
+    },
+    "INERT": {
+     "k": 1944729,
+     "p": 0.9723645,
+     "ci95": [
+      0.97213637908134,
+      0.9725912517567021
+     ]
+    }
+   },
+   "exact_capable": {
+    "k": 0,
+    "p": 0.0,
+    "ci95": [
+     0.0,
+     1.84443802607906e-06
+    ]
+   },
+   "exact_at_input0": {
+    "k": 0,
+    "p": 0.0,
+    "ci95": [
+     0.0,
+     1.84443802607906e-06
+    ]
+   },
+   "frac_tapes_reading_input": 0.1429,
+   "gating_hist_n_exact_inputs": {},
+   "gated_share_of_exact": null,
+   "architectures_all_hits": {},
+   "architectures_exact": {},
+   "stage2": {
+    "characterized": 0,
+    "offspring_heritable": 0,
+    "mean_frac_keep_any_exact_EXACT_GATED": null,
+    "mean_frac_keep_any_exact_EXACT_UNGATED": null,
+    "mean_frac_keep_any_birth": null,
+    "occupied_nbr_any_exact": 0,
+    "mean_essential_positions_exact": 0.0
+   },
+   "specimen_found_in_census": false,
+   "steps_exact_median": null
+  }
+ },
+ "prediction": {
+  "founders_per_world": 76.8,
+  "by_world_class": {
+   "z80_32|uniform_input": {
+    "worlds": 6353,
+    "survived": 0,
+    "p": 0.0,
+    "lambda": 0.0,
+    "lambda_ci": [
+     0.0,
+     0.17998171548625985
+    ]
+   },
+   "z80_64|uniform_input": {
+    "worlds": 6412,
+    "survived": 0,
+    "p": 0.0,
+    "lambda": 0.0,
+    "lambda_ci": [
+     0.0,
+     0.9082145231387675
+    ]
+   },
+   "vmcopy64|uniform_input": {
+    "worlds": 6291,
+    "survived": 0,
+    "p": 4.5e-06,
+    "lambda": 2.173798836957514,
+    "lambda_ci": [
+     0.9940922245171492,
+     4.125906864295073
+    ]
+   },
+   "vmcopy32|uniform_input": {
+    "worlds": 6352,
+    "survived": 1,
+    "p": 9.6e-06,
+    "lambda": 4.681499031389075,
+    "lambda_ci": [
+     3.7922946324778515,
+     5.71644555114654
+    ]
+   },
+   "z80_32|input0_only": {
+    "worlds": 408,
+    "survived": 0,
+    "p": 0.0,
+    "lambda": 0.0,
+    "lambda_ci": [
+     0.0,
+     0.011558718702722182
+    ]
+   },
+   "z80_64|input0_only": {
+    "worlds": 433,
+    "survived": 0,
+    "p": 0.0,
+    "lambda": 0.0,
+    "lambda_ci": [
+     0.0,
+     0.061331392470225565
+    ]
+   },
+   "vmcopy32|input0_only": {
+    "worlds": 416,
+    "survived": 0,
+    "p": 1e-07,
+    "lambda": 0.003194867889739328,
+    "lambda_ci": [
+     8.088735017608428e-05,
+     0.017800352081099646
+    ]
+   },
+   "vmcopy64|input0_only": {
+    "worlds": 476,
+    "survived": 0,
+    "p": 0.0,
+    "lambda": 0.0,
+    "lambda_ci": [
+     0.0,
+     0.06742203883562903
+    ]
+   }
+  },
+  "lambda_worlds_with_exact_copier_founder": 6.858492736236329,
+  "lambda_ci_from_density_ci": [
+   4.786467744345177,
+   11.088661156156318
+  ],
+  "observed_surviving_worlds": 1,
+  "reading": "LOTTERY_CONSISTENT",
+  "readings": {
+   "LOTTERY_CONSISTENT": "0.05 <= lambda <= 20: one surviving world is what an initial-founder lottery predicts",
+   "LOTTERY_INSUFFICIENT": "lambda < 0.05: the initial-tape prior cannot account for the survivor (look at mutation-born or neighbour-dependent copying)",
+   "SURVIVAL_LIMITED": "lambda > 20: copier founders were common; survival, not supply, is the bottleneck"
+  }
+ }
+}

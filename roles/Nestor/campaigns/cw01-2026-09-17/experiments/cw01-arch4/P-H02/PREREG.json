@@ -1,0 +1,36 @@
+{
+ "perturbation_id": "P-H02",
+ "parent": "T-X20",
+ "co_parents": [
+  "T-X19",
+  "T-X17"
+ ],
+ "deformation": "X",
+ "requires": [
+  "P-G11"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "recombination",
+ "representatives": 3,
+ "pairs": "all shape pairs including same-shape controls",
+ "operators": [
+  "splice at .25/.5/.75 both orders",
+  "middle-third insertion both orders",
+  "grammar 'splice' with mate, 2 draws each order"
+ ],
+ "naming": {
+  "DISAPPEAR": "all components < .1",
+  "COMPOSE": "both parents' distinctive positions (>= .5) present at >= .3 and the sets differ",
+  "DOMINATE": "within .15 of one parent and > .3 from the other",
+  "NEW": "> .3 from both parents and from every known centroid",
+  "INTERFERE": "otherwise"
+ },
+ "new_shapes": "NEW children clustered (k 2-4 by silhouette); centroids reported raw",
+ "material_rule": "any NEW cluster with >= 5 members, or COMPOSE in >= 10 percent of cross-shape children",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:02:55",
+ "prereg_sha256": "a28d39639b7d26c7522e44da1908dc8691b26fd20f02f54c218eba9575949b1a"
+}

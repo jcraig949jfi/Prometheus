@@ -1,0 +1,772 @@
+{
+ "perturbation_id": "P-J08",
+ "parent": "T-ARCH5",
+ "summary": {
+  "B": {
+   "xor1": {
+    "hit": 0.0,
+    "beneficial": 0.58725,
+    "neutral": 0.294,
+    "deleterious": 0.11875000000000001,
+    "best": 0.625,
+    "mean": 0.5562083333333333
+   },
+   "xor15": {
+    "hit": 0.0,
+    "beneficial": 0.58725,
+    "neutral": 0.294,
+    "deleterious": 0.11875000000000001,
+    "best": 0.625,
+    "mean": 0.5553958333333333
+   },
+   "beneficial_ops_pooled": {
+    "xor1": {
+     "movement": 545,
+     "insertion": 587,
+     "region_swap": 398,
+     "duplication": 314,
+     "deletion": 727,
+     "reference_redirection": 682,
+     "replacement": 885,
+     "unreachable_removal": 241,
+     "operand_perturbation": 1535,
+     "randomization": 290,
+     "splice": 366,
+     "config_perturbation": 477
+    },
+    "xor15": {
+     "movement": 545,
+     "insertion": 587,
+     "region_swap": 398,
+     "duplication": 314,
+     "deletion": 727,
+     "reference_redirection": 682,
+     "replacement": 885,
+     "unreachable_removal": 241,
+     "operand_perturbation": 1535,
+     "randomization": 290,
+     "splice": 366,
+     "config_perturbation": 477
+    }
+   }
+  },
+  "v0.4": {
+   "xor1": {
+    "hit": 0.0,
+    "beneficial": 0.5766666666666667,
+    "neutral": 0.29575,
+    "deleterious": 0.12758333333333335,
+    "best": 0.625,
+    "mean": 0.5509270833333333
+   },
+   "xor15": {
+    "hit": 0.0,
+    "beneficial": 0.5766666666666667,
+    "neutral": 0.29575,
+    "deleterious": 0.12758333333333335,
+    "best": 0.625,
+    "mean": 0.5499375000000001
+   },
+   "beneficial_ops_pooled": {
+    "xor1": {
+     "duplication": 286,
+     "config_perturbation": 434,
+     "movement": 515,
+     "splice": 344,
+     "operand_perturbation": 1439,
+     "replacement": 862,
+     "randomization": 294,
+     "region_swap": 402,
+     "reference_redirection": 650,
+     "insertion": 600,
+     "deletion": 834,
+     "unreachable_removal": 260
+    },
+    "xor15": {
+     "duplication": 286,
+     "config_perturbation": 434,
+     "movement": 515,
+     "splice": 344,
+     "operand_perturbation": 1439,
+     "replacement": 862,
+     "randomization": 294,
+     "region_swap": 402,
+     "reference_redirection": 650,
+     "insertion": 600,
+     "deletion": 834,
+     "unreachable_removal": 260
+    }
+   }
+  }
+ },
+ "rows": [
+  {
+   "seed": 1,
+   "rank": 0,
+   "f0": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "B": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.8875,
+     "deleterious": 0.1125,
+     "best": 0.5625,
+     "mean": 0.49925,
+     "beneficial_ops": {}
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.8875,
+     "deleterious": 0.1125,
+     "best": 0.5625,
+     "mean": 0.49925,
+     "beneficial_ops": {}
+    },
+    "ops": {
+     "replacement": 227,
+     "deletion": 255,
+     "reference_redirection": 172,
+     "region_swap": 126,
+     "insertion": 171,
+     "config_perturbation": 162,
+     "duplication": 92,
+     "operand_perturbation": 390,
+     "randomization": 74,
+     "movement": 173,
+     "splice": 83,
+     "unreachable_removal": 75
+    }
+   },
+   "v0.4": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.8825,
+     "deleterious": 0.1175,
+     "best": 0.5625,
+     "mean": 0.49659375,
+     "beneficial_ops": {}
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.8825,
+     "deleterious": 0.1175,
+     "best": 0.5625,
+     "mean": 0.49646875,
+     "beneficial_ops": {}
+    },
+    "ops": {
+     "config_perturbation": 194,
+     "insertion": 164,
+     "movement": 161,
+     "unreachable_removal": 73,
+     "region_swap": 122,
+     "operand_perturbation": 385,
+     "splice": 112,
+     "deletion": 221,
+     "reference_redirection": 163,
+     "duplication": 83,
+     "replacement": 236,
+     "randomization": 86
+    }
+   }
+  },
+  {
+   "seed": 1,
+   "rank": 1,
+   "f0": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "B": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.8765,
+     "deleterious": 0.1235,
+     "best": 0.5625,
+     "mean": 0.494125,
+     "beneficial_ops": {}
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.8765,
+     "deleterious": 0.1235,
+     "best": 0.5625,
+     "mean": 0.4930625,
+     "beneficial_ops": {}
+    },
+    "ops": {
+     "splice": 116,
+     "insertion": 167,
+     "region_swap": 109,
+     "operand_perturbation": 415,
+     "unreachable_removal": 60,
+     "movement": 169,
+     "duplication": 70,
+     "replacement": 264,
+     "deletion": 221,
+     "reference_redirection": 166,
+     "randomization": 78,
+     "config_perturbation": 165
+    }
+   },
+   "v0.4": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.892,
+     "deleterious": 0.108,
+     "best": 0.5625,
+     "mean": 0.5026875,
+     "beneficial_ops": {}
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.0,
+     "neutral": 0.892,
+     "deleterious": 0.108,
+     "best": 0.5625,
+     "mean": 0.50175,
+     "beneficial_ops": {}
+    },
+    "ops": {
+     "operand_perturbation": 376,
+     "replacement": 215,
+     "config_perturbation": 164,
+     "reference_redirection": 188,
+     "deletion": 211,
+     "region_swap": 147,
+     "movement": 171,
+     "duplication": 91,
+     "randomization": 88,
+     "insertion": 178,
+     "splice": 106,
+     "unreachable_removal": 65
+    }
+   }
+  },
+  {
+   "seed": 2,
+   "rank": 0,
+   "f0": {
+    "xor1": 0.484375,
+    "xor15": 0.484375
+   },
+   "B": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.872,
+     "neutral": 0.0,
+     "deleterious": 0.128,
+     "best": 0.625,
+     "mean": 0.55225,
+     "beneficial_ops": {
+      "movement": 130,
+      "insertion": 159,
+      "region_swap": 116,
+      "duplication": 78,
+      "deletion": 183,
+      "reference_redirection": 159,
+      "replacement": 212,
+      "unreachable_removal": 55,
+      "operand_perturbation": 381,
+      "randomization": 83,
+      "splice": 77,
+      "config_perturbation": 111
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.872,
+     "neutral": 0.0,
+     "deleterious": 0.128,
+     "best": 0.625,
+     "mean": 0.557125,
+     "beneficial_ops": {
+      "movement": 130,
+      "insertion": 159,
+      "region_swap": 116,
+      "duplication": 78,
+      "deletion": 183,
+      "reference_redirection": 159,
+      "replacement": 212,
+      "unreachable_removal": 55,
+      "operand_perturbation": 381,
+      "randomization": 83,
+      "splice": 77,
+      "config_perturbation": 111
+     }
+    },
+    "ops": {
+     "movement": 166,
+     "insertion": 177,
+     "config_perturbation": 179,
+     "region_swap": 131,
+     "duplication": 86,
+     "deletion": 211,
+     "reference_redirection": 166,
+     "replacement": 241,
+     "unreachable_removal": 55,
+     "operand_perturbation": 404,
+     "randomization": 96,
+     "splice": 88
+    }
+   },
+   "v0.4": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.8585,
+     "neutral": 0.0,
+     "deleterious": 0.1415,
+     "best": 0.625,
+     "mean": 0.544375,
+     "beneficial_ops": {
+      "duplication": 74,
+      "config_perturbation": 99,
+      "movement": 108,
+      "splice": 87,
+      "operand_perturbation": 373,
+      "replacement": 222,
+      "randomization": 75,
+      "region_swap": 104,
+      "reference_redirection": 168,
+      "insertion": 128,
+      "deletion": 224,
+      "unreachable_removal": 55
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.8585,
+     "neutral": 0.0,
+     "deleterious": 0.1415,
+     "best": 0.625,
+     "mean": 0.54925,
+     "beneficial_ops": {
+      "duplication": 74,
+      "config_perturbation": 99,
+      "movement": 108,
+      "splice": 87,
+      "operand_perturbation": 373,
+      "replacement": 222,
+      "randomization": 75,
+      "region_swap": 104,
+      "reference_redirection": 168,
+      "insertion": 128,
+      "deletion": 224,
+      "unreachable_removal": 55
+     }
+    },
+    "ops": {
+     "duplication": 85,
+     "config_perturbation": 166,
+     "movement": 149,
+     "splice": 101,
+     "operand_perturbation": 394,
+     "replacement": 257,
+     "randomization": 90,
+     "region_swap": 124,
+     "reference_redirection": 175,
+     "insertion": 146,
+     "deletion": 258,
+     "unreachable_removal": 55
+    }
+   }
+  },
+  {
+   "seed": 2,
+   "rank": 1,
+   "f0": {
+    "xor1": 0.484375,
+    "xor15": 0.484375
+   },
+   "B": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.9195,
+     "neutral": 0.0,
+     "deleterious": 0.0805,
+     "best": 0.625,
+     "mean": 0.57771875,
+     "beneficial_ops": {
+      "replacement": 228,
+      "reference_redirection": 160,
+      "region_swap": 107,
+      "operand_perturbation": 371,
+      "duplication": 86,
+      "movement": 150,
+      "randomization": 74,
+      "deletion": 220,
+      "insertion": 161,
+      "splice": 106,
+      "unreachable_removal": 53,
+      "config_perturbation": 123
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.9195,
+     "neutral": 0.0,
+     "deleterious": 0.0805,
+     "best": 0.625,
+     "mean": 0.580375,
+     "beneficial_ops": {
+      "replacement": 228,
+      "reference_redirection": 160,
+      "region_swap": 107,
+      "operand_perturbation": 371,
+      "duplication": 86,
+      "movement": 150,
+      "randomization": 74,
+      "deletion": 220,
+      "insertion": 161,
+      "splice": 106,
+      "unreachable_removal": 53,
+      "config_perturbation": 123
+     }
+    },
+    "ops": {
+     "replacement": 246,
+     "reference_redirection": 161,
+     "region_swap": 119,
+     "operand_perturbation": 388,
+     "duplication": 89,
+     "movement": 170,
+     "randomization": 81,
+     "deletion": 243,
+     "insertion": 171,
+     "splice": 118,
+     "unreachable_removal": 53,
+     "config_perturbation": 161
+    }
+   },
+   "v0.4": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.9125,
+     "neutral": 0.0,
+     "deleterious": 0.0875,
+     "best": 0.625,
+     "mean": 0.574125,
+     "beneficial_ops": {
+      "deletion": 241,
+      "region_swap": 108,
+      "reference_redirection": 169,
+      "operand_perturbation": 358,
+      "config_perturbation": 101,
+      "insertion": 171,
+      "splice": 103,
+      "randomization": 76,
+      "replacement": 224,
+      "duplication": 72,
+      "unreachable_removal": 72,
+      "movement": 130
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.9125,
+     "neutral": 0.0,
+     "deleterious": 0.0875,
+     "best": 0.625,
+     "mean": 0.577375,
+     "beneficial_ops": {
+      "deletion": 241,
+      "region_swap": 108,
+      "reference_redirection": 169,
+      "operand_perturbation": 358,
+      "config_perturbation": 101,
+      "insertion": 171,
+      "splice": 103,
+      "randomization": 76,
+      "replacement": 224,
+      "duplication": 72,
+      "unreachable_removal": 72,
+      "movement": 130
+     }
+    },
+    "ops": {
+     "deletion": 261,
+     "duplication": 75,
+     "region_swap": 116,
+     "reference_redirection": 171,
+     "operand_perturbation": 368,
+     "config_perturbation": 158,
+     "replacement": 247,
+     "insertion": 180,
+     "splice": 111,
+     "randomization": 83,
+     "unreachable_removal": 72,
+     "movement": 158
+    }
+   }
+  },
+  {
+   "seed": 3,
+   "rank": 0,
+   "f0": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "B": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.8955,
+     "neutral": 0.0,
+     "deleterious": 0.1045,
+     "best": 0.6875,
+     "mean": 0.62440625,
+     "beneficial_ops": {
+      "replacement": 246,
+      "operand_perturbation": 386,
+      "insertion": 128,
+      "duplication": 86,
+      "region_swap": 98,
+      "reference_redirection": 182,
+      "unreachable_removal": 72,
+      "config_perturbation": 127,
+      "movement": 133,
+      "deletion": 168,
+      "splice": 98,
+      "randomization": 67
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.8955,
+     "neutral": 0.0,
+     "deleterious": 0.1045,
+     "best": 0.6875,
+     "mean": 0.62009375,
+     "beneficial_ops": {
+      "replacement": 246,
+      "operand_perturbation": 386,
+      "insertion": 128,
+      "duplication": 86,
+      "region_swap": 98,
+      "reference_redirection": 182,
+      "unreachable_removal": 72,
+      "config_perturbation": 127,
+      "movement": 133,
+      "deletion": 168,
+      "splice": 98,
+      "randomization": 67
+     }
+    },
+    "ops": {
+     "replacement": 272,
+     "operand_perturbation": 395,
+     "insertion": 139,
+     "duplication": 91,
+     "region_swap": 119,
+     "reference_redirection": 185,
+     "unreachable_removal": 72,
+     "config_perturbation": 167,
+     "movement": 164,
+     "deletion": 202,
+     "splice": 112,
+     "randomization": 82
+    }
+   },
+   "v0.4": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.87,
+     "neutral": 0.0,
+     "deleterious": 0.13,
+     "best": 0.6875,
+     "mean": 0.60915625,
+     "beneficial_ops": {
+      "insertion": 168,
+      "operand_perturbation": 358,
+      "movement": 128,
+      "deletion": 195,
+      "reference_redirection": 155,
+      "config_perturbation": 91,
+      "duplication": 85,
+      "splice": 80,
+      "replacement": 226,
+      "unreachable_removal": 79,
+      "region_swap": 106,
+      "randomization": 69
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.87,
+     "neutral": 0.0,
+     "deleterious": 0.13,
+     "best": 0.6875,
+     "mean": 0.60365625,
+     "beneficial_ops": {
+      "insertion": 168,
+      "operand_perturbation": 358,
+      "movement": 128,
+      "deletion": 195,
+      "reference_redirection": 155,
+      "config_perturbation": 91,
+      "duplication": 85,
+      "splice": 80,
+      "replacement": 226,
+      "unreachable_removal": 79,
+      "region_swap": 106,
+      "randomization": 69
+     }
+    },
+    "ops": {
+     "insertion": 185,
+     "operand_perturbation": 383,
+     "movement": 164,
+     "deletion": 234,
+     "replacement": 250,
+     "reference_redirection": 157,
+     "config_perturbation": 141,
+     "duplication": 93,
+     "splice": 106,
+     "region_swap": 124,
+     "unreachable_removal": 79,
+     "randomization": 84
+    }
+   }
+  },
+  {
+   "seed": 3,
+   "rank": 1,
+   "f0": {
+    "xor1": 0.515625,
+    "xor15": 0.515625
+   },
+   "B": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.8365,
+     "neutral": 0.0,
+     "deleterious": 0.1635,
+     "best": 0.6875,
+     "mean": 0.5895,
+     "beneficial_ops": {
+      "operand_perturbation": 397,
+      "config_perturbation": 116,
+      "replacement": 199,
+      "insertion": 139,
+      "reference_redirection": 181,
+      "movement": 132,
+      "duplication": 64,
+      "unreachable_removal": 61,
+      "randomization": 66,
+      "splice": 85,
+      "deletion": 156,
+      "region_swap": 77
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.8365,
+     "neutral": 0.0,
+     "deleterious": 0.1635,
+     "best": 0.6875,
+     "mean": 0.58246875,
+     "beneficial_ops": {
+      "operand_perturbation": 397,
+      "config_perturbation": 116,
+      "replacement": 199,
+      "insertion": 139,
+      "reference_redirection": 181,
+      "movement": 132,
+      "duplication": 64,
+      "unreachable_removal": 61,
+      "randomization": 66,
+      "splice": 85,
+      "deletion": 156,
+      "region_swap": 77
+     }
+    },
+    "ops": {
+     "operand_perturbation": 415,
+     "config_perturbation": 169,
+     "deletion": 200,
+     "replacement": 237,
+     "insertion": 166,
+     "reference_redirection": 184,
+     "movement": 183,
+     "duplication": 79,
+     "unreachable_removal": 61,
+     "randomization": 82,
+     "splice": 111,
+     "region_swap": 113
+    }
+   },
+   "v0.4": {
+    "xor1": {
+     "hit": 0.0,
+     "beneficial": 0.819,
+     "neutral": 0.0,
+     "deleterious": 0.181,
+     "best": 0.6875,
+     "mean": 0.578625,
+     "beneficial_ops": {
+      "reference_redirection": 158,
+      "deletion": 174,
+      "replacement": 190,
+      "operand_perturbation": 350,
+      "randomization": 74,
+      "insertion": 133,
+      "region_swap": 84,
+      "config_perturbation": 143,
+      "splice": 74,
+      "movement": 149,
+      "unreachable_removal": 54,
+      "duplication": 55
+     }
+    },
+    "xor15": {
+     "hit": 0.0,
+     "beneficial": 0.819,
+     "neutral": 0.0,
+     "deleterious": 0.181,
+     "best": 0.6875,
+     "mean": 0.571125,
+     "beneficial_ops": {
+      "reference_redirection": 158,
+      "deletion": 174,
+      "replacement": 190,
+      "operand_perturbation": 350,
+      "randomization": 74,
+      "insertion": 133,
+      "region_swap": 84,
+      "config_perturbation": 143,
+      "splice": 74,
+      "movement": 149,
+      "unreachable_removal": 54,
+      "duplication": 55
+     }
+    },
+    "ops": {
+     "randomization": 96,
+     "reference_redirection": 161,
+     "deletion": 231,
+     "replacement": 231,
+     "operand_perturbation": 370,
+     "insertion": 162,
+     "region_swap": 121,
+     "config_perturbation": 190,
+     "splice": 114,
+     "movement": 200,
+     "duplication": 70,
+     "unreachable_removal": 54
+    }
+   }
+  }
+ ],
+ "material": false,
+ "elapsed_s": 61.0,
+ "prereg_sha256": "59c9a7212c52f0994255ccafbaf6b5353f2521ab0be32df194c9380f6dfe064f",
+ "ts": "2026-09-19 08:35:16"
+}

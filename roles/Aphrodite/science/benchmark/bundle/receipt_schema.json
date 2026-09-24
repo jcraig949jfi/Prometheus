@@ -1,0 +1,44 @@
+{
+ "produced_by": "run_frozen.py wrapping the unchanged bench.py",
+ "required_measured": [
+  "wall_s_total",
+  "model_calls",
+  "retries",
+  "failed_calls",
+  "failure_rate",
+  "retry_rate",
+  "format_failure_rate_loop",
+  "tokens_in_per_task",
+  "tokens_out_per_task",
+  "tokens_per_task_mean",
+  "wall_s_per_eval",
+  "evaluations_per_generation",
+  "model_calls_per_generation",
+  "per_generation",
+  "eval_throughput_per_s",
+  "gpu"
+ ],
+ "required_starting_accuracy": [
+  "n",
+  "correct",
+  "accuracy",
+  "wilson95",
+  "by_family",
+  "format_failure_rate"
+ ],
+ "required_top_level": [
+  "bundle_manifest_sha256",
+  "bundle_verified",
+  "bundle_git_commit",
+  "harness_version",
+  "harness_sha256",
+  "harness_git_head",
+  "host_label",
+  "frozen_settings",
+  "model",
+  "gpu_identity",
+  "starting_accuracy",
+  "measured",
+  "projection_single_host"
+ ]
+}

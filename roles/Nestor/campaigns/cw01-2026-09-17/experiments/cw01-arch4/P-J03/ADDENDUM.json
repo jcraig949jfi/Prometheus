@@ -1,0 +1,175 @@
+{
+ "perturbation_id": "P-J03",
+ "addendum": "post hoc, labelled",
+ "witness": {
+  "seed": 1,
+  "rank": 0,
+  "n_instr": 4,
+  "out_index": 5,
+  "out_reg": 3
+ },
+ "xor1_persistence": {
+  "S2|s1": {
+   "top4_xor1": 0.796875,
+   "pop_mean_xor1": 0.732421875,
+   "share_ge_.9": 0.0
+  },
+  "R|s1": {
+   "top4_xor1": 0.515625,
+   "pop_mean_xor1": 0.4666341145833333,
+   "share_ge_.9": 0.0
+  },
+  "S2|s2": {
+   "top4_xor1": 1.0,
+   "pop_mean_xor1": 0.6292317708333334,
+   "share_ge_.9": 0.3333333333333333
+  },
+  "R|s2": {
+   "top4_xor1": 0.484375,
+   "pop_mean_xor1": 0.4275716145833333,
+   "share_ge_.9": 0.0
+  }
+ },
+ "one_edit_from_witness": {
+  "xor1": {
+   "f0_witness_4set": 1.0,
+   "hits_confirmed": 12536,
+   "hit_ops": {
+    "XOR": 1616,
+    "ADD": 1614,
+    "SUB": 1614,
+    "OR": 1632,
+    "AND": 1482,
+    "MUL": 1470,
+    "MOV": 1638,
+    "IN": 1470
+   },
+   "hit_modes": {
+    "insert": 6517,
+    "replace": 6019
+   },
+   "classes": {
+    "deleterious": 1240,
+    "hit": 12536
+   },
+   "examples": [
+    {
+     "mode": "insert",
+     "op": "XOR",
+     "pos": 0,
+     "j": 1,
+     "xor1": 0.9062,
+     "xor1_class": "hit",
+     "xor3": 0.5625,
+     "xor3_class": "neutral",
+     "xor5": 0.5625,
+     "xor5_class": "neutral",
+     "xor15": 0.5625,
+     "xor15_class": "neutral",
+     "add1": 0.7812,
+     "add1_class": "deleterious"
+    },
+    {
+     "mode": "insert",
+     "op": "XOR",
+     "pos": 0,
+     "j": 2,
+     "xor1": 1.0,
+     "xor1_class": "hit",
+     "xor3": 0.5625,
+     "xor3_class": "neutral",
+     "xor5": 0.5625,
+     "xor5_class": "neutral",
+     "xor15": 0.5625,
+     "xor15_class": "neutral",
+     "add1": 0.875,
+     "add1_class": "neutral"
+    },
+    {
+     "mode": "insert",
+     "op": "XOR",
+     "pos": 0,
+     "j": 4,
+     "xor1": 1.0,
+     "xor1_class": "hit",
+     "xor3": 0.5625,
+     "xor3_class": "neutral",
+     "xor5": 0.5625,
+     "xor5_class": "neutral",
+     "xor15": 0.5625,
+     "xor15_class": "neutral",
+     "add1": 0.875,
+     "add1_class": "neutral"
+    }
+   ]
+  },
+  "xor3": {
+   "f0_witness_4set": 0.515625,
+   "hits_confirmed": 0,
+   "hit_ops": {},
+   "hit_modes": {},
+   "classes": {
+    "deleterious": 1229,
+    "neutral": 12547
+   },
+   "examples": []
+  },
+  "xor5": {
+   "f0_witness_4set": 0.515625,
+   "hits_confirmed": 0,
+   "hit_ops": {},
+   "hit_modes": {},
+   "classes": {
+    "deleterious": 1229,
+    "neutral": 12547
+   },
+   "examples": []
+  },
+  "xor15": {
+   "f0_witness_4set": 0.515625,
+   "hits_confirmed": 0,
+   "hit_ops": {},
+   "hit_modes": {},
+   "classes": {
+    "deleterious": 1229,
+    "neutral": 12547
+   },
+   "examples": []
+  },
+  "add1": {
+   "f0_witness_4set": 0.796875,
+   "hits_confirmed": 1,
+   "hit_ops": {
+    "ADD": 1
+   },
+   "hit_modes": {
+    "replace": 1
+   },
+   "classes": {
+    "deleterious": 1420,
+    "neutral": 12355,
+    "hit": 1
+   },
+   "examples": [
+    {
+     "mode": "replace",
+     "op": "ADD",
+     "pos": 3,
+     "j": 0,
+     "xor1": 0.875,
+     "xor1_class": "deleterious",
+     "xor3": 0.5625,
+     "xor3_class": "neutral",
+     "xor5": 0.5625,
+     "xor5_class": "neutral",
+     "xor15": 0.625,
+     "xor15_class": "neutral",
+     "add1": 0.9688,
+     "add1_class": "hit"
+    }
+   ]
+  }
+ },
+ "reading": "transforms whose regime-1 answer is a register-to-register operation on the read regime word (add 1: ADD out,out,t) can be one edit from the scaffold; transforms needing a literal constant (xor 3 / 5 / 15) need an LDC whose 32-bit word must equal the constant, which the grammar's uniform word draws cannot supply",
+ "elapsed_s": 171.9
+}

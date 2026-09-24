@@ -1,0 +1,28 @@
+{
+ "contract": {
+  "experiment_id": "cw01-e05",
+  "attempt_id": "cw01-e05-a01",
+  "world_schema_version": "composition-economics-v1",
+  "statistic_name": "difference_in_differences_normalised_information_superadditivity",
+  "statistic_formula": "DiD = (nsa(BEST,conj) - nsa(BEST,disj)) - (nsa(WORST,conj) - nsa(WORST,disj))",
+  "normalisation": "nsa(S,law) = 100 * (mixture_info(S,law) - additive_prediction(S,law)) / additive_prediction(S,law)",
+  "intervention_control_relationship": "every intervention applied to a treatment is also applied to every baseline it is compared against; enforced by learnability.assert_controlled",
+  "null_construction": "repeated measurement of the same quantity across at least 8 independent seed blocks; pairwise relative differences form the null",
+  "effect_clearing_rule": "infometrics.effect_clears_null at the 5th/95th percentile of the measured null, in the pre-declared direction",
+  "set_selection_procedure": "exhaustive enumeration of all C(K,B) subsets; BEST = argmax mean score, WORST = argmin; no hand-picked sets",
+  "budget_B": 3,
+  "budget_derivation": "measured mean conjunctive demand size over the attempt-stable pool, rounded; declared before inspecting superadditivity",
+  "superadditivity_basis": "information, not info/cost; carry cost stored separately",
+  "baseline_law_rule": "solo baselines measured under the SAME composition law as the mixture they are compared to",
+  "liveness_rule": "learnability.assert_live must pass before any matched-arm identity comparison",
+  "disposition_rules": {
+   "NEGATIVE": "mixtures do not beat the best single component",
+   "NULL": "superadditivity does not clear its measured null, OR targeted ablation costs no more than solo value",
+   "INCONCLUSIVE": "effect present but not replicated across all attempt seeds, or IX not discharged",
+   "COMPLETE": "mixtures beat the best single component AND superadditivity clears its null AND targeted ablation exceeds solo value AND the composition law benefits BEST more than WORST, in every replicate"
+  },
+  "freeze_rule": "once the first organism is evaluated under this attempt_id, no metric, normalisation, control, threshold, set-selection rule, budget, null or verdict criterion may change; a defect voids the verdict and opens a new attempt_id"
+ },
+ "contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+ "_freeze_rule": "no criterion may change under this attempt_id once the first organism is evaluated; a defect voids the verdict and opens a new attempt_id"
+}

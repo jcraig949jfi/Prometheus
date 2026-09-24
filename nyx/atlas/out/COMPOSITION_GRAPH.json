@@ -1,9 +1,9 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-18T06:03Z",
- "n": 648,
+ "built": "2026-09-19T10:08Z",
+ "n": 651,
  "by_label": {
-  "feeds": 345,
+  "feeds": 348,
   "updates": 69,
   "triggers": 51,
   "competes": 27,
@@ -50,6 +50,14 @@
    "label": "feeds",
    "evidence": "SOURCE_READ",
    "note": "shared accumulator under P_ON_M",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation",
+   "to": "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the K frames the score sees",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {
@@ -3674,6 +3682,22 @@
    "label": "gates",
    "evidence": "SOURCE_READ",
    "note": "SUCCEEDED / FAILED stop the relay",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "poet-original-2019::novelty_as_the_mean_distance_to_the_k_nearest_members_of_an_unpruned_archive_over_a_five_number_hand_built_environment_descriptor",
+   "to": "poet-original-2019::admission_only_of_environments_on_which_the_current_agent_scores_inside_a_two_sided_band_neither_unsolvable_nor_already_solved",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "novelty orders the child list; the minimal criterion decides admission from that order",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "from": "poet-original-2019::capacity_enforced_by_deleting_the_oldest_active_environments_while_the_novelty_archive_is_never_pruned",
+   "to": "poet-original-2019::novelty_as_the_mean_distance_to_the_k_nearest_members_of_an_unpruned_archive_over_a_five_number_hand_built_environment_descriptor",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "deletion never prunes the archive novelty is measured against",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

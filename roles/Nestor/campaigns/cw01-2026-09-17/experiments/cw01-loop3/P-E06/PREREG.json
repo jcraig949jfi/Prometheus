@@ -1,0 +1,61 @@
+{
+ "perturbation_id": "P-E06",
+ "parent": "T-E06",
+ "co_parents": [
+  "T-X14",
+  "T-X04",
+  "T-X01",
+  "T-E07"
+ ],
+ "claim_type": "integrated-factorial",
+ "factors": {
+  "rate": [
+   0.5,
+   0.6,
+   0.7,
+   0.8,
+   0.9,
+   1.0
+  ],
+  "f0": [
+   0.1,
+   0.5,
+   0.9
+  ],
+  "damage": [
+   "none",
+   "sham",
+   "tape",
+   "tree",
+   "both"
+  ],
+  "attempt_ids": [
+   "cw01-loop3-PE06-0",
+   "cw01-loop3-PE06-1",
+   "cw01-loop3-PE06-2"
+  ],
+  "generations": 160,
+  "f": 0.1,
+  "tournament": 3,
+  "n_org": 96
+ },
+ "unchanged": "e06 world, sharing, prices, item streams, mutation, graph targets",
+ "harness_check": "none == sham on every freq_TREE trajectory (separate damage rng); a violation voids the run as INVALID",
+ "readouts": [
+  "direction map sign(final160 - f0) per (rate, f0, regime)",
+  "crossing rate per f0 per regime: first consecutive-rate sign change of mean(final160 - f0)",
+  "coexistence at 80 and 160 (counts of 3, Wilson)",
+  "extinction generation",
+  "final units by label",
+  "lineage collapse (generation when lineages_TREE + lineages_TAPE <= 2)"
+ ],
+ "material_rule": "any of: a sign change across rate at f0 .1 or .9 in the 'none' regime; a damage regime moves a crossing by >= .2 in rate; coexistence-at-160 totals differ between regimes with disjoint Wilson bands; a regime has >= 3 cells with 2/3 or 3/3 coexistence at 160",
+ "continuation": [
+  "target geometry x rate",
+  "damage dose f",
+  "240 generations at the crossing",
+  "tournament 2"
+ ],
+ "written": "2026-09-18 23:23:21",
+ "prereg_sha256": "56c32d64d3ddd25bea6c0683e3e0a575c7b2ab6041ba048918b9da2743590211"
+}

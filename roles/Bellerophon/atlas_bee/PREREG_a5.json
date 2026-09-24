@@ -1,0 +1,116 @@
+{
+ "freeze": {
+  "algo": "sha256-canonical-json-v1",
+  "canonical_bytes": 3076,
+  "sha256": "04b0e4b4f82816297411f5ab46df10976bd5284b3110f6da5f66238f402b65e0"
+ },
+ "prereg": {
+  "adaptation_id": "a5",
+  "budgets": {
+   "horizon": 28,
+   "search": {
+    "generations": 8,
+    "n": 16
+   }
+  },
+  "controls": [
+   "p=0 (rung 0 never revisited) as the low anchor",
+   "held-out seeds disjoint from training"
+  ],
+  "decision_criteria": {
+   "PHENOMENON_ABSENT": "final_r0 is flat in p (revisit share does not shape rung-0 performance in BEE)",
+   "PHENOMENON_CHANGED": "final_r0 depends on p but not monotonically (revisiting helps non-linearly)",
+   "PHENOMENON_PRESERVED": "final_r0 rises with p (monotone non-decreasing, and the top p beats p=0)"
+  },
+  "ladder": {
+   "revisit_shares_p": [
+    0.0,
+    0.1,
+    0.25,
+    0.5
+   ],
+   "rungs_action_delay": [
+    0,
+    1,
+    2,
+    4
+   ]
+  },
+  "manifest": {
+   "adaptation_id": "a5",
+   "counts": {
+    "ANALOGOUS": 3,
+    "IDENTICAL": 1,
+    "MODIFIED": 1,
+    "OMITTED": 1,
+    "UNREPRESENTABLE": 0
+   },
+   "entries": [
+    {
+     "aspect": "delay ladder",
+     "bee": "battery over world_params action_delay in {0,1,2,4} (the S2 scaffolding)",
+     "reason": "action_delay is the same delay knob; the battery evaluates a proposal on all rungs at once",
+     "relation": "IDENTICAL",
+     "source": "action_delay rungs 0->1->2->4"
+    },
+    {
+     "aspect": "revisit share p",
+     "bee": "the battery WEIGHT on rung 0 (p); (1-p) split over the harder rungs",
+     "reason": "a higher weight on rung 0 is more revisiting of it; p=0 drops rung 0 from the battery entirely",
+     "relation": "ANALOGOUS",
+     "source": "how often rung 0 is revisited during training"
+    },
+    {
+     "aspect": "final_r0",
+     "bee": "best elite evaluated on action_delay=0 held-out (charge)",
+     "reason": "the best-by-weighted-battery elite is scored on rung 0 alone",
+     "relation": "ANALOGOUS",
+     "source": "rung-0 performance after the ladder"
+    },
+    {
+     "aspect": "organism / search",
+     "bee": "statemachine.v1 evolved under the battery, selector.truncation.v1",
+     "reason": "one search per p, ranked by the weighted battery objective",
+     "relation": "ANALOGOUS",
+     "source": "the source's ladder trainer"
+    },
+    {
+     "aspect": "objective",
+     "bee": "objective.charge.v1 (final charge, unnormalised)",
+     "reason": "BEE reports charge, not a normalised 0..1 competence; only the TREND in p is compared, not the level",
+     "relation": "MODIFIED",
+     "source": "the source's competence metric (0..1)"
+    },
+    {
+     "aspect": "scientific-conclusion layer",
+     "bee": "-",
+     "reason": "BEE authors no conclusion",
+     "relation": "OMITTED",
+     "source": "SFE's disposition (WEAK_POSITIVE)"
+    }
+   ],
+   "source_experiment": "archaeon.campaign/cmp2:C2-SFE-06"
+  },
+  "objective": "objective.charge.v1 (weighted battery mean during training; rung-0 held-out at evaluation)",
+  "observations": [
+   "final_r0 = best elite's mean held-out charge at action_delay=0, per p",
+   "trend of final_r0 in p"
+  ],
+  "organisms": "statemachine.v1 evolved once per p under the delay-ladder battery",
+  "question": "Does training with a higher revisit share p of rung 0 (action_delay=0) raise final rung-0 charge, across the delay ladder {0,1,2,4}? (C2-SFE-06 found final_r0 rose with p.)",
+  "seeds": {
+   "heldout": {
+    "base": 5000,
+    "n_seeds": 16
+   },
+   "train": {
+    "base": 1,
+    "n_seeds": 6
+   }
+  },
+  "source_disposition": "WEAK_POSITIVE",
+  "source_experiment": "archaeon.campaign/cmp2:C2-SFE-06",
+  "stopping_rules": "fixed budget; a flat or non-monotone final_r0(p) is a valid CHANGED/ABSENT result",
+  "world": "world.integer.v1({'world_seed': 8, 'start_charge': 30, 'yield_amt': 12, 'yield_width': 16384})"
+ }
+}

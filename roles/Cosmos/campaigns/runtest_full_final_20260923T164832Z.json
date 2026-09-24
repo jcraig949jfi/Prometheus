@@ -1,0 +1,94 @@
+{
+ "utc": "20260923T164832Z",
+ "identity": {
+  "cosmos_src_sha": "3349878179545eea97979071762be101f50ba69fe77a068dea5cf53421e07731",
+  "n_src": 55,
+  "git_head": "12df92a11af21b9ab5fb4dc249995e3507aaca8e",
+  "cosmos_dirty": false
+ },
+ "steps": {
+  "tests_fast": {
+   "ok": true,
+   "summary": "72 passed, 7 deselected in 3.18s",
+   "s": 3.7
+  },
+  "tests_slow_planted": {
+   "ok": true,
+   "summary": "7 passed, 72 deselected in 234.61s (0:03:54)",
+   "s": 235.1
+  },
+  "broker_selftest": {
+   "ok": true,
+   "detail": {
+    "w0": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    },
+    "w1": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    }
+   }
+  },
+  "seal": {
+   "ok": true,
+   "spec_sha": "48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265"
+  },
+  "quick_campaign": {
+   "ok": true,
+   "gates": {
+    "G1": "PASS",
+    "G0": "PASS",
+    "G4": "NOT REACHED",
+    "G2": "FAIL",
+    "G7": "NOT REACHED",
+    "G5": "SKIPPED (quick)",
+    "G6": "SKIPPED (quick)"
+   },
+   "graph": {
+    "nodes": 673,
+    "edges": 608,
+    "runs": 673,
+    "families": 3,
+    "laws": 0,
+    "edge_kinds": {
+     "CONTROL_OF": 60,
+     "DEFORMATION_OF": 548
+    }
+   },
+   "laws": [],
+   "mine_initial": {
+    "v4": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8756450356158133,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "v3": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8711041234912004,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "raw": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.7806246592282208,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    }
+   },
+   "s": 232.6
+  }
+ },
+ "ok": true
+}

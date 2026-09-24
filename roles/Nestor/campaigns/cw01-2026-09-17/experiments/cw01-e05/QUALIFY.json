@@ -1,0 +1,231 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "attempt_id": "cw01-e05-a01",
+ "phase": "QUALIFY",
+ "verdict": "QUALIFIED - EXECUTE authorised once the frozen verdict contract is committed and re-read",
+ "_history_warning": "This record deliberately preserves failed reasoning. The final design is NOT presented as the original design. Seven measurement/specification defects were found during QUALIFY, and three pass criteria were superseded. Each is recorded with what it was, why it was invalid, what exposed it, and what replaced it.",
+
+ "predicates": {
+  "Q1_prices_positive": {
+   "status": "PASS",
+   "measurement": "cost_carry_per_episode 3.0, cost_attempt 0.5, both > 0",
+   "control_or_null": "n/a - structural check on the spec",
+   "run_identifiers": "cw01-e05-a01 QUALIFY inspection",
+   "artifact": "WORLD.json components/items",
+   "final_criterion": "all declared prices strictly positive"},
+
+  "Q2_carrying_is_a_real_trade": {
+   "status": "PASS",
+   "measurement": "exhaustive enumeration of all C(8,3)=56 subsets under budget B=3",
+   "control_or_null": "worst subset as the floor; spread across the full subset space",
+   "run_identifiers": "cw01-e05-a01 tag=enum, 10 episodes per subset",
+   "artifact": "WORLD.json empirical_calibration.subset_enumeration",
+   "evidence": "best 1.8978 [0,2,4]; median 1.3206 [0,5,7]; worst 1.0015 [4,5,7]; spread 89.5%",
+   "final_criterion": "choice is contested: best materially exceeds worst across the enumerated space",
+   "supersedes": "an earlier price-based formulation that could never bind (see defect D039)"},
+
+  "Q3_shams_are_cost_matched": {
+   "status": "PASS",
+   "measurement": "M1 targeted removal of the most load-bearing component vs random removal of one other",
+   "control_or_null": "random-removal sham removing the SAME number of components, identical carry saving",
+   "run_identifiers": "cw01-e05-a01 tag=q3, 16 episodes",
+   "artifact": "QUALIFY run log",
+   "evidence": "targeted ablation cost 57.50 vs random-removal sham 45.83, identical carry saving",
+   "final_criterion": "targeted ablation cost exceeds the cost-matched random sham"},
+
+  "Q4_seeds_reconstructible": {
+   "status": "PASS",
+   "measurement": "identical 106-byte payloads for capmap, itempool and draws across three interpreter processes",
+   "control_or_null": "negative control: attempt_id cw01-e05-r02 must diverge from a01",
+   "run_identifiers": "PYTHONHASHSEED 0 / 7777 / random, rc 0/0/0",
+   "artifact": "QUALIFY run log",
+   "final_criterion": "bit-identical, non-empty across hash seeds, and divergent across attempt_ids"},
+
+  "Q5_durable_without_redis": {
+   "status": "PASS",
+   "measurement": "3 rows written via lib/localrun, then re-parsed in a process with the redis import blocked",
+   "control_or_null": "redis import forcibly raised ImportError during the read",
+   "run_identifiers": "CW01-E05-QUALIFY, rows/qualify_smoke.jsonl",
+   "artifact": "experiments/cw01-e05/rows/qualify_smoke.jsonl",
+   "final_criterion": "status, exp_id and ts present with the substrate unavailable"},
+
+  "Q6_neutral_genes_are_inert": {
+   "status": "PASS",
+   "measurement": "perturb neutral_a and neutral_b by +0.5 and compare every emitted metric",
+   "control_or_null": "unperturbed genome on the same stream seed",
+   "run_identifiers": "cw01-e05-a01 tag=q, stream 0",
+   "artifact": "QUALIFY run log",
+   "final_criterion": "no metric changes; they are the drift floor and the basis of cost-matched shams"},
+
+  "Q7_pressure_actually_binds": {
+   "status": "PASS",
+   "measurement": "budget B=3 against K=8; enumeration spread 89.5% across subsets",
+   "control_or_null": "full enumeration rather than a hand-chosen comparison",
+   "run_identifiers": "cw01-e05-a01 tag=enum",
+   "artifact": "WORLD.json empirical_calibration.subset_enumeration",
+   "final_criterion": "the budget forces a choice whose quality materially changes the outcome",
+   "supersedes": "carry-price formulation, monotone at every swept value (defect D039)"},
+
+  "Q8_learnability": {
+   "status": "PASS",
+   "measurement": "lib/learnability.probe over ENUMERATED best/worst/singleton/empty",
+   "control_or_null": "WORST subset from exhaustive enumeration; probes asserted pairwise distinct",
+   "run_identifiers": "cw01-e05-a01 tag=q8, 12 episodes per probe",
+   "artifact": "QUALIFY run log",
+   "evidence": "BEST 1.9808 (10.5 conjunctions/episode) vs WORST 1.0574 (0.0 conjunctions), +87.34%, at identical budget and carry cost; SINGLETON 0.7748; EMPTY 0.0000",
+   "final_criterion": "best conditional set beats the enumerated worst by >= 5% with the mechanism firing",
+   "supersedes": "a hand-picked 'complementary' set that was 30% worse than a random subset (defect D042)"},
+
+  "Q9_mechanism_fires": {
+   "status": "PASS",
+   "measurement": "conjunctive_satisfied per episode in the enumerated best case",
+   "control_or_null": "WORST set satisfies 0.0 conjunctions under the same budget",
+   "run_identifiers": "cw01-e05-a01 tag=q8",
+   "artifact": "QUALIFY run log",
+   "evidence": "10.5 conjunctions satisfied per episode vs 0.0 for WORST",
+   "final_criterion": "conjunctions are actually completed in the best case"},
+
+  "Q10_matched_arms": {
+   "status": "PASS",
+   "measurement": "treatment with force_disjunctive vs control_disjunctive_only on the SAME stream seed",
+   "control_or_null": "liveness asserted first via learnability.assert_live (D034)",
+   "run_identifiers": "cw01-e05-a01 tag=q, stream 0, genome carrying [0,2,4]",
+   "artifact": "QUALIFY run log",
+   "evidence": "info 268.2993003478004 and cost 69.0 identical across arms, on a LIVE genome",
+   "final_criterion": "bit-identical metrics AND the comparison is non-vacuous"},
+
+  "Q11_superadditivity_has_a_noise_floor": {
+   "status": "PASS",
+   "measurement": "8 independent estimates of normalised superadditivity for the BEST set across seed blocks",
+   "control_or_null": "repeated-measurement null band built from those blocks",
+   "run_identifiers": "cw01-e05-a01 tags nf0..nf7, 12 episodes each",
+   "artifact": "QUALIFY run log",
+   "evidence": "mean +12.79%, sd 4.04, null band [-7.51%, +8.12%]; effect sits about 3 sd clear",
+   "final_criterion": "the effect must exceed the measured null band, not merely have the right sign (D035)"},
+
+  "Q12_disposition_rule_is_executable": {
+   "status": "PASS",
+   "measurement": "disposition computed by lib/lineage.decide over a TestLog; branch unreachable unless its tests ran",
+   "control_or_null": "n/a - structural property of the driver",
+   "run_identifiers": "execute_e05.py",
+   "artifact": "experiments/cw01-e05/execute_e05.py and VERDICT_CONTRACT.json",
+   "final_criterion": "no disposition branch may cite a test that did not run (D024/D031)"},
+
+  "Q13_capabilities_are_not_free": {
+   "status": "PASS",
+   "measurement": "the organism's only decision function is `carried()`, over the inclusion vector alone",
+   "control_or_null": "n/a - structural check on the implementation",
+   "run_identifiers": "world_e05.py source inspection",
+   "artifact": "experiments/cw01-e05/world_e05.py",
+   "final_criterion": "neither capmap nor item demands appear in any decision path"},
+
+  "Q14_latent_facts_attempt_stable": {
+   "status": "PASS",
+   "measurement": "attempt_capabilities and attempt_item_pool called twice and compared",
+   "control_or_null": "n/a - determinism check",
+   "run_identifiers": "cw01-e05-a01",
+   "artifact": "QUALIFY run log",
+   "evidence": "capmap identical: True; pool identical: True; capmap [5,2,1,3,4,0,7,6]; 48 templates, 28 conjunctive",
+   "final_criterion": "world latent facts drawn once per attempt, never per episode (D029)"},
+
+  "Q15_no_unperformed_checks": {
+   "status": "PASS",
+   "measurement": "every predicate above names the measurement, control and run identifiers that produced it",
+   "control_or_null": "n/a - process rule",
+   "run_identifiers": "this record",
+   "artifact": "this record",
+   "final_criterion": "no ran=True without a performed comparison (D031)"},
+
+  "Q16_additive_prediction_is_measured": {
+   "status": "PASS",
+   "measurement": "world_e05.solo_values() runs each carried component ALONE in the same world under the same composition law, measuring mean INFORMATION (mean_info); no closed-form expression is used",
+   "control_or_null": "empty-carrier baseline measured, not assumed",
+   "run_identifiers": "cw01-e05-a01 tags sa/abl/dd",
+   "artifact": "world_e05.solo_values / superadditivity",
+   "final_criterion": "no closed-form additive prediction; computing it would make superadditivity a definition"},
+
+  "Q17_M3_interaction": {
+   "status": "PASS",
+   "measurement": "difference-in-differences on NORMALISED information superadditivity, within matched set size and carry budget",
+   "control_or_null": "WORST enumerated set as the comparison arm; composition law toggled for both",
+   "run_identifiers": "cw01-e05-a01 tag=dd, 16 episodes per cell",
+   "artifact": "WORLD.json empirical_calibration.interaction_test",
+   "evidence": "BEST +8.43% conjunctive / -22.35% disjunctive = +30.78 points; WORST +0.00% / -11.36% = +11.36 points; difference-in-differences +19.43 points",
+   "final_criterion": "the composition law must benefit a well-chosen set MORE than a poor one",
+   "supersedes": "two invalid criteria (defects D040, D041)"}
+ },
+
+ "predicate_count": {"declared_in_world_json": 16, "recorded_here": 17,
+  "_note": "Q17_M3_interaction was added to WORLD.json during QUALIFY when the original M3 formulation was found invalid. Counted separately so the record does not misstate the original spec."},
+
+ "measurement_and_specification_defects": [
+  {"id": "CW01-D037", "severity": "high",
+   "what": "The world had zero variance: items were drawn once per attempt and the organism is deterministic, so every score was a single exact number.",
+   "why_invalid": "infometrics.effect_clears_null requires independent estimates across seed blocks; with no variance the noise-floor gate could not be built at all and Q11 was unsatisfiable. Evolution also optimised against one frozen 120-item list.",
+   "exposed_by": "reading the world before running it, while checking whether Q11 could be evaluated",
+   "replaced_with": "demand STRUCTURE attempt-stable (capability assignment plus a 48-template pool), items drawn PER EPISODE from that pool"},
+
+  {"id": "CW01-D038a", "severity": "critical",
+   "what": "superadditivity() forwarded the intervention (force_disjunctive=True) to the mixture but not to solo_values().",
+   "why_invalid": "The mixture was measured under one composition law and its own baselines under another. The comparison spanned two different worlds while producing a clean-looking number.",
+   "exposed_by": "reading the call site after the M3 result inverted; the numbers alone looked decisive",
+   "replaced_with": "**kw propagated to every baseline; lib/learnability.assert_controlled added as a standing guard"},
+
+  {"id": "CW01-D038b", "severity": "high",
+   "what": "Superadditivity was defined on score = info/cost, whose denominator contains an item-attempt floor of 60.0 paid by every organism.",
+   "why_invalid": "Summing solo SURPLUSES of a ratio double-counts that floor's dilution, inflating the additive prediction. Measured: complementary -0.2184, arbitrary -0.5231, carry-all -0.9712 - all negative as an artefact of the denominator.",
+   "exposed_by": "every hand-built set reading negative, including ones that obviously composed",
+   "replaced_with": "superadditivity defined on INFORMATION, which composes linearly; carry cost reported separately"},
+
+  {"id": "CW01-D039", "severity": "critical",
+   "what": "Carrying was priced rather than budgeted, and score proved monotone in components carried at every swept price (3.0, 6.0, 10.0, 15.0, 22.0, 30.0).",
+   "why_invalid": "Conjunctive demand makes marginal value INCREASING, because each added component unlocks new combinations. Info grows about 13x from singleton to carry-all while cost grows about 5x, so a linear price cannot make carrying contested at any value.",
+   "exposed_by": "a price sweep whose declared selection rule returned None - no price satisfied it",
+   "replaced_with": "a carry BUDGET B=3, fixed by the measured mean conjunctive demand size (2.57 over 28 templates), declared before superadditivity was inspected"},
+
+  {"id": "CW01-D040", "severity": "high",
+   "what": "The first M3 criterion compared raw superadditivity ACROSS composition laws and required it to collapse toward zero with the law off.",
+   "why_invalid": "Raw superadditivity is not comparable across laws: under disjunction the additive prediction is inflated by coverage OVERLAP, since the sum of solo information greatly exceeds the union. That is arithmetic, not composition.",
+   "exposed_by": "disjunctive superadditivity reading -79.54 against conjunctive -5.56, a difference too large to be a composition effect",
+   "replaced_with": "within-law contrasts, and ultimately the difference-in-differences on normalised superadditivity"},
+
+  {"id": "CW01-D041", "severity": "high",
+   "what": "The replacement criterion required gap_conj > abs(gap_disj), an invented magnitude threshold.",
+   "why_invalid": "The threshold does not follow from the hypothesis. It reported FAIL on +18.25 vs -23.55, which is in fact the predicted dissociation: alignment helps under conjunction and hurts under disjunction. The printed conclusion 'alignment pays equally without conjunctions' was also false.",
+   "exposed_by": "re-reading the numbers behind a FAIL verdict that contradicted their direction",
+   "replaced_with": "difference-in-differences on NORMALISED superadditivity, immune to the scale differences that broke both prior criteria"},
+
+  {"id": "CW01-D042", "severity": "medium",
+   "what": "The 'complementary' probe set [4,5,6] was hand-picked from the single most common conjunctive demand.",
+   "why_invalid": "It scored 1.3570 while a random subset [2,3,6] scored 1.7676 - 30% better. Serving one common conjunction while neglecting everything else is not optimal, so the best-case probe was not a best case.",
+   "exposed_by": "a budget-binding check that happened to sample random subsets",
+   "replaced_with": "exhaustive enumeration of all C(8,3)=56 subsets; BEST [0,2,4], WORST [4,5,7]"}
+ ],
+
+ "superseded_criteria_summary": {
+  "count": 3,
+  "_reading": "Three of the seven defects were criteria rather than measurements. That is the finding the operator identified as primary: the criterion itself became an experimental object. It is addressed structurally by VERDICT_CONTRACT.json, which is hashed and frozen before the first organism is evaluated."},
+
+ "final_measurement_contract": {
+  "statistic": "difference-in-differences on normalised information superadditivity, within matched set size and carry budget",
+  "budget_B": 3,
+  "B_derivation": "measured mean conjunctive demand size (2.57 over 28 pool templates), rounded to 3; rule declared before inspecting superadditivity",
+  "set_selection": "exhaustive enumeration of all C(8,3)=56 subsets; no hand-picked sets",
+  "BEST": [0, 2, 4],
+  "WORST": [4, 5, 7],
+  "calibration": {
+   "BEST": {"conjunctive_pct": 8.43, "disjunctive_pct": -22.35, "law_effect_points": 30.78},
+   "WORST": {"conjunctive_pct": 0.00, "disjunctive_pct": -11.36, "law_effect_points": 11.36},
+   "difference_in_differences_points": 19.43,
+   "worst_mixture_equals_additive": "76.31 = 76.31 exactly - a pure partition with no composition, the null outcome the pre-registration required to remain reachable",
+   "best_ablation_load_bearing": "3/3 (0: 55.49 vs 44.81; 2: 54.41 vs 49.89; 4: 42.71 vs 25.46)"}},
+
+ "world_consistency": {
+  "requirement": "WORLD.json, this record, the ledger and the executable implementation must agree, or QUALIFY is not closed",
+  "checked": ["B=3 present in WORLD.json arms.treatment.max_components and arms.control_disjunctive_only.max_components",
+              "B derivation recorded in components._budget_basis",
+              "exhaustive enumeration recorded in empirical_calibration.subset_enumeration",
+              "interaction test recorded in empirical_calibration.interaction_test"],
+  "verified_by": "the pre-EXECUTE self-check, which re-reads all four from committed state"}
+}

@@ -1,0 +1,394 @@
+{
+ "adversary": [
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 25,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 25
+    },
+    "coordpres_base": {
+     "confident": 11,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 11
+    },
+    "errorseek": {
+     "confident": 36,
+     "confirmed": 2,
+     "contradictions": 2,
+     "n": 36
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    }
+   },
+   "confident": 108,
+   "confirmed": 2,
+   "law": "(Q - (C * K)) <= 0.808 AND (C - (G * exp(-N))) <= -0.08883",
+   "revision": {
+    "picked": "v4",
+    "v4": {
+     "law": "(exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16",
+     "score": 0.9201703005155406,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 0,
+   "verdict": "FAILED"
+  },
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 23,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 23
+    },
+    "coordpres_base": {
+     "confident": 13,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 13
+    },
+    "errorseek": {
+     "confident": 35,
+     "confirmed": 2,
+     "contradictions": 2,
+     "n": 35
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    }
+   },
+   "confident": 107,
+   "confirmed": 2,
+   "law": "(exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16",
+   "revision": null,
+   "round": 1,
+   "verdict": "SURVIVED"
+  }
+ ],
+ "cfg": {
+  "cmap": "v4",
+  "costlines": 0,
+  "g1b_crn": true,
+  "g1b_n": 12,
+  "holdout": null,
+  "location_gate": 0.1,
+  "main_strategy": "random",
+  "revise": [
+   "v4"
+  ],
+  "secondaries": [
+   "v3",
+   "raw"
+  ],
+  "seed": 20260928
+ },
+ "config": "c2none28",
+ "final_law": {
+  "cmap": "v4",
+  "freeze_hash": "ad4824fbb86afe73ec0b803e9c52f2ca69567ae851501cea6e4d59ae68ac393a",
+  "law": "(exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16",
+  "law_id": "c1b5a2630c7c0432376d"
+ },
+ "gates": {
+  "G0": {
+   "identical": 30,
+   "receipt_chain_ok": true,
+   "replayed": 30,
+   "verdict": "PASS"
+  },
+  "G1": {
+   "causal_consistency": {
+    "ca": {
+     "cost_up_edges": 8,
+     "pass": true,
+     "sel_fitness_nonincreasing": 8
+    },
+    "regs": {
+     "cost_up_edges": 12,
+     "pass": true,
+     "sel_fitness_nonincreasing": 12
+    },
+    "ring": {
+     "cost_up_edges": 10,
+     "pass": true,
+     "sel_fitness_nonincreasing": 10
+    }
+   },
+   "per_family": {
+    "ca": {
+     "pass": true,
+     "pays_rate": 0.26666666666666666,
+     "sham_pays": 0
+    },
+    "regs": {
+     "pass": true,
+     "pays_rate": 0.1675,
+     "sham_pays": 0
+    },
+    "ring": {
+     "pass": true,
+     "pays_rate": 0.2633333333333333,
+     "sham_pays": 0
+    }
+   },
+   "verdict": "PASS"
+  },
+  "G2": {
+   "law_score": 0.9201703005155406,
+   "mean_fold_ba": 0.9721703005155407,
+   "p_null": null,
+   "raw_unnormalized_best_score": 0.8454176307057663,
+   "verdict": "PASS",
+   "worst_fold_ba": 0.9576675077095599
+  },
+  "G2_initial_info": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.02585,
+    "mu_bits": 0.01459,
+    "null_median": 0.01126,
+    "p": 0.18,
+    "per_family_acc": {
+     "ca": 0.9875,
+     "regs": 0.9875,
+     "ring": 0.9875
+    }
+   },
+   "law_score": 0.9276524078557977,
+   "mean_fold_ba": 0.9756524078557978,
+   "raw_score": 0.8454176307057663,
+   "verdict": "INFO",
+   "worst_fold_ba": 0.9745762711864407
+  },
+  "G4": {
+   "rounds": 2,
+   "verdict": "PASS"
+  },
+  "G5": {
+   "verdict": "NOT REACHED (holdout adjudicated separately; D/E are spent)"
+  },
+  "G6": {
+   "verdict": "NOT REACHED (holdout adjudicated separately; D/E are spent)"
+  },
+  "G7": {
+   "gain_bits_per_row": 0.06521,
+   "mu_bits": 0.04272,
+   "null_median": 0.02248,
+   "p": 0.02,
+   "per_family_acc": {
+    "ca": 0.9543,
+    "regs": 0.9489,
+    "ring": 0.9716
+   },
+   "verdict": "PASS"
+  }
+ },
+ "graph": {
+  "edge_kinds": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 48,
+   "DEFORMATION_OF": 138
+  },
+  "edges": 246,
+  "families": 3,
+  "laws": 2,
+  "nodes": 758,
+  "runs": 766
+ },
+ "identity": {
+  "cosmos_dirty": false,
+  "cosmos_src_sha": "19f8c514e6c87df9bc7499ba5c7caccc7a527d3d9eccd5398ba02c81647e2002",
+  "git_head": "7ac8a0ed04de119fca5c0da8f790f4ea322550f8",
+  "n_src": 53
+ },
+ "laws": [
+  {
+   "cmap": "v4",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED",
+    "REVISED"
+   ],
+   "freeze_hash": null,
+   "law": "(Q - (C * K)) <= 0.808 AND (C - (G * exp(-N))) <= -0.08883",
+   "law_id": "b32d8248208ad2fc3542",
+   "parent": null,
+   "version": 1
+  },
+  {
+   "cmap": "v4",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "SURVIVED",
+    "FROZEN"
+   ],
+   "freeze_hash": "ad4824fbb86afe73ec0b803e9c52f2ca69567ae851501cea6e4d59ae68ac393a",
+   "law": "(exp(-N) - (C / G)) >= 0.1605 AND (log(Q) - (C * K)) <= -0.16",
+   "law_id": "c1b5a2630c7c0432376d",
+   "parent": "b32d8248208ad2fc3542",
+   "version": 2
+  }
+ ],
+ "mine_initial": {
+  "raw": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.04604,
+    "mu_bits": 0.03968,
+    "null_median": 0.00636,
+    "p": 0.18,
+    "per_family_acc": {
+     "ca": 0.7875,
+     "regs": 0.7875,
+     "ring": 0.9375
+    }
+   },
+   "fold_ba": {
+    "ca": 0.8490718321226796,
+    "regs": 0.8650793650793651,
+    "ring": 0.9661016949152542
+   },
+   "law": "(Q - (C * K)) <= 0.8349 AND ((G - log(N)) / C) >= 0.5291",
+   "p": 0.05,
+   "score": 0.8454176307057663,
+   "verdict": "CANDIDATE"
+  },
+  "v3": {
+   "family_dependence": {
+    "gain_bits_per_row": -0.00655,
+    "mu_bits": -0.0198,
+    "null_median": 0.01325,
+    "p": 0.98,
+    "per_family_acc": {
+     "ca": 0.9875,
+     "regs": 0.9875,
+     "ring": 1.0
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9830508474576272,
+    "regs": 0.9920634920634921,
+    "ring": 1.0
+   },
+   "law": "(Q - (C * K)) <= 0.8156 AND (exp(-N) - (C / G)) >= 0.1681",
+   "p": 0.05,
+   "score": 0.943704779840373,
+   "verdict": "CANDIDATE"
+  },
+  "v4": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.02585,
+    "mu_bits": 0.01459,
+    "null_median": 0.01126,
+    "p": 0.18,
+    "per_family_acc": {
+     "ca": 0.9875,
+     "regs": 0.9875,
+     "ring": 0.9875
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9745762711864407,
+    "regs": 0.9761904761904762,
+    "ring": 0.9761904761904762
+   },
+   "law": "(Q - (C * K)) <= 0.808 AND (C - (G * exp(-N))) <= -0.08883",
+   "p": 0.05,
+   "score": 0.9276524078557977,
+   "verdict": "CANDIDATE"
+  }
+ },
+ "n_queries": 656,
+ "null_pool_failures": [],
+ "quick": false,
+ "quotient": {
+  "battery": [
+   "PAYS",
+   "BEATS_LAST",
+   "BEATS_LOG",
+   "RETAINS"
+  ],
+  "boundary_edge_fraction": {
+   "CONTROL_OF": 0.65,
+   "COORD_PRESERVING": 0.0208,
+   "DEFORMATION_OF": 0.2231
+  },
+  "boundary_edges_n": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 48,
+   "DEFORMATION_OF": 121
+  },
+  "classes": {
+   "0000": 97,
+   "0001": 21,
+   "0010": 122,
+   "0011": 33,
+   "0100": 107,
+   "0101": 171,
+   "1110": 85,
+   "1111": 122
+  },
+  "classes_by_family": {
+   "ca": {
+    "0000": 18,
+    "0001": 13,
+    "0010": 36,
+    "0011": 17,
+    "0100": 23,
+    "0101": 78,
+    "1110": 12,
+    "1111": 59
+   },
+   "regs": {
+    "0000": 34,
+    "0001": 6,
+    "0010": 63,
+    "0011": 11,
+    "0100": 39,
+    "0101": 50,
+    "1110": 33,
+    "1111": 28
+   },
+   "ring": {
+    "0000": 46,
+    "0001": 3,
+    "0010": 35,
+    "0011": 5,
+    "0100": 46,
+    "0101": 45,
+    "1110": 41,
+    "1111": 35
+   }
+  },
+  "compression": 0.0106,
+  "n_classes": 8,
+  "n_nodes": 758
+ },
+ "receipt_chain_ok": true,
+ "t_eta_s": 226.8,
+ "t_oracle_s": 80.7,
+ "t_total_s": 971.5
+}

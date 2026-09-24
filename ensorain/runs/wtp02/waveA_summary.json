@@ -1,0 +1,270 @@
+{
+ "n_worlds": 1500,
+ "real_status": {
+  "OK": 1478,
+  "DEGENERATE": 22
+ },
+ "refs": {
+  "D3_top1": 0.06455056059594118,
+  "UG_top5": 0.7827002434331831,
+  "n": 1476
+ },
+ "per_world": {
+  "cgu_ge_01": 11.0,
+  "sd_ge_01": 117.0,
+  "both": 8.0,
+  "frac_both": 0.005333333333333333,
+  "shuffled_cgu_ge_01": 2
+ },
+ "per_lineage": {
+  "n_lineages": 187,
+  "both": 3,
+  "cgu": 3,
+  "frac_both": 0.016042780748663103,
+  "median_within_lineage_frac": 0.0,
+  "largest": 221
+ },
+ "CGu_quantiles": {
+  "0.01": -3.069390081564402,
+  "0.1": -0.3931643859865928,
+  "0.5": -0.0060285421447845156,
+  "0.9": 0.0,
+  "0.99": 0.08086798961967624,
+  "1.0": 0.33860477763257774
+ },
+ "detectors": {
+  "D1": {
+   "real": 11,
+   "null": 2,
+   "null_twin": "shuffled",
+   "lineages": 3
+  },
+  "D2": {
+   "real": 81,
+   "null": 88,
+   "null_twin": "shuffled",
+   "lineages": 20
+  },
+  "D3": {
+   "real": 15,
+   "null": 4,
+   "null_twin": "shuffled",
+   "lineages": 1
+  },
+  "D4": {
+   "real": 107,
+   "null": 12,
+   "null_twin": "frozen",
+   "lineages": 34
+  },
+  "D5": {
+   "real": 62,
+   "null": 295,
+   "null_twin": "random",
+   "lineages": 20
+  },
+  "D6": {
+   "real": 0,
+   "null": 3,
+   "null_twin": "frozen",
+   "lineages": 0
+  },
+  "D7": {
+   "real": 92,
+   "null": 90,
+   "null_twin": "shuffled",
+   "lineages": 17
+  },
+  "D8": {
+   "real": 15,
+   "null": 9,
+   "null_twin": "shuffled",
+   "lineages": 13
+  },
+  "D9": {
+   "real": 0,
+   "null": 0,
+   "null_twin": "shuffled",
+   "lineages": 0
+  }
+ },
+ "by_substrate": {
+  "cp": {
+   "n": 237,
+   "both": 0.0,
+   "cgu": 0.0
+  },
+  "lowrank": {
+   "n": 125,
+   "both": 0.0,
+   "cgu": 0.0
+  },
+  "pairwise": {
+   "n": 355,
+   "both": 1.0,
+   "cgu": 1.0
+  },
+  "sparse": {
+   "n": 13,
+   "both": 0.0,
+   "cgu": 0.0
+  },
+  "spectral": {
+   "n": 522,
+   "both": 7.0,
+   "cgu": 10.0
+  },
+  "sum": {
+   "n": 74,
+   "both": 0.0,
+   "cgu": 0.0
+  },
+  "tt": {
+   "n": 174,
+   "both": 0.0,
+   "cgu": 0.0
+  }
+ },
+ "by_band": {
+  "0.01": {
+   "n": 228,
+   "both": 1.0,
+   "cgu": 1.0
+  },
+  "0.03": {
+   "n": 366,
+   "both": 3.0,
+   "cgu": 5.0
+  },
+  "0.1": {
+   "n": 503,
+   "both": 2.0,
+   "cgu": 2.0
+  },
+  "0.25": {
+   "n": 403,
+   "both": 2.0,
+   "cgu": 3.0
+  }
+ },
+ "by_strategy": {
+  "grammar": {
+   "n": 49,
+   "both": 0.0,
+   "cgu": 0.0
+  },
+  "mutate": {
+   "n": 1313,
+   "both": 8.0,
+   "cgu": 11.0
+  },
+  "novelty": {
+   "n": 44,
+   "both": 0.0,
+   "cgu": 0.0
+  },
+  "random": {
+   "n": 94,
+   "both": 0.0,
+   "cgu": 0.0
+  }
+ },
+ "positives": [
+  {
+   "h": "0e3e9ca1cb88f30c",
+   "root": "f743f82dfa49d1f5",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.33860477763257774,
+   "CGu_sh": -0.13010048120578913,
+   "sub": "spectral",
+   "band": 0.25,
+   "strat": "mutate"
+  },
+  {
+   "h": "45706a898230b127",
+   "root": "f4fcd9697ea4b8b7",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.21605557477107348,
+   "CGu_sh": -0.29072344683945933,
+   "sub": "spectral",
+   "band": 0.1,
+   "strat": "mutate"
+  },
+  {
+   "h": "0c6e917c3d99a27b",
+   "root": "f743f82dfa49d1f5",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.19006871827226895,
+   "CGu_sh": -0.020895435850614735,
+   "sub": "spectral",
+   "band": 0.03,
+   "strat": "mutate"
+  },
+  {
+   "h": "b616541b69a6abc3",
+   "root": "f743f82dfa49d1f5",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.16197117840718683,
+   "CGu_sh": 0.0012427633054219733,
+   "sub": "spectral",
+   "band": 0.03,
+   "strat": "mutate"
+  },
+  {
+   "h": "090d18d40035d252",
+   "root": "f743f82dfa49d1f5",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.1561298227993348,
+   "CGu_sh": -0.14056242857402415,
+   "sub": "spectral",
+   "band": 0.25,
+   "strat": "mutate"
+  },
+  {
+   "h": "84c07c121ba36cd5",
+   "root": "3e67896214c70865",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.14711434305251903,
+   "CGu_sh": -0.7247083225649089,
+   "sub": "pairwise",
+   "band": 0.01,
+   "strat": "mutate"
+  },
+  {
+   "h": "8872caa4fc2d0393",
+   "root": "f743f82dfa49d1f5",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.1344488457938987,
+   "CGu_sh": -0.009115787295676763,
+   "sub": "spectral",
+   "band": 0.1,
+   "strat": "mutate"
+  },
+  {
+   "h": "acae04212998f400",
+   "root": "f743f82dfa49d1f5",
+   "cgu": true,
+   "sd": true,
+   "both": true,
+   "CGu": 0.12058066075962659,
+   "CGu_sh": -0.2827961877597317,
+   "sub": "spectral",
+   "band": 0.03,
+   "strat": "mutate"
+  }
+ ]
+}

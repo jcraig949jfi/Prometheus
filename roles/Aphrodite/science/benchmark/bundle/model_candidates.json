@@ -1,0 +1,34 @@
+{
+ "candidates_in_order": [
+  {
+   "family": "Qwen3-8B",
+   "required": {
+    "how": "runtime mechanism recorded in model.extra_body or model.runtime",
+    "thinking": "DISABLED"
+   },
+   "role": "primary"
+  },
+  {
+   "family": "Gemma 3 4B",
+   "role": "independent-family substrate-transfer candidate"
+  },
+  {
+   "family": "Llama 3.2 3B",
+   "role": "optional lower-cost reference"
+  }
+ ],
+ "fixed_inference_settings": {
+  "max_tokens": 512,
+  "temperature_tasks": 0.0
+ },
+ "identity_rule": "a candidate is a SERVED VARIANT = checkpoint + quantisation + runtime/server + inference settings; starting accuracy, throughput and eligibility belong to that exact variant on that host (operator amendment item 2)",
+ "material_difference": "two receipts are the SAME served variant iff checkpoint, quant, runtime family (first token of model.runtime, lower-cased) and extra_body are equal; otherwise they are distinct measurements (never averaged)",
+ "required_receipt_fields": [
+  "model.requested",
+  "model.checkpoint",
+  "model.quant",
+  "model.runtime",
+  "model.extra_body",
+  "model.served_models"
+ ]
+}

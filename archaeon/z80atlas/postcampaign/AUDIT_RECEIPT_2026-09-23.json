@@ -1,0 +1,1221 @@
+{
+ "schema": "archaeon.z80atlas.postcampaign.audit_receipt.v1",
+ "date": "2026-09-23",
+ "campaign_grammar": "63ffdeca16db3333",
+ "campaign_code_commit": "c7610ea19",
+ "inputs_sha256": {
+  "PACKET.json": "9f3bda5411c4e89eb96b018a1c6554e03fb060f2ed99c4c9ee59ef235212f98e",
+  "CAMPAIGN_PACKET.md": "b81113679a6db8b98fc0728ff34680e5cfc8c09c82da1bd57bb77b35db65d9e5",
+  "CAMPAIGN_STATE.json": "b0cc07be085bc07394a09e3b7cdfa0222108c289855294885d17ef0df8efd64a",
+  "CAMPAIGN_DONE.json": "53f1ac517a52e9958a815eb95a103cc559535a73724b5d0f477df26712556bd2",
+  "GRAMMAR_FROZEN.json": "ecdee2570febdcfb2a2644953050bf8f62bd57d2c67353f022b81e19d198fbc4",
+  "RUNS.jsonl": "3afa36b783b44b3a570f8463341d87e55e9f7fd1e0ca0bf55819c1f516e2d191",
+  "ATLAS_INDEX.jsonl": "7bc020e6d98229c27d642ba83deaec95458545a3f1434f5b3788d0ff74c1f3a2"
+ },
+ "historical_dir": "D:\\Prometheus-worktrees\\archaeon-wse-2026-09-16\\archaeon\\z80atlas\\campaign",
+ "historical_records_modified": false,
+ "code_paths": {
+  "1_transplant_spec_constructor": {
+   "commit": "c7610ea19",
+   "file": "archaeon/z80atlas/scheduler.py",
+   "line": 255,
+   "code": "t = json.loads(json.dumps(base)); t[\"transplant\"] = {\"from_run\": best[\"run_id\"], \"tapes\": tapes}; t[\"init\"] = \"random\""
+  },
+  "2a_transplant_branch_in_init": {
+   "commit": "c7610ea19",
+   "file": "archaeon/z80atlas/engine.py",
+   "line": 153,
+   "code": "transplant = spec.get(\"transplant\")                                   # late-stage lineage transport: tapes carried in the spec itself"
+  },
+  "2b_transplanted_tape_injection": {
+   "commit": "c7610ea19",
+   "file": "archaeon/z80atlas/engine.py",
+   "line": 158,
+   "code": "genomes[i] = bytes.fromhex(tapes[i])[:G].ljust(G, bytes(1))"
+  },
+  "3_spontaneous_predicate": {
+   "commit": "c7610ea19",
+   "file": "archaeon/z80atlas/engine.py",
+   "line": 371,
+   "code": "\"spontaneous_replication\": bool(spec[\"init\"] == \"random\" and phys in ENDO and births_endo >= F[\"spont_births\"] and last[\"pop\"] / N >= F[\"spont_pop_frac\"] and (last[\"fid\"] or 0) >= F[\"spont_fid\"]),"
+  },
+  "4_flag_and_weight": {
+   "commit": "c7610ea19",
+   "file": "archaeon/z80atlas/scheduler.py",
+   "line": 101,
+   "code": "if sig.get(\"spontaneous_replication\"): fl[\"spontaneous_replication\"] = 1"
+  }
+ },
+ "why_false": "verify() builds each transplant spec from the source run's final population, puts those tapes in spec['transplant'] and sets init='random' (1). run() fills cells from spec['transplant']['tapes'] and never draws a random tape in that branch (2a/2b), so every founder is inserted material. The predicate tests only the nominal label spec['init']=='random' plus endogenous births, population and fidelity (3); it has no access to founder origin, so a transplanted lineage that keeps replicating satisfies it. The flag then scored +5 in the family table (4).",
+ "sources_all_seeded": true,
+ "affected_runs_n": 26,
+ "runs_jsonl_rows_for_affected": 27,
+ "verification_kind_counts_as_packet_labelled": {
+  "transplant:environment_swap": 12,
+  "transplant:same": 10,
+  "transplant:world_swap": 4
+ },
+ "verification_kind_counts_all_rows": {
+  "transplant:environment_swap": 12,
+  "transplant:same": 11,
+  "transplant:world_swap": 4
+ },
+ "vacuous_environment_swaps": [
+  "466dab00b7b6-t_s100_veri"
+ ],
+ "affected_runs": [
+  {
+   "run_id": "07d1f7853f4c-t_s100_veri",
+   "run_dir": "runs/070c3a9ab655/07d1f7853f4c-t_s100_veri",
+   "family": "070c3a9ab655",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:070c3a9ab655:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 126,
+   "random_founders": 0,
+   "source": {
+    "run_id": "7dc7429b8c8a_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.906,
+    "births_endo": 189648,
+    "fidelity_late": 0.99,
+    "best_ever": 0.333,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 1486,
+    "extinct_epoch": null,
+    "epochs": 1587
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 126 founders were transplanted tapes (source 7dc7429b8c8a_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "11793ae99dd8-t_s100_veri",
+   "run_dir": "runs/dd2e76a1189b/11793ae99dd8-t_s100_veri",
+   "family": "dd2e76a1189b",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:dd2e76a1189b:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 125,
+   "random_founders": 0,
+   "source": {
+    "run_id": "8982c3f34714_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_atomic",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "CONST_atomic",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 187172,
+    "fidelity_late": 0.991,
+    "best_ever": 0.333,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 162,
+    "extinct_epoch": null,
+    "epochs": 1565
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 125 founders were transplanted tapes (source 8982c3f34714_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "2226fc309f55-t_s100_veri",
+   "run_dir": "runs/e8394eee206d/2226fc309f55-t_s100_veri",
+   "family": "e8394eee206d",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:e8394eee206d:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 127,
+   "random_founders": 0,
+   "source": {
+    "run_id": "41d711eb922d_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "CONST_incremental",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 189989,
+    "fidelity_late": 0.993,
+    "best_ever": 0.945,
+    "task_max_final": 0.492,
+    "moat_crossed": false,
+    "migrations": 161,
+    "extinct_epoch": null,
+    "epochs": 1563
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 127 founders were transplanted tapes (source 41d711eb922d_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "2b08271de8ad-t_s100_veri",
+   "run_dir": "runs/e8394eee206d/2b08271de8ad-t_s100_veri",
+   "family": "e8394eee206d",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:e8394eee206d:transplant:world_swap"
+   ],
+   "verification_kinds": [
+    "transplant:world_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 127,
+   "random_founders": 0,
+   "source": {
+    "run_id": "41d711eb922d_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "CONST_incremental",
+   "topology": "well_mixed",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.984,
+    "births_endo": 191325,
+    "fidelity_late": 0.993,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 0,
+    "extinct_epoch": null,
+    "epochs": 1564
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 127 founders were transplanted tapes (source 41d711eb922d_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "36f2d57cd4f2-t_s100_veri",
+   "run_dir": "runs/19a0e0a5300a/36f2d57cd4f2-t_s100_veri",
+   "family": "19a0e0a5300a",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:19a0e0a5300a:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 122,
+   "random_founders": 0,
+   "source": {
+    "run_id": "19a0e0a5300a_s1_expl",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.969,
+    "births_endo": 340880,
+    "fidelity_late": 0.931,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 2916,
+    "extinct_epoch": null,
+    "epochs": 3035
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 122 founders were transplanted tapes (source 19a0e0a5300a_s1_expl, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "3f05e65e3d47-t_s100_veri",
+   "run_dir": "runs/5bb46451d5fb/3f05e65e3d47-t_s100_veri",
+   "family": "5bb46451d5fb",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:5bb46451d5fb:transplant:world_swap"
+   ],
+   "verification_kinds": [
+    "transplant:world_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 123,
+   "random_founders": 0,
+   "source": {
+    "run_id": "e2a9b453b272_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "CONST_incremental",
+   "topology": "well_mixed",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.984,
+    "births_endo": 186603,
+    "fidelity_late": 0.987,
+    "best_ever": 0.992,
+    "task_max_final": 0.43,
+    "moat_crossed": false,
+    "migrations": 0,
+    "extinct_epoch": null,
+    "epochs": 1559
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 123 founders were transplanted tapes (source e2a9b453b272_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "3fe9d02da7fe-t_s100_veri",
+   "run_dir": "runs/5b237a475b69/3fe9d02da7fe-t_s100_veri",
+   "family": "5b237a475b69",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:5b237a475b69:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 125,
+   "random_founders": 0,
+   "source": {
+    "run_id": "a0132ad72787_s1_cont",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 406291,
+    "fidelity_late": 0.992,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 3146,
+    "extinct_epoch": null,
+    "epochs": 3373
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 125 founders were transplanted tapes (source a0132ad72787_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "45e6b162ded1-t_s100_veri",
+   "run_dir": "runs/d130e2d3e25f/45e6b162ded1-t_s100_veri",
+   "family": "d130e2d3e25f",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:d130e2d3e25f:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 127,
+   "random_founders": 0,
+   "source": {
+    "run_id": "629d457d12a5_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL"
+   },
+   "task": "CONST_incremental",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.969,
+    "births_endo": 189724,
+    "fidelity_late": 0.942,
+    "best_ever": 0.992,
+    "task_max_final": 0.531,
+    "moat_crossed": false,
+    "migrations": 1485,
+    "extinct_epoch": null,
+    "epochs": 1614
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 127 founders were transplanted tapes (source 629d457d12a5_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "466dab00b7b6-t_s100_veri",
+   "run_dir": "runs/2ace470e5c47/466dab00b7b6-t_s100_veri",
+   "family": "2ace470e5c47",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:2ace470e5c47:transplant:same",
+    "verify:2ace470e5c47:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap",
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 123,
+   "random_founders": 0,
+   "source": {
+    "run_id": "3e493d02a7f6_s1_cont",
+    "init": "seeded_replicator",
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": true,
+   "rows_in_runs_jsonl": 2,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 190166,
+    "fidelity_late": 0.99,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 1604,
+    "extinct_epoch": null,
+    "epochs": 1592
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 123 founders were transplanted tapes (source 3e493d02a7f6_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "4e132c6e0178-t_s100_veri",
+   "run_dir": "runs/5b237a475b69/4e132c6e0178-t_s100_veri",
+   "family": "5b237a475b69",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:5b237a475b69:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 125,
+   "random_founders": 0,
+   "source": {
+    "run_id": "a0132ad72787_s1_cont",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "ADD2",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 381361,
+    "fidelity_late": 0.994,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 2937,
+    "extinct_epoch": null,
+    "epochs": 3162
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 125 founders were transplanted tapes (source a0132ad72787_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "67cef4faf5e7-t_s100_veri",
+   "run_dir": "runs/19a0e0a5300a/67cef4faf5e7-t_s100_veri",
+   "family": "19a0e0a5300a",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:19a0e0a5300a:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 122,
+   "random_founders": 0,
+   "source": {
+    "run_id": "19a0e0a5300a_s1_expl",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL"
+   },
+   "task": "ADD2",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.984,
+    "births_endo": 349894,
+    "fidelity_late": 0.94,
+    "best_ever": 0.667,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 2984,
+    "extinct_epoch": null,
+    "epochs": 3031
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 122 founders were transplanted tapes (source 19a0e0a5300a_s1_expl, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "6c3a4a1fb3b8-t_s100_veri",
+   "run_dir": "runs/fd8719c6af75/6c3a4a1fb3b8-t_s100_veri",
+   "family": "fd8719c6af75",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:fd8719c6af75:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 124,
+   "random_founders": 0,
+   "source": {
+    "run_id": "fd8719c6af75_s1_expl",
+    "init": "seeded_replicator",
+    "task": "NEG",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.984,
+    "births_endo": 347369,
+    "fidelity_late": 0.958,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 2785,
+    "extinct_epoch": null,
+    "epochs": 2929
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 124 founders were transplanted tapes (source fd8719c6af75_s1_expl, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "7252d77c58b8-t_s100_veri",
+   "run_dir": "runs/4aa428bd90bd/7252d77c58b8-t_s100_veri",
+   "family": "4aa428bd90bd",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:4aa428bd90bd:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 128,
+   "random_founders": 0,
+   "source": {
+    "run_id": "63e4c98ca670_s1_cont",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "ADD2",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 354773,
+    "fidelity_late": 0.99,
+    "best_ever": 0.667,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 287,
+    "extinct_epoch": null,
+    "epochs": 2934
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 128 founders were transplanted tapes (source 63e4c98ca670_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "771c5c311468-t_s100_veri",
+   "run_dir": "runs/ac675613ecd5/771c5c311468-t_s100_veri",
+   "family": "ac675613ecd5",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:ac675613ecd5:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 126,
+   "random_founders": 0,
+   "source": {
+    "run_id": "ac675613ecd5_s1_expl",
+    "init": "seeded_replicator",
+    "task": "NEG",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.961,
+    "births_endo": 189639,
+    "fidelity_late": 0.992,
+    "best_ever": 0.667,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 1498,
+    "extinct_epoch": null,
+    "epochs": 1576
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 126 founders were transplanted tapes (source ac675613ecd5_s1_expl, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "78722e5100e6-t_s100_veri",
+   "run_dir": "runs/636158e75708/78722e5100e6-t_s100_veri",
+   "family": "636158e75708",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:636158e75708:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 122,
+   "random_founders": 0,
+   "source": {
+    "run_id": "a778e681e647_s1_cont",
+    "init": "seeded_replicator",
+    "task": "none",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 190806,
+    "fidelity_late": 0.993,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 1525,
+    "extinct_epoch": null,
+    "epochs": 1579
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 122 founders were transplanted tapes (source a778e681e647_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "8ac55dbf1309-t_s100_veri",
+   "run_dir": "runs/dd2e76a1189b/8ac55dbf1309-t_s100_veri",
+   "family": "dd2e76a1189b",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:dd2e76a1189b:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 125,
+   "random_founders": 0,
+   "source": {
+    "run_id": "8982c3f34714_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_atomic",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "ECHO_forced",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.961,
+    "births_endo": 190396,
+    "fidelity_late": 0.991,
+    "best_ever": 0.333,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 164,
+    "extinct_epoch": null,
+    "epochs": 1565
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 125 founders were transplanted tapes (source 8982c3f34714_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "8f1eda878795-t_s100_veri",
+   "run_dir": "runs/5bb46451d5fb/8f1eda878795-t_s100_veri",
+   "family": "5bb46451d5fb",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:5bb46451d5fb:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 123,
+   "random_founders": 0,
+   "source": {
+    "run_id": "e2a9b453b272_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "CONST_incremental",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 184453,
+    "fidelity_late": 0.989,
+    "best_ever": 0.93,
+    "task_max_final": 0.43,
+    "moat_crossed": false,
+    "migrations": 1514,
+    "extinct_epoch": null,
+    "epochs": 1586
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 123 founders were transplanted tapes (source e2a9b453b272_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "987e0e2fdf50-t_s100_veri",
+   "run_dir": "runs/5b237a475b69/987e0e2fdf50-t_s100_veri",
+   "family": "5b237a475b69",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:5b237a475b69:transplant:world_swap"
+   ],
+   "verification_kinds": [
+    "transplant:world_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 125,
+   "random_founders": 0,
+   "source": {
+    "run_id": "a0132ad72787_s1_cont",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "ADD2",
+   "topology": "well_mixed",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.984,
+    "births_endo": 389992,
+    "fidelity_late": 0.995,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 0,
+    "extinct_epoch": null,
+    "epochs": 3200
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 125 founders were transplanted tapes (source a0132ad72787_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "997f12c1740f-t_s100_veri",
+   "run_dir": "runs/4aa428bd90bd/997f12c1740f-t_s100_veri",
+   "family": "4aa428bd90bd",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:4aa428bd90bd:transplant:world_swap"
+   ],
+   "verification_kinds": [
+    "transplant:world_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 128,
+   "random_founders": 0,
+   "source": {
+    "run_id": "63e4c98ca670_s1_cont",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "ADD2",
+   "topology": "well_mixed",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 367693,
+    "fidelity_late": 0.989,
+    "best_ever": 0.667,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 0,
+    "extinct_epoch": null,
+    "epochs": 3023
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 128 founders were transplanted tapes (source 63e4c98ca670_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "9dd90a43ab91-t_s100_veri",
+   "run_dir": "runs/5bb46451d5fb/9dd90a43ab91-t_s100_veri",
+   "family": "5bb46451d5fb",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:5bb46451d5fb:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 123,
+   "random_founders": 0,
+   "source": {
+    "run_id": "e2a9b453b272_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 187675,
+    "fidelity_late": 0.98,
+    "best_ever": 1.0,
+    "task_max_final": 0.43,
+    "moat_crossed": true,
+    "migrations": 1592,
+    "extinct_epoch": null,
+    "epochs": 1583
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 123 founders were transplanted tapes (source e2a9b453b272_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "ac1891969d1f-t_s100_veri",
+   "run_dir": "runs/ac675613ecd5/ac1891969d1f-t_s100_veri",
+   "family": "ac675613ecd5",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:ac675613ecd5:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 126,
+   "random_founders": 0,
+   "source": {
+    "run_id": "ac675613ecd5_s1_expl",
+    "init": "seeded_replicator",
+    "task": "NEG",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "NEG",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.961,
+    "births_endo": 190128,
+    "fidelity_late": 0.989,
+    "best_ever": 0.333,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 1556,
+    "extinct_epoch": null,
+    "epochs": 1585
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 126 founders were transplanted tapes (source ac675613ecd5_s1_expl, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "c66e86c73e36-t_s100_veri",
+   "run_dir": "runs/d130e2d3e25f/c66e86c73e36-t_s100_veri",
+   "family": "d130e2d3e25f",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:d130e2d3e25f:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 127,
+   "random_founders": 0,
+   "source": {
+    "run_id": "629d457d12a5_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_PARTIAL",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.984,
+    "births_endo": 185046,
+    "fidelity_late": 0.923,
+    "best_ever": 0.977,
+    "task_max_final": 0.445,
+    "moat_crossed": false,
+    "migrations": 1513,
+    "extinct_epoch": null,
+    "epochs": 1620
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 127 founders were transplanted tapes (source 629d457d12a5_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "d09e8fde50a3-t_s100_veri",
+   "run_dir": "runs/636158e75708/d09e8fde50a3-t_s100_veri",
+   "family": "636158e75708",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:636158e75708:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 122,
+   "random_founders": 0,
+   "source": {
+    "run_id": "a778e681e647_s1_cont",
+    "init": "seeded_replicator",
+    "task": "none",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "none",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 223673,
+    "fidelity_late": 0.993,
+    "best_ever": 0.333,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 1800,
+    "extinct_epoch": null,
+    "epochs": 1854
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 122 founders were transplanted tapes (source a778e681e647_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "d6eab9d26a29-t_s100_veri",
+   "run_dir": "runs/e8394eee206d/d6eab9d26a29-t_s100_veri",
+   "family": "e8394eee206d",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:e8394eee206d:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 127,
+   "random_founders": 0,
+   "source": {
+    "run_id": "41d711eb922d_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 188836,
+    "fidelity_late": 0.991,
+    "best_ever": 0.667,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 141,
+    "extinct_epoch": null,
+    "epochs": 1563
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 127 founders were transplanted tapes (source 41d711eb922d_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "e64ba9b6e468-t_s100_veri",
+   "run_dir": "runs/070c3a9ab655/e64ba9b6e468-t_s100_veri",
+   "family": "070c3a9ab655",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:070c3a9ab655:transplant:same"
+   ],
+   "verification_kinds": [
+    "transplant:same"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 126,
+   "random_founders": 0,
+   "source": {
+    "run_id": "7dc7429b8c8a_s1_cont",
+    "init": "seeded_replicator",
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "CONST_incremental",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": null,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.977,
+    "births_endo": 187831,
+    "fidelity_late": 0.99,
+    "best_ever": 0.906,
+    "task_max_final": 0.0,
+    "moat_crossed": false,
+    "migrations": 1565,
+    "extinct_epoch": null,
+    "epochs": 1578
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 126 founders were transplanted tapes (source 7dc7429b8c8a_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  },
+  {
+   "run_id": "ee082f2db085-t_s100_veri",
+   "run_dir": "runs/4aa428bd90bd/ee082f2db085-t_s100_veri",
+   "family": "4aa428bd90bd",
+   "kind": "verification",
+   "seed": 100,
+   "scheduler_reasons": [
+    "verify:4aa428bd90bd:transplant:environment_swap"
+   ],
+   "verification_kinds": [
+    "transplant:environment_swap"
+   ],
+   "spec_init_label": "random",
+   "transplant": true,
+   "transplanted_tapes": 128,
+   "random_founders": 0,
+   "source": {
+    "run_id": "63e4c98ca670_s1_cont",
+    "init": "seeded_replicator",
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY"
+   },
+   "task": "COND_multi",
+   "topology": "niches",
+   "reproduction": "ENDOGENOUS_COPY",
+   "environment_swap_was_vacuous": false,
+   "rows_in_runs_jsonl": 1,
+   "duplicate_rows_identical_signals": true,
+   "legacy_signals": {
+    "final_pop_frac": 0.992,
+    "births_endo": 345615,
+    "fidelity_late": 0.989,
+    "best_ever": 1.0,
+    "task_max_final": 0.0,
+    "moat_crossed": true,
+    "migrations": 277,
+    "extinct_epoch": null,
+    "epochs": 2867
+   },
+   "corrected_spontaneous_replication": false,
+   "correction_basis": "all 128 founders were transplanted tapes (source 63e4c98ca670_s1_cont, itself init=seeded_replicator); a world with zero random founders cannot contain a random-only lineage, so the repaired predicate is false by construction",
+   "reclassified_as": "transplanted_lineage_replication"
+  }
+ ],
+ "reconstruction": {
+  "runs_jsonl_rows": 104429,
+  "unique_run_ids": 101003,
+  "done": 101003,
+  "duplicate_run_ids": 2207,
+  "family_table_reproduces_packet_top30": true
+ }
+}

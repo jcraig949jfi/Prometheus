@@ -1,0 +1,59 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e02",
+ "attempt_id": "cw01-e02-a01",
+ "phase": "PREFLIGHT",
+ "recorded_local": "2026-09-17 17:28:58",
+ "source": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "commit": "8d17c7feec1c9152d95b982658324add4cb135dc",
+  "e01_commit": "8d17c7fee"
+ },
+ "runtime_versions": {
+  "python": "3.12.10",
+  "numpy": "2.5.3",
+  "scipy": "1.17.1",
+  "redis": "8.1.0",
+  "psutil": "7.2.2"
+ },
+ "machine_profile_ref": "../../MACHINE_PROFILE.json",
+ "seed_policy": {
+  "rule": "all draws derive from attempt_id via lib/seeds.py; no clock, no PYTHONHASHSEED",
+  "attempt_seed_source": "blake2b(attempt_id|component|index) -> uint64",
+  "verified_in_e01": "bit-identical across 3 hash seeds in 3 processes; a01 reproduced exactly"
+ },
+ "declared_capabilities_required": {
+  "needs_gpu": false,
+  "needs_redis": false,
+  "needs_streams": false,
+  "needs_container_runtime": false,
+  "needs_N_GB_vram": 0,
+  "needs_git_worktree": true,
+  "needs_env_PM_TAG": true,
+  "min_ram_gb": 4,
+  "min_free_disk_gb": 5,
+  "_rationale": "e02 is CPU transformation economics. Redis is used ONLY for the IX backend counterfactual, which is optional-but-capping."
+ },
+ "capability_match": {
+  "checked_against": "MACHINE_PROFILE.json",
+  "verdict": "PASS - fail-closed; no unsatisfied requirement"
+ },
+ "reuse_from_e01": {
+  "lib/seeds.py": "deterministic attempt-seeded draws (Q4 already verified cross-process)",
+  "lib/localrun.py": "Redis-free durable rows via the standard job contract",
+  "lib/residue.py": "one enumerating scanner shared by RECONCILE and VERIFY ABSENCE (CW01-D017 fix)",
+  "_note": "Three components carried forward unchanged. This is the campaign's stated trajectory: experiment 2 should reuse experiment 1's machinery."
+ },
+ "standing_gates_inherited": [
+  "mechanism-fires: the measured mechanism must be non-zero in a hand-built best case (CW01-D013)",
+  "matched-arms: disabling the mechanism must make arms bit-identical (CW01-D010)",
+  "reachability probe: best-case vs worst-case organism before any budget (CW01-D015)",
+  "executable disposition rule including replication (CW01-D016)"
+ ],
+ "expected_runtime_envelope": {
+  "minimal_form_wall_minutes": 20,
+  "timebox_hours": 24
+ },
+ "preregistration_ref": "PREREGISTRATION.md (written before implementation, deliberately)",
+ "complete": true
+}

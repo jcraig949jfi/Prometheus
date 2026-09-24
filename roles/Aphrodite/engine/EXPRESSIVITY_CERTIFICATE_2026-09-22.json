@@ -1,0 +1,120 @@
+{
+  "VERDICT": "PROCEED",
+  "expressivity_equivalence": {
+    "EQUIVALENT": true,
+    "g4_subset_of_organ": true,
+    "instantiations_expanded": 2304,
+    "mismatches": 0,
+    "note": "ORGAN enumerates the macro coordinate first and then falls back to the full G4 enumeration, so G4 is contained verbatim; the macro expands into G4, so nothing is added.",
+    "organ_subset_of_g4": true,
+    "output_comparisons": 13824
+  },
+  "families": [
+    {
+      "T3_organ_alone_is_not_complete": true,
+      "candidate_count_ORGAN": 1215360,
+      "candidate_count_SCRATCH": 226381140,
+      "deterministic_rank_ORGAN": 15947,
+      "deterministic_rank_SCRATCH": 14507,
+      "expected_budget": 1500000,
+      "family": "gcd_times_first",
+      "not_trivially_first_ORGAN": true,
+      "not_trivially_first_SCRATCH": true,
+      "witness": {
+        "body": "math.gcd(abs(acc), abs(v))",
+        "final": "(acc * first)",
+        "init": "0"
+      },
+      "witness_solves_development": true
+    },
+    {
+      "T3_organ_alone_is_not_complete": true,
+      "candidate_count_ORGAN": 1215360,
+      "candidate_count_SCRATCH": 226381140,
+      "deterministic_rank_ORGAN": 635197,
+      "deterministic_rank_SCRATCH": 1979077,
+      "expected_budget": 1500000,
+      "family": "prod_minus_first",
+      "not_trivially_first_ORGAN": true,
+      "not_trivially_first_SCRATCH": true,
+      "witness": {
+        "body": "(acc * v)",
+        "final": "(acc - first)",
+        "init": "1"
+      },
+      "witness_solves_development": true
+    },
+    {
+      "T3_organ_alone_is_not_complete": true,
+      "candidate_count_ORGAN": 1215360,
+      "candidate_count_SCRATCH": 226381140,
+      "deterministic_rank_ORGAN": 4477,
+      "deterministic_rank_SCRATCH": 1597,
+      "expected_budget": 1500000,
+      "family": "sum_minus_first",
+      "not_trivially_first_ORGAN": true,
+      "not_trivially_first_SCRATCH": true,
+      "witness": {
+        "body": "(acc + v)",
+        "final": "(acc - first)",
+        "init": "0"
+      },
+      "witness_solves_development": true
+    },
+    {
+      "T3_organ_alone_is_not_complete": false,
+      "candidate_count_ORGAN": 1215360,
+      "candidate_count_SCRATCH": 226381140,
+      "deterministic_rank_ORGAN": 4328,
+      "deterministic_rank_SCRATCH": 1448,
+      "expected_budget": 1500000,
+      "family": "sum_plus_last",
+      "not_trivially_first_ORGAN": true,
+      "not_trivially_first_SCRATCH": true,
+      "witness": {
+        "body": "(acc + v)",
+        "final": "(acc + last)",
+        "init": "0"
+      },
+      "witness_solves_development": true
+    },
+    {
+      "T3_organ_alone_is_not_complete": true,
+      "candidate_count_ORGAN": 1215360,
+      "candidate_count_SCRATCH": 226381140,
+      "deterministic_rank_ORGAN": 70717,
+      "deterministic_rank_SCRATCH": 73957,
+      "expected_budget": 1500000,
+      "family": "sumsq_minus_first",
+      "not_trivially_first_ORGAN": true,
+      "not_trivially_first_SCRATCH": true,
+      "witness": {
+        "body": "(acc + (v * v))",
+        "final": "(acc - first)",
+        "init": "0"
+      },
+      "witness_solves_development": true
+    }
+  ],
+  "grammar_version": "g4-imperative-v1",
+  "organ_sha256": "5488abb9f6354f02eb210909e180b17db644f3e3a2675d70f3a140f2e6acf79a",
+  "selected_families": [
+    "gcd_times_first",
+    "prod_minus_first",
+    "sum_minus_first"
+  ],
+  "selection_rule": "lexicographic; first three satisfying T1-T6; no family chosen on observed ORGAN advantage",
+  "space_sizes": {
+    "G4_BODY": 10842,
+    "G4_FINAL": 180,
+    "G4_INIT": 116,
+    "G4_expr_shape_total": 180,
+    "G4_fold_shape_total": 226380960,
+    "ORGAN_H1": 2,
+    "ORGAN_H2": 422,
+    "ORGAN_H3": 8,
+    "ORGAN_macro_total": 1215360
+  },
+  "status": "CERTIFICATE ONLY -- no arm has been executed",
+  "written_utc": "2026-09-22T07:44:23Z"
+}

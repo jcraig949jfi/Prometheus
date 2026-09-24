@@ -1,0 +1,130 @@
+{
+ "freeze": {
+  "algo": "sha256-canonical-json-v1",
+  "canonical_bytes": 3910,
+  "sha256": "c66ea8190f3edae4fd687abb09819a987d85288fcd4c5ac60b19dc5ef26d9203"
+ },
+ "prereg": {
+  "adaptation_id": "a3",
+  "budgets": {
+   "episodes": 6,
+   "horizon": 24,
+   "search": {
+    "generations": 10,
+    "n": 20
+   }
+  },
+  "controls": [
+   "control.replay.v1 on every cell",
+   "sham as the cost-matched control for erase",
+   "NO_RECUR as the recurrence-0 control"
+  ],
+  "decision_criteria": {
+   "PHENOMENON_ABSENT": "erase ~= sham in both (retention not load-bearing for these organisms)",
+   "PHENOMENON_CHANGED": "erase < sham but the recurrence-specificity differs (e.g. the cost is present or larger without recurrence)",
+   "PHENOMENON_PRESERVED": "erase < sham under RECUR and erase ~= sham under NO_RECUR (retention cost is recurrence-specific, as e01)"
+  },
+  "initial_state": "empty workspace each run; lifetime state accrues across the run's episodes",
+  "interventions": {
+   "arm": {
+    "erase": "kv_weather mode=erase rate=0.6 weather_seed=5",
+    "off": "kv_weather mode=off rate=0.6 weather_seed=5",
+    "sham": "kv_weather mode=sham rate=0.6 weather_seed=5"
+   },
+   "recurrence": {
+    "NO_RECUR": "episode_seeds distinct=6 (all)",
+    "RECUR": "episode_seeds distinct=2"
+   }
+  },
+  "manifest": {
+   "adaptation_id": "a3",
+   "counts": {
+    "ANALOGOUS": 2,
+    "IDENTICAL": 4,
+    "MODIFIED": 1,
+    "OMITTED": 1,
+    "UNREPRESENTABLE": 0
+   },
+   "entries": [
+    {
+     "aspect": "retention substrate",
+     "bee": "substrate.kv.v1 / kv_weather.v1 scope=lifetime (workspace persists across episodes)",
+     "reason": "lifetime kv persists across the episodes of a run; the organism carries state between recurrences",
+     "relation": "ANALOGOUS",
+     "source": "an organism's retained state across recurring situations"
+    },
+    {
+     "aspect": "recurrence",
+     "bee": "budget.episode_seeds={kind:recur,distinct:k} (the S4 scaffolding)",
+     "reason": "recurring episode seeds make the SAME world situations repeat within a run",
+     "relation": "IDENTICAL",
+     "source": "situations recur"
+    },
+    {
+     "aspect": "recurrence-0 control",
+     "bee": "episode_seeds distinct = n_episodes (all distinct)",
+     "reason": "every episode a fresh world seed: retention has nothing to recur against",
+     "relation": "IDENTICAL",
+     "source": "situations do not recur"
+    },
+    {
+     "aspect": "erase / sham",
+     "bee": "kv_weather erase vs sham (sham rewrites the same value, pays the write)",
+     "reason": "the sham fires as often and pays the write but loses no information",
+     "relation": "IDENTICAL",
+     "source": "erasing retained state vs a cost-matched sham"
+    },
+    {
+     "aspect": "organism",
+     "bee": "statemachine.v2 EVOLVED under recurrence for charge",
+     "reason": "A6 showed random memory-users do not benefit from memory; the question is only posed for organisms selected to use their retained state",
+     "relation": "MODIFIED",
+     "source": "an organism whose retention is load-bearing"
+    },
+    {
+     "aspect": "objective / effect size",
+     "bee": "objective.charge.v1; effect = (erase-sham)/sham",
+     "reason": "BEE measures the same erase-vs-cost-matched-sham gap, as a fraction of the sham charge",
+     "relation": "ANALOGOUS",
+     "source": "performance, reported as a percent cost"
+    },
+    {
+     "aspect": "control",
+     "bee": "control.replay.v1 (BIT under seeded weather)",
+     "reason": "seeded weather replays bit-for-bit",
+     "relation": "IDENTICAL",
+     "source": "determinism"
+    },
+    {
+     "aspect": "scientific-conclusion layer",
+     "bee": "-",
+     "reason": "BEE authors no conclusion",
+     "relation": "OMITTED",
+     "source": "e01's disposition (POSITIVE)"
+    }
+   ],
+   "source_experiment": "nestor.cw01/cw01-2026-09-17:cw01-e01"
+  },
+  "objective": "objective.charge.v1",
+  "observations": [
+   "mean charge per (elite, recurrence, arm)",
+   "erase-vs-sham cost per recurrence, as a percent of sham"
+  ],
+  "organisms": "top-3 elites of a statemachine.v2 search evolved UNDER recurrence (distinct=2) for charge",
+  "question": "Is retained state load-bearing (erase < cost-matched sham), and is that cost SPECIFIC to recurring situations (present under RECUR, absent under NO_RECUR -- the recurrence-0 control)?",
+  "seeds": {
+   "test": {
+    "base": 50,
+    "n_seeds": 8
+   },
+   "train": {
+    "base": 1,
+    "n_seeds": 6
+   }
+  },
+  "source_disposition": "POSITIVE",
+  "source_experiment": "nestor.cw01/cw01-2026-09-17:cw01-e01",
+  "stopping_rules": "fixed budget; erase>=sham everywhere is a valid ABSENT result",
+  "world": "world.integer.v1({'world_seed': 8, 'start_charge': 40, 'yield_amt': 10, 'stoch_rate': 0})"
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "perturbation_id": "P-F09",
+ "parent": "T-X15",
+ "co_parents": [
+  "T-E06",
+  "T-E07"
+ ],
+ "claim_type": "serendipity-cross",
+ "bodies": "final populations of solo_tape / solo_tree at rates .5 / 1.0, 3 ids, 80 gens (deduplicated)",
+ "damage": {
+  "fixed": "k=2 units",
+  "fraction": 0.15,
+  "draws": 4
+ },
+ "ruler": "relative score loss on a shared item set, per-organism evaluate (no sharing)",
+ "manipulations": "TAPE: pad (dead-register instructions appended; identity checked) and duplicate",
+ "analysis": "per substrate: loss ~ 1 + log size + (live regs | depth), standardised, 2000-permutation bands, for fixed-k and fraction-matched; pad/duplicate paired contrasts (fixed-k and fraction)",
+ "predictions": {
+  "CROSS_SUBSTRATE": "fixed-k loss falls with size in TAPE (coef below p05) and the pad/duplicate pattern matches P-F01's",
+  "REPRESENTATION_IS_A_COORDINATE": "TAPE and TREE disagree in sign",
+  "NOT_PORTABLE": "no size coefficient clears its band"
+ },
+ "material_rule": "any size / registers / depth coefficient outside its band, or a pad/duplicate contrast outside its band",
+ "continuation": [
+  "registers-only damage",
+  "depth-matched trees"
+ ],
+ "written": "2026-09-19 02:37:32",
+ "prereg_sha256": "089a34afab3c1a277b5d6d271e71cd992e31eed677681fb517c3951ca2c19638"
+}

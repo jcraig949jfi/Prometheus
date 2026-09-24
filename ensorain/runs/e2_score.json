@@ -1,0 +1,166 @@
+{
+ "SD_committed_family_counts": {
+  "TT": {
+   "NONE": 21,
+   "LR": 28,
+   "TT": 58,
+   "CP": 13
+  },
+  "MAT": {
+   "NONE": 45,
+   "LR": 62,
+   "TT": 12,
+   "CP": 1
+  },
+  "CP": {
+   "TT": 73,
+   "CP": 39,
+   "NONE": 5,
+   "LR": 3
+  },
+  "NONE": {
+   "NONE": 115,
+   "LR": 5
+  }
+ },
+ "SD_trace_median_val_mse": {
+  "CP@round0": 0.7238,
+  "CP@round1": 0.5703,
+  "CP@round2": 0.4476,
+  "CP@round3": 0.3421,
+  "CP@round4": 0.3233,
+  "CP@round5": 0.5803,
+  "MAT@round0": 0.8245,
+  "MAT@round1": 0.7401,
+  "MAT@round2": 0.6682,
+  "MAT@round3": 0.6426,
+  "MAT@round4": 0.6678,
+  "MAT@round5": 0.6888,
+  "NONE@round0": 1.0174,
+  "NONE@round1": 1.0274,
+  "NONE@round2": 1.0274,
+  "NONE@round3": 1.0274,
+  "NONE@round4": 1.0274,
+  "NONE@round5": 1.0274,
+  "TT@round0": 0.829,
+  "TT@round1": 0.7669,
+  "TT@round2": 0.7269,
+  "TT@round3": 0.686,
+  "TT@round4": 0.6542,
+  "TT@round5": 0.7476
+ },
+ "controls": {
+  "PC_A_TT": 0.982,
+  "PC_A_MAT": 0.997,
+  "PC_A_CP": 0.913,
+  "PC_B_TT": 0.983,
+  "PC_B_MAT": 0.997,
+  "PC_B_CP": 0.944,
+  "PC_pass": true,
+  "NEG": {
+   "A_SD": -0.0002,
+   "A_RANDPERM": -0.0232,
+   "A_GREEDY": 0.0,
+   "A_OUTER": -0.0068,
+   "A_BLIND1": -0.024,
+   "A_EXHAUSTIVE": 0.0003,
+   "A_LRSEL": -0.0036,
+   "A_ORACLE_H": 0.0,
+   "A_MI": -0.0272,
+   "B_SD": 0.0004,
+   "B_RANDPERM": -0.0299,
+   "B_GREEDY": 0.0,
+   "B_OUTER": -0.0095,
+   "B_BLIND1": -0.0323,
+   "B_EXHAUSTIVE": -0.0005,
+   "B_LRSEL": -0.0109,
+   "B_ORACLE_H": 0.0,
+   "B_MI": -0.0305
+  },
+  "NEG_pass": true,
+  "CHT_smuggler_refused": true,
+  "CHT_blind_correct": 0.0917,
+  "CHT_blind_band": [
+   0.034,
+   0.0836
+  ],
+  "CHT_pass": false
+ },
+ "controls_pass": false,
+ "G_ID": {
+  "A_TT": 0.2,
+  "A_MAT": 0.517,
+  "A_CP": 0.267,
+  "A_NONE": 0.933,
+  "B_TT": 0.15,
+  "B_MAT": 0.433,
+  "B_CP": 0.383,
+  "B_NONE": 0.983
+ },
+ "G_ID_pass": false,
+ "G_EFF": {
+  "A_TT": {
+   "sd": -4.087,
+   "best_blind": "BLIND1",
+   "blind": 0.012,
+   "lo": -7.955,
+   "pass_": "False",
+   "best_simple": "MI",
+   "simple": 3.212,
+   "sd_beats_simple": "False"
+  },
+  "A_MAT": {
+   "sd": 2.272,
+   "best_blind": "OUTER",
+   "blind": 4.723,
+   "lo": -11.663,
+   "pass_": "False",
+   "best_simple": "LRSEL",
+   "simple": 14.689,
+   "sd_beats_simple": "False"
+  },
+  "A_CP": {
+   "sd": 1.472,
+   "best_blind": "BLIND1",
+   "blind": 2.131,
+   "lo": -3.008,
+   "pass_": "False",
+   "best_simple": "MI",
+   "simple": 2.605,
+   "sd_beats_simple": "False"
+  },
+  "B_TT": {
+   "sd": -0.821,
+   "best_blind": "BLIND1",
+   "blind": 1.147,
+   "lo": -4.915,
+   "pass_": "False",
+   "best_simple": "MI",
+   "simple": 2.791,
+   "sd_beats_simple": "False"
+  },
+  "B_MAT": {
+   "sd": -1.317,
+   "best_blind": "OUTER",
+   "blind": 5.447,
+   "lo": -13.901,
+   "pass_": "False",
+   "best_simple": "LRSEL",
+   "simple": 14.354,
+   "sd_beats_simple": "False"
+  },
+  "B_CP": {
+   "sd": 4.044,
+   "best_blind": "BLIND1",
+   "blind": 1.908,
+   "lo": 0.317,
+   "pass_": true,
+   "best_simple": "EXHAUSTIVE",
+   "simple": 3.668,
+   "sd_beats_simple": false
+  }
+ },
+ "G_EFF_pass": false,
+ "QUALIFIER": "TEXTBOOK",
+ "VERDICT": "INDETERMINATE (controls)"
+}

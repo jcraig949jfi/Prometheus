@@ -1,0 +1,83 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e04",
+ "attempt_id": "cw01-e04-a01",
+ "phase": "QUALIFY",
+ "completed_local": "2026-09-17 18:24:45",
+ "rule": "ALL predicates must pass before science budget is spent.",
+ "_history_note": "Capacity was amended 12 -> 4 mid-QUALIFY (CW01-D032). Predicates measured under the OLD capacity were RE-MEASURED at 4 rather than carried forward; those are marked. Q10 additionally passed VACUOUSLY the first time and was re-earned (CW01-D034).",
+ "predicates": {
+  "Q1_prices_positive": {
+   "status": "PASS",
+   "evidence": "cost_put 0.4, cost_get 0.3, cost_recompute 3.0"
+  },
+  "Q2_channel_is_a_real_trade": {
+   "status": "PASS",
+   "evidence": "round trip 0.70 vs recompute 3.00 (4.3x cheaper) but genuinely fails: drops, expiries and full-channel failures all observed"
+  },
+  "Q3_shams_are_cost_matched": {
+   "status": "PASS",
+   "evidence": "J1 identity sham BIT-IDENTICAL to no intervention (1.9808 / 57.9 / 114.6 / 0.506); sham and real scramble cost exactly 57.9 each; scramble hurts -12.49%. NOTE: materially weaker than e03's -37.6%..-61.0%; whether it survives on EVOLVED populations is an open question for EXECUTE."
+  },
+  "Q4_seeds_reconstructible": {
+   "status": "PASS",
+   "evidence": "identical 105-byte payloads across PYTHONHASHSEED 0/4242/random; negative control confirms a01 and r02 diverge"
+  },
+  "Q5_durable_without_redis": {
+   "status": "PASS",
+   "evidence": "3 rows written via localrun and re-parsed with the redis import BLOCKED"
+  },
+  "Q6_neutral_genes_are_inert": {
+   "status": "PASS",
+   "evidence": "perturbing neutral_a/neutral_b changed no metric"
+  },
+  "Q7_pressure_actually_binds": {
+   "status": "PASS (RE-MEASURED at capacity 4)",
+   "evidence": "always-place: occupancy 3.35 of 4, 55.0 placement failures. FAILED at the original capacity 12 (occupancy 6.28, 0.0 failures) -- carrying was free and blind placement beat triage. That failure is why the capacity was amended (CW01-D032)."
+  },
+  "Q8_learnability": {
+   "status": "PASS",
+   "evidence": "best CONDITIONAL 2.0697 vs best NON-CONDITIONAL 1.6441 (+25.88%) and vs ANTI_ALIGNED 1.6357 (+26.53%). The two controls land within 0.5% of each other by DIFFERENT routes (selectivity 1.000 with 48.9 hits at cost 81.5, versus 0.512 with 40.4 hits at cost 58.1), so alignment rather than volume is what separates the winner. The conditional optimum wins with FEWER hits at LOWER cost.",
+   "first_attempt": "mis-specified: worst=BLIND_PLACE_ALL conflated selectivity with alignment, and the verdict swung with capacity (+9.30% / +3.42% / -14.43%) (CW01-D033)"
+  },
+  "Q9_mechanism_fires": {
+   "status": "PASS (RE-MEASURED at capacity 4)",
+   "evidence": "competent triager: 53 placements, 33 retrieval hits, 5 expiries, 4 drops, 8 full-failures"
+  },
+  "Q10_matched_arms": {
+   "status": "PASS (RE-EARNED; first pass was VACUOUS)",
+   "evidence": "On live genomes, treatment and control_no_triage are bit-identical: b_place=1.0/b_rec=-9.0 gives info 135.2457, cost 81.6, 120 placements, 50 hits; b_place=1.0/b_rec=1.0 gives info 303.0489, cost 267.6, 62 recomputes. The FIRST pass had info=0.0 on both arms -- two arms agreeing the world was empty (CW01-D034)."
+  },
+  "Q11_triage_MI_calibrated": {
+   "status": "PASS",
+   "evidence": "CONDITIONAL: I(worth;handling) MI 0.9962, null_q99 0.0080, excess +0.9881, significant. BLIND: MI 0.0000, 1 distinct action, not significant. NOTE: I(features;handling) reads only 0.0307 for the same conditional policy because the feature code bins ONE feature while worth depends on all four -- the worth-conditioned measure is the informative one."
+  },
+  "Q12_disposition_rule_is_executable": {
+   "status": "PASS",
+   "evidence": "execute_e04.py builds the disposition with lineage.decide over a TestLog; a branch is UNREACHABLE unless its tests ran"
+  },
+  "Q13_latent_worth_is_not_free": {
+   "status": "PASS",
+   "evidence": "_fires() takes (bias, w, x); 'worth' never appears in it"
+  },
+  "Q14_latent_facts_attempt_stable": {
+   "status": "PASS",
+   "evidence": "worth map identical across calls; drawn once per attempt"
+  },
+  "Q15_no_unperformed_checks": {
+   "status": "PASS",
+   "evidence": "IX discharged by MEASUREMENT standalone before the run: 135 comparisons across 3 genomes x 3 arms x 3 seeds x 5 metrics, worst divergence 0.000e+00. Not asserted (CW01-D031)."
+  }
+ },
+ "instrument_defects_found_before_spending_budget": [
+  "CW01-D032 (high) the scarce resource was never scarce: capacity 12 against unconstrained demand 6.28",
+  "CW01-D033 (high) the learnability comparison conflated selectivity with worth-alignment",
+  "CW01-D034 (high) Q10 passed vacuously on info=0.0; third vacuous-pass in four experiments"
+ ],
+ "interpretive_limits_fixed_in_advance": [
+  "UNIFORM HANDLING IS NOT TRIAGE. Selectivity and triage are separate quantities; selective-but-blind is a NEGATIVE for the triage claim.",
+  "Generality (J2/J3/J4) is a SEPARATE verdict and never upgrades the primary disposition.",
+  "Two 5-parameter linear policies, not a rich program."
+ ],
+ "verdict": "QUALIFIED - EXECUTE authorised"
+}

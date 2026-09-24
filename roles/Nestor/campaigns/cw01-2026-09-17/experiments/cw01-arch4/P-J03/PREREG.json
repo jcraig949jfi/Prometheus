@@ -1,0 +1,47 @@
+{
+ "perturbation_id": "P-J03",
+ "parent": "T-X17",
+ "requires": [
+  "P-J01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "gateway-test",
+ "FLAG": "WITNESS-SEEDED scaffold (no natural crossing in P-J01)",
+ "scaffold": {
+  "witness": "P-J02 minimal xor1 witness (seed 1 rank 0, 4 instructions)",
+  "n_seeded": 8,
+  "background": "P-J01 A' seed-1 final population"
+ },
+ "ladder": [
+  [
+   "stage0_xor1",
+   1,
+   40
+  ],
+  [
+   "stage1_xor3",
+   3,
+   60
+  ],
+  [
+   "stage2_xor15",
+   15,
+   60
+  ]
+ ],
+ "removal": "xor 0 for 60 generations, retest on xor-15 held-out every 10",
+ "reuse": "xor 5 for 60 generations: post-removal vs plateau-ladder vs fresh",
+ "seeds": [
+  1,
+  2
+ ],
+ "crossing": "best-by-training individual's held-out >= .90 (generation), top-4 held-out at the end",
+ "gateway_rule": "scaffolded lineage crosses xor 15 while plateau-matched and fresh lineages stay trapped -> promote the gateway phenomenon (with the witness-seeded flag)",
+ "material_rule": "material if any lineage crosses xor 3 or xor 15, or the scaffold decays / persists measurably",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:49:23",
+ "prereg_sha256": "ce93dee307efb922ba6cdd863955e8ecc689b8e3ef91e22579f1e609f9e5d9ea"
+}

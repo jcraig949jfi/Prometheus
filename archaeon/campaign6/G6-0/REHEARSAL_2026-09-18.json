@@ -1,0 +1,143 @@
+{
+ "E": 6,
+ "N": 32,
+ "all_mine_yes": true,
+ "evaluations": 1280,
+ "events": 139,
+ "freeze_scopes": {
+  "COMPLETE": 59,
+  "PARTIAL_FREEZE": 80
+ },
+ "freezes": 139,
+ "generations": 40,
+ "pressure_history_n": 18,
+ "pressure_kinds": [
+  "EXOGENOUS_PRESSURE"
+ ],
+ "proofs": {
+  "detectors_emit_frozen_version_firings": {
+   "answer": "YES",
+   "evidence": {
+    "fired_by_detector": {
+     "behavioral_novelty": 29,
+     "classifier_failure": 139,
+     "detector_disagreement": 137,
+     "lineage_discontinuity": 1,
+     "structural_reuse": 115
+    },
+    "thresholds_digest_in_provenance": "sha256:88f28db8841527a83a9a58cc49e8b33a77c560dc748549b0a65abc1f4f028c7b",
+    "unable_by_detector": {
+     "lineage_discontinuity": 17,
+     "niche_divergence": 139,
+     "regime_persistence": 139,
+     "unexpected_causal_dependence": 139,
+     "unexpected_transfer": 139,
+     "unexplained_gain": 139
+    }
+   }
+  },
+  "escalation_ordering_auditable": {
+   "answer": "YES",
+   "evidence": {
+    "interpretation_none_on_all_freezes": true,
+    "preserved_at_on_every_freeze": true
+   }
+  },
+  "fixture_commitments_verify": {
+   "answer": "NOT_MINE",
+   "evidence": "Harmonia's registry + engine/PEW commitments (R3)"
+  },
+  "freezes_span_ownership_boundaries": {
+   "answer": "NOT_MINE",
+   "evidence": "single client here; the engine's PARTIAL-with-reason path is Daedalus's (R2); my PARTIAL_FREEZE carries member/owner/reason/at"
+  },
+  "graph_organism_checkpointing_works": {
+   "answer": "NOT_MINE",
+   "evidence": "profile v0 only until Proteus's graph triple registers (PROTEUS-47)"
+  },
+  "harmonia_can_consume_receipts": {
+   "answer": "PENDING",
+   "evidence": "this receipt + freezes are in c6_observatory's shape by construction; Harmonia to confirm"
+  },
+  "partial_freezes_remain_visible": {
+   "answer": "YES",
+   "evidence": {
+    "COMPLETE": 59,
+    "PARTIAL_FREEZE": 80
+   }
+  },
+  "planted_event_travels_the_chain": {
+   "answer": "YES",
+   "evidence": {
+    "detectors_on_plant": [
+     "behavioral_novelty",
+     "classifier_failure",
+     "detector_disagreement",
+     "structural_reuse"
+    ],
+    "events_at_plant_gen": 4,
+    "freezes_at_plant_gen": 4,
+    "planted_generation": 20,
+    "replay_A": "SAME",
+    "replay_D": "DIFFERENT"
+   }
+  },
+  "replay_requires_preserved_state": {
+   "answer": "YES",
+   "evidence": {
+    "replay_A_exact": "SAME",
+    "replay_D_rollback": "DIFFERENT",
+    "replay_input": "spec_hash + checkpoint_in digest (no replay without them)"
+   }
+  },
+  "segment_execution_works": {
+   "answer": "YES",
+   "evidence": {
+    "continuity_checked_by": "segment.self_test",
+    "evaluations": 1280,
+    "segments": 2
+   }
+  },
+  "t0_sidecars_anchor_correctly": {
+   "answer": "YES",
+   "evidence": {
+    "anchors": 38,
+    "chain_intact_across_boundary": true,
+    "coverage": true
+   }
+  },
+  "world_and_pressure_provenance_survives": {
+   "answer": "YES",
+   "evidence": {
+    "complexity_bin": 6,
+    "in_spec_hash": "sha256:b7a4d405e1280d572f70834c778acca1b4d3dcc5e572b68f3065d21621abe999",
+    "schedule_id": "7a0fab5c6eb34d24",
+    "schedule_provenance": "5a64ebc2a78b1ce0b291d222",
+    "world_id": "9a604b3769ea64c2",
+    "world_provenance": "3241e857b02dd39ebad4a5c9"
+   }
+  }
+ },
+ "rows_bytes_mean": 1441.1,
+ "schedule": {
+  "id": "7a0fab5c6eb34d24",
+  "mode": "labeled",
+  "segments": 3
+ },
+ "schema": "archaeon.c6.g6_0_rehearsal.v1",
+ "side": "Archaeon",
+ "thresholds_digest": "sha256:88f28db8841527a83a9a58cc49e8b33a77c560dc748549b0a65abc1f4f028c7b",
+ "wall_s": 8.6,
+ "world": {
+  "bin": 6,
+  "features": [
+   "locality",
+   "objects",
+   "delayed",
+   "coupling",
+   "regime",
+   "channels"
+  ],
+  "id": "9a604b3769ea64c2"
+ }
+}

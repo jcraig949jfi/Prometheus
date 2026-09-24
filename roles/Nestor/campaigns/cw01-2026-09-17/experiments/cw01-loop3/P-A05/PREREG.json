@@ -1,0 +1,68 @@
+{
+ "perturbation_id": "P-A05",
+ "parent": "T-X03",
+ "claim_type": "confirmatory-new",
+ "existing_worlds": [
+  {
+   "aid": "cw01-e05-a01",
+   "clears": true,
+   "P1_coverage_overlap": 0.1219782201925059,
+   "P2_conjunctive_concentration": 0.17857142857142858,
+   "n_conj": 28,
+   "n_disj": 20
+  },
+  {
+   "aid": "cw01-e05-r02",
+   "clears": true,
+   "P1_coverage_overlap": 0.10947098536384249,
+   "P2_conjunctive_concentration": 0.16129032258064516,
+   "n_conj": 31,
+   "n_disj": 17
+  },
+  {
+   "aid": "cw01-e05-r03",
+   "clears": false,
+   "P1_coverage_overlap": 0.11715685108542251,
+   "P2_conjunctive_concentration": 0.19230769230769232,
+   "n_conj": 26,
+   "n_disj": 22
+  },
+  {
+   "aid": "cw01-e05-r04",
+   "clears": false,
+   "P1_coverage_overlap": 0.08774092970521541,
+   "P2_conjunctive_concentration": 0.12903225806451613,
+   "n_conj": 31,
+   "n_disj": 17
+  }
+ ],
+ "split_rules": {
+  "P1_coverage_overlap": {
+   "threshold": 0.10908674658674658,
+   "clears_if": "ge",
+   "class_means": {
+    "clears": 0.1157246027781742,
+    "not": 0.10244889039531896
+   }
+  },
+  "P2_conjunctive_concentration": {
+   "threshold": 0.16530042538107054,
+   "clears_if": "ge",
+   "class_means": {
+    "clears": 0.16993087557603687,
+    "not": 0.1606699751861042
+   }
+  }
+ },
+ "fresh_worlds": 48,
+ "budget_B": 3,
+ "outcome": "superadditivity of the exhaustively enumerated BEST set clears its 8-block measured null (contract statistic; no evolution needed)",
+ "scoring": "accuracy of each rule on the 48 fresh worlds vs a 2000-permutation label null (p95)",
+ "material_rule": "either predictor's accuracy clears its permutation p95",
+ "continuation": [
+  "predictor from the BEST set's own coverage",
+  "conjunctive_fraction sweep (P-A06)"
+ ],
+ "written": "2026-09-18 23:21:50",
+ "prereg_sha256": "36d76662751a475977bf7a9bcb00b67f964b9582fc2161ae25520ef133c1420b"
+}

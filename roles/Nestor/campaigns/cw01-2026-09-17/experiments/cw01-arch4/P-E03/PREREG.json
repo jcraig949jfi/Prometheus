@@ -1,0 +1,80 @@
+{
+ "perturbation_id": "P-E03",
+ "parent": "T-ARCH4/M1",
+ "deformation": "A",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "required-comparison",
+ "evolver": {
+  "N": 96,
+  "G": 60,
+  "tournament": 3,
+  "env": "W2_K2",
+  "episodes_per_generation": "fresh (index 1000+g)",
+  "births": "one grammar op, mutation only",
+  "seeds": [
+   1,
+   2
+  ]
+ },
+ "arms": [
+  "select",
+  "drift"
+ ],
+ "groups": [
+  "selected top-32 by final W2_K2 reward",
+  "drift sample 32 (seeded uniform)",
+  "ancestor walker of each (paired)",
+  "original parent of each ancestor"
+ ],
+ "assay": {
+  "cells": [
+   [
+    "delete",
+    2,
+    1
+   ],
+   [
+    "delete",
+    4,
+    1
+   ],
+   [
+    "delete",
+    4,
+    4
+   ],
+   [
+    "operand",
+    4,
+    1
+   ],
+   [
+    "opcode",
+    4,
+    1
+   ]
+  ],
+  "draws": 4,
+  "decode": "modulo",
+  "loss_env": "W2_K2",
+  "held": "W1_d1"
+ },
+ "reading_rules": {
+  "SELECTED": "tops - ancestors sign-flip below p05 AND tops - drift relabel below p05",
+  "INHERITED": "tops - ancestors inside its band (robustness was already in the walkers)",
+  "DRIFT_ASSOCIATED": "tops - ancestors below p05 AND drift - ancestors below p05 AND tops - drift inside band",
+  "NONE": "otherwise; a length covariate regression is reported alongside"
+ },
+ "material_rule": "any paired or relabelled contrast outside its band, or the reading is not NONE",
+ "continuation": [
+  "selection on W0 / W1_d4",
+  "generation dose",
+  "n_ops 2 births"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 23:26:38",
+ "prereg_sha256": "da95c998f4cf777add58748eabd32584b3e0eaa03ca64bd47768a937d682c7c4"
+}

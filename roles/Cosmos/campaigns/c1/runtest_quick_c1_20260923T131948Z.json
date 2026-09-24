@@ -1,0 +1,89 @@
+{
+ "utc": "20260923T131948Z",
+ "identity": {
+  "cosmos_src_sha": "d187ca933290acae4b24c74f27109a0b6745301bbad0b0d06ad0b89d08bc9ece",
+  "n_src": 49,
+  "git_head": "7c9e0d58f2c9f2f258a7cc87a090e008c1d39950",
+  "cosmos_dirty": true
+ },
+ "steps": {
+  "tests_fast": {
+   "ok": true,
+   "summary": "67 passed, 6 deselected in 2.62s",
+   "s": 3.0
+  },
+  "broker_selftest": {
+   "ok": true,
+   "detail": {
+    "w0": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    },
+    "w1": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    }
+   }
+  },
+  "seal": {
+   "ok": true,
+   "spec_sha": "48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265"
+  },
+  "quick_campaign": {
+   "ok": true,
+   "gates": {
+    "G1": "PASS",
+    "G0": "PASS",
+    "G4": "NOT REACHED",
+    "G2": "FAIL",
+    "G7": "NOT REACHED",
+    "G5": "SKIPPED (quick)",
+    "G6": "SKIPPED (quick)"
+   },
+   "graph": {
+    "nodes": 675,
+    "edges": 584,
+    "runs": 675,
+    "families": 3,
+    "laws": 0,
+    "edge_kinds": {
+     "CONTROL_OF": 60,
+     "DEFORMATION_OF": 524
+    }
+   },
+   "laws": [],
+   "mine_initial": {
+    "v4": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.9001795311835626,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "v3": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8941349188076327,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "raw": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.7852047269083716,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    }
+   },
+   "s": 240.3
+  }
+ },
+ "ok": true
+}
