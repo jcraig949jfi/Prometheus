@@ -274,6 +274,51 @@ def make_body(run_id, worlds):
     }
 
 
+def create_with_reconcile(api, body):
+    """Create exactly one pod, treating a failed create as AMBIGUOUS.
+
+    A provider 500 on POST does not say whether a pod was created. The
+    only safe response is to ASK the inventory before doing anything
+    else: if a pod exists, adopt it and never POST again; if none exists,
+    the failure was clean and a retry cannot duplicate. Retrying without
+    that check is how one create error becomes two billing pods.
+
+    Restored from aeth01_scale_orchestrate.py. The first-light
+    orchestrator, which this file was generated from, called create_pod
+    directly and therefore had no reconciliation at all -- it happened to
+    get a 201 on its first attempt every time, so the gap never showed.
+    AETH-02's first launch attempt took a 500 and crashed out of the
+    `try` before its `finally` could terminate anything, which would have
+    orphaned a billing pod had the 500 actually created one. It had not
+    (inventory verified 0), but the next one might.
+    """
+    import runpod_api
+    for attempt in range(1, 4):
+        try:
+            pod = api.create_pod(body)
+            log("create attempt %d -> 201 pod=%s" % (attempt, pod.get("id")))
+            return pod
+        except runpod_api.ProviderError as e:
+            log("create attempt %d failed status=%s; reconciling inventory"
+                % (attempt, e.status))
+            try:
+                pods = api.list_pods()
+            except runpod_api.ProviderError as inner:
+                log("reconcile FAILED to list (status=%s) -> refusing to "
+                    "retry, because a pod may exist and be unobserved"
+                    % inner.status)
+                return None
+            if pods:
+                log("reconcile: %d pod(s) present -> adopting %s, NO further "
+                    "creates" % (len(pods), pods[0].get("id")))
+                return pods[0]
+            log("reconcile: 0 pods present, so that was a clean no-pod failure")
+            if attempt < 3:
+                time.sleep(5)
+    log("all 3 create attempts failed with no pod created -> STOP")
+    return None
+
+
 def _save(name, data):
     path = os.path.join(ART_DIR, "aeth02_" + name)
     mode = "wb" if isinstance(data, (bytes, bytearray)) else "w"
@@ -433,7 +478,10 @@ def main():
         return 3
     log("baseline confirmed empty (0 pods)")
 
-    pod = api.create_pod(make_body(run_id, worlds))
+    pod = create_with_reconcile(api, make_body(run_id, worlds))
+    if pod is None:
+        log("no pod created; nothing to terminate, nothing spent")
+        return 4
     pod_id = pod["id"]
     with open(POD_ID_FILE, "w") as f:
         f.write(pod_id)
