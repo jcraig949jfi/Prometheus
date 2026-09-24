@@ -216,6 +216,17 @@ not extinction. Evidence: `H4_AUTOPSY.md`.
 | C9-D13 | H3 arm B (NICHES_HIGH_MIG) migrated at 0.08 vs the reservoir's 0.02; "identical migration" was false (fixed as ruled: RESERVOIR, easy niche off) |
 | C9-D14 | **validity, open, freeze stopped**: on the pair tape an organism keeps its id while its bytes are replaced (identity to its birth genome 0.97 after 1 epoch, 0.00 by 600, with no lineage event); the H3 certificate follows id, so it certifies identity, not heredity |
 
+### E-6 Non-pair heredity: self-location is the gate, discovery is the barrier -- HOLDS (CONFIRM)
+Autonomous-loop chain, 2026-09-24 (graph: X-NONPAIR-SEARCH -> X-NONPAIR-FIDELITY -> X-SELFLOC-FREE
+-> X-SELFLOC-SEEDED -> C-SELFLOC). In the FREE non-pair physics, per-epoch in-place mutation
+(search) unlocks declared births (0 -> 87) but none carries parent bytes (all 231 fid < 0.06);
+free self-location alone still yields no faithful copy (CLEAN_NULL). An IMPLANTED
+ALLOC;LDIR;BIRTH copier with free self-location sustains causal lineages; without
+self-location it never replicates. **CONFIRMED on fresh cells/seeds under a frozen rule:**
+depth >= 3 in 13/36 cells (max 23) vs 0/36, Fisher p = 1.6e-10. Scope: implanted copier
+only; says nothing about spontaneous discovery, which remains the barrier.
+Evidence: `campaigns/c9x-explore-2026-09-24/c_selfloc_confirm/`.
+
 ---
 
 ## D. Standing methodological lessons
