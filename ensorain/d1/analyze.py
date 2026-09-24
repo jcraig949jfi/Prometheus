@@ -214,36 +214,54 @@ def _series(r, q):
     return [t.get(q) if t.get(q) is not None else np.nan for t in tr]
 
 
+def _perm_p(a, b, n=2000):
+    diff = a.mean() - b.mean()
+    pool = np.concatenate([a, b])
+    perm = [np.mean(p[:len(a)]) - np.mean(p[len(a):]) for p in (RNG.permutation(pool) for _ in range(n))]
+    return float(diff), float((np.abs(perm) >= abs(diff)).mean() + 1 / n)
+
+
 def precursors(disc, val):
+    """PREREG s5 D: change over the two trace points before FIRE, against
+    (i) random alignment in never-firing lives and (ii) random EARLIER
+    alignment within firing lives; plus a sign test on the firing deltas.
+    A quantity's p is the MAX of the three (all must hold)."""
     out = {}
     for q in TRACE_Q:
         per = {}
         for name, rows in (("disc", disc), ("val", val)):
-            fire_d, null_d = [], []
+            fire_d, null_i, null_ii = [], [], []
             for r in rows:
                 s = _series(r, q)
                 f = r.get("fire_idx")
                 if f is not None and f >= 2:
                     fire_d.append(s[f - 1] - s[f - 2])
+                    if f >= 3:
+                        k = int(RNG.integers(2, f))
+                        null_ii.append(s[k - 1] - s[k - 2])
                 elif f is None and len(s) >= 3:
                     k = int(RNG.integers(2, len(s)))
-                    null_d.append(s[k - 1] - s[k - 2])
-            a, b = np.array(fire_d, float), np.array(null_d, float)
-            a, b = a[np.isfinite(a)], b[np.isfinite(b)]
-            if len(a) < 5 or len(b) < 5:
-                per[name] = dict(n_fire=len(a), note="too few")
+                    null_i.append(s[k - 1] - s[k - 2])
+            a = np.array(fire_d, float)
+            b1, b2 = np.array(null_i, float), np.array(null_ii, float)
+            a, b1, b2 = a[np.isfinite(a)], b1[np.isfinite(b1)], b2[np.isfinite(b2)]
+            if len(a) < 5 or len(b1) < 5 or len(b2) < 5:
+                per[name] = dict(n_fire=len(a), n_null_i=len(b1), n_null_ii=len(b2), note="too few")
                 continue
-            diff = a.mean() - b.mean()
-            pool = np.concatenate([a, b])
-            perm = [np.mean(p[:len(a)]) - np.mean(p[len(a):]) for p in (RNG.permutation(pool) for _ in range(2000))]
-            per[name] = dict(n_fire=len(a), n_null=len(b), fire_mean=float(a.mean()), null_mean=float(b.mean()),
-                             diff=float(diff), p=float((np.abs(perm) >= abs(diff)).mean() + 1 / 2000))
+            d1, p1 = _perm_p(a, b1)
+            d2, p2 = _perm_p(a, b2)
+            nz = a[a != 0]
+            ps = float(stats.binomtest(int((nz > 0).sum()), len(nz)).pvalue) if len(nz) else 1.0
+            per[name] = dict(n_fire=len(a), n_null_i=len(b1), n_null_ii=len(b2), fire_mean=float(a.mean()),
+                             diff_vs_nonfiring=d1, p_i=p1, diff_vs_earlier=d2, p_ii=p2, sign_p=ps,
+                             diff=d1, p=max(p1, p2, ps))
         out[q] = per
     ps = [out[q]["disc"].get("p", 1.0) for q in TRACE_Q]
     for q, qq in zip(TRACE_Q, bh(ps)):
         d, v = out[q]["disc"], out[q]["val"]
         out[q]["q"] = float(qq)
         out[q]["nominated"] = bool(qq < .05 and "diff" in v and np.sign(v["diff"]) == np.sign(d.get("diff", 0))
+                                   and np.sign(v["diff_vs_earlier"]) == np.sign(d.get("diff_vs_earlier", 0))
                                    and v["p"] < .05)
     return out
 
