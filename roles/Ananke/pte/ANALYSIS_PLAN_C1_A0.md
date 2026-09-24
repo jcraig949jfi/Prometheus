@@ -62,3 +62,23 @@ take the confirmed habitable region and raise informational load
 (concurrent cue streams, distractor traffic on shared channels) to find
 where transport collapses under interference and whether any region
 reorganises instead.
+
+## 5. Annotation 2026-09-24 (operator review, before A0 closed)
+
+- L2 is renamed "distal influence: target influence reaches the readout".
+  It is upgraded to "transport" only after an intervention (zero_comm /
+  packet_ablation, B/D waves) shows removing the communication path
+  destroys it. The field is unchanged (gen0.frac_contrast_pos).
+- Where the shortcut is real: in RELAY/XOR/MAJ the sensors and the
+  actuator are different sites and PTE-SUB-1 has no inter-site channel
+  except packets, so twin divergence at the actuator requires packets
+  by construction (still called influence until the zero-comm check
+  confirms it). In HOLD, sensor = actuator: L2 is local by design and is
+  NOT evidence of transport. In FLIP, the twin negates the TEACHER as
+  well, and the teacher arrives AT the actuator, so the actuator can
+  move with the target through a local path (earlier teachers) with no
+  transport at all. FLIP's L2 is reported split: contrast from the
+  zero-comm twin vs the normal twin; only the excess counts as distal.
+- Rungs as adopted: L1 perturbability, L2 distal influence, L2' known-
+  mechanism viability, L3 discoverability/exploitation, L4 reuse/
+  adaptation, L5 (C2) concurrent informational organisation.
