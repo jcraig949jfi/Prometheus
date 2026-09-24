@@ -45,10 +45,11 @@ def _t3c_libs():
 
 def main():
     t0 = time.perf_counter()
-    s1 = json.loads((HERE / "S1_GATE_RUN3_2026-09-24.json").read_text(encoding="utf-8"))
-    if s1.get("OUTCOME") != "S1_PASS":
-        print("S1 has not passed -- S2 does not run")
+    s1l = json.loads((HERE / "S1_LOCAL_GATE_2026-09-24.json").read_text(encoding="utf-8"))
+    if s1l.get("CAMPAIGN_RELEVANT_IDENTITY") != "PASS":      # ADDENDUM 3 s5/s6
+        print("CAMPAIGN_RELEVANT_IDENTITY is not PASS -- S2 does not run")
         return 2
+    s1 = {"B1_sha256": I.B1_SHA if s1l.get("domain") == I.DOMAIN else None}
     rep = {"amendment": "AMENDMENT_13 @ 4a6bbf55d", "R": R, "families": FAMILIES,
            "started_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")}
     mem, abstract, sizes = _t3c_libs()

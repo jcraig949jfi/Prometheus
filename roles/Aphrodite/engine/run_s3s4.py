@@ -32,6 +32,7 @@ import fair as FR             # noqa: E402
 import identity as I          # noqa: E402
 import meta_tribunal as M     # noqa: E402
 import tier3d as T            # noqa: E402
+import cert as CT             # noqa: E402
 
 M.use_provider(T)
 
@@ -75,10 +76,11 @@ def lib_with(entries):
 
 # ---------------------------------------------------------------- stage 0
 def stage_preconditions():
-    s1 = json.loads((HERE / "S1_GATE_RUN3_2026-09-24.json").read_text(encoding="utf-8"))
+    s1l = json.loads((HERE / "S1_LOCAL_GATE_2026-09-24.json").read_text(encoding="utf-8"))
     s2 = json.loads((HERE / "S2_GATE_2026-09-23.json").read_text(encoding="utf-8"))
-    if s1.get("OUTCOME") != "S1_PASS" or s2.get("OUTCOME") != "S2_PASS":
-        raise SystemExit("STOP: S1_PASS and S2_PASS are preconditions (AMENDMENT 14)")
+    if s1l.get("CAMPAIGN_RELEVANT_IDENTITY") != "PASS" or s2.get("OUTCOME") != "S2_PASS":
+        raise SystemExit("STOP: CAMPAIGN_RELEVANT_IDENTITY=PASS (ADDENDUM 3) and S2_PASS "
+                         "are preconditions")
     std = CF.check()
     rng = random.Random(I._seed("APHRODITE/T3D/CONF/v1"))
     progs = [T.witness(f) for f in T.FAMILY_SPEC] + [
@@ -172,15 +174,33 @@ def stage_donor(quals, s6):
     classes = {}                                    # D2
     for o in observed:
         classes.setdefault(I.behavior_id(tuple(o["program"]), True), []).append(o)
-    cls_list = []
-    for bid, obs in sorted(classes.items()):         # D3
+    cls_list, cert_log = [], []
+    for bid, obs in sorted(classes.items()):         # D3 + certificates C1-C3 (ADDENDUM 3)
         mem = T.class_members(tuple(obs[0]["program"]), obs[0]["examples"])
-        cls_list.append({"behavior_id": bid, "families": sorted({o["family"] for o in obs}),
-                         "observed_programs": [o["program"] for o in obs],
-                         "members": [list(p) for p in mem],
-                         "member_bodies": sorted({p[2] for p in mem})})
-        _log("[D3] class %s.. from %s: %d members, %d distinct bodies"
-             % (bid[:10], cls_list[-1]["families"], len(mem), len(cls_list[-1]["member_bodies"])))
+        observed_progs = [tuple(o["program"]) for o in obs]
+        rec = CT.certify(observed_progs + mem, anchor=observed_progs[0])
+        cert_log.append({"provisional_behavior_id": bid, "certificate": rec})
+        if rec["PASS"]:
+            groups = [(observed_progs, mem)]
+        else:                                        # split BEFORE downstream use (s4)
+            _log("[cert] SPLIT provisional class %s.. into %d sub-buckets"
+                 % (bid[:10], rec["sub_buckets"]))
+            sigbat = list(I.B1) + CT.b_cert() + CT.adversarial(observed_progs + mem)
+            sub = {}
+            for p in dict.fromkeys(observed_progs + mem):
+                sub.setdefault(I.values(p, True, sigbat), []).append(p)
+            groups = [([p for p in v if p in observed_progs], [p for p in v if p in mem])
+                      for v in sub.values() if any(p in observed_progs for p in v)]
+        for gobs, gmem in groups:
+            fams = sorted({o["family"] for o in obs if tuple(o["program"]) in gobs})
+            cls_list.append({"behavior_id": bid, "certified": True, "split_from_provisional":
+                             not rec["PASS"], "families": fams,
+                             "observed_programs": [list(p) for p in gobs],
+                             "members": [list(p) for p in gmem],
+                             "member_bodies": sorted({p[2] for p in gmem})})
+            _log("[D3] class %s.. from %s: %d members, %d distinct bodies (certified%s)"
+                 % (bid[:10], fams, len(gmem), len(cls_list[-1]["member_bodies"]),
+                    ", split" if not rec["PASS"] else ""))
     derived = T.derive_schemas([c["member_bodies"] for c in cls_list])     # D4
     _log("[D4] candidate schemas: %s" % [d["schema"] for d in derived])
 
@@ -225,7 +245,9 @@ def stage_donor(quals, s6):
     pos = set(T.instantiate("(acc + {H})"))
     art = {"written_utc": _now(), "observed": [{k: v for k, v in o.items() if k != "examples"}
                                                for o in observed],
-           "classes": cls_list, "derived_schemas": derived,
+           "classes": cls_list, "class_certificates": cert_log,
+           "GLOBAL_BEHAVIOR_IDENTITY": "FAIL (provisional buckets; certificates govern use)",
+           "derived_schemas": derived,
            "derived_equal_to_positive_control_instantiations_REPORTED_ONLY": {
                d["schema"]: set(T.instantiate(d["schema"])) == pos for d in derived},
            "candidates": {n: {"entries": cands[n], "sha256": hashes[n]} for n in cands},
@@ -362,12 +384,34 @@ def criterion(out, art, libs):
     fps = sum(pf[f]["DERIVED"]["false_positives"] for f in fams)
     c["5_false_positive_limit"] = (fps / hits if hits else 0.0) <= 0.25
     c["6_multiple_families"] = len(eff) >= 2
-    observed_ids = {cl["behavior_id"] for cl in art["classes"]}
-    novel = [f for f in eff if pf[f]["DERIVED"]["solution_behavior_ids"]
-             and not (set(pf[f]["DERIVED"]["solution_behavior_ids"]) & observed_ids)]
-    c["7_two_unobserved_mechanisms"] = len(novel) >= 2
+    # C4 (ADDENDUM 3): a solving class counts as OBSERVED only if a certificate
+    # confirms it equals an observed class; a differing B1 bucket is a real witness
+    # of difference. A bucket match that the certificate refutes was found AFTER the
+    # arms ran: condition 7 is then INCONCLUSIVE and the seat returns.
+    anchors = {}
+    for cl in art["classes"]:
+        anchors.setdefault(cl["behavior_id"], []).append(tuple(cl["observed_programs"][0]))
+    c4, inconclusive, novel = [], False, []
+    for f in eff:
+        progs = {tuple(r["solution_program"]) for r in det[f]["DERIVED"] if r["qualified"]}
+        fam_novel = True
+        for sp in progs:
+            bid = I.behavior_id(sp, True)
+            for anc in anchors.get(bid, []):
+                rec = CT.certify([sp, anc], anchor=anc)
+                c4.append({"family": f, "solution": list(sp), "observed": list(anc),
+                           "certified_equal": rec["PASS"]})
+                if rec["PASS"]:
+                    fam_novel = False
+                else:
+                    inconclusive = True
+        if progs and fam_novel:
+            novel.append(f)
+    c["7_two_unobserved_mechanisms"] = (len(novel) >= 2) if not inconclusive else False
     c["8_no_donor_state"] = True                     # membrane: artifacts carry module bytes only
-    return {"conditions": c, "pooled_paired_vs_pristine": pooled, "per_family": fam_effect,
+    return {"conditions": c, "class_certificates_C4": c4,
+            "CONDITION_7_INCONCLUSIVE_RETURN_TO_OPERATOR": inconclusive,
+            "pooled_paired_vs_pristine": pooled, "per_family": fam_effect,
             "families_with_effect": eff, "novel_mechanism_families": novel,
             "derived_fp_fraction": round(fps / hits, 4) if hits else 0.0,
             "ABSTRACTION_TRANSPLANT": "YES" if all(c.values()) else "NO",

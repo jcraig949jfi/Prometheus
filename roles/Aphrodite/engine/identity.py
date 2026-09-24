@@ -317,9 +317,10 @@ def build_b1() -> List[List[int]]:
     return out
 
 
-def build_b2_v3(n: int = 10000) -> List[List[int]]:
-    """AUDIT battery B2 v3 (ADDENDUM 2 s3): fresh seed, inside the domain."""
-    rng = random.Random(_seed("APHRODITE/S1/B2/v3"))
+def build_b2_v3(n: int = 10000, label: str = "APHRODITE/S1/B2/v3") -> List[List[int]]:
+    """AUDIT battery B2 v3 (ADDENDUM 2 s3): fresh seed, inside the domain. The
+    same mixture under another label is B_CERT (ADDENDUM 3 s3)."""
+    rng = random.Random(_seed(label))
     out = []
     for _ in range(n):
         r = rng.random()
