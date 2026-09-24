@@ -40,3 +40,25 @@ S1 COMM holds (loop gain carries history; sR sees it in the receiver's view).   
 S2 POP holds but with PASSIVE worlds at small s (history in the population, not in a small sample). 0.5
 S3 RECOMP breaks at small r: the projection keeps distance (sR > 0) but a LINEAR readout cannot use
    the scrambled code -- geometric signal without linearly usable information.                     0.5
+
+## RESULT (2026-09-24T20:10Z; runs/SUBST_s1.json; law unchanged, threshold 0.0304)
+COMM    PASSIVE 12, NONE 11, INDETERMINATE 1   agreement 23/23 = 1.000   HOLDS
+POP     FUNCTIONAL 19, NONE 2, PASSIVE 1, INDET 2  agreement 21/22 = 0.955   HOLDS
+        (1 miss: beta .3 mu .02 c .3 s 2 k 8, FUNCTIONAL with effect .015 at sR .021 -- inside the
+        threshold's CI [.006, .043]; not a shape)
+RECOMP  FUNCTIONAL 21, NONE 1, INDETERMINATE 2  agreement 22/22 = 1.000   HOLDS
+=> The abstraction SURVIVES substitution by communication, population state and recomputation.
+DESIGN LIMITATION (own): the COMM loop has period 2 and every preregistered delay put the query at an
+odd step, when the history sits in the message the receiver does not hear -> COMM produced 0 FUNCTIONAL
+worlds; the law was tested only on COMM's NONE/PASSIVE side (natural PASSIVE by timing).
+EXPLORATORY supplement (NOT preregistered, NOT gated; runs/SUBST_comm_oddk_EXPLORATORY.json): odd k
+{3,5,7}, 12 worlds: FUNCTIONAL 10, NONE 1, PASSIVE 1; agreement 12/12. Edge: one PASSIVE world with
+sF ~0.000 (the certificate's probe finds history the geometric coordinate barely registers).
+Precommitments: S1 held as a verdict but LOST as a mechanism (the receiver's view never held the
+history at the preregistered delays); S2 held (POP holds) but only 1 PASSIVE world, not the predicted
+small-s PASSIVE regime; S3 LOST (a linear readout recovers the scrambled code even from r = 2: only four
+discrete trajectories must be separated).
+INFERRED: history remained causally accessible through five different loci (internal recurrence,
+environment, messages in flight, population composition, a scrambled recomputable code); in every
+locus the same actor-view coordinate and threshold predicted functional use. Recorded; not a
+conclusion about any substrate Cosmos did not write.
