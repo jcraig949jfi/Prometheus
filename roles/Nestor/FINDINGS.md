@@ -227,6 +227,17 @@ depth >= 3 in 13/36 cells (max 23) vs 0/36, Fisher p = 1.6e-10. Scope: implanted
 only; says nothing about spontaneous discovery, which remains the barrier.
 Evidence: `campaigns/c9x-explore-2026-09-24/c_selfloc_confirm/`.
 
+### E-7 The depth-1 wall under energy economies is newborn starvation -- HOLDS (CONFIRM)
+Graph: X-ERROR-THRESHOLD (no dose effect; failure is per-cell) -> X-ENERGY-INHERIT -> C-ENERGY.
+An endogenous newborn starts with energy 0, and energy-economy pressures cap its slice at
+its energy, so it cannot afford its own copy: the seeded copier replicates once and stops.
+A conserved half-energy transfer at birth: **CONFIRMED on 40 fresh cells** - child
+replication 20/40 vs 4/40, sign p = 7.2e-5. My declared side-prediction that
+RESOURCE_GATED would not respond was **falsified** (2 -> 6 of 12). This is directive
+hypothesis (d), "a first faithful child that immediately dies", in mechanical form, and
+the same depth-1 wall the 72-hour record showed. Evidence:
+`campaigns/c9x-explore-2026-09-24/c_energy_confirm/`.
+
 ---
 
 ## D. Standing methodological lessons
