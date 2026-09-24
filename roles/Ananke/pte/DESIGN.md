@@ -287,3 +287,21 @@ Source identity, per-packet TTL/multi-hop auto-forwarding (relay is only
 by site programs; distance-dependent latency and per-hop loss stand in
 for diffusion), packet-carried code, reproduction of sites. Each is a
 candidate dial for v2 if the census shows v1 cannot reach a question.
+
+## 9. Rulings on the oracle author's ambiguity list (2026-09-24)
+
+The independent oracle (prometheus/ananke/oracle.py, written from this
+file without reading the engine) listed 19 ambiguities A1-A19 in its
+module docstring. Ruling: ALL NINETEEN of its literal readings are
+adopted as normative, verbatim as written there. Notes:
+- A1: LM = 1 + max(1, lat_base + lat_hop*maxdist + 2*lat_jitter + 1),
+  maxdist = max of the dist table (1 for random/smallworld/global).
+- A2: global topology requires dest_mode=sample (Physics.validate
+  refuses the other); copies = F.
+- A12: SENSE is saturated to +-32767 in the register file. The engine
+  did NOT do this in its first draft (found by this list, fixed before
+  any conformance run; irrelevant for |SENSE| <= 256 but it was a
+  divergence).
+- A7/A17: stats vocabulary differs between implementations (the oracle
+  also counts `saturated`); conformance compares state, traces and the
+  attempted/delivered/lost/collided counters only.
