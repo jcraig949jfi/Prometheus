@@ -1,12 +1,12 @@
 {
  "ok": true,
- "written": "2026-09-23 09:33:32",
+ "written": "2026-09-24 01:00:53",
  "gates": [
   {
    "gate": "VM selftest",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.1,
+   "seconds": 0.0,
    "tail": [
     " \"failures\": []",
     "}",
@@ -17,7 +17,7 @@
    "gate": "T-P1,2,3,8,9,10 repairs",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.4,
+   "seconds": 0.3,
    "tail": [
     "caught T-P9  env x structure            niche0 easy=False, niche1 hard=True, coevo=True, deterministic=True",
     "--------------------------------------------------------------------------------------------",
@@ -39,7 +39,7 @@
    "gate": "T-P5 index-only",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 0.1,
+   "seconds": 0.0,
    "tail": [
     "PASS: adjudicate.py contains no per-run read path",
     "",
@@ -83,7 +83,7 @@
    "gate": "P-6 report audit (predecessor)",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 26.1,
+   "seconds": 24.7,
    "tail": [
     "banned_phrase_proves             caught   CHK-LANGUAGE:\\bproves\\b|\\bproven\\b  unsupported phrase 'proves",
     "----------------------------------------------------------------------------------------------------",
@@ -94,10 +94,10 @@
    "gate": "calibration controls (PREFREEZE)",
    "rc": 0,
    "outcome": "PASS",
-   "seconds": 13.1,
+   "seconds": 9.0,
    "tail": [
     " \"gate\": \"PASS\",",
-    " \"seconds\": 13.0",
+    " \"seconds\": 9.0",
     "}"
    ]
   }
