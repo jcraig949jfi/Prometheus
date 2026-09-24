@@ -7,3 +7,4 @@ correction and what the seat now does differently. Empty at creation:
 the seat has made no calls.
 
 date | call made | what was true | corrected by | changed practice
+2026-09-24 | own env design: exact per-world target balance (sampling without replacement) makes every constant policy score exactly 0.5, so it is a clean baseline | it made consecutive targets anti-correlated (P(same)=1/3 in FLIP's 4-trial blocks, 7/15 over 16 trials); a "copy last teacher" policy scored 0.346 under zero-comm, so "opposite of last" would have scored ~0.65 with no adaptation | plant probe (FLIP x relay_flood x zero_comm) before any search | i.i.d. targets + mirror-paired worlds; every env ships a sequential-exploit check (lag-1 target correlation) in its tests

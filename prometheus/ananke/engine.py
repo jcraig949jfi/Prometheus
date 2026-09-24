@@ -87,7 +87,7 @@ class World:
         self.ph = ph
         self.dev = torch.device(device)
         self.ctrl = ctrl or Controls()
-        g = torch.as_tensor(np.asarray(genomes), dtype=I64, device=self.dev)
+        g = torch.as_tensor(np.array(genomes), dtype=I64, device=self.dev)
         assert g.dim() == 4 and g.shape[1:] == (ph.rules, ph.prog_len, 5), g.shape
         self.genome = g
         B = g.shape[0]
@@ -141,6 +141,15 @@ class World:
         self.last_chan = torch.zeros(B, N, dtype=I64, device=dev)
         self.last_pay = torch.zeros(B, N, P, dtype=I32, device=dev)
         self.last_awake = torch.zeros(B, N, dtype=torch.bool, device=dev)
+        # cheap continuous telemetry (in-graph accumulators; telemetry.py reads them)
+        self.tel = {
+            "pay_hist": torch.zeros(B, 16, dtype=I64, device=dev),     # payload0 of emissions
+            "chan_hist": torch.zeros(B, C, dtype=I64, device=dev),
+            "ever_emit": torch.zeros(B, N, dtype=torch.bool, device=dev),
+            "s0_changes": torch.zeros(B, dtype=I64, device=dev),
+            "s0_prev": torch.zeros(B, N, dtype=I32, device=dev),
+            "emit_trace": torch.zeros(max(1, 1), B, dtype=I64, device=dev),
+        }
         # ---- schedule
         self.set_schedule(schedule)
         # ---- control tick tables
@@ -167,6 +176,7 @@ class World:
         self.read_idx = sch.read_idx.to(dev, I64)
         self.Tsch = self.sch_val.shape[0]
         self.trace = torch.zeros(max(self.Tsch, 1), self.B, self.read_idx.shape[1], dtype=I32, device=dev)
+        self.tel["emit_trace"] = torch.zeros(max(self.Tsch, 1), self.B, dtype=I64, device=dev)
         self._graph = None
 
     # ------------------------------------------------------------------ io
@@ -200,7 +210,8 @@ class World:
         return {"t": self.t, "ph": self.ph.to_dict(), "genome": self.genome.cpu(),
                 "ws": self.ws.cpu(), "state": {k: v.cpu().clone() for k, v in self.state_arrays().items()},
                 "stats": {k: v.cpu().clone() for k, v in self.stats.items()},
-                "trace": self.trace.cpu().clone()}
+                "trace": self.trace.cpu().clone(),
+                "tel": {k: v.cpu().clone() for k, v in self.tel.items()}}
 
     def restore(self, ck: dict) -> None:
         assert ck["ph"] == self.ph.to_dict()
@@ -212,6 +223,8 @@ class World:
         for k, v in self.stats.items():
             v.copy_(ck["stats"][k].to(self.dev))
         self.trace.copy_(ck["trace"].to(self.dev))
+        for k, v in self.tel.items():
+            v.copy_(ck["tel"][k].to(self.dev))
 
     # ---------------------------------------------------------------- tick
     def _tick(self) -> None:
@@ -224,9 +237,9 @@ class World:
         msum = self.Msum.index_select(0, slot)[0]
         mcnt = self.Mcnt.index_select(0, slot)[0]
         if ctrl.drop_packets_at:
-            keep = ~self._drop_tab[t.clamp(max=self._Tc)]
-            msum = msum * keep
-            mcnt = mcnt * keep
+            keep = ~self._drop_tab.index_select(0, t.clamp(max=self._Tc).reshape(1))
+            msum = msum * keep.to(I32)
+            mcnt = mcnt * keep.to(I32)
         tot = mcnt.sum(-1)
         if ph.cap > 0 and ph.collision == "aloha":
             over = tot > ph.cap
@@ -367,7 +380,7 @@ class World:
             self.Kp.scatter_(2, si, torch.where(fire, val, cur)[..., None])
         # ablation hook (not normal physics): memory reset before decay
         if ctrl.reset_state_at:
-            hit = self._reset_tab[t.clamp(max=self._Tc)] & self._reset_mask
+            hit = self._reset_tab.index_select(0, t.clamp(max=self._Tc).reshape(1)) & self._reset_mask
             self.S.masked_fill_(hit[..., None], 0)
         # 9. DECAY ---------------------------------------------------------
         if ph.decay_shift > 0:
@@ -375,6 +388,16 @@ class World:
         # 10. READOUT trace ------------------------------------------------
         s0 = torch.gather(self.S[..., 0], 1, self.read_idx)
         self.trace.index_copy_(0, tv.reshape(1), s0[None])
+        # telemetry ---------------------------------------------------------
+        tel = self.tel
+        pb = ((self.last_pay[..., 0].to(I64) + 32768) >> 12).clamp(0, 15)
+        tel["pay_hist"].scatter_add_(1, pb, want.to(I64))
+        tel["chan_hist"].scatter_add_(1, chan, want.to(I64))
+        tel["ever_emit"] |= want
+        s0n = self.S[..., 0]
+        tel["s0_changes"] += (s0n != tel["s0_prev"]).sum(-1)
+        tel["s0_prev"].copy_(s0n)
+        tel["emit_trace"].index_copy_(0, tv.reshape(1), want.sum(-1)[None].to(I64))
         self.t_dev.add_(1)
 
     def _emit(self, want, chan, pay):
