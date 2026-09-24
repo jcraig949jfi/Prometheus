@@ -1,0 +1,799 @@
+{
+ "identity": {
+  "cosmos_src_sha": "6c145b04cbb113602695b3d0e4019c1aa1791389dc2394a05f891645126c73e6",
+  "n_src": 62,
+  "git_head": "ad2d7a7b5d4313d5b1115615858927b3f91da269",
+  "cosmos_dirty": false
+ },
+ "summary": {
+  "N0": {
+   "expected": "NONE",
+   "got": [
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE"
+   ],
+   "pass": true
+  },
+  "PV": {
+   "expected": "PASSIVE",
+   "got": [
+    "PASSIVE",
+    "PASSIVE",
+    "PASSIVE",
+    "PASSIVE",
+    "PASSIVE"
+   ],
+   "pass": true
+  },
+  "FX": {
+   "expected": "FUNCTIONAL",
+   "got": [
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL"
+   ],
+   "pass": true
+  },
+  "FD": {
+   "expected": "FUNCTIONAL",
+   "got": [
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL"
+   ],
+   "pass": true
+  },
+  "MC": {
+   "expected": "NONE",
+   "got": [
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE"
+   ],
+   "pass": true
+  },
+  "NZ": {
+   "expected": "FUNCTIONAL",
+   "got": [
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "INCOHERENT",
+    "FUNCTIONAL",
+    "FUNCTIONAL"
+   ],
+   "pass": false
+  }
+ },
+ "gate": "FAIL",
+ "rows": [
+  {
+   "system": "N0",
+   "seed": 1,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "tau": 4.440892098500626e-16,
+    "null_max": 4.440892098500626e-16,
+    "ce_O": 2.0004721156626566,
+    "ce_SO": 2.0004721156626566,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.2355,
+    "J_ablated": 0.2355,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 0.91
+  },
+  {
+   "system": "N0",
+   "seed": 2,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "tau": 4.440892098500626e-16,
+    "null_max": 4.440892098500626e-16,
+    "ce_O": 2.0024164584806816,
+    "ce_SO": 2.0024164584806816,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.257,
+    "J_ablated": 0.257,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 0.86
+  },
+  {
+   "system": "N0",
+   "seed": 3,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "tau": 4.440892098500626e-16,
+    "null_max": 4.440892098500626e-16,
+    "ce_O": 2.000664439640528,
+    "ce_SO": 2.000664439640528,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.251,
+    "J_ablated": 0.251,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 0.93
+  },
+  {
+   "system": "N0",
+   "seed": 4,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "tau": 6.750155989720934e-16,
+    "null_max": 8.881784197001252e-16,
+    "ce_O": 2.0009957062765973,
+    "ce_SO": 2.0009957062765973,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.243,
+    "J_ablated": 0.243,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 1.29
+  },
+  {
+   "system": "N0",
+   "seed": 5,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "tau": 6.750155989720934e-16,
+    "null_max": 8.881784197001252e-16,
+    "ce_O": 2.0029001378128255,
+    "ce_SO": 2.0029001378128255,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.2475,
+    "J_ablated": 0.2475,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 1.28
+  },
+  {
+   "system": "PV",
+   "seed": 1,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9627370421788857,
+    "tau": 0.0011453654738146917,
+    "null_max": 0.0012298729356050586,
+    "ce_O": 2.00144245901452,
+    "ce_SO": 0.03870541683563438,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.2435,
+    "J_ablated": 0.2435,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "PASSIVE",
+   "s": 1.6
+  },
+  {
+   "system": "PV",
+   "seed": 2,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9648301009303621,
+    "tau": 0.002117270000926699,
+    "null_max": 0.002890513803238459,
+    "ce_O": 2.003564791467494,
+    "ce_SO": 0.03873469053713203,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.254,
+    "J_ablated": 0.254,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "PASSIVE",
+   "s": 1.92
+  },
+  {
+   "system": "PV",
+   "seed": 3,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9617698639770584,
+    "tau": 0.0013024796639010182,
+    "null_max": 0.002531994179739261,
+    "ce_O": 2.000454033603104,
+    "ce_SO": 0.03868416962604546,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.246,
+    "J_ablated": 0.246,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "PASSIVE",
+   "s": 2.03
+  },
+  {
+   "system": "PV",
+   "seed": 4,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.962407109200096,
+    "tau": 0.0006660290369943821,
+    "null_max": 0.0009478223669705521,
+    "ce_O": 2.0011057074587515,
+    "ce_SO": 0.038698598258655376,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.259,
+    "J_ablated": 0.259,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "PASSIVE",
+   "s": 1.88
+  },
+  {
+   "system": "PV",
+   "seed": 5,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9646976836177474,
+    "tau": 0.0006301008872427244,
+    "null_max": 0.0008411339675022944,
+    "ce_O": 2.003430551084555,
+    "ce_SO": 0.038732867466807645,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.2535,
+    "J_ablated": 0.2535,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "PASSIVE",
+   "s": 1.79
+  },
+  {
+   "system": "FX",
+   "seed": 1,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9627370421788857,
+    "tau": 0.0011453654738146917,
+    "null_max": 0.0012298729356050586,
+    "ce_O": 2.00144245901452,
+    "ce_SO": 0.03870541683563438,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 1.78
+  },
+  {
+   "system": "FX",
+   "seed": 2,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9648301009303621,
+    "tau": 0.002117270000926699,
+    "null_max": 0.002890513803238459,
+    "ce_O": 2.003564791467494,
+    "ce_SO": 0.03873469053713203,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 1.63
+  },
+  {
+   "system": "FX",
+   "seed": 3,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9617698639770584,
+    "tau": 0.0013024796639010182,
+    "null_max": 0.002531994179739261,
+    "ce_O": 2.000454033603104,
+    "ce_SO": 0.03868416962604546,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 1.51
+  },
+  {
+   "system": "FX",
+   "seed": 4,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.962407109200096,
+    "tau": 0.0006660290369943821,
+    "null_max": 0.0009478223669705521,
+    "ce_O": 2.0011057074587515,
+    "ce_SO": 0.038698598258655376,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 1.82
+  },
+  {
+   "system": "FX",
+   "seed": 5,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9646976836177474,
+    "tau": 0.0006301008872427244,
+    "null_max": 0.0008411339675022944,
+    "ce_O": 2.003430551084555,
+    "ce_SO": 0.038732867466807645,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 1.52
+  },
+  {
+   "system": "FD",
+   "seed": 1,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9617925823043298,
+    "tau": 0.0019537469444996466,
+    "null_max": 0.0026573126545481607,
+    "ce_O": 2.0004721156626566,
+    "ce_SO": 0.03867953335832672,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 2.37
+  },
+  {
+   "system": "FD",
+   "seed": 2,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.963697416347474,
+    "tau": 0.0014941731014295049,
+    "null_max": 0.0021232010173228844,
+    "ce_O": 2.0024164584806816,
+    "ce_SO": 0.03871904213320762,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 2.18
+  },
+  {
+   "system": "FD",
+   "seed": 3,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.961976863916978,
+    "tau": 0.0003150053501370494,
+    "null_max": 0.0011693480496823838,
+    "ce_O": 2.000664439640528,
+    "ce_SO": 0.038687575723550034,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 2.21
+  },
+  {
+   "system": "FD",
+   "seed": 4,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9622984773346732,
+    "tau": 0.0006761487275313411,
+    "null_max": 0.0011334429228324616,
+    "ce_O": 2.0009957062765973,
+    "ce_SO": 0.03869722894192405,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 2.15
+  },
+  {
+   "system": "FD",
+   "seed": 5,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9641715593886757,
+    "tau": 0.0024486076168615985,
+    "null_max": 0.004271653703288747,
+    "ce_O": 2.0029001378128255,
+    "ce_SO": 0.03872857842414987,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 2.2
+  },
+  {
+   "system": "MC",
+   "seed": 1,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009756370575872753,
+    "tau": 0.009774141241562617,
+    "null_max": 0.00977464146080198,
+    "ce_O": 1.0103653812573594,
+    "ce_SO": 1.0006090106814867,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.6455,
+    "J_ablated": 0.6455,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 5.13
+  },
+  {
+   "system": "MC",
+   "seed": 2,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009833949295395827,
+    "tau": 0.009882238016360647,
+    "null_max": 0.009882495040210104,
+    "ce_O": 1.0042456647083515,
+    "ce_SO": 0.9944117154129557,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.5965,
+    "J_ablated": 0.5965,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 4.92
+  },
+  {
+   "system": "MC",
+   "seed": 3,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009458960355219537,
+    "tau": 0.009463124984418965,
+    "null_max": 0.009463631772716585,
+    "ce_O": 1.0451498717781857,
+    "ce_SO": 1.0356909114229662,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.611,
+    "J_ablated": 0.611,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 4.9
+  },
+  {
+   "system": "MC",
+   "seed": 4,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009518600384694098,
+    "tau": 0.009534488580415106,
+    "null_max": 0.009536943825194433,
+    "ce_O": 1.0420024181582623,
+    "ce_SO": 1.0324838177735682,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.6395,
+    "J_ablated": 0.6395,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 4.79
+  },
+  {
+   "system": "MC",
+   "seed": 5,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009676571140160961,
+    "tau": 0.009688174225129034,
+    "null_max": 0.009688779649797086,
+    "ce_O": 1.0205672875196323,
+    "ce_SO": 1.0108907163794714,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.631,
+    "J_ablated": 0.631,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "held": false
+   },
+   "expected": "NONE",
+   "s": 8.83
+  },
+  {
+   "system": "NZ",
+   "seed": 1,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.004021558894448551,
+    "tau": 0.0017069980842962969,
+    "null_max": 0.0018994876596152288,
+    "ce_O": 2.00144245901452,
+    "ce_SO": 1.9974209001200716,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.319,
+    "J_ablated": 0.23,
+    "effect": 0.089,
+    "se": 0.006270305860878913,
+    "eps": 0.018810917582636737,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.62
+  },
+  {
+   "system": "NZ",
+   "seed": 2,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.014308052247992142,
+    "tau": 0.0013278390658336262,
+    "null_max": 0.001695684672476716,
+    "ce_O": 2.003564791467494,
+    "ce_SO": 1.989256739219502,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.3175,
+    "J_ablated": 0.2265,
+    "effect": 0.091,
+    "se": 0.0065463394226921,
+    "eps": 0.0196390182680763,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.6
+  },
+  {
+   "system": "NZ",
+   "seed": 3,
+   "class": "INCOHERENT",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0004637311068282912,
+    "tau": 0.0015528430054021277,
+    "null_max": 0.001992335040734261,
+    "ce_O": 2.000454033603104,
+    "ce_SO": 1.9999903024962755,
+    "held": false
+   },
+   "P2": {
+    "J_intact": 0.3295,
+    "J_ablated": 0.2105,
+    "effect": 0.119,
+    "se": 0.006935249668896197,
+    "eps": 0.020805749006688593,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.48
+  },
+  {
+   "system": "NZ",
+   "seed": 4,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009669403853741487,
+    "tau": 0.0007121194298073319,
+    "null_max": 0.0009784075537084824,
+    "ce_O": 2.0011057074587515,
+    "ce_SO": 1.99143630360501,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.326,
+    "J_ablated": 0.235,
+    "effect": 0.091,
+    "se": 0.0064016023164552415,
+    "eps": 0.019204806949365723,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.37
+  },
+  {
+   "system": "NZ",
+   "seed": 5,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.014991904389926702,
+    "tau": 0.003113082695479114,
+    "null_max": 0.0031987203289185473,
+    "ce_O": 2.003430551084555,
+    "ce_SO": 1.9884386466946284,
+    "held": true
+   },
+   "P2": {
+    "J_intact": 0.3115,
+    "J_ablated": 0.2225,
+    "effect": 0.089,
+    "se": 0.006235519063797934,
+    "eps": 0.018706557191393802,
+    "held": true
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.37
+  }
+ ]
+}
