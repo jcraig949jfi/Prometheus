@@ -27,7 +27,17 @@ def load(path):
         for k, v in r["dials"].items():
             r.setdefault(k, v)
         r["r2c"] = float(np.clip(r["r2_ho"], -1, 1))
+        if "mse_ho" in r:  # Round 3+: unclipped ruler
+            r["nlmse"] = float(-np.log10(max(r["mse_ho"], 1e-12)))
     return rows
+
+
+def configure(dials_cont, dials_cat, primary):
+    """Round 3 generalisation: set dial set and primary rulers (Round-1
+    defaults unchanged when not called)."""
+    global CONT, CAT, DIALS, PRIMARY
+    CONT, CAT = list(dials_cont), list(dials_cat)
+    DIALS, PRIMARY = CONT + CAT, list(primary)
 
 
 def col(rows, k):
@@ -152,11 +162,12 @@ def couplings(disc, val, ruler, rank=False):
 def coupling_controls(disc, val):
     """Shuffled ruler must nominate <= 5% of pairs; a planted z_i z_j coupling
     must be nominated."""
-    yd = np.array([r["r2c"] for r in disc])
-    sh_d = [dict(r, r2c=v) for r, v in zip(disc, RNG.permutation(yd))]
-    yv = np.array([r["r2c"] for r in val])
-    sh_v = [dict(r, r2c=v) for r, v in zip(val, RNG.permutation(yv))]
-    shuffled = couplings(sh_d, sh_v, "r2c")
+    ru = PRIMARY[0]
+    yd = np.array([r[ru] for r in disc])
+    sh_d = [dict(r, **{ru: v}) for r, v in zip(disc, RNG.permutation(yd))]
+    yv = np.array([r[ru] for r in val])
+    sh_v = [dict(r, **{ru: v}) for r, v in zip(val, RNG.permutation(yv))]
+    shuffled = couplings(sh_d, sh_v, ru)
     frac = float(np.mean([r["nominated"] for r in shuffled]))
     pi, pj = [CONT[i] for i in RNG.choice(len(CONT), 2, replace=False)]
 
@@ -164,9 +175,9 @@ def coupling_controls(disc, val):
         zi = col(rows, pi)
         zj = col(rows, pj)
         zi, zj = (zi - zi.mean()) / zi.std(), (zj - zj.mean()) / zj.std()
-        y = np.array([r["r2c"] for r in rows])
-        return [dict(r, r2c=v) for r, v in zip(rows, y + 0.3 * y.std() * zi * zj)]
-    planted = couplings(plant(disc), plant(val), "r2c")
+        y = np.array([r[ru] for r in rows])
+        return [dict(r, **{ru: v}) for r, v in zip(rows, y + 0.3 * y.std() * zi * zj)]
+    planted = couplings(plant(disc), plant(val), ru)
     hit = next(r for r in planted if set(r["pair"]) == {pi, pj})
     return dict(shuffled_nominated_frac=frac, planted_pair=(pi, pj), planted_nominated=hit["nominated"],
                 planted_q=hit["q"], pass_=frac <= 0.05 and hit["nominated"])
@@ -266,7 +277,11 @@ def precursors(disc, val):
     return out
 
 
-def main(path, outp):
+def main(path, outp, round3=False):
+    if round3:
+        configure(["lam", "sweeps", "scratch", "cap_actual", "replay_frac_actual", "dream_ratio", "surprise_alpha",
+                   "disturb", "forget", "err_frac_actual", "persist", "p_restruct", "drift", "noise", "kappa_mult"],
+                  ["start"], ["nlmse", "EFF"])
     rows = load(path)
     for r in rows:
         r["EFF"] = float(r["EFF"])
@@ -274,7 +289,7 @@ def main(path, outp):
     val = [r for r in rows if r["life"] % 2 == 1]
     rep = dict(n=len(rows), n_disc=len(disc), n_val=len(val))
     me = {}
-    for ruler in PRIMARY + ["L2", "L2_p2"]:
+    for ruler in list(dict.fromkeys(PRIMARY + ["r2c", "L2", "L2_p2"])):
         yd = np.array([r[ruler] for r in disc], float)
         yv = np.array([r[ruler] for r in val], float)
         a, b = main_effects(disc, yd), main_effects(val, yv)
@@ -303,4 +318,4 @@ def main(path, outp):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], round3=len(sys.argv) > 3 and sys.argv[3] == "round3")

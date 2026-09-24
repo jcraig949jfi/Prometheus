@@ -344,7 +344,7 @@ def live_d(world, org, events, econ, trace_every=4, sample_cells=None):
     y = xf[ho]
     r2_final = float(1 - ((y - p) ** 2).sum() / ((y - y.mean()) ** 2).sum())
     return dict(steps=t + 1, died=bool(energy <= 0), reward=rew, comp_energy=comp_e, U=rew - comp_e,
-                comp_units=comp_u, r2_ho=r2_final, L2=ok["L2"] / max(n["L2"], 1),
+                comp_units=comp_u, r2_ho=r2_final, mse_ho=float(np.mean((y - p) ** 2)), L2=ok["L2"] / max(n["L2"], 1),
                 L2_p2=ok2["L2_p2"] / max(ok2["n_p2"], 1), n_cons=n_cons, restructs=restructs,
                 P_used=int(org.persistent_floats()), trace=trace)
 
@@ -362,6 +362,18 @@ def sample_dials(rng):
         surprise_alpha=float(rng.uniform(0, 2)), disturb=float(rng.uniform(0, 0.3)), forget=float(rng.uniform(0, 0.2)),
         err_frac=float(rng.uniform(0, 0.3)), persist=int(rng.integers(1, 21)), p_restruct=float(rng.uniform(0, 1)),
         org_family=str(rng.choice(["TT", "CP", "LR"])), start=str(rng.choice(["correct", "random"])))
+
+
+def sample_dials_local(rng):
+    """PREREG_D3 (final ranges): local random design inside the competent regime."""
+    lu = lambda a, b: float(np.exp(rng.uniform(np.log(a), np.log(b))))
+    return dict(
+        world_family="TT", drift=float(rng.uniform(0, 0.6)), noise=float(rng.uniform(0.05, 0.25)),
+        kappa_mult=lu(0.25, 4.0), lam=lu(15, 120), sweeps=int(rng.integers(5, 21)), scratch=int(round(lu(64, 512))),
+        cap=int(round(lu(192, 512))), replay_frac=float(rng.uniform(0, 0.3)), dream_ratio=float(rng.uniform(0, 1)),
+        surprise_alpha=float(rng.uniform(0, 0.3)), disturb=float(rng.uniform(0, 0.05)), forget=float(rng.uniform(0, 0.1)),
+        err_frac=float(rng.uniform(0, 0.15)), persist=int(rng.integers(1, 21)), p_restruct=float(rng.uniform(0, 1)),
+        org_family="TT", start=str(rng.choice(["correct", "random"])))
 
 
 ECON = dict(energy0=400.0, metabolism=0.5, reward=10.0, tau=0.15, kappa=5e-6, budget=3e7, scratch=128)
