@@ -382,3 +382,51 @@ def test_rehearse_does_not_overwrite_a_declared_telemetry_artifact(tmp_path):
         ' "artifacts": ["%s", "out/result.json"]}' % launch.TELEMETRY_PATH)
     (tmp_path / "run.py").write_text("print('hi')\n")
     assert cli.main(["rehearse", str(spec_path)]) == 0
+
+
+# ------------------------------------------------------- the flight script
+
+def _flight_module():
+    import importlib.util
+    path = os.path.join(os.path.dirname(__file__), "..", "runpod",
+                        "iteration1_flight.py")
+    spec = importlib.util.spec_from_file_location("iteration1_flight",
+                                                  os.path.abspath(path))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_the_flight_script_needs_go_and_otherwise_creates_nothing(monkeypatch,
+                                                                  capsys):
+    """The expensive action is opt-in. Reading, importing or testing this
+    file must be free, so `--go` is the only path that can spend."""
+    flight = _flight_module()
+    from prometheus_gpu import credentials, provider as prov
+
+    def refuse(*a, **k):
+        raise AssertionError("a non --go invocation touched a credential")
+    monkeypatch.setattr(credentials, "install_into_environ", refuse)
+    monkeypatch.setattr(credentials, "resolve", refuse)
+
+    def no_provider(*a, **k):
+        raise AssertionError("a non --go invocation built a real provider")
+    monkeypatch.setattr(prov, "RunPodProvider", no_provider)
+
+    assert flight.main([]) == 0
+    assert "POD CREATED: False" in capsys.readouterr().out
+    assert flight.main(["--dry"]) == 0
+    assert flight.main(["--rehearse"]) == 0
+    out = capsys.readouterr().out
+    assert "result OK" in out
+    assert "billing_reconciled=False" in out
+
+
+def test_the_flight_budget_is_well_above_the_projection():
+    """A ceiling set near the estimate turns a small projection error into
+    lost work. That happened on AETH-02; see the calibration ledger."""
+    flight = _flight_module()
+    from prometheus_gpu import cost as cost_mod
+    spec = flight.load_spec()
+    projected = cost_mod.project(spec, workload_seconds=60.0)
+    assert flight.DEFAULT_BUDGET_USD > 5 * projected["usd_total"]

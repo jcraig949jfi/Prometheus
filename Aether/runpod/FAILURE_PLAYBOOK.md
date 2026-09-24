@@ -204,6 +204,86 @@ sequence. Keep the expensive step last, always.
 
 ---
 
+## 11. A possibly-billing pod recorded as a non-event
+
+**Looked like:** nothing yet -- caught by a launch test.
+
+**Cause:** the controller's teardown `finally` forced
+`result = "NOT_RUN"` whenever it held no pod id. An *unresolved* create
+also holds no pod id -- that is the whole problem with it -- so the one
+case where a pod may exist that we cannot name would have been written
+into the receipt as a clean non-event.
+
+**Now:** only a create the provider *confirmed* created nothing may be
+downgraded to `NOT_RUN`. An unresolved create emits a pod record with the
+id `UNRESOLVED`, `creation_outcome: "unknown"`, and a receipt that refuses
+to claim cleanup.
+
+**Prevention:** `test_an_unresolvable_create_is_not_a_clean_non_event`.
+
+**Generalisation worth keeping:** "no id" and "nothing exists" are
+different facts. Any code that treats a missing identifier as an absence
+is asserting something it cannot know.
+
+---
+
+## 12. The canonical example violated the schema the platform enforces
+
+**Looked like:** nothing, because nobody had run it.
+`examples/hello_gpu/run.py` emitted `utc` and `monotonic_s`;
+`TELEMETRY_SCHEMA.md` requires `t_utc` and `t_elapsed_s`, and
+`validate-telemetry` rejects a record missing either. The one file a seat
+is told to copy would have produced telemetry the platform refuses.
+
+**Cause:** the example was written before the schema and never re-checked
+against it. Documentation and code were verified; the example was assumed.
+
+**Now:** both examples conform, and both emit the reserved `units`
+counter the cost model divides by.
+
+**Prevention:** `test_prometheus_gpu_examples.py` EXECUTES each example
+the way a pod would and validates what it produced, including that every
+declared artifact was actually written. An example that does not satisfy
+the contract is worse than no example, because a seat copies it and
+inherits the defect.
+
+---
+
+## 13. A placeholder overwrote the thing it was standing in for
+
+**Looked like:** `rehearse` reported `TIMEOUT` on a module that was fine.
+
+**Cause:** the rehearsal serves synthetic telemetry, then fills each
+declared artifact with placeholder bytes. A module may legitimately
+declare its telemetry file as an artifact -- both examples do -- so the
+placeholder assignment clobbered the synthetic telemetry, and the
+controller polled until the runtime cap without ever seeing an `end`.
+
+**Now:** `setdefault`, not assignment.
+
+**Prevention:** `test_rehearse_does_not_overwrite_a_declared_telemetry_artifact`.
+
+---
+
+## 14. A stripped environment that broke the interpreter, not the code
+
+**Looked like:** every example failed under test with
+`ModuleNotFoundError: No module named 'numpy'`.
+
+**Cause:** the conformance test built the subprocess environment from
+scratch, to mimic a pod. numpy lives in a user site-packages directory
+that needs `APPDATA`, so the test was failing for a reason that had
+nothing to do with what it was testing.
+
+**Now:** start from the real environment with the forbidden names
+*removed*, which is also what the pod-side prelude actually leaves behind.
+
+**Generalisation:** a test that isolates more than the thing under test
+stops reporting on that thing. "Pod-like" was the wrong target; "what the
+prelude leaves" was the real one.
+
+---
+
 ## Diagnostics
 
 ```bash
