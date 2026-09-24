@@ -212,6 +212,62 @@
       "home_host": "M1",
       "status": "IGNORED",
       "notes": "observed 2026-09-19 by Atlas[m1-1c645957]: two foundry_service.py processes from F:/SerendipityD/var/deploy. Operator 2026-09-19: 'may have been repurposed to something else if it's still active. Ignore it for now.' No collector reads it; rows from the one stat pass are kept as history."
+    },
+    {
+      "engine_id": "cosmos",
+      "name": "Cosmos world-physics engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "roles/Cosmos"
+      ],
+      "owner_seats": [
+        "Cosmos"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "registered 2026-09-24 on Cosmos's delegation (comms #544): C0 closed, export at roles/Cosmos/campaigns/atlas_export_c0 (10 stores, ~4.3k edges, ~8.9k facts, MANIFEST with source sha256s) awaiting an Atlas adapter (ATLAS-37)"
+    },
+    {
+      "engine_id": "ensorain",
+      "name": "Ensorain Tensor World Engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "roles/Ensorain"
+      ],
+      "owner_seats": [
+        "Ensorain"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "registered 2026-09-24 from comms #541/#543/#545: E0/E1/E1.5 closed INDETERMINATE (planted TT cannot learn in a life; rank-1 unfolding beats TT per parameter); not yet harvested"
+    },
+    {
+      "engine_id": "crius",
+      "name": "Crius accessibility-frontier engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "crius"
+      ],
+      "owner_seats": [
+        "Crius"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "registered 2026-09-24: campaign 2 rungs A-D with PARTS donors and takeovers.jsonl; RA-4 depends on indexing it (ATLAS-34)"
+    },
+    {
+      "engine_id": "ananke",
+      "name": "Ananke PTE substrate",
+      "kind": "ENGINE",
+      "code_paths": [
+        "roles/Ananke"
+      ],
+      "owner_seats": [
+        "Ananke"
+      ],
+      "home_host": null,
+      "status": "UNKNOWN",
+      "notes": "observed 2026-09-24 on main (0e89f7104: charter + substrate design spec PTE-SUB-1/PTE-OPS-1); no runs indexed"
     }
   ],
   "local_roots": [
@@ -386,6 +442,9 @@
       "M1"
     ],
     "proposals": [
+      "M1"
+    ],
+    "theory": [
       "M1"
     ]
   }
