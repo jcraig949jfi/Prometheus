@@ -5,6 +5,8 @@
     python -m prometheus_gpu.cli bundle    spec.json [--out bundle.tar.gz]
     python -m prometheus_gpu.cli inventory
     python -m prometheus_gpu.cli cleanup   [--pod ID ...] [--all]
+    python -m prometheus_gpu.cli validate-telemetry telemetry.jsonl
+    python -m prometheus_gpu.cli validate-receipt   receipt.json
 
 No seat should have to construct RunPod JSON to run an ordinary
 experiment, and `estimate` and `dry-run` never touch the provider's
@@ -139,6 +141,31 @@ def cmd_cleanup(args):
     return 0 if receipt["operational_cleanup"] else 1
 
 
+def cmd_validate_telemetry(args):
+    from . import telemetry as tel
+    try:
+        records, summary = tel.validate_file(args.path)
+    except tel.TelemetryError as exc:
+        print("TELEMETRY REJECTED: %s" % exc, file=sys.stderr)
+        return 2
+    print(json.dumps(summary, indent=2, sort_keys=True))
+    if not summary.get("complete"):
+        print("\nNOTE: no `end` record. The module never reported finishing, "
+              "which is not the same as the run having failed.", file=sys.stderr)
+    return 0
+
+
+def cmd_validate_receipt(args):
+    from . import receipt as rc
+    try:
+        rec = rc.load(args.path)
+    except rc.ReceiptError as exc:
+        print("RECEIPT REJECTED: %s" % exc, file=sys.stderr)
+        return 2
+    print(rc.render(rec))
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="prometheus-gpu",
                                 description="Prometheus GPU flight system")
@@ -148,9 +175,15 @@ def build_parser():
                                  ("dry-run", cmd_dry_run, True),
                                  ("bundle", cmd_bundle, True),
                                  ("inventory", cmd_inventory, False),
-                                 ("cleanup", cmd_cleanup, False)):
+                                 ("cleanup", cmd_cleanup, False),
+                                 ("validate-telemetry",
+                                  cmd_validate_telemetry, False),
+                                 ("validate-receipt",
+                                  cmd_validate_receipt, False)):
         sp = sub.add_parser(name)
         sp.set_defaults(func=fn)
+        if name.startswith("validate-"):
+            sp.add_argument("path")
         if needs_spec:
             sp.add_argument("spec")
             sp.add_argument("--module-dir", default=None)

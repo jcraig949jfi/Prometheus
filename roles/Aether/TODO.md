@@ -1,6 +1,6 @@
 # Aether TODO
 
-Currency: 2026-09-23. Written for the instance that boots after a
+Currency: 2026-09-24. Written for the instance that boots after a
 context reset or a Claude Code upgrade. Read this AFTER the base-role
 chain and BEFORE starting anything.
 
@@ -20,6 +20,39 @@ GPU experiment without reading Aether's implementation.
 
 **2. AETH-02 NATIVE CIRCUITRY** -- the science, which continues as the
 engineering campaign's reference workload.
+
+## LADDER PROGRESS (2026-09-24)
+
+**Iteration 0 DONE, $0.00.** `Aether/runpod/prometheus_gpu/`, the
+`examples/hello_gpu/` module, and the six documents named by the
+directive. 59 tests in `Aether/test/test_prometheus_gpu.py`.
+
+Entry point for a fresh seat: `Aether/runpod/README.md`. Do not start by
+reading the platform source; the guide is meant to be sufficient and if
+it is not, that is the defect to fix.
+
+Two bugs the tests found before any pod: `os.path.isabs("/abs/path")` is
+False on a Windows controller, so host path rules were deciding what is
+legal on a Linux pod; and the package was originally named `platform`,
+shadowing the stdlib module.
+
+Deliberately NOT built: `python -m prometheus_gpu.cli run`. A
+half-qualified launch command invites spending through a path that has
+not demonstrated cleanup after an ambiguous create. Iterations 1-5
+qualify it rung by rung. Until then, real runs go through
+`aeth01_firstlight/` or `aeth02_circuitry/`.
+
+Next rung (Iteration 1): a single tiny pod through the platform's own
+path, ~$0.05, proving bootstrap, canary, telemetry, artifact retrieval,
+receipt and cleanup end to end. Requires the AETH-02 pod to be down
+first -- one pod at a time.
+
+**Cost calibration correction.** The preregistered $0.83 per 2048^2
+x 50,000-tick trajectory was 7.2% low; measured $0.889. Cause: a
+throughput figure from an uninstrumented 4096^2 run was carried to an
+instrumented 2048^2 run without re-measuring. Measured rates now live in
+`Aether/runpod/COST_MODEL.md`; take them from there rather than
+re-deriving.
 
 ## THE AETH-02 ITEM
 

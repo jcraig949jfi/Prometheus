@@ -39,3 +39,28 @@ and only then stage and commit. Never put a test inside a `&&` chain
 whose later stages can mask the exit status, and never pipe a gate
 through `tail` when its exit code is what I am relying on.
 
+
+2026-09-24 | Preregistered the AETH-02 trajectory cost at $0.83 per
+2048^2 x 50,000-tick world, $2.49 for three, and set the controller
+ceiling at $2.60 on that basis. | Measured from 3,918 s of the live run:
+7.72 ticks/s, $0.889 per trajectory, $2.67 for three. The projection was
+7.2% low, so the run will stop against its ceiling near tick 146,000 of
+150,000 instead of finishing, truncating the third trajectory and costing
+it the terminal 50,000-tick edge window. AETH-02 lands at ~$2.82 of $3.00,
+leaving $0.18 rather than the ~$0.33 the directive asked be held back. |
+Deriving throughput from the orchestrator's own progress log while the
+run was still in flight. | The error was in the throughput figure, not
+the price: observed billing was $0.4897/h against A40 list $0.49/h, so
+the rate model was fine. I carried a site-ticks/s figure from an
+UNINSTRUMENTED 4096^2 First Light run into an INSTRUMENTED 2048^2 run
+without re-measuring, and neither the lattice size nor the causal-edge
+observer was held constant. A cost projection is a throughput claim
+wearing a dollar sign; the throughput has to be measured on the
+configuration that will actually run, and a short paid probe before
+committing the campaign would have cost about $0.02. Measured rates now
+live in `Aether/runpod/COST_MODEL.md` with their provenance, and
+`prometheus_gpu.cost` marks inferred overhead terms as inferred, so the
+next projection starts from observations rather than from recollection.
+Second lesson: set the ceiling ABOVE the projection by more than the
+projection's own uncertainty, or the guard converts a small estimate
+error into lost science at the end of the last replicate.

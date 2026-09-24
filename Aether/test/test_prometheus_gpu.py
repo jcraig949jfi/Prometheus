@@ -31,6 +31,8 @@ from prometheus_gpu import dryrun                    # noqa: E402
 from prometheus_gpu import provider as prov          # noqa: E402
 from prometheus_gpu import secrets as secrets_mod    # noqa: E402
 from prometheus_gpu import spec as spec_mod          # noqa: E402
+from prometheus_gpu import telemetry as tel_mod      # noqa: E402
+from prometheus_gpu import receipt as rc_mod         # noqa: E402
 
 MINIMAL = {
     "name": "example-module",
@@ -98,6 +100,29 @@ def test_the_smallest_useful_spec_is_two_fields():
 def test_specs_that_would_cost_money_or_lose_data_are_refused(bad, why):
     with pytest.raises(spec_mod.SpecError):
         spec_mod.from_dict(bad)
+
+
+def test_windows_host_cannot_bless_an_absolute_pod_path():
+    """The controller may be Windows; the pod is always Linux.
+
+    os.path.isabs("/etc/passwd") is FALSE on Windows under Python 3.13,
+    because a rooted path with no drive is not absolute to ntpath. It is
+    absolutely absolute on the pod. Validating a pod-side path with
+    host-side rules is how this passes review on a laptop and escapes
+    the workdir in the cloud.
+    """
+    import os.path
+    if os.name == "nt":
+        assert os.path.isabs("/app/out/x.json") is False, (
+            "if this ever becomes True the bug below stops being possible "
+            "on this host, but the validator must still not depend on it")
+    for escaping in ("/etc/passwd", "/app/out/x.json", "../../etc/passwd",
+                     "out" + chr(92) + "result.json"):
+        with pytest.raises(spec_mod.SpecError):
+            spec_mod.from_dict({"name": "x", "entrypoint": "go.py",
+                                "artifacts": [escaping]})
+        with pytest.raises(spec_mod.SpecError):
+            spec_mod.from_dict({"name": "x", "entrypoint": escaping})
 
 
 def test_a_spec_cannot_allowlist_a_provider_credential():
@@ -363,3 +388,223 @@ def test_cheaper_gpu_can_win_on_a_short_job():
     assert a4000["usd_total"] < a40["usd_total"], (
         "a slower, cheaper GPU can be operationally superior on a short job "
         "even at twice the runtime")
+
+
+# --------------------------------------------------------------------------
+# Telemetry. The schema doc is only as true as these.
+# --------------------------------------------------------------------------
+
+def test_a_record_without_a_clock_is_refused():
+    """t_elapsed_s is not decoration: the pod and the controller keep
+    different clocks, and a progress curve has to be placeable against a
+    cost curve using an origin the pod agrees with."""
+    with pytest.raises(tel_mod.TelemetryError):
+        tel_mod.validate_record({"kind": "progress", "t_utc": "now"})
+    with pytest.raises(tel_mod.TelemetryError):
+        tel_mod.validate_record({"kind": "progress", "t_elapsed_s": 1.0})
+
+
+def test_a_truncated_tail_is_normal_but_mid_stream_corruption_is_not():
+    """A pod killed mid-write leaves a partial LAST line; that must not
+    discard the whole run. A bad line in the MIDDLE is a different and
+    worse failure and must not be swallowed."""
+    good = ('{"kind":"start","t_utc":"a","t_elapsed_s":0}\n'
+            '{"kind":"progress","t_utc":"b","t_elapsed_s":5,"units":40}\n'
+            '{"kind":"progr')
+    assert len(tel_mod.read_jsonl(good, is_text=True)) == 2
+
+    bad = ('{"kind":"start","t_utc":"a","t_elapsed_s":0}\n'
+           'NOT JSON AT ALL\n'
+           '{"kind":"end","t_utc":"c","t_elapsed_s":9}\n')
+    with pytest.raises(tel_mod.TelemetryError):
+        tel_mod.read_jsonl(bad, is_text=True)
+
+
+def test_telemetry_survives_a_run_that_never_finished(tmp_path):
+    """The case telemetry exists for: the pod is gone and no `end` record
+    was ever written. Everything up to the last flush must still read."""
+    path = str(tmp_path / "telemetry.jsonl")
+    writer = tel_mod.Writer(path, run_id="r1")
+    writer.emit("start", plan="3 phases")
+    writer.emit("progress", units=1000)
+    writer.emit("progress", units=2000)
+    # no `end`: the pod died here.
+    records, summary = tel_mod.validate_file(path)
+    assert len(records) == 3
+    assert summary["units_final"] == 2000
+    assert summary["complete"] is False, (
+        "`complete` must mean the MODULE said it finished, not that we "
+        "managed to read some telemetry")
+    assert [r["seq"] for r in records] == [1, 2, 3]
+
+
+def test_a_module_keeps_its_own_vocabulary():
+    """The platform must not force Aether's denominator onto other seats."""
+    import time
+    rec = tel_mod.record("progress", time.monotonic(), units=5,
+                         candidates_evaluated=17, my_own_metric=0.25)
+    assert rec["candidates_evaluated"] == 17
+    assert rec["my_own_metric"] == 0.25
+
+
+def test_summary_reports_the_stall_not_just_the_mean():
+    recs = [{"kind": "progress", "t_utc": "a", "t_elapsed_s": t, "units": t}
+            for t in (0, 1, 2, 90, 91)]
+    summary = tel_mod.summarise(recs)
+    assert summary["max_gap_s"] == 88.0, (
+        "a mean rate hides an 88-second stall; the gap is the finding")
+
+
+# --------------------------------------------------------------------------
+# The run receipt. The four cleanup claims are the point.
+# --------------------------------------------------------------------------
+
+def _receipt(pods, inventory_read_ok=True, result="OK", **over):
+    rec = {"schema": rc_mod.SCHEMA, "run_id": "r1", "module": "m@1",
+           "result": result, "bundle_sha256": "a" * 64, "pods": pods,
+           "cleanup": rc_mod.cleanup_block(pods, inventory_read_ok)}
+    rec.update(over)
+    return rec
+
+
+def test_a_clean_run_needs_both_an_acknowledgement_and_an_absence():
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=True,
+                            observed_absent=True)
+    rec = _receipt([pod])
+    assert rec["cleanup"]["operational_cleanup"] is True
+    rc_mod.validate(rec)
+
+
+def test_absence_alone_cannot_report_clean():
+    """The rule: no experiment may report CLEAN solely because a LIST
+    omitted the pod. A listing that omits a pod and a terminate that was
+    never acknowledged are not the same evidence."""
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=False,
+                            observed_absent=True)
+    rec = _receipt([pod])
+    assert rec["cleanup"]["operational_cleanup"] is False
+    assert rec["cleanup"]["unresolved"][0]["id"] == "p1"
+
+
+def test_a_failed_inventory_read_cannot_testify_to_absence():
+    """A LIST that errored omits every pod. Treating that as absence is
+    how a run reports clean while a pod is still billing."""
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=True,
+                            observed_absent=True)
+    block = rc_mod.cleanup_block([pod], inventory_read_ok=False)
+    assert block["operational_cleanup"] is False
+    assert block["observed_absent"] is False
+    assert "Reconcile before any further create" in block["note"]
+
+
+def test_a_forged_clean_claim_is_refused_on_read():
+    """Validation reads receipts written by anyone, including a future
+    version of us that got it wrong."""
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=False,
+                            observed_absent=False)
+    rec = _receipt([pod])
+    rec["cleanup"]["operational_cleanup"] = True          # the forgery
+    with pytest.raises(rc_mod.ReceiptError) as exc:
+        rc_mod.validate(rec)
+    assert "does not support it" in str(exc.value)
+
+
+def test_billing_reconciliation_requires_actual_billing_data():
+    """Wall time at a quoted rate is an ESTIMATE. Calling it
+    reconciliation is the specific false claim this module prevents."""
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=True,
+                            observed_absent=True)
+    rec = _receipt([pod])
+    rec["cleanup"]["billing_reconciled"] = True
+    with pytest.raises(rc_mod.ReceiptError) as exc:
+        rc_mod.validate(rec)
+    assert "billing_evidence" in str(exc.value)
+
+    rec["cleanup"]["billing_evidence"] = {
+        "source": "RunPod billing export 2026-09-24",
+        "retrieved_utc": "2026-09-24T12:00:00Z", "amount_usd": 2.55}
+    rc_mod.validate(rec)
+
+
+def test_billing_evidence_must_say_where_the_number_came_from():
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=True,
+                            observed_absent=True)
+    rec = _receipt([pod])
+    rec["cleanup"]["billing_reconciled"] = True
+    rec["cleanup"]["billing_evidence"] = {"amount_usd": 2.55}
+    with pytest.raises(rc_mod.ReceiptError):
+        rc_mod.validate(rec)
+
+
+def test_a_cost_estimate_may_not_smuggle_in_reconciliation():
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=True,
+                            observed_absent=True)
+    rec = _receipt([pod])
+    rec["cost"] = cost_mod.actual(100.0, 0.49)
+    rc_mod.validate(rec)                       # honest estimate: fine
+    rec["cost"]["billing_reconciled"] = True
+    with pytest.raises(rc_mod.ReceiptError):
+        rc_mod.validate(rec)
+
+
+def test_an_adopted_pod_is_recorded_as_adopted_not_confirmed():
+    """After a lost create response, the pod was FOUND by reconciling,
+    not confirmed by a create. A later reader needs to see the
+    difference, because that run was one blind retry from a double bill."""
+    pod = rc_mod.pod_record("p1", creation_outcome="adopted",
+                            terminate_acknowledged=True, observed_absent=True)
+    rec = _receipt([pod])
+    rc_mod.validate(rec)
+    assert rec["pods"][0]["creation_outcome"] == "adopted"
+
+
+def test_an_unknown_creation_outcome_blocks_a_clean_claim():
+    pod = rc_mod.pod_record("p1", creation_outcome="unknown",
+                            terminate_acknowledged=True, observed_absent=True)
+    block = rc_mod.cleanup_block([pod], inventory_read_ok=True)
+    assert block["operational_cleanup"] is False
+    assert "creation outcome unknown" in block["unresolved"][0]["reasons"]
+
+
+def test_unknown_is_not_a_synonym_for_failed():
+    """A pod whose outcome we cannot determine is a different operational
+    situation from one that crashed, and the receipt must be able to say
+    so rather than rounding to the nearest familiar word."""
+    assert "UNKNOWN" in rc_mod.RESULTS and "FAILED" in rc_mod.RESULTS
+    pod = rc_mod.pod_record("p1", creation_outcome="unknown")
+    rec = _receipt([pod], result="UNKNOWN")
+    rc_mod.validate(rec)
+
+
+def test_a_run_that_happened_must_identify_the_bytes_that_ran():
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=True,
+                            observed_absent=True)
+    rec = _receipt([pod])
+    rec["bundle_sha256"] = None
+    with pytest.raises(rc_mod.ReceiptError):
+        rc_mod.validate(rec)
+
+
+def test_a_receipt_begins_as_the_dry_run_plan(tmp_path):
+    """What was validated is what is reported: the receipt is not
+    re-derived by hand after the fact."""
+    module = tmp_path / "mod"
+    module.mkdir()
+    (module / "run.py").write_text("print('hi')\n")
+    spec = spec_mod.from_dict(dict(MINIMAL))
+    plan = dryrun.plan(spec, str(module), inventory=None)
+    rec = rc_mod.from_plan(plan)
+    assert rec["result"] == "NOT_RUN"
+    assert rec["bundle_sha256"] == plan["bundle"]["bundle_sha256"]
+    assert rec["artifacts_missing"] == spec["artifacts"]
+    rc_mod.validate(rec)
+    path = str(tmp_path / "receipt.json")
+    rc_mod.write(rec, path)
+    assert rc_mod.load(path)["run_id"] == rec["run_id"]
+
+
+def test_render_names_what_is_still_unresolved():
+    pod = rc_mod.pod_record("p1", terminate_acknowledged=False,
+                            observed_absent=False)
+    text = rc_mod.render(_receipt([pod]))
+    assert "UNRESOLVED" in text and "p1" in text
