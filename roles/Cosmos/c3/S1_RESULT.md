@@ -34,3 +34,29 @@ succeeds where the persistence coordinate fails, and transfers without refit whe
 attack moves history from internal state to the world. What governs functional memory here is causal
 ACCESSIBILITY to the actor, not the locus of persistence. Whether that survives a substrate Cosmos did
 not write is D's question.
+
+## L5 adversary (runs/maps_s1/ATTACK.json; 2026-09-24T07:47Z): SURVIVED
+720 fresh candidates (30% off-lattice sizes: rnn n 16/96, graph N 48/192, stig L 8/32); 90 certified
+(15 band + 15 confident per family). Confirmed confident misses 2/44 = 4.5% (kill > 10%); per family
+rnn 0/15, graph 2/14 (14%, kill > 20%), stig 0/15. Band calibration: mean law P 0.46 vs observed
+FUNCTIONAL rate 0.55 (n 40).
+FAILURE REGION (shape): both confirmed misses -- and the one graph map misfit -- are noisy excitable
+graph worlds (b = +0.5, flip p 0.03-0.1) predicted FUNCTIONAL, certified NONE, with sR 0.06-0.31 AND a
+readout-view signal that GROWS from t = 1 to the query (rR 1.5, rF 1.35). INFERRED: sR measures
+SENSITIVITY to history; in chaotic noisy dynamics any perturbation is amplified but not in a cue-
+consistent way, so sensitivity is not reliable accessibility. Recorded as a known failure region
+(on the D/E withholding list); the law is NOT patched in Session 1.
+
+## Uncertainty and family dependence (post-hoc, on the map data)
+Pooled threshold sR* = 0.0304; bootstrap 95% CI [0.0064, 0.0425] (wide below: stig has few worlds near
+its boundary). Family-specific thresholds: graph 0.040, rnn 0.032, stig 0.004; gain over the pooled
+threshold in per-family BA: graph 0.000, rnn 0.000, stig 0.016 -> no family-specific correction term is
+needed (directive s16 stop condition NOT triggered), but stig's own boundary sits lower than the pooled
+one: an offset the coordinate audit should look at.
+
+## Preliminary candidate law (Session 1 endpoint; NOT frozen)
+  FUNCTIONAL  iff  sR > sR*,  sR* = 0.030 [0.006, 0.043]
+  PASSIVE     iff  sR ~ 0 and sF > 0    (history persists, none in the actor's view)
+  NONE        iff  sF ~ 0
+where sR / sF are the generic decoder-free history-signal shares of the readout view / full causal
+state (geometry.py). Known failure region: chaotic noisy dynamics (sensitivity without information).
