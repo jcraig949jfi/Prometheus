@@ -1,0 +1,723 @@
+{
+ "n_rows": 114,
+ "n_indeterminate": 6,
+ "class_counts": {
+  "graph": {
+   "NONE": 16,
+   "PASSIVE": 8,
+   "FUNCTIONAL": 11,
+   "INDETERMINATE": 4,
+   "INCOHERENT": 1
+  },
+  "rnn": {
+   "NONE": 4,
+   "PASSIVE": 0,
+   "FUNCTIONAL": 34,
+   "INDETERMINATE": 2,
+   "INCOHERENT": 0
+  },
+  "stig": {
+   "NONE": 0,
+   "PASSIVE": 9,
+   "FUNCTIONAL": 31,
+   "INDETERMINATE": 0,
+   "INCOHERENT": 0
+  }
+ },
+ "mine": {
+  "verdict": "CANDIDATE",
+  "p_null": 0.05,
+  "best_score": 0.9679139784946237,
+  "top": [
+   {
+    "atoms": [
+     [
+      [
+       "dec",
+       [
+        "var",
+        "sR"
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "structure": "exp(-sR) <=",
+    "score": 0.9679,
+    "fold_ba": {
+     "graph": 0.96,
+     "rnn": 1.0,
+     "stig": 0.9677
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "mul",
+       [
+        "dec",
+        [
+         "var",
+         "rF"
+        ]
+       ],
+       [
+        "log",
+        [
+         "var",
+         "sR"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-rF) * log(sR)) >=",
+    "score": 0.96,
+    "fold_ba": {
+     "graph": 0.94,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "mul",
+       [
+        "add",
+        [
+         "var",
+         "rF"
+        ],
+        [
+         "var",
+         "rR"
+        ]
+       ],
+       [
+        "var",
+        "sR"
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "((rF + rR) * sR) >=",
+    "score": 0.96,
+    "fold_ba": {
+     "graph": 0.94,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "div",
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ],
+       [
+        "var",
+        "sR"
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "structure": "(exp(-rR) / sR) <=",
+    "score": 0.9599,
+    "fold_ba": {
+     "graph": 0.96,
+     "rnn": 1.0,
+     "stig": 0.9677
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "var",
+        "sR"
+       ],
+       [
+        "log",
+        [
+         "var",
+         "sR"
+        ]
+       ]
+      ],
+      1.0
+     ]
+    ],
+    "structure": "(sR - log(sR)) <=",
+    "score": 0.9599,
+    "fold_ba": {
+     "graph": 0.96,
+     "rnn": 1.0,
+     "stig": 0.9677
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "kq"
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "sub",
+       [
+        "var",
+        "sR"
+       ],
+       [
+        "div",
+        [
+         "var",
+         "sF"
+        ],
+        [
+         "log",
+         [
+          "var",
+          "sR"
+         ]
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-rR) - exp(-kq)) >= AND (sR - (sF / log(sR))) >=",
+    "score": 0.9453,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "sF"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "add",
+        [
+         "var",
+         "sR"
+        ],
+        [
+         "var",
+         "sR"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "kq"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-sF) - exp(-rR)) <= AND ((sR + sR) + exp(-kq)) >=",
+    "score": 0.9453,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "kq"
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "add",
+       [
+        "add",
+        [
+         "var",
+         "sR"
+        ],
+        [
+         "var",
+         "sR"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "kq"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-rR) - exp(-kq)) >= AND ((sR + sR) + exp(-kq)) >=",
+    "score": 0.9453,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "sF"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "sR"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "rR"
+        ],
+        [
+         "var",
+         "sF"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-sF) - exp(-rR)) <= AND (log(sR) / (rR + sF)) >=",
+    "score": 0.9453,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "kq"
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "div",
+       [
+        "log",
+        [
+         "var",
+         "sR"
+        ]
+       ],
+       [
+        "add",
+        [
+         "var",
+         "rR"
+        ],
+        [
+         "var",
+         "sF"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-rR) - exp(-kq)) >= AND (log(sR) / (rR + sF)) >=",
+    "score": 0.9453,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 1.0,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "sF"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ]
+      ],
+      1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "dec",
+        [
+         "var",
+         "rF"
+        ]
+       ],
+       [
+        "log",
+        [
+         "var",
+         "sR"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-sF) - exp(-rR)) <= AND (exp(-rF) * log(sR)) >=",
+    "score": 0.9444,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 0.9853,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   },
+   {
+    "atoms": [
+     [
+      [
+       "sub",
+       [
+        "dec",
+        [
+         "var",
+         "rR"
+        ]
+       ],
+       [
+        "dec",
+        [
+         "var",
+         "kq"
+        ]
+       ]
+      ],
+      -1.0
+     ],
+     [
+      [
+       "mul",
+       [
+        "dec",
+        [
+         "var",
+         "rF"
+        ]
+       ],
+       [
+        "log",
+        [
+         "var",
+         "sR"
+        ]
+       ]
+      ],
+      -1.0
+     ]
+    ],
+    "structure": "(exp(-rR) - exp(-kq)) >= AND (exp(-rF) * log(sR)) >=",
+    "score": 0.9444,
+    "fold_ba": {
+     "graph": 0.98,
+     "rnn": 0.9853,
+     "stig": 1.0
+    },
+    "passes_worst_gate": true
+   }
+  ]
+ },
+ "baselines": {
+  "sF_only": {
+   "graph": 0.6018181818181818,
+   "rnn": 0.8823529411764706,
+   "stig": 0.5304659498207885
+  },
+  "sR_only": {
+   "graph": 0.96,
+   "rnn": 0.875,
+   "stig": 0.967741935483871
+  },
+  "knn5": {
+   "graph": 0.8200000000000001,
+   "rnn": 0.9117647058823529,
+   "stig": 0.7849462365591398
+  }
+ },
+ "law": {
+  "law": "exp(-sR) <= 0.97",
+  "atoms": [
+   [
+    [
+     "dec",
+     [
+      "var",
+      "sR"
+     ]
+    ],
+    0.9700207955180242,
+    1.0
+   ]
+  ],
+  "complexity": 2,
+  "fold_ba": {
+   "graph": 0.96,
+   "rnn": 1.0,
+   "stig": 0.967741935483871
+  },
+  "score": 0.9679139784946237,
+  "alpha": 16.76462074624779,
+  "scales": [
+   0.22696758428752964
+  ]
+ },
+ "gates": {
+  "L1": "PASS",
+  "L2": "PASS",
+  "L3": "PASS",
+  "L4": "PASS"
+ },
+ "hybrid": [
+  {
+   "params": {
+    "internal": true,
+    "external": true
+   },
+   "k": 2,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": true,
+    "external": true
+   },
+   "k": 4,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": true,
+    "external": true
+   },
+   "k": 8,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": true,
+    "external": false
+   },
+   "k": 2,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": true,
+    "external": false
+   },
+   "k": 4,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": true,
+    "external": false
+   },
+   "k": 8,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": false,
+    "external": true
+   },
+   "k": 2,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": false,
+    "external": true
+   },
+   "k": 4,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": false,
+    "external": true
+   },
+   "k": 8,
+   "class": "FUNCTIONAL",
+   "pred": 1
+  },
+  {
+   "params": {
+    "internal": false,
+    "external": false
+   },
+   "k": 2,
+   "class": "NONE",
+   "pred": 0
+  },
+  {
+   "params": {
+    "internal": false,
+    "external": false
+   },
+   "k": 4,
+   "class": "NONE",
+   "pred": 0
+  },
+  {
+   "params": {
+    "internal": false,
+    "external": false
+   },
+   "k": 8,
+   "class": "NONE",
+   "pred": 0
+  }
+ ]
+}
