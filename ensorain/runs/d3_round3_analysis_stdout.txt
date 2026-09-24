@@ -1,0 +1,211 @@
+{
+ "n": 4800,
+ "B_controls": {
+  "shuffled_nominated_frac": 0.0,
+  "planted_pair": [
+   "kappa_mult",
+   "noise"
+  ],
+  "planted_nominated": true,
+  "planted_q": 0.0,
+  "pass_": true
+ },
+ "nominated": {
+  "nlmse_nominated": [
+   [
+    "scratch",
+    "start"
+   ],
+   [
+    "cap_actual",
+    "replay_frac_actual"
+   ],
+   [
+    "p_restruct",
+    "start"
+   ]
+  ],
+  "nlmse_rank_nominated": [
+   [
+    "scratch",
+    "start"
+   ]
+  ],
+  "EFF_nominated": [
+   [
+    "sweeps",
+    "kappa_mult"
+   ],
+   [
+    "scratch",
+    "cap_actual"
+   ],
+   [
+    "scratch",
+    "kappa_mult"
+   ],
+   [
+    "scratch",
+    "start"
+   ],
+   [
+    "replay_frac_actual",
+    "kappa_mult"
+   ],
+   [
+    "dream_ratio",
+    "kappa_mult"
+   ],
+   [
+    "p_restruct",
+    "kappa_mult"
+   ],
+   [
+    "drift",
+    "kappa_mult"
+   ]
+  ],
+  "EFF_rank_nominated": [
+   [
+    "sweeps",
+    "kappa_mult"
+   ],
+   [
+    "scratch",
+    "drift"
+   ],
+   [
+    "scratch",
+    "start"
+   ],
+   [
+    "cap_actual",
+    "kappa_mult"
+   ],
+   [
+    "dream_ratio",
+    "kappa_mult"
+   ],
+   [
+    "p_restruct",
+    "kappa_mult"
+   ]
+  ]
+ },
+ "C": {
+  "frac_learned_disc": 0.11833333333333333,
+  "frac_learned_val": 0.12791666666666668,
+  "logloss_main": 0.2572814502496422,
+  "logloss_coupled": 0.2634420003960177,
+  "improvement": -0.02394478941407474,
+  "T2_supportive": false,
+  "r2c_hist": [
+   1874,
+   379,
+   434,
+   441,
+   409,
+   277,
+   270,
+   240,
+   244,
+   232
+  ]
+ },
+ "D": {
+  "change": {
+   "q": 0.672,
+   "nominated": false,
+   "disc": -0.026788662381276612,
+   "val": -0.01801099688992043
+  },
+  "surprise": {
+   "q": 0.396,
+   "nominated": false,
+   "disc": -0.6983297637417532,
+   "val": -0.4104955927735939
+  },
+  "energy": {
+   "q": 0.672,
+   "nominated": false,
+   "disc": 3.5497253480850546,
+   "val": -2.274595088234726
+  },
+  "rank_sum": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": 0.0,
+   "val": 0.0006349206349206349
+  },
+  "err_fill": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": 0.0,
+   "val": 0.0
+  },
+  "restructs": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": -0.2040626182827528,
+   "val": -0.20244035446489433
+  }
+ },
+ "A": {
+  "nlmse": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "replay_frac_actual",
+   "surprise_alpha",
+   "forget",
+   "err_frac_actual",
+   "p_restruct",
+   "drift",
+   "start"
+  ],
+  "EFF": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "replay_frac_actual",
+   "p_restruct",
+   "drift",
+   "kappa_mult",
+   "start"
+  ],
+  "r2c": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "surprise_alpha",
+   "forget",
+   "err_frac_actual",
+   "p_restruct",
+   "drift",
+   "start"
+  ],
+  "L2": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "forget",
+   "p_restruct",
+   "drift",
+   "start"
+  ],
+  "L2_p2": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "dream_ratio",
+   "p_restruct",
+   "drift",
+   "kappa_mult",
+   "start"
+  ]
+ }
+}

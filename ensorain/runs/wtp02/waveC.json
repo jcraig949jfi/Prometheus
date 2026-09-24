@@ -1,0 +1,432 @@
+{
+ "families": [
+  {
+   "j": 10,
+   "detector": "D3",
+   "genome_hash": "0e3e9ca1cb88f30c",
+   "interventions": {
+    "band_third": {
+     "fires": 1,
+     "removed": true
+    },
+    "band_triple": {
+     "fires": 1,
+     "removed": true
+    },
+    "delay_0": {
+     "fires": 2,
+     "removed": false
+    },
+    "delay_16": {
+     "fires": 1,
+     "removed": true
+    },
+    "drift_0": {
+     "fires": 3,
+     "removed": false
+    },
+    "drift_up": {
+     "fires": 1,
+     "removed": true
+    },
+    "door_0": {
+     "fires": 2,
+     "removed": false
+    },
+    "door_03": {
+     "fires": 0,
+     "removed": true
+    },
+    "rewire_off": {
+     "fires": 3,
+     "removed": false
+    },
+    "rewire_on": {
+     "fires": 0,
+     "removed": true
+    },
+    "obs_swap": {
+     "fires": 1,
+     "removed": true
+    },
+    "policy_random": {
+     "fires": 0,
+     "removed": true
+    },
+    "rule_none": {
+     "fires": 3,
+     "removed": false
+    },
+    "marks_off": {
+     "fires": 1,
+     "removed": true
+    }
+   },
+   "causal": [
+    "band_third",
+    "band_triple",
+    "delay_16",
+    "drift_up",
+    "door_03",
+    "rewire_on",
+    "obs_swap",
+    "policy_random",
+    "marks_off"
+   ],
+   "causal_support": true,
+   "sweeps": [
+    {
+     "dial": "band",
+     "levels": [
+      0.005,
+      0.01,
+      0.02,
+      0.03,
+      0.06,
+      0.1,
+      0.25
+     ],
+     "values": {
+      "0.005": {
+       "stat": [
+        0.08312179008802784,
+        0.3687248526715956,
+        0.19540099040295417,
+        0.31521993305832263
+       ],
+       "fire": [
+        true,
+        true,
+        true,
+        true
+       ]
+      },
+      "0.01": {
+       "stat": [
+        0.10747315512891925,
+        0.08041961561854682,
+        -0.16888694700917523,
+        0.20865069669212016
+       ],
+       "fire": [
+        true,
+        true,
+        false,
+        true
+       ]
+      },
+      "0.02": {
+       "stat": [
+        -0.024764298573323892,
+        0.12167454864072597,
+        0.2378649892574129,
+        0.16422254402940756
+       ],
+       "fire": [
+        false,
+        true,
+        true,
+        true
+       ]
+      },
+      "0.03": {
+       "stat": [
+        -0.04574737543927944,
+        -0.10278053454354091,
+        0.504612348889909,
+        0.1541544366719978
+       ],
+       "fire": [
+        false,
+        false,
+        true,
+        true
+       ]
+      },
+      "0.06": {
+       "stat": [
+        0.20852262401879065,
+        0.028220367619804343,
+        0.2482445614842698,
+        0.16524009281859442
+       ],
+       "fire": [
+        true,
+        false,
+        true,
+        true
+       ]
+      },
+      "0.1": {
+       "stat": [
+        0.2527970915365843,
+        0.1789523588698605,
+        0.10238181799883216,
+        0.16637718982981875
+       ],
+       "fire": [
+        true,
+        true,
+        true,
+        true
+       ]
+      },
+      "0.25": {
+       "stat": [
+        0.2958775004040965,
+        -0.030498878283873286,
+        0.0424343049694238,
+        0.18571759758877712
+       ],
+       "fire": [
+        true,
+        false,
+        false,
+        true
+       ]
+      }
+     },
+     "pooled_sd": 0.13248005310990757,
+     "boundaries": []
+    },
+    {
+     "dial": "delay",
+     "levels": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+     ],
+     "values": {
+      "0": {
+       "stat": [
+        0.02289379569840619,
+        0.1842703464754747,
+        0.20919588857427393,
+        0.2268611198338379
+       ],
+       "fire": [
+        false,
+        true,
+        true,
+        true
+       ]
+      },
+      "1": {
+       "stat": [
+        0.11991390945289898,
+        0.2565925793398012,
+        -0.14278458915970696,
+        0.24401587908423597
+       ],
+       "fire": [
+        true,
+        true,
+        false,
+        true
+       ]
+      },
+      "2": {
+       "stat": [
+        0.010451881518268785,
+        0.09705942172845933,
+        0.2792604312940098,
+        0.12595792040250564
+       ],
+       "fire": [
+        false,
+        true,
+        true,
+        true
+       ]
+      },
+      "4": {
+       "stat": [
+        -0.07565010154332096,
+        -0.08105381562711261,
+        0.23048622817771972,
+        0.250136808020974
+       ],
+       "fire": [
+        false,
+        false,
+        true,
+        true
+       ]
+      },
+      "8": {
+       "stat": [
+        0.28489641758895556,
+        0.013076173945572173,
+        0.15840826685196668,
+        0.07941729418789725
+       ],
+       "fire": [
+        true,
+        false,
+        true,
+        true
+       ]
+      },
+      "16": {
+       "stat": [
+        0.17912342618972585,
+        0.12807472906762776,
+        0.15458080454196177,
+        0.15296735065106903
+       ],
+       "fire": [
+        true,
+        true,
+        true,
+        true
+       ]
+      },
+      "32": {
+       "stat": [
+        0.46905333539390837,
+        0.047226016354683556,
+        0.04332042612338166,
+        0.40713124441148024
+       ],
+       "fire": [
+        true,
+        false,
+        false,
+        true
+       ]
+      }
+     },
+     "pooled_sd": 0.12918468781532033,
+     "boundaries": []
+    }
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 5,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.34742139587670046,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.3890237927106947,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 359.73312556394234,
+     "metabolism": 1.1272139045913836,
+     "gain": 4.460176353439172,
+     "theta": -0.039306080630420126,
+     "regrow": 599,
+     "query_every": 5,
+     "query_reward": 9.337540588377763,
+     "tol": 0.05645069576655251,
+     "p_compute": 0.0003541087517343605,
+     "p_read": 3.923980903634933e-05,
+     "p_write": 7.809270057305722e-05,
+     "p_move": 0.14794085392470946,
+     "p_probe": 2.413450183275275,
+     "p_rollout": 0.43260135494471597,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.3582962077157026,
+     "depth": 3,
+     "temp": 2.0625160588376206
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.007031311014070879
+    },
+    "time": {
+     "lifetime": 1901,
+     "checkpoints": 10,
+     "lifetime2": 1901
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "2e592945baef7840"
+     ],
+     "mutations": [
+      "law:search"
+     ]
+    }
+   }
+  }
+ ]
+}
