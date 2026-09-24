@@ -290,6 +290,6 @@ Commits (branch archaeon/z80atlas-postcampaign-2026-09-23):
   6878f582d (moat closed)  805ae076a (bundle)  c5067fac6 (census)
 
 +==============================================================================+
-| END. "Not worth continuing" remains a first-class answer. The census       |
-| suggests the de-novo question in this bench is now answered by its prior.  |
+| END. "Not worth continuing" remains a first-class answer. The census         |
+| suggests the de-novo question in this bench is now answered by its prior.    |
 +==============================================================================+
