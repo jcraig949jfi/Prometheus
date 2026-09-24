@@ -329,7 +329,14 @@ class TTMem(Linear):
 
     def hazard(self, kind, rng):
         if kind == "permute":
-            order = list(rng.permutation(self.D))
+            # permute only among modes of EQUAL size (a TT's cores are sized per mode);
+            # WTP-01 permuted freely and crashed when sizes differed (fixed 2026-09-24)
+            order = list(self.tt.order)
+            for size in set(self.dims):
+                pos = [k for k, o in enumerate(order) if self.dims[o] == size]
+                vals = [order[k] for k in pos]
+                for k, vv in zip(pos, rng.permutation(vals)):
+                    order[k] = int(vv)
             self.tt.order = tuple(order)
         else:
             super().hazard(kind, rng)

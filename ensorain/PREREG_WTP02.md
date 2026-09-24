@@ -157,3 +157,33 @@ Admission rate 5-20%. The CGu >= 0.10 & SD >= 0.10 fraction is small but
 nonzero (0.2-2%), dominated by low-rank/DCT/CP learners in low-rank or
 spectral fields. Verdict CONTINUE SEARCH (p .5), PARK/REDESIGN (p .35),
 EXPAND (p .15).
+
+## 9. Addendum before any WTP-02 campaign row (dev smoke only; seeds
+## 9,000,000+ / 7,000,000+, not campaign seeds)
+
+A1 N2b ECONOMIC POSITIVE CONTROL. First admitted lives (dev) all died in
+   100-500 of 1,000-3,000 steps: N2 showed no-learning loses, nothing
+   showed learning CAN pay. Added: an ORACLE organism (reads the true
+   current field; same policy and costs) must end with positive energy.
+A2 ECONOMY CALIBRATION. With random economic constants the oracle itself
+   lost in 34 of 36 N2-passing worlds. Each candidate is therefore
+   calibrated: income rates (metabolism 0, ample energy, 600 steps) of the
+   random walker, the frozen organism (2 seeds each) and the oracle
+   (2 seeds). Reject (gate N2c) unless oracle_min > 0 and
+   gap = oracle_min - max(base) > 0.02 and > 0.2 x |max(base)|
+   ("information must pay"). Metabolism := max(base) + 0.5 gap, written into
+   the genome (resource.calibrated = true). Then N2 (random and frozen lose,
+   300 steps, 2 seeds) and N2b (oracle wins) are VERIFIED with the
+   calibrated economy. This places every admitted world on the edge where
+   only competence survives; it does not make any world easier.
+A3 CANDIDATE CAP 30,000 -> 150,000. Dev admission rate with A1-A2 is
+   ~1.3% (4/300; rejections N3 93, N5 82, N1 77, N2 29 -- mostly a random
+   walker trapped in dead topology, i.e. correctly DEGENERATE -- N2c 13).
+   1,500 admitted worlds need ~115k candidates.
+A4 START NODE. The dry run (N5) measures reachability from node 0;
+   organism 0 now starts at node 0 and one-way / hazard edges are built
+   inside world construction, so the dry run and the life share them.
+A5 BUG FIX (shared substrate code, ensorain/wtp/organism.py): the TT
+   "permute" memory hazard reordered modes of different sizes and crashed
+   (likely several of WTP-01's 17 crashes). It now permutes only among
+   modes of equal size. WTP-01 remains replayable at its own commit.
