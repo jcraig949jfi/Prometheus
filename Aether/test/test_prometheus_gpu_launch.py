@@ -657,3 +657,21 @@ def test_capacity_language_is_recognised():
         "specifications. Please refresh and try again.")
     assert not prov.looks_like_capacity("invalid image name")
     assert not prov.looks_like_capacity(None)
+
+
+def test_a_missing_artifact_asks_the_pod_what_it_does_have(module_dir):
+    """A missing artifact is a question the pod can still answer while it
+    is alive. Iteration 1 lost a flight to guessing at this from the
+    ground."""
+    fake = prov.FakeProvider(served={
+        TEL: frames(None, START, START + END),
+        "": "<html><li>telemetry.jsonl</li></html>"})
+    r = controller(fake, module_dir).run()
+    assert r["artifacts_missing"] == ["result.json"]
+    assert "telemetry.jsonl" in r["artifact_dir_listing"]
+
+
+def test_no_listing_is_fetched_when_nothing_is_missing(module_dir):
+    r = controller(happy_fake(), module_dir).run()
+    assert r["artifacts_missing"] == []
+    assert "artifact_dir_listing" not in r

@@ -427,6 +427,18 @@ class Controller(object):
         receipt_obj["artifacts_missing"] = missing
         receipt_obj["artifact_bytes_total"] = sum(a["bytes"] for a in got)
         if missing:
+            # A missing artifact is a question, and the pod can still answer
+            # it. The server's document root is the artifact directory, so
+            # its index says exactly which files exist. Guessing at this from
+            # the ground cost Iteration 1 a flight.
+            listing = self._fetch("")
+            if listing is not None:
+                receipt_obj["artifact_dir_listing"] = listing[:4000]
+                self._log("artifact dir listing retrieved (%d bytes)"
+                          % len(listing))
+            else:
+                self._log("artifact dir listing also unreachable")
+        if missing:
             self._log("artifacts NOT retrieved: %s" % ", ".join(missing))
 
     def _teardown(self):
