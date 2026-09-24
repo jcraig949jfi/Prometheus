@@ -141,3 +141,19 @@ P3 Dreams (internal generation) help only with low noise and hurt with
    high noise (grounding coupling) -- p .3.
 P4 Precursor: effective TT rank settles (stops changing) before FIRE;
    parameter change falls before FIRE -- p .4.
+
+## 8. Addendum before any Round-1 row (dev rows d1_dev.jsonl, seeds 900+)
+
+Dev pass (300 lives): 8/299 lives reached held-out R^2 >= .5 (2.7%); 11
+fired at trace point >= 2; the planted-coupling control was NOT detected
+at 150 lives per half (q .11) -- the analysis is under-powered at dev
+size, as the control is designed to show. One life crashed (singular
+ridge after divergence); crashed lives are kept as ERROR rows, counted and
+their dials reported, excluded from rulers.
+Changes, all before data: N 2,400 -> 4,800 (lives 0-4799, seeds
+60000-64799); sampling stays independent-uniform (no stratification
+toward the learning region: finding that region is part of the search).
+The analysis (ensorain/d1/analyze.py, committed with this addendum)
+clips held-out R^2 to [-1, 1] and uses life-index parity for the split.
+If the planted control still fails at 4,800, section B is void and
+reported as under-powered, not as "no coupling".
