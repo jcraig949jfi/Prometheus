@@ -4,8 +4,31 @@ import copy
 
 import numpy as np
 
-from ensorain.wtp.genome import random_genome, mutate, recombine, descriptor, ghash, SPECIAL
+from ensorain.wtp.genome import random_genome, recombine, descriptor, ghash, SPECIAL, LAWS
 from .world2 import BANDS
+
+WTP2_KEYS = {("memory", "band"), ("time", "lifetime2"), ("resource", "calibrated")}
+
+
+def mutate(g, rng, scale="local"):
+    """WTP-01 mutation made WTP-02-aware: only keys a fresh genome has are redrawn;
+    band / lifetime are redrawn by normalize; the economy is recalibrated by preflight."""
+    child = copy.deepcopy(g)
+    fresh = normalize(random_genome(rng), rng)
+    muts = []
+    if scale == "large":
+        for law in rng.choice(LAWS, size=int(rng.integers(1, 4)), replace=False):
+            child[law] = copy.deepcopy(fresh[law])
+            muts.append(f"law:{law}")
+    else:
+        for law in rng.choice(LAWS, size=int(rng.integers(1, 3)), replace=False):
+            keys = [k for k in child[law] if k in fresh[law]]
+            for k in rng.choice(keys, size=min(len(keys), int(rng.integers(1, 3))), replace=False):
+                child[law][k] = copy.deepcopy(fresh[law][k])
+                muts.append(f"{law}.{k}")
+    child["resource"].pop("calibrated", None)
+    child["meta"] = {"strategy": f"mutate:{scale}", "parents": [ghash(g)], "mutations": muts}
+    return child
 
 
 def normalize(g, rng):

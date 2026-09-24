@@ -187,3 +187,12 @@ A5 BUG FIX (shared substrate code, ensorain/wtp/organism.py): the TT
    "permute" memory hazard reordered modes of different sizes and crashed
    (likely several of WTP-01's 17 crashes). It now permutes only among
    modes of equal size. WTP-01 remains replayable at its own commit.
+
+### A6 (2026-09-24, pre-data: no Wave A row had been written) — two executor fixes
+- **Mutation crash.** Wave A's second batch crashed (`KeyError: lifetime2`) because WTP-01 `mutate` redraws keys a fresh
+  genome lacks. `genome2.mutate` is now WTP-02-aware: it redraws only keys present in a normalized fresh genome and drops
+  `resource.calibrated` so preflight recalibrates the economy of every child. No gate, threshold or proportion changed.
+- **V3 birth digest.** `init_digest` was hashed at END of life from the path-mutated graph, so V3 (same seed, same
+  battery+graph) failed for a bookkeeping reason. It is now hashed at birth, before the life loop. Validation is rerun
+  from scratch by `campaign2 all`; the first run's V3 fail is kept in the journal.
+- Admission is now checkpointed to `waveA_admission.json` after every batch (`partial=true` until the wave closes).

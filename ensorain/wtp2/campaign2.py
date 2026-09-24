@@ -14,8 +14,8 @@ from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 
-from ensorain.wtp.genome import ghash, recombine, mutate
-from .genome2 import candidate, normalize
+from ensorain.wtp.genome import ghash, recombine
+from .genome2 import candidate, normalize, mutate
 from .detect2 import DETS, NULL, fires, null_fires, refs_from, status
 
 OUT = "ensorain/runs/wtp02"
@@ -182,6 +182,7 @@ def wave_a(target=1500, max_cand=150_000, batch=4000):
             if ok and len(admitted) < target:
                 admitted.append(dict(g=g, seed=s, pre=rec))
         print(f"candidates {n} admitted {len(admitted)} gates {dict(gates)}", flush=True)
+        dump(dict(candidates=n, gates=dict(gates), admitted=admitted, partial=True), "waveA_admission.json")
     dump(dict(candidates=n, gates=dict(gates), admitted=admitted), "waveA_admission.json")
     jobs = []
     for i, a in enumerate(admitted):
