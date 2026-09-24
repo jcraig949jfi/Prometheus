@@ -1,6 +1,26 @@
 # Archaeon — TODO
 
-## ACTIVE DIRECTIVE (2026-09-23) -- READ THIS FIRST ON BOOT
+## 2026-09-24 OPERATOR RULINGS 1-4 DONE (session m2-db608f52)
+Rulings: roles/Archaeon/prompts/2026-09-23_postcampaign_rulings/00_OPERATOR_RULINGS.md
+Packet:  archaeon/z80atlas/pivot/Z80ATLAS_RULINGS_FOLLOWUP_REVIEW_2026-09-24.md
+- [x] R1 seeded moat ledger CLOSED (828 QUALIFIED / 104 VOID); use LOWER ranking only
+- [x] R2 copier census: LOTTERY_CONSISTENT (lambda 6.86 vs 1 survivor); input-gating is the norm
+- [x] R3 evidence bundle verified on C: (NOT yet off-machine: needs operator destination)
+- [x] R4 random_spec fix + preflight gate (PASS_WITH_RESTRICTIONS: matched control changes pressure)
+- [ ] proposed next: environmental-gating pair (input stream with/without 120..135), random founders at inflow scale
+- [ ] matched_controls / scorer: make the reproduction contrast clean before any future campaign
+
+## (superseded) 2026-09-23 DIRECTIVE COMPLETE -- awaiting operator rulings
+Packet: archaeon/z80atlas/pivot/Z80ATLAS_POSTCAMPAIGN_REVIEW_2026-09-23.md
+- [x] Phase 1 audit receipt; [x] Phase 2 provenance repair + tests; [x] Phase 3 adjudication;
+      [x] Phase 4 DENOVO-01: NO_DETECTABLE_DE_NOVO_REPLICATION (0/80, controls 21/21)
+- [ ] RULING NEEDED: witness confound (seeded init_hybrid) -- re-score seeded moat flags or mark unadjudicated
+- [ ] proposed: per-tape copier prior (10^7 random vmcopy tapes x 256 inputs; no worlds)
+- [ ] proposed: random-inflow ("soup") arm -- grammar change, new digest + campaign identity
+- [ ] own code: grammar.random_spec coverage weighting starves optional levels (forced levels counted)
+- DO NOT delete D:\Prometheus-worktrees\archaeon-wse-2026-09-16: it is the only copy of the campaign records.
+
+## (done) DIRECTIVE 2026-09-23
 roles/Archaeon/prompts/2026-09-23_z80atlas_postcampaign/00_OPERATOR_DIRECTIVE.md
 
 Z80 x Atlas post-campaign repair + targeted falsification. Four phases:

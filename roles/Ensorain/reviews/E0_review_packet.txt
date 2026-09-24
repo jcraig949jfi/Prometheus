@@ -1,0 +1,85 @@
+ENSORAIN E0 "CHOO CHOO" -- EXTERNAL REVIEW PACKET        2026-09-23
+Seat: Ensorain[m2-14baf7d5], claude-opus-5-5, host M2 (SPECTREX5)
+Worktree Prometheus-worktrees/ensorain-base-role, base 7a90be1d8
+Rows + verdict: ensorain/E0_VERDICT.md, ensorain/runs/ (same commit)
+Conflict of interest: the seat built the engine it is judging, and its
+own existence is justified by a positive result. Read accordingly.
+--------------------------------------------------------------------------
+QUESTION (founding directive): in a world larger than memory, does a
+bounded TensorTrain memory whose ORGANISATION is under selection turn
+experience into competence that (a) a matched randomised world does not
+support and (b) strong baselines at the same cap do not reach?
+
+SETUP (preregistered before data: 20a4bab5c; constants 60b8cb1d1;
+scorer 33055de3d)
+  world    4096 cells = 6 modes x 4 values; hidden field = rank-3 TT in a
+           LATENT mode order; organism sees a scrambled order. R = same
+           values permuted over cells (same graph, histogram, economy).
+  life     12,000 steps; harvest relu(x) at cells (regrow 500); energy
+           charged per step and per flop-proxy unit; death at 0.
+  policy   identical for every arm: predict exit values, argmax, eps.
+  arms     14 memories at caps 48/96/168/384/4096 floats; audit refuses
+           undeclared state; TT_EVOLVED = GA over (order, ranks, lr,
+           init, buffer, replay, eps) on training seeds only.
+  n        40 held-out world instances x 2 organism seeds per cell;
+           15,760 confirmatory lives.
+
+VERDICT UNDER THE FROZEN RULE:  INDETERMINATE (controls)
+  Positive control failed: planted TT (true order, true ranks) median
+  R^2 on unvisited cells = 0.007 at C=168 (gate >= 0.5). Three learner
+  rounds were used on dev seeds before the freeze. Rule reading: B2,
+  the learner cannot build the representation within a life.
+
+SEAT RECOMMENDATION:  B  (fun, not a great use of compute) FOR E0 AS BUILT
+
+  gate  result   numbers (harvest means, 80 lives each)
+  H1    FAIL     C=96  TT_TUNED 7,605 vs best non-TT (LRU) 3,235 PASS
+                 C=168 LOWRANK 8,719 vs TT_TUNED 7,058      FAIL
+  H2    FAIL     evolved beats tuned +33.5% at 168 (CI lo +1,028);
+                 order recovery better than chance (568 / 1,464 params
+                 vs random median 1,568; physics = 168);
+                 CROSS-CLASS FAILS: class-0 genome gains 2,639 on a
+                 different physics vs 2,365 on its own -> generic tuning
+  H3    n/a      TT advantage negative at every lambda (-1,118..-2,621);
+                 rho = -9/10 exactly (float scored -0.8999999 -> FAIL;
+                 annotated, not re-scored; vacuous either way)
+
+FAILURE SHAPES
+  F1  Coarse beats faithful: survivors have R^2(unvisited) ~0 yet ~2x
+      NOMEM harvest; evolution drives TT ranks to 1-2; a rank-1 TT is
+      order-invariant, so there was little pressure to find the physics.
+  F2  Bounded structure beats an UNCAPPED cache (DICT_UNCAP 6,244 <
+      TT_TUNED@96 7,605 < TT_EVOLVED@168 9,423 < LOWRANK@384 14,112):
+      the premise holds, but not TT-specifically.
+  F3  Cap forbids the good algorithm: batch ALS 0.997 R^2 from 800
+      samples needs ~1,600 stored floats; online SGD needs ~8,000
+      samples for ~0.9.
+  F4  Compute proxy decides baseline ranks: kappa=0 moves KNN
+      172 -> 6,133 and TT_TUNED 7,058 -> 11,492.
+  F5  Memory as trap: LRU 3,030 < NOMEM 3,759 (returns to depleted cells).
+
+CONTROLS
+  cheat: smuggled dict refused mid-life (PASS); true field injected into
+  a legal TT reaches 1.05x ORACLE (PASS) -> the harvest channel can see a
+  correct memory. negative: no learner finds signal in R (governing PASS;
+  literal R^2-within-.05 FAILS on miscalibration, declared pre-data in
+  A6). positive: FAIL (above).
+
+WHAT WOULD FALSIFY THE RECOMMENDATION
+  An E1 world where decisions need FINE structure (exact values, delayed
+  cross-region relevance) and organisms may spend cap on a charged batch
+  step. Kill condition fixed now: if any non-TT arm at matched cap and
+  compute comes within 10% of the best TT arm there, B stands.
+
+WHAT SHOULD STOP
+  Scaling E0 as is (bigger worlds, GPU, Runpod): the evidence says the
+  harvest task is solved by rank-1 fits and matrix factorisation; more
+  compute buys a larger version of F1.
+
+OPEN / NOT DONE
+  Directive s12 truncated (interim measure reported, not gated); P4/P5/P7
+  not built; no GPU used (CPU faster for tiny tensors); no cloud spend.
+
+ASK OF REVIEWER: is F1 an artifact of the argmax-over-4-exits decision
+(a world design choice) rather than a property of bounded TT memory? If
+yes, E1 is warranted; if no, B.

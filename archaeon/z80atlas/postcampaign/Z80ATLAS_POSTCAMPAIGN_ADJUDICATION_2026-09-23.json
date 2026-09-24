@@ -1,0 +1,4091 @@
+{
+ "schema": "archaeon.z80atlas.postcampaign.adjudication.v1",
+ "date": "2026-09-23",
+ "inputs_sha256": {
+  "PACKET.json": "9f3bda5411c4e89eb96b018a1c6554e03fb060f2ed99c4c9ee59ef235212f98e",
+  "CAMPAIGN_PACKET.md": "b81113679a6db8b98fc0728ff34680e5cfc8c09c82da1bd57bb77b35db65d9e5",
+  "CAMPAIGN_STATE.json": "b0cc07be085bc07394a09e3b7cdfa0222108c289855294885d17ef0df8efd64a",
+  "CAMPAIGN_DONE.json": "53f1ac517a52e9958a815eb95a103cc559535a73724b5d0f477df26712556bd2",
+  "GRAMMAR_FROZEN.json": "ecdee2570febdcfb2a2644953050bf8f62bd57d2c67353f022b81e19d198fbc4",
+  "RUNS.jsonl": "3afa36b783b44b3a570f8463341d87e55e9f7fd1e0ca0bf55819c1f516e2d191",
+  "ATLAS_INDEX.jsonl": "7bc020e6d98229c27d642ba83deaec95458545a3f1434f5b3788d0ff74c1f3a2"
+ },
+ "campaign_code_commit": "c7610ea19",
+ "historical_records_modified": false,
+ "reconstruction_verified": true,
+ "A_reclassification": {
+  "verified_de_novo_spontaneous_replication": 0,
+  "denominator_runs_done": 101003,
+  "flagged_by_legacy_label": 26,
+  "reclassified_transplanted_lineage_replication": 26,
+  "unresolved": [],
+  "runs": [
+   {
+    "run_id": "07d1f7853f4c-t_s100_veri",
+    "family": "070c3a9ab655",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 126,
+    "source": {
+     "run_id": "7dc7429b8c8a_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "11793ae99dd8-t_s100_veri",
+    "family": "dd2e76a1189b",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "CONST_atomic",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 125,
+    "source": {
+     "run_id": "8982c3f34714_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_atomic",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "2226fc309f55-t_s100_veri",
+    "family": "e8394eee206d",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 127,
+    "source": {
+     "run_id": "41d711eb922d_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "2b08271de8ad-t_s100_veri",
+    "family": "e8394eee206d",
+    "verification_kinds": [
+     "transplant:world_swap"
+    ],
+    "task": "CONST_incremental",
+    "topology": "well_mixed",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 127,
+    "source": {
+     "run_id": "41d711eb922d_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "36f2d57cd4f2-t_s100_veri",
+    "family": "19a0e0a5300a",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL",
+    "transplanted_tapes": 122,
+    "source": {
+     "run_id": "19a0e0a5300a_s1_expl",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "3f05e65e3d47-t_s100_veri",
+    "family": "5bb46451d5fb",
+    "verification_kinds": [
+     "transplant:world_swap"
+    ],
+    "task": "CONST_incremental",
+    "topology": "well_mixed",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 123,
+    "source": {
+     "run_id": "e2a9b453b272_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "3fe9d02da7fe-t_s100_veri",
+    "family": "5b237a475b69",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 125,
+    "source": {
+     "run_id": "a0132ad72787_s1_cont",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "45e6b162ded1-t_s100_veri",
+    "family": "d130e2d3e25f",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL",
+    "transplanted_tapes": 127,
+    "source": {
+     "run_id": "629d457d12a5_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "466dab00b7b6-t_s100_veri",
+    "family": "2ace470e5c47",
+    "verification_kinds": [
+     "transplant:environment_swap",
+     "transplant:same"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 123,
+    "source": {
+     "run_id": "3e493d02a7f6_s1_cont",
+     "init": "seeded_replicator",
+     "task": "COND_multi",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": true,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "4e132c6e0178-t_s100_veri",
+    "family": "5b237a475b69",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 125,
+    "source": {
+     "run_id": "a0132ad72787_s1_cont",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "67cef4faf5e7-t_s100_veri",
+    "family": "19a0e0a5300a",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL",
+    "transplanted_tapes": 122,
+    "source": {
+     "run_id": "19a0e0a5300a_s1_expl",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "6c3a4a1fb3b8-t_s100_veri",
+    "family": "fd8719c6af75",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL",
+    "transplanted_tapes": 124,
+    "source": {
+     "run_id": "fd8719c6af75_s1_expl",
+     "init": "seeded_replicator",
+     "task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "7252d77c58b8-t_s100_veri",
+    "family": "4aa428bd90bd",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "ADD2",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 128,
+    "source": {
+     "run_id": "63e4c98ca670_s1_cont",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "771c5c311468-t_s100_veri",
+    "family": "ac675613ecd5",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 126,
+    "source": {
+     "run_id": "ac675613ecd5_s1_expl",
+     "init": "seeded_replicator",
+     "task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "78722e5100e6-t_s100_veri",
+    "family": "636158e75708",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 122,
+    "source": {
+     "run_id": "a778e681e647_s1_cont",
+     "init": "seeded_replicator",
+     "task": "none",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "8ac55dbf1309-t_s100_veri",
+    "family": "dd2e76a1189b",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "ECHO_forced",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 125,
+    "source": {
+     "run_id": "8982c3f34714_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_atomic",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "8f1eda878795-t_s100_veri",
+    "family": "5bb46451d5fb",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 123,
+    "source": {
+     "run_id": "e2a9b453b272_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "987e0e2fdf50-t_s100_veri",
+    "family": "5b237a475b69",
+    "verification_kinds": [
+     "transplant:world_swap"
+    ],
+    "task": "ADD2",
+    "topology": "well_mixed",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 125,
+    "source": {
+     "run_id": "a0132ad72787_s1_cont",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "997f12c1740f-t_s100_veri",
+    "family": "4aa428bd90bd",
+    "verification_kinds": [
+     "transplant:world_swap"
+    ],
+    "task": "ADD2",
+    "topology": "well_mixed",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 128,
+    "source": {
+     "run_id": "63e4c98ca670_s1_cont",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "9dd90a43ab91-t_s100_veri",
+    "family": "5bb46451d5fb",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 123,
+    "source": {
+     "run_id": "e2a9b453b272_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "ac1891969d1f-t_s100_veri",
+    "family": "ac675613ecd5",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "NEG",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 126,
+    "source": {
+     "run_id": "ac675613ecd5_s1_expl",
+     "init": "seeded_replicator",
+     "task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "c66e86c73e36-t_s100_veri",
+    "family": "d130e2d3e25f",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_PARTIAL",
+    "transplanted_tapes": 127,
+    "source": {
+     "run_id": "629d457d12a5_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "d09e8fde50a3-t_s100_veri",
+    "family": "636158e75708",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "none",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 122,
+    "source": {
+     "run_id": "a778e681e647_s1_cont",
+     "init": "seeded_replicator",
+     "task": "none",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "d6eab9d26a29-t_s100_veri",
+    "family": "e8394eee206d",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 127,
+    "source": {
+     "run_id": "41d711eb922d_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "e64ba9b6e468-t_s100_veri",
+    "family": "070c3a9ab655",
+    "verification_kinds": [
+     "transplant:same"
+    ],
+    "task": "CONST_incremental",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 126,
+    "source": {
+     "run_id": "7dc7429b8c8a_s1_cont",
+     "init": "seeded_replicator",
+     "task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": null,
+    "reclassified_as": "transplanted_lineage_replication"
+   },
+   {
+    "run_id": "ee082f2db085-t_s100_veri",
+    "family": "4aa428bd90bd",
+    "verification_kinds": [
+     "transplant:environment_swap"
+    ],
+    "task": "COND_multi",
+    "topology": "niches",
+    "reproduction": "ENDOGENOUS_COPY",
+    "transplanted_tapes": 128,
+    "source": {
+     "run_id": "63e4c98ca670_s1_cont",
+     "init": "seeded_replicator",
+     "task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY"
+    },
+    "environment_swap_was_vacuous": false,
+    "reclassified_as": "transplanted_lineage_replication"
+   }
+  ]
+ },
+ "B_rescoring": {
+  "original_top30": [
+   {
+    "family": "2ace470e5c47",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 1,
+    "corrected_rank": 4,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "466dab00b7b6-t_s100_veri",
+    "corrected_best_run": "2ace470e5c47_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   {
+    "family": "5b237a475b69",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 2,
+    "corrected_rank": 9,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "4e132c6e0178-t_s100_veri",
+    "corrected_best_run": "5b237a475b69_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   {
+    "family": "e8394eee206d",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 3,
+    "corrected_rank": 12,
+    "original_flags": [
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "2b08271de8ad-t_s100_veri",
+    "corrected_best_run": "41d711eb922d_s1_cont",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "coexistence",
+     "transport"
+    ]
+   },
+   {
+    "family": "19a0e0a5300a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 4,
+    "corrected_rank": 1,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "19a0e0a5300a_s1_expl",
+    "corrected_best_run": "19a0e0a5300a_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "4aa428bd90bd",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 5,
+    "corrected_rank": 2,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "63e4c98ca670_s1_cont",
+    "corrected_best_run": "63e4c98ca670_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "dd2e76a1189b",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 6,
+    "corrected_rank": 3,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "8982c3f34714_s1_cont",
+    "corrected_best_run": "8982c3f34714_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "5bb46451d5fb",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 7,
+    "corrected_rank": 5,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "e2a9b453b272_s1_cont",
+    "corrected_best_run": "e2a9b453b272_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "ac675613ecd5",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 8,
+    "corrected_rank": 6,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ac675613ecd5_s1_expl",
+    "corrected_best_run": "ac675613ecd5_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "070c3a9ab655",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 9,
+    "corrected_rank": 7,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "7dc7429b8c8a_s1_cont",
+    "corrected_best_run": "7dc7429b8c8a_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "636158e75708",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 10,
+    "corrected_rank": 8,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "a778e681e647_s1_cont",
+    "corrected_best_run": "a778e681e647_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "fd8719c6af75",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 11,
+    "corrected_rank": 10,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "fd8719c6af75_s1_expl",
+    "corrected_best_run": "fd8719c6af75_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "d130e2d3e25f",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 12,
+    "corrected_rank": 11,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "629d457d12a5_s1_cont",
+    "corrected_best_run": "629d457d12a5_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "f85407d4d325",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 13,
+    "corrected_rank": 13,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ebb8078017a6_s1_cont",
+    "corrected_best_run": "ebb8078017a6_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "fd435eace669",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 14,
+    "corrected_rank": 14,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "0611455c8b9f_s1_cont",
+    "corrected_best_run": "0611455c8b9f_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "bc2e3e5602ea",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 15,
+    "corrected_rank": 15,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "c0db15811798_s1_cont",
+    "corrected_best_run": "c0db15811798_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "1804582d6f19",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 16,
+    "corrected_rank": 16,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ca0df7255922_s1_cont",
+    "corrected_best_run": "ca0df7255922_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "32b5c3dd4c45",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 17,
+    "corrected_rank": 17,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "d19936248740_s1_cont",
+    "corrected_best_run": "d19936248740_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "4189c2c18fc2",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 18,
+    "corrected_rank": 18,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "4b7f2d335a6a_s1_cont",
+    "corrected_best_run": "4b7f2d335a6a_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e4148c8c2968",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 19,
+    "corrected_rank": 19,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "e2fc611f53ce_s1_cont",
+    "corrected_best_run": "e2fc611f53ce_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "3ae856c8eb40",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 20,
+    "corrected_rank": 20,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "3ae856c8eb40_s1_expl",
+    "corrected_best_run": "3ae856c8eb40_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "1f1cb3176483",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 21,
+    "corrected_rank": 21,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "74d25fc07683_s1_cont",
+    "corrected_best_run": "74d25fc07683_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "f03bf63b3a6a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 22,
+    "corrected_rank": 22,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "378836158bfd_s1_cont",
+    "corrected_best_run": "378836158bfd_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e0c8e95860f8",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 23,
+    "corrected_rank": 23,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "cd4d41f89aac_s1_cont",
+    "corrected_best_run": "cd4d41f89aac_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "00d75b431ee8",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 24,
+    "corrected_rank": 24,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "6fcba3e1a8e8_s1_cont",
+    "corrected_best_run": "6fcba3e1a8e8_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "cff1bc285b45",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 25,
+    "corrected_rank": 25,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "3e0a02a3ae0e_s1_cont",
+    "corrected_best_run": "3e0a02a3ae0e_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "0964a1a156e1",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 26,
+    "corrected_rank": 26,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "517f98fae7c0_s1_cont",
+    "corrected_best_run": "517f98fae7c0_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e50017b04a3a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 27,
+    "corrected_rank": 27,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "3d58a2116293_s1_cont",
+    "corrected_best_run": "3d58a2116293_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "d66d67b02b42",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 28,
+    "corrected_rank": 28,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "d66d67b02b42_s1_expl",
+    "corrected_best_run": "d66d67b02b42_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "c933207af712",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 29,
+    "corrected_rank": 29,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "76c8ee5e7d4f_s1_cont",
+    "corrected_best_run": "76c8ee5e7d4f_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "708f54fd28d2",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 30,
+    "corrected_rank": 30,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "dba1c34cc7e5_s1_cont",
+    "corrected_best_run": "dba1c34cc7e5_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   }
+  ],
+  "corrected_top30": [
+   {
+    "family": "19a0e0a5300a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 4,
+    "corrected_rank": 1,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "19a0e0a5300a_s1_expl",
+    "corrected_best_run": "19a0e0a5300a_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "4aa428bd90bd",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 5,
+    "corrected_rank": 2,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "63e4c98ca670_s1_cont",
+    "corrected_best_run": "63e4c98ca670_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "dd2e76a1189b",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 6,
+    "corrected_rank": 3,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "8982c3f34714_s1_cont",
+    "corrected_best_run": "8982c3f34714_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "2ace470e5c47",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 1,
+    "corrected_rank": 4,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "466dab00b7b6-t_s100_veri",
+    "corrected_best_run": "2ace470e5c47_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   {
+    "family": "5bb46451d5fb",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 7,
+    "corrected_rank": 5,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "e2a9b453b272_s1_cont",
+    "corrected_best_run": "e2a9b453b272_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "ac675613ecd5",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 8,
+    "corrected_rank": 6,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ac675613ecd5_s1_expl",
+    "corrected_best_run": "ac675613ecd5_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "070c3a9ab655",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 9,
+    "corrected_rank": 7,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "7dc7429b8c8a_s1_cont",
+    "corrected_best_run": "7dc7429b8c8a_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "636158e75708",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 10,
+    "corrected_rank": 8,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "a778e681e647_s1_cont",
+    "corrected_best_run": "a778e681e647_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "5b237a475b69",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 2,
+    "corrected_rank": 9,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "4e132c6e0178-t_s100_veri",
+    "corrected_best_run": "5b237a475b69_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   {
+    "family": "fd8719c6af75",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 11,
+    "corrected_rank": 10,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "fd8719c6af75_s1_expl",
+    "corrected_best_run": "fd8719c6af75_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "d130e2d3e25f",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 12,
+    "corrected_rank": 11,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "629d457d12a5_s1_cont",
+    "corrected_best_run": "629d457d12a5_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e8394eee206d",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 3,
+    "corrected_rank": 12,
+    "original_flags": [
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "2b08271de8ad-t_s100_veri",
+    "corrected_best_run": "41d711eb922d_s1_cont",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "coexistence",
+     "transport"
+    ]
+   },
+   {
+    "family": "f85407d4d325",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 13,
+    "corrected_rank": 13,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ebb8078017a6_s1_cont",
+    "corrected_best_run": "ebb8078017a6_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "fd435eace669",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 14,
+    "corrected_rank": 14,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "0611455c8b9f_s1_cont",
+    "corrected_best_run": "0611455c8b9f_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "bc2e3e5602ea",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 15,
+    "corrected_rank": 15,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "c0db15811798_s1_cont",
+    "corrected_best_run": "c0db15811798_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "1804582d6f19",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 16,
+    "corrected_rank": 16,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ca0df7255922_s1_cont",
+    "corrected_best_run": "ca0df7255922_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "32b5c3dd4c45",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 17,
+    "corrected_rank": 17,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "d19936248740_s1_cont",
+    "corrected_best_run": "d19936248740_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "4189c2c18fc2",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 18,
+    "corrected_rank": 18,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "4b7f2d335a6a_s1_cont",
+    "corrected_best_run": "4b7f2d335a6a_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e4148c8c2968",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 19,
+    "corrected_rank": 19,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "e2fc611f53ce_s1_cont",
+    "corrected_best_run": "e2fc611f53ce_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "3ae856c8eb40",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 20,
+    "corrected_rank": 20,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "3ae856c8eb40_s1_expl",
+    "corrected_best_run": "3ae856c8eb40_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "1f1cb3176483",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 21,
+    "corrected_rank": 21,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "74d25fc07683_s1_cont",
+    "corrected_best_run": "74d25fc07683_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "f03bf63b3a6a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 22,
+    "corrected_rank": 22,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "378836158bfd_s1_cont",
+    "corrected_best_run": "378836158bfd_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e0c8e95860f8",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 23,
+    "corrected_rank": 23,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "cd4d41f89aac_s1_cont",
+    "corrected_best_run": "cd4d41f89aac_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "00d75b431ee8",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 24,
+    "corrected_rank": 24,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "6fcba3e1a8e8_s1_cont",
+    "corrected_best_run": "6fcba3e1a8e8_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "cff1bc285b45",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 25,
+    "corrected_rank": 25,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "3e0a02a3ae0e_s1_cont",
+    "corrected_best_run": "3e0a02a3ae0e_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "0964a1a156e1",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 26,
+    "corrected_rank": 26,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "517f98fae7c0_s1_cont",
+    "corrected_best_run": "517f98fae7c0_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "e50017b04a3a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 27,
+    "corrected_rank": 27,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "3d58a2116293_s1_cont",
+    "corrected_best_run": "3d58a2116293_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "d66d67b02b42",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 28,
+    "corrected_rank": 28,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "d66d67b02b42_s1_expl",
+    "corrected_best_run": "d66d67b02b42_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "c933207af712",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 29,
+    "corrected_rank": 29,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "76c8ee5e7d4f_s1_cont",
+    "corrected_best_run": "76c8ee5e7d4f_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   {
+    "family": "708f54fd28d2",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 30,
+    "corrected_rank": 30,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "dba1c34cc7e5_s1_cont",
+    "corrected_best_run": "dba1c34cc7e5_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   }
+  ],
+  "named": {
+   "2ace470e5c47": {
+    "family": "2ace470e5c47",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 1,
+    "corrected_rank": 4,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "466dab00b7b6-t_s100_veri",
+    "corrected_best_run": "2ace470e5c47_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   "5b237a475b69": {
+    "family": "5b237a475b69",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 2,
+    "corrected_rank": 9,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "4e132c6e0178-t_s100_veri",
+    "corrected_best_run": "5b237a475b69_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   "e8394eee206d": {
+    "family": "e8394eee206d",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 3,
+    "corrected_rank": 12,
+    "original_flags": [
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "2b08271de8ad-t_s100_veri",
+    "corrected_best_run": "41d711eb922d_s1_cont",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "coexistence",
+     "transport"
+    ]
+   }
+  },
+  "families_touched": {
+   "070c3a9ab655": {
+    "family": "070c3a9ab655",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 9,
+    "corrected_rank": 7,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "7dc7429b8c8a_s1_cont",
+    "corrected_best_run": "7dc7429b8c8a_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "19a0e0a5300a": {
+    "family": "19a0e0a5300a",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 4,
+    "corrected_rank": 1,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "19a0e0a5300a_s1_expl",
+    "corrected_best_run": "19a0e0a5300a_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "2ace470e5c47": {
+    "family": "2ace470e5c47",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 1,
+    "corrected_rank": 4,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "466dab00b7b6-t_s100_veri",
+    "corrected_best_run": "2ace470e5c47_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   "4aa428bd90bd": {
+    "family": "4aa428bd90bd",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 5,
+    "corrected_rank": 2,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "63e4c98ca670_s1_cont",
+    "corrected_best_run": "63e4c98ca670_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "5b237a475b69": {
+    "family": "5b237a475b69",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 2,
+    "corrected_rank": 9,
+    "original_flags": [
+     "coexistence",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "4e132c6e0178-t_s100_veri",
+    "corrected_best_run": "5b237a475b69_s1_expl",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "compression"
+    ]
+   },
+   "5bb46451d5fb": {
+    "family": "5bb46451d5fb",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 7,
+    "corrected_rank": 5,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "e2a9b453b272_s1_cont",
+    "corrected_best_run": "e2a9b453b272_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "636158e75708": {
+    "family": "636158e75708",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 10,
+    "corrected_rank": 8,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "a778e681e647_s1_cont",
+    "corrected_best_run": "a778e681e647_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "ac675613ecd5": {
+    "family": "ac675613ecd5",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 8,
+    "corrected_rank": 6,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "ac675613ecd5_s1_expl",
+    "corrected_best_run": "ac675613ecd5_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "d130e2d3e25f": {
+    "family": "d130e2d3e25f",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 12,
+    "corrected_rank": 11,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "629d457d12a5_s1_cont",
+    "corrected_best_run": "629d457d12a5_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "dd2e76a1189b": {
+    "family": "dd2e76a1189b",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 6,
+    "corrected_rank": 3,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "8982c3f34714_s1_cont",
+    "corrected_best_run": "8982c3f34714_s1_cont",
+    "flags_removed": [],
+    "flags_added": []
+   },
+   "e8394eee206d": {
+    "family": "e8394eee206d",
+    "original_score": 17,
+    "corrected_score": 14,
+    "original_rank": 3,
+    "corrected_rank": 12,
+    "original_flags": [
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "spontaneous_replication"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "2b08271de8ad-t_s100_veri",
+    "corrected_best_run": "41d711eb922d_s1_cont",
+    "flags_removed": [
+     "spontaneous_replication"
+    ],
+    "flags_added": [
+     "coexistence",
+     "transport"
+    ]
+   },
+   "fd8719c6af75": {
+    "family": "fd8719c6af75",
+    "original_score": 14,
+    "corrected_score": 14,
+    "original_rank": 11,
+    "corrected_rank": 10,
+    "original_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "corrected_flags": [
+     "coexistence",
+     "compression",
+     "moat_advantage",
+     "moat_crossed",
+     "new_arch_events",
+     "persistence_over_control",
+     "transport"
+    ],
+    "original_best_run": "fd8719c6af75_s1_expl",
+    "corrected_best_run": "fd8719c6af75_s1_expl",
+    "flags_removed": [],
+    "flags_added": []
+   }
+  },
+  "flag_totals_corrected": {
+   "spontaneous_replication": 0
+  }
+ },
+ "C_transplant": {
+  "thresholds_frozen_grammar": {
+   "persist_pop_frac": 0.25,
+   "reproduce_births": 50,
+   "fidelity": 0.9,
+   "competence": 0.999
+  },
+  "families": {
+   "070c3a9ab655": {
+    "transplant:environment_swap": {
+     "run_id": "07d1f7853f4c-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.906,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 189648,
+     "fidelity_late": 0.99,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.333,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "595aa3bd5fc5-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 1.0,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.971,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:same": {
+     "run_id": "e64ba9b6e468-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 187831,
+     "fidelity_late": 0.99,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.906,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "2ace470e5c47": {
+    "transplant:physics_swap": {
+     "run_id": "0ea32c4831fa-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "COND_multi",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.961,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.972,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:environment_swap": {
+     "run_id": "466dab00b7b6-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "COND_multi",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": true,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 190166,
+     "fidelity_late": 0.99,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "dd2e76a1189b": {
+    "transplant:same": {
+     "run_id": "11793ae99dd8-t_s100_veri",
+     "task": "CONST_atomic",
+     "source_task": "CONST_atomic",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 187172,
+     "fidelity_late": 0.991,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.333,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "42ba1388ead9-t_s100_veri",
+     "task": "CONST_atomic",
+     "source_task": "CONST_atomic",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.972,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:environment_swap": {
+     "run_id": "8ac55dbf1309-t_s100_veri",
+     "task": "ECHO_forced",
+     "source_task": "CONST_atomic",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.961,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 190396,
+     "fidelity_late": 0.991,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.333,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "e8394eee206d": {
+    "transplant:same": {
+     "run_id": "2226fc309f55-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 189989,
+     "fidelity_late": 0.993,
+     "task_competence_final": 0.492,
+     "task_best_ever": 0.945,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.672,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:world_swap": {
+     "run_id": "2b08271de8ad-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "well_mixed",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 191325,
+     "fidelity_late": 0.993,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.672,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:environment_swap": {
+     "run_id": "d6eab9d26a29-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 188836,
+     "fidelity_late": 0.991,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.667,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.672,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "fcf13daad0ff-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.971,
+     "task_competence_final": 0.43,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.672,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    }
+   },
+   "5b237a475b69": {
+    "transplant:physics_swap": {
+     "run_id": "2bc594810800-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.953,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.971,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 1.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:environment_swap": {
+     "run_id": "3fe9d02da7fe-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 406291,
+     "fidelity_late": 0.992,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 1.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:same": {
+     "run_id": "4e132c6e0178-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 381361,
+     "fidelity_late": 0.994,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 1.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:world_swap": {
+     "run_id": "987e0e2fdf50-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "well_mixed",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 389992,
+     "fidelity_late": 0.995,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 1.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "5bb46451d5fb": {
+    "transplant:physics_swap": {
+     "run_id": "2c75bf4831f8-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.97,
+     "task_competence_final": 0.43,
+     "task_best_ever": 0.984,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.422,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:world_swap": {
+     "run_id": "3f05e65e3d47-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "well_mixed",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 186603,
+     "fidelity_late": 0.987,
+     "task_competence_final": 0.43,
+     "task_best_ever": 0.992,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.422,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:same": {
+     "run_id": "8f1eda878795-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 184453,
+     "fidelity_late": 0.989,
+     "task_competence_final": 0.43,
+     "task_best_ever": 0.93,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.422,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:environment_swap": {
+     "run_id": "9dd90a43ab91-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 187675,
+     "fidelity_late": 0.98,
+     "task_competence_final": 0.43,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.422,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "19a0e0a5300a": {
+    "transplant:environment_swap": {
+     "run_id": "36f2d57cd4f2-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.969,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 340880,
+     "fidelity_late": 0.931,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:same": {
+     "run_id": "67cef4faf5e7-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 349894,
+     "fidelity_late": 0.94,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.667,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "cfdcc153f036-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.969,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.766,
+     "task_competence_final": 0.333,
+     "task_best_ever": 0.667,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": false
+    }
+   },
+   "fd8719c6af75": {
+    "transplant:physics_swap": {
+     "run_id": "388c00632c7a-t_s100_veri",
+     "task": "NEG",
+     "source_task": "NEG",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.971,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:environment_swap": {
+     "run_id": "6c3a4a1fb3b8-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 347369,
+     "fidelity_late": 0.958,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:same": {
+     "run_id": "a5a0493ec7cf-t_s100_veri",
+     "task": "NEG",
+     "source_task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.969,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 332050,
+     "fidelity_late": 0.8,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    }
+   },
+   "d130e2d3e25f": {
+    "transplant:same": {
+     "run_id": "45e6b162ded1-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.969,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 189724,
+     "fidelity_late": 0.942,
+     "task_competence_final": 0.531,
+     "task_best_ever": 0.992,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.641,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "bfa2f73eaf57-t_s100_veri",
+     "task": "CONST_incremental",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.62,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.992,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.641,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:environment_swap": {
+     "run_id": "c66e86c73e36-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "CONST_incremental",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_PARTIAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 185046,
+     "fidelity_late": 0.923,
+     "task_competence_final": 0.445,
+     "task_best_ever": 0.977,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.641,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "4aa428bd90bd": {
+    "transplant:same": {
+     "run_id": "7252d77c58b8-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 354773,
+     "fidelity_late": 0.99,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.667,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:world_swap": {
+     "run_id": "997f12c1740f-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "well_mixed",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 367693,
+     "fidelity_late": 0.989,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.667,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "d5855efe5fc2-t_s100_veri",
+     "task": "ADD2",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.971,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:environment_swap": {
+     "run_id": "ee082f2db085-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "ADD2",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.992,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 345615,
+     "fidelity_late": 0.989,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    }
+   },
+   "ac675613ecd5": {
+    "transplant:environment_swap": {
+     "run_id": "771c5c311468-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.961,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 189639,
+     "fidelity_late": 0.992,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.667,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:same": {
+     "run_id": "ac1891969d1f-t_s100_veri",
+     "task": "NEG",
+     "source_task": "NEG",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.961,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 190128,
+     "fidelity_late": 0.989,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.333,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "bc09f51a277b-t_s100_veri",
+     "task": "NEG",
+     "source_task": "NEG",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.971,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    }
+   },
+   "636158e75708": {
+    "transplant:environment_swap": {
+     "run_id": "78722e5100e6-t_s100_veri",
+     "task": "COND_multi",
+     "source_task": "none",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 190806,
+     "fidelity_late": 0.993,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": true
+    },
+    "transplant:physics_swap": {
+     "run_id": "aa1a432ba1d5-t_s100_veri",
+     "task": "none",
+     "source_task": "none",
+     "topology": "niches",
+     "reproduction": "EXTERNAL",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.984,
+     "extinct_epoch": null,
+     "reproduced_endogenously": false,
+     "births_endo": 0,
+     "fidelity_late": 0.765,
+     "task_competence_final": 0.0,
+     "task_best_ever": 1.0,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": true,
+     "legacy_spontaneous_label": false
+    },
+    "transplant:same": {
+     "run_id": "d09e8fde50a3-t_s100_veri",
+     "task": "none",
+     "source_task": "none",
+     "topology": "niches",
+     "reproduction": "ENDOGENOUS_COPY",
+     "vacuous": false,
+     "persisted": true,
+     "final_pop_frac": 0.977,
+     "extinct_epoch": null,
+     "reproduced_endogenously": true,
+     "births_endo": 223673,
+     "fidelity_late": 0.993,
+     "task_competence_final": 0.0,
+     "task_best_ever": 0.333,
+     "competence_retained": false,
+     "source_best_ever": 1.0,
+     "source_task_max_final": 0.0,
+     "moat_crossed": false,
+     "legacy_spontaneous_label": true
+    }
+   }
+  }
+ },
+ "D_topology": {
+  "all_runs_by_topology": {
+   "graph": {
+    "runs": 11621,
+    "moat_crossed": 7481,
+    "moat_advantage": 70,
+    "has_repro_control": 4688,
+    "moat_crossed_rate": 0.6437,
+    "moat_advantage_rate": 0.006
+   },
+   "grid_vn": {
+    "runs": 11673,
+    "moat_crossed": 7453,
+    "moat_advantage": 48,
+    "has_repro_control": 4676,
+    "moat_crossed_rate": 0.6385,
+    "moat_advantage_rate": 0.0041
+   },
+   "niches": {
+    "runs": 54363,
+    "moat_crossed": 40209,
+    "moat_advantage": 2864,
+    "has_repro_control": 23533,
+    "moat_crossed_rate": 0.7396,
+    "moat_advantage_rate": 0.0527
+   },
+   "ring_soup": {
+    "runs": 11637,
+    "moat_crossed": 7286,
+    "moat_advantage": 64,
+    "has_repro_control": 4698,
+    "moat_crossed_rate": 0.6261,
+    "moat_advantage_rate": 0.0055
+   },
+   "well_mixed": {
+    "runs": 11709,
+    "moat_crossed": 7886,
+    "moat_advantage": 64,
+    "has_repro_control": 4700,
+    "moat_crossed_rate": 0.6735,
+    "moat_advantage_rate": 0.0055
+   }
+  },
+  "exploration_runs_by_topology": {
+   "graph": {
+    "runs": 4553,
+    "moat_crossed": 2253,
+    "moat_advantage": 2,
+    "has_repro_control": 4483,
+    "moat_crossed_rate": 0.4948,
+    "moat_advantage_rate": 0.0004
+   },
+   "grid_vn": {
+    "runs": 4560,
+    "moat_crossed": 2219,
+    "moat_advantage": 1,
+    "has_repro_control": 4484,
+    "moat_crossed_rate": 0.4866,
+    "moat_advantage_rate": 0.0002
+   },
+   "niches": {
+    "runs": 13313,
+    "moat_crossed": 7776,
+    "moat_advantage": 227,
+    "has_repro_control": 13180,
+    "moat_crossed_rate": 0.5841,
+    "moat_advantage_rate": 0.0171
+   },
+   "ring_soup": {
+    "runs": 4536,
+    "moat_crossed": 2144,
+    "moat_advantage": 4,
+    "has_repro_control": 4469,
+    "moat_crossed_rate": 0.4727,
+    "moat_advantage_rate": 0.0009
+   },
+   "well_mixed": {
+    "runs": 4553,
+    "moat_crossed": 2435,
+    "moat_advantage": 6,
+    "has_repro_control": 4483,
+    "moat_crossed_rate": 0.5348,
+    "moat_advantage_rate": 0.0013
+   }
+  },
+  "allocation_by_topology_and_kind": {
+   "graph": {
+    "exploration": 4553,
+    "control": 6895,
+    "promotion": 173
+   },
+   "grid_vn": {
+    "exploration": 4560,
+    "control": 6944,
+    "promotion": 169
+   },
+   "niches": {
+    "exploration": 13313,
+    "control": 32279,
+    "promotion": 8682,
+    "verification": 89
+   },
+   "ring_soup": {
+    "exploration": 4536,
+    "control": 6892,
+    "promotion": 209
+   },
+   "well_mixed": {
+    "control": 6953,
+    "exploration": 4553,
+    "positive_control": 6,
+    "promotion": 193,
+    "verification": 4
+   }
+  },
+  "niches_split_by_coupled_features": {
+   "niches+coupled(migration|reservoir|local_shift|env_coevolve)": {
+    "runs": 53210,
+    "moat_crossed": 39256,
+    "moat_advantage": 2752,
+    "has_repro_control": 22977,
+    "moat_crossed_rate": 0.7378,
+    "moat_advantage_rate": 0.0517
+   },
+   "niches_bare(no migration, no reservoir, env fixed/nonstationary/env_mutate)": {
+    "runs": 1153,
+    "moat_crossed": 953,
+    "moat_advantage": 112,
+    "has_repro_control": 556,
+    "moat_crossed_rate": 0.8265,
+    "moat_advantage_rate": 0.0971
+   }
+  },
+  "bare_comparison_all_topologies": {
+   "graph": {
+    "runs": 11621,
+    "moat_crossed": 7481,
+    "moat_advantage": 70,
+    "has_repro_control": 4688,
+    "moat_crossed_rate": 0.6437,
+    "moat_advantage_rate": 0.006
+   },
+   "grid_vn": {
+    "runs": 11673,
+    "moat_crossed": 7453,
+    "moat_advantage": 48,
+    "has_repro_control": 4676,
+    "moat_crossed_rate": 0.6385,
+    "moat_advantage_rate": 0.0041
+   },
+   "niches": {
+    "runs": 1153,
+    "moat_crossed": 953,
+    "moat_advantage": 112,
+    "has_repro_control": 556,
+    "moat_crossed_rate": 0.8265,
+    "moat_advantage_rate": 0.0971
+   },
+   "ring_soup": {
+    "runs": 11637,
+    "moat_crossed": 7286,
+    "moat_advantage": 64,
+    "has_repro_control": 4698,
+    "moat_crossed_rate": 0.6261,
+    "moat_advantage_rate": 0.0055
+   },
+   "well_mixed": {
+    "runs": 11709,
+    "moat_crossed": 7886,
+    "moat_advantage": 64,
+    "has_repro_control": 4700,
+    "moat_crossed_rate": 0.6735,
+    "moat_advantage_rate": 0.0055
+   }
+  },
+  "bare_comparison_exploration_only": {
+   "graph": {
+    "runs": 4553,
+    "moat_crossed": 2253,
+    "moat_advantage": 2,
+    "has_repro_control": 4483,
+    "moat_crossed_rate": 0.4948,
+    "moat_advantage_rate": 0.0004
+   },
+   "grid_vn": {
+    "runs": 4560,
+    "moat_crossed": 2219,
+    "moat_advantage": 1,
+    "has_repro_control": 4484,
+    "moat_crossed_rate": 0.4866,
+    "moat_advantage_rate": 0.0002
+   },
+   "ring_soup": {
+    "runs": 4536,
+    "moat_crossed": 2144,
+    "moat_advantage": 4,
+    "has_repro_control": 4469,
+    "moat_crossed_rate": 0.4727,
+    "moat_advantage_rate": 0.0009
+   },
+   "well_mixed": {
+    "runs": 4553,
+    "moat_crossed": 2435,
+    "moat_advantage": 6,
+    "has_repro_control": 4483,
+    "moat_crossed_rate": 0.5348,
+    "moat_advantage_rate": 0.0013
+   }
+  },
+  "moat_advantage_families_by_best_run_topology": {
+   "grid_vn": 7,
+   "niches": 491,
+   "graph": 9,
+   "ring_soup": 14,
+   "well_mixed": 7
+  },
+  "niches_exploration_levels": {
+   "world.migration": {
+    "low": 2642,
+    "high": 2646,
+    "competence": 2637,
+    "periodic": 2629,
+    "env_dependent": 2569,
+    "none": 190
+   },
+   "world.reservoir": {
+    "True": 9546,
+    "False": 3767
+   },
+   "world.env_dynamics": {
+    "env_coevolve": 3785,
+    "env_mutate": 1930,
+    "local_shift": 3813,
+    "nonstationary": 1881,
+    "fixed": 1904
+   }
+  },
+  "sampler_note": "grammar.random_spec weights each level by 1/(1+coverage); migration=none and reservoir=False are forced (and counted) in every non-niches run, so a niches draw almost never selects them: the exploration sampler itself coupled topology to migration/reservoir"
+ },
+ "E_recombination": {
+  "grammar_constraint": [
+   "recombination only with EXTERNAL (PAIR_EXECUTION is the endogenous form)"
+  ],
+  "matched_control_rule": "grammar.matched_controls: flip_r = ENDOGENOUS_COPY for an EXTERNAL treatment; pressures explicit_fitness and recombination are dropped (-> implicit_survival if empty)",
+  "treatment_control_pairs": {
+   "recombination_treatments": 1829,
+   "control_ran": 1823,
+   "control_has_recombination": 0,
+   "control_keeps_explicit_fitness": 0,
+   "treatment_had_explicit_fitness": 550,
+   "control_reproduction_ENDOGENOUS_COPY": 1829,
+   "control_pressure_metabolic": 69,
+   "control_pressure_implicit_survival": 1264,
+   "control_pressure_resource_competition": 63,
+   "control_pressure_minimal_criterion": 56,
+   "control_pressure_exec_time": 91,
+   "control_pressure_tape_cost": 75,
+   "control_pressure_qd": 53,
+   "control_pressure_resource_gated": 54,
+   "control_pressure_novelty": 32,
+   "control_pressure_competence_gated": 72
+  },
+  "by_recombination_all": {
+   "no_recombination": {
+    "runs": 98245,
+    "moat_crossed": 67791,
+    "moat_advantage": 2411,
+    "has_repro_control": 40306,
+    "moat_crossed_rate": 0.69,
+    "moat_advantage_rate": 0.0245
+   },
+   "recombination": {
+    "runs": 2758,
+    "moat_crossed": 2524,
+    "moat_advantage": 699,
+    "has_repro_control": 1989,
+    "moat_crossed_rate": 0.9152,
+    "moat_advantage_rate": 0.2534
+   }
+  },
+  "within_EXTERNAL_all": {
+   "no_recombination": {
+    "runs": 40373,
+    "moat_crossed": 34671,
+    "moat_advantage": 1832,
+    "has_repro_control": 5696,
+    "moat_crossed_rate": 0.8588,
+    "moat_advantage_rate": 0.0454
+   },
+   "recombination": {
+    "runs": 2758,
+    "moat_crossed": 2524,
+    "moat_advantage": 699,
+    "has_repro_control": 1989,
+    "moat_crossed_rate": 0.9152,
+    "moat_advantage_rate": 0.2534
+   }
+  },
+  "within_EXTERNAL_exploration_only": {
+   "no_recombination": {
+    "runs": 965,
+    "moat_crossed": 835,
+    "moat_advantage": 115,
+    "has_repro_control": 954,
+    "moat_crossed_rate": 0.8653,
+    "moat_advantage_rate": 0.1192
+   },
+   "recombination": {
+    "runs": 650,
+    "moat_crossed": 564,
+    "moat_advantage": 85,
+    "has_repro_control": 641,
+    "moat_crossed_rate": 0.8677,
+    "moat_advantage_rate": 0.1308
+   }
+  },
+  "by_reproduction_all": {
+   "CONSTRUCTIVE": {
+    "runs": 10135,
+    "moat_crossed": 5670,
+    "moat_advantage": 10,
+    "has_repro_control": 6602,
+    "moat_crossed_rate": 0.5594,
+    "moat_advantage_rate": 0.001
+   },
+   "ENDOGENOUS_COPY": {
+    "runs": 15392,
+    "moat_crossed": 8684,
+    "moat_advantage": 442,
+    "has_repro_control": 6474,
+    "moat_crossed_rate": 0.5642,
+    "moat_advantage_rate": 0.0287
+   },
+   "ENDOGENOUS_PARTIAL": {
+    "runs": 11523,
+    "moat_crossed": 7193,
+    "moat_advantage": 88,
+    "has_repro_control": 7844,
+    "moat_crossed_rate": 0.6242,
+    "moat_advantage_rate": 0.0076
+   },
+   "EXTERNAL": {
+    "runs": 43131,
+    "moat_crossed": 37195,
+    "moat_advantage": 2531,
+    "has_repro_control": 7685,
+    "moat_crossed_rate": 0.8624,
+    "moat_advantage_rate": 0.0587
+   },
+   "OVERWRITE": {
+    "runs": 10783,
+    "moat_crossed": 6159,
+    "moat_advantage": 32,
+    "has_repro_control": 7176,
+    "moat_crossed_rate": 0.5712,
+    "moat_advantage_rate": 0.003
+   },
+   "PAIR_EXECUTION": {
+    "runs": 10039,
+    "moat_crossed": 5414,
+    "moat_advantage": 7,
+    "has_repro_control": 6514,
+    "moat_crossed_rate": 0.5393,
+    "moat_advantage_rate": 0.0007
+   }
+  }
+ },
+ "F_seeded_witness_confound": {
+  "moat_crossed_by_init": {
+   "random|task": {
+    "runs": 45353,
+    "crossed": 20762,
+    "crossed_at_epoch0": 2486,
+    "crossed_by_epoch5": 5429
+   },
+   "random|task=none": {
+    "runs": 3465,
+    "crossed": 721,
+    "crossed_at_epoch0": 1,
+    "crossed_by_epoch5": 2
+   },
+   "seeded_replicator|task": {
+    "runs": 48703,
+    "crossed": 47814,
+    "crossed_at_epoch0": 36961,
+    "crossed_by_epoch5": 45969
+   },
+   "seeded_replicator|task=none": {
+    "runs": 3482,
+    "crossed": 1018,
+    "crossed_at_epoch0": 1,
+    "crossed_by_epoch5": 1
+   }
+  },
+  "moat_advantage_runs_by_init_and_first_crossing_epoch": {
+   "random|epoch0": 50,
+   "random|epoch1-5": 125,
+   "random|epoch>5": 2003,
+   "seeded_replicator|epoch0": 619,
+   "seeded_replicator|epoch1-5": 114,
+   "seeded_replicator|epoch>5": 199
+  },
+  "families_scoring_14_by_best_run_init": {
+   "seeded_replicator": 34,
+   "random": 1
+  },
+  "families_scoring_14": 35,
+  "moat_scoring_weight": {
+   "moat_advantage": 6,
+   "moat_crossed": 2
+  },
+  "status": "CONFOUND_MEASURED_FROM_RECORDS; causal attribution per run requires instrumented replay (replays/REPLAY_*.json first_crossing provenance)"
+ },
+ "G_denovo_denominator": {
+  "random_init_endogenous_runs_without_inserted_material": 27141,
+  "by_reproduction": {
+   "PAIR_EXECUTION": 4906,
+   "ENDOGENOUS_PARTIAL": 4991,
+   "OVERWRITE": 5062,
+   "CONSTRUCTIVE": 4856,
+   "ENDOGENOUS_COPY": 7326
+  },
+  "extinct": 27140,
+  "median_extinct_epoch": 61,
+  "max_extinct_epoch": 204,
+  "not_extinct": [
+   {
+    "run_id": "84616cf8257b_s1_cont",
+    "run_dir": "runs/70d24e947c80/84616cf8257b_s1_cont",
+    "factors": {
+     "world.topology": "well_mixed",
+     "world.migration": "none",
+     "world.resources": "limited",
+     "world.env_dynamics": "env_mutate",
+     "world.reservoir": false,
+     "representation.substrate": "vmcopy",
+     "representation.genome": 32,
+     "representation.layout": "shared",
+     "reproduction": "ENDOGENOUS_COPY",
+     "pressure": "tape_cost",
+     "task": "ECHO_forced",
+     "mutation": "local_byte",
+     "init": "random"
+    },
+    "final_pop_frac": 0.75,
+    "births_endo": 4739,
+    "fidelity_late": 0.482,
+    "epochs": 918,
+    "vm_steps": 60021803,
+    "lineages_final": 1,
+    "best_ever": 1.0
+   }
+  ],
+  "legacy_label_fired_on_any": 0,
+  "max_births_endo_among_extinct": 254
+ }
+}

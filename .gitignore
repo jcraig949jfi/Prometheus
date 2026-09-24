@@ -177,6 +177,15 @@ agents/nemesis/grid/grid.json
 # Root-level TODO (personal, local only)
 /TODO.md
 
+# Local session-resume scratch notes (personal, local only)
+/resume_runpod.md
+
+# AETH-01 run evidence. The global *.log rule (line 47) would otherwise
+# swallow the pod-side canary.log and bench.log, which are the RAW ROWS
+# behind the AETH-01 scaling verdicts -- and a verdict whose ledger is
+# not committed is an assertion (roles/base-role/RESPONSIBILITIES.md s2).
+!Aether/AETH-01/evidence/**/*.log
+
 # Dashboard data moved to docs/ for GitHub Pages serving (2026-05-15).
 # See "Docs — local research drafts" block below for the docs/ exceptions.
 
@@ -283,6 +292,11 @@ docs/*
 !docs/weekly_recap_audio_*.md
 !docs/notebook_lm/
 !docs/notebook_lm/calliope_daily_*.md
+# Essays — long-form notes meant to be READ in a browser off the Pages site
+# (https://jcraig949jfi.github.io/Prometheus/essays/...). Whole subdirectory is
+# served, so anything added here becomes public on the next push to main.
+!docs/essays/
+!docs/essays/**
 
 # Papers — UNPUBLISHED (gitignore until ready to publish)
 papers/

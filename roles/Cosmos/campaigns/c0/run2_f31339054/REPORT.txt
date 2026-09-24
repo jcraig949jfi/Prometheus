@@ -1,0 +1,42 @@
+CWE CAMPAIGN 0 REPORT  c0_main_run2_f31339054
+==============================================================================
+code   head f31339054a  src 6d26a7be8ca6  dirty False
+graph  nodes 721 edges 243 runs 799 laws 3  edge kinds {'CONTROL_OF': 60, 'COORD_PRESERVING': 84, 'DEFORMATION_OF': 99}
+queries (chamber, excl. oracle) 867   wall 1957.3s
+------------------------------------------------------------------------------
+GATES
+  G0  PASS
+  G1  FAIL
+  G2  NOT REACHED
+  G3  NOT REACHED (not run by campaign0; see G3 receipt)
+  G4  FAIL
+  G5  NOT REACHED
+  G6  NOT REACHED
+  G7  NOT REACHED
+------------------------------------------------------------------------------
+INITIAL MINING (main dataset)
+  raw  CANDIDATE                  p=0.050 score=0.732
+       (C * log((G + K))) >= 0.06353 AND ((N - K) * exp(-C)) <= -0.1254
+  v1   CANDIDATE                  p=0.050 score=0.838
+       ((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136
+  v2   CANDIDATE                  p=0.050 score=0.864
+       ((C / G) + N) <= 0.9605 AND (C / (log(C) / K)) <= -0.06323
+ADVERSARY
+  round 0  FAILED  confirmed 17 / confident 108
+    law  ((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136
+    revision picked v1 ; v1 CANDIDATE ; v2 CANDIDATE
+  round 1  FAILED  confirmed 11 / confident 108
+    law  ((C + K) * C) >= 0.1647 AND (C - (G * exp(-N))) <= -0.06142
+    revision picked v2 ; v1 CANDIDATE ; v2 CANDIDATE
+  round 2  FAILED  confirmed 25 / confident 108
+    law  (C * K) >= 0.1608 AND (C - (G * exp(-N))) <= -0.08702
+    revision picked v2 ; v1 CANDIDATE ; v2 CANDIDATE
+LAW LEDGER
+  424fa143b7 v1 parent=- cmap=v1  PROPOSED/ATTACKED/FAILED/REVISED
+    ((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136
+  d45d1069e0 v2 parent=424fa143b7 cmap=v1  PROPOSED/ATTACKED/FAILED/REVISED
+    ((C + K) * C) >= 0.1647 AND (C - (G * exp(-N))) <= -0.06142
+  964c086e6d v3 parent=d45d1069e0 cmap=v2  PROPOSED/ATTACKED/FAILED
+    (C * K) >= 0.1608 AND (C - (G * exp(-N))) <= -0.08702
+QUOTIENT  721 nodes -> 8 classes (0.011); boundary edge fraction {'CONTROL_OF': 0.7333, 'COORD_PRESERVING': 0.0952, 'DEFORMATION_OF': 0.2706}
+==============================================================================

@@ -1,0 +1,378 @@
+{
+ "adversary": [
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 28,
+     "confirmed": 5,
+     "contradictions": 5,
+     "n": 28
+    },
+    "coordpres_base": {
+     "confident": 8,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 8
+    },
+    "errorseek": {
+     "confident": 36,
+     "confirmed": 9,
+     "contradictions": 11,
+     "n": 36
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 2,
+     "contradictions": 2,
+     "n": 36
+    }
+   },
+   "confident": 108,
+   "confirmed": 17,
+   "law": "((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136",
+   "revision": {
+    "picked": "v1",
+    "v1": {
+     "law": "((C + K) * C) >= 0.1647 AND (C - (G * exp(-N))) <= -0.06142",
+     "score": 0.8498670379798586,
+     "verdict": "CANDIDATE"
+    },
+    "v2": {
+     "law": "((C / G) + N) <= 0.9307 AND log(((C + K) * C)) >= -1.803",
+     "score": 0.8596062188390997,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 0,
+   "verdict": "FAILED"
+  },
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 28,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 28
+    },
+    "coordpres_base": {
+     "confident": 8,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 8
+    },
+    "errorseek": {
+     "confident": 36,
+     "confirmed": 8,
+     "contradictions": 8,
+     "n": 36
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 2,
+     "contradictions": 2,
+     "n": 36
+    }
+   },
+   "confident": 108,
+   "confirmed": 11,
+   "law": "((C + K) * C) >= 0.1647 AND (C - (G * exp(-N))) <= -0.06142",
+   "revision": {
+    "picked": "v2",
+    "v1": {
+     "law": "(C * K) >= 0.1608 AND (C + exp(-(G - N))) <= 1.237",
+     "score": 0.8403070125561088,
+     "verdict": "CANDIDATE"
+    },
+    "v2": {
+     "law": "(C * K) >= 0.1608 AND (C - (G * exp(-N))) <= -0.08702",
+     "score": 0.8907495845908194,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 1,
+   "verdict": "FAILED"
+  },
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 28,
+     "confirmed": 6,
+     "contradictions": 6,
+     "n": 28
+    },
+    "coordpres_base": {
+     "confident": 8,
+     "confirmed": 1,
+     "contradictions": 1,
+     "n": 8
+    },
+    "errorseek": {
+     "confident": 36,
+     "confirmed": 15,
+     "contradictions": 15,
+     "n": 36
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 3,
+     "contradictions": 3,
+     "n": 36
+    }
+   },
+   "confident": 108,
+   "confirmed": 25,
+   "law": "(C * K) >= 0.1608 AND (C - (G * exp(-N))) <= -0.08702",
+   "revision": {
+    "picked": "v2",
+    "v1": {
+     "law": "(C * K) >= 0.1728 AND (G - (C - exp(-N))) >= 0.9903",
+     "score": 0.798719289438658,
+     "verdict": "CANDIDATE"
+    },
+    "v2": {
+     "law": "log(((C + C) * K)) >= -1.062 AND (C - (G * exp(-N))) <= -0.08012",
+     "score": 0.8440606155439231,
+     "verdict": "CANDIDATE"
+    }
+   },
+   "round": 2,
+   "verdict": "FAILED"
+  }
+ ],
+ "gates": {
+  "G0": {
+   "identical": 30,
+   "receipt_chain_ok": true,
+   "replayed": 30,
+   "verdict": "PASS"
+  },
+  "G1": {
+   "causal_consistency": {
+    "ca": {
+     "cost_up_edges": 8,
+     "pass": false,
+     "sel_fitness_nonincreasing": 7
+    },
+    "regs": {
+     "cost_up_edges": 8,
+     "pass": true,
+     "sel_fitness_nonincreasing": 8
+    },
+    "ring": {
+     "cost_up_edges": 8,
+     "pass": false,
+     "sel_fitness_nonincreasing": 7
+    }
+   },
+   "per_family": {
+    "ca": {
+     "pass": true,
+     "pays_rate": 0.2675,
+     "sham_pays": 0
+    },
+    "regs": {
+     "pass": true,
+     "pays_rate": 0.17166666666666666,
+     "sham_pays": 0
+    },
+    "ring": {
+     "pass": true,
+     "pays_rate": 0.2675,
+     "sham_pays": 0
+    }
+   },
+   "verdict": "FAIL"
+  },
+  "G2": {
+   "initial": {
+    "law": "((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136",
+    "p": 0.05,
+    "score": 0.8376353715728716,
+    "verdict": "CANDIDATE"
+   },
+   "verdict": "NOT REACHED"
+  },
+  "G4": {
+   "rounds": 3,
+   "verdict": "FAIL"
+  },
+  "G5": {
+   "verdict": "NOT REACHED"
+  },
+  "G6": {
+   "verdict": "NOT REACHED"
+  },
+  "G7": {
+   "verdict": "NOT REACHED"
+  }
+ },
+ "graph": {
+  "edge_kinds": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 84,
+   "DEFORMATION_OF": 99
+  },
+  "edges": 243,
+  "families": 3,
+  "laws": 3,
+  "nodes": 721,
+  "runs": 799
+ },
+ "identity": {
+  "cosmos_dirty": false,
+  "cosmos_src_sha": "6d26a7be8ca6f1a785b00a1408de9f2b21f27fcb80d9890b7554adaf30ee554c",
+  "git_head": "f31339054a384503a893863e1d4ac8dc079f4f3f",
+  "n_src": 38
+ },
+ "laws": [
+  {
+   "cmap": "v1",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED",
+    "REVISED"
+   ],
+   "freeze_hash": null,
+   "law": "((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136",
+   "law_id": "424fa143b7352aea09ae",
+   "parent": null,
+   "version": 1
+  },
+  {
+   "cmap": "v1",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED",
+    "REVISED"
+   ],
+   "freeze_hash": null,
+   "law": "((C + K) * C) >= 0.1647 AND (C - (G * exp(-N))) <= -0.06142",
+   "law_id": "d45d1069e076e460c5c6",
+   "parent": "424fa143b7352aea09ae",
+   "version": 2
+  },
+  {
+   "cmap": "v2",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "FAILED"
+   ],
+   "freeze_hash": null,
+   "law": "(C * K) >= 0.1608 AND (C - (G * exp(-N))) <= -0.08702",
+   "law_id": "964c086e6d0acb0678ce",
+   "parent": "d45d1069e076e460c5c6",
+   "version": 3
+  }
+ ],
+ "mine_initial": {
+  "raw": {
+   "law": "(C * log((G + K))) >= 0.06353 AND ((N - K) * exp(-C)) <= -0.1254",
+   "p": 0.05,
+   "score": 0.7315353535353535,
+   "verdict": "CANDIDATE"
+  },
+  "v1": {
+   "law": "((N - K) * C) <= -0.1584 AND (C - exp(-(C * N))) <= -0.136",
+   "p": 0.05,
+   "score": 0.8376353715728716,
+   "verdict": "CANDIDATE"
+  },
+  "v2": {
+   "law": "((C / G) + N) <= 0.9605 AND (C / (log(C) / K)) <= -0.06323",
+   "p": 0.05,
+   "score": 0.8643931277056277,
+   "verdict": "CANDIDATE"
+  }
+ },
+ "n_queries": 867,
+ "null_pool_failures": [],
+ "quick": false,
+ "quotient": {
+  "battery": [
+   "PAYS",
+   "BEATS_LAST",
+   "BEATS_LOG",
+   "RETAINS"
+  ],
+  "boundary_edge_fraction": {
+   "CONTROL_OF": 0.7333,
+   "COORD_PRESERVING": 0.0952,
+   "DEFORMATION_OF": 0.2706
+  },
+  "boundary_edges_n": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 84,
+   "DEFORMATION_OF": 85
+  },
+  "classes": {
+   "0000": 102,
+   "0001": 14,
+   "0010": 143,
+   "0011": 83,
+   "0100": 83,
+   "0101": 117,
+   "1110": 51,
+   "1111": 128
+  },
+  "classes_by_family": {
+   "ca": {
+    "0000": 23,
+    "0001": 9,
+    "0010": 26,
+    "0011": 56,
+    "0100": 34,
+    "0101": 54,
+    "1110": 55,
+    "1111": 99
+   },
+   "regs": {
+    "0000": 44,
+    "0001": 3,
+    "0010": 86,
+    "0011": 36,
+    "0100": 38,
+    "0101": 37,
+    "1110": 18,
+    "1111": 38
+   },
+   "ring": {
+    "0000": 47,
+    "0001": 5,
+    "0010": 77,
+    "0011": 23,
+    "0100": 28,
+    "0101": 41,
+    "1110": 41,
+    "1111": 69
+   }
+  },
+  "compression": 0.0111,
+  "n_classes": 8,
+  "n_nodes": 721
+ },
+ "receipt_chain_ok": true,
+ "t_eta_s": 636.1,
+ "t_oracle_s": 211.4,
+ "t_total_s": 1957.3
+}

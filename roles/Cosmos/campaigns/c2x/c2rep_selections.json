@@ -1,0 +1,151 @@
+[
+ {
+  "chosen": {
+   "cmap": "v4",
+   "lolo_score": 0.8974,
+   "offsets": {
+    "ca": 0.006656462146799455,
+    "regs": 0.006925675868049941,
+    "ring": 0.01174976390236808
+   },
+   "structure": "(Q - (C * K)) <= AND (C - (G * exp(-N))) <=",
+   "worst_offset": 0.01174976390236808
+  },
+  "n_candidates": 12,
+  "scored": [
+   {
+    "cmap": "v4",
+    "lolo_score": 0.8974,
+    "offsets": {
+     "ca": 0.006656462146799455,
+     "regs": 0.006925675868049941,
+     "ring": 0.01174976390236808
+    },
+    "structure": "(Q - (C * K)) <= AND (C - (G * exp(-N))) <=",
+    "worst_offset": 0.01174976390236808
+   },
+   {
+    "cmap": "v4",
+    "lolo_score": 0.8974,
+    "offsets": {
+     "ca": 0.015414512127330693,
+     "regs": 0.14274705601654405,
+     "ring": 0.023903348386611595
+    },
+    "structure": "(C - (G * exp(-N))) <= AND ((C * K) + exp(-Q)) >=",
+    "worst_offset": 0.14274705601654405
+   },
+   {
+    "cmap": "v4",
+    "lolo_score": 0.8946,
+    "offsets": {
+     "ca": 0.03748548640146094,
+     "regs": 0.04936985716445431,
+     "ring": 0.09011627120900263
+    },
+    "structure": "(exp(-N) - (C / G)) >= AND ((C * K) + exp(-Q)) >=",
+    "worst_offset": 0.09011627120900263
+   },
+   {
+    "cmap": "v4",
+    "lolo_score": 0.8934,
+    "offsets": {
+     "ca": 0.017112279379186992,
+     "regs": 0.02729888289032401,
+     "ring": 0.015414512127330748
+    },
+    "structure": "log((Q - (C * K))) <= AND (C - (G * exp(-N))) <=",
+    "worst_offset": 0.02729888289032401
+   },
+   {
+    "cmap": "v4",
+    "lolo_score": 0.8934,
+    "offsets": {
+     "ca": 0.5,
+     "regs": 0.5,
+     "ring": 0.5
+    },
+    "structure": "exp(-(Q - (C * K))) >= AND (C - (G * exp(-N))) <=",
+    "worst_offset": 0.5
+   },
+   {
+    "cmap": "v4",
+    "lolo_score": 0.888,
+    "offsets": {
+     "ca": 0.10200064197199592,
+     "regs": 0.1033588557734808,
+     "ring": 0.09520957296457111
+    },
+    "structure": "(G - (C / exp(-N))) >= AND ((C * K) + exp(-Q)) >=",
+    "worst_offset": 0.1033588557734808
+   },
+   {
+    "cmap": "v3",
+    "lolo_score": 0.8772,
+    "offsets": {
+     "ca": 0.1237320627957548,
+     "regs": 0.07483636594229696,
+     "ring": 0.02899665014218012
+    },
+    "structure": "(Q - (C * K)) <= AND (N - log((G - C))) <=",
+    "worst_offset": 0.1237320627957548
+   },
+   {
+    "cmap": "v3",
+    "lolo_score": 0.8772,
+    "offsets": {
+     "ca": 0.013716744875474527,
+     "regs": 0.05038851751556801,
+     "ring": 0.19877337532779793
+    },
+    "structure": "(Q - (C * K)) <= AND ((C - G) * exp(-N)) <=",
+    "worst_offset": 0.19877337532779793
+   },
+   {
+    "cmap": "v3",
+    "lolo_score": 0.8732,
+    "offsets": {
+     "ca": 0.044276555408885844,
+     "regs": 0.23782202212048995,
+     "ring": 0.01779138627992937
+    },
+    "structure": "(N - log((G - C))) <= AND (log(Q) - (C * K)) <=",
+    "worst_offset": 0.23782202212048995
+   },
+   {
+    "cmap": "v3",
+    "lolo_score": 0.8732,
+    "offsets": {
+     "ca": 0.01881004663104302,
+     "regs": 0.22254211685378436,
+     "ring": 0.042239234706658454
+    },
+    "structure": "(log(Q) - (C * K)) <= AND ((C - G) * exp(-N)) <=",
+    "worst_offset": 0.22254211685378436
+   },
+   {
+    "cmap": "v3",
+    "lolo_score": 0.8732,
+    "offsets": {
+     "ca": 0.05276539166816671,
+     "regs": 0.07992966769786555,
+     "ring": 0.10539617647570805
+    },
+    "structure": "(N - log((G - C))) <= AND (Q * exp(-(C * K))) <=",
+    "worst_offset": 0.10539617647570805
+   },
+   {
+    "cmap": "v3",
+    "lolo_score": 0.8732,
+    "offsets": {
+     "ca": 0.22933318586120902,
+     "regs": 0.04767208991259799,
+     "ring": 0.16991133204624287
+    },
+    "structure": "(Q * exp(-(C * K))) <= AND ((C - G) * exp(-N)) <=",
+    "worst_offset": 0.22933318586120902
+   }
+  ],
+  "tag": "initial"
+ }
+]

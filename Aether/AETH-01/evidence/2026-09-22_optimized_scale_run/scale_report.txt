@@ -1,0 +1,21 @@
+AETH-01 SCALING RUN REPORT
+run_id=aeth01-20260922T184536Z-71bd2e9d
+gpu=NVIDIA A40 vram=48GB cloud=SECURE hourly=$0.49
+canary=PASS
+canary_backend=cupy cases=300/300 gpu_kernel_seconds=11.779067654162645
+largest_successful_lattice=16384 (268435456 sites)
+peak_sites_per_sec=36177599.4
+first_limiting_boundary=AETH01_BENCH_STOP reason=OOM size=32768 err=OutOfMemoryError
+pod_wall_seconds=186 est_cost=$0.025
+--- scaling curve (size, tick_med_s, sites/sec, mem_used_mb, parity, digest) ---
+  16     0.022952   11153.9      270.2     PASS    1000219c591e1595
+  32     0.023848   42939.2      270.2     PASS    9f65f15cb87b630f
+  64     0.02323    176326.0     270.2     PASS    3ce333436da923b0
+  128    0.023075   710021.5     272.2     PASS    3ab66c98546a3a95
+  256    0.023026   2846231.4    278.2     SKIPPED 7383c7d828504a30
+  512    0.022989   11402985.0   302.2     SKIPPED a04b1321280b0b97
+  1024   0.03241    32353728.2   398.2     SKIPPED 87b8194c84a440d0
+  2048   0.119645   35056228.4   782.2     SKIPPED f2ad4a9ec9dbac4f
+  4096   0.467566   35882025.5   2318.2    SKIPPED 3741cde26ed38979
+  8192   1.85969    36086056.4   8462.2    SKIPPED 2f787e64bf323091
+  16384  7.419936   36177599.4   33038.2   SKIPPED b3d06be54c1be93c
