@@ -249,6 +249,11 @@ unchanged, no program supplied) yields evidence-backed replication from random b
 remaining probability mass is consumed by assembling a 6-byte ordered op chain; at 3 bytes it
 is found. Scope: this permissive world; which relieved barriers remain necessary is
 X-DENSE-ABLATE. Evidence: `campaigns/c9x-explore-2026-09-24/c_dense_confirm/`.
+**Ablations under dense encodings (X-DENSE-ABLATE -> C-ABLATE, 40 fresh cells, frozen):** free
+self-location is NECESSARY (replication cells 15 -> 1, p = 6.1e-5) and in-place search is
+NECESSARY (15 -> 6, p = 0.0059) - CONFIRMED. The exploratory claim that energy inheritance
+matters for depth in SPONTANEOUS replicators did NOT confirm (depth >= 2: 3 vs 3); E-7
+(seeded copier) is unaffected.
 
 ### E-9 Cycle 9 outcome
 C9 (frozen, protocol 5819bc6d; 1,200/1,200 runs; audit PASS 21/21). Frozen verdicts stand in
