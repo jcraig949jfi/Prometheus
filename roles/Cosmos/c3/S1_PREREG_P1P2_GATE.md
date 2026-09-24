@@ -48,3 +48,18 @@ run); the 0.05-bit floor is ~2 SE. If the gate FAILS, C3 stops before any foreig
 ## 5. Precommitments
 G1 the gate passes on the first implementation (conf 0.5; the likeliest failure is MC or PV).
 G2 NZ lands FUNCTIONAL in 5/5 seeds (conf 0.7).
+
+## Amendment A1 (2026-09-24 ~07:25Z) -- written after a SMOKE run, before the preregistered gate run
+Smoke run (seed 1, 9 permutations; not the gate): N0 NONE, PV PASSIVE (P1 1.963 bits, P2 effect 0.000),
+FX FUNCTIONAL, FD FUNCTIONAL, MC NONE (J .645 from the hint, P1 .010 at tau .010, P2 0.000) -- all as
+expected; NZ INCOHERENT: P1 0.004 bits (< the 0.05 floor) while P2 effect 0.089 (SE ~0.006).
+Diagnosis: the fixed magnitude floors made the two tests unequally sensitive. A register surviving 7
+steps at 30% corruption carries ~0.013 bits (analytic), far below the 0.05-bit floor, yet its causal
+effect is detectable at >10 SE. INCOHERENT did its job: it flagged a certificate defect.
+Revision (certificate v2, both tests matched at the same logic, no ad hoc magnitudes -- operator rule
+"tolerances from uncertainty"): P1 iff D_bits > the 99th percentile of the within-stratum permutation
+null (49 permutations); P2 iff effect > 3 x bootstrap SE. The FLOOR constants are removed.
+Disclosure: NZ's expected class was fixed before the smoke run; the revision was made after seeing
+NZ's smoke result, so NZ's gate verdict under v2 is weaker evidence than the other five systems'.
+The gate itself (5 seeds x 6 systems, 49 permutations) has not been run. Precommitment G1 (the first
+implementation passes) is LOST by the smoke run.
