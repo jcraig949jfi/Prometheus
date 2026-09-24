@@ -1,0 +1,355 @@
+launch attempt 4: cmd 4.3 KB, hashes verified against GitHub raw
+[a2 03:04:08] RUN_ID=aeth02-20260924T070408Z-efe7be17  plan=trajectory  3 phases, ceiling $2.60, pod budget 20000s
+[a2 03:04:08] pinned commit f4fb349b849eb36f6e26545bcdc2f6b95b84e6b6
+[a2 03:04:08]   downloaded aeth01_cpu_oracle.py     1b28db2a10a9b9eb
+[a2 03:04:08]   downloaded aeth01_gpu_kernel.py     1e89830d62e50266
+[a2 03:04:08]   downloaded run_canary.py            751d5a20f324cc86
+[a2 03:04:08]   downloaded pod_service.py           f5053e38525cdde8
+[a2 03:04:08]   fetched    __init__.py              28a35b52368cfbff
+[a2 03:04:08]   fetched    aeth01_observatory.py    24d4cdd4877369d4
+[a2 03:04:08]   fetched    aeth01_run.py            9d1e19d973024d0f
+[a2 03:04:08]   fetched    aeth01_graph.py          b70e5e4061277860
+[a2 03:04:08]   fetched    aeth02_runner.py         7f3283ca1f15a38d
+[a2 03:04:08]   fetched    aeth01_bench_server.py   71aec32bc7013fd4
+[a2 03:04:08]   phase B_long_seed0        2048^2 x  50000 ticks
+[a2 03:04:08]   phase B_long_seed1        2048^2 x  50000 ticks
+[a2 03:04:08]   phase B_long_seed2        2048^2 x  50000 ticks
+[a2 03:04:08] projected artifact 5.9 MB against an 8 MB channel
+[a2 03:04:08]   cadence AETH02_SAMPLE_EVERY      250
+[a2 03:04:08]   cadence AETH02_GRAPH_EVERY       500
+[a2 03:04:08]   cadence AETH02_DEEP_EVERY        5000
+[a2 03:04:08]   cadence AETH02_WINDOW_EVERY      25000
+[a2 03:04:08]   cadence AETH02_WINDOW_SIZE       (runner default)
+[a2 03:04:08]   cadence AETH02_WINDOW_EDGE_CAP   2500
+[a2 03:04:08]   cadence AETH02_PERSIST_TICKS     64
+[a2 03:04:08]   cadence AETH02_MAX_TICK_S        (runner default)
+[a2 03:04:08] baseline confirmed empty (0 pods)
+[a2 03:04:09] create attempt 1 -> 201 pod=ns96dzh9bq7ynx
+[a2 03:04:09] pod ns96dzh9bq7ynx created (id persisted to C:\Users\jcrai\AppData\Local\Temp\aeth02_pod_id.txt)
+[a2 03:04:40] CANARY PASS
+[a2 03:04:40] receipt: backend=cupy cases=300/300 gpu_s=10.950883249286562
+[a2 03:04:40] log 1316 bytes, 0 phase_end, 0 samples, $0.004 spent
+[a2 03:05:40] log 53920 bytes, 0 phase_end, 2 samples, $0.012 spent
+[a2 03:06:40] log 63097 bytes, 0 phase_end, 4 samples, $0.021 spent
+[a2 03:07:41] log 72300 bytes, 0 phase_end, 6 samples, $0.029 spent
+[a2 03:08:41] log 81497 bytes, 0 phase_end, 8 samples, $0.037 spent
+[a2 03:09:41] log 90688 bytes, 0 phase_end, 10 samples, $0.045 spent
+[a2 03:10:41] log 95969 bytes, 0 phase_end, 11 samples, $0.053 spent
+[a2 03:11:42] log 105159 bytes, 0 phase_end, 13 samples, $0.062 spent
+[a2 03:12:42] log 114355 bytes, 0 phase_end, 15 samples, $0.070 spent
+[a2 03:13:42] log 123557 bytes, 0 phase_end, 17 samples, $0.078 spent
+[a2 03:14:42] log 132752 bytes, 0 phase_end, 19 samples, $0.086 spent
+[a2 03:15:43] log 142181 bytes, 0 phase_end, 21 samples, $0.094 spent
+[a2 03:16:43] log 151378 bytes, 0 phase_end, 23 samples, $0.103 spent
+[a2 03:17:43] log 155446 bytes, 0 phase_end, 24 samples, $0.111 spent
+[a2 03:18:43] log 164644 bytes, 0 phase_end, 26 samples, $0.119 spent
+[a2 03:19:44] log 173837 bytes, 0 phase_end, 28 samples, $0.127 spent
+[a2 03:20:44] log 183041 bytes, 0 phase_end, 30 samples, $0.135 spent
+[a2 03:21:44] log 192385 bytes, 0 phase_end, 32 samples, $0.144 spent
+[a2 03:22:45] log 201585 bytes, 0 phase_end, 34 samples, $0.152 spent
+[a2 03:23:45] log 210790 bytes, 0 phase_end, 36 samples, $0.160 spent
+[a2 03:24:45] log 215924 bytes, 0 phase_end, 37 samples, $0.168 spent
+[a2 03:25:45] log 225127 bytes, 0 phase_end, 39 samples, $0.176 spent
+[a2 03:26:46] log 234566 bytes, 0 phase_end, 41 samples, $0.185 spent
+[a2 03:27:46] log 243782 bytes, 0 phase_end, 43 samples, $0.193 spent
+[a2 03:28:46] log 252997 bytes, 0 phase_end, 45 samples, $0.201 spent
+[a2 03:29:47] log 262216 bytes, 0 phase_end, 47 samples, $0.209 spent
+[a2 03:30:47] log 266291 bytes, 0 phase_end, 48 samples, $0.217 spent
+[a2 03:31:47] log 275507 bytes, 0 phase_end, 50 samples, $0.226 spent
+[a2 03:32:47] log 284870 bytes, 0 phase_end, 52 samples, $0.234 spent
+[a2 03:33:48] log 294080 bytes, 0 phase_end, 54 samples, $0.242 spent
+[a2 03:34:48] log 303298 bytes, 0 phase_end, 56 samples, $0.250 spent
+[a2 03:35:48] log 312512 bytes, 0 phase_end, 58 samples, $0.258 spent
+[a2 03:36:48] log 321726 bytes, 0 phase_end, 60 samples, $0.267 spent
+[a2 03:37:49] log 327098 bytes, 0 phase_end, 61 samples, $0.275 spent
+[a2 03:38:49] log 336314 bytes, 0 phase_end, 63 samples, $0.283 spent
+[a2 03:39:49] log 345528 bytes, 0 phase_end, 65 samples, $0.291 spent
+[a2 03:40:50] log 354741 bytes, 0 phase_end, 67 samples, $0.299 spent
+[a2 03:41:50] log 363957 bytes, 0 phase_end, 69 samples, $0.308 spent
+[a2 03:42:50] log 373318 bytes, 0 phase_end, 71 samples, $0.316 spent
+[a2 03:43:50] log 382534 bytes, 0 phase_end, 73 samples, $0.324 spent
+[a2 03:44:51] log 386608 bytes, 0 phase_end, 74 samples, $0.332 spent
+[a2 03:45:51] log 395814 bytes, 0 phase_end, 76 samples, $0.341 spent
+[a2 03:46:51] log 405025 bytes, 0 phase_end, 78 samples, $0.349 spent
+[a2 03:47:52] log 414238 bytes, 0 phase_end, 80 samples, $0.357 spent
+[a2 03:48:52] log 423678 bytes, 0 phase_end, 82 samples, $0.365 spent
+[a2 03:49:52] log 432891 bytes, 0 phase_end, 84 samples, $0.373 spent
+[a2 03:50:52] log 442100 bytes, 0 phase_end, 86 samples, $0.382 spent
+[a2 03:51:53] log 447237 bytes, 0 phase_end, 87 samples, $0.390 spent
+[a2 03:52:53] log 456447 bytes, 0 phase_end, 89 samples, $0.398 spent
+[a2 03:53:53] log 465806 bytes, 0 phase_end, 91 samples, $0.406 spent
+[a2 03:54:54] log 475019 bytes, 0 phase_end, 93 samples, $0.414 spent
+[a2 03:55:54] log 484234 bytes, 0 phase_end, 95 samples, $0.423 spent
+[a2 03:56:54] log 493450 bytes, 0 phase_end, 97 samples, $0.431 spent
+[a2 03:57:54] log 497521 bytes, 0 phase_end, 98 samples, $0.439 spent
+[a2 03:58:55] log 506734 bytes, 0 phase_end, 100 samples, $0.447 spent
+[a2 03:59:55] log 569977 bytes, 0 phase_end, 102 samples, $0.455 spent
+[a2 04:00:55] log 579189 bytes, 0 phase_end, 104 samples, $0.464 spent
+[a2 04:01:56] log 588402 bytes, 0 phase_end, 106 samples, $0.472 spent
+[a2 04:02:56] log 597619 bytes, 0 phase_end, 108 samples, $0.480 spent
+[a2 04:03:56] log 606829 bytes, 0 phase_end, 110 samples, $0.488 spent
+[a2 04:04:56] log 612116 bytes, 0 phase_end, 111 samples, $0.496 spent
+[a2 04:05:57] log 621330 bytes, 0 phase_end, 113 samples, $0.505 spent
+[a2 04:06:57] log 630541 bytes, 0 phase_end, 115 samples, $0.513 spent
+[a2 04:07:57] log 639758 bytes, 0 phase_end, 117 samples, $0.521 spent
+[a2 04:08:58] log 648971 bytes, 0 phase_end, 119 samples, $0.529 spent
+[a2 04:09:58] log 658416 bytes, 0 phase_end, 121 samples, $0.537 spent
+[a2 04:10:58] log 662492 bytes, 0 phase_end, 122 samples, $0.546 spent
+[a2 04:11:59] log 671706 bytes, 0 phase_end, 124 samples, $0.554 spent
+[a2 04:12:59] log 680919 bytes, 0 phase_end, 126 samples, $0.562 spent
+[a2 04:13:59] log 690134 bytes, 0 phase_end, 128 samples, $0.570 spent
+[a2 04:14:59] log 699344 bytes, 0 phase_end, 130 samples, $0.578 spent
+[a2 04:16:00] log 708706 bytes, 0 phase_end, 132 samples, $0.587 spent
+[a2 04:17:00] log 717921 bytes, 0 phase_end, 134 samples, $0.595 spent
+[a2 04:18:00] log 723057 bytes, 0 phase_end, 135 samples, $0.603 spent
+[a2 04:19:01] log 732271 bytes, 0 phase_end, 137 samples, $0.611 spent
+[a2 04:20:01] log 741482 bytes, 0 phase_end, 139 samples, $0.620 spent
+[a2 04:21:01] log 750924 bytes, 0 phase_end, 141 samples, $0.628 spent
+[a2 04:22:02] log 760134 bytes, 0 phase_end, 143 samples, $0.636 spent
+[a2 04:23:02] log 769349 bytes, 0 phase_end, 145 samples, $0.644 spent
+[a2 04:24:02] log 778565 bytes, 0 phase_end, 147 samples, $0.652 spent
+[a2 04:25:03] log 782639 bytes, 0 phase_end, 148 samples, $0.661 spent
+[a2 04:26:03] log 791855 bytes, 0 phase_end, 150 samples, $0.669 spent
+[a2 04:27:03] log 801215 bytes, 0 phase_end, 152 samples, $0.677 spent
+[a2 04:28:04] log 810428 bytes, 0 phase_end, 154 samples, $0.685 spent
+[a2 04:29:04] log 819642 bytes, 0 phase_end, 156 samples, $0.693 spent
+[a2 04:30:04] log 828853 bytes, 0 phase_end, 158 samples, $0.702 spent
+[a2 04:31:05] log 838071 bytes, 0 phase_end, 160 samples, $0.710 spent
+[a2 04:32:05] log 843440 bytes, 0 phase_end, 161 samples, $0.718 spent
+[a2 04:33:05] log 852653 bytes, 0 phase_end, 163 samples, $0.726 spent
+[a2 04:34:05] log 861859 bytes, 0 phase_end, 165 samples, $0.734 spent
+[a2 04:35:06] log 871073 bytes, 0 phase_end, 167 samples, $0.743 spent
+[a2 04:36:06] log 880287 bytes, 0 phase_end, 169 samples, $0.751 spent
+[a2 04:37:06] log 889645 bytes, 0 phase_end, 171 samples, $0.759 spent
+[a2 04:38:07] log 893715 bytes, 0 phase_end, 172 samples, $0.767 spent
+[a2 04:39:07] log 902926 bytes, 0 phase_end, 174 samples, $0.776 spent
+[a2 04:40:07] log 912143 bytes, 0 phase_end, 176 samples, $0.784 spent
+[a2 04:41:08] log 921361 bytes, 0 phase_end, 178 samples, $0.792 spent
+[a2 04:42:08] log 930566 bytes, 0 phase_end, 180 samples, $0.800 spent
+[a2 04:43:08] log 940009 bytes, 0 phase_end, 182 samples, $0.808 spent
+[a2 04:44:09] log 949221 bytes, 0 phase_end, 184 samples, $0.817 spent
+[a2 04:45:09] log 954357 bytes, 0 phase_end, 185 samples, $0.825 spent
+[a2 04:46:09] log 963571 bytes, 0 phase_end, 187 samples, $0.833 spent
+[a2 04:47:09] log 972782 bytes, 0 phase_end, 189 samples, $0.841 spent
+[a2 04:48:10] log 982145 bytes, 0 phase_end, 191 samples, $0.849 spent
+[a2 04:49:10] log 991352 bytes, 0 phase_end, 193 samples, $0.858 spent
+[a2 04:50:11] log 1000569 bytes, 0 phase_end, 195 samples, $0.866 spent
+[a2 04:51:11] log 1009784 bytes, 0 phase_end, 197 samples, $0.874 spent
+[a2 04:52:11] log 1013860 bytes, 0 phase_end, 198 samples, $0.882 spent
+[a2 04:53:11] log 1023073 bytes, 0 phase_end, 200 samples, $0.890 spent
+[a2 04:54:12] log 1136859 bytes, 1 phase_end, 203 samples, $0.899 spent
+[a2 04:55:12] log 1146047 bytes, 1 phase_end, 205 samples, $0.907 spent
+[a2 04:56:13] log 1155241 bytes, 1 phase_end, 207 samples, $0.915 spent
+[a2 04:57:13] log 1164438 bytes, 1 phase_end, 209 samples, $0.923 spent
+[a2 04:58:13] log 1169571 bytes, 1 phase_end, 210 samples, $0.932 spent
+[a2 04:59:13] log 1178914 bytes, 1 phase_end, 212 samples, $0.940 spent
+[a2 05:00:14] log 1188108 bytes, 1 phase_end, 214 samples, $0.948 spent
+[a2 05:01:14] log 1197308 bytes, 1 phase_end, 216 samples, $0.956 spent
+[a2 05:02:15] log 1206504 bytes, 1 phase_end, 218 samples, $0.964 spent
+[a2 05:03:15] log 1215706 bytes, 1 phase_end, 220 samples, $0.973 spent
+[a2 05:04:15] log 1225136 bytes, 1 phase_end, 222 samples, $0.981 spent
+[a2 05:05:16] log 1229200 bytes, 1 phase_end, 223 samples, $0.989 spent
+[a2 05:06:16] log 1238402 bytes, 1 phase_end, 225 samples, $0.997 spent
+[a2 05:07:16] log 1247602 bytes, 1 phase_end, 227 samples, $1.005 spent
+[a2 05:08:17] log 1256799 bytes, 1 phase_end, 229 samples, $1.014 spent
+[a2 05:09:17] log 1266000 bytes, 1 phase_end, 231 samples, $1.022 spent
+[a2 05:10:17] log 1275347 bytes, 1 phase_end, 233 samples, $1.030 spent
+[a2 05:11:18] log 1284553 bytes, 1 phase_end, 235 samples, $1.038 spent
+[a2 05:12:18] log 1289688 bytes, 1 phase_end, 236 samples, $1.047 spent
+[a2 05:13:18] log 1298890 bytes, 1 phase_end, 238 samples, $1.055 spent
+[a2 05:14:19] log 1308089 bytes, 1 phase_end, 240 samples, $1.063 spent
+[a2 05:15:19] log 1317525 bytes, 1 phase_end, 242 samples, $1.071 spent
+[a2 05:16:19] log 1326740 bytes, 1 phase_end, 244 samples, $1.079 spent
+[a2 05:17:20] log 1335955 bytes, 1 phase_end, 246 samples, $1.088 spent
+[a2 05:18:20] log 1345170 bytes, 1 phase_end, 248 samples, $1.096 spent
+[a2 05:19:20] log 1349241 bytes, 1 phase_end, 249 samples, $1.104 spent
+[a2 05:20:21] log 1358455 bytes, 1 phase_end, 251 samples, $1.112 spent
+[a2 05:21:21] log 1367816 bytes, 1 phase_end, 253 samples, $1.120 spent
+[a2 05:22:21] log 1377030 bytes, 1 phase_end, 255 samples, $1.129 spent
+[a2 05:23:22] log 1386244 bytes, 1 phase_end, 257 samples, $1.137 spent
+[a2 05:24:22] log 1395457 bytes, 1 phase_end, 259 samples, $1.145 spent
+[a2 05:25:22] log 1400593 bytes, 1 phase_end, 260 samples, $1.153 spent
+[a2 05:26:23] log 1410038 bytes, 1 phase_end, 262 samples, $1.161 spent
+[a2 05:27:23] log 1419249 bytes, 1 phase_end, 264 samples, $1.170 spent
+[a2 05:28:23] log 1428461 bytes, 1 phase_end, 266 samples, $1.178 spent
+[a2 05:29:24] log 1437674 bytes, 1 phase_end, 268 samples, $1.186 spent
+[a2 05:30:24] log 1446892 bytes, 1 phase_end, 270 samples, $1.194 spent
+[a2 05:31:24] log 1456247 bytes, 1 phase_end, 272 samples, $1.203 spent
+[a2 05:32:25] log 1460320 bytes, 1 phase_end, 273 samples, $1.211 spent
+[a2 05:33:25] log 1469529 bytes, 1 phase_end, 275 samples, $1.219 spent
+[a2 05:34:25] log 1478742 bytes, 1 phase_end, 277 samples, $1.227 spent
+[a2 05:35:26] log 1487948 bytes, 1 phase_end, 279 samples, $1.235 spent
+[a2 05:36:26] log 1497166 bytes, 1 phase_end, 281 samples, $1.244 spent
+[a2 05:37:26] log 1506612 bytes, 1 phase_end, 283 samples, $1.252 spent
+[a2 05:38:27] log 1515828 bytes, 1 phase_end, 285 samples, $1.260 spent
+[a2 05:39:27] log 1520970 bytes, 1 phase_end, 286 samples, $1.268 spent
+[a2 05:40:27] log 1530181 bytes, 1 phase_end, 288 samples, $1.276 spent
+[a2 05:41:28] log 1539395 bytes, 1 phase_end, 290 samples, $1.285 spent
+[a2 05:42:28] log 1548754 bytes, 1 phase_end, 292 samples, $1.293 spent
+[a2 05:43:28] log 1557968 bytes, 1 phase_end, 294 samples, $1.301 spent
+[a2 05:44:29] log 1567182 bytes, 1 phase_end, 296 samples, $1.309 spent
+[a2 05:45:29] log 1576394 bytes, 1 phase_end, 298 samples, $1.318 spent
+[a2 05:46:29] log 1580467 bytes, 1 phase_end, 299 samples, $1.326 spent
+[a2 05:47:30] log 1589681 bytes, 1 phase_end, 301 samples, $1.334 spent
+[a2 05:48:30] log 1652999 bytes, 1 phase_end, 303 samples, $1.342 spent
+[a2 05:49:30] log 1662214 bytes, 1 phase_end, 305 samples, $1.350 spent
+[a2 05:50:31] log 1671431 bytes, 1 phase_end, 307 samples, $1.359 spent
+[a2 05:51:31] log 1680645 bytes, 1 phase_end, 309 samples, $1.367 spent
+[a2 05:52:32] log 1685788 bytes, 1 phase_end, 310 samples, $1.375 spent
+[a2 05:53:32] log 1695153 bytes, 1 phase_end, 312 samples, $1.383 spent
+[a2 05:54:32] log 1704369 bytes, 1 phase_end, 314 samples, $1.391 spent
+[a2 05:55:33] log 1713584 bytes, 1 phase_end, 316 samples, $1.400 spent
+[a2 05:56:33] log 1722799 bytes, 1 phase_end, 318 samples, $1.408 spent
+[a2 05:57:33] log 1732012 bytes, 1 phase_end, 320 samples, $1.416 spent
+[a2 05:58:34] log 1741461 bytes, 1 phase_end, 322 samples, $1.424 spent
+[a2 05:59:34] log 1745538 bytes, 1 phase_end, 323 samples, $1.433 spent
+[a2 06:00:34] log 1754756 bytes, 1 phase_end, 325 samples, $1.441 spent
+[a2 06:01:35] log 1763970 bytes, 1 phase_end, 327 samples, $1.449 spent
+[a2 06:02:35] log 1773190 bytes, 1 phase_end, 329 samples, $1.457 spent
+[a2 06:03:35] log 1782403 bytes, 1 phase_end, 331 samples, $1.465 spent
+[a2 06:04:36] log 1791767 bytes, 1 phase_end, 333 samples, $1.474 spent
+[a2 06:05:36] log 1800981 bytes, 1 phase_end, 335 samples, $1.482 spent
+[a2 06:06:36] log 1806122 bytes, 1 phase_end, 336 samples, $1.490 spent
+[a2 06:07:37] log 1815337 bytes, 1 phase_end, 338 samples, $1.498 spent
+[a2 06:08:37] log 1824556 bytes, 1 phase_end, 340 samples, $1.506 spent
+[a2 06:09:37] log 1833999 bytes, 1 phase_end, 342 samples, $1.515 spent
+[a2 06:10:38] log 1843211 bytes, 1 phase_end, 344 samples, $1.523 spent
+[a2 06:11:38] log 1852421 bytes, 1 phase_end, 346 samples, $1.531 spent
+[a2 06:12:38] log 1861635 bytes, 1 phase_end, 348 samples, $1.539 spent
+[a2 06:13:39] log 1865711 bytes, 1 phase_end, 349 samples, $1.547 spent
+[a2 06:14:39] log 1874922 bytes, 1 phase_end, 351 samples, $1.556 spent
+[a2 06:15:39] log 1884286 bytes, 1 phase_end, 353 samples, $1.564 spent
+[a2 06:16:40] log 1893499 bytes, 1 phase_end, 355 samples, $1.572 spent
+[a2 06:17:40] log 1902712 bytes, 1 phase_end, 357 samples, $1.580 spent
+[a2 06:18:40] log 1911925 bytes, 1 phase_end, 359 samples, $1.589 spent
+[a2 06:19:41] log 1921140 bytes, 1 phase_end, 361 samples, $1.597 spent
+[a2 06:20:41] log 1926515 bytes, 1 phase_end, 362 samples, $1.605 spent
+[a2 06:21:42] log 1935734 bytes, 1 phase_end, 364 samples, $1.613 spent
+[a2 06:22:42] log 1944951 bytes, 1 phase_end, 366 samples, $1.621 spent
+[a2 06:23:42] log 1954163 bytes, 1 phase_end, 368 samples, $1.630 spent
+[a2 06:24:43] log 1963379 bytes, 1 phase_end, 370 samples, $1.638 spent
+[a2 06:25:43] log 1972746 bytes, 1 phase_end, 372 samples, $1.646 spent
+[a2 06:26:43] log 1976820 bytes, 1 phase_end, 373 samples, $1.654 spent
+[a2 06:27:44] log 1986040 bytes, 1 phase_end, 375 samples, $1.662 spent
+[a2 06:28:44] log 1995258 bytes, 1 phase_end, 377 samples, $1.671 spent
+[a2 06:29:44] log 2004476 bytes, 1 phase_end, 379 samples, $1.679 spent
+[a2 06:30:45] log 2013692 bytes, 1 phase_end, 381 samples, $1.687 spent
+[a2 06:31:45] log 2023143 bytes, 1 phase_end, 383 samples, $1.695 spent
+[a2 06:32:45] log 2032352 bytes, 1 phase_end, 385 samples, $1.704 spent
+[a2 06:33:46] log 2037493 bytes, 1 phase_end, 386 samples, $1.712 spent
+[a2 06:34:46] log 2046711 bytes, 1 phase_end, 388 samples, $1.720 spent
+[a2 06:35:46] log 2055927 bytes, 1 phase_end, 390 samples, $1.728 spent
+[a2 06:36:47] log 2065289 bytes, 1 phase_end, 392 samples, $1.736 spent
+[a2 06:37:47] log 2074506 bytes, 1 phase_end, 394 samples, $1.745 spent
+[a2 06:38:47] log 2083725 bytes, 1 phase_end, 396 samples, $1.753 spent
+[a2 06:39:48] log 2092939 bytes, 1 phase_end, 398 samples, $1.761 spent
+[a2 06:40:48] log 2097008 bytes, 1 phase_end, 399 samples, $1.769 spent
+[a2 06:41:49] log 2106224 bytes, 1 phase_end, 401 samples, $1.778 spent
+[a2 06:42:49] log 2219908 bytes, 2 phase_end, 404 samples, $1.786 spent
+[a2 06:43:49] log 2229099 bytes, 2 phase_end, 406 samples, $1.794 spent
+[a2 06:44:50] log 2238302 bytes, 2 phase_end, 408 samples, $1.802 spent
+[a2 06:45:50] log 2247505 bytes, 2 phase_end, 410 samples, $1.810 spent
+[a2 06:46:50] log 2252639 bytes, 2 phase_end, 411 samples, $1.819 spent
+[a2 06:47:51] log 2261987 bytes, 2 phase_end, 413 samples, $1.827 spent
+[a2 06:48:51] log 2271183 bytes, 2 phase_end, 415 samples, $1.835 spent
+[a2 06:49:52] log 2280383 bytes, 2 phase_end, 417 samples, $1.843 spent
+[a2 06:50:52] log 2289582 bytes, 2 phase_end, 419 samples, $1.851 spent
+[a2 06:51:52] log 2298785 bytes, 2 phase_end, 421 samples, $1.860 spent
+[a2 06:52:53] log 2308210 bytes, 2 phase_end, 423 samples, $1.868 spent
+[a2 06:53:53] log 2312278 bytes, 2 phase_end, 424 samples, $1.876 spent
+[a2 06:54:54] log 2321477 bytes, 2 phase_end, 426 samples, $1.884 spent
+[a2 06:55:54] log 2330677 bytes, 2 phase_end, 428 samples, $1.893 spent
+[a2 06:56:54] log 2339882 bytes, 2 phase_end, 430 samples, $1.901 spent
+[a2 06:57:55] log 2349081 bytes, 2 phase_end, 432 samples, $1.909 spent
+[a2 06:58:55] log 2358431 bytes, 2 phase_end, 434 samples, $1.917 spent
+[a2 06:59:55] log 2367635 bytes, 2 phase_end, 436 samples, $1.925 spent
+[a2 07:00:56] log 2372769 bytes, 2 phase_end, 437 samples, $1.934 spent
+[a2 07:01:56] log 2381971 bytes, 2 phase_end, 439 samples, $1.942 spent
+[a2 07:02:57] log 2391175 bytes, 2 phase_end, 441 samples, $1.950 spent
+[a2 07:03:57] log 2400616 bytes, 2 phase_end, 443 samples, $1.958 spent
+[a2 07:04:57] log 2409835 bytes, 2 phase_end, 445 samples, $1.967 spent
+[a2 07:05:58] log 2419052 bytes, 2 phase_end, 447 samples, $1.975 spent
+[a2 07:06:58] log 2428266 bytes, 2 phase_end, 449 samples, $1.983 spent
+[a2 07:07:58] log 2432341 bytes, 2 phase_end, 450 samples, $1.991 spent
+[a2 07:08:59] log 2441553 bytes, 2 phase_end, 452 samples, $1.999 spent
+[a2 07:09:59] log 2450915 bytes, 2 phase_end, 454 samples, $2.008 spent
+[a2 07:10:59] log 2460129 bytes, 2 phase_end, 456 samples, $2.016 spent
+[a2 07:12:00] log 2469345 bytes, 2 phase_end, 458 samples, $2.024 spent
+[a2 07:13:00] log 2478558 bytes, 2 phase_end, 460 samples, $2.032 spent
+[a2 07:14:01] log 2487774 bytes, 2 phase_end, 462 samples, $2.040 spent
+[a2 07:15:01] log 2493146 bytes, 2 phase_end, 463 samples, $2.049 spent
+[a2 07:16:01] log 2502360 bytes, 2 phase_end, 465 samples, $2.057 spent
+[a2 07:17:02] log 2511573 bytes, 2 phase_end, 467 samples, $2.065 spent
+[a2 07:18:02] log 2520788 bytes, 2 phase_end, 469 samples, $2.073 spent
+[a2 07:19:02] log 2530006 bytes, 2 phase_end, 471 samples, $2.082 spent
+[a2 07:20:03] log 2539371 bytes, 2 phase_end, 473 samples, $2.090 spent
+[a2 07:21:03] log 2548586 bytes, 2 phase_end, 475 samples, $2.098 spent
+[a2 07:22:04] log 2552659 bytes, 2 phase_end, 476 samples, $2.106 spent
+[a2 07:23:04] log 2561871 bytes, 2 phase_end, 478 samples, $2.114 spent
+[a2 07:24:05] log 2571089 bytes, 2 phase_end, 480 samples, $2.123 spent
+[a2 07:25:05] log 2580307 bytes, 2 phase_end, 482 samples, $2.131 spent
+[a2 07:26:06] log 2589751 bytes, 2 phase_end, 484 samples, $2.139 spent
+[a2 07:27:06] log 2598968 bytes, 2 phase_end, 486 samples, $2.147 spent
+[a2 07:28:06] log 2608182 bytes, 2 phase_end, 488 samples, $2.156 spent
+[a2 07:29:07] log 2613317 bytes, 2 phase_end, 489 samples, $2.164 spent
+[a2 07:30:07] log 2622534 bytes, 2 phase_end, 491 samples, $2.172 spent
+[a2 07:31:08] log 2631896 bytes, 2 phase_end, 493 samples, $2.180 spent
+[a2 07:32:08] log 2641109 bytes, 2 phase_end, 495 samples, $2.188 spent
+[a2 07:33:08] log 2650325 bytes, 2 phase_end, 497 samples, $2.197 spent
+[a2 07:34:09] log 2659537 bytes, 2 phase_end, 499 samples, $2.205 spent
+[a2 07:35:09] log 2668752 bytes, 2 phase_end, 501 samples, $2.213 spent
+[a2 07:36:09] log 2672826 bytes, 2 phase_end, 502 samples, $2.221 spent
+[a2 07:37:10] log 2736139 bytes, 2 phase_end, 504 samples, $2.230 spent
+[a2 07:38:10] log 2745352 bytes, 2 phase_end, 506 samples, $2.238 spent
+[a2 07:39:11] log 2754567 bytes, 2 phase_end, 508 samples, $2.246 spent
+[a2 07:40:11] log 2763784 bytes, 2 phase_end, 510 samples, $2.254 spent
+[a2 07:41:11] log 2772996 bytes, 2 phase_end, 512 samples, $2.262 spent
+[a2 07:42:12] log 2782356 bytes, 2 phase_end, 514 samples, $2.271 spent
+[a2 07:43:12] log 2787496 bytes, 2 phase_end, 515 samples, $2.279 spent
+[a2 07:44:13] log 2796711 bytes, 2 phase_end, 517 samples, $2.287 spent
+[a2 07:45:13] log 2805922 bytes, 2 phase_end, 519 samples, $2.295 spent
+[a2 07:46:13] log 2815139 bytes, 2 phase_end, 521 samples, $2.304 spent
+[a2 07:47:14] log 2824587 bytes, 2 phase_end, 523 samples, $2.312 spent
+[a2 07:48:14] log 2833800 bytes, 2 phase_end, 525 samples, $2.320 spent
+[a2 07:49:15] log 2837875 bytes, 2 phase_end, 526 samples, $2.328 spent
+[a2 07:50:15] log 2847088 bytes, 2 phase_end, 528 samples, $2.336 spent
+[a2 07:51:16] log 2856305 bytes, 2 phase_end, 530 samples, $2.345 spent
+[a2 07:52:16] log 2865518 bytes, 2 phase_end, 532 samples, $2.353 spent
+[a2 07:53:16] log 2874881 bytes, 2 phase_end, 534 samples, $2.361 spent
+[a2 07:54:17] log 2884098 bytes, 2 phase_end, 536 samples, $2.369 spent
+[a2 07:55:17] log 2893318 bytes, 2 phase_end, 538 samples, $2.378 spent
+[a2 07:56:17] log 2902536 bytes, 2 phase_end, 540 samples, $2.386 spent
+[a2 07:57:18] log 2907675 bytes, 2 phase_end, 541 samples, $2.394 spent
+[a2 07:58:18] log 2917118 bytes, 2 phase_end, 543 samples, $2.402 spent
+[a2 07:59:19] log 2926335 bytes, 2 phase_end, 545 samples, $2.410 spent
+[a2 08:00:19] log 2935547 bytes, 2 phase_end, 547 samples, $2.419 spent
+[a2 08:01:19] log 2944763 bytes, 2 phase_end, 549 samples, $2.427 spent
+[a2 08:02:20] log 2953982 bytes, 2 phase_end, 551 samples, $2.435 spent
+[a2 08:03:20] log 2958057 bytes, 2 phase_end, 552 samples, $2.443 spent
+[a2 08:04:21] log 2967421 bytes, 2 phase_end, 554 samples, $2.452 spent
+[a2 08:05:21] log 2976641 bytes, 2 phase_end, 556 samples, $2.460 spent
+[a2 08:06:21] log 2985850 bytes, 2 phase_end, 558 samples, $2.468 spent
+[a2 08:07:22] log 2995065 bytes, 2 phase_end, 560 samples, $2.476 spent
+[a2 08:08:22] log 3004277 bytes, 2 phase_end, 562 samples, $2.484 spent
+[a2 08:09:23] log 3013727 bytes, 2 phase_end, 564 samples, $2.493 spent
+[a2 08:10:23] log 3018866 bytes, 2 phase_end, 565 samples, $2.501 spent
+[a2 08:11:24] log 3028080 bytes, 2 phase_end, 567 samples, $2.509 spent
+[a2 08:12:24] log 3037293 bytes, 2 phase_end, 569 samples, $2.517 spent
+[a2 08:13:25] log 3046507 bytes, 2 phase_end, 571 samples, $2.526 spent
+[a2 08:14:25] log 3055871 bytes, 2 phase_end, 573 samples, $2.534 spent
+[a2 08:15:25] log 3065085 bytes, 2 phase_end, 575 samples, $2.542 spent
+[a2 08:16:26] log 3074302 bytes, 2 phase_end, 577 samples, $2.550 spent
+[a2 08:17:26] log 3083518 bytes, 2 phase_end, 579 samples, $2.558 spent
+[a2 08:18:27] log 3087591 bytes, 2 phase_end, 580 samples, $2.567 spent
+[a2 08:19:27] log 3096807 bytes, 2 phase_end, 582 samples, $2.575 spent
+[a2 08:20:27] log 3106256 bytes, 2 phase_end, 584 samples, $2.583 spent
+[a2 08:21:28] log 3115474 bytes, 2 phase_end, 586 samples, $2.591 spent
+[a2 08:22:28] log 3124686 bytes, 2 phase_end, 588 samples, $2.600 spent
+[a2 08:23:28] DOLLAR CEILING reached: $2.608 >= $2.60 after 19159s -> stopping
+[a2 08:23:29] terminating ns96dzh9bq7ynx
+[a2 08:23:29] terminate outcome: ACK_204
+[a2 08:23:30] ABSENCE CONFIRMED (ACTIVE_POD_COUNT 0)
+run_id=aeth02-20260924T070408Z-efe7be17 canary=PASS stop=ceiling pod_wall_s=19161 est_cost=$2.608
+
+
+[exited with code 0]
