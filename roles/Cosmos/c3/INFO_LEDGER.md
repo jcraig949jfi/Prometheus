@@ -16,8 +16,11 @@ Published to main now: the contract (D_CONTRACT.md), the P1/P2 definitions and r
 (task.py, system.py, probe.py, certify.py, calib.py, gate.py, S1_PREREG_P1P2_GATE.md), this ledger, the
 directive and the D request. Harmonia's coordinate audit runs AFTER D's seal is pushed (its report would
 otherwise publish the coordinates) and BEFORE D is adjudicated (directive s3 item 6 / s10).
-Residual risk: the M2 worktree files are readable on disk by a seat on M2; D_CONTRACT s7 forbids reading
-them and requires an attestation.
+Residual risk (stated exactly): every M2 worktree shares the canonical clone's .git object store, so the
+withheld local branch ref is visible to any seat working on M2 (git show <branch>:<path>), and the
+worktree files are readable on disk. For a seat off M2 the barrier is real (nothing is on origin); for
+an M2 seat it is HONOR + ATTESTATION (D_CONTRACT s7 forbids reading it and requires an attestation).
+The D request goes to Bellerophon, which works on M2: the attestation is therefore load-bearing.
 
 ## D (development holdout) -- requested 2026-09-24 (comms), not yet sealed
 Author seat: Bellerophon (directive s3 recommendation), request prompts/2026-09-24_c3_D_request/.
