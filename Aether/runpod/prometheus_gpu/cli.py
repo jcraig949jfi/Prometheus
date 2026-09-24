@@ -3,6 +3,7 @@
     python -m prometheus_gpu.cli estimate  spec.json
     python -m prometheus_gpu.cli dry-run   spec.json [--out plan.json]
     python -m prometheus_gpu.cli bundle    spec.json [--out bundle.tar.gz]
+    python -m prometheus_gpu.cli rehearse  spec.json [--verbose]
     python -m prometheus_gpu.cli inventory
     python -m prometheus_gpu.cli cleanup   [--pod ID ...] [--all]
     python -m prometheus_gpu.cli validate-telemetry telemetry.jsonl
@@ -141,6 +142,50 @@ def cmd_cleanup(args):
     return 0 if receipt["operational_cleanup"] else 1
 
 
+def cmd_rehearse(args):
+    """Fly the whole launch path against the FAKE provider. $0.00.
+
+    A dry run proves the request is well formed. A rehearsal proves the
+    controller can carry THIS spec from create through retrieval,
+    termination and a valid receipt -- including the parts that only exist
+    at launch time, like the credential assertion on the real request.
+    Nothing here can reach a provider: the fake is constructed locally and
+    no credential is resolved.
+    """
+    from . import launch, provider as prov, receipt as rc
+    spec = _load(args.spec)
+    telemetry = ('{"kind":"start","t_utc":"-","t_elapsed_s":0,"seq":1}\n'
+                 '{"kind":"end","t_utc":"-","t_elapsed_s":1,"seq":2,'
+                 '"units":%s,"status":"ok"}\n'
+                 % ((spec.get("work_units") or {}).get("estimate", 1)))
+    served = {launch.TELEMETRY_PATH: [None, telemetry]}
+    for path in spec["artifacts"]:
+        # setdefault, not assignment: a module that declares its telemetry
+        # file as an artifact would otherwise have the synthetic telemetry
+        # overwritten by placeholder bytes, and the rehearsal would report
+        # a spurious TIMEOUT. It did, the first time this ran.
+        served.setdefault(path, '{"rehearsal": true}')
+    fake = prov.FakeProvider(served=served)
+    clock = [0.0]
+    ctl = launch.Controller(
+        fake, spec, _module_dir(args.spec, args.module_dir),
+        budget_usd=args.budget or 1.0, poll_s=1.0,
+        now=lambda: clock[0], sleep=lambda s: clock.__setitem__(0, clock[0] + s),
+        log=(lambda m: print("  " + m)) if args.verbose else None)
+    receipt_obj = ctl.run()
+    print(rc.render(receipt_obj))
+    print("\nREHEARSAL ONLY. No pod existed; the provider was a fake and no "
+          "credential was resolved.")
+    if fake.leaked():
+        print("DEFECT: the rehearsal leaked a pod. Report this.",
+              file=sys.stderr)
+        return 1
+    if args.out:
+        rc.write(receipt_obj, args.out)
+        print("receipt written to %s" % args.out)
+    return 0 if receipt_obj["result"] == "OK" else 1
+
+
 def cmd_validate_telemetry(args):
     from . import telemetry as tel
     try:
@@ -174,6 +219,7 @@ def build_parser():
     for name, fn, needs_spec in (("estimate", cmd_estimate, True),
                                  ("dry-run", cmd_dry_run, True),
                                  ("bundle", cmd_bundle, True),
+                                 ("rehearse", cmd_rehearse, True),
                                  ("inventory", cmd_inventory, False),
                                  ("cleanup", cmd_cleanup, False),
                                  ("validate-telemetry",
@@ -191,6 +237,9 @@ def build_parser():
             sp.add_argument("--out", default=None)
         if name == "dry-run":
             sp.add_argument("--no-inventory", action="store_true")
+        if name == "rehearse":
+            sp.add_argument("--budget", type=float, default=None)
+            sp.add_argument("--verbose", action="store_true")
         if name == "cleanup":
             sp.add_argument("--pod", action="append")
             sp.add_argument("--all", action="store_true")

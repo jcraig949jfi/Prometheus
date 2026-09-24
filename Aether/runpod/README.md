@@ -21,20 +21,23 @@ Copy `examples/hello_gpu/` and edit it. It is two files.
 python -m prometheus_gpu.cli estimate  spec.json [--workload-seconds N]
 python -m prometheus_gpu.cli dry-run   spec.json [--out plan.json]
 python -m prometheus_gpu.cli bundle    spec.json [--out bundle.tar.gz]
+python -m prometheus_gpu.cli rehearse  spec.json [--verbose]
 python -m prometheus_gpu.cli inventory
 python -m prometheus_gpu.cli cleanup   [--pod ID ...] [--all]
 python -m prometheus_gpu.cli validate-telemetry telemetry.jsonl
 python -m prometheus_gpu.cli validate-receipt   receipt.json
 ```
 
-`estimate` and `dry-run` cost nothing and cannot create a pod. `run` is
-deliberately absent until the launch path has flown — see the guide, s8.
+`estimate`, `dry-run` and `rehearse` cost nothing and cannot create a
+pod. `rehearse` flies the entire controller path against a fake provider
+using your spec. `run` is deliberately absent until that path has flown on
+hardware — see the guide, s8.
 
 ## Layout
 
 | path | what it is |
 |:--|:--|
-| `prometheus_gpu/` | the platform: spec, bundle, secrets, provider, cost, telemetry, receipt, dry run, CLI |
+| `prometheus_gpu/` | the platform: spec, bundle, secrets, provider, cost, telemetry, receipt, dry run, launch, CLI |
 | `examples/hello_gpu/` | the minimal module, meant to be copied |
 | `aeth01_canary/` | the qualified RunPod client and GPU canary |
 | `aeth01_firstlight/`, `aeth02_circuitry/` | Aether's own campaign orchestrators |
@@ -45,6 +48,7 @@ deliberately absent until the launch path has flown — see the guide, s8.
 
 ```bash
 python -m pytest Aether/test/test_prometheus_gpu.py -q
+python -m pytest Aether/test/test_prometheus_gpu_launch.py -q
 ```
 
 Run it as its own command and read the result. Piping a gate into `tail`

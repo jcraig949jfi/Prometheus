@@ -133,16 +133,37 @@ overhead fraction, and cost per unit of YOUR work unit. When you give no
 `--workload-seconds` it uses `max_runtime_s` and labels the result a
 CEILING.
 
-## 8. Launch
+## 8. Rehearse, then launch
 
-**Not yet available as `prometheus-gpu run`.** The launch path is being
-qualified rung by rung, and a half-qualified launch command is worse
-than none. Until it lands, a real run goes through the qualified
-orchestrators in `aeth01_firstlight/` or `aeth02_circuitry/`, or through
-Aether.
+### Rehearse -- $0.00
 
-What exists today: `estimate`, `dry-run`, `bundle`, `inventory`,
-`cleanup`. This section is updated when `run` is qualified.
+```bash
+python -m prometheus_gpu.cli rehearse module_spec.json [--verbose]
+```
+
+A dry run proves the *request* is well formed. A rehearsal flies the
+**whole controller path** against a fake provider -- create, wait for
+ready, poll telemetry, retrieve artifacts, terminate, confirm absence,
+write a receipt -- using YOUR spec, and prints the receipt you would get.
+It resolves no credential and holds nothing that can reach RunPod. Run it
+before you spend anything.
+
+### Launch
+
+**Not yet available as `prometheus-gpu run`.** The controller in
+`prometheus_gpu/launch.py` is complete and qualified against the fake
+provider, including the cases that cost money: a lost create response, an
+unreadable inventory, a pod hidden from the listing, a terminate that
+will not acknowledge, a budget ceiling, and a controller that raises
+mid-run. What it has **not** done is fly on hardware, and until it has,
+exposing `run` would invite spending through an unproven path.
+
+Until it lands, a real run goes through the qualified orchestrators in
+`aeth01_firstlight/` or `aeth02_circuitry/`, or through Aether.
+
+What exists today: `estimate`, `dry-run`, `rehearse`, `bundle`,
+`inventory`, `cleanup`, `validate-telemetry`, `validate-receipt`. This
+section is updated when `run` is qualified.
 
 ## 9. Telemetry
 

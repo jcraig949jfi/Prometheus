@@ -157,10 +157,15 @@ def build_request(spec, run_meta, transport, module_env):
     }
 
 
-def plan(spec, module_dir, inventory=None, transport_factory=local_transport,
-         workload_seconds=None, seat="Aether", image=STOCK_IMAGE,
-         now=None, run_id=None):
-    """Produce the complete plan. Creates nothing.
+def prepare(spec, module_dir, inventory=None,
+            transport_factory=local_transport, workload_seconds=None,
+            seat="Aether", image=STOCK_IMAGE, now=None, run_id=None):
+    """Return (plan, request, run_meta, built). Creates nothing.
+
+    The PLAN is safe to print, save and commit: its request is scrubbed.
+    The REQUEST is not, because it carries the module's environment, so it
+    is returned separately and only `launch.py` ever asks for it. Keeping
+    them apart is why a saved plan cannot leak a value.
 
     `inventory` is a zero-argument callable returning the current pod
     list, or None to skip. It is deliberately NOT a provider object:
@@ -220,7 +225,7 @@ def plan(spec, module_dir, inventory=None, transport_factory=local_transport,
         findings.append("no canary declared; a broken environment would not "
                         "be caught until the workload failed")
 
-    return {
+    result = {
         "schema": SCHEMA,
         "created_utc": _utc(),
         "run_id": run_id,
@@ -270,6 +275,12 @@ def plan(spec, module_dir, inventory=None, transport_factory=local_transport,
         "would_spend_usd": projected["usd_total"],
         "pod_created": False,
     }
+    return result, request, run_meta, built
+
+
+def plan(*args, **kwargs):
+    """The dry-run plan alone. This is what a seat and a receipt see."""
+    return prepare(*args, **kwargs)[0]
 
 
 def render(plan_dict):

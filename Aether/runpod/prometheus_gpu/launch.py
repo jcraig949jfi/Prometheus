@@ -1,0 +1,322 @@
+"""The launch path: create, watch, retrieve, terminate, account.
+
+This is the only module that can spend money, so it is the only one
+written to be driven entirely by an injected provider and an injected
+clock. Every ordering property below is a test against `FakeProvider`,
+which means reliability work costs nothing and a rung of the engineering
+ladder can be qualified before hardware is involved.
+
+ORDER IS THE SAFETY PROPERTY. In sequence:
+
+  1. READ THE INVENTORY FIRST, and refuse to launch if anything is
+     already running, or if the read itself failed. One pod at a time is
+     not a convention here; it is a precondition, and "I could not tell"
+     is not permission.
+  2. Build and hash the bundle, and plan the run, BEFORE creating
+     anything. A malformed run must cost nothing.
+  3. Create through `create_with_reconcile`, so an ambiguous outcome is
+     resolved by reading the inventory rather than by a second create.
+  4. Watch. Poll telemetry from the pod's own channel. Stop on the
+     module's `end`, on the dollar ceiling, or on `max_runtime_s`.
+  5. RETRIEVE BEFORE TERMINATING. Artifacts and telemetry come back from
+     a pod that still exists. Terminating first to save a minute destroys
+     exactly the evidence a failed run needs.
+  6. TERMINATE IN A `finally`, on every path including an exception, and
+     then confirm absence separately.
+  7. Write a receipt that claims only what the evidence supports.
+
+WHAT THIS MODULE WILL NOT DO. It will not retry a create blindly, it
+will not treat an empty listing as proof of cleanup, and it will not
+claim billing reconciliation. Those refusals live in
+`provider.create_with_reconcile` and `receipt.py` respectively, and this
+module is wired so it cannot route around them.
+"""
+
+import hashlib
+import time
+
+from . import cost as cost_mod
+from . import dryrun
+from . import provider as prov
+from . import receipt as rc
+from . import secrets as secrets_mod
+from . import telemetry as tel_mod
+
+TELEMETRY_PATH = "out/telemetry.jsonl"
+
+
+class LaunchRefused(RuntimeError):
+    """A precondition failed. Nothing was created, so nothing is billing."""
+
+
+class Controller(object):
+    def __init__(self, provider, spec, module_dir, budget_usd,
+                 transport_factory=dryrun.local_transport, seat="Aether",
+                 poll_s=30.0, ready_timeout_s=600.0, artifact_token=None,
+                 now=time.time, sleep=time.sleep, log=None):
+        self.provider = provider
+        self.spec = spec
+        self.module_dir = module_dir
+        self.budget_usd = float(budget_usd)
+        self.transport_factory = transport_factory
+        self.seat = seat
+        self.poll_s = float(poll_s)
+        self.ready_timeout_s = float(ready_timeout_s)
+        self.artifact_token = artifact_token
+        self._now = now
+        self._sleep = sleep
+        self._log = log or (lambda m: None)
+        self.pod_id = None
+        self.creation_outcome = None
+        self.telemetry_text = ""
+
+    # ------------------------------------------------------------ helpers
+    def _hourly(self):
+        gpu = self.spec["gpu"]
+        return cost_mod.hourly_for(gpu.get("class")) * int(gpu.get("count", 1))
+
+    def _fetch_bytes(self, path):
+        """None means unreachable, which early in a run is the normal answer.
+
+        A fetch never raises out of here. Losing a run because a poll was
+        early, or because the proxy hiccuped once, would be absurd.
+        """
+        try:
+            blob = self.provider.fetch(self.pod_id, path,
+                                       token=self.artifact_token)
+        except Exception as exc:
+            self._log("fetch %s raised %s; treating as unreachable"
+                      % (path, type(exc).__name__))
+            return None
+        if blob is None:
+            return None
+        return blob if isinstance(blob, bytes) else blob.encode("utf-8")
+
+    def _fetch(self, path):
+        blob = self._fetch_bytes(path)
+        return None if blob is None else blob.decode("utf-8", "replace")
+
+    # -------------------------------------------------------- preconditions
+    def preflight(self):
+        """Refuse before spending. `LaunchRefused` means nothing exists."""
+        try:
+            pods = self.provider.list_pods()
+        except prov.ProviderError as exc:
+            raise LaunchRefused(
+                "inventory read failed (status=%s). Refusing to create: a "
+                "failed listing is indistinguishable from an empty account, "
+                "and launching blind is how a second pod starts billing "
+                "beside one nobody can see." % (exc.status,))
+        if pods:
+            raise LaunchRefused(
+                "%d pod(s) already active (%s). One pod at a time; terminate "
+                "or adopt before launching."
+                % (len(pods), ", ".join(str(p.get("id")) for p in pods)))
+        return True
+
+    # ------------------------------------------------------------- the run
+    def run(self):
+        self.preflight()
+
+        # The plan is what gets recorded; the request is what gets sent.
+        # They are built together, from the same inputs, so the receipt
+        # describes the run that actually happened rather than a
+        # reconstruction of it.
+        plan, request, _run_meta, _built = dryrun.prepare(
+            self.spec, self.module_dir, inventory=self.provider.list_pods,
+            transport_factory=self.transport_factory, seat=self.seat)
+        secrets_mod.assert_no_credentials(request["env"],
+                                          where="pod request env at launch")
+
+        receipt_obj = rc.from_plan(plan, result="NOT_RUN")
+        started = self._now()
+        receipt_obj["started_utc"] = rc._utc(started)
+        result = "UNKNOWN"
+        try:
+            self.pod_id, self.creation_outcome = self._create(request)
+            if self.pod_id is None and self.creation_outcome == "unknown":
+                # A create whose outcome could not be resolved. A pod may
+                # exist and we do not have its id, so this is the one case
+                # that must NOT be reported as a clean non-event.
+                result = "UNKNOWN"
+                receipt_obj["notes"].append(
+                    "create outcome unresolved and inventory unreadable; a "
+                    "pod may exist that this controller cannot name. "
+                    "RECONCILE MANUALLY before creating anything else.")
+            elif self.pod_id is None:
+                result = "NOT_RUN"
+                receipt_obj["notes"].append(
+                    "create failed cleanly; provider confirms nothing exists")
+            else:
+                ready = self._await_ready(started)
+                if not ready:
+                    result = "FAILED"
+                    receipt_obj["notes"].append(
+                        "pod never reported ready within %.0f s"
+                        % self.ready_timeout_s)
+                else:
+                    result = self._watch(started)
+                self._retrieve(receipt_obj)
+        except LaunchRefused:
+            raise
+        except Exception as exc:
+            result = "UNKNOWN"
+            receipt_obj["notes"].append(
+                "controller raised %s: %s" % (type(exc).__name__, exc))
+            self._log("controller raised %s; proceeding to teardown"
+                      % type(exc).__name__)
+        finally:
+            ended = self._now()
+            receipt_obj["ended_utc"] = rc._utc(ended)
+            pods, inventory_ok = self._teardown()
+            receipt_obj["pods"] = pods
+            receipt_obj["cleanup"] = rc.cleanup_block(pods, inventory_ok)
+            receipt_obj["cost"] = cost_mod.actual(
+                max(0.0, ended - started), self._hourly(),
+                work_units=self._work_units(receipt_obj))
+            # Only a create the provider CONFIRMED created nothing may be
+            # downgraded to NOT_RUN here. An unresolved create also has no
+            # pod id, and calling that a non-event is how a pod that may
+            # be billing disappears from the record.
+            never_existed = (self.pod_id is None
+                             and self.creation_outcome != "unknown")
+            receipt_obj["result"] = "NOT_RUN" if never_existed else result
+            receipt_obj["telemetry_summary"] = tel_mod.summarise(
+                tel_mod.read_jsonl(self.telemetry_text, is_text=True)
+                if self.telemetry_text else [])
+        rc.validate(receipt_obj)
+        return receipt_obj
+
+    # ------------------------------------------------------------- stages
+    # Provider labels to receipt vocabulary. The mapping is explicit
+    # because flattening ADOPTED into confirmed would erase a near miss,
+    # and flattening AMBIGUOUS_UNRECONCILED into a clean failure would
+    # hide a pod that may be billing.
+    _OUTCOMES = {"CREATED": "confirmed",
+                 "ADOPTED": "adopted",
+                 "AMBIGUOUS_UNRECONCILED": "unknown",
+                 "FAILED_CLEAN": None}
+
+    def _create(self, request):
+        pod, label = prov.create_with_reconcile(
+            self.provider, request, log=self._log, sleep=self._sleep)
+        outcome = self._OUTCOMES.get(label, "unknown")
+        pod_id = pod.get("id") if isinstance(pod, dict) else pod
+        self._log("create %s -> %s pod=%s" % (label, outcome, pod_id))
+        if pod_id is None:
+            return None, outcome
+        return pod_id, outcome
+
+    def _await_ready(self, started):
+        deadline = started + self.ready_timeout_s
+        while self._now() < deadline:
+            if self._fetch(TELEMETRY_PATH) is not None:
+                return True
+            try:
+                if self.provider.get_pod(self.pod_id) is None:
+                    self._log("pod vanished before it was ready")
+                    return False
+            except prov.ProviderError:
+                pass            # a control-plane blip is not a verdict
+            self._sleep(self.poll_s)
+        return False
+
+    def _watch(self, started):
+        """Poll until the module finishes, the budget runs out, or time does."""
+        hourly = self._hourly()
+        runtime_cap = float(self.spec["max_runtime_s"])
+        while True:
+            elapsed = self._now() - started
+            spend = elapsed / 3600.0 * hourly
+            if spend >= self.budget_usd:
+                self._log("BUDGET CEILING $%.4f >= $%.4f after %.0f s"
+                          % (spend, self.budget_usd, elapsed))
+                return "ABORTED"
+            if elapsed >= runtime_cap:
+                self._log("max_runtime_s %.0f reached" % runtime_cap)
+                return "TIMEOUT"
+            text = self._fetch(TELEMETRY_PATH)
+            if text is not None:
+                self.telemetry_text = text
+                records = tel_mod.read_jsonl(text, is_text=True)
+                ends = [r for r in records if r.get("kind") == "end"]
+                if ends:
+                    status = str(ends[-1].get("status", "")).lower()
+                    self._log("module reported end (status=%s)" % status)
+                    return "OK" if status in ("ok", "success", "") else "FAILED"
+                errors = [r for r in records if r.get("kind") == "error"]
+                if errors:
+                    self._log("module reported an error record")
+            self._sleep(self.poll_s)
+
+    def _retrieve(self, receipt_obj):
+        """Before teardown, always. A dead pod hands back nothing."""
+        text = self._fetch(TELEMETRY_PATH)
+        if text is not None:
+            self.telemetry_text = text
+        got, missing = [], []
+        for path in self.spec["artifacts"]:
+            blob = self._fetch_bytes(path)
+            if blob is None:
+                missing.append(path)
+                continue
+            got.append({"path": path, "bytes": len(blob),
+                        "sha256": hashlib.sha256(blob).hexdigest()})
+        receipt_obj["artifacts"] = got
+        receipt_obj["artifacts_missing"] = missing
+        if missing:
+            self._log("artifacts NOT retrieved: %s" % ", ".join(missing))
+
+    def _teardown(self):
+        """Terminate, then confirm absence. Two facts, recorded separately."""
+        if self.pod_id is None:
+            if self.creation_outcome == "unknown":
+                # Nothing to terminate, because nothing can be named. This
+                # must still appear in the receipt as unresolved, or the
+                # run would read as a clean non-event.
+                return [rc.pod_record(
+                    "UNRESOLVED", creation_outcome="unknown",
+                    note="create outcome unresolved; no id to terminate")], \
+                    False
+            return [], True
+        acked = False
+        for attempt in range(3):
+            try:
+                self.provider.terminate_pod(self.pod_id)
+                acked = True
+                break
+            except prov.ProviderError as exc:
+                self._log("terminate attempt %d failed (status=%s)"
+                          % (attempt + 1, exc.status))
+                self._sleep(self.poll_s)
+        absent, inventory_ok = False, False
+        for attempt in range(3):
+            try:
+                ids = [p.get("id") for p in self.provider.list_pods()]
+                inventory_ok = True
+                absent = self.pod_id not in ids
+                if absent:
+                    break
+            except prov.ProviderError:
+                inventory_ok = False
+            self._sleep(self.poll_s)
+        if not inventory_ok:
+            self._log("ABSENCE UNVERIFIED: inventory unreadable. Reconcile "
+                      "before creating anything else.")
+        pod = rc.pod_record(self.pod_id,
+                            creation_outcome=self.creation_outcome or "unknown",
+                            terminate_acknowledged=acked,
+                            observed_absent=absent and inventory_ok)
+        return [pod], inventory_ok
+
+    def _work_units(self, receipt_obj):
+        declared = self.spec.get("work_units")
+        if not declared:
+            return None
+        records = tel_mod.read_jsonl(self.telemetry_text, is_text=True) \
+            if self.telemetry_text else []
+        summary = tel_mod.summarise(records)
+        actual = summary.get("units_final")
+        if not actual:
+            return None
+        return {"name": declared["name"], "actual": float(actual)}

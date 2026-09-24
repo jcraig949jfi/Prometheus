@@ -36,16 +36,30 @@ False on a Windows controller, so host path rules were deciding what is
 legal on a Linux pod; and the package was originally named `platform`,
 shadowing the stdlib module.
 
-Deliberately NOT built: `python -m prometheus_gpu.cli run`. A
-half-qualified launch command invites spending through a path that has
-not demonstrated cleanup after an ambiguous create. Iterations 1-5
-qualify it rung by rung. Until then, real runs go through
-`aeth01_firstlight/` or `aeth02_circuitry/`.
+**The launch path EXISTS and is qualified against the fake provider**
+(`prometheus_gpu/launch.py`, 20 tests in
+`Aether/test/test_prometheus_gpu_launch.py`). It has not flown on
+hardware, which is the only thing missing. `python -m prometheus_gpu.cli
+run` is therefore still absent; `rehearse` is the zero-dollar substitute
+and flies the whole controller path against the fake using a seat's own
+spec.
 
-Next rung (Iteration 1): a single tiny pod through the platform's own
-path, ~$0.05, proving bootstrap, canary, telemetry, artifact retrieval,
-receipt and cleanup end to end. Requires the AETH-02 pod to be down
-first -- one pod at a time.
+Qualified against the fake, all cases that cost money: a lost create
+response, an unreadable inventory, a pod hidden from the listing, a
+terminate that will not acknowledge, the budget ceiling, `max_runtime_s`,
+and a controller that raises mid-run. The fake's `leaked()` is asserted
+empty in every one.
+
+Next rung (Iteration 1): point `launch.Controller` at `RunPodProvider`
+for one tiny pod, ~$0.05, and expose `run` if it holds. Requires the
+AETH-02 pod to be down first -- one pod at a time is a precondition the
+controller now enforces itself.
+
+A bug worth remembering, found by the launch tests: the teardown
+`finally` originally forced `result = NOT_RUN` whenever no pod id was
+held. An UNRESOLVED create also holds no id, so a pod that might have
+been billing would have been recorded as a clean non-event. Only a
+provider-confirmed clean failure may be downgraded to NOT_RUN.
 
 **Cost calibration correction.** The preregistered $0.83 per 2048^2
 x 50,000-tick trajectory was 7.2% low; measured $0.889. Cause: a
