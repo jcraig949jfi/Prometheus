@@ -1,5 +1,15 @@
 # Aphrodite -- pick-up state for the next session
 
+UPDATE 2026-09-24: S1 -> S4 EXECUTED (see STATUS.md dispositions and
+journal/2026-09-23.md). S1 global identity FAILED (three runs) and was replaced
+by campaign-local class certificates (AMENDMENT 12 ADDENDUM 3); S2 PASS; S3
+ENDOGENOUS_ABSTRACTION = YES; S4 ABSTRACTION_TRANSPLANT = YES. The open
+clause below is answered for this engine -- read the hostile caveats in the
+journal before citing it. Next steps need an operator ruling. Acceleration
+branches are waiting on credentials for their cloud canaries (RunPod first).
+The text below is the 2026-09-22 state, kept for the record.
+
+
 Written 2026-09-22 at the end of Tier 3C, for a session that will return
 to pick up upgrades. READ THIS SECOND, after STATUS.md.
 
