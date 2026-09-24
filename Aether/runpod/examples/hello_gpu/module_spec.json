@@ -1,0 +1,17 @@
+{
+  "name": "hello-gpu",
+  "version": "1",
+  "description": "Smallest useful GPU module: copy this and change the entrypoint.",
+  "entrypoint": "run.py",
+  "args": [],
+  "dependencies": {"pip": ["cupy-cuda12x==13.3.0", "numpy==2.2.0"]},
+  "gpu": {"class": "NVIDIA RTX A4000", "count": 1, "cloud": "SECURE"},
+  "disk_gb": 10,
+  "max_runtime_s": 300,
+  "artifacts": ["out/result.json", "out/telemetry.jsonl"],
+  "canary": "python3 -c \"import cupy; cupy.arange(8).sum()\"",
+  "env_allowlist": ["HELLO_STEPS"],
+  "env": {"HELLO_STEPS": "200"},
+  "telemetry": {"interval_s": 10},
+  "work_units": {"name": "steps", "estimate": 200.0}
+}

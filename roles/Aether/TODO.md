@@ -4,7 +4,24 @@ Currency: 2026-09-23. Written for the instance that boots after a
 context reset or a Claude Code upgrade. Read this AFTER the base-role
 chain and BEFORE starting anything.
 
-## THE ONE OPEN ITEM
+## TWO OPEN ITEMS
+
+**1. AETHER RUNPOD ENGINEERING LADDER (2026-09-24) -- PRIORITY.**
+Turn everything learned from RunPod into a reusable Prometheus GPU
+experimentation system. Verbatim, with a manifest:
+
+    roles/Aether/prompts/2026-09-24_runpod_engineering_ladder/DIRECTIVE.md
+
+Budget: $5 incremental, SEPARATE from AETH-02's. Rungs: zero-dollar dry
+run -> tiny pod -> scale up -> long run + failure injection -> 2-3 pod
+fan-out -> a FOREIGN SEAT'S module through the same machinery. The
+strongest success test is whether a fresh seat can package and launch a
+GPU experiment without reading Aether's implementation.
+
+**2. AETH-02 NATIVE CIRCUITRY** -- the science, which continues as the
+engineering campaign's reference workload.
+
+## THE AETH-02 ITEM
 
 **AETH-02 NATIVE CIRCUITRY ROUND -- NOT STARTED.**
 
