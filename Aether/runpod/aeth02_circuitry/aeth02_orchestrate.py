@@ -127,6 +127,42 @@ def build_worlds():
     return PLANS[PLAN]
 
 
+# Every observation-cadence setting the pod-side runner reads. These
+# MUST be forwarded: the runner has its own defaults, so an unforwarded
+# value does not fail, it quietly disagrees with the controller.
+_CADENCE_KEYS = ("AETH02_SAMPLE_EVERY", "AETH02_GRAPH_EVERY",
+                 "AETH02_DEEP_EVERY", "AETH02_WINDOW_EVERY",
+                 "AETH02_WINDOW_SIZE", "AETH02_WINDOW_EDGE_CAP",
+                 "AETH02_PERSIST_TICKS", "AETH02_MAX_TICK_S")
+CADENCE = {k: os.environ[k] for k in _CADENCE_KEYS if k in os.environ}
+
+# Measured on the calibration run: a sample costs about this much once
+# the edge classes are included, and a packed window sample about this
+# much per retained edge.
+BYTES_PER_SAMPLE = int(os.environ.get("AETH02_BYTES_PER_SAMPLE", "7000"))
+BYTES_PER_WINDOW_EDGE = int(os.environ.get("AETH02_BYTES_PER_WINDOW_EDGE", "27"))
+ARTIFACT_LIMIT = 8 * 1024 * 1024
+
+
+def project_artifact_bytes(worlds):
+    """Estimate the log size the pod will produce.
+
+    The artifact server serves at most 8 MB and keeps the FIRST 8 MB, so
+    an overrun does not degrade gracefully -- it discards the end of the
+    run, which is the part worth having. Projecting it here turns a
+    silent truncation into a refusal to launch.
+    """
+    sample_every = int(CADENCE.get("AETH02_SAMPLE_EVERY", 10))
+    window_every = int(CADENCE.get("AETH02_WINDOW_EVERY", 2000))
+    edge_cap = int(CADENCE.get("AETH02_WINDOW_EDGE_CAP", 20000))
+    total = 0
+    for w in worlds:
+        samples = w["ticks"] // max(sample_every, 1) + 2
+        windows = (w["ticks"] // max(window_every, 1) + 2) * 2
+        total += samples * BYTES_PER_SAMPLE + windows * edge_cap * BYTES_PER_WINDOW_EDGE
+    return total
+
+
 def _read(path):
     with open(path, "r", encoding="utf-8") as f:
         return f.read().rstrip("\n")
@@ -231,6 +267,7 @@ def make_body(run_id, worlds):
             "AETH02_BUDGET_S": str(POD_BUDGET_S),
             "AETH02_HOURLY": str(HOURLY),
             "AETH02_PHASES": json.dumps(worlds),
+            **CADENCE,
         },
         "entrypoint": ["/bin/bash", "-c"],
         "cmd": [build_script(worlds)],
@@ -377,6 +414,16 @@ def main():
         log("  shipped    %-24s %s" % (os.path.basename(path), digest[:16]))
     for w in worlds:
         log("  phase %-18s %5d^2 x %6d ticks" % (w["name"], w["size"], w["ticks"]))
+
+    projected = project_artifact_bytes(worlds)
+    log("projected artifact %.1f MB against an %.0f MB channel"
+        % (projected / 1e6, ARTIFACT_LIMIT / 1e6))
+    for k in _CADENCE_KEYS:
+        log("  cadence %-24s %s" % (k, CADENCE.get(k, "(runner default)")))
+    if projected > ARTIFACT_LIMIT:
+        log("ABORT: projected artifact exceeds the channel, which keeps the "
+            "FIRST 8 MB and would discard the end of the run")
+        return 5
 
     import runpod_api
     api = runpod_api.RunPodAPI()
