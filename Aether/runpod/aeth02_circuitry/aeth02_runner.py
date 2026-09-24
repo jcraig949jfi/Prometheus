@@ -224,8 +224,12 @@ def run_phase(index, spec, deadline, t_run0):
           "tick_s_median": round(med, 6),
           "tick_s_p95": round(float(np.percentile(latencies, 95)), 6) if latencies else 0.0,
           "sites_per_sec": round(size * size / med, 1) if med else None,
-          "usd_per_1k_world_ticks": round(
-              (med * HOURLY / 3600.0) * 1000.0 / (size * size) * 1e6, 6),
+          # USD per 1e9 site-ticks. Named explicitly because the first
+          # version of this field was labelled "per_1k" while computing
+          # per-1e9, which is a millionfold misread waiting to happen.
+          "usd_per_1e9_site_ticks": round(
+              (med * HOURLY / 3600.0) / (size * size) * 1e9, 6),
+          "usd_per_tick": round(med * HOURLY / 3600.0, 9),
           "world_ticks": world_ticks,
           "phase_usd": round((time.time() - t_phase) / 3600.0 * HOURLY, 5),
           "gpu_memory": gpu_memory()})

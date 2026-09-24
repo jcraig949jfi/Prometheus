@@ -65,6 +65,16 @@ proposed map does not (arbitration re-randomizes per tick because the
 priority hash includes the tick), and whether anything about a cycle's
 history affects its future.
 
+**CORRECTION 2026-09-23, after the calibration run, left beside the
+original rather than rewritten.** The parenthesis above is wrong. It
+assumed arbitration re-randomizes the realized map every tick. Measured
+on an A40 at 4096^2: only **1.7%** of targets have two or more
+contenders, so for 98.3% of edges there is a single contender and the
+winner is forced. The realized map is therefore essentially the proposed
+map, and it changes because template bytes get overwritten, not because
+of arbitration churn. See AETH02_CALIBRATION_2026-09-23.md section 5.
+The questions listed above stand; only the stated cause was wrong.
+
 ## 3. Sparsity: the observer must not become the experiment
 
 At 4096^2 with First Light's activity of 0.19-0.42, a tick produces

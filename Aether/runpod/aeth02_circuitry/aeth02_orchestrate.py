@@ -223,7 +223,7 @@ def make_body(run_id, worlds):
 
 
 def _save(name, data):
-    path = os.path.join(ART_DIR, "aeth01_fl_" + name)
+    path = os.path.join(ART_DIR, "aeth02_" + name)
     mode = "wb" if isinstance(data, (bytes, bytearray)) else "w"
     with open(path, mode) as f:
         f.write(data)
