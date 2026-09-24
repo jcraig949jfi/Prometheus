@@ -1,0 +1,4600 @@
+{
+ "B1_boundary_inputs": 7966,
+ "B1_inputs": 12121,
+ "B1_sha256": "f60f8835ea2c059189a140ff4529008bc608faf3847da39cfe50ee886d227240",
+ "B1_version": "v3",
+ "B2_inputs": 10000,
+ "B2_version": "v3",
+ "G_S1_1_collapse": {
+  "PASS": true,
+  "collapsed": 199,
+  "collapses_that_depend_on_nonnegative_domain": [
+   "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc * last)",
+   "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc + first)",
+   "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc + last)",
+   "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc - first)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc * last)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc + first)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc + last)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc - first)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc * last)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc + first)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc + last)",
+   "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc - first)",
+   "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc * last)",
+   "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc + first)",
+   "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc + last)",
+   "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc - first)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc * last)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc + first)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc + last)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc - first)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc * last)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc + first)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc + last)",
+   "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc - first)",
+   "observed:tier3a/md_prod_plus_first:[\"fold\", \"1\", \"(acc * math.gcd(abs(v), abs(v)))\", \"(acc + first)\"]",
+   "observed:tier3a/md_sum_times_last:[\"fold\", \"0\", \"(acc + math.gcd(abs(v), abs(v)))\", \"(acc * last)\"]",
+   "observed:tier3c/md_a_sum_times_last:[\"fold\", \"0\", \"(acc + math.gcd(abs(v), abs(v)))\", \"(last * acc)\"]",
+   "reclassified:identity_body_fold_vs_inlined",
+   "reclassified:offset_conjugate_of_sum",
+   "reclassified:zero_times_first_div_last"
+  ],
+  "failures": [],
+  "fixtures": 199,
+  "general": 129,
+  "historical": 70,
+  "rows": [
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/md_gcd_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/md_gcd_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/md_gcd_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 1)",
+     "(0 - ((0 - acc) * v))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/md_prod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v * acc)",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/md_prod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(1 * 1)",
+     "(0 + (acc * v))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/md_prod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/md_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/md_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc * last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/md_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v * v)))",
+     "((0 - acc) + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/md_sumsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v * v) + acc)",
+     "(last + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/md_sumsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v * v)))",
+     "((acc + last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/md_sumsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/mt_gcd_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/mt_gcd_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/mt_gcd_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * (v + first))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 1)",
+     "(0 - ((0 - acc) * (v + first)))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/mt_prodshift_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * (v + first))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "((first + v) * acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/mt_prodshift_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * (v + first))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(1 * 1)",
+     "(0 + (acc * (v + first)))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/mt_prodshift_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/mt_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/mt_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc - last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/mt_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v % last)))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3a/mt_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v % last) + acc)",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3a/mt_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v % last)))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3a/mt_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/md_gcd_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/md_gcd_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/md_gcd_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 1)",
+     "(0 - ((0 - acc) * v))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/md_prod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v * acc)",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/md_prod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(1 * 1)",
+     "(0 + (acc * v))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/md_prod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/md_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/md_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc * last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/md_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v * v)))",
+     "((0 - acc) + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/md_sumsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v * v) + acc)",
+     "(last + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/md_sumsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v * v)))",
+     "((acc + last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/md_sumsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/mt_gcd_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/mt_gcd_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/mt_gcd_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v * v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs((v * v))))",
+     "((0 - acc) + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/mt_gcdsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v * v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs((v * v)), abs(acc))",
+     "(last + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/mt_gcdsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v * v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs((v * v))))",
+     "((acc + last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/mt_gcdsq_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/mt_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/mt_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc - last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/mt_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v // last)))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/mt_sumdivlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v // last) + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/mt_sumdivlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v // last)))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/mt_sumdivlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v % last)))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3b/mt_summodlast_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v % last) + acc)",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3b/mt_summodlast_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v % last)))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3b/mt_summodlast_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/md_a_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/md_a_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc * last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/md_a_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v * v)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/md_b_sumsq_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v * v) + acc)",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/md_b_sumsq_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v * v)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/md_b_sumsq_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 1)",
+     "(0 - ((0 - acc) * v))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/md_c_prod_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v * acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/md_c_prod_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(1 * 1)",
+     "(0 + (acc * v))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/md_c_prod_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/md_d_gcd_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(last + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/md_d_gcd_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc + last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/md_d_gcd_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v // last)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/tc_new_sumdiv_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v // last) + acc)",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/tc_new_sumdiv_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v // last)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/tc_new_sumdiv_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + math.gcd(abs(v), abs(last))))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/tc_new_sumgcdlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(math.gcd(abs(last), abs(v)) + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/tc_new_sumgcdlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + math.gcd(abs(v), abs(last))))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/tc_new_sumgcdlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v % last)))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/tc_new_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v % last) + acc)",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/tc_new_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v % last)))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/tc_new_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/tc_rel_gcd_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/tc_rel_gcd_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/tc_rel_gcd_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3c/tc_rel_sum_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3c/tc_rel_sum_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3c/tc_rel_sum_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_a_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_a_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc * last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_a_sum_times_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v * v)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_b_sumsq_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v * v) + acc)",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_b_sumsq_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v * v)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_b_sumsq_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 1)",
+     "(0 - ((0 - acc) * v))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_c_prod_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v * acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_c_prod_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(1 * 1)",
+     "(0 + (acc * v))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_c_prod_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs(v)))",
+     "((0 - acc) + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_d_gcd_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(acc))",
+     "(last + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_d_gcd_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs(v)))",
+     "((acc + last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_d_gcd_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc - v)",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) - v))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_e_negsum_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc - v)",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc - v)",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_e_negsum_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc - v)",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc - v))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_e_negsum_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v - 1))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v - 1)))",
+     "((0 - acc) + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_f_sumdec_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v - 1))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v - 1) + acc)",
+     "(last + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_f_sumdec_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v - 1))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v - 1)))",
+     "((acc + last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_f_sumdec_plus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * (v + 1))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 1)",
+     "(0 - ((0 - acc) * (v + 1)))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_g_prodinc_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * (v + 1))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "((1 + v) * acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_g_prodinc_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * (v + 1))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(1 * 1)",
+     "(0 + (acc * (v + 1)))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_g_prodinc_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + 1)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs((v + 1))))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/md_h_gcdinc_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + 1)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs((1 + v)), abs(acc))",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/md_h_gcdinc_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + 1)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs((v + 1))))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/md_h_gcdinc_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + last)))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - math.gcd(abs((0 - acc)), abs((v + last))))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_new_gcdshift_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + last)))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs((last + v)), abs(acc))",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_new_gcdshift_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + last)))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + math.gcd(abs(acc), abs((v + last))))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_new_gcdshift_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc - (v % last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) - (v % last)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_new_negmod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc - (v % last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc - (v % last))",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_new_negmod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc - (v % last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc - (v % last)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_new_negmod_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v // last)))",
+     "((0 - acc) + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_new_sumdiv_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v // last) + acc)",
+     "(first + acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_new_sumdiv_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v // last))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v // last)))",
+     "((acc + first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_new_sumdiv_plus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + math.gcd(abs(v), abs(last))))",
+     "((0 - acc) - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_new_sumgcdlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(math.gcd(abs(last), abs(v)) + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_new_sumgcdlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(last)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + math.gcd(abs(v), abs(last))))",
+     "((acc - first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_new_sumgcdlast_minus_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v % last)))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_new_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v % last) + acc)",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_new_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v % last))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v % last)))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_new_summod_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v * last)))",
+     "((0 - acc) - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_new_sumscaled_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((last * v) + acc)",
+     "(acc - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_new_sumscaled_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * last))",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v * last)))",
+     "((acc - last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_new_sumscaled_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + v))",
+     "((0 - acc) - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_rel_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_rel_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - last)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + v))",
+     "((acc - last) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_rel_sum_minus_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 - 0)",
+     "(0 - ((0 - acc) + (v * v)))",
+     "((0 - acc) * first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "negation_conjugate:tier3d/tc_rel_sumsq_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "((v * v) + acc)",
+     "(first * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "commuted:tier3d/tc_rel_sumsq_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc * first)"
+    ],
+    "b": [
+     "fold",
+     "(0 * 1)",
+     "(0 + (acc + (v * v)))",
+     "((acc * first) - 0)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "general",
+    "name": "neutral_padded:tier3d/tc_rel_sumsq_times_first",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "observed:tier3a/md_sum_times_last:[\"fold\", \"0\", \"(acc + math.gcd(abs(v), abs(v)))\", \"(acc * last)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3a/md_sum_times_last:[\"fold\", \"0\", \"(v + acc)\", \"(acc * last)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "observed:tier3a/md_prod_plus_first:[\"fold\", \"1\", \"(acc * math.gcd(abs(v), abs(v)))\", \"(acc + first)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "observed:tier3a/md_prod_plus_first:[\"fold\", \"1\", \"(acc * math.gcd(abs(v), abs(v)))\", \"(acc + first)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3a/md_gcd_minus_first:[\"fold\", \"0\", \"math.gcd(abs(acc), abs((v + acc)))\", \"(acc - first)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3a/md_gcd_minus_first:[\"fold\", \"0\", \"math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))\", \"(acc - first)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3a/md_sumsq_plus_last:[\"fold\", \"0\", \"(acc + (v * v))\", \"(acc + last)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc - (v * v))",
+     "(last - acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3a/md_sumsq_plus_last:[\"fold\", \"0\", \"(acc - (v * v))\", \"(last - acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "observed:tier3c/md_a_sum_times_last:[\"fold\", \"0\", \"(acc + math.gcd(abs(v), abs(v)))\", \"(last * acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3c/md_a_sum_times_last:[\"fold\", \"0\", \"(v + acc)\", \"(last * acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(last * acc)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "observed:tier3c/md_a_sum_times_last:[\"fold\", \"0\", \"(acc + math.gcd(abs(v), abs(v)))\", \"(last * acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc - (v * v))",
+     "(first - acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3c/md_b_sumsq_plus_first:[\"fold\", \"0\", \"(acc - (v * v))\", \"(first - acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc - (v * v))",
+     "(first - acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3c/md_b_sumsq_plus_first:[\"fold\", \"0\", \"(acc - (v * v))\", \"(first - acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + (v * v))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc - (v * v))",
+     "(first - acc)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "observed:tier3c/md_b_sumsq_plus_first:[\"fold\", \"0\", \"(acc - (v * v))\", \"(first - acc)\"]",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "first",
+     "(acc + v)",
+     "((acc - first) * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "general",
+    "name": "reclassified:offset_conjugate_of_sum",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "first",
+     "acc",
+     "(acc - first)"
+    ],
+    "b": [
+     "expr",
+     "(first - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "general",
+    "name": "reclassified:identity_body_fold_vs_inlined",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "acc"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc + (0 * (first // last)))"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "general",
+    "name": "reclassified:zero_times_first_div_last",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + v)|(v + acc):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": true
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc * math.gcd(abs(v), abs(v)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc * math.gcd(abs(v), abs(v)))|(acc * v):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))|math.gcd(abs(acc), abs(v)):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs((v + acc)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "math.gcd(abs(acc), abs(v))",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:math.gcd(abs(acc), abs((v + acc)))|math.gcd(abs(acc), abs(v)):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(acc + math.gcd(abs(v), abs(v)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc + v)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3a_body:(acc + math.gcd(abs(v), abs(v)))|(acc + v):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": true,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v * math.gcd(abs(acc), abs(acc)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(acc * v)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v * math.gcd(abs(acc), abs(acc)))|(acc * v):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "0",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "0",
+     "(v + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=0:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc * last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc * last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc * last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc + first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc + first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc + first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc + last)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc + last)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc + last)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   },
+   {
+    "a": [
+     "fold",
+     "1",
+     "(v + math.gcd(abs(acc), abs(acc)))",
+     "(acc - first)"
+    ],
+    "b": [
+     "fold",
+     "1",
+     "(v + acc)",
+     "(acc - first)"
+    ],
+    "holds_with_negative_inputs": false,
+    "kind": "historical",
+    "name": "lifted:tier3b_body:(v + math.gcd(abs(acc), abs(acc)))|(v + acc):init=1:final=(acc - first)",
+    "same_behavior": true,
+    "same_on_audit": true,
+    "same_structure": false
+   }
+  ],
+  "structurally_distinct_but_behaviourally_equal": 104
+ },
+ "G_S1_2_separation": {
+  "PASS": true,
+  "hand_declared": [
+   {
+    "name": "naive_sign_flip_across_floor_division",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "7",
+     "2"
+    ],
+    "witness_really_differs": true
+   },
+   {
+    "name": "naive_sign_flip_across_modulo",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "5",
+     "5",
+     "3"
+    ],
+    "witness_really_differs": true
+   },
+   {
+    "name": "guarded_pow_vs_unguarded_expansion",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "2",
+     "2",
+     "33"
+    ],
+    "witness_really_differs": true
+   },
+   {
+    "name": "tier3b_alias_in_negative_accumulator_context",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "5",
+     "2",
+     "2"
+    ],
+    "witness_really_differs": true
+   },
+   {
+    "name": "product_overflow_on_valid_input_vs_constant",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "7"
+    ],
+    "witness_really_differs": true
+   },
+   {
+    "name": "scale_conjugate_of_product_crosses_ceiling_earlier",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "30",
+     "5"
+    ],
+    "witness_really_differs": true
+   },
+   {
+    "name": "failure_disposition_on_valid_input",
+    "same_structure": false,
+    "separated_by_B1": true,
+    "witness": [
+     "5",
+     "5",
+     "3"
+    ],
+    "witness_really_differs": true
+   }
+  ],
+  "hand_failures": [],
+  "mechanical": {
+   "B1_merges_B2_merges": 7,
+   "B1_separates": 1621,
+   "B2_separates": 1621,
+   "B2_separates_but_B1_merges": [],
+   "mutants": 1628
+  }
+ },
+ "G_S1_3_audit": {
+  "PASS": false,
+  "behavior_classes": 3445,
+  "false_merge_count": 13,
+  "false_merges": [
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(first + 1)",
+       "pow(v, pow(first, last))",
+       "pow(last, 1)"
+      ],
+      [
+       "fold",
+       "(last * 0)",
+       "pow(v, pow(first, last))",
+       "(last + 0)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "pow(1, first)",
+       "pow(first, (first // last))",
+       "(last + 0)"
+      ]
+     ]
+    ],
+    "behavior_id": "813abc27b6335cb8e4789dfe0245aa3fc68d79d5c5287b296c63cd837d042cf9",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 + 0)",
+       "(last * (acc + last))",
+       "(1 % acc)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(last * 1)",
+       "(last * math.gcd(abs(acc), abs(0)))",
+       "math.gcd(abs(1), abs(last))"
+      ]
+     ]
+    ],
+    "behavior_id": "abcd8df29999a6bcbfa78da76b1feaf6c0a64f081c80a5ac521b775ddffb7965",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(1 * 1)",
+       "(last * (acc - v))",
+       "(0 // first)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(first - 1)",
+       "(last * acc)",
+       "(0 * 1)"
+      ],
+      [
+       "fold",
+       "first",
+       "(last - (last * acc))",
+       "(0 - 0)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "math.gcd(abs(1), abs(last))",
+       "(last * (first - acc))",
+       "(1 * 0)"
+      ]
+     ]
+    ],
+    "behavior_id": "cf4e606b7772cd8079cd4d084be53d8b29c75530b688abfe51f79130ac217615",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 % last)",
+       "(v - (acc * last))",
+       "(0 - 0)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(1 * 0)",
+       "(v + (acc * last))",
+       "0"
+      ]
+     ]
+    ],
+    "behavior_id": "765d644a2f689a81f9aca8e36733a534a4c1e0e60b66a578610309e172258bc7",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 + 1)",
+       "(1 - (acc * first))",
+       "math.gcd(abs(0), abs(1))"
+      ],
+      [
+       "fold",
+       "(1 // 1)",
+       "(first * math.gcd(abs(acc), abs(0)))",
+       "math.gcd(abs(acc), abs(1))"
+      ],
+      [
+       "fold",
+       "(1 // 1)",
+       "math.gcd(abs(0), abs((acc * first)))",
+       "pow(1, first)"
+      ],
+      [
+       "fold",
+       "(last // last)",
+       "(acc * (first - 0))",
+       "math.gcd(abs(1), abs(1))"
+      ],
+      [
+       "fold",
+       "math.gcd(abs(1), abs(first))",
+       "(0 + (acc * first))",
+       "pow(first, 0)"
+      ],
+      [
+       "fold",
+       "math.gcd(abs(first), abs(1))",
+       "(acc * math.gcd(abs(first), abs(first)))",
+       "math.gcd(abs(acc), abs(1))"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(0 // first)",
+       "(v - (acc * first))",
+       "math.gcd(abs(1), abs(acc))"
+      ]
+     ]
+    ],
+    "behavior_id": "a20f5b98d46ef007e957f05bc6ba3f4ec1881af61c8b006b7e2a5195035960ab",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(1 + first)",
+       "(last * (acc + 1))",
+       "math.gcd(abs(1), abs(acc))"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "pow(first, 1)",
+       "(acc * last)",
+       "math.gcd(abs(1), abs(1))"
+      ]
+     ]
+    ],
+    "behavior_id": "8c22c0ad82b51dcd32680b823ce41ab598684866c4b7eddbe1d0b8e54c9ede1b",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "math.gcd(abs(1), abs(1))",
+       "(last * (last - acc))",
+       "pow(first, 1)"
+      ],
+      [
+       "fold",
+       "pow(1, 0)",
+       "(last * (last - acc))",
+       "math.gcd(abs(first), abs(0))"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "math.gcd(abs(last), abs(0))",
+       "(last * (acc // 1))",
+       "first"
+      ]
+     ]
+    ],
+    "behavior_id": "fb4268439cd7c7a0a7d1f6282e9c64157373add1ff970c361bea357cfb62bd1e",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(1 + 1)",
+       "(first * (first + acc))",
+       "pow(acc, 0)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "math.gcd(abs(0), abs(1))",
+       "(first * (v + acc))",
+       "math.gcd(abs(1), abs(0))"
+      ]
+     ]
+    ],
+    "behavior_id": "eb39debe66e23037d31bdc343f61c25e95772f2da9f2c0c4a3adf3381e942f5d",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 * last)",
+       "(last * (acc + 1))",
+       "(0 % 1)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(first // first)",
+       "(last * (acc // 1))",
+       "(0 // acc)"
+      ],
+      [
+       "fold",
+       "pow(1, first)",
+       "(last * pow(acc, 1))",
+       "(0 // 1)"
+      ]
+     ]
+    ],
+    "behavior_id": "d3d1df6d79e2f18b659c46bb64a28fcb1c70745c0111c636c59f0f5c8430f0eb",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 // last)",
+       "(last * (1 + acc))",
+       "(first // 1)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(1 % last)",
+       "(last * pow(acc, 1))",
+       "(0 + first)"
+      ]
+     ]
+    ],
+    "behavior_id": "d42e87f7ca4b99ebb28499aadc23f7c686e33b82ee425451d3355520069baf36",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(first % 1)",
+       "(last * (acc + last))",
+       "(1 * 0)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(last - 0)",
+       "(acc * (last * 1))",
+       "(0 * 0)"
+      ],
+      [
+       "fold",
+       "pow(last, 1)",
+       "(last * (0 + acc))",
+       "(1 - 1)"
+      ]
+     ]
+    ],
+    "behavior_id": "01ae9e89055d93f7fd32068689fc9d43fb34c461e8913b163c3d35bc6a36e464",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 + last)",
+       "pow(first, (last * first))",
+       "(acc - acc)"
+      ],
+      [
+       "fold",
+       "(0 - first)",
+       "pow(first, (first // last))",
+       "(first % 1)"
+      ],
+      [
+       "fold",
+       "math.gcd(abs(last), abs(last))",
+       "pow(first, (last * first))",
+       "(0 // 1)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "first",
+       "pow(v, pow(first, last))",
+       "0"
+      ]
+     ]
+    ],
+    "behavior_id": "5670d9e457c2ed1f20897e28e9369b694db6445edb54218e9c9edf9cbe0e3637",
+    "trailing": true
+   },
+   {
+    "audit_split": [
+     [
+      [
+       "fold",
+       "(0 % 1)",
+       "(first - (acc * last))",
+       "(first * 1)"
+      ]
+     ],
+     [
+      [
+       "fold",
+       "(1 * 0)",
+       "(v + (acc * last))",
+       "(first % acc)"
+      ]
+     ]
+    ],
+    "behavior_id": "e420674d194fe71af6de1ca80114401fdfe197c5d2aa78054d6190e611af816a",
+    "trailing": true
+   }
+  ],
+  "members_in_multi_member_classes": 18098,
+  "programs": 21031
+ },
+ "G_S1_4_refinement": {
+  "PASS": true,
+  "rewrite_changed_behavior": [],
+  "rewritten_programs": 17103,
+  "structure_classes": 20287,
+  "structure_id_with_two_behaviors": 0
+ },
+ "G_S1_5_conformance": {
+  "PASS": true,
+  "standing_gate_part1": {
+   "GREEN": true,
+   "checked": 21600,
+   "mismatches": []
+  },
+  "whole_program_B1_part2": {
+   "comparisons": 7833930,
+   "emitter": 2,
+   "excluded_non_trailing_or_expr": 2,
+   "mismatch_count": 0,
+   "mismatches": [],
+   "of_which_boundary_battery": 3106740,
+   "programs": 390
+  }
+ },
+ "G_S1_6_no_target": {
+  "PASS": true,
+  "catalog_literals_in_code": [],
+  "family_names_in_source": [],
+  "forbidden_imports": [],
+  "imports": [
+   "ast",
+   "hashlib",
+   "json",
+   "random",
+   "typing",
+   "basis_v4",
+   "itertools"
+  ],
+  "schema_hole_in_source": false
+ },
+ "G_S1_7_old_fixtures": {
+  "PASS": true,
+  "returncode": 0,
+  "summary": "7 passed in 0.04s"
+ },
+ "OUTCOME": "S1_FAIL",
+ "amendment": "AMENDMENT_12 @ 287d208ea + ADDENDUM_1 @ d72595bb0 + ADDENDUM_2 @ 18ab82c50",
+ "domain": "D_TASK_T3_v1",
+ "emitter": 2,
+ "failed_gates": [
+  "G_S1_3_audit"
+ ],
+ "run": 3,
+ "seconds": 2848.0,
+ "started_utc": "2026-09-24T09:55:52Z",
+ "workers": 7
+}
