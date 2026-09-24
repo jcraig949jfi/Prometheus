@@ -265,6 +265,12 @@ C9 (frozen, protocol 5819bc6d; 1,200/1,200 runs; audit PASS 21/21). Frozen verdi
   competence when consuming the cue costs instructions (0.000 vs 0.200; crossings 0 vs 11.7%)
   and is harmless when the cue is free (0.197 vs 0.197). The cycle-8 answer-before-read
   obstruction is the price of reading the cue, not the ordering itself.
+  Transplanted (EXPLORE) to all 4 other transforms (I = +0.20..+0.34; gate+VM competence 0.000
+  everywhere; positive control: a correct reader scores identically under the gate, so the
+  zeros are evolutionary). Mechanism (EXPLORE): ungated competence is carried entirely by
+  answer-before-read guessers and no reader ever evolves; the gate removes the guessers and
+  paid reading stays rare and weak (my literal flat-landscape prediction failed: 3.8% weak
+  readers exist).
 - **H2 -- REPLICATION_EVENTS_WITHOUT_PROPAGATION** (both authorship readings); WEAK_SIGNAL
   concentrated in one specimen, `7ae3f9c1437c8000`: implanted genome reaches depth >= 5 in 4/16
   seeds, random bytes 0/16, in situ 0/16.
