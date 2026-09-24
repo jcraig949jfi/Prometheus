@@ -91,3 +91,18 @@ Test episodes 3,000 (was 2,000). Gate v3: fresh seeds 6-10 (the gated verdict); 
 v3 and reported (not gated: they informed A2).
 Precommitment: gate v3 passes (conf 0.65); NZ FUNCTIONAL 5/5 (conf 0.7); MC NONE with p1 = 1 (ties) in
 5/5 (conf 0.8).
+
+## GATE v3 RESULT (2026-09-24T07:19Z; runs/GATE_v3_PASS_seeds6to10.json): PASS
+Fresh seeds 6-10: N0 NONE 5/5, PV PASSIVE 5/5 (D_generic 1.96 bits, D_readout 0.0000, effect 0.000),
+FX FUNCTIONAL 5/5, FD FUNCTIONAL 5/5, MC NONE 5/5 (p 0.46-0.96), NZ FUNCTIONAL 5/5 (effect 0.070-0.088,
+z 15-17; D 0.004-0.017 bits at the minimum attainable p = 0.02).
+Seeds 1-5 under v3 (NOT gated; they informed A2; runs/GATE_v3_seeds1to5_notgated.json): all expected
+except MC seed 1 INDETERMINATE (p1 in (0.02, 0.10]). CALIBRATION FACT for users of the certificate: the
+INDETERMINATE band admits a truly history-free system with probability ~0.08 per certification (p-values
+of a null are ~uniform on the 49-permutation grid); a 5-seed "all exact" gate is therefore stricter than
+any single certification. INDETERMINATE is never a wrong class; it is reported and never promoted.
+Precommitments: v3 gate passes HELD; NZ 5/5 HELD; MC p1 = 1 by ties LOST (the max-statistic removed the
+ties; p ranged 0.46-0.96 in the gated seeds).
+CONCLUDED (instrument): the certificate separates NONE / PASSIVE / FUNCTIONAL, including weak memory
+and a misleading current-observation correlate, on planted systems. The directive's s13 stop
+condition is NOT triggered. The certificate is v3 from here on; any change is a new version.
