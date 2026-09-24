@@ -51,7 +51,10 @@ operator, the recombination splice, both manufactured them and destroys genuine 
 Turn it off and about 5% of single-founder implants of one specimen run away into
 sustained, population-wide causal copying, 549 causal generations at the maximum.
 Runaway is specimen-specific: 0 of 7 other specimens ran away. It is not explained by
-copier quality, and the critical-mass test (X-CRITICAL-MASS) is running.
+copier quality. It is dose-sensitive: with 4 founders instead of 1, runaways rose from
+0/64 to 9/64 and depth >= 5 from 8/64 to 32/64 (X-CRITICAL-MASS, exploratory WEAK_SIGNAL;
+the SIGNAL bar was missed by one run). A fresh frozen test (C-CRITICAL-MASS, 80 seeds per arm,
+primary endpoint depth >= 5) is running.
 
 ## 4. Defects found and handled
 

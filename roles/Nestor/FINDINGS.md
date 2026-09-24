@@ -289,6 +289,13 @@ p = 0.0073; max depth 549 vs 13. The operator that manufactured ~88% of the pred
 Scope: specimen 7ae3's cell, single founder. Evidence:
 `campaigns/c9x-explore-2026-09-24/c_runaway_confirm/`.
 
+Follow-ups (EXPLORE, hypotheses only): X-RUNAWAY-TRANSPLANT (0/7 other specimens run away);
+X-STATE / X-SUFFICIENCY (runaway copies are genome-sufficient, but so are stalled seeds' copies
+- sufficiency does not separate them; scale does: 3,901-13,298 P-11 copies by epoch 200 vs
+<= 31); X-CRITICAL-MASS (**WEAK_SIGNAL**: 4 founders vs 1, runaways 9/64 vs 0/64, depth >= 5
+32/64 vs 8/64, max depth 385 vs 10; the declared SIGNAL bar of 10 runaways missed by one).
+Hypothesis under CONFIRM: heredity here is establishment-limited (C-CRITICAL-MASS).
+
 ---
 
 ## D. Standing methodological lessons
