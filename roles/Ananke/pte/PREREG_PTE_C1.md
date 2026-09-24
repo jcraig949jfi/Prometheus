@@ -218,3 +218,23 @@ search, the detectors and these predictions; only the oracle has an
 independent author. Holdouts are seed namespaces, not sealed worlds from
 another seat. Adversarial review of the evidence package by Kairos,
 Elenchus or Nemesis is the independent failure mode promotion requires.
+
+## Annotation 2026-09-24 22:2xZ (POST-DATA: written after reading the 37 wave-B candidates; labels are NOT changed)
+
+The s8 criterion has three defects visible in the wave-B candidate list.
+The mechanical labels stand as computed; the report carries these flags
+beside every affected row and interprets accordingly:
+D1 CATEGORICAL DIALS. topology (and collision, update_mode, dest_mode)
+   have no order, so "adjacent levels" is an artefact of list order. A
+   jump on such a dial is reported as a LEVEL CONTRAST, never read as a
+   phase boundary (MAJ plant x topology: 3 "candidates" on one transect).
+D2 ZERO-VARIANCE METRICS. Plant accuracy is often deterministic across
+   replicates (SE 0.000), so the 3-SE clause is vacuous and only the
+   0.10 floor binds. Such candidates are flagged "SE0".
+D3 NON-MONOTONE DIPS. A single-level dip ([1.0, 0.75, 1.0, 1.0]) yields
+   two opposite-sign "boundaries". Reported as one dip, not two
+   boundaries. The HOLD plant dip at decay_shift=1 is the sign-asymmetric
+   integer decay predicted in DESIGN s10 (positive latches stall, negative
+   ones erase: 0.75 = half the targets at 1.0, half at 0.5).
+For C2: the criterion is amended BEFORE any C2 data (ordinal dials only;
+a variance floor; monotone-run requirement), in PREREG_PTE_C2.
