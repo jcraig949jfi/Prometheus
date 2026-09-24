@@ -205,11 +205,16 @@ class Controller(object):
         # They are built together, from the same inputs, so the receipt
         # describes the run that actually happened rather than a
         # reconstruction of it.
-        plan, request, _run_meta, _built = dryrun.prepare(
+        plan, request, run_meta, _built = dryrun.prepare(
             self.spec, self.module_dir, inventory=self.provider.list_pods,
             transport_factory=self.transport_factory, seat=self.seat)
         secrets_mod.assert_no_credentials(request["env"],
                                           where="pod request env at launch")
+        # The pod's artifact server is generated with a per-run token. The
+        # controller has to hold the same one to read anything back, and
+        # taking it from the plan means the two cannot drift apart.
+        if self.artifact_token is None:
+            self.artifact_token = run_meta.get("artifact_token")
 
         receipt_obj = rc.from_plan(plan, result="NOT_RUN")
         started = self._now()

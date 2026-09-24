@@ -501,3 +501,82 @@ def test_the_bootstrap_marks_every_stage_it_claims():
     # The scrub still precedes the module, with the marker between them.
     assert boot.index("unset RUNPOD_API_KEY") < boot.index("stage module_start")
     assert boot.index("stage module_start") < boot.index(spec["entrypoint"])
+
+
+# ------------------------------------------------- the pod's artifact server
+
+def test_the_artifact_server_starts_before_anything_that_can_fail():
+    """A workload that dies must still hand back what it had. Serving only
+    after the science succeeds destroys exactly the evidence a failed run
+    needs -- FAILURE_PLAYBOOK entry 5."""
+    from prometheus_gpu import dryrun as dr
+    spec = spec_mod.from_dict(dict(SPEC))
+    meta = {"run_id": "r", "seat": "Aether", "workdir": "/app/module",
+            "artifact_dir": "/app/out",
+            "telemetry_path": "/app/out/telemetry.jsonl", "image": "img",
+            "artifact_token": "tok", "artifact_port": 8080}
+    transport = {"fetch_cmd": "curl -o b.tar.gz http://x",
+                 "local_name": "b.tar.gz", "bundle_sha256": "a" * 64}
+    boot = dr.build_bootstrap(spec, meta, transport)
+    server = boot.index("python3 -u /app/_serve.py &")
+    assert server < boot.index("pip install"), "installed before serving"
+    assert server < boot.index(spec["entrypoint"])
+    assert server < boot.index(transport["fetch_cmd"])
+    # And the pod stays alive on it, so retrieval happens before teardown.
+    assert boot.rstrip().endswith("wait $PROM_SERVER_PID")
+
+
+def test_a_failing_module_does_not_take_the_server_down_with_it():
+    """`set -e` plus a non-zero module exit would kill the server and lose
+    the telemetry that explains the failure."""
+    from prometheus_gpu import dryrun as dr
+    spec = spec_mod.from_dict(dict(SPEC))
+    meta = {"run_id": "r", "seat": "Aether", "workdir": "/app/module",
+            "artifact_dir": "/app/out",
+            "telemetry_path": "/app/out/telemetry.jsonl", "image": "img",
+            "artifact_token": "tok", "artifact_port": 8080}
+    boot = dr.build_bootstrap(spec, meta, {
+        "fetch_cmd": "curl -o b http://x", "local_name": "b",
+        "bundle_sha256": "a" * 64})
+    entry = boot.index("python3 -u " + spec["entrypoint"])
+    assert boot.rindex("set +e", 0, entry) < entry, "module runs under set -e"
+    assert "PROM_MODULE_RC=$?" in boot
+    assert "module_rc" in boot, "the exit code is not recorded"
+    assert boot.index("PROM_MODULE_RC=$?") < boot.index("wait $PROM_SERVER_PID")
+
+
+def test_each_plan_gets_its_own_artifact_token(module_dir):
+    """Two plans for the same module must not share a token, or an old plan
+    could be replayed to read a later run's output."""
+    from prometheus_gpu import dryrun as dr
+    spec = spec_mod.from_dict(dict(SPEC))
+    _p1, r1, m1, _b1 = dr.prepare(spec, module_dir, inventory=None)
+    _p2, r2, m2, _b2 = dr.prepare(spec, module_dir, inventory=None)
+    assert m1["artifact_token"] and m2["artifact_token"]
+    assert m1["artifact_token"] != m2["artifact_token"]
+    assert r1["env"]["PROMETHEUS_ARTIFACT_TOKEN"] == m1["artifact_token"]
+
+
+def test_the_token_value_never_reaches_the_saved_plan(module_dir):
+    from prometheus_gpu import dryrun as dr
+    spec = spec_mod.from_dict(dict(SPEC))
+    plan, request, meta, _b = dr.prepare(spec, module_dir, inventory=None)
+    token = meta["artifact_token"]
+    assert token in request["env"].values()
+    import json as _json
+    assert token not in _json.dumps(plan), (
+        "the artifact token's VALUE is in the plan, which gets committed")
+
+
+def test_the_controller_holds_the_same_token_the_pod_was_given(module_dir):
+    fake = happy_fake()
+    sent = {}
+    original = fake.create_pod
+
+    def capture(body):
+        sent.update(body)
+        return original(body)
+    fake.create_pod = capture
+    ctl = controller(fake, module_dir)
+    ctl.run()
+    assert ctl.artifact_token == sent["env"]["PROMETHEUS_ARTIFACT_TOKEN"]

@@ -54,6 +54,12 @@ def build_module_env(spec, run_meta):
         "PROMETHEUS_ARTIFACT_DIR": run_meta.get("artifact_dir", "/app/out"),
         "PROMETHEUS_TELEMETRY_PATH": run_meta.get("telemetry_path",
                                                   "/app/out/telemetry.jsonl"),
+        # Per-run bearer token for the pod's artifact server. Generated
+        # fresh for every launch, never reused, and not a provider
+        # credential -- it authorises reading this one run's own output.
+        # `scrub_request` drops its value from anything written down.
+        "PROMETHEUS_ARTIFACT_TOKEN": run_meta.get("artifact_token", ""),
+        "PROMETHEUS_ARTIFACT_PORT": str(run_meta.get("artifact_port", 8080)),
     })
     assert_no_credentials(env, where="module environment")
     return env

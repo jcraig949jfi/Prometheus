@@ -18,10 +18,12 @@ does not recompute identity, so what was validated is what runs.
 import datetime
 import json
 import os
+import secrets as _secrets
 import urllib.request
 
 from . import bundle as bundle_mod
 from . import cost as cost_mod
+from . import provider as prov_mod
 from . import secrets as secrets_mod
 
 SCHEMA = "prometheus-gpu/run-plan/1"
@@ -43,12 +45,59 @@ def run_id_for(spec, now=None):
     return "%s-%s" % (spec.name, stamp)
 
 
+ARTIFACT_SERVER = '''import http.server
+import os
+import socketserver
+
+ROOT = os.environ.get("PROMETHEUS_ARTIFACT_DIR", "/app/out")
+TOKEN = os.environ.get("PROMETHEUS_ARTIFACT_TOKEN", "")
+PORT = int(os.environ.get("PROMETHEUS_ARTIFACT_PORT", "8080"))
+
+
+class Handler(http.server.SimpleHTTPRequestHandler):
+    """Serves the artifact directory, and only to this run's token."""
+
+    def __init__(self, *a, **k):
+        super().__init__(*a, directory=ROOT, **k)
+
+    def do_GET(self):
+        if TOKEN and self.headers.get("Authorization") != "Bearer " + TOKEN:
+            self.send_error(401, "artifact token required")
+            return
+        super().do_GET()
+
+    def log_message(self, *a):
+        pass
+
+
+socketserver.TCPServer.allow_reuse_address = True
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    httpd.serve_forever()
+'''
+
+
+def server_prelude():
+    """Shell that writes and starts the artifact server, first of all.
+
+    FAILURE_PLAYBOOK entry 5: the server comes up BEFORE the dependency
+    install and before the module, because a workload that dies must still
+    be able to hand back what it had. Serving only after the science
+    succeeds destroys exactly the evidence a failed run needs.
+    """
+    return ["cat > /app/_serve.py <<'PROM_SERVER_EOF'",
+            ARTIFACT_SERVER.rstrip("\n"),
+            "PROM_SERVER_EOF",
+            "python3 -u /app/_serve.py &",
+            "PROM_SERVER_PID=$!"]
+
+
 def build_bootstrap(spec, run_meta, transport):
     """The exact shell the pod will run, in order.
 
-    Ordering is the safety property: verify BEFORE installing, scrub
-    credentials BEFORE running module code, and prove the scrub worked
-    before the module starts rather than trusting it.
+    Ordering is the safety property: serve BEFORE anything that can fail,
+    verify BEFORE installing, scrub credentials BEFORE running module code,
+    prove the scrub worked rather than trusting it, and stay alive on the
+    server afterwards so the controller can retrieve before it terminates.
     """
     workdir = run_meta["workdir"]
     artifacts = run_meta["artifact_dir"]
@@ -67,6 +116,8 @@ def build_bootstrap(spec, run_meta, transport):
         "cd %s" % workdir,
         mark,
         "stage boot",
+    ] + server_prelude() + [
+        "stage server_up",
         transport["fetch_cmd"],
         "stage fetched",
         "printf '%%s  %%s\\n' '%s' '%s' > bundle.sha256"
@@ -90,8 +141,20 @@ def build_bootstrap(spec, run_meta, transport):
     entry = spec["entrypoint"]
     args = " ".join("'%s'" % a for a in spec["args"])
     lines.append("stage module_start")
+    # The module's exit code must not abort the script. Under `set -e` a
+    # non-zero exit would take the artifact server down with it, and the
+    # run that most needs its telemetry read back is exactly the run that
+    # failed. Captured and recorded as a stage instead.
+    lines.append("set +e")
     lines.append("python3 -u %s %s" % (entry, args))
+    lines.append("PROM_MODULE_RC=$?")
+    lines.append("set -e")
     lines.append("stage module_end")
+    lines.append('printf \'{"stage": "module_rc", "epoch": %s}\\n\' '
+                 '"$PROM_MODULE_RC" >> ' + stages)
+    # Hold the pod open on the server. The controller's teardown ends it,
+    # after it has retrieved.
+    lines.append("wait $PROM_SERVER_PID")
     return "\n".join(lines)
 
 
@@ -195,6 +258,11 @@ def prepare(spec, module_dir, inventory=None,
         "run_id": run_id, "seat": seat,
         "workdir": "/app/module", "artifact_dir": "/app/out",
         "telemetry_path": "/app/out/telemetry.jsonl", "image": image,
+        # A fresh token per plan. Two plans for the same module get
+        # different tokens, which is why a plan cannot be replayed to read
+        # a later run's artifacts.
+        "artifact_token": _secrets.token_urlsafe(24),
+        "artifact_port": prov_mod.ARTIFACT_PORT,
     }
 
     built = bundle_mod.build(module_dir, spec)

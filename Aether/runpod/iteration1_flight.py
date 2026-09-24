@@ -163,8 +163,6 @@ def fly(spec, budget_usd, poll_s):
     ctl = launch.Controller(api, spec, MODULE_DIR, budget_usd=budget_usd,
                             poll_s=poll_s, ready_timeout_s=600.0,
                             transport_factory=repo_transport_factory(commit),
-                            artifact_token=os.environ.get(
-                                "AGE_ARTIFACT_TOKEN"),
                             log=log)
     os.makedirs(RECEIPT_DIR, exist_ok=True)
     receipt_obj = None
