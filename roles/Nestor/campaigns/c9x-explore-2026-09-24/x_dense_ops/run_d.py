@@ -71,8 +71,11 @@ def cells():
 def job(args):
     j, cell, arm = args
     import world
-    if arm == "PERMISSIVE_DENSE":
-        world.z8 = dense_z8()
+    import z8 as z8_plain
+    # HARNESS FIX (X-DENSE-OPS-R): the VM is set EXPLICITLY for every job. The first run
+    # assigned it only for the DENSE arm; pool workers are reused, so later PERMISSIVE jobs
+    # on a worker that had run a DENSE job silently used the dense VM.
+    world.z8 = dense_z8() if arm == "PERMISSIVE_DENSE" else z8_plain
 
     class Permissive(world.Runner):
         def step(self):
@@ -147,9 +150,9 @@ def main():
         return 1
     cs = cells()
     todo = [(j, c, arm) for j, c in enumerate(cs) for arm in ("PERMISSIVE", "PERMISSIVE_DENSE")]
-    with mp.Pool(6) as pool:
+    with mp.Pool(6, maxtasksperchild=1) as pool:        # one job per process: no carry-over
         res = pool.map(job, todo)
-    (HERE / "RESULTS.json").write_text(json.dumps(res, indent=1))
+    (HERE / "RESULTS_R.json").write_text(json.dumps(res, indent=1))
     P = {r["j"]: r for r in res if r["arm"] == "PERMISSIVE"}
     D = {r["j"]: r for r in res if r["arm"] == "PERMISSIVE_DENSE"}
     d2 = sum(D[j]["max_causal_depth"] >= 2 for j in D)
@@ -166,7 +169,7 @@ def main():
                                 "max_depth": max(r["max_causal_depth"] for r in D.values()),
                                 "cells_repl": sum(1 for r in D.values() if r["replication_events"]),
                                 "alloc_calls": sum(r["alloc_calls"] for r in D.values())}}
-    (HERE / "SUMMARY.json").write_text(json.dumps(out, indent=1))
+    (HERE / "SUMMARY_R.json").write_text(json.dumps(out, indent=1))
     print(json.dumps(out, indent=1))
     return 0
 
