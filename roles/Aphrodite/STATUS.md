@@ -21,6 +21,9 @@ READ NEXT: NEXT_SESSION.md, then journal/2026-09-23.md (covers 09-23 and 09-24).
                                                  selected (acc + {H})
   ABSTRACTION_TRANSPLANT (S4)         YES        all 8 conditions; 5 unseen-body
                                                  families; break-even 41.2 < 64
+                                                 ACCEPTED by operator 2026-09-24
+  BOUNDED_RSI                         NOT YET ESTABLISHED (operator 2026-09-24);
+                                                 next: G1 -> G2 recursion campaign
   Tier 3A also: PRIMARY_CAUSAL_INFERENCE = INCONCLUSIVE_CONTROL_INVALID
 
 ## Campaign 1
