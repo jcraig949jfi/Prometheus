@@ -196,3 +196,14 @@ A5 BUG FIX (shared substrate code, ensorain/wtp/organism.py): the TT
   battery+graph) failed for a bookkeeping reason. It is now hashed at birth, before the life loop. Validation is rerun
   from scratch by `campaign2 all`; the first run's V3 fail is kept in the journal.
 - Admission is now checkpointed to `waveA_admission.json` after every batch (`partial=true` until the wave closes).
+
+### A7 (2026-09-24, declared while Wave A admission is running, before any Wave A life has been analysed) — lineage clustering
+After two batches, 242 of 307 admitted worlds (79%) are mutants, descending from 28 founders; the largest lineage has 25.
+The per-candidate admission gates do not see this. The strategy mix (40/25/20/15) is unchanged. However, mutants of admitted
+worlds pass the gates far more often than fresh draws, so the admitted population is lineage-clustered.
+Substrate-generator spread is still broad: spectral 101, pairwise 65, cp 58, tt 38, lowrank 23, sum 17, sparse 5.
+**Added reporting (no gate or threshold changes):** every Wave A fraction, including P(CGu >= .1 & SD >= .1), is reported
+two ways. (i) Per world, as preregistered. (ii) Per founder lineage: each world is traced to its root founder through
+`meta.parents`, and a lineage counts as positive if any member is positive. The report also gives the median fraction
+within each lineage. A specimen claim must hold at the lineage level: two positives from one lineage count as one
+specimen, not two.
