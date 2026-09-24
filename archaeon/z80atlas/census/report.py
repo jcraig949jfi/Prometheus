@@ -14,7 +14,14 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from archaeon.z80atlas.census import copier_census as C
-from archaeon.z80atlas.denovo.run_denovo import clopper_pearson
+
+
+def clopper_pearson(k: int, n: int, alpha: float = 0.05):
+    """Exact two-sided Clopper-Pearson via the beta quantile (the summed-binomial form in run_denovo overflows at n ~ 1e7)."""
+    from scipy.stats import beta
+    lo = 0.0 if k == 0 else float(beta.ppf(alpha / 2, k, n - k + 1))
+    hi = 1.0 if k == n else float(beta.ppf(1 - alpha / 2, k + 1, n - k))
+    return [lo, hi]
 
 HERE = Path(__file__).resolve().parent
 RUNS = HERE / "runs"                                                       # gitignored chunk outputs
@@ -60,7 +67,7 @@ def campaign_worlds():
     for r in runs.values():
         fv = r["factor_vector"]
         if r["status"] == "DONE" and fv["init"] == "random" and fv["reproduction"] in endo and ":transplant:" not in r["scheduler_reason"]:
-            k = "%s%d|%s" % (fv["representation.substrate"], fv["representation.genome"], "input0_only" if fv["task"] == "none" else "uniform_input")
+            k = "%s%s%d|%s" % (fv["representation.substrate"], "_" if fv["representation.substrate"] == "z80" else "", fv["representation.genome"], "input0_only" if fv["task"] == "none" else "uniform_input")
             w[k] += 1; surv[k] += r["signals"]["extinct_epoch"] is None
     return w, surv
 
