@@ -66,3 +66,30 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
 - Blind-lane rule: do not ask Bellerophon about the program.
 - CAMPAIGN NOT AUTHORIZED. The s12 CPU condition is now met; the steward prereg review is still outstanding. Send the s13
   deliverables; the launch prompt follows the review.
+
+## Joint rules from #615, #619, #626, #627 (2026-09-25)
+- #615 R1e POSITIVE CONTROL: a known HYBRID whose competence the SAME index ablation collapses. Without it, "no collapse"
+  reads UNRESOLVED, not LOSSLESS.
+- #615 GENERAL RULE for every outcome mapping:
+  - SUPPORT needs a positive certificate;
+  - FALSIFICATION needs demonstrated use or advantage;
+  - absence of evidence decides neither.
+- #619 NO-DIFFERENCE verdicts (INDISCRIMINATE_EQUIVALENT above all, and a LOSSLESS/SELECTIVE tie) need BOTH:
+  - (a) an equivalence test: the CI lies inside a margin preregistered from dev noise;
+  - (b) a positive-control world in which a planted SELECTIVE beats the rate-matched merge, detected by the same analysis.
+  Otherwise UNRESOLVED.
+- D1 HR2 is the MATCHED quantity (RECOVERABLE tier) and never decides a verdict by itself. Each arm's reconstruction map
+  is declared in the prereg before any dev margin and is never tuned afterwards. R(tau) and distinguishability are
+  reported.
+- D1 addition (#627): also REPORT HR2_signal, the same map scored against the GENERATOR's noise-free field. The per-arm gap
+  HR2 - HR2_signal reads "discarded noise vs discarded signal". Measured, never matched, fixed before dev.
+- D2 IM-rate (HR2-matched, bytes charged) is PRIMARY; IM-bytes (byte-matched) is SECONDARY. INDISCRIMINATE_EQUIVALENT
+  reads on IM-rate only. The rank-2 "55x" figure is a DEV DESIGN FINDING: it stays out of results and never chooses
+  families.
+- INTERVENTION ARM (secondary, preregistered):
+  - Mid-life swap of SELECTIVE state for an IM-rate merge of the same prefix. Negative control: an equal-HR2 re-seeded
+    SELECTIVE. Positive control: a planted must-hurt world.
+  - LIMITATION, verbatim: a drop shows "the selective state was needed for the rest of THIS life", not "selectivity in
+    general".
+  - Read side by side with Ananke's SI01-REQ.
+- Housekeeping: stamp heartbeats from `date -u` in the same step.
