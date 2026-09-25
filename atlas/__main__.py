@@ -4,6 +4,7 @@
     python -m atlas harvest <name>|all      run harvesters (see atlas/harvest/__init__.py ORDER)
     python -m atlas comb                    apply the flag rules (atlas/comb.py)
     python -m atlas report [--out PATH]     write the manifest summary (text)
+    python -m atlas roadmap [--out PATH]    write the research-policy roadmap (text)
     python -m atlas status                  harvest runs, coverage, counts
 
 Refuses to run from the canonical checkout (D-23). Reads git objects,
@@ -31,8 +32,13 @@ def main(argv=None) -> int:
     hp.add_argument("--ref", default="origin/main", help="ref for main-line sources")
     hp.add_argument("--force", action="store_true", help="run a harvester on a host registry.json does not list for it")
     sub.add_parser("comb")
+    pp = sub.add_parser("policy")
+    pp.add_argument("what", choices=["score", "portfolio"])
+    pp.add_argument("--horizon", default="STRATEGY", choices=["MICRO", "STRATEGY", "THEORY"])
     rp = sub.add_parser("report")
     rp.add_argument("--out", default=None)
+    dp = sub.add_parser("roadmap")
+    dp.add_argument("--out", default=None)
     sub.add_parser("status")
     a = ap.parse_args(argv)
 
@@ -68,6 +74,11 @@ def main(argv=None) -> int:
                 print("{:<20} FAILED {}: {}".format(n, type(e).__name__, e), file=sys.stderr)
                 rc = 1
         return rc
+    if a.cmd == "policy":
+        from atlas import policy
+        out = policy.score(a) if a.what == "score" else policy.portfolio(a.horizon)
+        print(json.dumps(out, indent=1, sort_keys=True, default=str))
+        return 0
     if a.cmd == "comb":
         from atlas import comb
         print(json.dumps(comb.run(), indent=1, sort_keys=True))
@@ -75,6 +86,13 @@ def main(argv=None) -> int:
     if a.cmd == "report":
         from atlas import report
         text = report.build()
+        if a.out:
+            open(a.out, "w", encoding="utf-8", newline="\n").write(text)
+        print(text)
+        return 0
+    if a.cmd == "roadmap":
+        from atlas import report
+        text = report.roadmap()
         if a.out:
             open(a.out, "w", encoding="utf-8", newline="\n").write(text)
         print(text)

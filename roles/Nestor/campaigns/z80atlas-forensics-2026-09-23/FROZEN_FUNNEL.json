@@ -1,0 +1,527 @@
+{
+ "population": {
+  "random_start_non_pair_runs": 1255,
+  "random_start_external_runs_excluded": 3054,
+  "invaders_distribution": {
+   "0": 1255
+  }
+ },
+ "semantics": "run-level marginal evidence from frozen per-run totals; NOT_MEASURED = the frozen record cannot establish the step; values are runs whose record PROVES the step",
+ "steps": [
+  "self_location_executed",
+  "alloc_attempted",
+  "alloc_succeeded",
+  "target_writes",
+  "birth_attempted",
+  "birth_accepted",
+  "fidelity_ge_090",
+  "offspring_evidence_child"
+ ],
+ "physics": {
+  "ENDOGENOUS_COPY": {
+   "runs": 323,
+   "funnel": [
+    {
+     "step": "self_location_executed",
+     "runs_proven": 0,
+     "runs_not_measured": 201,
+     "runs_not_applicable": 122,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "alloc_attempted",
+     "runs_proven": 41,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.1269,
+     "absolute_loss": 282
+    },
+    {
+     "step": "alloc_succeeded",
+     "runs_proven": 36,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.878,
+     "absolute_loss": 5
+    },
+    {
+     "step": "target_writes",
+     "runs_proven": 14,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.3889,
+     "absolute_loss": 22
+    },
+    {
+     "step": "birth_attempted",
+     "runs_proven": 0,
+     "runs_not_measured": 323,
+     "runs_not_applicable": 0,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "birth_accepted",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 14
+    },
+    {
+     "step": "fidelity_ge_090",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "offspring_evidence_child",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "event_totals": {
+    "alloc_calls": 144079,
+    "alloc_fails": 29045,
+    "writes_other": 22932,
+    "births_endogenous": 0,
+    "births_no_copy": 0,
+    "births_no_copy_live": 0,
+    "births_similar_no_write": 0,
+    "replication_events": 0,
+    "copy_bytes": 13305597,
+    "births_external": 0,
+    "alloc_succeeded": 115034,
+    "births_wrote_any": 0,
+    "births_fid_ge_090": 0
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 65,
+     "alloc_attempted": 9,
+     "alloc_succeeded": 8,
+     "target_writes": 2
+    },
+    "NONE/BYTEWISE": {
+     "runs": 57,
+     "alloc_attempted": 13,
+     "alloc_succeeded": 13,
+     "target_writes": 4
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 47,
+     "alloc_attempted": 3,
+     "alloc_succeeded": 3,
+     "target_writes": 2
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 57,
+     "alloc_attempted": 5,
+     "alloc_succeeded": 4,
+     "target_writes": 2
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 46,
+     "alloc_attempted": 5,
+     "alloc_succeeded": 4
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 51,
+     "alloc_attempted": 6,
+     "alloc_succeeded": 4,
+     "target_writes": 4
+    }
+   }
+  },
+  "ENDOGENOUS_PARTIAL": {
+   "runs": 306,
+   "funnel": [
+    {
+     "step": "self_location_executed",
+     "runs_proven": 0,
+     "runs_not_measured": 205,
+     "runs_not_applicable": 101,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "alloc_attempted",
+     "runs_proven": 37,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.1209,
+     "absolute_loss": 269
+    },
+    {
+     "step": "alloc_succeeded",
+     "runs_proven": 34,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.9189,
+     "absolute_loss": 3
+    },
+    {
+     "step": "target_writes",
+     "runs_proven": 12,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.3529,
+     "absolute_loss": 22
+    },
+    {
+     "step": "birth_attempted",
+     "runs_proven": 0,
+     "runs_not_measured": 306,
+     "runs_not_applicable": 0,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "birth_accepted",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 12
+    },
+    {
+     "step": "fidelity_ge_090",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "offspring_evidence_child",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "event_totals": {
+    "alloc_calls": 139417,
+    "alloc_fails": 16919,
+    "writes_other": 28973,
+    "births_endogenous": 0,
+    "births_no_copy": 0,
+    "births_no_copy_live": 0,
+    "births_similar_no_write": 0,
+    "replication_events": 0,
+    "copy_bytes": 12289233,
+    "births_external": 0,
+    "alloc_succeeded": 122498,
+    "births_wrote_any": 0,
+    "births_fid_ge_090": 0
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 54,
+     "alloc_attempted": 9,
+     "alloc_succeeded": 7,
+     "target_writes": 4
+    },
+    "NONE/BYTEWISE": {
+     "runs": 47,
+     "alloc_attempted": 2,
+     "alloc_succeeded": 2,
+     "target_writes": 1
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 49,
+     "alloc_attempted": 8,
+     "alloc_succeeded": 7,
+     "target_writes": 4
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 67,
+     "alloc_attempted": 6,
+     "alloc_succeeded": 6,
+     "target_writes": 2
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 48,
+     "alloc_attempted": 8,
+     "alloc_succeeded": 8,
+     "target_writes": 1
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 41,
+     "alloc_attempted": 4,
+     "alloc_succeeded": 4
+    }
+   }
+  },
+  "CONSTRUCTIVE": {
+   "runs": 278,
+   "funnel": [
+    {
+     "step": "self_location_executed",
+     "runs_proven": 0,
+     "runs_not_measured": 187,
+     "runs_not_applicable": 91,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "alloc_attempted",
+     "runs_proven": 33,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.1187,
+     "absolute_loss": 245
+    },
+    {
+     "step": "alloc_succeeded",
+     "runs_proven": 29,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.8788,
+     "absolute_loss": 4
+    },
+    {
+     "step": "target_writes",
+     "runs_proven": 13,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.4483,
+     "absolute_loss": 16
+    },
+    {
+     "step": "birth_attempted",
+     "runs_proven": 0,
+     "runs_not_measured": 278,
+     "runs_not_applicable": 0,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "birth_accepted",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 13
+    },
+    {
+     "step": "fidelity_ge_090",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "offspring_evidence_child",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "event_totals": {
+    "alloc_calls": 146598,
+    "alloc_fails": 22168,
+    "writes_other": 16430,
+    "births_endogenous": 0,
+    "births_no_copy": 0,
+    "births_no_copy_live": 0,
+    "births_similar_no_write": 0,
+    "replication_events": 0,
+    "copy_bytes": 14725122,
+    "births_external": 0,
+    "alloc_succeeded": 124430,
+    "births_wrote_any": 0,
+    "births_fid_ge_090": 0
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 42,
+     "alloc_attempted": 4,
+     "alloc_succeeded": 3
+    },
+    "NONE/BYTEWISE": {
+     "runs": 49,
+     "alloc_attempted": 10,
+     "alloc_succeeded": 10,
+     "target_writes": 6
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 43,
+     "alloc_attempted": 2,
+     "alloc_succeeded": 1
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 39,
+     "alloc_attempted": 3,
+     "alloc_succeeded": 3,
+     "target_writes": 2
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 58,
+     "alloc_attempted": 8,
+     "alloc_succeeded": 7,
+     "target_writes": 4
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 47,
+     "alloc_attempted": 6,
+     "alloc_succeeded": 5,
+     "target_writes": 1
+    }
+   }
+  },
+  "OVERWRITE": {
+   "runs": 348,
+   "funnel": [
+    {
+     "step": "self_location_executed",
+     "runs_proven": 0,
+     "runs_not_measured": 246,
+     "runs_not_applicable": 102,
+     "status": "NOT_MEASURED",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "alloc_attempted",
+     "runs_proven": 321,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.9224,
+     "absolute_loss": 27
+    },
+    {
+     "step": "alloc_succeeded",
+     "runs_proven": 290,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.9034,
+     "absolute_loss": 31
+    },
+    {
+     "step": "target_writes",
+     "runs_proven": 218,
+     "runs_not_measured": 130,
+     "runs_not_applicable": 0,
+     "status": "LOWER_BOUND",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "birth_attempted",
+     "runs_proven": 227,
+     "runs_not_measured": 121,
+     "runs_not_applicable": 0,
+     "status": "LOWER_BOUND",
+     "transition_p": null,
+     "absolute_loss": null
+    },
+    {
+     "step": "birth_accepted",
+     "runs_proven": 227,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.7828,
+     "absolute_loss": 63
+    },
+    {
+     "step": "fidelity_ge_090",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 227
+    },
+    {
+     "step": "offspring_evidence_child",
+     "runs_proven": 0,
+     "runs_not_measured": 0,
+     "runs_not_applicable": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "event_totals": {
+    "alloc_calls": 436233,
+    "alloc_fails": 85200,
+    "writes_other": 2310816685,
+    "births_endogenous": 3075,
+    "births_no_copy": 624,
+    "births_no_copy_live": 350,
+    "births_similar_no_write": 0,
+    "replication_events": 0,
+    "copy_bytes": 47887075,
+    "births_external": 0,
+    "alloc_succeeded": 351033,
+    "births_wrote_any": 2451,
+    "births_fid_ge_090": 0
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 59,
+     "alloc_attempted": 54,
+     "alloc_succeeded": 45,
+     "target_writes": 34,
+     "birth_attempted": 36,
+     "birth_accepted": 36
+    },
+    "NONE/BYTEWISE": {
+     "runs": 43,
+     "alloc_attempted": 42,
+     "alloc_succeeded": 36,
+     "target_writes": 25,
+     "birth_attempted": 26,
+     "birth_accepted": 26
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 48,
+     "alloc_attempted": 46,
+     "alloc_succeeded": 44,
+     "target_writes": 37,
+     "birth_attempted": 37,
+     "birth_accepted": 37
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 69,
+     "alloc_attempted": 61,
+     "alloc_succeeded": 51,
+     "target_writes": 31,
+     "birth_attempted": 35,
+     "birth_accepted": 35
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 69,
+     "alloc_attempted": 63,
+     "alloc_succeeded": 63,
+     "target_writes": 52,
+     "birth_attempted": 53,
+     "birth_accepted": 53
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 60,
+     "alloc_attempted": 55,
+     "alloc_succeeded": 51,
+     "target_writes": 39,
+     "birth_attempted": 40,
+     "birth_accepted": 40
+    }
+   }
+  }
+ }
+}

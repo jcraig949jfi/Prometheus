@@ -1,6 +1,6 @@
 # Nestor findings ledger
 
-Currency: 2026-09-23. One row per finding that survived adjudication or that
+Currency: 2026-09-24 (section E added by the S1-S4 pass). One row per finding that survived adjudication or that
 corrected a claim. Newest campaign first. Every entry names where the evidence
 lives so a fresh context can verify rather than trust this file.
 
@@ -16,7 +16,7 @@ Frozen 2026-09-22. 23,471 runs, 0 failed, 0 voided, 20,638 families, grammar
 `570c8037ccf4f86d`. Evidence: `observatory/PACKET.json`, `observatory/ADJUDICATION.json`,
 `REPORT.html` revision 2, `AUDIT_RECEIPT.json`.
 
-### A-1 Spontaneous replication from random bytes -- NARROWED, twice
+### A-1 Spontaneous replication from random bytes -- NARROWED, three times (third: E-3)
 
 1,031 randomly initialised unseeded populations produced at least one birth backed by
 evidence that the organism placed the child's bytes, fidelity 0.906 to 0.990. All 1,031
@@ -71,7 +71,7 @@ Further, `FORCED_READ` is not a read-order change at all: `tasks.episodes()` set
 `base = v XOR key` and passes a three-element input vector, so the two arms score
 different targets. Cycle-9 H1 replaces it with a true same-task intervention.
 
-### A-4 Endogenous-only accessibility -- OPEN, n = 1
+### A-4 Endogenous-only accessibility -- WITHDRAWN (see E-4: unmatched control, non-reproducing population)
 
 One ADMISSIBLE instance, `64dea50f417efb02-s1203-tL-a0`, final held 1.0 against a
 matched external control at 0.0. Of the other 64 instances, 50 are below threshold at
@@ -173,6 +173,49 @@ against 20.40 usable.
 
 ---
 
+## E. S1-S4 pass (`campaigns/z80atlas-forensics-2026-09-23`, 2026-09-23/24)
+
+Forensic replays are a new assay, not retroactive 72-hour evidence. Every replay was checked
+field for field against its frozen summary: 256/256 funnel, 1,031/1,031 P-11, 3/3 H4.
+
+### E-1 Non-pair physics never searched -- HOLDS
+All 907 FREE-policy random-start runs (ENDOGENOUS_COPY/PARTIAL, CONSTRUCTIVE) produced zero
+births; mutation happens only at birth, so those populations never varied. In 192 replays,
+114,485 BIRTH calls all had no pending allocation: allocators never declare, declarers never
+allocated. OVERWRITE: 656 replayed births, none at fidelity >= 0.90. PAIR_EXECUTION mutates
+every organism every epoch. Evidence: `S1A_FUNNEL.md`.
+
+### E-2 P-11 causal-copy criterion -- HOLDS as an instrument
+Randomized-victim assay, 3 draws, majority 2; T-P11 14/14; committed `f28e5fd72` before the
+1,031 were inspected. C5 is nearly implied by C2 and C4 (decisive in 2 of 7,919 events).
+
+### E-3 The 1,031 under P-11 -- 57 survive
+Predecessor criterion: 1,031 admissible (frozen, unchanged). P-11 reassay: **57** (48 under
+the literal authorship reading); 69 of 7,919 events causal; max P-11 depth **2** (55 at 1,
+2 at 2). Evidence: `S1C_P11_REASSAY.md`.
+
+### E-4 H4 source run -- A-4 WITHDRAWN
+`64dea50f417efb02-s1203-tL-a0` had 0 births, 0 deaths, 0 mutations in 4,000 epochs; its held
+moves only with COEVO_ENV. The exact matched control (new run, s1203 L) crossed at epoch 48,
+before it (636). The 4x runtime is execution and validation-cache cost of a frozen population,
+not extinction. Evidence: `H4_AUTOPSY.md`.
+
+### E-5 Defects -- DEFECT, recorded
+| id | defect |
+|---|---|
+| Z80A-D04 | scheduler keeps control_summary per family: 64 of 65 endogenous-reach flags were judged against a control not run for them |
+| Z80A-D05 | pair-tape fidelity read after `_mutate`; under RECOMBINATION the splice made the match in 6,287 of 6,547 events |
+| C9-D05 | controls.py wrote the freeze artifact CALIBRATION.json by default (fixed: --freeze) |
+| C9-D06 | P-6, specimens, smoke depended on gitignored per-run files (Z80A_FROZEN_OBS; P-6 sandboxed) |
+| C9-D07 | H4 endogenous arm cannot reproduce, so H4 cannot test accessibility (not enlarged) |
+| C9-D08 | rev-B proposed_protocol_hash had no derivation (replaced by proposed_hashes.py) |
+| C9-D09 | H3 cells were re-derived from the H2 panel (fixed: pinned) |
+| C9-D10 | H2 arm B resolved implant bytes at run time from the predecessor first_replicator (fixed: embedded) |
+| C9-D11 | H3 certificate walks non-causal pair edges in RECOMBINATION cells (NOT repaired; operator decision) |
+| C9-D12 | H2 bar depth >= 5 has no precedent: max P-11 depth over 1,031 runs is 2 |
+
+---
+
 ## D. Standing methodological lessons
 
 These generalise beyond either campaign and should survive into any successor.
@@ -192,3 +235,8 @@ These generalise beyond either campaign and should survive into any successor.
    rules declared in one place.
 6. **Selection on the outcome is easy to do by accident.** Specimen panels, cells and
    thresholds are chosen by a rule that runs before any result exists, and committed.
+7. **Measure a copy where it happens.** A heredity detector that reads the genome after the
+   world's own variation operator will credit that operator. Z80A-D05 turned 910 of 1,031
+   "replicators" into splice artifacts.
+8. **A control inherited from a sibling is not a control.** Match seed and tier per run, and
+   store the pairing on the run, not on the family (Z80A-D04).

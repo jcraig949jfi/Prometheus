@@ -1,0 +1,120 @@
+{
+ "substrate": {
+  "dims": [
+   2,
+   2,
+   5,
+   11
+  ],
+  "gen": "spectral",
+  "rank": 5,
+  "chain": [
+   {
+    "op": "f_svd_power",
+    "p": {
+     "power": 2.9045166813689045
+    }
+   }
+  ],
+  "reward_chain": []
+ },
+ "geometry": {
+  "kind": "torus",
+  "n_nodes": 440,
+  "k": 3,
+  "p": 0.26129905199836084,
+  "directed": 0.06377912431835804,
+  "map": "sorted"
+ },
+ "observation": {
+  "kind": "marginal",
+  "mode": 15,
+  "k": 1,
+  "chain": [
+   {
+    "op": "v_quantize",
+    "p": {
+     "levels": 3
+    }
+   }
+  ],
+  "noise_sd": 0.12225829394703153,
+  "noise_dist": "normal"
+ },
+ "transition": {
+  "drift": 0.0,
+  "drift_period": 260,
+  "basis_change_period": 342,
+  "rewire_period": 175,
+  "rewire_frac": 0.4865825074981718,
+  "catastrophe_rate": 0.0
+ },
+ "irreversibility": {
+  "oneway": 0.06347761457311879,
+  "door_close": 0.0,
+  "hazard_frac": 0.0,
+  "hazard": "permute"
+ },
+ "resource": {
+  "energy0": 359.73312556394234,
+  "metabolism": 1.1500264574136723,
+  "gain": 4.460176353439172,
+  "theta": -0.039306080630420126,
+  "regrow": 599,
+  "query_every": 5,
+  "query_reward": 9.337540588377763,
+  "tol": 0.05645069576655251,
+  "p_compute": 0.0003541087517343605,
+  "p_read": 3.923980903634933e-05,
+  "p_write": 7.809270057305722e-05,
+  "p_move": 0.14794085392470946,
+  "p_probe": 2.413450183275275,
+  "p_rollout": 0.43260135494471597,
+  "calibrated": true
+ },
+ "memory": {
+  "substrate": "marks",
+  "cap": 49,
+  "bits": 2,
+  "forget": "oldest",
+  "forget_rate": 0.16240340229212594,
+  "fluid": 0,
+  "band": 0.25
+ },
+ "learning": {
+  "rule": "none",
+  "lr": 0.14373544260102425,
+  "batch": 37,
+  "sweeps": 1
+ },
+ "credit": {
+  "delay": 0,
+  "radius": 1,
+  "noise": 0.0,
+  "sign_flip": 0.0
+ },
+ "search": {
+  "policy": "novelty",
+  "eps": 0.3582962077157026,
+  "depth": 3,
+  "temp": 2.0625160588376206
+ },
+ "boundary": {
+  "n_org": 4,
+  "marks": "private",
+  "mark_decay": 0.007031311014070879
+ },
+ "time": {
+  "lifetime": 1891,
+  "checkpoints": 10,
+  "lifetime2": 1891
+ },
+ "meta": {
+  "strategy": "recombine",
+  "parents": [
+   "0e3e9ca1cb88f30c",
+   "996579edc9312ee0"
+  ],
+  "mutations": []
+ }
+}

@@ -1,0 +1,892 @@
+{
+ "status": {
+  "REPLAY_MATCH": 256
+ },
+ "n_used": 256,
+ "physics": {
+  "ENDOGENOUS_COPY": {
+   "runs": 64,
+   "organisms": 16384,
+   "organisms_self_location_NONE": 5632,
+   "self_location_executed_by_locating_organisms": 6,
+   "locating_organisms": 10752,
+   "sequential": [
+    {
+     "step": "self_location_executed",
+     "count": 5638,
+     "transition_p": 0.344116,
+     "absolute_loss": 10746
+    },
+    {
+     "step": "alloc_attempted",
+     "count": 16,
+     "transition_p": 0.002838,
+     "absolute_loss": 5622
+    },
+    {
+     "step": "alloc_succeeded",
+     "count": 15,
+     "transition_p": 0.9375,
+     "absolute_loss": 1
+    },
+    {
+     "step": "target_writes",
+     "count": 3,
+     "transition_p": 0.2,
+     "absolute_loss": 12
+    },
+    {
+     "step": "birth_attempted",
+     "count": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 3
+    },
+    {
+     "step": "birth_accepted",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "fidelity_ge_090",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "offspring_evidence_child",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "marginal": {
+    "self_location_executed": 6,
+    "alloc_attempted": 29,
+    "alloc_succeeded": 27,
+    "target_writes": 3,
+    "birth_attempted": 10,
+    "birth_accepted": 0,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "runs_reaching": {
+    "self_location_executed": 26,
+    "alloc_attempted": 4,
+    "alloc_succeeded": 4,
+    "target_writes": 2,
+    "birth_attempted": 0,
+    "birth_accepted": 0,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "event_counts": {
+    "alloc_attempts": 40248,
+    "alloc_ok": 30248,
+    "self_location_disabled_hit": 37559,
+    "window_writes": 66,
+    "birth_calls": 9012,
+    "birth_calls_no_pending": 9012,
+    "self_location_exec": 4030
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 11,
+     "organisms": 2816,
+     "sequential": {
+      "self_location_executed": 2816,
+      "alloc_attempted": 8,
+      "alloc_succeeded": 8,
+      "target_writes": 2,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 5294,
+      "alloc_ok": 5294,
+      "window_writes": 51,
+      "self_location_disabled_hit": 8472
+     }
+    },
+    "NONE/BYTEWISE": {
+     "runs": 11,
+     "organisms": 2816,
+     "sequential": {
+      "self_location_executed": 2816,
+      "alloc_attempted": 8,
+      "alloc_succeeded": 7,
+      "target_writes": 1,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 22897,
+      "alloc_ok": 14897,
+      "self_location_disabled_hit": 3897,
+      "window_writes": 15
+     }
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 2816,
+     "sequential": {
+      "self_location_executed": 1,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 4002,
+      "birth_calls": 2000,
+      "birth_calls_no_pending": 2000,
+      "alloc_attempts": 5998,
+      "alloc_ok": 5998,
+      "self_location_exec": 2000
+     }
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 10,
+     "organisms": 2560,
+     "sequential": {
+      "self_location_executed": 4,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_exec": 2003,
+      "birth_calls": 3999,
+      "birth_calls_no_pending": 3999,
+      "alloc_attempts": 2000
+     }
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 2944,
+     "sequential": {
+      "self_location_executed": 1,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 4059,
+      "alloc_ok": 4059,
+      "self_location_disabled_hit": 18588,
+      "birth_calls": 15,
+      "birth_calls_no_pending": 15,
+      "self_location_exec": 27
+     }
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 10,
+     "organisms": 2432,
+     "sequential": {
+      "self_location_executed": 0,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 2600,
+      "birth_calls": 2998,
+      "birth_calls_no_pending": 2998
+     }
+    }
+   }
+  },
+  "ENDOGENOUS_PARTIAL": {
+   "runs": 64,
+   "organisms": 17024,
+   "organisms_self_location_NONE": 5888,
+   "self_location_executed_by_locating_organisms": 13,
+   "locating_organisms": 11136,
+   "sequential": [
+    {
+     "step": "self_location_executed",
+     "count": 5901,
+     "transition_p": 0.346628,
+     "absolute_loss": 11123
+    },
+    {
+     "step": "alloc_attempted",
+     "count": 3,
+     "transition_p": 0.000508,
+     "absolute_loss": 5898
+    },
+    {
+     "step": "alloc_succeeded",
+     "count": 1,
+     "transition_p": 0.333333,
+     "absolute_loss": 2
+    },
+    {
+     "step": "target_writes",
+     "count": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 1
+    },
+    {
+     "step": "birth_attempted",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "birth_accepted",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "fidelity_ge_090",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "offspring_evidence_child",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "marginal": {
+    "self_location_executed": 13,
+    "alloc_attempted": 18,
+    "alloc_succeeded": 15,
+    "target_writes": 1,
+    "birth_attempted": 24,
+    "birth_accepted": 0,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "runs_reaching": {
+    "self_location_executed": 27,
+    "alloc_attempted": 2,
+    "alloc_succeeded": 1,
+    "target_writes": 0,
+    "birth_attempted": 0,
+    "birth_accepted": 0,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "event_counts": {
+    "alloc_attempts": 17110,
+    "alloc_ok": 11542,
+    "window_writes": 15,
+    "self_location_disabled_hit": 52654,
+    "self_location_exec": 9020,
+    "birth_calls": 71960,
+    "birth_calls_no_pending": 71960
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 11,
+     "organisms": 2944,
+     "sequential": {
+      "self_location_executed": 2944,
+      "alloc_attempted": 2,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 9652,
+      "alloc_attempts": 1335,
+      "birth_calls": 1999,
+      "birth_calls_no_pending": 1999
+     }
+    },
+    "NONE/BYTEWISE": {
+     "runs": 11,
+     "organisms": 2944,
+     "sequential": {
+      "self_location_executed": 2944,
+      "alloc_attempted": 1,
+      "alloc_succeeded": 1,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 11000,
+      "birth_calls": 2001,
+      "birth_calls_no_pending": 2001,
+      "alloc_attempts": 1,
+      "alloc_ok": 1
+     }
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 2816,
+     "sequential": {
+      "self_location_executed": 4,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 8833,
+      "alloc_ok": 8833,
+      "window_writes": 15,
+      "self_location_disabled_hit": 14000,
+      "self_location_exec": 5001,
+      "birth_calls": 2000,
+      "birth_calls_no_pending": 2000
+     }
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 10,
+     "organisms": 2688,
+     "sequential": {
+      "self_location_executed": 0,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 4001,
+      "birth_calls": 14594,
+      "birth_calls_no_pending": 14594,
+      "alloc_attempts": 2000,
+      "alloc_ok": 2000
+     }
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 2944,
+     "sequential": {
+      "self_location_executed": 5,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "birth_calls": 51366,
+      "birth_calls_no_pending": 51366,
+      "self_location_disabled_hit": 6001,
+      "alloc_attempts": 4940,
+      "alloc_ok": 707,
+      "self_location_exec": 4008
+     }
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 10,
+     "organisms": 2688,
+     "sequential": {
+      "self_location_executed": 4,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 8000,
+      "self_location_exec": 11,
+      "alloc_attempts": 1,
+      "alloc_ok": 1
+     }
+    }
+   }
+  },
+  "CONSTRUCTIVE": {
+   "runs": 64,
+   "organisms": 17024,
+   "organisms_self_location_NONE": 5632,
+   "self_location_executed_by_locating_organisms": 5,
+   "locating_organisms": 11392,
+   "sequential": [
+    {
+     "step": "self_location_executed",
+     "count": 5637,
+     "transition_p": 0.331121,
+     "absolute_loss": 11387
+    },
+    {
+     "step": "alloc_attempted",
+     "count": 7,
+     "transition_p": 0.001242,
+     "absolute_loss": 5630
+    },
+    {
+     "step": "alloc_succeeded",
+     "count": 7,
+     "transition_p": 1.0,
+     "absolute_loss": 0
+    },
+    {
+     "step": "target_writes",
+     "count": 3,
+     "transition_p": 0.428571,
+     "absolute_loss": 4
+    },
+    {
+     "step": "birth_attempted",
+     "count": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 3
+    },
+    {
+     "step": "birth_accepted",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "fidelity_ge_090",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    },
+    {
+     "step": "offspring_evidence_child",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "marginal": {
+    "self_location_executed": 5,
+    "alloc_attempted": 9,
+    "alloc_succeeded": 8,
+    "target_writes": 3,
+    "birth_attempted": 8,
+    "birth_accepted": 0,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "runs_reaching": {
+    "self_location_executed": 25,
+    "alloc_attempted": 4,
+    "alloc_succeeded": 4,
+    "target_writes": 3,
+    "birth_attempted": 0,
+    "birth_accepted": 0,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "event_counts": {
+    "self_location_exec": 6017,
+    "self_location_disabled_hit": 19943,
+    "birth_calls": 33513,
+    "birth_calls_no_pending": 33513,
+    "alloc_attempts": 14308,
+    "alloc_ok": 12308,
+    "window_writes": 2614
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 10,
+     "organisms": 2688,
+     "sequential": {
+      "self_location_executed": 2688,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 4000,
+      "birth_calls": 3991,
+      "birth_calls_no_pending": 3991
+     }
+    },
+    "NONE/BYTEWISE": {
+     "runs": 11,
+     "organisms": 2944,
+     "sequential": {
+      "self_location_executed": 2944,
+      "alloc_attempted": 7,
+      "alloc_succeeded": 7,
+      "target_writes": 3,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 10308,
+      "alloc_ok": 10308,
+      "window_writes": 2614,
+      "self_location_disabled_hit": 4079
+     }
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 3072,
+     "sequential": {
+      "self_location_executed": 0,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 2054
+     }
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 10,
+     "organisms": 2688,
+     "sequential": {
+      "self_location_executed": 1,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "birth_calls": 2022,
+      "birth_calls_no_pending": 2022,
+      "self_location_disabled_hit": 4810,
+      "self_location_exec": 2
+     }
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 2816,
+     "sequential": {
+      "self_location_executed": 2,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_exec": 2015,
+      "self_location_disabled_hit": 5000,
+      "birth_calls": 2000,
+      "birth_calls_no_pending": 2000,
+      "alloc_attempts": 2000,
+      "alloc_ok": 2000
+     }
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 11,
+     "organisms": 2816,
+     "sequential": {
+      "self_location_executed": 2,
+      "alloc_attempted": 0,
+      "alloc_succeeded": 0,
+      "target_writes": 0,
+      "birth_attempted": 0,
+      "birth_accepted": 0,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_exec": 4000,
+      "alloc_attempts": 2000,
+      "birth_calls": 25500,
+      "birth_calls_no_pending": 25500
+     }
+    }
+   }
+  },
+  "OVERWRITE": {
+   "runs": 64,
+   "organisms": 18832,
+   "organisms_self_location_NONE": 6469,
+   "self_location_executed_by_locating_organisms": 1612,
+   "locating_organisms": 12363,
+   "sequential": [
+    {
+     "step": "self_location_executed",
+     "count": 8081,
+     "transition_p": 0.42911,
+     "absolute_loss": 10751
+    },
+    {
+     "step": "alloc_attempted",
+     "count": 1418,
+     "transition_p": 0.175473,
+     "absolute_loss": 6663
+    },
+    {
+     "step": "alloc_succeeded",
+     "count": 1060,
+     "transition_p": 0.747532,
+     "absolute_loss": 358
+    },
+    {
+     "step": "target_writes",
+     "count": 734,
+     "transition_p": 0.692453,
+     "absolute_loss": 326
+    },
+    {
+     "step": "birth_attempted",
+     "count": 130,
+     "transition_p": 0.177112,
+     "absolute_loss": 604
+    },
+    {
+     "step": "birth_accepted",
+     "count": 128,
+     "transition_p": 0.984615,
+     "absolute_loss": 2
+    },
+    {
+     "step": "fidelity_ge_090",
+     "count": 0,
+     "transition_p": 0.0,
+     "absolute_loss": 128
+    },
+    {
+     "step": "offspring_evidence_child",
+     "count": 0,
+     "transition_p": null,
+     "absolute_loss": 0
+    }
+   ],
+   "marginal": {
+    "self_location_executed": 1612,
+    "alloc_attempted": 3731,
+    "alloc_succeeded": 3005,
+    "target_writes": 2210,
+    "birth_attempted": 3618,
+    "birth_accepted": 543,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "runs_reaching": {
+    "self_location_executed": 62,
+    "alloc_attempted": 51,
+    "alloc_succeeded": 45,
+    "target_writes": 41,
+    "birth_attempted": 19,
+    "birth_accepted": 18,
+    "fidelity_ge_090": 0,
+    "offspring_evidence_child": 0
+   },
+   "event_counts": {
+    "alloc_attempts": 82210,
+    "self_location_disabled_hit": 99779,
+    "birth_calls": 108674,
+    "birth_calls_no_pending": 108018,
+    "alloc_ok": 69946,
+    "window_writes": 154704,
+    "mutate_calls": 656,
+    "births_ok": 656,
+    "births_ok_birth": 656,
+    "births_wrote_any": 493,
+    "self_location_exec": 34277
+   },
+   "by_self_location_copy_primitive": {
+    "NONE/BLOCK": {
+     "runs": 11,
+     "organisms": 3329,
+     "sequential": {
+      "self_location_executed": 3329,
+      "alloc_attempted": 556,
+      "alloc_succeeded": 485,
+      "target_writes": 295,
+      "birth_attempted": 64,
+      "birth_accepted": 63,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 24339,
+      "self_location_disabled_hit": 20706,
+      "birth_calls": 30611,
+      "birth_calls_no_pending": 30482,
+      "alloc_ok": 23627,
+      "window_writes": 22293,
+      "mutate_calls": 129,
+      "births_ok": 129,
+      "births_ok_birth": 129,
+      "births_wrote_any": 80
+     }
+    },
+    "NONE/BYTEWISE": {
+     "runs": 11,
+     "organisms": 3140,
+     "sequential": {
+      "self_location_executed": 3140,
+      "alloc_attempted": 531,
+      "alloc_succeeded": 304,
+      "target_writes": 261,
+      "birth_attempted": 44,
+      "birth_accepted": 43,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "birth_calls": 27901,
+      "birth_calls_no_pending": 27833,
+      "alloc_attempts": 9268,
+      "self_location_disabled_hit": 31107,
+      "alloc_ok": 6215,
+      "window_writes": 16395,
+      "mutate_calls": 68,
+      "births_ok": 68,
+      "births_ok_birth": 68,
+      "births_wrote_any": 63
+     }
+    },
+    "PC_RELATIVE/BLOCK": {
+     "runs": 11,
+     "organisms": 3331,
+     "sequential": {
+      "self_location_executed": 373,
+      "alloc_attempted": 88,
+      "alloc_succeeded": 80,
+      "target_writes": 52,
+      "birth_attempted": 8,
+      "birth_accepted": 8,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_exec": 6435,
+      "self_location_disabled_hit": 15642,
+      "alloc_attempts": 8401,
+      "alloc_ok": 7671,
+      "birth_calls": 10459,
+      "birth_calls_no_pending": 10328,
+      "window_writes": 35844,
+      "mutate_calls": 131,
+      "births_ok": 131,
+      "births_ok_birth": 131,
+      "births_wrote_any": 117
+     }
+    },
+    "PC_RELATIVE/BYTEWISE": {
+     "runs": 10,
+     "organisms": 2956,
+     "sequential": {
+      "self_location_executed": 352,
+      "alloc_attempted": 80,
+      "alloc_succeeded": 58,
+      "target_writes": 43,
+      "birth_attempted": 5,
+      "birth_accepted": 5,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "self_location_disabled_hit": 10499,
+      "birth_calls": 14494,
+      "birth_calls_no_pending": 14354,
+      "alloc_attempts": 18093,
+      "alloc_ok": 13767,
+      "window_writes": 40659,
+      "self_location_exec": 3285,
+      "mutate_calls": 140,
+      "births_ok": 140,
+      "births_ok_birth": 140,
+      "births_wrote_any": 80
+     }
+    },
+    "PRIMITIVE/BLOCK": {
+     "runs": 10,
+     "organisms": 2783,
+     "sequential": {
+      "self_location_executed": 480,
+      "alloc_attempted": 87,
+      "alloc_succeeded": 84,
+      "target_writes": 59,
+      "birth_attempted": 7,
+      "birth_accepted": 7,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "birth_calls": 9682,
+      "birth_calls_no_pending": 9587,
+      "self_location_disabled_hit": 8747,
+      "self_location_exec": 11334,
+      "alloc_attempts": 8313,
+      "alloc_ok": 8110,
+      "window_writes": 19278,
+      "mutate_calls": 95,
+      "births_ok": 95,
+      "births_ok_birth": 95,
+      "births_wrote_any": 89
+     }
+    },
+    "PRIMITIVE/BYTEWISE": {
+     "runs": 11,
+     "organisms": 3293,
+     "sequential": {
+      "self_location_executed": 407,
+      "alloc_attempted": 76,
+      "alloc_succeeded": 49,
+      "target_writes": 24,
+      "birth_attempted": 2,
+      "birth_accepted": 2,
+      "fidelity_ge_090": 0,
+      "offspring_evidence_child": 0
+     },
+     "events": {
+      "alloc_attempts": 13796,
+      "alloc_ok": 10556,
+      "self_location_disabled_hit": 13078,
+      "window_writes": 20235,
+      "self_location_exec": 13223,
+      "birth_calls": 15527,
+      "birth_calls_no_pending": 15434,
+      "mutate_calls": 93,
+      "births_ok": 93,
+      "births_ok_birth": 93,
+      "births_wrote_any": 64
+     }
+    }
+   }
+  }
+ }
+}

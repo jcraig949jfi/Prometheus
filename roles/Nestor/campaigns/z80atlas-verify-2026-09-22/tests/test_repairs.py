@@ -23,7 +23,8 @@ import grammar as G          # noqa: E402
 import tasks                 # noqa: E402
 import world                 # noqa: E402
 
-CROSS = world.CROSS_THRESH
+from constants import C  # noqa: E402
+CROSS = C["CROSS"]
 
 
 # ----------------------------------------------------------------- cells

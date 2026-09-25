@@ -1,5 +1,14 @@
 # Archaeon — TODO
 
+## 2026-09-24 ENVGATE-01 CLOSED -- awaiting operator review (session m2-db608f52)
+Packet: archaeon/envgate/ENVGATE01_REVIEW_2026-09-24.md
+- [x] prereg f9c0bf3ec before treatment; 16 blocks run; frozen verdict GATING_CAUSALLY_SUPPORTED (+ALTERNATE)
+- [x] forensics: assessment GATING_PARTIALLY_SUPPORTED (window 120..131 is the key; 128 alone insufficient)
+- [ ] BLOCKED: off-machine evidence copy (needs an authorised M1 share or SSH key)
+- [ ] before any inflow ecology: genetic-ancestry lineage identity; block/cluster-level primary statistics
+- [ ] optional ENVGATE-02: block 129..131 vs 120..127 (window asymmetry prediction)
+- DO NOT launch the general random-inflow ecology without operator review
+
 ## 2026-09-24 OPERATOR RULINGS 1-4 DONE (session m2-db608f52)
 Rulings: roles/Archaeon/prompts/2026-09-23_postcampaign_rulings/00_OPERATOR_RULINGS.md
 Packet:  archaeon/z80atlas/pivot/Z80ATLAS_RULINGS_FOLLOWUP_REVIEW_2026-09-24.md

@@ -1,0 +1,547 @@
+{
+ "schema": "archaeon.envgate.preflight.v1",
+ "assay": "ENVGATE-01",
+ "digest": "da8a886fc9158b13",
+ "schedule": {
+  "K_chambers": 2048,
+  "dwell": 64,
+  "refills": 1024
+ },
+ "A_pairing": {
+  "PASS": true,
+  "blocks": {
+   "0": {
+    "arms_identical": true,
+    "sha": "433613c44e2df7515dde185a378e156f66fc6b92ec2227df59c5a1bc137ec6c8",
+    "arrivals": 192
+   },
+   "1": {
+    "arms_identical": true,
+    "sha": "5d5ca594fadf87a7262700a5fb0755cc06a50e165c6511dcc5598b75c38667a3",
+    "arrivals": 192
+   }
+  }
+ },
+ "B_transforms": {
+  "n": 2560000,
+  "U_chi2_df255": 267.0,
+  "U_uniform": true,
+  "BAND_BLOCK_band_values": 0,
+  "SHAM_BLOCK_sham_values": 0,
+  "BLOCK_128_128s": 0,
+  "RESCUE_128_band_values_other_than_128": 0,
+  "RESCUE_128_rate_128": 0.003847265625,
+  "RESCUE_128_rate_z": -1.51,
+  "nonblocked_values_changed": {},
+  "RESCUE_vs_BAND_cases_differing": 9849,
+  "RESCUE_vs_BAND_differing_only_on_base_128": true,
+  "draws_per_case": 2,
+  "PASS": true
+ },
+ "physics_identity": {
+  "PASS": true,
+  "seeds": {
+   "7": {
+    "telemetry_equal": true,
+    "final_equal": true,
+    "births": 8364
+   },
+   "8": {
+    "telemetry_equal": true,
+    "final_equal": true,
+    "births": 6402
+   },
+   "9": {
+    "telemetry_equal": true,
+    "final_equal": true,
+    "births": 7360
+   }
+  }
+ },
+ "rng_isolation": {
+  "PASS": true,
+  "world_rng_draws_by_inflow_and_env": 0,
+  "mutation_rng_draws_by_inflow_and_env": 0,
+  "env_words_per_case": 2,
+  "note": "transform consumes exactly two 32-bit words per case in every arm (fixed consumption)"
+ },
+ "design_support": {
+  "PASS": true,
+  "contrast_arms_differ_only_in_transform": {
+   "U_vs_BAND_BLOCK": {
+    "differs_only_in_transform": true,
+    "blocked_symmetric_difference": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     128,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ]
+   },
+   "U_vs_SHAM_BLOCK": {
+    "differs_only_in_transform": true,
+    "blocked_symmetric_difference": [
+     156,
+     157,
+     158,
+     159,
+     160,
+     161,
+     162,
+     163,
+     164,
+     165,
+     166,
+     167,
+     168,
+     169,
+     170,
+     171
+    ]
+   },
+   "U_vs_BLOCK_128": {
+    "differs_only_in_transform": true,
+    "blocked_symmetric_difference": [
+     128
+    ]
+   },
+   "RESCUE_128_vs_BAND_BLOCK": {
+    "differs_only_in_transform": true,
+    "blocked_symmetric_difference": [
+     128
+    ]
+   }
+  },
+  "support": {
+   "arrivals_per_arm_per_block": 2097152,
+   "census_exact_density": 9.6e-06,
+   "expected_exact_copier_arrivals_per_block": 20.13,
+   "expected_exact_copier_arrivals_total_16_blocks": 322.1,
+   "census_fraction_of_exact_copiers_with_an_available_gate": {
+    "U": 1.0,
+    "BAND_BLOCK": 0.0729,
+    "SHAM_BLOCK": 1.0,
+    "BLOCK_128": 0.1562,
+    "RESCUE_128": 0.9167
+   },
+   "expected_gate_available_exact_arrivals_per_block": {
+    "U": 20.13,
+    "BAND_BLOCK": 1.47,
+    "SHAM_BLOCK": 20.13,
+    "BLOCK_128": 3.15,
+    "RESCUE_128": 18.45
+   }
+  },
+  "contrasts_informative": {
+   "U_vs_BAND_BLOCK": true,
+   "U_vs_BLOCK_128": true,
+   "RESCUE_128_vs_BAND_BLOCK": true,
+   "U_vs_SHAM_BLOCK_is_a_null_control": true
+  },
+  "held_identical_across_arms": [
+   "schedule",
+   "K_chambers",
+   "dwell",
+   "refills",
+   "inflow stream",
+   "base env stream",
+   "world/mutation seeds",
+   "physics",
+   "N"
+  ]
+ },
+ "C_controls": {
+  "PASS": true,
+  "schedule": {
+   "K_chambers": 16,
+   "dwell": 64,
+   "refills": 4
+  },
+  "rule": "chamber exact copies > 0 iff the control's gate is in the arm's alphabet; controls never scored (origin control_inserted -> 0 established)",
+  "controls": {
+   "census_128_gated_0": {
+    "gates": [
+     128
+    ],
+    "arms": {
+     "U": {
+      "gate_available": true,
+      "chamber_exact": 16,
+      "chamber_births": 1634,
+      "exact_inputs": {
+       "128": 16
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 1547,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 14,
+      "chamber_births": 1743,
+      "exact_inputs": {
+       "128": 14
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 1623,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": true,
+      "chamber_exact": 15,
+      "chamber_births": 1559,
+      "exact_inputs": {
+       "128": 15
+      },
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   },
+   "census_128_gated_1": {
+    "gates": [
+     128
+    ],
+    "arms": {
+     "U": {
+      "gate_available": true,
+      "chamber_exact": 12,
+      "chamber_births": 610,
+      "exact_inputs": {
+       "128": 12
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 449,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 12,
+      "chamber_births": 656,
+      "exact_inputs": {
+       "128": 12
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 601,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": true,
+      "chamber_exact": 11,
+      "chamber_births": 458,
+      "exact_inputs": {
+       "128": 11
+      },
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   },
+   "census_128_gated_2": {
+    "gates": [
+     128
+    ],
+    "arms": {
+     "U": {
+      "gate_available": true,
+      "chamber_exact": 12,
+      "chamber_births": 425,
+      "exact_inputs": {
+       "128": 12
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 253,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 13,
+      "chamber_births": 453,
+      "exact_inputs": {
+       "128": 13
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 423,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": true,
+      "chamber_exact": 13,
+      "chamber_births": 272,
+      "exact_inputs": {
+       "128": 13
+      },
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   },
+   "census_gated_in_band_127": {
+    "gates": [
+     127
+    ],
+    "arms": {
+     "U": {
+      "gate_available": true,
+      "chamber_exact": 13,
+      "chamber_births": 171,
+      "exact_inputs": {
+       "127": 13
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 0,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 11,
+      "chamber_births": 186,
+      "exact_inputs": {
+       "127": 11
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": true,
+      "chamber_exact": 11,
+      "chamber_births": 160,
+      "exact_inputs": {
+       "127": 11
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 12,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   },
+   "census_gated_outside_243": {
+    "gates": [
+     243
+    ],
+    "arms": {
+     "U": {
+      "gate_available": true,
+      "chamber_exact": 13,
+      "chamber_births": 4096,
+      "exact_inputs": {
+       "243": 13
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 11,
+      "chamber_births": 4096,
+      "exact_inputs": {
+       "243": 11
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 12,
+      "chamber_births": 4096,
+      "exact_inputs": {
+       "243": 12
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": true,
+      "chamber_exact": 13,
+      "chamber_births": 4096,
+      "exact_inputs": {
+       "243": 13
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": true,
+      "chamber_exact": 11,
+      "chamber_births": 4096,
+      "exact_inputs": {
+       "243": 11
+      },
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   },
+   "noncopier_inert": {
+    "gates": [],
+    "arms": {
+     "U": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 0,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 0,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 0,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 0,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 0,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   },
+   "specimen_84616_reference": {
+    "gates": [
+     121
+    ],
+    "arms": {
+     "U": {
+      "gate_available": true,
+      "chamber_exact": 17,
+      "chamber_births": 393,
+      "exact_inputs": {
+       "121": 17
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BAND_BLOCK": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 227,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     },
+     "SHAM_BLOCK": {
+      "gate_available": true,
+      "chamber_exact": 21,
+      "chamber_births": 420,
+      "exact_inputs": {
+       "121": 21
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "BLOCK_128": {
+      "gate_available": true,
+      "chamber_exact": 17,
+      "chamber_births": 377,
+      "exact_inputs": {
+       "121": 17
+      },
+      "established_counted": 0,
+      "PASS": true
+     },
+     "RESCUE_128": {
+      "gate_available": false,
+      "chamber_exact": 0,
+      "chamber_births": 244,
+      "exact_inputs": {},
+      "established_counted": 0,
+      "PASS": true
+     }
+    }
+   }
+  }
+ },
+ "D_provenance": {
+  "PASS": true,
+  "rule": "control_inserted founders are never scored as established"
+ },
+ "verdict": "PASS"
+}

@@ -1,0 +1,313 @@
+{
+ "schema": "archaeon.envgate.prereg.v1",
+ "assay": "ENVGATE-01",
+ "frozen_at_utc": "2026-09-24T06:39:37Z",
+ "mechanism_digest": "da8a886fc9158b13",
+ "not_a_continuation_of": "Z80 x Atlas 72-hour campaign (frozen input; code/records unchanged)",
+ "directive": "roles/Archaeon/prompts/2026-09-24_environmental_gating/00_OPERATOR_DIRECTIVE.md",
+ "question": "Does access to a small set of environmental input values causally control whether random vmcopy32 self-copiers establish persistent reproductive lineages?",
+ "mechanism": {
+  "assay": "ENVGATE-01",
+  "held": {
+   "substrate": "vmcopy",
+   "G": 32,
+   "layout": "shared",
+   "reproduction": "ENDOGENOUS_COPY",
+   "topology": "well_mixed",
+   "pressure": "implicit_survival",
+   "task": "ECHO_forced",
+   "mutation": "local_byte",
+   "resources": "unlimited",
+   "env_dynamics": "fixed",
+   "N_ecology": 128,
+   "initial_ecology": "empty",
+   "step_cap": 256
+  },
+  "frozen_physics": {
+   "copy_min_frac": 0.9,
+   "copy_noise": 0.004,
+   "background_mutation": 0.02,
+   "mutation_rate": 0.03,
+   "max_age": 60,
+   "death_rate": 0.01,
+   "energy_init": 40.0,
+   "cases_per_opportunity": 3
+  },
+  "arms": {
+   "U": {
+    "blocked": [],
+    "pool_size": 256
+   },
+   "BAND_BLOCK": {
+    "blocked": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     128,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ],
+    "pool_size": 240
+   },
+   "SHAM_BLOCK": {
+    "blocked": [
+     156,
+     157,
+     158,
+     159,
+     160,
+     161,
+     162,
+     163,
+     164,
+     165,
+     166,
+     167,
+     168,
+     169,
+     170,
+     171
+    ],
+    "pool_size": 240
+   },
+   "BLOCK_128": {
+    "blocked": [
+     128
+    ],
+    "pool_size": 255
+   },
+   "RESCUE_128": {
+    "blocked": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ],
+    "pool_size": 240
+   }
+  },
+  "gate_band": [
+   120,
+   121,
+   122,
+   123,
+   124,
+   125,
+   126,
+   127,
+   128,
+   129,
+   130,
+   131,
+   132,
+   133,
+   134,
+   135
+  ],
+  "sham_band": [
+   156,
+   157,
+   158,
+   159,
+   160,
+   161,
+   162,
+   163,
+   164,
+   165,
+   166,
+   167,
+   168,
+   169,
+   170,
+   171
+  ],
+  "schedule": {
+   "K_chambers": 2048,
+   "dwell": 64,
+   "refills": 1024
+  },
+  "streams": [
+   "envgate.inflow(block)",
+   "envgate.env(block,cell,epoch)",
+   "envgate.world(block)",
+   "envgate.mutation(block)"
+  ]
+ },
+ "held_rationale": "vmcopy32 is the only censused substrate with copiers. ECHO_forced supplies one fresh uniform byte per case (the census input model); under implicit_survival the task score has no reproductive consequence. Everything else is the plainest frozen level. Nothing is taken from the 84616cf8257b specimen's world.",
+ "sham_rule": "16-byte intervals disjoint from 120..135, ranked by (exact-copier gate incidences in the frozen vmcopy32 census; birth-input incidences over all 176 vmcopy32 census hits; -distance to 128; start): 156..171 has 0 gated-copier gates (its 16 incidences are the single UNGATED copier, identical for every interval), 257 birth incidences",
+ "arms": {
+  "U": {
+   "blocked": [],
+   "replacement_pool_size": 256
+  },
+  "BAND_BLOCK": {
+   "blocked": [
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135
+   ],
+   "replacement_pool_size": 240
+  },
+  "SHAM_BLOCK": {
+   "blocked": [
+    156,
+    157,
+    158,
+    159,
+    160,
+    161,
+    162,
+    163,
+    164,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171
+   ],
+   "replacement_pool_size": 240
+  },
+  "BLOCK_128": {
+   "blocked": [
+    128
+   ],
+   "replacement_pool_size": 255
+  },
+  "RESCUE_128": {
+   "blocked": [
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135
+   ],
+   "replacement_pool_size": 240
+  }
+ },
+ "transform": "Every case input starts from the SAME base stream in every arm: per (block, cell, epoch, case) two 32-bit words\n(u, v) are drawn from the environment stream -- always both, in every arm (fixed consumption). Base byte x = u >> 24. An arm blocks\na set B of byte values: if x is in B it is replaced by POOL[(v * |POOL|) >> 32]; otherwise x passes unchanged. Non-blocked values are\ntherefore IDENTICAL across arms case by case, and each arm's alphabet is exactly its complement of B.",
+ "blocks": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15
+ ],
+ "schedule": {
+  "K_chambers": 2048,
+  "dwell": 64,
+  "refills": 1024
+ },
+ "arrivals_per_arm_per_block": 2097152,
+ "epochs_per_world": 65717,
+ "exposure_planning": {
+  "census_density": 9.6e-06,
+  "expected_exact_copier_arrivals_per_block": 20.13,
+  "expected_total": 322.1,
+  "expected_gate_available_per_block": {
+   "U": 20.13,
+   "BAND_BLOCK": 1.47,
+   "SHAM_BLOCK": 20.13,
+   "BLOCK_128": 3.15,
+   "RESCUE_128": 18.45
+  },
+  "throughput_basis": "engineering pilot block -1 (excluded): 16,384 arrivals x 5 arms in 40.8 s; dwell 64 ~ one max_age lifetime per arrival",
+  "chance_single_gate_fires_during_dwell": 0.2216
+ },
+ "endpoint": {
+  "name": "ESTABLISHED_RANDOM_INFLOW_LINEAGE",
+  "definition": [
+   "founder origin random_inflow; world holds no other founder class",
+   "lineage has ecology members (left the chamber; chambers are write-protected)",
+   ">= 1 endogenous birth",
+   "founder removed from its chamber (refill or end of inflow) -- the only original member",
+   "lineage alive in the ecology at removal + 180 epochs (3 x max_age)",
+   "peak ecology population >= 0.25 x 128 OR max generation depth >= 10",
+   "lineage = descendants of ONE arrival (primary lineage id); independent arrivals are different lineages"
+  ],
+  "fidelity": "recorded as a phenotype, never a gate"
+ },
+ "analysis": "ENVGATE-01 analysis: frozen with the preregistration (its sha256 is in PREREG.json). Reads runs/block_XX.json, writes RESULTS.json.\n\nPaired unit = ARRIVAL: arrival index a of block b is the same tape, in the same chamber, at the same epoch, in every arm. E_arm(b, a) = 1\niff that arrival founded an ESTABLISHED_RANDOM_INFLOW_LINEAGE in that arm (engine.World.established).\n\nPRIMARY test per contrast (X over Y, predicted X >= Y): exact one-sided McNemar on arrivals discordant between X and Y, pooled over\nblocks; Holm-Bonferroni over the four primary contrasts at family alpha 0.05. Robustness (reported, not decisive): exact one-sided sign\ntest on per-block established-count differences. A contrast with fewer than 5 discordant arrivals cannot reach p < 0.05 and is\nreported UNDERPOWERED.\n\nDecision (first match): DESIGN_OR_INSTRUMENT_FAILURE (pairing mismatch, missing/errored block, a control-origin founder scored, any\nlineage into a chamber) > NO_ESTABLISHMENT_AT_TESTED_EXPOSURE (0 established in every arm) > GATING_CAUSALLY_SUPPORTED (U>BAND\nsignificant, U vs SHAM not significant and SHAM suppression < half of BAND suppression, RESCUE>BAND significant) >\nGATING_PARTIALLY_SUPPORTED (any of U>BAND, U>BLOCK_128, RESCUE>BAND significant) > GATING_NOT_SUPPORTED (none significant, U has >= 5\nestablishments) > INCONCLUSIVE_LOW_ESTABLISHMENT (none significant, U has 1-4). ALTERNATE_MECHANISM_OBSERVED is reported alongside the\nverdict when > 50% of all established lineages have founders the frozen ruler classes as non-copiers (WRITER / TOUCH / INERT); each such\nlineage is labelled NOVEL_REPRODUCTIVE_MECHANISM_CANDIDATE.\n",
+ "preflight_sha256": "365ddae42f1945679c518b8b2defd8398f896dbbc6655c578a7d60e9c9f436e2",
+ "preflight_verdict": "PASS",
+ "code_sha256_lf_normalised": {
+  "archaeon/envgate/mechanism.py": "4f72cbe99a4114a7a0349f6f871d23ccf579d5861fd5a07c02ab47a262ed89c2",
+  "archaeon/envgate/engine.py": "789a0f36195e4ab329b3012b555532d4c04c8c3df2e9fcf39dd9c63404b98ed0",
+  "archaeon/envgate/ruler.py": "c1a2f37177aaa98c094701d8a68aaf28cd0550a8ca45d2231483140849cfe94a",
+  "archaeon/envgate/block.py": "04a084d5119a13d31d575236e70bc709113aa1fd2de6d06121bc5d044a6c470e",
+  "archaeon/envgate/analyze.py": "79e162b9047978d1e2d4f75643ecdd46b6db3c912fa51d2a89de1da867ba004d",
+  "archaeon/envgate/run_assay.py": "02196de0ac6b86f7aeca24ec9f749bddca4e639f8c0f72842de89e71bca80a2a",
+  "archaeon/envgate/preflight.py": "6420a03b304488058f04a5b038327e5dd74684e372e9a3afe6fe0dd7c596107e",
+  "archaeon/z80atlas/vm.py": "7b96202d750f4fc880707887ac298052c90652a26a0cdc375f8302bd5028a453",
+  "archaeon/z80atlas/engine.py": "77422a9efc1ad618ed0cc097a0dea3d3e36e980323142a4c1487553d2dea1029",
+  "archaeon/z80atlas/tasks.py": "d0d19d28e8d52e0ea1279dd7b785acc08af1b7159a8c3eaed86becc6f45f5307",
+  "archaeon/z80atlas/grammar.py": "d3244e0b2d241762524571478c685dd12f4b648fb732698344b9d7a0846a1b91",
+  "archaeon/z80atlas/census/copier_census.py": "b8bdd2f3865d05d6c61e0d538a2081de33ae9dddaf3ce57d0748f9e05714dcc4",
+  "archaeon/z80atlas/census/HITS.json": "68422c5f61c4e141ceaaf7a7708194d8d3a2cd68ce877ba2cc34f88a71d21f90",
+  "archaeon/z80atlas/census/RESULTS.json": "ee8bedf701d5dc8bc2920b1f8f3965cc15b0d3b1fad35a44d7a34d1e6fa71322"
+ },
+ "stop_conditions": [
+  "hash mismatch at --run",
+  "preflight not PASS",
+  "any block errors (rerun that block from its own seeds; never patched)",
+  "a threshold/endpoint change after results -> ENVGATE-02"
+ ],
+ "specimen_policy": "84616cf8257b is one control reference among census copiers; never seeded into treatment, never a target, gate 121 not used in design"
+}

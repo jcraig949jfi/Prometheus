@@ -71,7 +71,7 @@ class Ctx:
                  "writes_blocked", "copy_bytes", "copy_errors", "births", "alloc_calls",
                  "alloc_fails", "birth_calls", "in_reads", "out_writes",
                  "in_reads_at_first_out", "halted", "world_op_calls", "max_addr_written",
-                 "out_gate_reads", "out_suppressed",
+                 "out_gate_reads", "out_suppressed", "prov", "prov_lit", "who",
                  "min_addr_written", "self_overwrites", "budget_exhausted",
                  "regs", "fz", "fc")
 
@@ -115,6 +115,13 @@ class Ctx:
         # 0 is the unrestricted arm and is bit-identical to the predecessor VM.
         self.out_gate_reads = out_gate_reads
         self.out_suppressed = 0
+        # P-11 per-position provenance. None disables it (the default, and the only mode
+        # outside a pair-tape interaction). When set, `prov[a]` records the context that
+        # last CHANGED the byte at a, `prov_lit[a]` the context that last wrote it at all,
+        # both as `who`. Recording never alters what is written.
+        self.prov = None
+        self.prov_lit = None
+        self.who = 0
         self.min_addr_written = -1
         self.self_overwrites = 0
         # CPU state that may persist across time slices. A world that declares register
@@ -174,7 +181,15 @@ def run(ctx, pc, budget, ops_enabled=0xFF):
         if not _writable(ctx, a):
             ctx.writes_blocked += 1
             return
-        mem[a] = val & 0xFF
+        pv = ctx.prov
+        if pv is None:
+            mem[a] = val & 0xFF
+        else:
+            v8 = val & 0xFF
+            if mem[a] != v8:
+                pv[a] = ctx.who
+            mem[a] = v8
+            ctx.prov_lit[a] = ctx.who
         ctx.writes += 1
         b = ctx.base
         if b <= a < b + ctx.length:

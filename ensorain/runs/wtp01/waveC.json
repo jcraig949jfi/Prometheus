@@ -1,0 +1,1825 @@
+{
+ "families": [
+  {
+   "genome_hash": "19eea2a88c3412e2",
+   "detector": "A1",
+   "variants": {
+    "mem_half": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 21.286676013512
+    },
+    "mem_double": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.1499362823486719
+    },
+    "no_delay": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 0.3450681481404903
+    },
+    "shuffled_topology": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 0.5866269019258358
+    },
+    "shuffled_latents": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 0.5301360450785726
+    },
+    "reversible": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.05023082652613592
+    },
+    "noisier": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 0.3450681481404903
+    },
+    "no_marks": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 0.3450681481404903
+    },
+    "no_rollouts": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 0.3450681481404903
+    },
+    "frozen_world": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0016408061493078726
+    }
+   },
+   "removes": [
+    "mem_double",
+    "reversible",
+    "frozen_world"
+   ],
+   "keeps": [
+    "mem_half",
+    "no_delay",
+    "shuffled_topology",
+    "shuffled_latents",
+    "noisier",
+    "no_marks",
+    "no_rollouts"
+   ],
+   "causal_support": true,
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "tt",
+     "rank": 2,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 1.8622010304945547
+       }
+      },
+      {
+       "op": "f_hadamard_self",
+       "p": {}
+      },
+      {
+       "op": "f_qr_mode",
+       "p": {
+        "mode": 5
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "scale_free",
+     "n_nodes": 97,
+     "k": 2,
+     "p": 0.29333758105022445,
+     "directed": 0.07760258623151606,
+     "map": "blocked"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 1,
+     "k": 8,
+     "chain": [],
+     "noise_sd": 0.1287440807897206,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 168,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.22849834171185013,
+     "catastrophe_rate": 0.008171584234956928
+    },
+    "irreversibility": {
+     "oneway": 0.22189842007037808,
+     "door_close": 0.0,
+     "hazard_frac": 0.13881310228361318,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 187.11314333452847,
+     "metabolism": 0.18563307871254503,
+     "gain": 3.609424779350871,
+     "theta": 0.5730896597529123,
+     "regrow": 758,
+     "query_every": 0,
+     "query_reward": 9.402158827528087,
+     "tol": 0.3879095922609642,
+     "p_compute": 4.8359342207652124e-05,
+     "p_read": 0.001466499346400909,
+     "p_write": 0.000941542243921792,
+     "p_move": 0.772779956840384,
+     "p_probe": 2.6694663372384397,
+     "p_rollout": 0.18466305603227828
+    },
+    "memory": {
+     "substrate": "tt",
+     "cap": 538,
+     "bits": 8,
+     "forget": "oldest",
+     "forget_rate": 0.19816639159748703,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.028415168450727498,
+     "batch": 112,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.0,
+     "sign_flip": 0.08061266222243714
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.07534636333031969,
+     "depth": 3,
+     "temp": 1.2720932508312062
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.02929057043711434
+    },
+    "time": {
+     "lifetime": 570,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "recombine",
+     "parents": [
+      "1cd3f0fe0793309e",
+      "9a3765b0c14f02d7"
+     ],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "genome_hash": "dec8a39d07b2c182",
+   "detector": "A1",
+   "variants": {
+    "mem_half": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": -6.336880701597603e-07
+    },
+    "mem_double": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0010317085523924166
+    },
+    "no_delay": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0010452732530523412
+    },
+    "shuffled_topology": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 17.69215253218562
+    },
+    "shuffled_latents": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0006189634089638716
+    },
+    "reversible": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0012224700076047968
+    },
+    "noisier": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0010452732530523412
+    },
+    "no_marks": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0010452732530523412
+    },
+    "no_rollouts": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0010452732530523412
+    },
+    "frozen_world": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 1.8415882070288673e-05
+    }
+   },
+   "removes": [
+    "mem_half",
+    "mem_double",
+    "no_delay",
+    "shuffled_latents",
+    "reversible",
+    "noisier",
+    "no_marks",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "keeps": [
+    "shuffled_topology"
+   ],
+   "causal_support": true,
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "tt",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.819728906827116
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 765,
+     "k": 3,
+     "p": 0.07738862198988637,
+     "directed": 0.1667345847026129,
+     "map": "blocked"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 4,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.2686148854258898,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 175,
+     "basis_change_period": 99,
+     "rewire_period": 0,
+     "rewire_frac": 0.367325763555657,
+     "catastrophe_rate": 0.00694916639416544
+    },
+    "irreversibility": {
+     "oneway": 0.25372221424037417,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "svd_trunc"
+    },
+    "resource": {
+     "energy0": 356.7474067746202,
+     "metabolism": 0.5908869257265543,
+     "gain": 2.609220637605543,
+     "theta": 0.5406643852964899,
+     "regrow": 248,
+     "query_every": 16,
+     "query_reward": 5.228911892797816,
+     "tol": 0.37953598592442267,
+     "p_compute": 0.001637345651830367,
+     "p_read": 0.0003197160567849524,
+     "p_write": 0.051697953447108605,
+     "p_move": 0.3541702559987706,
+     "p_probe": 0.8046066954287224,
+     "p_rollout": 0.09027567090510824
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 75,
+     "bits": 2,
+     "forget": "random",
+     "forget_rate": 0.05175412255757877,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.00869474110918833,
+     "batch": 44,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.14307919499499477,
+     "sign_flip": 0.016615074162947385
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.08970068296659339,
+     "depth": 4,
+     "temp": 0.20545449531921223
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.034313221093601576
+    },
+    "time": {
+     "lifetime": 521,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "random",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "genome_hash": "ad338376629fb633",
+   "detector": "A1",
+   "variants": {
+    "mem_half": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": -8.829136025387962e-05
+    },
+    "mem_double": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0011729569512498933
+    },
+    "no_delay": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0004546793328981829
+    },
+    "shuffled_topology": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.00010025316025973367
+    },
+    "shuffled_latents": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.002011295546844742
+    },
+    "reversible": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.011746413944103426
+    },
+    "noisier": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0060660934952314685
+    },
+    "no_marks": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0060660934952314685
+    },
+    "no_rollouts": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.0008748222704571147
+    },
+    "frozen_world": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": -0.0004122967041960035
+    }
+   },
+   "removes": [
+    "mem_half",
+    "mem_double",
+    "no_delay",
+    "shuffled_topology",
+    "shuffled_latents",
+    "reversible",
+    "noisier",
+    "no_marks",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "keeps": [],
+   "causal_support": false,
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "cp",
+     "rank": 1,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "random_geometric",
+     "n_nodes": 595,
+     "k": 6,
+     "p": 0.05211085119294637,
+     "directed": 0.047130884679220886,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 10,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.002301569626986688,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 113,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.2075166314141606,
+     "catastrophe_rate": 0.009524210354494408
+    },
+    "irreversibility": {
+     "oneway": 0.044584095717140115,
+     "door_close": 0.13950019646647258,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 59.68276169009522,
+     "metabolism": 0.8516570312835291,
+     "gain": 4.98502327723791,
+     "theta": -0.2869354992306239,
+     "regrow": 657,
+     "query_every": 7,
+     "query_reward": 8.550858768664266,
+     "tol": 0.26724638906488074,
+     "p_compute": 4.2115551496898285e-05,
+     "p_read": 0.007818480268068386,
+     "p_write": 0.03612094228578216,
+     "p_move": 0.8302118458679404,
+     "p_probe": 1.9113388239358118,
+     "p_rollout": 0.14470502266999363
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 330,
+     "bits": 2,
+     "forget": "spectral_trunc",
+     "forget_rate": 0.11878308765389314,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.3333091656171733,
+     "batch": 84,
+     "sweeps": 2
+    },
+    "credit": {
+     "delay": 53,
+     "radius": 1,
+     "noise": 0.5888394658822396,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.014855507901100407,
+     "depth": 3,
+     "temp": 0.07227356116209176
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "none",
+     "mark_decay": 0.03683091672431219
+    },
+    "time": {
+     "lifetime": 310,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "novelty",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "genome_hash": "b235013022100e1f",
+   "detector": "A2",
+   "variants": {
+    "mem_half": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 14.926161796017007
+    },
+    "mem_double": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 21.538005302486432
+    },
+    "no_delay": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 0.3788051610028256
+    },
+    "shuffled_topology": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 7.096453650380459
+    },
+    "shuffled_latents": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 2.4502451325493464
+    },
+    "reversible": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 1.0385451850335672
+    },
+    "noisier": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 1.7448281727065442
+    },
+    "no_marks": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 8.727406048973148
+    },
+    "no_rollouts": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 3.0647616304966165
+    },
+    "frozen_world": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 8.310414087850434
+    }
+   },
+   "removes": [
+    "no_delay",
+    "shuffled_latents",
+    "reversible",
+    "noisier",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "keeps": [
+    "mem_half",
+    "mem_double",
+    "shuffled_topology",
+    "no_marks"
+   ],
+   "causal_support": true,
+   "genome": {
+    "substrate": {
+     "dims": [
+      15,
+      10
+     ],
+     "gen": "random",
+     "rank": 3,
+     "chain": [
+      {
+       "op": "f_phase_scramble",
+       "p": {
+        "mode": 10
+       }
+      },
+      {
+       "op": "f_rare_spikes",
+       "p": {
+        "rate": 0.04526512735903785
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "modular",
+     "n_nodes": 184,
+     "k": 3,
+     "p": 0.1172556968153464,
+     "directed": 0.09662429504544219,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 11,
+     "k": 6,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.43565357917672787,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 178,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.08218449698303776,
+     "catastrophe_rate": 0.01191350199908441
+    },
+    "irreversibility": {
+     "oneway": 0.22201405755955222,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 226.27337057673333,
+     "metabolism": 0.3973828893646789,
+     "gain": 1.4796531317730939,
+     "theta": -0.4042442843740297,
+     "regrow": 419,
+     "query_every": 0,
+     "query_reward": 1.6062545097807046,
+     "tol": 0.06712015561501397,
+     "p_compute": 2.1545917008031546e-06,
+     "p_read": 0.06411042879440598,
+     "p_write": 2.932696145624588e-05,
+     "p_move": 0.4496141018917037,
+     "p_probe": 1.1952756579793444,
+     "p_rollout": 0.3966989252801838
+    },
+    "memory": {
+     "substrate": "tt",
+     "cap": 283,
+     "bits": 64,
+     "forget": "lowest_value",
+     "forget_rate": 0.05638832928636009,
+     "fluid": 1
+    },
+    "learning": {
+     "rule": "hebbian",
+     "lr": 0.6224923996879599,
+     "batch": 78,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.4008440281947059,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.36367081279208746,
+     "depth": 2,
+     "temp": 0.05574053610021741
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "shared",
+     "mark_decay": 0.011275522944917654
+    },
+    "time": {
+     "lifetime": 313,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "recombine",
+     "parents": [
+      "f98415e7f424a435",
+      "2fd49f2a6ba17d20"
+     ],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "genome_hash": "736309cd444a6698",
+   "detector": "A6",
+   "variants": {
+    "mem_half": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 422.28429472503603
+    },
+    "mem_double": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 422.28429472503603
+    },
+    "no_delay": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 424.5099376320158
+    },
+    "shuffled_topology": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 422.28429472503603
+    },
+    "shuffled_latents": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 320.3270026232506
+    },
+    "reversible": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 356.5901289006431
+    },
+    "noisier": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 422.28429472503603
+    },
+    "no_marks": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 422.28429472503603
+    },
+    "no_rollouts": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 438.9738235418728
+    },
+    "frozen_world": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 407.89530443294586
+    }
+   },
+   "removes": [
+    "reversible"
+   ],
+   "keeps": [
+    "mem_half",
+    "mem_double",
+    "no_delay",
+    "shuffled_topology",
+    "shuffled_latents",
+    "noisier",
+    "no_marks",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "causal_support": true,
+   "genome": {
+    "substrate": {
+     "dims": [
+      11,
+      8,
+      2,
+      7,
+      3
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_permute",
+       "p": {}
+      },
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.0864990645173265
+       }
+      },
+      {
+       "op": "f_split_mode",
+       "p": {
+        "mode": 7
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "erdos",
+     "n_nodes": 566,
+     "k": 5,
+     "p": 0.28259903120339464,
+     "directed": 0.19551128934998355,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 11,
+     "k": 5,
+     "chain": [
+      {
+       "op": "v_sign",
+       "p": {}
+      },
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 8
+       }
+      }
+     ],
+     "noise_sd": 0.1059482874605372,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 276,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.10993971415137033,
+     "catastrophe_rate": 0.006207633938905395
+    },
+    "irreversibility": {
+     "oneway": 0.20165948051321397,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 397.23928001247083,
+     "metabolism": 0.5271930795196917,
+     "gain": 4.904168602803871,
+     "theta": -0.31749509123949604,
+     "regrow": 230,
+     "query_every": 32,
+     "query_reward": 2.2259243397590067,
+     "tol": 0.3986016068370352,
+     "p_compute": 2.0606303292111776e-06,
+     "p_read": 0.00016056397136301326,
+     "p_write": 5.422592551361427e-05,
+     "p_move": 0.620381708159659,
+     "p_probe": 0.43867192663428456,
+     "p_rollout": 0.9245772908126907
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 101,
+     "bits": 8,
+     "forget": "decay",
+     "forget_rate": 0.13285855444144953,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "nlms",
+     "lr": 0.3322963308218643,
+     "batch": 101,
+     "sweeps": 5
+    },
+    "credit": {
+     "delay": 5,
+     "radius": 0,
+     "noise": 0.4051958785315045,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.45593568991285505,
+     "depth": 1,
+     "temp": 0.3292059237257779
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.022943067426191066
+    },
+    "time": {
+     "lifetime": 400,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "dc38414b0b5fc72a"
+     ],
+     "mutations": [
+      "credit.noise",
+      "credit.delay",
+      "resource.query_every"
+     ]
+    }
+   }
+  },
+  {
+   "genome_hash": "5c2029e90d272a76",
+   "detector": "A6",
+   "variants": {
+    "mem_half": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 741.700462682992
+    },
+    "mem_double": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 741.700462682992
+    },
+    "no_delay": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 741.700462682992
+    },
+    "shuffled_topology": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 660.1453616461098
+    },
+    "shuffled_latents": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 719.9129219298796
+    },
+    "reversible": {
+     "hits": 1,
+     "n": 3,
+     "present": false,
+     "median_prop": 686.3601511455004
+    },
+    "noisier": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 745.9866964786913
+    },
+    "no_marks": {
+     "hits": 0,
+     "n": 3,
+     "present": false,
+     "median_prop": 842.0484499798728
+    },
+    "no_rollouts": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 741.700462682992
+    },
+    "frozen_world": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 653.0771689815308
+    }
+   },
+   "removes": [
+    "shuffled_latents",
+    "reversible",
+    "no_marks"
+   ],
+   "keeps": [
+    "mem_half",
+    "mem_double",
+    "no_delay",
+    "shuffled_topology",
+    "noisier",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "causal_support": true,
+   "genome": {
+    "substrate": {
+     "dims": [
+      11,
+      2,
+      2,
+      7
+     ],
+     "gen": "spectral",
+     "rank": 2,
+     "chain": [
+      {
+       "op": "f_gemv_mode",
+       "p": {
+        "mode": 1
+       }
+      },
+      {
+       "op": "f_topk_sparsify",
+       "p": {
+        "keep": 0.2132662086769579
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 467,
+     "k": 6,
+     "p": 0.08946797372700786,
+     "directed": 0.1385614524790513,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 7,
+     "k": 7,
+     "chain": [],
+     "noise_sd": 0.4116476807070525,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 104,
+     "basis_change_period": 0,
+     "rewire_period": 280,
+     "rewire_frac": 0.2531455455241825,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.3606063143250166,
+     "door_close": 0.04374887644284686,
+     "hazard_frac": 0.0,
+     "hazard": "svd_trunc"
+    },
+    "resource": {
+     "energy0": 268.53611014338264,
+     "metabolism": 0.7165127379674213,
+     "gain": 4.28902499474485,
+     "theta": -0.36528447667898556,
+     "regrow": 34,
+     "query_every": 5,
+     "query_reward": 4.642373839326281,
+     "tol": 0.48031671022601435,
+     "p_compute": 0.004278660362672771,
+     "p_read": 0.05067973261499017,
+     "p_write": 0.0002393392879738003,
+     "p_move": 0.7986607375609823,
+     "p_probe": 0.030619421958082094,
+     "p_rollout": 0.2431941821298732
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 708,
+     "bits": 2,
+     "forget": "spectral_trunc",
+     "forget_rate": 0.11782683140943367,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "none",
+     "lr": 0.19289726105332006,
+     "batch": 25,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "softmax",
+     "eps": 0.209037755083476,
+     "depth": 1,
+     "temp": 1.1530043406164179
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.02245019484486114
+    },
+    "time": {
+     "lifetime": 502,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "random",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "genome_hash": "d2593f285c22facb",
+   "detector": "A6",
+   "variants": {
+    "mem_half": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 260.4709307567066
+    },
+    "mem_double": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 260.4709307567066
+    },
+    "no_delay": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 260.4709307567066
+    },
+    "shuffled_topology": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 413.6658806958734
+    },
+    "shuffled_latents": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 411.26623375375186
+    },
+    "reversible": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 260.4709307567066
+    },
+    "noisier": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 252.69180910487015
+    },
+    "no_marks": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 260.4709307567066
+    },
+    "no_rollouts": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 260.4709307567066
+    },
+    "frozen_world": {
+     "hits": 2,
+     "n": 3,
+     "present": true,
+     "median_prop": 200.18652276626412
+    }
+   },
+   "removes": [],
+   "keeps": [
+    "mem_half",
+    "mem_double",
+    "no_delay",
+    "shuffled_topology",
+    "shuffled_latents",
+    "reversible",
+    "noisier",
+    "no_marks",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "causal_support": false,
+   "genome": {
+    "substrate": {
+     "dims": [
+      5,
+      17,
+      2,
+      5
+     ],
+     "gen": "tt",
+     "rank": 3,
+     "chain": [
+      {
+       "op": "f_rare_spikes",
+       "p": {
+        "rate": 0.01732102470303618
+       }
+      },
+      {
+       "op": "f_reduce_max",
+       "p": {
+        "mode": 4
+       }
+      }
+     ],
+     "reward_chain": [
+      {
+       "op": "f_unary",
+       "p": {
+        "kind": "sign"
+       }
+      }
+     ]
+    },
+    "geometry": {
+     "kind": "scale_free",
+     "n_nodes": 248,
+     "k": 2,
+     "p": 0.13075428895342564,
+     "directed": 0.39750133490075745,
+     "map": "blocked"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 13,
+     "k": 7,
+     "chain": [
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 5
+       }
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.13895211012608483,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 117,
+     "basis_change_period": 270,
+     "rewire_period": 225,
+     "rewire_frac": 0.3129990597466389,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.008501053287435278,
+     "door_close": 0.0,
+     "hazard_frac": 0.055561217672320695,
+     "hazard": "svd_trunc"
+    },
+    "resource": {
+     "energy0": 219.6418339777421,
+     "metabolism": 0.2086248848793057,
+     "gain": 3.875133774166645,
+     "theta": -0.23291035878824012,
+     "regrow": 607,
+     "query_every": 7,
+     "query_reward": 7.779121651836487,
+     "tol": 0.47491352726549946,
+     "p_compute": 6.903030578207503e-05,
+     "p_read": 0.00909249732898542,
+     "p_write": 0.00010984976125471048,
+     "p_move": 0.21785369014796563,
+     "p_probe": 2.1674495268968954,
+     "p_rollout": 0.03232352714667963
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 919,
+     "bits": 4,
+     "forget": "random",
+     "forget_rate": 0.17489889853570295,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "none",
+     "lr": 0.032739998024925686,
+     "batch": 56,
+     "sweeps": 5
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.4457411407854078,
+     "depth": 3,
+     "temp": 0.9025941457553925
+    },
+    "boundary": {
+     "n_org": 2,
+     "marks": "none",
+     "mark_decay": 0.034758040596966314
+    },
+    "time": {
+     "lifetime": 565,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "3f2bac6ed17818e0"
+     ],
+     "mutations": [
+      "observation.chain",
+      "observation.noise_dist",
+      "learning.rule",
+      "learning.batch"
+     ]
+    }
+   }
+  },
+  {
+   "genome_hash": "dbf83cfa9adbe931",
+   "detector": "A6",
+   "variants": {
+    "mem_half": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 298.882029283103
+    },
+    "mem_double": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 298.882029283103
+    },
+    "no_delay": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 298.882029283103
+    },
+    "shuffled_topology": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 245.631843112379
+    },
+    "shuffled_latents": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 355.6031012745257
+    },
+    "reversible": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 339.8099448458069
+    },
+    "noisier": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 298.882029283103
+    },
+    "no_marks": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 298.8995489177503
+    },
+    "no_rollouts": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 298.882029283103
+    },
+    "frozen_world": {
+     "hits": 3,
+     "n": 3,
+     "present": true,
+     "median_prop": 375.42245284060647
+    }
+   },
+   "removes": [],
+   "keeps": [
+    "mem_half",
+    "mem_double",
+    "no_delay",
+    "shuffled_topology",
+    "shuffled_latents",
+    "reversible",
+    "noisier",
+    "no_marks",
+    "no_rollouts",
+    "frozen_world"
+   ],
+   "causal_support": false,
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      3,
+      2,
+      3,
+      3,
+      4,
+      3,
+      2
+     ],
+     "gen": "lowrank",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_reduce_max",
+       "p": {
+        "mode": 3
+       }
+      },
+      {
+       "op": "f_rare_spikes",
+       "p": {
+        "rate": 0.04541078382455919
+       }
+      },
+      {
+       "op": "f_mask",
+       "p": {
+        "keep": 0.8495696581128176
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 740,
+     "k": 3,
+     "p": 0.15382275954982108,
+     "directed": 0.03456961194803616,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 1,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.1229552905951824,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 136,
+     "basis_change_period": 390,
+     "rewire_period": 0,
+     "rewire_frac": 0.0036438468001817603,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.0690068801922536,
+     "door_close": 0.0,
+     "hazard_frac": 0.09675806029010166,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 339.16906994879383,
+     "metabolism": 0.11056437698976343,
+     "gain": 4.380083791284122,
+     "theta": -0.03975193678786182,
+     "regrow": 291,
+     "query_every": 0,
+     "query_reward": 0.47206118372165706,
+     "tol": 0.31601791243220234,
+     "p_compute": 5.798543023108861e-05,
+     "p_read": 0.028640504649877826,
+     "p_write": 3.1681075309834775e-05,
+     "p_move": 0.035626649633195284,
+     "p_probe": 1.7454191626066857,
+     "p_rollout": 0.37430762610512003
+    },
+    "memory": {
+     "substrate": "none",
+     "cap": 123,
+     "bits": 8,
+     "forget": "none",
+     "forget_rate": 0.010582024795183132,
+     "fluid": 0
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.2601679615387206,
+     "batch": 34,
+     "sweeps": 2
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.2886652989954499,
+     "depth": 3,
+     "temp": 0.07326364717703175
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.044586879308069316
+    },
+    "time": {
+     "lifetime": 553,
+     "checkpoints": 10
+    },
+    "meta": {
+     "strategy": "recombine",
+     "parents": [
+      "956985f65705b791",
+      "ef34742286bb2f02"
+     ],
+     "mutations": []
+    }
+   }
+  }
+ ],
+ "sweeps": [
+  {
+   "genome_hash": "19eea2a88c3412e2",
+   "detector": "A1",
+   "dial": "cap",
+   "levels": [
+    67,
+    134,
+    269,
+    538,
+    1076,
+    2152,
+    4304
+   ],
+   "values": [
+    [
+     21.069210390443033,
+     20.4984978636051,
+     1.5579006667817794,
+     20.288530638724342
+    ],
+    [
+     0.04723663717077142,
+     9.36231148401215e-06,
+     1.0654066622045213,
+     0.0010132364596917324
+    ],
+    [
+     0.393825598396246,
+     0.057950206841554594,
+     1.076219427510909,
+     0.12290896159907126
+    ],
+    [
+     1.2335549351631452,
+     21.96305854799086,
+     2.1921939811386557,
+     0.33886978592571904
+    ],
+    [
+     -0.018294166439758452,
+     0.2612733111401793,
+     0.7980652564608935,
+     21.998118843372993
+    ],
+    [
+     0.016752997122644084,
+     0.02136425215061053,
+     22.231912272269334,
+     0.6431245910538609
+    ],
+    [
+     0.006732550725804486,
+     0.029694164022098367,
+     0.5135751578574315,
+     22.651868231984174
+    ]
+   ],
+   "pooled_sd": 7.773034931822126,
+   "boundaries": []
+  },
+  {
+   "genome_hash": "dec8a39d07b2c182",
+   "detector": "A1",
+   "dial": "cap",
+   "levels": [
+    9,
+    18,
+    37,
+    75,
+    150,
+    300,
+    600
+   ],
+   "values": [
+    [
+     NaN,
+     NaN,
+     NaN,
+     NaN
+    ],
+    [
+     0.002474268277231605,
+     -1.2359534708472901e-05,
+     16.728951330089327,
+     0.04063141749642763
+    ],
+    [
+     0.00015689116236145776,
+     18.941503527071546,
+     0.006307128268864726,
+     7.016095216924958e-05
+    ],
+    [
+     0.0015094604043177449,
+     0.00026678826044011127,
+     19.89070482069298,
+     -0.0007577653786700151
+    ],
+    [
+     20.405237132134893,
+     0.0002608177321676622,
+     -0.004287411270036674,
+     -0.0033945297847042134
+    ],
+    [
+     0.020045967612649644,
+     0.01785241635141082,
+     0.0009208097202229186,
+     0.00358376848714081
+    ],
+    [
+     0.0032086274344997052,
+     -0.002435319650497859,
+     0.00410815157258601,
+     0.006464397694168013
+    ]
+   ],
+   "pooled_sd": 6.7318706366674546,
+   "boundaries": []
+  },
+  {
+   "genome_hash": "ad338376629fb633",
+   "detector": "A1",
+   "dial": "cap",
+   "levels": [
+    41,
+    82,
+    165,
+    330,
+    660,
+    1320,
+    2640
+   ],
+   "values": [
+    [
+     -4.8265200981291315e-05,
+     -5.78490856347326e-06,
+     0.00011368238323245915,
+     0.00034497007843824375
+    ],
+    [
+     -0.05606514314122871,
+     -0.0009508657030472831,
+     -0.095431787193642,
+     18.897418911671032
+    ],
+    [
+     5.98202730546011e-05,
+     0.011821243417613942,
+     0.001265837550821861,
+     -0.00041320698985174154
+    ],
+    [
+     0.000116342285614515,
+     0.0001410518034073027,
+     0.0002553484800232129,
+     0.46609730547951994
+    ],
+    [
+     0.00912122550780432,
+     0.010055661326461834,
+     0.00021736113805882187,
+     -0.0017786700448396034
+    ],
+    [
+     -0.009553127103143204,
+     0.030967204891596045,
+     -0.001108090129880222,
+     3.214614086447269e-05
+    ],
+    [
+     6.788789623436882e-05,
+     0.018226930951709172,
+     0.0016952350755302034,
+     0.00015461506115499717
+    ]
+   ],
+   "pooled_sd": 3.102104216154671,
+   "boundaries": []
+  }
+ ]
+}

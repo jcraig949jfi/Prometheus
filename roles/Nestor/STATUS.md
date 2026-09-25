@@ -1,5 +1,29 @@
 # Nestor status
 
+Currency: 2026-09-24. S1 through S4 of the operator directive of 2026-09-23 are COMPLETE.
+**Stopped for operator review after S4, as directed.** Nothing is frozen, no final hash is
+written, no production observatory exists, nothing is launched.
+
+Directive: `prompts/2026-09-23_s1_s4_execution/DIRECTIVE_VERBATIM.md`.
+Workspace: worktree `nestor-s1-forensics`, branch `nestor/s1-forensics-2026-09-23` (pushed,
+NOT merged to main - the directive asks for review first).
+
+Read in this order: `campaigns/z80atlas-verify-2026-09-22/S4_CANDIDATE.md` (the review
+document), then `campaigns/z80atlas-forensics-2026-09-23/{S1A_FUNNEL,H4_AUTOPSY,S1C_P11_REASSAY}.md`,
+then FINDINGS section E.
+
+Headline: P-11 keeps 57 of the 1,031 (max causal depth 2); non-pair physics never
+searched (zero births, so zero mutation); A-4 withdrawn; candidate manifest 1,352 runs,
+7.6 wall-h (5.95 without H4).
+
+Open operator decisions: H4-0 vs H4-R; H2 16-seed decision rule; H3 certificate edges
+(C9-D11); P-11 authorship reading; then freeze (S5) and launch (S6).
+
+---
+
+## Previous state (2026-09-23, before S1-S4)
+
+
 Currency: 2026-09-23, written at the close of the session that finished the Cycle-9
 repair pass, immediately before an operator-requested context reset.
 

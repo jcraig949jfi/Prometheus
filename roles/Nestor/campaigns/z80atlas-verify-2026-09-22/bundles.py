@@ -74,10 +74,10 @@ VOLATILE_KEYS = frozenset({
 
 ROLES = ("TREATMENT", "CONTROL", "INTERVENTION")
 
-# Declared here, not inherited implicitly, so the bundle layer's rule is auditable in one
-# place. These mirror adjudicate.py; if they ever diverge the campaign gate says so.
-CROSS = 0.90
-MARGIN = 0.25
+# S3-2. The bundle layer used to keep its own CROSS and MARGIN "mirroring" adjudicate.py,
+# with a promise that a gate would notice divergence; none did. It now reads the one
+# hash-covered constants object, and tests/test_s3_repairs.py refuses a local copy.
+from constants import C
 
 VERDICT_INCOMPLETE = "INCOMPLETE"
 
@@ -315,10 +315,10 @@ def default_rule(spec, results):
             v, why = "INADMISSIBLE", "the treatment never reached the threshold"
     elif margin < 0:
         v, why = "INADMISSIBLE", "the control finished ahead of the treatment"
-    elif margin < MARGIN:
-        v, why = "WEAK", "margin below %.2f: the control is not separated" % MARGIN
+    elif margin < C["MARGIN"]:
+        v, why = "WEAK", "margin below %.2f: the control is not separated" % C["MARGIN"]
     else:
-        v, why = "ADMISSIBLE", "at threshold at final state, control below it, margin >= %.2f" % MARGIN
+        v, why = "ADMISSIBLE", "at threshold at final state, control below it, margin >= %.2f" % C["MARGIN"]
     return {"bundle_id": spec.bundle_id, "hypothesis_id": spec.hypothesis_id,
             "verdict": v, "why": why, "numbers": nums}
 

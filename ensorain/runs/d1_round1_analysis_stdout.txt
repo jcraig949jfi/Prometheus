@@ -1,0 +1,234 @@
+{
+ "n": 4797,
+ "B_controls": {
+  "shuffled_nominated_frac": 0.0,
+  "planted_pair": [
+   "cap_actual",
+   "persist"
+  ],
+  "planted_nominated": true,
+  "planted_q": 0.0,
+  "pass_": true
+ },
+ "nominated": {
+  "r2c_nominated": [
+   [
+    "lam",
+    "org_family"
+   ],
+   [
+    "scratch",
+    "surprise_alpha"
+   ],
+   [
+    "forget",
+    "org_family"
+   ],
+   [
+    "world_family",
+    "org_family"
+   ]
+  ],
+  "r2c_rank_nominated": [
+   [
+    "lam",
+    "org_family"
+   ],
+   [
+    "scratch",
+    "surprise_alpha"
+   ],
+   [
+    "forget",
+    "org_family"
+   ],
+   [
+    "world_family",
+    "org_family"
+   ]
+  ],
+  "EFF_nominated": [
+   [
+    "lam",
+    "cap_actual"
+   ],
+   [
+    "lam",
+    "org_family"
+   ],
+   [
+    "sweeps",
+    "kappa_mult"
+   ],
+   [
+    "scratch",
+    "kappa_mult"
+   ],
+   [
+    "scratch",
+    "org_family"
+   ],
+   [
+    "cap_actual",
+    "org_family"
+   ],
+   [
+    "replay_frac_actual",
+    "org_family"
+   ],
+   [
+    "err_frac_actual",
+    "kappa_mult"
+   ],
+   [
+    "world_family",
+    "org_family"
+   ],
+   [
+    "org_family",
+    "start"
+   ]
+  ],
+  "EFF_rank_nominated": [
+   [
+    "lam",
+    "org_family"
+   ],
+   [
+    "sweeps",
+    "kappa_mult"
+   ],
+   [
+    "cap_actual",
+    "org_family"
+   ],
+   [
+    "disturb",
+    "org_family"
+   ],
+   [
+    "world_family",
+    "org_family"
+   ],
+   [
+    "org_family",
+    "start"
+   ]
+  ]
+ },
+ "C": {
+  "frac_learned_disc": 0.024166666666666666,
+  "frac_learned_val": 0.025448477263245724,
+  "logloss_main": 0.09659214508739668,
+  "logloss_coupled": 0.1479367396390754,
+  "improvement": -0.5315607651659673,
+  "T2_supportive": false,
+  "r2c_hist": [
+   2605,
+   279,
+   340,
+   450,
+   647,
+   221,
+   99,
+   74,
+   48,
+   34
+  ]
+ },
+ "D": {
+  "change": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": -0.015727312844454874,
+   "val": -0.0062629584795657195
+  },
+  "surprise": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": -785.6430941140752,
+   "val": 1710.7393503837113
+  },
+  "energy": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": 24.601961763280492,
+   "val": 12.831055760821435
+  },
+  "rank_sum": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": null,
+   "val": null
+  },
+  "err_fill": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": 0.05396567031666173,
+   "val": 0.0014058106841611997
+  },
+  "restructs": {
+   "q": 1.0,
+   "nominated": false,
+   "disc": -0.18662326131991713,
+   "val": -0.18181818181818182
+  }
+ },
+ "A": {
+  "r2c": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "replay_frac_actual",
+   "surprise_alpha",
+   "disturb",
+   "forget",
+   "err_frac_actual",
+   "noise",
+   "world_family",
+   "org_family"
+  ],
+  "EFF": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "replay_frac_actual",
+   "dream_ratio",
+   "surprise_alpha",
+   "disturb",
+   "forget",
+   "err_frac_actual",
+   "noise",
+   "kappa_mult",
+   "world_family",
+   "org_family"
+  ],
+  "L2": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "surprise_alpha",
+   "disturb",
+   "forget",
+   "noise",
+   "world_family",
+   "org_family"
+  ],
+  "L2_p2": [
+   "lam",
+   "sweeps",
+   "scratch",
+   "cap_actual",
+   "dream_ratio",
+   "surprise_alpha",
+   "disturb",
+   "forget",
+   "noise",
+   "kappa_mult",
+   "world_family",
+   "org_family"
+  ]
+ }
+}

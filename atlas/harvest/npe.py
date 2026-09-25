@@ -24,7 +24,7 @@ from collections import defaultdict
 from atlas import classify, db, gitsrc
 from atlas.harvest import common as C
 
-VERSION = "npe/4"
+VERSION = "npe/5"
 DEFAULT_REF = "nestor/sidequest-graphworld-2026-09-14"
 GW = "nestor.graphworld"
 CW = "nestor.cw01"
@@ -40,8 +40,40 @@ AXIS_REASON = {"world_geometry": "WORLD_DEFORMATION", "representation": "REPRESE
 SFE_ID = re.compile(r"\bC[1-6]-(?:SFE-)?\d{2}\b")
 
 
+def _npe_refs(explicit=None):
+    """Nestor works on many branches and moves between them (sidequest-graphworld,
+    s1-forensics, arch4-loop ...). Reading one hardcoded ref silently goes stale,
+    so discover every nestor ref that carries the CW01 campaign or the primordial
+    ledger and read them oldest-first, newest last (upserts merge; newest wins)."""
+    if explicit:
+        return [explicit]
+    cands = []
+    for name, sha, date in gitsrc.refs(("refs/remotes/origin", "refs/heads")):
+        short = name.replace("refs/remotes/", "").replace("refs/heads/", "")
+        if "nestor" not in short.lower():
+            continue
+        has = gitsrc.git("ls-tree", "--name-only", sha, "--", CWDIR, "primordial/ledger", check=False).strip()
+        if has:
+            cands.append((date, short))
+    cands.sort()
+    seen, out = set(), []
+    for _date, short in cands:
+        if short not in seen:
+            seen.add(short)
+            out.append(short)
+    return out[-4:] if out else [DEFAULT_REF]
+
+
 def run(args) -> dict:
-    ref = args.npe_ref or DEFAULT_REF
+    refs = _npe_refs(args.npe_ref if getattr(args, "npe_ref", None) else None)
+    counts = {}
+    for ref in refs:
+        counts = _run_one(ref)
+        counts["refs_read"] = len(refs)
+    return counts
+
+
+def _run_one(ref) -> dict:
     sha = gitsrc.resolve(ref)
     if not sha:
         raise RuntimeError("NPE ref {} not visible on this host (it is M1-local); nothing inferred as absent".format(ref))

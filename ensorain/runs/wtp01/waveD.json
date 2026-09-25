@@ -1,0 +1,599 @@
+[
+ {
+  "genome_hash": "19eea2a88c3412e2",
+  "detector": "A1",
+  "CG": 21.8846657937992,
+  "CG_marks": 3.1116246581468063,
+  "final_kind": "tt",
+  "n_floats": 528,
+  "autopsy": {
+   "reskin": {
+    "transplant_nlmse": -0.009045636436728531,
+    "fresh_nlmse": -0.02082994537491218,
+    "gain": 0.011784308938183649
+   },
+   "new_seed": {
+    "transplant_nlmse": 12.0,
+    "fresh_nlmse": -10.417298936700512,
+    "gain": 22.41729893670051
+   },
+   "same": {
+    "transplant_nlmse": -0.02667813933712394,
+    "fresh_nlmse": -9.884665793799202,
+    "gain": 9.857987654462079
+   },
+   "scramble": {
+    "gain": 9.857987654462079
+   },
+   "no_marks_CG": 21.8846657937992,
+   "transferred": false
+  },
+  "genome": {
+   "substrate": {
+    "dims": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "gen": "tt",
+    "rank": 2,
+    "chain": [
+     {
+      "op": "f_svd_power",
+      "p": {
+       "power": 1.8622010304945547
+      }
+     },
+     {
+      "op": "f_hadamard_self",
+      "p": {}
+     },
+     {
+      "op": "f_qr_mode",
+      "p": {
+       "mode": 5
+      }
+     }
+    ],
+    "reward_chain": []
+   },
+   "geometry": {
+    "kind": "scale_free",
+    "n_nodes": 97,
+    "k": 2,
+    "p": 0.29333758105022445,
+    "directed": 0.07760258623151606,
+    "map": "blocked"
+   },
+   "observation": {
+    "kind": "marginal",
+    "mode": 1,
+    "k": 8,
+    "chain": [],
+    "noise_sd": 0.1287440807897206,
+    "noise_dist": "cauchy_clip"
+   },
+   "transition": {
+    "drift": 0.0,
+    "drift_period": 168,
+    "basis_change_period": 0,
+    "rewire_period": 0,
+    "rewire_frac": 0.22849834171185013,
+    "catastrophe_rate": 0.008171584234956928
+   },
+   "irreversibility": {
+    "oneway": 0.22189842007037808,
+    "door_close": 0.0,
+    "hazard_frac": 0.13881310228361318,
+    "hazard": "reset_part"
+   },
+   "resource": {
+    "energy0": 187.11314333452847,
+    "metabolism": 0.18563307871254503,
+    "gain": 3.609424779350871,
+    "theta": 0.5730896597529123,
+    "regrow": 758,
+    "query_every": 0,
+    "query_reward": 9.402158827528087,
+    "tol": 0.3879095922609642,
+    "p_compute": 4.8359342207652124e-05,
+    "p_read": 0.001466499346400909,
+    "p_write": 0.000941542243921792,
+    "p_move": 0.772779956840384,
+    "p_probe": 2.6694663372384397,
+    "p_rollout": 0.18466305603227828
+   },
+   "memory": {
+    "substrate": "tt",
+    "cap": 538,
+    "bits": 8,
+    "forget": "oldest",
+    "forget_rate": 0.19816639159748703,
+    "fluid": 0
+   },
+   "learning": {
+    "rule": "sgd",
+    "lr": 0.028415168450727498,
+    "batch": 112,
+    "sweeps": 1
+   },
+   "credit": {
+    "delay": 0,
+    "radius": 0,
+    "noise": 0.0,
+    "sign_flip": 0.08061266222243714
+   },
+   "search": {
+    "policy": "random",
+    "eps": 0.07534636333031969,
+    "depth": 3,
+    "temp": 1.2720932508312062
+   },
+   "boundary": {
+    "n_org": 1,
+    "marks": "private",
+    "mark_decay": 0.02929057043711434
+   },
+   "time": {
+    "lifetime": 570,
+    "checkpoints": 10
+   },
+   "meta": {
+    "strategy": "recombine",
+    "parents": [
+     "1cd3f0fe0793309e",
+     "9a3765b0c14f02d7"
+    ],
+    "mutations": []
+   }
+  }
+ },
+ {
+  "genome_hash": "dec8a39d07b2c182",
+  "detector": "A1",
+  "CG": 0.0013743335391392002,
+  "CG_marks": 0.0013743335391392002,
+  "final_kind": "cp",
+  "n_floats": 70,
+  "autopsy": {
+   "reskin": {
+    "transplant_nlmse": -0.0002294793400003624,
+    "fresh_nlmse": 2.3773600305955787e-05,
+    "gain": -0.0002532529403063182
+   },
+   "new_seed": {
+    "transplant_nlmse": -0.0006874924606624337,
+    "fresh_nlmse": -0.004786461105906992,
+    "gain": 0.004098968645244558
+   },
+   "same": {
+    "transplant_nlmse": 12.0,
+    "fresh_nlmse": -0.0006696858150162384,
+    "gain": 12.000669685815016
+   },
+   "scramble": {
+    "gain": -7.060826496150481
+   },
+   "no_marks_CG": 0.0013743335391392002,
+   "transferred": false
+  },
+  "genome": {
+   "substrate": {
+    "dims": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "gen": "tt",
+    "rank": 4,
+    "chain": [
+     {
+      "op": "f_svd_power",
+      "p": {
+       "power": 2.819728906827116
+      }
+     }
+    ],
+    "reward_chain": []
+   },
+   "geometry": {
+    "kind": "tensor_index",
+    "n_nodes": 765,
+    "k": 3,
+    "p": 0.07738862198988637,
+    "directed": 0.1667345847026129,
+    "map": "blocked"
+   },
+   "observation": {
+    "kind": "cell",
+    "mode": 4,
+    "k": 1,
+    "chain": [
+     {
+      "op": "v_sort",
+      "p": {}
+     },
+     {
+      "op": "v_tanh",
+      "p": {}
+     }
+    ],
+    "noise_sd": 0.2686148854258898,
+    "noise_dist": "laplace"
+   },
+   "transition": {
+    "drift": 0.0,
+    "drift_period": 175,
+    "basis_change_period": 99,
+    "rewire_period": 0,
+    "rewire_frac": 0.367325763555657,
+    "catastrophe_rate": 0.00694916639416544
+   },
+   "irreversibility": {
+    "oneway": 0.25372221424037417,
+    "door_close": 0.0,
+    "hazard_frac": 0.0,
+    "hazard": "svd_trunc"
+   },
+   "resource": {
+    "energy0": 356.7474067746202,
+    "metabolism": 0.5908869257265543,
+    "gain": 2.609220637605543,
+    "theta": 0.5406643852964899,
+    "regrow": 248,
+    "query_every": 16,
+    "query_reward": 5.228911892797816,
+    "tol": 0.37953598592442267,
+    "p_compute": 0.001637345651830367,
+    "p_read": 0.0003197160567849524,
+    "p_write": 0.051697953447108605,
+    "p_move": 0.3541702559987706,
+    "p_probe": 0.8046066954287224,
+    "p_rollout": 0.09027567090510824
+   },
+   "memory": {
+    "substrate": "cp",
+    "cap": 75,
+    "bits": 2,
+    "forget": "random",
+    "forget_rate": 0.05175412255757877,
+    "fluid": 0
+   },
+   "learning": {
+    "rule": "evolve",
+    "lr": 0.00869474110918833,
+    "batch": 44,
+    "sweeps": 1
+   },
+   "credit": {
+    "delay": 0,
+    "radius": 0,
+    "noise": 0.14307919499499477,
+    "sign_flip": 0.016615074162947385
+   },
+   "search": {
+    "policy": "random",
+    "eps": 0.08970068296659339,
+    "depth": 4,
+    "temp": 0.20545449531921223
+   },
+   "boundary": {
+    "n_org": 1,
+    "marks": "none",
+    "mark_decay": 0.034313221093601576
+   },
+   "time": {
+    "lifetime": 521,
+    "checkpoints": 10
+   },
+   "meta": {
+    "strategy": "random",
+    "parents": [],
+    "mutations": []
+   }
+  }
+ },
+ {
+  "genome_hash": "ad338376629fb633",
+  "detector": "A1",
+  "CG": 0.4240123492198782,
+  "CG_marks": 0.4240123492198782,
+  "final_kind": "cp",
+  "n_floats": 324,
+  "autopsy": {
+   "reskin": {
+    "transplant_nlmse": -0.00475574901038229,
+    "fresh_nlmse": -0.00943970011969951,
+    "gain": 0.00468395110931722
+   },
+   "new_seed": {
+    "transplant_nlmse": -1.4600909737373104e-06,
+    "fresh_nlmse": -0.450601474225032,
+    "gain": 0.45060001413405826
+   },
+   "same": {
+    "transplant_nlmse": -0.0030282575738731954,
+    "fresh_nlmse": -0.0030766609798674014,
+    "gain": 4.840340599420595e-05
+   },
+   "scramble": {
+    "gain": -0.968918591503892
+   },
+   "no_marks_CG": 0.4240123492198782,
+   "transferred": false
+  },
+  "genome": {
+   "substrate": {
+    "dims": [
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2,
+     2
+    ],
+    "gen": "cp",
+    "rank": 1,
+    "chain": [],
+    "reward_chain": []
+   },
+   "geometry": {
+    "kind": "random_geometric",
+    "n_nodes": 595,
+    "k": 6,
+    "p": 0.05211085119294637,
+    "directed": 0.047130884679220886,
+    "map": "sorted"
+   },
+   "observation": {
+    "kind": "cell",
+    "mode": 10,
+    "k": 1,
+    "chain": [
+     {
+      "op": "v_cumsum",
+      "p": {}
+     }
+    ],
+    "noise_sd": 0.002301569626986688,
+    "noise_dist": "normal"
+   },
+   "transition": {
+    "drift": 0.0,
+    "drift_period": 113,
+    "basis_change_period": 0,
+    "rewire_period": 0,
+    "rewire_frac": 0.2075166314141606,
+    "catastrophe_rate": 0.009524210354494408
+   },
+   "irreversibility": {
+    "oneway": 0.044584095717140115,
+    "door_close": 0.13950019646647258,
+    "hazard_frac": 0.0,
+    "hazard": "permute"
+   },
+   "resource": {
+    "energy0": 59.68276169009522,
+    "metabolism": 0.8516570312835291,
+    "gain": 4.98502327723791,
+    "theta": -0.2869354992306239,
+    "regrow": 657,
+    "query_every": 7,
+    "query_reward": 8.550858768664266,
+    "tol": 0.26724638906488074,
+    "p_compute": 4.2115551496898285e-05,
+    "p_read": 0.007818480268068386,
+    "p_write": 0.03612094228578216,
+    "p_move": 0.8302118458679404,
+    "p_probe": 1.9113388239358118,
+    "p_rollout": 0.14470502266999363
+   },
+   "memory": {
+    "substrate": "cp",
+    "cap": 330,
+    "bits": 2,
+    "forget": "spectral_trunc",
+    "forget_rate": 0.11878308765389314,
+    "fluid": 0
+   },
+   "learning": {
+    "rule": "anti_hebbian",
+    "lr": 0.3333091656171733,
+    "batch": 84,
+    "sweeps": 2
+   },
+   "credit": {
+    "delay": 53,
+    "radius": 1,
+    "noise": 0.5888394658822396,
+    "sign_flip": 0.0
+   },
+   "search": {
+    "policy": "rollout",
+    "eps": 0.014855507901100407,
+    "depth": 3,
+    "temp": 0.07227356116209176
+   },
+   "boundary": {
+    "n_org": 4,
+    "marks": "none",
+    "mark_decay": 0.03683091672431219
+   },
+   "time": {
+    "lifetime": 310,
+    "checkpoints": 10
+   },
+   "meta": {
+    "strategy": "novelty",
+    "parents": [],
+    "mutations": []
+   }
+  }
+ },
+ {
+  "genome_hash": "b235013022100e1f",
+  "detector": "A2",
+  "CG": -12.217688208835806,
+  "CG_marks": -12.214825681207598,
+  "final_kind": "table",
+  "n_floats": 283,
+  "autopsy": {
+   "reskin": {
+    "transplant_nlmse": -12.752367103129467,
+    "fresh_nlmse": -0.1413852708259782,
+    "gain": -12.610981832303489
+   },
+   "new_seed": {
+    "transplant_nlmse": -12.311136236985723,
+    "fresh_nlmse": -0.3163245279814326,
+    "gain": -11.99481170900429
+   },
+   "same": {
+    "transplant_nlmse": -12.345534128010907,
+    "fresh_nlmse": -0.126031072599631,
+    "gain": -12.219503055411277
+   },
+   "scramble": {
+    "gain": -12.327976270821136
+   },
+   "no_marks_CG": -7.964964140306687,
+   "transferred": false
+  },
+  "genome": {
+   "substrate": {
+    "dims": [
+     15,
+     10
+    ],
+    "gen": "random",
+    "rank": 3,
+    "chain": [
+     {
+      "op": "f_phase_scramble",
+      "p": {
+       "mode": 10
+      }
+     },
+     {
+      "op": "f_rare_spikes",
+      "p": {
+       "rate": 0.04526512735903785
+      }
+     }
+    ],
+    "reward_chain": []
+   },
+   "geometry": {
+    "kind": "modular",
+    "n_nodes": 184,
+    "k": 3,
+    "p": 0.1172556968153464,
+    "directed": 0.09662429504544219,
+    "map": "sorted"
+   },
+   "observation": {
+    "kind": "cell",
+    "mode": 11,
+    "k": 6,
+    "chain": [
+     {
+      "op": "v_sort",
+      "p": {}
+     },
+     {
+      "op": "v_sign",
+      "p": {}
+     }
+    ],
+    "noise_sd": 0.43565357917672787,
+    "noise_dist": "normal"
+   },
+   "transition": {
+    "drift": 0.0,
+    "drift_period": 178,
+    "basis_change_period": 0,
+    "rewire_period": 0,
+    "rewire_frac": 0.08218449698303776,
+    "catastrophe_rate": 0.01191350199908441
+   },
+   "irreversibility": {
+    "oneway": 0.22201405755955222,
+    "door_close": 0.0,
+    "hazard_frac": 0.0,
+    "hazard": "quantize2"
+   },
+   "resource": {
+    "energy0": 226.27337057673333,
+    "metabolism": 0.3973828893646789,
+    "gain": 1.4796531317730939,
+    "theta": -0.4042442843740297,
+    "regrow": 419,
+    "query_every": 0,
+    "query_reward": 1.6062545097807046,
+    "tol": 0.06712015561501397,
+    "p_compute": 2.1545917008031546e-06,
+    "p_read": 0.06411042879440598,
+    "p_write": 2.932696145624588e-05,
+    "p_move": 0.4496141018917037,
+    "p_probe": 1.1952756579793444,
+    "p_rollout": 0.3966989252801838
+   },
+   "memory": {
+    "substrate": "tt",
+    "cap": 283,
+    "bits": 64,
+    "forget": "lowest_value",
+    "forget_rate": 0.05638832928636009,
+    "fluid": 1
+   },
+   "learning": {
+    "rule": "hebbian",
+    "lr": 0.6224923996879599,
+    "batch": 78,
+    "sweeps": 1
+   },
+   "credit": {
+    "delay": 0,
+    "radius": 1,
+    "noise": 0.4008440281947059,
+    "sign_flip": 0.0
+   },
+   "search": {
+    "policy": "rollout",
+    "eps": 0.36367081279208746,
+    "depth": 2,
+    "temp": 0.05574053610021741
+   },
+   "boundary": {
+    "n_org": 4,
+    "marks": "shared",
+    "mark_decay": 0.011275522944917654
+   },
+   "time": {
+    "lifetime": 313,
+    "checkpoints": 10
+   },
+   "meta": {
+    "strategy": "recombine",
+    "parents": [
+     "f98415e7f424a435",
+     "2fd49f2a6ba17d20"
+    ],
+    "mutations": []
+   }
+  }
+ }
+]

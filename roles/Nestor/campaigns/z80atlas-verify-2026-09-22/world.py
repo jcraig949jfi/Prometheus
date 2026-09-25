@@ -31,12 +31,13 @@ import zlib
 
 import anticheat
 import grammar as G
+import p11
 import tasks
 import z8
+from constants import C       # S3-2: every verdict-bearing threshold, hash-covered
 
 REP_LEN = {"Z8_64": 64, "Z8_32": 32, "Z8_SHARED": 96, "Z8_SEPARATED": 96, "Z8_SLOTTED": 64}
 MUT_RATE = {"LOW": 0.002, "MID": 0.01, "HIGH": 0.04}
-CROSS_THRESH = 0.90          # held-out competence that counts as crossing the task
 MIN_LEN, SLOT_FACTOR = 8, 2
 
 
@@ -156,6 +157,7 @@ class Runner:
 
         self.ct = {"births_endogenous": 0, "births_external": 0, "births_no_copy": 0,
                    "replication_events": 0, "births_similar_no_write": 0,
+                   "p11_events": 0, "p11_fail_C2": 0, "p11_fail_C4": 0, "p11_fail_C5": 0,
                    "births_no_copy_live": 0, "deaths": 0, "reaped": 0, "alloc_calls": 0,
                    "alloc_fails": 0, "writes_blocked": 0, "writes_other": 0,
                    "validation_writes": 0, "validation_world_ops": 0, "copy_bytes": 0,
@@ -300,11 +302,18 @@ class Runner:
         return o
 
     # ------------------------------------------------------------------ P-1 / P-2 lineage
-    def _lin_birth(self, child, parent, niche, fid, span, causal):
-        self.lineage.append({"kind": "birth", "child": child, "parent": parent,
-                             "epoch": self.epoch, "niche": niche,
-                             "fidelity": round(fid, 3) if fid is not None else None,
-                             "span": span, "causal": bool(causal)})
+    def _lin_birth(self, child, parent, niche, fid, span, causal, causal_pred=None, p11_rec=None):
+        # `causal` is the edge's causal status under the CURRENT criterion (P-11 for the
+        # pair tape); `causal_pred` keeps the predecessor criterion's reading beside it so
+        # both depths are reportable and neither silently replaces the other.
+        e = {"kind": "birth", "child": child, "parent": parent,
+             "epoch": self.epoch, "niche": niche,
+             "fidelity": round(fid, 3) if fid is not None else None,
+             "span": span, "causal": bool(causal),
+             "causal_pred": bool(causal if causal_pred is None else causal_pred)}
+        if p11_rec is not None:
+            e["p11"] = p11_rec
+        self.lineage.append(e)
 
     def _lin_migration(self, oid, frm, to):
         self.lineage.append({"kind": "migration", "oid": oid, "from_niche": frm,
@@ -669,13 +678,13 @@ class Runner:
         # resemble its parent because the population has converged and the slot still
         # holds a dead near-relative's bytes. So a birth counts as replication only if
         # this organism placed at least half the child's bytes itself.
-        is_repl = fid >= 0.90 and wrote_bytes >= 0.5 * len(g)
+        is_repl = fid >= C["REPL_FIDELITY"] and wrote_bytes >= C["REPL_WROTE_SHARE"] * len(g)
         # P-2. The edge carries whether it is a CAUSAL replication edge. Ordinary descent
         # extends genealogy depth without any copying having happened, so a population
         # that is merely being reproduced by the runner would otherwise report deep
         # "lineages" and look like sustained self-replication.
         self._lin_birth(child.oid, o.oid, o.niche, fid, o.repro_span, is_repl)
-        if fid >= 0.90 and not is_repl:
+        if fid >= C["REPL_FIDELITY"] and not is_repl:
             self.ct["births_similar_no_write"] += 1
         if is_repl:
             self.ct["replication_events"] += 1
@@ -746,10 +755,16 @@ class Runner:
             tape[0:len(ga)] = ga
             tape[n:n + len(gb)] = gb
             ctxs = {}
+            # P-11: the exact pre-interaction state, so a candidate event can be re-executed
+            # against a randomized victim, and per-position provenance on the live tape.
+            st0 = ((None if a.regs is None else list(a.regs), a.fz, a.fc),
+                   (None if b.regs is None else list(b.regs), b.fz, b.fc))
+            prov, prov_lit = bytearray(len(tape)), bytearray(len(tape))
             for who, start, org in ((0, 0, a), (1, n, b)):
                 ctx = z8.Ctx(tape, start, n, policy=z8.ARENA, rng=self.rng,
                              copy_mut_rate=self.copy_mut, sense=who)
                 ctx.regs, ctx.fz, ctx.fc = org.regs, org.fz, org.fc
+                ctx.prov, ctx.prov_lit, ctx.who = prov, prov_lit, who + 1
                 z8.run(ctx, start, self.t["slice"], ops_enabled=self._ops_mask())
                 org.regs, org.fz, org.fc = ctx.regs, ctx.fz, ctx.fc
                 org.ops += ctx.ops
@@ -765,6 +780,7 @@ class Runner:
             # so a similarity test alone reports replication continuously and reports it
             # loudest exactly where nothing is happening.
             for org, old, new in ((a, ga, na), (b, gb, nb)):
+                pre_mut = new
                 new = self._mutate(new)
                 self.mem[org.slot:org.slot + self.slot_size] = bytes(self.slot_size)
                 self.mem[org.slot:org.slot + len(new)] = new
@@ -774,17 +790,39 @@ class Runner:
                 donor = b if org is a else a
                 fid_other = _fidelity(other, new)
                 donor_wrote = ctxs[id(donor)].writes_other
-                if fid_other >= 0.90 and fid_self < 0.90 and donor_wrote >= 0.25 * n:
+                if p11.predecessor_accepts(fid_other, fid_self, donor_wrote, n):
                     # this half was overwritten by (a copy of) the other organism
                     self.ct["replication_events"] += 1
                     self.ct["births_endogenous"] += 1
                     src = b if org is a else a
+                    # P-11. The predecessor branch above counts writes, not whether they
+                    # carried the donor's bytes; the edge is causal only if the donor also
+                    # rebuilds a randomized victim (see p11.py and P11_SPEC.md). The assay
+                    # re-executes this interaction on a private tape with a private RNG, so
+                    # it cannot perturb the world.
+                    vs = 0 if org is a else 1
+                    kw = dict(n=n, tape_len=len(tape), ga=ga, gb=gb, st_a=st0[0], st_b=st0[1],
+                              budget=self.t["slice"], ops_mask=self._ops_mask(),
+                              cmr=self.copy_mut, victim_side=vs,
+                              seed=(self.seed, G.cell_id(self.cell), self.epoch, i, vs))
+                    res = p11.assay(z8, **kw)
+                    v0 = 0 if vs == 0 else n
+                    diag = p11.ordinary_diagnostics(z8, final_half=pre_mut,
+                                                    prov_half=prov[v0:v0 + n],
+                                                    lit_half=prov_lit[v0:v0 + n], **kw)
+                    rec = {"pass": res["pass"], "draws_passed": res["draws_passed"],
+                           "C2": res["C2_majority"], "C4": res["C4_majority"],
+                           "C5": res["C5_majority"], **diag}
+                    if res["pass"]:
+                        self.ct["p11_events"] += 1
+                    for crit in ("C2", "C4", "C5"):
+                        if not rec[crit]:
+                            self.ct["p11_fail_" + crit] += 1
                     src.births += 1
                     src.fidelity = fid_other
                     src.repro_span = n
-                    # Causal: this branch is already gated on the donor having written at
-                    # least a quarter of the victim's half of the tape.
-                    self._lin_birth(self.next_oid, src.oid, org.niche, fid_other, n, True)
+                    self._lin_birth(self.next_oid, src.oid, org.niche, fid_other, n,
+                                    res["pass"], causal_pred=True, p11_rec=rec)
                     org.pid, org.anc, org.oid = src.oid, src.anc, self.next_oid
                     self.next_oid += 1
                     if self.first_replicator is None:
@@ -794,7 +832,7 @@ class Runner:
                                                  "donor_writes_other": donor_wrote,
                                                  "seeded": self.d["seeded_instrument"],
                                                  "slot": src.slot, "base_is_zero": src.slot == 0}
-                elif fid_other >= 0.90 and fid_self < 0.90:
+                elif fid_other >= C["PAIR_FID_OTHER_MIN"] and fid_self < C["PAIR_FID_SELF_MAX"]:
                     self.ct["births_similar_no_write"] += 1
 
     # ------------------------------------------------------------------ external control
@@ -1009,7 +1047,7 @@ class Runner:
             # final-state number as evidence for a historical crossing.
             if o.held > self.held_max_ever:
                 self.held_max_ever = o.held
-            if o.held >= CROSS_THRESH:
+            if o.held >= C["CROSS"]:
                 ev = {"epoch": self.epoch, "oid": o.oid, "held": o.held,
                       "comp": o.comp, "niche": o.niche, "anc": o.anc, "pid": o.pid,
                       "seeded": self.d["seeded_instrument"], "reads_at_answer": o.probe}
@@ -1154,7 +1192,7 @@ class Runner:
         agg["held_max_ever"] = round(self.held_max_ever, 4)
         agg["held_max_final"] = held_final
         agg["crossed_ever"] = bool(self.first_cross)
-        agg["crossed_at_final"] = bool(held_final >= CROSS_THRESH)
+        agg["crossed_at_final"] = bool(held_final >= C["CROSS"])
         agg["n_cross_events"] = len(self.cross_events)
 
         # ---- P-2: genealogy depth and CAUSAL replication depth ----
@@ -1168,6 +1206,15 @@ class Runner:
         agg["n_causal_lineages_depth_ge_2"] = sum(1 for v in per_causal.values() if v >= 2)
         agg["n_causal_lineages_depth_ge_5"] = sum(1 for v in per_causal.values() if v >= 5)
         agg["propagating_replicators"] = self._propagating_replicators(causal_parent)
+        # P-11: the predecessor criterion's depth, kept beside the causal one. For private
+        # slot births the two edge sets coincide; on the pair tape `causal` is P-11.
+        pred_parent = {e["child"]: e["parent"] for e in self.lineage
+                       if e["kind"] == "birth" and e.get("causal_pred")}
+        agg["max_predecessor_replication_depth"] = self._depths(pred_parent)[0]
+        agg["p11_events"] = self.ct["p11_events"]
+        agg["p11_fail_C2"] = self.ct["p11_fail_C2"]
+        agg["p11_fail_C4"] = self.ct["p11_fail_C4"]
+        agg["p11_fail_C5"] = self.ct["p11_fail_C5"]
 
         # ---- P-1: lineage completeness and the reservoir ancestry certificate ----
         agg["lineage_complete"] = bool(self.lineage_complete)

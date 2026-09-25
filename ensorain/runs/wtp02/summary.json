@@ -1,0 +1,85 @@
+{
+ "validation": {
+  "found_admitted_after": 29,
+  "V1_collapse_status": "DEGENERATE",
+  "V1_pass": true,
+  "V2_table_CGu": -0.030625286441997288,
+  "V2_pass": true,
+  "V3_same_seed_same_battery_graph": true,
+  "V3_transplant_deterministic": true,
+  "V3_pass": true,
+  "V4_truth_CG_real": 6.051122287365481,
+  "V4_truth_CG_shuffled": -0.193391074869249,
+  "V4_pass": true,
+  "ALL_PASS": true
+ },
+ "candidates": 24000,
+ "gates": {
+  "N2": 1983,
+  "N2b": 269,
+  "N5": 7512,
+  "N1": 4982,
+  "N2c": 1070,
+  "N3": 6308,
+  "ADMITTED": 1717,
+  "BUILD": 141,
+  "N4": 14,
+  "CRASH": 4
+ },
+ "admitted": 1500,
+ "life_status": {
+  "OK": 1478,
+  "DEGENERATE": 22
+ },
+ "frac_CGu_and_SD": 0.005333333333333333,
+ "n_CGu_and_SD": 8,
+ "flags": {
+  "D2": 81,
+  "D7": 92,
+  "D4": 107,
+  "D5": 62,
+  "D8": 15,
+  "D1": 11,
+  "D3": 15
+ },
+ "anomalies": 33,
+ "statuses": {
+  "UNRESOLVED": 9,
+  "FALSIFIED": 13,
+  "STRUCTURE-INDEPENDENT": 4,
+  "STRUCTURE-DEPENDENT": 1,
+  "METRIC ARTEFACT": 6
+ },
+ "structure_dependent": [
+  {
+   "j": 10,
+   "detector": "D3",
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.25
+   ]
+  }
+ ],
+ "causal_support": [
+  10
+ ],
+ "phase_boundaries": [],
+ "carriers": [
+  10
+ ],
+ "transferred": [
+  10
+ ],
+ "full_chain": [
+  {
+   "j": 10,
+   "detector": "D3",
+   "extra": [
+    "TRANSFERRED"
+   ]
+  }
+ ],
+ "VERDICT": "FOUND CANDIDATE INTELLIGENCE PHYSICS -- EXPAND"
+}

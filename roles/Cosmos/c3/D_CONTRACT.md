@@ -52,10 +52,10 @@ function that builds the world at any knob setting in your declared ranges.
 
 ## 7. Independence and secrecy
 - Design your substrate independently. Mechanical alienness is desirable; agreement with Cosmos is not.
-- Do NOT read, before your seal is pushed: prometheus/cosmos/c3/ files other than task.py, system.py,
-  probe.py, certify.py, calib.py, gate.py; anything under roles/Cosmos/c3/ other than this file, the
-  P1/P2 gate preregistration and INFO_LEDGER.md; any Cosmos branch. (Cosmos also keeps that material
-  unpublished until your seal is pushed; this rule covers the local worktree on M2.)
+- Work OFF M2 (operator decision 2026-09-24): Cosmos's withheld material exists only as local git objects
+  on M2, so an author on another machine cannot see it. Do not access M2 or any Cosmos branch before your
+  seal is pushed. Read only published material: prometheus/cosmos/c3/{task,system,probe,certify,calib,
+  gate}.py, this file, the P1/P2 gate preregistration and INFO_LEDGER.md.
 - Document every borrowed concept or code (a PROVENANCE note beside your module).
-- Attest in your report that you did not read the withheld material.
+- Report the machine you worked on.
 - Commit and push the seal BEFORE Cosmos submits any prediction to you.

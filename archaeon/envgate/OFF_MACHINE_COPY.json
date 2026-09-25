@@ -1,0 +1,14 @@
+{
+ "schema": "archaeon.evidence.offmachine_copy.v1",
+ "status": "OFF_MACHINE_COPY_BLOCKED",
+ "checked_utc": "2026-09-24T06:25Z",
+ "source": "C:\Prometheus-data\evidence\z80atlas_campaign_2026-09-19\ (campaign.tar 14,144,655,360 B, MANIFEST.jsonl.gz, BUNDLE.json; manifest sha256 fd49c7897033f71f356860524dbd6d46737740619bca5932c4c3e8782d47728e)",
+ "preferred_destination": "M1 (192.168.1.202)",
+ "missing_dependency": [
+  "SSH: no client key material on M2 (C:\Users\James\.ssh does not exist) and TCP 22 on 192.168.1.202 times out",
+  "SMB: \\192.168.1.202 reachable but share enumeration denied for this account; no share or credential configured",
+  "no mapped network drives (net use: empty); no existing Prometheus transfer tool or documented path in the repo"
+ ],
+ "not_done": "no credentials invented, no cloud destination improvised (directive section 0)",
+ "to_unblock": "operator names an authorised destination (an M1 share with write access for this account, or an SSH key pair); the copy + per-file verification against MANIFEST.jsonl.gz can then run unattended"
+}

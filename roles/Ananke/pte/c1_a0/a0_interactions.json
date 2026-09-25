@@ -1,0 +1,533 @@
+{
+ "per_family": {
+  "FLIP": {
+   "n_fit": 491,
+   "n_conf": 509,
+   "L1": {
+    "pos_rate_fit": 0.1955193482688391,
+    "pos_rate_conf": 0.15717092337917485,
+    "auc_single": 0.9624125874125873,
+    "auc_ratios": 0.9602272727272727,
+    "auc_tree": 0.8628059440559441,
+    "tree": "|--- rules=4 <= 0.50\n|   |--- state_dim=8 <= 0.50\n|   |   |--- n_sites=64 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- n_sites=64 >  0.50\n|   |   |   |--- class: False\n|   |--- state_dim=8 >  0.50\n|   |   |--- rules=2 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- rules=2 >  0.50\n|   |   |   |--- class: False\n|--- rules=4 >  0.50\n|   |--- state_dim=1 <= 0.50\n|   |   |--- state_dim=2 <= 0.50\n|   |   |   |--- class: True\n|   |   |--- state_dim=2 >  0.50\n|   |   |   |--- class: False\n|   |--- state_dim=1 >  0.50\n|   |   |--- update_p=0.5 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- update_p=0.5 >  0.50\n|   |   |   |--- class: False\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": 0.1974969059228897,
+      "thr_conf": 0.29519371688365936,
+      "bin_fit": 1,
+      "bin_conf": 2,
+      "auc_gain": -2.9137529137357454e-05,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 0.14692430943250656,
+      "thr_conf": 0.6365628242492676,
+      "bin_fit": 1,
+      "bin_conf": 3,
+      "auc_gain": -0.001311188811188746,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 0.8958797454833984,
+      "thr_conf": 0.17046329006552696,
+      "bin_fit": 4,
+      "bin_conf": 1,
+      "auc_gain": 0.00014568764568778647,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 3.751368999481201,
+      "thr_conf": 0.8047189712524414,
+      "bin_fit": 8,
+      "bin_conf": 2,
+      "auc_gain": -0.001252913752913587,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 0.8243293166160583,
+      "thr_conf": 0.8243293166160583,
+      "bin_fit": 1,
+      "bin_conf": 1,
+      "auc_gain": -8.741258741251645e-05,
+      "EXPLAINS": false
+     }
+    },
+    "auc_null_within_topology": 0.45504079254079255
+   },
+   "L2": {
+    "pos_rate_fit": 0.018329938900203666,
+    "pos_rate_conf": 0.007858546168958742,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   },
+   "L2p": {
+    "pos_rate_fit": 0.0,
+    "pos_rate_conf": 0.0,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   }
+  },
+  "HOLD": {
+   "n_fit": 494,
+   "n_conf": 506,
+   "L1": {
+    "pos_rate_fit": 0.15587044534412955,
+    "pos_rate_conf": 0.10869565217391304,
+    "auc_single": 0.9221931062285829,
+    "auc_ratios": 0.9103809715783109,
+    "auc_tree": 0.884418464019351,
+    "tree": "|--- rules=4 <= 0.50\n|   |--- rules=2 <= 0.50\n|   |   |--- class: False\n|   |--- rules=2 >  0.50\n|   |   |--- state_dim=8 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- state_dim=8 >  0.50\n|   |   |   |--- class: False\n|--- rules=4 >  0.50\n|   |--- state_dim=8 <= 0.50\n|   |   |--- prog_len=16 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- prog_len=16 >  0.50\n|   |   |   |--- class: False\n|   |--- state_dim=8 >  0.50\n|   |   |--- setrule=0 <= 0.50\n|   |   |   |--- class: True\n|   |   |--- setrule=0 >  0.50\n|   |   |   |--- class: False\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": NaN,
+      "thr_conf": NaN,
+      "bin_fit": 1,
+      "bin_conf": 1,
+      "auc_gain": 0.0,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 0.8585179448127747,
+      "thr_conf": 1.0224250555038452,
+      "bin_fit": 3,
+      "bin_conf": 4,
+      "auc_gain": 0.0009272324128201115,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 1.9033312797546387,
+      "thr_conf": 1.9033312797546387,
+      "bin_fit": 6,
+      "bin_conf": 6,
+      "auc_gain": -0.0006853456964320825,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 1.138633668422699,
+      "thr_conf": 4.633596658706665,
+      "bin_fit": 2,
+      "bin_conf": 8,
+      "auc_gain": -0.00483773432775636,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 1.0270618796348572,
+      "thr_conf": 1.0270618796348572,
+      "bin_fit": 2,
+      "bin_conf": 2,
+      "auc_gain": -0.0004837734327756138,
+      "EXPLAINS": false
+     }
+    },
+    "auc_null_within_topology": 0.44329772223342073
+   },
+   "L2": {
+    "pos_rate_fit": 0.2793522267206478,
+    "pos_rate_conf": 0.25296442687747034,
+    "auc_single": 0.6905795304232805,
+    "auc_ratios": 0.7019675925925926,
+    "auc_tree": 0.7143373842592593,
+    "tree": "|--- R_clock <= 1.03\n|   |--- rules=1 <= 0.50\n|   |   |--- prog_len=16 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- prog_len=16 >  0.50\n|   |   |   |--- class: True\n|   |--- rules=1 >  0.50\n|   |   |--- prog_len=16 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- prog_len=16 >  0.50\n|   |   |   |--- class: False\n|--- R_clock >  1.03\n|   |--- d=3 <= 0.50\n|   |   |--- class: False\n|   |--- d=3 >  0.50\n|   |   |--- class: False\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": NaN,
+      "thr_conf": NaN,
+      "bin_fit": 1,
+      "bin_conf": 1,
+      "auc_gain": 0.0,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 2.304342031478882,
+      "thr_conf": 1.2578795552253723,
+      "bin_fit": 10,
+      "bin_conf": 5,
+      "auc_gain": -0.0012194113756613945,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 0.31430432200431824,
+      "thr_conf": 0.17046329006552696,
+      "bin_fit": 2,
+      "bin_conf": 1,
+      "auc_gain": -0.00033068783068790353,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 4.033103823661804,
+      "thr_conf": 0.6263814866542816,
+      "bin_fit": 8,
+      "bin_conf": 1,
+      "auc_gain": -0.00549768518518523,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 1.0270618796348572,
+      "thr_conf": 1.0270618796348572,
+      "bin_fit": 2,
+      "bin_conf": 2,
+      "auc_gain": 0.020357969576719537,
+      "EXPLAINS": true
+     }
+    },
+    "auc_null_within_topology": 0.4813368055555555
+   },
+   "L2p": {
+    "pos_rate_fit": 0.8785425101214575,
+    "pos_rate_conf": 0.8715415019762845,
+    "auc_single": 0.9908599337170766,
+    "auc_ratios": 0.9894993894993894,
+    "auc_tree": 0.9916274201988488,
+    "tree": "|--- R_mem <= 0.31\n|   |--- update_mode=async <= 0.50\n|   |   |--- class: True\n|   |--- update_mode=async >  0.50\n|   |   |--- class: False\n|--- R_mem >  0.31\n|   |--- class: True\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": NaN,
+      "thr_conf": NaN,
+      "bin_fit": 1,
+      "bin_conf": 1,
+      "auc_gain": 0.0,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 0.4476356953382492,
+      "thr_conf": 1.5637310147285461,
+      "bin_fit": 1,
+      "bin_conf": 7,
+      "auc_gain": -3.488574917143161e-05,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 0.31430432200431824,
+      "thr_conf": 0.31430432200431824,
+      "bin_fit": 2,
+      "bin_conf": 2,
+      "auc_gain": 0.0004186289900575124,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 2.8888261318206787,
+      "thr_conf": 0.6263814866542816,
+      "bin_fit": 7,
+      "bin_conf": 1,
+      "auc_gain": -6.977149834297425e-05,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 1.0270618796348572,
+      "thr_conf": 1.0270618796348572,
+      "bin_fit": 2,
+      "bin_conf": 2,
+      "auc_gain": -3.488574917143161e-05,
+      "EXPLAINS": false
+     }
+    },
+    "auc_null_within_topology": 0.5339612768184195
+   }
+  },
+  "MAJ": {
+   "n_fit": 497,
+   "n_conf": 503,
+   "L1": {
+    "pos_rate_fit": 0.2193158953722334,
+    "pos_rate_conf": 0.23260437375745527,
+    "auc_single": 0.9553164164563128,
+    "auc_ratios": 0.9494265090120013,
+    "auc_tree": 0.8885235374872682,
+    "tree": "|--- rules=4 <= 0.50\n|   |--- rules=1 <= 0.50\n|   |   |--- state_dim=8 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- state_dim=8 >  0.50\n|   |   |   |--- class: False\n|   |--- rules=1 >  0.50\n|   |   |--- class: False\n|--- rules=4 >  0.50\n|   |--- state_dim=1 <= 0.50\n|   |   |--- prog_len=8 <= 0.50\n|   |   |   |--- class: True\n|   |   |--- prog_len=8 >  0.50\n|   |   |   |--- class: False\n|   |--- state_dim=1 >  0.50\n|   |   |--- n_sites=100 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- n_sites=100 >  0.50\n|   |   |   |--- class: False\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": 0.6772728264331818,
+      "thr_conf": 0.6772728264331818,
+      "bin_fit": 5,
+      "bin_conf": 5,
+      "auc_gain": 0.00035428014702620914,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 1.4359884858131409,
+      "thr_conf": 1.3142436742782593,
+      "bin_fit": 6,
+      "bin_conf": 5,
+      "auc_gain": 0.00011071254594574587,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 5.180867433547974,
+      "thr_conf": 1.9033312797546387,
+      "bin_fit": 9,
+      "bin_conf": 5,
+      "auc_gain": -0.0002214250918913807,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 3.0816574096679688,
+      "thr_conf": 0.31430432200431824,
+      "bin_fit": 7,
+      "bin_conf": 1,
+      "auc_gain": -0.00011071254594563484,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 1.0270618796348572,
+      "thr_conf": 0.8243293166160583,
+      "bin_fit": 2,
+      "bin_conf": 1,
+      "auc_gain": -6.642752756746972e-05,
+      "EXPLAINS": false
+     }
+    },
+    "auc_null_within_topology": 0.4078428767547939
+   },
+   "L2": {
+    "pos_rate_fit": 0.004024144869215292,
+    "pos_rate_conf": 0.007952286282306162,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   },
+   "L2p": {
+    "pos_rate_fit": 0.0,
+    "pos_rate_conf": 0.0,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   }
+  },
+  "RELAY": {
+   "n_fit": 515,
+   "n_conf": 485,
+   "L1": {
+    "pos_rate_fit": 0.11067961165048544,
+    "pos_rate_conf": 0.10721649484536082,
+    "auc_single": 0.9101971931071238,
+    "auc_ratios": 0.9149937821993249,
+    "auc_tree": 0.8394919168591224,
+    "tree": "|--- rules=4 <= 0.50\n|   |--- prog_len=16 <= 0.50\n|   |   |--- class: False\n|   |--- prog_len=16 >  0.50\n|   |   |--- rules=1 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- rules=1 >  0.50\n|   |   |   |--- class: False\n|--- rules=4 >  0.50\n|   |--- prog_len=8 <= 0.50\n|   |   |--- state_dim=8 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- state_dim=8 >  0.50\n|   |   |   |--- class: True\n|   |--- prog_len=8 >  0.50\n|   |   |--- payload_width=1 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- payload_width=1 >  0.50\n|   |   |   |--- class: False\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": 0.29519371688365936,
+      "thr_conf": 0.8246296942234039,
+      "bin_fit": 2,
+      "bin_conf": 7,
+      "auc_gain": -0.0003553028957186122,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 1.3142436742782593,
+      "thr_conf": 0.4553885757923126,
+      "bin_fit": 6,
+      "bin_conf": 2,
+      "auc_gain": 0.0033753775093268157,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 0.17046329006552696,
+      "thr_conf": 2.51521897315979,
+      "bin_fit": 1,
+      "bin_conf": 6,
+      "auc_gain": -0.0011547344110853786,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 3.357691764831543,
+      "thr_conf": 2.4337671995162964,
+      "bin_fit": 7,
+      "bin_conf": 5,
+      "auc_gain": 0.0026647717178894803,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 1.0270618796348572,
+      "thr_conf": 1.0270618796348572,
+      "bin_fit": 2,
+      "bin_conf": 2,
+      "auc_gain": -0.0008882572392964194,
+      "EXPLAINS": false
+     }
+    },
+    "auc_null_within_topology": 0.5724373778646296
+   },
+   "L2": {
+    "pos_rate_fit": 0.009708737864077669,
+    "pos_rate_conf": 0.004123711340206186,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   },
+   "L2p": {
+    "pos_rate_fit": 0.017475728155339806,
+    "pos_rate_conf": 0.020618556701030927,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   }
+  },
+  "XOR": {
+   "n_fit": 482,
+   "n_conf": 518,
+   "L1": {
+    "pos_rate_fit": 0.10580912863070539,
+    "pos_rate_conf": 0.11003861003861004,
+    "auc_single": 0.9136887772576778,
+    "auc_ratios": 0.8891806522814629,
+    "auc_tree": 0.863454732275374,
+    "tree": "|--- state_dim=8 <= 0.50\n|   |--- rules=4 <= 0.50\n|   |   |--- prog_len=16 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- prog_len=16 >  0.50\n|   |   |   |--- class: False\n|   |--- rules=4 >  0.50\n|   |   |--- state_dim=4 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- state_dim=4 >  0.50\n|   |   |   |--- class: False\n|--- state_dim=8 >  0.50\n|   |--- rules=1 <= 0.50\n|   |   |--- channels=4 <= 0.50\n|   |   |   |--- class: True\n|   |   |--- channels=4 >  0.50\n|   |   |   |--- class: False\n|   |--- rules=1 >  0.50\n|   |   |--- R_clock <= 1.03\n|   |   |   |--- class: False\n|   |   |--- R_clock >  1.03\n|   |   |   |--- class: False\n",
+    "ratios": {
+     "R_time": {
+      "thr_fit": 0.24753862619400024,
+      "thr_conf": 0.6772728264331818,
+      "bin_fit": 2,
+      "bin_conf": 5,
+      "auc_gain": -0.00015222437873430028,
+      "EXPLAINS": false
+     },
+     "R_surv": {
+      "thr_fit": 0.5182734131813049,
+      "thr_conf": 2.364966630935669,
+      "bin_fit": 2,
+      "bin_conf": 10,
+      "auc_gain": -7.611218936720565e-05,
+      "EXPLAINS": false
+     },
+     "R_mem": {
+      "thr_fit": 0.31430432200431824,
+      "thr_conf": 3.492126703262329,
+      "bin_fit": 2,
+      "bin_conf": 7,
+      "auc_gain": 3.8056094683547315e-05,
+      "EXPLAINS": false
+     },
+     "R_band": {
+      "thr_fit": 1.825329065322876,
+      "thr_conf": 1.138633668422699,
+      "bin_fit": 4,
+      "bin_conf": 2,
+      "auc_gain": 0.0005708414202534318,
+      "EXPLAINS": false
+     },
+     "R_clock": {
+      "thr_fit": 1.0270618796348572,
+      "thr_conf": 1.0270618796348572,
+      "bin_fit": 2,
+      "bin_conf": 2,
+      "auc_gain": 0.000837234083038374,
+      "EXPLAINS": false
+     }
+    },
+    "auc_null_within_topology": 0.5621265745709175
+   },
+   "L2": {
+    "pos_rate_fit": 0.002074688796680498,
+    "pos_rate_conf": 0.003861003861003861,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   },
+   "L2p": {
+    "pos_rate_fit": 0.0,
+    "pos_rate_conf": 0.0,
+    "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+   }
+  }
+ },
+ "pooled_comm_families": {
+  "n_fit": 1494,
+  "n_conf": 1506,
+  "L1": {
+   "pos_rate_fit": 0.14524765729585007,
+   "pos_rate_conf": 0.150066401062417,
+   "auc_single": 0.9531077157079646,
+   "auc_ratios": 0.9495367809734513,
+   "auc_tree": 0.8890002765486726,
+   "tree": "|--- rules=4 <= 0.50\n|   |--- rules=1 <= 0.50\n|   |   |--- prog_len=16 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- prog_len=16 >  0.50\n|   |   |   |--- class: False\n|   |--- rules=1 >  0.50\n|   |   |--- R_mem <= 0.17\n|   |   |   |--- class: False\n|   |   |--- R_mem >  0.17\n|   |   |   |--- class: False\n|--- rules=4 >  0.50\n|   |--- state_dim=8 <= 0.50\n|   |   |--- state_dim=4 <= 0.50\n|   |   |   |--- class: False\n|   |   |--- state_dim=4 >  0.50\n|   |   |   |--- class: False\n|   |--- state_dim=8 >  0.50\n|   |   |--- prog_len=8 <= 0.50\n|   |   |   |--- class: True\n|   |   |--- prog_len=8 >  0.50\n|   |   |   |--- class: False\n",
+   "ratios": {
+    "R_time": {
+     "thr_fit": 0.6772728264331818,
+     "thr_conf": 1.6932532787322998,
+     "bin_fit": 5,
+     "bin_conf": 10,
+     "auc_gain": -7.950774336284994e-05,
+     "EXPLAINS": false
+    },
+    "R_surv": {
+     "thr_fit": 1.4400197863578796,
+     "thr_conf": 2.6438586711883545,
+     "bin_fit": 7,
+     "bin_conf": 10,
+     "auc_gain": -0.0015141039823008962,
+     "EXPLAINS": false
+    },
+    "R_mem": {
+     "thr_fit": 0.17046329006552696,
+     "thr_conf": 3.492126703262329,
+     "bin_fit": 1,
+     "bin_conf": 7,
+     "auc_gain": -1.0370575221241296e-05,
+     "EXPLAINS": false
+    },
+    "R_band": {
+     "thr_fit": 4.4325852394104,
+     "thr_conf": 1.138633668422699,
+     "bin_fit": 8,
+     "bin_conf": 2,
+     "auc_gain": 9.67920353982521e-05,
+     "EXPLAINS": false
+    },
+    "R_clock": {
+     "thr_fit": 1.0270618796348572,
+     "thr_conf": 1.0270618796348572,
+     "bin_fit": 2,
+     "bin_conf": 2,
+     "auc_gain": 3.456858407080432e-05,
+     "EXPLAINS": false
+    }
+   },
+   "auc_null_within_topology": 0.42000829646017696
+  },
+  "L2": {
+   "pos_rate_fit": 0.00535475234270415,
+   "pos_rate_conf": 0.005312084993359893,
+   "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+  },
+  "L2p": {
+   "pos_rate_fit": 0.006024096385542169,
+   "pos_rate_conf": 0.006640106241699867,
+   "status": "INDETERMINATE: fewer than 10 positives or negatives in FIT"
+  }
+ },
+ "ladder": {
+  "FLIP": {
+   "n": 1000,
+   "L1": 176,
+   "L2": 13,
+   "L2p": 0,
+   "L2_given_L1": 0.03409090909090909,
+   "L2_given_notL1": 0.00849514563106796,
+   "L2p_given_L2": 0.0
+  },
+  "HOLD": {
+   "n": 1000,
+   "L1": 132,
+   "L2": 266,
+   "L2p": 875,
+   "L2_given_L1": 0.49242424242424243,
+   "L2_given_notL1": 0.2315668202764977,
+   "L2p_given_L2": 0.8533834586466166
+  },
+  "MAJ": {
+   "n": 1000,
+   "L1": 226,
+   "L2": 6,
+   "L2p": 0,
+   "L2_given_L1": 0.01327433628318584,
+   "L2_given_notL1": 0.003875968992248062,
+   "L2p_given_L2": 0.0
+  },
+  "RELAY": {
+   "n": 1000,
+   "L1": 109,
+   "L2": 7,
+   "L2p": 19,
+   "L2_given_L1": 0.01834862385321101,
+   "L2_given_notL1": 0.005611672278338945,
+   "L2p_given_L2": 0.0
+  },
+  "XOR": {
+   "n": 1000,
+   "L1": 108,
+   "L2": 3,
+   "L2p": 0,
+   "L2_given_L1": 0.009259259259259259,
+   "L2_given_notL1": 0.002242152466367713,
+   "L2p_given_L2": 0.0
+  }
+ }
+}

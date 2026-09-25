@@ -1,0 +1,415 @@
+{
+ "validation": {
+  "V1_teeth": [
+   {
+    "gen": "lowrank",
+    "fired": [
+     [
+      "lowrank",
+      0.567,
+      0.646
+     ],
+     [
+      "cp",
+      0.119,
+      0.237
+     ],
+     [
+      "tt",
+      0.273,
+      0.331
+     ],
+     [
+      "hybrid_al",
+      0.131,
+      0.24
+     ]
+    ]
+   },
+   {
+    "gen": "cp",
+    "fired": [
+     [
+      "cp",
+      2.613,
+      2.663
+     ],
+     [
+      "tt",
+      2.187,
+      2.21
+     ]
+    ]
+   },
+   {
+    "gen": "spectral",
+    "fired": [
+     [
+      "dct",
+      1.216,
+      1.201
+     ]
+    ]
+   }
+  ],
+  "V1_pass": true,
+  "V7_recomb": [
+   [
+    "dct",
+    0.585,
+    0.54
+   ]
+  ],
+  "V7_pass": true,
+  "V5_stats": {
+   "mean_diff": 2.7755575615628914e-17,
+   "var_ratio": 0.9999999999999998,
+   "marg_max_diff": 4.440892098500626e-16
+  },
+  "V5_pass": true,
+  "V5_structure_destroyed": [
+   true,
+   true,
+   true
+  ],
+  "V2_max_structured_XC": -1.6241241544471197,
+  "V2_pass": true,
+  "V3": {
+   "fired": [],
+   "constant_XC": [
+    -0.1468469469719711
+   ],
+   "marg_XC": {}
+  },
+  "V3_pass": true,
+  "V4_pass": true,
+  "V6": {
+   "constant": {
+    "attempted": "ablate_half",
+    "changed": false,
+    "state_changed": false,
+    "pred_rms_change": 0.0
+   },
+   "trained": {
+    "attempted": "ablate_half",
+    "changed": true,
+    "state_changed": true,
+    "pred_rms_change": 0.5465716034843526
+   }
+  },
+  "V6_pass": true,
+  "ALL_PASS": true
+ },
+ "candidates": 38000,
+ "gates": {
+  "G1_BUDGET": 11401,
+  "G2_NONDEG": 8563,
+  "G3_ECONOMY": 10068,
+  "G3_INFO_VALUELESS": 4837,
+  "G0_BUILD": 730,
+  "G4_TRIVIAL_WINS": 632,
+  "G5_DEMAND": 867,
+  "G4_EXPOSURE": 499,
+  "G4_ORACLE_FAILS": 47,
+  "CRASH": 27,
+  "ADMITTED": 326,
+  "G6_SURROGATE": 3,
+  "LINEAGE_CAP": 145
+ },
+ "admitted": 181,
+ "lineages": 13,
+ "flags": {
+  "X1": 222,
+  "X3": 358,
+  "X6": 51,
+  "X4": 5
+ },
+ "flag_lineages": {
+  "X1": 9,
+  "X6": 3,
+  "X3": 13,
+  "X4": 3
+ },
+ "wave_c": {
+  "X6:STRUCTURE-DEPENDENT": 4,
+  "X6:FALSIFIED": 2,
+  "X1:STRUCTURE-DEPENDENT": 10,
+  "X1:UNRESOLVED": 2,
+  "X4:STRUCTURE-DEPENDENT": 1,
+  "X4:UNRESOLVED": 1,
+  "X4:FALSIFIED": 3,
+  "X3:FALSIFIED": 9,
+  "X3:UNRESOLVED": 3
+ },
+ "specimens": [
+  {
+   "q": 0,
+   "h": "11bed5f191c5f958",
+   "root": "4ab458f79eb1d263",
+   "flag": {
+    "det": "X6",
+    "substrate": "cp",
+    "set": "recomb",
+    "XC": 2.634706610063129,
+    "SD": 3.090112949079227
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "RECOMBINES",
+    "TRANSFERS"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 1,
+   "h": "11bed5f191c5f958",
+   "root": "4ab458f79eb1d263",
+   "flag": {
+    "det": "X6",
+    "substrate": "lowrank",
+    "set": "recomb",
+    "XC": 2.629687736497625,
+    "SD": 3.0860792697185264
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "RECOMBINES",
+    "TRANSFERS"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 2,
+   "h": "085519679993f05f",
+   "root": "085519679993f05f",
+   "flag": {
+    "det": "X6",
+    "substrate": "tt",
+    "set": "recomb",
+    "XC": 0.31678114240311095,
+    "SD": 0.6919770027472661
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "RECOMBINES"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 3,
+   "h": "085519679993f05f",
+   "root": "085519679993f05f",
+   "flag": {
+    "det": "X6",
+    "substrate": "lowrank",
+    "set": "recomb",
+    "XC": 0.31677777066640134,
+    "SD": 0.694319236704286
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "RECOMBINES"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 6,
+   "h": "faf3e97b72c68fff",
+   "root": "faf3e97b72c68fff",
+   "flag": {
+    "det": "X1",
+    "substrate": "lowrank",
+    "set": "interp",
+    "XC": 3.2379381091723705,
+    "SD": 3.279163469199156
+   },
+   "carrier": false,
+   "reskin_loses": false,
+   "extra": [],
+   "full_chain": false
+  },
+  {
+   "q": 7,
+   "h": "69be5ebd4d252e1e",
+   "root": "faf3e97b72c68fff",
+   "flag": {
+    "det": "X1",
+    "substrate": "lowrank",
+    "set": "interp",
+    "XC": 2.815560614067393,
+    "SD": 2.901443839160679
+   },
+   "carrier": false,
+   "reskin_loses": false,
+   "extra": [
+    "TRANSFERS"
+   ],
+   "full_chain": false
+  },
+  {
+   "q": 8,
+   "h": "7678f92b593ba298",
+   "root": "da94bd988f42d5f0",
+   "flag": {
+    "det": "X1",
+    "substrate": "tt",
+    "set": "interp",
+    "XC": 2.4974208136780836,
+    "SD": 2.546789245726962
+   },
+   "carrier": false,
+   "reskin_loses": true,
+   "extra": [
+    "TRANSFERS"
+   ],
+   "full_chain": false
+  },
+  {
+   "q": 9,
+   "h": "565adc406940b31b",
+   "root": "daebe1f3f337e5f6",
+   "flag": {
+    "det": "X1",
+    "substrate": "lowrank",
+    "set": "interp",
+    "XC": 2.1666058900932486,
+    "SD": 2.283784394071802
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "TRANSFERS"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 10,
+   "h": "d7496aa1842b10ee",
+   "root": "4ab458f79eb1d263",
+   "flag": {
+    "det": "X1",
+    "substrate": "tt",
+    "set": "interp",
+    "XC": 1.9541262235408106,
+    "SD": 2.1940671563631846
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "TRANSFERS"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 11,
+   "h": "d7496aa1842b10ee",
+   "root": "4ab458f79eb1d263",
+   "flag": {
+    "det": "X1",
+    "substrate": "cp",
+    "set": "interp",
+    "XC": 1.892362867669969,
+    "SD": 2.1791594004503887
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "RECOMBINES",
+    "TRANSFERS"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 12,
+   "h": "ea7b491a37114dbc",
+   "root": "000baa3eb75c2a96",
+   "flag": {
+    "det": "X1",
+    "substrate": "tt",
+    "set": "interp",
+    "XC": 1.7181343810705052,
+    "SD": 1.7949075183242644
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "TRANSFERS",
+    "PHASE_BOUNDARY"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 13,
+   "h": "26aaeec35d80de21",
+   "root": "000baa3eb75c2a96",
+   "flag": {
+    "det": "X1",
+    "substrate": "tt",
+    "set": "interp",
+    "XC": 1.6240445879963696,
+    "SD": 1.7235941055494899
+   },
+   "carrier": true,
+   "reskin_loses": true,
+   "extra": [
+    "TRANSFERS"
+   ],
+   "full_chain": true
+  },
+  {
+   "q": 14,
+   "h": "7678f92b593ba298",
+   "root": "da94bd988f42d5f0",
+   "flag": {
+    "det": "X1",
+    "substrate": "lowrank",
+    "set": "interp",
+    "XC": 1.2350601648658825,
+    "SD": 1.3066386696253989
+   },
+   "carrier": false,
+   "reskin_loses": false,
+   "extra": [],
+   "full_chain": false
+  },
+  {
+   "q": 15,
+   "h": "adb76a7917a3f669",
+   "root": "d57211c7120dbf66",
+   "flag": {
+    "det": "X1",
+    "substrate": "lowrank",
+    "set": "interp",
+    "XC": 0.5702846374407229,
+    "SD": 0.6719930656993629
+   },
+   "carrier": false,
+   "reskin_loses": false,
+   "extra": [],
+   "full_chain": false
+  },
+  {
+   "q": 18,
+   "h": "72080e5e3fffc91d",
+   "root": "faf3e97b72c68fff",
+   "flag": {
+    "det": "X4",
+    "set": "interp",
+    "excess": 0.3688380442867849,
+    "SD": 0.35509974841210723
+   },
+   "carrier": false,
+   "reskin_loses": false,
+   "extra": [],
+   "full_chain": false
+  }
+ ],
+ "replicated_crossovers": 0,
+ "bracketed_crossovers": 0,
+ "sd_lineages": 7,
+ "VERDICT": "CANDIDATE PHYSICS FOUND -- DEEPEN"
+}

@@ -1,0 +1,5298 @@
+{
+ "flag_counts": {
+  "D2": 81,
+  "D7": 92,
+  "D4": 107,
+  "D5": 62,
+  "D8": 15,
+  "D1": 11,
+  "D3": 15
+ },
+ "refs": {
+  "D3_top1": 0.06455056059594118,
+  "UG_top5": 0.7827002434331831,
+  "n": 1476
+ },
+ "anomalies": [
+  {
+   "j": 0,
+   "detector": "D1",
+   "genome_hash": "0e3e9ca1cb88f30c",
+   "waveA_i": 1415,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.13894949044713287,
+    "median_stat": 0.08500655417106956,
+    "degenerate": 0,
+    "real": [
+     0.08500655417106956,
+     0.06468653495389964,
+     0.02092912721572461,
+     0.1979538799917343,
+     0.22974041786324106
+    ],
+    "null": [
+     -0.05394293627606331,
+     0.03516290077152112,
+     0.044124553415709644,
+     0.002791963592453567,
+     0.05978067959789274
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 5,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.34742139587670046,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.3890237927106947,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 359.73312556394234,
+     "metabolism": 1.1272139045913836,
+     "gain": 4.460176353439172,
+     "theta": -0.039306080630420126,
+     "regrow": 599,
+     "query_every": 5,
+     "query_reward": 9.337540588377763,
+     "tol": 0.05645069576655251,
+     "p_compute": 0.0003541087517343605,
+     "p_read": 3.923980903634933e-05,
+     "p_write": 7.809270057305722e-05,
+     "p_move": 0.14794085392470946,
+     "p_probe": 2.413450183275275,
+     "p_rollout": 0.43260135494471597,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.3582962077157026,
+     "depth": 3,
+     "temp": 2.0625160588376206
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.007031311014070879
+    },
+    "time": {
+     "lifetime": 1901,
+     "checkpoints": 10,
+     "lifetime2": 1901
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "2e592945baef7840"
+     ],
+     "mutations": [
+      "law:search"
+     ]
+    }
+   }
+  },
+  {
+   "j": 1,
+   "detector": "D1",
+   "genome_hash": "d829b4a4dd79d9a6",
+   "waveA_i": 812,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.03471968824353041,
+    "median_stat": -0.13630661027416124,
+    "degenerate": 0,
+    "real": [
+     NaN,
+     NaN,
+     -0.36465491340422596,
+     0.06595489776874883,
+     -0.13630661027416124
+    ],
+    "null": [
+     0.029921848464857403,
+     NaN,
+     NaN,
+     -0.013621510520479538,
+     -0.1261695784719937
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.03
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 5,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.386476014956328,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.3091410765403102,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 132.66273938389463,
+     "metabolism": 0.1037538447264714,
+     "gain": 2.6554587562503174,
+     "theta": 0.8052240993525275,
+     "regrow": 67,
+     "query_every": 20,
+     "query_reward": 4.660190056460508,
+     "tol": 0.30154501796185795,
+     "p_compute": 0.006941708173373236,
+     "p_read": 0.005463118013491494,
+     "p_write": 6.809333994368776e-05,
+     "p_move": 0.42774692472222076,
+     "p_probe": 0.711764454086741,
+     "p_rollout": 0.42171708656157825,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.03
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "greedy",
+     "eps": 0.19419237296480812,
+     "depth": 3,
+     "temp": 1.6342725249696601
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.0496989514353951
+    },
+    "time": {
+     "lifetime": 1901,
+     "checkpoints": 10,
+     "lifetime2": 1901
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "7bfaed0d6e99557a"
+     ],
+     "mutations": [
+      "credit.delay",
+      "credit.sign_flip",
+      "transition.rewire_frac"
+     ]
+    }
+   }
+  },
+  {
+   "j": 2,
+   "detector": "D1",
+   "genome_hash": "45706a898230b127",
+   "waveA_i": 208,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.14676150605933466,
+    "median_stat": 0.007628065094357232,
+    "degenerate": 0,
+    "real": [
+     -0.0020979508816516557,
+     0.007628065094357232,
+     0.027508803507734658,
+     0.012008597376602252,
+     -0.03475492366261076
+    ],
+    "null": [
+     0.027730226826720973,
+     -0.233899728244604,
+     -0.1192527025516,
+     -0.14003200111005434,
+     -0.07767277983740745
+    ]
+   },
+   "klass": [
+    "none",
+    "dag",
+    "none",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      29,
+      2,
+      3
+     ],
+     "gen": "spectral",
+     "rank": 2,
+     "chain": [
+      {
+       "op": "f_qr_mode",
+       "p": {
+        "mode": 14
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "dag",
+     "n_nodes": 968,
+     "k": 4,
+     "p": 0.2868099528143198,
+     "directed": 0.061437703801881446,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 6,
+     "k": 2,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_sort",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.27672817069499517,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 26,
+     "basis_change_period": 0,
+     "rewire_period": 139,
+     "rewire_frac": 0.39294378832141247,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.02142535468288248,
+     "door_close": 0.0,
+     "hazard_frac": 0.19701913155404904,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 194.42868820089524,
+     "metabolism": 0.3161460099503868,
+     "gain": 2.1978850064262327,
+     "theta": -0.31270247161344855,
+     "regrow": 276,
+     "query_every": 10,
+     "query_reward": 5.009022587702562,
+     "tol": 0.09530215015760576,
+     "p_compute": 0.0008918546119141628,
+     "p_read": 0.0001180361061031271,
+     "p_write": 0.005155621004007699,
+     "p_move": 0.768600658412237,
+     "p_probe": 2.4078499582911905,
+     "p_rollout": 0.1424628403007029,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "none",
+     "cap": 130,
+     "bits": 64,
+     "forget": "random",
+     "forget_rate": 0.00694047586584341,
+     "fluid": 1,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "none",
+     "lr": 0.016012125634397304,
+     "batch": 20,
+     "sweeps": 3
+    },
+    "credit": {
+     "delay": 45,
+     "radius": 2,
+     "noise": 0.5159338333154866,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.3242316739181428,
+     "depth": 4,
+     "temp": 2.746825883032463
+    },
+    "boundary": {
+     "n_org": 2,
+     "marks": "shared",
+     "mark_decay": 0.03202083865461144
+    },
+    "time": {
+     "lifetime": 1246,
+     "checkpoints": 10,
+     "lifetime2": 1246
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "f4fcd9697ea4b8b7"
+     ],
+     "mutations": [
+      "law:transition",
+      "law:credit"
+     ]
+    }
+   }
+  },
+  {
+   "j": 3,
+   "detector": "D1",
+   "genome_hash": "84c07c121ba36cd5",
+   "waveA_i": 1027,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -0.10377371829335129,
+    "median_stat": -0.10042985794036498,
+    "degenerate": 0,
+    "real": [
+     -0.10450733281430297,
+     -0.10042985794036498,
+     -0.06669059895352811,
+     -0.24867423028065386,
+     -0.09545244687731146
+    ],
+    "null": [
+     -0.0007336145209516781,
+     -0.0470506535807413,
+     -0.5322788572660612,
+     -0.12104301759411792,
+     0.02575452710808911
+    ]
+   },
+   "klass": [
+    "cp",
+    "spectral_roads",
+    "evolve",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      3,
+      2,
+      2,
+      2,
+      4,
+      3,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 2,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "spectral_roads",
+     "n_nodes": 787,
+     "k": 6,
+     "p": 0.10519674969230548,
+     "directed": 0.004279266898933276,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 4,
+     "k": 5,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.30579003759768014,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.2746918553524388,
+     "drift_period": 185,
+     "basis_change_period": 368,
+     "rewire_period": 150,
+     "rewire_frac": 0.19733261391891638,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.15849124713670948,
+     "door_close": 0.0,
+     "hazard_frac": 0.02763983837660995,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 228.81124537516357,
+     "metabolism": 0.37315536443868236,
+     "gain": 3.546834234820332,
+     "theta": 0.6937639220716085,
+     "regrow": 364,
+     "query_every": 39,
+     "query_reward": 7.8282960427541735,
+     "tol": 0.43197904923082014,
+     "p_compute": 1.3984921252362562e-05,
+     "p_read": 0.006354188786249996,
+     "p_write": 0.010982801679062957,
+     "p_move": 0.9059581851128464,
+     "p_probe": 1.0925458148429437,
+     "p_rollout": 0.7170176205825488,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 743,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.00768149714014057,
+     "fluid": 1,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.012822146623947714,
+     "batch": 54,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 8,
+     "radius": 0,
+     "noise": 0.6050918740851048,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.39304074749249296,
+     "depth": 2,
+     "temp": 0.33535660775954945
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.0384392122536564
+    },
+    "time": {
+     "lifetime": 2125,
+     "checkpoints": 10,
+     "lifetime2": 2125
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "2b2b71f264138589"
+     ],
+     "mutations": [
+      "learning.batch",
+      "learning.lr",
+      "search.temp"
+     ]
+    }
+   }
+  },
+  {
+   "j": 4,
+   "detector": "D1",
+   "genome_hash": "8872caa4fc2d0393",
+   "waveA_i": 653,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.1220328374552839,
+    "median_stat": -0.007539794523423737,
+    "degenerate": 0,
+    "real": [
+     0.17536790265548147,
+     -0.19836570047690086,
+     -0.007539794523423737,
+     0.13901950345354358,
+     -0.04509121685224832
+    ],
+    "null": [
+     -0.007908374744057142,
+     -0.06375001036430991,
+     -0.12957263197870764,
+     -0.013897035629549193,
+     -0.09422147902476932
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 5,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.386476014956328,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.4517149477122659,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 310.4798732745328,
+     "metabolism": 1.2795368247073582,
+     "gain": 4.460176353439172,
+     "theta": -0.039306080630420126,
+     "regrow": 599,
+     "query_every": 5,
+     "query_reward": 9.337540588377763,
+     "tol": 0.31761744215156595,
+     "p_compute": 0.0003541087517343605,
+     "p_read": 3.923980903634933e-05,
+     "p_write": 7.809270057305722e-05,
+     "p_move": 0.14794085392470946,
+     "p_probe": 2.413450183275275,
+     "p_rollout": 0.43260135494471597,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.3584165080909025,
+     "depth": 3,
+     "temp": 0.7891212118415519
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.007031311014070879
+    },
+    "time": {
+     "lifetime": 2631,
+     "checkpoints": 10,
+     "lifetime2": 2631
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "bdc02b4eeb298685"
+     ],
+     "mutations": [
+      "time.lifetime",
+      "time.lifetime2",
+      "transition.rewire_frac"
+     ]
+    }
+   }
+  },
+  {
+   "j": 5,
+   "detector": "D2",
+   "genome_hash": "84c07c121ba36cd5",
+   "waveA_i": 1027,
+   "status": "STRUCTURE-INDEPENDENT",
+   "info": {
+    "hits": 3,
+    "null_hits": 3,
+    "n": 5,
+    "median_SD": 0.008951098472724794,
+    "median_stat": 2.8396696780256407,
+    "degenerate": 0,
+    "real": [
+     3.072076329230222,
+     0.28606153566665404,
+     2.8396696780256407,
+     3.015167602377845,
+     0.24993566918228588
+    ],
+    "null": [
+     3.063125230757497,
+     3.0703373351393974,
+     0.08427225586571102,
+     0.1328683424623711,
+     2.8835268215256598
+    ]
+   },
+   "klass": [
+    "cp",
+    "spectral_roads",
+    "evolve",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      3,
+      2,
+      2,
+      2,
+      4,
+      3,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 2,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "spectral_roads",
+     "n_nodes": 787,
+     "k": 6,
+     "p": 0.10519674969230548,
+     "directed": 0.004279266898933276,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 4,
+     "k": 5,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.30579003759768014,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.2746918553524388,
+     "drift_period": 185,
+     "basis_change_period": 368,
+     "rewire_period": 150,
+     "rewire_frac": 0.19733261391891638,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.15849124713670948,
+     "door_close": 0.0,
+     "hazard_frac": 0.02763983837660995,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 228.81124537516357,
+     "metabolism": 0.37315536443868236,
+     "gain": 3.546834234820332,
+     "theta": 0.6937639220716085,
+     "regrow": 364,
+     "query_every": 39,
+     "query_reward": 7.8282960427541735,
+     "tol": 0.43197904923082014,
+     "p_compute": 1.3984921252362562e-05,
+     "p_read": 0.006354188786249996,
+     "p_write": 0.010982801679062957,
+     "p_move": 0.9059581851128464,
+     "p_probe": 1.0925458148429437,
+     "p_rollout": 0.7170176205825488,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 743,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.00768149714014057,
+     "fluid": 1,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.012822146623947714,
+     "batch": 54,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 8,
+     "radius": 0,
+     "noise": 0.6050918740851048,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.39304074749249296,
+     "depth": 2,
+     "temp": 0.33535660775954945
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.0384392122536564
+    },
+    "time": {
+     "lifetime": 2125,
+     "checkpoints": 10,
+     "lifetime2": 2125
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "2b2b71f264138589"
+     ],
+     "mutations": [
+      "learning.batch",
+      "learning.lr",
+      "search.temp"
+     ]
+    }
+   }
+  },
+  {
+   "j": 6,
+   "detector": "D2",
+   "genome_hash": "96e0083972e22bff",
+   "waveA_i": 913,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 2,
+    "n": 5,
+    "median_SD": 0.0,
+    "median_stat": 0.0,
+    "degenerate": 0,
+    "real": [
+     3.0480608006962324,
+     0.0,
+     3.0075099189080245,
+     0.0,
+     0.0
+    ],
+    "null": [
+     2.9926842407087997,
+     0.0,
+     0.0,
+     3.0065998652276087,
+     0.0
+    ]
+   },
+   "klass": [
+    "cp",
+    "tensor_index",
+    "evolve",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      3,
+      2,
+      2,
+      4,
+      4,
+      2,
+      2
+     ],
+     "gen": "spectral",
+     "rank": 1,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 101,
+     "k": 2,
+     "p": 0.23333134950964715,
+     "directed": 0.4317053681535102,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 6,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.275940319570616,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.1896166439657243,
+     "drift_period": 255,
+     "basis_change_period": 0,
+     "rewire_period": 109,
+     "rewire_frac": 0.46161167495335154,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.011261906332647398,
+     "door_close": 0.0,
+     "hazard_frac": 0.1180493241809125,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 357.3093165921398,
+     "metabolism": 0.7505444464619571,
+     "gain": 1.1895623270997149,
+     "theta": 0.5424351226866451,
+     "regrow": 295,
+     "query_every": 9,
+     "query_reward": 9.47023129058737,
+     "tol": 0.41342793220104357,
+     "p_compute": 9.301967989154295e-06,
+     "p_read": 0.022773280084368637,
+     "p_write": 5.0997678959626334e-05,
+     "p_move": 0.7432777135824227,
+     "p_probe": 1.3861657515774355,
+     "p_rollout": 0.4401648372462762,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 354,
+     "bits": 2,
+     "forget": "random",
+     "forget_rate": 0.14193173182768454,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.021677124388891304,
+     "batch": 128,
+     "sweeps": 4
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.13024362216762408,
+     "depth": 1,
+     "temp": 0.17025519273717643
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.021043541944210598
+    },
+    "time": {
+     "lifetime": 1992,
+     "checkpoints": 10,
+     "lifetime2": 1992
+    },
+    "meta": {
+     "strategy": "grammar:search_granularity",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "j": 7,
+   "detector": "D2",
+   "genome_hash": "2b0d3e499f1f7fed",
+   "waveA_i": 993,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 2,
+    "n": 5,
+    "median_SD": -0.6255942248730622,
+    "median_stat": 0.38707405300136966,
+    "degenerate": 0,
+    "real": [
+     3.0436581171395916,
+     0.38707405300136966,
+     2.937438708064749,
+     0.27527959453381623,
+     0.17140601474184258
+    ],
+    "null": [
+     0.2354279093620768,
+     1.4172944867841335,
+     0.2650983687391508,
+     2.7540636772912825,
+     0.7970002396149047
+    ]
+   },
+   "klass": [
+    "additive",
+    "tensor_index",
+    "hebbian",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      2,
+      3,
+      3
+     ],
+     "gen": "spectral",
+     "rank": 4,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 529,
+     "k": 5,
+     "p": 0.13341614904645543,
+     "directed": 0.024026136853173584,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "fiber",
+     "mode": 1,
+     "k": 4,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.19381907324708758,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.20928962402614348,
+     "drift_period": 368,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.4552852280766764,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.11225345748622029,
+     "door_close": 0.0,
+     "hazard_frac": 0.10638542391465339,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 316.50551093033056,
+     "metabolism": 2.102419740215817,
+     "gain": 3.805925078257718,
+     "theta": -0.14504953572551843,
+     "regrow": 10,
+     "query_every": 7,
+     "query_reward": 3.1019965653067727,
+     "tol": 0.23829530483185252,
+     "p_compute": 3.481513078778546e-05,
+     "p_read": 1.0741125004213062e-05,
+     "p_write": 4.178924308685744e-05,
+     "p_move": 0.27808203020844,
+     "p_probe": 1.994583592105908,
+     "p_rollout": 0.3186775626623971,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "additive",
+     "cap": 767,
+     "bits": 16,
+     "forget": "decay",
+     "forget_rate": 0.10869468046088615,
+     "fluid": 1,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "hebbian",
+     "lr": 0.8739230265726134,
+     "batch": 71,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "softmax",
+     "eps": 0.0027318715213485723,
+     "depth": 1,
+     "temp": 2.79270406408813
+    },
+    "boundary": {
+     "n_org": 2,
+     "marks": "none",
+     "mark_decay": 0.0366571626503381
+    },
+    "time": {
+     "lifetime": 1699,
+     "checkpoints": 10,
+     "lifetime2": 1699
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "d32129d1c24c72cf"
+     ],
+     "mutations": [
+      "law:substrate",
+      "law:learning",
+      "law:boundary"
+     ]
+    }
+   }
+  },
+  {
+   "j": 8,
+   "detector": "D2",
+   "genome_hash": "542d7174300e199f",
+   "waveA_i": 1093,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 1,
+    "null_hits": 1,
+    "n": 5,
+    "median_SD": -0.011592545796690834,
+    "median_stat": 0.2043192667370132,
+    "degenerate": 0,
+    "real": [
+     0.10035598863506684,
+     0.2043192667370132,
+     0.34273824291633365,
+     0.07515567064142523,
+     0.4284318310713906
+    ],
+    "null": [
+     0.11194853443175767,
+     0.2548380637118301,
+     0.3130771026715625,
+     0.0962775533582044,
+     0.2998116423952469
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.22812560076707844,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 5,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.386476014956328,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.3890237927106947,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.17980550340133844,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 359.73312556394234,
+     "metabolism": 1.055363869386536,
+     "gain": 4.460176353439172,
+     "theta": -0.039306080630420126,
+     "regrow": 599,
+     "query_every": 5,
+     "query_reward": 9.337540588377763,
+     "tol": 0.05645069576655251,
+     "p_compute": 0.0003541087517343605,
+     "p_read": 3.923980903634933e-05,
+     "p_write": 7.809270057305722e-05,
+     "p_move": 0.14794085392470946,
+     "p_probe": 2.413450183275275,
+     "p_rollout": 0.43260135494471597,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.3584165080909025,
+     "depth": 3,
+     "temp": 0.7891212118415519
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.007031311014070879
+    },
+    "time": {
+     "lifetime": 2324,
+     "checkpoints": 10,
+     "lifetime2": 2324
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "97d385afc04dd486"
+     ],
+     "mutations": [
+      "geometry.p"
+     ]
+    }
+   }
+  },
+  {
+   "j": 9,
+   "detector": "D2",
+   "genome_hash": "9d896f6429fc479d",
+   "waveA_i": 1272,
+   "status": "STRUCTURE-INDEPENDENT",
+   "info": {
+    "hits": 3,
+    "null_hits": 4,
+    "n": 5,
+    "median_SD": -0.06378058572625528,
+    "median_stat": 0.4246950058888044,
+    "degenerate": 0,
+    "real": [
+     0.4246950058888044,
+     0.7754500154494959,
+     0.22419566354682285,
+     0.7775099929013187,
+     0.20491740924538043
+    ],
+    "null": [
+     0.48847559161505966,
+     0.5530359201952557,
+     0.48425841154716864,
+     1.077902345346138,
+     0.13540270900823687
+    ]
+   },
+   "klass": [
+    "table",
+    "small_world",
+    "evolve",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      4,
+      2,
+      3,
+      4,
+      2,
+      2,
+      3
+     ],
+     "gen": "pairwise",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_permute",
+       "p": {}
+      },
+      {
+       "op": "f_split_mode",
+       "p": {
+        "mode": 0
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "small_world",
+     "n_nodes": 417,
+     "k": 6,
+     "p": 0.03869364743266891,
+     "directed": 0.4040661026202724,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 4,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 4
+       }
+      }
+     ],
+     "noise_sd": 0.3034665538658255,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 233,
+     "basis_change_period": 39,
+     "rewire_period": 0,
+     "rewire_frac": 0.1916706872077822,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.17643506467640035,
+     "door_close": 0.0,
+     "hazard_frac": 0.09464158714584026,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 334.2772258499561,
+     "metabolism": 1.2668186504738617,
+     "gain": 2.4515826695368856,
+     "theta": -0.45371153905424355,
+     "regrow": 192,
+     "query_every": 5,
+     "query_reward": 7.3265441422808655,
+     "tol": 0.35664894045180795,
+     "p_compute": 1.3843702339176464e-06,
+     "p_read": 0.010759065339353993,
+     "p_write": 0.00013819497091456485,
+     "p_move": 0.8873775612789954,
+     "p_probe": 1.5368810324521716,
+     "p_rollout": 0.6576897892947954,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "table",
+     "cap": 646,
+     "bits": 4,
+     "forget": "random",
+     "forget_rate": 0.13091470796472357,
+     "fluid": 0,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.006157320586742872,
+     "batch": 42,
+     "sweeps": 6
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.0,
+     "sign_flip": 0.1555359495190685
+    },
+    "search": {
+     "policy": "eps_greedy",
+     "eps": 0.20624113083605128,
+     "depth": 4,
+     "temp": 0.2151102466616462
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "none",
+     "mark_decay": 0.027708334513688385
+    },
+    "time": {
+     "lifetime": 1420,
+     "checkpoints": 10,
+     "lifetime2": 1420
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "4b4ea0b522864e82"
+     ],
+     "mutations": [
+      "credit.delay",
+      "learning.sweeps",
+      "learning.lr"
+     ]
+    }
+   }
+  },
+  {
+   "j": 10,
+   "detector": "D3",
+   "genome_hash": "0e3e9ca1cb88f30c",
+   "waveA_i": 1415,
+   "status": "STRUCTURE-DEPENDENT",
+   "info": {
+    "hits": 5,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.24348266003994667,
+    "median_stat": 0.1381655776316907,
+    "degenerate": 0,
+    "real": [
+     0.1106708817006128,
+     0.1381655776316907,
+     0.22602850177210115,
+     0.12217580001214043,
+     0.20419333112905919
+    ],
+    "null": [
+     -0.09708337604675434,
+     -0.20738391035918918,
+     -0.2917205784300527,
+     -0.09347720501094006,
+     -0.03928932891088749
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 5,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.34742139587670046,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.3890237927106947,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 359.73312556394234,
+     "metabolism": 1.1272139045913836,
+     "gain": 4.460176353439172,
+     "theta": -0.039306080630420126,
+     "regrow": 599,
+     "query_every": 5,
+     "query_reward": 9.337540588377763,
+     "tol": 0.05645069576655251,
+     "p_compute": 0.0003541087517343605,
+     "p_read": 3.923980903634933e-05,
+     "p_write": 7.809270057305722e-05,
+     "p_move": 0.14794085392470946,
+     "p_probe": 2.413450183275275,
+     "p_rollout": 0.43260135494471597,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.3582962077157026,
+     "depth": 3,
+     "temp": 2.0625160588376206
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.007031311014070879
+    },
+    "time": {
+     "lifetime": 1901,
+     "checkpoints": 10,
+     "lifetime2": 1901
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "2e592945baef7840"
+     ],
+     "mutations": [
+      "law:search"
+     ]
+    }
+   }
+  },
+  {
+   "j": 11,
+   "detector": "D3",
+   "genome_hash": "d829b4a4dd79d9a6",
+   "waveA_i": 812,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.1795181164561368,
+    "median_stat": 0.04761182969279401,
+    "degenerate": 0,
+    "real": [
+     0.14318778624150139,
+     0.14680844153689757,
+     -0.2800165105227736,
+     -0.013306732667001386,
+     0.04761182969279401
+    ],
+    "null": [
+     -0.013143985826249288,
+     -0.05589601930762536,
+     NaN,
+     -0.11941489360181559,
+     -0.240313310668199
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.03
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 5,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.386476014956328,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.3091410765403102,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 132.66273938389463,
+     "metabolism": 0.1037538447264714,
+     "gain": 2.6554587562503174,
+     "theta": 0.8052240993525275,
+     "regrow": 67,
+     "query_every": 20,
+     "query_reward": 4.660190056460508,
+     "tol": 0.30154501796185795,
+     "p_compute": 0.006941708173373236,
+     "p_read": 0.005463118013491494,
+     "p_write": 6.809333994368776e-05,
+     "p_move": 0.42774692472222076,
+     "p_probe": 0.711764454086741,
+     "p_rollout": 0.42171708656157825,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.03
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "greedy",
+     "eps": 0.19419237296480812,
+     "depth": 3,
+     "temp": 1.6342725249696601
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.0496989514353951
+    },
+    "time": {
+     "lifetime": 1901,
+     "checkpoints": 10,
+     "lifetime2": 1901
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "7bfaed0d6e99557a"
+     ],
+     "mutations": [
+      "credit.delay",
+      "credit.sign_flip",
+      "transition.rewire_frac"
+     ]
+    }
+   }
+  },
+  {
+   "j": 12,
+   "detector": "D3",
+   "genome_hash": "8872caa4fc2d0393",
+   "waveA_i": 653,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 1,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.04199123346764329,
+    "median_stat": -0.054168552062087746,
+    "degenerate": 0,
+    "real": [
+     -0.054168552062087746,
+     0.3115803541923121,
+     -0.26222220943732183,
+     -0.09258589264874843,
+     -0.051317121290539475
+    ],
+    "null": [
+     -0.12884231002846408,
+     -0.15699060669872472,
+     -0.14859704416749456,
+     -0.13457712611639172,
+     -0.07140961823438838
+    ]
+   },
+   "klass": [
+    "marks",
+    "torus",
+    "sgd",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      5,
+      11
+     ],
+     "gen": "spectral",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_svd_power",
+       "p": {
+        "power": 2.9045166813689045
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "torus",
+     "n_nodes": 440,
+     "k": 3,
+     "p": 0.26129905199836084,
+     "directed": 0.06377912431835804,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 5,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.386476014956328,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 116,
+     "basis_change_period": 338,
+     "rewire_period": 0,
+     "rewire_frac": 0.4517149477122659,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.09591172737975828,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "permute"
+    },
+    "resource": {
+     "energy0": 310.4798732745328,
+     "metabolism": 1.2795368247073582,
+     "gain": 4.460176353439172,
+     "theta": -0.039306080630420126,
+     "regrow": 599,
+     "query_every": 5,
+     "query_reward": 9.337540588377763,
+     "tol": 0.31761744215156595,
+     "p_compute": 0.0003541087517343605,
+     "p_read": 3.923980903634933e-05,
+     "p_write": 7.809270057305722e-05,
+     "p_move": 0.14794085392470946,
+     "p_probe": 2.413450183275275,
+     "p_rollout": 0.43260135494471597,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "marks",
+     "cap": 49,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.16240340229212594,
+     "fluid": 0,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "sgd",
+     "lr": 0.15698428571520856,
+     "batch": 95,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.3584165080909025,
+     "depth": 3,
+     "temp": 0.7891212118415519
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.007031311014070879
+    },
+    "time": {
+     "lifetime": 2631,
+     "checkpoints": 10,
+     "lifetime2": 2631
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "bdc02b4eeb298685"
+     ],
+     "mutations": [
+      "time.lifetime",
+      "time.lifetime2",
+      "transition.rewire_frac"
+     ]
+    }
+   }
+  },
+  {
+   "j": 13,
+   "detector": "D4",
+   "genome_hash": "5bbb7304059afc49",
+   "waveA_i": 930,
+   "status": "METRIC ARTEFACT",
+   "info": {
+    "hits": 5,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -3.0667651221646444,
+    "median_stat": -3.1253296623450595,
+    "degenerate": 0,
+    "real": [
+     -2.863469912651178,
+     -3.2305049168634743,
+     -2.843786880699784,
+     -3.1253296623450595,
+     -3.2131991395001767
+    ],
+    "null": [
+     -0.05525901110315777,
+     -0.018179432024144238,
+     -0.019155066779733845,
+     -0.05856454018041493,
+     -0.06742293849889595
+    ]
+   },
+   "klass": [
+    "additive",
+    "spectral_roads",
+    "anti_hebbian",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      3,
+      7,
+      7,
+      2,
+      8
+     ],
+     "gen": "spectral",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_rare_spikes",
+       "p": {
+        "rate": 0.02348499768249922
+       }
+      },
+      {
+       "op": "f_topk_sparsify",
+       "p": {
+        "keep": 0.42010497901263133
+       }
+      },
+      {
+       "op": "f_outer_marginals",
+       "p": {}
+      }
+     ],
+     "reward_chain": [
+      {
+       "op": "f_contract_mode",
+       "p": {
+        "mode": 6
+       }
+      }
+     ]
+    },
+    "geometry": {
+     "kind": "spectral_roads",
+     "n_nodes": 666,
+     "k": 4,
+     "p": 0.012063062178381503,
+     "directed": 0.31254881763988723,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "fiber",
+     "mode": 5,
+     "k": 4,
+     "chain": [
+      {
+       "op": "v_sign",
+       "p": {}
+      },
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.38592154384001937,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 395,
+     "basis_change_period": 118,
+     "rewire_period": 37,
+     "rewire_frac": 0.3316160191834092,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.1066071367835228,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 86.66889662836012,
+     "metabolism": 0.40716986272548383,
+     "gain": 3.460548240750724,
+     "theta": 0.6120160887519064,
+     "regrow": 685,
+     "query_every": 15,
+     "query_reward": 7.657585810741541,
+     "tol": 0.31752541169160675,
+     "p_compute": 2.1830790391018764e-05,
+     "p_read": 0.00047700253909405,
+     "p_write": 0.001202838145241195,
+     "p_move": 0.5835456844897999,
+     "p_probe": 2.128011424898142,
+     "p_rollout": 0.41346798989481315,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "additive",
+     "cap": 69,
+     "bits": 2,
+     "forget": "none",
+     "forget_rate": 0.14279031631608785,
+     "fluid": 0,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.06676406785708329,
+     "batch": 46,
+     "sweeps": 2
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "greedy",
+     "eps": 0.189105731910706,
+     "depth": 4,
+     "temp": 0.0799300635755088
+    },
+    "boundary": {
+     "n_org": 2,
+     "marks": "shared",
+     "mark_decay": 0.01672697955568583
+    },
+    "time": {
+     "lifetime": 2414,
+     "checkpoints": 10,
+     "lifetime2": 2414
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "6549a49c886ff0b7"
+     ],
+     "mutations": [
+      "law:credit",
+      "law:memory"
+     ]
+    }
+   }
+  },
+  {
+   "j": 14,
+   "detector": "D4",
+   "genome_hash": "70f75870e43b4922",
+   "waveA_i": 1249,
+   "status": "METRIC ARTEFACT",
+   "info": {
+    "hits": 5,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -3.0254744142812773,
+    "median_stat": -3.0168565633337536,
+    "degenerate": 0,
+    "real": [
+     -2.9373646109092757,
+     -3.093545986375477,
+     -3.0168565633337536,
+     -3.0749519621128742,
+     -2.9639891999403734
+    ],
+    "null": [
+     0.009438225438574005,
+     0.007639720521690124,
+     0.00861785094752351,
+     -0.0034251836465346783,
+     0.02584376206147699
+    ]
+   },
+   "klass": [
+    "mixture",
+    "tensor_index",
+    "anti_hebbian",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "tt",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_lowpass",
+       "p": {
+        "mode": 9,
+        "keep": 0.4990924578379001
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 599,
+     "k": 4,
+     "p": 0.2956563394266874,
+     "directed": 0.4934751007926202,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 12,
+     "k": 3,
+     "chain": [],
+     "noise_sd": 0.20635004022130216,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.16934664802891447,
+     "drift_period": 291,
+     "basis_change_period": 0,
+     "rewire_period": 227,
+     "rewire_frac": 0.078618697805863,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.12629338912459565,
+     "door_close": 0.21341718839113874,
+     "hazard_frac": 0.0,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 314.8976195932973,
+     "metabolism": 1.0795832430346601,
+     "gain": 2.83516035038981,
+     "theta": -0.06326769768436713,
+     "regrow": 702,
+     "query_every": 27,
+     "query_reward": 1.9382147240518899,
+     "tol": 0.3195395846182449,
+     "p_compute": 0.00034746966147944245,
+     "p_read": 0.00011729628756534695,
+     "p_write": 0.001261031172469987,
+     "p_move": 0.6719063986177506,
+     "p_probe": 2.14044812244682,
+     "p_rollout": 0.2503398578502928,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "mixture",
+     "cap": 36,
+     "bits": 16,
+     "forget": "spectral_trunc",
+     "forget_rate": 0.13346322893155912,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.38556749580304794,
+     "batch": 42,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.20655068223226264,
+     "depth": 4,
+     "temp": 0.1792167443054086
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.014522042566778104
+    },
+    "time": {
+     "lifetime": 2749,
+     "checkpoints": 10,
+     "lifetime2": 2749
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "9f8148fec3928048"
+     ],
+     "mutations": [
+      "law:time",
+      "law:irreversibility",
+      "law:learning"
+     ]
+    }
+   }
+  },
+  {
+   "j": 15,
+   "detector": "D4",
+   "genome_hash": "a3e05109a8404716",
+   "waveA_i": 774,
+   "status": "METRIC ARTEFACT",
+   "info": {
+    "hits": 5,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -2.734302716071414,
+    "median_stat": -2.7319124679220903,
+    "degenerate": 0,
+    "real": [
+     -2.2388252841597334,
+     -2.9883161799303624,
+     -2.7319124679220903,
+     -2.7660576665675936,
+     -2.474682466122147
+    ],
+    "null": [
+     0.00012076653022136423,
+     -2.2198632633878626e-05,
+     0.0023902481493238044,
+     0.009382918143664737,
+     0.0010723088367879975
+    ]
+   },
+   "klass": [
+    "mixture",
+    "wormholes",
+    "hebbian",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      3,
+      4,
+      3,
+      2,
+      2,
+      3,
+      3
+     ],
+     "gen": "tt",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_binary_field",
+       "p": {
+        "kind": "max"
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "wormholes",
+     "n_nodes": 298,
+     "k": 4,
+     "p": 0.029658931434075997,
+     "directed": 0.3562954983116393,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 1,
+     "k": 6,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.07618463989779489,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.019838387655161105,
+     "drift_period": 285,
+     "basis_change_period": 0,
+     "rewire_period": 213,
+     "rewire_frac": 0.4222211793204881,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.07812896382039547,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "rank_inflate"
+    },
+    "resource": {
+     "energy0": 176.17483351868503,
+     "metabolism": 0.4356714640221053,
+     "gain": 3.8855152804448085,
+     "theta": 0.12281884443218183,
+     "regrow": 452,
+     "query_every": 13,
+     "query_reward": 9.442260451627524,
+     "tol": 0.267832578078055,
+     "p_compute": 2.219839018640822e-06,
+     "p_read": 0.005626139689381855,
+     "p_write": 5.41854543319949e-05,
+     "p_move": 0.5942962184794859,
+     "p_probe": 1.5562809023875317,
+     "p_rollout": 0.13877676103713554,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "mixture",
+     "cap": 435,
+     "bits": 64,
+     "forget": "decay",
+     "forget_rate": 0.1744687391624724,
+     "fluid": 1,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "hebbian",
+     "lr": 0.1386623241046052,
+     "batch": 123,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.06014896020087779,
+     "sign_flip": 0.10826916105071525
+    },
+    "search": {
+     "policy": "greedy",
+     "eps": 0.22078455461045754,
+     "depth": 2,
+     "temp": 1.9394987788156126
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "shared",
+     "mark_decay": 0.01552893988954875
+    },
+    "time": {
+     "lifetime": 2485,
+     "checkpoints": 10,
+     "lifetime2": 2485
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "9301e80eb79b9cf7"
+     ],
+     "mutations": [
+      "search.policy",
+      "search.eps"
+     ]
+    }
+   }
+  },
+  {
+   "j": 16,
+   "detector": "D4",
+   "genome_hash": "a4577d08c8c2590d",
+   "waveA_i": 1190,
+   "status": "METRIC ARTEFACT",
+   "info": {
+    "hits": 5,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -2.9989506687105445,
+    "median_stat": -2.998332364341377,
+    "degenerate": 0,
+    "real": [
+     -2.9617859644151223,
+     -3.0680265448442063,
+     -2.998332364341377,
+     -2.86902237136802,
+     -3.0536107570808286
+    ],
+    "null": [
+     0.002741807860893619,
+     0.002160203005445574,
+     0.0006183043691676074,
+     0.0,
+     0.0032415634611815194
+    ]
+   },
+   "klass": [
+    "mixture",
+    "tensor_index",
+    "anti_hebbian",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      3,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      2,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_rare_spikes",
+       "p": {
+        "rate": 0.004752858202422459
+       }
+      },
+      {
+       "op": "f_correlated_noise",
+       "p": {
+        "sd": 0.10564559275197852,
+        "mode": 4
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 971,
+     "k": 6,
+     "p": 0.2987307464162901,
+     "directed": 0.594754120948468,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 8,
+     "k": 3,
+     "chain": [],
+     "noise_sd": 0.09592372185153841,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 162,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.3532262447565452,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.3329106021910154,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 376.02697164794847,
+     "metabolism": 1.0037024280634284,
+     "gain": 2.661811259950969,
+     "theta": 0.263730403093247,
+     "regrow": 41,
+     "query_every": 27,
+     "query_reward": 5.470190177156002,
+     "tol": 0.4128238088249086,
+     "p_compute": 9.557933540413584e-05,
+     "p_read": 0.00041018421416808156,
+     "p_write": 0.00019061338542781161,
+     "p_move": 0.6786454037386387,
+     "p_probe": 0.3544088392267558,
+     "p_rollout": 0.5145956768778003,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "mixture",
+     "cap": 778,
+     "bits": 16,
+     "forget": "lowest_value",
+     "forget_rate": 0.08156350807570417,
+     "fluid": 0,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.4926930717242828,
+     "batch": 125,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "eps_greedy",
+     "eps": 0.4547106111604816,
+     "depth": 1,
+     "temp": 0.37720692770884606
+    },
+    "boundary": {
+     "n_org": 2,
+     "marks": "shared",
+     "mark_decay": 0.034636482629049524
+    },
+    "time": {
+     "lifetime": 2779,
+     "checkpoints": 10,
+     "lifetime2": 2779
+    },
+    "meta": {
+     "strategy": "grammar:communication_bandwidth",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "j": 17,
+   "detector": "D4",
+   "genome_hash": "a79aa22fb4dcfd70",
+   "waveA_i": 396,
+   "status": "METRIC ARTEFACT",
+   "info": {
+    "hits": 4,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -3.00013145666042,
+    "median_stat": -2.9981962223526852,
+    "degenerate": 0,
+    "real": [
+     -0.8879486280748151,
+     -2.9981962223526852,
+     -2.990689715463929,
+     -3.050675747771989,
+     -3.042510270979054
+    ],
+    "null": [
+     0.004078946218984303,
+     0.0019352343077347453,
+     0.0005237199821301226,
+     0.0008043065190572497,
+     0.002942508381228101
+    ]
+   },
+   "klass": [
+    "cp",
+    "tensor_index",
+    "batch_replay",
+    0.03
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      4,
+      2,
+      3,
+      4,
+      2
+     ],
+     "gen": "sum",
+     "rank": 3,
+     "chain": [],
+     "reward_chain": [
+      {
+       "op": "f_contract_mode",
+       "p": {
+        "mode": 12
+       }
+      }
+     ]
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 480,
+     "k": 4,
+     "p": 0.10380513172786064,
+     "directed": 0.06847761319423269,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 12,
+     "k": 8,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      },
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.22510116511275274,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 98,
+     "basis_change_period": 199,
+     "rewire_period": 0,
+     "rewire_frac": 0.11490121823484595,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.4821473422033397,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 106.51941932789602,
+     "metabolism": 2.097219227299315,
+     "gain": 4.532787371650266,
+     "theta": -0.3556916421695237,
+     "regrow": 517,
+     "query_every": 0,
+     "query_reward": 9.132822148681194,
+     "tol": 0.14242350365937506,
+     "p_compute": 0.0007474453936069644,
+     "p_read": 0.03255505604095174,
+     "p_write": 0.08404409556779957,
+     "p_move": 0.8930245385329011,
+     "p_probe": 1.8391197960341024,
+     "p_rollout": 0.7889578850221598,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 62,
+     "bits": 64,
+     "forget": "spectral_trunc",
+     "forget_rate": 0.011702220201884673,
+     "fluid": 0,
+     "band": 0.03
+    },
+    "learning": {
+     "rule": "batch_replay",
+     "lr": 0.5874185011950507,
+     "batch": 81,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 13,
+     "radius": 2,
+     "noise": 0.7349460146963721,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.1426078772017138,
+     "depth": 3,
+     "temp": 2.8600658466080024
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "private",
+     "mark_decay": 0.010131658777149583
+    },
+    "time": {
+     "lifetime": 2983,
+     "checkpoints": 10,
+     "lifetime2": 2983
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "391b88a6887670a5"
+     ],
+     "mutations": [
+      "law:irreversibility"
+     ]
+    }
+   }
+  },
+  {
+   "j": 18,
+   "detector": "D5",
+   "genome_hash": "36ad967b4cd15fd6",
+   "waveA_i": 1017,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 2,
+    "n": 5,
+    "median_SD": -54.37269244298665,
+    "median_stat": -8.431588919268592,
+    "degenerate": 0,
+    "real": [
+     -61.56091362641581,
+     23.58195979346982,
+     28.535129930092467,
+     -8.431588919268592,
+     -32.761684803259186
+    ],
+    "null": [
+     -7.188221183429164,
+     89.60682759309628,
+     74.39513690382529,
+     86.4641691718675,
+     -104.33732484570137
+    ]
+   },
+   "klass": [
+    "none",
+    "ring",
+    "evolve",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      14,
+      2,
+      7,
+      11
+     ],
+     "gen": "lowrank",
+     "rank": 2,
+     "chain": [
+      {
+       "op": "f_fft_abs",
+       "p": {
+        "mode": 3
+       }
+      },
+      {
+       "op": "f_tt_round",
+       "p": {
+        "rank": 5
+       }
+      }
+     ],
+     "reward_chain": [
+      {
+       "op": "f_topk_sparsify",
+       "p": {
+        "keep": 0.4294813589724899
+       }
+      }
+     ]
+    },
+    "geometry": {
+     "kind": "ring",
+     "n_nodes": 324,
+     "k": 6,
+     "p": 0.21962673450075834,
+     "directed": 0.4905414155897865,
+     "map": "blocked"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 11,
+     "k": 5,
+     "chain": [
+      {
+       "op": "v_tanh",
+       "p": {}
+      },
+      {
+       "op": "v_tanh",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.3342811679225688,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.39504934982529816,
+     "drift_period": 89,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.2541520336383008,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.38139895305929694,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 219.56225187253358,
+     "metabolism": 0.2888440330283367,
+     "gain": 4.974411554998373,
+     "theta": 0.3734798845076496,
+     "regrow": 469,
+     "query_every": 3,
+     "query_reward": 1.3481987683866559,
+     "tol": 0.265313605110778,
+     "p_compute": 2.8713797070029294e-05,
+     "p_read": 2.8902966644059053e-05,
+     "p_write": 0.0035050206867063326,
+     "p_move": 0.3874498595565119,
+     "p_probe": 2.305215536703696,
+     "p_rollout": 0.7965622028922932,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "none",
+     "cap": 894,
+     "bits": 8,
+     "forget": "random",
+     "forget_rate": 0.07272463186612031,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.020395672485286613,
+     "batch": 125,
+     "sweeps": 6
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "softmax",
+     "eps": 0.09157172037225092,
+     "depth": 4,
+     "temp": 0.07774512286090057
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.03126608246925187
+    },
+    "time": {
+     "lifetime": 1223,
+     "checkpoints": 10,
+     "lifetime2": 1223
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "72e25719720ceb30"
+     ],
+     "mutations": [
+      "time.lifetime2",
+      "time.lifetime"
+     ]
+    }
+   }
+  },
+  {
+   "j": 19,
+   "detector": "D5",
+   "genome_hash": "68a7102ee4bbde16",
+   "waveA_i": 638,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 3,
+    "n": 5,
+    "median_SD": -34.59815225809655,
+    "median_stat": -16.116291743641455,
+    "degenerate": 0,
+    "real": [
+     -16.11629174364174,
+     -8.236267953614629,
+     -16.116291743641455,
+     -31.876339323696982,
+     -0.35624416358655253
+    ],
+    "null": [
+     46.59489300601081,
+     -5.872779664864936,
+     18.481860514455093,
+     -39.198316304742804,
+     72.06362438563929
+    ]
+   },
+   "klass": [
+    "none",
+    "tensor_index",
+    "evolve",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      7,
+      8,
+      5,
+      11
+     ],
+     "gen": "tt",
+     "rank": 1,
+     "chain": [
+      {
+       "op": "f_reduce_norm",
+       "p": {
+        "mode": 7
+       }
+      },
+      {
+       "op": "f_rare_spikes",
+       "p": {
+        "rate": 0.0454463224593813
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 306,
+     "k": 4,
+     "p": 0.27488787837439144,
+     "directed": 0.49079940669104366,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "fiber",
+     "mode": 12,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_sort",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.12108175154989675,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.7866044400574284,
+     "drift_period": 149,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.3785440010579228,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.047374425800398856,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 299.21852402408973,
+     "metabolism": 0.38997198415471934,
+     "gain": 2.9382803363088312,
+     "theta": 0.6495591443951385,
+     "regrow": 124,
+     "query_every": 17,
+     "query_reward": 7.880023790027701,
+     "tol": 0.2062714456380818,
+     "p_compute": 6.156512073592447e-05,
+     "p_read": 0.01798318179060292,
+     "p_write": 0.0005057491066806637,
+     "p_move": 0.2878148655335704,
+     "p_probe": 0.9464494849087773,
+     "p_rollout": 0.3086815950132852,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "none",
+     "cap": 121,
+     "bits": 16,
+     "forget": "random",
+     "forget_rate": 0.009262049716970444,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.0906129295013691,
+     "batch": 31,
+     "sweeps": 3
+    },
+    "credit": {
+     "delay": 61,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.39183339968463027,
+     "depth": 1,
+     "temp": 0.23413934601239866
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "shared",
+     "mark_decay": 0.04681848113116316
+    },
+    "time": {
+     "lifetime": 1098,
+     "checkpoints": 10,
+     "lifetime2": 1098
+    },
+    "meta": {
+     "strategy": "grammar:world_change",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "j": 20,
+   "detector": "D5",
+   "genome_hash": "6979a6aaba9b326e",
+   "waveA_i": 1465,
+   "status": "STRUCTURE-INDEPENDENT",
+   "info": {
+    "hits": 3,
+    "null_hits": 5,
+    "n": 5,
+    "median_SD": -50.73697558878787,
+    "median_stat": 2.5426034500048047,
+    "degenerate": 0,
+    "real": [
+     -16.88907049455571,
+     8.695687021908668,
+     12.763390358798347,
+     -6.877521773739147,
+     2.5426034500048047
+    ],
+    "null": [
+     53.923617771277435,
+     54.102979251085074,
+     54.0889853959782,
+     43.859453815048724,
+     63.898988327871066
+    ]
+   },
+   "klass": [
+    "sketch",
+    "dag",
+    "evolve",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_lowpass",
+       "p": {
+        "mode": 12,
+        "keep": 0.4884384475371042
+       }
+      },
+      {
+       "op": "f_reduce_max",
+       "p": {
+        "mode": 15
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "dag",
+     "n_nodes": 587,
+     "k": 6,
+     "p": 0.033134568419981233,
+     "directed": 0.46360399312163797,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 4,
+     "k": 6,
+     "chain": [
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 5
+       }
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.18164414961922049,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.4267740926249013,
+     "drift_period": 369,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.4267452932005637,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.35647731063228244,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 246.06599597086773,
+     "metabolism": 0.06902605255482708,
+     "gain": 1.7844447165102468,
+     "theta": 0.4886229484561728,
+     "regrow": 681,
+     "query_every": 7,
+     "query_reward": 1.4822899428120495,
+     "tol": 0.13101571257985606,
+     "p_compute": 0.0005244825688375645,
+     "p_read": 0.004231346496679759,
+     "p_write": 1.4897209716512985e-05,
+     "p_move": 0.4278992076295912,
+     "p_probe": 1.661168209526632,
+     "p_rollout": 0.2840867136320586,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "sketch",
+     "cap": 624,
+     "bits": 64,
+     "forget": "lowest_value",
+     "forget_rate": 0.1573794071173931,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.20427711307615734,
+     "batch": 92,
+     "sweeps": 4
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.2734497686512032,
+     "sign_flip": 0.1902029767412675
+    },
+    "search": {
+     "policy": "greedy",
+     "eps": 0.2510197413297081,
+     "depth": 4,
+     "temp": 0.0903196062664489
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "none",
+     "mark_decay": 0.01697636034590675
+    },
+    "time": {
+     "lifetime": 1179,
+     "checkpoints": 10,
+     "lifetime2": 1179
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "3ab901f1023a3d4a"
+     ],
+     "mutations": [
+      "boundary.n_org"
+     ]
+    }
+   }
+  },
+  {
+   "j": 21,
+   "detector": "D5",
+   "genome_hash": "720013b03eddb80a",
+   "waveA_i": 955,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 1,
+    "null_hits": 4,
+    "n": 5,
+    "median_SD": -65.31709325697474,
+    "median_stat": -2.2697201478268596,
+    "degenerate": 0,
+    "real": [
+     -1.9562367101794962,
+     24.491578094376138,
+     -10.65499815443377,
+     -2.2697201478268596,
+     -2.7965564897821764
+    ],
+    "null": [
+     58.42498785657165,
+     48.923024250990295,
+     54.662095102540974,
+     66.20901725179979,
+     79.40680791522891
+    ]
+   },
+   "klass": [
+    "sketch",
+    "dag",
+    "anti_hebbian",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      7,
+      5,
+      5,
+      4
+     ],
+     "gen": "lowrank",
+     "rank": 1,
+     "chain": [
+      {
+       "op": "f_mask",
+       "p": {
+        "keep": 0.3677692525199917
+       }
+      },
+      {
+       "op": "f_tt_round",
+       "p": {
+        "rank": 2
+       }
+      },
+      {
+       "op": "f_fft_abs",
+       "p": {
+        "mode": 12
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "dag",
+     "n_nodes": 587,
+     "k": 5,
+     "p": 0.2320269758991614,
+     "directed": 0.46360399312163797,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 4,
+     "k": 6,
+     "chain": [
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 5
+       }
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.18164414961922049,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.4267740926249013,
+     "drift_period": 369,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.4267452932005637,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.35647731063228244,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 246.06599597086773,
+     "metabolism": 0.11609499181919289,
+     "gain": 1.7844447165102468,
+     "theta": 0.4886229484561728,
+     "regrow": 681,
+     "query_every": 7,
+     "query_reward": 1.4822899428120495,
+     "tol": 0.13101571257985606,
+     "p_compute": 6.074109969308614e-05,
+     "p_read": 0.004231346496679759,
+     "p_write": 1.4897209716512985e-05,
+     "p_move": 0.4278992076295912,
+     "p_probe": 2.1515218990171796,
+     "p_rollout": 0.2840867136320586,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "sketch",
+     "cap": 624,
+     "bits": 64,
+     "forget": "lowest_value",
+     "forget_rate": 0.1573794071173931,
+     "fluid": 0,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.20427711307615734,
+     "batch": 92,
+     "sweeps": 4
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.2734497686512032,
+     "sign_flip": 0.1902029767412675
+    },
+    "search": {
+     "policy": "eps_greedy",
+     "eps": 0.059308717345078865,
+     "depth": 3,
+     "temp": 0.8998700903741448
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.01697636034590675
+    },
+    "time": {
+     "lifetime": 1761,
+     "checkpoints": 10,
+     "lifetime2": 1761
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "439310bdd4ba5693"
+     ],
+     "mutations": [
+      "resource.p_probe",
+      "resource.p_compute"
+     ]
+    }
+   }
+  },
+  {
+   "j": 22,
+   "detector": "D5",
+   "genome_hash": "2861086c47c16545",
+   "waveA_i": 437,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 4,
+    "n": 5,
+    "median_SD": -26.21015814871319,
+    "median_stat": -3.369329995109979,
+    "degenerate": 0,
+    "real": [
+     -5.3595901767231595,
+     -3.369329995109979,
+     -6.457927818876783,
+     8.437527505181833,
+     1.726087650155435
+    ],
+    "null": [
+     15.967317571916183,
+     25.984580926291443,
+     -11.789336804510185,
+     50.01613307784601,
+     27.936245798868626
+    ]
+   },
+   "klass": [
+    "sketch",
+    "dag",
+    "anti_hebbian",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_lowpass",
+       "p": {
+        "mode": 12,
+        "keep": 0.4884384475371042
+       }
+      },
+      {
+       "op": "f_reduce_max",
+       "p": {
+        "mode": 15
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "dag",
+     "n_nodes": 587,
+     "k": 6,
+     "p": 0.033134568419981233,
+     "directed": 0.46360399312163797,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 4,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 5
+       }
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.18164414961922049,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.4267740926249013,
+     "drift_period": 369,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.4267452932005637,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.35647731063228244,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 246.06599597086773,
+     "metabolism": 0.07151614624039963,
+     "gain": 1.7844447165102468,
+     "theta": 0.4886229484561728,
+     "regrow": 681,
+     "query_every": 7,
+     "query_reward": 1.4822899428120495,
+     "tol": 0.13101571257985606,
+     "p_compute": 0.0005244825688375645,
+     "p_read": 0.004231346496679759,
+     "p_write": 1.4897209716512985e-05,
+     "p_move": 0.4278992076295912,
+     "p_probe": 1.661168209526632,
+     "p_rollout": 0.2840867136320586,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "sketch",
+     "cap": 624,
+     "bits": 64,
+     "forget": "lowest_value",
+     "forget_rate": 0.1573794071173931,
+     "fluid": 0,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.20427711307615734,
+     "batch": 92,
+     "sweeps": 4
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.2734497686512032,
+     "sign_flip": 0.1902029767412675
+    },
+    "search": {
+     "policy": "greedy",
+     "eps": 0.2510197413297081,
+     "depth": 4,
+     "temp": 0.0903196062664489
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.01697636034590675
+    },
+    "time": {
+     "lifetime": 1179,
+     "checkpoints": 10,
+     "lifetime2": 1179
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "2ea830156f4eb785"
+     ],
+     "mutations": [
+      "observation.k"
+     ]
+    }
+   }
+  },
+  {
+   "j": 23,
+   "detector": "D7",
+   "genome_hash": "84c07c121ba36cd5",
+   "waveA_i": 1027,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 5,
+    "n": 5,
+    "median_SD": -0.6033943679672285,
+    "median_stat": 0.004730457705530107,
+    "degenerate": 0,
+    "real": [
+     0.0,
+     3.009694913404505,
+     0.004730457705530107,
+     0.10734402034148077,
+     0.0
+    ],
+    "null": [
+     2.937929374571389,
+     0.2915360107171923,
+     2.9139105213305982,
+     0.7107383883087093,
+     0.14702782570964984
+    ]
+   },
+   "klass": [
+    "cp",
+    "spectral_roads",
+    "evolve",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      3,
+      2,
+      2,
+      2,
+      4,
+      3,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 2,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "spectral_roads",
+     "n_nodes": 787,
+     "k": 6,
+     "p": 0.10519674969230548,
+     "directed": 0.004279266898933276,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 4,
+     "k": 5,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.30579003759768014,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.2746918553524388,
+     "drift_period": 185,
+     "basis_change_period": 368,
+     "rewire_period": 150,
+     "rewire_frac": 0.19733261391891638,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.15849124713670948,
+     "door_close": 0.0,
+     "hazard_frac": 0.02763983837660995,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 228.81124537516357,
+     "metabolism": 0.37315536443868236,
+     "gain": 3.546834234820332,
+     "theta": 0.6937639220716085,
+     "regrow": 364,
+     "query_every": 39,
+     "query_reward": 7.8282960427541735,
+     "tol": 0.43197904923082014,
+     "p_compute": 1.3984921252362562e-05,
+     "p_read": 0.006354188786249996,
+     "p_write": 0.010982801679062957,
+     "p_move": 0.9059581851128464,
+     "p_probe": 1.0925458148429437,
+     "p_rollout": 0.7170176205825488,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 743,
+     "bits": 2,
+     "forget": "oldest",
+     "forget_rate": 0.00768149714014057,
+     "fluid": 1,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.012822146623947714,
+     "batch": 54,
+     "sweeps": 7
+    },
+    "credit": {
+     "delay": 8,
+     "radius": 0,
+     "noise": 0.6050918740851048,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.39304074749249296,
+     "depth": 2,
+     "temp": 0.33535660775954945
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.0384392122536564
+    },
+    "time": {
+     "lifetime": 2125,
+     "checkpoints": 10,
+     "lifetime2": 2125
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "2b2b71f264138589"
+     ],
+     "mutations": [
+      "learning.batch",
+      "learning.lr",
+      "search.temp"
+     ]
+    }
+   }
+  },
+  {
+   "j": 24,
+   "detector": "D7",
+   "genome_hash": "96e0083972e22bff",
+   "waveA_i": 913,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 4,
+    "n": 5,
+    "median_SD": -2.980272143525115,
+    "median_stat": 0.0,
+    "degenerate": 0,
+    "real": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "null": [
+     2.9781823128090927,
+     0.0,
+     3.0083876835152323,
+     2.980272143525115,
+     3.0181009437349586
+    ]
+   },
+   "klass": [
+    "cp",
+    "tensor_index",
+    "evolve",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      3,
+      2,
+      2,
+      4,
+      4,
+      2,
+      2
+     ],
+     "gen": "spectral",
+     "rank": 1,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 101,
+     "k": 2,
+     "p": 0.23333134950964715,
+     "directed": 0.4317053681535102,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 6,
+     "k": 3,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.275940319570616,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.1896166439657243,
+     "drift_period": 255,
+     "basis_change_period": 0,
+     "rewire_period": 109,
+     "rewire_frac": 0.46161167495335154,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.011261906332647398,
+     "door_close": 0.0,
+     "hazard_frac": 0.1180493241809125,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 357.3093165921398,
+     "metabolism": 0.7505444464619571,
+     "gain": 1.1895623270997149,
+     "theta": 0.5424351226866451,
+     "regrow": 295,
+     "query_every": 9,
+     "query_reward": 9.47023129058737,
+     "tol": 0.41342793220104357,
+     "p_compute": 9.301967989154295e-06,
+     "p_read": 0.022773280084368637,
+     "p_write": 5.0997678959626334e-05,
+     "p_move": 0.7432777135824227,
+     "p_probe": 1.3861657515774355,
+     "p_rollout": 0.4401648372462762,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 354,
+     "bits": 2,
+     "forget": "random",
+     "forget_rate": 0.14193173182768454,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.021677124388891304,
+     "batch": 128,
+     "sweeps": 4
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.13024362216762408,
+     "depth": 1,
+     "temp": 0.17025519273717643
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.021043541944210598
+    },
+    "time": {
+     "lifetime": 1992,
+     "checkpoints": 10,
+     "lifetime2": 1992
+    },
+    "meta": {
+     "strategy": "grammar:search_granularity",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "j": 25,
+   "detector": "D7",
+   "genome_hash": "f5fe2507d7f94b1c",
+   "waveA_i": 463,
+   "status": "STRUCTURE-INDEPENDENT",
+   "info": {
+    "hits": 3,
+    "null_hits": 3,
+    "n": 5,
+    "median_SD": -0.10349124928465514,
+    "median_stat": 0.4003596381169192,
+    "degenerate": 0,
+    "real": [
+     0.6592935152945043,
+     0.4003596381169192,
+     0.0,
+     0.0,
+     2.975901942243388
+    ],
+    "null": [
+     2.969856987643506,
+     0.0,
+     0.006171566760615921,
+     0.8268709677379702,
+     3.0793931915280432
+    ]
+   },
+   "klass": [
+    "additive",
+    "tensor_index",
+    "anti_hebbian",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      3,
+      3,
+      2,
+      3,
+      2,
+      3,
+      3,
+      2,
+      2
+     ],
+     "gen": "lowrank",
+     "rank": 3,
+     "chain": [
+      {
+       "op": "f_lowpass",
+       "p": {
+        "mode": 3,
+        "keep": 0.16049597210722122
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 529,
+     "k": 5,
+     "p": 0.13341614904645543,
+     "directed": 0.024026136853173584,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 9,
+     "k": 7,
+     "chain": [
+      {
+       "op": "v_fft_abs",
+       "p": {}
+      },
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 5
+       }
+      }
+     ],
+     "noise_sd": 0.2986442341909486,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.20928962402614348,
+     "drift_period": 368,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.4552852280766764,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.11225345748622029,
+     "door_close": 0.0,
+     "hazard_frac": 0.10638542391465339,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 316.50551093033056,
+     "metabolism": 2.118151891444993,
+     "gain": 3.805925078257718,
+     "theta": -0.14504953572551843,
+     "regrow": 10,
+     "query_every": 7,
+     "query_reward": 3.1019965653067727,
+     "tol": 0.23829530483185252,
+     "p_compute": 3.481513078778546e-05,
+     "p_read": 1.0741125004213062e-05,
+     "p_write": 4.178924308685744e-05,
+     "p_move": 0.27808203020844,
+     "p_probe": 1.994583592105908,
+     "p_rollout": 0.3186775626623971,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "additive",
+     "cap": 767,
+     "bits": 16,
+     "forget": "decay",
+     "forget_rate": 0.10869468046088615,
+     "fluid": 1,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.03223449955207645,
+     "batch": 90,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "softmax",
+     "eps": 0.4068249087195514,
+     "depth": 4,
+     "temp": 0.0711140016013788
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.04407639686187463
+    },
+    "time": {
+     "lifetime": 1699,
+     "checkpoints": 10,
+     "lifetime2": 1699
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "d32129d1c24c72cf"
+     ],
+     "mutations": [
+      "law:observation",
+      "law:search",
+      "law:boundary"
+     ]
+    }
+   }
+  },
+  {
+   "j": 26,
+   "detector": "D7",
+   "genome_hash": "6996f0015a11dc94",
+   "waveA_i": 1460,
+   "status": "METRIC ARTEFACT",
+   "info": {
+    "hits": 2,
+    "null_hits": 3,
+    "n": 5,
+    "median_SD": 0.006261037062516017,
+    "median_stat": 0.03672023915429756,
+    "degenerate": 0,
+    "real": [
+     0.0,
+     0.03672023915429756,
+     3.008006844910831,
+     0.20413611290278544,
+     0.006261037062516017
+    ],
+    "null": [
+     1.258870422378792,
+     3.031834973118565,
+     2.94524169414404,
+     0.0,
+     0.0
+    ]
+   },
+   "klass": [
+    "dct",
+    "ring",
+    "anti_hebbian",
+    0.01
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      11,
+      5,
+      5,
+      2
+     ],
+     "gen": "pairwise",
+     "rank": 2,
+     "chain": [],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "ring",
+     "n_nodes": 303,
+     "k": 6,
+     "p": 0.11406964368418591,
+     "directed": 0.009884302608677186,
+     "map": "blocked"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 7,
+     "k": 1,
+     "chain": [
+      {
+       "op": "v_sort",
+       "p": {}
+      },
+      {
+       "op": "v_quantize",
+       "p": {
+        "levels": 5
+       }
+      }
+     ],
+     "noise_sd": 0.05584792419859064,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.45706003376382615,
+     "drift_period": 308,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.0066426423491367514,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.17568624639228958,
+     "door_close": 0.03129308504002066,
+     "hazard_frac": 0.0,
+     "hazard": "svd_trunc"
+    },
+    "resource": {
+     "energy0": 377.24312053977565,
+     "metabolism": 0.25152377709242757,
+     "gain": 2.608990587185585,
+     "theta": 0.1454248181789517,
+     "regrow": 371,
+     "query_every": 30,
+     "query_reward": 9.082179396364667,
+     "tol": 0.19530896695520322,
+     "p_compute": 4.223652482328902e-05,
+     "p_read": 1.8606649756336803e-05,
+     "p_write": 0.000785651867827521,
+     "p_move": 0.6500170131646923,
+     "p_probe": 0.6334463414122201,
+     "p_rollout": 0.6582496554992973,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "dct",
+     "cap": 164,
+     "bits": 2,
+     "forget": "none",
+     "forget_rate": 0.06987059969197122,
+     "fluid": 1,
+     "band": 0.01
+    },
+    "learning": {
+     "rule": "anti_hebbian",
+     "lr": 0.3671351803927254,
+     "batch": 110,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "random",
+     "eps": 0.42609193521976757,
+     "depth": 4,
+     "temp": 0.2938413186272555
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "none",
+     "mark_decay": 0.01965845654626816
+    },
+    "time": {
+     "lifetime": 2781,
+     "checkpoints": 10,
+     "lifetime2": 2781
+    },
+    "meta": {
+     "strategy": "random",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "j": 27,
+   "detector": "D7",
+   "genome_hash": "9bc271fe4c88f684",
+   "waveA_i": 1010,
+   "status": "UNRESOLVED",
+   "info": {
+    "hits": 2,
+    "null_hits": 1,
+    "n": 5,
+    "median_SD": 0.0,
+    "median_stat": 0.0,
+    "degenerate": 0,
+    "real": [
+     0.0,
+     0.17354751556341075,
+     0.0,
+     0.26570966558718756,
+     0.0
+    ],
+    "null": [
+     0.0,
+     0.8104372788813246,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "klass": [
+    "mixture",
+    "tensor_index",
+    "hebbian",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "tt",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_lowpass",
+       "p": {
+        "mode": 9,
+        "keep": 0.4990924578379001
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 599,
+     "k": 4,
+     "p": 0.2956563394266874,
+     "directed": 0.4934751007926202,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 12,
+     "k": 3,
+     "chain": [],
+     "noise_sd": 0.20635004022130216,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.16934664802891447,
+     "drift_period": 291,
+     "basis_change_period": 0,
+     "rewire_period": 227,
+     "rewire_frac": 0.078618697805863,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.25729278934696276,
+     "door_close": 0.07309390389611116,
+     "hazard_frac": 0.0,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 249.1537671287394,
+     "metabolism": 0.7608399359333069,
+     "gain": 4.263513885779588,
+     "theta": 0.4832117673583787,
+     "regrow": 208,
+     "query_every": 0,
+     "query_reward": 2.3926612808149548,
+     "tol": 0.2615596086364114,
+     "p_compute": 0.0010512617652963792,
+     "p_read": 0.013282060745000074,
+     "p_write": 0.0006109965415276962,
+     "p_move": 0.7994784338656987,
+     "p_probe": 2.4247287246821454,
+     "p_rollout": 0.9110525601996791,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "mixture",
+     "cap": 36,
+     "bits": 16,
+     "forget": "spectral_trunc",
+     "forget_rate": 0.13346322893155912,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "hebbian",
+     "lr": 0.13373420299343716,
+     "batch": 17,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.20655068223226264,
+     "depth": 4,
+     "temp": 0.1792167443054086
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.014522042566778104
+    },
+    "time": {
+     "lifetime": 1862,
+     "checkpoints": 10,
+     "lifetime2": 1862
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "9f8148fec3928048"
+     ],
+     "mutations": [
+      "law:resource"
+     ]
+    }
+   }
+  },
+  {
+   "j": 28,
+   "detector": "D8",
+   "genome_hash": "e8a67a611476f362",
+   "waveA_i": 1388,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 1,
+    "n": 5,
+    "median_SD": -0.05,
+    "median_stat": 0.0,
+    "degenerate": 0,
+    "real": [
+     0.0,
+     -0.05,
+     0.0,
+     0.0,
+     -0.05
+    ],
+    "null": [
+     0.025,
+     0.0,
+     -0.025,
+     0.1,
+     0.0
+    ]
+   },
+   "klass": [
+    "lowrank",
+    "tensor_index",
+    "batch_replay",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      3,
+      2,
+      4,
+      4,
+      3
+     ],
+     "gen": "cp",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_correlated_noise",
+       "p": {
+        "sd": 0.28093659142542615,
+        "mode": 15
+       }
+      },
+      {
+       "op": "f_binary_field",
+       "p": {
+        "kind": "max"
+       }
+      },
+      {
+       "op": "f_tt_round",
+       "p": {
+        "rank": 6
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 1009,
+     "k": 4,
+     "p": 0.2204446790280279,
+     "directed": 0.3762206638127104,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "fiber",
+     "mode": 5,
+     "k": 6,
+     "chain": [
+      {
+       "op": "v_cumsum",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.39775924736599166,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 103,
+     "basis_change_period": 287,
+     "rewire_period": 0,
+     "rewire_frac": 0.07790712699110103,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.47031590892192066,
+     "door_close": 0.0,
+     "hazard_frac": 0.057766659929935266,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 265.1596908191831,
+     "metabolism": 1.5533238924619033,
+     "gain": 0.7073406801241859,
+     "theta": -0.21984385248314448,
+     "regrow": 331,
+     "query_every": 3,
+     "query_reward": 6.455464040031695,
+     "tol": 0.25236841396001525,
+     "p_compute": 0.0007803451567498811,
+     "p_read": 0.06823706974524603,
+     "p_write": 6.589123607552089e-05,
+     "p_move": 0.4404957163514849,
+     "p_probe": 2.498530920180647,
+     "p_rollout": 0.5937845146113987,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "lowrank",
+     "cap": 532,
+     "bits": 8,
+     "forget": "none",
+     "forget_rate": 0.13118536942587708,
+     "fluid": 0,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "batch_replay",
+     "lr": 0.05476005537918515,
+     "batch": 110,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 1,
+     "noise": 0.30231630620013694,
+     "sign_flip": 0.1988293725065851
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.19781660319804772,
+     "depth": 1,
+     "temp": 0.07311007229430898
+    },
+    "boundary": {
+     "n_org": 2,
+     "marks": "shared",
+     "mark_decay": 0.03982096016704066
+    },
+    "time": {
+     "lifetime": 1521,
+     "checkpoints": 10,
+     "lifetime2": 1521
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "19aabfa36420d015"
+     ],
+     "mutations": [
+      "search.eps",
+      "observation.chain"
+     ]
+    }
+   }
+  },
+  {
+   "j": 29,
+   "detector": "D8",
+   "genome_hash": "963b3a5a15b6fb24",
+   "waveA_i": 757,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.025,
+    "median_stat": 0.0,
+    "degenerate": 0,
+    "real": [
+     0.0,
+     0.0,
+     0.025,
+     0.05,
+     0.0
+    ],
+    "null": [
+     -0.1,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "klass": [
+    "sketch",
+    "tensor_index",
+    "nlms",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      23,
+      26,
+      6
+     ],
+     "gen": "spectral",
+     "rank": 1,
+     "chain": [],
+     "reward_chain": [
+      {
+       "op": "f_reduce_max",
+       "p": {
+        "mode": 3
+       }
+      }
+     ]
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 820,
+     "k": 6,
+     "p": 0.2697925556489451,
+     "directed": 0.09545423250718141,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 1,
+     "k": 6,
+     "chain": [],
+     "noise_sd": 0.22358955700415478,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.260307934103834,
+     "drift_period": 261,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.08490071988515313,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.2932022236227293,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "quantize2"
+    },
+    "resource": {
+     "energy0": 140.677955929476,
+     "metabolism": 1.6167620075778104,
+     "gain": 2.4927535556113316,
+     "theta": 0.13252336408815113,
+     "regrow": 563,
+     "query_every": 10,
+     "query_reward": 7.903388260727411,
+     "tol": 0.23098989443643336,
+     "p_compute": 0.004029346230561093,
+     "p_read": 0.0004047633677778349,
+     "p_write": 0.001384545692785243,
+     "p_move": 0.5726128948468077,
+     "p_probe": 2.971401930925462,
+     "p_rollout": 0.16343581896496873,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "sketch",
+     "cap": 817,
+     "bits": 4,
+     "forget": "decay",
+     "forget_rate": 0.10145222603764047,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "nlms",
+     "lr": 0.07019827638808773,
+     "batch": 18,
+     "sweeps": 4
+    },
+    "credit": {
+     "delay": 6,
+     "radius": 0,
+     "noise": 0.0,
+     "sign_flip": 0.2656639159448157
+    },
+    "search": {
+     "policy": "eps_greedy",
+     "eps": 0.3350469443232249,
+     "depth": 1,
+     "temp": 0.42853834949815683
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.04033824265997499
+    },
+    "time": {
+     "lifetime": 1639,
+     "checkpoints": 10,
+     "lifetime2": 1639
+    },
+    "meta": {
+     "strategy": "mutate:local",
+     "parents": [
+      "a22671710fd2e424"
+     ],
+     "mutations": [
+      "learning.lr",
+      "learning.rule",
+      "credit.noise",
+      "credit.sign_flip"
+     ]
+    }
+   }
+  },
+  {
+   "j": 30,
+   "detector": "D8",
+   "genome_hash": "b6238353cd7a8739",
+   "waveA_i": 910,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 1,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": 0.0,
+    "median_stat": 0.05,
+    "degenerate": 0,
+    "real": [
+     0.15,
+     0.05,
+     0.0,
+     0.0,
+     0.05
+    ],
+    "null": [
+     0.025,
+     0.05,
+     0.0,
+     0.0,
+     NaN
+    ]
+   },
+   "klass": [
+    "cp",
+    "erdos",
+    "evolve",
+    0.03
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      3,
+      2,
+      2,
+      2,
+      3,
+      3,
+      4
+     ],
+     "gen": "pairwise",
+     "rank": 2,
+     "chain": [
+      {
+       "op": "f_outer_marginals",
+       "p": {}
+      },
+      {
+       "op": "f_phase_scramble",
+       "p": {
+        "mode": 10
+       }
+      },
+      {
+       "op": "f_reduce_norm",
+       "p": {
+        "mode": 13
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "erdos",
+     "n_nodes": 910,
+     "k": 3,
+     "p": 0.027664109118136188,
+     "directed": 0.19313224090969752,
+     "map": "blocked"
+    },
+    "observation": {
+     "kind": "cell",
+     "mode": 1,
+     "k": 1,
+     "chain": [],
+     "noise_sd": 0.039664823907022195,
+     "noise_dist": "cauchy_clip"
+    },
+    "transition": {
+     "drift": 0.0,
+     "drift_period": 268,
+     "basis_change_period": 280,
+     "rewire_period": 0,
+     "rewire_frac": 0.3020871078699915,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.030920719979156963,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "rank_inflate"
+    },
+    "resource": {
+     "energy0": 349.7524586252694,
+     "metabolism": 0.5414581825198114,
+     "gain": 2.348025845573404,
+     "theta": 0.6521576474492061,
+     "regrow": 675,
+     "query_every": 4,
+     "query_reward": 4.18551229883514,
+     "tol": 0.2749653476395201,
+     "p_compute": 0.00021222790287077988,
+     "p_read": 0.0027823013514679754,
+     "p_write": 0.016901352093934827,
+     "p_move": 0.4797602297733162,
+     "p_probe": 2.8411111386426287,
+     "p_rollout": 0.34829342118215834,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "cp",
+     "cap": 149,
+     "bits": 2,
+     "forget": "lowest_value",
+     "forget_rate": 0.06970670970167399,
+     "fluid": 0,
+     "band": 0.03
+    },
+    "learning": {
+     "rule": "evolve",
+     "lr": 0.4327876680329634,
+     "batch": 94,
+     "sweeps": 5
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 2,
+     "noise": 0.49588077619063364,
+     "sign_flip": 0.09896405854060848
+    },
+    "search": {
+     "policy": "rollout",
+     "eps": 0.06081711440670318,
+     "depth": 3,
+     "temp": 0.14157308084128814
+    },
+    "boundary": {
+     "n_org": 4,
+     "marks": "none",
+     "mark_decay": 0.04044762823975226
+    },
+    "time": {
+     "lifetime": 1588,
+     "checkpoints": 10,
+     "lifetime2": 1588
+    },
+    "meta": {
+     "strategy": "novelty",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  },
+  {
+   "j": 31,
+   "detector": "D8",
+   "genome_hash": "b35e1ef32120441d",
+   "waveA_i": 729,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 0,
+    "n": 5,
+    "median_SD": -0.075,
+    "median_stat": -0.075,
+    "degenerate": 0,
+    "real": [
+     0.05,
+     -0.1,
+     -0.075,
+     -0.15,
+     -0.05
+    ],
+    "null": [
+     -0.125,
+     0.075,
+     0.0,
+     -0.075,
+     -0.05
+    ]
+   },
+   "klass": [
+    "table",
+    "tensor_index",
+    "hebbian",
+    0.25
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "gen": "cp",
+     "rank": 5,
+     "chain": [
+      {
+       "op": "f_lowpass",
+       "p": {
+        "mode": 9,
+        "keep": 0.4990924578379001
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 599,
+     "k": 4,
+     "p": 0.26756915200397524,
+     "directed": 0.4934751007926202,
+     "map": "random"
+    },
+    "observation": {
+     "kind": "marginal",
+     "mode": 12,
+     "k": 3,
+     "chain": [],
+     "noise_sd": 0.20635004022130216,
+     "noise_dist": "laplace"
+    },
+    "transition": {
+     "drift": 0.16934664802891447,
+     "drift_period": 291,
+     "basis_change_period": 0,
+     "rewire_period": 227,
+     "rewire_frac": 0.078618697805863,
+     "catastrophe_rate": 0.0
+    },
+    "irreversibility": {
+     "oneway": 0.1301621577267973,
+     "door_close": 0.0,
+     "hazard_frac": 0.0,
+     "hazard": "scramble"
+    },
+    "resource": {
+     "energy0": 314.8976195932973,
+     "metabolism": 0.7901797317521222,
+     "gain": 2.83516035038981,
+     "theta": -0.06326769768436713,
+     "regrow": 702,
+     "query_every": 27,
+     "query_reward": 1.9382147240518899,
+     "tol": 0.3195395846182449,
+     "p_compute": 0.00034746966147944245,
+     "p_read": 0.00011729628756534695,
+     "p_write": 0.001261031172469987,
+     "p_move": 0.6719063986177506,
+     "p_probe": 2.14044812244682,
+     "p_rollout": 0.2503398578502928,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "table",
+     "cap": 18,
+     "bits": 8,
+     "forget": "none",
+     "forget_rate": 0.13033902890192647,
+     "fluid": 0,
+     "band": 0.25
+    },
+    "learning": {
+     "rule": "hebbian",
+     "lr": 0.13373420299343716,
+     "batch": 17,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.07699934834996724,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.20655068223226264,
+     "depth": 4,
+     "temp": 0.1792167443054086
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "shared",
+     "mark_decay": 0.014522042566778104
+    },
+    "time": {
+     "lifetime": 1590,
+     "checkpoints": 10,
+     "lifetime2": 1590
+    },
+    "meta": {
+     "strategy": "mutate:large",
+     "parents": [
+      "9a073ab35ddc0359"
+     ],
+     "mutations": [
+      "law:memory",
+      "law:irreversibility"
+     ]
+    }
+   }
+  },
+  {
+   "j": 32,
+   "detector": "D8",
+   "genome_hash": "62c8b4c2e40936d6",
+   "waveA_i": 912,
+   "status": "FALSIFIED",
+   "info": {
+    "hits": 0,
+    "null_hits": 2,
+    "n": 5,
+    "median_SD": -0.05,
+    "median_stat": 0.0,
+    "degenerate": 0,
+    "real": [
+     0.05,
+     0.0,
+     -0.025,
+     0.025,
+     -0.075
+    ],
+    "null": [
+     0.1,
+     0.05,
+     -0.05,
+     0.0,
+     0.1
+    ]
+   },
+   "klass": [
+    "tt",
+    "tensor_index",
+    "nlms",
+    0.1
+   ],
+   "genome": {
+    "substrate": {
+     "dims": [
+      5,
+      5,
+      4,
+      3,
+      3,
+      3
+     ],
+     "gen": "cp",
+     "rank": 4,
+     "chain": [
+      {
+       "op": "f_reduce_max",
+       "p": {
+        "mode": 3
+       }
+      }
+     ],
+     "reward_chain": []
+    },
+    "geometry": {
+     "kind": "tensor_index",
+     "n_nodes": 123,
+     "k": 6,
+     "p": 0.11177174770305395,
+     "directed": 0.361650890428919,
+     "map": "sorted"
+    },
+    "observation": {
+     "kind": "masked",
+     "mode": 4,
+     "k": 5,
+     "chain": [
+      {
+       "op": "v_sign",
+       "p": {}
+      }
+     ],
+     "noise_sd": 0.07681587015262675,
+     "noise_dist": "normal"
+    },
+    "transition": {
+     "drift": 0.49417875894360663,
+     "drift_period": 303,
+     "basis_change_period": 0,
+     "rewire_period": 0,
+     "rewire_frac": 0.04552037375042828,
+     "catastrophe_rate": 0.0025623260672187165
+    },
+    "irreversibility": {
+     "oneway": 0.4437655725916836,
+     "door_close": 0.1635755274440767,
+     "hazard_frac": 0.11742885164139308,
+     "hazard": "reset_part"
+    },
+    "resource": {
+     "energy0": 169.88603096478195,
+     "metabolism": 1.4786115518469916,
+     "gain": 4.574175384014044,
+     "theta": 0.32980165073653867,
+     "regrow": 142,
+     "query_every": 0,
+     "query_reward": 6.061560073291892,
+     "tol": 0.32058867041404676,
+     "p_compute": 1.827673090388251e-05,
+     "p_read": 0.0008842863635813386,
+     "p_write": 0.0004210988764746028,
+     "p_move": 0.8087605483842126,
+     "p_probe": 2.8565037696443607,
+     "p_rollout": 0.6626854085310571,
+     "calibrated": true
+    },
+    "memory": {
+     "substrate": "tt",
+     "cap": 588,
+     "bits": 4,
+     "forget": "spectral_trunc",
+     "forget_rate": 5.446940384778998e-05,
+     "fluid": 1,
+     "band": 0.1
+    },
+    "learning": {
+     "rule": "nlms",
+     "lr": 0.3182533039723429,
+     "batch": 29,
+     "sweeps": 1
+    },
+    "credit": {
+     "delay": 0,
+     "radius": 0,
+     "noise": 0.0,
+     "sign_flip": 0.0
+    },
+    "search": {
+     "policy": "novelty",
+     "eps": 0.4648340393184957,
+     "depth": 3,
+     "temp": 0.24394102198293405
+    },
+    "boundary": {
+     "n_org": 1,
+     "marks": "private",
+     "mark_decay": 0.034168827228216916
+    },
+    "time": {
+     "lifetime": 2022,
+     "checkpoints": 10,
+     "lifetime2": 2022
+    },
+    "meta": {
+     "strategy": "random",
+     "parents": [],
+     "mutations": []
+    }
+   }
+  }
+ ]
+}

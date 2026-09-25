@@ -1,8 +1,10 @@
 # Atlas model -- schema, identity, lineage, merge, adapters
 
-Currency: 2026-09-19 (migrations 001-004; harvesters commits/2,
-archaeon_campaigns/1, frontier/3, npe/3, vivarium/2, pew/1, local_files/2;
-comb/2). Charter: prompts/2026-09-19_charter/ and _charter_addendum/.
+Currency: 2026-09-24 (migrations 001-011; harvesters commits/2,
+archaeon_campaigns/3, frontier/3, npe/5, vivarium/2, pew/1, local_files/4,
+catalog/1, proposals/2, theory/2; comb/2; policy atlas.policy/2). Charters:
+prompts/2026-09-19_charter/, _charter_addendum/, 2026-09-21_prior_art_raid/,
+2026-09-24_promotion/.
 
 ## 1. The three layers are separate tables
 
@@ -162,3 +164,62 @@ small reads, sha256 of files <= 5 MB; live service trees stat-only
 (registry "no_hash"). SQLite: only idle ledgers, mode=ro&immutable=1.
 Postgres: SELECT in READ ONLY transactions outside schema atlas. No
 engine depends on Atlas; deleting schema atlas changes nothing they do.
+
+## 9. The research-policy layer (migration 010-011, promotion 2026-09-24)
+
+Five tables sit on top of the index. They hold ATLAS'S OWN reasoning, so
+they are kept physically apart from what ran, was observed and was
+concluded; nothing here is written back onto an engine's record.
+
+  atlas.proposition          a distinction we are learning to draw, with
+                             scope, confidence, confidence_basis, known
+                             confounds, mechanisms (primitive ids) and
+                             untested_predictions (its falsifiers)
+  atlas.proposition_evidence evidence BOTH WAYS: SUPPORTS | CONTRADICTS |
+                             SHARPENS | SCOPES | CONFOUNDS | PREDICTS,
+                             each pointing at an indexed entity with a
+                             locator or verbatim text. Contested stays
+                             contested: there is no averaged verdict.
+  atlas.primitive            an abstract mechanism, plus detection_status:
+                             AXIS_RULE, or UNMEASURED with the reason. A
+                             primitive with no rule is UNMEASURABLE HERE,
+                             never 'untested' (011; the control that
+                             caught the conflation is in atlas/tests).
+  atlas.primitive_use        which entity exercises which primitive, basis
+                             ATLAS_DERIVED with the rule id in evidence
+  atlas.combination          coverage of primitive tuples: UNEXPLORED |
+                             TESTED | FALSIFIED_INDIRECTLY |
+                             SUGGESTED_BY_EVIDENCE | BARREN, each with a
+                             verdict_basis and an interest score
+  atlas.experiment_score     the score vector for one proposal under one
+                             policy version -- a PREDICTION -- and, later,
+                             outcome, theory_delta and theory_delta_score
+  atlas.policy_version       the weights, what they were fitted on, and a
+                             rationale that must name the defect in the
+                             version it supersedes
+  atlas.portfolio_update     directives per horizon with their evidence,
+                             routed_to seats, status ISSUED|ACKED|
+                             SUPERSEDED. A directive is a suggestion.
+  atlas.blind_spot           an assumption every engine checked holds,
+                             with engines_checked, counterexamples from
+                             the catalogue, how Atlas noticed, and the
+                             anti-experiment
+
+Rules that keep it honest:
+
+- The scoring target is MODEL CHANGE PER UNIT COMPUTE, not success. No
+  weight rewards a positive result; cost is a penalty; a proposal aimed at
+  a settled proposition is discounted (policy.CONF_W).
+- A score is a prediction. It is only worth something once outcome and
+  theory_delta come back and the weights are refitted (ATLAS-40).
+- Horizons must differ. MICRO (~10 experiments) may only surface
+  anomalies; STRATEGY (~100) reprioritises; THEORY (~1000) revises the
+  ontology. Identical directives across horizons is a tested failure.
+- Every horizon reports the INDEX COVERAGE LAG. A quiet window is never
+  reported as quiet engines.
+- The ledgers behind these tables are committed text (roles/Atlas/theory/
+  PROPOSITIONS, PRIMITIVES, BLIND_SPOTS .jsonl), so the reasoning is
+  reviewable in git and Postgres stays an index, not the only evidence.
+
+Reports: `python -m atlas policy score`, `python -m atlas policy portfolio
+--horizon MICRO|STRATEGY|THEORY`, `python -m atlas roadmap --out <file>`.

@@ -1,0 +1,81 @@
+{
+ "config": {
+  "campaign_id": "pte-c1",
+  "seed": 20260924,
+  "families": [
+   "RELAY",
+   "XOR",
+   "MAJ",
+   "FLIP",
+   "HOLD"
+  ],
+  "a0_cells": 5000,
+  "a0_random": 64,
+  "a_cells": 400,
+  "a_search": {
+   "pop": 96,
+   "M": 8,
+   "gens": 36,
+   "elite": 4,
+   "trunc": 0.25,
+   "p_field": 0.04,
+   "p_instr": 0.15,
+   "p_swap": 0.1,
+   "p_cross": 0.3,
+   "M_final": 16,
+   "M_held": 64,
+   "w_contrast": 0.1,
+   "w_any": 0.02
+  },
+  "living_plant": 0.75,
+  "living_sens": 0.3,
+  "b_dials": 6,
+  "b_reps": 3,
+  "b_search": {
+   "pop": 96,
+   "M": 8,
+   "gens": 36,
+   "elite": 4,
+   "trunc": 0.25,
+   "p_field": 0.04,
+   "p_instr": 0.15,
+   "p_swap": 0.1,
+   "p_cross": 0.3,
+   "M_final": 16,
+   "M_held": 64,
+   "w_contrast": 0.1,
+   "w_any": 0.02
+  },
+  "c_top": 12,
+  "d_top": 24,
+  "d_reps": 2,
+  "e_top": 5,
+  "e_sizes": [
+   400,
+   1024,
+   2304
+  ],
+  "budget_hours": {
+   "A0": 3.0,
+   "A": 5.0,
+   "B": 3.0,
+   "B2": 1.5,
+   "C": 1.5,
+   "D": 2.0,
+   "E": 1.5
+  },
+  "signal_margin": 0.05,
+  "comm_margin": 0.03,
+  "jump_abs": 0.1,
+  "jump_se": 3.0,
+  "jump_frac": 0.5
+ },
+ "code_sha": "eb7c4b40ae8686262094d362a00ab69c00e3d002",
+ "prereg": {
+  "path": "roles/Ananke/pte/PREREG_PTE_C1.md",
+  "commit": "78243a758",
+  "sha256_lf_blob": "cf17881180238701d8832d514d48099315986166806f5d9847a0dcf505a9b57c"
+ },
+ "frozen_at": "2026-09-24T12:02:52Z",
+ "note": "Campaign driver refuses to run if prometheus/ananke differs from code_sha. Preflight seeds 1-3 are never reused (campaign seed 20260924)."
+}

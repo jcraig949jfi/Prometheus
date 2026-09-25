@@ -4,7 +4,8 @@ The directive's early-exploration stage requires positive controls proving that 
 executes correctly, that known replicators replicate, that known task witnesses solve,
 that external reproduction controls evolve, and that endogenous reproduction can invade
 when seeded. This file runs all five against the real engine - not against a mock - and
-writes CALIBRATION.json. run_campaign.py refuses to launch on anything but PASS.
+writes CALIBRATION_PREFREEZE.json, or CALIBRATION.json only under --freeze (C9-D05).
+run_campaign.py refuses to launch on anything but PASS.
 
 Every check returns PASS / FAIL / NOT_VERIFIED. A check that could not run is never
 counted as a check that passed: that distinction is the one this campaign's ledger has
@@ -26,6 +27,7 @@ import grammar as G
 import selftest_z8
 import tasks
 import world
+from constants import C
 
 HERE = pathlib.Path(__file__).resolve().parent
 RESULTS = []
@@ -80,7 +82,7 @@ def control_replication():
                    {"exception": "%s: %s" % (type(e).__name__, e)}, t0)
             continue
         s = r["summary"]
-        ok = s["births_endogenous"] > 0 and (s["first_replicator"] or {}).get("fidelity", 0) >= 0.90
+        ok = s["births_endogenous"] > 0 and (s["first_replicator"] or {}).get("fidelity", 0) >= C["REPL_FIDELITY"]
         record("seeded_replicator_%s_%s" % (prim, loc), "PASS" if ok else "FAIL",
                {"births_endogenous": s["births_endogenous"], "births_external": s["births_external"],
                 "first_replicator_epoch": (s["first_replicator"] or {}).get("epoch"),
@@ -215,7 +217,13 @@ def main():
            "passed": sum(1 for r in RESULTS if r["outcome"] == "PASS"),
            "failed": n_fail, "not_verified": n_nv,
            "gate": "PASS" if (n_fail == 0 and n_nv == 0) else "REFUSE"}
-    (HERE / "CALIBRATION.json").write_text(json.dumps(out, indent=1), encoding="ascii")
+    # C9-D05. The freeze-gate artifact is CALIBRATION.json. Writing it by default meant any
+    # routine pre-freeze check produced a file that reads as "the freeze gate passed", and
+    # the stop line was held only by renaming the output by hand. The freeze name is now
+    # written ONLY with an explicit --freeze, which is an operator instruction.
+    name = "CALIBRATION.json" if "--freeze" in sys.argv else "CALIBRATION_PREFREEZE.json"
+    out["artifact"] = name
+    (HERE / name).write_text(json.dumps(out, indent=1), encoding="ascii")
     print(json.dumps({k: out[k] for k in ("passed", "failed", "not_verified", "gate", "seconds")}, indent=1))
     return 0 if out["gate"] == "PASS" else 1
 

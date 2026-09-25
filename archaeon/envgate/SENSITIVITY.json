@@ -1,0 +1,327 @@
+{
+ "schema": "archaeon.envgate.sensitivity.v1",
+ "status": "POST_HOC -- descriptive; the preregistered verdict in RESULTS.json is unchanged",
+ "preregistered_verdict": "GATING_CAUSALLY_SUPPORTED",
+ "S1_block_level": {
+  "C1_gate_band_removed": {
+   "block_diffs": [
+    3,
+    1,
+    6,
+    5,
+    0,
+    2,
+    5,
+    2,
+    5,
+    6,
+    2,
+    4,
+    2,
+    10,
+    1,
+    31
+   ],
+   "block_sign_one_sided_p": 3.0517578125e-05
+  },
+  "C2_sham_band_removed": {
+   "block_diffs": [
+    -2,
+    -1,
+    4,
+    4,
+    -3,
+    -3,
+    4,
+    0,
+    -5,
+    3,
+    -3,
+    0,
+    -1,
+    3,
+    -2,
+    0
+   ],
+   "block_sign_one_sided_p": 0.8665771484375
+  },
+  "C3_dominant_gate_removed": {
+   "block_diffs": [
+    2,
+    -1,
+    4,
+    4,
+    0,
+    2,
+    2,
+    0,
+    4,
+    5,
+    1,
+    1,
+    2,
+    -58,
+    0,
+    36
+   ],
+   "block_sign_one_sided_p": 0.01123046875
+  },
+  "C4_dominant_gate_restored": {
+   "block_diffs": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    32
+   ],
+   "block_sign_one_sided_p": 0.5
+  }
+ },
+ "S2_copier_founded": {
+  "established": {
+   "U": 47,
+   "BAND_BLOCK": 1,
+   "SHAM_BLOCK": 45,
+   "BLOCK_128": 18,
+   "RESCUE_128": 1
+  },
+  "contrasts": {
+   "C1_gate_band_removed": {
+    "X": "U",
+    "Y": "BAND_BLOCK",
+    "established_X": 47,
+    "established_Y": 1,
+    "discordant": [
+     46,
+     0
+    ],
+    "mcnemar_one_sided_p": 1.4210854715202004e-14,
+    "block_diffs": [
+     2,
+     1,
+     6,
+     4,
+     0,
+     2,
+     5,
+     2,
+     4,
+     4,
+     2,
+     4,
+     1,
+     7,
+     1,
+     1
+    ],
+    "blocks_pos_neg": [
+     15,
+     0
+    ],
+    "block_sign_one_sided_p": 3.0517578125e-05
+   },
+   "C2_sham_band_removed": {
+    "X": "U",
+    "Y": "SHAM_BLOCK",
+    "established_X": 47,
+    "established_Y": 45,
+    "discordant": [
+     32,
+     30
+    ],
+    "mcnemar_one_sided_p": 0.4495381568264295,
+    "block_diffs": [
+     0,
+     -1,
+     4,
+     3,
+     -2,
+     -1,
+     4,
+     0,
+     -4,
+     1,
+     -1,
+     0,
+     -1,
+     1,
+     -2,
+     1
+    ],
+    "blocks_pos_neg": [
+     6,
+     7
+    ],
+    "block_sign_one_sided_p": 0.70947265625
+   },
+   "C3_dominant_gate_removed": {
+    "X": "U",
+    "Y": "BLOCK_128",
+    "established_X": 47,
+    "established_Y": 18,
+    "discordant": [
+     37,
+     8
+    ],
+    "mcnemar_one_sided_p": 7.687045098236922e-06,
+    "block_diffs": [
+     1,
+     -1,
+     4,
+     4,
+     0,
+     2,
+     2,
+     0,
+     3,
+     3,
+     1,
+     2,
+     1,
+     7,
+     0,
+     0
+    ],
+    "blocks_pos_neg": [
+     11,
+     1
+    ],
+    "block_sign_one_sided_p": 0.003173828125
+   },
+   "C4_dominant_gate_restored": {
+    "X": "RESCUE_128",
+    "Y": "BAND_BLOCK",
+    "established_X": 1,
+    "established_Y": 1,
+    "discordant": [
+     0,
+     0
+    ],
+    "mcnemar_one_sided_p": 1.0,
+    "block_diffs": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "blocks_pos_neg": [
+     0,
+     0
+    ],
+    "block_sign_one_sided_p": 1.0
+   }
+  }
+ },
+ "T_takeover_worlds": {
+  "worlds": [
+   {
+    "block": 13,
+    "arm": "BLOCK_128",
+    "final_pop": 126,
+    "births": 6149466,
+    "established": 68,
+    "noncopier_established": 68,
+    "earliest_copier_established_arrival": null,
+    "its_gates": null,
+    "its_gate_in_band": false
+   },
+   {
+    "block": 15,
+    "arm": "U",
+    "final_pop": 124,
+    "births": 3419311,
+    "established": 69,
+    "noncopier_established": 67,
+    "earliest_copier_established_arrival": 516848,
+    "its_gates": [],
+    "its_gate_in_band": false
+   },
+   {
+    "block": 15,
+    "arm": "BAND_BLOCK",
+    "final_pop": 125,
+    "births": 3392164,
+    "established": 38,
+    "noncopier_established": 37,
+    "earliest_copier_established_arrival": 1212310,
+    "its_gates": [
+     255
+    ],
+    "its_gate_in_band": false
+   },
+   {
+    "block": 15,
+    "arm": "SHAM_BLOCK",
+    "final_pop": 126,
+    "births": 3421649,
+    "established": 69,
+    "noncopier_established": 68,
+    "earliest_copier_established_arrival": 525972,
+    "its_gates": [
+     129
+    ],
+    "its_gate_in_band": true
+   },
+   {
+    "block": 15,
+    "arm": "BLOCK_128",
+    "final_pop": 126,
+    "births": 3402845,
+    "established": 33,
+    "noncopier_established": 31,
+    "earliest_copier_established_arrival": 629416,
+    "its_gates": [
+     128
+    ],
+    "its_gate_in_band": true
+   },
+   {
+    "block": 15,
+    "arm": "RESCUE_128",
+    "final_pop": 126,
+    "births": 3409521,
+    "established": 70,
+    "noncopier_established": 69,
+    "earliest_copier_established_arrival": 1212310,
+    "its_gates": [
+     255
+    ],
+    "its_gate_in_band": false
+   }
+  ],
+  "noncopier_establishments_inside_takeover_worlds": 340,
+  "noncopier_establishments_total": 363
+ },
+ "H_host_test_block15_U": {
+  "resident_genome": "c180094094938d528ef73c4ab400de8e7eb7a99cab37f38650832a8d607194a5",
+  "resident_class": "EXACT_UNGATED",
+  "resident_exact_input_count": 256,
+  "hosts": 63,
+  "give_births_facing_resident": 26,
+  "write_exact_copy_of_resident": 23,
+  "births_via_foreign_execution": 26
+ }
+}
