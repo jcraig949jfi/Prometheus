@@ -24,6 +24,7 @@ Protocol `5819bc6d`. 1,200 of 1,200 runs, 0 errors; the report audit passes 21 o
 | **The depth-1 wall is newborn starvation** under energy economies | C-ENERGY | child replication 20/40 vs 4/40, p = 7e-5 (my side-prediction was falsified) |
 | **Spontaneous non-pair heredity is blocked by the encoding length** of the ALLOC->copy->BIRTH chain | C-DENSE | 13/40 vs 0/40 cells replicate from random bytes, p = 3.8e-5 |
 | Under short encodings, **self-location and search are necessary** | C-ABLATE | 15 -> 1 (p = 6e-5) and 15 -> 6 (p = 0.006); energy-for-depth not confirmed |
+| With the splice off, **pair-tape heredity is establishment-limited** (4 founders vs 1) | C-CRITICAL-MASS | depth >= 5 in 41/80 vs 5/80, p = 8e-11; runaways 15 vs 2 |
 | **The world's recombination splice prevents runaway pair-tape heredity** | C-RUNAWAY | runaway (depth >= 20) in 7/150 vs 0/150, p = 0.007; max depth 549 vs 13 |
 | H1 cost interaction (C9-D16 repaired) | C9-H1R | I = +0.20 |
 
@@ -53,8 +54,9 @@ sustained, population-wide causal copying, 549 causal generations at the maximum
 Runaway is specimen-specific: 0 of 7 other specimens ran away. It is not explained by
 copier quality. It is dose-sensitive: with 4 founders instead of 1, runaways rose from
 0/64 to 9/64 and depth >= 5 from 8/64 to 32/64 (X-CRITICAL-MASS, exploratory WEAK_SIGNAL;
-the SIGNAL bar was missed by one run). A fresh frozen test (C-CRITICAL-MASS, 80 seeds per arm,
-primary endpoint depth >= 5) is running.
+the SIGNAL bar was missed by one run). **A fresh frozen test confirmed it** (C-CRITICAL-MASS:
+depth >= 5 in 41/80 vs 5/80, p = 8e-11): heredity here is establishment-limited. Whether
+founders help each other (superadditivity) is under test in X-DOSE-CURVE.
 
 ## 4. Defects found and handled
 

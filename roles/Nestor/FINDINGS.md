@@ -294,7 +294,12 @@ X-STATE / X-SUFFICIENCY (runaway copies are genome-sufficient, but so are stalle
 - sufficiency does not separate them; scale does: 3,901-13,298 P-11 copies by epoch 200 vs
 <= 31); X-CRITICAL-MASS (**WEAK_SIGNAL**: 4 founders vs 1, runaways 9/64 vs 0/64, depth >= 5
 32/64 vs 8/64, max depth 385 vs 10; the declared SIGNAL bar of 10 runaways missed by one).
-Hypothesis under CONFIRM: heredity here is establishment-limited (C-CRITICAL-MASS).
+**C-CRITICAL-MASS CONFIRMED (frozen at e2bcf6e2b, 80 fresh seeds per arm):** 4 founders vs 1
+raise P-11 depth >= 5 from 5/80 to 41/80 (Fisher p = 8e-11; secondary runaways 15/80 vs 2/80,
+p = 7e-4). Pair-tape causal heredity in this cell is **establishment-limited**. Whether founders
+are superadditive (a true critical mass) is NOT yet claimed: post hoc, k=4 exceeds the
+independent-founders prediction (41 vs 18), and X-DOSE-CURVE tests it by declared LRT.
+Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
 

@@ -29,14 +29,15 @@ claim (E-6..E-10). Consolidated report:
   - **C-ABLATE**: under dense encodings, self-location and search remain necessary.
   - **C-RUNAWAY**: the recombination splice prevents runaway pair-tape heredity
     (7/150 vs 0/150, p = 0.007).
+  - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
 - Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
-- Latest EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64).
+- Latest EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64), confirmed by C-CRITICAL-MASS.
 
 ## Running
 
 | experiment | lane | what |
 |---|---|---|
-| C-CRITICAL-MASS | CONFIRM | frozen at e2bcf6e2b: 4 founders vs 1, 80 fresh seeds, depth >= 5; launched 19:43 via schtask NestorCCM (disabled), ~1 h |
+| X-DOSE-CURVE | EXPLORE | founders k in {1,2,4,8}, 64 seeds each; LRT superadditive vs independent founders; schtask NestorDC (disabled), ~2 h |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
