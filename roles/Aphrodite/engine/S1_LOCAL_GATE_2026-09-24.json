@@ -1,0 +1,327 @@
+{
+ "B_CERT_inputs": 20000,
+ "CAMPAIGN_RELEVANT_IDENTITY": "PASS",
+ "GLOBAL_BEHAVIOR_IDENTITY": "FAIL",
+ "addendum": "AMENDMENT_12_ADDENDUM_3 @ a2ba379aa",
+ "certifier_power_REPORTED_NOT_GATED": {
+  "member_space_examples_split": "15 / 20 (recorded examples, first 6 members each)",
+  "run3_false_merges_split": "13 / 13"
+ },
+ "conformance": {
+  "PASS": true,
+  "part1_GREEN": true,
+  "part1_checked": 21600,
+  "part2_checked": 321392,
+  "part2_mismatches": 0
+ },
+ "domain": "D_TASK_T3_v1",
+ "families": {
+  "md_a_sum_times_last": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "md_a_sum_times_last",
+   "member_bodies": [
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(acc + v)",
+    "(v + acc)",
+    "(v + math.gcd(abs(acc), abs(acc)))"
+   ],
+   "members": 8,
+   "members_in_M": 8,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + v)",
+    "(acc * last)"
+   ]
+  },
+  "md_b_sumsq_plus_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "md_b_sumsq_plus_first",
+   "member_bodies": [
+    "(acc + (v * v))",
+    "(acc - (v * v))"
+   ],
+   "members": 3,
+   "members_in_M": 3,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + (v * v))",
+    "(acc + first)"
+   ]
+  },
+  "md_c_prod_minus_first": {
+   "PASS": true,
+   "adversarial_inputs": 15290,
+   "b_cert_inputs": 20000,
+   "family": "md_c_prod_minus_first",
+   "member_bodies": [
+    "(acc * math.gcd(abs(v), abs(v)))",
+    "(acc * v)",
+    "(v * acc)",
+    "(v * math.gcd(abs(acc), abs(acc)))"
+   ],
+   "members": 4,
+   "members_in_M": 4,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "1",
+    "(acc * v)",
+    "(acc - first)"
+   ]
+  },
+  "md_d_gcd_plus_last": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "md_d_gcd_plus_last",
+   "member_bodies": [
+    "math.gcd(abs(acc), abs((acc + v)))",
+    "math.gcd(abs(acc), abs((acc - v)))",
+    "math.gcd(abs(acc), abs((v + acc)))",
+    "math.gcd(abs(acc), abs((v - acc)))",
+    "math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(v))))",
+    "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(acc))))",
+    "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(v))))",
+    "math.gcd(abs(acc), abs(v))",
+    "math.gcd(abs(v), abs((acc % v)))",
+    "math.gcd(abs(v), abs((acc + v)))",
+    "math.gcd(abs(v), abs((acc - v)))",
+    "math.gcd(abs(v), abs((v + acc)))",
+    "math.gcd(abs(v), abs((v - acc)))",
+    "math.gcd(abs(v), abs(acc))",
+    "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+    "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(v))))",
+    "math.gcd(abs(v), abs(math.gcd(abs(v), abs(acc))))"
+   ],
+   "members": 34,
+   "members_in_M": 34,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "(acc + last)"
+   ]
+  },
+  "md_e_negsum_times_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "md_e_negsum_times_first",
+   "member_bodies": [
+    "(acc - math.gcd(abs(v), abs(v)))",
+    "(acc - v)"
+   ],
+   "members": 4,
+   "members_in_M": 4,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc - v)",
+    "(acc * first)"
+   ]
+  },
+  "md_f_sumdec_plus_last": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "md_f_sumdec_plus_last",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + (v - 1))",
+    "(acc + last)"
+   ]
+  },
+  "md_g_prodinc_minus_first": {
+   "PASS": true,
+   "adversarial_inputs": 15258,
+   "b_cert_inputs": 20000,
+   "family": "md_g_prodinc_minus_first",
+   "member_bodies": [
+    "(acc + (acc * v))",
+    "(acc + (v * acc))"
+   ],
+   "members": 3,
+   "members_in_M": 2,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "1",
+    "(acc * (v + 1))",
+    "(acc - first)"
+   ]
+  },
+  "md_h_gcdinc_plus_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "md_h_gcdinc_plus_first",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs((v + 1)))",
+    "(acc + first)"
+   ]
+  },
+  "tc_new_gcdshift_times_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_new_gcdshift_times_first",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs((v + last)))",
+    "(acc * first)"
+   ]
+  },
+  "tc_new_negmod_plus_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_new_negmod_plus_first",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc - (v % last))",
+    "(acc + first)"
+   ]
+  },
+  "tc_new_sumdiv_plus_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_new_sumdiv_plus_first",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + (v // last))",
+    "(acc + first)"
+   ]
+  },
+  "tc_new_sumgcdlast_minus_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_new_sumgcdlast_minus_first",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + math.gcd(abs(v), abs(last)))",
+    "(acc - first)"
+   ]
+  },
+  "tc_new_summod_times_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_new_summod_times_first",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + (v % last))",
+    "(acc * first)"
+   ]
+  },
+  "tc_new_sumscaled_minus_last": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_new_sumscaled_minus_last",
+   "member_bodies": [],
+   "members": 1,
+   "members_in_M": 0,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + (v * last))",
+    "(acc - last)"
+   ]
+  },
+  "tc_rel_sum_minus_last": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_rel_sum_minus_last",
+   "member_bodies": [
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(acc + v)",
+    "(v + acc)",
+    "(v + math.gcd(abs(acc), abs(acc)))"
+   ],
+   "members": 4,
+   "members_in_M": 4,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + v)",
+    "(acc - last)"
+   ]
+  },
+  "tc_rel_sumsq_times_first": {
+   "PASS": true,
+   "adversarial_inputs": 0,
+   "b_cert_inputs": 20000,
+   "family": "tc_rel_sumsq_times_first",
+   "member_bodies": [
+    "(acc + (v * v))"
+   ],
+   "members": 2,
+   "members_in_M": 2,
+   "sub_buckets": 1,
+   "witness": [
+    "fold",
+    "0",
+    "(acc + (v * v))",
+    "(acc * first)"
+   ]
+  }
+ },
+ "global_residual_false_merges": {
+  "member_space_H1xH2xFINAL": "74 / 7808 classes",
+  "nature": "internal-overflow thresholds: fast-growing accumulators crossing 10^40 one step apart on rare valid inputs",
+  "run3_sample": "13 / 3445 classes"
+ },
+ "seconds": 260.3,
+ "started_utc": "2026-09-24T14:22:07Z"
+}

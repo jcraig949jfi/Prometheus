@@ -22,7 +22,7 @@ def use_provider(mod):
     _P = mod
 
 
-def program_source(family: str, prog) -> str:
+def program_source(family: str, prog, emitter: int = 1) -> str:
     """Every Tier-3A family carries a trailing query parameter, so `vals`
     always excludes it."""
     _, init, body, final = prog
@@ -48,16 +48,28 @@ def program_source(family: str, prog) -> str:
         # agree with the searcher about the same program instead of diverging.
         "        if acc is None or abs(acc) > 10 ** 40:",
         "            return \"overflow\"",
+    ] + ([
         "    return str(%s)" % sub(final),
+    ] if emitter == 1 else [
+        # EMITTER v2 (AMENDMENT 12 ADDENDUM 1 s4): the OUTPUT is guarded too,
+        # so the artifact says "overflow" exactly where run_program says None.
+        "    out = %s" % sub(final),
+        "    if out is None or abs(out) > 10 ** 40:",
+        "        return \"overflow\"",
+        "    return str(out)",
+    ]) + [
         'DISCOVERED["%s"] = _t3_%s' % (family, family),
         "",
     ]
     return "\n".join(lines)
 
 
-def artifact_for(family: str, prog):
+def artifact_for(family: str, prog, emitter: int = 1):
+    """emitter=1 reproduces Tiers 3A-3C byte for byte; every step from S2 on
+    uses emitter=2 (AMENDMENT 12 ADDENDUM 1 s4)."""
     return E.Artifact.from_modules(
-        dict(E.base_image(), search=E.base_image()["search"] + program_source(family, prog)),
+        dict(E.base_image(), search=E.base_image()["search"]
+             + program_source(family, prog, emitter)),
         generation=E.FROZEN_GENERATION)
 
 
