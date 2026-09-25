@@ -1,0 +1,65 @@
+{
+ "all_checks_true": true,
+ "all_negative_controls_false": true,
+ "checks": {
+  "history_free_certifies_NONE": true,
+  "interchange_round_trip": true,
+  "interchange_transplant": true,
+  "replay_identical": true,
+  "replay_identical_control_world": true
+ },
+ "control_world": {
+  "D": 0.2,
+  "L": 12,
+  "V": 4,
+  "d_patch": 2,
+  "k": 4,
+  "kappa": 0.1,
+  "p_decay": 1.0,
+  "q": 2.0,
+  "sigma": 0.05,
+  "v": 1.0,
+  "w_patch": 4,
+  "x_in": 0
+ },
+ "control_world_in_lattice": true,
+ "defect_shadow_detail": {
+  "P1_p": 0.02,
+  "P2_effect": 1.0,
+  "P2_se": 0.0,
+  "class": "FUNCTIONAL"
+ },
+ "demo_world": {
+  "D": 0.2,
+  "L": 16,
+  "V": 3,
+  "d_patch": 4,
+  "k": 4,
+  "kappa": 0.1,
+  "p_decay": 0.03,
+  "q": 1.0,
+  "sigma": 0.2,
+  "v": 0.5,
+  "w_patch": 2,
+  "x_in": 0
+ },
+ "family": "D-reactive-channel",
+ "family_version": 1,
+ "history_free_control_detail": {
+  "P1_p": 0.66,
+  "P2_effect": 0.0,
+  "P2_se": 0.0,
+  "class": "NONE"
+ },
+ "machine": "M1 SKULLPORT",
+ "medium_src_sha256": "09559e69572967bd31803f61888bec21edcf9044ab0270a1fcbf7794cc1fcde4",
+ "negative_controls_must_be_false": {
+  "history_free_certifies_NONE[DefectShadowRegister]": false,
+  "interchange_round_trip[DefectPairPooled]": false,
+  "interchange_transplant[DefectHiddenState]": false,
+  "replay_identical[DefectUnseededNoise]": false
+ },
+ "numpy": "2.2.6",
+ "python": "3.12.10",
+ "selftest_pass": true
+}
