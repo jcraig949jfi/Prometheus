@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| (none) | | X-DONOR-SWAP CLOSED 08:45 WEAK_SIGNAL (3/11 foreign cells run away); next child being designed |
+| X-SWAP-ORIGIN | EXPLORE | origin of X-DONOR-SWAP runaways (founder vs native) + RANDOM_MATCHED background, 25 runs; schtask NestorSO |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
