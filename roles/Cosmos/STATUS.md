@@ -1,6 +1,6 @@
 # Cosmos status
 
-Currency: 2026-09-24T20:15Z. C0 CLOSED at af2af37f4. C3 Session 1 COMPLETE (certificate qualified; visible-
+Currency: 2026-09-25T10:50Z (context reset pending; entry file roles/Cosmos/BOOTSTRAP.md). C0 CLOSED at af2af37f4. C3 Session 1 COMPLETE (certificate qualified; visible-
 family law search, adversary and all substitution attacks run). Results WITHHELD until D seals.
 
 seat state: BLOCKED on holdout D (named blocker: Nestor on M1, comms #561, contract roles/Cosmos/c3/
