@@ -1,16 +1,47 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-25 ~04:05 EDT. Charter: budgeted autonomous scientific loop
+Currency: 2026-09-25 ~07:20 EDT (pre-reboot save). Charter: budgeted autonomous scientific loop
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
 (`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
 claim (E-6..E-10). Consolidated report:
 `campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
 
+## RESUME AFTER REBOOT (2026-09-25, operator directive `prompts/2026-09-25_reboot_resume/`)
+
+Bootstrap: read RESPONSIBILITIES.md section 0-2, this file, then `python graph.py open`.
+Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forensics-2026-09-23`
+(merged to main at the reboot save).
+
+1. **X-DONOR-SWAP was mid-flight at the save** (44/96 runs at 07:17; ~15 min remaining). Check
+   `campaigns/c9x-explore-2026-09-24/x_donor_swap/run.log` for an `EXIT` line. If absent (the reboot
+   killed it), resume: `cd campaigns/c9x-explore-2026-09-24/x_donor_swap && python run_ds.py`
+   (it skips finished runs; its per-cell assay rates are recomputed, deterministic). Prefer a
+   one-shot schtask (template: any `launch_*.cmd` pattern in STATUS history; task NestorDS exists,
+   disabled - `schtasks /Change /TN NestorDS /ENABLE`, `/Run`, then `/DISABLE`).
+2. Record its result: graph node X-DONOR-SWAP (declared classification in `run_ds.py`), FINDINGS
+   E-10 tail, CAMPAIGN_REPORT section 3 item 5, commit + push.
+3. Next branches (charter: SIGNAL -> CONFIRM; null -> localize/targeted/orthogonal):
+   - if SIGNAL (competent donor runs away in foreign cells): C-DONOR-SWAP, fresh frozen confirm.
+   - if CLEAN_NULL: localize which cell factors block a competent donor (representation, pressure).
+   - open question worth a child: 7ae3 copies only from tape side 1 (runs second) - why, and does
+     side asymmetry matter in the world?
+4. Budget: window ends 2026-09-26 06:47 EDT (48 h from 09-24 06:47), <= 12 workers, 20% reserve.
+   Whether the reboot downtime counts against it is an OPEN operator question (below).
+
+### Questions pending for the operator (ask these right after bootstrapping)
+- Q1 Budget clock: does the reboot/upgrade downtime count against the 48 h window (ends
+  2026-09-26 06:47), or should the window be extended by the downtime?
+- Q2 Housekeeping, no decision needed unless you object: eight disabled one-shot schtasks
+  (NestorCCM, NestorDC, NestorTK, NestorDK, NestorSR, NestorAT, NestorCAT, NestorDS) remain; I will
+  delete them after X-DONOR-SWAP completes.
+- FYI (not my lane, not worked around): Harmonia reports test_base_role RED on origin/main
+  (Nyx manifest mismatch; Ananke MONITORS row); the merge of this branch does not touch it.
+
 ## Budget ledger (seat decision)
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 26.7 h left) |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 23.5 h left at 07:20 on 09-25) |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -29,6 +60,7 @@ claim (E-6..E-10). Consolidated report:
   - **C-ABLATE**: under dense encodings, self-location and search remain necessary.
   - **C-RUNAWAY**: the recombination splice prevents runaway pair-tape heredity
     (7/150 vs 0/150, p = 0.007).
+  - **C-ATOMIC C1**: tape-write erosion stops pair-tape heredity in 7ae3's cell (46/80 vs 1/80); C2 generality NOT confirmed.
   - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
 - Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
 - Chain since C-CRITICAL-MASS: X-DOSE-CURVE null (independent founders) -> X-TICKET (copying stops by ~epoch 12) -> X-DECAY (in-place mutation minor) -> X-STALL (members sterile) -> X-STERILE (fertile at birth) -> X-STALL-F0 (tape-write erosion ~25x nominal) -> X-ATOMIC SIGNAL (36/64 vs 3/64 runaways).
@@ -38,7 +70,7 @@ claim (E-6..E-10). Consolidated report:
 
 | experiment | lane | what |
 |---|---|---|
-| C-ATOMIC | CONFIRM | frozen: atomic write-back vs base; C1 7ae3 80 seeds/arm, C2 15 other panel specimens x 8 seeds/arm; schtask NestorCAT (disabled), ~1.5 h |
+| X-DONOR-SWAP | EXPLORE | 7ae3 genome in 11 foreign panel cells + own-cell control, ATOMIC, 8 seeds each; schtask NestorDS; 44/96 at 07:17 |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
