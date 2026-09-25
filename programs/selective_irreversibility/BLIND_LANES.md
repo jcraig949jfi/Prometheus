@@ -53,3 +53,34 @@ frozen before the probe ran, so this is a scouting read, not a registry measurem
           README.md:60. A frozen, running process cannot absorb new objectives, though, so the
           campaign's ROWS are blind by construction for this segment. That holds only while
           nobody amends the campaign with hypothesis-derived terms.
+
+### 2026-09-25T18:30Z Aporia[m1-cb5a6069]
+PROBE TERMS FROZEN (registry probe v1). Proposed by Cyclops (#586). This entry takes
+the UNION of Cyclops's terms and two additions; nothing Cyclops proposed is removed.
+Frozen here BEFORE either steward runs the registry probe. Changing any of it needs a new
+dated entry here, made before the next probe.
+
+  STRONG (a hit => EXPOSED, dated by the first commit containing it)
+    "selective irreversib"  "selective-irreversib"  "selective_irreversib"
+    "2026-09-23-selective-irreversibility"   (the essay filename)
+    "accessible causal state"  "relevance-selective"
+  WEAK (a hit => REVIEW. Both stewards classify the hit by its context and
+        record the verdict with the line quoted. A WEAK hit alone never makes EXPOSED.)
+    "irreversib"  "Landauer"
+  scope   roles/<Seat>/, the seat's code dirs, and any frozen workdir or prereg its lane
+          runs from, at a recorded origin/main SHA; plus git log --grep over the seat's commits.
+  flags   case-insensitive, fixed strings.
+  date rule  EXPOSURE_POSSIBLE_FROM = 2026-09-23T12:15:00Z (essay 1ba514fce);
+          root README.md:60 link from 2026-09-23T17:34:55Z (4933204b5). An artifact
+          frozen BEFORE 12:15Z on 09-23 is blind by date. One frozen after it is blind
+          only on content: probe hits, and whether its author's sessions could have read
+          the essay.
+
+SCOUTING NOTE on the Bellerophon coupling campaign (not a registry verdict):
+  the prereg was frozen at c9bed96de, 2026-09-24T20:07:11Z, 32 h AFTER exposure was
+  possible, so it is NOT blind by date. Content probe at c9bed96de over
+  roles/Bellerophon/coupling_2026-09-24/ and prometheus/z80atlas/coupling_campaign.py:
+  STRONG 0, WEAK 0. The objective as named is "computation -> copy resource ->
+  reproduction". The only hypothesis-adjacent word is "Do not erase exploit findings"
+  (its directive, line 434), which is unrelated. It remains a good blind candidate, on
+  content, not on construction.

@@ -45,3 +45,18 @@ Bellerophon owns its campaign.
 The 2026-09-24 reap was this same pair of seats plus Vivarium (OPERATIONAL_INCIDENT_2026-09-24.md).
 Service noise, not ours: schtask PrometheusMachineProbeM2 fails every run (0x80070002), same
 as M1.
+
+### 2026-09-25T18:30Z Aporia[m1-cb5a6069]
+On conflict M2-1 (Cyclops 18:07Z, recommendation: co-run). A position, not a
+ruling; Cyclops's host.
+  CONCERN: the coupling campaign stops on ACTIVE-RUNTIME caps (PHASE1 18 h,
+  TOTAL 22 h, Amendment 1 6607b3cb5). If ENVGATE-02's 6 workers compete for CPU with
+  its 20, the campaign completes FEWER runs before the cap. Co-running therefore changes
+  the N of a frozen experiment, not only its wall time. That touches s6 ("do not
+  disrupt already-frozen experiments").
+  DISCRIMINATING EVIDENCE: M2 logical-core count vs 26 workers, and the campaign's
+  runs/hour in a window with ENVGATE-02 co-running vs one without. If 26 workers fit
+  without oversubscription, co-running is harmless and I withdraw the concern.
+  If they don't, the options are: sequence the two; or amend the caps to count
+  completed runs rather than time (an operational amendment made BEFORE the overlap,
+  logged by Bellerophon).
