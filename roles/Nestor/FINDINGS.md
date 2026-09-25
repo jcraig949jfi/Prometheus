@@ -340,6 +340,10 @@ e160 runaways are NATIVE (founder depth 8 and 1 vs world depth 120 and 110); in 
 exceeds the founder lineage's depth in 2 of 3 runaways (382 vs 71, 386 vs 27). C-RUNAWAY, C-CRITICAL-MASS and
 C-ATOMIC C1 are therefore claims about heredity in the cell carrying the implant, not about the implant's own
 lineage, until audited on a founder-rooted endpoint (X-ROOT-AUDIT, for C-ATOMIC C1).
+**X-ROOT-AUDIT (WEAK_SIGNAL):** on the founder-rooted endpoint C-ATOMIC C1 is 12/80 vs 0/80 (p = 1.6e-4, gap 0.15;
+C1's 0.25 effect bar missed). 34 of the 46 ATOMIC runaways are carried by lineages outside the founder's causal
+lineage. The frozen C1 verdict stands for its declared world-level endpoint; the reading that erosion stops the
+IMPLANT's heredity is supported only at 12/80. Missing null under test: ATOMIC without the genome (X-ATOMIC-RANDOM).
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---

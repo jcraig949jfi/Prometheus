@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-ROOT-AUDIT | EXPLORE | C-ATOMIC C1 on a founder-rooted endpoint: replay its 47 world-runaways with the founder tracker; schtask NestorRA |
+| X-ATOMIC-RANDOM | EXPLORE | missing null: ATOMIC in 7ae3 cell with a random implant (80) + genome replay check (16); schtask NestorAR |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
