@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-CONTENT | EXPLORE | founder byte share (z8taint tags) in 10 own-cell + 9 foreign runaway replays; schtask NestorXC |
+| X-CORE | EXPLORE | positions of surviving founder material (conserved core vs scattered), 10 tagged replays; schtask NestorXK |
 | C3-D (Cosmos #561) | DELEGATION | SEALED + pushed 2026-09-25: commitment ae4479c6...57ac, commit a56ef7787, report 5e05307b2 (branch nestor/c3-holdout-d-2026-09-25); reported to Cosmos #599. Awaiting Cosmos predictions; no outcomes run |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and

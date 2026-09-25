@@ -359,6 +359,11 @@ rule needed 10 vs 0. The claim is not made. X-ACQUIRE (WEAK_SIGNAL): 9-15% (lowe
 carry genomes that copy from a fresh state where the founder cannot. **Caveat on every anc-based statement above:** the
 most frequent descendant genomes differ from the founder at 58-62 of 64 bytes. anc == 0 passes through overwrite
 events, so 'founder-descended' may mean slot lineage, not inherited content; byte-level provenance (z8taint) is next.
+**X-CONTENT (WEAK_SIGNAL) answers it:** in anc-descended runaway populations only a minority of bytes is founder material
+(z8taint, median 13% in 7ae3's cell, 25% in 9cba/e160; anc0 share ~1.0 everywhere), and in 17 of 19 populations no organism
+is even half founder bytes. **Every 'founder-descended' statement above (X-ATOMIC-RANDOM, X-SWAP-ANCESTRY, C-SWAP-ACQUIRE's
+endpoint) is lineage descent, not content inheritance.** What IS required is the genome at the start (random implant 0/80,
+0/240). Where the surviving founder bytes sit: X-CORE.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
