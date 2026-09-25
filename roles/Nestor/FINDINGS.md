@@ -326,6 +326,14 @@ atomic write-back, runaway causal heredity in 46/80 vs 1/80 (Fisher p = 4e-17; d
 specimens reach depth 5 in neither arm. Scope of the confirmed claim: 7ae3's cell. Post hoc, the
 other donors rarely make even one causal copy (36/120 vs 9/120 runs with any), so erosion is the
 barrier only once copying starts. Localization: X-DONOR-RATE.
+X-DONOR-RATE (SIGNAL): fresh-state P-11 pass rate 7ae3 0.96, cb7f and 4931 0.29, twelve donors 0.0;
+donor copy competence is the first barrier, erosion the second. X-DONOR-SWAP (EXPLORE, WEAK_SIGNAL):
+7ae3's genome implanted into the 11 eligible foreign cells (ATOMIC, 8 seeds each) runs away in 3 of 11
+(ffa6 4/8, 9cba 1/8, e160 1/8; pooled 6/88) vs its own cell 3/8; the declared SIGNAL bar was 4 cells.
+The genome's fresh-state assay rate is 0.955 only in 7ae3 and ffa6 (which differ only in representation and
+structure) and 0.0 in the ten other cells: **competence is a property of genome x cell, not of the genome.**
+Post hoc (hypothesis only): 9cba and e160 ran away although the founder's assay rate there is 0, so descendants
+can acquire competence the founder lacks.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---

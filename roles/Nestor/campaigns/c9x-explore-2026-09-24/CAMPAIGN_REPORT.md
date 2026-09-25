@@ -76,8 +76,11 @@ LRT p = 0.42): each founder is an independent ~13% lottery ticket, s(k) = 1-(1-p
    (p = 4e-17) in 7ae3's cell.
 5. *But not across the panel* (C-ATOMIC C2, not confirmed: 1/120 vs 0/120). The other donors
    mostly cannot copy at all from a fresh state (X-DONOR-RATE: 7ae3 96%, two others 29%, twelve
-   0%). Donor copy competence is the first barrier; erosion is the second. Whether the other
-   cells permit runaway given a competent donor is under test (X-DONOR-SWAP).
+   0%). Donor copy competence is the first barrier; erosion is the second. Given a competent
+   donor (7ae3's genome, atomic write-back), 3 of 11 other cells permit runaway (X-DONOR-SWAP,
+   WEAK_SIGNAL: ffa6 4/8, 9cba 1/8, e160 1/8 vs own cell 3/8). The genome copies from a fresh state
+   only in 7ae3's cell and the near-identical ffa6 (0.955) and in no other cell (0.0): competence
+   belongs to the genome-cell pair. Exploratory; not confirmed.
 
 ## 4. Defects found and handled
 

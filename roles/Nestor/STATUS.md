@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-DONOR-SWAP | EXPLORE | 7ae3 genome in 11 foreign panel cells + own-cell control, ATOMIC, 8 seeds each; schtask NestorDS; killed by reboot at 66/96, resumed 08:15 |
+| (none) | | X-DONOR-SWAP CLOSED 08:45 WEAK_SIGNAL (3/11 foreign cells run away); next child being designed |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
