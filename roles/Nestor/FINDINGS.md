@@ -319,6 +319,10 @@ tape-write EROSION is a ~5%/byte/epoch mutation, ~25x the nominal rate. Under te
 X-ATOMIC (EXPLORE, SIGNAL): making write-back atomic (a half changes only by an accepted copy, plus
 nominal mutation) raises runaways from 3/64 to 36/64 (p = 4e-11) and copy duration from 4 to 38
 epochs. Under CONFIRM: C-ATOMIC (fresh 7ae3 seeds, and generality over the other 15 specimens).
+**C-ATOMIC C1 CONFIRMED (frozen at the C-ATOMIC freeze commit, 80 fresh seeds per arm):** with
+atomic write-back, runaway causal heredity in 46/80 vs 1/80 (Fisher p = 4e-17; depth >= 5 49 vs 9).
+**Tape-write erosion is what stops pair-tape heredity in 7ae3's cell (splice off).** C2
+(generality over the other 15 panel specimens) is running after an infrastructure amendment (A1).
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
