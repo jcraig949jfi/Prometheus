@@ -14,6 +14,9 @@ padded founder and its assay rate.
 Controls: the founder genome assayed with the same function in each cell (expected 0.0) and in
 7ae3's own cell (expected ~0.95). INVALID if the 7ae3-cell founder control passes < 50%, or a
 replay depth mismatches.
+AMENDMENT A1 (infrastructure, 12:30, after the first launch crashed with IndexError and BEFORE
+any outcome existed): live genomes can be longer than L; the world places them unpadded and passes
+the resulting tape length. The assay now does the same (raw genomes, tape length after placement).
 Classification: SIGNAL (acquired competence) if the competent share >= 0.5 in both cells; CLEAN_NULL
 (replication without fresh-state competence) if < 0.05 in both; WEAK_SIGNAL otherwise.
 """
@@ -36,7 +39,11 @@ TOP = 40
 
 
 def assay(world, r, g, tag):
-    n, tl = r.L, world._pow2(2 * r.L)
+    n = r.L
+    t = bytearray(world._pow2(2 * n))          # A1: tape length as the world builds it (genomes
+    t[0:len(g)] = g                            # may exceed L and lengthen the tape)
+    t[n:n + len(g)] = g
+    tl = len(t)
     fresh, hits = (None, 0, 0), 0
     for k in range(K):
         ok = False
@@ -60,7 +67,7 @@ def job(args):
     out = r.run()
     recorded = json.loads((DS / "results" / ("%s_%d.json" % (sp[:16], s))).read_text())["depth"]
     alive = [o for o in r.orgs if o.alive]
-    cnt = collections.Counter(bytes(r._pad(r._genome(o))) for o in alive)
+    cnt = collections.Counter(bytes(r._genome(o)) for o in alive)   # A1: raw, as on the world tape
     top = cnt.most_common(TOP)
     rates = {g.hex(): assay(world, r, g, (short, i)) for i, (g, _) in enumerate(top)}
     covered = sum(c for _, c in top)
