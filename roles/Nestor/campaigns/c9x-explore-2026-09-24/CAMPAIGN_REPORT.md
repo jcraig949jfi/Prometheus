@@ -56,7 +56,9 @@ copier quality. It is dose-sensitive: with 4 founders instead of 1, runaways ros
 0/64 to 9/64 and depth >= 5 from 8/64 to 32/64 (X-CRITICAL-MASS, exploratory WEAK_SIGNAL;
 the SIGNAL bar was missed by one run). **A fresh frozen test confirmed it** (C-CRITICAL-MASS:
 depth >= 5 in 41/80 vs 5/80, p = 8e-11): heredity here is establishment-limited. Whether
-founders help each other (superadditivity) is under test in X-DOSE-CURVE.
+founders help each other was then tested and **they do not** (X-DOSE-CURVE, clean null,
+LRT p = 0.42): each founder is an independent ~13% lottery ticket, s(k) = 1-(1-p)^k. The
+"critical mass" name was wrong; the post-hoc excess came from a noisy single-founder rate.
 
 ## 4. Defects found and handled
 

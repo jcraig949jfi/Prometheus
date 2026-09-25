@@ -299,6 +299,9 @@ raise P-11 depth >= 5 from 5/80 to 41/80 (Fisher p = 8e-11; secondary runaways 1
 p = 7e-4). Pair-tape causal heredity in this cell is **establishment-limited**. Whether founders
 are superadditive (a true critical mass) is NOT yet claimed: post hoc, k=4 exceeds the
 independent-founders prediction (41 vs 18), and X-DOSE-CURVE tests it by declared LRT.
+**X-DOSE-CURVE (EXPLORE, CLEAN_NULL): founders are independent lottery tickets.** Over k = 1, 2,
+4, 8 (64 seeds each) the 1-parameter model s(k) = 1-(1-p)^k with p = 0.13 fits (LRT p = 0.42;
+runaways p = 0.57). No critical mass: the post-hoc excess was a noisy single-founder rate.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
@@ -335,3 +338,7 @@ These generalise beyond either campaign and should survive into any successor.
 11. **Before building a mechanism on a measurement, reproduce the discrepancy with the real
     inputs.** X-POSITION "showed" copying needs register state; a captured real event with
     fresh registers passed. The cause was partner sabotage in the assay draw. Withdrawn.
+12. **A baseline plugged in from a small arm can manufacture an interaction.** C-CRITICAL-MASS
+    k=4 "beat" the independent-founders prediction at p = 1e-6, using p1 = 5/80 as if exact. A
+    declared dose curve fitting p1 jointly (X-DOSE-CURVE) found no excess (LRT p = 0.42). Fit
+    the null model's parameters on all arms before calling anything superadditive.
