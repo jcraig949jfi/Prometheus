@@ -1,6 +1,6 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-24 ~23:10 EDT. Charter: budgeted autonomous scientific loop
+Currency: 2026-09-24 ~23:55 EDT. Charter: budgeted autonomous scientific loop
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
 (`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
 claim (E-6..E-10). Consolidated report:
@@ -10,7 +10,7 @@ claim (E-6..E-10). Consolidated report:
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 31.5 h left) |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 31 h left) |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -37,7 +37,7 @@ claim (E-6..E-10). Consolidated report:
 
 | experiment | lane | what |
 |---|---|---|
-| X-TICKET | EXPLORE | where losing single-founder tickets fail (early causal extinction vs persistence without depth); 128 seeds; schtask NestorTK (disabled), ~40 min |
+| X-DECAY | EXPLORE | per-epoch in-place mutation dosed f in {1, 0.25, 0}; 64 seeds each; schtask NestorDK (disabled), ~1.5 h |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.

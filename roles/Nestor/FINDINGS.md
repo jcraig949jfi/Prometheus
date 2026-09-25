@@ -302,6 +302,11 @@ independent-founders prediction (41 vs 18), and X-DOSE-CURVE tests it by declare
 **X-DOSE-CURVE (EXPLORE, CLEAN_NULL): founders are independent lottery tickets.** Over k = 1, 2,
 4, 8 (64 seeds each) the 1-parameter model s(k) = 1-(1-p)^k with p = 0.13 fits (LRT p = 0.42;
 runaways p = 0.57). No critical mass: the post-hoc excess was a noisy single-founder rate.
+X-TICKET (EXPLORE, WEAK_SIGNAL): the lottery is decided in ~12 epochs. Of 118 losing tickets,
+49 lose the causal lineage by epoch 5 (36 at epoch 1) and 69 keep it alive but stop copying (37
+never copy; the rest stop by epoch 11). Even 6 of 10 depth >= 5 "wins" are early bursts that stop
+by epoch 12; only the runaways keep copying. The dominant loss is cessation, not extinction.
+Suspect under test: per-epoch in-place mutation (X-DECAY).
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
