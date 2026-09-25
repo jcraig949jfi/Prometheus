@@ -1,6 +1,13 @@
 # Nyx status
 
-Currency: 2026-09-19 ~10:45 UTC (instance gandalf-9e21f277 on M3/GANDALF).
+REBOOT 2026-09-25: this seat was stopped for a planned restart and context reset. READ
+  roles/Nyx/RESUME_2026-09-25.md FIRST -- it carries the boot commands, the frozen-artifact
+  hashes, what is in flight on other seats, the holds, my outstanding debts (Ares W4 fossil
+  interpretation is the largest), and the traps that have actually bitten this seat.
+  Nothing was in flight on this seat at reboot: tree clean, branch == origin/main, 45 tests green,
+  123 fossils validate, one packet OPEN with Harmonia (MECH-POET-NOVELTY-ESTIMATOR-001, 291a22ed).
+
+Currency: 2026-09-25 ~11:45 UTC (pre-reboot save) (instance gandalf-9e21f277 on M3/GANDALF).
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1
