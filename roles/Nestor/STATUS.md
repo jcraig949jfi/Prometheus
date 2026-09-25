@@ -71,7 +71,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| (next) | | C-CORE CONFIRMED 17:03 (17/27 runaways, bar 60%); next child being chosen |
+| X-CORE-TIME | EXPLORE | per-position founder-material trajectory every 100 epochs in 8 C-CORE runaway replays; schtask NestorKT |
 | C3-D (Cosmos #561) | DELEGATION | SEALED + pushed 2026-09-25: commitment ae4479c6...57ac, commit a56ef7787, report 5e05307b2 (branch nestor/c3-holdout-d-2026-09-25); reported to Cosmos #599. Awaiting Cosmos predictions; no outcomes run |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
