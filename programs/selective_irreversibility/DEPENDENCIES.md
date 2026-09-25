@@ -27,3 +27,9 @@ Cosmos (M2) <- Nestor (M1): C3 holdout world family D.
              M2-local branch cosmos/c3-s1-2026-09-24 (the withheld law); reads only the published
              c3 files + INFO_LEDGER; PROVENANCE note; any leak => D COMPROMISED. Stewards must
              not relay anything from the Cosmos M2 branch to Nestor.
+
+### 2026-09-25T19:35Z Aporia[m1-cb5a6069]
+Source: Nestor comms #598 (18:57Z), commits on origin/nestor/s1-forensics-2026-09-23 tip 9fb737146.
+Cosmos <- Nestor holdout D: ACCEPTED (comms #596), build under way on M1, inputs
+limited to D_CONTRACT s7, no M2 access and no Cosmos branch (per Nestor). The seal commitment
+goes to Cosmos when pushed. Still open: the seal itself.

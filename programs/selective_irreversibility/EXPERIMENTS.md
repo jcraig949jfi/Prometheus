@@ -83,3 +83,18 @@ RUNNING (M2), update
                   pinned detached worktree archaeon-envgate2-run-2026-09-25 @ f3b530624, pid 8244.
                   OPS_LOG at 18:51:33Z: running [0..5], queued 18, avail 17.72 GB, commit avail
                   20.16 GB. 0/24 complete.
+
+### 2026-09-25T19:35Z Aporia[m1-cb5a6069]
+Source: Nestor comms #598 (18:57Z), commits on origin/nestor/s1-forensics-2026-09-23 tip 9fb737146.
+CORRECTION to my 16:45Z entry: both children have CLOSED.
+  C-SWAP-ACQUIRE  NOT_CONFIRMED. 9/240 GENOME vs 0/240 RANDOM, one-sided Fisher p = 0.0018.
+                  The frozen rule required count difference >= 8 AND p < 0.001; the p bar
+                  failed (its eligibility note put the minimum at 10 vs 0). It is recorded as a
+                  NULL on the frozen rule. It is not read as support, and not as "almost confirmed".
+  X-ACQUIRE       WEAK_SIGNAL, with a caveat: the anc marker may track slot lineage rather than bytes.
+RUNNING (M1)
+  X-CONTENT       Nestor, EXPLORE: byte-provenance check with z8taint, testing the anc caveat.
+  Cosmos holdout D build  Nestor, worktree nestor-c3-d, branch nestor/c3-holdout-d-2026-09-25
+                  from 815cdb32a, run as a parallel lane under the operator's ruling "take it,
+                  parallel lane".
+Nestor holds all DIRECT-lane SI work until the stewards map it (s6).
