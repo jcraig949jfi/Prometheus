@@ -70,8 +70,8 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| C-SWAP-ACQUIRE | CONFIRM | frozen: 9cba+e160, GENOME vs RANDOM implant, ATOMIC, 240 fresh seeds/arm, 10 workers; schtask NestorCSA |
-| X-ACQUIRE | EXPLORE | do the 9cba/e160 runaway descendants copy from a fresh state? 2 replays + assays, 2 workers; schtask NestorXA |
+| (next) | EXPLORE | byte-level content provenance of runaway populations (z8taint) -- being designed |
+| C3-D (Cosmos #561) | DELEGATION | holdout world family for Cosmos C3, operator ruling 2026-09-25: take it, parallel lane |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.

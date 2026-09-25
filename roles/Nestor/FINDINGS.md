@@ -354,6 +354,11 @@ X-SWAP-ANCESTRY. Open instrument question: which births break certification, and
 **X-SWAP-ANCESTRY (SIGNAL):** all five foreign runaways are founder-descended (anc0 share 0.99-1.0), including
 9cba and e160 where the founder genome cannot copy from a fresh state. Exploratory (one run per cell). Under
 CONFIRM: C-SWAP-ACQUIRE (240 fresh seeds per arm vs random implant). Mechanism under test: X-ACQUIRE.
+**C-SWAP-ACQUIRE NOT CONFIRMED** (frozen at 82b6caeb3): 9/240 vs 0/240 founder-descended runaways, p = 0.0018; the
+rule needed 10 vs 0. The claim is not made. X-ACQUIRE (WEAK_SIGNAL): 9-15% (lower bound) of the runaway populations
+carry genomes that copy from a fresh state where the founder cannot. **Caveat on every anc-based statement above:** the
+most frequent descendant genomes differ from the founder at 58-62 of 64 bytes. anc == 0 passes through overwrite
+events, so 'founder-descended' may mean slot lineage, not inherited content; byte-level provenance (z8taint) is next.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
