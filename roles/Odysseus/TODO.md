@@ -9,7 +9,5 @@ with the closing commit and date, purged after 24 h (base role s7).
       to superseded/); name overlaps with sibling seats (Artemis on
       ubu002 is the nearest: same creation day, same host class)
 - [ ] File BACKLOG_H0H5.md in the schema (>= 20 rows, first five today's)
-- [ ] Ask the operator for ubu001's program name so comms/api.py
-      MACHINES can carry it (owner of that file, not this seat, edits it)
 - [ ] Read the base-role files not read on the creation pass:
       aporia/doctrine/critical_memories.md, MONITORS.md

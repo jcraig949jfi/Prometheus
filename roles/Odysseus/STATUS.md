@@ -7,7 +7,7 @@ seat state: ACTIVE (creation pass). Charter PENDING (operator: "then
 what it asserts: PRESENT (comms boot on M1 store), ACTIVE (this pass),
   NOT PRODUCTIVE (no domain output), VALID not applicable.
 host: ubu001 (Ubuntu 26.04.1, 192.168.1.218, 4 cores, 7 GB RAM, no GPU);
-  no M-number assigned; comms machine label falls back to "ubu001".
+  program name is ubu001 (operator 2026-09-25); comms label "ubu001".
   worktree /home/jcraig/Prometheus-worktrees/odysseus-base-role,
   branch odysseus/base-role-adopt-2026-09-25, base 22bfbc966.
 monitors owned or fed: none.
