@@ -28,12 +28,12 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 4. Budget: window ends 2026-09-26 06:47 EDT (48 h from 09-24 06:47), <= 12 workers, 20% reserve.
    Whether the reboot downtime counts against it is an OPEN operator question (below).
 
-### Questions pending for the operator (ask these right after bootstrapping)
-- Q1 Budget clock: does the reboot/upgrade downtime count against the 48 h window (ends
-  2026-09-26 06:47), or should the window be extended by the downtime?
-- Q2 Housekeeping, no decision needed unless you object: eight disabled one-shot schtasks
-  (NestorCCM, NestorDC, NestorTK, NestorDK, NestorSR, NestorAT, NestorCAT, NestorDS) remain; I will
-  delete them after X-DONOR-SWAP completes.
+### Operator rulings on the reboot questions (2026-09-25 08:16)
+- Q1 Budget clock: **extend by the downtime**. Downtime 07:20 -> 08:15 (55 min); window now ends
+  **2026-09-26 07:42 EDT**.
+- Q2 Housekeeping: **keep** the eight disabled one-shot schtasks; do not delete them.
+- X-DONOR-SWAP was killed by the reboot at 66/96 (no EXIT line); resumed 08:15 via NestorDS
+  (enable, run, disable).
 - FYI (not my lane, not worked around): Harmonia reports test_base_role RED on origin/main
   (Nyx manifest mismatch; Ananke MONITORS row); the merge of this branch does not touch it.
 
@@ -41,7 +41,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 23.5 h left at 07:20 on 09-25) |
+| window | 48 wall-h + 55 min reboot downtime (operator Q1), 2026-09-24 06:47 -> **2026-09-26 07:42 EDT** |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-DONOR-SWAP | EXPLORE | 7ae3 genome in 11 foreign panel cells + own-cell control, ATOMIC, 8 seeds each; schtask NestorDS; 44/96 at 07:17 |
+| X-DONOR-SWAP | EXPLORE | 7ae3 genome in 11 foreign panel cells + own-cell control, ATOMIC, 8 seeds each; schtask NestorDS; killed by reboot at 66/96, resumed 08:15 |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
