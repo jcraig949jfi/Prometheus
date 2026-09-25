@@ -41,8 +41,11 @@ M-mapping from the repository as cited):
     --  BUCKKEEP    Aether (laptop, inferred: no M-number found)
     --  UBU002      Artemis                roles/Artemis (host ruling 32707896d)
     --  UBU001      Odysseus (this seat)
+    --  DESKTOP-RUAPVAI  (operator, same day; no repository mention at
+                          609237307, so no known seat)
 
-Which two hosts are "the two other laptops" is inferred, not stated.
+Which two hosts are "the two other laptops" is not stated; the laptop
+label on BUCKKEEP above is a guess and is not relied on.
 Odysseus
 is expected to be the ONLY seat resident on ubu001 given its small memory,
 CPU and disk. Consequence for the charter: heavy compute is not local;
