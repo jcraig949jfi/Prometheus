@@ -25,10 +25,12 @@ Protocol `5819bc6d`. 1,200 of 1,200 runs, 0 errors; the report audit passes 21 o
 | **Spontaneous non-pair heredity is blocked by the encoding length** of the ALLOC->copy->BIRTH chain | C-DENSE | 13/40 vs 0/40 cells replicate from random bytes, p = 3.8e-5 |
 | Under short encodings, **self-location and search are necessary** | C-ABLATE | 15 -> 1 (p = 6e-5) and 15 -> 6 (p = 0.006); energy-for-depth not confirmed |
 | With the splice off, **pair-tape heredity is establishment-limited** (4 founders vs 1) | C-CRITICAL-MASS | depth >= 5 in 41/80 vs 5/80, p = 8e-11; runaways 15 vs 2 |
+| **Tape-write erosion (write-back of both halves after every interaction) stops pair-tape heredity** (7ae3 cell) | C-ATOMIC C1 | runaway 46/80 vs 1/80, p = 4e-17; generality C2 not confirmed |
 | **The world's recombination splice prevents runaway pair-tape heredity** | C-RUNAWAY | runaway (depth >= 20) in 7/150 vs 0/150, p = 0.007; max depth 549 vs 13 |
 | H1 cost interaction (C9-D16 repaired) | C9-H1R | I = +0.20 |
 
 Not confirmed, and recorded as such:
+- C-ATOMIC C2: the atomic-write-back effect across the other 15 panel specimens (1/120 vs 0/120).
 - C-NORECOMB: the threshold endpoint, 5/48 vs 5/48.
 - The energy-for-depth arm of C-ABLATE.
 
@@ -59,6 +61,23 @@ depth >= 5 in 41/80 vs 5/80, p = 8e-11): heredity here is establishment-limited.
 founders help each other was then tested and **they do not** (X-DOSE-CURVE, clean null,
 LRT p = 0.42): each founder is an independent ~13% lottery ticket, s(k) = 1-(1-p)^k. The
 "critical mass" name was wrong; the post-hoc excess came from a noisy single-founder rate.
+
+**Why pair-tape heredity stops: two barriers in series.** Following the losing tickets:
+1. *Copying ceases, lineages persist* (X-TICKET): outside the runaways, a founder's causal line
+   stops copying by about epoch 12, while its members stay alive.
+2. *Not mutation, not copy error* (X-DECAY, X-STERILE): switching off in-place mutation barely
+   helps, and children are 75-80% fertile at birth.
+3. *Erosion* (X-STALL, X-STALL-F0): by epoch 100 the members are genomically sterile even with
+   mutation off. After every interaction the world writes BOTH tape halves back into the two
+   organisms, so an organism's own writes and its partner's rewrite ~5.5 bytes in 57% of
+   interactions: about 5% per byte per epoch, 25x the nominal mutation rate.
+4. *Removing erosion restores heredity* (X-ATOMIC; **confirmed by C-ATOMIC C1**): if a half
+   changes only when an accepted copy lands on it, runaway heredity rises from 1/80 to 46/80
+   (p = 4e-17) in 7ae3's cell.
+5. *But not across the panel* (C-ATOMIC C2, not confirmed: 1/120 vs 0/120). The other donors
+   mostly cannot copy at all from a fresh state (X-DONOR-RATE: 7ae3 96%, two others 29%, twelve
+   0%). Donor copy competence is the first barrier; erosion is the second. Whether the other
+   cells permit runaway given a competent donor is under test (X-DONOR-SWAP).
 
 ## 4. Defects found and handled
 
