@@ -23,7 +23,7 @@ import json
 import grammar as G
 import specimens
 
-PROTOCOL_VERSION = "cycle9-verify-1"
+PROTOCOL_VERSION = "cycle9-verify-2-candidate"   # S4 candidate, 2026-09-23; NOT FROZEN
 
 # Reduction rule, declared before any timing is measured so the reduction cannot be
 # chosen to protect a preferred result: seeds are dropped from the LARGEST hypothesis
@@ -35,7 +35,11 @@ SCALE_RULE = ("drop seeds uniformly from the largest hypothesis first; never dro
 MIN_SEEDS = 5
 
 # Default sizing. Smoke timings decide whether these survive to freeze.
-SIZE = {"H1_seeds": 60, "H2_seeds": 5, "H3_seeds": 16, "H4_seeds": 16}
+# S4 candidate (operator directive 2026-09-23): enlarge unevenly. H1 unchanged. H2 more
+# seeds, but ONLY for P-11-surviving specimens (panel rebuilt, see specimens.manifest_p11).
+# H3 moderately more shared-seed exposure. H4 NOT enlarged: the S1-B autopsy found its
+# endogenous arm cannot reproduce (C9-D07), which is the directive's redesign exception.
+SIZE = {"H1_seeds": 60, "H2_seeds": 16, "H3_seeds": 24, "H4_seeds": 16}
 TIER = {"H1": "S", "H2": "M", "H3": "M", "H4": "L"}
 
 
@@ -91,7 +95,7 @@ def h2_bundles(n_seeds):
     B and C share background and RNG seed and differ ONLY in the implanted bytes, which
     is what separates "this genome propagates" from "this world produces depth".
     """
-    panel = specimens.manifest()
+    panel = specimens.manifest_p11()
     out = []
     for sp in panel["specimens"]:
         for s in range(n_seeds):
@@ -105,9 +109,15 @@ def h2_bundles(n_seeds):
                 "arms": [
                     {"arm": "A_in_situ", "cell": sp["cell"], "seed": seed,
                      "tier": TIER["H2"], "kwargs": {}},
+                    # The implanted bytes are IN the manifest (and so in its hash):
+                    # the donor genome of the specimen's first P-11-causal event. Resolving
+                    # them at run time from the predecessor's first_replicator would
+                    # implant the donor of the first PREDECESSOR-criterion event instead,
+                    # and would depend on gitignored per-run files (C9-D06).
                     {"arm": "B_reimplant_actual", "cell": sp["cell"], "seed": seed,
                      "tier": TIER["H2"], "kwargs": {"implant": "ACTUAL_GENOME",
-                                                    "implant_source": sp["run_id"]}},
+                                                    "implant_source": sp["run_id"],
+                                                    "implant_hex": sp["genome_hex"]}},
                     {"arm": "C_reimplant_random", "cell": sp["cell"], "seed": seed,
                      "tier": TIER["H2"], "kwargs": {"implant": "RANDOM_MATCHED",
                                                     "implant_len": sp["genome_len"]}},
@@ -125,10 +135,37 @@ def h3_cells():
     Chosen from the predecessor record before launch and recorded here, so there is no
     adaptive replacement of cells after results arrive.
     """
-    panel = specimens.manifest()
-    res = [s for s in panel["specimens"] if s["stratum"][1] == "RESERVOIR"]
-    res.sort(key=lambda s: s["run_id"])
-    return res
+    # S4: PINNED. These were the RESERVOIR specimens of the rev-B H2 panel (hash 005a495c...).
+    # H3 used to re-derive them from the H2 panel on every build, so rebuilding H2 from
+    # P-11 survivors would have silently replaced H3's cells - a coupling nothing
+    # declared (C9-D09). H3 asks about the easy niche, not about pair-tape copying, so its
+    # cells are pinned here verbatim, independent of H2.
+    return [dict(run_id=r, cell=c) for r, c in H3_CELLS]
+
+
+H3_CELLS = (
+    ("42b011dfbda8be17-s60842-tL-a0",
+     {"atlas_axis": "RECOMBINATION", "bridge": "NEUTRAL_BRIDGE", "copy_primitive": "BLOCK",
+      "environment": "STATIC", "mutation_locality": "LOCAL", "mutation_operator": "BOTH",
+      "mutation_rate": "HIGH", "pressure": "PREDATION", "read_order": "ANSWER_BEFORE_READ",
+      "representation": "Z8_64", "reproduction": "PAIR_EXECUTION", "seeding": "RANDOM",
+      "self_location": "PRIMITIVE", "structure": "RESERVOIR", "task_transform": "XOR5A",
+      "world": "PAIR_TAPE"}),
+    ("54e9cd610c16e9ba-s28950-tL-a0",
+     {"atlas_axis": "RECOMBINATION", "bridge": "NEUTRAL_BRIDGE", "copy_primitive": "BLOCK",
+      "environment": "STATIC", "mutation_locality": "LOCAL", "mutation_operator": "BOTH",
+      "mutation_rate": "HIGH", "pressure": "PREDATION", "read_order": "ANSWER_BEFORE_READ",
+      "representation": "Z8_SLOTTED", "reproduction": "PAIR_EXECUTION", "seeding": "RANDOM",
+      "self_location": "PRIMITIVE", "structure": "RESERVOIR", "task_transform": "ADD1",
+      "world": "PAIR_TAPE"}),
+    ("f42f2adef369af16-s8750-tL-a0",
+     {"atlas_axis": "RECOMBINATION", "bridge": "NEUTRAL_BRIDGE", "copy_primitive": "BLOCK",
+      "environment": "RESOURCE_LIMITED", "mutation_locality": "LOCAL",
+      "mutation_operator": "BOTH", "mutation_rate": "HIGH", "pressure": "PREDATION",
+      "read_order": "ANSWER_BEFORE_READ", "representation": "Z8_SHARED",
+      "reproduction": "PAIR_EXECUTION", "seeding": "RANDOM", "self_location": "NONE",
+      "structure": "RESERVOIR", "task_transform": "XOR5A", "world": "PAIR_TAPE"}),
+)
 
 
 def h3_bundles(n_seeds):

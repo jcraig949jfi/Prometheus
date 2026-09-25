@@ -37,7 +37,8 @@ SMOKE_EPOCHS = 120           # short runs for timing; scaled up by the tier rati
 
 
 def _specimen_bytes(run_id):
-    pred = pathlib.Path(__file__).resolve().parent.parent / "z80atlas-2026-09-19" / "observatory"
+    import specimens                                   # C9-D06: one resolver for the path
+    pred = specimens.PRED
     for p in pred.glob("runs/*/%s/RESULT.json" % run_id):
         s = json.loads(p.read_text(encoding="ascii"))["summary"]
         g = (s.get("first_replicator") or {}).get("genome")
@@ -48,7 +49,10 @@ def _specimen_bytes(run_id):
 def _run_arm(arm, epochs=SMOKE_EPOCHS):
     kw = dict(arm.get("kwargs") or {})
     src = kw.pop("implant_source", None)
-    if src:
+    hx = kw.pop("implant_hex", None)
+    if hx:                                   # S4: bytes carried in the manifest itself
+        kw["implant_bytes"] = bytes.fromhex(hx)
+    elif src:
         kw["implant_bytes"] = _specimen_bytes(src)
     t0 = time.time()
     res = world.run_cell(arm["cell"], arm["seed"], tier=arm["tier"], max_epochs=epochs, **kw)

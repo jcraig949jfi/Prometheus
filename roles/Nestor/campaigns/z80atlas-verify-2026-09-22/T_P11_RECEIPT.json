@@ -1,0 +1,96 @@
+{
+ "gate": "T-P11",
+ "ok": true,
+ "constants": {
+  "CROSS": 0.9,
+  "MARGIN": 0.25,
+  "CAUSAL_DEPTH": 5,
+  "REPL_FIDELITY": 0.9,
+  "REPL_WROTE_SHARE": 0.5,
+  "PAIR_FID_OTHER_MIN": 0.9,
+  "PAIR_FID_SELF_MAX": 0.9,
+  "PAIR_DONOR_WROTE_SHARE": 0.25,
+  "P11_FINAL_FIDELITY": 0.9,
+  "P11_AUTHORSHIP": 0.9,
+  "P11_CONTROL_MAX": 0.9,
+  "P11_DRAWS": 3,
+  "P11_MAJORITY": 2
+ },
+ "checks": [
+  {
+   "check": "genuine block copier: PASS",
+   "pass": true,
+   "detail": "pred=True p11=True fo=1.000 fs=0.000 dw=96 | draws 3/3  fid=1.000 auth=1.00 lit=0.00 dis=0.000"
+  },
+  {
+   "check": "genuine bytewise copier: PASS",
+   "pass": true,
+   "detail": "pred=True p11=True fo=1.000 fs=0.000 dw=96 | draws 3/3  fid=1.000 auth=1.00 lit=0.00 dis=0.000"
+  },
+  {
+   "check": "already-similar halves, no copying: FAIL",
+   "pass": true,
+   "detail": "pred=True p11=False fo=0.979 fs=0.688 dw=30 | draws 0/3  fid=0.000 auth=0.00 lit=0.00 dis=0.000"
+  },
+  {
+   "check": "donor writes many unrelated bytes: FAIL",
+   "pass": true,
+   "detail": "pred=True p11=False fo=0.990 fs=0.688 dw=30 | draws 0/3  fid=0.000 auth=0.00 lit=0.00 dis=0.000"
+  },
+  {
+   "check": "partial overwrite + pre-existing similarity: FAIL",
+   "pass": true,
+   "detail": "pred=True p11=False fo=0.990 fs=0.688 dw=30 | draws 0/3  fid=0.323 auth=1.00 lit=1.00 dis=0.010"
+  },
+  {
+   "check": "randomized victim rebuilt by donor: PASS",
+   "pass": true,
+   "detail": "pred=True p11=True fo=1.000 fs=0.000 dw=96 | draws 3/3  fid=1.000 auth=1.00 lit=1.00 dis=0.000"
+  },
+  {
+   "check": "same case, donor writes disabled: FAIL",
+   "pass": true,
+   "detail": "pred=False p11=False fo=0.000 fs=0.990 dw=0 | draws 3/3  fid=1.000 auth=1.00 lit=1.00 dis=0.000"
+  },
+  {
+   "check": "predecessor fooled: already-similar halves, no copying",
+   "pass": true,
+   "detail": "pred=True p11=False fo=0.979 fs=0.688 dw=30 | draws 0/3  fid=0.000 auth=0.00 lit=0.00 dis=0.000"
+  },
+  {
+   "check": "predecessor fooled: donor writes many unrelated bytes",
+   "pass": true,
+   "detail": "pred=True p11=False fo=0.990 fs=0.688 dw=30 | draws 0/3  fid=0.000 auth=0.00 lit=0.00 dis=0.000"
+  },
+  {
+   "check": "predecessor fooled: partial overwrite + pre-existing similarity",
+   "pass": true,
+   "detail": "pred=True p11=False fo=0.990 fs=0.688 dw=30 | draws 0/3  fid=0.323 auth=1.00 lit=1.00 dis=0.010"
+  },
+  {
+   "check": "donor-disabled case vs predecessor",
+   "pass": null,
+   "detail": "NOT A CATCH: the predecessor also rejects it (donor_wrote=0, fid_other=0.000). Its write-count clause already refuses a donor that wrote nothing; C5's ability to fire is shown below instead."
+  },
+  {
+   "check": "C2 fires: partial overwrite",
+   "pass": true,
+   "detail": "assay full=False  without C2=True"
+  },
+  {
+   "check": "C4 fires: donor writes a loader, victim copies",
+   "pass": true,
+   "detail": "assay full=False  without C4=True  auth=0.10"
+  },
+  {
+   "check": "C5 fires: a victim able to pull the donor alone",
+   "pass": true,
+   "detail": "assay full=False  without C5=True  dis=1.000"
+  },
+  {
+   "check": "block copier: victim re-copies itself, same values",
+   "pass": true,
+   "detail": "prov share=1.00  prov_lit share=0.00  (under prov_lit a genuine copier would FAIL)"
+  }
+ ]
+}

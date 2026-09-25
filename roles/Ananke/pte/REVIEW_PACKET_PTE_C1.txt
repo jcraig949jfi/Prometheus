@@ -1,0 +1,178 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+PTE-C1 -- Packet-Tensor Engine, first campaign (Ananke)
+================================================================================
+Prepared:        2026-09-25   frozen campaign, complete, NOT yet audited
+Location/Code:   prometheus/ananke/ (engine, oracle, envs, assays, search,
+                 campaign, report); roles/Ananke/pte/ (DESIGN, PREREG,
+                 FREEZE, C1_REPORT, c1_a0/, c1_report/, c1_posthoc/)
+Artifacts:       roles/Ananke/pte/C1_REPORT.md (reading)
+                 roles/Ananke/pte/c1_report/REPORT.md + summary.json (rows)
+                 run state ~/ananke_runs/pte-c1/cells.jsonl (6596 rows)
+Version/Hash:    freeze 362f2189b, code eb7c4b40a, PREREG 78243a758
+Headline:        Rare, causally verified, reproduced, size-free packet
+                 transport evolves (RELAY 0.84-0.89 vs 0.500 no-comm);
+                 topology-bound; no cross-family transfer; XOR/FLIP NULL;
+                 SUPPORTED boundaries belong to a hand design, not to
+                 evolved machinery.
+
+--------------------------------------------------------------------------------
+1. CLAIM UNDER REVIEW
+--------------------------------------------------------------------------------
+Can organised, communication-dependent information processing emerge in a
+mutable integer tensor substrate from asynchronous, lossy, delayed,
+superposing packets with no imported neural machinery -- and where in
+communication-physics space? Preregistered falsifiers: every SIGNAL must
+beat 0.55 (99% lower bound over mirror pairs) on held-out worlds; COMM
+claims must beat the same law with communication removed; CAUSAL claims
+must die under zero-comm and packet ablation; 8 losable predictions.
+
+--------------------------------------------------------------------------------
+2. METHOD / SUBSTRATE
+--------------------------------------------------------------------------------
+B worlds x N sites (torus/ring/random/smallworld/global). int32 state
+saturated to +-32767; counter-hash randomness per named stream; packets =
+(channel, payload[P]) that SUM on arrival; per-copy loss, latency, jitter,
+duplication, noise; receiver cap with none/aloha/saturate; sync/async;
+decay S -= S>>k. Update law = straight-line program, 16 integer ops
+(NOP MOV ADD SUB MULQ ADDI CONST GT SEL MAX SHR XOR MOD RAND SETRULE
+WIMM). Adaptation: writable routing, writable immediates, rule switching,
+in-lifetime mutation. 31 physics dials + 4 env dials. Outer search: a
+declared GA (pop 96, 36 gens), selection shaped by a twin-contrast bonus
+(max +0.12); champion chosen on training accuracy only.
+
+--------------------------------------------------------------------------------
+3. GROUND TRUTH / KEY DEFINITIONS
+--------------------------------------------------------------------------------
+Engine = independent CPU oracle, bit-identical (oracle written from the
+spec by a separate agent that never read the engine; 145 tests).
+Targets iid, worlds in MIRROR PAIRS (negated targets, shared physics
+randomness): every constant policy scores exactly 0.500. Positions redrawn
+per world, so a homogeneous law cannot memorise its actuator.
+
+--------------------------------------------------------------------------------
+4. CONDITIONS / BASELINES
+--------------------------------------------------------------------------------
+Families: RELAY, XOR (each input alone = 0 information), MAJ (single-
+sensor ceiling 0.70), FLIP (hidden mapping, teacher after readout), HOLD.
+Baselines: constant 0.500 exact; zero-comm control of the SAME law on the
+SAME held-out worlds for every cell; plant (hand design) viability.
+
+--------------------------------------------------------------------------------
+5. PROCEDURE / STATISTICS
+--------------------------------------------------------------------------------
+Waves: A0 5000 census cells; A1 400 evolve cells (352 run, 48 budget-
+censored); B 786 transect cells; B2 270 fresh-seed reruns; C 132
+transfer/re-evolve; D 36 adjudication/replication; E 20 scale. Unit of
+inference = mirror pair; 99% bootstrap CIs; held-out = 64 worlds from a
+disjoint seed namespace, evaluated once.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT
+--------------------------------------------------------------------------------
+    Evolve cells (all waves)   n     SIGNAL   COMM_DEPENDENT
+    ------------------------   ---   ------   --------------
+    RELAY                      196       50               50
+    MAJ                        162       19               19
+    HOLD                       155       97                3
+    XOR                         83        0                0
+    FLIP                        82        0                0
+
+    A1 only: COMM_DEPENDENT 8/352 (2.3%); living-arm vs uniform-arm
+    SIGNAL: RELAY 2/2, MAJ 2/1 (no advantage).
+
+    Promoted (D)        held    no-comm  label           fresh-seed reps
+    -----------------   -----   -------  --------------  ---------------
+    RELAY c16d5231      0.837   0.50     CAUSAL_SUPPORT  0.811  0.816
+    RELAY 62a7fff9      0.850   0.50     CAUSAL_SUPPORT  0.857  0.751
+    RELAY 31cd2a8a      0.857   0.50     CAUSAL_SUPPORT  0.667  0.789
+    RELAY bbef66a1      0.883   0.50     CAUSAL_SUPPORT  0.572  0.506
+    MAJ   4781b0a1      0.789   0.50     CAUSAL_SUPPORT  0.636  0.520
+    MAJ   0a23398f      0.695   0.50     NOT_SUPPORTED   0.549  0.699
+    MAJ   f6b623cd      0.686   0.50     NOT_SUPPORTED   0.533  0.680
+
+    Scale (frozen RELAY law, source 0.883): N=400 0.875, N=1024 0.893,
+    N=2304 0.882. Re-evolved at N=400: 0.619.
+
+--------------------------------------------------------------------------------
+7. DELIVERABLE + ACCEPTANCE
+--------------------------------------------------------------------------------
+    Engine bit-exact vs independent oracle ............. yes (145 tests)
+    PREREG committed alone before data ................. yes (78243a758)
+    Freeze + code identity enforced at run time ........ yes
+    Campaign completed, 0 failed cells ................. yes (12 h 02 m)
+    Verdicts ship with rows ............................ yes (cells.jsonl
+                                                          summarised in
+                                                          summary.json;
+                                                          raw rows are run
+                                                          state, not git)
+    Negative results reported .......................... yes
+
+--------------------------------------------------------------------------------
+8. CONTROLS / ABLATIONS / STRESS TESTS
+--------------------------------------------------------------------------------
+RELAY (4 cells): zero-comm, max-loss, shuffled destinations -> 0.50-0.52;
+shuffled timing 0.73-0.88; payload randomisation 0.50-0.70; env-
+permutation null 0.50. Transplants survive +0.2 loss, +1 latency, +2
+jitter, x2.25 size, async 0.7; topology -> random graph 0.50 in 4/4.
+MAJ M3 (2 cells): packet ablation no effect, adaptation-off 0.53-0.55,
++1 latency 0.49-0.50. POST-HOC (exploratory, not promoted by the prereg):
+HOLD 4ab2ba01 (0.883): site-state reset mid-gap no effect (0.88), packet
+ablation / payload randomisation / zero-comm 0.50 -> the bit is held in
+packets in flight (delay-line memory).
+Boundaries: 13 SUPPORTED, 24 CANDIDATE; the physics ones gate the HAND
+DESIGN (decay, delay 4->8, energy cost); evolved-competence boundaries
+are CANDIDATE only.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT VERIFICATION
+--------------------------------------------------------------------------------
+Engine correctness: independent oracle author (bit-exact). Science: NONE
+yet. Same author wrote substrate, envs, search, detectors, predictions.
+Adversarial review requested from Kairos and Elenchus (comms).
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- Boundary criterion defects found post-data (categorical dials, zero-
+  variance metrics, one-level dips counted twice); labels unchanged,
+  flagged. 4 of 13 SUPPORTED are one HOLD dip; 3 are program-space.
+- Causal rules encoded the expected mechanism: M2 and M3 are labelled
+  NOT_SUPPORTED by the prereg though their ablation patterns are clean.
+- Wave C HOLD "env variants" changed dials HOLD does not read: 22 trivial
+  transfers, not counted.
+- A0 rungs L1/L2 are bound to the random-program prior; L2' to one design.
+- Promotion by lo99 favoured trivial HOLD latches; 48 A1 cells censored.
+- Holdouts are seed namespaces, not worlds sealed by another seat.
+- Integration beyond one sensor did not reproduce (1 cell).
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+    git worktree add --detach <dir> 362f2189b
+    python -m pytest -q prometheus/ananke/tests          (145 pass)
+    python -m prometheus.ananke.campaign --config \
+        roles/Ananke/pte/FREEZE_PTE_C1.json --home <HOME>  (~12 h, 1 GPU)
+    python -m prometheus.ananke.report --run <HOME>/pte-c1 --out <dir> \
+        --freeze roles/Ananke/pte/FREEZE_PTE_C1.json
+Spot check (minutes): re-evaluate a RELAY champion from summary.json /
+cells.jsonl with assays.evaluate and Controls(zero_comm=True); all-integer
+replay is bit-exact on any hardware.
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+    NULL (no communication-dependent organisation) ....... no
+    SIGNAL / COMM_DEPENDENT ................................ YES (rare)
+    REPRODUCED_SIGNAL ...................................... YES (RELAY 3/4)
+    CAUSAL_SUPPORT ......................................... YES (RELAY 4/4)
+    TRANSFER_SUPPORT (size, within-family env) ............. YES
+    TRANSFER_SUPPORT (cross-family, topology) .............. no
+    PHASE_BOUNDARY_SUPPORTED in evolved competence ......... no
+    INTEGRATION beyond one sensor, reproduced .............. no
+Reviewer's bottom line: is M1 genuine packet transport, or can a cheaper
+explanation (e.g. a lattice-geometry artefact of the env placement)
+survive zero-comm = 0.50 and shuffled-destination = 0.50?
+================================================================================
+END OF PACKET
+================================================================================

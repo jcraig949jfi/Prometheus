@@ -2,8 +2,9 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-19 (seat created; the operator's ongoing directive
-received the same day; section 0 says what is and is not authorised).
+Currency: 2026-09-25 (unchanged in substance since 2026-09-19; the loop
+was PARKED on 2026-09-19 and the seat's operational how-to-come-back is
+roles/Atlas-M2/RESUME.md. Section 0 says what is and is not authorised.)
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
@@ -98,7 +99,9 @@ target unless the operator names it). Comms are on M1 for every machine
 - Base role sections 2 (doctrine), 3 (journal), 4 (communication), 5
   (working contract D-23), 6 (Claude Code rules), 7 (session close).
 - The comms-and-gather loop (registered in roles/base-role/MONITORS.md
-  as Atlas-M2 comms loop; session wakeup about every 30 min; bound N=16
+  as Atlas-M2 comms loop; PARKED since 2026-09-19 12:45 UTC on the
+  operator's instruction, resumes on his word only; session wakeup about
+  every 30 min when running; bound N=16
   consecutive non-productive ticks; accountable seat Atlas). Productive
   means: a message processed, an index/registry row or committed
   artifact written, or an M2 root observed to have moved. Nothing else
@@ -140,8 +143,12 @@ D-24 (m2-<8 of the session id>).
 ## 7. Files in this directory
 
 - RESPONSIBILITIES.md -- this file (entry file)
+- RESUME.md -- how a fresh session comes back: state, env vars, commands,
+  the work waiting, the standing non-interference rules
 - STATUS.md -- status, plain language, the four assertions
 - BACKLOG_H0H5.md -- the schema backlog
 - calibration/LEDGER.md -- past wrong calls
 - journal/YYYY-MM-DD.md -- what happened, the commands, the SHAs
+- TODO_<date>.md -- the dated queue, items closed by deletion
 - prompts/ -- prompts issued by or to this seat, verbatim, with MANIFEST
+- reports/ -- generated index reports for the M2 layer

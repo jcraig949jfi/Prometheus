@@ -207,3 +207,14 @@ two ways. (i) Per world, as preregistered. (ii) Per founder lineage: each world 
 `meta.parents`, and a lineage counts as positive if any member is positive. The report also gives the median fraction
 within each lineage. A specimen claim must hold at the lineage level: two positives from one lineage count as one
 specimen, not two.
+
+### A8 (2026-09-24, POST-DATA; declared after the campaign's mechanical verdict and marked as such) — constant-predictor kill
+This is a post-hoc test, added after the full campaign had run and computed EXPAND. It is not part of the fixed s6 rule,
+and it is reported beside the mechanical verdict, never in place of it. CGu is scored against the zero predictor, so an
+organism that learns a single constant can score as "competent".
+**Test** (`ensorain/wtp2/kill_const.py`): for each Wave A positive (CGu >= .1 and SD >= .1), 5 seeds, re-score CGu with
+organism 0's predictor replaced by (a) the true field mean and (b) the organism's own learned constant. Frozen, no marks.
+**Verdict per positive:** SCALAR-EXPLAINED if the median CGu excess over the better constant is < 0.10, else
+EXCEEDS-CONSTANT.
+**Wave F recombinant #9** (D2 jump) gets the same test on its trace: the genome is regenerated deterministically from
+rng 24_092_406 and stored at runs/wtp02/waveF_i9_genome.json.
