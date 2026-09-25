@@ -377,6 +377,9 @@ Interpretation limits (steward note, Aporia #621, accepted): C-CORE is exactly w
 core plus drift elsewhere predicts; it is not evidence for any stronger account, and calling SELF/LDIR "relevant" because
 they survived would be circular. Provenance: C-CORE was frozen (19:53Z) after this seat read the selective-irreversibility
 directive (18:57Z), so under that program's date rule it is THEORY-AWARE; my #620 called it theory-blind, which was wrong.
+X-CORE-TIME (EXPLORE, SIGNAL, theory-aware): the core is HELD, not re-fixed -- in 7 of 8 runaways SELF+LDIR stay at ~0.99
+from epoch ~200 while all other founder material falls to 0 by epoch 300-900; one run shows a late sweep instead.
+Same limit as above: this is the purifying-selection trajectory.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
