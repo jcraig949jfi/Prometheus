@@ -1,0 +1,303 @@
+[
+ {
+  "q": 6,
+  "h": "faf3e97b72c68fff",
+  "flag": {
+   "det": "X1",
+   "substrate": "lowrank",
+   "set": "interp",
+   "XC": 3.2379381091723705,
+   "SD": 3.279163469199156
+  },
+  "conversions": [
+   {
+    "target": "cp",
+    "XC_before": 1.9919363875844587,
+    "XC_after": -3.033482000694328,
+    "XC_direct": 1.6074569313884024,
+    "conv_flops": 230400,
+    "size_before": 64,
+    "size_after": 100,
+    "X7": false
+   },
+   {
+    "target": "tt",
+    "XC_before": 1.9919363875844587,
+    "XC_after": -0.1681129607942419,
+    "XC_direct": 1.55811120220289,
+    "conv_flops": 82944,
+    "size_before": 64,
+    "size_after": 72,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": 1.9919363875844587,
+    "XC_after": -0.0616575250607822,
+    "XC_direct": -0.2917617121752605,
+    "conv_flops": 147456,
+    "size_before": 64,
+    "size_after": 64,
+    "X7": false
+   }
+  ]
+ },
+ {
+  "q": 8,
+  "h": "7678f92b593ba298",
+  "flag": {
+   "det": "X1",
+   "substrate": "tt",
+   "set": "interp",
+   "XC": 2.4974208136780836,
+   "SD": 2.546789245726962
+  },
+  "conversions": [
+   {
+    "target": "lowrank",
+    "XC_before": 1.9728500990006528,
+    "XC_after": -0.3052019946123886,
+    "XC_direct": 0.8543337196457435,
+    "conv_flops": 1492992,
+    "size_before": 642,
+    "size_after": 648,
+    "X7": false
+   },
+   {
+    "target": "cp",
+    "XC_before": 1.9728500990006528,
+    "XC_after": -2.986829145594929,
+    "XC_direct": 0.6250489846539808,
+    "conv_flops": 1469952,
+    "size_before": 642,
+    "size_after": 638,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": 1.9728500990006528,
+    "XC_after": 0.38856713956163347,
+    "XC_direct": 0.2112471523822842,
+    "conv_flops": 1179648,
+    "size_before": 642,
+    "size_after": 512,
+    "X7": false
+   }
+  ]
+ },
+ {
+  "q": 9,
+  "h": "565adc406940b31b",
+  "flag": {
+   "det": "X1",
+   "substrate": "lowrank",
+   "set": "interp",
+   "XC": 2.1666058900932486,
+   "SD": 2.283784394071802
+  },
+  "conversions": [
+   {
+    "target": "cp",
+    "XC_before": 2.3268218987932663,
+    "XC_after": -0.04471746969865857,
+    "XC_direct": 0.07425997063423108,
+    "conv_flops": 1138176,
+    "size_before": 455,
+    "size_after": 494,
+    "X7": false
+   },
+   {
+    "target": "tt",
+    "XC_before": 2.3268218987932663,
+    "XC_after": -0.06063543644918557,
+    "XC_direct": 0.17813379954294123,
+    "conv_flops": 195840,
+    "size_before": 455,
+    "size_after": 370,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": 2.3268218987932663,
+    "XC_after": -0.1904537463458196,
+    "XC_direct": -0.05751159230392727,
+    "conv_flops": 1105920,
+    "size_before": 455,
+    "size_after": 480,
+    "X7": false
+   }
+  ]
+ },
+ {
+  "q": 10,
+  "h": "d7496aa1842b10ee",
+  "flag": {
+   "det": "X1",
+   "substrate": "tt",
+   "set": "interp",
+   "XC": 1.9541262235408106,
+   "SD": 2.1940671563631846
+  },
+  "conversions": [
+   {
+    "target": "lowrank",
+    "XC_before": -0.07648848795383001,
+    "XC_after": -0.07738067153805506,
+    "XC_direct": -0.007852891371337167,
+    "conv_flops": 188928,
+    "size_before": 82,
+    "size_after": 82,
+    "X7": false
+   },
+   {
+    "target": "cp",
+    "XC_before": -0.07648848795383001,
+    "XC_after": -0.07461651752327297,
+    "XC_direct": -0.03248885749951626,
+    "conv_flops": 188928,
+    "size_before": 82,
+    "size_after": 82,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": -0.07648848795383001,
+    "XC_after": -0.03240393386489547,
+    "XC_direct": -0.009521237547085896,
+    "conv_flops": 207360,
+    "size_before": 82,
+    "size_after": 90,
+    "X7": false
+   }
+  ]
+ },
+ {
+  "q": 11,
+  "h": "d7496aa1842b10ee",
+  "flag": {
+   "det": "X1",
+   "substrate": "cp",
+   "set": "interp",
+   "XC": 1.892362867669969,
+   "SD": 2.1791594004503887
+  },
+  "conversions": [
+   {
+    "target": "lowrank",
+    "XC_before": 1.8585566309113122,
+    "XC_after": 1.512752229937994,
+    "XC_direct": 1.8609022477364947,
+    "conv_flops": 188928,
+    "size_before": 82,
+    "size_after": 82,
+    "X7": false
+   },
+   {
+    "target": "tt",
+    "XC_before": 1.8585566309113122,
+    "XC_after": 1.414056779336398,
+    "XC_direct": 1.756111907160842,
+    "conv_flops": 9216,
+    "size_before": 82,
+    "size_after": 82,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": 1.8585566309113122,
+    "XC_after": -0.01195485949415509,
+    "XC_direct": -0.13449721204432297,
+    "conv_flops": 207360,
+    "size_before": 82,
+    "size_after": 90,
+    "X7": false
+   }
+  ]
+ },
+ {
+  "q": 12,
+  "h": "ea7b491a37114dbc",
+  "flag": {
+   "det": "X1",
+   "substrate": "tt",
+   "set": "interp",
+   "XC": 1.7181343810705052,
+   "SD": 1.7949075183242644
+  },
+  "conversions": [
+   {
+    "target": "lowrank",
+    "XC_before": 1.4254582464791705,
+    "XC_after": -0.02141801471798451,
+    "XC_direct": 0.8860803274959035,
+    "conv_flops": 1317888,
+    "size_before": 594,
+    "size_after": 572,
+    "X7": false
+   },
+   {
+    "target": "cp",
+    "XC_before": 1.4254582464791705,
+    "XC_after": -0.08468866817408412,
+    "XC_direct": 0.6406140771625012,
+    "conv_flops": 1520640,
+    "size_before": 594,
+    "size_after": 660,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": 1.4254582464791705,
+    "XC_after": -0.010922033000973613,
+    "XC_direct": -0.07238976458803077,
+    "conv_flops": 1492992,
+    "size_before": 594,
+    "size_after": 648,
+    "X7": false
+   }
+  ]
+ },
+ {
+  "q": 13,
+  "h": "26aaeec35d80de21",
+  "flag": {
+   "det": "X1",
+   "substrate": "tt",
+   "set": "interp",
+   "XC": 1.6240445879963696,
+   "SD": 1.7235941055494899
+  },
+  "conversions": [
+   {
+    "target": "lowrank",
+    "XC_before": 1.4907484055005604,
+    "XC_after": -0.07491965519112269,
+    "XC_direct": 0.9092215488638973,
+    "conv_flops": 1317888,
+    "size_before": 594,
+    "size_after": 572,
+    "X7": false
+   },
+   {
+    "target": "cp",
+    "XC_before": 1.4907484055005604,
+    "XC_after": -0.030847499972769466,
+    "XC_direct": 0.6104826832192103,
+    "conv_flops": 1520640,
+    "size_before": 594,
+    "size_after": 660,
+    "X7": false
+   },
+   {
+    "target": "dct",
+    "XC_before": 1.4907484055005604,
+    "XC_after": -0.030416600819039807,
+    "XC_direct": -0.09977580240921693,
+    "conv_flops": 1492992,
+    "size_before": 594,
+    "size_after": 648,
+    "X7": false
+   }
+  ]
+ }
+]

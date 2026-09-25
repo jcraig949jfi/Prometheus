@@ -623,7 +623,7 @@ def verdict():
     summ = dict(validation=V, candidates=A["candidates"], gates=A["gates"], admitted=len(A["admitted"]), lineages=lin,
                 flags=dict(collections.Counter(f["det"] for r in B for f in r["flags"])),
                 flag_lineages={d: len({r["root"] for r in B if any(f["det"] == d for f in r["flags"])}) for d in ("X1", "X6", "X3", "X4")},
-                wave_c=dict(collections.Counter((c["flag"]["det"], c["status"]) for c in C).most_common()) if C else {},
+                wave_c={f"{d}:{s}": n for (d, s), n in collections.Counter((c["flag"]["det"], c["status"]) for c in C).items()} if C else {},
                 specimens=specimens, replicated_crossovers=len(rep_x), bracketed_crossovers=len(xover),
                 sd_lineages=len({s["root"] for s in specimens}), VERDICT=v)
     dump(summ, "summary.json")
