@@ -11,6 +11,10 @@ DIRECTION (2026-09-25): major scientific direction now arrives by comms from the
   - Rulings R1-R3 RECEIVED (#591/#592/#594): ensorain/lm01/STEWARD_RULINGS.md.
   - Dev envelope v2 (#610): <= 8 workers, BELOW_NORMAL, stop at < 6 GB free RAM, sweep log committed. Campaign gated
     on the steward prereg review. Blind-lane: never ask Bellerophon about the program.
+  - Build (789879d55): ensorain/lm01/ arms + cheat fixtures + meters, 12 tests. Defects D1 (R(tau) -> HR2) and D2
+    (rate vs bytes -> IM-rate primary, IM-bytes reported) sent in #625, awaiting confirmation. Intervention arm proposed
+    as a secondary arm. Joint rules #615/#619 are accepted into the prereg.
+  - CADENCE: each hourly tick is a WORK block; heartbeat at the end (Cyclops #615).
   - Deliverables before launch: directive s13 (prereg, frozen config, arms + audit tests, accounting spec, calibration
     results, dev resource estimate, falsifier + limitations, runtime proposal, sealed campaign-seed procedure).
 CHARTER: Tensor Physics of Intelligence Foundry (roles/Ensorain/prompts/2026-09-24_foundry_directive/).
