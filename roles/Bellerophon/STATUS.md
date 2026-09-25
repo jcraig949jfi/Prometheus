@@ -3,10 +3,10 @@
 Currency: 2026-09-25 ~06:45Z (written before a machine reboot + context reset).
 
 BOOT POINTER -- READ FIRST: roles/Bellerophon/coupling_2026-09-24/RESUME_AFTER_RESET.md
-  One experiment is IN FLIGHT BUT STOPPED (coupling campaign, 959/11,372 runs, killed by the harness low-memory
-  reaper at 2026-09-24T21:23Z). Relaunch needs the operator's go-ahead and answers to Q1-Q4 in that file (cap
-  re-base amendment, whole machine, worker recycling, merge policy). Do NOT relaunch unasked.
-seat state: BLOCKED (named blocker: operator decision Q1/Q2 in RESUME_AFTER_RESET.md). Worktree
+  Coupling campaign RUNNING again since 2026-09-25T10:35:24Z under Amendment 1 (operator-authorised; active-runtime
+  caps; detached supervisor with standing authority to recover crashes). If it is not running after a reboot, follow
+  the UPDATE block at the top of RESUME_AFTER_RESET.md WITHOUT asking the operator.
+seat state: ACTIVE (autonomous campaign; no HITL until the final report). Worktree
   D:/Prometheus-worktrees/bellerophon-post-campaign-forensics on branch bellerophon/coupling-campaign-2026-09-24.
 
 COUPLING CAMPAIGN (physics v3) -- STOPPED BY HARNESS 2026-09-24T21:23Z, AWAITING OPERATOR RESTART

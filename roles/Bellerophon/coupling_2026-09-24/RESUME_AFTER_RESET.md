@@ -1,3 +1,27 @@
+# UPDATE 2026-09-25T10:45Z -- CAMPAIGN RESUMED UNDER AMENDMENT 1 (supersedes sections 2-4 below)
+
+The operator authorised the restart (prompts/01_OPERATOR_RESTART_AUTHORIZATION_verbatim.md): active-runtime caps,
+dedicated host, standing autonomous-recovery authority, blindness until the frozen analysis point, NO further HITL.
+Amendment 1 committed at 6607b3cb5 (prereg appendix). Code re-pinned at C:/Users/James/z80atlas_coupling_2026-09-24/code
+(COMMIT.txt 6607b3cb5; old pin kept as code_c9bed96de; only coupling_campaign.py differs, plus the new
+coupling_supervisor.py). The SUPERVISOR runs detached (not a Claude Code shell): pid in the workdir's supervisor.pid;
+logs supervisor.jsonl, memory.jsonl, driver.log there. Relaunched 2026-09-25T10:35:24Z, 20 workers, workers recycled
+every 6 runs (worker RSS ~170 MB).
+
+IF THE MACHINE REBOOTED OR THE SUPERVISOR DIED (standing authority -- do NOT ask the operator):
+  1. Read C:/Users/James/z80atlas_coupling_2026-09-24/STATUS.json. If "stopped": true, go to step 4.
+  2. Measure free RAM (keep >= 4 GB reserve), then relaunch the supervisor detached from PowerShell:
+       Start-Process C:/Users/James/AppData/Local/Python/pythoncore-3.14-64/python.exe
+         -ArgumentList "-m","prometheus.z80atlas.coupling_supervisor","--workdir","C:/Users/James/z80atlas_coupling_2026-09-24",
+                       "--inputs","C:/Users/James/z80atlas_coupling_2026-09-24/coupling_inputs.json","--workers","20"
+         -WorkingDirectory C:/Users/James/z80atlas_coupling_2026-09-24/code -WindowStyle Hidden
+     It runs the integrity gate first and the driver closes the crashed active segment at its last heartbeat.
+  3. Stop for the operator ONLY if supervisor.jsonl shows HALT_integrity_failure or evidence is lost.
+  4. After "stopped": run tools/coupling_analysis.py --workdir <wd> --code <wd>/code --inputs <wd>/coupling_inputs.json
+     --replay 0.03, then tools/ops_accounting.py (same args); write COUPLING_CAMPAIGN_REPORT.md, the ledgers, failure
+     ledger F4 (the OOM kill), NEXT_MULTIDAY_CAMPAIGN.md only if READY_FOR_MULTIDAY, STATUS.md, journal; commit, push;
+     final report in the directive's format plus the restart authorization's accounting block.
+
 # RESUME AFTER RESET -- Bellerophon, written 2026-09-25 ~06:45Z before a machine reboot / context reset
 
 Read this first after boot (after the base-role boot sequence). It is the exact state of the one experiment in
