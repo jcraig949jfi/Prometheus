@@ -1,0 +1,24 @@
+**1. Algorithm**
+
+The three concepts collapse into a workable pipeline: **sparse predicate coding + free-energy scoring + configuration search**.
+
+*Data structures.* A dictionary `D` of structural atoms, each a regex-backed extractor emitting typed tuples: `NEG(pred)`, `CMP(a, >, b)`, `COND(antecedent, consequent)`, `NUM(entity, value, unit)`, `CAUSE(x, y)`, `ORD(a, before, b)`. The prompt is parsed into a fact set `P` (a dict keyed by predicate signature) and closed under propagation rules: transitivity over `CMP`/`ORD` (Floyd–Warshall on a small adjacency matrix), modus ponens over `COND`, and arithmetic on `NUM` (unit-normalised floats). This closure `P*` is the generative model. Each candidate answer is encoded as a sparse binary vector `a ∈ {0,1}^|D|` via greedy matching pursuit: repeatedly pick the atom that explains the most unexplained tokens, stop when residual gain < τ (the Olshausen–Field sparsity constraint enforced as an L0 budget).
+
+*Scoring.* Variational free energy per candidate: `F = accuracy + complexity`. Accuracy = weighted prediction error: count of atoms in `a` that contradict `P*` (negation flip, numeric mismatch beyond tolerance, reversed ordering) plus atoms in `P*` the question demands but `a` omits. Complexity = `λ·‖a‖₀` minus atoms grounded in `P*` — a penalty for unsupported claims, the KL-to-prior term. Score = `−F`; candidates ranked ascending in F.
+
+*NAS role.* The pipeline has discrete choices: extractor subset, propagation depth, tolerance τ, λ. Random/evolutionary search over this small space on a labelled dev set, with a "performance predictor" (accuracy after 20 items extrapolated) and weight sharing implemented as a memoised parse cache so configurations reuse extractions. Honestly, this is hyperparameter search wearing a NAS costume.
+
+**2. Parsed features**
+
+Negation scope, comparatives/superlatives, if-then conditionals, numeric values with units, causal verbs (`because`, `leads to`), temporal/ordinal relations, and quantifiers (`all`/`some`/`none`) as constraints on the atom vector.
+
+**3. Novelty**
+
+Not novel. The core is MDL/penalised-likelihood consistency checking: matching pursuit (Mallat & Zhang) over hand-built predicates, plus classical forward chaining. The FEP framing is equivalent to Bayesian surprise + description length; NAS reduces to AutoML over a scorer. Nearest existing work: rule-based NLI consistency checkers and MDL-based answer verification.
+
+**4. Ratings**
+
+Reasoning: 7/10 — constraint propagation over typed predicates does real logical work; brittle to paraphrase.
+Metacognition: 5/10 — complexity term flags unsupported claims and F magnitude gives a confidence proxy, but no self-model beyond that.
+Hypothesis generation: 3/10 — the config search explores scorer variants, not answer-space hypotheses; nothing generative about content.
+Implementability: 8/10 — regex extractors, small adjacency matrices, greedy pursuit, and grid search are all straightforward in numpy; the hard part is extractor coverage, not the algorithm.

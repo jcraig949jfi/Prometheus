@@ -1,0 +1,32 @@
+**1. Emerging algorithm**  
+The tool builds a *Signal‑Property‑Confidence* pipeline:
+
+1. **Parsing → proposition graph** – A lightweight lexer (regex + `re` split) tokenises the prompt and each answer into *atoms* (numeric literals, identifiers, comparatives, causal verbs). Each atom becomes a node in a directed graph; edges encode logical relations (→ for implication, ↔ for equivalence, ‑‑> for ordering). The graph is stored as adjacency lists (`dict[int, list[int]]`) and a feature matrix `F ∈ ℝ^{n×k}` where each row is a one‑hot/TF‑IDF encoding of the atom’s type (negation, comparative, conditional, etc.).
+
+2. **Matched‑filter scoring** – The reference answer is pre‑processed the same way, yielding a reference matrix `R`. For each candidate, the algorithm computes the cross‑correlation  
+   `s = sum(F * R, axis=1)` (implemented with `numpy.tensordot`). The maximum normalized correlation `S = max(s) / (‖F‖·‖R‖)` is the *signal‑to‑noise* detection score, rewarding structural overlap while tolerating noise (extra or missing atoms).
+
+3. **Property‑based testing** – From the specification (the prompt’s logical constraints) the system auto‑generates *property functions* (e.g., “if A → B then B must appear”, “numeric difference ≤ Δ”). Using a simple shrinking loop, it mutates the candidate graph to produce minimal counter‑examples. Each violated property adds a penalty `p_i`; the total property penalty `P = Σ w_i·p_i`.
+
+4. **Metacognitive calibration** – If the candidate supplies a confidence estimate `c ∈ [0,1]`, the algorithm computes an internal confidence `ĉ = S·(1‑P)`. A calibration loss `M = |c‑ĉ|` is added to the final score.
+
+**Final score**: `Score = α·S – β·P – γ·M` (α,β,γ are tunable scalars). The result is a deterministic float in `[0,1]`.
+
+**2. Parsed structural features**  
+- Negation cues (`not`, `never`)  
+- Comparatives (`greater than`, `≤`, `more … than`)  
+- Conditionals (`if … then`, `unless`)  
+- Numeric values and units  
+- Causal verbs (`causes`, `leads to`)  
+- Ordering relations (`first`, `after`, `precede`)  
+- Quantifiers (`all`, `some`, `at least`)  
+- Logical connectors (`and`, `or`, `implies`)
+
+**3. Novelty**  
+The exact combination—using matched‑filter cross‑correlation on proposition‑level feature matrices, coupled with automatically generated property‑based tests and a metacognitive calibration term—is not present in mainstream evaluation suites (e.g., BLEU, ROUGE, LLM‑based rubrics). It parallels work on *structured similarity* and *constraint‑based grading* but integrates them in a single, purely algorithmic scorer, making it effectively novel.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong structural matching and logical constraint handling.  
+Metacognition: 7/10 — confidence calibration adds self‑awareness without learning.  
+Hypothesis generation: 6/10 — property‑based test generation is solid but limited by specification expressiveness.  
+Implementability: 9/10 — relies only on `re`, `numpy`, and standard data structures; straightforward to prototype.

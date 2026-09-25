@@ -1,0 +1,34 @@
+**Algorithmic design**
+
+1. **Reservoir‑based feature encoder** – Build a fixed‑size random recurrent matrix **R** (shape *N×N*) with spectral radius < 1. For each candidate answer, tokenise to a sequence of word‑ids, embed each id with a deterministic hash‑based vector (e.g. 32‑dim). Feed the embedding stream through the linear‑only “reservoir”:  
+   `h_t = tanh(R @ h_{t‑1} + e_t)` (implemented with NumPy). After the last token, collect the state vector **h** and optionally a time‑averaged trace **\bar h**. This yields a dense, high‑dimensional representation of the answer’s syntactic‑semantic pattern without training.
+
+2. **Evolutionary fitness evaluator** – Define a population of *M* candidate‑answer representations (the encoded **h** vectors). Each individual receives a *phenomenological fitness* computed from a hand‑crafted checklist of phenomenological predicates (see §2). The fitness function **F** is a weighted sum of binary features (e.g. “explicit first‑person claim”, “bracketing language”, “intentionality marker”). Apply a simple evolutionary loop (10 generations): select the top‑k individuals, mutate by adding small Gaussian noise to their vectors, and recombine by linear interpolation. The final best‑fitness vector **h\*** is taken as the model‑free “reasoning signature”.
+
+3. **Scoring logic** – For a new answer, compute its reservoir state **h_new**. The score is the negative Euclidean distance to **h\***, optionally normalised by the population’s standard deviation:  
+   `score = -np.linalg.norm(h_new - h_star) / sigma`. Higher scores indicate closer alignment with the evolved phenomenological prototype of correct reasoning.
+
+**Parsed structural features**
+
+The pre‑processor extracts, via regex and simple finite‑state scans, the following patterns from the raw text:
+
+- Negation cues (`not`, `no`, `never`)  
+- Comparative and superlative forms (`more … than`, `least`)  
+- Conditional clauses (`if … then`, `unless`)  
+- Numeric literals and units (`3 kg`, `≈ 2.5`)  
+- Causal connectors (`because`, `therefore`, `leads to`)  
+- Temporal/ordering markers (`first`, `after`, `subsequently`)  
+- Explicit phenomenological markers (`I experience`, `the felt sense`, `bracket`)  
+
+These features are encoded as binary flags fed into the fitness function.
+
+**Novelty assessment**
+
+The combination is novel in that it fuses a reservoir computer (purely linear dynamics) with an evolutionary search over phenomenologically‑derived fitness, producing a deterministic scoring metric. No prior work couples random recurrent encoders with hand‑crafted phenomenology in an evolutionary loop for reasoning evaluation; existing systems rely on supervised neural models or static similarity metrics.
+
+**Ratings**
+
+Reasoning: 8/10 — concrete logical‑feature extraction and distance‑based scoring are robust.  
+Metacognition: 6/10 — phenomenological flags capture self‑reference but remain shallow.  
+Hypothesis generation: 5/10 — evolutionary mutation can explore nearby representations but lacks directed hypothesis creation.  
+Implementability: 9/10 — pure NumPy and regex, no external dependencies, easy to embed in pipelines.

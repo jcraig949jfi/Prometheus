@@ -1,0 +1,173 @@
+import re
+import math
+import zlib
+import collections
+import numpy as np
+
+
+class ReasoningTool:
+    """Thermodynamics x Falsificationism x NCD.
+
+    Propositions are parsed from the prompt (numeric comparisons, comparative
+    chains, conditionals, negations) and propagated (transitivity, modus ponens,
+    modus tollens) into a set of derived facts. Each candidate answer is read as
+    a set of claims; claims that collide with derived facts are contradictions
+    (energy E), claims the facts cannot decide add binary entropy S, and the
+    free energy F = E - T*S ranks candidates. Falsificationism: the share of a
+    candidate's claims that survive the facts. NCD to the prompt is a small
+    tiebreaker only.
+    """
+    T = 1.0
+    ALPHA, BETA, GAMMA = 0.15, 0.45, 0.40
+    GT = ("larger", "greater", "bigger", "more", "taller", "older", "heavier", "faster", "higher", "longer")
+    LT = ("smaller", "less", "fewer", "shorter", "younger", "lighter", "slower", "lower")
+
+    def __init__(self):
+        self.num = re.compile(r"-?\d+(?:\.\d+)?")
+        self.cmp = re.compile(r"(\w+) (?:is|was|are) (\w+) than (\w+)")
+        self.cond = re.compile(r"if ([^,]+?),? then ([^.?]+)")
+        self.neg = re.compile(r"\b(?:not|never|no|isn't|wasn't|doesn't|didn't|cannot|can't)\b")
+
+    # ---------------- parsing and propagation ----------------
+    def _facts(self, prompt):
+        p = prompt.lower()
+        facts = {}            # (a, b) -> True means a > b in the comparative order
+        derived = {}          # statement text -> truth value
+        # numeric comparison question: "Is 9.11 larger than 9.9?"
+        m = re.search(r"is (-?\d+(?:\.\d+)?) (\w+) than (-?\d+(?:\.\d+)?)", p)
+        if m:
+            x, word, y = float(m.group(1)), m.group(2), float(m.group(3))
+            if word in self.GT:
+                derived["yes"] = x > y
+            elif word in self.LT:
+                derived["yes"] = x < y
+        # comparative chain: "A is taller than B. B is taller than C."
+        for a, word, b in self.cmp.findall(p):
+            if word in self.GT:
+                facts[(a, b)] = True
+            elif word in self.LT:
+                facts[(b, a)] = True
+        changed = True
+        while changed:                       # transitivity closure
+            changed = False
+            for (a, b) in list(facts):
+                for (c, d) in list(facts):
+                    if b == c and (a, d) not in facts:
+                        facts[(a, d)] = True
+                        changed = True
+        # conditionals with modus ponens / modus tollens
+        for ante, cons in self.cond.findall(p):
+            ante, cons = ante.strip(), cons.strip()
+            if re.search(r"\b" + re.escape(ante) + r"\b", p.replace("if " + ante, "")):
+                derived[cons] = True
+            cons_neg = self.neg.search(cons) is None and re.search(self.neg.pattern + r"[^.]*" + re.escape(cons.split()[-1]), p)
+            if cons_neg:
+                derived["not " + ante] = True
+        return facts, derived
+
+    def _claims(self, cand, facts, derived):
+        """Return (contradictions, undecided, total) for a candidate."""
+        c = cand.lower().strip().rstrip(".")
+        contra = undecided = total = 0
+        if "yes" in derived and c in ("yes", "no", "true", "false"):
+            total += 1
+            truth = derived["yes"]
+            says_yes = c in ("yes", "true")
+            contra += int(says_yes != truth)
+            return contra, undecided, total
+        for a, word, b in self.cmp.findall(c):
+            total += 1
+            if word in self.GT:
+                key, rev = (a, b), (b, a)
+            elif word in self.LT:
+                key, rev = (b, a), (a, b)
+            else:
+                undecided += 1
+                continue
+            if key in facts:
+                pass
+            elif rev in facts:
+                contra += 1
+            else:
+                undecided += 1
+        for stmt, truth in derived.items():
+            if stmt != "yes" and stmt in c:
+                total += 1
+                contra += int(not truth)
+        if total == 0:
+            tokens = set(re.findall(r"[a-z]+", c))
+            for (a, b) in facts:                 # single-name answers: "Who is tallest?"
+                if a in tokens and b not in tokens:
+                    total += 1
+                    if any(x == a for (x, _) in facts) and not any(y == a for (_, y) in facts):
+                        pass
+                    else:
+                        undecided += 1
+        return contra, undecided, total
+
+    def _ncd(self, x, y):
+        cx, cy = len(zlib.compress(x.encode())), len(zlib.compress(y.encode()))
+        cxy = len(zlib.compress((x + y).encode()))
+        return (cxy - min(cx, cy)) / max(cx, cy, 1)
+
+    # ---------------- interface ----------------
+    def evaluate(self, prompt, candidates):
+        facts, derived = self._facts(prompt)
+        rows = []
+        for cand in candidates:
+            contra, und, total = self._claims(cand, facts, derived)
+            E = float(contra)
+            S = und * (-2 * 0.5 * math.log(0.5))     # binary entropy of p = 0.5 per undecided claim
+            F = E - self.T * S
+            fals = (total - contra) / total if total else 0.5
+            sim = 1.0 - self._ncd(prompt, cand)
+            rows.append([cand, sim, F, fals, contra, und, total])
+        Fs = np.array([r[2] for r in rows], dtype=float)
+        span = float(Fs.max() - Fs.min()) if len(Fs) else 0.0
+        out = []
+        for cand, sim, F, fals, contra, und, total in rows:
+            F_norm = (F - Fs.min()) / span if span > 0 else 0.5
+            score = self.ALPHA * sim + self.BETA * (1.0 - F_norm) + self.GAMMA * fals
+            out.append({"candidate": cand, "score": round(float(score), 4),
+                        "reasoning": "contradictions=%d undecided=%d claims=%d F=%.2f" % (contra, und, total, F)})
+        out.sort(key=lambda d: -d["score"])
+        return out
+
+    def confidence(self, prompt, answer):
+        facts, derived = self._facts(prompt)
+        contra, und, total = self._claims(answer, facts, derived)
+        if not facts and not derived:
+            return 0.25                       # no structural parser matched
+        if total == 0:
+            return 0.35
+        if contra:
+            return 0.1
+        return 0.85 if und == 0 else 0.5
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

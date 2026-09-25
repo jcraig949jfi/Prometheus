@@ -1,0 +1,42 @@
+**Algorithm sketch**
+
+1. **Parsing → categorical graph**  
+   - The answer is tokenised and a deterministic regex‑based parser extracts *atomic propositions* (e.g., “A → B”, “A > 5”, “not C”).  
+   - Each proposition becomes a **Node** (object) with attributes: `type` (implication, comparison, numeric, causal), `negated` flag, and a **complexity depth** measured by nesting of conditionals/comparatives.  
+   - Directed edges encode logical relations: “if‑then” creates a morphism `A → B`; “and”, “or”, and “therefore” create composition edges.  
+   - The whole answer is stored as a **Category**: `nodes: dict[id, Node]`, `edges: list[Edge]`, and an adjacency matrix `A` (NumPy `int8`) for fast transitive‑closure (`np.linalg.matrix_power`).  
+
+2. **Reference model**  
+   - A teacher‑provided gold answer is parsed the same way, yielding a reference graph `G*`.  
+
+3. **Cognitive‑load weighting**  
+   - For each node `v`, compute `intrinsic = depth(v)`, `extraneous = 1` if the token sequence contains filler patterns (e.g., “actually”, “basically”).  
+   - Node weight `w(v)=1/(1+intrinsic+extraneous)`. The total **load penalty** is `L = Σ w(v) * extraneous_flag`.  
+
+4. **Property‑based robustness test**  
+   - From the parsed graph, generate *mutants* by randomly removing non‑essential nodes (those with `w(v) < 0.5`) or swapping comparable numeric values.  
+   - For each mutant `M`, run a **graph‑isomorphism check** against `G*`. If a mutant still matches, the answer is *over‑specified*; if it fails, apply a shrinking loop (remove nodes one‑by‑one) to find the minimal failing subgraph `M_min`.  
+   - The **robustness score** `R = 1 – |M_min|/|G|` (higher when the answer tolerates irrelevant variations).  
+
+5. **Scoring**  
+   - **Correctness** `C = 1 – (edit_distance(G, G*) / max(|G|,|G*|))`.  
+   - **Final score** `S = C * (1 – L) * R`. All terms are computed with NumPy vectorised operations, no external models.
+
+**Structural features parsed**
+
+- Negations (`not`, “never”)  
+- Comparatives (“greater than”, “less than”, “as … as”)  
+- Conditionals (“if … then”, “when”)  
+- Numeric values and units  
+- Causal verbs (“causes”, “leads to”)  
+- Ordering relations (“first”, “after”)  
+- Conjunction/disjunction markers (“and”, “or”)  
+
+**Novelty assessment**  
+Graph‑based categorical representations for reasoning exist (semantic parsing, AMR). Combining a cognitive‑load penalty and a property‑based testing loop that shrinks failing subgraphs is, to the best of my knowledge, a new integration; it bridges educational psychology with formal verification rather than pure entailment checking.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical graph + transitive closure, but depends on parser quality.  
+Metacognition: 7/10 — load weighting captures self‑monitoring, yet heuristic.  
+Hypothesis generation: 6/10 — mutation‑shrink loop is systematic but limited to surface changes.  
+Implementability: 9/10 — pure Python/NumPy, deterministic, no external services.

@@ -1,0 +1,20 @@
+**1. Mechanism: susceptibility-driven test selection with spectral diagnostics**
+
+Treat a reasoning system's belief state as a dynamical system whose hypothesis pool is perturbed by incoming evidence. Falsificationism says: choose the test most likely to *break* the current conjecture. Criticality says: a system near a phase boundary has divergent susceptibility — a small perturbation produces a large, correlated reorganization. Spectral analysis provides the instrument to *locate* that boundary without knowing the order parameter.
+
+Concretely: maintain a posterior over hypotheses (particle filter or ensemble of models, N≈100–1000). Drive it with a sequence of candidate probes and record the time series of a scalar summary (e.g., ensemble disagreement, KL between successive posteriors). Compute the Welch periodogram of that series. Near criticality the PSD flattens toward 1/f^α with α≈1, and the autocorrelation time diverges — this is the "critical slowing down" signature already used as an early-warning indicator in ecology (Scheffer et al.) and climate tipping points. The mechanism: **rank candidate falsification tests by the predicted increase in low-frequency spectral power they induce**, i.e., pick tests that push the belief system *toward* its own susceptibility divergence, because that is where one observation discriminates the most hypotheses.
+
+**2. Advantage for self-testing**
+
+Standard expected-information-gain (Lindley, BOED) requires a likelihood model and is myopic. The spectral-susceptibility signal is model-agnostic — it reads the *dynamics* of belief updating, not the content — so it detects when the reasoner is in a brittle, overfit regime (flat spectrum, decorrelated) versus a frozen, dogmatic one (sharp low-frequency peak). Spectral leakage becomes a real diagnostic: windowing artifacts from short evidence sequences mimic criticality, forcing an explicit null (surrogate data via phase randomization — the Theiler test). That builds a chance floor into the metacognitive loop.
+
+**3. Novelty**
+
+Partially mapped. Components exist: Bayesian optimal experimental design; critical-slowing-down early-warning indicators; edge-of-chaos reservoir computing; free-energy-principle "epistemic value." What is not a named field is *using critical-slowing-down spectral signatures as the objective for adversarial test selection*. That is a composition, not a discovery — but a coherent one with a clear implementation path.
+
+**Honest caveat:** the 1/f signature is notoriously non-specific (many non-critical processes produce it), so the mechanism is only as good as its surrogate null.
+
+Reasoning: 6/10 — gives a principled non-myopic test-selection heuristic, but the critical-regime assumption is unverified for belief dynamics.
+Metacognition: 8/10 — spectral readout of one's own update dynamics is a genuine content-free self-monitor with a built-in null.
+Hypothesis generation: 5/10 — selects tests well; generates new conjectures only indirectly via detected brittleness.
+Implementability: 7/10 — particle filter + Welch PSD + phase-randomized surrogates are all off-the-shelf; the hard part is validating the criticality claim.

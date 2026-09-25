@@ -1,0 +1,34 @@
+**1. Algorithmic core**  
+The combined algorithm treats a candidate answer as a *super‑position* of discrete logical propositions extracted from the text. Each proposition is stored as a node in a directed graph `G = (V, E)`. The node payload is a NumPy float‑vector **ψ** that holds a probability amplitude for the proposition being true at a given *scale* (e.g., sentence‑level, paragraph‑level, whole‑answer).  
+
+*Renormalization* is performed by repeatedly **coarse‑graining** the graph: lower‑level nodes are aggregated into higher‑level meta‑nodes, their amplitudes summed and then *renormalized* so that the ℓ₂‑norm of the amplitude vector at each scale equals 1. Fixed‑point detection (‖ψₖ₊₁ − ψₖ‖ < ε) yields a stable scale‑independent representation of the answer’s logical content.
+
+*Symbiosis* enters as a mutual‑reinforcement step. For every edge (e = (u→v)) representing a logical implication, a **constraint‑propagation** pass updates the amplitudes of u and v simultaneously:  
+```python
+ψ_u += λ * (ψ_v * w_e)      # λ∈[0,1] controls symbiotic strength
+ψ_v += λ * (ψ_u * w_e)
+```  
+The weights w_e encode the strength of the relation (e.g., causal, conditional). After each pass the amplitudes are renormalized again, allowing “interference” – overlapping evidence can amplify or cancel scores, mimicking quantum superposition.
+
+The final **score** for the answer is the summed squared amplitudes of propositions that match a gold‑standard logical template, i.e. Score = ∑ₖ‖ψₖ‖² for matched nodes.
+
+**2. Parsed structural features**  
+The parser extracts:  
+- Negations (¬) and double‑negatives,  
+- Comparatives/ superlatives (>, ≥, <, ≤),  
+- Conditionals (if … then),  
+- Numeric values and units,  
+- Explicit causal claims (because, leads to),  
+- Temporal and ordering relations (first, before, after).  
+
+These are encoded as edge types and weight modifiers in G.
+
+**3. Novelty**  
+The pipeline resembles existing constraint‑propagation and probabilistic logic systems, but the explicit use of a quantum‑inspired amplitude vector together with a renormalization hierarchy and a symbiotic mutual‑reinforcement update is not present in standard NLP evaluators. It therefore maps partially to prior work (e.g., belief‑propagation, multi‑scale reasoning) while introducing a novel hybrid formalism.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — strong logical propagation and multi‑scale consistency.  
+Metacognition: 6/10 — can detect self‑referential claims via graph cycles but lacks self‑awareness.  
+Hypothesis generation: 7/10 — interference step creates novel combined propositions.  
+Implementability: 9/10 — pure NumPy and regex; no external models required.

@@ -1,0 +1,43 @@
+**Algorithmic design**
+
+The scorer is a **Phase‑Adaptive Bandit Controller (PABC)**.  
+1. **Data structures** – each answer is tokenised and passed through a lightweight regex‑based parser that builds a flat *FeatureRecord*:  
+```python
+{
+  'negations': int,
+  'comparatives': int,
+  'conditionals': int,
+  'numbers': list[float],
+  'causal_links': int,
+  'order_relations': int,
+  'logic_clauses': list[(premise, conclusion)]
+}
+```  
+A *BanditArm* object stores `count`, `reward_sum`, `reward_sq` for a concrete scoring heuristic (e.g., “numeric consistency”, “logical entailment”, “causal chain”). A global *ControlState* holds adaptive gains `α, β, γ` (learning‑rate, exploration‑rate, decay) and a scalar `phase_metric`.
+
+2. **Operations** – For every candidate answer:  
+   *Parse* → `FeatureRecord`.  
+   *Heuristic evaluation* → each arm computes a raw sub‑score from its feature subset (e.g., numeric arm checks that extracted numbers satisfy the problem’s equations).  
+   *Reward update* → the sub‑score is treated as an immediate reward; arm statistics are updated.  
+   *Adaptive control* → using a simple PID‑like rule, `α` (weight of the numeric arm) is increased when `reward_variance` of that arm drops below a threshold, and decreased otherwise.  
+   *Phase‑transition detection* – `phase_metric = Σ (reward_variance_i / count_i)`. When `phase_metric` crosses a pre‑defined critical value `θ`, the controller switches from an **exploration‑dominant** regime (UCB‑style high exploration term) to an **exploitation‑dominant** regime (weights frozen). This abrupt change mirrors a physical phase transition and prevents endless wandering.
+
+3. **Scoring logic** – The final score is a weighted sum  
+`S = Σ w_i * (reward_sum_i / count_i)`  
+where `w_i` are the adaptive gains from `ControlState`. The UCB term `c·√(ln N / count_i)` is added during the exploration phase to encourage trying under‑used heuristics.
+
+**Parsed structural features** – the regex parser extracts:  
+- Negation cues (“not”, “never”)  
+- Comparative operators (“greater than”, “≤”)  
+- Conditional constructs (“if … then …”)  
+- Numeric literals (including units)  
+- Causal verbs (“causes”, “leads to”)  
+- Ordering words (“first”, “after”)  
+
+**Novelty** – Bandit‑driven adaptive scoring exists in educational testing, and phase‑transition concepts have been used for curriculum pacing, but their tight integration into a pure‑numpy, rule‑based scorer is not documented in the literature, making the PABC a novel hybrid.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical‑constraint handling with adaptive weighting  
+Metacognition: 7/10 — the controller monitors its own uncertainty and adjusts exploration  
+Hypothesis generation: 6/10 — generates candidate scoring hypotheses via bandit arms but limited to pre‑defined heuristics  
+Implementability: 9/10 — relies only on numpy, regex, and simple data classes, easy to prototype.

@@ -1,0 +1,35 @@
+**Algorithmic design**
+
+The tool builds a *reasoning‑profile vector* for each candidate answer and compares it to a *reference profile* derived from the prompt.  
+
+1. **Parsing phase** – Using regular expressions and a simple finite‑state tokenizer (standard library `re`), the prompt and each answer are scanned for a predefined set of logical tokens:
+   * negations (`not`, `never`, `no`), comparatives (`more than`, `less than`, `≥`, `≤`), conditionals (`if…then`, `=>`), causal verbs (`cause`, `lead to`), temporal/ordering markers (`first`, `after`, `then`), numeric literals (integers, floats, fractions) and hypothesis markers (`possible`, `might`, `could`).  
+   Each token is stored in a dictionary keyed by its type; occurrences are counted, and their positions (index in token list) are recorded.
+
+2. **Cognitive‑load weighting** – Borrowing from CLT, three load factors are computed on the token set:
+   * **Intrinsic load** = sum of *concept‑complexity* scores (e.g., multi‑step causal chains increase load).  
+   * **Extraneous load** = count of irrelevant tokens (detected by a whitelist of domain‑specific terms).  
+   * **Germane load** = number of *chunked* patterns (detected by regexes for common reasoning templates such as “if A then B because C”).  
+   The three loads are normalized and combined into a scalar *cognitive‑efficiency* weight `w = (germane‑extraneous)/intrinsic` (clipped to [0,1]).
+
+3. **Spectral analysis of token sequence** – The token list is mapped to a numeric sequence: each token type receives a unique integer ID; the sequence is converted to a NumPy array `x`. A fast Fourier transform (`np.fft.rfft`) yields the power spectrum `P`. The *spectral entropy* `H = -∑(P/∑P)·log(P/∑P)` quantifies the regularity of reasoning steps: lower entropy indicates a more orderly, step‑wise argument, higher entropy flags scattered or noisy reasoning.
+
+4. **Abductive‑fit scoring** – The reference profile contains a set of *hypothesis slots* (e.g., “best explanation for X”). For each slot the algorithm extracts candidate explanations (noun‑phrase chunks) and scores them by:
+   * **Coverage** – proportion of required entities present (set‑intersection over extracted entities).  
+   * **Coherence** – inverse of spectral entropy of the sub‑sequence containing the explanation.  
+   * **Simplicity** – length in tokens (shorter preferred).  
+   The final abductive score `A = (coverage·coherence)/simplicity`.
+
+5. **Overall score** – `Score = w·A`. The vectorized operations run in O(n log n) time because of the FFT; all data structures are plain Python dicts, lists, and NumPy arrays.
+
+**Parsed structural features**  
+Negations, comparatives, conditionals, numeric values, causal claims, temporal/ordering relations, hypothesis markers, and multi‑step logical chains.
+
+**Novelty**  
+The exact combination—cognitive‑load weighting, FFT‑based spectral regularity, and abductive‑fit metrics—is not present in standard evaluation suites. It parallels work on “reasoning‑spectra” (e.g., spectral analysis of proof steps) but integrates CLT‑style weighting, making it a novel hybrid.
+
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and coherence without relying on surface similarity.  
+Metacognition: 7/10 — cognitive‑load weighting reflects self‑monitoring of reasoning effort.  
+Hypothesis generation: 6/10 — scores explanations but does not generate new hypotheses.  
+Implementability: 9/10 — uses only regex, NumPy FFT, and simple dict/list logic; easy to embed.

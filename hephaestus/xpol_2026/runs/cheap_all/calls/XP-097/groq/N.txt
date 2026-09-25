@@ -1,0 +1,38 @@
+**Algorithmic sketch**
+
+1. **Representation** – Each candidate answer is tokenised and converted into a directed *reasoning graph* G=(V,E).  
+   * V = unique propositions (including literals, negations, comparatives, conditionals, numeric facts).  
+   * E = typed edges: `CAUSE`, `IMPLIES`, `COMPARE`, `ORDER`.  
+   The graph is stored as a NumPy adjacency‑matrix **A** of shape (|V|,|V|) with integer codes for edge types.
+
+2. **Topological analysis** – From **A** we compute the *0‑ and 1‑dimensional Betti numbers* (connected components and cycles) using the rank of the Laplacian L = D – A (D is the degree matrix).  
+   - `b0 = |V| – rank(L)` (connectedness).  
+   - `b1 = rank(A) – rank(L) + b0 – 1` (presence of logical loops).  
+   The target answer (provided by the test designer) is processed the same way, yielding (b0\*, b1\*). A *topological similarity* s_top = 1 – (|b0‑b0\*|+|b1‑b1\*|)/2.
+
+3. **Quantum‑style superposition** – For each answer we maintain a probability amplitude vector **ψ** of length *k* (k = number of possible parse states). Initial amplitudes are uniform (1/√k). Constraint‑propagation rules (transitivity, modus‑ponens) are applied as linear operators **U_i** on **ψ** (implemented as NumPy matrix multiplication). After all operators, measurement collapses **ψ**: the state with maximal |ψ_i|² is selected, giving a *consistency score* s_q = |ψ_max|².
+
+4. **Theory‑of‑Mind (ToM) alignment** – The expected mental model of a competent reasoner is encoded as a *belief graph* B (same format as G). We compute a cosine similarity between the flattened adjacency vectors of G and B: s_tom = (vec(G)·vec(B)) / (‖vec(G)‖‖vec(B)‖).
+
+5. **Final scoring** – The overall score is a weighted sum:  
+   `score = w1·s_top + w2·s_q + w3·s_tom` (weights sum to 1, chosen empirically). The class returns the numeric score and a pass/fail flag.
+
+**Parsed structural features**
+
+- Negations (`not`, `no`, `never`)  
+- Comparatives & superlatives (`more`, `less`, `greater than`)  
+- Conditionals (`if … then`, `unless`)  
+- Numeric values and units (extracted with regex)  
+- Causal claims (`because`, `leads to`)  
+- Temporal/ordering relations (`first`, `after`, `before`)  
+
+**Novelty assessment**
+
+The combination of discrete topological invariants, a linear‑algebraic “quantum” propagation of logical constraints, and an explicit ToM belief‑graph is not present in standard evaluation suites (which rely on bag‑of‑words or pretrained embeddings). It parallels work on graph‑based reasoning and quantum‑inspired inference, but the three‑way integration is novel.
+
+**Ratings**
+
+Reasoning: 8/10 — strong logical‑graph scoring, limited linguistic nuance  
+Metacognition: 7/10 — explicit ToM model adds perspective‑taking  
+Hypothesis generation: 6/10 — superposition explores multiple parses but lacks stochastic search  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, easy to integrate

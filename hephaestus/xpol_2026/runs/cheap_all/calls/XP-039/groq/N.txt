@@ -1,0 +1,44 @@
+**Algorithmic synthesis**
+
+1. **Scoring algorithm** – The tool builds a *reasoning tensor* **R**∈ℝⁿˣᵐˣᵏ where *n* is the number of extracted logical predicates, *m* the number of candidate answers, and *k* the number of inference steps (e.g., forward, backward, counter‑example). Each predicate is encoded as a binary vector (presence = 1, absence = 0) of length *p* (vocabulary of logical operators, entities, numeric slots). Using NumPy, we factor **R** with a CP‑decomposition (rank‑r) via alternating least‑squares:  
+
+```python
+# X: n×m×k tensor of raw matches
+A, B, C = cp_decompose(X, rank=r)   # three factor matrices
+recon = np.einsum('ir,jr,kr->ijk', A, B, C)
+```
+
+The factor matrices capture (i) *hypothesis strength* (A), (ii) *falsifiability* (B), and (iii) *free‑energy cost* (C).  
+
+*Falsificationism* contributes a binary mask **F** where a candidate receives 0 if a direct counter‑example is found (e.g., a negated predicate that contradicts the prompt). This mask multiplies the reconstruction, suppressing falsified entries.  
+
+*Free‑Energy Principle* supplies a scalar *surprise* for each candidate:  
+
+```python
+surprise = -np.log(np.clip(recon, 1e-12, None)).sum(axis=0)   # m‑vector
+```
+
+Lower surprise (i.e., lower variational free energy) means the answer better predicts the observed predicate pattern. The final score is  
+
+`score = (recon * F).sum(axis=(0,1)) - α * surprise`,  
+
+with α a tunable weight.
+
+2. **Parsed structural features** – The front‑end regex‑based parser extracts:
+- Negations (`not`, `never`, `no`),
+- Comparatives (`more`, `less`, `greater than`),
+- Conditionals (`if … then …`),
+- Numeric values and units,
+- Causal verbs (`causes`, `leads to`),
+- Temporal/ordering markers (`before`, `after`, `first`, `next`),
+- Logical connectors (`and`, `or`, `implies`).
+
+Each extraction yields a predicate token placed in the tensor’s first dimension.
+
+3. **Novelty** – No prior work combines a CP‑tensor factorization with explicit falsification masks and a free‑energy‑derived surprise term for pure‑numeric reasoning evaluation. Existing systems use either constraint propagation or bag‑of‑words; this hybrid is therefore novel, though each component (tensor factorization, falsification testing, free‑energy‑style scoring) appears separately in the literature.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical decomposition and falsification handling.  
+Metacognition: 6/10 — captures surprise but lacks self‑reflection loops.  
+Hypothesis generation: 7/10 — can propose counter‑examples via mask creation.  
+Implementability: 9/10 — relies only on NumPy and regex, straightforward to code.

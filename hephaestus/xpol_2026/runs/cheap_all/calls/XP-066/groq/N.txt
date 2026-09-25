@@ -1,0 +1,30 @@
+**Algorithmic core**  
+The tool builds a *probabilistic constraint network* that evolves like a discrete‐time dynamical system and is pruned by an immune‑inspired clonal selection loop.
+
+1. **Parsing layer** extracts logical predicates (e.g., `A → B`, `A > B`, `¬C`) and quantitative tokens (numbers, units).  
+2. **State vector** `S_t ∈ ℝ^k` stores the *belief* (entropy‑based confidence) for each predicate at time step *t*. Each entry is initialized with the Shannon entropy of the token‑frequency distribution observed in the prompt (information‑theoretic grounding).  
+3. **Transition rule** `S_{t+1}=F(S_t, C)` updates beliefs by applying deterministic dynamical‑system operators:
+   * **Propagation** – for each implication `P → Q`, transfer a fraction `α·S_t[P]` to `S_t[Q]` (analogous to a linear map).  
+   * **Bifurcation detection** – if a predicate’s entropy exceeds a threshold, split it into competing sub‑predicates (e.g., “greater than” vs. “greater‑or‑equal”), creating new dimensions (state expansion).  
+   * **Lyapunov‑style damping** – a global decay `β` reduces confidence of unsupported predicates, stabilising the system.  
+
+4. **Clonal selection**: After a fixed number of iterations, predicates with highest confidence are *cloned*; each clone undergoes a stochastic mutation (small random perturbation of its weight) and is re‑evaluated against the original logical constraints. Poorly performing clones are discarded, mimicking affinity maturation.  
+
+5. **Scoring**: The final answer score is the weighted sum of confidences of predicates that are *present* in the candidate text, normalised by the total entropy of the prompt. High‑confidence, mutually consistent predicates boost the score; contradictions or unsupported high‑entropy predicates penalise it.
+
+**Parsed structural features**  
+- Negations (`not`, `¬`)  
+- Comparatives (`>`, `<`, `≥`, `≤`) and superlatives  
+- Conditionals (`if … then`, logical implication)  
+- Numeric values and units (including ranges)  
+- Causal verbs (`cause`, `lead to`) mapped to directed edges  
+- Temporal/ordering cues (`first`, `after`, `subsequently`) for sequence constraints  
+
+**Novelty**  
+The exact combination—entropy‑seeded dynamical propagation with immune‑style clonal refinement—is not present in standard grading scripts. Similar ideas appear separately (information‑theoretic weighting, graph‑based constraint solvers, evolutionary pruning), but their integration into a pure‑numpy, deterministic‑iteration scorer is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical propagation and consistency checking.  
+Metacognition: 6/10 — can reflect on its own uncertainty via entropy but lacks self‑explanation.  
+Hypothesis generation: 7/10 — mutation step creates alternative interpretations of ambiguous predicates.  
+Implementability: 9/10 — relies only on numpy, regex, and basic data structures; straightforward to prototype.

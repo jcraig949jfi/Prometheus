@@ -1,0 +1,31 @@
+**Algorithmic design**
+
+The scorer builds a *state‑space graph* G = (V, E) where each vertex v ∈ V represents a parsed logical proposition (e.g., “X > Y”, “if A then B”). Edges encode inferred relations (transitivity, modus ponens). A *population* P of “walkers” traverses G in discrete time steps. Each walker carries a *weight vector* w ∈ ℝ^k that records cumulative evidence for truth, consistency, and relevance.  
+
+1. **Ergodic averaging** – Over a fixed horizon T, the algorithm repeatedly samples random walks from every vertex (uniform start distribution). The time‑average of each walker’s weight vector converges to the space‑average across all vertices (ergodic theorem). The final averaged weight for each proposition is taken as its statistical support.
+
+2. **Chaos‑driven perturbation** – At each step, a small deterministic perturbation δ = ε·sin(λ · t) (λ a Lyapunov‑like constant) is added to the transition probabilities. This creates sensitive dependence on initial parsing choices, forcing the system to explore alternative inference paths. The magnitude of divergence between two walkers is measured; highly divergent paths that still converge in the ergodic average increase a *robustness* score.
+
+3. **Plasticity update** – After each full horizon, edges that consistently contribute to high‑support propositions have their transition probabilities reinforced (Hebbian rule: Δp_ij ∝ w_i·w_j). Edges that rarely participate are pruned (synaptic pruning). This rewires G iteratively, yielding a self‑organizing inference network that adapts to the specific answer set.
+
+**Scoring logic**  
+For a candidate answer, extract its propositions, locate corresponding vertices, and retrieve the final averaged support vector. The overall answer score = α·Σ support_truth − β·Σ inconsistency + γ·robustness, where α,β,γ are tunable hyper‑parameters.
+
+**Parsed structural features**
+
+- Negations (¬, “not”)  
+- Comparatives (“greater than”, “more … than”)  
+- Conditionals (“if … then …”)  
+- Numeric values and units  
+- Causal claims (“because”, “leads to”)  
+- Ordering relations (temporal or logical sequence)  
+- Quantifiers (“all”, “some”, “none”)  
+
+**Novelty assessment**  
+The exact combination—ergodic averaging of random walks, chaos‑induced transition perturbation, and Hebbian‑style graph plasticity—is not present in prior symbolic reasoning evaluators. Elements appear separately in Monte‑Carlo inference, stochastic perturbation methods, and adaptive proof‑graph systems, but their integrated use for answer scoring is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical inference with statistical robustness  
+Metacognition: 6/10 — limited self‑awareness, relies on structural cues only  
+Hypothesis generation: 7/10 — can explore alternative inference paths via chaos  
+Implementability: 9/10 — pure NumPy/stdlib, deterministic, no external models

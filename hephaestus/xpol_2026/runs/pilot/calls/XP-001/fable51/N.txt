@@ -1,0 +1,23 @@
+**1. Algorithm**
+
+Combining these yields a *bounded model checker over a packed-ambiguity proposition lattice with online edge reweighting*. Concretely:
+
+- **Data structures.** A `Proposition` tuple `(subj, rel, obj, polarity, value, tmark)` extracted by regex. A `PackedFrame` holds, per ambiguous span, a list of alternative propositions with normalized weights (the "superposition" is just a chart-parser packed forest, not amplitudes). A `KripkeGraph`: nodes = consistent truth assignments to the proposition set; edges = ordering/causal/conditional claims (`before`, `causes`, `if…then`) labelled with temporal operators.
+- **Operations.** (a) Parse prompt into facts and rules; parse each candidate into claims. (b) BFS/DFS from the fact set applying propagation rules: transitivity over `<`, `>`, `before`; modus ponens over conditionals; arithmetic on numeric slots; contrapositive under negation. Bound depth to keep the state space finite. (c) "Measurement": when a candidate claim contacts a derived fact, collapse each ambiguous span to the alternative that maximizes consistency; unresolved ambiguity contributes an entropy penalty ("decoherence" is just penalizing spans no constraint disambiguates). (d) Check each claim as a temporal property: `AG(claim)` for must-hold statements, `EF` for possibility claims; contradictions yield hard zeros.
+- **Hebbian layer.** Maintain a co-occurrence weight matrix over predicate pairs across the candidate set; pairs that co-occur in *verified* claims strengthen, pairs in refuted claims decay, edges under threshold are pruned. It serves only as a tie-breaker prior. This is the weakest leg: it is a structured-perceptron update dressed in neuroscience.
+- **Score.** `verified / (verified + refuted + λ·unresolved) − μ·entropy`.
+
+**2. Parsed features**
+
+Negations (`not`, `never`, `no`), comparatives/superlatives (`more than`, `-er`, `largest`), conditionals (`if/unless/only if`), numeric values with units and operators, ordering relations (`before/after/first/last`), causal claims (`because/leads to`), universal/existential quantifiers (`all/some/none`), and modality (`must/may`) mapped to AG/EF.
+
+**3. Novelty**
+
+Not novel as a whole. It is bounded model checking (Clarke/Biere) + constraint propagation + packed ambiguity from chart parsing + weighted-abduction priors. The quantum framing adds nothing computational beyond "keep alternatives and penalize residual ambiguity"; plasticity reduces to online weight updates. The useful contribution is the *combination*: temporal-logic checking of ordering/conditional claims is underused in scorers.
+
+**4. Ratings**
+
+Reasoning: 7/10 — propagation + temporal checking directly tests logical consistency; strong on ordering/conditional tasks, blind to open-domain semantics.
+Metacognition: 5/10 — the entropy term flags where the parser is uncertain, but no self-model beyond that.
+Hypothesis generation: 4/10 — Hebbian weights are a tie-breaker, not a generator; the Kripke exploration produces consequences, not conjectures.
+Implementability: 8/10 — regex extractor, dict-based propagation, bounded BFS, numpy weight matrix; ~400 LOC, no dependencies; main risk is regex brittleness.

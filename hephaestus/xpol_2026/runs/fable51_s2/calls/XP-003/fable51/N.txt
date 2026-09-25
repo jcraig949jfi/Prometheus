@@ -1,0 +1,22 @@
+**1. Algorithm: perturbation-stable constraint closure**
+
+Data structures: a *fact graph* G = (atoms, typed edges). Atoms are entity/value tokens; edges carry a relation type and sign: `LT(a,b)`, `EQ(a,v)`, `CAUSES(a,b)`, `IMPLIES(p,q)`, `NOT(p)`. Each edge stores its source (premise index or derived-rule id) — a justification list, as in an ATMS.
+
+Operations:
+- **Extraction**: regex/pattern rules populate G from prompt + candidate.
+- **Iterated map** (dynamical-systems piece): forward-chaining F applied to the fact set until fixed point — transitivity over `LT`, modus ponens over `IMPLIES`, interval arithmetic over `EQ`/numeric ranges, negation contradiction detection. Track iteration count and closure size; non-terminating or oscillating closures (e.g. `A<B<C<A`) are flagged.
+- **Topological checks**: compute connected components of G. A candidate's conclusion atom must lie in the component reachable from prompt premises (β₀ test: unsupported claims sit in isolated components). Signed cycles with inconsistent sign are contradictions; the count of independent inconsistent cycles is the penalty term.
+- **Sensitivity sweep**: for each premise pᵢ, perturb (flip negation, drop edge, shift numeric by ±δ), recompute closure, record whether the candidate's conclusion survives. Build a sensitivity vector s ∈ {0,1}ⁿ. A finite-difference "Lyapunov" analogue: Δ(closure)/Δ(premise) — the number of derived facts changed per single-premise perturbation.
+
+Scoring: `score = support − λ·contradictions + μ·consistency`, where support = conclusion in closure, and consistency rewards candidates whose conclusion flips *exactly* when a premise in its justification ancestry is perturbed and is invariant otherwise. This separates correct-by-reasoning from correct-by-coincidence, and penalises answers that ignore load-bearing premises.
+
+**2. Parsed features**: comparatives/ordering (`more than`, `before`), numeric values and units, conditionals (`if…then`, `unless`), negation scope, causal verbs (`causes`, `leads to`), equality/assignment, quantified counts (`all`, `none`, `at least`).
+
+**3. Novelty**: the pieces are old — forward chaining to fixed point, de Kleer's ATMS justification tracking, cycle detection for consistency, ablation/Shapley-style premise perturbation. The combination — using premise-perturbation stability as a *grading signal* distinguishing supported from coincidental answers — is a known idea in robustness evaluation but not standard in pure-algorithmic graders. Recombination, not invention.
+
+**4. Ratings**
+
+Reasoning: 7/10 — fixed-point propagation plus justification-aware sensitivity captures genuine inferential structure, limited by regex extraction coverage.
+Metacognition: 6/10 — the sensitivity vector doubles as a confidence signal (fragile closures = low certainty), but it doesn't model the candidate's own uncertainty.
+Hypothesis generation: 5/10 — perturbation reveals which premises are load-bearing, a weak generative signal; it does not propose alternative answers.
+Implementability: 8/10 — graph, closure loop, component/cycle detection and n perturbation reruns are all numpy/stdlib; cost is O(n·closure), fine for short prompts.

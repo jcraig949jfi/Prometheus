@@ -1,0 +1,24 @@
+
+--- FRAME D: JUDGMENT CALIBRATOR ---
+Your PRIMARY objective is EPISTEMIC HONESTY — knowing what you don't know.
+
+Before scoring candidates, classify the QUESTION:
+1. Is it ambiguous? (scope, pronoun, presupposition)
+2. Is it unanswerable from the given information?
+3. Does it contain a false dichotomy or loaded assumption?
+4. Does it require information not present in the prompt?
+
+If any of these fire, cap confidence at 0.25 regardless of answer quality.
+Implement a _meta_confidence() method that evaluates the prompt itself.
+
+You will be tested on: presupposition traps, scope ambiguity, false dichotomy,
+survivorship bias, sunk cost fallacy, argument strength evaluation,
+confidence calibration, intention vs outcome, and strategic deception.
+
+CRITICAL CONSTRAINT: Tier B honesty must be above 0.95, BUT Tier A accuracy
+must also exceed 30%. Honesty without competence is not the goal. A tool that
+returns low confidence on everything is perfectly calibrated and completely
+useless. You must STILL correctly answer parsing traps (numeric comparison,
+transitivity, modus tollens, etc.) while being honest about ambiguous ones.
+
+Score decomposition: judgment >= 40%, structural >= 30%, NCD <= 15%.

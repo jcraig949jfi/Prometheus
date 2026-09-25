@@ -1,0 +1,86 @@
+{
+ "nous_v1.txt": {
+  "sha256": "babaaba77c9e8512508a64b18bbd94778634a7693b18ed341aa5e34d3daa29bb",
+  "chars": 952,
+  "source_commit": "2f3e4eb6f",
+  "source_file": "agents/nous/src/nous.py",
+  "note": "in force for Nous runs before 2026-03-25 (theory-flavoured prompt); leading line-continuation of the Python literal removed (produces no characters)"
+ },
+ "nous_v2.txt": {
+  "sha256": "db12fee6de955184e991e2a4bce4c9d0f65688e4eba30570c8b72a78cb88eaa6",
+  "chars": 1464,
+  "source_commit": "2a186ba24",
+  "source_file": "agents/nous/src/nous.py",
+  "note": "in force from 2026-03-25 to the end (implementation-focused); identical through 8b8676272; leading line-continuation of the Python literal removed (produces no characters)"
+ },
+ "codegen_v1.txt": {
+  "sha256": "1b77a930096b4478ee0802ede427fe28866b71769facaec8ccd6bc1e73ac7302",
+  "chars": 1292,
+  "source_commit": "2f3e4eb6f",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "ledger rows before 2026-03-25; leading line-continuation of the Python literal removed (produces no characters)"
+ },
+ "codegen_v2.txt": {
+  "sha256": "81babffa0caf3f889cb8fc026978aec9a4ab0700daf67b9d21d1fd1086564e4d",
+  "chars": 2441,
+  "source_commit": "923d11c66",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "ledger rows 2026-03-25 .. 2026-03-26 (adds NCD floor + Coeus section); leading line-continuation of the Python literal removed (produces no characters)"
+ },
+ "codegen_v3.txt": {
+  "sha256": "059ed0a9a2bf0acc2e1f0870d45450f3fe7cfaad52e8a0ee846e9a986aba3991",
+  "chars": 4414,
+  "source_commit": "6daaada54",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "ledger rows from 2026-03-27 on; identical to HEAD prompts.py (4b250fa97 variant of 04-03 reverted same day); leading line-continuation of the Python literal removed (produces no characters)"
+ },
+ "frame_B.txt": {
+  "sha256": "335962e2f4d37c3793b47e816365451d1e42e1d0127473d822346cabe00e3101",
+  "chars": 1126,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ },
+ "frame_C.txt": {
+  "sha256": "f8a3a62222f8dbb3290d608cc9211b7692aa5b0cdd3b6d64335c8a2adc1ac91a",
+  "chars": 936,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ },
+ "frame_D.txt": {
+  "sha256": "9b17f06de37d796cafc3abcc9c8f4f05bb805f2c7d0c4694c3fab88d016c6b23",
+  "chars": 1204,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ },
+ "frame_E.txt": {
+  "sha256": "593ae6f3df3a06c682584101ac3f7e6ea366a9b2ade1f950271c7ad4c744f39a",
+  "chars": 1786,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ },
+ "frame_F.txt": {
+  "sha256": "56ee8bbbe4baee0428dfc6f8b7c9257010f66ae3243c6aabbd4cf86eb2522739",
+  "chars": 1524,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ },
+ "frame_G.txt": {
+  "sha256": "05e6b0c9b3d9e0d3803c10819850c89effd3715875471d07b81d065e16b26a8e",
+  "chars": 1697,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ },
+ "frame_H.txt": {
+  "sha256": "2c7065d471553a352257d84bada8b16362a8e9e8002e5f06e01a3bebfd0e2c63",
+  "chars": 3040,
+  "source_commit": "b674a9976",
+  "source_file": "agents/hephaestus/src/prompts.py",
+  "note": "frame suffix appended when the ledger row carries that frame"
+ }
+}

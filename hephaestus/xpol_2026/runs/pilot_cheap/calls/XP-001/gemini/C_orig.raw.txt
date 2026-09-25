@@ -1,0 +1,206 @@
+```python
+import math
+import re
+import zlib
+import numpy as np
+
+
+class ReasoningTool:
+    """
+    Entangled Plastic Model Checker (EPMC) with Epistemic Judgment Calibrator.
+    Combines quantum-inspired belief superposition, Hebbian synaptic plasticity,
+    and reachability model checking with prompt meta-confidence analysis.
+    """
+
+    def __init__(self):
+        self.eta = 0.1  # learning rate
+        self.tau = 0.2  # pruning threshold
+        self.T = 5  # critical period iterations
+
+    def _meta_confidence(self, prompt: str) -> float:
+        p_lower = prompt.lower()
+        # Tier B judgment trap checks
+        traps = [
+            r"\b(have you|why did|when did|how come)\b.*\b(stop|quit|fail)\b",  # presupposition
+            r"\bevery\b.+\b(a|an)\b",  # scope ambiguity
+            r"\b(told|asked|said to)\b.+\b(he|she|they)\b",  # pronoun ambiguity
+            r"\beither\b.+\bor\b",  # false dichotomy
+            r"\b(best|worst|favorite|favourite|prettier|cooler)\b",  # subjectivity
+            r"\b(what|who|where|when|why)\b(?![^?]*\b(if|given|assuming)\b).*\?",  # unanswerable without context
+        ]
+        for pattern in traps:
+            if re.search(pattern, p_lower):
+                return 0.2
+
+        solvable = [
+            r"\d+\.?\d*",  # numbers/math
+            r"\b(if|then|unless|not|implies|before|after|greater|less)\b",  # logic/ordering
+            r"[><=]=?",  # comparisons
+            r"[\+\-\*/]",  # arithmetic operators
+        ]
+        if any(re.search(pat, p_lower) for pat in solvable):
+            return 0.85
+        return 0.25
+
+    def _extract_props(self, text: str) -> list[str]:
+        tokens = re.findall(r"[a-zA-Z0-9_.]+|[><=]=?|[\+\-\*/]", text.lower())
+        stopwords = {"is", "a", "an", "the", "and", "or", "of", "to", "in", "that", "it"}
+        return list(dict.fromkeys([t for t in tokens if t not in stopwords]))
+
+    def _solve_numeric(self, prompt: str, candidates: list[str]) -> list[float]:
+        p_lower = prompt.lower()
+        nums = re.findall(r"-?\d+\.?\d*", p_lower)
+
+        calc_val = None
+        expr_match = re.search(r"(\d+\s*[\+\-\*/\^]\s*\d+(?:\s*[\+\-\*/\^]\s*\d+)*)", prompt)
+        if expr_match:
+            try:
+                expr = expr_match.group(1).replace("^", "**")
+                if re.match(r"^[\d\s\+\-\*/\(\)\.]+$", expr):
+                    calc_val = float(eval(expr))
+            except Exception:
+                calc_val = None
+
+        comp_val = None
+        if len(nums) >= 2:
+            try:
+                n1, n2 = float(nums[0]), float(nums[1])
+                if any(w in p_lower for w in ["greater", "larger", ">", "more"]):
+                    comp_val = n1 > n2
+                elif any(w in p_lower for w in ["less", "smaller", "<"]):
+                    comp_val = n1 < n2
+            except Exception:
+                pass
+
+        scores = []
+        for cand in candidates:
+            c_lower = cand.lower()
+            score = 0.0
+            if calc_val is not None:
+                c_nums = re.findall(r"-?\d+\.?\d*", c_lower)
+                for cn in c_nums:
+                    try:
+                        if abs(float(cn) - calc_val) < 1e-5:
+                            score = 1.0
+                            break
+                    except Exception:
+                        pass
+            elif comp_val is not None:
+                if comp_val and any(w in c_lower for w in ["true", "yes", "first", nums[0]]):
+                    score = 1.0
+                elif not comp_val and any(w in c_lower for w in ["false", "no", "second", nums[1]]):
+                    score = 1.0
+            scores.append(score)
+        return scores
+
+    def _epmc_check(self, prompt: str, candidate: str) -> float:
+        props = self._extract_props(prompt + " " + candidate)
+        p = len(props)
+        if p == 0:
+            return 0.5
+        p = min(p, 10)  # Bound matrix size for efficiency
+
+        adj = np.zeros((p, p), dtype=bool)
+        w = np.full((p, p), 0.5)
+
+        for i in range(p):
+            for j in range(i + 1, p):
+                if props[i] in prompt and props[j] in prompt:
+                    adj[i, j] = True
+                    adj[j, i] = True
+
+        c_p = prompt + " " + candidate
+        cand_active = np.array([prop in c_p.lower() for prop in props[:p]])
+
+        # Hebbian updates & Synaptic pruning over T iterations
+        for _ in range(self.T):
+            for i in range(p):
+                for j in range(p):
+                    if adj[i, j]:
+                        if cand_active[i] and cand_active[j]:
+                            w[i, j] += self.eta * (1.0 - w[i, j])
+                        else:
+                            w[i, j] -= self.eta * w[i, j]
+                        if w[i, j] < self.tau:
+                            w[i, j] = 0.0
+
+        # Reachable state exploration
+        reachable_states = 0
+        satisfying_states = 0
+        num_states = min(1 << p, 64)
+
+        for s in range(num_states):
+            state = [(s >> k) & 1 == 1 for k in range(p)]
+            valid_edges = 0
+            satisfied_edges = 0
+            for i in range(p):
+                for j in range(p):
+                    if w[i, j] > 0:
+                        valid_edges += 1
+                        if state[i] == state[j]:
+                            satisfied_edges += 1
+
+            if valid_edges == 0 or (satisfied_edges / valid_edges) >= 0.5:
+                reachable_states += 1
+                if any(state[k] == cand_active[k] for k in range(p)):
+                    satisfying_states += 1
+
+        sat_ratio = satisfying_states / max(1, reachable_states)
+        return sat_ratio
+
+    def _ncd_similarity(self, prompt: str, candidate: str) -> float:
+        p_bytes = prompt.encode("utf-8")
+        c_bytes = candidate.encode("utf-8")
+        pc_bytes = (prompt + " " + candidate).encode("utf-8")
+
+        len_p = len(zlib.compress(p_bytes))
+        len_c = len(zlib.compress(c_bytes))
+        len_pc = len(zlib.compress(pc_bytes))
+
+        ncd = (len_pc - min(len_p, len_c)) / max(len_p, len_c)
+        return max(0.0, min(1.0, 1.0 - ncd))
+
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        if not candidates:
+            return []
+
+        meta_conf = self._meta_confidence(prompt)
+        numeric_scores = self._solve_numeric(prompt, candidates)
+
+        n_cand = len(candidates)
+        born_scores = np.ones(n_cand) / n_cand
+
+        results = []
+        for idx, cand in enumerate(candidates):
+            epmc_score = self._epmc_check(prompt, cand)
+            born_scores[idx] *= epmc_score
+            ncd_sim = self._ncd_similarity(prompt, cand)
+
+            num_score = numeric_scores[idx]
+            if max(numeric_scores) > 0:
+                final_score = 0.6 * num_score + 0.3 * epmc_score + 0.1 * ncd_sim
+            else:
+                final_score = 0.65 * epmc_score + 0.25 * (born_scores[idx] * n_cand) + 0.1 * ncd_sim
+
+            results.append({
+                "candidate": cand,
+                "score": float(final_score),
+                "reasoning": f"EPMC sat_ratio={epmc_score:.2f}, meta_conf={meta_conf:.2f}, ncd_sim={ncd_sim:.2f}",
+            })
+
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        meta_conf = self._meta_confidence(prompt)
+        if meta_conf < 0.3:
+            return meta_conf
+
+        evals = self.evaluate(prompt, [answer])
+        if not evals:
+            return 0.0
+
+        top_score = evals[0]["score"]
+        conf = min(0.95, meta_conf * top_score * 1.1)
+        return float(max(0.05, min(0.95, conf)))
+```

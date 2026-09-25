@@ -1,0 +1,21 @@
+**Algorithm Overview**  
+The tool builds a *state‑energy graph* (SEG) that treats a candidate answer as a sequence of logical propositions. Each proposition is a node annotated with an **energy** value (thermodynamics) derived from its informational entropy: \(E=-\sum p_i\log p_i\) where \(p_i\) is the normalized frequency of lexical tokens in the proposition. Edges encode logical relations (implication, equivalence, contradiction) extracted by regex patterns; each edge carries a **coupling constant** (quantum mechanics) that quantifies superposition strength: \(J = \exp(-\Delta\theta^2/2\sigma^2)\), where \(\Delta\theta\) is the semantic angle between vectorised propositions (simple TF‑IDF vectors) and \(\sigma\) a tunable bandwidth.  
+
+The SEG is then transformed into a time‑series by traversing nodes in textual order and recording cumulative energy. A **spectral analysis** step applies a discrete Fourier transform (numpy fft) to this series, yielding a power spectral density (PSD). Reasoning quality is scored by two spectral criteria: (1) **energy concentration** – the proportion of total power in low‑frequency bins (stable, equilibrium‑like reasoning), and (2) **coherence peaks** – sharp peaks indicating well‑aligned superposed arguments. The final score is a weighted sum of normalized energy‑entropy, coupling‑consistency, and spectral‑coherence metrics.
+
+**Parsed Structural Features**  
+- Negation cues (`not`, `never`, `no`);  
+- Comparative operators (`greater than`, `less than`, `as…as`);  
+- Conditional clauses (`if…then`, `unless`);  
+- Numeric values and units (extracted with regex);  
+- Causal verbs (`causes`, `leads to`, `because`);  
+- Ordering relations (`first`, `next`, `finally`).  
+
+**Novelty Assessment**  
+While entropy‑based token weighting, graph‑based logical propagation, and FFT‑based coherence checks exist separately, their integration into a unified *thermo‑quantum‑spectral* scoring pipeline is not documented in the literature. The algorithm thus represents a novel synthesis of three physical metaphors applied algorithmically to textual reasoning.
+
+**Ratings**  
+Reasoning: 8/10 — strong multi‑level consistency checks, but depends on shallow semantic vectors.  
+Metacognition: 6/10 — captures self‑referential structure only via entropy, limited depth.  
+Hypothesis generation: 5/10 — can flag missing links but does not propose alternatives.  
+Implementability: 9/10 — relies solely on numpy, regex, and standard data structures; straightforward to code.

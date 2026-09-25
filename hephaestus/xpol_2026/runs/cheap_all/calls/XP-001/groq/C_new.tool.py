@@ -1,0 +1,279 @@
+import string
+from collections import defaultdict
+from typing import Dict, Tuple
+
+"""
+ReasoningTool – quantum‑inspired model‑checking scorer.
+
+* Parses a prompt and candidate answers for logical/temporal tokens.
+* Builds a finite‑state transition graph where each node holds an amplitude.
+* Implication edges apply a 2*2 rotation (unitary) that entangles amplitudes.
+* Scores are the summed probabilities (|alpha|²) of nodes that satisfy the
+  specification extracted from the prompt.
+* A meta‑confidence routine detects ambiguous or unanswerable prompts and
+  caps the confidence accordingly (epistemic honesty).
+"""
+
+import re
+import zlib
+import numpy as np
+from collections import Counter, defaultdict
+from typing import List, Dict, Tuple
+
+# ----------------------------------------------------------------------
+# tiny ontology – can be extended later
+ONTOLOGY = {
+    "superposition": "quantum",
+    "entanglement": "quantum",
+    "decoherence": "quantum",
+    "hebbian": "neural",
+    "plasticity": "neural",
+    "synapse": "neural",
+    "temporal": "logic",
+    "always": "logic",
+    "eventually": "logic",
+    "until": "logic",
+    "if": "logic",
+    "then": "logic",
+    "and": "logic",
+    "or": "logic",
+    "not": "logic",
+    "causes": "logic",
+    "leads": "logic",
+}
+# a tiny reference corpus – frequencies of tokens in "high‑quality" answers
+REFERENCE = Counter({
+    "superposition": 12, "entanglement": 9, "hebbian": 8,
+    "plasticity": 7, "if": 30, "then": 30, "and": 40,
+    "or": 25, "not": 20, "always": 15, "eventually": 12,
+})
+
+TOTAL_REF = sum(REFERENCE.values()) or 1  # avoid div‑by‑zero
+
+
+class ReasoningTool:
+    """Quantum‑inspired model‑checking reasoning scorer."""
+
+    # ------------------------------------------------------------------
+    # regular‑expression pipelines ------------------------------------------------
+    _token_pat = re.compile(
+        r"\b(if|then|and|or|not|always|eventually|until|causes?|leads?|"
+        r"superposition|entanglement|decoherence|hebbian|plasticity|synapse)\b",
+        flags=re.I,
+    )
+    _num_pat = re.compile(r"\b\d+(\.\d+)?\b")
+    _comp_pat = re.compile(r"\b(greater than|less than|at least|at most|most|least)\b", flags=re.I)
+
+    # ------------------------------------------------------------------
+    # meta‑confidence patterns ----------------------------------------------------
+    _presupp_pat = re.compile(r"\b(have you|did you|why did|why have you)\b.*\b(stop|quit|fail|ceased)\b", re.I)
+    _scope_pat = re.compile(r"\bevery\b.*\b(?:does|did|will)\b.*\ba\b.*\b(?:different|same)?\b\by\b", re.I)
+    _pron_pat = re.compile(r"\b\w+\b\s+told\s+\b\w+\b\s+(he|she|they)\b.*\bwho\b", re.I)
+    _dichotomy_pat = re.compile(r"\beither\b.*\bor\b", re.I)
+    _subjective_pat = re.compile(r"\b(best|worst|favorite|most|least)\b", re.I)
+
+    # ------------------------------------------------------------------
+    def __init__(self):
+        pass
+
+    # ------------------------------------------------------------------
+    # public API ---------------------------------------------------------------
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """Return ranked list of candidates with score and short reasoning."""
+        spec_nodes = self._build_specification(prompt)
+        results = []
+        for cand in candidates:
+            cand_nodes = self._parse(cand)
+            score, reason = self._score_candidate(spec_nodes, cand_nodes, prompt, cand)
+            results.append({"candidate": cand, "score": score, "reasoning": reason})
+        # tie‑break with NCD (max 15 % of final rank)
+        results.sort(key=lambda d: d["score"], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Return epistemically honest confidence (0‑1)."""
+        base = self._meta_confidence(prompt)
+        # deterministic boost if prompt is clean and answer matches spec
+        if base >= 0.3:
+            spec = self._build_specification(prompt)
+            ans_nodes = self._parse(answer)
+            match = all(node in ans_nodes for node in spec if node[1] == +1)
+            if match:
+                base = min(0.85, base + 0.2)  # modest boost
+        return min(base, 0.9)
+
+    # ------------------------------------------------------------------
+    # internal helpers ---------------------------------------------------------
+
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detect ambiguous / unanswerable patterns and cap confidence."""
+        if any(p.search(prompt) for p in (
+            self._presupp_pat,
+            self._scope_pat,
+            self._pron_pat,
+            self._dichotomy_pat,
+            self._subjective_pat,
+        )):
+            return 0.25
+        # crude unanswerability: no verb or no noun (very short)
+        if len(prompt.split()) < 4:
+            return 0.2
+        return 0.6  # baseline for a clean question
+
+    # ------------------------------------------------------------------
+    def _parse(self, text: str) -> List[Tuple[str, int, str]]:
+        """
+        Extract tokens -> (concept, polarity, value).
+        polarity: +1 asserted, -1 negated, 0 uncertain.
+        value: numeric literal if present, else empty string.
+        """
+        tokens = []
+        lowered = text.lower()
+        # logical / ontology tokens
+        for m in self._token_pat.finditer(lowered):
+            tok = m.group(0)
+            polarity = -1 if tok == "not" else +1
+            tokens.append((tok, polarity, ""))
+
+        # comparatives (treated as separate concepts)
+        for m in self._comp_pat.finditer(lowered):
+            tokens.append((m.group(0), +1, ""))
+
+        # numbers
+        for m in self._num_pat.finditer(lowered):
+            tokens.append(("number", +1, m.group(0)))
+
+        return tokens
+
+    # ------------------------------------------------------------------
+    def _build_specification(self, prompt: str) -> List[Tuple[str, int, str]]:
+        """Parse the prompt and keep only positively asserted tokens."""
+        nodes = self._parse(prompt)
+        # drop negations for the spec (they become constraints later)
+        return [n for n in nodes if n[1] != -1]
+
+    # ------------------------------------------------------------------
+    def _init_amplitudes(self, nodes: List[Tuple[str, int, str]]) -> Dict[Tuple, complex]:
+        """Amplitude alpha = sqrt(freq/total) with phase 0."""
+        amps = {}
+        for node in nodes:
+            concept = node[0]
+            freq = REFERENCE.get(concept, 1)  # smoothing
+            mag = np.sqrt(freq / TOTAL_REF)
+            amps[node] = complex(mag, 0.0)
+        return amps
+
+    # ------------------------------------------------------------------
+    def _apply_implications(self, amps: Dict[Tuple, complex], text: str):
+        """
+        Find "if A then B" patterns and rotate the amplitudes of the two nodes.
+        Rotation angle θ derived from a fixed strength (0.9).
+        """
+        strength = 0.9
+        theta = np.arcsin(strength)  # 0 < θ < pi/2
+        U = np.array([[np.cos(theta), -np.sin(theta)],
+                      [np.sin(theta),  np.cos(theta)]], dtype=complex)
+
+        # simple regex for "if X then Y"
+        pattern = re.compile(r"\bif\b\s+([^\.]+?)\s+\bthen\b\s+([^\.]+)", re.I)
+        for m in pattern.finditer(text):
+            a_raw, b_raw = m.group(1), m.group(2)
+            a_node = self._first_matching_node(a_raw, amps)
+            b_node = self._first_matching_node(b_raw, amps)
+            if a_node and b_node:
+                vec = np.array([amps[a_node], amps[b_node]])
+                new_vec = U @ vec
+                amps[a_node], amps[b_node] = new_vec[0], new_vec[1]
+
+    def _first_matching_node(self, fragment: str,
+                             amps: Dict[Tuple, complex]) -> Tuple:
+        """Return the first node whose concept appears in fragment."""
+        frag = fragment.lower()
+        for node in amps:
+            if node[0] in frag:
+                return node
+        return None
+
+    # ------------------------------------------------------------------
+    def _score_candidate(self, spec_nodes: List[Tuple],
+                         cand_nodes: List[Tuple],
+                         prompt: str,
+                         candidate: str) -> Tuple[float, str]:
+        """
+        Build graph from prompt + candidate, run quantum update,
+        then sum probabilities of spec nodes that also appear in candidate.
+        """
+        # combine all nodes (spec + candidate) – duplicates merged
+        all_nodes = list({n for n in spec_nodes + cand_nodes})
+        amps = self._init_amplitudes(all_nodes)
+
+        # apply implication updates using the *prompt* (the logical skeleton)
+        self._apply_implications(amps, prompt.lower())
+
+        # measurement: probability = |alpha|^2
+        probs = {node: (abs(alpha) ** 2) for node, alpha in amps.items()}
+
+        # score = sum of probabilities of spec nodes that are present in candidate
+        score = sum(probs[n] for n in spec_nodes if n in cand_nodes)
+
+        # small NCD tie‑breaker (max 0.15 contribution)
+        ncd = self._ncd(prompt, candidate)
+        score = 0.85 * score + 0.15 * (1 - ncd)  # keep in [0,1]
+
+        # reasoning string (brief)
+        reason = f"Matched {len([n for n in spec_nodes if n in cand_nodes])} spec tokens; "
+        reason += f"NCD={ncd:.2f}"
+        return float(min(1.0, score)), reason
+
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _ncd(s1: str, s2: str) -> float:
+        """Normalized compression distance using zlib."""
+        c1 = len(zlib.compress(s1.encode()))
+        c2 = len(zlib.compress(s2.encode()))
+        c12 = len(zlib.compress((s1 + s2).encode()))
+        return (c12 - min(c1, c2)) / max(c1, c2)
+
+# ----------------------------------------------------------------------
+# Example usage (not part of the required API)
+if __name__ == "__main__":
+    tool = ReasoningTool()
+    prompt = ("If a quantum system is in superposition and you measure it, "
+              "the wavefunction collapses. Does this violate Hebbian plasticity?")
+    candidates = [
+        "No, measurement collapse is unrelated to Hebbian learning.",
+        "Yes, because superposition contradicts synaptic changes.",
+        "It depends on the interpretation of plasticity."
+    ]
+    for r in tool.evaluate(prompt, candidates):
+        print(r)
+    print("Confidence on first answer:",
+          tool.confidence(prompt, candidates[0]))
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

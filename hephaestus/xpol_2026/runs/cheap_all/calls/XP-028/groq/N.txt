@@ -1,0 +1,21 @@
+**Computational mechanism**  
+Combining the three ideas yields a *variational‑information‑planning engine*: a predictive‑coding network that performs amortized variational inference while selecting actions by minimizing **expected free energy (EFE)** whose epistemic component is expressed as a **mutual‑information (MI) term**. Concretely, one can implement this as a **Deep Active Inference (DAI) architecture** in which a hierarchical VAE (or normalising‑flow encoder‑decoder) learns a generative model \(p_\theta(o,s,a)\) and a policy network \(\pi_\phi(a|s)\) is trained with a loss  
+
+\[
+\mathcal{L}= \underbrace{D_{\mathrm{KL}}\!\big(q_\phi(s|o)\,\|\,p_\theta(s)\big)}_{\text{variational free energy}}
+\;+\; \underbrace{\mathbb{E}_{\pi_\phi}\!\big[ - I(o_{t+1};s_t) + C(o_{t+1})\big]}_{\text{expected free energy}} ,
+\]
+
+where the first term is the classic free‑energy bound and the second decomposes EFE into **epistemic value** \(-I\) (information‑theoretic gain) and **pragmatic value** \(C\) (task reward). Action selection can be realised with **Monte‑Carlo Tree Search** or **KL‑regularised policy gradients**, giving a tractable planner that actively gathers data to reduce uncertainty about its latent hypotheses.
+
+**Advantage for self‑testing reasoning**  
+The system simultaneously *infers* latent states (hypotheses) and *acts* to maximise the expected reduction in KL divergence between its current belief and the true posterior. Because the epistemic term is precisely the mutual information between future observations and hidden states, the agent chooses *hypothesis‑discriminating* experiments (epistemic foraging) rather than random exploration, leading to faster convergence on the correct model and a principled trade‑off between exploration and exploitation.
+
+**Novelty**  
+Elements of this design appear in active‑inference literature (Friston, Parr) and in information‑theoretic RL (empowerment, curiosity‑driven agents). However, an explicit **information‑theoretic decomposition of EFE inside a deep amortised inference + planning‑as‑inference pipeline** is not yet a standard, widely‑cited framework. It therefore maps to existing work but constitutes a still‑emerging synthesis rather than a fully established field.
+
+**Ratings**  
+Reasoning: 8/10 — integrates rigorous Bayesian inference with principled uncertainty reduction.  
+Metacognition: 9/10 — the KL/MI terms give the system explicit self‑monitoring of belief accuracy.  
+Hypothesis generation: 7/10 — strong for discriminative testing, but limited by model expressivity.  
+Implementability: 6/10 — requires deep generative models and sophisticated planners; feasible but non‑trivial.

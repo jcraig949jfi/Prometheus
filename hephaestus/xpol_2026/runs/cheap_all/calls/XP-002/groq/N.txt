@@ -1,0 +1,26 @@
+**Algorithmic synthesis**
+
+1. **Algorithm outline** – The tool builds a *search‑defined scorer* (NAS) whose architecture is a directed acyclic graph of primitive parsers (regex, numeric extractor, logical‑relation detector). The search space is enumerated with a simple evolutionary loop that evaluates each candidate graph on a held‑out set of reference Q‑A pairs. For every graph we (a) run the parsers on a prompt, producing a **feature set** F = {f₁,…,fₖ}; (b) encode F as a **sparse code** z ∈ ℝⁿ using an over‑complete dictionary D (learned offline by Olshausen‑Field‑style ICA on a corpus of parsed features). The sparse code is stored in a SciPy‑compatible CSR matrix but can be represented with pure NumPy index/value arrays. (c) Compute a **variational free‑energy** loss  
+   \[
+   \mathcal{F}(z)=\underbrace{\|x-Dz\|_2^2}_{\text{prediction error}}+\lambda\underbrace{\|z\|_1}_{\text{entropy‑penalty}} .
+   \]  
+   Here x is the binary vector of observed features for a candidate answer. The lower 𝔽, the better the answer matches the expected logical structure. The NAS loop selects the graph that yields the smallest average 𝔽 on validation data, fixing the final scorer architecture.
+
+2. **Parsed structural features** – The primitive parsers extract:
+   * **Negations** (e.g., “not”, “no”, “without”)  
+   * **Comparatives/Superlatives** (e.g., “greater than”, “most”)  
+   * **Conditionals** (e.g., “if … then …”)  
+   * **Numeric values** (quantities, ranges)  
+   * **Causal claims** (e.g., “because”, “leads to”)  
+   * **Ordering relations** (e.g., “first”, “after”, “precede”)  
+
+   Each extraction yields a token‑level tag that becomes a feature fᵢ.
+
+3. **Novelty assessment** – Constraint‑propagation parsers combined with sparse coding have appeared in symbolic‑numeric hybrid evaluators, and free‑energy‑based scoring is known in predictive‑coding models. However, explicitly using NAS to discover the optimal composition of regex‑based parsers and then scoring answers with a variational free‑energy objective on sparse codes is not present in the literature, making the combination effectively novel.
+
+---
+
+Reasoning: 8/10 — strong logical‑structure extraction and principled scoring, but limited to regex‑driven features.  
+Metacognition: 6/10 — the algorithm can self‑select parsers but lacks self‑reflection on its own errors.  
+Hypothesis generation: 7/10 — sparse coding encourages novel feature combinations, yet hypothesis space is constrained by the predefined parser pool.  
+Implementability: 9/10 — pure NumPy/standard‑library code, evolutionary NAS loop, and CSR‑style sparse vectors are straightforward to realize.

@@ -1,0 +1,14 @@
+**1. Emerging computational mechanism**  
+A concrete mechanism is *Thermodynamic Spectral Program Synthesis* (TSPS): a stochastic search over the space of programs that treats the synthesis process as a physical system with a free‑energy objective.  The search is driven by a simulated‑annealing or Hamiltonian‑Monte‑Carlo (HMC) sampler whose Hamiltonian combines (a) a *syntactic‑semantic energy* derived from constraint‑solving or neural‑guided type‑directed synthesis (e.g., DreamCoder’s probabilistic grammar), and (b) a *thermodynamic entropy term* that penalises overly concentrated posterior mass.  While the sampler runs, the acceptance‑rate time series is Fourier‑transformed each epoch; the resulting power‑spectral density (PSD) reveals “spectral leakage’’ that signals sluggish mixing or periodic cycling.  A controller adjusts the temperature schedule (or the proposal distribution) in real time based on spectral diagnostics, much like adaptive cooling in simulated annealing but informed by frequency‑domain feedback.
+
+**2. Advantage for a self‑testing reasoning system**  
+The system can quantify *hypothesis entropy* (how many distinct programs satisfy the current specification) and monitor the *spectral signature* of its own search dynamics.  When the PSD shows a dominant low‑frequency peak, the system infers that it is stuck in a narrow basin and raises temperature or injects neural‑guided proposals; when the spectrum flattens, it knows the search is well‑mixed and can commit to a candidate program.  This dual feedback—thermodynamic free‑energy minimisation plus spectral mixing assessment— lets the system allocate computational effort adaptively, reducing wasted exploration and giving a principled way to test and reject its own conjectures.
+
+**3. Novelty**  
+Thermodynamic analogues (energy‑based models, simulated annealing) and spectral analysis of optimisation trajectories exist separately, and recent work (e.g., “energy‑based program synthesis” and “Fourier analysis of SGD dynamics”) touches parts of the idea.  However, an integrated architecture that *closes the loop* between free‑energy‑driven program synthesis and real‑time spectral diagnostics for self‑metacognition has not been formalised as a distinct field.  TSPS therefore occupies a novel niche, though it can be built from known components.
+
+**4. Ratings**  
+Reasoning: 8/10 — the free‑energy/spectral loop gives a rigorous, quantitative self‑monitoring capability.  
+Metacognition: 7/10 — spectral feedback is a concrete metacognitive signal, though interpreting PSD may be noisy.  
+Hypothesis generation: 6/10 — entropy‑aware synthesis improves diversity, but the gain depends on specification richness.  
+Implementability: 7/10 — all parts (annealing, HMC, neural‑guided synthesis, FFT) are mature; integration effort is moderate.

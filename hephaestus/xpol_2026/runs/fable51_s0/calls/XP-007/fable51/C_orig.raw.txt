@@ -1,0 +1,207 @@
+Below is the implementation. The wiring: prompt → regex atoms → **abstract-interpretation prediction** (`modus_ponens` forward chaining + `check_transitivity` closure, min t-norm / summed variance) → per-candidate **Kalman update** with a two-pass **self-tuning regulator** (R inflated on outlier innovations, order-invariant) → blended with constructive computation (`bayesian_update`, `bat_and_ball`, numeric compare, PEMDAS, mod, work-rate) and a ≤10% NCD tiebreaker. `confidence()` is capped by `_meta_confidence()` (regex traps + `information_sufficiency`) and by `confidence_from_agreement` over Q-perturbed runs.
+
+```python
+"""Adaptive Abstract Kalman Scorer (AAKS).
+
+Mechanism: regex parsing turns the prompt into primitive propositions (comparatives,
+negated claims, conditionals, causal links, temporal order, computed numbers).  Each is a
+Gaussian belief (mu, sigma2).  PREDICTION = abstract interpretation: beliefs are pushed
+through Horn clauses (forge_primitives.modus_ponens) and comparative chains
+(check_transitivity) using min t-norm for conjunction and summed variance as a sound
+over-approximation.  UPDATE = one Kalman step per candidate: the candidate's feature vector
+is an observation of the state; the normalized innovation and posterior SNR score it.
+ADAPTIVE CONTROL = a two-pass self-tuning regulator that inflates observation noise R on
+features whose innovations are outliers across candidates (unreliable features are
+down-weighted, order-invariant).  Constructive computation (bayesian_update, bat_and_ball,
+numeric comparison, PEMDAS, modular, work-rate) both seeds the prior and scores directly.
+confidence() is capped by _meta_confidence() (presupposition, scope, pronoun, false
+dichotomy, subjectivity, information_sufficiency) and by confidence_from_agreement across
+process-noise perturbations.  NCD is a <=10% tiebreaker.
+"""
+import re, zlib, math
+import numpy as np
+try:
+    from forge_primitives import (modus_ponens, check_transitivity, bayesian_update, bat_and_ball,
+                                  information_sufficiency, confidence_from_agreement)
+except Exception:  # minimal fallbacks (same semantics) so the tool still runs standalone
+    def modus_ponens(premises, facts):
+        facts, ch = set(facts), True
+        while ch:
+            ch = False
+            for ants, con in premises:
+                if con not in facts and all(a in facts for a in ants): facts.add(con); ch = True
+        return facts
+    def check_transitivity(rel):
+        rel, ch = set(rel), True
+        while ch:
+            ch = False
+            for a, b in list(rel):
+                for c, d in list(rel):
+                    if b == c and (a, d) not in rel: rel.add((a, d)); ch = True
+        return rel
+    def bayesian_update(p, tp, fp): return p * tp / (p * tp + (1 - p) * fp)
+    def bat_and_ball(t, d): return (t - d) / 2.0
+    def information_sufficiency(u, c): return min(1.0, c / float(max(u, 1)))
+    def confidence_from_agreement(s): return max(0.0, 1.0 - float(np.std(s)) * 2)
+
+STOP = set("the a an is are was were be of to in on and or that this it if then than".split())
+NEG = re.compile(r"\b(not|no|never|cannot|neither|nor|none)\b|n't", re.I)
+GT = re.compile(r"([\w.]+)\s*(?:>|is\s+(?:more|greater|larger|bigger|taller|older|faster|heavier)\s+than|exceeds)\s*([\w.]+)", re.I)
+LT = re.compile(r"([\w.]+)\s*(?:<|is\s+(?:less|smaller|fewer|shorter|younger|slower|lighter)\s+than)\s*([\w.]+)", re.I)
+COND = re.compile(r"\bif\s+([^,.;?]+?)\s*(?:,\s*then|then|,)\s*([^,.;?]+)", re.I)
+CAUSE = re.compile(r"([\w ]{3,40}?)\s+(?:causes?|leads? to|results? in|implies)\s+([\w ]{3,40}?)(?=[.,;?]|$)", re.I)
+TEMP = re.compile(r"(\w+)\s+(?:before|precedes|and then)\s+(\w+)", re.I)
+NUM = re.compile(r"-?\d+(?:\.\d+)?")
+META = [(r"\b(have|has|did) (you|he|she|they|we) (stopped|quit|ceased|given up)", .15, "presupposition"),
+        (r"\bwhy (did|does|do|has|have|is|are) .*\b(fail|stop|quit|lie|cheat|hate|refuse)", .2, "presupposition"),
+        (r"\b(every|each|all) \w+ .*\b(a|an|some) \w+.*\b(same|which|how many)\b", .3, "scope ambiguity"),
+        (r"\b\w+ (told|said to|asked|informed) \w+ (that )?(he|she|they)\b", .2, "pronoun ambiguity"),
+        (r"\beither\b.*\bor\b", .25, "false dichotomy"), (r"\b(best|worst|favou?rite|greatest|prettiest)\b", .25, "subjectivity"),
+        (r"\bsurviv(or|ed|ing)", .3, "survivorship bias"), (r"already (spent|invested|paid|put in)", .3, "sunk cost"),
+        (r"\b(exceptional|extreme|record)\b.*\b(next|following|again)\b", .3, "regression to mean"),
+        (r"\b(valid|sound|strong|weak)\b.*\bargument\b|\bargument\b.*\b(valid|sound|strong|weak)\b", .3, "validity vs truth")]
+
+def _key(p): return "_".join(w for w in re.findall(r"[a-z0-9.]+", p.lower()) if w not in STOP)[:40]
+def _pol(p): return -1 if len(NEG.findall(p)) % 2 else 1
+
+def _atoms(text):
+    """text -> ({atom: polarity}, [horn clauses], [gt pairs])"""
+    a, cl, gt, t = {}, [], [], text.lower()
+    for m in GT.finditer(t): gt.append((m.group(1), m.group(2)))
+    for m in LT.finditer(t): gt.append((m.group(2), m.group(1)))
+    for m in COND.finditer(t): cl.append(([_key(m.group(1))], _key(m.group(2)))); a.setdefault(_key(m.group(2)), 0)
+    for m in CAUSE.finditer(t): cl.append(([_key(m.group(1))], _key(m.group(2)))); a.setdefault(_key(m.group(2)), 0)
+    for m in TEMP.finditer(t): a["before:%s:%s" % (m.group(1), m.group(2))] = 1
+    for s in re.split(r"[.;!?]", t):
+        k = _key(s)
+        if k and not COND.search(s): a[k] = _pol(s)
+    return a, cl, gt
+
+class ReasoningTool:
+    def __init__(self): self.r0, self.q0 = 1e-1, 1e-3
+
+    def _compute(self, p):  # constructive computation; returns value (float/bool) or None
+        t, nums = p.lower(), [float(x) for x in NUM.findall(p)]
+        m = re.search(r"total (?:of )?\$?([\d.]+).*?\$?([\d.]+) more", t)
+        if m: return float(bat_and_ball(float(m.group(1)), float(m.group(2))))
+        m = re.search(r"(?:prevalence|base rate|have|has)\D{0,30}?([\d.]+)%.*?(?:sensitivity|detect|true positive)\D{0,30}?([\d.]+)%.*?(?:false positive)\D{0,30}?([\d.]+)%", t, re.S)
+        if m: return 100 * float(bayesian_update(*[float(m.group(i)) / 100 for i in (1, 2, 3)]))
+        m = re.search(r"remainder when (\d+) is divided by (\d+)|(\d+)\s*mod\s*(\d+)", t)
+        if m: g = [x for x in m.groups() if x]; return float(int(g[0]) % int(g[1]))
+        m = re.search(r"(\d+(?:\.\d+)?) hours?.*?(\d+(?:\.\d+)?) hours?.*?together", t)
+        if m: x, y = float(m.group(1)), float(m.group(2)); return x * y / (x + y)
+        m = re.search(r"all but (\d+)", t)
+        if m: return float(m.group(1))
+        m = re.search(r"(?:what is|calculate|compute|evaluate)\s*([\d\s+\-*/().^]+)\??", t)
+        if m and re.search(r"\d\s*[+\-*/^]\s*\d", m.group(1)):
+            try: return float(eval(m.group(1).replace("^", "**"), {"__builtins__": {}}, {}))
+            except Exception: pass
+        if len(nums) >= 2 and re.search(r"\b(larger|bigger|greater|smaller|less|bigger|higher|lower)\b", t):
+            big = bool(re.search(r"\b(larger|bigger|greater|higher)\b", t)); a, b = nums[0], nums[1]
+            if re.match(r"\s*(is|does)\b", t): return (a > b) if big else (a < b)
+            return max(a, b) if big else min(a, b)
+        return None
+
+    def _match(self, c, v):
+        if isinstance(v, bool): return (v == bool(re.search(r"\b(yes|true|correct)\b", c.lower()))) if re.search(r"\b(yes|no|true|false|correct|incorrect)\b", c.lower()) else 0.5
+        return 1.0 if any(abs(float(n) - v) <= 1e-6 * max(1, abs(v)) + 1e-9 for n in NUM.findall(c)) else 0.0
+
+    def _prior(self, prompt, comp):  # abstract-interpretation prediction step
+        a, cl, gt = _atoms(prompt); mu, s2 = {}, {}
+        for k, v in a.items(): mu[k], s2[k] = float(v), 0.1 if v else 1.0
+        try: closed = set(tuple(x) for x in check_transitivity(gt))
+        except Exception: closed = set(gt)
+        for x, y in closed | set(gt): mu["gt:%s:%s" % (x, y)] = 1.0; s2["gt:%s:%s" % (x, y)] = 0.1 if (x, y) in gt else 0.3
+        facts = set(k for k, v in mu.items() if v > 0.5)
+        try: derived = set(modus_ponens(cl, facts))
+        except Exception: derived = facts
+        for ants, con in cl:  # t-norm min for conjunction, variance sum = over-approximation
+            if con in derived and all(x in mu for x in ants) and ants:
+                mu[con] = min(mu[x] for x in ants); s2[con] = sum(s2[x] for x in ants) + self.q0
+        if comp is not None and not isinstance(comp, bool): mu["num:%g" % comp] = 1.0; s2["num:%g" % comp] = 0.01
+        return mu, s2, cl, a
+
+    def _feat(self, c, idx, prompt):
+        f, ca = np.zeros(len(idx)), _atoms(c)[0]
+        for k, v in ca.items():
+            if k in idx and v: f[idx[k]] = v
+        for n in NUM.findall(c):
+            k = "num:%g" % float(n)
+            if k in idx: f[idx[k]] = 1
+        q = [s for s in re.split(r"[.!?]", prompt) if s.strip()]
+        if q and re.fullmatch(r"\W*(yes|no|true|false)\W*", c.lower()):  # yes/no observes the question atom
+            k = _key(q[-1])
+            if k in idx: f[idx[k]] = 1 if c.lower().strip(" .") in ("yes", "true") else -1
+        return f
+
+    def _kalman(self, mu_d, s2_d, cands, prompt, qscale=1.0):
+        idx = {k: i for i, k in enumerate(mu_d)}
+        if not idx: return [0.0] * len(cands)
+        mu, s2 = np.array([mu_d[k] for k in idx]), np.array([s2_d[k] for k in idx]) * qscale + self.q0
+        feats, R, n, scores = [self._feat(c, idx, prompt) for c in cands], np.full(len(idx), self.r0), len(idx), []
+        for _ in range(2):  # pass 1 adapts R (self-tuning regulator); pass 2 scores with adapted R
+            scores, out = [], np.zeros(n)
+            for f in feats:
+                obs = np.nonzero(f)[0]
+                if not len(obs): scores.append(0.0); continue
+                H, P = np.eye(n)[obs], np.diag(s2)
+                S, z = H @ P @ H.T + np.diag(R[obs]), f[obs] - H @ mu
+                K = P @ H.T @ np.linalg.inv(S)
+                mu_p, s2_p = mu + K @ z, np.diag((np.eye(n) - K @ H) @ P)
+                out[obs] += np.abs(z) > 2 * np.sqrt(np.diag(S))
+                nis = float(z @ np.linalg.solve(S, z)) / len(obs)
+                snr = float(np.mean(f[obs] * mu_p[obs] / np.sqrt(s2_p[obs] + 1e-6)))
+                scores.append(math.exp(-0.5 * nis) * (0.5 + 0.5 * math.tanh(snr)))
+            R = R * (1 + out)
+        return scores
+
+    def _ncd(self, a, b):
+        za, zb, zab = (len(zlib.compress(x.encode())) for x in (a, b, a + b))
+        return (zab - min(za, zb)) / max(za, zb)
+
+    def _meta_confidence(self, prompt):
+        cap, flags, t = 1.0, [], prompt.lower()
+        for rx, c, name in META:
+            if re.search(rx, t, re.S): cap, flags = min(cap, c), flags + [name]
+        mu, s2, cl, a = self._prior(prompt, None)
+        unknowns, cons = sum(1 for k in a if a[k] == 0), sum(1 for k in mu if s2[k] < 0.5)
+        try: suff = float(information_sufficiency(unknowns, cons))
+        except Exception: suff = 1.0 if cons >= unknowns else 0.5
+        if not mu and self._compute(prompt) is None: cap, flags = min(cap, 0.25), flags + ["no parser matched"]
+        return min(cap, 0.3 + 0.6 * max(0.0, min(1.0, suff))), flags
+
+    def evaluate(self, prompt, candidates):
+        comp = self._compute(prompt); mu, s2, cl, _ = self._prior(prompt, comp)
+        st = self._kalman(mu, s2, candidates, prompt); cap, flags = self._meta_confidence(prompt)
+        nc = [1 - self._ncd(prompt, c) for c in candidates]; lo, hi = min(nc), max(nc)
+        out = []
+        for i, c in enumerate(candidates):
+            cs = self._match(c, comp) if comp is not None else 0.5
+            ncd = (nc[i] - lo) / (hi - lo) if hi > lo else 0.5
+            score = 0.55 * st[i] + 0.35 * cs + 0.10 * ncd
+            out.append({"candidate": c, "score": round(float(score), 4), "reasoning":
+                        "kalman_snr=%.3f comp=%s(%s) ncd=%.2f atoms=%d clauses=%d meta_cap=%.2f flags=%s"
+                        % (st[i], "%.4g" % comp if comp is not None else "none", cs, ncd, len(mu), len(cl), cap, flags or "-")})
+        return sorted(out, key=lambda d: (-d["score"], candidates.index(d["candidate"])))
+
+    def confidence(self, prompt, answer):
+        cap, flags = self._meta_confidence(prompt); comp = self._compute(prompt)
+        if comp is not None:
+            m = self._match(answer, comp); base = 0.92 if m == 1.0 else (0.08 if m == 0.0 else 0.4)
+        else:
+            mu, s2, _, _ = self._prior(prompt, None)
+            runs = [self._kalman(mu, s2, [answer], prompt, q)[0] for q in (0.5, 1.0, 2.0)]  # Q perturbation
+            try: agree = float(confidence_from_agreement(runs))
+            except Exception: agree = 1.0 - float(np.std(runs))
+            base = 0.2 + 0.5 * float(np.mean(runs)) * max(0.0, min(1.0, agree))
+        return float(max(0.0, min(base, cap)))
+```
+
+Design notes on how it meets the constraints:
+
+- **Primitive-based computation (≥60%)**: `check_transitivity` + `modus_ponens` build the prior (structural 55% of the score is entirely Kalman-over-primitive-derived state); `bayesian_update`/`bat_and_ball` feed the 35% computation term and seed `num:` atoms in the prior; `information_sufficiency` and `confidence_from_agreement` gate confidence.
+- **Novel wiring**: forward-chained beliefs are the Kalman prior; each candidate is an observation; the two-pass R-inflation is the adaptive regulator and makes the result order-invariant across candidates.
+- **Epistemic honesty**: `_meta_confidence` caps at ≤0.3 for presupposition/pronoun/dichotomy/subjectivity, ≤0.25 when nothing parses, and `confidence()` only exceeds 0.9 when a constructive computation matched the answer.
+- Deterministic (no randomness; Q-perturbation uses fixed scales), ASCII-only, numpy + stdlib with a self-contained fallback if `forge_primitives` is absent.
+
+One caveat: the fallback primitives assume `modus_ponens(premises, facts)` takes `[(antecedents, consequent)]` and `check_transitivity` returns the closure; if the real library returns a different shape, the `try/except` degrades to the fallback semantics rather than crashing.

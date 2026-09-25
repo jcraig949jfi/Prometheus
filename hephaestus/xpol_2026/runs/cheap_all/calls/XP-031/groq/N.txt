@@ -1,0 +1,17 @@
+**Computational mechanism**
+
+The three ideas fuse into a *Compositional Free‑Energy Architecture Search* (CFEAS).  A differentiable NAS engine (e.g., DARTS or ENAS) operates over a **grammar‑defined, modular search space**: each primitive is a small, reusable sub‑network (a “module”) with a well‑specified input‑output type, so whole architectures are compositional programs.  Instead of minimizing a static loss, the NAS objective is the **expected free energy (EFE)** of an active‑inference agent that can both predict observations and select actions.  The EFE is estimated with a variational bound that combines (i) a reconstruction term (accuracy of the candidate architecture as a generative model) and (ii) an epistemic term (information‑gain about the module’s parameters).  Weight‑sharing and amortized inference keep the search tractable, while a Monte‑Carlo tree search over action sequences supplies the “policy” that evaluates each architecture’s capacity to test its own predictions.
+
+**Advantage for a self‑testing reasoning system**
+
+Each candidate architecture is a *hypothesis* about the latent generative process of the environment.  By optimizing EFE, the system prefers architectures that not only fit current data but also **plan interventions that maximally reduce uncertainty** about their own predictions.  Consequently the reasoning engine can *actively probe* its own model space: it selects actions that expose failures of a hypothesised module, revises the composition, and re‑evaluates with fresh evidence.  This yields a principled loop of hypothesis generation → experiment → model update, far richer than passive error‑backpropagation.
+
+**Novelty**
+
+There are Bayesian NAS methods (e.g., “Neural Architecture Search with Bayesian Optimisation”) and active‑inference controllers that use neural nets, and there are compositional program‑synthesis approaches.  However, **no existing framework treats the NAS loss itself as expected free energy and couples it with a grammar‑based compositional search space**.  The closest work—Active Neural Architecture Search (ANAS)—optimises a reward‑based proxy, not the full epistemic‑plus‑pragmatic EFE.  Thus CFEAS occupies a previously unfilled niche.
+
+**Ratings**  
+Reasoning: 8/10 — integrates hypothesis testing with structured model building.  
+Metacognition: 9/10 — explicit free‑energy drive gives self‑monitoring of uncertainty.  
+Hypothesis generation: 7/10 — compositional modules enable many combinatorial hypotheses.  
+Implementability: 6/10 — requires non‑trivial variational‑EFE estimation and grammar‑aware NAS but builds on existing tools.
