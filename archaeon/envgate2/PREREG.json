@@ -1,0 +1,268 @@
+{
+ "schema": "archaeon.envgate2.prereg.v1",
+ "assay": "ENVGATE-02",
+ "frozen_at_utc": "2026-09-24T21:22:34Z",
+ "mechanism_digest": "9e3fb887a4aeaa84",
+ "directive": "roles/Archaeon/prompts/2026-09-24_envgate_adjudication_rie/00_OPERATOR_DIRECTIVE.md",
+ "claim": "(post-hoc, from ENVGATE-01): copier establishment depends on a multi-byte viable-offspring input WINDOW, not on the\nexact-copy byte 128 alone. Source of every prediction: the FROZEN viability map archaeon/envgate/OFFSPRING_VIABILITY.json (commit\n5649c78f8): for 81 census copiers gated at 128, how many yield a copier-grade child at each input byte.",
+ "spec": {
+  "assay": "ENVGATE-02",
+  "design": {
+   "rright": [
+    128,
+    129,
+    130,
+    131
+   ],
+   "rweak": [
+    125,
+    126,
+    127,
+    128
+   ],
+   "width": 4,
+   "mass_rright": 240,
+   "mass_rweak": 146,
+   "mass_ratio": 0.6083,
+   "threshold": 40.5,
+   "identifiable": true,
+   "n_copiers": 81
+  },
+  "arms": {
+   "U": {
+    "blocked": [],
+    "restored": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     128,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ],
+    "pool": 0
+   },
+   "BAND0": {
+    "blocked": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     128,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ],
+    "restored": [],
+    "pool": 240
+   },
+   "R128": {
+    "blocked": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ],
+    "restored": [
+     128
+    ],
+    "pool": 240
+   },
+   "RRIGHT": {
+    "blocked": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     125,
+     126,
+     127,
+     132,
+     133,
+     134,
+     135
+    ],
+    "restored": [
+     128,
+     129,
+     130,
+     131
+    ],
+    "pool": 240
+   },
+   "RWEAK": {
+    "blocked": [
+     120,
+     121,
+     122,
+     123,
+     124,
+     129,
+     130,
+     131,
+     132,
+     133,
+     134,
+     135
+    ],
+    "restored": [
+     125,
+     126,
+     127,
+     128
+    ],
+    "pool": 240
+   }
+  },
+  "schedule": {
+   "K_chambers": 2048,
+   "dwell": 64,
+   "refills": 512
+  },
+  "blocks": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23
+  ],
+  "streams": "envgate2.{inflow,env,world,mutation}(block)",
+  "core": "archaeon.lineage.core (genetic attribution)",
+  "held": "envgate mechanism.HELD (vmcopy32, ENDOGENOUS_COPY, well_mixed 128, implicit_survival, ECHO_forced, local_byte, empty initial ecology)"
+ },
+ "predictions_from_frozen_viability_map": {
+  "per_arm": {
+   "U": {
+    "exact_copy_access_frac_census_exact_copiers": 1.0,
+    "viable_child_inputs_per_128_copier": 4.099,
+    "viability_mass": 332,
+    "branching_R0": 0.961
+   },
+   "RRIGHT": {
+    "exact_copy_access_frac_census_exact_copiers": 0.9271,
+    "viable_child_inputs_per_128_copier": 2.963,
+    "viability_mass": 240,
+    "branching_R0": 0.694
+   },
+   "RWEAK": {
+    "exact_copy_access_frac_census_exact_copiers": 0.9896,
+    "viable_child_inputs_per_128_copier": 1.802,
+    "viability_mass": 146,
+    "branching_R0": 0.422
+   },
+   "R128": {
+    "exact_copy_access_frac_census_exact_copiers": 0.9167,
+    "viable_child_inputs_per_128_copier": 1.0,
+    "viability_mass": 81,
+    "branching_R0": 0.234
+   },
+   "BAND0": {
+    "exact_copy_access_frac_census_exact_copiers": 0.0729,
+    "viable_child_inputs_per_128_copier": 0.0,
+    "viability_mass": 0,
+    "branching_R0": 0.0
+   }
+  },
+  "predicted_ordering": [
+   "U",
+   "RRIGHT",
+   "RWEAK",
+   "R128",
+   "BAND0"
+  ],
+  "ties": [],
+  "note": "ordinal prediction only; not fitted to ENVGATE-02"
+ },
+ "power": "Planning from ENVGATE-01 copier-founded establishment per block at full exposure (U 2.9; k~3 arm ~1.1) scaled to half exposure: expected per block U ~1.5, RRIGHT ~0.55, RWEAK ~0.2, R128 ~0.03, BAND0 ~0.03. With 24 blocks: P2 (RRIGHT>R128) ~10 positive vs <1 negative block -> power high; P3 (RRIGHT>RWEAK) ~40% power; Page's L high. Gate needs P2 OR P3. Half of ENVGATE-01's per-block exposure, 24 blocks (more independent units at ~0.75 of ENVGATE-01's total tape exposure).",
+ "arrivals_per_arm_per_block": 1048576,
+ "analysis": "ENVGATE-02 analysis -- frozen with the preregistration (sha256 in PREREG.json). Reads runs/block_XX.json, writes RESULTS.json.\n\nEndpoint: INDEPENDENT_GENETIC_ESTABLISHMENT (archaeon.lineage.core.World.genetic_establishments): a genetic lineage (glin) of random\norigin (random_inflow arrival or originated from random material; never inserted) whose material reproduced outside the chamber, alive\nat root_end + 3 x max_age, with peak >= 0.25 N or genetic generation depth >= 10. Host labels amplifying one glin count ONCE.\n\nPRIMARY UNIT = BLOCK (the ENVGATE-01 lesson: arrivals inside one world are not independent). Y[b][arm] = genetic establishments.\n  P1  U > BAND0         exact one-sided sign test over blocks\n  P2  RRIGHT > R128     exact one-sided sign test over blocks\n  P3  RRIGHT > RWEAK    exact one-sided sign test over blocks\n  Holm-Bonferroni over P1..P3 at family alpha 0.05.\n  PO  ordering: Page's L trend test for the frozen predicted order U > RRIGHT > RWEAK > R128 > BAND0 (within-block ranks, midranks for\n      ties); p by 200,000 within-block permutations from a fixed seed; significant at 0.05.\nReported, not decisive: arrival-level paired McNemar on genetic establishments (established glin root arrival), parent-chain counts\n(to show whether results depend on labels), takeover share.\n\nPHASE C GATE (all required): attribution tests pass (recorded in PREREG), preflight PASS without waiver, INFORMATIVE (U total >= 10 and\nRRIGHT+RWEAK+R128 total >= 6), PO significant, P1 Holm-significant, (P2 or P3) Holm-significant, no instrument failure.\nVerdict: WINDOW_SUPPORTED (gate passes) / WINDOW_PARTIAL (P1 and PO pass, P2 and P3 fail) / WINDOW_NOT_SUPPORTED (PO not significant or\nR128 >= RRIGHT in total) / UNINFORMATIVE / DESIGN_OR_INSTRUMENT_FAILURE.\n",
+ "attribution_tests": {
+  "passed": true,
+  "fast": [
+   "11 passed, 1 skipped in 9.36s"
+  ],
+  "slow_block13": {
+   "passed": true,
+   "command": "Z80ATLAS_SLOW=1 pytest archaeon/tests/test_lineage_attribution.py",
+   "summary": "12 passed in 3426.03s",
+   "finished_utc": "2026-09-24T21:18:40Z",
+   "includes": "test_10_block13_rescue_is_near_copier_propagation_aided_by_a_foreign_executor (replay of ENVGATE-01 block 13 BLOCK_128 to epoch 14800)"
+  }
+ },
+ "preflight_sha256": "fdc354d970977acb51dbf74551d85767f062e65fd1d27e375feb702962562770",
+ "code_sha256_lf_normalised": {
+  "archaeon/envgate2/mechanism.py": "695085d23951a5bc8ad3f788c1c6bb9ed7c366bd9dce0cb45c9c606d2183058d",
+  "archaeon/envgate2/analyze.py": "77324ca696ac51e565460d0e9e6e12400ae0c4d313b51ea98d24b89ac3e239ef",
+  "archaeon/envgate2/run_assay.py": "73cf988ef810196d0f424bc1cf0feffdafd39eb4cff687e38f2a8faaed94ba87",
+  "archaeon/envgate2/preflight.py": "f5ba905a834a7e058eeea1bb49304ad309a2ee3e62f40defdfb97be67dd70687",
+  "archaeon/lineage/core.py": "2237603d707bc798eb5579c758e62643b750235944a9c6bc340e36b7bfda20e6",
+  "archaeon/lineage/taint_vm.py": "d55799925c1f97b9f18e45ecd0c23b0d432584b52a224b17fdf59aaa47be72d2",
+  "archaeon/lineage/assay_block.py": "b3c165ff242fd63f6129b9510a9105f696a43f481c1231f7c3c333784dc735a5",
+  "archaeon/envgate/mechanism.py": "4f72cbe99a4114a7a0349f6f871d23ccf579d5861fd5a07c02ab47a262ed89c2",
+  "archaeon/envgate/engine.py": "789a0f36195e4ab329b3012b555532d4c04c8c3df2e9fcf39dd9c63404b98ed0",
+  "archaeon/envgate/ruler.py": "c1a2f37177aaa98c094701d8a68aaf28cd0550a8ca45d2231483140849cfe94a",
+  "archaeon/envgate/OFFSPRING_VIABILITY.json": "b20678d64662faeff2062ccd3ee44cc14acd1a0dd6ae845c201402ba6915298b",
+  "archaeon/z80atlas/vm.py": "7b96202d750f4fc880707887ac298052c90652a26a0cdc375f8302bd5028a453",
+  "archaeon/z80atlas/engine.py": "77422a9efc1ad618ed0cc097a0dea3d3e36e980323142a4c1487553d2dea1029",
+  "archaeon/z80atlas/tasks.py": "d0d19d28e8d52e0ea1279dd7b785acc08af1b7159a8c3eaed86becc6f45f5307",
+  "archaeon/z80atlas/grammar.py": "d3244e0b2d241762524571478c685dd12f4b648fb732698344b9d7a0846a1b91",
+  "archaeon/z80atlas/census/copier_census.py": "b8bdd2f3865d05d6c61e0d538a2081de33ae9dddaf3ce57d0748f9e05714dcc4",
+  "archaeon/z80atlas/census/HITS.json": "68422c5f61c4e141ceaaf7a7708194d8d3a2cd68ce877ba2cc34f88a71d21f90",
+  "archaeon/z80atlas/census/RESULTS.json": "ee8bedf701d5dc8bc2920b1f8f3965cc15b0d3b1fad35a44d7a34d1e6fa71322",
+  "archaeon/tests/test_lineage_attribution.py": "efdcb061100320b87f4fae3131b1fea6d28429aaf7eb6d2880b2873544471d63"
+ },
+ "stop_conditions": [
+  "hash mismatch",
+  "preflight not PASS",
+  "a block errors (rerun from its own seeds)",
+  "any change after results -> ENVGATE-03"
+ ]
+}
