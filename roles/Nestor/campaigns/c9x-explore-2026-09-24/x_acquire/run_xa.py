@@ -14,8 +14,9 @@ padded founder and its assay rate.
 Controls: the founder genome assayed with the same function in each cell (expected 0.0) and in
 7ae3's own cell (expected ~0.95). INVALID if the 7ae3-cell founder control passes < 50%, or a
 replay depth mismatches.
-AMENDMENT A1 (infrastructure, 12:30, after the first launch crashed with IndexError and BEFORE
-any outcome existed): live genomes can be longer than L; the world places them unpadded and passes
+AMENDMENT A1 (infrastructure, 12:30, after the first launch crashed with IndexError): attempt 1
+had written one row (e160_0, old padded-genome path) that was moved UNREAD to attempt1_unread/ and is
+recomputed; no outcome was inspected before this amendment. Live genomes can be longer than L; the world places them unpadded and passes
 the resulting tape length. The assay now does the same (raw genomes, tape length after placement).
 Classification: SIGNAL (acquired competence) if the competent share >= 0.5 in both cells; CLEAN_NULL
 (replication without fresh-state competence) if < 0.05 in both; WEAK_SIGNAL otherwise.
