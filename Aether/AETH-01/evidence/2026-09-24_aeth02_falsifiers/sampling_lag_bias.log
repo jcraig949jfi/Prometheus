@@ -1,0 +1,24 @@
+FOUR-WAY CLASSIFICATION: reference state one tick back vs 250 ticks back
+  (same lattice, same tick, same observer -- only `before` differs)
+  PER TICK (correct)         edges=12344
+      STATE_CHANGING                                25.4861%
+      SAME_VALUE_UNCONTESTED                        73.8253%
+      SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE        0.6724%
+      SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE     0.0162%
+      template: same=0.7917 changing=0.2083 -> p_s=0.8796  perturbation share of change=0.4222
+      change_rate=0.164874  (opcode 0.00986 energy 0.78796)
+  250-TICK LAG (as AETH-02 ran) edges=12344
+      STATE_CHANGING                                27.3493%
+      SAME_VALUE_UNCONTESTED                        71.8649%
+      SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE        0.7777%
+      SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE     0.0081%
+      template: same=0.7739 changing=0.2261 -> p_s=0.8598  perturbation share of change=0.3802
+      change_rate=0.184784  (opcode 0.02248 energy 0.83623)
+
+  bias introduced by the lag:
+    STATE_CHANGING                                  +1.8633 points (+7.3% relative)
+    SAME_VALUE_UNCONTESTED                          -1.9605 points (-2.7% relative)
+    SAME_VALUE_CONTESTED_ALTERNATIVE_CHANGE         +0.1053 points (+15.7% relative)
+    SAME_VALUE_CONTESTED_NO_ALTERNATIVE_CHANGE      -0.0081 points (-50.0% relative)
+
+[exited with code 0]

@@ -1,0 +1,50 @@
+launching AETH-02 calibration: pinned 20b69fc3040680b217fd0a0d990b7e5bfeb037b8 ceiling $0.60
+[a2 21:15:12] RUN_ID=aeth02-20260924T011512Z-7e729e54  plan=calibration  4 phases, ceiling $0.60, pod budget 2400s
+[a2 21:15:12] pinned commit 20b69fc3040680b217fd0a0d990b7e5bfeb037b8
+[a2 21:15:12]   downloaded aeth01_cpu_oracle.py     1b28db2a10a9b9eb
+[a2 21:15:12]   downloaded aeth01_gpu_kernel.py     8b3092b4ebb79ef8
+[a2 21:15:12]   downloaded run_canary.py            751d5a20f324cc86
+[a2 21:15:12]   downloaded pod_service.py           f5053e38525cdde8
+[a2 21:15:12]   shipped    __init__.py              94100d67086416ce
+[a2 21:15:12]   shipped    aeth01_observatory.py    56b90d121b862b9b
+[a2 21:15:12]   shipped    aeth01_run.py            22c8c041385c7c55
+[a2 21:15:12]   shipped    aeth01_graph.py          3fa745d500ac46a1
+[a2 21:15:12]   shipped    aeth02_runner.py         b1d31b043fd63041
+[a2 21:15:12]   shipped    aeth01_bench_server.py   e6add7beff40bceb
+[a2 21:15:12]   phase econ_1024           1024^2 x    300 ticks
+[a2 21:15:12]   phase econ_2048           2048^2 x    300 ticks
+[a2 21:15:12]   phase econ_4096           4096^2 x    300 ticks
+[a2 21:15:12]   phase probe_4096          4096^2 x   2000 ticks
+[a2 21:15:12] baseline confirmed empty (0 pods)
+[a2 21:15:13] pod qtyu4j6p6dgozr created (id persisted to C:\Users\jcrai\AppData\Local\Temp\aeth02_pod_id.txt)
+[a2 21:15:44] CANARY PASS
+[a2 21:15:44] receipt: backend=cupy cases=300/300 gpu_s=11.342945378273726
+[a2 21:15:44] log 1307 bytes, 0 phase_end, 0 samples, $0.004 spent
+[a2 21:16:44] log 1228959 bytes, 2 phase_end, 62 samples, $0.012 spent
+[a2 21:17:44] log 1586844 bytes, 2 phase_end, 73 samples, $0.021 spent
+[a2 21:18:45] log 1613740 bytes, 2 phase_end, 85 samples, $0.029 spent
+[a2 21:19:45] log 2190208 bytes, 3 phase_end, 96 samples, $0.037 spent
+[a2 21:20:46] log 2217103 bytes, 3 phase_end, 108 samples, $0.045 spent
+[a2 21:21:46] log 2243937 bytes, 3 phase_end, 120 samples, $0.053 spent
+[a2 21:22:46] log 2270712 bytes, 3 phase_end, 132 samples, $0.062 spent
+[a2 21:23:47] log 2297716 bytes, 3 phase_end, 144 samples, $0.070 spent
+[a2 21:24:47] log 2324468 bytes, 3 phase_end, 156 samples, $0.078 spent
+[a2 21:25:47] log 2351217 bytes, 3 phase_end, 168 samples, $0.086 spent
+[a2 21:26:48] log 2377971 bytes, 3 phase_end, 180 samples, $0.095 spent
+[a2 21:27:48] log 2404709 bytes, 3 phase_end, 192 samples, $0.103 spent
+[a2 21:28:48] log 2429390 bytes, 3 phase_end, 203 samples, $0.111 spent
+[a2 21:29:49] log 2456470 bytes, 3 phase_end, 215 samples, $0.119 spent
+[a2 21:30:49] log 2483286 bytes, 3 phase_end, 227 samples, $0.127 spent
+[a2 21:31:50] log 2510119 bytes, 3 phase_end, 239 samples, $0.136 spent
+[a2 21:32:50] log 2536962 bytes, 3 phase_end, 251 samples, $0.144 spent
+[a2 21:33:50] log 2563796 bytes, 3 phase_end, 263 samples, $0.152 spent
+[a2 21:34:51] log 2593127 bytes, 3 phase_end, 276 samples, $0.160 spent
+[a2 21:35:51] log 2619965 bytes, 3 phase_end, 288 samples, $0.168 spent
+[a2 21:36:51] log 2847734 bytes, 4 phase_end, 294 samples, $0.177 spent
+[a2 21:36:51] terminating qtyu4j6p6dgozr
+[a2 21:36:52] terminate outcome: ACK_204
+[a2 21:36:53] ABSENCE CONFIRMED (ACTIVE_POD_COUNT 0)
+run_id=aeth02-20260924T011512Z-7e729e54 canary=PASS stop=complete pod_wall_s=1300 est_cost=$0.177
+
+
+[exited with code 0]

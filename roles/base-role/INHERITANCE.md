@@ -27,6 +27,7 @@ Every role below carries the banner on its primary document(s):
 | Ensorain | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; first charter (Tensor World Engine falsifier) 2026-09-23; charter CHANGED 2026-09-24 to the Tensor Physics of Intelligence Foundry, verbatim in roles/Ensorain/prompts/2026-09-24_foundry_directive/ with MANIFEST; earlier charter bodies at roles/Ensorain/superseded/; self-service row per Archaeon ruling #39) |
 | Crius | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter ADOPTED 2026-09-19 (Campaign 0: adaptive workspace sandbox), verbatim in roles/Crius/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Crius/superseded/; self-service row per Archaeon ruling #39) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
+| Cyclops | RESPONSIBILITIES.md (created 2026-09-25 on the seat's creation pass on M2; new seat, charter PENDING the operator's first prompt; creation directive verbatim in roles/Cyclops/prompts/2026-09-25_creation/; self-service row per Archaeon ruling #39) |
 | Daedalus | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Diomedes | ROLE.md (already), BOOTSTRAP.md (already) |
 | Elenchus | RESPONSIBILITIES.md (already) |
@@ -95,6 +96,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Cosmos | BOOTSTRAP.md (from 2026-09-25; was RESPONSIBILITIES.md) |
 | Crius | RESPONSIBILITIES.md |
 | CrossDomainCartographer | RESPONSIBILITIES.md |
+| Cyclops | RESPONSIBILITIES.md |
 | Daedalus | RESPONSIBILITIES.md |
 | Diomedes | BOOTSTRAP.md |
 | Elenchus | RESPONSIBILITIES.md |

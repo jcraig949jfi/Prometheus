@@ -7,6 +7,15 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-09-25T18:30Z (session m2-1034e815): ENVGATE-02 RUNNING
+Hold lifted by operator directive roles/Cyclops/prompts/2026-09-25_selective_irreversibility/01_OPERATOR_DIRECTIVE_verbatim.md
+(sha256 f0dd0599..., s6: "Archaeon -- ENVGATE-02. Run the frozen experiment unchanged"; it also frames Archaeon as an
+assay/attribution LENS, not another Z80 world -- lens extraction only AFTER the frozen sequence). Relayed by Cyclops #585.
+Launched 18:30:33Z, pid 8244, 6 workers, from pinned worktree D:\Prometheus-worktrees\archaeon-envgate2-run-2026-09-25
+(detached at f3b530624). Receipt comms #593. Progress = that worktree's archaeon/envgate2/OPS_LOG.jsonl + runs/.
+If not running after a reboot: re-run `python -m archaeon.envgate2.launch_ops` in THAT worktree (resumes, skips done blocks).
+Bellerophon's coupling campaign co-runs (20 workers); it records the overlap.
+
 ## State at shutdown: NOTHING RUNNING. All science ON HOLD by operator instruction.
 Operator (2026-09-25): "Don't change anything as of yet, don't continue any experments." Do NOT relaunch anything
 until the operator decides on the engine-landscape discussion AND gives a go.

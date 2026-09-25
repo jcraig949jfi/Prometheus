@@ -1,0 +1,118 @@
+{
+  "args": [],
+  "artifact_bytes_total": 0,
+  "artifacts": [],
+  "artifacts_missing": [
+    "out/result.json",
+    "out/telemetry.jsonl"
+  ],
+  "bundle_sha256": "bb98abcb42fcd4bf8504ab2699aeba7b81e8a832a40d6c636feeb1dd2eef2433",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 614.2,
+    "hourly_usd": 0.26,
+    "usd_estimated": 0.04436
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A5000",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-24T20:49:53Z",
+  "ended_utc": "2026-09-24T21:00:07Z",
+  "entrypoint": "run.py",
+  "git": {
+    "available": true,
+    "commit": "66a4059d980334bc2ab0617df381ac8e42c9b935",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA RTX A5000",
+  "guardrails": {
+    "disk_gb": 10,
+    "max_runtime_s": 300,
+    "telemetry_interval_s": 10
+  },
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 0.898,
+      "artifact_transfer_s": 0.676,
+      "create_call_s": 1.495,
+      "teardown_total_s": 1.574,
+      "terminate_ack_s": 0.62,
+      "total_wall_s": 615.085
+    },
+    "cross_clock": {},
+    "pod_clock": {}
+  },
+  "module": "hello-gpu@1",
+  "notes": [
+    "pod never reported ready within 600 s"
+  ],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 300.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.0,
+      "bootstrap": 40.0,
+      "canary": 12.0,
+      "provision": 20.0,
+      "teardown": 5.0
+    },
+    "overhead_fraction": 0.2063,
+    "overhead_s": 78.0,
+    "total_s": 378.0,
+    "usd_compute": 0.0142,
+    "usd_overhead": 0.0037,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.0179,
+    "work_units": {
+      "estimate": 200.0,
+      "name": "steps",
+      "units_per_usd": 11204.481792717086,
+      "usd_per_1e9_units": 89250.0,
+      "usd_per_unit": 8.925e-05
+    }
+  },
+  "pods": [
+    {
+      "created_utc": "2026-09-24T21:00:08Z",
+      "creation_outcome": "confirmed",
+      "id": "95nw8ovtlqrdlm",
+      "observed_absent": true,
+      "terminate_acknowledged": true
+    }
+  ],
+  "preregistered_estimate": null,
+  "result": "FAILED",
+  "run_id": "hello-gpu-20260924T204952Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "cc361e5658a98919ac78e6a554471d0ad46073153c216cc4239703b9cbcd696d",
+  "started_utc": "2026-09-24T20:49:53Z",
+  "telemetry_summary": {
+    "complete": false,
+    "note": "no telemetry; the workload may never have started",
+    "records": 0
+  },
+  "transport": "repo-pinned"
+}

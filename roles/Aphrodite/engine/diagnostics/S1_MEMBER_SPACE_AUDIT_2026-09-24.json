@@ -1,0 +1,472 @@
+{
+ "space": "H1 x H2 x FINAL_SPACE",
+ "programs": 151920,
+ "classes": 7808,
+ "members_in_multi_member_classes": 148761,
+ "false_merges": 74,
+ "examples": [
+  [
+   [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "acc"
+   ],
+   [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "(acc + 0)"
+   ],
+   [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "(0 + acc)"
+   ],
+   [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "(acc // 1)"
+   ],
+   [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "fold",
+    "0",
+    "math.gcd(abs(acc), abs(v))",
+    "math.gcd(abs(acc), abs(first))"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "first"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first + 0)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 + first)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first // 1)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "math.gcd(abs(first), abs(first))"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "math.gcd(abs(first), abs(0))"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "last"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last + 0)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 + last)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last // 1)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "math.gcd(abs(last), abs(last))"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "math.gcd(abs(last), abs(0))"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "0"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 + 0)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first // acc)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 // acc)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 // first)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 // last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "1"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(0 + 1)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(1 + 0)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(acc // acc)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first // first)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last // last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first + first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first + first)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first + last)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last + first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first + last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(last + first)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first + 1)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(1 + first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first + 1)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(1 + first)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last + last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(last + last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last + 1)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(1 + last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(last + 1)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(1 + last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(1 + 1)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(1 + 1)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first // last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first // last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last // first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(last // first)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(1 // last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(1 // last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "math.gcd(abs(first), abs(last))"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "math.gcd(abs(last), abs(first))"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "math.gcd(abs(first), abs(last))"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "math.gcd(abs(last), abs(first))"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first % last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first % last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last % first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(last % first)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(1 % last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(1 % last)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first * first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first * first)"
+   ]
+  ],
+  [
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(first * last)"
+   ],
+   [
+    "fold",
+    "0",
+    "(v + (acc * acc))",
+    "(last * first)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(first * last)"
+   ],
+   [
+    "fold",
+    "1",
+    "(v + (acc * acc))",
+    "(last * first)"
+   ]
+  ]
+ ],
+ "seconds": 11137.7,
+ "domain": "D_TASK_T3_v1",
+ "B1_sha256": "f60f8835ea2c059189a140ff4529008bc608faf3847da39cfe50ee886d227240"
+}

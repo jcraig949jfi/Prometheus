@@ -1,0 +1,302 @@
+{
+ "K": 4,
+ "families": [
+  {
+   "body": "(v + (acc // 1))",
+   "final": "(0 + acc)",
+   "init": "1",
+   "name": "tE_add_a",
+   "role": "TRANSFER",
+   "stratum": "add"
+  },
+  {
+   "body": "(v + (acc - first))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "init": "0",
+   "name": "tE_add_b",
+   "role": "TRANSFER",
+   "stratum": "add"
+  },
+  {
+   "body": "(v + (acc + first))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "init": "0",
+   "name": "tE_add_c",
+   "role": "VALIDATE",
+   "stratum": "add"
+  },
+  {
+   "body": "(0 + (acc + v))",
+   "final": "(acc // first)",
+   "init": "1",
+   "name": "tE_add_d",
+   "role": "OBSERVE",
+   "stratum": "add"
+  },
+  {
+   "body": "(acc - (first // v))",
+   "final": "(acc % last)",
+   "init": "1",
+   "name": "tE_sub_a",
+   "role": "TRANSFER",
+   "stratum": "sub"
+  },
+  {
+   "body": "(0 - math.gcd(abs(acc), abs(v)))",
+   "final": "(first - acc)",
+   "init": "0",
+   "name": "tE_sub_b",
+   "role": "OBSERVE",
+   "stratum": "sub"
+  },
+  {
+   "body": "(acc - math.gcd(abs(v), abs(0)))",
+   "final": "(last - acc)",
+   "init": "1",
+   "name": "tE_sub_c",
+   "role": "TRANSFER",
+   "stratum": "sub"
+  },
+  {
+   "body": "(acc - (last - v))",
+   "final": "(acc + 0)",
+   "init": "1",
+   "name": "tE_sub_d",
+   "role": "VALIDATE",
+   "stratum": "sub"
+  },
+  {
+   "body": "(first * (acc % v))",
+   "final": "math.gcd(abs(first), abs(acc))",
+   "init": "1",
+   "name": "tE_mul_a",
+   "role": "TRANSFER",
+   "stratum": "mul"
+  },
+  {
+   "body": "(acc * (v // first))",
+   "final": "math.gcd(abs(first), abs(acc))",
+   "init": "1",
+   "name": "tE_mul_b",
+   "role": "VALIDATE",
+   "stratum": "mul"
+  },
+  {
+   "body": "(1 * (acc - v))",
+   "final": "(last + acc)",
+   "init": "1",
+   "name": "tE_mul_c",
+   "role": "OBSERVE",
+   "stratum": "mul"
+  },
+  {
+   "body": "(1 * (v + acc))",
+   "final": "(acc + acc)",
+   "init": "0",
+   "name": "tE_mul_d",
+   "role": "TRANSFER",
+   "stratum": "mul"
+  },
+  {
+   "body": "(v // (v + acc))",
+   "final": "(acc * acc)",
+   "init": "1",
+   "name": "tE_fdiv_a",
+   "role": "OBSERVE",
+   "stratum": "fdiv"
+  },
+  {
+   "body": "(acc // math.gcd(abs(v), abs(last)))",
+   "final": "(acc + last)",
+   "init": "1",
+   "name": "tE_fdiv_b",
+   "role": "TRANSFER",
+   "stratum": "fdiv"
+  },
+  {
+   "body": "(1 // pow(v, acc))",
+   "final": "(first * acc)",
+   "init": "0",
+   "name": "tE_fdiv_c",
+   "role": "TRANSFER",
+   "stratum": "fdiv"
+  },
+  {
+   "body": "(v // (v + acc))",
+   "final": "(acc // 1)",
+   "init": "0",
+   "name": "tE_fdiv_d",
+   "role": "VALIDATE",
+   "stratum": "fdiv"
+  },
+  {
+   "body": "(1 % (acc - v))",
+   "final": "(last * acc)",
+   "init": "1",
+   "name": "tE_mod_a",
+   "role": "OBSERVE",
+   "stratum": "mod"
+  },
+  {
+   "body": "(acc % math.gcd(abs(first), abs(v)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "init": "1",
+   "name": "tE_mod_b",
+   "role": "VALIDATE",
+   "stratum": "mod"
+  },
+  {
+   "body": "(acc % pow(1, v))",
+   "final": "(acc - first)",
+   "init": "1",
+   "name": "tE_mod_c",
+   "role": "TRANSFER",
+   "stratum": "mod"
+  },
+  {
+   "body": "(v % (acc - v))",
+   "final": "math.gcd(abs(0), abs(acc))",
+   "init": "1",
+   "name": "tE_mod_d",
+   "role": "TRANSFER",
+   "stratum": "mod"
+  },
+  {
+   "body": "math.gcd(abs(first), abs(pow(acc, v)))",
+   "final": "(acc - 1)",
+   "init": "0",
+   "name": "tE_gcd_a",
+   "role": "TRANSFER",
+   "stratum": "gcd"
+  },
+  {
+   "body": "math.gcd(abs(acc), abs((0 % v)))",
+   "final": "(acc + first)",
+   "init": "1",
+   "name": "tE_gcd_b",
+   "role": "VALIDATE",
+   "stratum": "gcd"
+  },
+  {
+   "body": "math.gcd(abs(last), abs((acc * v)))",
+   "final": "(acc + 0)",
+   "init": "1",
+   "name": "tE_gcd_c",
+   "role": "TRANSFER",
+   "stratum": "gcd"
+  },
+  {
+   "body": "math.gcd(abs(first), abs((acc * v)))",
+   "final": "(acc - last)",
+   "init": "0",
+   "name": "tE_gcd_d",
+   "role": "OBSERVE",
+   "stratum": "gcd"
+  },
+  {
+   "body": "pow(v, (0 * acc))",
+   "final": "(acc - first)",
+   "init": "1",
+   "name": "tE_powr_a",
+   "role": "TRANSFER",
+   "stratum": "powr"
+  },
+  {
+   "body": "pow(acc, (first // v))",
+   "final": "pow(first, acc)",
+   "init": "0",
+   "name": "tE_powr_b",
+   "role": "VALIDATE",
+   "stratum": "powr"
+  },
+  {
+   "body": "pow(acc, (first + v))",
+   "final": "(acc - first)",
+   "init": "1",
+   "name": "tE_powr_c",
+   "role": "OBSERVE",
+   "stratum": "powr"
+  },
+  {
+   "body": "pow(acc, (v * v))",
+   "final": "(acc + first)",
+   "init": "1",
+   "name": "tE_powr_d",
+   "role": "TRANSFER",
+   "stratum": "powr"
+  }
+ ],
+ "generation_log": {
+  "add": {
+   "rejected": {
+    "F1_order": 4,
+    "F2_fails": 5,
+    "F3_constant": 2
+   },
+   "tried": 15
+  },
+  "fdiv": {
+   "rejected": {
+    "F1_order": 17,
+    "F2_fails": 35,
+    "F3_constant": 25,
+    "F4_duplicate": 1
+   },
+   "tried": 82
+  },
+  "gcd": {
+   "rejected": {
+    "F1_order": 10,
+    "F2_fails": 6,
+    "F3_constant": 18,
+    "F4_duplicate": 2
+   },
+   "tried": 40
+  },
+  "mod": {
+   "rejected": {
+    "F1_order": 12,
+    "F2_fails": 35,
+    "F3_constant": 12,
+    "F4_duplicate": 3
+   },
+   "tried": 66
+  },
+  "mul": {
+   "rejected": {
+    "F1_order": 8,
+    "F2_fails": 34,
+    "F3_constant": 37,
+    "F4_duplicate": 6
+   },
+   "tried": 89
+  },
+  "powr": {
+   "rejected": {
+    "F1_order": 25,
+    "F2_fails": 14,
+    "F3_constant": 32,
+    "F4_duplicate": 3
+   },
+   "tried": 78
+  },
+  "sub": {
+   "rejected": {
+    "F1_order": 11,
+    "F2_fails": 5,
+    "F3_constant": 3
+   },
+   "tried": 23
+  }
+ },
+ "sha256": "25a2535cbba11f205bfa8f27c06cac33dce78b25392e5f2052b72d4bf31e9056",
+ "strata": [
+  "add",
+  "sub",
+  "mul",
+  "fdiv",
+  "mod",
+  "gcd",
+  "powr"
+ ]
+}

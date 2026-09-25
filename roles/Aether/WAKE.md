@@ -1,6 +1,6 @@
 # Aether wake block -- paste this to boot this seat
 
-Currency: 2026-09-23.
+Currency: 2026-09-25.
 
 This is `roles/base-role/WAKE_DIRECTIVE.md`'s conformant wording with
 this seat's name filled in and its task line supplied. The base file is
@@ -22,7 +22,9 @@ shell first. Then boot in that worktree
 (python -m comms boot Aether --model <id>), read
 roles/base-role/RESPONSIBILITIES.md, and follow its boot sequence.
 
-Read roles/Aether/TODO.md first.
+Read roles/Aether/TODO.md first. The primary mission is the
+RunPod engineering ladder at Iteration 2; AETH-02 science is
+closed. Do not start a science round.
 
 ----------------------------------------------------------------------
 

@@ -1,0 +1,146 @@
+{
+  "args": [],
+  "artifact_bytes_total": 980,
+  "artifacts": [
+    {
+      "bytes": 980,
+      "path": "telemetry.jsonl",
+      "sha256": "79deae330d629e3663f393cbe60c803f706f8919a4c2cbc2574c6391d9b176d8"
+    }
+  ],
+  "artifacts_missing": [
+    "result.json"
+  ],
+  "bundle_sha256": "d363c477cf1bda385836415e7f784079b0fecf295e3dad208ecf31f9d66139ba",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 34.0,
+    "hourly_usd": 0.34,
+    "usd_estimated": 0.00321,
+    "work_units": {
+      "actual": 200.0,
+      "name": "steps",
+      "usd_per_1e9_units": 16073.065578937534,
+      "usd_per_unit": 1.6073065578937534e-05
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A5000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA GeForce RTX 4090",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-24T21:14:10Z",
+  "ended_utc": "2026-09-24T21:14:44Z",
+  "entrypoint": "run.py",
+  "git": {
+    "available": true,
+    "commit": "d71a52e946416ab0a839893ec75a5ded34817cdf",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA GeForce RTX 4090",
+  "guardrails": {
+    "disk_gb": 10,
+    "max_runtime_s": 300,
+    "telemetry_interval_s": 10
+  },
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 0.701,
+      "accepted_to_first_telemetry_s": 31.499,
+      "artifact_transfer_s": 0.397,
+      "create_call_s": 2.035,
+      "teardown_total_s": 1.098,
+      "terminate_ack_s": 0.491,
+      "total_wall_s": 34.738
+    },
+    "cross_clock": {},
+    "module_reported_elapsed_s": 0.659,
+    "pod_clock": {}
+  },
+  "module": "hello-gpu@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 300.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.0,
+      "bootstrap": 40.0,
+      "canary": 12.0,
+      "provision": 20.0,
+      "teardown": 5.0
+    },
+    "overhead_fraction": 0.2063,
+    "overhead_s": 78.0,
+    "total_s": 378.0,
+    "usd_compute": 0.0142,
+    "usd_overhead": 0.0037,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.0179,
+    "work_units": {
+      "estimate": 200.0,
+      "name": "steps",
+      "units_per_usd": 11204.481792717086,
+      "usd_per_1e9_units": 89250.0,
+      "usd_per_unit": 8.925e-05
+    }
+  },
+  "pods": [
+    {
+      "created_utc": "2026-09-24T21:14:45Z",
+      "creation_outcome": "confirmed",
+      "id": "ucrf1r9dardwew",
+      "observed_absent": true,
+      "terminate_acknowledged": true
+    }
+  ],
+  "preregistered_estimate": null,
+  "result": "OK",
+  "run_id": "hello-gpu-20260924T211409Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "4a487e24de50c852a78ccd04dfe9a60afc06e9463e2a8e159026805ec4b8b047",
+  "started_utc": "2026-09-24T21:14:10Z",
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 0.659,
+    "errors": 0,
+    "first_utc": "2026-09-24T21:14:27Z",
+    "kinds": {
+      "end": 1,
+      "progress": 4,
+      "start": 1
+    },
+    "last_utc": "2026-09-24T21:14:27Z",
+    "max_gap_s": 0.298,
+    "module_status": "ok",
+    "records": 6,
+    "units_final": 200,
+    "units_per_s": 303.4901,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

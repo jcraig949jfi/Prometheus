@@ -1,0 +1,5435 @@
+{
+ "A": {
+  "draws": {
+   "add": [
+    {
+     "body": "(1 + pow(acc, v))",
+     "draw": 0,
+     "final": "pow(acc, acc)",
+     "init": "0",
+     "name": "fA_add_aa",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v // v))",
+     "draw": 1,
+     "final": "(acc + first)",
+     "init": "0",
+     "name": "fA_add_ab",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + (acc - v))",
+     "draw": 2,
+     "final": "acc",
+     "init": "0",
+     "name": "fA_add_ac",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v * v))",
+     "draw": 3,
+     "final": "(first // acc)",
+     "init": "1",
+     "name": "fA_add_ad",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (acc % acc))",
+     "draw": 4,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fA_add_ae",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + pow(acc, last))",
+     "draw": 5,
+     "final": "(acc // first)",
+     "init": "0",
+     "name": "fA_add_af",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(1), abs(acc)))",
+     "draw": 6,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fA_add_ag",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v + v))",
+     "draw": 7,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_add_ah",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (acc % v))",
+     "draw": 8,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fA_add_ai",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v * v))",
+     "draw": 9,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fA_add_aj",
+     "stratum": "add"
+    },
+    {
+     "body": "(1 + (v + acc))",
+     "draw": 10,
+     "final": "pow(1, acc)",
+     "init": "0",
+     "name": "fA_add_ak",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + pow(1, v))",
+     "draw": 11,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fA_add_al",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (1 // v))",
+     "draw": 12,
+     "final": "(1 // acc)",
+     "init": "1",
+     "name": "fA_add_am",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (v // acc))",
+     "draw": 13,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fA_add_an",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (1 - acc))",
+     "draw": 14,
+     "final": "(acc + last)",
+     "init": "0",
+     "name": "fA_add_ao",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (first * acc))",
+     "draw": 15,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fA_add_ap",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v * acc))",
+     "draw": 16,
+     "final": "(acc // 1)",
+     "init": "1",
+     "name": "fA_add_aq",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v + first))",
+     "draw": 17,
+     "final": "acc",
+     "init": "1",
+     "name": "fA_add_ar",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (v * acc))",
+     "draw": 18,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_add_as",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (0 - acc))",
+     "draw": 19,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "0",
+     "name": "fA_add_at",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + pow(acc, v))",
+     "draw": 20,
+     "final": "pow(1, acc)",
+     "init": "1",
+     "name": "fA_add_au",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(0), abs(acc)))",
+     "draw": 21,
+     "final": "(first + acc)",
+     "init": "1",
+     "name": "fA_add_av",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + pow(v, acc))",
+     "draw": 22,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fA_add_aw",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (v - acc))",
+     "draw": 23,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "1",
+     "name": "fA_add_ax",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (last - v))",
+     "draw": 24,
+     "final": "pow(acc, 1)",
+     "init": "0",
+     "name": "fA_add_ay",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v % acc))",
+     "draw": 25,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fA_add_az",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + pow(acc, v))",
+     "draw": 26,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "0",
+     "name": "fA_add_ba",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (1 + acc))",
+     "draw": 27,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "0",
+     "name": "fA_add_bb",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (acc + v))",
+     "draw": 28,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fA_add_bc",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (first + acc))",
+     "draw": 29,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fA_add_bd",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v + v))",
+     "draw": 30,
+     "final": "(acc // last)",
+     "init": "0",
+     "name": "fA_add_be",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + v)",
+     "draw": 31,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fA_add_bf",
+     "stratum": "add"
+    }
+   ],
+   "fdiv": [
+    {
+     "body": "(last // pow(v, acc))",
+     "draw": 0,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_fdiv_aa",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // pow(last, v))",
+     "draw": 1,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fA_fdiv_ab",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (acc + v))",
+     "draw": 2,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "0",
+     "name": "fA_fdiv_ac",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // pow(acc, acc))",
+     "draw": 3,
+     "final": "(1 // acc)",
+     "init": "0",
+     "name": "fA_fdiv_ad",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(1 // (acc % v))",
+     "draw": 4,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_fdiv_ae",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // math.gcd(abs(v), abs(last)))",
+     "draw": 5,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fA_fdiv_af",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // pow(1, acc))",
+     "draw": 6,
+     "final": "(first // acc)",
+     "init": "1",
+     "name": "fA_fdiv_ag",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (1 - acc))",
+     "draw": 7,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fA_fdiv_ah",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last % v))",
+     "draw": 8,
+     "final": "pow(acc, first)",
+     "init": "0",
+     "name": "fA_fdiv_ai",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // pow(last, acc))",
+     "draw": 9,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_fdiv_aj",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // math.gcd(abs(acc), abs(v)))",
+     "draw": 10,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fA_fdiv_ak",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(acc), abs(v)))",
+     "draw": 11,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fA_fdiv_al",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(v), abs(acc)))",
+     "draw": 12,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fA_fdiv_am",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc + last))",
+     "draw": 13,
+     "final": "(1 * acc)",
+     "init": "0",
+     "name": "fA_fdiv_an",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(acc), abs(v)))",
+     "draw": 14,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fA_fdiv_ao",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v - last))",
+     "draw": 15,
+     "final": "(acc // acc)",
+     "init": "1",
+     "name": "fA_fdiv_ap",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last - v))",
+     "draw": 16,
+     "final": "(first + acc)",
+     "init": "0",
+     "name": "fA_fdiv_aq",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v - 1))",
+     "draw": 17,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fA_fdiv_ar",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (1 * acc))",
+     "draw": 18,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fA_fdiv_as",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (v // acc))",
+     "draw": 19,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "1",
+     "name": "fA_fdiv_at",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // pow(acc, last))",
+     "draw": 20,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fA_fdiv_au",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (v - acc))",
+     "draw": 21,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fA_fdiv_av",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last - v))",
+     "draw": 22,
+     "final": "(1 - acc)",
+     "init": "0",
+     "name": "fA_fdiv_aw",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v % last))",
+     "draw": 23,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fA_fdiv_ax",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // pow(v, acc))",
+     "draw": 24,
+     "final": "(acc % acc)",
+     "init": "1",
+     "name": "fA_fdiv_ay",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(first)))",
+     "draw": 25,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fA_fdiv_az",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(first)))",
+     "draw": 26,
+     "final": "(acc * first)",
+     "init": "1",
+     "name": "fA_fdiv_ba",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (acc * v))",
+     "draw": 27,
+     "final": "(acc - 1)",
+     "init": "1",
+     "name": "fA_fdiv_bb",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (v * acc))",
+     "draw": 28,
+     "final": "(acc // 1)",
+     "init": "1",
+     "name": "fA_fdiv_bc",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc + first))",
+     "draw": 29,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fA_fdiv_bd",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(v), abs(acc)))",
+     "draw": 30,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_fdiv_be",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // pow(first, acc))",
+     "draw": 31,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "0",
+     "name": "fA_fdiv_bf",
+     "stratum": "fdiv"
+    }
+   ],
+   "gcd": [
+    {
+     "body": "math.gcd(abs(v), abs((acc - first)))",
+     "draw": 0,
+     "final": "(1 * acc)",
+     "init": "0",
+     "name": "fA_gcd_aa",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0))))",
+     "draw": 1,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fA_gcd_ab",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs(pow(first, acc)))",
+     "draw": 2,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fA_gcd_ac",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc // 1)))",
+     "draw": 3,
+     "final": "(acc * acc)",
+     "init": "0",
+     "name": "fA_gcd_ad",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((first + acc)))",
+     "draw": 4,
+     "final": "(acc * first)",
+     "init": "0",
+     "name": "fA_gcd_ae",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(math.gcd(abs(0), abs(v))))",
+     "draw": 5,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_gcd_af",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((v % acc)))",
+     "draw": 6,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "1",
+     "name": "fA_gcd_ag",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((last - acc)))",
+     "draw": 7,
+     "final": "(acc + first)",
+     "init": "0",
+     "name": "fA_gcd_ah",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((v + acc)))",
+     "draw": 8,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fA_gcd_ai",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((acc - v)))",
+     "draw": 9,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fA_gcd_aj",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((v * acc)))",
+     "draw": 10,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fA_gcd_ak",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v // last)))",
+     "draw": 11,
+     "final": "pow(acc, last)",
+     "init": "0",
+     "name": "fA_gcd_al",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs(math.gcd(abs(v), abs(acc))))",
+     "draw": 12,
+     "final": "(acc - last)",
+     "init": "0",
+     "name": "fA_gcd_am",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs(math.gcd(abs(acc), abs(v))))",
+     "draw": 13,
+     "final": "acc",
+     "init": "0",
+     "name": "fA_gcd_an",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((acc + v)))",
+     "draw": 14,
+     "final": "acc",
+     "init": "1",
+     "name": "fA_gcd_ao",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((last * acc)))",
+     "draw": 15,
+     "final": "(last % acc)",
+     "init": "0",
+     "name": "fA_gcd_ap",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((v * acc)))",
+     "draw": 16,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fA_gcd_aq",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc // last)))",
+     "draw": 17,
+     "final": "(acc * acc)",
+     "init": "0",
+     "name": "fA_gcd_ar",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((last - v)))",
+     "draw": 18,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fA_gcd_as",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((v - acc)))",
+     "draw": 19,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fA_gcd_at",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((first + acc)))",
+     "draw": 20,
+     "final": "(1 // acc)",
+     "init": "0",
+     "name": "fA_gcd_au",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((v + acc)))",
+     "draw": 21,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fA_gcd_av",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((0 * acc)))",
+     "draw": 22,
+     "final": "(acc % first)",
+     "init": "0",
+     "name": "fA_gcd_aw",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs(pow(acc, 1)))",
+     "draw": 23,
+     "final": "(acc * first)",
+     "init": "0",
+     "name": "fA_gcd_ax",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((v - acc)))",
+     "draw": 24,
+     "final": "(last % acc)",
+     "init": "0",
+     "name": "fA_gcd_ay",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((first - acc)))",
+     "draw": 25,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fA_gcd_az",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((last % v)))",
+     "draw": 26,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fA_gcd_ba",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs(pow(acc, 1)))",
+     "draw": 27,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fA_gcd_bb",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((acc // v)))",
+     "draw": 28,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_gcd_bc",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v + acc)))",
+     "draw": 29,
+     "final": "(last % acc)",
+     "init": "0",
+     "name": "fA_gcd_bd",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v * last)))",
+     "draw": 30,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fA_gcd_be",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc * v)))",
+     "draw": 31,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fA_gcd_bf",
+     "stratum": "gcd"
+    }
+   ],
+   "mod": [
+    {
+     "body": "(v % (acc + first))",
+     "draw": 0,
+     "final": "(first - acc)",
+     "init": "1",
+     "name": "fA_mod_aa",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % math.gcd(abs(acc), abs(1)))",
+     "draw": 1,
+     "final": "(acc - first)",
+     "init": "0",
+     "name": "fA_mod_ab",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first - acc))",
+     "draw": 2,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "1",
+     "name": "fA_mod_ac",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (last * v))",
+     "draw": 3,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fA_mod_ad",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (v + acc))",
+     "draw": 4,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fA_mod_ae",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v // first))",
+     "draw": 5,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_mod_af",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc - first))",
+     "draw": 6,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fA_mod_ag",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (acc - v))",
+     "draw": 7,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fA_mod_ah",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + acc))",
+     "draw": 8,
+     "final": "(0 * acc)",
+     "init": "1",
+     "name": "fA_mod_ai",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (acc * v))",
+     "draw": 9,
+     "final": "(acc - 0)",
+     "init": "1",
+     "name": "fA_mod_aj",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % math.gcd(abs(v), abs(acc)))",
+     "draw": 10,
+     "final": "(first % acc)",
+     "init": "1",
+     "name": "fA_mod_ak",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (last % v))",
+     "draw": 11,
+     "final": "(first % acc)",
+     "init": "1",
+     "name": "fA_mod_al",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % math.gcd(abs(acc), abs(v)))",
+     "draw": 12,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fA_mod_am",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v + last))",
+     "draw": 13,
+     "final": "(last + acc)",
+     "init": "1",
+     "name": "fA_mod_an",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (last - acc))",
+     "draw": 14,
+     "final": "(first % acc)",
+     "init": "1",
+     "name": "fA_mod_ao",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (v + acc))",
+     "draw": 15,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fA_mod_ap",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v // first))",
+     "draw": 16,
+     "final": "(acc % first)",
+     "init": "0",
+     "name": "fA_mod_aq",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (first // v))",
+     "draw": 17,
+     "final": "(first + acc)",
+     "init": "1",
+     "name": "fA_mod_ar",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % math.gcd(abs(acc), abs(v)))",
+     "draw": 18,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fA_mod_as",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % (v - acc))",
+     "draw": 19,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "0",
+     "name": "fA_mod_at",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first - acc))",
+     "draw": 20,
+     "final": "(acc + last)",
+     "init": "0",
+     "name": "fA_mod_au",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (v + acc))",
+     "draw": 21,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fA_mod_av",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % math.gcd(abs(v), abs(acc)))",
+     "draw": 22,
+     "final": "(1 % acc)",
+     "init": "0",
+     "name": "fA_mod_aw",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % math.gcd(abs(acc), abs(first)))",
+     "draw": 23,
+     "final": "pow(0, acc)",
+     "init": "0",
+     "name": "fA_mod_ax",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + acc))",
+     "draw": 24,
+     "final": "(last % acc)",
+     "init": "1",
+     "name": "fA_mod_ay",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (acc - v))",
+     "draw": 25,
+     "final": "(first - acc)",
+     "init": "1",
+     "name": "fA_mod_az",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + acc))",
+     "draw": 26,
+     "final": "acc",
+     "init": "1",
+     "name": "fA_mod_ba",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (last - v))",
+     "draw": 27,
+     "final": "(acc * last)",
+     "init": "1",
+     "name": "fA_mod_bb",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % math.gcd(abs(v), abs(first)))",
+     "draw": 28,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fA_mod_bc",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % math.gcd(abs(last), abs(acc)))",
+     "draw": 29,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_mod_bd",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % math.gcd(abs(v), abs(acc)))",
+     "draw": 30,
+     "final": "(acc - 0)",
+     "init": "0",
+     "name": "fA_mod_be",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % pow(last, acc))",
+     "draw": 31,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fA_mod_bf",
+     "stratum": "mod"
+    }
+   ],
+   "mul": [
+    {
+     "body": "(acc * (v + v))",
+     "draw": 0,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fA_mul_aa",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (last // v))",
+     "draw": 1,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fA_mul_ab",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (1 - v))",
+     "draw": 2,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fA_mul_ac",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * pow(v, acc))",
+     "draw": 3,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fA_mul_ad",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(1), abs(acc)))",
+     "draw": 4,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fA_mul_ae",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v - v))",
+     "draw": 5,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_mul_af",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v - v))",
+     "draw": 6,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fA_mul_ag",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * math.gcd(abs(v), abs(v)))",
+     "draw": 7,
+     "final": "(last // acc)",
+     "init": "1",
+     "name": "fA_mul_ah",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * pow(acc, acc))",
+     "draw": 8,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fA_mul_ai",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * math.gcd(abs(first), abs(v)))",
+     "draw": 9,
+     "final": "(acc // acc)",
+     "init": "1",
+     "name": "fA_mul_aj",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (acc % v))",
+     "draw": 10,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "0",
+     "name": "fA_mul_ak",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(acc), abs(acc)))",
+     "draw": 11,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fA_mul_al",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v - 0))",
+     "draw": 12,
+     "final": "(0 + acc)",
+     "init": "1",
+     "name": "fA_mul_am",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (v - acc))",
+     "draw": 13,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fA_mul_an",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (first // v))",
+     "draw": 14,
+     "final": "(acc // last)",
+     "init": "1",
+     "name": "fA_mul_ao",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (last + acc))",
+     "draw": 15,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fA_mul_ap",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (acc - v))",
+     "draw": 16,
+     "final": "(acc // acc)",
+     "init": "1",
+     "name": "fA_mul_aq",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (v + acc))",
+     "draw": 17,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_mul_ar",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (first + acc))",
+     "draw": 18,
+     "final": "acc",
+     "init": "1",
+     "name": "fA_mul_as",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * (v * acc))",
+     "draw": 19,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fA_mul_at",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * math.gcd(abs(v), abs(acc)))",
+     "draw": 20,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_mul_au",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v + 1))",
+     "draw": 21,
+     "final": "(last // acc)",
+     "init": "1",
+     "name": "fA_mul_av",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * pow(acc, acc))",
+     "draw": 22,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fA_mul_aw",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * pow(acc, v))",
+     "draw": 23,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fA_mul_ax",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * (acc + v))",
+     "draw": 24,
+     "final": "(1 + acc)",
+     "init": "1",
+     "name": "fA_mul_ay",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * (acc * v))",
+     "draw": 25,
+     "final": "(acc % acc)",
+     "init": "1",
+     "name": "fA_mul_az",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(acc), abs(last)))",
+     "draw": 26,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_mul_ba",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (first + v))",
+     "draw": 27,
+     "final": "(first + acc)",
+     "init": "1",
+     "name": "fA_mul_bb",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * pow(v, acc))",
+     "draw": 28,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fA_mul_bc",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v + 1))",
+     "draw": 29,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fA_mul_bd",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(v), abs(acc)))",
+     "draw": 30,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fA_mul_be",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * pow(0, acc))",
+     "draw": 31,
+     "final": "pow(first, acc)",
+     "init": "0",
+     "name": "fA_mul_bf",
+     "stratum": "mul"
+    }
+   ],
+   "powr": [
+    {
+     "body": "pow(acc, (v - 1))",
+     "draw": 0,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fA_powr_aa",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc * acc))",
+     "draw": 1,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fA_powr_ab",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (first + acc))",
+     "draw": 2,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fA_powr_ac",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(acc, last))",
+     "draw": 3,
+     "final": "pow(1, acc)",
+     "init": "0",
+     "name": "fA_powr_ad",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(v, acc))",
+     "draw": 4,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fA_powr_ae",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, (v * acc))",
+     "draw": 5,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fA_powr_af",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (v - last))",
+     "draw": 6,
+     "final": "(1 // acc)",
+     "init": "1",
+     "name": "fA_powr_ag",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc // last))",
+     "draw": 7,
+     "final": "(acc % 1)",
+     "init": "0",
+     "name": "fA_powr_ah",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(0, (v * acc))",
+     "draw": 8,
+     "final": "(acc // acc)",
+     "init": "1",
+     "name": "fA_powr_ai",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc // last))",
+     "draw": 9,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fA_powr_aj",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, acc)",
+     "draw": 10,
+     "final": "(last * acc)",
+     "init": "0",
+     "name": "fA_powr_ak",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (v // last))",
+     "draw": 11,
+     "final": "(acc - 0)",
+     "init": "0",
+     "name": "fA_powr_al",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, pow(acc, v))",
+     "draw": 12,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fA_powr_am",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (first * v))",
+     "draw": 13,
+     "final": "(1 // acc)",
+     "init": "1",
+     "name": "fA_powr_an",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, pow(acc, v))",
+     "draw": 14,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fA_powr_ao",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc * last))",
+     "draw": 15,
+     "final": "(last + acc)",
+     "init": "0",
+     "name": "fA_powr_ap",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, (v + acc))",
+     "draw": 16,
+     "final": "acc",
+     "init": "1",
+     "name": "fA_powr_aq",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (first - v))",
+     "draw": 17,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fA_powr_ar",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(acc, 0))",
+     "draw": 18,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fA_powr_as",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, acc)",
+     "draw": 19,
+     "final": "(acc + 0)",
+     "init": "0",
+     "name": "fA_powr_at",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(first, acc))",
+     "draw": 20,
+     "final": "(acc + 0)",
+     "init": "0",
+     "name": "fA_powr_au",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc * v))",
+     "draw": 21,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fA_powr_av",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + first))",
+     "draw": 22,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fA_powr_aw",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, (v - acc))",
+     "draw": 23,
+     "final": "(0 + acc)",
+     "init": "1",
+     "name": "fA_powr_ax",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, math.gcd(abs(acc), abs(v)))",
+     "draw": 24,
+     "final": "(acc - acc)",
+     "init": "1",
+     "name": "fA_powr_ay",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (last * v))",
+     "draw": 25,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fA_powr_az",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (0 - acc))",
+     "draw": 26,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fA_powr_ba",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, (acc % v))",
+     "draw": 27,
+     "final": "(last * acc)",
+     "init": "0",
+     "name": "fA_powr_bb",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, (v * acc))",
+     "draw": 28,
+     "final": "(0 % acc)",
+     "init": "0",
+     "name": "fA_powr_bc",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, (v - acc))",
+     "draw": 29,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "0",
+     "name": "fA_powr_bd",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, math.gcd(abs(0), abs(acc)))",
+     "draw": 30,
+     "final": "math.gcd(abs(acc), abs(1))",
+     "init": "1",
+     "name": "fA_powr_be",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (v - acc))",
+     "draw": 31,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fA_powr_bf",
+     "stratum": "powr"
+    }
+   ],
+   "sub": [
+    {
+     "body": "(0 - pow(acc, v))",
+     "draw": 0,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fA_sub_aa",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - (acc + v))",
+     "draw": 1,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "0",
+     "name": "fA_sub_ab",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (first * v))",
+     "draw": 2,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fA_sub_ac",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (last % v))",
+     "draw": 3,
+     "final": "(acc // last)",
+     "init": "0",
+     "name": "fA_sub_ad",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v - first))",
+     "draw": 4,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fA_sub_ae",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (0 + v))",
+     "draw": 5,
+     "final": "(acc - 0)",
+     "init": "1",
+     "name": "fA_sub_af",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - (acc % v))",
+     "draw": 6,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fA_sub_ag",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - math.gcd(abs(v), abs(first)))",
+     "draw": 7,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fA_sub_ah",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc - acc))",
+     "draw": 8,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fA_sub_ai",
+     "stratum": "sub"
+    },
+    {
+     "body": "(0 - math.gcd(abs(acc), abs(v)))",
+     "draw": 9,
+     "final": "(1 * acc)",
+     "init": "0",
+     "name": "fA_sub_aj",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - pow(acc, last))",
+     "draw": 10,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fA_sub_ak",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc % last))",
+     "draw": 11,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fA_sub_al",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - pow(acc, acc))",
+     "draw": 12,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fA_sub_am",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (first % v))",
+     "draw": 13,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fA_sub_an",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (v + acc))",
+     "draw": 14,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fA_sub_ao",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - math.gcd(abs(last), abs(v)))",
+     "draw": 15,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fA_sub_ap",
+     "stratum": "sub"
+    },
+    {
+     "body": "(first - (v * acc))",
+     "draw": 16,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fA_sub_aq",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (v * acc))",
+     "draw": 17,
+     "final": "(acc % acc)",
+     "init": "0",
+     "name": "fA_sub_ar",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(first), abs(acc)))",
+     "draw": 18,
+     "final": "acc",
+     "init": "1",
+     "name": "fA_sub_as",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc % 1))",
+     "draw": 19,
+     "final": "(acc - last)",
+     "init": "0",
+     "name": "fA_sub_at",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - math.gcd(abs(acc), abs(v)))",
+     "draw": 20,
+     "final": "(0 - acc)",
+     "init": "0",
+     "name": "fA_sub_au",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc // v))",
+     "draw": 21,
+     "final": "(acc + acc)",
+     "init": "0",
+     "name": "fA_sub_av",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (last - acc))",
+     "draw": 22,
+     "final": "(last - acc)",
+     "init": "0",
+     "name": "fA_sub_aw",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (acc * v))",
+     "draw": 23,
+     "final": "(1 // acc)",
+     "init": "1",
+     "name": "fA_sub_ax",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc + acc))",
+     "draw": 24,
+     "final": "(acc % 1)",
+     "init": "0",
+     "name": "fA_sub_ay",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - pow(acc, acc))",
+     "draw": 25,
+     "final": "math.gcd(abs(1), abs(acc))",
+     "init": "1",
+     "name": "fA_sub_az",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (0 + v))",
+     "draw": 26,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fA_sub_ba",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v * v))",
+     "draw": 27,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "0",
+     "name": "fA_sub_bb",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (v // acc))",
+     "draw": 28,
+     "final": "(acc - acc)",
+     "init": "1",
+     "name": "fA_sub_bc",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - (v * acc))",
+     "draw": 29,
+     "final": "(0 % acc)",
+     "init": "0",
+     "name": "fA_sub_bd",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - pow(acc, acc))",
+     "draw": 30,
+     "final": "acc",
+     "init": "0",
+     "name": "fA_sub_be",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc // last))",
+     "draw": 31,
+     "final": "(acc * last)",
+     "init": "0",
+     "name": "fA_sub_bf",
+     "stratum": "sub"
+    }
+   ]
+  },
+  "sha256": "0f3b69de7355731e81b599997e1151e971f4e5f338d2a3e2af4780ae1f97b946"
+ },
+ "B": {
+  "draws": {
+   "add": [
+    {
+     "body": "(0 + (acc - v))",
+     "draw": 0,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fB_add_aa",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + (v * acc))",
+     "draw": 1,
+     "final": "(last - acc)",
+     "init": "0",
+     "name": "fB_add_ab",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(0), abs(acc)))",
+     "draw": 2,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fB_add_ac",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + pow(last, v))",
+     "draw": 3,
+     "final": "(1 % acc)",
+     "init": "0",
+     "name": "fB_add_ad",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + math.gcd(abs(last), abs(v)))",
+     "draw": 4,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fB_add_ae",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v // v))",
+     "draw": 5,
+     "final": "pow(acc, 1)",
+     "init": "1",
+     "name": "fB_add_af",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + math.gcd(abs(v), abs(0)))",
+     "draw": 6,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fB_add_ag",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v + first))",
+     "draw": 7,
+     "final": "(acc - first)",
+     "init": "0",
+     "name": "fB_add_ah",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + (acc + v))",
+     "draw": 8,
+     "final": "(1 // acc)",
+     "init": "0",
+     "name": "fB_add_ai",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + pow(first, v))",
+     "draw": 9,
+     "final": "(acc % acc)",
+     "init": "1",
+     "name": "fB_add_aj",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (last // acc))",
+     "draw": 10,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "1",
+     "name": "fB_add_ak",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (acc * last))",
+     "draw": 11,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fB_add_al",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v + 1))",
+     "draw": 12,
+     "final": "math.gcd(abs(1), abs(acc))",
+     "init": "0",
+     "name": "fB_add_am",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (first + v))",
+     "draw": 13,
+     "final": "(acc - 0)",
+     "init": "1",
+     "name": "fB_add_an",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (acc * first))",
+     "draw": 14,
+     "final": "acc",
+     "init": "1",
+     "name": "fB_add_ao",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (acc // 0))",
+     "draw": 15,
+     "final": "(1 * acc)",
+     "init": "0",
+     "name": "fB_add_ap",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + pow(v, acc))",
+     "draw": 16,
+     "final": "(last - acc)",
+     "init": "0",
+     "name": "fB_add_aq",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (1 + v))",
+     "draw": 17,
+     "final": "(acc + 0)",
+     "init": "0",
+     "name": "fB_add_ar",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + (v * acc))",
+     "draw": 18,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fB_add_as",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(acc), abs(acc)))",
+     "draw": 19,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fB_add_at",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + pow(first, v))",
+     "draw": 20,
+     "final": "(acc // 1)",
+     "init": "1",
+     "name": "fB_add_au",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v * 1))",
+     "draw": 21,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "0",
+     "name": "fB_add_av",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + (acc + v))",
+     "draw": 22,
+     "final": "(acc // last)",
+     "init": "0",
+     "name": "fB_add_aw",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v + 0))",
+     "draw": 23,
+     "final": "(acc * acc)",
+     "init": "1",
+     "name": "fB_add_ax",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(acc), abs(first)))",
+     "draw": 24,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fB_add_ay",
+     "stratum": "add"
+    },
+    {
+     "body": "(1 + math.gcd(abs(acc), abs(v)))",
+     "draw": 25,
+     "final": "(last % acc)",
+     "init": "0",
+     "name": "fB_add_az",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v - acc))",
+     "draw": 26,
+     "final": "(last % acc)",
+     "init": "1",
+     "name": "fB_add_ba",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (acc % last))",
+     "draw": 27,
+     "final": "(acc - 0)",
+     "init": "1",
+     "name": "fB_add_bb",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + pow(acc, 1))",
+     "draw": 28,
+     "final": "(0 - acc)",
+     "init": "0",
+     "name": "fB_add_bc",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (acc + v))",
+     "draw": 29,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fB_add_bd",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (1 - v))",
+     "draw": 30,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fB_add_be",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (acc % v))",
+     "draw": 31,
+     "final": "pow(acc, 1)",
+     "init": "0",
+     "name": "fB_add_bf",
+     "stratum": "add"
+    }
+   ],
+   "fdiv": [
+    {
+     "body": "(first // (acc - v))",
+     "draw": 0,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fB_fdiv_aa",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // pow(acc, last))",
+     "draw": 1,
+     "final": "(acc - 1)",
+     "init": "1",
+     "name": "fB_fdiv_ab",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last - v))",
+     "draw": 2,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "1",
+     "name": "fB_fdiv_ac",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc - 1))",
+     "draw": 3,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fB_fdiv_ad",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (first + acc))",
+     "draw": 4,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fB_fdiv_ae",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(acc)))",
+     "draw": 5,
+     "final": "(first // acc)",
+     "init": "1",
+     "name": "fB_fdiv_af",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(last)))",
+     "draw": 6,
+     "final": "(acc % first)",
+     "init": "0",
+     "name": "fB_fdiv_ag",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (acc * v))",
+     "draw": 7,
+     "final": "pow(acc, 0)",
+     "init": "1",
+     "name": "fB_fdiv_ah",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last % v))",
+     "draw": 8,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fB_fdiv_ai",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(last)))",
+     "draw": 9,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fB_fdiv_aj",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v // first))",
+     "draw": 10,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fB_fdiv_ak",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (v - acc))",
+     "draw": 11,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fB_fdiv_al",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc // acc))",
+     "draw": 12,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fB_fdiv_am",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v - acc))",
+     "draw": 13,
+     "final": "(0 % acc)",
+     "init": "1",
+     "name": "fB_fdiv_an",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc * last))",
+     "draw": 14,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fB_fdiv_ao",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(0 // (v - acc))",
+     "draw": 15,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fB_fdiv_ap",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (v - acc))",
+     "draw": 16,
+     "final": "(last % acc)",
+     "init": "1",
+     "name": "fB_fdiv_aq",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last % v))",
+     "draw": 17,
+     "final": "(last // acc)",
+     "init": "1",
+     "name": "fB_fdiv_ar",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (first + acc))",
+     "draw": 18,
+     "final": "(last // acc)",
+     "init": "0",
+     "name": "fB_fdiv_as",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc + last))",
+     "draw": 19,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fB_fdiv_at",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc + 1))",
+     "draw": 20,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fB_fdiv_au",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (v - acc))",
+     "draw": 21,
+     "final": "pow(acc, 1)",
+     "init": "0",
+     "name": "fB_fdiv_av",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v - last))",
+     "draw": 22,
+     "final": "pow(acc, 0)",
+     "init": "1",
+     "name": "fB_fdiv_aw",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(v)))",
+     "draw": 23,
+     "final": "(0 - acc)",
+     "init": "0",
+     "name": "fB_fdiv_ax",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(1 // pow(v, acc))",
+     "draw": 24,
+     "final": "(first + acc)",
+     "init": "0",
+     "name": "fB_fdiv_ay",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (v + acc))",
+     "draw": 25,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fB_fdiv_az",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc + acc))",
+     "draw": 26,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fB_fdiv_ba",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (acc * v))",
+     "draw": 27,
+     "final": "(acc // acc)",
+     "init": "1",
+     "name": "fB_fdiv_bb",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // pow(v, last))",
+     "draw": 28,
+     "final": "(0 * acc)",
+     "init": "1",
+     "name": "fB_fdiv_bc",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc - first))",
+     "draw": 29,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fB_fdiv_bd",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (v // acc))",
+     "draw": 30,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fB_fdiv_be",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (last + acc))",
+     "draw": 31,
+     "final": "pow(acc, 1)",
+     "init": "1",
+     "name": "fB_fdiv_bf",
+     "stratum": "fdiv"
+    }
+   ],
+   "gcd": [
+    {
+     "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(first))))",
+     "draw": 0,
+     "final": "(last - acc)",
+     "init": "0",
+     "name": "fB_gcd_aa",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc + 0)))",
+     "draw": 1,
+     "final": "(1 // acc)",
+     "init": "0",
+     "name": "fB_gcd_ab",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs(pow(v, acc)))",
+     "draw": 2,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fB_gcd_ac",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((v * acc)))",
+     "draw": 3,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fB_gcd_ad",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+     "draw": 4,
+     "final": "(acc * acc)",
+     "init": "0",
+     "name": "fB_gcd_ae",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(1), abs((acc - v)))",
+     "draw": 5,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fB_gcd_af",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(pow(first, v)))",
+     "draw": 6,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fB_gcd_ag",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v - last)))",
+     "draw": 7,
+     "final": "(acc // acc)",
+     "init": "0",
+     "name": "fB_gcd_ah",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs(math.gcd(abs(0), abs(acc))))",
+     "draw": 8,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fB_gcd_ai",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((acc - v)))",
+     "draw": 9,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "1",
+     "name": "fB_gcd_aj",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs(pow(v, acc)))",
+     "draw": 10,
+     "final": "pow(acc, acc)",
+     "init": "0",
+     "name": "fB_gcd_ak",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(math.gcd(abs(0), abs(v))))",
+     "draw": 11,
+     "final": "(acc * first)",
+     "init": "0",
+     "name": "fB_gcd_al",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs(math.gcd(abs(acc), abs(v))))",
+     "draw": 12,
+     "final": "(first + acc)",
+     "init": "0",
+     "name": "fB_gcd_am",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc % v)))",
+     "draw": 13,
+     "final": "(last * acc)",
+     "init": "0",
+     "name": "fB_gcd_an",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((1 - v)))",
+     "draw": 14,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fB_gcd_ao",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((first - v)))",
+     "draw": 15,
+     "final": "(0 - acc)",
+     "init": "0",
+     "name": "fB_gcd_ap",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v - 0)))",
+     "draw": 16,
+     "final": "(acc - first)",
+     "init": "0",
+     "name": "fB_gcd_aq",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc - last)))",
+     "draw": 17,
+     "final": "(acc * acc)",
+     "init": "0",
+     "name": "fB_gcd_ar",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(pow(v, first)))",
+     "draw": 18,
+     "final": "(acc + first)",
+     "init": "0",
+     "name": "fB_gcd_as",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs(pow(v, acc)))",
+     "draw": 19,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fB_gcd_at",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(v))))",
+     "draw": 20,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "0",
+     "name": "fB_gcd_au",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc + 1)))",
+     "draw": 21,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "1",
+     "name": "fB_gcd_av",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((0 * acc)))",
+     "draw": 22,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fB_gcd_aw",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((acc * v)))",
+     "draw": 23,
+     "final": "pow(acc, first)",
+     "init": "0",
+     "name": "fB_gcd_ax",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc % last)))",
+     "draw": 24,
+     "final": "acc",
+     "init": "1",
+     "name": "fB_gcd_ay",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((1 - acc)))",
+     "draw": 25,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fB_gcd_az",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc * 0)))",
+     "draw": 26,
+     "final": "(first + acc)",
+     "init": "1",
+     "name": "fB_gcd_ba",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc * first)))",
+     "draw": 27,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fB_gcd_bb",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((last - acc)))",
+     "draw": 28,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fB_gcd_bc",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc - v)))",
+     "draw": 29,
+     "final": "(acc + 1)",
+     "init": "0",
+     "name": "fB_gcd_bd",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v * 1)))",
+     "draw": 30,
+     "final": "pow(acc, first)",
+     "init": "0",
+     "name": "fB_gcd_be",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((acc - v)))",
+     "draw": 31,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fB_gcd_bf",
+     "stratum": "gcd"
+    }
+   ],
+   "mod": [
+    {
+     "body": "(acc % (first // v))",
+     "draw": 0,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fB_mod_aa",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % (v + acc))",
+     "draw": 1,
+     "final": "(1 * acc)",
+     "init": "0",
+     "name": "fB_mod_ab",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first - acc))",
+     "draw": 2,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fB_mod_ac",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % math.gcd(abs(acc), abs(v)))",
+     "draw": 3,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fB_mod_ad",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v % last))",
+     "draw": 4,
+     "final": "acc",
+     "init": "1",
+     "name": "fB_mod_ae",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (1 - v))",
+     "draw": 5,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fB_mod_af",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (acc - v))",
+     "draw": 6,
+     "final": "(acc * last)",
+     "init": "1",
+     "name": "fB_mod_ag",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first - acc))",
+     "draw": 7,
+     "final": "(last // acc)",
+     "init": "0",
+     "name": "fB_mod_ah",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % math.gcd(abs(v), abs(acc)))",
+     "draw": 8,
+     "final": "pow(last, acc)",
+     "init": "1",
+     "name": "fB_mod_ai",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (last - acc))",
+     "draw": 9,
+     "final": "(0 // acc)",
+     "init": "0",
+     "name": "fB_mod_aj",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v + last))",
+     "draw": 10,
+     "final": "(first + acc)",
+     "init": "1",
+     "name": "fB_mod_ak",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (first // v))",
+     "draw": 11,
+     "final": "(last - acc)",
+     "init": "0",
+     "name": "fB_mod_al",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v // last))",
+     "draw": 12,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fB_mod_am",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v % last))",
+     "draw": 13,
+     "final": "(acc * 0)",
+     "init": "1",
+     "name": "fB_mod_an",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc - last))",
+     "draw": 14,
+     "final": "pow(acc, 0)",
+     "init": "1",
+     "name": "fB_mod_ao",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % math.gcd(abs(v), abs(v)))",
+     "draw": 15,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fB_mod_ap",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first - acc))",
+     "draw": 16,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fB_mod_aq",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % math.gcd(abs(acc), abs(v)))",
+     "draw": 17,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fB_mod_ar",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % math.gcd(abs(v), abs(acc)))",
+     "draw": 18,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fB_mod_as",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v - 1))",
+     "draw": 19,
+     "final": "(last // acc)",
+     "init": "1",
+     "name": "fB_mod_at",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v - last))",
+     "draw": 20,
+     "final": "(acc - 1)",
+     "init": "1",
+     "name": "fB_mod_au",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % (v + acc))",
+     "draw": 21,
+     "final": "(acc * first)",
+     "init": "0",
+     "name": "fB_mod_av",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % math.gcd(abs(v), abs(acc)))",
+     "draw": 22,
+     "final": "(first + acc)",
+     "init": "0",
+     "name": "fB_mod_aw",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % pow(v, 0))",
+     "draw": 23,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fB_mod_ax",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % (v - acc))",
+     "draw": 24,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fB_mod_ay",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % math.gcd(abs(last), abs(v)))",
+     "draw": 25,
+     "final": "(acc - 1)",
+     "init": "1",
+     "name": "fB_mod_az",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (acc + v))",
+     "draw": 26,
+     "final": "(1 // acc)",
+     "init": "0",
+     "name": "fB_mod_ba",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (acc * v))",
+     "draw": 27,
+     "final": "(0 * acc)",
+     "init": "1",
+     "name": "fB_mod_bb",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc - last))",
+     "draw": 28,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fB_mod_bc",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (acc - v))",
+     "draw": 29,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fB_mod_bd",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (last + acc))",
+     "draw": 30,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fB_mod_be",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (acc + v))",
+     "draw": 31,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fB_mod_bf",
+     "stratum": "mod"
+    }
+   ],
+   "mul": [
+    {
+     "body": "(v * pow(acc, acc))",
+     "draw": 0,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fB_mul_aa",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (v + acc))",
+     "draw": 1,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fB_mul_ab",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v * first))",
+     "draw": 2,
+     "final": "(acc % acc)",
+     "init": "1",
+     "name": "fB_mul_ac",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * pow(v, 0))",
+     "draw": 3,
+     "final": "(first - acc)",
+     "init": "1",
+     "name": "fB_mul_ad",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * math.gcd(abs(v), abs(1)))",
+     "draw": 4,
+     "final": "(last + acc)",
+     "init": "0",
+     "name": "fB_mul_ae",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * math.gcd(abs(v), abs(v)))",
+     "draw": 5,
+     "final": "(acc - last)",
+     "init": "0",
+     "name": "fB_mul_af",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (acc * acc))",
+     "draw": 6,
+     "final": "pow(last, acc)",
+     "init": "1",
+     "name": "fB_mul_ag",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * pow(acc, v))",
+     "draw": 7,
+     "final": "(acc // last)",
+     "init": "1",
+     "name": "fB_mul_ah",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * pow(v, acc))",
+     "draw": 8,
+     "final": "acc",
+     "init": "1",
+     "name": "fB_mul_ai",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (1 + acc))",
+     "draw": 9,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "1",
+     "name": "fB_mul_aj",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * pow(0, acc))",
+     "draw": 10,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fB_mul_ak",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (acc - first))",
+     "draw": 11,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fB_mul_al",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (1 * v))",
+     "draw": 12,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fB_mul_am",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v + 0))",
+     "draw": 13,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fB_mul_an",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (v - acc))",
+     "draw": 14,
+     "final": "(acc + first)",
+     "init": "0",
+     "name": "fB_mul_ao",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (acc % v))",
+     "draw": 15,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fB_mul_ap",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * pow(acc, v))",
+     "draw": 16,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fB_mul_aq",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (last // v))",
+     "draw": 17,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fB_mul_ar",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (acc % v))",
+     "draw": 18,
+     "final": "math.gcd(abs(first), abs(acc))",
+     "init": "0",
+     "name": "fB_mul_as",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (v + acc))",
+     "draw": 19,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fB_mul_at",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (last % v))",
+     "draw": 20,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "1",
+     "name": "fB_mul_au",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (acc + v))",
+     "draw": 21,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fB_mul_av",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(v), abs(acc)))",
+     "draw": 22,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fB_mul_aw",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * pow(acc, v))",
+     "draw": 23,
+     "final": "(0 * acc)",
+     "init": "1",
+     "name": "fB_mul_ax",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * pow(v, acc))",
+     "draw": 24,
+     "final": "(acc * first)",
+     "init": "1",
+     "name": "fB_mul_ay",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * pow(v, acc))",
+     "draw": 25,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fB_mul_az",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(v), abs(acc)))",
+     "draw": 26,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fB_mul_ba",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (acc * v))",
+     "draw": 27,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fB_mul_bb",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (v - acc))",
+     "draw": 28,
+     "final": "(last // acc)",
+     "init": "0",
+     "name": "fB_mul_bc",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * pow(0, acc))",
+     "draw": 29,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fB_mul_bd",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (last - acc))",
+     "draw": 30,
+     "final": "math.gcd(abs(acc), abs(1))",
+     "init": "1",
+     "name": "fB_mul_be",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(v), abs(acc)))",
+     "draw": 31,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fB_mul_bf",
+     "stratum": "mul"
+    }
+   ],
+   "powr": [
+    {
+     "body": "pow(acc, (v * first))",
+     "draw": 0,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fB_powr_aa",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, acc)",
+     "draw": 1,
+     "final": "(acc % 1)",
+     "init": "0",
+     "name": "fB_powr_ab",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + v))",
+     "draw": 2,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fB_powr_ac",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (0 + acc))",
+     "draw": 3,
+     "final": "(acc % 1)",
+     "init": "1",
+     "name": "fB_powr_ad",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (first + acc))",
+     "draw": 4,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fB_powr_ae",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + acc))",
+     "draw": 5,
+     "final": "pow(1, acc)",
+     "init": "1",
+     "name": "fB_powr_af",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc - last))",
+     "draw": 6,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "1",
+     "name": "fB_powr_ag",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + first))",
+     "draw": 7,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fB_powr_ah",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc % v))",
+     "draw": 8,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fB_powr_ai",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(acc, last))",
+     "draw": 9,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fB_powr_aj",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, (v // acc))",
+     "draw": 10,
+     "final": "(acc - acc)",
+     "init": "1",
+     "name": "fB_powr_ak",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + acc))",
+     "draw": 11,
+     "final": "(0 % acc)",
+     "init": "0",
+     "name": "fB_powr_al",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (v * last))",
+     "draw": 12,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fB_powr_am",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (1 // acc))",
+     "draw": 13,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "1",
+     "name": "fB_powr_an",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, math.gcd(abs(v), abs(acc)))",
+     "draw": 14,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fB_powr_ao",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc * v))",
+     "draw": 15,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fB_powr_ap",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc % v))",
+     "draw": 16,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fB_powr_aq",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, math.gcd(abs(v), abs(acc)))",
+     "draw": 17,
+     "final": "(0 * acc)",
+     "init": "1",
+     "name": "fB_powr_ar",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + v))",
+     "draw": 18,
+     "final": "(acc % acc)",
+     "init": "1",
+     "name": "fB_powr_as",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (v + v))",
+     "draw": 19,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fB_powr_at",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (last + acc))",
+     "draw": 20,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fB_powr_au",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(acc, last))",
+     "draw": 21,
+     "final": "(acc // last)",
+     "init": "1",
+     "name": "fB_powr_av",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (last - v))",
+     "draw": 22,
+     "final": "pow(0, acc)",
+     "init": "0",
+     "name": "fB_powr_aw",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (v - acc))",
+     "draw": 23,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fB_powr_ax",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (last * v))",
+     "draw": 24,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fB_powr_ay",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, (v // acc))",
+     "draw": 25,
+     "final": "(0 + acc)",
+     "init": "1",
+     "name": "fB_powr_az",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (first - acc))",
+     "draw": 26,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "0",
+     "name": "fB_powr_ba",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (v // first))",
+     "draw": 27,
+     "final": "(last * acc)",
+     "init": "0",
+     "name": "fB_powr_bb",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, (acc * v))",
+     "draw": 28,
+     "final": "pow(acc, 0)",
+     "init": "1",
+     "name": "fB_powr_bc",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, (acc % v))",
+     "draw": 29,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fB_powr_bd",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (1 // acc))",
+     "draw": 30,
+     "final": "pow(acc, 1)",
+     "init": "1",
+     "name": "fB_powr_be",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, math.gcd(abs(acc), abs(v)))",
+     "draw": 31,
+     "final": "math.gcd(abs(acc), abs(1))",
+     "init": "1",
+     "name": "fB_powr_bf",
+     "stratum": "powr"
+    }
+   ],
+   "sub": [
+    {
+     "body": "(acc - (v - 0))",
+     "draw": 0,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fB_sub_aa",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(acc), abs(1)))",
+     "draw": 1,
+     "final": "pow(acc, first)",
+     "init": "0",
+     "name": "fB_sub_ab",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v - 0))",
+     "draw": 2,
+     "final": "(acc * acc)",
+     "init": "0",
+     "name": "fB_sub_ac",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - (acc * v))",
+     "draw": 3,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fB_sub_ad",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (last % v))",
+     "draw": 4,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fB_sub_ae",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (last // acc))",
+     "draw": 5,
+     "final": "(first // acc)",
+     "init": "1",
+     "name": "fB_sub_af",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (0 % acc))",
+     "draw": 6,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fB_sub_ag",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(acc), abs(last)))",
+     "draw": 7,
+     "final": "pow(first, acc)",
+     "init": "0",
+     "name": "fB_sub_ah",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - pow(v, last))",
+     "draw": 8,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fB_sub_ai",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (v % acc))",
+     "draw": 9,
+     "final": "math.gcd(abs(acc), abs(1))",
+     "init": "1",
+     "name": "fB_sub_aj",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (last + acc))",
+     "draw": 10,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fB_sub_ak",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - pow(v, acc))",
+     "draw": 11,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fB_sub_al",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (v + acc))",
+     "draw": 12,
+     "final": "(last + acc)",
+     "init": "0",
+     "name": "fB_sub_am",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (first % v))",
+     "draw": 13,
+     "final": "(acc * last)",
+     "init": "0",
+     "name": "fB_sub_an",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v // v))",
+     "draw": 14,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fB_sub_ao",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (1 // v))",
+     "draw": 15,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fB_sub_ap",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - pow(first, v))",
+     "draw": 16,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "0",
+     "name": "fB_sub_aq",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v - first))",
+     "draw": 17,
+     "final": "(0 % acc)",
+     "init": "0",
+     "name": "fB_sub_ar",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (1 % v))",
+     "draw": 18,
+     "final": "pow(acc, last)",
+     "init": "0",
+     "name": "fB_sub_as",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - pow(acc, v))",
+     "draw": 19,
+     "final": "acc",
+     "init": "0",
+     "name": "fB_sub_at",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(acc), abs(acc)))",
+     "draw": 20,
+     "final": "(last + acc)",
+     "init": "1",
+     "name": "fB_sub_au",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - (v - acc))",
+     "draw": 21,
+     "final": "(1 * acc)",
+     "init": "0",
+     "name": "fB_sub_av",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v * 1))",
+     "draw": 22,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fB_sub_aw",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - math.gcd(abs(v), abs(acc)))",
+     "draw": 23,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fB_sub_ax",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (first - v))",
+     "draw": 24,
+     "final": "(acc * acc)",
+     "init": "1",
+     "name": "fB_sub_ay",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v + 0))",
+     "draw": 25,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fB_sub_az",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (acc // v))",
+     "draw": 26,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fB_sub_ba",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (acc + v))",
+     "draw": 27,
+     "final": "pow(last, acc)",
+     "init": "1",
+     "name": "fB_sub_bb",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (acc % 1))",
+     "draw": 28,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fB_sub_bc",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (v * acc))",
+     "draw": 29,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "1",
+     "name": "fB_sub_bd",
+     "stratum": "sub"
+    },
+    {
+     "body": "(first - (acc + v))",
+     "draw": 30,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fB_sub_be",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (first % v))",
+     "draw": 31,
+     "final": "pow(acc, 1)",
+     "init": "0",
+     "name": "fB_sub_bf",
+     "stratum": "sub"
+    }
+   ]
+  },
+  "sha256": "8258ec194a8e94b7b35852db972ab3206b5bea8307d61a8bc1b7274cd4bef623"
+ },
+ "C": {
+  "draws": {
+   "add": [
+    {
+     "body": "(1 + (acc * (first + v)))",
+     "draw": 0,
+     "final": "(acc + first)",
+     "init": "0",
+     "name": "fC_add_aa",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (1 * pow(acc, v)))",
+     "draw": 1,
+     "final": "pow(last, acc)",
+     "init": "1",
+     "name": "fC_add_ab",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (0 // (1 - acc)))",
+     "draw": 2,
+     "final": "(acc - 0)",
+     "init": "1",
+     "name": "fC_add_ac",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (v * math.gcd(abs(0), abs(acc))))",
+     "draw": 3,
+     "final": "(last - acc)",
+     "init": "0",
+     "name": "fC_add_ad",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + math.gcd(abs(0), abs((acc % v))))",
+     "draw": 4,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fC_add_ae",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (v - math.gcd(abs(last), abs(acc))))",
+     "draw": 5,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fC_add_af",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (1 // math.gcd(abs(acc), abs(v))))",
+     "draw": 6,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fC_add_ag",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + pow(v, math.gcd(abs(v), abs(acc))))",
+     "draw": 7,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fC_add_ah",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (0 * pow(v, last)))",
+     "draw": 8,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fC_add_ai",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(acc), abs((last * first))))",
+     "draw": 9,
+     "final": "(first + acc)",
+     "init": "0",
+     "name": "fC_add_aj",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + math.gcd(abs(acc), abs(pow(v, last))))",
+     "draw": 10,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fC_add_ak",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + pow(v, (acc - 0)))",
+     "draw": 11,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fC_add_al",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (v * math.gcd(abs(last), abs(first))))",
+     "draw": 12,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fC_add_am",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (last + (0 + v)))",
+     "draw": 13,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fC_add_an",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + math.gcd(abs(v), abs(pow(1, 1))))",
+     "draw": 14,
+     "final": "(acc // last)",
+     "init": "1",
+     "name": "fC_add_ao",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (v + acc))",
+     "draw": 15,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fC_add_ap",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + math.gcd(abs(acc), abs((0 // v))))",
+     "draw": 16,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fC_add_aq",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(last), abs((acc // last))))",
+     "draw": 17,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "0",
+     "name": "fC_add_ar",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + (acc + (1 - v)))",
+     "draw": 18,
+     "final": "(last % acc)",
+     "init": "0",
+     "name": "fC_add_as",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + (acc - (first % v)))",
+     "draw": 19,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "0",
+     "name": "fC_add_at",
+     "stratum": "add"
+    },
+    {
+     "body": "(last + (acc - (v + last)))",
+     "draw": 20,
+     "final": "(acc * first)",
+     "init": "0",
+     "name": "fC_add_au",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + pow(v, math.gcd(abs(acc), abs(0))))",
+     "draw": 21,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fC_add_av",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + math.gcd(abs(1), abs((acc // 1))))",
+     "draw": 22,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fC_add_aw",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (1 + (acc // v)))",
+     "draw": 23,
+     "final": "(acc // first)",
+     "init": "0",
+     "name": "fC_add_ax",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (last % (last // acc)))",
+     "draw": 24,
+     "final": "(acc * last)",
+     "init": "1",
+     "name": "fC_add_ay",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + math.gcd(abs(first), abs((acc + v))))",
+     "draw": 25,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fC_add_az",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + (acc // (1 % last)))",
+     "draw": 26,
+     "final": "(acc - first)",
+     "init": "0",
+     "name": "fC_add_ba",
+     "stratum": "add"
+    },
+    {
+     "body": "(0 + (acc % pow(v, last)))",
+     "draw": 27,
+     "final": "(first - acc)",
+     "init": "1",
+     "name": "fC_add_bb",
+     "stratum": "add"
+    },
+    {
+     "body": "(v + pow(acc, (v + first)))",
+     "draw": 28,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fC_add_bc",
+     "stratum": "add"
+    },
+    {
+     "body": "(1 + math.gcd(abs(0), abs(pow(acc, v))))",
+     "draw": 29,
+     "final": "(acc - acc)",
+     "init": "1",
+     "name": "fC_add_bd",
+     "stratum": "add"
+    },
+    {
+     "body": "(first + math.gcd(abs(last), abs(math.gcd(abs(v), abs(acc)))))",
+     "draw": 30,
+     "final": "(1 + acc)",
+     "init": "0",
+     "name": "fC_add_be",
+     "stratum": "add"
+    },
+    {
+     "body": "(acc + math.gcd(abs(0), abs((v * acc))))",
+     "draw": 31,
+     "final": "(acc - 0)",
+     "init": "1",
+     "name": "fC_add_bf",
+     "stratum": "add"
+    }
+   ],
+   "fdiv": [
+    {
+     "body": "(last // (last // pow(acc, v)))",
+     "draw": 0,
+     "final": "(first + acc)",
+     "init": "1",
+     "name": "fC_fdiv_aa",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(0), abs((v * acc))))",
+     "draw": 1,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_fdiv_ab",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (acc + (0 - first)))",
+     "draw": 2,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fC_fdiv_ac",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (v - (acc % 1)))",
+     "draw": 3,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fC_fdiv_ad",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // (acc + pow(v, last)))",
+     "draw": 4,
+     "final": "(acc // acc)",
+     "init": "0",
+     "name": "fC_fdiv_ae",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (first % pow(last, v)))",
+     "draw": 5,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "0",
+     "name": "fC_fdiv_af",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // math.gcd(abs(0), abs((v - acc))))",
+     "draw": 6,
+     "final": "(1 + acc)",
+     "init": "1",
+     "name": "fC_fdiv_ag",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(1 // (last - (v // acc)))",
+     "draw": 7,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fC_fdiv_ah",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // pow(v, (1 % acc)))",
+     "draw": 8,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fC_fdiv_ai",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(v), abs(math.gcd(abs(v), abs(acc)))))",
+     "draw": 9,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fC_fdiv_aj",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (last - (v + 0)))",
+     "draw": 10,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fC_fdiv_ak",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(0), abs((acc + 1))))",
+     "draw": 11,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fC_fdiv_al",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (first - (acc - acc)))",
+     "draw": 12,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fC_fdiv_am",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(acc), abs((first % v))))",
+     "draw": 13,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fC_fdiv_an",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (last + math.gcd(abs(acc), abs(last))))",
+     "draw": 14,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fC_fdiv_ao",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(1 // (v - pow(last, acc)))",
+     "draw": 15,
+     "final": "(acc * acc)",
+     "init": "1",
+     "name": "fC_fdiv_ap",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(v), abs((acc - first))))",
+     "draw": 16,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fC_fdiv_aq",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // math.gcd(abs(0), abs((v // acc))))",
+     "draw": 17,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fC_fdiv_ar",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(1 // (first % (acc + v)))",
+     "draw": 18,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fC_fdiv_as",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(1 // (v - pow(acc, 0)))",
+     "draw": 19,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fC_fdiv_at",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (0 + (v // last)))",
+     "draw": 20,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fC_fdiv_au",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // pow(first, (v - acc)))",
+     "draw": 21,
+     "final": "(0 // acc)",
+     "init": "0",
+     "name": "fC_fdiv_av",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (acc - pow(last, v)))",
+     "draw": 22,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fC_fdiv_aw",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(acc), abs(pow(acc, 1))))",
+     "draw": 23,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_fdiv_ax",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (last % (v - acc)))",
+     "draw": 24,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fC_fdiv_ay",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // math.gcd(abs(v), abs((last - first))))",
+     "draw": 25,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fC_fdiv_az",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(acc // (v // (1 * first)))",
+     "draw": 26,
+     "final": "(acc + 0)",
+     "init": "0",
+     "name": "fC_fdiv_ba",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(first // math.gcd(abs(acc), abs((v - acc))))",
+     "draw": 27,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fC_fdiv_bb",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // (first - math.gcd(abs(1), abs(acc))))",
+     "draw": 28,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fC_fdiv_bc",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (acc + math.gcd(abs(v), abs(last))))",
+     "draw": 29,
+     "final": "(1 + acc)",
+     "init": "1",
+     "name": "fC_fdiv_bd",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(last // (v // pow(last, acc)))",
+     "draw": 30,
+     "final": "acc",
+     "init": "0",
+     "name": "fC_fdiv_be",
+     "stratum": "fdiv"
+    },
+    {
+     "body": "(v // math.gcd(abs(0), abs(acc)))",
+     "draw": 31,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fC_fdiv_bf",
+     "stratum": "fdiv"
+    }
+   ],
+   "gcd": [
+    {
+     "body": "math.gcd(abs(v), abs((0 * (acc * first))))",
+     "draw": 0,
+     "final": "(1 - acc)",
+     "init": "0",
+     "name": "fC_gcd_aa",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs(math.gcd(abs(1), abs(math.gcd(abs(v), abs(0))))))",
+     "draw": 1,
+     "final": "(first - acc)",
+     "init": "0",
+     "name": "fC_gcd_ab",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((v * pow(v, acc))))",
+     "draw": 2,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "0",
+     "name": "fC_gcd_ac",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((acc % (v + first))))",
+     "draw": 3,
+     "final": "pow(acc, acc)",
+     "init": "0",
+     "name": "fC_gcd_ad",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((v * (last + v))))",
+     "draw": 4,
+     "final": "pow(acc, first)",
+     "init": "0",
+     "name": "fC_gcd_ae",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((first - (acc * acc))))",
+     "draw": 5,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fC_gcd_af",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((1 * (first + acc))))",
+     "draw": 6,
+     "final": "(last // acc)",
+     "init": "1",
+     "name": "fC_gcd_ag",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((acc + pow(v, 1))))",
+     "draw": 7,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fC_gcd_ah",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((last - (acc // v))))",
+     "draw": 8,
+     "final": "(first // acc)",
+     "init": "0",
+     "name": "fC_gcd_ai",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc + (0 + first))))",
+     "draw": 9,
+     "final": "(acc - last)",
+     "init": "0",
+     "name": "fC_gcd_aj",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs(pow(v, (acc * last))))",
+     "draw": 10,
+     "final": "(acc + 1)",
+     "init": "0",
+     "name": "fC_gcd_ak",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((last + (v - acc))))",
+     "draw": 11,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fC_gcd_al",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs(math.gcd(abs(v), abs((acc + 1)))))",
+     "draw": 12,
+     "final": "pow(acc, 1)",
+     "init": "0",
+     "name": "fC_gcd_am",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs(pow(v, (acc + first))))",
+     "draw": 13,
+     "final": "pow(acc, acc)",
+     "init": "0",
+     "name": "fC_gcd_an",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc // pow(v, last))))",
+     "draw": 14,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fC_gcd_ao",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((0 + (1 + acc))))",
+     "draw": 15,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fC_gcd_ap",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((acc - (acc + v))))",
+     "draw": 16,
+     "final": "(last + acc)",
+     "init": "1",
+     "name": "fC_gcd_aq",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((0 * (0 * acc))))",
+     "draw": 17,
+     "final": "(first // acc)",
+     "init": "1",
+     "name": "fC_gcd_ar",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(acc), abs((acc + math.gcd(abs(v), abs(last)))))",
+     "draw": 18,
+     "final": "(0 + acc)",
+     "init": "0",
+     "name": "fC_gcd_as",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs(math.gcd(abs(last), abs((acc // v)))))",
+     "draw": 19,
+     "final": "(first * acc)",
+     "init": "0",
+     "name": "fC_gcd_at",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((0 // (v + acc))))",
+     "draw": 20,
+     "final": "(1 // acc)",
+     "init": "0",
+     "name": "fC_gcd_au",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((first + math.gcd(abs(last), abs(acc)))))",
+     "draw": 21,
+     "final": "(acc * acc)",
+     "init": "1",
+     "name": "fC_gcd_av",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((acc - (acc + 0))))",
+     "draw": 22,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fC_gcd_aw",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((v + pow(last, acc))))",
+     "draw": 23,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fC_gcd_ax",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(1), abs((acc - pow(last, v))))",
+     "draw": 24,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_gcd_ay",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((last + pow(acc, v))))",
+     "draw": 25,
+     "final": "(acc - 0)",
+     "init": "0",
+     "name": "fC_gcd_az",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(first), abs((v // (0 - acc))))",
+     "draw": 26,
+     "final": "(0 + acc)",
+     "init": "1",
+     "name": "fC_gcd_ba",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(0), abs((last - (v - acc))))",
+     "draw": 27,
+     "final": "(first % acc)",
+     "init": "1",
+     "name": "fC_gcd_bb",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((0 + (acc * last))))",
+     "draw": 28,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fC_gcd_bc",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(v), abs((last + (0 - acc))))",
+     "draw": 29,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "0",
+     "name": "fC_gcd_bd",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(1), abs((acc - (v % acc))))",
+     "draw": 30,
+     "final": "(0 - acc)",
+     "init": "1",
+     "name": "fC_gcd_be",
+     "stratum": "gcd"
+    },
+    {
+     "body": "math.gcd(abs(last), abs((1 // pow(v, acc))))",
+     "draw": 31,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "1",
+     "name": "fC_gcd_bf",
+     "stratum": "gcd"
+    }
+   ],
+   "mod": [
+    {
+     "body": "(acc % pow(first, pow(last, v)))",
+     "draw": 0,
+     "final": "(0 + acc)",
+     "init": "1",
+     "name": "fC_mod_aa",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % pow(last, pow(acc, 1)))",
+     "draw": 1,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_mod_ab",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (last * math.gcd(abs(acc), abs(1))))",
+     "draw": 2,
+     "final": "(acc - 1)",
+     "init": "1",
+     "name": "fC_mod_ac",
+     "stratum": "mod"
+    },
+    {
+     "body": "(first % (last // (acc + v)))",
+     "draw": 3,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_mod_ad",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % math.gcd(abs(acc), abs((acc + first))))",
+     "draw": 4,
+     "final": "(0 // acc)",
+     "init": "0",
+     "name": "fC_mod_ae",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (last * pow(v, acc)))",
+     "draw": 5,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fC_mod_af",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v + (v - first)))",
+     "draw": 6,
+     "final": "(acc + last)",
+     "init": "1",
+     "name": "fC_mod_ag",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (last * (acc % v)))",
+     "draw": 7,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fC_mod_ah",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (v + (acc + first)))",
+     "draw": 8,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fC_mod_ai",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % pow(v, (v * v)))",
+     "draw": 9,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fC_mod_aj",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (last + (acc - first)))",
+     "draw": 10,
+     "final": "(0 - acc)",
+     "init": "0",
+     "name": "fC_mod_ak",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v * (first - last)))",
+     "draw": 11,
+     "final": "(acc - first)",
+     "init": "0",
+     "name": "fC_mod_al",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first + acc))",
+     "draw": 12,
+     "final": "(0 // acc)",
+     "init": "0",
+     "name": "fC_mod_am",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + pow(v, last)))",
+     "draw": 13,
+     "final": "(acc % 1)",
+     "init": "1",
+     "name": "fC_mod_an",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + (0 + first)))",
+     "draw": 14,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fC_mod_ao",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (v % (last - acc)))",
+     "draw": 15,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fC_mod_ap",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (acc - (v + 0)))",
+     "draw": 16,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fC_mod_aq",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (first - (acc * last)))",
+     "draw": 17,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fC_mod_ar",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % math.gcd(abs(0), abs((acc - first))))",
+     "draw": 18,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fC_mod_as",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % math.gcd(abs(0), abs((v % last))))",
+     "draw": 19,
+     "final": "(acc + acc)",
+     "init": "0",
+     "name": "fC_mod_at",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (acc * math.gcd(abs(first), abs(v))))",
+     "draw": 20,
+     "final": "acc",
+     "init": "1",
+     "name": "fC_mod_au",
+     "stratum": "mod"
+    },
+    {
+     "body": "(1 % (last - math.gcd(abs(v), abs(acc))))",
+     "draw": 21,
+     "final": "pow(first, acc)",
+     "init": "0",
+     "name": "fC_mod_av",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + (last + v)))",
+     "draw": 22,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fC_mod_aw",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (first * (last - v)))",
+     "draw": 23,
+     "final": "(0 * acc)",
+     "init": "0",
+     "name": "fC_mod_ax",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + (first * last)))",
+     "draw": 24,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fC_mod_ay",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (last * (v - acc)))",
+     "draw": 25,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "1",
+     "name": "fC_mod_az",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (v * (v // first)))",
+     "draw": 26,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fC_mod_ba",
+     "stratum": "mod"
+    },
+    {
+     "body": "(last % (last + (v + acc)))",
+     "draw": 27,
+     "final": "(acc % first)",
+     "init": "0",
+     "name": "fC_mod_bb",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (1 * (acc + 1)))",
+     "draw": 28,
+     "final": "pow(0, acc)",
+     "init": "1",
+     "name": "fC_mod_bc",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % pow(first, (first * v)))",
+     "draw": 29,
+     "final": "(last - acc)",
+     "init": "1",
+     "name": "fC_mod_bd",
+     "stratum": "mod"
+    },
+    {
+     "body": "(v % (acc + math.gcd(abs(first), abs(0))))",
+     "draw": 30,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fC_mod_be",
+     "stratum": "mod"
+    },
+    {
+     "body": "(acc % (first - math.gcd(abs(last), abs(v))))",
+     "draw": 31,
+     "final": "(acc % last)",
+     "init": "0",
+     "name": "fC_mod_bf",
+     "stratum": "mod"
+    }
+   ],
+   "mul": [
+    {
+     "body": "(v * (first + (0 * acc)))",
+     "draw": 0,
+     "final": "(acc // 1)",
+     "init": "0",
+     "name": "fC_mul_aa",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (acc // (last * v)))",
+     "draw": 1,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fC_mul_ab",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (0 - (v - last)))",
+     "draw": 2,
+     "final": "(1 - acc)",
+     "init": "1",
+     "name": "fC_mul_ac",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * math.gcd(abs(acc), abs((first - v))))",
+     "draw": 3,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fC_mul_ad",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc)))))",
+     "draw": 4,
+     "final": "pow(acc, last)",
+     "init": "0",
+     "name": "fC_mul_ae",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (acc + (last + 0)))",
+     "draw": 5,
+     "final": "math.gcd(abs(1), abs(acc))",
+     "init": "0",
+     "name": "fC_mul_af",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * (first // math.gcd(abs(acc), abs(v))))",
+     "draw": 6,
+     "final": "(acc - 1)",
+     "init": "0",
+     "name": "fC_mul_ag",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v - math.gcd(abs(0), abs(1))))",
+     "draw": 7,
+     "final": "pow(acc, first)",
+     "init": "1",
+     "name": "fC_mul_ah",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (first * pow(v, acc)))",
+     "draw": 8,
+     "final": "(acc + last)",
+     "init": "0",
+     "name": "fC_mul_ai",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * (acc + (last - v)))",
+     "draw": 9,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fC_mul_aj",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * pow(acc, math.gcd(abs(1), abs(acc))))",
+     "draw": 10,
+     "final": "(acc + first)",
+     "init": "1",
+     "name": "fC_mul_ak",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (1 + (acc - v)))",
+     "draw": 11,
+     "final": "pow(acc, 0)",
+     "init": "1",
+     "name": "fC_mul_al",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (last // (v + first)))",
+     "draw": 12,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "1",
+     "name": "fC_mul_am",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * (acc - (v + v)))",
+     "draw": 13,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fC_mul_an",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(acc), abs(pow(last, v))))",
+     "draw": 14,
+     "final": "(acc // last)",
+     "init": "1",
+     "name": "fC_mul_ao",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (first - pow(acc, v)))",
+     "draw": 15,
+     "final": "pow(last, acc)",
+     "init": "0",
+     "name": "fC_mul_ap",
+     "stratum": "mul"
+    },
+    {
+     "body": "(first * math.gcd(abs(acc), abs((v - v))))",
+     "draw": 16,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fC_mul_aq",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (first - pow(first, acc)))",
+     "draw": 17,
+     "final": "(first % acc)",
+     "init": "1",
+     "name": "fC_mul_ar",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * math.gcd(abs(0), abs((acc - v))))",
+     "draw": 18,
+     "final": "(acc - 1)",
+     "init": "1",
+     "name": "fC_mul_as",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (v - (v % acc)))",
+     "draw": 19,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fC_mul_at",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (0 + (v - acc)))",
+     "draw": 20,
+     "final": "(acc // first)",
+     "init": "0",
+     "name": "fC_mul_au",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (first % (last - v)))",
+     "draw": 21,
+     "final": "(acc * 0)",
+     "init": "1",
+     "name": "fC_mul_av",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * (acc // (first // v)))",
+     "draw": 22,
+     "final": "(acc * first)",
+     "init": "0",
+     "name": "fC_mul_aw",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * (acc % (last // acc)))",
+     "draw": 23,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_mul_ax",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * (v - (1 * acc)))",
+     "draw": 24,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fC_mul_ay",
+     "stratum": "mul"
+    },
+    {
+     "body": "(1 * (acc + (acc % v)))",
+     "draw": 25,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fC_mul_az",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(v), abs((last + acc))))",
+     "draw": 26,
+     "final": "(first // acc)",
+     "init": "1",
+     "name": "fC_mul_ba",
+     "stratum": "mul"
+    },
+    {
+     "body": "(last * (v * (v // acc)))",
+     "draw": 27,
+     "final": "(acc // acc)",
+     "init": "1",
+     "name": "fC_mul_bb",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (acc - (v - last)))",
+     "draw": 28,
+     "final": "math.gcd(abs(1), abs(acc))",
+     "init": "1",
+     "name": "fC_mul_bc",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * pow(1, (last + v)))",
+     "draw": 29,
+     "final": "(acc + 1)",
+     "init": "1",
+     "name": "fC_mul_bd",
+     "stratum": "mul"
+    },
+    {
+     "body": "(v * math.gcd(abs(last), abs((v // acc))))",
+     "draw": 30,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fC_mul_be",
+     "stratum": "mul"
+    },
+    {
+     "body": "(acc * (v - (acc % first)))",
+     "draw": 31,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fC_mul_bf",
+     "stratum": "mul"
+    }
+   ],
+   "powr": [
+    {
+     "body": "pow(v, math.gcd(abs(first), abs((acc // v))))",
+     "draw": 0,
+     "final": "(acc % last)",
+     "init": "1",
+     "name": "fC_powr_aa",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (first * (last + acc)))",
+     "draw": 1,
+     "final": "(acc % first)",
+     "init": "1",
+     "name": "fC_powr_ab",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(1, (v * (acc * first)))",
+     "draw": 2,
+     "final": "(0 // acc)",
+     "init": "0",
+     "name": "fC_powr_ac",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, math.gcd(abs(acc), abs((acc + v))))",
+     "draw": 3,
+     "final": "(last + acc)",
+     "init": "0",
+     "name": "fC_powr_ad",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(1, (v * math.gcd(abs(acc), abs(v))))",
+     "draw": 4,
+     "final": "(acc + last)",
+     "init": "0",
+     "name": "fC_powr_ae",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (first - (v % last)))",
+     "draw": 5,
+     "final": "(first - acc)",
+     "init": "1",
+     "name": "fC_powr_af",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, math.gcd(abs(last), abs((v - acc))))",
+     "draw": 6,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fC_powr_ag",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + pow(0, first)))",
+     "draw": 7,
+     "final": "(acc - acc)",
+     "init": "1",
+     "name": "fC_powr_ah",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(first, (acc + 1)))",
+     "draw": 8,
+     "final": "(acc * acc)",
+     "init": "1",
+     "name": "fC_powr_ai",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(acc, (v * last)))",
+     "draw": 9,
+     "final": "(0 % acc)",
+     "init": "0",
+     "name": "fC_powr_aj",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(1, (acc // (acc - v)))",
+     "draw": 10,
+     "final": "(last % acc)",
+     "init": "1",
+     "name": "fC_powr_ak",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc * (last - v)))",
+     "draw": 11,
+     "final": "pow(acc, 1)",
+     "init": "1",
+     "name": "fC_powr_al",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (0 + pow(v, acc)))",
+     "draw": 12,
+     "final": "(acc * 1)",
+     "init": "1",
+     "name": "fC_powr_am",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (0 - (acc // last)))",
+     "draw": 13,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "1",
+     "name": "fC_powr_an",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, (v + (0 * acc)))",
+     "draw": 14,
+     "final": "(acc // 1)",
+     "init": "1",
+     "name": "fC_powr_ao",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (last % (1 + v)))",
+     "draw": 15,
+     "final": "(acc - last)",
+     "init": "0",
+     "name": "fC_powr_ap",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(0, (first + (acc - v)))",
+     "draw": 16,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fC_powr_aq",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (acc + (1 % v)))",
+     "draw": 17,
+     "final": "(acc - last)",
+     "init": "1",
+     "name": "fC_powr_ar",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, math.gcd(abs(last), abs((v * last))))",
+     "draw": 18,
+     "final": "(acc * first)",
+     "init": "1",
+     "name": "fC_powr_as",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, pow(acc, pow(acc, v)))",
+     "draw": 19,
+     "final": "(first + acc)",
+     "init": "0",
+     "name": "fC_powr_at",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (v + math.gcd(abs(last), abs(0))))",
+     "draw": 20,
+     "final": "(0 - acc)",
+     "init": "1",
+     "name": "fC_powr_au",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(last, (last + math.gcd(abs(acc), abs(v))))",
+     "draw": 21,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fC_powr_av",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc % (v - 1)))",
+     "draw": 22,
+     "final": "(1 - acc)",
+     "init": "0",
+     "name": "fC_powr_aw",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (acc + (last + acc)))",
+     "draw": 23,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fC_powr_ax",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (first - (acc // last)))",
+     "draw": 24,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "0",
+     "name": "fC_powr_ay",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, math.gcd(abs(1), abs(pow(last, acc))))",
+     "draw": 25,
+     "final": "math.gcd(abs(acc), abs(first))",
+     "init": "0",
+     "name": "fC_powr_az",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, pow(0, (first % acc)))",
+     "draw": 26,
+     "final": "math.gcd(abs(acc), abs(last))",
+     "init": "1",
+     "name": "fC_powr_ba",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(first, pow(last, (acc * v)))",
+     "draw": 27,
+     "final": "(acc - first)",
+     "init": "1",
+     "name": "fC_powr_bb",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(0, (acc % v))",
+     "draw": 28,
+     "final": "(last * acc)",
+     "init": "1",
+     "name": "fC_powr_bc",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(v, (v // (0 + acc)))",
+     "draw": 29,
+     "final": "pow(1, acc)",
+     "init": "1",
+     "name": "fC_powr_bd",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(1, (last * (v - acc)))",
+     "draw": 30,
+     "final": "(0 % acc)",
+     "init": "1",
+     "name": "fC_powr_be",
+     "stratum": "powr"
+    },
+    {
+     "body": "pow(acc, (acc // pow(first, v)))",
+     "draw": 31,
+     "final": "pow(acc, last)",
+     "init": "1",
+     "name": "fC_powr_bf",
+     "stratum": "powr"
+    }
+   ],
+   "sub": [
+    {
+     "body": "(0 - math.gcd(abs(acc), abs((v % 1))))",
+     "draw": 0,
+     "final": "(first * acc)",
+     "init": "1",
+     "name": "fC_sub_aa",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (acc // math.gcd(abs(v), abs(first))))",
+     "draw": 1,
+     "final": "pow(1, acc)",
+     "init": "0",
+     "name": "fC_sub_ab",
+     "stratum": "sub"
+    },
+    {
+     "body": "(0 - (v + (last + acc)))",
+     "draw": 2,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fC_sub_ac",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(acc), abs(first)))",
+     "draw": 3,
+     "final": "(last % acc)",
+     "init": "1",
+     "name": "fC_sub_ad",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (first // math.gcd(abs(v), abs(first))))",
+     "draw": 4,
+     "final": "(first % acc)",
+     "init": "0",
+     "name": "fC_sub_ae",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v // pow(first, 1)))",
+     "draw": 5,
+     "final": "(last // acc)",
+     "init": "0",
+     "name": "fC_sub_af",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - pow(acc, pow(0, v)))",
+     "draw": 6,
+     "final": "(acc % first)",
+     "init": "0",
+     "name": "fC_sub_ag",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - pow(v, (acc // first)))",
+     "draw": 7,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "1",
+     "name": "fC_sub_ah",
+     "stratum": "sub"
+    },
+    {
+     "body": "(0 - (first + (v * acc)))",
+     "draw": 8,
+     "final": "(acc % acc)",
+     "init": "0",
+     "name": "fC_sub_ai",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (1 % (acc - v)))",
+     "draw": 9,
+     "final": "pow(first, acc)",
+     "init": "1",
+     "name": "fC_sub_aj",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (acc + pow(first, v)))",
+     "draw": 10,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fC_sub_ak",
+     "stratum": "sub"
+    },
+    {
+     "body": "(0 - (acc - (v * acc)))",
+     "draw": 11,
+     "final": "pow(acc, 1)",
+     "init": "1",
+     "name": "fC_sub_al",
+     "stratum": "sub"
+    },
+    {
+     "body": "(0 - pow(first, (acc * v)))",
+     "draw": 12,
+     "final": "math.gcd(abs(acc), abs(0))",
+     "init": "0",
+     "name": "fC_sub_am",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(acc), abs(pow(v, v))))",
+     "draw": 13,
+     "final": "(acc * 1)",
+     "init": "0",
+     "name": "fC_sub_an",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (1 % pow(v, acc)))",
+     "draw": 14,
+     "final": "(acc + acc)",
+     "init": "1",
+     "name": "fC_sub_ao",
+     "stratum": "sub"
+    },
+    {
+     "body": "(first - math.gcd(abs(v), abs((acc * 0))))",
+     "draw": 15,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fC_sub_ap",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - pow(acc, (first % v)))",
+     "draw": 16,
+     "final": "pow(acc, 1)",
+     "init": "0",
+     "name": "fC_sub_aq",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v + (acc * last)))",
+     "draw": 17,
+     "final": "(acc // last)",
+     "init": "1",
+     "name": "fC_sub_ar",
+     "stratum": "sub"
+    },
+    {
+     "body": "(0 - (acc * (v * last)))",
+     "draw": 18,
+     "final": "pow(acc, acc)",
+     "init": "1",
+     "name": "fC_sub_as",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (v * (acc + 0)))",
+     "draw": 19,
+     "final": "(acc // last)",
+     "init": "0",
+     "name": "fC_sub_at",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - math.gcd(abs(first), abs((v - acc))))",
+     "draw": 20,
+     "final": "pow(0, acc)",
+     "init": "0",
+     "name": "fC_sub_au",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (0 * (first + v)))",
+     "draw": 21,
+     "final": "(1 * acc)",
+     "init": "1",
+     "name": "fC_sub_av",
+     "stratum": "sub"
+    },
+    {
+     "body": "(1 - (last + (v * acc)))",
+     "draw": 22,
+     "final": "(1 % acc)",
+     "init": "1",
+     "name": "fC_sub_aw",
+     "stratum": "sub"
+    },
+    {
+     "body": "(first - (acc % (v // v)))",
+     "draw": 23,
+     "final": "(last + acc)",
+     "init": "1",
+     "name": "fC_sub_ax",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (v + (last * first)))",
+     "draw": 24,
+     "final": "(acc * acc)",
+     "init": "1",
+     "name": "fC_sub_ay",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - (0 % (acc + 1)))",
+     "draw": 25,
+     "final": "math.gcd(abs(acc), abs(acc))",
+     "init": "0",
+     "name": "fC_sub_az",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(acc), abs((acc + 1))))",
+     "draw": 26,
+     "final": "(acc // first)",
+     "init": "1",
+     "name": "fC_sub_ba",
+     "stratum": "sub"
+    },
+    {
+     "body": "(v - math.gcd(abs(first), abs((acc * 0))))",
+     "draw": 27,
+     "final": "(0 // acc)",
+     "init": "1",
+     "name": "fC_sub_bb",
+     "stratum": "sub"
+    },
+    {
+     "body": "(acc - (1 % (0 - v)))",
+     "draw": 28,
+     "final": "(acc + 0)",
+     "init": "1",
+     "name": "fC_sub_bc",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - pow(acc, (acc * v)))",
+     "draw": 29,
+     "final": "(acc % first)",
+     "init": "0",
+     "name": "fC_sub_bd",
+     "stratum": "sub"
+    },
+    {
+     "body": "(last - (v - pow(acc, first)))",
+     "draw": 30,
+     "final": "math.gcd(abs(0), abs(acc))",
+     "init": "0",
+     "name": "fC_sub_be",
+     "stratum": "sub"
+    },
+    {
+     "body": "(first - math.gcd(abs(v), abs((acc // first))))",
+     "draw": 31,
+     "final": "math.gcd(abs(last), abs(acc))",
+     "init": "0",
+     "name": "fC_sub_bf",
+     "stratum": "sub"
+    }
+   ]
+  },
+  "sha256": "debc93aa75bf1cdb416dcd9f597bffe6754e85219a25f7d38bb126f081e0c665"
+ }
+}
