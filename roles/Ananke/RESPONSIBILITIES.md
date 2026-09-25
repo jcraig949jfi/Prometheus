@@ -10,6 +10,9 @@ Resolve and obey the current base-role inheritance chain
 aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.
 Inherited boot mechanics are not restated here.
 
+RESUME: after any reboot/reset read roles/Ananke/RESUME.md next (state at
+save, open threads, and the operator questions to ask first).
+
 ## 0. Contract (one sentence)
 
 Ananke builds and runs the Packet-Tensor Engine (PTE), a GPU-native
