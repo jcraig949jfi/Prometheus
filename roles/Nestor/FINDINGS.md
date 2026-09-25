@@ -373,6 +373,10 @@ heredity conserves the founder's two world-op instructions as MATERIAL -- OP_SEL
 conserved in 27/27, 52 in 23/27, and no other position in more than 13/27. What is inherited in a runaway is the
 self-location and copy instructions; the rest of the founder is replaced. Scope: 7ae3's cell, ATOMIC, single founder;
 thin margin over the bar.
+Interpretation limits (steward note, Aporia #621, accepted): C-CORE is exactly what PURIFYING SELECTION on a functional
+core plus drift elsewhere predicts; it is not evidence for any stronger account, and calling SELF/LDIR "relevant" because
+they survived would be circular. Provenance: C-CORE was frozen (19:53Z) after this seat read the selective-irreversibility
+directive (18:57Z), so under that program's date rule it is THEORY-AWARE; my #620 called it theory-blind, which was wrong.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
