@@ -59,3 +59,18 @@ before the reboot). So the session EXISTS but was never woken with the wake bloc
 not absent. Waking it is the operator's act (base role: the operator manages waking). Cyclops
 reported this to the operator in chat and to Aporia (re #609). Cyclops does not message the
 session directly.
+
+### 2026-09-25T20:37Z Cyclops[m2-e8056938]
+M2 dependencies (cross-engine and cross-machine):
+  WTP-LM01 campaign  <- Ensorain s13 deliverables + Cyclops prereg review + Harmonia freeze
+                        (Aporia 20:30Z rule: nothing verdict-producing before the freeze).
+                        CPU condition MET (the coupling campaign stopped).
+  DSA Z80 adapter    <- Bellerophon's committed blind analysis + Aporia's DSA spec + a second blind
+                        lane designated (memo Q4, BLIND_LANES 20:11Z)
+  DSA AGE adapter    <- Aporia's DSA spec; Aether briefing (not yet done)
+  Archaeon lens      <- ENVGATE-02 at its preregistered gate (s6)
+  Cosmos C3          <- holdout D seal (Nestor, M1; accepted #596). Stewards relay NOTHING from the
+                        Cosmos M2 branch to Nestor (D_CONTRACT independence).
+  Reversible core    <- operator Q1 + the Cyclops/Aporia spec (CYCLOPS-22) -> Nestor (M1). Cross-
+                        machine: the design is M1+M2 joint, the build is M1. Needs Aporia's
+                        agreement per s15 before commitment.
