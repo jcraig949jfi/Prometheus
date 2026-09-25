@@ -70,7 +70,8 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-SWAP-ANCESTRY | EXPLORE | ancestry (anc==0 share) of X-DONOR-SWAP foreign runaways, 5 replays; schtask NestorSA |
+| C-SWAP-ACQUIRE | CONFIRM | frozen: 9cba+e160, GENOME vs RANDOM implant, ATOMIC, 240 fresh seeds/arm, 10 workers; schtask NestorCSA |
+| X-ACQUIRE | EXPLORE | do the 9cba/e160 runaway descendants copy from a fresh state? 2 replays + assays, 2 workers; schtask NestorXA |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.

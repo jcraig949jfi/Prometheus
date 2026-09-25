@@ -351,6 +351,9 @@ founder breaks at uncertified births, so founder causal depth undercounts the li
 **Correction to X-SWAP-ORIGIN:** its NATIVE labels mean 'outside the certified causal lineage', not native ancestry;
 the random implant gave 0/8 runaways in 9cba and e160 too. The withdrawn post hoc is reopened, under test in
 X-SWAP-ANCESTRY. Open instrument question: which births break certification, and how often.
+**X-SWAP-ANCESTRY (SIGNAL):** all five foreign runaways are founder-descended (anc0 share 0.99-1.0), including
+9cba and e160 where the founder genome cannot copy from a fresh state. Exploratory (one run per cell). Under
+CONFIRM: C-SWAP-ACQUIRE (240 fresh seeds per arm vs random implant). Mechanism under test: X-ACQUIRE.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
