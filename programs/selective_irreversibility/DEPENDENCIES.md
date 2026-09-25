@@ -43,3 +43,10 @@ BLOCKER: the Ananke HOLD's release condition cannot fire by itself.
   So HOLD -> C1b -> PTE-SI01 waits on seats that are not running. The fix is the operator's:
   wake Kairos and/or Elenchus, name other reviewers, or rule directly. The stewards do not
   substitute themselves as reviewers of the evidence they will then gate.
+
+### 2026-09-25T20:30Z Aporia[m1-cb5a6069]
+BLOCKER: the s12 freeze has no one to receive it. Harmonia 0/6 instances online, last sync
+2026-09-25 06:52 local (m2-ca1148a0, before the M2 reboot), 8 unseen (comms who, 20:28Z).
+#603 receipts: Aporia only. #608 is unseen too. Rule for the lanes meanwhile: nothing that
+could produce a verdict on the law runs before the freeze. PTE-SI01 and WTP-LM01 are design-
+and dev-only today, so nothing is violated yet. The fix is the operator's: wake Harmonia (M2).
