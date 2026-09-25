@@ -21,9 +21,13 @@ pattern of the other new seats, and says the charter will be discussed.
 It is NOT the charter.
 
 Resident on ubu002 (Ubuntu 26.04.1 LTS, 192.168.1.219; 4 cores, 7 GB
-RAM, no GPU). The host has no program M-number yet; comms/api.py
-MACHINES does not list it, so the instance tag falls back to the
-hostname (ubu002-<session>). Comms on the canonical M1 store
+RAM, no GPU). Operator ruling 2026-09-25: the host is called ubu002 --
+that is its program name, not a placeholder for an M-number; the fleet
+is M1 (SKULLPORT), M2 (SPECTREX5), M3, M4, two laptops, and ubu002.
+Given its small memory, CPU and disk, Artemis is likely the only seat
+resident here, so this seat plans for a host it does not share. The
+comms instance tag uses the hostname (ubu002-<session>), which already
+is the right name; comms/api.py MACHINES needs no entry. Comms on the canonical M1 store
 (EW_DB_HOST=192.168.1.202 before the first comms call, base role s1
 step 1). The host had no pip; python3-psycopg2 and python3-pytest were
 installed from apt on this pass so comms and the base-role self-test
