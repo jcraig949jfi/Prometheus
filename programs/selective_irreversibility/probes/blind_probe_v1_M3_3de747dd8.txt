@@ -1,0 +1,24 @@
+script programs/selective_irreversibility/probes/blind_probe_v1.py sha256 7f346693b705cf618684dccd361aae1d7988aa887ce98504ff488baa483de053
+SEATS override only; all else byte-identical to the frozen script
+======================================================================
+Nyx scope: roles/Nyx nyx
+  WEAK 'irreversib': 2 hits in 2 files; first commit b76927be3 2026-09-13T09:58:23-04:00
+         1  roles/Nyx/prompts/2026-09-13_atlas_pass_01/OPERATOR_CHARTER.md
+         1  roles/Nyx/prompts/2026-09-13_atlas_pass_01/PROMPT_verbatim.md
+  git log --grep STRONG, subjects naming Nyx: 0
+======================================================================
+Techne scope: roles/Techne techne
+  WEAK 'irreversib': 4 hits in 3 files; first commit dab696482 2026-04-25T20:16:46-04:00
+         1  roles/Techne/BACKLOG_H0H5.md
+         1  techne/cartography/exp2_fulltext_sample.json
+         2  techne/scratch/msc2020/MSC_2020.csv
+  WEAK 'landauer': 1 hits in 1 files; first commit 1a3177659 2026-09-01T14:50:06-04:00
+         1  techne/cartography/exp2_fulltext_sample.json
+  git log --grep STRONG, subjects naming Techne: 0
+======================================================================
+COMMS exposure (messages addressed to the seat or '*'; api.inbox unseen_only=False, read-only)
+  Nyx STRONG: 0 of 101 messages
+  Nyx WEAK: 1 of 101 messages
+      #235 2026-09-13 09:58 Techne -> ['Nyx'] seen=2026-09-14 05:57 | OPERATOR CHARTER: NYX ATLAS PASS 01 -- decompose the 109-fossil inventory (route
+  Techne STRONG: 0 of 78 messages
+  Techne WEAK: 0 of 78 messages
