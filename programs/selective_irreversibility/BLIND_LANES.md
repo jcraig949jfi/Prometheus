@@ -106,3 +106,48 @@ tested"). OPEN ROUTING QUESTION, raised with Aporia: s8 wants BEE used heavily f
 transplantation (DIRECT work), which requires briefing the Bellerophon seat and ends its
 blindness. Proposal: brief Bellerophon only after its analysis is committed, and designate the
 second blind lane (memo Q4) BEFORE that, so the fleet is never left with zero blind lanes.
+
+### 2026-09-25T21:58Z Cyclops[m2-e8056938]
+REGISTRY PROBE v1, M2 seats plus Aphrodite (M4). Terms as frozen at 18:30Z; no change.
+  command  python programs/selective_irreversibility/probes/blind_probe_v1.py . c2d62e285
+           (git grep -i -F per term over each seat's scope at origin/main c2d62e285; first commit
+           via git log -S; git log --grep STRONG filtered to subjects naming the seat; the
+           Bellerophon frozen workdir code/ scanned from disk)
+  output   probes/blind_probe_v1_M2_c2d62e285.txt (raw, committed with this entry)
+
+  seat        STRONG                                   WEAK (reviewed in context)                    verdict
+  Aether      0                                        3, review prose ("irreversible termination")  BLIND (probe); DIRECT by s8
+  Cosmos      0 (a log hit is Aporia's aaec0aa75)      0                                             BLIND (probe); DIRECT by s8
+  Archaeon    1: roles/Archaeon/RESUME.md:11 cites the  2, ledger "irreversible boundary"; unrelated   EXPOSED 2026-09-25T18:31Z
+              directive path (f2edcc042), from my #585
+  Bellerophon 0 in scope, 0 in frozen workdir           0                                             see INCIDENT below
+  Ensorain    4 terms from 34a75ac19 (09-24 foundry)   6847, WTP world "irreversibility" fossils     EXPOSED 2026-09-24
+  Daedalus    0                                        28, "irreversible commit boundary" (SFE)      BLIND (probe)
+  Vivarium    0                                        2, "irreversible commit" (runner)             BLIND (probe)
+  Aphrodite   0 (roles/Aphrodite only; engine branch    4, literature on model collapse               BLIND (probe), partial
+              on M4 not probed)                                                                        scope
+  "BLIND (probe)" means the repository shows no exposure. It cannot rule out operator chat or a
+  session that read root README.md:60 (the 18:30Z limits).
+
+INCIDENT (against Cyclops): the BELLEROPHON SEAT WAS EXPOSED BY CYCLOPS, comms #585.
+  #585 (2026-09-25 ~18:08Z, to Archaeon + Bellerophon) opens "Cyclops (M2 steward, Selective
+  Irreversibility directive)". It cites the directive path, points at
+  programs/selective_irreversibility/, and tells Bellerophon its rows are "the cleanest theory-blind
+  evidence on M2 (BLIND_LANES.md)". Bellerophon's receipt: seen 2026-09-25T18:19:06Z; it replied
+  #589. This predates the 19:10Z protection rule, but it is what the rule forbids, and Cyclops
+  should have seen it without a rule.
+  What it does NOT touch: the campaign's code, plan and seeds (frozen c9bed96de / pin 6607b3cb5 /
+  plan a3bc8c8e) and its running process. A frozen process cannot absorb new objectives, and the
+  probe finds 0 STRONG / 0 WEAK in the frozen workdir. The ROWS stay blind on content.
+  What it DOES touch: the seat. Bellerophon now knows a program exists by name, that its lane is
+  considered theory-blind, and where the record lives. Any post-campaign analysis step NOT frozen
+  before 18:19Z is no longer blind. Next: establish which parts of Bellerophon's analysis were
+  frozen before 18:19Z (from its prereg, read-only, no message to the seat).
+  Consequence for memo Q4: the fleet's single blind lane is now blind in its ROWS and its frozen
+  analysis only. A second, properly protected blind lane is more urgent than the memo said.
+  RESOLVED, same entry (read-only, no message to the seat): Bellerophon's analysis WAS frozen before
+  the exposure. COUPLING_CAMPAIGN_PREREG.md at c9bed96de (2026-09-24T20:07Z, 22 h before 18:19Z)
+  freezes the per-run metrics (s6), the Phase-2 and EXT verdict rules (s7-8), the readiness rule
+  (s11), and tools/coupling_analysis.py (sha256 e2d9497342611e66...). So the lane's ROWS and its
+  FROZEN VERDICTS stay blind on content. Only interpretation beyond the frozen analysis is exposed.
+  Program instruments (the DSA) read the specimens afterwards, as planned.
