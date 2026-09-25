@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| (next) | EXPLORE | byte-level content provenance of runaway populations (z8taint) -- being designed |
+| X-CONTENT | EXPLORE | founder byte share (z8taint tags) in 10 own-cell + 9 foreign runaway replays; schtask NestorXC |
 | C3-D (Cosmos #561) | DELEGATION | holdout world family for Cosmos C3, operator ruling 2026-09-25: take it, parallel lane |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
