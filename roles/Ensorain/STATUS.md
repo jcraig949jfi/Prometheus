@@ -8,8 +8,8 @@ DIRECTION (2026-09-25): major scientific direction now arrives by comms from the
   - Heartbeat to both stewards every 60-90 min; report defects/falsifiers immediately.
   - NO M2 launch while the Bellerophon coupling campaign runs. Cyclops issues the launch prompt.
   - First response: comms #590 (ACK + objections O1-O6).
-  - Awaiting rulings: R1 L-R status, R2 COUNTERMODEL frontier definition, R3 dev CPU envelope.
-  - Until R3 is answered: code and tests only, no dev sweeps.
+  - Rulings R1-R3 RECEIVED (#591/#592/#594): ensorain/lm01/STEWARD_RULINGS.md.
+  - Dev envelope: <= 2 workers while ENVGATE-02 runs, IDLE priority, stop at < 6 GB free RAM, sweep log committed.
   - Deliverables before launch: directive s13 (prereg, frozen config, arms + audit tests, accounting spec, calibration
     results, dev resource estimate, falsifier + limitations, runtime proposal, sealed campaign-seed procedure).
 CHARTER: Tensor Physics of Intelligence Foundry (roles/Ensorain/prompts/2026-09-24_foundry_directive/).
