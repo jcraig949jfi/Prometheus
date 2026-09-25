@@ -1,0 +1,109 @@
+# AETH-02 NATIVE CIRCUITRY -- provenance and boot pointer
+
+Issued by: the operator, in chat, 2026-09-23.
+Received by: Aether[buckkeep-7a10ca4b] on BUCKKEEP.
+Status: **STANDING DIRECTIVE, NOT STARTED.** No work against it had
+begun when it was committed; it was committed deliberately so it
+survives a context reset and a Claude Code upgrade.
+
+## The verbatim text
+
+`DIRECTIVE.md` beside this file is the operator's text **verbatim**,
+including its em dashes, curly quotes, superscripts and section rules.
+Nothing was normalized, paraphrased, reordered or summarized. The
+pure-ASCII rule applies to `roles/base-role/` files only, and the
+terminology contract's audit surface is the `Aether/` tree only, so
+neither required an edit here. The verbatim directive outranks every
+summary of it, including this file and including anything I wrote in
+the journal (base role s1 step 2).
+
+`MANIFEST.md` carries the sha256 of the committed LF bytes. Verify it
+before acting on the directive (base role s1 step 5):
+
+    python -m comms.manifest verify roles/Aether/prompts/2026-09-23_native_circuitry
+
+## Why this exists in four places
+
+The boot sequence reads, in order: the seat entry file, then the newest
+prompt under `roles/Aether/prompts/`, then the newest dated TODO, then
+`git log`. A directive that lives in only one of those is one stale
+file away from being missed. So the same pointer appears in:
+
+1. `roles/Aether/RESPONSIBILITIES.md` -- the entry file, read first
+2. this prompt directory -- the authoritative verbatim text
+3. `roles/Aether/TODO.md` -- the dated TODO, with the resume state
+4. `roles/Aether/STATUS.md` -- "next executable action"
+
+A fifth route was attempted and REJECTED: a comms self-post
+(`--from Aether --to Aether`) is accepted by the queue but never
+delivered back to the sending seat, so `comms sync` reports 0 new
+and it never becomes a task. Message 537 records the attempt. Do
+not rely on it; the four above are the working routes.
+
+If those four ever disagree, **DIRECTIVE.md is what the operator
+actually said** and the others are wrong.
+
+## THE ONE WAY THIS STILL GETS MISSED -- READ IF YOU ARE THE OPERATOR
+
+**None of this is on `origin/main`.** Checked at commit time:
+
+    git ls-tree origin/main Aether/                -> EMPTY
+    git ls-tree origin/main roles/Aether/prompts/  -> only the
+                                                      2026-09-19 prompt
+    branch vs main                                 -> 2526 behind,
+                                                      45 ahead
+
+The whole AETH-01 lane, this directive, `TODO.md`, and the
+`CURRENT DIRECTIVE` block in `RESPONSIBILITIES.md` exist ONLY on
+`aether/aeth01-memwall-2026-09-22`. `roles/Aether/RESPONSIBILITIES.md`
+on main is still the stale pre-charter version with no pointer in it.
+
+`roles/base-role/WAKE_DIRECTIVE.md` tells a booting seat to create its
+worktree from `origin/main`. A seat that follows it literally will find
+none of the above and will conclude the lane has no standing work.
+
+Two ways to close it, both the operator's call:
+
+1. CHEAP, ZERO RISK -- add one line to the wake paste:
+
+       Work from branch aether/aeth01-memwall-2026-09-22, not main.
+       Read roles/Aether/TODO.md first.
+
+2. THE REAL FIX -- integrate the branch to main under
+   WORKING_CONTRACT.md s5: merge `origin/main` in explicitly, run the
+   full suite on the MERGED tree, then fast-forward push. 45 commits
+   ahead and 2526 behind, so this is a real merge and not a formality.
+   Not done unilaterally: it is an integration the operator has not
+   asked for.
+
+Until one of those happens, discoverability depends on the next boot
+using this branch.
+
+## What the next instance must NOT assume
+
+- That any of this round has been done. It has not. Track 1 through
+  Track 5, the determinism check and the output document are all
+  unstarted as of commit time.
+- That the First Light tooling already covers it. It does not. The
+  causal-graph observatory of Track 2 **does not exist**; the current
+  observatory measures lattice-wide scalars and 64-block coarse maps
+  and emits no edges at all. Track 2 is a build, not a configuration.
+- That money is still available without checking. Roughly $2.09 of the
+  previous $3 authorization was spent on 2026-09-22. The directive
+  grants **its own fresh budget of up to $3**; confirm with the
+  operator rather than inferring a carry-over.
+
+## Boot checklist specific to this directive
+
+Before spending anything:
+
+1. Resolve the base-role inheritance chain as usual.
+2. `python -m comms.manifest verify` this directory.
+3. Read `DIRECTIVE.md` in full, then the four documents its "Start by
+   reading" block names.
+4. Read `roles/Aether/TODO.md` for the resume state and the known
+   blockers, and `Aether/AETH-01/FIRST_LIGHT_01_2026-09-22.md` section
+   "HYPOTHESES FOR NEXT ROUND", which this directive supersedes and
+   partly absorbs (H1 becomes Track 1; H2 becomes the determinism
+   check; H3 becomes Track 5).
+5. Confirm `ACTIVE_POD_COUNT 0` before and after any pod work.

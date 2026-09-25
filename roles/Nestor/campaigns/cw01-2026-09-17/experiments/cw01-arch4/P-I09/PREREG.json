@@ -1,0 +1,40 @@
+{
+ "perturbation_id": "P-I09",
+ "parent": "T-ARCH4/W1",
+ "co_parents": [
+  "T-X21"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "anti-gravity",
+ "doses": [
+  {
+   "p_cue": 0.55,
+   "block": 4
+  },
+  {
+   "p_cue": 0.7,
+   "block": 4
+  },
+  {
+   "p_cue": 0.9,
+   "block": 4
+  },
+  {
+   "p_cue": 0.7,
+   "block": 8
+  }
+ ],
+ "G": 120,
+ "seeds": [
+  1,
+  2
+ ],
+ "reading": "TRACKS_CUE if |top4 held - cue_follow| <= .05 at every dose and top4 < tracker - .05; EXCEEDS_CUE if top4 >= cue_follow + .10 in >= 2 doses; BELOW_CUE if top4 < cue_follow - .10 in >= 2 doses; MIXED otherwise",
+ "material_rule": "the reading is not MIXED",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 07:23:44",
+ "prereg_sha256": "23619ed58171f16c2c1689e2764d01988f7d07709e7c1010ee6c1d4ff84ecad1"
+}

@@ -1,0 +1,203 @@
+{
+ "_doc": "Declarative world spec for cw01-e04 (queue/TTL ecology). Written during PREFLIGHT, before implementation. Items arrive in PAIRS separated by a gap, so useful output requires carrying information across time. The channel that spans the gap is bounded, expiring, delayed and lossy. Nothing is named queue, cache, scheduler or retry; the organism experiences physics and pays consequences.",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e04",
+ "attempt_id": "cw01-e04-a01",
+ "world_family": "channel-economics-v1",
+ "channel": {
+  "_note": "Finite, ordered, forgetful, delayed and lossy. The organism never observes TTL, occupancy, or whether a specific value still exists. The object vanishes; it pays the consequence.",
+  "capacity": 4,
+  "discipline": "FIFO",
+  "ttl_steps": 15,
+  "delay_steps": 1,
+  "p_drop": 0.05,
+  "cost_put": 0.4,
+  "cost_get": 0.3,
+  "_full_behaviour": "placement into a full channel FAILS SILENTLY and still costs cost_put",
+  "_capacity_basis": "Derived from measured demand, not chosen. Unconstrained occupancy under an ALWAYS-PLACE genome is 6.28; capacity 4 gives a contention ratio of about 1.6 and 55.4 placement failures when everything is placed. The rule was declared BEFORE the triage outcome was known."
+ },
+ "items": {
+  "items_per_episode": 120,
+  "observable_features": 4,
+  "_latent": "worth is LATENT: computed from the observable features through a hidden attempt-stable map. The organism sees features, never worth.",
+  "worth_range": [
+   1.0,
+   11.0
+  ],
+  "pair_gap_distribution": {
+   "kind": "geometric_discrete",
+   "mean_steps": 8,
+   "clip": [
+    2,
+    30
+   ]
+  },
+  "_pairing": "an item at step t has a partner at t+gap. Combining both yields info; a lone item yields nothing."
+ },
+ "actions": {
+  "place": "put the first member of a pair into the channel (cost_put)",
+  "retrieve": "attempt to take it back when the partner arrives (cost_get, charged on miss)",
+  "recompute": "reconstruct the missing information without the channel (cost_recompute) - always available, expensive, reliable",
+  "skip": "do nothing; the pair yields no info and costs nothing",
+  "cost_recompute": 3.0
+ },
+ "info_model": {
+  "paired": "log2(1 + worth) when both members are combined",
+  "unpaired": 0.0,
+  "_trade": "channel round trip costs 0.7 and may fail; recompute costs 3.0 and never fails; skipping costs 0 and yields 0. For low-worth items skipping can beat both - that is what makes triage non-trivial."
+ },
+ "genome": {
+  "_shape": "two deterministic linear policies over the 4 observable features, plus 2 neutral genes: place = sigmoid(b_place + w_place . x) > 0.5, recompute = sigmoid(b_rec + w_rec . x) > 0.5",
+  "bias_bounds": [
+   -4.0,
+   4.0
+  ],
+  "weight_bounds": [
+   -3.0,
+   3.0
+  ],
+  "neutral_genes": [
+   "neutral_a",
+   "neutral_b"
+  ],
+  "_neutral": "no phenotype by construction; the drift floor and the basis of cost-matched shams (D011/D027)",
+  "_uniform_is_reachable": "setting all weights to 0 yields a policy that ignores item properties entirely. That is the NULL outcome and it MUST remain reachable; engineering it away would rig the experiment."
+ },
+ "arms": {
+  "_critical": "Arms are genome/world transformations applied UP FRONT so every arm runs identical code (D019/D021). Drop outcomes are PRE-DRAWN per item from the stream seed, so RNG consumption does not depend on how many placements the organism makes.",
+  "treatment": {
+   "triage_enabled": true,
+   "channel_enabled": true
+  },
+  "control_no_triage": {
+   "triage_enabled": false,
+   "channel_enabled": true,
+   "_tests": "weights forced to zero: may be selective, cannot be conditional on item properties"
+  },
+  "control_always_recompute": {
+   "triage_enabled": false,
+   "channel_enabled": false,
+   "_tests": "the channel is unavailable; every pair must be recomputed or skipped. The reliable-but-expensive baseline."
+  }
+ },
+ "population": {
+  "organisms": 64,
+  "generations_minimal_form": 60,
+  "generations_full": 200,
+  "elite_fraction": 0.25,
+  "mutation_sigma": 0.1
+ },
+ "measurements": {
+  "primary": "delta(useful_information_transformed / resource_cost) vs ancestor, matched world+budget",
+  "selectivity": "fraction of arriving pairs given channel treatment",
+  "triage": "mutual information I(item_properties ; handling_decision), against a shuffled null",
+  "triage_competence": "correlation between an item's latent worth and the effort spent on it",
+  "per_organism": [
+   "pairs_seen",
+   "placements",
+   "placement_failures_full",
+   "retrievals",
+   "retrieval_hits",
+   "expiries_suffered",
+   "drops_suffered",
+   "recomputes",
+   "skips",
+   "channel_occupancy_mean",
+   "selectivity",
+   "mi_bits",
+   "triage_competence",
+   "info",
+   "cost",
+   "score"
+  ],
+  "_separation": "Selectivity and triage are TWO INDEPENDENT quantities. High selectivity with zero triage is a policy that is cheap without being informed, and is a NEGATIVE for the triage claim."
+ },
+ "interventions_post_hoc": {
+  "J1_scramble_value": {
+   "effect": "permute which observable features predict worth; all costs and physics identical",
+   "sham": "identity permutation at identical cost",
+   "in_minimal_form": true,
+   "_decisive": "a triage policy matched to real structure must collapse; uniform handling should not care"
+  },
+  "J2_ttl_shock": {
+   "effect": "halve and double ttl_steps after evolution",
+   "sham": "same parameter writes, ttl unchanged",
+   "in_minimal_form": false
+  },
+  "J3_discipline_swap": {
+   "effect": "FIFO -> LIFO",
+   "sham": "FIFO -> FIFO",
+   "in_minimal_form": false
+  },
+  "J4_drop_shock": {
+   "effect": "raise p_drop",
+   "sham": "unchanged p_drop at identical cost",
+   "in_minimal_form": false
+  },
+  "_generality_note": "J2/J3/J4 produce a SEPARATE generality verdict and never upgrade the primary disposition"
+ },
+ "qualify_predicates": {
+  "_rule": "ALL must pass before science budget is spent. Most are STANDING GATES promoted from e01-e03 failures.",
+  "Q1_prices_positive": "cost_put, cost_get, cost_recompute all > 0",
+  "Q2_channel_is_a_real_trade": "measured: a successful channel round trip (0.7) is cheaper than recompute (3.0), but the channel can fail through expiry, delay, loss or capacity - so neither dominates",
+  "Q3_shams_are_cost_matched": "J1's identity permutation must be BIT-IDENTICAL to no intervention and cost exactly the same as the real scramble",
+  "Q4_seeds_reconstructible": "lib/seeds.py, re-asserted cross-process for this attempt_id",
+  "Q5_durable_without_redis": "a row written and re-parsed with the redis import blocked",
+  "Q6_neutral_genes_are_inert": "perturbing neutral_a/neutral_b changes no metric",
+  "Q7_pressure_actually_binds": "capacity 4 is materially smaller than unconstrained demand (occupancy 6.28 under always-place), so carrying is genuinely contested. RE-VERIFIED at the amended capacity: 55.0 placement failures under always-place (was 0.0 at the original capacity 12, which is why the spec was amended).",
+  "Q8_learnability": "STANDING GATE: the BEST conditional policy must beat the BEST policy the NON-CONDITIONAL arm could evolve into (swept, not one arbitrary blind genome), and also beat an ANTI-ALIGNED control at matched selectivity. Probes asserted pairwise distinct.",
+  "Q9_mechanism_fires": "in the hand-built best case, placements and retrieval hits are non-zero and expiries are survivable",
+  "Q10_matched_arms": "with weights zeroed, treatment and control_no_triage produce BIT-IDENTICAL metrics from the same stream seed",
+  "Q11_triage_MI_calibrated": "MI measured with lib/infometrics.mi_with_null; raw MI reads about 0.14 bits on independent data at this sample size, so only the excess over the shuffled null is evidence",
+  "Q12_disposition_rule_is_executable": "disposition computed by lib/lineage.decide; a branch is UNREACHABLE unless its tests ran",
+  "Q13_latent_worth_is_not_free": "the organism observes features only; worth never appears in any decision function",
+  "Q14_latent_facts_attempt_stable": "the property->worth map and the channel physics are drawn ONCE per attempt, never per episode (D029)",
+  "Q15_no_unperformed_checks": "every logged test names the comparison it performed; no ran=True without a real measurement (D031)"
+ },
+ "backend_counterfactual": {
+  "requirement_IX": "organism-visible physics must not depend on one implementation",
+  "primary_backend": "in-process channel simulation",
+  "secondary_backend": "independent reimplementation of the channel physics (explicit list/loop bookkeeping vs the primary representation)",
+  "equivalence_test": "identical per-organism metric vectors from identical seeds",
+  "_note": "e03 established that a redis swap tests nothing when there is no substrate-backed organism-visible state; IX is discharged against a second IMPLEMENTATION (CW01-D031).",
+  "cap_rule": "if not exercised within timebox, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE"
+ },
+ "empirical_calibration": {
+  "capacity_sweep": {
+   "unconstrained_occupancy_always_place": 6.28,
+   "sweep": {
+    "cap2": 83.6,
+    "cap3": 68.7,
+    "cap4": 55.4,
+    "cap6": 29.3,
+    "cap8": 10.0,
+    "cap12": 0.0
+   },
+   "_sweep_units": "mean placement failures under ALWAYS-PLACE",
+   "chosen": 4,
+   "rule": "contention ratio ~1.6 (scarce, not thrashing), declared before the outcome",
+   "learnability_at_chosen": {
+    "best_conditional": 2.0697,
+    "best_blind": 1.6441,
+    "anti_aligned": 1.6357,
+    "always_recompute": 0.8237,
+    "vs_best_blind_pct": 25.88,
+    "vs_anti_aligned_pct": 26.53
+   },
+   "_reading": "the conditional optimum wins with FEWER hits (37.9 vs 48.9) at LOWER cost (56.9 vs 81.5) and far fewer full-channel failures (10.9 vs 55.3): it carries the right things, not more."
+  }
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "ts": "2026-09-17 18:20:27",
+   "phase": "QUALIFY (pre-EXECUTE)",
+   "trigger": "Q7 failed: capacity never bound (CW01-D032). Learnability comparison also conflated selectivity with worth-alignment (CW01-D033).",
+   "changes": [
+    "channel.capacity 12 -> 4, derived from measured occupancy by a contention rule declared before the triage outcome was known. Choosing capacity 3 - where triage happens to win - would have been fitting the world to the hypothesis.",
+    "Q8 restated: best CONDITIONAL vs best NON-CONDITIONAL (swept) plus an ANTI-ALIGNED control at matched selectivity, isolating alignment from volume."
+   ],
+   "_no_result_observed": "No evolutionary run has been performed. These are pre-data corrections to an unchecked spec parameter and a mis-specified comparison."
+  }
+ ]
+}

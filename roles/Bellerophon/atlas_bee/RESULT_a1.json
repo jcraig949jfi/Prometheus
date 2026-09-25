@@ -1,0 +1,227 @@
+{
+ "adaptation_id": "a1",
+ "comparison": {
+  "differences": {
+   "executor": [
+    "BEE local scalar execution; every held-out evaluation replays bit-for-bit (BIT world)"
+   ],
+   "measurement": [
+    "mean over held-out seeds of the single best-by-train-charge elite's final charge"
+   ],
+   "representational": [
+    "objective is final charge, not the source's yield_events (the wforge wrap does not surface yield_events)",
+    "genome_seed 1 (2-slot) refused: no single-organism test without a partner harness"
+   ],
+   "resource": [
+    "generations=8, population=20, train_seeds=10, heldout_seeds=20",
+    "a fixed-seed evolutionary search sat on a flat plateau where no train seed was winnable (gs3)"
+   ],
+   "scientific": [
+    "closed-vs-open held-out relation per world: gs3:NO_GRADIENT; gs4:open>closed"
+   ]
+  },
+  "new_phenomena": [
+   "gs4: the OPEN (blind) organism generalised better than the closed one -- opposite to E10's closed>open",
+   "gs4: the closed organism OVERFIT the train seeds (train_best=318.6, held-out=-0.40) -- selecting by train charge picks a seed-memoriser that does not generalise"
+  ],
+  "signals": [
+   {
+    "closed_heldout": -0.15,
+    "closed_train": 0.0,
+    "learned": false,
+    "open_heldout": 0.0,
+    "open_train": 0.0,
+    "relation": "NO_GRADIENT",
+    "world": 3
+   },
+   {
+    "closed_heldout": -0.4,
+    "closed_train": 318.6,
+    "learned": true,
+    "open_heldout": 36.1,
+    "open_train": 72.2,
+    "relation": "open>closed",
+    "world": 4
+   }
+  ],
+  "summary": "closed vs open on wforge gs3/gs4 (held-out charge; train_best in brackets): gs3 closed=-0.15[0.0] open=0.0[0.0]; gs4 closed=-0.4[318.6] open=36.1[72.2]",
+  "verdict": "PHENOMENON_INVERTED"
+ },
+ "manifest_counts": {
+  "ANALOGOUS": 3,
+  "IDENTICAL": 3,
+  "MODIFIED": 1,
+  "OMITTED": 1,
+  "UNREPRESENTABLE": 1
+ },
+ "notes": [
+  "genome_seed 1 (2-slot) refused per manifest"
+ ],
+ "observed": {
+  "per_cell": [
+   {
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a1\\heldout_g3_statemachine.jsonl",
+    "heldout_mean": -0.15,
+    "heldout_vals": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0,
+     -1
+    ],
+    "n_elites": 160,
+    "organism": "statemachine.v1",
+    "replay": "MET",
+    "train_best": 0.0,
+    "world": 3
+   },
+   {
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a1\\heldout_g3_sequence.jsonl",
+    "heldout_mean": 0.0,
+    "heldout_vals": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "n_elites": 160,
+    "organism": "sequence.v1",
+    "replay": "MET",
+    "train_best": 0.0,
+    "world": 3
+   },
+   {
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a1\\heldout_g4_statemachine.jsonl",
+    "heldout_mean": -0.4,
+    "heldout_vals": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     -2,
+     0,
+     0,
+     0,
+     0,
+     -2,
+     0,
+     -2,
+     0,
+     -2,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "n_elites": 160,
+    "organism": "statemachine.v1",
+    "replay": "MET",
+    "train_best": 318.6,
+    "world": 4
+   },
+   {
+    "heldout_file": "C:\\Users\\James\\AppData\\Local\\Temp\\claude\\D--prometheus\\c95cc146-61b5-4b8e-bbff-902630a045cc\\scratchpad\\atlas_bee_work\\a1\\heldout_g4_sequence.jsonl",
+    "heldout_mean": 36.1,
+    "heldout_vals": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     722
+    ],
+    "n_elites": 160,
+    "organism": "sequence.v1",
+    "replay": "MET",
+    "train_best": 72.2,
+    "world": 4
+   }
+  ]
+ },
+ "prereg_sha256": "a3fb68ce21d94df16be2510aa586bd5d9a6c7b0e6d9d16f16c37f657bfef2bc5",
+ "replay": [
+  {
+   "divergent": [],
+   "file": "heldout_g3_statemachine.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 40,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "heldout_g3_sequence.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 40,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "heldout_g4_statemachine.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 40,
+   "status": "OK"
+  },
+  {
+   "divergent": [],
+   "file": "heldout_g4_sequence.jsonl",
+   "kernel_hash_equal": true,
+   "runs_compared": 40,
+   "status": "OK"
+  }
+ ],
+ "replay_ok": true,
+ "source": {
+  "atlas_key": "nestor.graphworld/r1:E10-linear-closed-vs-open-128-seeds",
+  "disposition": "POSITIVE",
+  "original": "closed > open on held-out; significant on w3/w4, not on w1; E6 (8 train seeds) FAILED"
+ },
+ "utc": "2026-09-19T13:23:43Z",
+ "wall_s": 5.6
+}

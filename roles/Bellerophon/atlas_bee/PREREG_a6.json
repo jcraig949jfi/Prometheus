@@ -1,0 +1,122 @@
+{
+ "freeze": {
+  "algo": "sha256-canonical-json-v1",
+  "canonical_bytes": 4318,
+  "sha256": "64bda025f81a96cbe7dcf586ed7340da9773e101ca7fd02eea22b02b7305a568"
+ },
+ "prereg": {
+  "adaptation_id": "a6",
+  "budgets": {
+   "episodes": 2,
+   "horizon": 30
+  },
+  "controls": [
+   "control.replay.v1 on every arm (weather is seeded: BIT replay must hold)"
+  ],
+  "decision_criteria": {
+   "NEW_PHENOMENON": "all gates pass and erase < sham (retention load-bearing; the gates e07 refused, P1/P4, pass in BEE)",
+   "PHENOMENON_ABSENT": "gates pass but erase ~= sham ~= STATIC (weather has no effect: retention not load-bearing)",
+   "PHENOMENON_PRESERVED": "a gate refuses as in e07 (BEE is also inconclusive for the same structural reason)"
+  },
+  "gates": {
+   "P1_damage_fires": "erase ws_damage > 0 AND erase mean charge < STATIC mean charge on the panel",
+   "P2_uses_state": "ws_writes > 0 and ws_reads > 0 (memory users)",
+   "P3_changes_behaviour": "erase mean charge != STATIC mean charge",
+   "P4_separable": "erase mean charge != sham mean charge, and sham ~= STATIC (sham loses no information)",
+   "P5_deterministic": "control.replay MET under every arm"
+  },
+  "initial_state": "each organism starts each episode with an empty workspace; state accrues across ticks",
+  "interventions": {
+   "arm": {
+    "SHAMWEATHER": "substrate.kv_weather.v1 mode=sham, rate=0.5, weather_seed=3",
+    "STATIC": "substrate.kv_weather.v1 mode=off, rate=0.5, weather_seed=3",
+    "WEATHER": "substrate.kv_weather.v1 mode=erase, rate=0.5, weather_seed=3"
+   }
+  },
+  "manifest": {
+   "adaptation_id": "a6",
+   "counts": {
+    "ANALOGOUS": 4,
+    "IDENTICAL": 2,
+    "MODIFIED": 0,
+    "OMITTED": 1,
+    "UNREPRESENTABLE": 1
+   },
+   "entries": [
+    {
+     "aspect": "arms",
+     "bee": "substrate.kv_weather.v1 mode off / erase / sham",
+     "reason": "the three arms map one-to-one onto the weather substrate's modes",
+     "relation": "IDENTICAL",
+     "source": "STATIC / WEATHER / SHAMWEATHER"
+    },
+    {
+     "aspect": "damage",
+     "bee": "kv_weather erase: delete the workspace value when weather fires",
+     "reason": "BEE damages the organism's WORKSPACE (a substrate door it owns), the state it can lose",
+     "relation": "ANALOGOUS",
+     "source": "weather erases an organism's retained state"
+    },
+    {
+     "aspect": "sham / cost-match",
+     "bee": "kv_weather sham: rewrite the same value, pay the write, ws_damage counts equally",
+     "reason": "the sham fires exactly as often (same ws_damage) and pays a write, but the value is unchanged",
+     "relation": "IDENTICAL",
+     "source": "SHAMWEATHER pays the same cost, loses no information"
+    },
+    {
+     "aspect": "organism",
+     "bee": "statemachine.v2, write_every=1 (writes its workspace every tick)",
+     "reason": "a finite-state controller with a workspace it reads and writes; a memory user by construction",
+     "relation": "ANALOGOUS",
+     "source": "a memory-using brain"
+    },
+    {
+     "aspect": "objective",
+     "bee": "objective.charge.v1 (final charge)",
+     "reason": "performance is the resource the organism ends with",
+     "relation": "ANALOGOUS",
+     "source": "the organism's performance"
+    },
+    {
+     "aspect": "gate P1..P5",
+     "bee": "P1 damage fires / P2 uses state / P3 changes behaviour / P4 WEATHER separable from SHAMWEATHER / P5 deterministic",
+     "reason": "the same five predicates, evaluated on BEE's accounting, objectives and replay",
+     "relation": "ANALOGOUS",
+     "source": "e07's refusal gate"
+    },
+    {
+     "aspect": "in-life damage to HIDDEN state",
+     "bee": "-",
+     "reason": "BEE can damage the WORKSPACE (a declared door) but not a statemachine's internal `state` register; only externalised, retained state is in reach of a substrate",
+     "relation": "UNREPRESENTABLE",
+     "source": "damage to state the organism does not expose"
+    },
+    {
+     "aspect": "scientific-conclusion layer",
+     "bee": "-",
+     "reason": "BEE authors no scientific conclusion; the comparison packet is the conclusion layer",
+     "relation": "OMITTED",
+     "source": "e07's disposition (INCONCLUSIVE)"
+    }
+   ],
+   "source_experiment": "nestor.cw01/cw01-2026-09-17:cw01-e07"
+  },
+  "objective": "objective.charge.v1",
+  "observations": [
+   "mean final charge per (organism, arm)",
+   "accounting ws_damage/ws_writes/ws_reads per arm",
+   "replay outcome per arm"
+  ],
+  "organisms": "panel of 6 statemachine.v2 (write_every=1), seeds [0, 1, 2, 3, 4, 5]",
+  "question": "Does erasing a memory-using organism's retained workspace (WEATHER) reduce its final charge beyond a cost-matched sham that rewrites the same value (SHAMWEATHER)? I.e. is retained state load-bearing, and is WEATHER separable from SHAMWEATHER?",
+  "seeds": {
+   "base": 1,
+   "n_seeds": 8
+  },
+  "source_disposition": "INCONCLUSIVE",
+  "source_experiment": "nestor.cw01/cw01-2026-09-17:cw01-e07",
+  "stopping_rules": "fixed panel and budget; a gate that fails REFUSES the reading (as e07 did), it is not forced",
+  "world": "world.integer.v1({'world_seed': 8, 'start_charge': 40, 'yield_amt': 10})"
+ }
+}

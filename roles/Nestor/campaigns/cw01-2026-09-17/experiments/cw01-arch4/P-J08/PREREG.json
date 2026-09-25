@@ -1,0 +1,44 @@
+{
+ "perturbation_id": "P-J08",
+ "parent": "T-ARCH5",
+ "requires": [
+  "P-J02"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-representation",
+ "grammar_b_available": true,
+ "genomes": [
+  [
+   1,
+   0
+  ],
+  [
+   1,
+   1
+  ],
+  [
+   2,
+   0
+  ],
+  [
+   2,
+   1
+  ],
+  [
+   3,
+   0
+  ],
+  [
+   3,
+   1
+  ]
+ ],
+ "design": "paired: 2000 one-operator mutants per genome under grammar B and under v0.4, 2 held-out sets with the baseline on the same sets, beneficial / hits confirmed on 4 (cap 300), A' (xor 1) and A (xor 15)",
+ "material_rule": "material if the grammars differ in hit share, or in beneficial share by > 2x with >= 10 beneficial mutants pooled",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 08:39:54",
+ "prereg_sha256": "311b9b8043d5e2d2bae4213a345c57862a02baf38bad49eec0fdc2651d30d8e0"
+}

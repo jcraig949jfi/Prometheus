@@ -1,0 +1,2 @@
+I’d like you to research ALife, POET and see if
+You can find a 3rd, 4th or 5th ecosystem, and see if we can craft a set of experiments that are similarly shaped to what we’ve been running.  The hypothesis is that there are hundreds, if not thousands of of possible world, organism, evolutionary pressure combinations with varied architectures, approaches and motivations behind them.  I’d lime to round up as many as we can, enumerate them, classify them and create reference pointers to their research, girhub repo, etc.

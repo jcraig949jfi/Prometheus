@@ -367,3 +367,39 @@ O3. Can the assay tell "the improver got better" from "the improver
     moved to another point on its compute curve" (COMPUTE CHEAT) and
     from "it carried useful state" (MEMORY CHEAT)? STATUS: OPEN
     (Campaign 0 fixtures).
+
+
+## P. Questions from the relayed commentary (2026-09-21)
+
+P1. What is the MINIMUM evaluator reliability at which evolution still
+    selects real improvement rather than confident error? Model it as
+    the swarm precision law (p*t/(p*t+(1-p)*q), MODELS.md M2) with the
+    improver's acceptance rule in place of the aggregator, and find the
+    crossover. STATUS: OPEN, and cheap -- the local engine can corrupt
+    its own oracle at a known rate q, which is a T2 experiment costing
+    seconds per lineage.
+P2. Is there a headroom/judge-quality FRONTIER? I.e. does more headroom
+    make a weak judge more dangerous (more chances to be fooled) or less
+    (real gradient outcompetes noise)? T9 says both factors matter; it
+    does not say they are independent. STATUS: OPEN.
+P3. Can a saturated environment be detected from the OUTSIDE, without
+    the counterfactual? Flat-at-ceiling dev scores are the signature,
+    but a system reporting only a benchmark number would look identical
+    to one genuinely improving on a harder mix. What does a paper have
+    to publish for a reader to tell? STATUS: OPEN; this is a reporting
+    standard the seat could propose.
+P4. Does any published RSI result state the base system's accuracy on
+    its OWN development distribution (not the benchmark)? If not, the
+    field cannot currently distinguish T9's two failure modes in the
+    literature at all. STATUS: OPEN; answerable by re-reading
+    rsi_core.md's papers for one specific number.
+P5. The commentary claims open-ended evolution REQUIRES heavy
+    infrastructure (event streams, databases, low-latency traces). The
+    local engine reaches 5,577 lineages/hour on one core with none of
+    it. At what point does the claim become true -- is it a property of
+    open-endedness, of model-based workers, or of production systems
+    only? STATUS: OPEN, and worth answering because it decides how much
+    engine this seat should ever build.
+P6. If the frontier really is "assembling frameworks", what is the
+    falsifiable version of that claim, and what would the field look
+    like in 12 months if it were false? STATUS: OPEN.

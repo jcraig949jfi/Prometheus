@@ -1,0 +1,41 @@
+{
+ "disputes": [
+  {
+   "C_position": "PASS as recorded, under a predicate pinned at 7f3217b4d before any row, with a vacuity rule fixed before rows. That rule did not fire. C's recorded PASS stands as recorded.",
+   "H_position": "The VERDICT is reproduced; the PRESSURE claim is read as VACUOUS. P2/P3 discriminate (channel use is supported). P1 is the only component carrying the corruption effect and tolerates a 16.3% median drop; a planted drop equal to the pressure's own direct size (5.3% flipped ticks) fails P1 in only 4.6% of 2000 draws. Observed drop 5.7%; cell vs control MWU p 0.95. The planted null cannot PASS by construction, so no control demonstrates P1 rejecting a pressured arm. Under the R8 invariant -- a PASS whose arms cannot discriminate is VACUOUS -- H reads the pressure claim as vacuous in substance.",
+   "H_self_disclosure": "H labelled its own 4.6% / 2000-draw resolving-power analysis POST HOC. It must be reported as post hoc, never as a preregistered test.",
+   "against": "C",
+   "bus_id": "1789594234509-0",
+   "conductor_role": "A does NOT adjudicate. SWARM_R8 s14: both statements preserved, the dispute never overwritten. P4: observation / eligibility / verdict / interpretation stay separate layers, and this dispute sits exactly on the verdict/interpretation seam.",
+   "id": "C-R8-AP-01",
+   "not_in_dispute": {
+    "arithmetic": "H re-scored 96 runs independently from stored bytes, 0 mismatches",
+    "null_check": "FAIL, as the predicate requires before the cell runs",
+    "replay": "90458d47b, replay_r8/C-R8-AP-01.json",
+    "sample": "balanced 32/4/8, EVIDENCE_N_v1",
+    "verdict": "cell median 0.5506 >= bar 0.4883; P2 and P3 32/32 -> PASS, identical to C"
+   },
+   "packet_guard_ACCEPTED_by_A": "This result is NOT to be written up as 'corruption robustness'. The anti-prior calibration outcome carries the VACUOUS-in-substance flag alongside the recorded PASS. Both statements ship; neither is collapsed into the other.",
+   "raised_by": "H"
+  },
+  {
+   "C_position": "PASS as recorded, under a predicate pinned before any row with a vacuity rule fixed in advance.",
+   "H_position": "Pressure claim VACUOUS. By the PREREGISTERED MDD80 rule (fixed 1789595069735-0 before any cell row): MDD80 0.05 > (c) HAND held loss 0.0040. AND on substance independently: a planted drop of exactly (c) fails P1 in 26.9% of draws against the bootstrap's own 25.0% false-fail level -- no power at the pressure's own size.",
+   "H_self_disclosed_defect_in_H_rule": "H disclosed that its OWN preregistered grid floor (5%) is far coarser than this P1, which accepts a drop of <= 0.74%, so MDD80 would call ANY sub-5% pressure vacuous on this cell. H reached VACUOUS on substance by a separate check rather than resting on the defective grid. A did not ask for this and does not rule on the instrument mid-round.",
+   "against": "C",
+   "bus_id": "1789601365307-0",
+   "conductor_role": "A does NOT adjudicate. Both statements preserved; the dispute is never overwritten (s14).",
+   "id": "C-R8-AP-02",
+   "not_in_dispute": {
+    "null_check": "FAIL as required",
+    "predicate": "pinned 26b55dc46 before the first row",
+    "sample": "32/4/8 across 3 arms",
+    "verdict": "PASS re-derived from recorded per-run values, 0 disagreements"
+   },
+   "packet_guard_ACCEPTED_by_A": "Do NOT write this as 'corruption helps' or as a mechanism. A second recorded PASS whose pressure claim is read VACUOUS, plus two post-hoc observations pointing the same way, is a CANDIDATE for r9, not a finding.",
+   "post_hoc_observations_NOT_verdicts": "H: cell median ABOVE control on clean HELD, +6847 (+5.5% of control's margin above floor), MWU two-sided p 0.0035. C, filed independently as an ANOMALY against its own result: corruption RAISES the planted greedy code's TRAIN NK fitness (2,370,731 corrupted vs 2,270,339 clean, +4.4%) while HELD falls. Two observers, same direction. Candidate interpretation only (H): observation noise regularising the plastic refit. NK fitness always uses the TRUE table; corruption changes only which bits the brain chooses.",
+   "raised_by": "H"
+  }
+ ],
+ "round_id": "r8"
+}

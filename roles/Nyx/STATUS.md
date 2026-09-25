@@ -1,6 +1,6 @@
 # Nyx status
 
-Currency: 2026-09-18 ~11:45 UTC (instance gandalf-9e21f277 on M3/GANDALF).
+Currency: 2026-09-19 ~10:45 UTC (instance gandalf-9e21f277 on M3/GANDALF).
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1
@@ -13,17 +13,36 @@ comms: Harmonia[gandalf-6cd1348b] booted on M3 at 15:2xZ (R1 open on gzip 003; s
   nothing asked of Nyx); #357 (the particles packet) is in its inbox. The live channel is the Postgres queue at 192.168.1.202:5432 (EW_DB_HOST). The Redis at 192.168.1.202:6379 answers
   but its Agora streams have been dead since 2026-05-20; 192.168.1.176 is unreachable. Nyx and Techne online; Harmonia
   offline since 2026-09-16 13:42Z (messages queue for it).
-what it asserts (atlas, python -m nyx.atlas.build): census 121; cut 107 (COARSE 62, DEEP 42, ORGAN0 3); NOT_CUT 14; 513 fragments
-  (453 ACCEPTED, 60 CANDIDATE); 321 rejected; 157 pressures; 630 composition edges; fingerprints 0; blind cuts 0; measured
-  cells 0. Stage A order for the NOT_CUT population preregistered (seed 20260917); positions 1-80 done except 13 (valgrind fixtures), 18 (souffle) and 49 (pari-gp: ORIGIN_UNREACHABLE, SSL); bodies present (79/80 MATCH).
+what it asserts (atlas, python -m nyx.atlas.build): STAGE A FROZEN (operator directive 2026-09-18 s1) -- census 121 FROZEN + 2 operator-directed ALife bodies (asal-sakana-2024, poet-original-2019) = 123 atlas fossils; cut 122
+  (COARSE 72, DEEP 45, ORGAN0 4); NOT_CUT 1 (pari-gp-2.17, ORIGIN_UNREACHABLE/SSL from this host); 475 accepted organs. 121 is a HARD boundary; no new broad census until >=10
+  mechanisms carry Harmonia verdicts. The atlas is now the RESERVOIR; the scoreboard is the output.
+SCOREBOARD (nyx.scoreboard/3, operator directives 2026-09-19 s9 + 2026-09-19b s2 -- investigations, and MECHANISM
+  counts over UNIQUE mechanism_ids from the mechanism ledger, never packets or supported clauses):
+  packets_issued 4, packets_adjudicated 2, predictions_tested 7, predictions_falsified 2, cuts_technically_supported 2,
+  mechanisms_registered 6, mechanisms_isolated 6, mechanisms_evidence_supported 2, observer_stable_mechanisms 0,
+  observer_dependence_unresolved 2, unresolved_anomalies 1, MECHANISMS_THAT_SURVIVED_TRANSPLANT 0 (headline target;
+  cannot be claimed without a SUPPORTED transplant row -- validator-enforced). Open packets/lane {m3-native-python: 1} cap 3.
+MECHANISM LEDGER (nyx/atlas/gates/MECHANISMS.json, schema nyx.mechanism_ledger/1; python -m nyx.atlas.mechanisms):
+  MECH-ASAL-OE-SCORE EVIDENCE_SUPPORTED (observer UNKNOWN, transplant OFFERED) | MECH-ASAL-FRAME-SAMPLING PROPOSED |
+  MECH-PARTICLES-ESS-TRIGGER EVIDENCE_SUPPORTED | MECH-POET-NOVELTY-ESTIMATOR PROPOSED (packet 291a22ed out for ruling) |
+  MECH-POET-MINIMAL-CRITERION PROPOSED | MECH-POET-FIFO-DISCARD PROPOSED.
+PROBE BATTERY frozen (nyx/atlas/probes.py, source sha256 53f63df5...; probes.FREEZE): 14 declared probes + open-channel
+  descriptor, synthetic fixtures only, open-channel output is a NOMINATION not evidence.
 pipeline objects: MECH-GZIP-LEVELTABLE-003 (frozen 5dbf46a2..., with Harmonia since 09-16, no return; NOT runnable on M3);
   MECH-PARTICLES-ESSTRIGGER-001 (frozen 5b8d6ae4...; RAN on M3 by Harmonia 2026-09-17: cheat/negative PASS, positive control FAIL
   -> PREDICTION_INDETERMINATE + PREDICTION_PACKET_CHALLENGE, #363; immutable); MECH-PARTICLES-ESSTRIGGER-002 (frozen 186047db...,
   supersedes 001; RAN on M3 by Harmonia, #382: all controls PASS; CUT_SUPPORTED on the boundary (a)/(b) on W1 and W2; claim (c) scheme ordering
   PREDICTION_FAILED at 50 seeds + INDETERMINATE at 400 -> DROPPED from the cut (D' 2026-09-18), to be re-posed as MECH-PARTICLES-SCHEME-001
   with a power statement; immutable).
-gates (nyx/atlas/gates/LEDGER.json): cuts_created 107; cuts_returned_with_verdict 1 (particles-chopin-0.4, CUT_SUPPORTED, #382); handoffs open 4 (Harmonia x2 -- gzip
-  003 and particles 001; Techne x2 -- #296 first-pass return, #358 census/asks); returns received 7 (3 on 09-16; #360 ACK, #363 INDETERMINATE + CHALLENGE on 09-17; #377 Techne POET/ALife autopsy, ACCEPT, answered #379 with ASK 3-5).
+  MECH-ASAL-LEGIT-SEARCH-001 (frozen c6627d26...; the GOLDEN PATH's first verdict). RAN sealed-then-frozen by Harmonia (#441,
+  operator-tightened #446): boundary CUT_SUPPORTED; I0-catalogue PREDICTION_FAILED (raw catalogue crosses, 0.8076 < 0.8167; A7
+  lesson -- an estimated mean frozen as an exact threshold); I1/I2 SUPPORTED_BY_WITNESS (0.7665; existential); I3
+  SUPPORTED_ON_EXECUTED_SUBSET (395 of 1045 executed, port refused 650). MECHANISM STRENGTHENED: the ASAL scalar admits both exploit
+  turbulence and coherent morphing life below garbage; selection alone suffices. Packet immutable; full-domain run deferred to a new
+  preregistered replication after port extension (A4). Posted Stage D' #476.
+gates (nyx/atlas/gates/LEDGER.json): cuts_created 120; packets_issued 3 (all with verdicts; open 0); returns_received 18. The
+  golden path's first mechanism (asal-sakana-2024, score at asal_metrics.py:52-64) has a Harmonia verdict and a Theophrastus cell
+  OFFERED (not yet accepted); milestone s7 (one mechanism to a bench with machine-verifiable receipts) is one bench-acceptance away.
 record defects for Techne (this block): the 4.3-Reno tape body lacks tape files 5-7 (record says it contains the Reno TCP;
   cut ORGAN0); viterbi-hmm-xukmin tags; ELIZA 1965 matcher outside the body.
 own defects: NYX-47 (cost_class free text in 12 pre-09-17 pressures), NYX-48 (F:/ paths in five 09-13 scripts). CLOSED
@@ -32,14 +51,24 @@ incident (calibration ledger 2026-09-17): boot-time `git pull` moved the canonic
   hephaestus/src/closure_q045.py is in stash@{0} of C:\Prometheus, intact; pop it in a worktree.
 lane: nyx/ and roles/Nyx/ only.
 
-next executable action (operator refinery directive 2026-09-18, roles/Nyx/prompts/2026-09-18_refinery_directive/): Stage A is DONE
-  and frozen; the scoreboard, not the atlas count, is now the output. FAST LANE -- write the ASAL legitimate-Lenia-search prediction
-  packet: can a search over legitimate Lenia parameters cross below the observed GARBAGE CLIP score (0.817)? Boundary = Techne's
-  techne107_asal_observer.py instrument (hashed; a descendant of the ASAL body, not the body); carry a power statement, disjoint seeds
-  and novelty_kind per intervention; hand Harmonia the six-bullet ruler brief (directive s2). HISTORICAL LANE -- POET's two mechanisms
-  (environment discard / minimal-criterion boundary; PATA-EC recomputation over world x contemporary population, with the basis-
-  population ablation) the moment Techne lands the body; then Avida's save / population / ancestry cut (extend nothing yet exists;
-  it becomes the HISTORY_MODE reconstruction benchmark). The seven pure-Python packet candidates (sgp4, backoff, emcee, pid-autotune,
-  pybreaker, py-vollib, filterpy) are the fallback lane if neither ASAL nor POET is runnable. Particles claim (c) is dropped;
-  MECH-PARTICLES-SCHEME-001 only on a downstream dependency or a larger-effect world. No deepening of the COARSE inventory bodies
-  (glpk, lapack, souffle, valgrind, spin, swipl, ...) without a named downstream question. Cap: 3 open packets per Harmonia lane.
+next executable action (operator directive 2026-09-19b "NEXT PIPELINE DIRECTION",
+  roles/Nyx/prompts/2026-09-19b_next_pipeline_direction/; the earlier 2026-09-19 directive is in .../2026-09-19_asal_pipeline_direction/):
+  DONE this tick: mechanism ledger built (a mechanism is NOT a packet -- review q9.1 answered NO); scoreboard -> /3 with
+  mechanism counts over unique ids; probe battery implemented and FROZEN under two channels (declared + open), synthetic
+  fixtures only; stop-condition corrected (PROBE_BATTERY_FOUND_NO_SEPARATOR is not homogeneity); POET cut + the first POET
+  packet frozen and posted (#494); directive relayed (#495); two Techne record defects reported.
+  NEXT, in order:
+  (1) AWAIT the POET novelty ruling (MECH-POET-NOVELTY-ESTIMATOR-001, 291a22ed). It is M3-runnable on the fossil's own
+      bytes, so it can return without any AVX host. Assimilate in Stage D' into the mechanism ledger entry.
+  (2) AVIDA ancestry cut, concurrently -- A5 definedness on a 30-organism fixture per degradation before any prereg hash
+      (parent-edge recall is undefined for endpoints-only history; those arms are refused at plan time) and A9 (keep
+      survivors' ancestry, never invent parent ids: missing beats unverified).
+  (3) poet-enhanced-2020 (PATA-EC over world x contemporary population, with the basis-population ablation) AFTER the
+      POET novelty ruling returns -- one mechanism completed beats several cuts accumulated.
+  (4) FULL-DOMAIN REPLICATION packet -- author it the moment HARM-56 returns a disposition A/B/C. Domain must be
+      demonstrably executable BEFORE the first score (100% executable or explicitly excluded; coverage is a GATE, not a
+      statistic); catalogue by stable positional INDEX not code (#479: 63 duplicated codes); both observers where feasible.
+  (5) BEHAVIORAL CUTS on stable + discordant regions, only after (4) executes. Battery already frozen.
+  HOLDS: no replication packet until HARM-56; no behavioral cuts until it executes; no new search objective; no
+  transplant nomination until the low-score region is cut by behavior; no port-development campaign. HARM-55's Flax
+  column is Techne/Harmonia on an AVX host, not this seat (original-observer column already bit-identical, #488).

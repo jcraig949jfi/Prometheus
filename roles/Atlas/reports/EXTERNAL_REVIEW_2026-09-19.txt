@@ -1,0 +1,323 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+ATLAS -- Experiment index of Prometheus + survey of world x organism x pressure
+ecosystems in artificial life and open-endedness
+================================================================================
+Prepared:      2026-09-19   first pass; M1 + M2 evidence; surveyor-graded links
+Location:      atlas/ (code), roles/Atlas/ (docs, catalogue, proposals)
+Store:         Postgres "prometheus_fire" on M1, schema atlas
+Artifacts:     roles/Atlas/catalog/{ECOSYSTEMS.jsonl,README.md,SCHEMA.md}
+               roles/Atlas/proposals/2026-09-19_cross_ecosystem/
+               roles/Atlas/reports/REPORT_2026-09-19.txt, MODEL.md
+Version:       origin/main 0436f52a4 (catalogue + proposals); migrations 001-008
+Headline:      352 external ecosystems classified on 3 axes. They occupy 205
+               of 1,728 single-pressure cells (11.9%) and 186 of 589,680
+               pressure-set combinations (0.03%). Our 4 engines sit in 7
+               cells, 5 of which no catalogued system shares.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+Two deliverables from the Atlas seat, which shadows the Prometheus
+experiment engines and never runs or adjudicates their science.
+
+(a) An index of the experiments the Prometheus engines have run. WHAT RAN,
+    WHAT WAS OBSERVED and WHAT SOMEONE CONCLUDED are separate tables. Every
+    fact points back to evidence (git blob, file on a named host, Postgres
+    rows, engine-ledger id).
+(b) A survey of external artificial-life and open-endedness ecosystems:
+    systems that combine a WORLD, an ORGANISM (the "player") and an
+    evolutionary PRESSURE. Each is enumerated, classified and pointed to
+    its papers and code, then compared with our own engines. Candidate new
+    ecosystems and 12 cross-ecosystem experiment proposals follow from it.
+
+Claims under review:
+  C1  The catalogue is a faithful, reference-backed census of a large
+      part of the field. It is not exhaustive.
+  C2  The occupied part of the world x organism x pressure space is a
+      tiny fraction of the combinatorial space, and most occupied cells
+      are held by a single system.
+  C3  Prometheus's engines cluster in two world x organism cells that the
+      field barely uses, and none co-evolves its environments.
+What would falsify them: a spot-check finding links marked VERIFIED that
+do not resolve (C1); a finer or corrected labelling that fills the space
+(C2); a misclassification of our engines (C3).
+
+--------------------------------------------------------------------------------
+2. METHOD
+--------------------------------------------------------------------------------
+Index (a): eight read-only collectors run from linked git worktrees:
+  git history (all remote and local refs); Archaeon SFE campaigns;
+  DEEP FRONTIER scheduler registry; NPE (Nestor) ledgers and CW01 loop
+  (an M1-local branch); Vivarium queue; PEW evidence-wiki pointers; M1
+  local files and engine ledgers (idle SQLite, opened read-only and
+  immutable); M2 run receipts and ledgers (collected by the sibling seat
+  Atlas-M2 into the same keys).
+  Collectors are idempotent and versioned. They never erase data and
+  record conflicts instead. Advisory locks keep the two seats' writes
+  from interleaving.
+
+Survey (b): six parallel web-survey passes, one per cluster, all writing
+  one JSON schema:
+    c1 open-endedness / environment curricula   66 records
+    c2 digital evolution / artificial chemistry 53
+    c3 cellular automata / self-organisation    58
+    c4 embodied morphology / ecologies          52
+    c5 LLM-era and program evolution            70
+    c6 frameworks, source lists, discoveries    94
+  Every link carries the surveyor's status: VERIFIED (fetched, or resolved
+  via the GitHub/arXiv API), SEARCH_RESULT, or UNVERIFIED (from memory).
+  393 records were merged and de-duplicated into 352 systems. Four rows
+  for our own engines were added on the same axes. Our existing internal
+  coverage (Techne specimens, Nyx cuts, Harmonia rulers, Aporia dossiers)
+  was mapped first, and each catalogue row points to it.
+
+--------------------------------------------------------------------------------
+3. KEY DEFINITIONS
+--------------------------------------------------------------------------------
+WORLD      where organisms live: discrete grid, program memory, continuous
+           field, particles, 2D/3D physics, chemistry, game environment,
+           text/code, procedural terrain, graph, other.
+ORGANISM   what varies and is inherited ("player"): machine code, genome
+           bytes, CPPN, neural net, policy, morphology + controller, CA
+           pattern, kernel parameters, reaction rules, LLM-written
+           program, LLM agent, other.
+PRESSURE   what selects: implicit replication, resource competition,
+           explicit fitness, novelty, quality-diversity, minimal
+           criterion, coevolution, environment co-evolution, regret
+           curricula, human/model judgment, predator-prey, other.
+Each axis has 11 canonical values plus an "other" bucket (12 in all). The
+surveyors used 25 / 67 / 41 raw labels, which fold into those 12.
+Frameworks and curated lists are catalogued but left out of the matrix.
+
+--------------------------------------------------------------------------------
+4. INPUTS: WHAT IS IN THE PROMETHEUS INDEX TODAY
+--------------------------------------------------------------------------------
+  Item                                           Count
+  ---------------------------------------------  ------
+  campaigns / programs                               48
+  experiments (excluding 12 proposals)            1,929
+    vivarium queue rows                           1,242
+    DEEP FRONTIER specs (mostly planned)            372
+    NPE (rounds r1-r8 + CW01)                       258
+    SFE (Archaeon campaigns 1-6)                     57
+  attempts / execution segments             1,623 / 3,280
+  scientific-lineage ideas (trajectories, lineages)  54
+  structured facts: RAN / OBSERVED / CONCLUDED
+                                      8,559 / 12,750 / 1,449
+  verbatim conclusions                              468
+  typed edges (lineage, provenance, relations)    2,074
+  defects                                           218
+  evidence pointers                              12,475
+    referenced, M2 location not yet visible       6,046
+    seen on M2 by Atlas-M2                          304
+  open weak-signal candidates (13 rules)            192
+
+  Atlas class of non-Vivarium experiments (reported disposition kept
+  verbatim beside it):
+    PLANNED 354  UNKNOWN 111  POSITIVE 74  INCONCLUSIVE 40  NEGATIVE 39
+    NULL 26  FAILED 25  WEAK_POSITIVE 16  INVALID 2
+
+--------------------------------------------------------------------------------
+5. PRIMARY RESULT A: THE CATALOGUE
+--------------------------------------------------------------------------------
+  Item                                            Count   Verified
+  ----------------------------------------------  -----   --------
+  external ecosystems                               352
+    in the matrix (frameworks/lists excluded)       314
+  references                                        834        642
+    code repositories                               327        315
+    papers                                          344        225
+  declared relative links (variants, reimpls)       904
+  systems Prometheus already holds in some form      22
+  status: maintained 96, active 87, historical 89, archived 80
+  GPU / JAX-based                                   110 of 352
+
+  First appearance by 5-year bin:
+    <1990    11   |   1990-94  16   |   1995-99  18   |   2000-04  10
+    2005-09  14   |   2010-14  17   |   2015-19  60   |   2020-24 141
+    2025+    41   (the field accelerated sharply after 2015)
+
+  Axis frequencies (external, in-matrix):
+    WORLD     discrete_grid 79, text_or_code 47, physics_3d 37,
+              game_env 26, physics_2d 21, continuous_field 20,
+              program_memory 20, other 20, chemistry 18,
+              procedural_terrain 14, particles 10, graph 2
+    ORGANISM  other 76, policy 59, neural_net 32, ca_pattern 30,
+              llm_program 29, machine_code 25, morphology+ctrl 18,
+              kernel_params 14, llm_agent 11, reaction_rules 10,
+              genome_bytes 7, cppn 3
+    PRESSURE  explicit_fitness 124, implicit_replication 90,
+              resource_competition 67, other 53, coevolution 31,
+              novelty 30, human_or_model_judgment 30,
+              curriculum_regret 26, quality_diversity 22,
+              predator_prey 21, env_coevolution 12, min_criterion 9
+    Environment generation: fixed 217, procedural 38, co-evolved 26,
+              none 16, learned world model 9, LLM-generated 8
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULT B: THE COMBINATORIAL SPACE
+--------------------------------------------------------------------------------
+Mixing worlds, organisms ("players") and pressures:
+
+  Space                                     Cells     Occupied   Share
+  ---------------------------------------   -------   --------   -----
+  WORLD x ORGANISM                              144         53   36.8%
+  WORLD x ORGANISM x PRESSURE (single)        1,728        205   11.9%
+  WORLD x ORGANISM x PRESSURE-SET
+    (12 x 12 x (2^12 - 1))                  589,680        186    0.03%
+  + environment generation (6 values)        10,368          -       -
+  + search-algorithm family (~10)          ~103,680          -       -
+  raw labels, single pressure (25x67x41)     68,675          -       -
+
+  Singletons: 17 of 53 world x organism cells, 104 of 205 single-pressure
+  cells and 137 of 186 pressure-set triples hold exactly ONE system. A
+  typical system mixes 1.64 pressures, and 59 distinct pressure sets
+  occur.
+
+  World x organism occupancy (top 8 x top 8; the counts are systems):
+
+                     other policy nnet  ca_p llm_p mcode morph kern
+    discrete_grid      15    22    16    17     0     6     0     0
+    text_or_code       15     0     1     0    25     0     0     0
+    physics_3d          8    14     0     0     1     0    13     0
+    game_env            4    14     3     0     1     0     0     0
+    physics_2d          7     3     6     0     1     0     3     0
+    other               8     4     1     1     0     1     0     2
+    continuous_field    0     0     1     7     0     0     0    12
+    program_memory      2     0     0     0     1    17     0     0
+
+  31 of these 64 cells are empty. Examples: LLM-written programs in grid
+  worlds; morphologies in grid worlds; CA patterns in 3D physics or game
+  worlds; machine code in text, 3D or game worlds; kernel-parameter
+  organisms anywhere except continuous fields.
+
+  Each cell is itself a family of experiments. Worlds, seeds, rates,
+  budgets and controls parameterise it. In-house examples: DEEP FRONTIER
+  expanded 15 lineages into 372 specs; the NPE CW01 loop wrote 122
+  perturbation records against 35 trajectories; one SFE campaign is 10
+  preregistered slots with up to 6 attempts each. The realisable
+  experiment space is cells x parameterisations. In practice it is
+  unbounded, so the real question is how to sample it.
+
+  Where Prometheus sits:
+    SFE campaigns     program_memory x machine_code  x explicit, QD
+    DEEP FRONTIER     program_memory x graph_organism x explicit, novelty
+    NPE CW01          program_memory x tree/tape genome x explicit, resource
+    NPE GraphWorld    graph x policy x explicit, QD
+  Together these are 7 world x organism x pressure cells, and only 2 of
+  them contain any catalogued system. All four engines use fixed or
+  procedural environments; the field has 26 systems that co-evolve them.
+
+--------------------------------------------------------------------------------
+7. DELIVERABLES: CANDIDATE ECOSYSTEMS AND PROPOSALS
+--------------------------------------------------------------------------------
+  Candidate new ecosystems (all have verified code; none is running here):
+    E3  BFF program soups (cubff)  same kind of program, IMPLICIT pressure
+    E4  Flow-Lenia                 continuous field; multi-species
+                                   evolution built into the physics
+    E5  JaxUED / ACCEL             environment CO-EVOLUTION (POET line)
+    ref Avida (preserved and runnable in-house), EvoGym (morphology)
+
+  12 experiment proposals (XE-01..XE-12). Each transplants a named
+  in-house finding, quoted from the index, into these substrates. Each
+  declares positive, negative and cheat controls, a falsifier, a kill
+  condition, a claim ceiling and what a pass would NOT license. They are
+  indexed as kind=proposal with TRANSPLANT_OF lineage edges.
+    XE-01 single-edit damage cliff across substrates
+    XE-02 length-mediated robustness
+    XE-03 selection vs neutral drift on damage loss
+    XE-04 deleterious load at mutation-selection balance
+    XE-05 residue transport between co-evolving worlds
+    XE-06 flat elite at equal total compute
+    XE-07 implicit vs explicit pressure, same substrate
+    XE-08 stasis and escape in a continuous ecology
+    XE-09 recombination rate and dominance direction
+    XE-10 historical transitions as detector calibration
+    XE-11 co-evolution vs curriculum vs randomisation
+    XE-12 artificial chemistries under our damage rulers
+
+  Acceptance checklist:
+    every catalogue link carries a verification status ........... yes
+    ids unique; declared relatives resolve or are set aside ....... yes
+    proposal parents resolve in the index ......................... yes
+    all three controls declared per proposal ...................... yes
+    nothing downloaded, nothing run, no engine disturbed .......... yes
+
+--------------------------------------------------------------------------------
+8. CONTROLS AND SELF-CHECKS
+--------------------------------------------------------------------------------
+- Atlas test suite: 32 tests pass.
+  - Positive: known declared parents and supersessions are present.
+  - Negative: no filename-based identity; no keys minted from prose.
+  - Cheat: an injected weak positive is surfaced; a cross-host merge never
+    erases data; a second seat is refused the write lock; loss tracking
+    flags a deleted file.
+- Signal rules were tightened after the first run surfaced schema fields
+  as "effects" (recorded in the calibration ledger).
+- Found and corrected in this pass:
+  - a lineage walk that returned one row per path, and exploded;
+  - a dangling-edge view that ignored ecosystem endpoints;
+  - a proposal citing a claim that exists only in private notes, now
+    replaced with the verbatim index text.
+- Eight of the seat's own errors are logged in
+  roles/Atlas/calibration/LEDGER.md.
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT VERIFICATION
+--------------------------------------------------------------------------------
+None yet. Link verification is the surveyors' own. The proposals have
+gone to Archaeon, Nestor, Harmonia and Atlas-M2 for review, with no
+action requested (comms #520-#523).
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- Each system gets one label per axis, so hybrids flatten. "other"
+  absorbs 76 organisms and 20 worlds; finer labels would raise every
+  cell count and lower the occupancy percentages further.
+- Occupancy percentages depend on the vocabulary. They measure how
+  concentrated the field is, not how much biology is possible.
+- Coverage is broad, not exhaustive. The 16 source lists name more
+  systems, and two earlier in-house lists (152 and 463 entries) are
+  unverified.
+- 192 of 834 links are SEARCH_RESULT or UNVERIFIED. Some venues and
+  years come from memory and are flagged in the notes.
+- The index is M1 plus partial M2. 6,046 pointers still wait for M2-side
+  ledger checks.
+- Atlas classes are word maps over reported dispositions. Vivarium's
+  are queue states, not science.
+- No proposal has been sized, piloted or accepted by an owning seat.
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+From a linked worktree (the canonical checkout is refused):
+  python -m atlas migrate
+  python -m atlas harvest all        (M1 collectors; M2 via Atlas-M2)
+  python -m atlas comb
+  python -m atlas report --out /tmp/r.txt
+  python -m pytest -q atlas/tests
+Spot checks (psql, schema atlas):
+  SELECT world_kind, organism_repr, count(*) FROM atlas.ecosystem
+    WHERE origin='external' GROUP BY 1,2 ORDER BY 3 DESC;
+  SELECT ecosystem_id, ref_uri FROM atlas.ecosystem_reference
+    WHERE kind='code' AND url_status='VERIFIED' ORDER BY random() LIMIT 20;
+  SELECT depth, ent_key, via FROM atlas.descendants('experiment',
+    'archaeon.campaign/cmp4:C4-01');
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+  CATALOGUE BUILT AND REFERENCE-BACKED ........................... yes
+  SPACE MOSTLY UNEXPLORED (C2) ....... yes, under this vocabulary
+  PROMETHEUS IN SPARSE CELLS; NO ENVIRONMENT CO-EVOLUTION (C3) .... yes
+  NEW ECOSYSTEMS ADOPTED ................... NO -- proposals only
+Decisions for the operator and the owning seats: which of E3, E4, E5 to
+smoke-test, and which XE proposals merit preregistration.
+Reviewer's bottom line: is the 3-axis vocabulary fine enough that the
+empty cells are real opportunities, or would a better taxonomy show the
+field already covers them?
+================================================================================
+END OF PACKET
+================================================================================

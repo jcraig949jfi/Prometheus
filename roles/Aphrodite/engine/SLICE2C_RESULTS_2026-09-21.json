@@ -1,0 +1,1343 @@
+{
+  "discovery_yield": "16/16",
+  "distinct_artifact_hashes": "1/16",
+  "engine_sha256": "6df93c2a4f7c671287f7d3eb46fbe5943baeef9a9eb703ffe4d96ef38ba0dd93",
+  "grammar_hash": "713195e32926e538e2cebb9831359782854e20f29c227c3fbdd2f1f3f6849d16",
+  "independent_lineages": 16,
+  "lineages": [
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 908,
+      "generation": 8,
+      "lineage_id": "L2C-001",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.13,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 908,
+      "generation": 8,
+      "lineage_id": "L2C-002",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.23,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 5908,
+      "generation": 8,
+      "lineage_id": "L2C-003",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.35,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 908,
+      "generation": 8,
+      "lineage_id": "L2C-004",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.5,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 10908,
+      "generation": 8,
+      "lineage_id": "L2C-005",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.65,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 15908,
+      "generation": 8,
+      "lineage_id": "L2C-006",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.87,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 15908,
+      "generation": 8,
+      "lineage_id": "L2C-007",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.01,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 5908,
+      "generation": 8,
+      "lineage_id": "L2C-008",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 0.83,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 5908,
+      "generation": 8,
+      "lineage_id": "L2C-009",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.08,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 10908,
+      "generation": 8,
+      "lineage_id": "L2C-010",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.11,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 908,
+      "generation": 8,
+      "lineage_id": "L2C-011",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.21,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 15908,
+      "generation": 8,
+      "lineage_id": "L2C-012",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.32,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 15908,
+      "generation": 8,
+      "lineage_id": "L2C-013",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.29,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 10908,
+      "generation": 8,
+      "lineage_id": "L2C-014",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.43,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 908,
+      "generation": 8,
+      "lineage_id": "L2C-015",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.55,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    },
+    {
+      "artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+      "criteria": {
+        "Q1_endogenous": true,
+        "Q3_membrane": true,
+        "Q4_two_classes": true,
+        "Q5_survives_falsification": true,
+        "Q6_load_bearing_structure": true,
+        "Q7_extrapolates": true,
+        "Q8_no_undeclared_payload": true
+      },
+      "dev_final_score": 1.0,
+      "disposition": "QUALIFIES",
+      "escrow_spent": 908,
+      "generation": 8,
+      "lineage_id": "L2C-016",
+      "load_bearing_classes": [
+        "list_sum",
+        "list_prod_mod"
+      ],
+      "membrane": {
+        "clean": true,
+        "crossed": [
+          "artifact_bytes"
+        ],
+        "donor_reads": [
+          "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146"
+        ]
+      },
+      "non_base": true,
+      "qualifies": true,
+      "seconds": 1.72,
+      "telemetry": {
+        "contains_loop": false,
+        "helper_count": 0,
+        "helpers": [],
+        "invoked": false
+      },
+      "tribunal": {
+        "list_prod_mod": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc * v)",
+            "final": "(acc % last)",
+            "init": "1",
+            "trailing": true
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        },
+        "list_sum": {
+          "base_held_out": 0.0,
+          "counterexample_accuracy": 1.0,
+          "extrapolates": true,
+          "held_out_extrapolation": 1.0,
+          "improves": true,
+          "mechanism": {
+            "body": "(acc + v)",
+            "final": "acc",
+            "init": "0",
+            "trailing": false
+          },
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0,
+          "structure": {
+            "load_bearing": true,
+            "original_accuracy": 1.0,
+            "survivors": []
+          },
+          "survives_falsification": true
+        }
+      }
+    }
+  ],
+  "qualifying_artifacts": 16,
+  "reuse_load_bearing_in_both_classes": "16/16",
+  "reuse_load_bearing_in_one_class_only": "0/16",
+  "tier": "2 (apparatus) -- NOT Campaign 1 evidence",
+  "total_seconds": 22.7,
+  "written_utc": "2026-09-22T01:29:02Z"
+}

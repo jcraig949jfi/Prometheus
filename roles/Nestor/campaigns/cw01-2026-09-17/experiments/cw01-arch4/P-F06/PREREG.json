@@ -1,0 +1,76 @@
+{
+ "perturbation_id": "P-F06",
+ "parent": "T-ARCH4/M1",
+ "deformation": "A",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "replication-confirmatory",
+ "evolver": {
+  "N": 96,
+  "G": 60,
+  "tournament": 3,
+  "env": "W2_K2",
+  "seeds": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "archives": [
+   20,
+   40,
+   60
+  ]
+ },
+ "arms": {
+  "select": "tournament 3",
+  "ndrift": "uniform parent; child kept only if |r_child - r_parent| <= band (competence retained, no fitness ordering)"
+ },
+ "assay": {
+  "cells": [
+   [
+    "delete",
+    2,
+    1
+   ],
+   [
+    "delete",
+    4,
+    1
+   ],
+   [
+    "delete",
+    4,
+    4
+   ],
+   [
+    "operand",
+    4,
+    1
+   ],
+   [
+    "opcode",
+    4,
+    1
+   ]
+  ],
+  "draws": 4,
+  "loss_env": "W2_K2",
+  "held": "W1_d1"
+ },
+ "samples": "top-32 (select) / 32-sample (ndrift) at each archive; ancestor walker of each",
+ "promotion_rule": "per seed at G60: (top_select - ancestor) sign-flip below p05 AND (select - ndrift) relabel below p05; promote only if >= 4/6 seeds",
+ "material_rule": "the promotion rule holds, or the ndrift arm itself moves loss vs ancestors outside its band, or the generation dose is monotone",
+ "continuation": [
+  "selection on W0 / W1_d4",
+  "n_ops 2",
+  "band width of the control"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 02:46:50",
+ "prereg_sha256": "e95d9cf0552060fdbb8745e83d4fce24f1978ee246cb48bb676ff4c474c91ffc"
+}

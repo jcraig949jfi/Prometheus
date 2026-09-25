@@ -1,0 +1,213 @@
+"""H-R4-2 (round 4 P0, builder H): F12's clause A axis on SCREENED worlds only.
+
+Screen: primordial/ledger/qd/worlds_r4.json, written by builder G (G-R4-4; schema agreed on the bus,
+H 1789433688592-0, A 1789433714703-0, G 1789433928197-0). The active variant is
+`<q1_floor_policy>|<q2_policy>` from the file (operator message 13: gate_in|HOLD). Nothing here
+re-derives a floor or a verdict of the screen: the floor is verdicts[variant]["floor"], the baseline is
+the cell's baseline block.
+
+  screen status   SURVIVED -> judged; HELD, CULLED, NOT_REACHED, PENDING, UNSCREENED (absent, or no file)
+                  -> INELIGIBLE(<status>) and never scored; the judge is not consulted for them.
+                  PENDING (A 1789440120713-0, G 1789440338587-0): a non-survivable cell whose HELD vs
+                  CULLED waits for the train128 learner; it never counts as SURVIVED.
+
+Operator 16 (SWARM_R4 s9; A 1789455359216-0, 1789455552584-0), H-R16-1: on a SURVIVED cell the baseline
+must pool >= 32 run seeds over >= 4 RNG families with >= 8 per family (worlds_r4/v2 names
+baseline.{n_runs, families, n_per_family}); otherwise INELIGIBLE(BASELINE_N). A v1 baseline (no families,
+no n_per_family) is refused. Order, as in qd_ledger.check_r4: screen -> BASELINE_N -> oracles / cheats / runs.
+
+Clause A, round 4 binding (SWARM_R4 s4), per candidate on a SURVIVED cell:
+  progress = (median_candidate - floor) / (median_baseline - floor)
+  PASS iff progress >= 0.95 AND bytes < baseline bytes; BELOW_FLOOR iff progress < 0; FAIL otherwise;
+  INELIGIBLE if oracles unclean, a cheat control did not fail, < 8 run seeds, or the cell is not SURVIVED.
+  The candidate's bootstrap CI (primordial.metric.ci.median_ci) is mapped through the same formula and
+  reported, not judged.
+
+`qd_ledger check` is the only judge (its `clause_a_r4` block, G-R4-5). F12 scores a PASS only when the
+judge says PASS and `s4_verdict` below, computed from the screen's numbers, agrees; a disagreement is
+recorded as MISMATCH and scores nothing. A judge without a clause_a_r4 block reads NO_JUDGE.
+"""
+from __future__ import annotations
+
+import json
+import pathlib
+
+from primordial.score.round2 import ROOT
+
+WORLDS_R4 = ROOT / "primordial" / "ledger" / "qd" / "worlds_r4.json"
+PASS_PROGRESS = 0.95                 # SWARM_R4 s4 (operator message 12); read here, never tuned
+MIN_RUNS = 8
+SCREEN = ("SURVIVED", "HELD", "CULLED", "NOT_REACHED", "PENDING")
+ALIASES = {"PENDING_LEARNER": "PENDING"}      # primordial.metric.worlds.PENDING before G's rename (1789440338587-0)
+PROGRESS_TOL = 1e-9
+BASELINE_MIN_RUNS = 32               # operator 16: the statistical minimum for a baseline
+BASELINE_MIN_FAMILIES = 4
+BASELINE_MIN_PER_FAMILY = 8
+
+
+def load_worlds(path=WORLDS_R4) -> dict | None:
+    p = pathlib.Path(path)
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
+
+def active_variant(doc: dict) -> str:
+    return f"{doc['q1_floor_policy']}|{doc['q2_policy']}"
+
+
+def screen_of(doc: dict | None, world: str, pressure: str) -> dict:
+    """The screen status of (world, pressure) under the file's active variant, read from the file only."""
+    if doc is None:
+        return {"status": "UNSCREENED", "why": "no worlds_r4.json"}
+    variant = active_variant(doc)
+    hits = [c for c in doc.get("cells", []) if c.get("world") == world and c.get("pressure") == pressure]
+    if len(hits) != 1:
+        return {"status": "UNSCREENED", "variant": variant, "why": f"{len(hits)} cells for {world} {pressure}"}
+    v = (hits[0].get("verdicts") or {}).get(variant) or {}
+    st = ALIASES.get(v.get("verdict"), v.get("verdict"))
+    if v.get("cull_reason") == "NOT_REACHED":
+        st = "NOT_REACHED"
+    if st not in SCREEN:
+        return {"status": "UNSCREENED", "variant": variant, "why": f"verdict {st!r} under {variant}"}
+    return {"status": st, "variant": variant, "cell": hits[0], "floor": v.get("floor"),
+            "cull_reason": v.get("cull_reason")}
+
+
+def _ineligible(why: str, **kw) -> dict:
+    return {"verdict": "INELIGIBLE", "why": why, **kw}
+
+
+def baseline_n(baseline: dict | None) -> dict | None:
+    """None when the baseline meets operator 16's minimum, else the INELIGIBLE(BASELINE_N) refusal."""
+    b = baseline or {}
+    fams, per = b.get("families"), b.get("n_per_family")
+    per_ok = isinstance(per, dict) and len(per) > 0 and all(
+        isinstance(v, (int, float)) and not isinstance(v, bool) and v >= BASELINE_MIN_PER_FAMILY for v in per.values())
+    if int(b.get("n_runs") or 0) >= BASELINE_MIN_RUNS and len(set(fams or ())) >= BASELINE_MIN_FAMILIES and per_ok:
+        return None
+    return _ineligible("BASELINE_N", baseline_n_runs=b.get("n_runs"), baseline_families=fams,
+                       baseline_n_per_family=per, need_runs=BASELINE_MIN_RUNS, need_families=BASELINE_MIN_FAMILIES,
+                       need_per_family=BASELINE_MIN_PER_FAMILY)
+
+
+def candidate_n(sample: dict) -> dict | None:
+    """SWARM_R5 O4 / G-R5-2: a Clause A candidate needs runs_total >= 32, rng_family_count >= 4,
+    runs_per_family >= 8 and no n_per_family below 8; else INELIGIBLE(CANDIDATE_N) with G's payload names."""
+    s = sample or {}
+    num = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool)
+    per = s.get("n_per_family")
+    ok = (num(s.get("runs_total")) and s["runs_total"] >= BASELINE_MIN_RUNS
+          and num(s.get("rng_family_count")) and s["rng_family_count"] >= BASELINE_MIN_FAMILIES
+          and num(s.get("runs_per_family")) and s["runs_per_family"] >= BASELINE_MIN_PER_FAMILY
+          and not (isinstance(per, dict) and any(int(v) < BASELINE_MIN_PER_FAMILY for v in per.values())))
+    if ok:
+        return None
+    return _ineligible("CANDIDATE_N", candidate_runs_total=s.get("runs_total"),
+                       candidate_rng_family_count=s.get("rng_family_count"),
+                       candidate_runs_per_family=s.get("runs_per_family"), candidate_n_per_family=per,
+                       need_runs_total=BASELINE_MIN_RUNS, need_rng_family_count=BASELINE_MIN_FAMILIES,
+                       need_runs_per_family=BASELINE_MIN_PER_FAMILY)
+
+
+def s4_verdict(screen: dict, median: float, nbytes: int, runs: int, held=None,
+               oracle_clean: bool = True, cheats_fail: bool = True, sample: dict | None = None) -> dict:
+    """SWARM_R4 s4 from the screen's numbers (the cross-check on the judge). `sample` = the candidate's
+    {runs_total, rng_family_count, runs_per_family, n_per_family}: when given, CANDIDATE_N replaces the old
+    run-count check, in the judge's order (screen -> BASELINE_N -> CANDIDATE_N -> oracles / cheats)."""
+    if screen["status"] != "SURVIVED":
+        return _ineligible(screen["status"])
+    refusal = baseline_n(screen["cell"].get("baseline"))
+    if refusal is not None:
+        return refusal
+    if sample is not None:
+        refusal = candidate_n(sample)
+        if refusal is not None:
+            return refusal
+    if not oracle_clean:
+        return _ineligible("oracles not clean")
+    if not cheats_fail:
+        return _ineligible("a cheat control did not fail")
+    if sample is None and runs < MIN_RUNS:
+        return _ineligible(f"{runs} run seeds < {MIN_RUNS}")
+    floor, base = screen.get("floor"), screen["cell"].get("baseline") or {}
+    if floor is None or base.get("median") is None or base.get("bytes") is None:
+        return _ineligible("worlds_r4.json lacks the variant floor or the baseline median/bytes")
+    den = float(base["median"]) - float(floor)
+    if not den > 0:
+        return _ineligible(f"denominator {den} <= 0 on a SURVIVED cell (screen defect)")
+    progress = (float(median) - float(floor)) / den
+    out = {"progress": progress, "floor": float(floor), "baseline_median": float(base["median"]),
+           "baseline_bytes": int(base["bytes"]), "bytes": int(nbytes), "variant": screen.get("variant")}
+    if held is not None:
+        from primordial.metric.ci import median_ci
+        lo, hi = median_ci(list(held.values()) if isinstance(held, dict) else list(held))
+        out["progress_ci"] = [(lo - float(floor)) / den, (hi - float(floor)) / den]
+    if progress < 0:
+        return {"verdict": "BELOW_FLOOR", **out}
+    if progress >= PASS_PROGRESS and int(nbytes) < int(base["bytes"]):
+        return {"verdict": "PASS", **out}
+    return {"verdict": "FAIL", **out}
+
+
+SAMPLE_KEYS = ("runs_total", "rng_family_count", "runs_per_family", "n_per_family")
+SAMPLE_REFUSALS = ("BASELINE_N", "CANDIDATE_N")
+
+
+def _accepts(fn, name: str) -> bool:
+    import inspect
+    try:
+        return name in inspect.signature(fn).parameters
+    except (TypeError, ValueError):
+        return False
+
+
+def _agrees(judge: dict, mine: dict) -> bool:
+    if judge.get("verdict") != mine["verdict"]:
+        return False
+    if mine.get("why") in SAMPLE_REFUSALS:
+        return judge.get("why") == mine["why"]
+    if "progress" in mine:
+        jp = judge.get("progress")
+        return jp is not None and abs(float(jp) - mine["progress"]) <= PROGRESS_TOL
+    return True
+
+
+def compression_r4(qd: list[dict], lane: str, window, doc: dict | None, check=None) -> dict:
+    """F12 compression axis, round 4: PASS on a SURVIVED cell, judged by check and confirmed from the screen."""
+    from primordial.score.progress import _cell, _in
+    if check is None:
+        from primordial.ops.qd_ledger import check
+    mine = [r for r in qd if r.get("cohort") == lane and not r.get("baseline") and not r.get("floor")
+            and _in(r.get("ts"), window)]
+    superseded = {(r["supersedes"]["exp_id"], _cell(r)) for r in mine if isinstance(r.get("supersedes"), dict)}
+    tally: dict[str, int] = {}
+    scored, mismatches = [], []
+    for r in mine:
+        f = r.get("fitness") or {}
+        if r.get("status") != "record" or f.get("held64_median") is None or (r.get("exp_id"), _cell(r)) in superseded:
+            continue
+        c = r["cell"]
+        nbytes, runs, held = int(r["footprint"]["genome_bytes"]), int(f.get("n_runs") or 0), f.get("held64_by_run_seed")
+        scr = screen_of(doc, c["world"], c["pressure"])
+        if scr["status"] != "SURVIVED":
+            key = f"INELIGIBLE({scr['status']})"
+            tally[key] = tally.get(key, 0) + 1
+            continue
+        sample = {k: f[k] for k in SAMPLE_KEYS if f.get(k) is not None} or None      # G-R5-1 fields on the row
+        mine_v = s4_verdict(scr, f["held64_median"], nbytes, runs, held, sample=sample)
+        hl = list(held.values()) if isinstance(held, dict) else held
+        extra = dict(sample) if sample and _accepts(check, "runs_total") else {}
+        judge = (check(qd, c["world"], c["pressure"], f["held64_median"], f.get("iqr") or 0.0, nbytes, runs,
+                       held=hl, doc=doc, **extra) or {}).get("clause_a_r4")   # the judge reads the same file
+        if judge is None:
+            key = "NO_JUDGE"
+        elif not _agrees(judge, mine_v):
+            key = "MISMATCH"
+            mismatches.append({"exp_id": r.get("exp_id"), "cell": list(_cell(r)), "judge": judge, "screen_s4": mine_v})
+        else:
+            key = f"INELIGIBLE({mine_v['why']})" if mine_v.get("why") in SAMPLE_REFUSALS else judge["verdict"]
+            if key == "PASS":
+                scored.append({"exp_id": r.get("exp_id"), "cell": list(_cell(r)), "genome_bytes": nbytes,
+                               "progress": mine_v["progress"], "progress_ci": mine_v.get("progress_ci")})
+        tally[key] = tally.get(key, 0) + 1
+    return {"value": len(scored), "verdicts": tally, "scored": scored, "mismatches": mismatches,
+            "superseded_dropped": len(superseded), "variant": active_variant(doc) if doc else None}

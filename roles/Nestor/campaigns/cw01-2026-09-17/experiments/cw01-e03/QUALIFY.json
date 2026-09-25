@@ -1,0 +1,79 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e03",
+ "attempt_id": "cw01-e03-a01",
+ "phase": "QUALIFY",
+ "completed_local": "2026-09-17 18:08:47",
+ "rule": "ALL predicates must pass before science budget is spent.",
+ "predicates": {
+  "Q1_prices_positive": {
+   "status": "PASS",
+   "evidence": "activation_cost 0.5, base_process_cost 1.0"
+  },
+  "Q2_activation_is_a_real_trade": {
+   "status": "PASS",
+   "evidence": "ROUTER 1.9011 at cost 282.1 (sparsity 0.169) vs ACTIVATE_ALL 0.6606 at cost 1080.0"
+  },
+  "Q3_shams_are_cost_matched": {
+   "status": "PASS",
+   "evidence": "identity sham is BIT-IDENTICAL to no-intervention (1.9011 / 282.1 / 0.752 / 0.836). Sham and scramble cost exactly the same (282.1 vs 282.1). The scramble collapses the router -70.04% (coverage 0.752->0.224, precision 0.836->0.249). Same price; only the structure match differs."
+  },
+  "Q4_seeds_reconstructible": {
+   "status": "PASS",
+   "evidence": "identical 105-byte payloads across PYTHONHASHSEED 0 and 999, non-empty, rc 0/0"
+  },
+  "Q5_durable_without_redis": {
+   "status": "PASS",
+   "evidence": "3 rows written via localrun, re-parsed in a process with the redis import BLOCKED; status/exp_id/ts present"
+  },
+  "Q6_neutral_genes_are_inert": {
+   "status": "PASS",
+   "evidence": "perturbing neutral_a and neutral_b by +0.5 changed NO metric. They are the drift floor and the basis of the cost-matched sham."
+  },
+  "Q7_pressure_actually_binds": {
+   "status": "PASS",
+   "evidence": "activate-all is 2.9x WORSE than competent selective activation (0.6606 vs 1.9011). CORRECTION: an earlier reading compared activate-all to a RANDOM genome and wrongly concluded the price was too cheap; the correct comparison is against a competent organism."
+  },
+  "Q8_not_a_free_lunch": {
+   "status": "PASS",
+   "evidence": "ROUTER 1.9011 vs STATIC_SPARSE 0.9854 = +92.93%. BAD_ROUTER is the informative control: precision 0.915 but coverage 0.199 and score 0.8859 - MORE precise and WORSE, proving precision alone is not the objective. Probes asserted pairwise distinct (D023)."
+  },
+  "Q9_mechanism_fires": {
+   "status": "PASS",
+   "evidence": "routing_precision 0.836, coverage 0.752 in the hand-built best case"
+  },
+  "Q10_matched_arms": {
+   "status": "PASS",
+   "evidence": "weights zeroed -> treatment and control_no_conditionality identical on info (308.79576632907015) and cost (600.0). Equal BY CONSTRUCTION: the arm is a genome transform and activation is deterministic, so the D019/D021 class is eliminated rather than guarded against."
+  },
+  "Q11_MI_calibrated_against_shuffled_null": {
+   "status": "PASS",
+   "evidence": "Estimator two-sided: independent inputs not significant (raw MI ~0.14 bits on data with NO relationship - the bias the null absorbs), dependence detected at p_noise 0.00/0.25/0.50/0.75 and correctly rejected at 1.00. ON THE WORLD: ROUTER MI 1.7620 vs null_q99 0.5042 (significant); STATIC MI 0.0000 with 1 distinct pattern (not significant)."
+  },
+  "Q12_disposition_rule_is_executable": {
+   "status": "PASS",
+   "evidence": "execute_e03.py builds the disposition with lineage.decide over a TestLog; a branch is UNREACHABLE unless its tests ran (CW01-D024). Replication is a logged test, not an afterthought (D016)."
+  },
+  "Q13_latent_class_is_not_free": {
+   "status": "PASS",
+   "evidence": "activate() takes only (genome, x, force_all); 'cls' never appears in it"
+  },
+  "Q_learnability": {
+   "status": "PASS",
+   "evidence": "lib/learnability.probe -> LEARNABLE. First experiment to clear this gate before spending budget. Verified the gate itself rejects a 100% advantage with a dead mechanism (the D009 shape)."
+  },
+  "Q_backend_counterfactual_IX": {
+   "status": "PASS",
+   "evidence": "independent reimplementation agrees EXACTLY: 288 comparisons, worst divergence 0.000e+00. Originally passed by assertion (CW01-D031) and re-done by measurement."
+  }
+ },
+ "instrument_defects_found_before_spending_budget": [
+  "CW01-D029 (critical) the world's latent facts - hidden structure AND class feature centres - were redrawn every episode. Class-0 centroid spread 1.955 across episodes; conditional routing was unlearnable IN PRINCIPLE. Fixed: attempt-stable structure and centres (spread 1.955 -> 0.241)."
+ ],
+ "interpretive_limits_fixed_in_advance": [
+  "SPARSITY IS NOT A COALITION. Sparsity and conditionality are reported as two independent quantities; a sparse, blind population is a NEGATIVE for the coalition claim however elegant.",
+  "MI is biased upward at this sample size; only the excess over the shuffled null is evidence.",
+  "An 82-parameter linear activation policy, not a rich program."
+ ],
+ "verdict": "QUALIFIED - EXECUTE authorised"
+}

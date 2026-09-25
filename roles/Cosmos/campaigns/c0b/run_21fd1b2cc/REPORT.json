@@ -1,0 +1,386 @@
+{
+ "adversary": [
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 26,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 26
+    },
+    "coordpres_base": {
+     "confident": 10,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 10
+    },
+    "errorseek": {
+     "confident": 36,
+     "confirmed": 1,
+     "contradictions": 2,
+     "n": 36
+    },
+    "extreme": {
+     "confident": 36,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    }
+   },
+   "confident": 108,
+   "confirmed": 1,
+   "law": "(C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792",
+   "revision": null,
+   "round": 0,
+   "verdict": "SURVIVED"
+  }
+ ],
+ "cfg": {
+  "cmap": "v3",
+  "g1b_crn": true,
+  "g1b_n": 12,
+  "main_strategy": "random",
+  "revise": [
+   "v3"
+  ],
+  "secondaries": [
+   "v1",
+   "v2",
+   "raw"
+  ],
+  "seed": 20260924
+ },
+ "config": "c0b",
+ "final_law": {
+  "cmap": "v3",
+  "freeze_hash": "37c28c59ae919b081bfe19d55db8b23ce434252fcffcd22f444fdf8fb1d346ca",
+  "law": "(C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792",
+  "law_id": "f852d782cb76c0468fdf"
+ },
+ "gates": {
+  "G0": {
+   "identical": 30,
+   "receipt_chain_ok": true,
+   "replayed": 30,
+   "verdict": "PASS"
+  },
+  "G1": {
+   "causal_consistency": {
+    "ca": {
+     "cost_up_edges": 11,
+     "pass": true,
+     "sel_fitness_nonincreasing": 11
+    },
+    "regs": {
+     "cost_up_edges": 11,
+     "pass": true,
+     "sel_fitness_nonincreasing": 11
+    },
+    "ring": {
+     "cost_up_edges": 11,
+     "pass": true,
+     "sel_fitness_nonincreasing": 11
+    }
+   },
+   "per_family": {
+    "ca": {
+     "pass": true,
+     "pays_rate": 0.2625,
+     "sham_pays": 0
+    },
+    "regs": {
+     "pass": true,
+     "pays_rate": 0.14,
+     "sham_pays": 0
+    },
+    "ring": {
+     "pass": true,
+     "pays_rate": 0.25916666666666666,
+     "sham_pays": 0
+    }
+   },
+   "verdict": "PASS"
+  },
+  "G2": {
+   "law_score": 0.9427596823057397,
+   "mean_fold_ba": 0.9947596823057397,
+   "p_null": null,
+   "raw_unnormalized_best_score": 0.8464082364863499,
+   "verdict": "PASS",
+   "worst_fold_ba": 0.9915254237288136
+  },
+  "G2_initial_info": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.01637,
+    "mu_bits": -0.0039,
+    "null_median": 0.02027,
+    "p": 0.74,
+    "per_family_acc": {
+     "ca": 1.0,
+     "regs": 0.9875,
+     "ring": 0.9875
+    }
+   },
+   "law_score": 0.9427596823057397,
+   "mean_fold_ba": 0.9947596823057397,
+   "raw_score": 0.8464082364863499,
+   "verdict": "INFO",
+   "worst_fold_ba": 0.9915254237288136
+  },
+  "G4": {
+   "rounds": 1,
+   "verdict": "PASS"
+  },
+  "G5": {
+   "base_rate_D": 0.11666666666666667,
+   "baselines": {
+    "knn5_visible": {
+     "acc": 0.8833333333333333,
+     "ba": 0.8409703504043127
+    },
+    "majority_visible": {
+     "acc": 0.8833333333333333,
+     "ba": 0.5
+    }
+   },
+   "brier": 0.028639324494983662,
+   "brier_climatology": 0.10305555555555554,
+   "freeze_hash": "37c28c59ae919b081bfe19d55db8b23ce434252fcffcd22f444fdf8fb1d346ca",
+   "law_acc": 0.9708333333333333,
+   "law_ba": 0.9834905660377358,
+   "law_id": "f852d782cb76c0468fdf",
+   "n_worlds": 240,
+   "pred_hash": "59e111ae483f932bf62889dfe6b6c02fab58e197572f235978a40a4f7cebf260",
+   "spec_sha": "48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265",
+   "verdict": "PASS"
+  },
+  "G6": {
+   "G6": "FAIL",
+   "direction_ok": 0,
+   "in_band": 0,
+   "magnitude_ok": 0,
+   "n_prescribed": 12,
+   "n_scored": 12,
+   "presc_hash": "aefb6867b0764f2946227c85857a842fb8645a4dff5e128f5db8d1c197cfe84a",
+   "verdict": "FAIL"
+  },
+  "G7": {
+   "gain_bits_per_row": -0.0062,
+   "mu_bits": -0.0235,
+   "null_median": 0.0173,
+   "p": 0.8,
+   "per_family_acc": {
+    "ca": 0.9766,
+    "regs": 0.9609,
+    "ring": 0.9688
+   },
+   "verdict": "PASS"
+  }
+ },
+ "graph": {
+  "edge_kinds": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 26,
+   "DEFORMATION_OF": 139
+  },
+  "edges": 225,
+  "families": 3,
+  "laws": 1,
+  "nodes": 616,
+  "runs": 620
+ },
+ "identity": {
+  "cosmos_dirty": false,
+  "cosmos_src_sha": "39c2f04c8b697fa011a26f0735af35defb9363f200303477cea18739c10e22e4",
+  "git_head": "21fd1b2cc6670e9f47a0f355a115d4061a79d902",
+  "n_src": 39
+ },
+ "laws": [
+  {
+   "cmap": "v3",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "SURVIVED",
+    "FROZEN",
+    "HOLDOUT_TESTED",
+    "INTERVENTION_TESTED"
+   ],
+   "freeze_hash": "37c28c59ae919b081bfe19d55db8b23ce434252fcffcd22f444fdf8fb1d346ca",
+   "law": "(C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792",
+   "law_id": "f852d782cb76c0468fdf",
+   "parent": null,
+   "version": 1
+  }
+ ],
+ "mine_initial": {
+  "raw": {
+   "family_dependence": {
+    "gain_bits_per_row": -0.02116,
+    "mu_bits": -0.03624,
+    "null_median": 0.01509,
+    "p": 1.0,
+    "per_family_acc": {
+     "ca": 0.8375,
+     "regs": 0.8375,
+     "ring": 0.925
+    }
+   },
+   "fold_ba": {
+    "ca": 0.8818181818181818,
+    "regs": 0.8675889328063241,
+    "ring": 0.933817594834544
+   },
+   "law": "(Q - (C * K)) <= 0.7886 AND (K - (log(N) / G)) >= 4.935",
+   "p": 0.05,
+   "score": 0.8464082364863499,
+   "verdict": "CANDIDATE"
+  },
+  "v1": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.03724,
+    "mu_bits": 0.02196,
+    "null_median": 0.01528,
+    "p": 0.22,
+    "per_family_acc": {
+     "ca": 0.9,
+     "regs": 0.775,
+     "ring": 0.8125
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9163636363636363,
+    "regs": 0.8768115942028986,
+    "ring": 0.8353510895883778
+   },
+   "law": "(C / (K * exp(-N))) <= 0.3934 AND ((K / log(C)) + N) <= -0.3974",
+   "p": 0.05,
+   "score": 0.8241754400516376,
+   "verdict": "CANDIDATE"
+  },
+  "v2": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.04137,
+    "mu_bits": 0.00764,
+    "null_median": 0.03373,
+    "p": 0.3,
+    "per_family_acc": {
+     "ca": 0.875,
+     "regs": 0.8125,
+     "ring": 0.85
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9090909090909092,
+    "regs": 0.8768115942028986,
+    "ring": 0.8301049233252623
+   },
+   "law": "(C - (G + exp(-N))) <= -1.055 AND (N - (log(C) / K)) <= 2.114",
+   "p": 0.05,
+   "score": 0.82000247553969,
+   "verdict": "CANDIDATE"
+  },
+  "v3": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.01637,
+    "mu_bits": -0.0039,
+    "null_median": 0.02027,
+    "p": 0.74,
+    "per_family_acc": {
+     "ca": 1.0,
+     "regs": 0.9875,
+     "ring": 0.9875
+    }
+   },
+   "fold_ba": {
+    "ca": 1.0,
+    "regs": 0.9927536231884058,
+    "ring": 0.9915254237288136
+   },
+   "law": "(C - (G + exp(-N))) <= -1.055 AND ((C - log(Q)) * K) >= 0.1792",
+   "p": 0.05,
+   "score": 0.9427596823057397,
+   "verdict": "CANDIDATE"
+  }
+ },
+ "n_queries": 516,
+ "null_pool_failures": [
+  {
+   "error": "BrokenProcessPool('A process in the process pool was terminated abruptly while the future was running or pending.')",
+   "workers": 9
+  }
+ ],
+ "quick": false,
+ "quotient": {
+  "battery": [
+   "PAYS",
+   "BEATS_LAST",
+   "BEATS_LOG",
+   "RETAINS"
+  ],
+  "boundary_edge_fraction": {
+   "CONTROL_OF": 0.7667,
+   "COORD_PRESERVING": 0.0385,
+   "DEFORMATION_OF": 0.1328
+  },
+  "boundary_edges_n": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 26,
+   "DEFORMATION_OF": 128
+  },
+  "classes": {
+   "0000": 59,
+   "0001": 9,
+   "0010": 101,
+   "0011": 35,
+   "0100": 115,
+   "0101": 155,
+   "1110": 41,
+   "1111": 101
+  },
+  "classes_by_family": {
+   "ca": {
+    "0000": 14,
+    "0001": 7,
+    "0010": 22,
+    "0011": 18,
+    "0100": 20,
+    "0101": 64,
+    "1110": 9,
+    "1111": 57
+   },
+   "regs": {
+    "0000": 29,
+    "0010": 45,
+    "0011": 10,
+    "0100": 36,
+    "0101": 58,
+    "1110": 11,
+    "1111": 23
+   },
+   "ring": {
+    "0000": 16,
+    "0001": 2,
+    "0010": 35,
+    "0011": 10,
+    "0100": 59,
+    "0101": 36,
+    "1110": 25,
+    "1111": 30
+   }
+  },
+  "compression": 0.013,
+  "n_classes": 8,
+  "n_nodes": 616
+ },
+ "receipt_chain_ok": true,
+ "t_eta_s": 280.1,
+ "t_oracle_s": 108.7,
+ "t_total_s": 774.2
+}

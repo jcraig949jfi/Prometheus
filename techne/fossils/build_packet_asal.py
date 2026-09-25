@@ -17,6 +17,18 @@ def lf_sha256(path) -> str:
     return hashlib.sha256(open(path, "rb").read().replace(b"\r\n", b"\n")).hexdigest()
 
 
+def _executor_acceptance() -> dict:
+    """Exact accepted/refused counts of the numpy Lenia port over the pinned catalogue (rule A4)."""
+    p = vault.REPO / "techne" / "acquisition" / "poet_alife" / "PORT_ACCEPTANCE_2026-09-18.json"
+    if not p.exists():
+        return {"status": "NOT_MEASURED"}
+    d = json.loads(p.read_text(encoding="utf-8"))
+    return {"executor": "techne/scripts/techne107_asal_observer.py Lenia2D (numpy port; NOT the body's substrates/lenia.py)",
+            "catalogue": d["catalogue"], "accepted": d["accepted"], "refused": d["refused"], "refusal_reasons": d["refusal_reasons"],
+            "supports": d["port"]["supports"], "receipt": "techne/acquisition/poet_alife/PORT_ACCEPTANCE_2026-09-18.json",
+            "receipt_sha256_lf": lf_sha256(p)}
+
+
 def build() -> dict:
     rec = record.load(SID)
     sd = vault.specimen_dir(SID)
@@ -69,6 +81,8 @@ def build() -> dict:
         "PRESERVATION_STATUS": "PRESERVATION_GATE_OPEN",
         "HANDOFF": {
             "runtime": rec["runtime"],
+            # rule A4 (Harmonia STANDING_RULES, operator review 2026-09-18): the EXECUTOR's accepted subdomain, exact counts
+            "executor": _executor_acceptance(),
             "entry_point": {"path": "asal_metrics.py", "symbol": "calc_open_endedness_score(z)", "also": ["rollout.py rollout_simulation", "foundation_models/clip.py CLIP.embed_img", "substrates/lenia.py"]},
             "demonstration": {"command": "<isolated-env python> techne/scripts/techne107_asal_observer.py --out receipt.json --frames frames/   (pattern file resolved from the vault specimen lenia-chan-2019, never from a temp path; Harmonia #429)",
                               "observable": "seven per-arm scores of the open-endedness metric through CLIP ViT-B/32 (lower = more open-ended) + two controls; 56 s on M3",

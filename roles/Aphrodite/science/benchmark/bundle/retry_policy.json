@@ -1,0 +1,10 @@
+{
+ "after_retries": "call recorded as failed (ok_call false); counts toward failure_rate",
+ "caps": {
+  "max_calls": 2000,
+  "max_wall_s": 3600
+ },
+ "retries_per_call": 2,
+ "retry_on": "any client exception (timeout, HTTP, decode)",
+ "validity": "economics.py rejects a receipt with failure_rate > 0.05"
+}

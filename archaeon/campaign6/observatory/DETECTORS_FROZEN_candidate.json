@@ -1,0 +1,124 @@
+{
+ "c5_05_attempt": "a01",
+ "calibration_rounds": [
+  "CALIBRATION_round1_preserved.json",
+  "CALIBRATION_round2_preserved.json",
+  "CALIBRATION_v0.1.json (round 3)",
+  "CALIBRATION_population_v0.1.json (round 4, preserved, mis-specified positives)",
+  "CALIBRATION_population_v0.2.json (round 5, preserved, plant bookkeeping defects)",
+  "CALIBRATION_population_v0.3.json (round 6)"
+ ],
+ "code_sha256": {
+  "calibrate.py": "98cca8b0d4576e281869997526b1ce615aa21a0188090440aa73928798aa5972",
+  "detectors.py": "485a84389a168306e1e8b5485b2be38a7fce9a509070861d437332dfa8f363d4",
+  "fingerprint.py": "eef793a42d0bc8558d1180b3f1bc266e912f971c3fbb8ae4368874799fb3ca19"
+ },
+ "digest": "sha256:88f28db8841527a83a9a58cc49e8b33a77c560dc748549b0a65abc1f4f028c7b",
+ "n_children": 4992,
+ "n_parents": 57,
+ "schema": "archaeon.c6.detectors_frozen.v1",
+ "spread": {
+  "answered_share": 0.05,
+  "branches_taken": 3.1206691465669936,
+  "budget_exhausted_ticks": 0.6778797084291566,
+  "cat_arithmetic": 2.833213344056216,
+  "cat_comparison": 0.1,
+  "cat_control": 2.330584487494404,
+  "cat_halt_yield": 1.7303601669285609,
+  "cat_indirection": 0.1,
+  "cat_logical": 1.0934309299261127,
+  "cat_opaque_io": 0.900397465507071,
+  "cat_randomness": 0.1,
+  "cat_read_write": 2.833213344056216,
+  "code_region_writes": 0.1,
+  "distinct_answers": 0.5306282510621703,
+  "faults": 0.1,
+  "in_reads": 0.686955210312024,
+  "occupancy_max": 0.1,
+  "ops": 1.1133618185941723,
+  "out_dropped": 0.1,
+  "out_writes": 0.6778797084291566,
+  "rnd_draws": 0.1,
+  "tape_writes": 0.1,
+  "ticks": 0.400323708607746
+ },
+ "status": "CANDIDATE (frozen at G6-0 by Harmonia's admission; never moved after)",
+ "thresholds": {
+  "behavioral_novelty": {
+   "admittable_on_v0": false,
+   "calibrated_on": "population round 6 (CALIBRATION_population_v0.3.json)",
+   "reason": "a planted positive did not fire at the population 1% threshold",
+   "single_edit_stage_threshold": 5.759519,
+   "stage": "NOT_ADMITTED_ON_V0",
+   "threshold": 25.493395
+  },
+  "classifier_failure": {
+   "admittable_on_v0": true,
+   "reason": "definitional; on v0 it fires whenever >= 3 detectors are UNABLE and one fires -- the blind-spot count of the old geometry, reported",
+   "stage": "BASELINE_ADMITTED_CANDIDATE",
+   "threshold": 3
+  },
+  "detector_disagreement": {
+   "admittable_on_v0": true,
+   "reason": "definitional over the verdict vector; rate reported",
+   "stage": "BASELINE_ADMITTED_CANDIDATE",
+   "threshold": 1
+  },
+  "environmental_modification": {
+   "admittable_on_v0": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "stage": "NOT_ADMITTED_ON_V0",
+   "threshold": null
+  },
+  "lineage_discontinuity": {
+   "admittable_on_v0": false,
+   "calibrated_on": "population round 6 (CALIBRATION_population_v0.3.json)",
+   "reason": "a planted positive did not fire at the population 1% threshold",
+   "single_edit_stage_threshold": 6.271749,
+   "stage": "NOT_ADMITTED_ON_V0",
+   "struct_max": 0.25,
+   "threshold": 50.788747
+  },
+  "niche_divergence": {
+   "admittable_on_v0": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "stage": "NOT_ADMITTED_ON_V0",
+   "threshold": null
+  },
+  "regime_persistence": {
+   "admittable_on_v0": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "stage": "NOT_ADMITTED_ON_V0",
+   "threshold": null
+  },
+  "structural_reuse": {
+   "admittable_on_v0": false,
+   "reason": "no positive control on the v0 profile; C6_GEOMETRY stage (graph profile) needed",
+   "stage": "NOT_ADMITTED_ON_V0",
+   "threshold": 2
+  },
+  "unexpected_causal_dependence": {
+   "admittable_on_v0": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "stage": "NOT_ADMITTED_ON_V0",
+   "threshold": null
+  },
+  "unexpected_transfer": {
+   "admittable_on_v0": true,
+   "band": 0.0625,
+   "floor": 0.1875,
+   "reason": "",
+   "stage": "BASELINE_ADMITTED_CANDIDATE",
+   "threshold": 0.0625
+  },
+  "unexplained_gain": {
+   "admittable_on_v0": false,
+   "reason": "UNABLE on the whole v0 calibration set (no persistent world state / one resource / no regime change / no replay D / no ablation set); C6_GEOMETRY stage",
+   "stage": "NOT_ADMITTED_ON_V0",
+   "struct_max": 0.25,
+   "threshold": null
+  }
+ },
+ "weights": "archaeon.campaign6.observatory.fingerprint.DEFAULT_WEIGHTS (round 3)",
+ "written_at": "2026-09-18T20:56:26Z"
+}

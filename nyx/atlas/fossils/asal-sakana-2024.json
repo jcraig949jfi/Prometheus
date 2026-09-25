@@ -1,0 +1,496 @@
+{
+ "schema": "nyx.atlas/0",
+ "fossil_id": "asal-sakana-2024",
+ "techne_record": "techne/fossils/specimens/asal-sakana-2024/record.json",
+ "whole_system": {
+  "FOSSIL_ID": {
+   "value": "asal-sakana-2024",
+   "basis": "TECHNE_RECORD"
+  },
+  "CANONICAL_NAME": {
+   "value": "ASAL -- Automating the Search for Artificial Life with Foundation Models (Kumar et al., Sakana AI / MIT, 2024-2025)",
+   "basis": "TECHNE_RECORD"
+  },
+  "VERSION": {
+   "value": "SakanaAI/asal main @ 677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7 (last push 2025-10-23)",
+   "basis": "TECHNE_RECORD"
+  },
+  "ERA": {
+   "value": "2024-2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_SYSTEM": {
+   "value": {
+    "domain": [
+     "artificial-life",
+     "open-endedness",
+     "foundation-model-observer",
+     "cellular-automata",
+     "quality-diversity"
+    ],
+    "lineage": "Lenia (Chan 2019), Boids, Particle Life, NCA and Life-like CA substrates searched with CLIP as the observer; Artificial Life 31(3) 2025"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "HUMAN_PROBLEM": {
+   "value": "replacing hand-authored phenotype metrics with a learned observer",
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVED_HUMAN_CAPABILITY": {
+   "value": {
+    "built_to": "find ALife simulations by target phenomenon, open-ended novelty or illumination, using a vision-language model as the measuring instrument",
+    "pressure": "hand-written metrics cannot capture lifelike behaviour; manual parameter search does not scale",
+    "success_means": "simulations whose CLIP-embedded rollouts satisfy the target / novelty / diversity objective"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "DOCUMENTED_ENVIRONMENTAL_PRESSURE": {
+   "value": {
+    "pressure": "",
+    "failure_condition": ""
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "LANGUAGE": {
+   "value": [
+    "Python"
+   ],
+   "basis": "TECHNE_RECORD"
+  },
+  "EXECUTION_MODEL": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "ANCESTRY": {
+   "value": "Lenia (Chan 2019), Boids, Particle Life, NCA and Life-like CA substrates searched with CLIP as the observer; Artificial Life 31(3) 2025",
+   "basis": "TECHNE_RECORD"
+  },
+  "KNOWN_PREDECESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_SUCCESSORS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_RIVALS": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "KNOWN_HISTORICAL_DISPOSITION": {
+   "value": "UNKNOWN",
+   "basis": "UNKNOWN"
+  },
+  "SOURCE_STATUS": {
+   "value": {
+    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+    "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+    "tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "RUN_STATUS": {
+   "value": {
+    "run": "NOT_ATTEMPTED",
+    "test": "NOT_ATTEMPTED",
+    "environment": {
+     "runner": "native",
+     "note": "on M3 the metric and observer were exercised via a numpy/torch port (techne/scripts/techne107_asal_observer.py); ASAL's own JAX path needs AVX"
+    }
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "OBSERVABILITY": {
+   "value": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "basis": "TECHNE_RECORD"
+  },
+  "ORACLE_STATUS": {
+   "value": {
+    "oracle_backed": "unknown",
+    "test_classification": "NOT_ATTEMPTED"
+   },
+   "basis": "NYX_DERIVED"
+  },
+  "INTERVENTION_READINESS": {
+   "value": {
+    "intervention_ready": "unknown",
+    "patch_intervention": "unknown",
+    "runnable": false
+   },
+   "basis": "NYX_DERIVED"
+  }
+ },
+ "cut": {
+  "state": "COARSE",
+  "mode": "ANCESTRY_AWARE",
+  "evidence": [
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/asal_metrics.py:52-64"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/asal_metrics.py:66-79"
+   },
+   {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/rollout.py:78-95"
+   }
+  ],
+  "inspected_files": [
+   "asal_metrics.py 52-79",
+   "rollout.py 5-95"
+  ],
+  "date": "2026-09-19T07:32Z",
+  "note": "ASAL replaces hand-written artificial-life metrics with a foundation-model observer: a simulation is rolled out, a few frames are embedded by a vision-language model, and 'open-endedness' is scored purely in that embedding space. The score at asal_metrics.py:52-64 is: build the T x T matrix of frame-embedding inner products, keep for each frame only its similarity to STRICTLY EARLIER frames (lower triangle, k=-1), take each frame's maximum such similarity, and average; lower is 'more open-ended'. So the metric rewards a trajectory whose every frame is embedding-dissimilar from all earlier ones -- a property of the frame sequence in the observer's space, not of the underlying dynamics. Techne's TECHNE-107 showed scene-level and colour-level garbage beats living Lenia by this score through CLIP; the open question the operator poses is whether a search over LEGITIMATE Lenia parameters can reach the same exploit",
+  "provenance": {
+   "schema": "nyx.atlas/1-provenance",
+   "migrated_at": "2026-09-19T07:33Z",
+   "migrated_from": "nyx.atlas/0 (record at origin/main ef05d395f)",
+   "provenance_grade_read": "ORIGINAL_ARTIFACT",
+   "grade_basis": "Techne FOSSIL_PACKET.json PROVENANCE_GRADE where issued, else the record's handoff string mapped (populated per R34; Harmonia may re-grade)",
+   "source_object_id": "https://github.com/SakanaAI/asal@677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7; https://pub.sakana.ai/asal/data/illumination_boids.npz sha256:ffd4637d0e93e23155fc41701196c375d793024cbea87cf2ea38d96c4f5fe38c; https://pub.sakana.ai/asal/data/illumination_plife.npz sha256:6bf7a1c9b9899be7791dda8c3228965625f7f22983b5ff31acf2986e54ff8cea; https://pub.sakana.ai/asal/data/sweep_gol.npz sha256:823a94785c4b294ff9f59e64edf515ef2f714edc649a01997cf930c9bf174a34",
+   "payload_manifest_id": "techne tree_sha256 188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a (32 files)",
+   "host_tree_matches_record": null,
+   "host": "GANDALF (hostname), bodies receipt not named",
+   "files_read": [
+    {
+     "path": "upstream/tree/asal_metrics.py",
+     "payload_hash_read": "75b7eaa9a751acf7e88c5902621937401ec28ab84199edf11fdb4db0514f5aa4",
+     "techne_recorded_hash": "75b7eaa9a751acf7e88c5902621937401ec28ab84199edf11fdb4db0514f5aa4",
+     "match": true,
+     "refs": 3
+    },
+    {
+     "path": "upstream/tree/rollout.py",
+     "payload_hash_read": "59c49d430a2e00d20f5c6ecdb5f649402c598747af105522b3e2269b7a1fd693",
+     "techne_recorded_hash": "59c49d430a2e00d20f5c6ecdb5f649402c598747af105522b3e2269b7a1fd693",
+     "match": true,
+     "refs": 2
+    }
+   ],
+   "unresolved_refs": []
+  }
+ },
+ "organs": [
+  {
+   "organ_id": "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised",
+   "fossil_ancestry": "asal-sakana-2024",
+   "human_name": "calc_open_endedness_score (asal_metrics.py:52-64): kernel = z @ z.T; kernel = tril(kernel, k=-1); return kernel.max(axis=-1).mean()",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the T frame embeddings z (unit vectors from the foundation model) form a T x T inner-product matrix; the strict lower triangle keeps, for frame t, its similarities to frames 0..t-1 only; the row max is the closest earlier frame; the mean of those maxima is the score, minimised, so a low score means every frame is far in embedding space from all its predecessors; frame 0 contributes 0 (empty row) by construction; the sibling calc_illumination_score does the same across simulations (diagonal set to -inf) to spread a POPULATION rather than a trajectory",
+   "input": "z, a T x D array of frame embeddings",
+   "output": "a scalar (lower = more open-ended)",
+   "state": "none",
+   "update": "per rollout",
+   "assumptions": [
+    "embedding-space dissimilarity between successive frames is a usable proxy for open-ended novelty (ASAL's thesis); the foundation model's geometry is trusted as the arbiter of 'different'"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation"
+   ],
+   "fitness_value_in_ancestor": "ALife phenomena searchable by phenotype without hand-authored features; the paper's contribution",
+   "failure_landscape": "by reading, and confirmed by TECHNE-107 (E1): the metric rewards any process that makes embeddings drift, whether or not the underlying system is alive or novel; scene garbage (0.817) and a colour cycle (0.837) beat a living Orbium (0.847) through CLIP; the observer regularises pixel noise (0.866) but not structured garbage; recurrence (a 2-frame cycle) is punished, so the exploit is drift, not mere change",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "Kumar, Lu, Lange, Tang, Ha et al. 2024 (ASAL); the max-cosine-to-earlier-frame form is asal_metrics.py's",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/asal_metrics.py:52-64"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "calc_open_endedness_score (and its illumination sibling)",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SCALAR",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "NONE",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "DETERMINISTIC",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "POINT",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "SENSITIVE",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  },
+  {
+   "organ_id": "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation",
+   "fossil_ancestry": "asal-sakana-2024",
+   "human_name": "rollout_simulation time_sampling branch (rollout.py:78-95): chunk_steps = rollout_steps // K; scan the substrate for rollout_steps; idx_sample = arange(0, rollout_steps, chunk_steps) (or arange(chunk_steps-1, ...) if chunk_ends); render and embed the K sampled states",
+   "human_interpretation": "UNKNOWN",
+   "mechanism": "the substrate is stepped for the full rollout (256 steps by default), every state kept; then K evenly spaced indices (K=8 in the default score call) select the frames actually rendered, embedded and scored, either from the interval starts (chunk_ends False) or ends; 'final' returns only the last state and 'video' all of them; so the score sees a fixed-length, evenly-spaced sub-sample of the trajectory, and what happens between samples is invisible to the observer",
+   "input": "an initial state, the substrate, K",
+   "output": "K rendered frames and their embeddings",
+   "state": "the rollout's state video",
+   "update": "per rollout",
+   "assumptions": [
+    "K evenly spaced frames summarise the trajectory well enough for the embedding metric; the substrate is deterministic given params and rng"
+   ],
+   "interface": "UNKNOWN",
+   "dependencies": [
+    "UNKNOWN"
+   ],
+   "parent_mechanism": "WHOLE_SYSTEM",
+   "child_mechanisms": [],
+   "composition_neighbors": [
+    "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised"
+   ],
+   "fitness_value_in_ancestor": "one cheap fixed-size summary per candidate for the search to score",
+   "failure_landscape": "by reading: sub-sampling means a trajectory that is dynamically rich between samples but embedding-similar at the sample points scores as non-open-ended, and vice versa; the number and placement of samples is a hidden knob of the metric",
+   "ablation": "NOT_RUN",
+   "decomposability": "UNKNOWN",
+   "composability": "UNKNOWN",
+   "human_prior": "the ASAL rollout API (rollout.py)",
+   "control": "UNKNOWN",
+   "cheat": "UNKNOWN",
+   "observability": "UNKNOWN",
+   "intervention_readiness": "UNKNOWN",
+   "evidence": {
+    "grade": "SOURCE_READ",
+    "ref": "vault:asal-sakana-2024/upstream/tree/rollout.py:78-95"
+   },
+   "confidence": "HIGH",
+   "portability": "YES",
+   "compatibility": "YES",
+   "utility": "UNKNOWN",
+   "source_boundary": "the K-interval branch of rollout_simulation",
+   "status": "ACCEPTED",
+   "cut_mode": "ANCESTRY_AWARE",
+   "depth": 1,
+   "coverage": {
+    "input_topology": {
+     "value": "SEQUENCE",
+     "basis": "READ"
+    },
+    "output_topology": {
+     "value": "SET",
+     "basis": "READ"
+    },
+    "state_amount": {
+     "value": "LINEAR_IN_INPUT",
+     "basis": "READ"
+    },
+    "state_persistence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "feedback": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "memory": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "stochasticity": {
+     "value": "SEEDED_RANDOM",
+     "basis": "READ"
+    },
+    "update_topology": {
+     "value": "SWEEP",
+     "basis": "READ"
+    },
+    "order_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "resource_dependence": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "failure_mode": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "recovery": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "adaptation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "competition": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "cooperation": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "hidden_state": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "uncertainty": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "representation_sensitivity": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    },
+    "temporal_horizon": {
+     "value": "UNMEASURED",
+     "basis": "READ"
+    }
+   }
+  }
+ ],
+ "rejected_cuts": [
+  {
+   "candidate": "the substrates (Lenia, Boids, particle life, particle Lenia, NCA, Game-of-Life-like), the foundation-model embedding wrappers (CLIP/DINO), the search drivers (asal_search: supervised, open-endedness, illumination), the published .npz datasets, the JAX plumbing",
+   "reason": "OTHER",
+   "evidence": "NOT READ; residue",
+   "note": "the substrate parameter domain is defined by Harmonia's ruler independently of the score (directive s2); the search driver is the mechanism a downstream bench would inherit if the metric survives",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "asal-sakana-2024"
+  },
+  {
+   "candidate": "'ASAL' / 'open-ended search' as one organ",
+   "reason": "NAME_HAS_NO_EXECUTABLE_BOUNDARY",
+   "evidence": "the observer-metric, the rollout sampling and the search driver are separable; this cut binds the two the operator's question is about",
+   "note": "",
+   "cut_mode": "ANCESTRY_AWARE",
+   "fossil": "asal-sakana-2024"
+  }
+ ],
+ "pressures": [
+  {
+   "pressure_id": "asal-sakana-2024::P.an_open_ended_search_scored_only_by_an_observer_s_embedding_of_a_few_sampled_frames_must_be_shown_either_to_reward_genuine_dynamical_novelty_or_to_be_crossable_by_drift_producing_configurations_within_the_legitimate_substrate",
+   "source_fossil": "asal-sakana-2024",
+   "source_evidence": "asal_metrics.py:52-64; rollout.py:78-95; TECHNE-107 (E1); Harmonia's PREREG_ASAL_LEGIT_SEARCH_2026-09-18",
+   "condition": "an organism searches a substrate's parameters to minimise the ASAL open-endedness score (mean max-cosine-to-earlier-frame over 8 sampled frames); the score cannot see the dynamics between samples or anything the observer's embedding discards; the question is whether a legitimate (ALIVE) configuration can reach a score at or below what scene-level garbage achieves",
+   "resource_or_constraint": "a fixed rollout-and-embed budget; the substrate's real parameter envelope",
+   "failure_condition": "for the metric-as-novelty claim: a legitimate ALIVE rollout crossing below the garbage score by drift rather than by any property one would call novelty",
+   "world_punishes": "trusting an observer-embedding score as a novelty measure without a substrate-side control",
+   "world_rewards": "a search that finds embedding-dissimilar frame sequences, alive or not",
+   "observable_consequence": "the minimum ALIVE score reached by a preregistered search over the Lenia catalogue and its parameter envelope, versus the garbage score (0.8167) and versus the catalogue with no search; and the class (genuine / metric-exploit / observer-exploit) of the best crosser",
+   "vacuity_condition": "a substrate too small to produce embedding drift",
+   "trivial_shortcuts": "free images not tied to any substrate (Harmonia's C-POS-SEARCH control, which is exactly the shortcut the legitimate-search question excludes)",
+   "cheat_control": "feeding fixed garbage frames scores the fixed value regardless of the Lenia parameters (the score depends only on the frames); a free-image search must reach below the garbage score (the channel works); a blank world must score the (T-1)/T ceiling and be NOT_ALIVE: Harmonia's fixture shows all three",
+   "cost_class": "GPU-scale",
+   "purpose_separated_from_pressure": "PURPOSE: automated open-ended ALife search (SakanaAI 2024)",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "composition_edges": [
+  {
+   "from": "asal-sakana-2024::rollout_reduced_to_k_frames_by_sampling_at_fixed_intervals_so_the_observer_sees_a_short_evenly_spaced_summary_of_a_long_simulation",
+   "to": "asal-sakana-2024::open_endedness_as_the_mean_over_frames_of_each_frame_s_maximum_embedding_similarity_to_any_strictly_earlier_frame_minimised",
+   "label": "feeds",
+   "evidence": "SOURCE_READ",
+   "note": "the K frames the score sees",
+   "cut_mode": "ANCESTRY_AWARE"
+  }
+ ],
+ "ancestry_edges": [
+  {
+   "from": "asal-sakana-2024",
+   "relation": "algorithm_from",
+   "to": "SakanaAI ASAL (Kumar, Lu, Lange, Tang, Ha, Clune et al. 2024); the substrates descend from Lenia (Chan 2019), Boids (Reynolds 1987), particle life; the observer from CLIP (Radford et al. 2021)",
+   "note": "from the record and the source",
+   "basis": "SOURCE_READ"
+  }
+ ],
+ "residue": {
+  "state": "PARTIALLY_EXPLAINED",
+  "unexplained": [
+   "the substrates, the search drivers and the datasets unread (the metric and its frame sampling are what MECH-ASAL-LEGIT-SEARCH-001 tests)",
+   "the JAX path did not run on M3 (no AVX); Harmonia's ruler is a descendant port",
+   "the operator's open falsifier -- a legitimate Lenia search never crossing below garbage -- is the packet's negative outcome"
+  ],
+  "note": "the two mechanisms the operator's question is about are located and bound to the fossil's lines. STAGE D' (Harmonia #441 + operator-tightened #446, verdict on MECH-ASAL-LEGIT-SEARCH-001 FREEZE c6627d26): boundary CUT_SUPPORTED (cut_kill silent); the score reading is STRENGTHENED, not weakened. The ASAL scalar admits BOTH exploit turbulence AND coherent persistent morphing dynamics below the scene-garbage reference, INCLUDING crossings already present in the published catalogue with no search (min ALIVE catalogue 0.8076 < 0.8167, five lifeforms) -- so SELECTION ALONE suffices and search only deepens it; the packet's I0 sub-claim (raw catalogue does not cross) was FALSE. The best crosser over the 395 executed draws (of 1045; the descendant port refused 650: fractional-b, kn/gn>=3, oversized) is a METRIC_EXPLOIT (S2_189, Orbium walked to turbulent explode-and-regrow); the best GENUINE rollout S2_135 (0.7933) is a two-lobed body shrinking to a persistent rotating glider, ALSO below the 2-sd line -- the score cannot separate turbulence from coherent morphing life, the class rule can; no observer-only exploit arose in Lenia. NET: the ASAL open-endedness score is a detector of large CLIP-embedding novelty relative to earlier sampled frames and by itself does not identify the mechanism that generated it. A full-domain run is a NEW preregistered replication after the port is extended (Harmonia A4); this cut's reading stands.",
+  "cut_mode": "ANCESTRY_AWARE"
+ }
+}

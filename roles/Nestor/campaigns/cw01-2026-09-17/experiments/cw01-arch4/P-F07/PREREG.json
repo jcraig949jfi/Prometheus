@@ -1,0 +1,43 @@
+{
+ "perturbation_id": "P-F07",
+ "parent": "T-X13",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-dose",
+ "ps": [
+  0.25,
+  0.5,
+  0.75
+ ],
+ "Gs": [
+  60,
+  120
+ ],
+ "seeds": [
+  1,
+  2
+ ],
+ "arms": [
+  "weather",
+  "sham"
+ ],
+ "ruler": {
+  "intervention_family": "blind structural damage",
+  "geometry": "scattered, per-instruction, independent",
+  "sampling_law": "Bernoulli(f) per eligible instruction",
+  "normalisation": "loss = D2/D3 share over draws (binary); dreward = absolute reward_per_ask change",
+  "denominator": "draws (4) per cell; programs paired with themselves",
+  "price_assumptions": "none (no price in the evaluation)",
+  "viability_floor": "3/16 on reward_per_ask (D3 below it)",
+  "alters_baseline_function": "no: the baseline is the undamaged program; the sham path verifies the route",
+  "qualification": "P-G01 (RESULT.json disposition)"
+ },
+ "note": "the candidate's fixed-k / fraction-matched cells are superseded by the qualified scattered ruler (T-R01)",
+ "readouts": "top-32 loss (scattered f .10), persistent words, length, reward; weather - sham per dose",
+ "material_rule": "weather - sham loss below its band at any dose (pooled seeds, relabel over tops not available here: descriptive with 2 seeds; material if the difference exceeds .10 at >= 2 doses)",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 07:33:51",
+ "prereg_sha256": "0cb072abb31d837aeed6f3e7a07190bcec087af5a9d5957c158d4692e7bc2f48"
+}

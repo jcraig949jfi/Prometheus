@@ -1,0 +1,161 @@
+{
+ "_doc": "Declarative world spec for cw01-e06 (representation ecology). Written during PREFLIGHT, before implementation. Two substrates express overlapping solutions to a representation-blind task. Every difference between them arises mechanically from the substrate; nothing in scoring or selection reads the substrate label. The question is ECOLOGICAL - persistence, invasion, displacement, coexistence, frequency dependence - not which representation computes better.",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e06",
+ "attempt_id": "cw01-e06-a01",
+ "world_family": "representation-ecology-v1",
+ "inherits": ["lib/contract.py", "lib/guardproof.py", "lib/repopath.py", "lib/recordsafety.py",
+              "lib/seeds.py", "lib/localrun.py", "lib/lineage.py", "lib/infometrics.py",
+              "lib/learnability.py"],
+ "_path_policy": "Every e06 module resolves roots via lib/repopath.find_root / find_campaign_root. NO parents[N] assumptions anywhere (CW01-D046).",
+
+ "task": {
+  "_blind": "The reward function reads OUTPUTS ONLY. It never receives, inspects or branches on the substrate label. There is no representation-specific bonus anywhere in scoring or selection.",
+  "form": "map an input vector to one output value",
+  "n_inputs": 6,
+  "input_domain": [0, 3],
+  "items_per_episode": 96,
+  "target": "a hidden family of functions over the inputs, drawn ONCE per attempt_id",
+  "target_family": "straight-line DAGs over {add, sub, mul, min, max, gate} spanning a REUSE spectrum",
+  "n_nodes": 8,
+  "reuse_bands": [0.0, 0.25, 0.5, 0.75],
+  "min_distinct_outputs": 8,
+  "degeneracy_probe": 64,
+  "max_generator_tries": 40,
+  "_canonical_form": "An OPERATION GRAPH with explicit dependencies, evaluated by memoised recursion. NOT a straight-line instruction list: that would be TAPE semantics with a TREE compiler, handing one substrate the canonical form for free (CW01-D055, operator constraint 1). Both substrates receive the same semantic object and each pays its OWN realisation cost - TAPE holds a shared node in a register, TREE must DUPLICATE the sub-graph beneath it.",
+  "_reuse_is_environmental": "reuse is the fraction of nodes consumed more than once (fan-out > 1). It is a property of the ENVIRONMENT, not a representation label, and is swept over preregistered bands. The precondition (operator constraint 2) is that ONE generator yields regions where Delta(r) = F_TREE(r) - F_TAPE(r) is positive AND regions where it is negative.",
+  "_non_degeneracy": "CW01-D055: the previous generator emitted a CONSTANT target at reuse=0.50 (1 distinct output over 400 draws) and only 7 at reuse=0.00, which makes solve-rates meaningless. Graphs are now rejection-sampled until they produce at least min_distinct_outputs over their own input domain. input_domain is deliberately UNCHANGED - the instruction was to change the target family and nothing else.",
+  "_history": "CW01-D054. The first version generated the target as a depth-3 EXPRESSION TREE - one substrate's native form. Scoring was blind but the WORLD was not. Across the tested frequencies TREE's measured lower envelope (0.345) exceeded TAPE's measured upper envelope (0.289): no observed crossing, no mutual invasibility in the exercised domain. The generator is retained as world_e06.legacy_tree_target, an adversarial FIXTURE the Q16 gate must be shown REFUSING.",
+  "score": "1 / (1 + mean absolute error) over the episode's items",
+  "_swept": "n_inputs and target depth are world parameters and are SWEPT, never fixed at one convenient value"
+ },
+
+ "substrates": {
+  "_critical": "Both substrates reach an overlapping solution set, so the SAME solution is expressible in either. Differences below are mechanical consequences of the form, not scoring rules.",
+  "TREE": {
+   "form": "expression tree over {add, sub, mul, min, max, gate} and input leaves",
+   "max_nodes": 24,
+   "mutation": "subtree replacement - NON-LOCAL, large effect",
+   "recombination": "subtree crossover; requires a TREE partner",
+   "intermediate_structure": "implicit; no registers to maintain",
+   "_tradeoff": "compact and cheap, but its mutations are disruptive"
+  },
+  "TAPE": {
+   "form": "linear instruction list, each 'op dst src1 src2' over R registers; inputs preloaded, output read from register 0",
+   "max_instructions": 32,
+   "n_registers": 6,
+   "mutation": "single instruction edit - LOCAL, small effect",
+   "recombination": "one-point crossover; requires a TAPE partner",
+   "intermediate_structure": "explicit registers, maintained at cost",
+   "_tradeoff": "costlier per unit of function, but incrementally improvable"
+  },
+  "_balance": "TREE is cheaper; TAPE hill-climbs more reliably. Neither is structurally destined to dominate - that would not be an ecology experiment (design requirement 4)."
+ },
+
+ "prices": {
+  "_one_price_list": "ONE price list applied to whatever structure a substrate actually has. TREE pays per node; TAPE pays per instruction AND per live register, at the SAME unit price. TREE pays nothing for registers because it has none - that is mechanical, not a discount.",
+  "per_structural_unit": 0.010,
+  "per_live_register": 0.010,
+  "per_item_attempted": 0.002
+ },
+
+ "genome": {
+  "_shape": "a substrate tag plus the substrate's own body, plus 2 neutral genes",
+  "substrate_tag": ["TREE", "TAPE"],
+  "neutral_genes": ["neutral_a", "neutral_b"],
+  "_neutral": "no phenotype by construction; the drift floor and the basis of label-matched shams",
+  "_organism_cannot_read_its_label": "no decision path in the organism, the scorer or the selector branches on substrate_tag; the tag exists only for bookkeeping and for recombination compatibility, which is the mechanism under test"
+ },
+
+ "sharing": {
+  "_why": "CW01-D052. Each item is a RESOURCE; organisms that solve it SPLIT its value. Representation-blind: it keys on WHICH ITEMS ARE SOLVED, never on the substrate label. Supplies the NEGATIVE frequency-dependence channel that assortative recombination cannot provide - a common strategy dilutes its own reward, so rare types gain. Without it the world was a fixation lottery: 18/18 fixed, 0/18 coexistence, and control A fixed 6/6 with no representational difference at all.",
+  "enabled": true,
+  "tolerance": 0.5,
+  "_disabling_is_a_control": "sharing.enabled=false restores the unshared world and should restore the lottery; that contrast is itself a control on the mechanism"
+ },
+
+ "ecology": {
+  "population": 96,
+  "generations_minimal_form": 80,
+  "generations_full": 240,
+  "elite_fraction": 0.25,
+  "_elite_fraction_retired": "retained for signature stability only. Deterministic truncation over 24 elites let drift dominate and is why control A fixed 6/6 (D052); selection is now a tournament.",
+  "tournament_size": 3,
+  "recombination_rate": 0.5,
+  "seeded_frequencies": [0.10, 0.25, 0.50, 0.75, 0.90],
+  "_mechanism_under_test": "recombination compatibility is ASSORTATIVE by substrate: TREE x TREE and TAPE x TAPE recombine, TREE x TAPE does not. A rare substrate finds fewer compatible partners, so its recombination yield falls with its own frequency -> predicted POSITIVE frequency dependence.",
+  "_competing_mechanism": "the cost of maintaining explicit intermediate structure may vary with population composition -> NEGATIVE frequency dependence and coexistence. Both remain reachable, as does no frequency dependence at all."
+ },
+
+ "arms": {
+  "_critical": "Arms are transformations applied UP FRONT so every arm runs identical code (CW01-D019/D021). Item draws come from a stream seed that never sees the arm.",
+  "mixed_assortative": {"substrates": ["TREE", "TAPE"], "cross_substrate_recombination": false,
+   "_tests": "the treatment ecology"},
+  "mixed_neutralised": {"substrates": ["TREE", "TAPE"], "cross_substrate_recombination": true,
+   "_tests": "M3 - the hypothesised mechanism is removed while LABELS remain. If the ecological effect survives, representation identity is a proxy or the measurement is contaminated."},
+  "solo_tree": {"substrates": ["TREE"], "cross_substrate_recombination": false,
+   "_tests": "intrinsic advantage of TREE, free of interaction"},
+  "solo_tape": {"substrates": ["TAPE"], "cross_substrate_recombination": false,
+   "_tests": "intrinsic advantage of TAPE, free of interaction"},
+  "control_same_substrate": {"substrates": ["TREE", "TREE"], "cross_substrate_recombination": false,
+   "_tests": "CONTROL A - two lineage labels over ONE substrate. Estimates ecological noise with no representational difference, and supplies the measured band for beta."}
+ },
+
+ "measurements": {
+  "_three_layers_never_collapsed": "TASK, REPRESENTATION and ECOLOGY are recorded separately. Task success is NOT ecological success.",
+  "task": ["score", "mean_abs_error", "items_attempted"],
+  "representation": ["substrate", "structural_units", "live_registers", "resource_cost",
+                     "mutation_yield", "recombination_attempts", "recombination_successes"],
+  "ecology": ["frequency", "frequency_trajectory", "invasion_success_when_rare",
+              "resistance_when_common", "lineage_survival", "extinction_generation",
+              "displacement_time", "representation_transitions"],
+  "_trajectories": "frequency TRAJECTORIES are recorded per generation, never only endpoints"
+ },
+
+ "primary_statistic": {
+  "name": "frequency_dependence_of_the_interaction_term",
+  "definition": "r_A(f) = per-capita growth advantage of substrate A in MIXED populations seeded at frequency f; s_solo = A's advantage implied by SOLO lanes on matched worlds (frequency-independent by construction); interaction(f) = r_A(f) - s_solo; beta = slope of interaction(f) in f over the seeded frequency grid",
+  "reading": {"beta_zero": "frequency-independent; the mixed outcome is explained by intrinsic advantage alone - an ecological NULL even if one substrate fixes",
+              "beta_negative": "negative frequency dependence; rare-advantage; coexistence predicted",
+              "beta_positive": "positive frequency dependence; common-advantage; contingent dominance"},
+  "_terminal_abundance": "recorded, but NEVER the verdict quantity. The biggest conceptual trap in this experiment is reading terminal abundance as ecology."
+ },
+
+ "qualify_predicates": {
+  "_rule": "ALL must pass before science budget is spent. Most are STANDING GATES promoted from e01-e05 failures.",
+  "Q1_prices_positive_and_shared": "every price > 0 and ONE price list applies to both substrates",
+  "Q2_overlapping_expressiveness": "a target solvable in TREE is measurably solvable in TAPE and vice versa - MEASURED by construction and evaluation, not asserted",
+  "Q3_scoring_is_representation_blind": "no scoring or selection path reads substrate_tag; verified structurally and by a label-permutation test that must leave every score bit-identical",
+  "Q4_seeds_reconstructible": "lib/seeds.py re-asserted cross-process for this attempt_id",
+  "Q5_durable_without_redis": "a row written and re-parsed with the redis import blocked",
+  "Q6_neutral_genes_are_inert": "perturbing neutral_a/neutral_b changes no metric",
+  "Q7_selection_actually_binds": "a competent organism reliably out-reproduces an incompetent one",
+  "Q8_learnability_in_BOTH_substrates": "STANDING GATE: a hand-built COMPETENT organism beats a hand-built INCOMPETENT one in EACH substrate separately; probes asserted pairwise distinct (D023)",
+  "Q9_mechanism_fires": "recombination is actually attempted and assortment is measurable: cross-substrate attempts are refused in assortative arms and permitted in neutralised arms, with counts recorded",
+  "Q10_matched_arms": "with the mechanism neutralised, treatment and control produce BIT-IDENTICAL metrics from the same stream seed, on a LIVE population (D034: not on one where nothing happened)",
+  "Q11_beta_has_a_noise_floor": "beta must clear a band built from control_same_substrate across independent seed blocks (D035)",
+  "Q12_disposition_rule_is_executable": "disposition computed by lib/lineage.decide; a branch is UNREACHABLE unless its tests ran (D024)",
+  "Q13_organism_cannot_read_its_label": "no decision path in organism, scorer or selector branches on substrate_tag",
+  "Q14_latent_facts_attempt_stable": "target structure drawn ONCE per attempt (D029/D037); items drawn per episode",
+  "Q15_no_unperformed_checks": "every logged test names the comparison it performed (D031)",
+  "Q16_all_outcomes_reachable": "TREE fixes, TAPE fixes, stable coexistence, contingent dominance and no-difference must EACH be demonstrably attainable. A design where one substrate is destined to dominate is not an ecology experiment.",
+  "Q17_intrinsic_separable_from_interaction": "solo lanes exist, are matched to the mixed lanes' worlds, and yield s_solo independently of any mixed run",
+  "Q18_inherited_gates_proven": "ENGINEERING TARGET: repopath discovery from >=2 directory depths; recordsafety refusing an unsafe fixture; tally agreement refusing drifted state; guardproof refusing a vacuous proof; and no git write while a live RowWriter exists. Each by OBSERVED REFUSAL."
+ },
+
+ "backend_counterfactual": {
+  "requirement_IX": "organism-visible physics must not depend on one implementation",
+  "primary_backend": "in-process interpreters for both substrates",
+  "secondary_backend": "independent reimplementation of the TAPE interpreter using an explicit stack machine, and of TREE evaluation using an iterative post-order walk",
+  "equivalence_test": "identical per-organism metric vectors from identical seeds",
+  "cap_rule": "if not exercised within timebox, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE"
+ },
+
+ "dispositions": {
+  "NEGATIVE": "no task-capable organisms in either substrate, or the task is unlearnable",
+  "NULL": "substrates compute differently but no ecological quantity clears its measured null",
+  "INCONCLUSIVE": "the ecological interaction was not genuinely exercised, or a measure cannot clear its null, or IX not discharged, or not replicated",
+  "COMPLETE": "representation changes an ecological quantity; the decisive effect clears its null, survives control A, is abolished or materially reduced by M3, and holds in EVERY replicate",
+  "_not_complete": "COMPLETE is explicitly NOT 'TREE wins'. A substrate fixing is not by itself evidence of ecology."
+ }
+}

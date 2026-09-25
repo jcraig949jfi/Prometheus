@@ -1,0 +1,125 @@
+{
+ "freeze": {
+  "algo": "sha256-canonical-json-v1",
+  "canonical_bytes": 3952,
+  "sha256": "0ead62e45ed366b9112d0aac4283a8950dded748f9b26958b61284d6306c7a48"
+ },
+ "prereg": {
+  "adaptation_id": "a4",
+  "budgets": {
+   "episodes": 1,
+   "horizon": 24,
+   "search": {
+    "generations": 8,
+    "keep": 6,
+    "n": 16
+   }
+  },
+  "controls": [
+   "permuted (shuffle) as the competence-removed control",
+   "fresh random import as a floor"
+  ],
+  "decision_criteria": {
+   "PHENOMENON_ABSENT": "no import kind takes over (dose too small / no selection gradient)",
+   "PHENOMENON_CHANGED/INVERTED": "mature takes over substantially more than permuted (competence DOES drive takeover in BEE)",
+   "PHENOMENON_PRESERVED": "mature and permuted reach a similar final import-share (takeover is dose-driven, as C3-SFE-10)"
+  },
+  "imports": {
+   "fresh": "a random statemachine (floor)",
+   "mature": "best elite of a 10-generation search on the world",
+   "permuted": "transform.shuffle.v1 of the mature elite"
+  },
+  "initial_state": "generation 0 = DOSE copies of the import (origin=import) + fresh residents",
+  "interventions": {
+   "dose": 4,
+   "import_kind": [
+    "mature",
+    "permuted",
+    "fresh"
+   ]
+  },
+  "manifest": {
+   "adaptation_id": "a4",
+   "counts": {
+    "ANALOGOUS": 3,
+    "IDENTICAL": 2,
+    "MODIFIED": 1,
+    "OMITTED": 1,
+    "UNREPRESENTABLE": 1
+   },
+   "entries": [
+    {
+     "aspect": "import / injection",
+     "bee": "seed_players injected into generation 0 with origin=import (the S3 scaffolding)",
+     "reason": "injected players take the first slots of generation 0; their descendants inherit the origin",
+     "relation": "IDENTICAL",
+     "source": "a mature organism injected into a population"
+    },
+    {
+     "aspect": "takeover measure",
+     "bee": "fraction of archive elites with origin=import, per generation",
+     "reason": "origin travels through player meta, so the archive records import vs resident lineage per generation",
+     "relation": "ANALOGOUS",
+     "source": "the import lineage's share of the population over time"
+    },
+    {
+     "aspect": "mature import",
+     "bee": "best elite of a prior search on the same world",
+     "reason": "matured by BEE's own search rather than the source's, but on the same world",
+     "relation": "ANALOGOUS",
+     "source": "an organism matured on the world"
+    },
+    {
+     "aspect": "permuted control",
+     "bee": "transform.shuffle.v1 of the mature elite (permutes the table)",
+     "reason": "the shuffle keeps the components and complexity but scrambles the behaviour -- the permuted control",
+     "relation": "IDENTICAL",
+     "source": "the import scrambled (same material, no competence)"
+    },
+    {
+     "aspect": "dose",
+     "bee": "seed_players = DOSE DISTINCT organisms of the kind (top-DOSE elites for mature; their individual shuffles for permuted; DOSE randoms for fresh)",
+     "reason": "BEE's sweep forbids duplicate players (every population member must be distinct), so a dose of byte-identical clones is UNREPRESENTABLE; the dose is DOSE distinct organisms of the same kind",
+     "relation": "MODIFIED",
+     "source": "how many copies are injected"
+    },
+    {
+     "aspect": "offspring cap",
+     "bee": "-",
+     "reason": "BEE's search has no per-parent offspring cap; takeover is shaped by selection, not a quota",
+     "relation": "UNREPRESENTABLE",
+     "source": "SFE's per-parent offspring quota"
+    },
+    {
+     "aspect": "objective / selection",
+     "bee": "objective.charge.v1, selector.truncation.v1",
+     "reason": "hill-climb on charge; a competent import should out-select residents, a scrambled one should not",
+     "relation": "ANALOGOUS",
+     "source": "the population's fitness pressure"
+    },
+    {
+     "aspect": "scientific-conclusion layer",
+     "bee": "-",
+     "reason": "BEE authors no conclusion",
+     "relation": "OMITTED",
+     "source": "SFE's disposition (CAPABLE_NEGATIVE)"
+    }
+   ],
+   "source_experiment": "archaeon.campaign/cmp3:C3-SFE-10"
+  },
+  "objective": "objective.charge.v1",
+  "observations": [
+   "import-origin share of the archive per generation",
+   "final import-share per import kind"
+  ],
+  "question": "Does a MATURE import take over a population more than its PERMUTED control (a scrambled copy)? If they take over equally, takeover is driven by the dose/injection, not by competence (as C3-SFE-10).",
+  "seeds": {
+   "base": 1,
+   "n_seeds": 4
+  },
+  "source_disposition": "CAPABLE_NEGATIVE",
+  "source_experiment": "archaeon.campaign/cmp3:C3-SFE-10",
+  "stopping_rules": "fixed budget; equal takeover of mature and permuted is the CAPABLE_NEGATIVE result, not a failure",
+  "world": "world.integer.v1({'world_seed': 8, 'start_charge': 40, 'yield_amt': 10})"
+ }
+}

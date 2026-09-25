@@ -1,0 +1,18 @@
+{
+ "perturbation_id": "P-A04",
+ "parent": "T-X02",
+ "claim_type": "search-boundary-descriptive",
+ "delta": "train seed set size 8 / 32 / 128 for the e08 CONTROL arm",
+ "lineages": {
+  "8": 4,
+  "32": 4,
+  "128": 3
+ },
+ "generations": 200,
+ "unchanged": "organism, world, selection, mutation, assay seeds and competence floor",
+ "attacks": "the assumption that train8 fitness tracks held64 capability (D065, D069)",
+ "statistic": "per lineage: competent reps (of 8) and mean held64; 8-seed vs 128-seed by exact relabelling",
+ "decision": "descriptive; a relabelling-clearing rise in competent reps with breadth is material",
+ "written": "2026-09-18 11:13:07",
+ "prereg_sha256": "2a2ea468af693267be7aeb2b4aff6f6bbfbb755715d697a7f47df3e2292a6a17"
+}

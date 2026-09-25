@@ -1,0 +1,107 @@
+{
+ "when_utc": "2026-09-19T05:18:48.641902+00:00",
+ "host": "SPECTREX5",
+ "python": "3.14.4",
+ "cycle": "C92",
+ "claim_under_test": "U1: a batched (numpy) world raises env-ticks per second over the scalar reference at equal receipts",
+ "world_only": [
+  {
+   "impl": "world.integer.v1",
+   "n_envs": 1,
+   "us_per_env_tick": 6.05
+  },
+  {
+   "impl": "world.integer_batch.v1",
+   "n_envs": 1,
+   "us_per_env_tick": 33.23,
+   "speedup_vs_scalar": 0.18
+  },
+  {
+   "impl": "world.integer_batch.v1",
+   "n_envs": 8,
+   "us_per_env_tick": 12.14,
+   "speedup_vs_scalar": 0.5
+  },
+  {
+   "impl": "world.integer_batch.v1",
+   "n_envs": 32,
+   "us_per_env_tick": 9.52,
+   "speedup_vs_scalar": 0.64
+  },
+  {
+   "impl": "world.integer_batch.v1",
+   "n_envs": 128,
+   "us_per_env_tick": 8.77,
+   "speedup_vs_scalar": 0.69
+  },
+  {
+   "impl": "world.integer_batch.v1",
+   "n_envs": 512,
+   "us_per_env_tick": 8.55,
+   "speedup_vs_scalar": 0.71
+  },
+  {
+   "impl": "world.integer_batch.v1",
+   "n_envs": 2048,
+   "us_per_env_tick": 8.7,
+   "speedup_vs_scalar": 0.7
+  }
+ ],
+ "executor": [
+  {
+   "case": "short-lived",
+   "runs": 7,
+   "ticks_per_run": 5,
+   "scalar_wall_s": 0.03,
+   "batched_wall_s": 0.023,
+   "speedup": 1.3,
+   "receipts_equal_on_science_fields": true
+  },
+  {
+   "case": "long-lived 2p",
+   "runs": 33,
+   "ticks_per_run": 500,
+   "scalar_wall_s": 0.341,
+   "batched_wall_s": 0.367,
+   "speedup": 0.93,
+   "receipts_equal_on_science_fields": true
+  },
+  {
+   "case": "long-lived 4p",
+   "runs": 33,
+   "ticks_per_run": 500,
+   "scalar_wall_s": 0.534,
+   "batched_wall_s": 0.561,
+   "speedup": 0.95,
+   "receipts_equal_on_science_fields": true
+  }
+ ],
+ "profile_scalar_tick_share_pct": {
+  "world.step": 35.8,
+  "players.act": 22.4,
+  "observer.on_events": 8.7,
+  "json.dumps(trace)": 7.6,
+  "loop+rest": 25.5
+ },
+ "verdict": "FALSIFIED for this world: 0.7x world-only at every batch size, 0.93-0.94x end to end on long-lived runs, 1.3-1.8x on short-lived runs (setup amortisation, not stepping). The vectorised transition was never the cost; the per-env contract (events, JSON trace text, pending queue) and the players are. Batching pays only when the CONTRACT is batchable (columnar events, array trace) and players/observers batch too -- that is a different world family under SEMANTIC/aggregate agreement, not BIT trace equality.",
+ "world_step_share_of_execute_pct_C104": {
+  "note": "cProfile share of execute() wall (4 seeds x 1 episode, flat substrate, statemachine.v1 players, trace observer); receipts/JSON included in the denominator",
+  "integer(300 ticks)": {
+   "world.step": 13.0,
+   "players.act": 9.7
+  },
+  "grid(300)": {
+   "world.step": 25.7,
+   "players.act": 33.7
+  },
+  "pendulum(300)": {
+   "world.step": 29.3,
+   "players.act": 28.6
+  },
+  "c6.composed(100)": {
+   "world.step": 16.2,
+   "players.act": 19.3
+  },
+  "reading": "no reference world's step exceeds ~30% of a run's wall; vectorising the world alone is bounded below 1.4x everywhere tonight (Amdahl)"
+ }
+}

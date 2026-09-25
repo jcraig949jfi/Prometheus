@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prometheus.toolbox.capability.v1",
+  "title": "Capability model",
+  "description": "A capability is a versioned id `core.<name>.vN` or `ext.<name>.vN`. Components DECLARE the set they provide (registry row `capabilities`); an Experiment DECLARES the set it requires (`required_capabilities`, unioned with what its content implies). negotiate(required, provided) -> {status: OK | BLOCKED_MISSING_CAPABILITY, missing, uncatalogued, malformed}. A missing capability blocks one experiment; it never stops the kernel. The five core ids are immutable within a major version; extension ids are open (uncatalogued ids are reported, not refused).",
+  "$defs": {
+    "capabilityId": {"type": "string", "pattern": "^(core|ext)\\.[a-z0-9_.]+\\.v[0-9]+$"},
+    "core": {"enum": ["core.world.v1", "core.player.v1", "core.substrate.v1", "core.experiment.v1", "core.receipt.v1"]},
+    "registryRow": {
+      "type": "object",
+      "required": ["kind", "slot", "capabilities", "requires", "route", "provenance", "license", "native_deps", "state"],
+      "properties": {
+        "kind": {"type": "string"},
+        "slot": {"enum": ["world", "substrate", "representation", "observer", "objective", "control", "transform", "selector", "state_device", "compute_device"]},
+        "capabilities": {"type": "array", "items": {"$ref": "#/$defs/capabilityId"}},
+        "requires": {"type": "array", "items": {"$ref": "#/$defs/capabilityId"}},
+        "reference_of": {"type": ["string", "null"]},
+        "implements": {"type": ["string", "null"], "description": "the reference family this implementation reproduces; admission compares traces with that reference (C70)"},
+        "route": {"enum": ["write", "wrap", "bind", "chop"]},
+        "provenance": {"type": "object", "properties": {"author": {"type": "string"}, "source": {"type": "string"}, "owner": {"type": "string"}, "fossil_id": {"type": "string"}, "organ_id": {"type": "string"}}},
+        "license": {"type": "string"},
+        "native_deps": {"type": "array", "items": {"type": "string"}},
+        "state": {"enum": ["ADMITTED", "PROVISIONAL", "UNAVAILABLE", "RETIRED"]}
+      }
+    },
+    "negotiation": {
+      "type": "object",
+      "required": ["status", "required", "provided", "missing", "uncatalogued", "malformed"],
+      "properties": {"status": {"enum": ["OK", "BLOCKED_MISSING_CAPABILITY"]}}
+    }
+  },
+  "oneOf": [{"$ref": "#/$defs/registryRow"}, {"$ref": "#/$defs/negotiation"}]
+}

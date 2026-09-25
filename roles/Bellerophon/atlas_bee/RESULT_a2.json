@@ -1,0 +1,69 @@
+{
+ "adaptation_id": "a2",
+ "comparison": {
+  "ablation_drops": [
+   -28.44,
+   -28.88,
+   -29.0
+  ],
+  "differences": {
+   "executor": [
+    "BEE local scalar execution; deterministic (fixed seeds)"
+   ],
+   "measurement": [
+    "total charge summed over slots, meaned over eval seeds; ablation = one member replaced by an inert constant"
+   ],
+   "representational": [
+    "mixture interaction is via the integer world's SHARED registers + split yield; the source's mixture medium may differ (ANALOGOUS)"
+   ],
+   "resource": [
+    "K=3, population=16, generations=8, eval_seeds=16"
+   ],
+   "scientific": [
+    "mixture is SUBADDITIVE (ratio 0.03): the members interfere (contest the shared yield)",
+    "solo=[47.44, 45.38, 45.06] sum=137.88 mixture=3.69; ablation drops=[-28.44, -28.88, -29.0]; load-bearing members=[]"
+   ]
+  },
+  "load_bearing_members": [],
+  "new_phenomena": [
+   "mixing the solo elites LOSES total charge vs their solos -- they contest the shared yield window (a mixture cost e05's additive-null did not expose)"
+  ],
+  "ratio": 0.02674524025385313,
+  "summary": "mixture is SUBADDITIVE (ratio 0.03): the members interfere (contest the shared yield)",
+  "verdict": "PHENOMENON_CHANGED"
+ },
+ "manifest_counts": {
+  "ANALOGOUS": 5,
+  "IDENTICAL": 1,
+  "MODIFIED": 0,
+  "OMITTED": 1,
+  "UNREPRESENTABLE": 0
+ },
+ "notes": [
+  "mixture interacts through the integer world's shared registers and yield split"
+ ],
+ "observed": {
+  "ablation": [
+   32.125,
+   32.5625,
+   32.6875
+  ],
+  "mixture": 3.6875,
+  "solo": [
+   47.4375,
+   45.375,
+   45.0625
+  ],
+  "solo_sum": 137.875
+ },
+ "prereg_sha256": "ca7f6e09c33214f5c1edf5967dd562bfbf49c4094be030714db8587575fd8737",
+ "replay": [],
+ "replay_ok": true,
+ "source": {
+  "atlas_key": "nestor.cw01/cw01-2026-09-17:cw01-e05",
+  "disposition": "NULL",
+  "original": "mixture superadditivity vs solo-transplant additive prediction; 2/4 clear null; load-bearing members"
+ },
+ "utc": "2026-09-19T13:37:36Z",
+ "wall_s": 1.0
+}

@@ -1,0 +1,23 @@
+{
+ "perturbation_id": "P-B05",
+ "parent": "T-E02",
+ "claim_type": "serendipity-descriptive",
+ "delta": "blind deletion of a fraction of bound region entries between steps during evolution (WEATHER) with a draw-matched sham",
+ "unchanged": "e02 economics, organism, selection (elite 0.25, sigma 0.12), 80 generations, fixation ruler",
+ "attacks": "whether disruption is a pressure that changes which gene fixes first (foundation-first?) or the neutral drift floor",
+ "arms": [
+  "STATIC",
+  "WEATHER",
+  "SHAMWEATHER"
+ ],
+ "replicates": 4,
+ "sweep": [
+  0.1,
+  0.2,
+  0.3
+ ],
+ "statistic": "per replicate: fixation generation of p_norm and p_factor (75% travel), gap = fix_factor - fix_norm, neutral drift max_abs; arm contrast on gap by exact relabelling (C(8,4)=70)",
+ "decision": "descriptive; a change of ORDER (foundation-first majority under WEATHER but not STATIC) is recorded as material",
+ "written": "2026-09-18 11:06:41",
+ "prereg_sha256": "6964e3757efd6de8de1b05ab5343f778f59554dc391a0a650bde5dc179881b5a"
+}

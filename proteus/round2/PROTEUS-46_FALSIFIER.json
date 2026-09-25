@@ -1,0 +1,824 @@
+{
+ "departures": [],
+ "falsifier_status": "FALSIFIER_FAILED",
+ "limits": [
+  "hand-written parents, not evolved organisms",
+  "neutral probe, not W2_K2",
+  "one graph wiring of the function"
+ ],
+ "neighbourhood": {
+  "graph": {
+   "keyed": {
+    "batch_shares": {
+     "A": {
+      "DESTROYED": 0.37238836542400655,
+      "GRADED_DOWN": 0.006964358869315854,
+      "NEUTRAL": 0.6132732486685785,
+      "NEUTRAL_DIFF": 0.007374027038099139,
+      "USEFUL": 0.0
+     },
+     "B": {
+      "DESTROYED": 0.36569313039901274,
+      "GRADED_DOWN": 0.007404360345536816,
+      "NEUTRAL": 0.6178527354997944,
+      "NEUTRAL_DIFF": 0.00904977375565611,
+      "USEFUL": 0.0
+     }
+    },
+    "children": 4872,
+    "counts": {
+     "DESTROYED": 1798,
+     "GRADED_DOWN": 35,
+     "NEUTRAL": 2999,
+     "NEUTRAL_DIFF": 40
+    },
+    "identity_children_excluded": 328,
+    "parent_all_keys": 16,
+    "parent_two_key": 6,
+    "per_operator_counts": {
+     "CONFIG_PERTURB": {
+      "DESTROYED": 135,
+      "NEUTRAL": 158,
+      "NEUTRAL_DIFF": 27
+     },
+     "CROSSOVER_SUBGRAPH": {
+      "NEUTRAL": 400
+     },
+     "EDGE_ADD": {
+      "NEUTRAL": 400
+     },
+     "EDGE_CUT": {
+      "DESTROYED": 314,
+      "NEUTRAL": 86
+     },
+     "EDGE_RETARGET": {
+      "DESTROYED": 288,
+      "GRADED_DOWN": 7,
+      "NEUTRAL": 63,
+      "NEUTRAL_DIFF": 10
+     },
+     "NODE_ADD": {
+      "NEUTRAL": 400
+     },
+     "NODE_KIND": {
+      "DESTROYED": 244,
+      "GRADED_DOWN": 28,
+      "NEUTRAL": 114,
+      "NEUTRAL_DIFF": 3
+     },
+     "NODE_PARAM": {
+      "DESTROYED": 80,
+      "NEUTRAL": 312
+     },
+     "NODE_REMOVE": {
+      "DESTROYED": 303,
+      "NEUTRAL": 97
+     },
+     "SUBGRAPH_COPY": {
+      "NEUTRAL": 400
+     },
+     "SUBGRAPH_COPY_ATTACH": {
+      "NEUTRAL": 400
+     },
+     "SUBGRAPH_MOVE": {
+      "DESTROYED": 140,
+      "NEUTRAL": 63
+     },
+     "SUBGRAPH_REMOVE": {
+      "DESTROYED": 294,
+      "NEUTRAL": 106
+     }
+    },
+    "per_operator_shares": {
+     "CONFIG_PERTURB": {
+      "DESTROYED": 0.421875,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.49375,
+      "NEUTRAL_DIFF": 0.084375,
+      "USEFUL": 0.0
+     },
+     "CROSSOVER_SUBGRAPH": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "EDGE_ADD": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "EDGE_CUT": {
+      "DESTROYED": 0.785,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.215,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "EDGE_RETARGET": {
+      "DESTROYED": 0.782608695652174,
+      "GRADED_DOWN": 0.019021739130434784,
+      "NEUTRAL": 0.17119565217391305,
+      "NEUTRAL_DIFF": 0.02717391304347826,
+      "USEFUL": 0.0
+     },
+     "NODE_ADD": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "NODE_KIND": {
+      "DESTROYED": 0.6272493573264781,
+      "GRADED_DOWN": 0.07197943444730077,
+      "NEUTRAL": 0.2930591259640103,
+      "NEUTRAL_DIFF": 0.007712082262210797,
+      "USEFUL": 0.0
+     },
+     "NODE_PARAM": {
+      "DESTROYED": 0.20408163265306123,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.7959183673469388,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "NODE_REMOVE": {
+      "DESTROYED": 0.7575,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.2425,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_COPY": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_COPY_ATTACH": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_MOVE": {
+      "DESTROYED": 0.6896551724137931,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.3103448275862069,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_REMOVE": {
+      "DESTROYED": 0.735,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.265,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     }
+    },
+    "shares": {
+     "DESTROYED": 0.36904761904761907,
+     "GRADED_DOWN": 0.007183908045977011,
+     "NEUTRAL": 0.6155582922824302,
+     "NEUTRAL_DIFF": 0.008210180623973728,
+     "USEFUL": 0.0
+    }
+   },
+   "one_value": {
+    "batch_shares": {
+     "A": {
+      "DESTROYED": 0.35629356293562936,
+      "GRADED_DOWN": 0.0012300123001230013,
+      "NEUTRAL": 0.6424764247642476,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "B": {
+      "DESTROYED": 0.3570843570843571,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.6408681408681409,
+      "NEUTRAL_DIFF": 0.0020475020475020475,
+      "USEFUL": 0.0
+     }
+    },
+    "children": 4881,
+    "counts": {
+     "DESTROYED": 1741,
+     "GRADED_DOWN": 3,
+     "NEUTRAL": 3132,
+     "NEUTRAL_DIFF": 5
+    },
+    "identity_children_excluded": 319,
+    "parent_all_keys": 1,
+    "parent_two_key": 3,
+    "per_operator_counts": {
+     "CONFIG_PERTURB": {
+      "DESTROYED": 142,
+      "NEUTRAL": 192
+     },
+     "CROSSOVER_SUBGRAPH": {
+      "NEUTRAL": 400
+     },
+     "EDGE_ADD": {
+      "NEUTRAL": 400
+     },
+     "EDGE_CUT": {
+      "DESTROYED": 272,
+      "NEUTRAL": 128
+     },
+     "EDGE_RETARGET": {
+      "DESTROYED": 280,
+      "GRADED_DOWN": 2,
+      "NEUTRAL": 87,
+      "NEUTRAL_DIFF": 4
+     },
+     "NODE_ADD": {
+      "NEUTRAL": 400
+     },
+     "NODE_KIND": {
+      "DESTROYED": 257,
+      "GRADED_DOWN": 1,
+      "NEUTRAL": 127,
+      "NEUTRAL_DIFF": 1
+     },
+     "NODE_PARAM": {
+      "DESTROYED": 72,
+      "NEUTRAL": 319
+     },
+     "NODE_REMOVE": {
+      "DESTROYED": 290,
+      "NEUTRAL": 110
+     },
+     "SUBGRAPH_COPY": {
+      "NEUTRAL": 400
+     },
+     "SUBGRAPH_COPY_ATTACH": {
+      "NEUTRAL": 400
+     },
+     "SUBGRAPH_MOVE": {
+      "DESTROYED": 128,
+      "NEUTRAL": 69
+     },
+     "SUBGRAPH_REMOVE": {
+      "DESTROYED": 300,
+      "NEUTRAL": 100
+     }
+    },
+    "per_operator_shares": {
+     "CONFIG_PERTURB": {
+      "DESTROYED": 0.4251497005988024,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.5748502994011976,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "CROSSOVER_SUBGRAPH": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "EDGE_ADD": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "EDGE_CUT": {
+      "DESTROYED": 0.68,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.32,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "EDGE_RETARGET": {
+      "DESTROYED": 0.7506702412868632,
+      "GRADED_DOWN": 0.005361930294906166,
+      "NEUTRAL": 0.23324396782841822,
+      "NEUTRAL_DIFF": 0.010723860589812333,
+      "USEFUL": 0.0
+     },
+     "NODE_ADD": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "NODE_KIND": {
+      "DESTROYED": 0.6658031088082902,
+      "GRADED_DOWN": 0.0025906735751295338,
+      "NEUTRAL": 0.3290155440414508,
+      "NEUTRAL_DIFF": 0.0025906735751295338,
+      "USEFUL": 0.0
+     },
+     "NODE_PARAM": {
+      "DESTROYED": 0.18414322250639387,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.8158567774936062,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "NODE_REMOVE": {
+      "DESTROYED": 0.725,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.275,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_COPY": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_COPY_ATTACH": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 1.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_MOVE": {
+      "DESTROYED": 0.649746192893401,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.350253807106599,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "SUBGRAPH_REMOVE": {
+      "DESTROYED": 0.75,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.25,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     }
+    },
+    "shares": {
+     "DESTROYED": 0.35668920303216556,
+     "GRADED_DOWN": 0.0006146281499692685,
+     "NEUTRAL": 0.6416717885679164,
+     "NEUTRAL_DIFF": 0.001024380249948781,
+     "USEFUL": 0.0
+    }
+   }
+  },
+  "v0": {
+   "keyed": {
+    "batch_shares": {
+     "A": {
+      "DESTROYED": 0.7342130065975495,
+      "GRADED_DOWN": 0.06267672007540057,
+      "NEUTRAL": 0.18897266729500473,
+      "NEUTRAL_DIFF": 0.01413760603204524,
+      "USEFUL": 0.0
+     },
+     "B": {
+      "DESTROYED": 0.7589453860640302,
+      "GRADED_DOWN": 0.04849340866290019,
+      "NEUTRAL": 0.1803201506591337,
+      "NEUTRAL_DIFF": 0.01224105461393597,
+      "USEFUL": 0.0
+     }
+    },
+    "children": 4246,
+    "counts": {
+     "DESTROYED": 3170,
+     "GRADED_DOWN": 236,
+     "NEUTRAL": 784,
+     "NEUTRAL_DIFF": 56
+    },
+    "identity_children_excluded": 554,
+    "parent_all_keys": 16,
+    "parent_two_key": 6,
+    "per_operator_counts": {
+     "config_perturbation": {
+      "DESTROYED": 40,
+      "NEUTRAL": 286
+     },
+     "deletion": {
+      "DESTROYED": 380,
+      "GRADED_DOWN": 12,
+      "NEUTRAL": 8
+     },
+     "duplication": {
+      "DESTROYED": 329,
+      "GRADED_DOWN": 71
+     },
+     "insertion": {
+      "DESTROYED": 323,
+      "GRADED_DOWN": 77
+     },
+     "movement": {
+      "DESTROYED": 335,
+      "GRADED_DOWN": 4,
+      "NEUTRAL": 10,
+      "NEUTRAL_DIFF": 4
+     },
+     "operand_perturbation": {
+      "DESTROYED": 134,
+      "GRADED_DOWN": 9,
+      "NEUTRAL": 220,
+      "NEUTRAL_DIFF": 15
+     },
+     "randomization": {
+      "DESTROYED": 379,
+      "GRADED_DOWN": 5,
+      "NEUTRAL": 10,
+      "NEUTRAL_DIFF": 6
+     },
+     "reference_redirection": {
+      "DESTROYED": 169,
+      "GRADED_DOWN": 18,
+      "NEUTRAL": 208,
+      "NEUTRAL_DIFF": 5
+     },
+     "region_swap": {
+      "DESTROYED": 390,
+      "NEUTRAL": 7
+     },
+     "replacement": {
+      "DESTROYED": 311,
+      "GRADED_DOWN": 30,
+      "NEUTRAL": 34,
+      "NEUTRAL_DIFF": 25
+     },
+     "splice": {
+      "DESTROYED": 380,
+      "GRADED_DOWN": 10,
+      "NEUTRAL": 1,
+      "NEUTRAL_DIFF": 1
+     },
+     "unreachable_removal": {}
+    },
+    "per_operator_shares": {
+     "config_perturbation": {
+      "DESTROYED": 0.12269938650306748,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.8773006134969326,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "deletion": {
+      "DESTROYED": 0.95,
+      "GRADED_DOWN": 0.03,
+      "NEUTRAL": 0.02,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "duplication": {
+      "DESTROYED": 0.8225,
+      "GRADED_DOWN": 0.1775,
+      "NEUTRAL": 0.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "insertion": {
+      "DESTROYED": 0.8075,
+      "GRADED_DOWN": 0.1925,
+      "NEUTRAL": 0.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "movement": {
+      "DESTROYED": 0.9490084985835694,
+      "GRADED_DOWN": 0.0113314447592068,
+      "NEUTRAL": 0.028328611898016998,
+      "NEUTRAL_DIFF": 0.0113314447592068,
+      "USEFUL": 0.0
+     },
+     "operand_perturbation": {
+      "DESTROYED": 0.3544973544973545,
+      "GRADED_DOWN": 0.023809523809523808,
+      "NEUTRAL": 0.582010582010582,
+      "NEUTRAL_DIFF": 0.03968253968253968,
+      "USEFUL": 0.0
+     },
+     "randomization": {
+      "DESTROYED": 0.9475,
+      "GRADED_DOWN": 0.0125,
+      "NEUTRAL": 0.025,
+      "NEUTRAL_DIFF": 0.015,
+      "USEFUL": 0.0
+     },
+     "reference_redirection": {
+      "DESTROYED": 0.4225,
+      "GRADED_DOWN": 0.045,
+      "NEUTRAL": 0.52,
+      "NEUTRAL_DIFF": 0.0125,
+      "USEFUL": 0.0
+     },
+     "region_swap": {
+      "DESTROYED": 0.982367758186398,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.017632241813602016,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "replacement": {
+      "DESTROYED": 0.7775,
+      "GRADED_DOWN": 0.075,
+      "NEUTRAL": 0.085,
+      "NEUTRAL_DIFF": 0.0625,
+      "USEFUL": 0.0
+     },
+     "splice": {
+      "DESTROYED": 0.9693877551020408,
+      "GRADED_DOWN": 0.025510204081632654,
+      "NEUTRAL": 0.002551020408163265,
+      "NEUTRAL_DIFF": 0.002551020408163265,
+      "USEFUL": 0.0
+     },
+     "unreachable_removal": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     }
+    },
+    "shares": {
+     "DESTROYED": 0.7465850211964201,
+     "GRADED_DOWN": 0.055581723975506356,
+     "NEUTRAL": 0.18464437117286858,
+     "NEUTRAL_DIFF": 0.0131888836552049,
+     "USEFUL": 0.0
+    }
+   },
+   "one_value": {
+    "batch_shares": {
+     "A": {
+      "DESTROYED": 0.7196436943272386,
+      "GRADED_DOWN": 0.006094702297233943,
+      "NEUTRAL": 0.2630098452883263,
+      "NEUTRAL_DIFF": 0.011251758087201125,
+      "USEFUL": 0.0
+     },
+     "B": {
+      "DESTROYED": 0.689784442361762,
+      "GRADED_DOWN": 0.008903467666354265,
+      "NEUTRAL": 0.2849109653233365,
+      "NEUTRAL_DIFF": 0.01640112464854733,
+      "USEFUL": 0.0
+     }
+    },
+    "children": 4267,
+    "counts": {
+     "DESTROYED": 3007,
+     "GRADED_DOWN": 32,
+     "NEUTRAL": 1169,
+     "NEUTRAL_DIFF": 59
+    },
+    "identity_children_excluded": 533,
+    "parent_all_keys": 1,
+    "parent_two_key": 3,
+    "per_operator_counts": {
+     "config_perturbation": {
+      "DESTROYED": 56,
+      "NEUTRAL": 275
+     },
+     "deletion": {
+      "DESTROYED": 388,
+      "NEUTRAL": 12
+     },
+     "duplication": {
+      "DESTROYED": 249,
+      "GRADED_DOWN": 10,
+      "NEUTRAL": 141
+     },
+     "insertion": {
+      "DESTROYED": 219,
+      "GRADED_DOWN": 14,
+      "NEUTRAL": 167
+     },
+     "movement": {
+      "DESTROYED": 345,
+      "NEUTRAL": 6,
+      "NEUTRAL_DIFF": 4
+     },
+     "operand_perturbation": {
+      "DESTROYED": 137,
+      "GRADED_DOWN": 1,
+      "NEUTRAL": 240,
+      "NEUTRAL_DIFF": 9
+     },
+     "randomization": {
+      "DESTROYED": 381,
+      "GRADED_DOWN": 2,
+      "NEUTRAL": 9,
+      "NEUTRAL_DIFF": 8
+     },
+     "reference_redirection": {
+      "DESTROYED": 157,
+      "NEUTRAL": 243
+     },
+     "region_swap": {
+      "DESTROYED": 397,
+      "NEUTRAL": 2
+     },
+     "replacement": {
+      "DESTROYED": 318,
+      "GRADED_DOWN": 2,
+      "NEUTRAL": 48,
+      "NEUTRAL_DIFF": 32
+     },
+     "splice": {
+      "DESTROYED": 360,
+      "GRADED_DOWN": 3,
+      "NEUTRAL": 26,
+      "NEUTRAL_DIFF": 6
+     },
+     "unreachable_removal": {}
+    },
+    "per_operator_shares": {
+     "config_perturbation": {
+      "DESTROYED": 0.1691842900302115,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.8308157099697885,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "deletion": {
+      "DESTROYED": 0.97,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.03,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "duplication": {
+      "DESTROYED": 0.6225,
+      "GRADED_DOWN": 0.025,
+      "NEUTRAL": 0.3525,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "insertion": {
+      "DESTROYED": 0.5475,
+      "GRADED_DOWN": 0.035,
+      "NEUTRAL": 0.4175,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "movement": {
+      "DESTROYED": 0.971830985915493,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.016901408450704224,
+      "NEUTRAL_DIFF": 0.011267605633802818,
+      "USEFUL": 0.0
+     },
+     "operand_perturbation": {
+      "DESTROYED": 0.35400516795865633,
+      "GRADED_DOWN": 0.002583979328165375,
+      "NEUTRAL": 0.6201550387596899,
+      "NEUTRAL_DIFF": 0.023255813953488372,
+      "USEFUL": 0.0
+     },
+     "randomization": {
+      "DESTROYED": 0.9525,
+      "GRADED_DOWN": 0.005,
+      "NEUTRAL": 0.0225,
+      "NEUTRAL_DIFF": 0.02,
+      "USEFUL": 0.0
+     },
+     "reference_redirection": {
+      "DESTROYED": 0.3925,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.6075,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "region_swap": {
+      "DESTROYED": 0.9949874686716792,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.005012531328320802,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     },
+     "replacement": {
+      "DESTROYED": 0.795,
+      "GRADED_DOWN": 0.005,
+      "NEUTRAL": 0.12,
+      "NEUTRAL_DIFF": 0.08,
+      "USEFUL": 0.0
+     },
+     "splice": {
+      "DESTROYED": 0.9113924050632911,
+      "GRADED_DOWN": 0.007594936708860759,
+      "NEUTRAL": 0.06582278481012659,
+      "NEUTRAL_DIFF": 0.015189873417721518,
+      "USEFUL": 0.0
+     },
+     "unreachable_removal": {
+      "DESTROYED": 0.0,
+      "GRADED_DOWN": 0.0,
+      "NEUTRAL": 0.0,
+      "NEUTRAL_DIFF": 0.0,
+      "USEFUL": 0.0
+     }
+    },
+    "shares": {
+     "DESTROYED": 0.7047105694867588,
+     "GRADED_DOWN": 0.007499414108272791,
+     "NEUTRAL": 0.2739629716428404,
+     "NEUTRAL_DIFF": 0.013827044762127958,
+     "USEFUL": 0.0
+    }
+   }
+  }
+ },
+ "neighbourhood_exhausted": false,
+ "neighbourhood_exhausted_note": "one hand-written parent pair on one neutral probe cannot exhaust a transformation neighbourhood; retirement under condition A is NOT supported by this file",
+ "parameters": {
+  "K_per_operator": 400,
+  "greedy_paths": 100,
+  "greedy_width": 50,
+  "walk_steps": 3,
+  "walks": 200
+ },
+ "preregistration": "proteus/round2/PROTEUS-46_PREREGISTRATION.md @ main eb58691fc",
+ "reopen_conditions": [
+  "a materially different graph topology of the same function",
+  "a different mutation operator set or mass profile",
+  "a developmental regime (growth/dormancy rules) not present in graph_grammar.v1",
+  "a representation change beyond graph_organism.v1"
+ ],
+ "rule_evaluation": {
+  "both_exceed_floor": false,
+  "floor_graded": 0.0028087653691203224,
+  "floor_useful": 0.0,
+  "graded_condition": false,
+  "graded_graph": 0.0006146281499692685,
+  "graded_v0": 0.007499414108272791,
+  "useful_condition": false,
+  "useful_graph": 0.0,
+  "useful_v0": 0.0
+ },
+ "schema_version": "proteus.p46_falsifier.v1",
+ "substrates": {
+  "graph": {
+   "grammar_hash": "dc689a334aca2bd0f9f999a549523b0a788e63ecf3e6986dc5d4dfdbac69637f",
+   "operators": [
+    "NODE_ADD",
+    "NODE_REMOVE",
+    "SUBGRAPH_REMOVE",
+    "NODE_KIND",
+    "NODE_PARAM",
+    "EDGE_ADD",
+    "EDGE_CUT",
+    "EDGE_RETARGET",
+    "SUBGRAPH_COPY",
+    "SUBGRAPH_COPY_ATTACH",
+    "SUBGRAPH_MOVE",
+    "CROSSOVER_SUBGRAPH",
+    "CONFIG_PERTURB"
+   ],
+   "runtime_hash": "f850a6ed1e5296867972acad01189ffa6a7a129271d358be567f4b008e4c868a"
+  },
+  "v0": {
+   "grammar_hash": "5043f5e11a726b63a9553cc4855995c3ac324e55f8154ffe4adf28dad553a832",
+   "operators": [
+    "insertion",
+    "deletion",
+    "duplication",
+    "movement",
+    "replacement",
+    "operand_perturbation",
+    "reference_redirection",
+    "region_swap",
+    "splice",
+    "randomization",
+    "unreachable_removal",
+    "config_perturbation"
+   ],
+   "runtime_hash": "73f110e21b9df879b3bfd7b46a3793ab146f4e2a69d06aedeb2c329cfdab9ec0"
+  }
+ },
+ "verdict": "CLIFF_SURVIVES",
+ "walks": {
+  "graph": {
+   "greedy_3step_paths": 100,
+   "greedy_best_two_key_seen": 3,
+   "greedy_reached_6": 0,
+   "greedy_width": 50,
+   "random_3step_walks": 200,
+   "random_reached_6": 0
+  },
+  "v0": {
+   "greedy_3step_paths": 100,
+   "greedy_best_two_key_seen": 3,
+   "greedy_reached_6": 0,
+   "greedy_width": 50,
+   "random_3step_walks": 200,
+   "random_reached_6": 0
+  }
+ }
+}

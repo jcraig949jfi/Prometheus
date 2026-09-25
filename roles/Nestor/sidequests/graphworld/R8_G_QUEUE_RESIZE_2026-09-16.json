@@ -1,0 +1,111 @@
+{
+ "projection": {
+  "admitted_by_this_resize": [
+   "W64369802ea2ee3fe"
+  ],
+  "affordable_whole_worlds": 1,
+  "est_cpu_s_per_world": 20251.34375,
+  "estimator": "MEAN_MEASURED_CPU_S_PER_COMPLETED_WORLD",
+  "measured_at": "2026-09-16 19:20:37",
+  "measured_world": "W293076ad1f07d50f",
+  "n_measured": 1,
+  "remaining_cpu_s": 28761.364056243652,
+  "remaining_wall_s_to_NNW": 10466.1,
+  "rule": "G-R8-SCREEN 1789593329740-0",
+  "sustained_cpu_s_per_wall_s_lane_G": 2.7480465785210617
+ },
+ "reason": "undelivered bootstrap jobs of worlds whose projected completion is after NO_NEW_WORK; a partial world decides nothing",
+ "record": "G_R8_QUEUE_RESIZE",
+ "removed": [
+  {
+   "fields": {
+    "code_file_sha256": "3566776eae8b794b128f8be9d6da87efe409da3aa7b301b98d25d8667edae676",
+    "code_repo": "F:/Prometheus-worktrees/nestor-bld-g",
+    "continuation": "0",
+    "cpu_prior": "0.000000",
+    "envelope": "{\"campaign_stage\": \"PRODUCTION\", \"checkpointable\": true, \"cohort\": \"G\", \"cpu_budget_s\": 36000.0, \"expected_output_rows\": 101, \"experiment_class\": \"R16_SCREEN_CELL\", \"families\": [2101, 3303, 4200, 5501], \"gpu_budget_s\": 0, \"n_per_family\": {\"2101\": 8, \"3303\": 8, \"4200\": 8, \"5501\": 8}, \"predicate_event_id\": \"1789593329740-0\", \"predicate_id\": \"G-R8-SCREEN\", \"required_controls\": [\"floor_suite\", \"world_key_matches_manifest\"], \"required_oracles\": [\"world_oracle\", \"fused_eq_numpy\"], \"rng_family_count\": 4, \"runs_per_family\": 8, \"runs_total\": 32, \"wall_budget_s\": 2400}",
+    "exp_id": "G-R8-screen",
+    "fn": "primordial.metric.screen_r8:world_cell_job",
+    "job_id": "8bc721e1a90c",
+    "job_key": "g-r8-screen-Wb8a200cd423158b8-train8_held64",
+    "kwargs": "{\"world_id\": \"Wb8a200cd423158b8\", \"pressure\": \"train8_held64\"}",
+    "priority_ts": "1789593346.295",
+    "queue_enter_ts": "1789593346.295",
+    "rows": "primordial/ledger/rows/G/G-R8-screen.jsonl",
+    "segment": "0",
+    "ts": "1789593346.295",
+    "ttl_cpu_s": "36000.0",
+    "wall_prior": "0.000000"
+   },
+   "stream_id": "1789593346310-0"
+  },
+  {
+   "fields": {
+    "code_file_sha256": "3566776eae8b794b128f8be9d6da87efe409da3aa7b301b98d25d8667edae676",
+    "code_repo": "F:/Prometheus-worktrees/nestor-bld-g",
+    "continuation": "0",
+    "cpu_prior": "0.000000",
+    "envelope": "{\"campaign_stage\": \"PRODUCTION\", \"checkpointable\": true, \"cohort\": \"G\", \"cpu_budget_s\": 36000.0, \"expected_output_rows\": 69, \"experiment_class\": \"R16_SCREEN_CELL\", \"families\": [2101, 3303, 4200, 5501], \"gpu_budget_s\": 0, \"n_per_family\": {\"2101\": 8, \"3303\": 8, \"4200\": 8, \"5501\": 8}, \"predicate_event_id\": \"1789593329740-0\", \"predicate_id\": \"G-R8-SCREEN\", \"required_controls\": [\"floor_suite\", \"world_key_matches_manifest\"], \"required_oracles\": [\"world_oracle\", \"fused_eq_numpy\"], \"rng_family_count\": 4, \"runs_per_family\": 8, \"runs_total\": 32, \"wall_budget_s\": 2400}",
+    "exp_id": "G-R8-screen",
+    "fn": "primordial.metric.screen_r8:world_cell_job",
+    "job_id": "b1b1412df96b",
+    "job_key": "g-r8-screen-Wb8a200cd423158b8-train128_held64",
+    "kwargs": "{\"world_id\": \"Wb8a200cd423158b8\", \"pressure\": \"train128_held64\"}",
+    "priority_ts": "1789593346.311",
+    "queue_enter_ts": "1789593346.311",
+    "rows": "primordial/ledger/rows/G/G-R8-screen.jsonl",
+    "segment": "0",
+    "ts": "1789593346.311",
+    "ttl_cpu_s": "36000.0",
+    "wall_prior": "0.000000"
+   },
+   "stream_id": "1789593346325-0"
+  },
+  {
+   "fields": {
+    "code_file_sha256": "3566776eae8b794b128f8be9d6da87efe409da3aa7b301b98d25d8667edae676",
+    "code_repo": "F:/Prometheus-worktrees/nestor-bld-g",
+    "continuation": "0",
+    "cpu_prior": "0.000000",
+    "envelope": "{\"campaign_stage\": \"PRODUCTION\", \"checkpointable\": true, \"cohort\": \"G\", \"cpu_budget_s\": 36000.0, \"expected_output_rows\": 101, \"experiment_class\": \"R16_SCREEN_CELL\", \"families\": [2101, 3303, 4200, 5501], \"gpu_budget_s\": 0, \"n_per_family\": {\"2101\": 8, \"3303\": 8, \"4200\": 8, \"5501\": 8}, \"predicate_event_id\": \"1789593329740-0\", \"predicate_id\": \"G-R8-SCREEN\", \"required_controls\": [\"floor_suite\", \"world_key_matches_manifest\"], \"required_oracles\": [\"world_oracle\", \"fused_eq_numpy\"], \"rng_family_count\": 4, \"runs_per_family\": 8, \"runs_total\": 32, \"wall_budget_s\": 2400}",
+    "exp_id": "G-R8-screen",
+    "fn": "primordial.metric.screen_r8:world_cell_job",
+    "job_id": "a2bc6671e127",
+    "job_key": "g-r8-screen-Wb15242af6347626f-train8_held64",
+    "kwargs": "{\"world_id\": \"Wb15242af6347626f\", \"pressure\": \"train8_held64\"}",
+    "priority_ts": "1789593346.326",
+    "queue_enter_ts": "1789593346.326",
+    "rows": "primordial/ledger/rows/G/G-R8-screen.jsonl",
+    "segment": "0",
+    "ts": "1789593346.326",
+    "ttl_cpu_s": "36000.0",
+    "wall_prior": "0.000000"
+   },
+   "stream_id": "1789593346330-0"
+  },
+  {
+   "fields": {
+    "code_file_sha256": "3566776eae8b794b128f8be9d6da87efe409da3aa7b301b98d25d8667edae676",
+    "code_repo": "F:/Prometheus-worktrees/nestor-bld-g",
+    "continuation": "0",
+    "cpu_prior": "0.000000",
+    "envelope": "{\"campaign_stage\": \"PRODUCTION\", \"checkpointable\": true, \"cohort\": \"G\", \"cpu_budget_s\": 36000.0, \"expected_output_rows\": 69, \"experiment_class\": \"R16_SCREEN_CELL\", \"families\": [2101, 3303, 4200, 5501], \"gpu_budget_s\": 0, \"n_per_family\": {\"2101\": 8, \"3303\": 8, \"4200\": 8, \"5501\": 8}, \"predicate_event_id\": \"1789593329740-0\", \"predicate_id\": \"G-R8-SCREEN\", \"required_controls\": [\"floor_suite\", \"world_key_matches_manifest\"], \"required_oracles\": [\"world_oracle\", \"fused_eq_numpy\"], \"rng_family_count\": 4, \"runs_per_family\": 8, \"runs_total\": 32, \"wall_budget_s\": 2400}",
+    "exp_id": "G-R8-screen",
+    "fn": "primordial.metric.screen_r8:world_cell_job",
+    "job_id": "f76706df39c4",
+    "job_key": "g-r8-screen-Wb15242af6347626f-train128_held64",
+    "kwargs": "{\"world_id\": \"Wb15242af6347626f\", \"pressure\": \"train128_held64\"}",
+    "priority_ts": "1789593346.330",
+    "queue_enter_ts": "1789593346.330",
+    "rows": "primordial/ledger/rows/G/G-R8-screen.jsonl",
+    "segment": "0",
+    "ts": "1789593346.330",
+    "ttl_cpu_s": "36000.0",
+    "wall_prior": "0.000000"
+   },
+   "stream_id": "1789593346358-0"
+  }
+ ],
+ "removed_from": "pm:jobs:G",
+ "ts": 1789600861.115
+}

@@ -1,0 +1,36 @@
+{
+ "perturbation_id": "P-G12",
+ "parent": "T-X18",
+ "co_parents": [
+  "T-ARCH4/M1",
+  "T-X15"
+ ],
+ "requires": [
+  "P-G01"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-cross",
+ "populations": "P-F06 select / ndrift seeds 1-2 regenerated (label nestor.pf06), archives G20/40/60",
+ "ruler": {
+  "intervention_family": "blind structural damage",
+  "geometry": "scattered, per-instruction, independent",
+  "sampling_law": "Bernoulli(f) per eligible instruction",
+  "normalisation": "loss = D2/D3 share over draws (binary); dreward = absolute reward_per_ask change",
+  "denominator": "draws (4) per cell; programs paired with themselves",
+  "price_assumptions": "none (no price in the evaluation)",
+  "viability_floor": "3/16 on reward_per_ask (D3 below it)",
+  "alters_baseline_function": "no: the baseline is the undamaged program; the sham path verifies the route",
+  "qualification": "P-G01 (RESULT.json disposition)"
+ },
+ "f": 0.05,
+ "draws": 2,
+ "readouts": "per arm x generation: mean absolute reward change, share of individuals whose reward rises, elite (top 5 by reward) vs population; load vs generation",
+ "reading": "LOAD_PRESENT if the share rising exceeds the sham expectation (a rise requires the deletion to remove a harmful instruction: share > 0 with Wilson lower bound > .05) in the population; ELITE_LOADED if the elite also rises in >= 1/3 of cases; else NO_LOAD",
+ "material_rule": "LOAD_PRESENT or ELITE_LOADED",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:21:27",
+ "prereg_sha256": "8b5671287b1b2c5525d39328175acf84df705e10f11c6e13f24907389231c6c3"
+}

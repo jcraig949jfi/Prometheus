@@ -1,0 +1,45 @@
+W4   MECHANISM_DIVERSE  n 10 i 10 ii 10 iii 6 iv 10 shufbehav 0 top_sig (none)x4 classes {'ACT': 10} accretion [0, 0, 0, 10, 0, 10, 0, 5, 5, 0] portable 1/10
+     s1  held  40.00 shuf   0.50 i1 ii1 iii0 iv1 ACT       (none)                 noact   3.25 noplast  40.00 nomem   3.19 accr 0 port None
+     s2  held  40.00 shuf   7.12 i1 ii1 iii1 iv1 ACT       DIFF                   noact   2.94 noplast  40.00 nomem   2.94 accr 0 port False
+     s3  held  40.00 shuf   3.81 i1 ii1 iii1 iv1 ACT       GATE+MAX               noact   2.56 noplast  40.00 nomem   2.56 accr 0 port False
+     s4  held  40.00 shuf   9.81 i1 ii1 iii1 iv1 ACT       CONST+GATE+GATE        noact   3.75 noplast  40.00 nomem   3.75 accr 10 port False
+     s5  held  40.00 shuf   7.19 i1 ii1 iii0 iv1 ACT       (none)                 noact   3.56 noplast  40.00 nomem   3.56 accr 0 port None
+     s6  held  40.00 shuf   7.56 i1 ii1 iii0 iv1 ACT       (none)                 noact   2.94 noplast  40.00 nomem   3.44 accr 10 port None
+     s7  held  40.00 shuf   1.38 i1 ii1 iii1 iv1 ACT       GATE                   noact   3.38 noplast  40.00 nomem   3.38 accr 0 port False
+     s8  held  40.00 shuf   7.09 i1 ii1 iii1 iv1 ACT       TANH                   noact   2.19 noplast  40.00 nomem   2.81 accr 5 port False
+     s9  held  40.00 shuf   0.00 i1 ii1 iii0 iv1 ACT       (none)                 noact   2.06 noplast  40.00 nomem   2.06 accr 5 port None
+     s10 held  40.00 shuf   7.28 i1 ii1 iii1 iv1 ACT       ADD+ADD                noact   2.88 noplast  40.00 nomem   2.88 accr 0 port True
+W5   MECHANISM_DIVERSE  n 10 i 10 ii 8 iii 7 iv 10 shufbehav 2 top_sig (none)x3 classes {'BOTH': 8, 'ACT': 2} accretion [45, 10, 0, 45, 35, 65, 25, 25, 40, 15] portable 0/10
+     s1  held  50.00 shuf  28.12 i1 ii0 iii1 iv1 BOTH      ADD+ADD+CONST+DIFF+DIFF+TANH+THRESH noact   9.38 noplast   0.00 nomem   0.00 accr 45 port False
+     s2  held  50.00 shuf  15.62 i1 ii1 iii0 iv1 BOTH      (none)                 noact   0.00 noplast   0.00 nomem   0.00 accr 10 port None
+     s3  held  28.12 shuf  12.50 i1 ii1 iii1 iv1 ACT       ADD+MAX+MIN+MIN+TANH+TANH+THRESH noact   0.00 noplast  28.12 nomem   0.00 accr 0 port False
+     s4  held  50.00 shuf  12.50 i1 ii1 iii1 iv1 BOTH      DIFF+GATE+MAX+MIN      noact   0.00 noplast  -3.12 nomem  -6.25 accr 45 port False
+     s5  held  50.00 shuf  15.62 i1 ii1 iii1 iv1 BOTH      ADD+ADD+DIFF+THRESH    noact   0.00 noplast   0.00 nomem   0.00 accr 35 port False
+     s6  held  50.00 shuf  15.62 i1 ii1 iii1 iv1 BOTH      DIFF+MIN               noact   0.00 noplast   0.00 nomem   0.00 accr 65 port False
+     s7  held  50.00 shuf  21.88 i1 ii0 iii0 iv1 BOTH      (none)                 noact  -3.12 noplast   0.00 nomem  -9.38 accr 25 port None
+     s8  held  50.00 shuf  15.62 i1 ii1 iii1 iv1 BOTH      MAX+MUL+THRESH         noact   0.00 noplast   0.00 nomem   0.00 accr 25 port False
+     s9  held  50.00 shuf  14.06 i1 ii1 iii0 iv1 ACT       (none)                 noact   0.00 noplast  50.00 nomem   0.00 accr 40 port None
+     s10 held  50.00 shuf  15.62 i1 ii1 iii1 iv1 BOTH      DIFF                   noact  -9.38 noplast   0.00 nomem  -6.25 accr 15 port False
+W12  MECHANISM_DIVERSE  n 10 i 10 ii 9 iii 10 iv 4 shufbehav 0 top_sig ADD+GATE+MAX+TANHx1 classes {'NONE': 6, 'ACT': 2, 'BOTH': 1, 'PLAST': 1} accretion [] portable 0/10
+     s1  held  26.81 shuf  26.41 i1 ii1 iii1 iv0 NONE      ADD+GATE+MAX+TANH      noact  18.38 noplast  30.28 nomem  21.88 accr None port False
+     s2  held  25.59 shuf  26.09 i1 ii0 iii1 iv0 NONE      MUL+MUL                noact  25.06 noplast  19.00 nomem  25.06 accr None port False
+     s3  held  29.38 shuf  23.06 i1 ii1 iii1 iv0 NONE      ADD                    noact  30.28 noplast  30.28 nomem  30.28 accr None port False
+     s4  held  30.28 shuf  25.44 i1 ii1 iii1 iv0 NONE      ADD+MAX                noact  24.06 noplast  30.28 nomem  24.06 accr None port False
+     s5  held  29.44 shuf  24.12 i1 ii1 iii1 iv1 ACT       ADD+MAX+MIN+TANH+TANH  noact  17.28 noplast  24.03 nomem  19.72 accr None port False
+     s6  held  26.22 shuf  23.88 i1 ii1 iii1 iv0 NONE      ADD+ADD+TANH+THRESH    noact  21.50 noplast  26.22 nomem  21.50 accr None port False
+     s7  held  32.72 shuf  22.44 i1 ii1 iii1 iv1 BOTH      DIFF+THRESH            noact  19.09 noplast  21.22 nomem  21.50 accr None port False
+     s8  held  28.66 shuf  25.69 i1 ii1 iii1 iv0 NONE      CONST+CONST+MIN        noact  20.88 noplast  26.22 nomem  26.22 accr None port False
+     s9  held  31.12 shuf  24.12 i1 ii1 iii1 iv1 PLAST     TANH+TANH              noact  29.59 noplast  20.78 nomem  19.91 accr None port False
+     s10 held  28.47 shuf  23.59 i1 ii1 iii1 iv1 ACT       DIFF+DIFF+MAX+TANH     noact  21.22 noplast  23.00 nomem  21.22 accr None port False
+W13  PRESERVE           n 10 i 9 ii 6 iii 7 iv 10 shufbehav 3 top_sig (none)x3 classes {'BOTH': 2, 'ACT': 6, 'PLAST': 2} accretion [0, 0, 0, 5, 0, 15, 0, 10, 10] portable 0/10
+     s1  held  20.00 shuf   1.25 i1 ii1 iii1 iv1 BOTH      THRESH                 noact   0.00 noplast   0.00 nomem   0.00 accr 0 port False
+     s2  held  10.00 shuf  10.00 i1 ii0 iii0 iv1 ACT       (none)                 noact  -0.34 noplast  10.00 nomem  -0.34 accr 0 port None
+     s3  held   1.81 shuf   2.78 i0 ii0 iii0 iv1 PLAST     (none)                 noact   0.75 noplast   0.00 nomem   0.00 accr None port None
+     s4  held  20.00 shuf   4.00 i1 ii1 iii1 iv1 ACT       DIFF                   noact  -1.38 noplast  16.25 nomem   0.00 accr 0 port False
+     s5  held  20.00 shuf   6.25 i1 ii0 iii1 iv1 ACT       THRESH                 noact   0.00 noplast  20.00 nomem   0.00 accr 5 port False
+     s6  held  20.00 shuf   5.00 i1 ii1 iii1 iv1 ACT       DIFF+MAX               noact   0.00 noplast  20.00 nomem   0.00 accr 0 port False
+     s7  held  20.00 shuf   5.69 i1 ii1 iii1 iv1 BOTH      ADD+MAX                noact   0.00 noplast   0.00 nomem   0.00 accr 15 port False
+     s8  held  20.00 shuf   2.50 i1 ii1 iii1 iv1 ACT       GATE+MUL               noact   0.25 noplast  20.00 nomem   0.25 accr 0 port False
+     s9  held  20.00 shuf   6.25 i1 ii0 iii1 iv1 ACT       DIFF+DIFF              noact  -1.12 noplast  20.00 nomem  -1.12 accr 10 port False
+     s10 held  20.00 shuf   5.09 i1 ii1 iii0 iv1 PLAST     (none)                 noact  17.44 noplast  -0.88 nomem  -0.88 accr 10 port None
+arm_nomem_W4: held [4.56, 4.0, 4.0, 4.0, 3.88, 3.88, 4.38, 4.0, 4.0, 3.44] at_floor(<=4) 8/10

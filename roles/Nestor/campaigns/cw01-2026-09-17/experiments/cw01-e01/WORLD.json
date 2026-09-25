@@ -1,0 +1,208 @@
+{
+ "_doc": "Declarative world spec for cw01-e01. Parameters are data, not prose. QUALIFY predicates are machine-checkable and MUST all pass before the science budget is spent. Written during PREFLIGHT, before the codebase reuse survey, so the economics are not fitted to whatever the existing machinery makes cheap.",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e01",
+ "attempt_id": "cw01-e01-a01",
+ "world_family": "necessity-economics-v1",
+ "affordances": {
+  "_note": "Neutral names only. Nothing here is called a workspace, cache, memory or scratchpad. Each is priced; none is privileged.",
+  "A1_addressable_region": {
+   "cells": 64,
+   "cell_width": 1,
+   "cost_write_per_cell": 1.0,
+   "cost_read_per_cell": 0.5,
+   "cost_hold_per_cell_per_step": 0.1,
+   "persists_between_steps": true,
+   "_critical": "cost_hold_per_cell_per_step MUST be > 0. If holding is free, retention wins trivially and the finding is about the price, not the organism (threat-to-validity 2)."
+  },
+  "A2_partial_emission": {
+   "permitted": true,
+   "direct_reward": 0.0
+  },
+  "A3_re_entry": {
+   "permitted": true,
+   "cost": 0.25,
+   "enforces_own_provenance": false
+  },
+  "A4_retrieval_by_content": {
+   "permitted": true,
+   "cost_per_lookup": 0.5,
+   "charged_on_miss": true,
+   "key_space_bits": 16,
+   "collisions_possible": true
+  },
+  "A5_transfer_channel": {
+   "permitted": true,
+   "cost": 2.0,
+   "failure_probability": 0.1
+  }
+ },
+ "pressure": {
+  "step_compute_budget": 100.0,
+  "item_demand_distribution": {
+   "kind": "lognormal_discrete",
+   "median": 80,
+   "sigma": 0.9,
+   "clip": [
+    5,
+    400
+   ]
+  },
+  "fraction_exceeding_one_step_budget": 0.4,
+  "item_mix": {
+   "resumable": 0.45,
+   "recurring": 0.35,
+   "novel": 0.2
+  },
+  "_note": "item_mix.recurring is the parameter that makes retention potentially pay. It is SWEPT, never fixed at one convenient value.",
+  "recurrence_gap_distribution": {
+   "kind": "geometric_discrete",
+   "mean_steps": 15,
+   "clip": [
+    2,
+    60
+   ],
+   "_why": "Holding cost = h * cells * steps_held, so retention economics are undefined without a gap. A geometric gap makes most recurrences cheap to wait out and a minority expensive -- retention should pay CONDITIONALLY, which is the informative regime."
+  }
+ },
+ "arms": {
+  "treatment": {
+   "recurrence_rate": 0.35,
+   "A1_enabled": true,
+   "A4_enabled": true
+  },
+  "control_no_retention": {
+   "recurrence_rate": 0.35,
+   "A1_enabled": false,
+   "A4_enabled": false,
+   "_critical": "A1/A4 must be genuinely UNREACHABLE for this arm, not merely unused. An ablation an organism can still reach is not an ablation. Asserted by Q6."
+  },
+  "control_no_recurrence": {
+   "recurrence_rate": 0.0,
+   "A1_enabled": true,
+   "A4_enabled": true,
+   "_note": "Built-in negative control: at recurrence 0 retention is pure cost. If retention still 'wins' here, the instrument is wrong, not the biology."
+  }
+ },
+ "population": {
+  "organisms": 64,
+  "generations_minimal_form": 40,
+  "generations_full": 200,
+  "selection": "ancestor-relative useful-information-transformed per unit resource (II)",
+  "_forbidden": "raw fitness must never be used as the progress measure"
+ },
+ "interventions_post_hoc": {
+  "_applied": "after evolution, to evolved populations, each against a COST-MATCHED sham",
+  "I1_erase": {
+   "effect": "zero A1 between steps",
+   "sham": "rewrite A1 with its own current contents (same write cost, no information loss)",
+   "in_minimal_form": true
+  },
+  "I2_scramble": {
+   "effect": "permute address map between write and read",
+   "sham": "identity permutation, same indirection cost",
+   "in_minimal_form": false
+  },
+  "I3_sever": {
+   "effect": "disable A4 only",
+   "sham": "A4 returns correct value but charges double",
+   "in_minimal_form": false
+  },
+  "I4_destroy_selected": {
+   "effect": "delete k most-retrieved partials",
+   "sham": "delete k RANDOM partials",
+   "in_minimal_form": false,
+   "_note": "the random-deletion control is the one that makes this informative; it is named here so it cannot be quietly dropped"
+  },
+  "I5_swap": {
+   "effect": "exchange preserved state between matched organisms",
+   "sham": "exchange with an identical copy of own state",
+   "in_minimal_form": false
+  }
+ },
+ "measurements": {
+  "primary": "delta(useful_information_transformed / resource_cost) vs ancestor, matched world+budget",
+  "per_organism": [
+   "compute_used",
+   "cell_steps_held",
+   "writes",
+   "reads",
+   "retrievals_hit",
+   "retrievals_miss",
+   "transfers_attempted",
+   "transfers_succeeded",
+   "partial_emissions",
+   "re_entries",
+   "recompute_events",
+   "latency_to_completion",
+   "completion_fraction"
+  ],
+  "dependence_statistic": "delta(performance | intervention) - delta(performance | matched sham), ancestor-adjusted",
+  "null_rule": "a positive advantage with ZERO intervention sensitivity is reported NULL for the causal claim, however large the raw advantage"
+ },
+ "qualify_predicates": {
+  "_rule": "ALL must pass before any science budget is spent. A process existing is not qualification.",
+  "Q1_holding_costs_something": "affordances.A1.cost_hold_per_cell_per_step > 0",
+  "Q2_controls_differ_as_declared": "arms.control_no_recurrence.recurrence_rate == 0.0 AND arms.treatment.recurrence_rate > 0",
+  "Q3_shams_are_cost_matched": "for each intervention in minimal form: expected resource cost(effect arm) == expected cost(sham arm) within 1%",
+  "Q4_seeds_reconstructible": "two independent derivations from attempt_id alone produce identical draw sequences; no clock or PYTHONHASHSEED input",
+  "Q5_durable_without_redis": "at least one row is written to disk and is fully interpretable with the Redis instance stopped (XI)",
+  "Q6_ablation_is_real": "control_no_retention organisms attempting A1/A4 receive a hard refusal, not a silent no-op; verified by an organism that deliberately tries",
+  "Q7_pressure_actually_binds": "observed fraction of items whose demand exceeds step_compute_budget is within 0.05 of pressure.fraction_exceeding_one_step_budget",
+  "Q8_not_a_free_lunch": "CONDITIONAL ON CONFIGURATION, measured empirically at the pre-registered price: a well-configured retainer must WIN and a badly-configured retainer must LOSE against a never-retainer. Measured at h=0.10 over 24 matched streams: well-configured +13.15%, badly-configured -4.69%, never-retain 0.00%. Retention is therefore a real trade, not automatic."
+ },
+ "backend_counterfactual": {
+  "requirement_IX": "the organism-visible physics of A1/A4 must be reproducible on a second backend, so a result reflects the PHYSICS and not one store's quirks",
+  "primary_backend": "in-process arrays/dicts (backend='mem'). Chosen because the reuse survey showed the whole job contract is Redis-free: def job(ctx, **kwargs) with a 5-method ctx.",
+  "secondary_backend": "Redis hashes with identical priced semantics (backend='redis'), using the campaign namespace pm:cw01:. Same read/write/hold prices, same collision behaviour, same hard refusal when an arm disables the affordance.",
+  "equivalence_test": "same attempt seed + same arm on both backends must produce identical per-organism metric vectors. A divergence is a BACKEND LEAK and invalidates the physics claim.",
+  "cap_rule": "if the second backend is not exercised within timebox, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE."
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "ts": "2026-09-17 17:05:48",
+   "phase": "PREFLIGHT (pre-INSTANTIATE)",
+   "trigger": "QUALIFY dry-run of the data-only predicates, run before spending any science budget",
+   "changes": [
+    "item_demand_distribution.median 70 -> 80: Q7 FAILED, the declared fraction_exceeding_one_step_budget (0.40) contradicted the distribution (implied 0.346). Design intent (0.40 of items exceed one step) is primary; the median was refitted to it. Now 0.402.",
+    "added pressure.recurrence_gap_distribution: Q8 was UNCHECKABLE without it.",
+    "cost_hold_per_cell_per_step 0.05 -> 0.1: at 0.05 retention was near-free below gap ~25, biasing the world TOWARD the hypothesis under test. At 0.1 the trade straddles the 10% floor across the gap range.",
+    "Q8 restated to require the trade to REVERSE across the gap range, not merely exceed a threshold."
+   ],
+   "_discipline": "Recorded as an amendment, not a silent edit, per PREREGISTRATION.md. No result had been observed when this was made -- these are pre-data corrections to an internally inconsistent and hypothesis-biased spec."
+  },
+  {
+   "n": 2,
+   "ts": "2026-09-17 17:16:26",
+   "phase": "QUALIFY (pre-EXECUTE)",
+   "trigger": "Reachability probe + holding-price sweep, run before spending science budget",
+   "changes": [
+    "Q8 re-operationalized from an arithmetic threshold to an EMPIRICAL conditional-trade test. The arithmetic version passed while the world in fact rewarded retention at every swept price, which is exactly the free-lunch condition Q8 exists to prevent. The empirical version compares a well-configured against a badly-configured retainer at the SAME price.",
+    "Recorded the h-sweep and the ~0.85 crossover as empirical_calibration rather than re-pricing the world: h stays at 0.10. Re-pricing to manufacture a price-crossover would have been fitting the world to the predicate."
+   ],
+   "_no_result_observed": "No evolutionary result had been produced when this was made. These are pre-data corrections to the instrument."
+  }
+ ],
+ "empirical_calibration": {
+  "reachability_probe": {
+   "why": "Before spending budget: is the effect reachable at all? If no genome profits from retention, a NEGATIVE result would be foregone rather than measured.",
+   "n_matched_streams": 24,
+   "arm": "treatment",
+   "well_configured_vs_never": "+13.15% (13.50 re-entries/episode)",
+   "badly_configured_vs_never": "-4.69% (0.17 re-entries/episode)",
+   "holding_price_sweep": {
+    "0.10": "+13.15%",
+    "0.40": "+7.85%",
+    "0.60": "+4.60%",
+    "0.80": "+1.53%",
+    "1.20": "-4.09%",
+    "1.60": "-9.11%",
+    "2.40": "-17.71%",
+    "3.20": "-24.82%"
+   },
+   "crossover_h": "between 0.80 and 1.20 (~0.85)",
+   "interpretation": "Across PRICE, retention pays monotonically until h~0.85. The real conditionality is across CONFIGURATION: five genes must coordinate (p_write, small cells_frac, p_retrieve, p_reenter, long persist_steps) or retention is a net loss."
+  }
+ }
+}

@@ -1,0 +1,272 @@
+launch 3: pinned aa38513600da898a9de011b5b1ee84d9d153b4f7 ceiling $2.50
+[fl 16:13:39] RUN_ID=aeth01fl-20260922T201339Z-7df284cb  6 worlds, 4096^2, 5000 ticks, ceiling $2.50
+[fl 16:13:39] pinned commit aa38513600da898a9de011b5b1ee84d9d153b4f7
+[fl 16:13:39]   downloaded aeth01_cpu_oracle.py     1b28db2a10a9b9eb
+[fl 16:13:39]   downloaded aeth01_gpu_kernel.py     138b32dccd1d69ed
+[fl 16:13:39]   downloaded run_canary.py            751d5a20f324cc86
+[fl 16:13:39]   downloaded pod_service.py           f5053e38525cdde8
+[fl 16:13:39]   shipped    __init__.py              94100d67086416ce
+[fl 16:13:39]   shipped    aeth01_observatory.py    8c4ec037203e4eb8
+[fl 16:13:39]   shipped    aeth01_run.py            22c8c041385c7c55
+[fl 16:13:39]   shipped    aeth01_firstlight.py     fc70176c9d8e3976
+[fl 16:13:39]   shipped    aeth01_bench_server.py   e6add7beff40bceb
+[fl 16:13:39]   world C_free_compute|seed0     {'write_cost': 0, 'maintenance_cost': 0, 'replenish_numer': 0, 'replenish_amount': 0, 'seed': 1543575297, 'mut_numer': 429496730}
+[fl 16:13:39]   world B_balanced|seed0         {'write_cost': 1, 'maintenance_cost': 1, 'replenish_numer': 536870912, 'replenish_amount': 8, 'seed': 1543575297, 'mut_numer': 429496730}
+[fl 16:13:39]   world A_execution_only|seed0   {'write_cost': 1, 'maintenance_cost': 0, 'replenish_numer': 0, 'replenish_amount': 0, 'seed': 1543575297, 'mut_numer': 429496730}
+[fl 16:13:39]   world C_free_compute|seed1     {'write_cost': 0, 'maintenance_cost': 0, 'replenish_numer': 0, 'replenish_amount': 0, 'seed': 1543575298, 'mut_numer': 429496730}
+[fl 16:13:39]   world B_balanced|seed1         {'write_cost': 1, 'maintenance_cost': 1, 'replenish_numer': 536870912, 'replenish_amount': 8, 'seed': 1543575298, 'mut_numer': 429496730}
+[fl 16:13:39]   world A_execution_only|seed1   {'write_cost': 1, 'maintenance_cost': 0, 'replenish_numer': 0, 'replenish_amount': 0, 'seed': 1543575298, 'mut_numer': 429496730}
+[fl 16:13:39] baseline confirmed empty (0 pods)
+[fl 16:13:40] pod cblvom5ygkh210 created (id persisted to C:\Users\jcrai\AppData\Local\Temp\aeth01_firstlight_pod_id.txt)
+[fl 16:14:12] CANARY PASS
+[fl 16:14:12] receipt: backend=cupy cases=300/300 gpu_s=12.392086614388973
+[fl 16:14:12] log 972 bytes, 0 world_end, 0 samples, $0.004 spent
+[fl 16:15:13] log 17923 bytes, 0 world_end, 10 samples, $0.013 spent
+[fl 16:16:14] log 26815 bytes, 0 world_end, 23 samples, $0.021 spent
+[fl 16:17:14] log 35108 bytes, 0 world_end, 35 samples, $0.029 spent
+[fl 16:18:15] log 43994 bytes, 0 world_end, 48 samples, $0.037 spent
+[fl 16:19:16] log 62241 bytes, 0 world_end, 60 samples, $0.046 spent
+[fl 16:20:17] log 71123 bytes, 0 world_end, 73 samples, $0.054 spent
+[fl 16:21:18] log 79407 bytes, 0 world_end, 85 samples, $0.062 spent
+[fl 16:22:18] log 88302 bytes, 0 world_end, 98 samples, $0.070 spent
+[fl 16:23:19] log 106555 bytes, 0 world_end, 110 samples, $0.079 spent
+[fl 16:24:20] log 115471 bytes, 0 world_end, 123 samples, $0.087 spent
+[fl 16:25:21] log 123768 bytes, 0 world_end, 135 samples, $0.095 spent
+[fl 16:26:22] log 132674 bytes, 0 world_end, 148 samples, $0.104 spent
+[fl 16:27:23] log 150947 bytes, 0 world_end, 160 samples, $0.112 spent
+[fl 16:28:25] log 159860 bytes, 0 world_end, 173 samples, $0.120 spent
+[fl 16:29:26] log 168170 bytes, 0 world_end, 185 samples, $0.129 spent
+[fl 16:30:27] log 177072 bytes, 0 world_end, 198 samples, $0.137 spent
+[fl 16:31:28] log 195344 bytes, 0 world_end, 210 samples, $0.145 spent
+[fl 16:32:29] log 204242 bytes, 0 world_end, 223 samples, $0.153 spent
+[fl 16:33:30] log 212530 bytes, 0 world_end, 235 samples, $0.162 spent
+[fl 16:34:31] log 221430 bytes, 0 world_end, 248 samples, $0.170 spent
+[fl 16:35:32] log 239672 bytes, 0 world_end, 260 samples, $0.178 spent
+[fl 16:36:33] log 248563 bytes, 0 world_end, 273 samples, $0.187 spent
+[fl 16:37:34] log 256853 bytes, 0 world_end, 285 samples, $0.195 spent
+[fl 16:38:35] log 265740 bytes, 0 world_end, 298 samples, $0.203 spent
+[fl 16:39:36] log 283988 bytes, 0 world_end, 310 samples, $0.212 spent
+[fl 16:40:37] log 292888 bytes, 0 world_end, 323 samples, $0.220 spent
+[fl 16:41:39] log 301170 bytes, 0 world_end, 335 samples, $0.228 spent
+[fl 16:42:41] log 310065 bytes, 0 world_end, 348 samples, $0.237 spent
+[fl 16:43:42] log 328992 bytes, 0 world_end, 361 samples, $0.245 spent
+[fl 16:44:43] log 337200 bytes, 0 world_end, 373 samples, $0.253 spent
+[fl 16:45:44] log 346171 bytes, 0 world_end, 386 samples, $0.262 spent
+[fl 16:46:45] log 354376 bytes, 0 world_end, 398 samples, $0.270 spent
+[fl 16:47:46] log 373289 bytes, 0 world_end, 411 samples, $0.278 spent
+[fl 16:48:47] log 382166 bytes, 0 world_end, 424 samples, $0.287 spent
+[fl 16:49:48] log 390450 bytes, 0 world_end, 436 samples, $0.295 spent
+[fl 16:50:49] log 399332 bytes, 0 world_end, 449 samples, $0.303 spent
+[fl 16:51:50] log 417556 bytes, 0 world_end, 461 samples, $0.312 spent
+[fl 16:52:51] log 426454 bytes, 0 world_end, 474 samples, $0.320 spent
+[fl 16:53:52] log 434735 bytes, 0 world_end, 486 samples, $0.328 spent
+[fl 16:54:54] log 443639 bytes, 0 world_end, 499 samples, $0.336 spent
+[fl 16:55:55] log 472959 bytes, 1 world_end, 511 samples, $0.345 spent
+[fl 16:56:56] log 481911 bytes, 1 world_end, 524 samples, $0.353 spent
+[fl 16:57:57] log 490250 bytes, 1 world_end, 536 samples, $0.361 spent
+[fl 16:58:58] log 499184 bytes, 1 world_end, 549 samples, $0.370 spent
+[fl 16:59:59] log 517450 bytes, 1 world_end, 561 samples, $0.378 spent
+[fl 17:01:01] log 526388 bytes, 1 world_end, 574 samples, $0.386 spent
+[fl 17:02:02] log 534728 bytes, 1 world_end, 586 samples, $0.395 spent
+[fl 17:03:03] log 543665 bytes, 1 world_end, 599 samples, $0.403 spent
+[fl 17:04:04] log 561926 bytes, 1 world_end, 611 samples, $0.411 spent
+[fl 17:05:06] log 570884 bytes, 1 world_end, 624 samples, $0.420 spent
+[fl 17:06:07] log 579220 bytes, 1 world_end, 636 samples, $0.428 spent
+[fl 17:07:08] log 588172 bytes, 1 world_end, 649 samples, $0.436 spent
+[fl 17:08:09] log 606529 bytes, 1 world_end, 661 samples, $0.445 spent
+[fl 17:09:10] log 615479 bytes, 1 world_end, 674 samples, $0.453 spent
+[fl 17:10:11] log 623837 bytes, 1 world_end, 686 samples, $0.461 spent
+[fl 17:11:13] log 632104 bytes, 1 world_end, 698 samples, $0.470 spent
+[fl 17:12:14] log 650409 bytes, 1 world_end, 710 samples, $0.478 spent
+[fl 17:13:15] log 659373 bytes, 1 world_end, 723 samples, $0.486 spent
+[fl 17:14:16] log 667729 bytes, 1 world_end, 735 samples, $0.495 spent
+[fl 17:15:17] log 676690 bytes, 1 world_end, 748 samples, $0.503 spent
+[fl 17:16:18] log 695046 bytes, 1 world_end, 760 samples, $0.511 spent
+[fl 17:17:19] log 704001 bytes, 1 world_end, 773 samples, $0.520 spent
+[fl 17:18:21] log 712351 bytes, 1 world_end, 785 samples, $0.528 spent
+[fl 17:19:22] log 721299 bytes, 1 world_end, 798 samples, $0.536 spent
+[fl 17:20:23] log 739626 bytes, 1 world_end, 810 samples, $0.545 spent
+[fl 17:21:24] log 748590 bytes, 1 world_end, 823 samples, $0.553 spent
+[fl 17:22:25] log 756945 bytes, 1 world_end, 835 samples, $0.561 spent
+[fl 17:23:27] log 765901 bytes, 1 world_end, 848 samples, $0.570 spent
+[fl 17:24:28] log 784133 bytes, 1 world_end, 860 samples, $0.578 spent
+[fl 17:25:29] log 793087 bytes, 1 world_end, 873 samples, $0.586 spent
+[fl 17:26:30] log 802130 bytes, 1 world_end, 886 samples, $0.595 spent
+[fl 17:27:31] log 810401 bytes, 1 world_end, 898 samples, $0.603 spent
+[fl 17:28:33] log 829426 bytes, 1 world_end, 911 samples, $0.611 spent
+[fl 17:29:34] log 837693 bytes, 1 world_end, 923 samples, $0.620 spent
+[fl 17:30:35] log 846046 bytes, 1 world_end, 935 samples, $0.628 spent
+[fl 17:31:36] log 854994 bytes, 1 world_end, 948 samples, $0.636 spent
+[fl 17:32:37] log 873319 bytes, 1 world_end, 960 samples, $0.645 spent
+[fl 17:33:38] log 882283 bytes, 1 world_end, 973 samples, $0.653 spent
+[fl 17:34:40] log 890622 bytes, 1 world_end, 985 samples, $0.661 spent
+[fl 17:35:41] log 899577 bytes, 1 world_end, 998 samples, $0.670 spent
+[fl 17:36:43] log 928973 bytes, 2 world_end, 1010 samples, $0.678 spent
+[fl 17:37:44] log 937902 bytes, 2 world_end, 1023 samples, $0.686 spent
+[fl 17:38:45] log 946202 bytes, 2 world_end, 1035 samples, $0.695 spent
+[fl 17:39:46] log 954855 bytes, 2 world_end, 1048 samples, $0.703 spent
+[fl 17:40:47] log 972812 bytes, 2 world_end, 1060 samples, $0.711 spent
+[fl 17:41:49] log 981314 bytes, 2 world_end, 1073 samples, $0.720 spent
+[fl 17:42:50] log 989245 bytes, 2 world_end, 1085 samples, $0.728 spent
+[fl 17:43:51] log 997747 bytes, 2 world_end, 1098 samples, $0.736 spent
+[fl 17:44:52] log 1015043 bytes, 2 world_end, 1109 samples, $0.745 spent
+[fl 17:45:54] log 1023558 bytes, 2 world_end, 1122 samples, $0.753 spent
+[fl 17:46:55] log 1031501 bytes, 2 world_end, 1134 samples, $0.761 spent
+[fl 17:47:56] log 1040016 bytes, 2 world_end, 1147 samples, $0.770 spent
+[fl 17:48:57] log 1057971 bytes, 2 world_end, 1159 samples, $0.778 spent
+[fl 17:49:59] log 1066486 bytes, 2 world_end, 1172 samples, $0.786 spent
+[fl 17:51:00] log 1074429 bytes, 2 world_end, 1184 samples, $0.795 spent
+[fl 17:52:01] log 1082944 bytes, 2 world_end, 1197 samples, $0.803 spent
+[fl 17:53:02] log 1100244 bytes, 2 world_end, 1208 samples, $0.811 spent
+[fl 17:54:04] log 1108759 bytes, 2 world_end, 1221 samples, $0.820 spent
+[fl 17:55:05] log 1116702 bytes, 2 world_end, 1233 samples, $0.828 spent
+[fl 17:56:06] log 1125217 bytes, 2 world_end, 1246 samples, $0.836 spent
+[fl 17:57:07] log 1143172 bytes, 2 world_end, 1258 samples, $0.845 spent
+[fl 17:58:09] log 1151687 bytes, 2 world_end, 1271 samples, $0.853 spent
+[fl 17:59:10] log 1159630 bytes, 2 world_end, 1283 samples, $0.861 spent
+[fl 18:00:11] log 1168145 bytes, 2 world_end, 1296 samples, $0.870 spent
+[fl 18:01:12] log 1186100 bytes, 2 world_end, 1308 samples, $0.878 spent
+[fl 18:02:14] log 1194615 bytes, 2 world_end, 1321 samples, $0.886 spent
+[fl 18:03:15] log 1202558 bytes, 2 world_end, 1333 samples, $0.895 spent
+[fl 18:04:16] log 1211073 bytes, 2 world_end, 1346 samples, $0.903 spent
+[fl 18:05:17] log 1228373 bytes, 2 world_end, 1357 samples, $0.911 spent
+[fl 18:06:19] log 1236888 bytes, 2 world_end, 1370 samples, $0.920 spent
+[fl 18:07:20] log 1244831 bytes, 2 world_end, 1382 samples, $0.928 spent
+[fl 18:08:21] log 1253346 bytes, 2 world_end, 1395 samples, $0.936 spent
+[fl 18:09:22] log 1271301 bytes, 2 world_end, 1407 samples, $0.945 spent
+[fl 18:10:24] log 1279816 bytes, 2 world_end, 1420 samples, $0.953 spent
+[fl 18:11:25] log 1287759 bytes, 2 world_end, 1432 samples, $0.961 spent
+[fl 18:12:26] log 1296274 bytes, 2 world_end, 1445 samples, $0.970 spent
+[fl 18:13:27] log 1314229 bytes, 2 world_end, 1457 samples, $0.978 spent
+[fl 18:14:29] log 1322744 bytes, 2 world_end, 1470 samples, $0.986 spent
+[fl 18:15:30] log 1330687 bytes, 2 world_end, 1482 samples, $0.995 spent
+[fl 18:16:31] log 1339202 bytes, 2 world_end, 1495 samples, $1.003 spent
+[fl 18:17:32] log 1367704 bytes, 3 world_end, 1506 samples, $1.011 spent
+[fl 18:18:34] log 1376590 bytes, 3 world_end, 1519 samples, $1.020 spent
+[fl 18:19:35] log 1384883 bytes, 3 world_end, 1531 samples, $1.028 spent
+[fl 18:20:36] log 1393778 bytes, 3 world_end, 1544 samples, $1.036 spent
+[fl 18:21:38] log 1412054 bytes, 3 world_end, 1556 samples, $1.045 spent
+[fl 18:22:39] log 1420961 bytes, 3 world_end, 1569 samples, $1.053 spent
+[fl 18:23:40] log 1429246 bytes, 3 world_end, 1581 samples, $1.061 spent
+[fl 18:24:42] log 1438141 bytes, 3 world_end, 1594 samples, $1.070 spent
+[fl 18:25:43] log 1456398 bytes, 3 world_end, 1606 samples, $1.078 spent
+[fl 18:26:44] log 1465307 bytes, 3 world_end, 1619 samples, $1.086 spent
+[fl 18:27:46] log 1473615 bytes, 3 world_end, 1631 samples, $1.095 spent
+[fl 18:28:47] log 1482520 bytes, 3 world_end, 1644 samples, $1.103 spent
+[fl 18:29:48] log 1500780 bytes, 3 world_end, 1656 samples, $1.112 spent
+[fl 18:30:50] log 1509671 bytes, 3 world_end, 1669 samples, $1.120 spent
+[fl 18:31:51] log 1518675 bytes, 3 world_end, 1682 samples, $1.128 spent
+[fl 18:32:52] log 1527573 bytes, 3 world_end, 1695 samples, $1.137 spent
+[fl 18:33:54] log 1545853 bytes, 3 world_end, 1707 samples, $1.145 spent
+[fl 18:34:55] log 1554755 bytes, 3 world_end, 1720 samples, $1.153 spent
+[fl 18:35:56] log 1562368 bytes, 3 world_end, 1731 samples, $1.162 spent
+[fl 18:36:57] log 1571258 bytes, 3 world_end, 1744 samples, $1.170 spent
+[fl 18:37:59] log 1590197 bytes, 3 world_end, 1757 samples, $1.178 spent
+[fl 18:39:00] log 1599089 bytes, 3 world_end, 1770 samples, $1.187 spent
+[fl 18:40:01] log 1606681 bytes, 3 world_end, 1781 samples, $1.195 spent
+[fl 18:41:03] log 1615571 bytes, 3 world_end, 1794 samples, $1.203 spent
+[fl 18:42:04] log 1634506 bytes, 3 world_end, 1807 samples, $1.212 spent
+[fl 18:43:05] log 1643389 bytes, 3 world_end, 1820 samples, $1.220 spent
+[fl 18:44:07] log 1651676 bytes, 3 world_end, 1832 samples, $1.228 spent
+[fl 18:45:08] log 1660562 bytes, 3 world_end, 1845 samples, $1.237 spent
+[fl 18:46:09] log 1678805 bytes, 3 world_end, 1857 samples, $1.245 spent
+[fl 18:47:10] log 1687696 bytes, 3 world_end, 1870 samples, $1.253 spent
+[fl 18:48:12] log 1695994 bytes, 3 world_end, 1882 samples, $1.262 spent
+[fl 18:49:13] log 1704889 bytes, 3 world_end, 1895 samples, $1.270 spent
+[fl 18:50:14] log 1723122 bytes, 3 world_end, 1907 samples, $1.278 spent
+[fl 18:51:16] log 1732010 bytes, 3 world_end, 1920 samples, $1.287 spent
+[fl 18:52:17] log 1740296 bytes, 3 world_end, 1932 samples, $1.295 spent
+[fl 18:53:18] log 1749176 bytes, 3 world_end, 1945 samples, $1.303 spent
+[fl 18:54:20] log 1767405 bytes, 3 world_end, 1957 samples, $1.312 spent
+[fl 18:55:21] log 1776300 bytes, 3 world_end, 1970 samples, $1.320 spent
+[fl 18:56:22] log 1784594 bytes, 3 world_end, 1982 samples, $1.329 spent
+[fl 18:57:24] log 1793495 bytes, 3 world_end, 1995 samples, $1.337 spent
+[fl 18:58:25] log 1822866 bytes, 4 world_end, 2007 samples, $1.345 spent
+[fl 18:59:26] log 1831807 bytes, 4 world_end, 2020 samples, $1.354 spent
+[fl 19:00:28] log 1840145 bytes, 4 world_end, 2032 samples, $1.362 spent
+[fl 19:01:29] log 1849073 bytes, 4 world_end, 2045 samples, $1.370 spent
+[fl 19:02:30] log 1867415 bytes, 4 world_end, 2057 samples, $1.379 spent
+[fl 19:03:32] log 1876350 bytes, 4 world_end, 2070 samples, $1.387 spent
+[fl 19:04:33] log 1884684 bytes, 4 world_end, 2082 samples, $1.395 spent
+[fl 19:05:34] log 1893627 bytes, 4 world_end, 2095 samples, $1.404 spent
+[fl 19:06:36] log 1911986 bytes, 4 world_end, 2107 samples, $1.412 spent
+[fl 19:07:37] log 1920938 bytes, 4 world_end, 2120 samples, $1.420 spent
+[fl 19:08:38] log 1929280 bytes, 4 world_end, 2132 samples, $1.429 spent
+[fl 19:09:40] log 1938229 bytes, 4 world_end, 2145 samples, $1.437 spent
+[fl 19:10:41] log 1956647 bytes, 4 world_end, 2157 samples, $1.445 spent
+[fl 19:11:42] log 1965596 bytes, 4 world_end, 2170 samples, $1.454 spent
+[fl 19:12:44] log 1973946 bytes, 4 world_end, 2182 samples, $1.462 spent
+[fl 19:13:45] log 1982903 bytes, 4 world_end, 2195 samples, $1.470 spent
+[fl 19:14:46] log 2001240 bytes, 4 world_end, 2207 samples, $1.479 spent
+[fl 19:15:48] log 2010204 bytes, 4 world_end, 2220 samples, $1.487 spent
+[fl 19:16:49] log 2018563 bytes, 4 world_end, 2232 samples, $1.495 spent
+[fl 19:17:50] log 2027519 bytes, 4 world_end, 2245 samples, $1.504 spent
+[fl 19:18:52] log 2045856 bytes, 4 world_end, 2257 samples, $1.512 spent
+[fl 19:19:53] log 2054801 bytes, 4 world_end, 2270 samples, $1.521 spent
+[fl 19:20:55] log 2062443 bytes, 4 world_end, 2281 samples, $1.529 spent
+[fl 19:21:57] log 2072071 bytes, 4 world_end, 2295 samples, $1.537 spent
+[fl 19:22:58] log 2090344 bytes, 4 world_end, 2307 samples, $1.546 spent
+[fl 19:24:00] log 2099296 bytes, 4 world_end, 2320 samples, $1.554 spent
+[fl 19:25:01] log 2107631 bytes, 4 world_end, 2332 samples, $1.562 spent
+[fl 19:26:02] log 2116584 bytes, 4 world_end, 2345 samples, $1.571 spent
+[fl 19:27:04] log 2134936 bytes, 4 world_end, 2357 samples, $1.579 spent
+[fl 19:28:05] log 2143891 bytes, 4 world_end, 2370 samples, $1.588 spent
+[fl 19:29:06] log 2152241 bytes, 4 world_end, 2382 samples, $1.596 spent
+[fl 19:30:08] log 2161196 bytes, 4 world_end, 2395 samples, $1.604 spent
+[fl 19:31:09] log 2179522 bytes, 4 world_end, 2407 samples, $1.613 spent
+[fl 19:32:11] log 2188481 bytes, 4 world_end, 2420 samples, $1.621 spent
+[fl 19:33:12] log 2196840 bytes, 4 world_end, 2432 samples, $1.629 spent
+[fl 19:34:13] log 2205792 bytes, 4 world_end, 2445 samples, $1.638 spent
+[fl 19:35:15] log 2224157 bytes, 4 world_end, 2457 samples, $1.646 spent
+[fl 19:36:16] log 2233120 bytes, 4 world_end, 2470 samples, $1.654 spent
+[fl 19:37:18] log 2241470 bytes, 4 world_end, 2482 samples, $1.663 spent
+[fl 19:38:19] log 2250418 bytes, 4 world_end, 2495 samples, $1.671 spent
+[fl 19:39:20] log 2279813 bytes, 5 world_end, 2507 samples, $1.679 spent
+[fl 19:40:22] log 2288755 bytes, 5 world_end, 2520 samples, $1.688 spent
+[fl 19:41:23] log 2297095 bytes, 5 world_end, 2532 samples, $1.696 spent
+[fl 19:42:24] log 2305866 bytes, 5 world_end, 2545 samples, $1.704 spent
+[fl 19:43:26] log 2323922 bytes, 5 world_end, 2557 samples, $1.713 spent
+[fl 19:44:28] log 2332424 bytes, 5 world_end, 2570 samples, $1.721 spent
+[fl 19:45:29] log 2340355 bytes, 5 world_end, 2582 samples, $1.730 spent
+[fl 19:46:30] log 2348857 bytes, 5 world_end, 2595 samples, $1.738 spent
+[fl 19:47:32] log 2366218 bytes, 5 world_end, 2606 samples, $1.746 spent
+[fl 19:48:33] log 2374733 bytes, 5 world_end, 2619 samples, $1.755 spent
+[fl 19:49:35] log 2382676 bytes, 5 world_end, 2631 samples, $1.763 spent
+[fl 19:50:36] log 2391191 bytes, 5 world_end, 2644 samples, $1.771 spent
+[fl 19:51:37] log 2409217 bytes, 5 world_end, 2656 samples, $1.780 spent
+[fl 19:52:39] log 2417732 bytes, 5 world_end, 2669 samples, $1.788 spent
+[fl 19:53:40] log 2425675 bytes, 5 world_end, 2681 samples, $1.796 spent
+[fl 19:54:42] log 2434190 bytes, 5 world_end, 2694 samples, $1.805 spent
+[fl 19:55:43] log 2452216 bytes, 5 world_end, 2706 samples, $1.813 spent
+[fl 19:56:44] log 2460731 bytes, 5 world_end, 2719 samples, $1.822 spent
+[fl 19:57:46] log 2468674 bytes, 5 world_end, 2731 samples, $1.830 spent
+[fl 19:58:47] log 2477189 bytes, 5 world_end, 2744 samples, $1.838 spent
+[fl 19:59:48] log 2484394 bytes, 5 world_end, 2755 samples, $1.847 spent
+[fl 20:00:50] log 2503075 bytes, 5 world_end, 2768 samples, $1.855 spent
+[fl 20:01:51] log 2510935 bytes, 5 world_end, 2780 samples, $1.863 spent
+[fl 20:02:53] log 2519533 bytes, 5 world_end, 2793 samples, $1.872 spent
+[fl 20:03:54] log 2527393 bytes, 5 world_end, 2805 samples, $1.880 spent
+[fl 20:04:55] log 2546074 bytes, 5 world_end, 2818 samples, $1.888 spent
+[fl 20:05:57] log 2553934 bytes, 5 world_end, 2830 samples, $1.897 spent
+[fl 20:06:58] log 2562532 bytes, 5 world_end, 2843 samples, $1.905 spent
+[fl 20:07:59] log 2570392 bytes, 5 world_end, 2855 samples, $1.913 spent
+[fl 20:09:01] log 2589073 bytes, 5 world_end, 2868 samples, $1.922 spent
+[fl 20:10:02] log 2596933 bytes, 5 world_end, 2880 samples, $1.930 spent
+[fl 20:11:04] log 2605531 bytes, 5 world_end, 2893 samples, $1.939 spent
+[fl 20:12:05] log 2613391 bytes, 5 world_end, 2905 samples, $1.947 spent
+[fl 20:13:07] log 2632072 bytes, 5 world_end, 2918 samples, $1.955 spent
+[fl 20:14:08] log 2639932 bytes, 5 world_end, 2930 samples, $1.964 spent
+[fl 20:15:10] log 2647875 bytes, 5 world_end, 2942 samples, $1.972 spent
+[fl 20:16:11] log 2656390 bytes, 5 world_end, 2955 samples, $1.980 spent
+[fl 20:17:12] log 2674416 bytes, 5 world_end, 2967 samples, $1.989 spent
+[fl 20:18:14] log 2682931 bytes, 5 world_end, 2980 samples, $1.997 spent
+[fl 20:19:15] log 2690874 bytes, 5 world_end, 2992 samples, $2.005 spent
+[fl 20:20:16] log 2699389 bytes, 5 world_end, 3005 samples, $2.014 spent
+[fl 20:21:18] log 2710548 bytes, 6 world_end, 3006 samples, $2.022 spent
+[fl 20:21:18] terminating cblvom5ygkh210
+[fl 20:21:19] terminate outcome: ACK_204
+[fl 20:21:19] ABSENCE CONFIRMED (ACTIVE_POD_COUNT 0)
+run_id=aeth01fl-20260922T201339Z-7df284cb canary=PASS stop=complete pod_wall_s=14859 est_cost=$2.022
+
+
+[exited with code 0]

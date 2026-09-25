@@ -1,0 +1,214 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e03",
+ "n_replicates": 4,
+ "replicates": [
+  {
+   "attempt_id": "cw01-e03-a01",
+   "treatment_final": 1.6028775483903197,
+   "control_no_cond_final": 1.3314201432799595,
+   "control_all_final": 0.6591861501369338,
+   "ancestor_mean": 0.5798318328241219,
+   "ancestor_relative_pct": 176.43834947511655,
+   "sparsity": 0.22536621093750003,
+   "routing_precision": 0.6334748912377148,
+   "coverage": 0.757074652777778,
+   "mi_bits": 1.4832861533574464,
+   "mi_null_q": 0.3291082335670101,
+   "mi_excess": 1.1541779197904363,
+   "conditional": true,
+   "I1_base": 1.6138428935409543,
+   "I1_sham": 1.6138428935409543,
+   "I1_scramble": 1.0076426499035276,
+   "I1_effect_pct": -37.56253140027494,
+   "I1_collapses": true,
+   "beats_control": true,
+   "beats_activate_all": true
+  },
+  {
+   "attempt_id": "cw01-e03-r02",
+   "treatment_final": 1.5421481297692654,
+   "control_no_cond_final": 1.1011676670658834,
+   "control_all_final": 0.6631752898662874,
+   "ancestor_mean": 0.6007354758301607,
+   "ancestor_relative_pct": 156.71001494262674,
+   "sparsity": 0.26166178385416666,
+   "routing_precision": 0.5752292446553899,
+   "coverage": 0.7985243055555558,
+   "mi_bits": 1.4277720632372537,
+   "mi_null_q": 0.4366859479294179,
+   "mi_excess": 0.9910861153078359,
+   "conditional": true,
+   "I1_base": 1.5350277570873878,
+   "I1_sham": 1.5350277570873878,
+   "I1_scramble": 0.781515320983603,
+   "I1_effect_pct": -49.08787040656021,
+   "I1_collapses": true,
+   "beats_control": true,
+   "beats_activate_all": true
+  },
+  {
+   "attempt_id": "cw01-e03-r03",
+   "treatment_final": 1.473037925600397,
+   "control_no_cond_final": 1.1101022259084947,
+   "control_all_final": 0.6594829915893321,
+   "ancestor_mean": 0.610602493900009,
+   "ancestor_relative_pct": 141.24335231451226,
+   "sparsity": 0.22215983072916667,
+   "routing_precision": 0.5875171169932198,
+   "coverage": 0.6874131944444445,
+   "mi_bits": 1.6472613735286916,
+   "mi_null_q": 0.4384024573503066,
+   "mi_excess": 1.208858916178385,
+   "conditional": true,
+   "I1_base": 1.4505843277838437,
+   "I1_sham": 1.4505843277838437,
+   "I1_scramble": 0.797894367033102,
+   "I1_effect_pct": -44.9949684585315,
+   "I1_collapses": true,
+   "beats_control": true,
+   "beats_activate_all": true
+  },
+  {
+   "attempt_id": "cw01-e03-r04",
+   "treatment_final": 1.5371023872748604,
+   "control_no_cond_final": 0.9601335737055336,
+   "control_all_final": 0.6587545529146822,
+   "ancestor_mean": 0.5822508260512006,
+   "ancestor_relative_pct": 163.99316557426306,
+   "sparsity": 0.26161295572916665,
+   "routing_precision": 0.5777153520808022,
+   "coverage": 0.8012152777777779,
+   "mi_bits": 1.7727553273641559,
+   "mi_null_q": 0.3509925214332988,
+   "mi_excess": 1.4217628059308571,
+   "conditional": true,
+   "I1_base": 1.5482879322183092,
+   "I1_sham": 1.5482879322183092,
+   "I1_scramble": 0.6044962950654015,
+   "I1_effect_pct": -60.957113823182134,
+   "I1_collapses": true,
+   "beats_control": true,
+   "beats_activate_all": true
+  }
+ ],
+ "summary": {
+  "beats_control": "4/4",
+  "conditional": "4/4",
+  "I1_collapses": "4/4",
+  "sparsity_mean": 0.2427001953125,
+  "mi_bits_mean": 1.582768729371887,
+  "mi_excess_mean": 1.1939714393018785,
+  "ancestor_relative_pct_mean": 159.59622057662966
+ },
+ "tests": {
+  "evolution_ran": {
+   "ran": true,
+   "passed": true,
+   "detail": "ancestor-relative improvement in every replicate",
+   "value": null
+  },
+  "beats_control": {
+   "ran": true,
+   "passed": true,
+   "detail": "4/4 beat the non-conditional control",
+   "value": null
+  },
+  "conditionality": {
+   "ran": true,
+   "passed": true,
+   "detail": "4/4 significant MI against a shuffled null",
+   "value": null
+  },
+  "I1_scramble": {
+   "ran": true,
+   "passed": true,
+   "detail": "4/4 collapse under structure scramble vs the identity sham",
+   "value": null
+  },
+  "replication": {
+   "ran": true,
+   "passed": true,
+   "detail": "all conditions must hold in EVERY replicate",
+   "value": null
+  },
+  "backend": {
+   "ran": true,
+   "passed": true,
+   "detail": "e03 is pure in-process arrays; no substrate-backed state to diverge",
+   "value": null
+  }
+ },
+ "decision_trace": [
+  {
+   "disposition": "NEGATIVE",
+   "skipped": false,
+   "matched": false
+  },
+  {
+   "disposition": "NULL",
+   "skipped": false,
+   "matched": false
+  },
+  {
+   "disposition": "NULL",
+   "skipped": false,
+   "matched": false
+  },
+  {
+   "disposition": "INCONCLUSIVE",
+   "skipped": false,
+   "matched": false
+  },
+  {
+   "disposition": "INCONCLUSIVE",
+   "skipped": false,
+   "matched": false
+  },
+  {
+   "disposition": "COMPLETE",
+   "skipped": false,
+   "matched": true
+  }
+ ],
+ "backend_counterfactual": {
+  "equivalent": true,
+  "method": "independent reimplementation of the episode physics (sets + explicit loops vs vectorised boolean arrays), NOT a redis swap",
+  "detail": "288 comparisons across 3 genomes x 3 arms x 4 seeds x 8 metrics; worst absolute divergence 0.000e+00 (exact agreement)",
+  "why_not_redis": "WORLD.json named a redis-backed activation ledger, but e03's world holds no substrate-backed organism-visible state - there is nothing in redis to diverge. The driver originally passed this gate by ASSERTING that (CW01-D031), which is the D024 shape one level up. IX's purpose is to catch physics that depends on one implementation, so it is discharged against a second IMPLEMENTATION instead.",
+  "verified_local": "2026-09-17 18:12:13"
+ },
+ "disposition": "COMPLETE",
+ "disposition_reason": "sparse, input-conditional activation matched to the hidden structure: beats the non-conditional control, MI clears its shuffled null, and scrambling the structure collapses performance beyond a cost-matched sham, in every replicate",
+ "interpretive_limits": [
+  "Sparsity and conditionality are separate quantities. A sparse, blind population is a NEGATIVE for the coalition claim however elegant it looks.",
+  "MI is biased upward at this sample size (raw MI ~0.14 bits on independent data); only the excess over the shuffled null is evidence.",
+  "An 82-parameter linear activation policy, not a rich program."
+ ],
+ "wall_s": 74.3,
+ "backend_counterfactual_as_recorded_by_driver": {
+  "equivalent": true,
+  "detail": "e03 is pure in-process arrays; no substrate-backed state to diverge"
+ },
+ "disposition_status": "EARNED - IX discharged by measurement, no longer provisional",
+ "key_control": {
+  "claim": "sparsity is not a coalition; the estimator must call a blind arm blind",
+  "non_conditional_evolved_arm": {
+   "mi_bits": 0.0,
+   "distinct_patterns": 1,
+   "significant": false
+  },
+  "treatment": {
+   "mi_bits_range": [
+    1.428,
+    1.773
+   ],
+   "excess_range": [
+    0.991,
+    1.422
+   ],
+   "significant": "4/4"
+  },
+  "reading": "demonstrated on EVOLVED populations, not argued"
+ }
+}

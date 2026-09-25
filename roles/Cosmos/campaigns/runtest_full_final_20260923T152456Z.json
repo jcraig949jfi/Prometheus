@@ -1,0 +1,94 @@
+{
+ "utc": "20260923T152456Z",
+ "identity": {
+  "cosmos_src_sha": "9a4b41e6b1e91748939074fc0b1c6e4b0ac8ea0b7180da95f80bffac6168675d",
+  "n_src": 52,
+  "git_head": "383fd90b43953cedca1705f3114343ff920f4033",
+  "cosmos_dirty": false
+ },
+ "steps": {
+  "tests_fast": {
+   "ok": true,
+   "summary": "67 passed, 7 deselected in 2.20s",
+   "s": 2.6
+  },
+  "tests_slow_planted": {
+   "ok": true,
+   "summary": "7 passed, 67 deselected in 176.52s (0:02:56)",
+   "s": 176.9
+  },
+  "broker_selftest": {
+   "ok": true,
+   "detail": {
+    "w0": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    },
+    "w1": {
+     "replay_identical": true,
+     "positive_control_sel_acc_ge_0.95": true,
+     "memoryless_below_0.5": true,
+     "sham_quiet": true
+    }
+   }
+  },
+  "seal": {
+   "ok": true,
+   "spec_sha": "48e709653f2bbda12c6b1d1c499d801339ec7897e9bf3081764c50691cfa8265"
+  },
+  "quick_campaign": {
+   "ok": true,
+   "gates": {
+    "G1": "PASS",
+    "G0": "PASS",
+    "G4": "NOT REACHED",
+    "G2": "FAIL",
+    "G7": "NOT REACHED",
+    "G5": "SKIPPED (quick)",
+    "G6": "SKIPPED (quick)"
+   },
+   "graph": {
+    "nodes": 673,
+    "edges": 608,
+    "runs": 673,
+    "families": 3,
+    "laws": 0,
+    "edge_kinds": {
+     "CONTROL_OF": 60,
+     "DEFORMATION_OF": 548
+    }
+   },
+   "laws": [],
+   "mine_initial": {
+    "v4": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8756450356158133,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "v3": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.8711041234912004,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    },
+    "raw": {
+     "verdict": "NONE",
+     "law": null,
+     "score": 0.7806246592282208,
+     "p": 0.16666666666666666,
+     "fold_ba": null,
+     "family_dependence": null
+    }
+   },
+   "s": 194.0
+  }
+ },
+ "ok": true
+}

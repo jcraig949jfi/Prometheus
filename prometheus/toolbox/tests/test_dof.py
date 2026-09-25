@@ -1,0 +1,353 @@
+"""Degrees of freedom the playtests found missing (overnight C12-C14): population as a sweep axis; an
+objective that reads the series; a held-out split that the receipts carry mechanically."""
+from __future__ import annotations
+
+import json
+
+import pytest
+
+from prometheus.toolbox.ir import Experiment, IRError, ref
+from prometheus.toolbox.registry import default_registry
+from prometheus.toolbox.backends.local import execute, lower
+from prometheus.toolbox.receipt import read_all
+from prometheus.toolbox.ref.players import random_statemachine, random_statemachine_v2, constant_player
+
+REG = default_registry()
+
+
+def _exp(**kw):
+    base = dict(family="dof", world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0), substrate=ref("substrate.flat.v1"),
+                players=[random_statemachine(1).manifest()], seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 2, "horizon": 10},
+                observers=[ref("observer.series.v1")])
+    base.update(kw); return Experiment(**base)
+
+
+# C12: "players" as a sweep root (found in C3/C11: population variation had to be a separate experiment)
+def test_population_is_a_sweep_axis_and_controls_pair_per_population(tmp_path):
+    A = [random_statemachine(1).manifest()]; B = [random_statemachine(2).manifest()]; C = [constant_player([1, 1]).manifest()]
+    e = _exp(sweep={"players": [A, B, C]}, controls=[ref("control.replay.v1")])
+    assert e.validate() == [] and len(e.sweep_points()) == 3
+    low = lower(e, REG); assert low.ok and len(low.job.runs) == 6
+    rep = execute(low.job, tmp_path / "p.jsonl", REG); assert rep.n_failed == 0 and rep.controls["replay"]["pairs"] == 3
+    hashes = {r["components"]["players"][0]["manifest_hash"] for r in read_all(tmp_path / "p.jsonl") if r["arm"] == "primary"}
+    assert len(hashes) == 3
+
+
+def test_single_player_slot_and_payload_fields_are_sweepable():
+    e = _exp(players=[random_statemachine(1).manifest(), random_statemachine(2).manifest()], world=ref("world.integer.v1", world_seed=3, n_players=2),
+             sweep={"players.1": [random_statemachine(5).manifest(), random_statemachine(6).manifest()], "players.0.initial_state.state": [0, 1]})
+    pts = e.sweep_points(); assert len(pts) == 4
+    at = e.at_point(pts[3]); assert at.players[0]["initial_state"]["state"] == 1 and at.players[1]["meta"]["seed"] == 6
+
+
+# C13: an objective that reads the SERIES (experience-to-competence shape): gain = yield in the last episode
+# minus yield in the first; None (never a fabricated 0) when the series is absent or disabled.
+def test_series_gain_objective_reads_the_series_and_refuses_to_fabricate(tmp_path):
+    e = _exp(objective=ref("objective.series_gain.v1"), budget={"episodes": 3, "horizon": 10})
+    execute(lower(e, REG).job, tmp_path / "g.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "g.jsonl") if x["arm"] == "primary"][0]
+    obj = r["science"]["objective"]
+    eps = r["series"]["observer.series.v1"]["inline"]
+    assert obj["value"] == eps[-1][-1][2] - eps[0][-1][2] and obj["components"]["episodes"] == 3
+    e2 = _exp(objective=ref("objective.series_gain.v1"), observers=[ref("observer.series.v1", enabled=False)])
+    execute(lower(e2, REG).job, tmp_path / "g2.jsonl", REG)
+    obj2 = [x for x in read_all(tmp_path / "g2.jsonl") if x["arm"] == "primary"][0]["science"]["objective"]
+    assert obj2["value"] is None and obj2["components"]["reason"] == "SERIES_DISABLED"
+    e3 = _exp(objective=ref("objective.series_gain.v1"), observers=[])
+    execute(lower(e3, REG).job, tmp_path / "g3.jsonl", REG)
+    obj3 = [x for x in read_all(tmp_path / "g3.jsonl") if x["arm"] == "primary"][0]["science"]["objective"]
+    assert obj3["value"] is None and obj3["components"]["reason"] == "SERIES_MISSING"
+
+
+# C14: held-out split carried by receipts, not by prose: seed_policy.holdout_seeds adds seeds tagged "holdout";
+# the summary aggregates objectives per split; controls pair within a split.
+def test_holdout_seeds_are_tagged_and_summarised_per_split(tmp_path):
+    e = _exp(seed_policy={"base": 10, "n_seeds": 2, "holdout_seeds": 3}, objective=ref("objective.survival.v1"), controls=[ref("control.replay.v1")])
+    low = lower(e, REG); assert low.ok and len(low.job.runs) == 10
+    rep = execute(low.job, tmp_path / "h.jsonl", REG); assert rep.n_failed == 0
+    rs = read_all(tmp_path / "h.jsonl"); prim = [r for r in rs if r["arm"] == "primary"]
+    assert sorted(r["split"] for r in prim) == ["holdout"] * 3 + ["train"] * 2
+    assert {r["seed"] for r in prim if r["split"] == "holdout"} == {12, 13, 14}
+    summ = rs[-1]["science"]["splits"]
+    assert summ["train"]["n"] == 2 and summ["holdout"]["n"] == 3 and "objective_mean" in summ["holdout"]
+    assert rep.controls["replay"]["pairs"] == 5
+
+
+def test_series_gain_objective_works_when_the_series_is_artifact_backed(tmp_path):
+    """False-green guard: an objective that only read the inline series would return SERIES_EMPTY for a large run."""
+    e = _exp(objective=ref("objective.series_gain.v1"), budget={"episodes": 3, "horizon": 300})
+    execute(lower(e, REG).job, tmp_path / "big.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "big.jsonl") if x["arm"] == "primary"][0]
+    assert "artifact" in r["series"]["observer.series.v1"] and r["science"]["objective"]["value"] is not None
+    assert r["science"]["objective"]["components"]["episodes"] == 3 and "_series_episodes" not in r
+
+
+# C19: "worlds are stationary" is not assumed (directive s8): an Intervention may carry a SCHEDULE of parameter
+# changes applied at tick boundaries by the kernel; the world declares ext.world.mutable_params.v1 and emits
+# TASK_CHANGE. Same designer text, no world rewrite.
+def test_schedule_intervention_changes_conditions_mid_episode_and_is_recorded(tmp_path):
+    sched = {"name": "task_switch", "world_params": {}, "wrappers": {}, "schedule": [{"tick": 4, "world_params": {"act_cost": 5}}, {"tick": 7, "world_params": {"yield_amt": 0}}]}
+    e = _exp(interventions=[sched], observers=[ref("observer.trace.v1")], controls=[ref("control.replay.v1")], budget={"episodes": 1, "horizon": 12})
+    assert "ext.intervention.schedule.v1" in e.derived_requirements()
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "s.jsonl", REG); assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET"
+    r = [x for x in read_all(tmp_path / "s.jsonl") if x["arm"] == "primary"][0]
+    assert r["science"]["observations"]["observer.trace.v1"]["events_by_kind"].get("TASK_CHANGE") == 2
+    assert r["components"]["world"]["manifest"]["schedule"] == sched["schedule"]
+    e0 = _exp(observers=[ref("observer.trace.v1")], budget={"episodes": 1, "horizon": 12})
+    execute(lower(e0, REG).job, tmp_path / "s0.jsonl", REG)
+    r0 = [x for x in read_all(tmp_path / "s0.jsonl") if x["arm"] == "primary"][0]
+    assert r0["trace_hashes"] != r["trace_hashes"]
+
+
+def test_schedule_on_a_world_without_mutable_params_is_blocked_locally():
+    e = _exp(world=ref("world.wforge.encounter.v0", genome_seed=1), interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"act_cost": 2}}]}])
+    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
+        pytest.skip("wforge not importable")
+    low = lower(e, REG)
+    assert low.status == "BLOCKED_MISSING_CAPABILITY" and "ext.world.mutable_params.v1" in low.negotiation["missing"]
+
+
+def test_schedule_refuses_non_mutable_params_as_a_failed_run_not_a_halt(tmp_path):
+    e = _exp(interventions=[{"name": "s", "schedule": [{"tick": 1, "world_params": {"n_regs": 99}}]}], budget={"episodes": 1, "horizon": 4})
+    rep = execute(lower(e, REG).job, tmp_path / "bad.jsonl", REG)
+    assert rep.n_failed == 1 and "not runtime-mutable" in read_all(tmp_path / "bad.jsonl")[0]["error"]
+
+
+# C23 (playtest C rows): TASK_CHANGE counts exceeded the schedule because the StateDevice reused the TASK_CHANGE
+# kind for key expiry and scope discards -- two meanings under one event id. Expiry/discard get their own kinds.
+def test_task_change_counts_only_schedule_changes_and_expiry_has_its_own_kind(tmp_path):
+    sched = {"name": "s", "schedule": [{"tick": 2, "world_params": {"act_cost": 3}}, {"tick": 4, "world_params": {"yield_amt": 1, "step_cost": 0}}]}
+    e = _exp(interventions=[sched], substrate=ref("substrate.kv.v1", scope="lifetime", ttl=1), players=[random_statemachine_v2(3).manifest()],
+             observers=[ref("observer.trace.v1")], budget={"episodes": 2, "horizon": 6})
+    execute(lower(e, REG).job, tmp_path / "tc.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "tc.jsonl") if x["arm"] == "primary"][0]
+    ev = r["science"]["observations"]["observer.trace.v1"]["events_by_kind"]
+    assert ev.get("TASK_CHANGE") == 2 * 3                     # 3 parameter changes per episode x 2 episodes
+    assert ev.get("STATE_EXPIRE", 0) == r["accounting"]["ws_expired"] > 0
+    assert ev.get("STATE_DISCARD", 0) >= 1                    # the episode-scope end at the second episode
+
+
+# C40 (directive s30: persistent objects / long-lived world state; c6's "coupling"): the World contract resets per
+# episode, so a world could never carry state across episodes. A world that declares ext.world.lifetime_state.v1
+# accepts reset(seed, keep=True); the experiment asks for it with budget.world_state="lifetime". Episode 2 then
+# begins where episode 1 ended (registers, pending actions), while charge and survival still reset.
+def test_world_lifetime_state_carries_registers_across_episodes(tmp_path):
+    e = _exp(budget={"episodes": 3, "horizon": 8, "world_state": "lifetime"}, observers=[ref("observer.trace.v1")],
+             world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0, action_delay=3))
+    assert "ext.world.lifetime_state.v1" in e.derived_requirements()
+    low = lower(e, REG); assert low.ok, low.reasons
+    execute(low.job, tmp_path / "lt.jsonl", REG)
+    r = [x for x in read_all(tmp_path / "lt.jsonl") if x["arm"] == "primary"][0]
+    e0 = _exp(budget={"episodes": 3, "horizon": 8}, observers=[ref("observer.trace.v1")], world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0, action_delay=3))
+    execute(lower(e0, REG).job, tmp_path / "ep.jsonl", REG)
+    r0 = [x for x in read_all(tmp_path / "ep.jsonl") if x["arm"] == "primary"][0]
+    assert r["trace_hashes"][0] == r0["trace_hashes"][0], "episode 0 must be identical with or without persistence"
+    assert r["trace_hashes"][1] != r0["trace_hashes"][1], "episode 1 must differ: the world remembered"
+    assert r["components"]["world"]["manifest"]["world_state"] == "lifetime"
+
+
+def test_world_lifetime_state_on_a_world_without_it_is_blocked():
+    e = _exp(world=ref("world.wforge.encounter.v0", genome_seed=1), budget={"episodes": 2, "horizon": 8, "world_state": "lifetime"})
+    if REG.get("world.wforge.encounter.v0").state == "UNAVAILABLE":
+        pytest.skip("wforge not importable")
+    low = lower(e, REG)
+    assert low.status == "BLOCKED_MISSING_CAPABILITY" and "ext.world.lifetime_state.v1" in low.negotiation["missing"]
+
+
+# C45 (ergonomics): a designer hands the IR PlayerSpec and Intervention OBJECTS (the natural thing to write); the
+# IR is data, so it converts them at construction instead of failing later with "not a PlayerSpec manifest".
+def test_ir_accepts_component_objects_and_stores_their_manifests():
+    from prometheus.toolbox.contracts import Intervention
+    e = Experiment(family="ergo", world=ref("world.integer.v1"), substrate=ref("substrate.flat.v1"),
+                   players=[random_statemachine(1), constant_player([1, 2]).manifest()],
+                   interventions=[Intervention("lag", wrappers={"observation_delay": 2}), {"name": "raw", "world_params": {"act_cost": 2}}])
+    assert e.validate() == []
+    assert e.players[0]["representation"] == "statemachine.v1" and isinstance(e.players[0], dict)
+    assert e.interventions[0] == {"name": "lag", "world_params": {}, "wrappers": {"observation_delay": 2}}
+    assert json.dumps(e.to_dict())
+
+
+# C58: TRANSFER (NPE Clause B shape: candidate evolved in world A judged in world B against scratch AND sham arms)
+# needs NO new abstraction: it is a sweep over `world` with sham + scratch controls. Verified rather than built.
+def test_transfer_is_a_world_sweep_with_sham_and_scratch_arms(tmp_path):
+    A = ref("world.integer.v1", world_seed=1, start_charge=60); B = ref("world.integer.v1", world_seed=2, start_charge=60, regime_period=4)
+    e = _exp(world=A, players=[random_statemachine(7).manifest()], sweep={"world": [A, B]}, controls=[ref("control.sham.v1"), ref("control.scratch.v1")],
+             objective=ref("objective.survival.v1"), seed_policy={"base": 1, "n_seeds": 2})
+    low = lower(e, REG); assert low.ok and len(low.job.runs) == 12
+    rep = execute(low.job, tmp_path / "tr.jsonl", REG); assert rep.n_failed == 0
+    rs = read_all(tmp_path / "tr.jsonl")
+    by = {}
+    for r in rs:
+        if r["arm"] != "SUMMARY":
+            by.setdefault(r["sweep_point"]["world"]["params"]["world_seed"], {}).setdefault(r["arm"], []).append(r["science"]["objective"]["value"])
+    assert set(by) == {1, 2} and all(set(v) == {"primary", "sham", "scratch"} for v in by.values())
+    assert rep.controls["sham"]["pairs"] == 4 and rep.controls["scratch"]["pairs"] == 4
+
+
+# C59: ablation as a control OBJECT: control.ablation.v1 removes every player's workspace (forces the flat
+# substrate, keeping per-player overrides visible as ablated); expectation = the arm ran with zero workspace
+# traffic while the primary had some (otherwise INDETERMINATE: nothing to ablate).
+def test_ablation_control_removes_workspaces_and_reports(tmp_path):
+    e = _exp(substrate=ref("substrate.kv.v1", scope="lifetime"), players=[random_statemachine_v2(1).manifest()], controls=[ref("control.ablation.v1")],
+             world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0))
+    rep = execute(lower(e, REG).job, tmp_path / "ab.jsonl", REG)
+    assert rep.controls["ablation"]["outcome"] == "MET" and rep.controls["ablation"]["details"][0]["detail"]["arm_ws_ops"] == 0
+    arm = [r for r in read_all(tmp_path / "ab.jsonl") if r["arm"] == "ablation"][0]
+    assert arm["components"]["substrate"]["kind"] == "substrate.flat.v1" and arm["provenance"]["ablated"] == "workspace"
+    e2 = _exp(substrate=ref("substrate.flat.v1"), players=[random_statemachine(1).manifest()], controls=[ref("control.ablation.v1")])
+    rep2 = execute(lower(e2, REG).job, tmp_path / "ab2.jsonl", REG)
+    assert rep2.controls["ablation"]["outcome"] == "INDETERMINATE"
+
+
+# C66 (mutation wave 4 survivor M37): the ablation control's tests used the EXPERIMENT substrate only; an
+# ablation that left PER-PLAYER overrides in place survived. Ablation must strip every override too.
+def test_ablation_strips_per_player_substrate_overrides(tmp_path):
+    p_mem = dict(random_statemachine_v2(11).manifest(), substrate=ref("substrate.kv.v1", scope="lifetime"))
+    e = _exp(substrate=ref("substrate.flat.v1"), players=[p_mem], controls=[ref("control.ablation.v1")],
+             world=ref("world.integer.v1", world_seed=3, start_charge=100000, step_cost=0))
+    rep = execute(lower(e, REG).job, tmp_path / "abo.jsonl", REG)
+    assert rep.controls["ablation"]["outcome"] == "MET"
+    arm = [r for r in read_all(tmp_path / "abo.jsonl") if r["arm"] == "ablation"][0]
+    assert arm["components"]["player_substrates"] == ["substrate.flat.v1"] and arm["accounting"].get("ws_writes", 0) == 0 and arm["accounting"].get("ws_refused", 0) > 0
+
+
+# C76: ONE designer text over EVERY registered world (worlds vary independently of players -- the whole point).
+# The same players, substrate, observers, objective and controls; only the world ref changes. Each world must
+# lower, run, replay MET, and the cheat control must be MET (every world has a cheat mechanism now).
+import pytest as _pt
+
+
+@_pt.mark.parametrize("kind", ["world.integer.v1", "world.integer_alt.v1", "world.grid.v1", "world.pendulum.v1", "world.c6.composed.v1", "world.wforge.encounter.v0"])
+def test_one_experiment_text_runs_on_every_registered_world(tmp_path, kind):
+    if not REG.has(kind) or REG.get(kind).state == "UNAVAILABLE":
+        _pt.skip("%s not on this tree" % kind)
+    probe = REG.make(kind); n = probe.n_players
+    e = Experiment(family="every_world", world=ref(kind), substrate=ref("substrate.kv.v1", scope="lifetime"),
+                   players=[random_statemachine_v2(100 + i, width=3).manifest() for i in range(n)],
+                   observers=[ref("observer.trace.v1"), ref("observer.series.v1", per_player=True)], objective=ref("objective.series_gain.v1"),
+                   controls=[ref("control.replay.v1"), ref("control.cheat.v1"), ref("control.sham.v1")],
+                   seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 2, "horizon": 16})
+    low = lower(e, REG); assert low.ok, (kind, low.reasons)
+    rep = execute(low.job, tmp_path / (kind + ".jsonl"), REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "MET" and rep.controls["sham"]["outcome"] == "MET", (kind, rep.controls)
+    r = [x for x in read_all(tmp_path / (kind + ".jsonl")) if x["arm"] == "primary"][0]
+    assert r["series"]["observer.series.v1"]["status"] in ("PRESENT", "EMPTY") and r["replay_class"] in ("BIT", "SEMANTIC")
+
+
+# C77: a sweep explodes silently (10 x 10 x 10 points x arms x seeds). The eligibility count is computed at
+# lowering and a declared budget.max_runs refuses the job BEFORE any run, naming the count.
+def test_eligibility_count_is_reported_and_max_runs_refuses_before_dispatch():
+    e = _exp(sweep={"world.params.world_seed": list(range(10)), "world.params.n_ops": [1, 2, 3, 4, 5]}, controls=[ref("control.replay.v1")],
+             seed_policy={"base": 1, "n_seeds": 3}, budget={"episodes": 1, "horizon": 4, "max_runs": 100})
+    low = lower(e, REG)
+    assert low.status == "TARGET_UNSUPPORTED" and any("300 runs" in r and "max_runs=100" in r for r in low.reasons)
+    e2 = _exp(sweep={"world.params.world_seed": [1, 2]}, controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 3})
+    low2 = lower(e2, REG)
+    assert low2.ok and low2.job.as_dict()["n_runs"] == 12 and low2.as_dict()["job"]["eligibility"] == {"points": 2, "arms": 2, "seeds": 3, "runs": 12}
+
+
+# C84: an experiment with NO players (a pure dynamical system observed -- a CA, a driven pendulum without a
+# driver) was refused by the IR ("players empty and no selector"). A world that declares n_players=0 runs
+# with zero players; observers, series, replay and cheat all apply. "A player is a conventional agent"
+# has a stronger negation than "a rewrite system": no player at all.
+def test_zero_player_experiment_runs_and_replays(tmp_path):
+    e = Experiment(family="no_players", world=ref("world.integer.v1", world_seed=3, n_players=0, stoch_rate=3), substrate=ref("substrate.flat.v1"), players=[],
+                   observers=[ref("observer.trace.v1"), ref("observer.series.v1")], controls=[ref("control.replay.v1"), ref("control.cheat.v1")],
+                   seed_policy={"base": 1, "n_seeds": 2}, budget={"episodes": 2, "horizon": 12})
+    assert e.validate() == []
+    low = lower(e, REG); assert low.ok, low.reasons
+    rep = execute(low.job, tmp_path / "np.jsonl", REG)
+    assert rep.n_failed == 0 and rep.controls["replay"]["outcome"] == "MET" and rep.controls["cheat"]["outcome"] == "MET"
+    r = [x for x in read_all(tmp_path / "np.jsonl") if x["arm"] == "primary"][0]
+    assert r["engineering"]["ticks"] == 24 and r["series"]["observer.series.v1"]["n_records"] == 24 and r["components"]["players"] == []
+    e2 = Experiment(family="no_players_bad", world=ref("world.integer.v1", world_seed=3, n_players=1), substrate=ref("substrate.flat.v1"), players=[])
+    assert lower(e2, REG).status == "TARGET_UNSUPPORTED"      # a world that expects a player and gets none is a mismatch, not a zero-player world
+
+
+# C85: the same zero-player defect class in every home-written world -- `not any(alive)` on an empty list ends
+# the episode at tick 1. Every world that accepts n_players=0 must run to its horizon.
+@_pt.mark.parametrize("kind", ["world.integer.v1", "world.integer_alt.v1", "world.grid.v1", "world.pendulum.v1"])
+def test_every_world_that_accepts_zero_players_runs_to_its_horizon(tmp_path, kind):
+    e = Experiment(family="zp", world=ref(kind, n_players=0, world_seed=2), substrate=ref("substrate.flat.v1"), players=[],
+                   observers=[ref("observer.trace.v1")], controls=[ref("control.replay.v1")], seed_policy={"base": 1, "n_seeds": 1}, budget={"episodes": 1, "horizon": 9})
+    low = lower(e, REG); assert low.ok, (kind, low.reasons)
+    rep = execute(low.job, tmp_path / (kind + ".jsonl"), REG); assert rep.n_failed == 0 and rep.valid
+    r = [x for x in read_all(tmp_path / (kind + ".jsonl")) if x["arm"] == "primary"][0]
+    assert r["engineering"]["ticks"] == 9, (kind, r["engineering"])
+
+
+# C132: the kernel wrappers' laws as a PROPERTY over random worlds: with delay d the wrapped observation at tick t is
+# the raw observation at tick max(0, t - d) (the first observation repeated until d are buffered); a permutation is a
+# bijection on channels (sorted values invariant, and applied consistently every tick); the two compose (permute
+# then delay, in intervention order) and neither touches the world's trace.
+@pytest.mark.parametrize("seed", list(range(1100, 1130)))
+def test_observation_wrapper_laws_over_random_worlds(seed):
+    import random
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import build_world, ObservationWrapper
+    rnd = random.Random(seed)
+    e = random_experiment(seed)
+    if e.validate() or e.world["kind"] not in ("world.integer.v1", "world.grid.v1", "world.pendulum.v1"):
+        return
+    e.interventions = []; e.budget = dict(e.budget, horizon=12)
+    if e.world["kind"] == "world.grid.v1":
+        e.world["params"]["obs_mode"] = "flat"
+    raw = build_world(e, REG); d = rnd.choice([1, 2, 5]); ps = rnd.choice([3, 11])
+    w = ObservationWrapper(build_world(e, REG), delay=d, permute_seeds=[ps])
+    raw.reset(3); w.reset(3); n = raw.n_players
+    acts = {pid: [rnd.randrange(8) for _ in range(raw.legal_actions(pid).width)] for pid in range(n)}
+    raw_obs = []; perm = None
+    for t in range(12):
+        ro = [list(raw.observe(pid)) for pid in range(n)]; wo = [list(w.observe(pid)) for pid in range(n)]
+        raw_obs.append(ro)
+        src = raw_obs[max(0, t - d)]
+        for pid in range(n):
+            assert sorted(wo[pid]) == sorted(src[pid]), (seed, t, pid)              # bijection on channels
+            if perm is None and len(set(src[pid])) == len(src[pid]):
+                perm = [src[pid].index(v) for v in wo[pid]]                           # recover the permutation once, from a tick with distinct values
+            if perm is not None and len(set(src[pid])) == len(src[pid]):
+                assert [src[pid][i] for i in perm] == wo[pid], (seed, t, pid)        # and it is the same permutation every tick
+        a = raw.step(acts); b = w.step(acts)
+        assert a == b and raw.trace_hash() == w.trace_hash(), (seed, t)             # the wrappers never touch the world
+        if a:
+            break
+
+
+# C146 (fuzz seed 1839 under the wall-budget property): a sweep axis with two IDENTICAL values made two RunSpecs
+# with the same key -- the point ran twice and a resume counted one receipt as two prior runs. Refused at validate().
+def test_duplicate_sweep_values_are_refused_with_the_axis_named():
+    from prometheus.toolbox.examples.exp_001_delay_sweep import build
+    e = build(); e.sweep = {"world.params.world_seed": [1, 2, 1]}
+    d = e.validate(); assert d and any("duplicate" in m and "world.params.world_seed" in m for m in d), d
+    e.sweep = {"world.params.world_seed": [1, 2]}; assert not e.validate()
+    pop = [random_statemachine(1).manifest()]
+    e.sweep = {"players": [pop, list(pop)]}; assert any("duplicate" in m for m in e.validate())
+
+
+# C147: split laws as a property: the SUMMARY's splits count exactly the primary receipts of each split; the seeds of
+# a split are the seed policy's; objective_n never exceeds n; a holdout split exists iff holdout_seeds > 0; the
+# per-split mean recomputes from the rows (scalar objectives).
+@pytest.mark.parametrize("seed", list(range(1900, 1960)))
+def test_split_laws_over_random_jobs(tmp_path, seed):
+    from prometheus.toolbox.tests.test_fuzz import random_experiment
+    from prometheus.toolbox.backends.local import lower, execute, seeds_for
+    from prometheus.toolbox.receipt import read_all
+    e = random_experiment(seed)
+    if e.validate():
+        return
+    low = lower(e, REG)
+    if not low.ok:
+        return
+    execute(low.job, tmp_path / "r.jsonl", REG)
+    rows = read_all(tmp_path / "r.jsonl"); summ = [r for r in rows if r["arm"] == "SUMMARY"][0]; prim = [r for r in rows if r["arm"] == "primary"]
+    sp = summ["science"]["splits"]; pol = seeds_for(e)
+    assert set(sp) == {s for _, s in pol} == {r["split"] for r in prim}
+    assert ("holdout" in sp) == (int(e.seed_policy.get("holdout_seeds", 0)) > 0)
+    for name, s in sp.items():
+        mine = [r for r in prim if r["split"] == name]
+        assert s["n"] == len(mine) and s["objective_n"] <= s["n"]
+        assert {r["seed"] for r in mine} == {sd for sd, nm in pol if nm == name}
+        if s["objective_shape"] == "scalar":
+            vals = [r["science"]["objective"]["value"] for r in mine if r["status"] == "COMPLETED" and isinstance(r["science"].get("objective", {}).get("value"), (int, float))]
+            assert s["objective_n"] == len(vals) and s["objective_mean"] == pytest.approx(sum(vals) / len(vals))

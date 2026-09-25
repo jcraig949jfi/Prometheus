@@ -1,0 +1,110 @@
+{
+ "perturbation_id": "P-G11",
+ "parent": "T-X12",
+ "deformation": "R",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "ruler-deformation",
+ "rulers": [
+  "disp",
+  "reward",
+  "answered",
+  "outdist"
+ ],
+ "conventions": {
+  "i1e16": [
+   1,
+   16
+  ],
+  "i2e16": [
+   2,
+   16
+  ],
+  "i1e32": [
+   1,
+   32
+  ]
+ },
+ "positions": [
+  [
+   "W0D1",
+   "before_first_ask"
+  ],
+  [
+   "W0D2",
+   "between_puts"
+  ],
+  [
+   "W0D2",
+   "before_first_ask"
+  ],
+  [
+   "W0D2",
+   "before_first_put"
+  ],
+  [
+   "K2",
+   "between_puts"
+  ],
+  [
+   "K2",
+   "before_first_ask"
+  ],
+  [
+   "K2",
+   "before_second_ask"
+  ]
+ ],
+ "doses": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "keys": [
+  "W0D1.before_first_ask.n1",
+  "W0D1.before_first_ask.n2",
+  "W0D1.before_first_ask.n3",
+  "W0D1.before_first_ask.n4",
+  "W0D2.between_puts.n1",
+  "W0D2.between_puts.n2",
+  "W0D2.between_puts.n3",
+  "W0D2.between_puts.n4",
+  "W0D2.before_first_ask.n1",
+  "W0D2.before_first_ask.n2",
+  "W0D2.before_first_ask.n3",
+  "W0D2.before_first_ask.n4",
+  "W0D2.before_first_put.n1",
+  "W0D2.before_first_put.n2",
+  "W0D2.before_first_put.n3",
+  "W0D2.before_first_put.n4",
+  "K2.between_puts.n1",
+  "K2.between_puts.n2",
+  "K2.between_puts.n3",
+  "K2.between_puts.n4",
+  "K2.before_first_ask.n1",
+  "K2.before_first_ask.n2",
+  "K2.before_first_ask.n3",
+  "K2.before_first_ask.n4",
+  "K2.before_second_ask.n1",
+  "K2.before_second_ask.n2",
+  "K2.before_second_ask.n3",
+  "K2.before_second_ask.n4",
+  "W0D1.order_ne",
+  "W0D1.order_en"
+ ],
+ "programs": "P-F02 census minus the P-F03 tops (parents, walkers 4/8/16, C4-08 tops) plus every member of clusters 0 and 4",
+ "assignment": "nearest P-F02 centroid (L1 over finite components) for each ruler x convention; the reference is disp / i1e16",
+ "readouts": [
+  "agreement with the reference assignment per ruler x convention vs a 2000-label-permutation band",
+  "per-shape survival share (members of each reference cluster keeping their cluster)",
+  "per-ruler, per-shape mean curves (kept raw)"
+ ],
+ "reading": "SURVIVES if agreement is above the permutation band under every ruler and convention and every non-immune shape keeps >= 2/3 of its members under every ruler; BREAKS_UNDER_<x> otherwise, recorded per ruler / convention / shape",
+ "material_rule": "always material: the survival table is the result",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 05:56:12",
+ "prereg_sha256": "82a3128620852f76e4da174e627816a83a0c018764efbbb10a0620977560cd80"
+}

@@ -1,0 +1,72 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e04",
+ "attempt_id": "cw01-e04-a01",
+ "phase": "PREFLIGHT",
+ "recorded_local": "2026-09-17 18:15:39",
+ "source": {
+  "branch": "nestor/sidequest-graphworld-2026-09-14",
+  "commit": "d8ce5a55ec677b03f6f85cbe1000ae1122d11024",
+  "e01_commit": "8d17c7fee",
+  "e02_commit": "0e4df6906",
+  "e03_commit": "d8ce5a55e"
+ },
+ "runtime_versions": {
+  "python": "3.12.10",
+  "numpy": "2.5.3",
+  "scipy": "1.17.1",
+  "redis": "8.1.0",
+  "psutil": "7.2.2"
+ },
+ "machine_profile_ref": "../../MACHINE_PROFILE.json",
+ "seed_policy": {
+  "rule": "all draws derive from attempt_id via lib/seeds.py",
+  "verified": "cross-process under multiple PYTHONHASHSEED values since e01"
+ },
+ "declared_capabilities_required": {
+  "needs_gpu": false,
+  "needs_redis": false,
+  "needs_streams": false,
+  "needs_container_runtime": false,
+  "needs_N_GB_vram": 0,
+  "needs_git_worktree": true,
+  "needs_env_PM_TAG": true,
+  "min_ram_gb": 4,
+  "min_free_disk_gb": 5,
+  "_rationale": "e04 is CPU channel economics. The channel is simulated physics, NOT a redis queue -- the organism experiences world physics, never an implementation name."
+ },
+ "capability_match": {
+  "checked_against": "MACHINE_PROFILE.json",
+  "verdict": "PASS - fail-closed; no unsatisfied requirement"
+ },
+ "reuse_from_prior_experiments": {
+  "lib/seeds.py": "deterministic attempt-seeded draws",
+  "lib/localrun.py": "Redis-free durable rows",
+  "lib/residue.py": "substrate AND process residue, one scanner",
+  "lib/lineage.py": "TestLog/decide, ancestor-seeded detect_gains, emit_generations, fixation_order",
+  "lib/infometrics.py": "MI against a shuffled-label null",
+  "lib/learnability.py": "prove the effect COULD be found, before spending budget",
+  "_note": "SIX components carried forward unchanged. e01 reused 0, e02 3, e03 4, e04 6."
+ },
+ "standing_gates_inherited": [
+  "learnability: a hand-built competent organism must beat an incompetent one, and the mechanism must fire (D009/D013/D015/D029)",
+  "matched-arms: bit-identical with the mechanism disabled (D010/D019/D021)",
+  "detector calibrated two-sided against a null (D022)",
+  "probe genomes asserted pairwise distinct (D023)",
+  "executable disposition; a branch is unreachable unless its tests ran (D016/D024)",
+  "per-generation trajectories as durable rows (D026)",
+  "latent world facts attempt-stable, never episode-stable (D029)",
+  "NEVER record ran=True for a check that performed no comparison (D031)"
+ ],
+ "e04_specific_risks": [
+  "UNIFORM HANDLING IS NOT TRIAGE - the central threat; triage measured separately via MI",
+  "p_drop is world-side stochasticity: if placements differ between arms, drop draws desynchronise the RNG. Drop outcomes are PRE-DRAWN per item so consumption is decision-independent.",
+  "generality (J2/J3/J4) is a SEPARATE verdict and never upgrades the primary disposition"
+ ],
+ "expected_runtime_envelope": {
+  "minimal_form_wall_minutes": 25,
+  "timebox_hours": 24
+ },
+ "preregistration_ref": "PREREGISTRATION.md (written before implementation)",
+ "complete": true
+}

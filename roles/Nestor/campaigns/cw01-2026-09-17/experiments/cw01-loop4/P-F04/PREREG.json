@@ -1,0 +1,57 @@
+{
+ "perturbation_id": "P-F04",
+ "parent": "T-X16",
+ "co_parents": [
+  "T-E06",
+  "T-E07"
+ ],
+ "claim_type": "economics-reversal",
+ "factors": {
+  "price": [
+   0.01,
+   0.0
+  ],
+  "damage": [
+   "none",
+   "tape",
+   "tree",
+   "both"
+  ],
+  "fraction": [
+   0.05,
+   0.1,
+   0.2
+  ],
+  "rate": [
+   0.55,
+   0.6,
+   0.65,
+   0.7,
+   0.75
+  ],
+  "f0": 0.1,
+  "ids": [
+   "cw01-loop4-PF04-0",
+   "cw01-loop4-PF04-1",
+   "cw01-loop4-PF04-2"
+  ],
+  "generations": 240
+ },
+ "harness_check": "none == sham (fraction .1, price .01) on every trajectory",
+ "signature": "pruning = final240 TREE(tree-damaged) - final240 TREE(tape-damaged), paired by (id, rate, fraction); relabel/sign-flip band",
+ "decision": {
+  "PRICE_MEDIATED_PRUNING": "signature above p95 at price .01 and inside band at price 0",
+  "DAMAGE_EFFECT": "above p95 at both prices",
+  "REVERSED": "below p05 at price 0",
+  "UNRESOLVED": "otherwise"
+ },
+ "also": "damage-vs-none effects per price and fraction; the rate window (signs of final240 - f0 at each rate) per price; coexistence at 240",
+ "material_rule": "the decision is not UNRESOLVED, or a damage-vs-none effect clears its band at either price, or the window signs differ between prices",
+ "continuation": [
+  "price dose",
+  "registers-only vs nodes-only damage",
+  "non-heritable damage"
+ ],
+ "written": "2026-09-19 02:50:27",
+ "prereg_sha256": "a5845f4adcdc2c4b747d98a042b912255210d4de9c700422f0069df89e6c7455"
+}

@@ -1,0 +1,12 @@
+{
+ "schema": "archaeon.frontier.suppression.v1",
+ "suppression_id": "PROTEUS-46",
+ "source": "proteus/round2/PROTEUS-46_FALSIFIER.json",
+ "condition": {"field": "falsifier_status", "equals": "FALSIFIER_FAILED"},
+ "covers_experiments": ["C4-cliff.T1"],
+ "covers_families": [],
+ "effect": "BLOCKED_BY_SUPPRESSION",
+ "scope_note": "the falsifier measured the per-operator single-edit neighbourhood of one hand-written witness under graph_grammar.v1 vs v0.4; it covers only that question",
+ "lifts_when": {"field": "neighbourhood_exhausted", "equals": true, "then": "retirement_candidate_A"},
+ "reopen_conditions_from_source": true
+}

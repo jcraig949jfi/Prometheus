@@ -1,0 +1,35 @@
+{
+ "host": "SPECTREX5",
+ "python": "3.14.4",
+ "when_utc": "2026-09-19T03:42:26.519499+00:00",
+ "rows": [
+  {
+   "players": 1,
+   "ticks": 1280,
+   "wall_s": 0.016,
+   "steps_per_s": 81241,
+   "observers": 2
+  },
+  {
+   "players": 3,
+   "ticks": 1280,
+   "wall_s": 0.034,
+   "steps_per_s": 38128,
+   "observers": 2
+  }
+ ],
+ "fuzz_300_both_paths_C109": {
+  "when_utc": "2026-09-19T06:34:58.593398+00:00",
+  "seeds": 300,
+  "invalid": 22,
+  "OK": 156,
+  "TARGET_UNSUPPORTED": 49,
+  "BLOCKED_MISSING_CAPABILITY": 73,
+  "runs_executed_each_path": 1141,
+  "batched_runs": 221,
+  "crashes": 0,
+  "unexplained_failed": 0,
+  "path_divergences": 0,
+  "generator": "widened C100/C109: grid obs_mode, per-player series, survival.v2, objective.multi.v1"
+ }
+}
