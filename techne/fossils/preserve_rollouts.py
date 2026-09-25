@@ -64,8 +64,8 @@ def build_record(key: str, reason: str, man: dict, rows: dict) -> dict:
                  "score_original": m.get("score_torch"), "coh": r.get("coh"), "d_pix": r.get("d_pix"), "d_clip_original": r.get("d_clip"), "mass_cv": r.get("mass_cv"),
                  "disp": r.get("disp"), "mass": r.get("mass")},
         preservation_reason=reason,
-        lineage_relations=[{"relation": "derived_from", "target": "lenia-chan-2019", "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"},
-                           {"relation": "derived_from", "target": "asal-sakana-2024", "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"}],
+        lineage_relations=[{"relation": "derived_from", "to": "lenia-chan-2019", "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"},
+                           {"relation": "derived_from", "to": "asal-sakana-2024", "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"}],
         acquisition_tags=["operator-directive-2026-09-19", "poet_alife", "HARM-55", "rollout-fossil"])
     return rec
 

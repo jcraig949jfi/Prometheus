@@ -1,0 +1,209 @@
++==============================================================================+
+|  REVIEW PACKET -- TECHNE, FIRST PASS AFTER THE FLEET RESET, 2026-09-25       |
+|  Author: Techne[gandalf-5983e3f7] (toolsmith seat), host GANDALF (M3)        |
+|  Date:   2026-09-25                                                          |
+|  For:    the operator (HITL) and any external reviewer                        |
+|  Status: one unit landed (TECHNE-124); one question posted; nothing outward  |
+|          changed. Commit: the one carrying this file (subject "TECHNE-124"). |
+|  Self-contained: every load-bearing number is inline. No repo access needed. |
++==============================================================================+
+
+0. SUMMARY / VERDICT
+-----------------------------------------------------------------------------
+  U0  Boot after the operator's fleet reset, by the base-role sequence.
+      Verified (not recalled): base-role self-test green on the boot base;
+      the previous Techne worktree already cleaned up; the host-local vault,
+      tool env and Drive mirror all survived; HARM-55's Flax column has
+      still not landed anywhere main can see.
+  U1  TECHNE-124. The fossil lineage graph had TWO keys for the far end of
+      an edge ("to" in 112 edges, "target" in 158). The canonical key was
+      always "to" (declared in the schema module's own docstring since the
+      2026-09-12 charter); the drift was this seat's own 09-19 writers.
+      Every drifted edge renamed in place (key position preserved, no other
+      byte changed, receipt with per-file hashes), the validator now refuses
+      the drifted key by name, the writers fixed, and a source-level cheat
+      control that found a THIRD writer I had missed by reading.
+
+Recommendation: accept U1 as done. U0 raises no decision. The two operator
+lines that were open before the reset are still open and unchanged:
+TECHNE-65/100 (mirror destination) and TECHNE-122 (raid order).
+
+1. WHAT WAS DONE, IN ORDER
+-----------------------------------------------------------------------------
+  fetch-only in the canonical checkout (it was 3,672 commits behind)
+  worktree techne-boot-2026-09-25 from origin/main dd42d1adb; guard passes
+  comms boot recorded; sync: 1 new (#572 Nyx), queue 0, no prompt
+  base-role self-test on dd42d1adb: 10 passed, 1 skipped
+  fossil suites BEFORE any change: 641 passed, 7 skipped
+  census of the drift (read-only), then schema rule, writers, migration,
+  tests -- tests run on the merged tree BEFORE commit
+  typed return to Nyx (#575), question to Harmonia (#576)
+  backlog rows 124 (done) and 125 (filed), journal, resume refreshed
+
+2. THE CLAIMS
+-----------------------------------------------------------------------------
+C1  Every lineage edge in the tracked specimen tree now uses "to" and none
+    uses "target"; no other byte of any record or capsule changed.
+C2  A record carrying a "target" edge can no longer validate; a record
+    whose edge lacks a non-empty "to" cannot either.
+C3  No writer under techne/fossils emits "target" any more, and a test
+    fails if one ever does.
+C4  The migration is byte-safe and idempotent: it refuses to rewrite a
+    file whose formatting it cannot reproduce, and a second run does
+    nothing.
+
+3. DESIGN AS EXECUTED
+-----------------------------------------------------------------------------
+Census (before touching anything):
+    files walked                 207  (168 record.json + 39 CAPSULE.json)
+    edges with "to"              112
+    edges with "target"          158  (= 80 in 41 records + 78 in 39 capsules)
+    Nyx's own count (#572)        80 vs 112 over records only -- consistent
+    writers responsible          preserve_rollouts.py (09-19; 39 rollout
+                                 fossils x 2 edges, copied into 39 capsules)
+                                 batches/batch14_alife.py (poet-original-2019,
+                                 terralingua-data-abundant-exp-1)
+    canonical declaration        record.py docstring on LINEAGE_RELATIONS:
+                                 "Each edge: {relation, to (...), note}"
+    why validate() missed it     it checked the relation vocabulary, never
+                                 the far-end key
+    pins that a rename could     none: CAPSULE.json is hashed nowhere in
+    break                        the tree; record.json has no self-hash;
+                                 the tracked CATALOG.json predates every
+                                 drifted record (0 "target" in it)
+
+Schema rule (record.py):
+    LINEAGE_EDGE_TARGET_KEY = "to";  LINEAGE_EDGE_DRIFTED_KEYS = ("target",)
+    lineage_edge_problems(e): a drifted key -> problem that NAMES the key
+    and the migration; missing / empty / non-string "to" -> problem.
+    validate() applies it to every edge.
+
+Migration (techne/fossils/migrate_lineage_key_20260925.py):
+    - renames "target" -> "to" in the SAME position of the edge dict
+    - rewrites a file only if an edge changed AND json.dumps with the
+      writer's own indent (record.json 2, CAPSULE.json 1) reproduces the
+      original bytes; otherwise FORMAT_MISMATCH, file untouched, exit 1
+    - refuses an edge with both keys, or an empty/non-string target
+    - --dry-run; receipt techne/fossils/LINEAGE_KEY_MIGRATION_2026-09-25.json
+      with sha256 before/after per touched file
+
+Run:
+    dry run     files_scanned 207  edges_renamed 158  WOULD_RENAME 80
+                UNCHANGED 127  FORMAT_MISMATCH 0      (equals the census)
+    real run    RENAMED 80
+    second run  edges_renamed 0  UNCHANGED 207
+    git diff -U0 over specimens:  -"target" lines 158, +"to" lines 158,
+                                  any other changed line 0
+    git ls-files --eol:  index LF, worktree LF on every rewritten file
+    record.validate over 168 records: 0 problems
+    capsule validate --all: 39/39 VALID
+
+4. CONTROLS (techne/tests/test_fossil_lineage_key.py, 11 tests)
+-----------------------------------------------------------------------------
+    positive    canonical edge -> no problem
+    negative    "target" edge -> problem naming 'target' and the canonical
+                key; missing / blank / None "to" -> problem; a skeleton
+                record with a drifted edge fails record.validate()
+    unit        rename_edge keeps key order and every other field; refuses
+                both-keys and empty
+    migration   fixture tree: renames 2 edges, then a second run is a no-op;
+                dry run leaves bytes unchanged
+    FORMAT      a record re-indented to 4 spaces is reported
+    REFUSAL     FORMAT_MISMATCH and left byte-identical
+    tree        every tracked edge has "to" and none has "target"
+    SOURCE      no .py under techne/fossils contains a lineage literal
+    CHEAT       with "target". THIS CONTROL FAILED ON FIRST RUN and named
+                batches/batch14_alife.py, a writer I had not found by
+                reading. Fixed. That is what the control is for.
+
+Suites on the merged tree after all edits:
+    test_fossil_lineage_key + test_fossils + test_fossil_capsule +
+    test_fossil_packet + test_fossil_packet_handoff:  541 passed, 2.1 s
+
+5. DEFECTS OF MINE, CAUGHT BEFORE COMMIT
+-----------------------------------------------------------------------------
+  - migrate_file used Path.relative_to(REPO): raised on the pytest tmp tree
+    (3 tests red). Now falls back to the absolute path.
+  - a test guessed a constructor name (record.new) that does not exist;
+    record.skeleton is the constructor.
+  - a heredoc-written journal was rejected by the shell on a quote; written
+    with the file tool instead. Same tool class as noted on 09-16.
+
+6. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----------------------------------------------------------------------------
+Established: C1-C4 above, each by a committed artifact or a test.
+NOT established / not done:
+  - Nyx's read-side fallback (nyx/atlas/census.py:_rel_to) still accepts
+    both keys. Their lane; told them it can go (#575). Not touched.
+  - CATALOG.json is a 2026-09-13 snapshot of 117 fossils; it now lags 51
+    specimens. Regenerating it on M3 would record M3's 48 bodies as
+    body_present truth. Filed as TECHNE-125 (a policy line, then one
+    command), not done.
+  - HARM-55 (ASAL Flax column, gandalf-6cd1348b): still no Flax file on
+    main; Harmonia's M2 resume records no run. Asked (#576). Not
+    actionable from M3 (no AVX).
+Claim ceiling: instrument-level. No scientific claim is made or moved.
+
+7. BOOT FACTS A REVIEWER MAY WANT
+-----------------------------------------------------------------------------
+    base                dd42d1adb (origin/main 12:10Z)
+    previous worktree   techne-m3-boot-2026-09-17: already removed, branch
+                        already deleted, before this pass opened
+    monitors            Techne owns none (MONITORS.md); nothing to feed
+    host-local          vault/fossils 208 MB, 48 of 168 specimens have
+                        bodies here; tool env asal107 present; Drive harm55
+                        present. All survived the reset.
+    environment debt    whole techne/tests: 17 collection errors on M3
+                        (hypothesis, chipfiring, python-sat absent); the
+                        fossil files run clean by name. Unchanged since 09-16.
+    numbering           two "HARM-55" ids exist (Harmonia Q6). Mine means
+                        the ASAL row opened by Harmonia[gandalf-6cd1348b].
+
+8. DECISIONS FOR THE OPERATOR (none new; the two standing ones restated)
+-----------------------------------------------------------------------------
+  (a) TECHNE-65/100  name the off-host mirror destination (G:\My Drive\
+      Prometheus\fossil_mirror is mounted here and measured on 09-17).
+  (b) TECHNE-122     confirm sections II/III next for the prior-art raid,
+      or redirect.
+  Optional, small: TECHNE-125 catalog snapshot policy.
+
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----------------------------------------------------------------------------
+  Q1  The migration REFUSES to reformat. Was that the right default, or
+      should a FORMAT_MISMATCH file have been renamed anyway with the
+      whole-file diff accepted? (Zero occurred, so the choice was untested
+      on real data; the control exercised it on a fixture.)
+  Q2  The validator refuses "target" by name. Should it refuse ANY key
+      other than {relation, to, note} on an edge, i.e. a closed schema?
+      I left extra keys allowed because rename_edge deliberately preserves
+      them and no record carries any today.
+  Q3  Should the receipt have appended a note to each renamed edge (as the
+      09-16 superseded migration did), rather than one receipt file beside
+      the script? I chose the receipt: 158 identical notes are noise, and
+      the commit diff is the record.
+  Q4  Is taking Nyx's ask as the first unit after a reset the right
+      priority, over Atlas's dcd fossil (priority 2 in #526)? It was
+      small, closed and blocked nothing; dcd is next (resume.md item B).
+  Q5  "Not worth continuing" remains available for the HARM-55 Flax column
+      from this host: it is waiting on hardware, and no pass here can move
+      it. Should the seat stop mentioning it until an AVX host exists?
+
+10. ARTIFACTS
+-----------------------------------------------------------------------------
+  techne/fossils/record.py (rule), techne/fossils/preserve_rollouts.py,
+  techne/fossils/batches/batch14_alife.py (writers fixed)
+  techne/fossils/migrate_lineage_key_20260925.py
+  techne/fossils/LINEAGE_KEY_MIGRATION_2026-09-25.json (receipt)
+  techne/fossils/specimens/*/record.json, CAPSULE.json (80 files, key only)
+  techne/tests/test_fossil_lineage_key.py (11 tests)
+  roles/Techne/BACKLOG_H0H5.md (TECHNE-124 done, TECHNE-125 filed)
+  roles/Techne/journal/2026-09-25_gandalf-5983e3f7.md
+  roles/Techne/resume.md (refreshed: pointer index + ranked work items)
+  roles/Techne/prompts/2026-09-25_lineage_key/TO_NYX_lineage_key_closed.md (#575)
+  roles/Techne/prompts/2026-09-25_lineage_key/TO_HARMONIA_harm55_flax_delegation_status.md (#576)
+
++==============================================================================+
+|  Reviewer: "not worth continuing" is a first-class answer for any row     |
+|  above. If the seat should go to dcd / GEA-4 / the raid instead of        |
+|  anything here, say which.                                                 |
++==============================================================================+
