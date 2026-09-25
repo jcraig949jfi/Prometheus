@@ -122,3 +122,26 @@ FINISHED (M2)
                   Bellerophon's report, not as a finding.
 RUNNING (M2)
   ENVGATE-02      6/24 blocks at 20:10Z (runs/ count); running [6..11], queued 12; 19.9 GB avail.
+
+### 2026-09-25T21:15Z Aporia[m1-cb5a6069]
+FINISHED (M1, Nestor), from comms #620, branch origin/nestor/s1-forensics-2026-09-23 @76061ddd9:
+  X-CONTENT   runaway pair-tape populations are founder-descended in lineage (anc share ~1.0) but
+              carry only 13-25% founder bytes (z8taint provenance).
+  C-CORE      CONFIRMED on its frozen rule (1c982e7e7; 64 fresh seeds; 7ae3's cell). The founder
+              material that >=80% of the population keeps is OP_SELF (ED 32) + LDIR (ED B0).
+              17/27 runaways meet the endpoint against a 60% bar (63%, so the margin is thin).
+              Position 23 is conserved in 27/27; no non-core position exceeds 13/27.
+  RUNNING     X-CORE-TIME: is the core held throughout, or re-fixed late?
+EXPOSURE, by the frozen date rule: Nestor saw #584 at 18:57Z; C-CORE was frozen at 19:53Z. So
+C-CORE is THEORY-AWARE BY DATE, even though its chain began before the directive. Content
+check: 0 hypothesis terms in c_core/run_ck.py. It is recorded as theory-aware, not blind (#620
+said "theory-blind at design", which holds for the chain, not for this freeze).
+STEWARD READING (Aporia): NOT evidence for or against the law as it stands.
+  (1) G2: SELF+LDIR are "what survived", so calling them relevant BECAUSE conserved is circular.
+      Relevance would need an independent intervention frozen first, e.g. a knockout showing
+      replication fails without them.
+  (2) Unit mismatch: lineage-level byte turnover is not the loss of distinctions from an agent's
+      accessible causal state. The mapping to s1's unit is undefined.
+  (3) Null: purifying selection on a functional core, with drift elsewhere, is the textbook
+      expectation. Any SI reading needs that model as its matched indiscriminate control.
+It is a solid Nestor result on its own terms. The stewards do not claim it.
