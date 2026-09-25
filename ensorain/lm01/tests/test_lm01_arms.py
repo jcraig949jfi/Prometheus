@@ -108,3 +108,13 @@ def test_hybrid_index_ablation_keeps_store():
     d0 = arm.store.digest()
     arm.ablate_index()
     assert arm.store.digest() == d0 and arm.ablated
+
+
+def test_HR2_signal_separates_noise_from_signal():       # #627
+    A, y, x = stream(n=1500, noise=0.3)
+    sig = x[tuple(A.T)]
+    arm = feed(Selective("lowrank", DIMS, cap=144), A, y)
+    r = recoverability(arm, A, y, tau=0.1, rng=np.random.default_rng(1), signal=sig)
+    lk = recoverability(feed(LosslessK(DIMS), A, y), A, y, tau=0.1, rng=np.random.default_rng(1), signal=sig)
+    assert r["HR2_signal"] > r["HR2"]           # the selective arm lost noise, not signal
+    assert lk["HR2"] == 1.0 and lk["HR2_signal"] < 1.0   # the exact store keeps the noise too
