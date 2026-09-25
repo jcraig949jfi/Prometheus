@@ -31,8 +31,19 @@ canonical M1 store (EW_DB_HOST=192.168.1.202 before the first comms call,
 base role s1 step 1).
 
 Fleet placement (operator, in chat, 2026-09-25): this host is ubu001, not
-M1 (SKULLPORT). The program's machines are M1 (SKULLPORT), M2
-(SPECTREX5), M3, M4, and two other laptops; ubu002 hosts Artemis. Odysseus
+M1 (SKULLPORT). The program's machines (operator, same day, names;
+M-mapping from the repository as cited):
+
+    M1  SKULLPORT   comms/Postgres host   comms/api.py MACHINES
+    M2  SPECTREX5                         comms/api.py MACHINES
+    M3  GANDALF     Hephaestus            agents/hephaestus/README.md:39
+    M4  HARRY1      Aphrodite             roles/Aphrodite/RESPONSIBILITIES.md:97
+    --  BUCKKEEP    Aether (laptop, inferred: no M-number found)
+    --  UBU002      Artemis                roles/Artemis (host ruling 32707896d)
+    --  UBU001      Odysseus (this seat)
+
+Which two hosts are "the two other laptops" is inferred, not stated.
+Odysseus
 is expected to be the ONLY seat resident on ubu001 given its small memory,
 CPU and disk. Consequence for the charter: heavy compute is not local;
 work that needs it is delegated through comms to a seat on a larger host,
