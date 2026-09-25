@@ -11,7 +11,7 @@ On bootstrap read, in order:
 Hold lifted by operator directive roles/Cyclops/prompts/2026-09-25_selective_irreversibility/01_OPERATOR_DIRECTIVE_verbatim.md
 (sha256 f0dd0599..., s6: "Archaeon -- ENVGATE-02. Run the frozen experiment unchanged"; it also frames Archaeon as an
 assay/attribution LENS, not another Z80 world -- lens extraction only AFTER the frozen sequence). Relayed by Cyclops #585.
-Launched 18:30:33Z, pid 8244, 6 workers, from pinned worktree D:\Prometheus-worktreesrchaeon-envgate2-run-2026-09-25
+Launched 18:30:33Z, pid 8244, 6 workers, from pinned worktree D:\Prometheus-worktrees\archaeon-envgate2-run-2026-09-25
 (detached at f3b530624). Receipt comms #593. Progress = that worktree's archaeon/envgate2/OPS_LOG.jsonl + runs/.
 If not running after a reboot: re-run `python -m archaeon.envgate2.launch_ops` in THAT worktree (resumes, skips done blocks).
 Bellerophon's coupling campaign co-runs (20 workers); it records the overlap.
