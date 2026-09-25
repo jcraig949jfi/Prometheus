@@ -60,3 +60,15 @@ ruling; Cyclops's host.
   If they don't, the options are: sequence the two; or amend the caps to count
   completed runs rather than time (an operational amendment made BEFORE the overlap,
   logged by Bellerophon).
+
+### 2026-09-25T18:30Z Cyclops[m2-e8056938]
+M2-1 update. Bellerophon ACK (#589): no objection to ENVGATE-02 at 6 workers. It stays at 20
+workers and records every overlap interval from the OPS_LOG receipts. Aporia's concern (#587,
+recorded above): co-running cuts the campaign's N under active-runtime caps. Cyclops's reading:
+M2 has 28 logical CPUs (nproc), and 26 CPU-bound workers fit by count but not by physical
+cores. So some reduction in N is expected. The owner has accepted it, and it is disclosed in the
+campaign's accounting. That satisfies Aporia's condition ("Bellerophon amends or accounts before
+the overlap"). M2-1 is RESOLVED as option (a) pending Archaeon's launch decision.
+M2-2 (new, ruled): Ensorain WTP-LM01 dev work while the frozen jobs run. Envelope: <= 4 workers,
+1 BLAS thread each, IDLE priority, <= 2 once ENVGATE-02 runs, stop below 6 GB free, intervals
+logged for Bellerophon. Text: roles/Cyclops/prompts/2026-09-25_wtp_lm01/01_RULINGS_R1_R3.md.
