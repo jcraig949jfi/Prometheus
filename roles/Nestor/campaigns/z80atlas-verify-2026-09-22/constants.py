@@ -43,6 +43,18 @@ C = MappingProxyType({
     "P11_CONTROL_MAX": 0.90,          # criterion 5: donor-disabled control stays BELOW
     "P11_DRAWS": 3,                   # independent randomized victims per event
     "P11_MAJORITY": 2,                # draws that must pass
+    # ---- H1 decision rule (rev B, unchanged) ----
+    "H1_THRESHOLD": 0.15,             # |M| gate main effect, |I| cost interaction
+    # ---- H2 decision rule (operator ruling 2026-09-24) ----
+    "H2_SEEDS": 16,                   # shared seeds per specimen
+    "H2_B_MIN": 8,                    # arm B reaching depth >= CAUSAL_DEPTH in >= 8 of 16
+    "H2_C_MAX": 2,                    # arm C reaching it in <= 2 of 16
+    "H2_PANEL_MIN_SPECIMENS": 2,      # supporting specimens from DIFFERENT strata
+    # ---- H3 decision rule (rev B, unchanged) ----
+    "H3_SEPARATION": 0.20,            # certificate rate A exceeds B and C by at least this
+    "H3_MIN_CERTIFICATES": 5,         # fewer in arm A: not demonstrated
+    # ---- H3 ruler R3, material certificate (C9-D14 repair, 2026-09-24) ----
+    "H3_MATERIAL_SHARE": 0.50,        # crossing genome is at least half easy-niche material
 })
 
 
@@ -52,8 +64,8 @@ def canonical(obj=C):
 
 CONSTANTS_SHA256 = hashlib.sha256(canonical().encode("ascii")).hexdigest()
 
-# Pinned at S3 (2026-09-23). A test compares the live hash to this; they must agree.
-PINNED_SHA256 = "ade1f755eaff9598e32eb9c768bd57b7094b4e0c7de555b0ebf2eb34b0b019ce"
+# Pinned at S3 (2026-09-23); re-pinned 2026-09-24 when the H2/H3 rules were added. A test compares the live hash to this; they must agree.
+PINNED_SHA256 = "c0e488deabebd03afd398b5aa5665a1e6dbce4ddc2683385113ca4bd7b655719"
 
 NAMES = tuple(C)
 # Module-level names that used to hold private copies; none may be re-declared.

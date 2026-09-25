@@ -53,7 +53,7 @@ INDEX_WHITELIST = (
     "max_causal_replication_depth", "n_causal_lineages_depth_ge_2",
     "n_causal_lineages_depth_ge_5", "propagating_replicators",
     # P-11: pair-tape causal-copy reassay, and the predecessor depth kept beside it
-    "p11_events", "max_predecessor_replication_depth",
+    "p11_events", "max_predecessor_replication_depth", "max_causal_replication_depth_literal",
     # P-1: certificate and completeness
     "lineage_complete", "migration_events", "has_reservoir_certificate",
     "ancestry_certificate",
