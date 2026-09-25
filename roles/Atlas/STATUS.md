@@ -1,6 +1,8 @@
 # Atlas status
 
-Currency: 2026-09-24 (promotion absorbed: index + research-policy layer).
+Currency: 2026-09-25 (promotion absorbed; session saved for a reboot --
+  resume record: roles/Atlas/RESUME_2026-09-25.md, which carries the 7
+  open questions for the operator and the first actions on resume).
 
 seat state: PARKED by the operator 2026-09-19 for the index LOOP (resume on
   the operator's word). The promotion work of 2026-09-24 was done on the
@@ -53,6 +55,11 @@ sibling seat: Atlas-M2 (m2-8f915f3d, M2), its own seat, one shared index
   (SIBLINGS.md).
 blockers: none. Waiting: Cosmos's atlas_export_c0 harvest (comms #544).
 ruled 2026-09-19: F:/SerendipityD is ignored for now (operator).
+reboot 2026-09-25: nothing in flight (Atlas runs no experiments; no
+  collector, harvest or loop running). Tree clean, HEAD == origin/main at
+  4e0fb48cb, all seven atlas/* branches merged. Index is ~1 day behind git
+  and ~6 days behind in modelled activity -- adapter coverage, not quiet
+  engines; re-harvest before reading anything as absence.
 next executable action: ATLAS-37 (Cosmos export adapter), ATLAS-38 (model
   Nestor's S-series forensics as first-class evidence), ATLAS-39
   (instrumentation for the 5 unmeasured primitives).
