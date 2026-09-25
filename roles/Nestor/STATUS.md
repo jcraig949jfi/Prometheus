@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-SWAP-ORIGIN | EXPLORE | origin of X-DONOR-SWAP runaways (founder vs native) + RANDOM_MATCHED background, 25 runs; schtask NestorSO |
+| X-ROOT-AUDIT | EXPLORE | C-ATOMIC C1 on a founder-rooted endpoint: replay its 47 world-runaways with the founder tracker; schtask NestorRA |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.

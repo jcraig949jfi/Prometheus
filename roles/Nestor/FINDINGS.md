@@ -334,6 +334,12 @@ The genome's fresh-state assay rate is 0.955 only in 7ae3 and ffa6 (which differ
 structure) and 0.0 in the ten other cells: **competence is a property of genome x cell, not of the genome.**
 Post hoc (hypothesis only): 9cba and e160 ran away although the founder's assay rate there is 0, so descendants
 can acquire competence the founder lacks.
+**X-SWAP-ORIGIN (CLEAN_NULL) withdraws that post hoc:** replayed with founder causal-lineage tracking, the 9cba and
+e160 runaways are NATIVE (founder depth 8 and 1 vs world depth 120 and 110); in ffa6 2 of 4 are founder-rooted.
+**Scope note (endpoint):** `max_causal_replication_depth` is WORLD-level. In 7ae3's own cell the world depth far
+exceeds the founder lineage's depth in 2 of 3 runaways (382 vs 71, 386 vs 27). C-RUNAWAY, C-CRITICAL-MASS and
+C-ATOMIC C1 are therefore claims about heredity in the cell carrying the implant, not about the implant's own
+lineage, until audited on a founder-rooted endpoint (X-ROOT-AUDIT, for C-ATOMIC C1).
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
