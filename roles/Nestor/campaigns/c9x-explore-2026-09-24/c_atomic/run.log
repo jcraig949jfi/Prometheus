@@ -1,0 +1,24 @@
+LAUNCH Fri 09/25/2026  4:03:16.07 
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "H:\Python312\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\c9x-explore-2026-09-24\c_atomic\run_cat.py", line 80, in job
+    assert not r.track_material
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\c9x-explore-2026-09-24\c_atomic\run_cat.py", line 137, in <module>
+    main()
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\c9x-explore-2026-09-24\c_atomic\run_cat.py", line 101, in main
+    list(pool.imap_unordered(job, todo))
+  File "H:\Python312\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+AssertionError
+EXIT 1 Fri 09/25/2026  6:19:56.12 

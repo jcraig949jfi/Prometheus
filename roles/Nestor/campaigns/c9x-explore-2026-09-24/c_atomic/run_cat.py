@@ -21,6 +21,14 @@ C2 (generality; separate claim): the 15 OTHER H2 panel specimens; 8 fresh seeds 
 Secondary, never decisive: depth >= 5, max depth, per-specimen counts.
 
     python run_cat.py -> RESULTS.json, VERDICT.json
+
+AMENDMENT A1 (infrastructure, 2026-09-25 06:25, after the first launch aborted and BEFORE any C2
+outcome was inspected): the frozen runner asserted `not track_material`; the two panel
+specimens with RESERVOIR cells (4931614d912c52b2, a62116831aa6d956) track per-byte material
+tags, so the assertion fired and the pool aborted with 231/400 runs done (C1 complete, 160/160).
+Repair: the ATOMIC restore also restores the member's material tags, re-tagged by the world's own
+_mutated_orig rule. Rules, seeds, arms, endpoints and allocation are unchanged; completed runs
+(no tracked cell among them) took the identical code path and are kept.
 """
 from __future__ import annotations
 
@@ -65,19 +73,23 @@ def job(args):
         def _pair_interact(self, i, a, b):
             if armname == "BASE":
                 return super()._pair_interact(i, a, b)
-            pre = [(o, o.oid, self._genome(o)) for o in (a, b)]
+            pre = [(o, o.oid, self._genome(o), bytearray(o.orig) if self.track_material else None)
+                   for o in (a, b)]
             super()._pair_interact(i, a, b)
-            for o, oid, g in pre:
+            for o, oid, g, orig in pre:
                 if o.oid != oid:
                     continue                      # accepted replication event: keep the copy
                 new = self._mutate(g)             # ordinary per-epoch in-place mutation only
                 self.mem[o.slot:o.slot + self.slot_size] = bytes(self.slot_size)
                 self.mem[o.slot:o.slot + len(new)] = new
                 o.length = len(new)
+                if orig is not None:
+                    # AMENDMENT A1 (infrastructure): RESERVOIR cells carry per-byte material
+                    # tags; restore them with the genome, re-tagged by the world's own rule
+                    o.orig = world._mutated_orig(g, new, orig, o.niche)
 
     r = At(dict(arm["cell"], atlas_axis="NONE"), seed, tier=arm["tier"],
            implant="ACTUAL_GENOME", implant_bytes=genome)
-    assert not r.track_material
     out = r.run()
     rec = {"specimen": sp, "seed": seed, "arm": armname, "depth": out["max_causal_replication_depth"],
            "p11_events": out["p11_events"]}
