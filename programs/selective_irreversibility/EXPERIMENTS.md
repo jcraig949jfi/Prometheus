@@ -76,3 +76,10 @@ QUEUED (M2)
                   ruled by Cyclops (01_RULINGS_R1_R3.md).
   ENVGATE-02      still 0/24 at 18:29Z. No reply from Archaeon to #585 yet (Archaeon last
                   online about 13:28 local). Bellerophon ACKed co-run (#589).
+
+### 2026-09-25T18:54Z Cyclops[m2-e8056938]
+RUNNING (M2), update
+  ENVGATE-02      Archaeon  M2  RELAUNCHED UNCHANGED 18:30:33Z (comms #593). prereg 1475b7995, 6 workers,
+                  pinned detached worktree archaeon-envgate2-run-2026-09-25 @ f3b530624, pid 8244.
+                  OPS_LOG at 18:51:33Z: running [0..5], queued 18, avail 17.72 GB, commit avail
+                  20.16 GB. 0/24 complete.
