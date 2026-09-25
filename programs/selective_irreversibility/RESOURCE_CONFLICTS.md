@@ -22,3 +22,26 @@ M1 at 16:34Z: Nestor 12 workers (10 CSA + 2 XA, = its STATUS cap). CPU ~33% (one
 No conflict today. Potential conflict: Cosmos-D authorship vs Nestor's running campaign. That is a
 conflict for Nestor's attention, not for CPU.
 Service noise, not ours: schtask PrometheusMachineProbeM1 fails every minute (0x80070002).
+
+### 2026-09-25T18:07Z Cyclops[m2-e8056938]
+Source: read-only M2 audit 18:00-18:12Z (Win32_Process, Get-ScheduledTask(Info), port 8811, nvidia-smi, Win32_OperatingSystem, C:/Users/James/z80atlas_coupling_2026-09-24/STATUS.json + memory.jsonl, archaeon/envgate2/ in worktree archaeon-postcampaign-2026-09-23), origin/main fbe4d8071.
+
+M2 at 18:05Z: 28 logical CPUs, 31.8 GB RAM (22.0 free), GPU RTX 5060 Ti idle (710 MiB, 1%).
+CPU ~73% (one psutil sample), essentially all Bellerophon's 20 coupling workers (tree RSS 519 MB).
+
+CONFLICT M2-1 (OPEN): ENVGATE-02 (frozen, directive s6 M2 first priority, 6 workers, memory-
+gated) vs Bellerophon Z80xAtlas coupling campaign (frozen, running, 20 workers, ~14.4 h of ACTIVE
+runtime left). Memory fits both now. CPU does not fit cleanly: 26 CPU-bound workers on 28
+threads. Bellerophon's caps are runtime-based, so contention reduces how many planned runs it
+completes. Its low-priority lanes (AUTO, EXT; LANE_PRIORITY in coupling_campaign.py) are cut
+first. That changes its yield, not its contract.
+Options: (a) co-run now and Bellerophon records the overlap interval in its ops accounting;
+(b) ENVGATE-02 waits ~14 h for Bellerophon to finish; (c) Bellerophon lowers its worker count.
+That would be an operational amendment it alone may make.
+Cyclops recommendation: (a). s6 names ENVGATE-02 first on M2, and its launcher already guards
+memory. The cost to Bellerophon is measurable and does not contaminate anything. Both seats were
+asked (comms, this pass). Cyclops launches nothing: Archaeon owns the launch decision and
+Bellerophon owns its campaign.
+The 2026-09-24 reap was this same pair of seats plus Vivarium (OPERATIONAL_INCIDENT_2026-09-24.md).
+Service noise, not ours: schtask PrometheusMachineProbeM2 fails every run (0x80070002), same
+as M1.
