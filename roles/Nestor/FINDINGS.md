@@ -311,6 +311,11 @@ X-STALL (SIGNAL): at epoch 100, 177/192 live lineage members cannot copy even fr
 where the founder genome passes 166/192 in the same contexts: stalled lineages are genomically
 STERILE. P-11 certifies a causal rebuild of the victim half, not a fertile child. When sterility
 arises (at birth, or by accumulated mutation) is under test (X-STERILE).
+X-STERILE (CLEAN_NULL on copy error): children are FERTILE at birth (75-80%). X-STALL-F0 (SIGNAL):
+with in-place mutation OFF, 187/192 members are still sterile at epoch 100; 57% of their
+interactions change their genome (~5.5 bytes) because the pair tape writes BOTH halves back after
+every interaction - the member's own writes and its partner's (no change without a write). This
+tape-write EROSION is a ~5%/byte/epoch mutation, ~25x the nominal rate. Under test: X-ATOMIC.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
