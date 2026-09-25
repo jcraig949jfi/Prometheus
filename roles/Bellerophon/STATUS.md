@@ -1,8 +1,15 @@
 # Bellerophon status
 
-Currency: 2026-09-23.
+Currency: 2026-09-25 ~06:45Z (written before a machine reboot + context reset).
 
-COUPLING CAMPAIGN (physics v3) -- PAUSED BY HARNESS, AWAITING OPERATOR RESTART (2026-09-24T21:2xZ)
+BOOT POINTER -- READ FIRST: roles/Bellerophon/coupling_2026-09-24/RESUME_AFTER_RESET.md
+  One experiment is IN FLIGHT BUT STOPPED (coupling campaign, 959/11,372 runs, killed by the harness low-memory
+  reaper at 2026-09-24T21:23Z). Relaunch needs the operator's go-ahead and answers to Q1-Q4 in that file (cap
+  re-base amendment, whole machine, worker recycling, merge policy). Do NOT relaunch unasked.
+seat state: BLOCKED (named blocker: operator decision Q1/Q2 in RESUME_AFTER_RESET.md). Worktree
+  D:/Prometheus-worktrees/bellerophon-post-campaign-forensics on branch bellerophon/coupling-campaign-2026-09-24.
+
+COUPLING CAMPAIGN (physics v3) -- STOPPED BY HARNESS 2026-09-24T21:23Z, AWAITING OPERATOR RESTART
   Branch bellerophon/coupling-campaign-2026-09-24; prereg frozen c9bed96de (plan a3bc8c8e..., 11,372 Phase-1 runs);
   artifacts roles/Bellerophon/coupling_2026-09-24/. Started 20:07:31Z from pinned code
   C:/Users/James/z80atlas_coupling_2026-09-24/code. Stopped by Claude Code's low-memory reaper at 959 results
