@@ -1,0 +1,182 @@
+{
+ "code_commit": "0f0da6df1",
+ "configs": {
+  "c2c": {
+   "config_hash": "416bbe8b9be34706",
+   "path": "crius/configs/c2c.json",
+   "sha256_16": "fedad2c0245ddb93"
+  },
+  "c2d": {
+   "config_hash": "7ab056c39e1821fd",
+   "path": "crius/configs/c2d.json",
+   "sha256_16": "78b6ce7c34b20730"
+  }
+ },
+ "created_utc": "2026-09-23T10:23:47Z",
+ "disposition": "CLOSED -- ACCESSIBILITY FRONTIER MAPPED",
+ "gates": {
+  "c2c": {
+   "all_pass": true,
+   "gate_version": 2,
+   "path": "crius/runs/gate_c2c_v2/GATE.json",
+   "sha256_16": "24045be7fafd754b"
+  },
+  "c2d": {
+   "all_pass": true,
+   "gate_version": 2,
+   "path": "crius/runs/gate_c2d_v2/GATE.json",
+   "sha256_16": "3bb03a60986874a7"
+  }
+ },
+ "generator_fingerprint": "624728b00fdd3f2f",
+ "host": "M2",
+ "instance": "m2-8d43bbf9",
+ "parts": {
+  "c2c": "60348667c42ac021",
+  "c2d": "a2b1d9c2fdbf00e0"
+ },
+ "prereg": {
+  "path": "crius/CRIUS_C2_TERMINAL_PREREG.md",
+  "sha256_16": "9c8e0855c8d6a719"
+ },
+ "reader": "python -m crius.c2_terminal --rungs c2c c2d reproduces C2_TERMINAL_DISPOSITION.json from the run receipts; this file's hashes name every input",
+ "runs": {
+  "search_c2c_random_s1": {
+   "SUMMARY.json": "1435a48bb18037c2",
+   "best.json": "35aaede603d8b93e",
+   "candidates.jsonl.gz": "031595b937303d6b",
+   "code_commit": "7661050d9"
+  },
+  "search_c2c_random_s2": {
+   "SUMMARY.json": "0b1e9eed858492a8",
+   "best.json": "864b26db75eaa02d",
+   "candidates.jsonl.gz": "50f8089301b7da4a",
+   "code_commit": "7661050d9"
+  },
+  "search_c2c_random_s3": {
+   "SUMMARY.json": "9720e00f50d9f9ad",
+   "best.json": "f802e1a606e5cac7",
+   "candidates.jsonl.gz": "4f8c1dd6ec924bd1",
+   "code_commit": "7661050d9"
+  },
+  "search_c2c_recombination_s1": {
+   "SUMMARY.json": "2a8010e78b4a2460",
+   "best.json": "5ae2c197809e4eef",
+   "candidates.jsonl.gz": "03ede004ae173231",
+   "code_commit": "cabe092b4"
+  },
+  "search_c2c_recombination_s2": {
+   "SUMMARY.json": "b1751ad24179d3af",
+   "best.json": "08072c944fd66c5c",
+   "candidates.jsonl.gz": "cb94694299352a79",
+   "code_commit": "cabe092b4"
+  },
+  "search_c2c_recombination_s3": {
+   "SUMMARY.json": "3297fd01076f679c",
+   "best.json": "2eb9ad9565bad529",
+   "candidates.jsonl.gz": "3035421834bbfd1a",
+   "code_commit": "cabe092b4"
+  },
+  "search_c2c_seeded_s1": {
+   "SUMMARY.json": "f0418beddcf240cc",
+   "best.json": "4c7b901b3185107f",
+   "candidates.jsonl.gz": "8e78f07b46305e38",
+   "code_commit": "f16d49322"
+  },
+  "search_c2c_seeded_s2": {
+   "SUMMARY.json": "3d7c5df0414bd4b3",
+   "best.json": "1fb6242949967115",
+   "candidates.jsonl.gz": "9ead4175d3b51bc1",
+   "code_commit": "f16d49322"
+  },
+  "search_c2c_seeded_s3": {
+   "SUMMARY.json": "bf9ffa523dfe866f",
+   "best.json": "c28b7ddd5999231e",
+   "candidates.jsonl.gz": "f5b25a0bb0d36c38",
+   "code_commit": "cabe092b4"
+  },
+  "search_c2d_random_s1": {
+   "SUMMARY.json": "1445a563b25e4f2c",
+   "best.json": "a76fae9bd788dc67",
+   "candidates.jsonl.gz": "0d2e3b4ede1440e8",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_random_s2": {
+   "SUMMARY.json": "e8568855e4b900c6",
+   "best.json": "f4c3ba0e48988dc0",
+   "candidates.jsonl.gz": "42d1dd56f489058d",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_random_s3": {
+   "SUMMARY.json": "732aadf1a606eb0e",
+   "best.json": "f75342db9b0616ad",
+   "candidates.jsonl.gz": "3dd148467f87ea6a",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_recombination_s1": {
+   "SUMMARY.json": "822c75b7a14a0263",
+   "best.json": "e324f83f68405089",
+   "candidates.jsonl.gz": "592766787dac660e",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_recombination_s2": {
+   "SUMMARY.json": "e22e05a44304bb27",
+   "best.json": "7fa425c8fbe1725a",
+   "candidates.jsonl.gz": "92f9c89dc4a78f46",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_recombination_s3": {
+   "SUMMARY.json": "0f3fdfa797295c1d",
+   "best.json": "c38bc8a8e2f66d3b",
+   "candidates.jsonl.gz": "53b1010a96318b7d",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_seeded_s1": {
+   "SUMMARY.json": "42f14f10f7dd891c",
+   "best.json": "47c23bb81a5c64c2",
+   "candidates.jsonl.gz": "1a8a589752f88cdd",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_seeded_s2": {
+   "SUMMARY.json": "df496c972491f351",
+   "best.json": "6a271883f3d45361",
+   "candidates.jsonl.gz": "14c7f13eda1f1e5c",
+   "code_commit": "52c58d0d4"
+  },
+  "search_c2d_seeded_s3": {
+   "SUMMARY.json": "13e969c1c7d24191",
+   "best.json": "a329fa24acc5fdf6",
+   "candidates.jsonl.gz": "93d8ab1099166a8c",
+   "code_commit": "52c58d0d4"
+  }
+ },
+ "scorer": {
+  "output": "crius/runs/C2_TERMINAL_DISPOSITION.json",
+  "output_sha256_16": "ee5bee750278e157",
+  "path": "crius/c2_terminal.py",
+  "sha256_16": "8896929e65719f77"
+ },
+ "seat": "Crius",
+ "verdict": {
+  "R4_hits": [],
+  "R4_survives": true,
+  "R5_hits": [],
+  "R5_survives": false,
+  "a_gate_C": true,
+  "c_partial_ok": false,
+  "c_partial_seeds_by_arm": {
+   "c2c/random": 1,
+   "c2c/recombination": 1,
+   "c2c/seeded": 0,
+   "c2d/random": 1,
+   "c2d/recombination": 1,
+   "c2d/seeded": 0
+  },
+  "d_repro_candidates": 0,
+  "disposition": "CLOSED -- ACCESSIBILITY FRONTIER MAPPED",
+  "e_causal_candidates": 0,
+  "f_content_test": "not applicable (no candidate reached e)",
+  "g_single_large_edit": []
+ },
+ "world_fingerprint": "7c53db874324b532"
+}

@@ -1,0 +1,171 @@
+{
+ "status": "DONE",
+ "spec_id": "84616cf8257b",
+ "family": "70d24e947c80",
+ "seed": 1,
+ "stage": "early",
+ "scheduler_reason": "matched_control:accessibility",
+ "factor_vector": {
+  "world.topology": "well_mixed",
+  "world.migration": "none",
+  "world.resources": "limited",
+  "world.env_dynamics": "env_mutate",
+  "world.reservoir": false,
+  "representation.substrate": "vmcopy",
+  "representation.genome": 32,
+  "representation.layout": "shared",
+  "reproduction": "ENDOGENOUS_COPY",
+  "pressure": "tape_cost",
+  "task": "ECHO_forced",
+  "mutation": "local_byte",
+  "init": "random"
+ },
+ "signals": {
+  "final_pop_frac": 0.75,
+  "mean_pop_frac": 0.688,
+  "births": 4739,
+  "births_endo": 4739,
+  "replication_rate": 0.0586,
+  "fidelity_late": 0.482,
+  "task_max_final": 0.333,
+  "best_ever": 1.0,
+  "first_crossing": {
+   "ECHO_forced": {
+    "epoch": 0,
+    "id": 41,
+    "lineage": 41,
+    "cell": 65
+   }
+  },
+  "moat_crossed": true,
+  "archs": 45,
+  "new_arch_events": 45,
+  "coexist_epochs": 3,
+  "lineages_final": 1,
+  "max_lineage_age": 57,
+  "migrations": 0,
+  "env_births": 0,
+  "env_changes": 18,
+  "span_first": 7,
+  "span_last": 22,
+  "compression": false,
+  "spontaneous_replication_legacy_label": false,
+  "spontaneous_replication": false,
+  "inserted_lineage_replication": false,
+  "provenance": {
+   "schema": "archaeon.z80atlas.provenance.v1",
+   "founders": {
+    "random": 81,
+    "seeded_replicator": 0,
+    "transplanted_lineage": 0
+   },
+   "world_has_inserted_material": false,
+   "births_endo_clean": 4739,
+   "births_endo_inserted": 0,
+   "fid_clean": 0.485,
+   "fid_inserted": 0.0,
+   "final_pop_clean": 96,
+   "final_pop_inserted": 0,
+   "donor_mixed_births": 0,
+   "recombination_mixed_births": 0,
+   "max_generation_clean": 74,
+   "max_generation_inserted": 0,
+   "first_replication": {
+    "epoch": 23,
+    "mech": "ENDOGENOUS_COPY",
+    "fid": 1.0,
+    "parent_id": 48,
+    "child_id": 82,
+    "cell": 17,
+    "niche": 0,
+    "lineage": 48,
+    "generation": 1,
+    "founders": [
+     48
+    ],
+    "origins": [
+     "random"
+    ],
+    "inserted_ancestry": false,
+    "parent_tape": "d521f9897030d42ef94aed67c4e2be714e8ed4791f14d54550d911698a00c826",
+    "child_tape": "d521f9897030d42ef94aed67c4e2be714e8ed4791f14d54550d911698a00c826",
+    "task": "ECHO_forced"
+   },
+   "first_clean_replication": {
+    "epoch": 23,
+    "mech": "ENDOGENOUS_COPY",
+    "fid": 1.0,
+    "parent_id": 48,
+    "child_id": 82,
+    "cell": 17,
+    "niche": 0,
+    "lineage": 48,
+    "generation": 1,
+    "founders": [
+     48
+    ],
+    "origins": [
+     "random"
+    ],
+    "inserted_ancestry": false,
+    "parent_tape": "d521f9897030d42ef94aed67c4e2be714e8ed4791f14d54550d911698a00c826",
+    "child_tape": "d521f9897030d42ef94aed67c4e2be714e8ed4791f14d54550d911698a00c826",
+    "task": "ECHO_forced"
+   },
+   "first_inserted_replication": null,
+   "first_crossing": {
+    "ECHO_forced": {
+     "epoch": 0,
+     "id": 41,
+     "generation": 0,
+     "inserted_ancestry": false,
+     "origins": [
+      "random"
+     ],
+     "is_unmodified_founder_tape": true
+    }
+   },
+   "births_endo_clean_hifi": 190,
+   "first_clean_hifi_replication": {
+    "epoch": 23,
+    "mech": "ENDOGENOUS_COPY",
+    "fid": 1.0,
+    "parent_id": 48,
+    "child_id": 82,
+    "cell": 17,
+    "niche": 0,
+    "lineage": 48,
+    "generation": 1,
+    "founders": [
+     48
+    ],
+    "origins": [
+     "random"
+    ],
+    "inserted_ancestry": false,
+    "parent_tape": "d521f9897030d42ef94aed67c4e2be714e8ed4791f14d54550d911698a00c826",
+    "child_tape": "d521f9897030d42ef94aed67c4e2be714e8ed4791f14d54550d911698a00c826",
+    "task": "ECHO_forced"
+   }
+  },
+  "ruler": {
+   "score": 0.0,
+   "non_deleterious": 1.0,
+   "beneficial": 0.0,
+   "id": 4598,
+   "fresh16": 0.0
+  },
+  "exploits": 0,
+  "neighbour_dependence": 0,
+  "cap_hit_frac": 0.964,
+  "extinct_epoch": null,
+  "epochs": 918,
+  "vm_steps": 60021803
+ },
+ "wall_s": 93.7,
+ "finished_at": "2026-09-23T12:03:48Z",
+ "grammar": "63ffdeca16db3333",
+ "final_population_n": 96,
+ "snapshots": 24,
+ "events": 20000
+}

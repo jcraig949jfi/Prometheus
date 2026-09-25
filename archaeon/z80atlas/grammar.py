@@ -82,27 +82,102 @@ def factor_vector(s: dict) -> dict:
             "representation.layout": s["representation"]["layout"], "reproduction": s["reproduction"], "pressure": "+".join(s["pressure"]), "task": s["task"]["name"], "mutation": s["mutation"], "init": s["init"]}
 
 
+# ---- context-conditional coverage (operator ruling 4, 2026-09-23; post-campaign fix of the 72-hour sampler)
+# The campaign sampler weighted every level by 1/(1+coverage) over ALL runs. A level that is FORCED in some context (migration=none
+# and reservoir=False in every non-niches world; the three env dynamics legal everywhere; every pressure except the two that need
+# EXTERNAL) accumulated coverage there, so where the axis was free those levels looked over-explored and were starved: niches
+# exploration drew migration=none in 190/13,313 runs and produced zero bare-niches worlds, and EXTERNAL draws were pushed toward
+# recombination / explicit_fitness. Fix: a dependent axis is drawn only among the levels the constraints allow given its parent,
+# weighted by coverage counted WITHIN that parent context; pair costs ignore pairs whose dependent level was forced.
+# CONTEXT is the dependency map of GR.CONSTRAINTS (checked against them by the preflight and the tests).
+CONTEXT = {"world.migration": "world.topology", "world.reservoir": "world.topology", "world.env_dynamics": "world.topology",
+           "pressure": "reproduction", "representation.layout": "task"}
+NEUTRAL = {"world.topology": "well_mixed", "world.migration": "none", "world.resources": "unlimited", "world.env_dynamics": "fixed", "world.reservoir": False,
+           "representation.substrate": "z80", "representation.genome": 32, "representation.layout": "shared", "reproduction": "EXTERNAL",
+           "pressure": "implicit_survival", "task": "CONST_atomic", "mutation": "local_byte", "init": "random"}   # a valid completion used for probing
+
+
+def spec_from_factors(fv: dict, stage: str = "early", reason: str = "probe") -> Optional[dict]:
+    w = {"topology": fv["world.topology"], "migration": fv["world.migration"], "resources": fv["world.resources"], "env_dynamics": fv["world.env_dynamics"],
+         "reservoir": fv["world.reservoir"], "niches": FROZEN["niches"]}
+    rep = {"substrate": fv["representation.substrate"], "genome": fv["representation.genome"], "layout": fv["representation.layout"]}
+    return make(w, rep, fv["reproduction"], fv["pressure"].split("+"), fv["task"], fv["mutation"], fv["init"], stage=stage, reason=reason)
+
+
+_ELIG: Dict[tuple, bool] = {}
+
+
+def eligible(axis: str, level, given: dict) -> bool:
+    """Is `level` of `axis` admissible under GR.CONSTRAINTS given the parent values in `given`? Probed on the neutral completion."""
+    key = (axis, str(level), tuple(sorted((k, str(v)) for k, v in given.items())))
+    if key not in _ELIG:
+        fv = dict(NEUTRAL); fv.update(given); fv[axis] = level
+        _ELIG[key] = spec_from_factors(fv) is not None
+    return _ELIG[key]
+
+
+def coverage_keys(fv: dict) -> List[str]:
+    keys = ["%s=%s" % (k, v) for k, v in fv.items()]                    # plain keys (kept for reports / compatibility)
+    for axis, parent in CONTEXT.items():
+        for l in (fv[axis].split("+") if axis == "pressure" else [fv[axis]]):
+            keys.append("%s=%s@%s=%s" % (axis, l, parent, fv[parent]))
+    return keys
+
+
+def forced_axes(fv: dict) -> set:
+    """Dependent axes whose value had no alternative in this spec's context (e.g. migration outside niches)."""
+    return {a for a, p in CONTEXT.items() if a != "pressure" and sum(eligible(a, l, {p: fv[p]}) for l in AXES[a]) == 1}
+
+
+def pair_keys(fv: dict) -> List[str]:
+    """Pair-coverage keys. Forced levels are skipped; a pair involving a dependent axis is counted WITHIN its parent context, so a
+    context-restricted level (e.g. local_shift, which exists only in niches) is not mistaken for an unexplored one."""
+    f = forced_axes(fv); ks = sorted(k for k in fv if k not in f); out = []
+    for i in range(len(ks)):
+        for j in range(i + 1, len(ks)):
+            ctx = sorted({"%s=%s" % (CONTEXT[a], fv[CONTEXT[a]]) for a in (ks[i], ks[j]) if a in CONTEXT and CONTEXT[a] not in (ks[i], ks[j])})
+            out.append("%s=%s|%s=%s" % (ks[i], fv[ks[i]], ks[j], fv[ks[j]]) + ("@" + ",".join(ctx) if ctx else ""))
+    return out
+
+
 def random_spec(rng: SplitMix64, stage: str, coverage: Dict[str, int], reason: str) -> Optional[dict]:
-    """Sparse coverage: draw each axis level with weight 1/(1+count of that level in coverage), so underexplored levels and
-    pairs are favoured; pairwise coverage counted by the scheduler. Structural axes vary before numeric ones (no numeric axis here)."""
-    def pick(axis):
-        lv = AXES[axis]; w = [1.0 / (1 + coverage.get("%s=%s" % (axis, l), 0)) for l in lv]; t = sum(w); x = rng.randbelow(1000000) / 1000000 * t
+    """Sparse coverage: each level weighted 1/(1+coverage). Independent axes use plain coverage; a dependent axis (CONTEXT) is drawn
+    only among levels the constraints admit given its already-drawn parent, weighted by coverage within that parent context."""
+    def pick(axis, parent=None, pval=None):
+        if parent is None:
+            lv = AXES[axis]; w = [1.0 / (1 + coverage.get("%s=%s" % (axis, l), 0)) for l in lv]
+        else:
+            lv = [l for l in AXES[axis] if eligible(axis, l, {parent: pval})]
+            w = [1.0 / (1 + coverage.get("%s=%s@%s=%s" % (axis, l, parent, pval), 0)) for l in lv]
+        t = sum(w); x = rng.randbelow(1000000) / 1000000 * t
         for l, ww in zip(lv, w):
             x -= ww
             if x <= 0: return l
         return lv[-1]
     for _ in range(50):
-        topo = pick("world.topology")
-        world = {"topology": topo, "migration": pick("world.migration") if topo == "niches" else "none", "resources": pick("world.resources"), "env_dynamics": pick("world.env_dynamics"),
-                 "reservoir": pick("world.reservoir") if topo == "niches" else False, "niches": FROZEN["niches"]}
-        rep = {"substrate": pick("representation.substrate"), "genome": pick("representation.genome"), "layout": pick("representation.layout")}
+        topo = pick("world.topology"); T_ = "world.topology"
+        world = {"topology": topo, "migration": pick("world.migration", T_, topo), "resources": pick("world.resources"),
+                 "env_dynamics": pick("world.env_dynamics", T_, topo), "reservoir": pick("world.reservoir", T_, topo), "niches": FROZEN["niches"]}
+        task = pick("task")
+        rep = {"substrate": pick("representation.substrate"), "genome": pick("representation.genome"), "layout": pick("representation.layout", "task", task)}
         repro = pick("reproduction"); n_p = 1 + rng.randbelow(2); press = []
         while len(press) < n_p:
-            p = pick("pressure")
+            p = pick("pressure", "reproduction", repro)
             if p not in press: press.append(p)
-        s = make(world, rep, repro, press, pick("task"), pick("mutation"), pick("init"), stage=stage, reason=reason)
+        s = make(world, rep, repro, press, task, pick("mutation"), pick("init"), stage=stage, reason=reason)
         if s: return s
     return None
+
+
+def explore_step(rng: SplitMix64, stage: str, coverage: Dict[str, int], pairs: Dict[str, int], n_cands: int = 4) -> Optional[dict]:
+    """One exploration draw exactly as the scheduler makes it: n_cands candidates, keep the one with least pair coverage, update both."""
+    cands = [c for c in (random_spec(rng, stage, coverage, "exploration") for _ in range(n_cands)) if c]
+    if not cands: return None
+    best = min(cands, key=lambda c: sum(pairs.get(k, 0) for k in pair_keys(factor_vector(c))))
+    fv = factor_vector(best)
+    for k in coverage_keys(fv): coverage[k] = coverage.get(k, 0) + 1
+    for k in pair_keys(fv): pairs[k] = pairs.get(k, 0) + 1
+    return best
 
 
 def matched_controls(s: dict, stage: str) -> List[dict]:

@@ -20,7 +20,15 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: false
+  # GitHub's stock Pages template sets this false, so a deploy is never cut off
+  # mid-flight. That assumes runs always finish. On 2026-08-31 a deployment stuck
+  # in "waiting" never did, and because nothing could cancel it, all 29 runs after
+  # it queued behind the wedge, were never assigned a job, and died at the timeout
+  # -- the published site sat three weeks stale while every push appeared to work.
+  # true trades "a deploy can be superseded by a newer one" for "one stuck run
+  # cannot freeze the site indefinitely". Superseding is the cheaper failure: the
+  # newer push is the one we wanted published anyway.
+  cancel-in-progress: true
 
 jobs:
   deploy:

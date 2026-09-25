@@ -1,0 +1,222 @@
++==============================================================================+
+|  REVIEW PACKET -- COSMOS WORLD-GRAPH ENGINE (CWE), CAMPAIGN 0 QUALIFICATION  |
+|  Author: Cosmos[m2-6ed01908] (new seat, M2 SPECTREX5)   Date: 2026-09-23     |
+|  For: operator (HITL) + external reviewers                                   |
+|  Status: campaign complete; claims at QUALIFICATION scope only               |
+|  Self-contained: no repository access needed; paths/SHAs in s10              |
++==============================================================================+
+
+0. SUMMARY / MANDATE / VERDICT
+------------------------------------------------------------------------------
+Mandate (charter, 8 h, autonomous): build an adversarial "physics chamber"
+over executable counterfactual worlds and QUALIFY it: can limited
+experimentation over 3 structurally different worlds recover a compact,
+normalized phase-boundary law that survives counterexample search and
+predicts a preregistered intervention in a sealed 4th world?
+
+Verdict: CWE QUALIFICATION PROVISIONALLY SUPPORTED -- as three verdicts:
+  V1 CHAMBER: SUPPORTED (PROVISIONAL). Recovers planted laws, refuses
+     artifacts/null/broken universality, kills wrong laws (7 of 9), finds
+     missing coordinates by attack, seals holdouts (audit PASS), and has
+     caught defects in its OWN tests (pooled residuals hid opposite-signed
+     family offsets; one-flip intervention engine; chance-floor-free gate).
+  V2 CANDIDATE LAW: SURVIVED sealed D (.983), E (.972), F (A .930, B .955)
+     and fresh-world interventions (G6 FAIL by engine defect, then G6b,
+     G6E, G6F PASS). B over A on F NOT established (10 vs 10, p = 1.0).
+     The law is the shared task's economics (97.5% agreement with a
+     hand-derived law): a planted-invariant recovery, not a discovery.
+  V3 SEARCH METHOD: UNRESOLVED. Active sampler ties random; cost lines
+     lose to random (.767 vs .946, matched budget); in the post-holdout
+     attribution matrix 6/7 arms survive, so location-aware selection is
+     not shown necessary; the C1->C2 "improvement" was mostly seed.
+  Observation (not a conclusion): on F, A's unique errors include gross
+  misses on growing/dying clones; B's all sit near the phase boundary.
+  No further universality claim until new sealed worlds exist.
+Nothing here is evidence about intelligence or reality.
+
+1. WHAT WAS BUILT (and what was committed before measurement)
+------------------------------------------------------------------------------
+numpy-only engine, 44 modules + 9 test files (72 fast + 7 slow tests):
+  - 3 visible substrates, independent code lineages (AST-audited):
+      regs  metered register VM, bit flips, unbounded registers
+      ring  delay line, packet loss, dead packets stop costing, eviction
+      ca    block cellular tape, cell flips, optional majority repair
+    Shared functional demand: a cue appears, K distractors pass, the ask
+    rewards the cue. Mechanisms SEL / LOG / LAST implemented natively.
+  - Phenomenon SELECTIVE_PAYS.v1: fit(SEL) - max(fit(LOG), fit(LAST))
+    >= 0.10, fit = (reward - cost)/reward_unit. Source contract (WSE,
+    archaeon/wse/ssf.py) verified and NOT mutated; translation manifest.
+    The certificate reads native observations only (leakage test).
+  - Miner: grammar C N K G (+Q) with + - * / log exp(-x), size <= 6,
+    one atom or a 2-atom conjunction; leave-one-lineage-out scoring;
+    the WHOLE search rerun under 19 label permutations (NONE otherwise).
+  - Adversary: band, coordinate-preserving transforms (metamorphic),
+    extremes, error-seeking; confirmation by 2 fresh 4x replicates;
+    kill if confirmed/confident > 5%. Later: location attack + gate.
+  - Holdout broker: sealed family module refuses import outside a
+    subprocess; spec hash + CSPRNG nonce committed and pushed BEFORE
+    mining; predictions and intervention prescriptions hash-receipted
+    BEFORE any sealed world runs.
+  - SQLite world graph (typed edges), immutable law ledger with
+    lifecycle, chained receipts; Atlas-shaped JSONL export.
+Committed before measurement: every campaign's PREREG (c0, c0b, c0e,
+c0m, c0s, c1, c2, eta2, c2abl) and every amendment, each in its own
+commit before its data; seals pushed to origin before use.
+
+2. THE CLAIM AND WHY IT MATTERS
+------------------------------------------------------------------------------
+Claim under test: the instrument can find a compact boundary law across
+mechanically different substrates, kill wrong laws, and transfer a
+surviving law to sealed substrates through their declared coordinates.
+It matters because every later Cosmos chamber (functional memory,
+communication, ...) inherits this instrument; if it cannot refuse wrong
+laws here, where the answer is known by construction, it cannot be
+trusted where the answer is unknown.
+
+3. DESIGN AS EXECUTED (campaign sequence)
+------------------------------------------------------------------------------
+  C0   v1 coords (C N K G), active sampler 80/fam, 3 adversary rounds
+  C0b  v3 = v2 + capacity Q, fresh seed, random sampler (active lost)
+  G6b  fresh-world intervention retest (new prereg; G6 stays FAIL)
+  C0e  second sealed universe E vs the already-frozen law
+  C0m  alternative mechanism (repetition-coded register)
+  C0s  post-freeze stress; ceiling-bias scan; LOCATE (new instrument)
+  C1   v4 expected-cost coords + cost lines + location gate; F sealed
+  C2   location-aware selection among near-tied candidates
+  F    both frozen laws adjudicated on sealed F
+  eta2 budget-matched cost lines vs random
+  c2x  attribution matrix (lines x selection) on seeds 28/29/31 + a full
+       end-to-end rerun (byte-identical) -- POST-HOLDOUT development
+
+4. RESULTS (exact)
+------------------------------------------------------------------------------
+Gates (C0 run 2): G0 PASS G1 FAIL(noise-blind check) G4 FAIL; G5/G6 not
+reached. Killed laws at 15.7%, 10.2%, 23.1% confirmed-contradiction rates.
+Gates (C0b): G0 G1 G2 G4 G5 G7 PASS, G6 FAIL 0/12.
+  law A: C - (G + exp(-N)) <= -1.055 AND (C - log Q) K >= 0.179
+Holdouts (predictions receipted first):
+                 law  BA     5-NN   majority  Brier (climatology)
+  D well         A    0.983  0.841  0.500     0.029 (0.103)
+  E swarm        A    0.972  0.769  0.500     0.031 (0.174)
+  F clone        A    0.930  0.841  0.500     0.045 (0.155)
+  F clone        B    0.955  0.833  0.500     0.042 (0.155)
+  law B: log(Q - C K) <= -0.158 AND C - G exp(-N) <= -0.102
+  F: discordant worlds 10 (A wrong) vs 10 (B wrong): sign test p = 1.0.
+Interventions (fresh sealed worlds; precision = mean |log2 f_obs/f_pred|
+of the upper flip, ladder resolution 0.5):
+  G6  D  FAIL 0/12  (engine assumed one flip; law is a band) -- stays FAIL
+  G6b D  dir 12/12  precision 0.155  (best constant 0.83)
+  G6E E  dir 10/12  precision 0.318  (best constant 1.25)
+  G6F F  dir 11/12  precision 0.201  (best constant 0.71)
+Mechanism attack (C0m): repetition coding flips 43/300 verdicts; law A
+  with mechanism-level coordinates BA 0.961 (reference mechanism 0.958;
+  with the wrong hazard 0.866).
+Location: law A ceiling at G - 0.055 vs observed G - 0.100 +/- 0.008
+  (9/9 cells); per-family offsets regs -0.147 ca -0.105 ring +0.142
+  log2, pooled -0.037 (looks fine); ring offset tracks N (corr 0.99).
+C1: 3 laws FAILED by the location gate (offsets -0.37..-0.55 log2)
+  while their contradiction rates were 2-4% (under the old 5% rule).
+C2: round-0 law FAILED (regs -0.168); law B SURVIVED, offsets <= 0.015.
+Samplers: active 0.790 vs random 0.788 (B=30); cost lines 0.767 vs
+  random 0.946 (eta2, matched budget).
+Post-hoc: mined law vs hand-derived task-economics law agree on 97.5%
+  of D and E worlds (BA 0.983/0.973, 0.972/0.971).
+Attribution (survival in 3 rounds, 1 run per cell-seed, descriptive):
+               no lines            lines
+  no select    s28 SURV s29 SURV   s28 FAIL  s29 SURV
+  select       s29 SURV            s29 SURV  s31 SURV
+Reproducibility: full reruns byte-identical -- c2none (740/740 runs,
+  241/241 edges) and C2 itself (1,130/1,130 runs, 693/693 edges, law B
+  freeze hash reproduced). Pinned C0b replay: pre-mining phases identical,
+  then OOM (old worker pool). Audit PASS on 9 stores (+ cheat controls).
+
+5. INCIDENTS AND WHAT THEY VALIDATED
+------------------------------------------------------------------------------
+  - C0 run 1 and C1 run 1 crashed (process-pool pipe exhaustion; worker
+    MemoryError); both before any law existed; amended, rerun, same seed.
+  - Own-instrument defects found and recorded (none silently fixed):
+    adversary used v1 coordinates for a v2 law; noise-blind G1 check;
+    G2/G7 hidden for killed laws; one-flip intervention engine; G6 gate
+    without a chance floor (a constant would pass magnitude 10/12);
+    scan resolution coarser than its criterion; repeated adversary
+    rounds re-fired identical attacks; a pool-row leak caught before the
+    preregistered run; a single-atom direction bug predicting the exact
+    inverse; an estimated (wrong) status timestamp.
+  - Each failure produced a test or a gate change; the calibration
+    ledger lists every lost prediction (P2 P4 M3 S2 C1a C1b eta2 ...).
+
+6. WHAT THE INSTRUMENT CAUGHT THAT GENERIC STATISTICS DID NOT
+------------------------------------------------------------------------------
+  - LOLO accuracy + permutation null + family-residual mu ~ 0 all passed
+    laws that the adversary then killed (C0) -- missing variables are
+    invisible to fit statistics.
+  - Pooled location bias ~0 hid opposite-signed family biases (ring vs
+    regs/ca); per-family location testing found a coordinate defect.
+  - Selection-time location estimates were noisy (0.005 vs gate -0.168);
+    the independent gate caught it.
+
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+------------------------------------------------------------------------------
+DOES (QUALIFICATION, these substrates, this author): the engine refuses
+wrong laws, finds missing coordinates adversarially, seals holdouts with
+engineered separation, and transfers a surviving law to three sealed
+substrates better than nonparametric transfer, with interventions.
+DOES NOT: say anything about intelligence, memory in general, or
+reality; establish universality (the law IS the shared task's
+economics in declared coordinates); show that active or cost-line
+sampling helps; show law B better than law A on F; give independence
+beyond code level (one author wrote every substrate, including the
+sealed ones, knowing the law's form); make the location gate independent
+of location-aware selection (same criterion, different bases).
+Nor does anything after F was spent (eta2, attribution arms, audit)
+carry a generalization claim: it is post-holdout development.
+
+8. RECOMMENDATION (operator's call; Cosmos's lean)
+------------------------------------------------------------------------------
+Lean: CONTINUE, but only if the next campaign breaks the one-author
+ceiling. Minimum for C3: (a) a sealed substrate written and sealed by a
+DIFFERENT seat; (b) a phenomenon whose law is not a restatement of a
+hand-written economy (the charter's functional-memory certificate:
+conditional mutual information + ablation); (c) retire the kernel
+active sampler; (d) Atlas harvest of the exported JSONL.
+Stop condition worth stating: if C3's sealed-by-another-seat substrate
+is predicted no better than 5-NN transfer, the transfer seen here was an
+artifact of shared authorship, and the engine should be re-scoped to an
+auditing tool rather than a law finder.
+
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+------------------------------------------------------------------------------
+  Q1 Is "qualification" meaningful when the recovered law equals the
+     task economics the author built in? What would a non-circular
+     qualification target look like at this cost?
+  Q2 The location gate killed laws with 2-4% contradiction rates. Is a
+     0.10 log2 location tolerance scientifically motivated or arbitrary?
+  Q3 Three sealed universes were spent in one day. Was spending E and F
+     on the same law family the best use of held-out capacity?
+  Q4 Coordinates are declared by the substrate author. Is there any
+     defence against a well-meaning author declaring coordinates that
+     smuggle the answer (every family "knows" C, N, K, G)?
+  Q5 What should Cosmos STOP doing?
+
+10. ARTIFACTS
+------------------------------------------------------------------------------
+  code        prometheus/cosmos/ (canonical check: python -m
+              prometheus.cosmos.runtest --full; PASS 20260923T164832Z)
+  seat        roles/Cosmos/ (STATUS.md, journal/2026-09-23.md,
+              calibration/LEDGER.md, design/00-02 + PROVENANCE.md)
+  campaigns   roles/Cosmos/campaigns/{c0,c0b,c0e,c0m,c0s,c1,c2,eta2,c2abl,
+              c2x} (PREREG + amendments + results + compact artifacts)
+  operator    roles/Cosmos/prompts/2026-09-23_operator_midcampaign/
+  audit       roles/Cosmos/campaigns/AUDIT_2026-09-23T1630Z.txt
+  handoff     roles/Cosmos/campaigns/HANDOFF_2026-09-23.md
+  seals       D 48e709653f2b... (800072c1e)  E d17ace6e6f91... (da57b0ac4)
+              F 5e0064901277... (7c9e0d58f)
+  frozen      law A f852d782cb freeze 37c28c59ae91...
+              law B a079ad5ec1 freeze a64cc593024b...
+  branch      cosmos/cwe-c0-2026-09-23; main fast-forwards ed84a6c59,
+              c9e12df7f, 93dfd4344 (+ this packet fix)
+
++==============================================================================+
+|  Reviewer: "not worth continuing" is a first-class answer. Say it if the     |
+|  one-author circularity in s7 is fatal rather than merely a limitation.      |
++==============================================================================+

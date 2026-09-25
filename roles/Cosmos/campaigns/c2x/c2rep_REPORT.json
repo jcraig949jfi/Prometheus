@@ -1,0 +1,485 @@
+{
+ "adversary": [
+  {
+   "by_kind": {
+    "band": {
+     "confident": 0,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 36
+    },
+    "coordpres": {
+     "confident": 25,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 25
+    },
+    "coordpres_base": {
+     "confident": 11,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 11
+    },
+    "errorseek": {
+     "confident": 35,
+     "confirmed": 0,
+     "contradictions": 1,
+     "n": 35
+    },
+    "extreme": {
+     "confident": 35,
+     "confirmed": 0,
+     "contradictions": 0,
+     "n": 35
+    }
+   },
+   "confident": 106,
+   "confirmed": 0,
+   "law": "(Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945",
+   "revision": null,
+   "round": 0,
+   "verdict": "SURVIVED"
+  }
+ ],
+ "cfg": {
+  "cmap": "v4",
+  "costlines": 10,
+  "g1b_crn": true,
+  "g1b_n": 12,
+  "holdout": null,
+  "location_gate": 0.1,
+  "location_select": true,
+  "main_strategy": "random",
+  "revise": [
+   "v4",
+   "v3"
+  ],
+  "secondaries": [
+   "v3",
+   "raw"
+  ],
+  "seed": 20260931
+ },
+ "config": "c2rep",
+ "final_law": {
+  "cmap": "v4",
+  "freeze_hash": "97f744115e29612eb0d49fc888639f0b6c016b995b18242b044bb9740d6b5e0f",
+  "law": "(Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945",
+  "law_id": "e654764319a1c31dc39d"
+ },
+ "gates": {
+  "G0": {
+   "identical": 30,
+   "receipt_chain_ok": true,
+   "replayed": 30,
+   "verdict": "PASS"
+  },
+  "G1": {
+   "causal_consistency": {
+    "ca": {
+     "cost_up_edges": 11,
+     "pass": true,
+     "sel_fitness_nonincreasing": 11
+    },
+    "regs": {
+     "cost_up_edges": 10,
+     "pass": true,
+     "sel_fitness_nonincreasing": 10
+    },
+    "ring": {
+     "cost_up_edges": 10,
+     "pass": true,
+     "sel_fitness_nonincreasing": 10
+    }
+   },
+   "per_family": {
+    "ca": {
+     "pass": true,
+     "pays_rate": 0.2475,
+     "sham_pays": 0
+    },
+    "regs": {
+     "pass": true,
+     "pays_rate": 0.18083333333333335,
+     "sham_pays": 0
+    },
+    "ring": {
+     "pass": true,
+     "pays_rate": 0.25333333333333335,
+     "sham_pays": 0
+    }
+   },
+   "verdict": "PASS"
+  },
+  "G2": {
+   "law_score": 0.8974,
+   "mean_fold_ba": 0.9454666666666668,
+   "p_null": null,
+   "raw_unnormalized_best_score": 0.7572676259446184,
+   "verdict": "PASS",
+   "worst_fold_ba": 0.9301
+  },
+  "G2_initial_info": {
+   "family_dependence": {
+    "gain_bits_per_row": -0.04279,
+    "mu_bits": -0.0158,
+    "null_median": -0.02699,
+    "p": 0.72,
+    "per_family_acc": {
+     "ca": 0.9461,
+     "regs": 0.9567,
+     "ring": 0.9519
+    }
+   },
+   "law_score": 0.8974495779977536,
+   "mean_fold_ba": 0.9454495779977536,
+   "raw_score": 0.7572676259446184,
+   "verdict": "INFO",
+   "worst_fold_ba": 0.9301116673084329
+  },
+  "G4": {
+   "rounds": 1,
+   "verdict": "PASS"
+  },
+  "G5": {
+   "verdict": "NOT REACHED (holdout adjudicated separately; D/E are spent)"
+  },
+  "G6": {
+   "verdict": "NOT REACHED (holdout adjudicated separately; D/E are spent)"
+  },
+  "G7": {
+   "gain_bits_per_row": -0.02378,
+   "mu_bits": -0.00645,
+   "null_median": -0.01734,
+   "p": 0.66,
+   "per_family_acc": {
+    "ca": 0.96,
+    "regs": 0.9414,
+    "ring": 0.9375
+   },
+   "verdict": "PASS"
+  }
+ },
+ "graph": {
+  "edge_kinds": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 25,
+   "DEFORMATION_OF": 577
+  },
+  "edges": 662,
+  "families": 3,
+  "laws": 1,
+  "nodes": 996,
+  "runs": 998
+ },
+ "identity": {
+  "cosmos_dirty": false,
+  "cosmos_src_sha": "fabdc296520465dc39a6b9b19e211c0c173e9c3f614390fbcce59d0dbbca2624",
+  "git_head": "95592c95f49633f071640b53cf2c056cc2f21134",
+  "n_src": 53
+ },
+ "laws": [
+  {
+   "cmap": "v4",
+   "events": [
+    "PROPOSED",
+    "ATTACKED",
+    "SURVIVED",
+    "FROZEN"
+   ],
+   "freeze_hash": "97f744115e29612eb0d49fc888639f0b6c016b995b18242b044bb9740d6b5e0f",
+   "law": "(Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945",
+   "law_id": "e654764319a1c31dc39d",
+   "parent": null,
+   "version": 1
+  }
+ ],
+ "mine_initial": {
+  "raw": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.06809,
+    "mu_bits": 0.06149,
+    "null_median": 0.0066,
+    "p": 0.04,
+    "per_family_acc": {
+     "ca": 0.6863,
+     "regs": 0.7981,
+     "ring": 0.8173
+    }
+   },
+   "fold_ba": {
+    "ca": 0.754935064935065,
+    "regs": 0.8647798742138364,
+    "ring": 0.8080879386849535
+   },
+   "law": "(N + log((C + N))) <= 2.169 AND (Q * exp(-(C * K))) <= 0.8725",
+   "p": 0.05,
+   "score": 0.7572676259446184,
+   "verdict": "CANDIDATE"
+  },
+  "v3": {
+   "family_dependence": {
+    "gain_bits_per_row": 0.08173,
+    "mu_bits": 0.007,
+    "null_median": 0.07473,
+    "p": 0.46,
+    "per_family_acc": {
+     "ca": 0.9216,
+     "regs": 0.9567,
+     "ring": 0.9375
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9248051948051947,
+    "regs": 0.9301116673084329,
+    "ring": 0.9207341670028237
+   },
+   "law": "(Q - (C * K)) <= 0.8385 AND (N - log((G - C))) <= 2.122",
+   "p": 0.05,
+   "score": 0.8772170097054838,
+   "verdict": "CANDIDATE"
+  },
+  "v4": {
+   "family_dependence": {
+    "gain_bits_per_row": -0.04279,
+    "mu_bits": -0.0158,
+    "null_median": -0.02699,
+    "p": 0.72,
+    "per_family_acc": {
+     "ca": 0.9461,
+     "regs": 0.9567,
+     "ring": 0.9519
+    }
+   },
+   "fold_ba": {
+    "ca": 0.9707792207792207,
+    "regs": 0.9301116673084329,
+    "ring": 0.9354578459056071
+   },
+   "law": "(Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945",
+   "p": 0.05,
+   "score": 0.8974495779977536,
+   "verdict": "CANDIDATE"
+  }
+ },
+ "n_queries": 920,
+ "null_pool_failures": [],
+ "quick": false,
+ "quotient": {
+  "battery": [
+   "PAYS",
+   "BEATS_LAST",
+   "BEATS_LOG",
+   "RETAINS"
+  ],
+  "boundary_edge_fraction": {
+   "CONTROL_OF": 0.8667,
+   "COORD_PRESERVING": 0.04,
+   "DEFORMATION_OF": 0.4822
+  },
+  "boundary_edges_n": {
+   "CONTROL_OF": 60,
+   "COORD_PRESERVING": 25,
+   "DEFORMATION_OF": 506
+  },
+  "classes": {
+   "0000": 104,
+   "0001": 20,
+   "0010": 162,
+   "0011": 101,
+   "0100": 147,
+   "0101": 196,
+   "1110": 105,
+   "1111": 161
+  },
+  "classes_by_family": {
+   "ca": {
+    "0000": 22,
+    "0001": 11,
+    "0010": 47,
+    "0011": 43,
+    "0100": 49,
+    "0101": 76,
+    "1110": 19,
+    "1111": 75
+   },
+   "regs": {
+    "0000": 41,
+    "0001": 11,
+    "0010": 61,
+    "0011": 34,
+    "0100": 45,
+    "0101": 85,
+    "1110": 31,
+    "1111": 44
+   },
+   "ring": {
+    "0000": 45,
+    "0010": 57,
+    "0011": 27,
+    "0100": 59,
+    "0101": 39,
+    "1110": 64,
+    "1111": 55
+   }
+  },
+  "compression": 0.008,
+  "n_classes": 8,
+  "n_nodes": 996
+ },
+ "receipt_chain_ok": true,
+ "selections": [
+  {
+   "chosen": {
+    "cmap": "v4",
+    "lolo_score": 0.8974,
+    "offsets": {
+     "ca": 0.006656462146799455,
+     "regs": 0.006925675868049941,
+     "ring": 0.01174976390236808
+    },
+    "structure": "(Q - (C * K)) <= AND (C - (G * exp(-N))) <=",
+    "worst_offset": 0.01174976390236808
+   },
+   "n_candidates": 12,
+   "scored": [
+    {
+     "cmap": "v4",
+     "lolo_score": 0.8974,
+     "offsets": {
+      "ca": 0.006656462146799455,
+      "regs": 0.006925675868049941,
+      "ring": 0.01174976390236808
+     },
+     "structure": "(Q - (C * K)) <= AND (C - (G * exp(-N))) <=",
+     "worst_offset": 0.01174976390236808
+    },
+    {
+     "cmap": "v4",
+     "lolo_score": 0.8974,
+     "offsets": {
+      "ca": 0.015414512127330693,
+      "regs": 0.14274705601654405,
+      "ring": 0.023903348386611595
+     },
+     "structure": "(C - (G * exp(-N))) <= AND ((C * K) + exp(-Q)) >=",
+     "worst_offset": 0.14274705601654405
+    },
+    {
+     "cmap": "v4",
+     "lolo_score": 0.8946,
+     "offsets": {
+      "ca": 0.03748548640146094,
+      "regs": 0.04936985716445431,
+      "ring": 0.09011627120900263
+     },
+     "structure": "(exp(-N) - (C / G)) >= AND ((C * K) + exp(-Q)) >=",
+     "worst_offset": 0.09011627120900263
+    },
+    {
+     "cmap": "v4",
+     "lolo_score": 0.8934,
+     "offsets": {
+      "ca": 0.017112279379186992,
+      "regs": 0.02729888289032401,
+      "ring": 0.015414512127330748
+     },
+     "structure": "log((Q - (C * K))) <= AND (C - (G * exp(-N))) <=",
+     "worst_offset": 0.02729888289032401
+    },
+    {
+     "cmap": "v4",
+     "lolo_score": 0.8934,
+     "offsets": {
+      "ca": 0.5,
+      "regs": 0.5,
+      "ring": 0.5
+     },
+     "structure": "exp(-(Q - (C * K))) >= AND (C - (G * exp(-N))) <=",
+     "worst_offset": 0.5
+    },
+    {
+     "cmap": "v4",
+     "lolo_score": 0.888,
+     "offsets": {
+      "ca": 0.10200064197199592,
+      "regs": 0.1033588557734808,
+      "ring": 0.09520957296457111
+     },
+     "structure": "(G - (C / exp(-N))) >= AND ((C * K) + exp(-Q)) >=",
+     "worst_offset": 0.1033588557734808
+    },
+    {
+     "cmap": "v3",
+     "lolo_score": 0.8772,
+     "offsets": {
+      "ca": 0.1237320627957548,
+      "regs": 0.07483636594229696,
+      "ring": 0.02899665014218012
+     },
+     "structure": "(Q - (C * K)) <= AND (N - log((G - C))) <=",
+     "worst_offset": 0.1237320627957548
+    },
+    {
+     "cmap": "v3",
+     "lolo_score": 0.8772,
+     "offsets": {
+      "ca": 0.013716744875474527,
+      "regs": 0.05038851751556801,
+      "ring": 0.19877337532779793
+     },
+     "structure": "(Q - (C * K)) <= AND ((C - G) * exp(-N)) <=",
+     "worst_offset": 0.19877337532779793
+    },
+    {
+     "cmap": "v3",
+     "lolo_score": 0.8732,
+     "offsets": {
+      "ca": 0.044276555408885844,
+      "regs": 0.23782202212048995,
+      "ring": 0.01779138627992937
+     },
+     "structure": "(N - log((G - C))) <= AND (log(Q) - (C * K)) <=",
+     "worst_offset": 0.23782202212048995
+    },
+    {
+     "cmap": "v3",
+     "lolo_score": 0.8732,
+     "offsets": {
+      "ca": 0.01881004663104302,
+      "regs": 0.22254211685378436,
+      "ring": 0.042239234706658454
+     },
+     "structure": "(log(Q) - (C * K)) <= AND ((C - G) * exp(-N)) <=",
+     "worst_offset": 0.22254211685378436
+    },
+    {
+     "cmap": "v3",
+     "lolo_score": 0.8732,
+     "offsets": {
+      "ca": 0.05276539166816671,
+      "regs": 0.07992966769786555,
+      "ring": 0.10539617647570805
+     },
+     "structure": "(N - log((G - C))) <= AND (Q * exp(-(C * K))) <=",
+     "worst_offset": 0.10539617647570805
+    },
+    {
+     "cmap": "v3",
+     "lolo_score": 0.8732,
+     "offsets": {
+      "ca": 0.22933318586120902,
+      "regs": 0.04767208991259799,
+      "ring": 0.16991133204624287
+     },
+     "structure": "(Q * exp(-(C * K))) <= AND ((C - G) * exp(-N)) <=",
+     "worst_offset": 0.22933318586120902
+    }
+   ],
+   "tag": "initial"
+  }
+ ],
+ "t_eta_s": 212.7,
+ "t_oracle_s": 98.9,
+ "t_total_s": 2079.5
+}

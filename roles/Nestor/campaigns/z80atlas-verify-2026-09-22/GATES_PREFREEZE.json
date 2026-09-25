@@ -1,0 +1,105 @@
+{
+ "ok": true,
+ "written": "2026-09-24 01:00:53",
+ "gates": [
+  {
+   "gate": "VM selftest",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.0,
+   "tail": [
+    " \"failures\": []",
+    "}",
+    "SELFTEST PASS"
+   ]
+  },
+  {
+   "gate": "T-P1,2,3,8,9,10 repairs",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.3,
+   "tail": [
+    "caught T-P9  env x structure            niche0 easy=False, niche1 hard=True, coevo=True, deterministic=True",
+    "--------------------------------------------------------------------------------------------",
+    "repair gate: PASS"
+   ]
+  },
+  {
+   "gate": "T-P4 reservoir",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.0,
+   "tail": [
+    "cases where the repaired flag fires: 1",
+    "",
+    "T-P4: PASS"
+   ]
+  },
+  {
+   "gate": "T-P5 index-only",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.0,
+   "tail": [
+    "PASS: adjudicate.py contains no per-run read path",
+    "",
+    "T-P5: PASS"
+   ]
+  },
+  {
+   "gate": "T-P7 bundles",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.1,
+   "tail": [
+    "------------------------------------------------------------------------------------------------",
+    "VOLATILE_KEYS (23): arrival_index, arrival_rank, completed_at, completion_order, dir, duration_s, host, hostname, observatory_dir, order, path, paths, pid, root, run_dir, source_root, started_at, timestamp, ts, wall_s, wall_seconds, worker, worker_id",
+    "T-P7: PASS  (17 checks, 0 failed)"
+   ]
+  },
+  {
+   "gate": "T-P11 pair-copy causality",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.1,
+   "tail": [
+    "PASS   block copier: victim re-copies itself, same values prov share=1.00  prov_lit share=0.00  (under prov_lit a genuine copier would FAIL)",
+    "--------------------------------------------------------------------------------------------------------------",
+    "T-P11: PASS  (14 checks, 0 failed)"
+   ]
+  },
+  {
+   "gate": "T-S3 engineering repairs",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 0.2,
+   "tail": [
+    "caught   S3-2e world literal 0.90 restored            bare threshold comparisons: ['world.py:687 fid >= 0.90']",
+    "----------------------------------------------------------------------------------------------------",
+    "T-S3: PASS  (12 checks)"
+   ]
+  },
+  {
+   "gate": "P-6 report audit (predecessor)",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 24.7,
+   "tail": [
+    "banned_phrase_proves             caught   CHK-LANGUAGE:\\bproves\\b|\\bproven\\b  unsupported phrase 'proves",
+    "----------------------------------------------------------------------------------------------------",
+    "negative control: PASS"
+   ]
+  },
+  {
+   "gate": "calibration controls (PREFREEZE)",
+   "rc": 0,
+   "outcome": "PASS",
+   "seconds": 9.0,
+   "tail": [
+    " \"gate\": \"PASS\",",
+    " \"seconds\": 9.0",
+    "}"
+   ]
+  }
+ ]
+}

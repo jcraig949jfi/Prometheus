@@ -1,0 +1,606 @@
+[
+ {
+  "op_id": "f_permute",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": true,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": true,
+  "params": {}
+ },
+ {
+  "op_id": "f_contract_mode",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": true,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_reduce_max",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": false,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": true,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_reduce_norm",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": true,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_merge_modes",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": true,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": true,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_split_mode",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": true,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": true,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_hadamard_self",
+  "family": "ELEMENT",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "f_outer_marginals",
+  "family": "TENSOR",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "f_unary",
+  "family": "ELEMENT",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": false,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "kind": [
+    "choice",
+    [
+     "tanh",
+     "abs",
+     "sign",
+     "square",
+     "relu",
+     "sin",
+     "cube"
+    ]
+   ]
+  }
+ },
+ {
+  "op_id": "f_binary_field",
+  "family": "ELEMENT",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "kind": [
+    "choice",
+    [
+     "mul",
+     "add",
+     "max"
+    ]
+   ]
+  }
+ },
+ {
+  "op_id": "f_tt_round",
+  "family": "TN",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 32768,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "rank": [
+    "int",
+    1,
+    6
+   ]
+  }
+ },
+ {
+  "op_id": "f_svd_power",
+  "family": "LINALG",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 16384,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "power": [
+    "float",
+    0.0,
+    3.0
+   ]
+  }
+ },
+ {
+  "op_id": "f_qr_mode",
+  "family": "LINALG",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 16384,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_gemv_mode",
+  "family": "LINALG",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 16384,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_fft_abs",
+  "family": "SPECTRAL",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 23040,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_lowpass",
+  "family": "SPECTRAL",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 23040,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "mode": [
+    "mode"
+   ],
+   "keep": [
+    "float",
+    0.1,
+    0.7
+   ]
+  }
+ },
+ {
+  "op_id": "f_phase_scramble",
+  "family": "SPECTRAL",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 23040,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_noise",
+  "family": "STOCH",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "sd": [
+    "float",
+    0.05,
+    1.0
+   ],
+   "dist": [
+    "choice",
+    [
+     "normal",
+     "laplace",
+     "lognormal"
+    ]
+   ]
+  }
+ },
+ {
+  "op_id": "f_rare_spikes",
+  "family": "STOCH",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "rate": [
+    "float",
+    0.001,
+    0.05
+   ]
+  }
+ },
+ {
+  "op_id": "f_correlated_noise",
+  "family": "STOCH",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "sd": [
+    "float",
+    0.1,
+    1.0
+   ],
+   "mode": [
+    "mode"
+   ]
+  }
+ },
+ {
+  "op_id": "f_topk_sparsify",
+  "family": "SPARSE",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": false,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "sparse",
+  "changes_shape": false,
+  "params": {
+   "keep": [
+    "float",
+    0.05,
+    0.5
+   ]
+  }
+ },
+ {
+  "op_id": "f_mask",
+  "family": "SPARSE",
+  "domain": "field",
+  "in_sig": "T[n1..nd]",
+  "out_sig": "T[n1..nd]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "masked",
+  "changes_shape": false,
+  "params": {
+   "keep": [
+    "float",
+    0.2,
+    0.9
+   ]
+  }
+ },
+ {
+  "op_id": "v_fft_abs",
+  "family": "SPECTRAL",
+  "domain": "vector",
+  "in_sig": "v[n]",
+  "out_sig": "v[n]",
+  "invertible": false,
+  "differentiable": true,
+  "flops_8x8x8": 23040,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 512,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "v_sign",
+  "family": "ELEMENT",
+  "domain": "vector",
+  "in_sig": "v[n]",
+  "out_sig": "v[n]",
+  "invertible": false,
+  "differentiable": false,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "v_quantize",
+  "family": "ELEMENT",
+  "domain": "vector",
+  "in_sig": "v[n]",
+  "out_sig": "v[n]",
+  "invertible": false,
+  "differentiable": false,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "int",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {
+   "levels": [
+    "int",
+    2,
+    8
+   ]
+  }
+ },
+ {
+  "op_id": "v_sort",
+  "family": "TENSOR",
+  "domain": "vector",
+  "in_sig": "v[n]",
+  "out_sig": "v[n]",
+  "invertible": false,
+  "differentiable": false,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "v_cumsum",
+  "family": "TENSOR",
+  "domain": "vector",
+  "in_sig": "v[n]",
+  "out_sig": "v[n]",
+  "invertible": true,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "v_tanh",
+  "family": "ELEMENT",
+  "domain": "vector",
+  "in_sig": "v[n]",
+  "out_sig": "v[n]",
+  "invertible": true,
+  "differentiable": true,
+  "flops_8x8x8": 1024,
+  "bytes_8x8x8": 8192,
+  "workspace_8x8x8": 0,
+  "precision": "fp64|fp32|fp16",
+  "sparsity": "dense",
+  "changes_shape": false,
+  "params": {}
+ },
+ {
+  "op_id": "hazard_svd_trunc",
+  "family": "MEMORY",
+  "domain": "memory"
+ },
+ {
+  "op_id": "hazard_permute",
+  "family": "MEMORY",
+  "domain": "memory"
+ },
+ {
+  "op_id": "hazard_scramble",
+  "family": "MEMORY",
+  "domain": "memory"
+ },
+ {
+  "op_id": "hazard_quantize2",
+  "family": "MEMORY",
+  "domain": "memory"
+ },
+ {
+  "op_id": "hazard_reset_part",
+  "family": "MEMORY",
+  "domain": "memory"
+ },
+ {
+  "op_id": "hazard_rank_inflate",
+  "family": "MEMORY",
+  "domain": "memory"
+ }
+]

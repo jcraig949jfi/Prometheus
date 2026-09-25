@@ -1,6 +1,14 @@
 # Project Prometheus
 
-> A falsification-first reasoning substrate for automated mathematical discovery.
+> An ecology for evolving computational mechanisms — and an instrument for finding reasoning primitives nobody designed.
+
+**The north star has not changed.** Prometheus exists to create and study an ecology in which computational mechanisms, and the information, representations and compressions they use, can evolve together — seeking the conditions under which reusable computational organization, and eventually forms of reasoning that humans did not explicitly design, can arise serendipitously. The charter states it in full at [`CHARTER_AND_CONTINUITY.md`](CHARTER_AND_CONTINUITY.md).
+
+**The roadmap has added roads.** The programme began as a falsification-first substrate for automated mathematical discovery. That road is still open, and the thesis, results and discipline behind it are documented below — dated, because much of that work is from May 2026. What has been added since is a second family of approaches: **worlds, organisms and fitness functions**, run as executable ecologies rather than as a catalogue of claims.
+
+Both roads aim at the same question from opposite ends. The first asks whether a *claim* survives attack. The second asks whether a *mechanism* survives a change of universe. Neither assumes human cognitive architecture is the reference design; it is treated as one architecture among many, which is why the same question is put to substrates that share none of our machinery.
+
+## The first road: falsification-first mathematical discovery
 
 Most AI-for-math systems treat generative variance — what users call "hallucinations" — as a failure mode to suppress. Prometheus treats variance as the engine of an evolutionary search and engineers ruthless mechanistic selection to impose on it. Most AI-for-math systems generate candidates and hope. Prometheus generates candidates and aggressively tries to kill them. Only what survives the gauntlet is allowed to become substrate state. The interesting output is what gets killed and how — and the architecture is engineered to make the kills carry structural information that downstream training and discovery can navigate.
 
@@ -32,6 +40,25 @@ This is the half of the bet that the rest of the architecture exists to support.
 
 Sister thesis to mutation-plus-selection: variance generates the points; selection ranks them; the ledger of ranked points is the landscape; the landscape, navigated, is discovery. Each half is necessary; neither is sufficient alone.
 
+## The second road: worlds, organisms, fitness functions
+
+Instead of submitting propositions to a battery, build a world, put bounded organisms in it, define what counts as fitness, and watch what structure the population is forced to invent. The bet is that a reasoning primitive worth the name shows up in more than one substrate — so the engines are deliberately built not to resemble one another.
+
+| Engine | Seat | What it is |
+|---|---|---|
+| **SFE** — Serendipity Foundry Engine | service: Daedalus · science: Archaeon | the long-running world-and-experiment service, and the fossil record it has accumulated |
+| **NPE** — Nestor Primordial Engine | Nestor | [`primordial/`](primordial/) — a swarm with worlds and kernels, tensor brains, channels and codebooks, and quality-diversity selection as separate lanes |
+| **CWE** — Cosmos World-Graph Engine | Cosmos | [`prometheus/cosmos/`](prometheus/cosmos/) — an adversarial physics chamber for counterfactual universes: *change almost everything and measure what refuses to change* |
+| **AGE** — artificial-physics ecosystem | Aether | a clean-room, GPU-scale world in which local state, energy, writes, mutation and perturbation are explicit parts of the physics |
+| **Tensor World Engine** | Ensorain | [`ensorain/`](ensorain/) — navigable worlds whose geometry, information and puzzles are tensors, inhabited by organisms with a hard storage cap |
+| **BEE** — the Worlds Kernel | Bellerophon | [`prometheus/toolbox/`](prometheus/toolbox/) — makes an experiment description executable while never deciding what is interesting, so one design can be lowered onto different machinery |
+
+Supporting instruments: [`vivarium/`](vivarium/) executes and fossilizes runs, [`evidence_wiki/`](evidence_wiki/) (PEW) holds the immutable experimental record, [`atlas/`](atlas/) indexes experiments across engines, and [`ludus/`](ludus/) maintains a catalogued atlas of game-like worlds.
+
+The near-term experimental programme is the six **H0–H5** lanes — exchange, failure reuse, computational components, retention, adaptive challenges, encodings. Current state, derived only from committed receipts rather than from plans, is at [`roles/Archaeon/H0H5_STATUS.md`](roles/Archaeon/H0H5_STATUS.md).
+
+A worked example of how a conjecture becomes rulers and attacks on this road: **[Selective Irreversibility](https://jcraig949jfi.github.io/Prometheus/essays/selective-irreversibility.html)** — intelligence as thermodynamically efficient *selective irreversibility*, turned into a measurable constraint-optimum ruler, given six engines six different jobs, and closed with the three strongest arguments against itself. A second, from a measured result rather than a conjecture: **[The Accessibility Frontier](https://jcraig949jfi.github.io/Prometheus/essays/accessibility-frontier.html)** — a world in which procedural reuse was valuable, causal and executable, and thirty-six evolutionary searches could not reach it; the capability/accessibility distinction that forces, the *assembly-geometry* principle it suggests, six rulers, and a controlled-pair experiment (same destination, same payoff, different assembly geometry) for other engines to run.
+
 ## Core architecture
 
 Prometheus has three major subsystems.
@@ -46,7 +73,7 @@ The substrate is operated by a small team of specialized agents, each with a tig
 - **[Ergon](ergon/)** — the Learner. v1.0 north star is *falsification-routing*, not theorem-answering. See the dedicated section below.
 - **[Harmonia](harmonia/)** — substrate architecture and Σ-language grammar.
 
-Other agents — Cartography (corpus ingestion), Ignis (LM reasoning suppression measurement), Rhea (evolutionary architecture), Apollo (training infrastructure) — continue but are not load-bearing for the falsification-first thesis.
+The roster has since grown well past five. More than fifty seats now carry a `RESPONSIBILITIES.md` under [`roles/`](roles/), each inheriting a common base role at [`roles/base-role/`](roles/base-role/) that fixes boot order, working contract and evidence discipline. Load-bearing for the second road: **Archaeon** (read side of the experiment loop — mines the fossil record and decides what the loop tries next), **Daedalus** (the SFE service: substrate, contracts, enforcement, provenance), **Mnemosyne** (PEW, the immutable experimental record), **Vivarium** (execution and fossilization), **Proteus** (the frozen panel of specimens and controls), **Harmonia** (experimental design and adjudication — what the evidence licenses), **Atlas** (cross-engine experiment index), and the engine seats named in the table above.
 
 ### 2. The Falsification Engine — the Σ-kernel + KillVector battery
 
@@ -96,7 +123,10 @@ The Learner's eventual action space is the 5-layer **substrate vocabulary** at [
 
 This is the deliberately-different bet in concrete form: navigate a discrete typed grammar of mathematical attack, not predict tokens.
 
-## Recent substrate-grade results — selection pressure in action
+## Substrate-grade results from the first road (May 2026)
+
+*The results in this section are real, reproducible and on disk. They are also historical: they date from the falsification-first mathematical-discovery phase, and are kept here as the record of what that road produced rather than as a description of current work.*
+
 
 These are reproducible artifacts on disk. Each is the substrate doing what it was designed to do — applying selection pressure to generative variance and recording the outcome with enough fidelity that downstream training and external audit can both consume it. Read this section as evidence the selection regime works, including on the substrate's own output.
 
@@ -206,7 +236,13 @@ Prometheus is engineered for local inference and evaluation. Data privacy and ra
 - **Evolutionary tool recombination** — the substrate is the underlying evaluation engine for recombining successful reasoning strategies (the `arsenal_meta` operations) over unattended multi-day compute runs, with the synthetic-null gate as a commit-blocking guard against modal-collapse artifacts.
 - **Anti-anchor calibration battery for external systems** — the registry at [`techne/registry/anti_anchors.jsonl`](techne/registry/anti_anchors.jsonl) is the substrate's immune system against LLM training-data fossilized false claims, and is independently useful as a calibration battery against any math-reasoning system that wants to test its own attribution discipline.
 
-## What's in flight (2026-05-11)
+## What's in flight
+
+The second road is where the active work is. The six H0–H5 lanes are running, with current state kept from committed receipts at [`roles/Archaeon/H0H5_STATUS.md`](roles/Archaeon/H0H5_STATUS.md); the engine seats above are building and attacking their own substrates in parallel, each preregistering before it runs and reporting what killed a claim rather than what survived. Because the engines disagree with one another by construction, a result that appears in only one of them is treated as an implementation artefact until shown otherwise.
+
+The programme's working discipline has not changed with the roadmap: preregister, name the control, state what would falsify the claim, and keep the kill.
+
+## What was in flight on 2026-05-11 (historical)
 
 - **Substrate-shaped Deep Research pipeline (Techne-led).** Spec the 6 substrate_block JSON schemas (`anti_anchor`, `primitive_proposal`, `composition_rule`, `catalog_edit`, `training_anchor`, `paradigm_candidate`); build parse/validate steps with arXiv-citation verification; coordinate 3-entry pilot fire with Aporia. Pilot success criteria: ≥80% block validity + ≤50% reviewer time vs narrative-only equivalents. Design at [`aporia/docs/gemini_research_queue/SUBSTRATE_SHAPED_PROMPTS.md`](aporia/docs/gemini_research_queue/SUBSTRATE_SHAPED_PROMPTS.md).
 - **Dims 2/3/10 audit-prep (Techne).** Per-dim audit of what current substrate emission carries, minimum generator-side instrumentation, contract-change implications. Precondition for cleaner episode emissions when LoRA does eventually train.

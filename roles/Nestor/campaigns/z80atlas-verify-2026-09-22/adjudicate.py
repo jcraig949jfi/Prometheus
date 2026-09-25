@@ -35,9 +35,7 @@ import json
 import pathlib
 import sys
 
-CROSS = 0.90          # crossing threshold, unchanged from the predecessor
-MARGIN = 0.25         # minimum separation from the matched control
-CAUSAL_DEPTH = 5      # H2's self-sustaining bar, on CAUSAL replication depth
+from constants import C, CONSTANTS_SHA256   # S3-2: one hash-covered source of thresholds
 
 # Everything adjudication reads. The scheduler writes exactly these into each index row's
 # "summary". Adding a verdict that needs a new field means adding the field HERE first,
@@ -54,6 +52,8 @@ INDEX_WHITELIST = (
     "max_ancestry_depth", "n_lineages_depth_ge_2", "n_lineages_depth_ge_5",
     "max_causal_replication_depth", "n_causal_lineages_depth_ge_2",
     "n_causal_lineages_depth_ge_5", "propagating_replicators",
+    # P-11: pair-tape causal-copy reassay, and the predecessor depth kept beside it
+    "p11_events", "max_predecessor_replication_depth",
     # P-1: certificate and completeness
     "lineage_complete", "migration_events", "has_reservoir_certificate",
     "ancestry_certificate",
@@ -111,7 +111,7 @@ def _reservoir(s, d, ev):
         return _verdict("INADMISSIBLE", "no complete easy-niche ancestry certificate", n)
     if cert.get("crossing_niche") == cert.get("founder_niche"):
         return _verdict("INADMISSIBLE", "crossing occurred in the easy niche itself", n)
-    if (s.get("held_max_ever") or 0) < CROSS:
+    if (s.get("held_max_ever") or 0) < C["CROSS"]:
         return _verdict("WEAK", "certificate present but below the crossing threshold", n)
     return _verdict("ADMISSIBLE",
                     "complete certificate: founder in the easy niche, logged migration, "
@@ -131,26 +131,26 @@ def _endogenous(s, d, ev):
         return _verdict("INADMISSIBLE", "the flagged run is not an endogenous treatment", n)
     if margin < 0:
         return _verdict("INADMISSIBLE", "the exogenous control finished better", n)
-    if (endo or 0) < CROSS:
+    if (endo or 0) < C["CROSS"]:
         return _verdict("WEAK", "below the crossing threshold on its own declared basis", n)
-    if margin < MARGIN:
-        return _verdict("WEAK", "margin below %.2f: the control is not separated" % MARGIN, n)
+    if margin < C["MARGIN"]:
+        return _verdict("WEAK", "margin below %.2f: the control is not separated" % C["MARGIN"], n)
     if not s.get("crossed_at_final"):
         return _verdict("WEAK",
                         "crossed historically but not at final state; the claim is about "
                         "reaching, so this is preserved, not promoted", n)
     return _verdict("ADMISSIBLE",
                     "crossed on its declared basis, control below it, margin >= %.2f "
-                    "and still at threshold at final state" % MARGIN, n)
+                    "and still at threshold at final state" % C["MARGIN"], n)
 
 
 def _incremental(s, d, ev):
     inc, at = ev.get("incremental_held_ever"), ev.get("atomic_held_ever")
     margin = (inc or 0) - (at or 0)
     n = {"incremental_held_ever": inc, "atomic_held_ever": at, "margin": round(margin, 4)}
-    if margin < MARGIN:
-        return _verdict("WEAK", "margin below %.2f" % MARGIN, n)
-    if (inc or 0) < CROSS:
+    if margin < C["MARGIN"]:
+        return _verdict("WEAK", "margin below %.2f" % C["MARGIN"], n)
+    if (inc or 0) < C["CROSS"]:
         return _verdict("WEAK", "below the crossing threshold", n)
     return _verdict("ADMISSIBLE", "incremental at threshold, atomic separated", n)
 
@@ -168,16 +168,16 @@ def _spontaneous(s, d, ev):
         return _verdict("INADMISSIBLE", "seeded population: cannot bear on spontaneous origin", n)
     if not s.get("replication_events"):
         return _verdict("INADMISSIBLE", "no evidence-backed replication event", n)
-    if (n["fidelity"] or 0) < CROSS:
-        return _verdict("WEAK", "first replicator fidelity below %.2f" % CROSS, n)
-    if (depth or 0) < CAUSAL_DEPTH:
+    if (n["fidelity"] or 0) < C["CROSS"]:
+        return _verdict("WEAK", "first replicator fidelity below %.2f" % C["CROSS"], n)
+    if (depth or 0) < C["CAUSAL_DEPTH"]:
         # The predecessor's headline result, stated at its true size.
         return _verdict("WEAK",
                         "evidence-backed replication events without propagation: causal "
-                        "depth %s is below %d" % (depth, CAUSAL_DEPTH), n)
+                        "depth %s is below %d" % (depth, C["CAUSAL_DEPTH"]), n)
     return _verdict("ADMISSIBLE",
                     "random initial population, evidence-backed copy, and a causal "
-                    "replication lineage of depth >= %d" % CAUSAL_DEPTH, n)
+                    "replication lineage of depth >= %d" % C["CAUSAL_DEPTH"], n)
 
 
 def _architecture(s, d, ev):
@@ -208,6 +208,11 @@ def adjudicate(rows, source="INDEX"):
     (flag, reads, evidence). `source` is recorded in the result for provenance only and
     never changes what is read.
     """
+    # S3-1. Materialise ONCE. The predecessor iterated `rows` and then evaluated
+    # `len(list(rows))`, which on a generator counts an exhausted iterator and on any
+    # non-list returned None - so an unattended run feeding rows lazily recorded a row
+    # count that did not describe what was adjudicated.
+    rows = list(rows)
     verdicts = []
     for row in rows:
         s = row.get("summary") or {}
@@ -236,9 +241,9 @@ def adjudicate(rows, source="INDEX"):
         summary[flag] = {v: by[(flag, v)] for v in
                          ("ADMISSIBLE", "WEAK", "INADMISSIBLE", "MISSING_FIELD")
                          if by[(flag, v)]}
-    return {"source": source, "n_rows": len(list(rows)) if isinstance(rows, list) else None,
+    return {"source": source, "n_rows": len(rows),
             "n_verdicts": len(verdicts),
-            "rules": {"CROSS": CROSS, "MARGIN": MARGIN, "CAUSAL_DEPTH": CAUSAL_DEPTH},
+            "rules": dict(C), "constants_sha256": CONSTANTS_SHA256,
             "summary": summary, "verdicts": verdicts}
 
 

@@ -1,6 +1,62 @@
 # Archaeon — TODO
 
-## ACTIVE DIRECTIVE (2026-09-23) -- READ THIS FIRST ON BOOT
+> BOOTSTRAP: read roles/Archaeon/RESUME.md first (left-off point, 2026-09-25) and ENGINE_LANDSCAPE_2026-09-25.md (awaiting operator decision).
+
+## 2026-09-25 OPEN -- compute placement, memory gating, portability (operator discussion, session m2-db608f52)
+Context: M2 (32 GB RAM, commit limit ~46 GB) cannot host several RAM-heavy engines at once; ENVGATE-02's first launch was
+reaped (receipt archaeon/envgate2/OPERATIONAL_INCIDENT_2026-09-24.md). ENVGATE-02 is on HOLD under frozen prereg 1475b7995.
+- [ ] Commit-aware admission gate for Archaeon heavy jobs on M2: each job declares peak commit (workers x per-worker);
+      queue until commit headroom (Commit Limit - Committed Bytes) exceeds it + margin; fair round-robin across queued
+      jobs; every admit/wait decision logged. Offer as a shared fleet tool (other seats opt in; do not impose).
+- [ ] AZURE (operator: "document the azure as a todo"): run CPU-heavy, self-contained Archaeon engines on Azure
+      E8s v5 (8 vCPU / 64 GB; ~$0.50/h pay-as-you-go, ~$0.11/h spot, East US, Sep 2026) started/stopped by GitHub
+      Actions, reusing the existing mso/jfi stop/start pipeline pattern. Needs from operator: subscription /
+      resource group, the workflow to copy, secrets handling (never read or print keys; CLAUDE.md).
+      * Portable package = archaeon/ + proteus/foundry/prng.py + Python 3.12 + scipy (report scripts only).
+        Verified 2026-09-25: z80atlas, census, envgate, envgate2, lineage, rie import NO psycopg / viv / PEW /
+        engine.db / SFE / EW_DB_HOST. (The ORIGINAL producer loop -- producer/, queue.py, fossils.py, run.py --
+        DOES need SFE engine.db + PEW + Vivarium queue on M1 Postgres; it is not part of this move.)
+      * Launcher on the VM verifies the prereg code hashes before any block runs (host change != science change);
+        results synced back as block/world JSON + sha256 manifest; spot eviction tolerated (completed blocks kept,
+        skip-on-restart).
+      * First run = an ENGINEERING block (id outside the preregistered 24) to measure s/block and $/block; no
+        treatment result used for sizing.
+      * E8s v5 = 4 physical cores / 8 threads: buys RAM + isolation, not per-thread speed (14700F P-cores are faster);
+        consider E16s v5 if worker width matters.
+- [ ] RunPod: cost probe for the VRAM-heavy engines (not Archaeon's CPU runs); compare $/result with Azure spot.
+- [ ] GAP: the z80atlas/envgate/lineage/rie results are JSON + manifests only and are NOT fossilized into PEW.
+      Propose a Mnemosyne-owned ingestion path (Archaeon does not write PEW tables).
+
+## 2026-09-24 ENVGATE-01 CLOSED -- awaiting operator review (session m2-db608f52)
+Packet: archaeon/envgate/ENVGATE01_REVIEW_2026-09-24.md
+- [x] prereg f9c0bf3ec before treatment; 16 blocks run; frozen verdict GATING_CAUSALLY_SUPPORTED (+ALTERNATE)
+- [x] forensics: assessment GATING_PARTIALLY_SUPPORTED (window 120..131 is the key; 128 alone insufficient)
+- [ ] BLOCKED: off-machine evidence copy (needs an authorised M1 share or SSH key)
+- [ ] before any inflow ecology: genetic-ancestry lineage identity; block/cluster-level primary statistics
+- [ ] optional ENVGATE-02: block 129..131 vs 120..127 (window asymmetry prediction)
+- DO NOT launch the general random-inflow ecology without operator review
+
+## 2026-09-24 OPERATOR RULINGS 1-4 DONE (session m2-db608f52)
+Rulings: roles/Archaeon/prompts/2026-09-23_postcampaign_rulings/00_OPERATOR_RULINGS.md
+Packet:  archaeon/z80atlas/pivot/Z80ATLAS_RULINGS_FOLLOWUP_REVIEW_2026-09-24.md
+- [x] R1 seeded moat ledger CLOSED (828 QUALIFIED / 104 VOID); use LOWER ranking only
+- [x] R2 copier census: LOTTERY_CONSISTENT (lambda 6.86 vs 1 survivor); input-gating is the norm
+- [x] R3 evidence bundle verified on C: (NOT yet off-machine: needs operator destination)
+- [x] R4 random_spec fix + preflight gate (PASS_WITH_RESTRICTIONS: matched control changes pressure)
+- [ ] proposed next: environmental-gating pair (input stream with/without 120..135), random founders at inflow scale
+- [ ] matched_controls / scorer: make the reproduction contrast clean before any future campaign
+
+## (superseded) 2026-09-23 DIRECTIVE COMPLETE -- awaiting operator rulings
+Packet: archaeon/z80atlas/pivot/Z80ATLAS_POSTCAMPAIGN_REVIEW_2026-09-23.md
+- [x] Phase 1 audit receipt; [x] Phase 2 provenance repair + tests; [x] Phase 3 adjudication;
+      [x] Phase 4 DENOVO-01: NO_DETECTABLE_DE_NOVO_REPLICATION (0/80, controls 21/21)
+- [ ] RULING NEEDED: witness confound (seeded init_hybrid) -- re-score seeded moat flags or mark unadjudicated
+- [ ] proposed: per-tape copier prior (10^7 random vmcopy tapes x 256 inputs; no worlds)
+- [ ] proposed: random-inflow ("soup") arm -- grammar change, new digest + campaign identity
+- [ ] own code: grammar.random_spec coverage weighting starves optional levels (forced levels counted)
+- DO NOT delete D:\Prometheus-worktrees\archaeon-wse-2026-09-16: it is the only copy of the campaign records.
+
+## (done) DIRECTIVE 2026-09-23
 roles/Archaeon/prompts/2026-09-23_z80atlas_postcampaign/00_OPERATOR_DIRECTIVE.md
 
 Z80 x Atlas post-campaign repair + targeted falsification. Four phases:

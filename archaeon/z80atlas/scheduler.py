@@ -88,6 +88,9 @@ def run_job(spec: dict, seed: int, run_dir: str) -> dict:
         (d / "EXPLOITS.json").write_text(json.dumps(out["exploits"], indent=1) + "\n", encoding="utf-8", newline="\n")
     if forensics:
         (d / "FORENSICS.json").write_text(json.dumps(forensics, indent=0) + "\n", encoding="utf-8", newline="\n")
+    # DF-017: founder origin classes (one row per initial organism) + the run's provenance summary
+    (d / "PROVENANCE.json").write_text(json.dumps({"schema": E.PROVENANCE_SCHEMA, "founders": out["founders"], "summary": sig["provenance"]}, indent=0) + "\n",
+                                       encoding="utf-8", newline="\n")
     rec = {"status": "DONE", "spec_id": spec["spec_id"], "family": spec["family"], "seed": seed, "stage": spec["stage"], "scheduler_reason": spec["scheduler_reason"],
            "factor_vector": GR.factor_vector(spec), "signals": sig, "wall_s": round(time.time() - t0, 1), "finished_at": stamp(), "grammar": spec["grammar"],
            "final_population_n": len(out["final_population"]), "snapshots": len(out["snapshots"]), "events": len(out["events"])}
@@ -150,27 +153,18 @@ class Campaign:
         return "early" if h < F["early_until_h"] else ("middle" if h < F["late_from_h"] else "late")
 
     # ---- coverage
+    # coverage and pair counts come from grammar (context-conditional; forced levels excluded) so the scheduler and the launch
+    # preflight run the same sampler code (operator ruling 4, 2026-09-23)
     def coverage(self) -> dict:
         cov = {}
         for r in self.runs.values():
-            for k, v in r["factor_vector"].items():
-                cov["%s=%s" % (k, v)] = cov.get("%s=%s" % (k, v), 0) + 1
+            for k in GR.coverage_keys(r["factor_vector"]): cov[k] = cov.get(k, 0) + 1
         return cov
-
-    def pair_cost(self, spec: dict, pairs: dict) -> int:
-        fv = GR.factor_vector(spec); ks = sorted(fv); c = 0
-        for i in range(len(ks)):
-            for j in range(i + 1, len(ks)):
-                c += pairs.get("%s=%s|%s=%s" % (ks[i], fv[ks[i]], ks[j], fv[ks[j]]), 0)
-        return c
 
     def pairs(self) -> dict:
         pairs = {}
         for r in self.runs.values():
-            fv = r["factor_vector"]; ks = sorted(fv)
-            for i in range(len(ks)):
-                for j in range(i + 1, len(ks)):
-                    key = "%s=%s|%s=%s" % (ks[i], fv[ks[i]], ks[j], fv[ks[j]]); pairs[key] = pairs.get(key, 0) + 1
+            for k in GR.pair_keys(r["factor_vector"]): pairs[k] = pairs.get(k, 0) + 1
         return pairs
 
     # ---- producers
@@ -182,13 +176,10 @@ class Campaign:
     def explore(self, n: int, stage: str):
         cov = self.coverage(); pairs = self.pairs()
         for _ in range(n):
-            cands = [GR.random_spec(self.rng, stage, cov, "exploration") for _ in range(4)]
-            cands = [c for c in cands if c]
-            if not cands: continue
-            best = min(cands, key=lambda c: self.pair_cost(c, pairs))
+            best = GR.explore_step(self.rng, stage, cov, pairs)
+            if best is None: continue
             self.push(best, "exploration")
             for c in GR.matched_controls(best, stage): self.push(c, "control")
-            for k, v in GR.factor_vector(best).items(): cov["%s=%s" % (k, v)] = cov.get("%s=%s" % (k, v), 0) + 1
 
     def family_table(self) -> dict:
         fams = {}
@@ -252,7 +243,10 @@ class Campaign:
                 c["scheduler_reason"] = "verify:%s:%s" % (fam, c["scheduler_reason"]); self.push(c, "verification", seed=100)
             if tapes:
                 def tp(reason, **chg):
-                    t = json.loads(json.dumps(base)); t["transplant"] = {"from_run": best["run_id"], "tapes": tapes}; t["init"] = "random"
+                    t = json.loads(json.dumps(base)); t["transplant"] = {"from_run": best["run_id"], "tapes": tapes}
+                    # DF-017: the campaign set init="random" here and the old predicate read that label. The engine now stamps these
+                    # founders transplanted_lineage from the tapes themselves; the label is corrected so the spec no longer lies.
+                    t["init"] = "transplanted_lineage"
                     for k, v in chg.items():
                         if k == "reproduction": t["reproduction"] = v; t["pressure"] = [p for p in t["pressure"] if p not in ("explicit_fitness", "recombination")] or ["implicit_survival"]
                         elif k == "topology": t["world"]["topology"] = v; t["world"]["migration"] = "none"; t["world"]["reservoir"] = False
@@ -360,10 +354,27 @@ class Campaign:
         log({"finalized": True, "packet": str(p)})
 
 
-def start() -> int:
+def preflight_gate(accept: str | None = None) -> tuple:
+    """Operator ruling 4 (2026-09-23): no campaign clock starts until the support/identifiability preflight passes. FAIL is never
+    launchable; PASS_WITH_RESTRICTIONS needs an explicit, recorded acceptance naming why the restricted contrasts are acceptable."""
+    from archaeon.z80atlas import preflight as PF
+    p = PF.run(GR)
+    ok = p["verdict"] == "PASS" or (p["verdict"] == "PASS_WITH_RESTRICTIONS" and bool(accept))
+    p["acceptance"] = accept if p["verdict"] == "PASS_WITH_RESTRICTIONS" else None
+    return ok, p
+
+
+def start(accept_preflight: str | None = None) -> int:
     if STATE.exists():
         print("campaign exists; use --resume"); return 2
+    ok, pf = preflight_gate(accept_preflight)
+    if not ok:
+        print("PREFLIGHT %s: refusing to start. %s" % (pf["verdict"], json.dumps({"undeclared_coupling": pf["undeclared_coupling"],
+              "contrasts": {k: v["status"] for k, v in pf["contrasts"].items() if v["status"] != "OK"}})))
+        if pf["verdict"] == "PASS_WITH_RESTRICTIONS": print("  re-run with --accept-preflight \"<reason>\" to accept the restricted contrasts on the record")
+        return 4
     ROOT.mkdir(parents=True, exist_ok=True); RUNS.mkdir(exist_ok=True)
+    (ROOT / "PREFLIGHT.json").write_text(json.dumps(pf, indent=1, default=str) + "\n", encoding="utf-8", newline="\n")
     g = {"digest": GR.digest(), "AXES": GR.AXES, "FROZEN": F, "constraints": [c[0] for c in GR.CONSTRAINTS], "blocked": GR.BLOCKED, "atlas_axes": GR.ATLAS_AXES, "frozen_at": stamp()}
     (ROOT / "GRAMMAR_FROZEN.json").write_text(json.dumps(g, indent=1, default=str) + "\n", encoding="utf-8", newline="\n")
     st = {"start_at": now(), "started": stamp(), "grammar": GR.digest(), "controls": {}, "uncalibrated": {}, "retired": {}, "promotions": {}, "high_value": [], "errors": 0}
@@ -396,10 +407,10 @@ def self_test() -> int:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(); ap.add_argument("--start", action="store_true"); ap.add_argument("--resume", action="store_true"); ap.add_argument("--status", action="store_true"); ap.add_argument("--self-test", action="store_true")
+    ap = argparse.ArgumentParser(); ap.add_argument("--start", action="store_true"); ap.add_argument("--resume", action="store_true"); ap.add_argument("--status", action="store_true"); ap.add_argument("--self-test", action="store_true"); ap.add_argument("--accept-preflight", default=None)
     a = ap.parse_args(argv)
     if a.self_test: return self_test()
-    if a.start: return start()
+    if a.start: return start(a.accept_preflight)
     if a.resume: return resume()
     if a.status:
         print(STATUS.read_text(encoding="utf-8") if STATUS.exists() else "{}"); return 0
