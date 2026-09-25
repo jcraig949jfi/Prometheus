@@ -2,8 +2,19 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
+## CURRENT DIRECTIVE (2026-09-25) -- READ THIS BEFORE ANYTHING ELSE
+
+The charter has arrived: the operator's SELECTIVE IRREVERSIBILITY
+STEWARDSHIP DIRECTIVE, issued to Aporia (M1) and Cyclops (M2) as peer
+stewards, verbatim at
+roles/Cyclops/prompts/2026-09-25_selective_irreversibility/ (MANIFEST).
+The body below is the pre-charter file and is STALE where it says "no
+lane" / "charter PENDING"; it is rewritten around the directive on the
+next pass (pre-charter body to superseded/). The verbatim directive
+wins over this file.
+
 Currency: 2026-09-25 (seat created on M2; base role adopted; charter
-PENDING the operator's first prompt).
+PENDING the operator's first prompt -- superseded, see above).
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
