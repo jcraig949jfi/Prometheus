@@ -29,7 +29,22 @@ def lf_sha(path):
     return hashlib.sha256(pathlib.Path(path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
-def main():
+FREEZE_BEGIN, FREEZE_END = b"<!-- FREEZE-BEGIN -->", b"<!-- FREEZE-END -->"
+
+
+def prereg_sha(path):
+    """PREREGISTRATION.md without its freeze block. The freeze block carries the hashes
+    themselves and is written AT freeze, so it cannot be inside what they cover. Only
+    the text between the two markers is excluded; T-HASH checks there is at most one."""
+    b = pathlib.Path(path).read_bytes().replace(b"\r\n", b"\n")
+    if FREEZE_BEGIN in b:
+        head, rest = b.split(FREEZE_BEGIN, 1)
+        b = head + FREEZE_BEGIN + FREEZE_END + rest.split(FREEZE_END, 1)[1]
+    return hashlib.sha256(b).hexdigest()
+
+
+def compute():
+    """Every proposed value, recomputed from source. Pure: writes nothing."""
     import constants
     import grammar as G
     import manifest as M
@@ -46,11 +61,16 @@ def main():
             "manifest_hash": m["manifest_hash"],
             "specimen_panel_hash": panel["panel_hash"],
             "constants_sha256": constants.CONSTANTS_SHA256,
-            "documents": {"PREREGISTRATION.md": lf_sha(HERE / "PREREGISTRATION.md"),
+            "documents": {"PREREGISTRATION.md": prereg_sha(HERE / "PREREGISTRATION.md"),
                           "P11_SPEC.md": lf_sha(HERE / "P11_SPEC.md")},
             "modules": mods}
     protocol = hashlib.sha256(json.dumps(body, sort_keys=True, separators=(",", ":"))
                               .encode("ascii")).hexdigest()
+    return body, protocol, m, bad, panel
+
+
+def main():
+    body, protocol, m, bad, panel = compute()
     old = json.loads((HERE / "PROPOSED_HASHES.json").read_text()) \
         if (HERE / "PROPOSED_HASHES.json").exists() else {}
     if old.get("status", "").startswith("PROPOSED"):

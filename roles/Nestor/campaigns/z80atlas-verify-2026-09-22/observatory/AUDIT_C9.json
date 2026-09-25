@@ -1,0 +1,110 @@
+{
+ "ok": true,
+ "checks": [
+  {
+   "check": "machine block parses",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "H1.verdict recomputed from raw bundles",
+   "pass": true,
+   "detail": "report \"NO_DETECTED_EFFECT\" vs recomputed \"NO_DETECTED_EFFECT\""
+  },
+  {
+   "check": "H1.n_complete recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 60 vs recomputed 60"
+  },
+  {
+   "check": "H1.M recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 0.0 vs recomputed 0.0"
+  },
+  {
+   "check": "H1.I recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 0.0 vs recomputed 0.0"
+  },
+  {
+   "check": "H1.threshold recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 0.15 vs recomputed 0.15"
+  },
+  {
+   "check": "H1.means_held_final recomputed from raw bundles",
+   "pass": true,
+   "detail": "report {\"gate_off_cost_free\": 0.325, \"gate_off_cost_vm\": 0.325, \"gate_on_cost_free\": 0.325, \"gate_on_cost_vm\": 0.325} vs recomputed {\"gate_off_cost_vm\": 0.325, \"gate_on_cost_vm\": 0.325, \"gate_off_cost_free\": 0.325, \"gate_on_cost_free\": 0.325}"
+  },
+  {
+   "check": "H2.verdict recomputed from raw bundles",
+   "pass": true,
+   "detail": "report \"REPLICATION_EVENTS_WITHOUT_PROPAGATION\" vs recomputed \"REPLICATION_EVENTS_WITHOUT_PROPAGATION\""
+  },
+  {
+   "check": "H2.supporting recomputed from raw bundles",
+   "pass": true,
+   "detail": "report [] vs recomputed []"
+  },
+  {
+   "check": "H2.distinct_supporting_strata recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 0 vs recomputed 0"
+  },
+  {
+   "check": "H2.per_specimen recomputed from raw bundles",
+   "pass": true,
+   "detail": "report {\"03650e1ad792eefa-s9040-tL-a0\": {\"B_reaching\": 0, \"C_reaching\": 0, \"verdict\": \"DOES_NOT_SUPPORT\"}, \"08b4c94e2ea65998-s7 vs recomputed {\"03650e1ad792eefa-s9040-tL-a0\": {\"verdict\": \"DOES_NOT_SUPPORT\", \"B_reaching\": 0, \"C_reaching\": 0}, \"08b4c94e2ea65998-s7"
+  },
+  {
+   "check": "H2.sensitivity_literal_verdict recomputed from raw bundles",
+   "pass": true,
+   "detail": "report \"REPLICATION_EVENTS_WITHOUT_PROPAGATION\" vs recomputed \"REPLICATION_EVENTS_WITHOUT_PROPAGATION\""
+  },
+  {
+   "check": "H3.verdict recomputed from raw bundles",
+   "pass": true,
+   "detail": "report \"NOT_DEMONSTRATED\" vs recomputed \"NOT_DEMONSTRATED\""
+  },
+  {
+   "check": "H3.n_complete recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 64 vs recomputed 64"
+  },
+  {
+   "check": "H3.certificates recomputed from raw bundles",
+   "pass": true,
+   "detail": "report {\"A_easy_plus_migration\": 1, \"B_homogeneous_same_migration\": 1, \"C_easy_no_migration\": 0} vs recomputed {\"A_easy_plus_migration\": 1, \"B_homogeneous_same_migration\": 1, \"C_easy_no_migration\": 0}"
+  },
+  {
+   "check": "H3.separation_vs_B recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 0.0 vs recomputed 0.0"
+  },
+  {
+   "check": "H3.separation_vs_C recomputed from raw bundles",
+   "pass": true,
+   "detail": "report 0.0156 vs recomputed 0.0156"
+  },
+  {
+   "check": "every verdict word in the prose is in the machine block",
+   "pass": true,
+   "detail": "prose verdicts ['NOT_DEMONSTRATED', 'NO_DETECTED_EFFECT', 'REPLICATION_EVENTS_WITHOUT_PROPAGATION']"
+  },
+  {
+   "check": "every decimal number in the prose is in the machine block",
+   "pass": true,
+   "detail": "prose-only numbers: []"
+  },
+  {
+   "check": "every H2 table row equals the machine block",
+   "pass": true,
+   "detail": "rows 16, specimens 16, mismatched []"
+  },
+  {
+   "check": "report names the frozen protocol hash",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

@@ -1,0 +1,49 @@
+{
+ "classification": "SIGNAL",
+ "per_transform": {
+  "XOR1": {
+   "verdict": "GATE_EFFECT_AND_COST_INTERACTION",
+   "M": -0.15,
+   "I": 0.3,
+   "means_held_final": {
+    "gate_off_cost_vm": 0.3,
+    "gate_on_cost_vm": 0.0,
+    "gate_off_cost_free": 0.2667,
+    "gate_on_cost_free": 0.2667
+   }
+  },
+  "XOR15": {
+   "verdict": "COST_INTERACTION_ONLY",
+   "M": -0.1,
+   "I": 0.2,
+   "means_held_final": {
+    "gate_off_cost_vm": 0.2,
+    "gate_on_cost_vm": 0.0,
+    "gate_off_cost_free": 0.2556,
+    "gate_on_cost_free": 0.2556
+   }
+  },
+  "XOR5A": {
+   "verdict": "GATE_EFFECT_AND_COST_INTERACTION",
+   "M": -0.1694,
+   "I": 0.3389,
+   "means_held_final": {
+    "gate_off_cost_vm": 0.3389,
+    "gate_on_cost_vm": 0.0,
+    "gate_off_cost_free": 0.3056,
+    "gate_on_cost_free": 0.3056
+   }
+  },
+  "ADD37": {
+   "verdict": "COST_INTERACTION_ONLY",
+   "M": -0.1278,
+   "I": 0.2556,
+   "means_held_final": {
+    "gate_off_cost_vm": 0.2556,
+    "gate_on_cost_vm": 0.0,
+    "gate_off_cost_free": 0.2278,
+    "gate_on_cost_free": 0.2278
+   }
+  }
+ }
+}
