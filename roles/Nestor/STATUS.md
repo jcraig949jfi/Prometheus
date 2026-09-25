@@ -61,6 +61,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
   - **C-RUNAWAY**: the recombination splice prevents runaway pair-tape heredity
     (7/150 vs 0/150, p = 0.007).
   - **C-ATOMIC C1**: tape-write erosion stops pair-tape heredity in 7ae3's cell (46/80 vs 1/80); C2 generality NOT confirmed.
+  - **C-CORE**: runaway heredity in 7ae3's cell conserves the founder's SELF + LDIR instructions as material, little else (17/27, bar 60%).
   - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
 - Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
 - Chain since C-CRITICAL-MASS: X-DOSE-CURVE null (independent founders) -> X-TICKET (copying stops by ~epoch 12) -> X-DECAY (in-place mutation minor) -> X-STALL (members sterile) -> X-STERILE (fertile at birth) -> X-STALL-F0 (tape-write erosion ~25x nominal) -> X-ATOMIC SIGNAL (36/64 vs 3/64 runaways).
@@ -70,7 +71,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| C-CORE | CONFIRM | frozen: are SELF (23-24) + LDIR (52-53) the conserved founder material in own-cell runaways? 64 fresh seeds; schtask NestorCK |
+| (next) | | C-CORE CONFIRMED 17:03 (17/27 runaways, bar 60%); next child being chosen |
 | C3-D (Cosmos #561) | DELEGATION | SEALED + pushed 2026-09-25: commitment ae4479c6...57ac, commit a56ef7787, report 5e05307b2 (branch nestor/c3-holdout-d-2026-09-25); reported to Cosmos #599. Awaiting Cosmos predictions; no outcomes run |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and

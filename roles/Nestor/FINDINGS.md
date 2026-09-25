@@ -367,6 +367,12 @@ endpoint) is lineage descent, not content inheritance.** What IS required is the
 X-CORE (WEAK_SIGNAL; the declared contiguous-core rule failed): post hoc, in all 5 own-cell runaways the founder bytes kept by
 >= 80% of the population include exactly the two world-op instructions, ED 32 (OP_SELF, positions 23-24) and ED B0 (LDIR,
 52-53), with most other bytes turned over. Hypothesis only; under CONFIRM in C-CORE (64 fresh seeds).
+**C-CORE CONFIRMED (frozen at 1c982e7e7, 64 fresh seeds):** in 7ae3's cell with atomic write-back, runaway pair-tape
+heredity conserves the founder's two world-op instructions as MATERIAL -- OP_SELF (ED 32, positions 23-24) and LDIR
+(ED B0, 52-53) -- and little else: 17/27 runaways meet the frozen CORE4-and-SPECIFIC endpoint (bar 60%); position 23 is
+conserved in 27/27, 52 in 23/27, and no other position in more than 13/27. What is inherited in a runaway is the
+self-location and copy instructions; the rest of the founder is replaced. Scope: 7ae3's cell, ATOMIC, single founder;
+thin margin over the bar.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---

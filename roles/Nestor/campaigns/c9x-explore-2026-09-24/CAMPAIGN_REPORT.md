@@ -85,6 +85,10 @@ LRT p = 0.42): each founder is an independent ~13% lottery ticket, s(k) = 1-(1-p
    cell a random implant never runs away (0/80 vs 46/80) and that genome runaways are 100% founder-descended
    by ancestry: certification breaks inside the lineage, it does not mark native lineages. Whether the
    foreign runaways are founder-descended: X-SWAP-ANCESTRY.
+6. *What is inherited* (X-CONTENT, X-CORE; **confirmed by C-CORE**): runaway populations are founder-descended in
+   lineage but carry only 13-25% founder bytes; the founder material that almost every member keeps is the two
+   world-op instructions, OP_SELF and LDIR (17/27 runaways by the frozen endpoint; position 23 in 27/27). Heredity
+   here conserves the replication machinery's key instructions and replaces the rest.
 
 ## 4. Defects found and handled
 
