@@ -17,6 +17,7 @@ Every role below carries the banner on its primary document(s):
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
+| Artemis | RESPONSIBILITIES.md (created 2026-09-25 on the seat's creation pass on ubu002; new seat, charter PENDING the operator's discussion; creation exchange verbatim in roles/Artemis/prompts/2026-09-25_creation/; self-service row per Archaeon ruling #39) |
 | Arachne | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before) |
 | Ares | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; charter ADOPTED the same day (pressure engineering / primordial soup sandbox), verbatim in roles/Ares/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Ares/superseded/; self-service row per Archaeon ruling #39) |
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
@@ -88,6 +89,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Apollo | BOOTSTRAP.md |
 | Aporia | RESPONSIBILITIES.md |
 | Arachne | RESPONSIBILITIES.md |
+| Artemis | RESPONSIBILITIES.md |
 | Ares | RESPONSIBILITIES.md |
 | Archaeon | RESPONSIBILITIES.md |
 | Charon | STARTUP.md |
