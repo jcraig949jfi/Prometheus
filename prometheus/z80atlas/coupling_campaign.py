@@ -30,6 +30,12 @@ COMMON = dict(world="GRID", representation="Z80_64", layout="SHARED", reproducti
 K = {"K16": {"base_income": 16, "bonus": 64}, "K40": {"base_income": 40, "bonus": 64}}
 V3 = {"physics": "v3", "copy_cost": 1, "resource_cap": 256, "delay": 60}
 PHASE1_CAP_H, TOTAL_CAP_H = 18.0, 22.0
+# Amendment 1 (2026-09-25, operator-authorised, operational only): when STATUS carries time_rule
+# "active_runtime_v1" the caps above are measured in ACTIVE campaign runtime (the sum of execution segments), not wall
+# clock from the first start. Suspensions (host OOM, reboot) do not count. A crashed segment is closed at its last
+# heartbeat. Scientific content (plan, seeds, physics, detectors, analysis, readiness) is unchanged.
+RECYCLE_TASKS = 6                     # Amendment 1: a pool worker is replaced after this many runs (bounds RSS growth)
+HEARTBEAT_S = 30
 SEED_SHIFT = 0                        # --smoke only: moves every seed (phase 1, AUTO, EXT) off the preregistered streams
 LANE_PRIORITY = {"A": 0, "I": 1, "C": 2, "E2": 3, "F": 4, "G": 5, "B-cop": 6, "B-rand": 7, "J": 8, "AUTO": 9, "EXT": 10}
 
@@ -299,18 +305,53 @@ def hash_lane(lane: str) -> int:
 
 
 # ---- execution ---------------------------------------------------------------------------------------------------------
+def save_status(st_: Dict, st_path: pathlib.Path) -> None:
+    """atomic STATUS write (a kill mid-write can never leave a torn STATUS.json)"""
+    tmp = st_path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(st_, indent=1), encoding="utf-8")
+    os.replace(tmp, st_path)
+
+
+def _beat(st_: Dict, st_path: pathlib.Path, force: bool = False) -> None:
+    now = time.time()
+    if force or now - st_.get("heartbeat_ts", 0) >= HEARTBEAT_S:
+        st_["heartbeat_ts"] = now
+        segs = st_.get("active_segments")
+        if segs and segs[-1][1] is None:
+            st_["active_elapsed_s"] = round(active_used(st_) + (now - segs[-1][0]), 1)
+        save_status(st_, st_path)
+
+
+def active_used(st_: Dict) -> float:
+    """active seconds in CLOSED segments"""
+    return sum(e - b for b, e, *_ in st_.get("active_segments") or [] if e is not None)
+
+
+def repair_tail(res_path: pathlib.Path, st_: Dict) -> None:
+    """a line cut by a kill mid-write is not an observation: truncate it (recorded), never merge it with the next"""
+    if not res_path.exists():
+        return
+    raw = res_path.read_bytes()
+    if raw and not raw.endswith(b"\n"):
+        cut = raw.rfind(b"\n") + 1
+        with res_path.open("r+b") as fh:
+            fh.truncate(cut)
+        st_.setdefault("tail_repairs", []).append({"utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "bytes_removed": len(raw) - cut})
+
+
 def execute(P: List[Dict], wd: pathlib.Path, workers: int, deadline: float, st_: Dict, st_path: pathlib.Path) -> str:
     """Continuous submission: up to 2*workers runs in flight; a YOKED arm is released as soon as its ON partner's result
     is written. Order of release: lane priority, then plan order. Scheduling only -- every run is a pure function of
     its spec, so the order cannot change any result."""
     res_path = wd / "results.jsonl"
+    repair_tail(res_path, st_)
     done: Dict[str, Dict] = load_results(wd)
     runs_dir = wd / "runs"; runs_dir.mkdir(exist_ok=True)
     pending = sorted((p for p in P if p["id"] not in done), key=lambda p: (p["priority"], p["id"]))
     stopped = "complete"; inflight = {}; n_written = 0
     import queue as _q
     q: "_q.Queue" = _q.Queue()
-    with mp.Pool(workers) as pool, res_path.open("a", encoding="utf-8", newline=chr(10)) as fh:
+    with mp.Pool(workers, maxtasksperchild=RECYCLE_TASKS) as pool, res_path.open("a", encoding="utf-8", newline=chr(10)) as fh:
         while pending or inflight:
             if time.time() < deadline:
                 i = 0
@@ -346,10 +387,9 @@ def execute(P: List[Dict], wd: pathlib.Path, workers: int, deadline: float, st_:
                 fh.write(json.dumps(out, sort_keys=True, default=str) + chr(10)); fh.flush()
                 done[out["id"]] = out; inflight.pop(out["id"])
                 n_written += 1
-                if n_written % 50 == 0:
-                    st_["last_write_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); st_["done"] = len(done)
-                    st_path.write_text(json.dumps(st_, indent=1), encoding="utf-8")
-    st_["done"] = len(done); st_path.write_text(json.dumps(st_, indent=1), encoding="utf-8")
+                st_["last_write_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); st_["done"] = len(done)
+                _beat(st_, st_path)
+    st_["done"] = len(done); _beat(st_, st_path, force=True)
     return stopped
 
 
@@ -393,25 +433,40 @@ def main(argv=None) -> int:
         raise SystemExit("phase-1 plan hash changed since the campaign started: refusing")
     st_.setdefault("phase1_sha256", h); st_.setdefault("first_start_ts", time.time())
     st_.setdefault("starts", []).append(time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
-    st_path.write_text(json.dumps(st_, indent=1), encoding="utf-8")
+    st_.setdefault("workers_by_start", []).append([time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), a.workers, RECYCLE_TASKS])
     t0 = st_["first_start_ts"]
+    if st_.get("time_rule") == "active_runtime_v1":
+        segs = st_["active_segments"]
+        if segs and segs[-1][1] is None:                      # previous segment crashed: close it at its last heartbeat
+            segs[-1][1] = max(segs[-1][0], st_.get("heartbeat_ts") or segs[-1][0]); segs[-1].append("closed at last heartbeat after an interruption")
+        now = time.time(); used = active_used(st_)
+        segs.append([now, None, "segment %d" % (len(segs) + 1)])
+        p1_deadline = now + PHASE1_CAP_H * 3600 - used
+        tot_deadline = now + TOTAL_CAP_H * 3600 - used
+    else:
+        p1_deadline = t0 + PHASE1_CAP_H * 3600
+        tot_deadline = t0 + TOTAL_CAP_H * 3600
+    _beat(st_, st_path, force=True)
     if st_.get("phase1_stopped") is None:
-        st_["phase1_stopped"] = execute(P1, wd, a.workers, t0 + PHASE1_CAP_H * 3600, st_, st_path)
-        st_["phase1_stopped_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); st_path.write_text(json.dumps(st_, indent=1), encoding="utf-8")
+        st_["phase1_stopped"] = execute(P1, wd, a.workers, p1_deadline, st_, st_path)
+        st_["phase1_stopped_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); save_status(st_, st_path)
     done = load_results(wd)
     P2 = phase2_plan(done, P1)
     if st_.get("phase2_sha256") and st_["phase2_sha256"] != plan_hash(P2):
         raise SystemExit("phase-2 plan hash changed: refusing")
     st_["phase2_sha256"] = plan_hash(P2); st_["phase2_runs"] = len(P2)
     (wd / "PHASE2_PLAN.json").write_text(json.dumps(P2, sort_keys=True), encoding="utf-8")
-    st_["phase2_stopped"] = execute(P2, wd, a.workers, t0 + TOTAL_CAP_H * 3600, st_, st_path)
+    st_["phase2_stopped"] = execute(P2, wd, a.workers, tot_deadline, st_, st_path)
     done = load_results(wd)
     PE = extension_plan(done, P1)
     st_["ext_sha256"] = plan_hash(PE); st_["ext_runs"] = len(PE)
     (wd / "EXT_PLAN.json").write_text(json.dumps(PE, sort_keys=True), encoding="utf-8")
-    st_["ext_stopped"] = execute(PE, wd, a.workers, t0 + TOTAL_CAP_H * 3600, st_, st_path)
+    st_["ext_stopped"] = execute(PE, wd, a.workers, tot_deadline, st_, st_path)
     st_["stopped_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); st_["stopped"] = True
-    st_path.write_text(json.dumps(st_, indent=1), encoding="utf-8")
+    if st_.get("time_rule") == "active_runtime_v1" and st_["active_segments"][-1][1] is None:
+        st_["active_segments"][-1][1] = time.time()
+        st_["active_elapsed_s"] = round(active_used(st_), 1)
+    save_status(st_, st_path)
     print(json.dumps({"stopped": True, "phase1": st_["phase1_stopped"], "phase2": st_["phase2_stopped"], "ext": st_["ext_stopped"]}))
     return 0
 

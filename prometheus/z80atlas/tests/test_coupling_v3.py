@@ -244,3 +244,26 @@ def test_campaign_plan_is_deterministic_and_yokes_follow_their_partner():
             assert on["arm"] == "ON" and on["seed"] == p["seed"] and on["init_tapes"] == p["init_tapes"] and on["K"] == p["K"]
     seeds = {p["seed"] for p in P}
     assert min(seeds) >= CC.SEED_BASE
+
+
+def test_amendment1_tail_repair_and_active_runtime(tmp_path):
+    from prometheus.z80atlas import coupling_campaign as CC
+    rp = tmp_path / "results.jsonl"
+    rp.write_bytes(b'{"id": "c000001"}\n{"id": "c0000')
+    st = {}
+    CC.repair_tail(rp, st)
+    assert rp.read_bytes() == b'{"id": "c000001"}\n' and st["tail_repairs"][0]["bytes_removed"] == len(b'{"id": "c0000')
+    st = {"active_segments": [[100.0, 4660.0, "pre-OOM"], [9000.0, 9500.0, "seg2"], [20000.0, None, "open"]]}
+    assert CC.active_used(st) == 4560.0 + 500.0
+
+
+def test_supervisor_integrity_detects_identity_corruption(tmp_path):
+    import json as _j
+    from prometheus.z80atlas import coupling_campaign as CC, coupling_supervisor as SV
+    P = CC.plan({}); p = P[0]
+    (tmp_path / "results.jsonl").write_text(_j.dumps({k: p[k] for k in ("id", "seed", "lane", "cell", "arm", "K", "k", "pair")}) + "\n")
+    inp = tmp_path / "in.json"; inp.write_text("{}")
+    assert SV.integrity(tmp_path, inp)["ok"]
+    bad = dict({k: p[k] for k in ("id", "seed", "lane", "cell", "arm", "K", "k", "pair")}, seed=p["seed"] + 1)
+    (tmp_path / "results.jsonl").write_text(_j.dumps(bad) + "\n")
+    assert not SV.integrity(tmp_path, inp)["ok"]

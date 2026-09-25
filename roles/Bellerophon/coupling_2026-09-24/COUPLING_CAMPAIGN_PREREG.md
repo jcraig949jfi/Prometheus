@@ -152,3 +152,22 @@ Launch: pinned copy of the freezing commit at C:/Users/James/z80atlas_coupling_2
   python -m prometheus.z80atlas.coupling_campaign --workdir C:/Users/James/z80atlas_coupling_2026-09-24
          --inputs <pinned>/coupling_inputs.json --workers 20
 Analysis (after stop): tools/coupling_analysis.py --workdir <that> --code <pinned code> --inputs <pinned inputs> --replay 0.03
+
+## AMENDMENT 1 (2026-09-25, operational only; operator authorization prompts/01_OPERATOR_RESTART_AUTHORIZATION_verbatim.md)
+
+Facts: the campaign launched 2026-09-24T20:07:31Z; at ~21:23Z the Claude Code harness killed the driver under host
+memory pressure (OOM). 959 result lines existed at the stop; integrity verified on 2026-09-25 (959 unique ids, all in
+the frozen plan, 0 seed/treatment mismatches, final line complete, results.jsonl sha256 529f3905da2c...). Nothing
+scientific ran during the suspension; no scientific outcome was inspected (only counts and voids).
+Change 1 -- stop rule: the s9 caps (Phase 1: 18 h; Phases 1+2+EXT: 22 h; analysis within 25 h) are measured in
+ACTIVE campaign runtime (sum of execution segments), not wall clock since the first start. The pre-OOM segment counts
+1 h 16 min (4,560 s, per the operator). A segment interrupted by a crash is closed at its last heartbeat (30 s
+resolution). Suspensions do not count. The directive's ~12 active hours minimum and 25 active hours maximum apply.
+Change 2 -- execution mechanics (cannot change any result; each run is a pure function of its frozen spec): pool
+workers are recycled every 6 runs (RSS bound); a results line torn by a kill mid-write is truncated and recorded,
+never merged; STATUS writes are atomic; a supervisor (coupling_supervisor.py) verifies evidence integrity before
+every (re)launch, relaunches after ordinary crashes, logs memory/concurrency (memory.jsonl), and lowers concurrency
+by 4 (floor 6) if free RAM stays below 4 GB.
+Unchanged: plan (sha256 a3bc8c8e... re-verified), seeds, arms, lanes, allocations, physics v3, detectors, metrics,
+tests P1-P6, Holm family, AUTO/EXT rules, readiness rule, analysis script. The 959 pre-OOM observations are retained
+exactly once; only missing run ids execute. The sample plan is NOT enlarged.
