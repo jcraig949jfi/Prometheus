@@ -63,6 +63,42 @@ class StateMachineInstance:
         d = json.loads(snapshot.decode()); self.state = d["state"]; self._c = d["c"]
 
 
+# ------------------------------------------------------------------------------------------ sequence.v1 (atlas-bee S1)
+def random_sequence(seed: int, length: int = 16, width: int = 2, act_range: int = 8, meta: dict | None = None) -> PlayerSpec:
+    """An OPEN-LOOP player: one action vector per tick, replayed cyclically, blind to the observation (the open-loop
+    action tensor of NPE lane E's E4b/E10; the control for every closed-vs-open-loop question)."""
+    s = stream("sequence", seed)
+    actions = [[s.below(act_range) for _ in range(width)] for _ in range(length)]
+    return PlayerSpec("sequence.v1", {"actions": actions, "length": length, "width": width, "act_range": act_range}, {}, frozenset(),
+                      dict(meta or {}, seed=seed, generator="random_sequence"))
+
+
+class SequenceInstance:
+    def __init__(self, spec: PlayerSpec):
+        self.actions = [list(a) for a in spec.payload["actions"]]; self.t = 0
+        self._c = {"transitions": 0, "reads": 0, "writes": 0, "ops": 0}
+
+    def act(self, obs, legal: ActionSpace) -> List[int]:
+        a = self.actions[self.t % len(self.actions)] if self.actions else []
+        self.t += 1; self._c["transitions"] += 1
+        return [x % legal.range for x in a[:legal.width]] + [0] * max(0, legal.width - len(a))
+
+    def adapt(self, signal) -> None:
+        return None
+
+    def cost(self) -> Dict[str, int]:
+        return dict(self._c, params=sum(len(a) for a in self.actions), state_bytes=4)
+
+    def fingerprint(self) -> str:
+        return fingerprint_by_probe(self)
+
+    def snapshot(self) -> bytes:
+        return json.dumps({"t": self.t, "c": self._c}).encode()
+
+    def restore(self, snapshot: bytes) -> None:
+        d = json.loads(snapshot.decode()); self.t = d["t"]; self._c = d["c"]
+
+
 # ------------------------------------------------------------------------------------------ constant.v1
 def constant_player(actions: List[int], meta: dict | None = None) -> PlayerSpec:
     return PlayerSpec("constant.v1", {"actions": list(actions)}, {}, frozenset(), dict(meta or {}, generator="constant_player"))

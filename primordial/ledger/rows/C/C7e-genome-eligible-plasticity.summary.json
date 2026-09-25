@@ -1,0 +1,155 @@
+{
+ "exp_id": "C7e-genome-eligible-plasticity",
+ "source": "C7e-genome-eligible-plasticity.jsonl",
+ "git": "1e684f6ad29aff51d941036c50dc9e6b55bd8661",
+ "h2_rule": {
+  "kind": "h2_rule",
+  "tt_out_surprises_calibration": 0,
+  "count_upper95": 2.9957322735539895,
+  "tt_out_ticks_calibration": 2712,
+  "rate_per_tick_upper": 0.0011046210448207926,
+  "record_window_ticks": 260,
+  "poisson_mean": 0.28720147165340604,
+  "q99_bar": 2
+ },
+ "posted_rule": {
+  "eligible_targets": 18,
+  "eligible_worlds": 14,
+  "switches_total": 130,
+  "affine_detected_total": 73,
+  "digit_tt_in_window_surprises": 0,
+  "h2_q99_bar": 2,
+  "H1": false,
+  "H2_chance_grounded": true,
+  "H3": true,
+  "H3_max_abs_deviation": 0.003557477678571397,
+  "H4": true,
+  "leak_probe": true,
+  "null_surprises_max": 1,
+  "status_by_posted_rule": "KILL"
+ },
+ "failing_targets": [
+  {
+   "gen_seed": 228,
+   "j": 3,
+   "detected": "0/3",
+   "learned_final_model": [
+    3,
+    1,
+    0
+   ],
+   "lookup_fit": {
+    "source": 2,
+    "normal": [
+     52429,
+     4418
+    ],
+    "flip": [
+     13107,
+     61118
+    ]
+   },
+   "b7b_regime_changes_form": false
+  },
+  {
+   "gen_seed": 248,
+   "j": 6,
+   "detected": "0/7",
+   "learned_final_model": [
+    6,
+    1,
+    0
+   ],
+   "lookup_fit": {
+    "source": 0,
+    "normal": [
+     1,
+     56837
+    ],
+    "flip": [
+     65535,
+     8699
+    ]
+   },
+   "b7b_regime_changes_form": false
+  },
+  {
+   "gen_seed": 261,
+   "j": 7,
+   "detected": "0/15",
+   "learned_final_model": [
+    7,
+    1,
+    0
+   ],
+   "lookup_fit": {
+    "source": 0,
+    "normal": [
+     43691,
+     51520
+    ],
+    "flip": [
+     21845,
+     14016
+    ]
+   },
+   "b7b_regime_changes_form": false
+  },
+  {
+   "gen_seed": 300,
+   "j": 4,
+   "detected": "0/1",
+   "learned_final_model": [
+    4,
+    1,
+    0
+   ],
+   "lookup_fit": {
+    "source": 3,
+    "normal": [
+     1,
+     10224
+    ],
+    "flip": [
+     65535,
+     55312
+    ]
+   },
+   "b7b_regime_changes_form": false
+  },
+  {
+   "gen_seed": 532,
+   "j": 2,
+   "detected": "0/31",
+   "learned_final_model": [
+    2,
+    1,
+    0
+   ],
+   "lookup_fit": {
+    "source": 1,
+    "normal": [
+     52429,
+     15465
+    ],
+    "flip": [
+     65535,
+     53747
+    ]
+   },
+   "b7b_regime_changes_form": false
+  }
+ ],
+ "cause": {
+  "all_failing_have_b7b_regime_changes_form_false": true,
+  "all_failing_learned_self_identity_y_next_eq_x_self": true,
+  "reading": "these registers are regime-invariant on reachable states (y_next == own current value, a=1, c=0, in both regimes); the lookup listed a DIFFERENT exact representation (another source column) whose (a, c) differ across regimes, and C7e eligibility compared representations, not functions. B7b regime_changes_form=false was right for these 5; C bus note 1789401581397-0 (mismatch in both directions) was wrong in its second direction."
+ },
+ "post_hoc_NOT_the_verdict": {
+  "targets_with_regime_changes_form_true_and_differing_fit": 13,
+  "all_true": true,
+  "detected": "73/73",
+  "worlds": 9
+ },
+ "line_status": "C7 line stays closed: C7e was the single disclosed post-correction run"
+}

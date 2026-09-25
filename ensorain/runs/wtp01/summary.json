@@ -1,0 +1,108 @@
+{
+ "attempted": 3000,
+ "valid": 2370,
+ "illegal": 613,
+ "crashed": 17,
+ "strategies": {
+  "random": 1262,
+  "mutate": 487,
+  "grammar": 488,
+  "recombine": 290,
+  "novelty": 473
+ },
+ "control_CG95": 0.07795683479162781,
+ "competent": 107,
+ "competent_frac": 0.04514767932489452,
+ "niches": 42,
+ "anomalies_selected": 35,
+ "states": {
+  "REPLICATED": 18,
+  "WEAK SIGNAL": 4,
+  "FALSIFIED": 13
+ },
+ "replicated_classes": [
+  [
+   "cp",
+   "dag",
+   "sgd"
+  ],
+  [
+   "cp",
+   "random_geometric",
+   "anti_hebbian"
+  ],
+  [
+   "cp",
+   "ring",
+   "anti_hebbian"
+  ],
+  [
+   "cp",
+   "tensor_index",
+   "evolve"
+  ],
+  [
+   "cp",
+   "tree",
+   "nlms"
+  ],
+  [
+   "marks",
+   "erdos",
+   "nlms"
+  ],
+  [
+   "marks",
+   "scale_free",
+   "none"
+  ],
+  [
+   "marks",
+   "tensor_index",
+   "none"
+  ],
+  [
+   "none",
+   "tensor_index",
+   "evolve"
+  ],
+  [
+   "none",
+   "wormholes",
+   "sgd"
+  ],
+  [
+   "sketch",
+   "tensor_index",
+   "batch_replay"
+  ],
+  [
+   "table",
+   "modular",
+   "anti_hebbian"
+  ],
+  [
+   "tt",
+   "modular",
+   "hebbian"
+  ],
+  [
+   "tt",
+   "scale_free",
+   "sgd"
+  ],
+  [
+   "tt",
+   "tensor_index",
+   "batch_replay"
+  ]
+ ],
+ "causal_support": 5,
+ "phase_boundaries": [],
+ "criteria": {
+  "a": true,
+  "b": false,
+  "c": false
+ },
+ "VERDICT": "SEARCH SPACE MOSTLY DEGENERATE -- REDESIGN"
+}

@@ -1,0 +1,137 @@
+{
+ "perturbation_id": "P-E02",
+ "parent": "T-X12",
+ "harness_ok": true,
+ "upstream_max_disp": 0.0,
+ "n_programs": 66,
+ "summary": {
+  "c408_ordinary": {
+   "n": 32,
+   "answered_k2": 1.0,
+   "disp": {
+    "between_puts": {
+     "tag1": 0.748046875,
+     "tag2": 0.748046875,
+     "first_ask": 0.748046875,
+     "second_ask": 0.748046875
+    },
+    "between_puts_x2": {
+     "tag1": 0.748046875,
+     "tag2": 0.748046875,
+     "first_ask": 0.748046875,
+     "second_ask": 0.748046875
+    },
+    "before_first_ask": {
+     "tag1": 0.0,
+     "tag2": 0.0,
+     "first_ask": 0.0,
+     "second_ask": 0.0
+    },
+    "before_second_ask": {
+     "tag1": 0.0,
+     "tag2": 0.0,
+     "first_ask": 0.0,
+     "second_ask": 0.0
+    }
+   },
+   "one_stream_noise1": 0.748046875,
+   "cross_tag_ge05_share": 0.75
+  },
+  "shelf_parent": {
+   "n": 19,
+   "answered_k2": 1.0,
+   "disp": {
+    "between_puts": {
+     "tag1": 0.27631578947368424,
+     "tag2": 0.24671052631578946,
+     "first_ask": 0.3157894736842105,
+     "second_ask": 0.20723684210526316
+    },
+    "between_puts_x2": {
+     "tag1": 0.2236842105263158,
+     "tag2": 0.19736842105263158,
+     "first_ask": 0.2631578947368421,
+     "second_ask": 0.15789473684210525
+    },
+    "before_first_ask": {
+     "tag1": 0.13157894736842105,
+     "tag2": 0.13157894736842105,
+     "first_ask": 0.10526315789473684,
+     "second_ask": 0.15789473684210525
+    },
+    "before_second_ask": {
+     "tag1": 0.05921052631578947,
+     "tag2": 0.09868421052631579,
+     "first_ask": 0.0,
+     "second_ask": 0.15789473684210525
+    }
+   },
+   "one_stream_noise1": 0.3684210526315789,
+   "cross_tag_ge05_share": 0.3157894736842105
+  },
+  "w0_parent": {
+   "n": 15,
+   "answered_k2": 1.0,
+   "disp": {
+    "between_puts": {
+     "tag1": 0.0,
+     "tag2": 0.0,
+     "first_ask": 0.0,
+     "second_ask": 0.0
+    },
+    "between_puts_x2": {
+     "tag1": 0.0,
+     "tag2": 0.0,
+     "first_ask": 0.0,
+     "second_ask": 0.0
+    },
+    "before_first_ask": {
+     "tag1": 0.625,
+     "tag2": 0.37916666666666665,
+     "first_ask": 1.0,
+     "second_ask": 0.004166666666666667
+    },
+    "before_second_ask": {
+     "tag1": 0.375,
+     "tag2": 0.625,
+     "first_ask": 0.0,
+     "second_ask": 1.0
+    }
+   },
+   "one_stream_noise1": 0.9958333333333333,
+   "cross_tag_ge05_share": 0.0
+  }
+ },
+ "signflips": {
+  "tag1_minus_tag2_between_puts": {
+   "mean_diff": 0.008522727272727272,
+   "p05": -0.008522727272727272,
+   "p95": 0.008522727272727272,
+   "n": 66,
+   "above_p95": false,
+   "below_p05": false
+  },
+  "k2_first_ask_minus_one_stream": {
+   "mean_diff": -0.4375,
+   "p05": -0.13446969696969696,
+   "p95": 0.13636363636363635,
+   "n": 66,
+   "above_p95": false,
+   "below_p05": true
+  },
+  "x2_minus_x1_tag1": {
+   "mean_diff": -0.015151515151515152,
+   "p05": -0.015151515151515152,
+   "p95": 0.015151515151515152,
+   "n": 66,
+   "above_p95": false,
+   "below_p05": false
+  }
+ },
+ "cross_tag_any_set": true,
+ "material": true,
+ "disposition": "RAN",
+ "elapsed_s": 1.0,
+ "prereg_sha256": "6c3c34b6470440ea93e1d3a4b846b20719fe61584d09daa36b61df968f8135a7",
+ "ts": "2026-09-18 23:20:50"
+}

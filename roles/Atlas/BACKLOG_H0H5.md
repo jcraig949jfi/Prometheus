@@ -1,16 +1,32 @@
 # Atlas backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-19 (charter + addendum adopted; first pass landed).
+Currency: 2026-09-24 (promotion absorbed: the research-policy layer is live).
 Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
 Closed 2026-09-19: ATLAS-24 by operator ruling (F:/SerendipityD: ignore for now;
 engine row marked IGNORED, its local root removed from the registry).
+Closed 2026-09-19: ATLAS-27 -- local_files/4 loss tracking (present=false + dated
+file.missing fact; flips back on return; host-scoped) and storage_role (primary |
+copy | backup; only the root itself is primary; declared engine_instance for live
+stores); migration 007 reset two M1 storage_roots set by the old rule.
+Closed 2026-09-19: ATLAS-06 -- archaeon_campaigns/3 reads every RECORD.md DISPOSITION
+paragraph as a verbatim conclusion (line pointer); cmp1 now 10/10 classed via
+classify.science_class (capitalised verdict words only; mixed -> LOW).
 Closed 2026-09-19: ATLAS-21 -- AtlasIndexLoop registered in MONITORS.md
 (bound 6 non-productive ticks, accountable Atlas-M2) before launch; tick in loop/TICK.md.
+Closed 2026-09-24: ATLAS-02 revised -- the promotion directive (prompts/2026-09-24_promotion/) is absorbed into RESPONSIBILITIES.md: Atlas is the index AND the research-policy layer (theory graph, primitive/combination coverage, scored proposals, portfolio directives, blind spots).
 
 ATLAS-04 | Run the M2 Atlas instance from roles/Atlas/prompts/2026-09-19_m2_instance/ and merge its host-local rows (frontier runs/, M2 SFE ledger, M2 logs) into the same keys | ENGINE | beta | M | operator (starts the M2 instance) | harvest_run rows with host_id=M2; EXPECTED:M2 sources drop below 10% of their 2026-09-19 count
 ATLAS-05 | Write a git adapter for archaeon/wse/ledgers (wse-survey-v01, ssf-c1..3) so the 4 PEW-only campaigns get receipts, attempts and facts | TOOLS | beta | S | none | archaeon.wse/* experiments with n_attempts > 0 and source links to git
-ATLAS-06 | Extract Campaign 1 verdicts from SFE-0N/RECORD.md (receipts carry none) as conclusions by pointer with the verbatim line | TOOLS | beta | S | none | 10 cmp1 conclusions; cmp1 atlas_class no longer all UNKNOWN
+ATLAS-34 | Index Crius (campaign 2: rungs, PARTS donors, takeovers.jsonl, paired streams) as an engine so RA-4 can run and Crius joins the manifest | TOOLS | beta | M | Crius C2 arm complete | crius campaign + experiments in atlas.campaign; RA-4 analysis possible
+ATLAS-35 | Index the Nyx mechanism ledger and Techne fossil CATALOG as entities so GEA-4 and RA-5 have machine-readable organ/fossil inventories | TOOLS | beta | M | none | mechanisms and fossils queryable beside experiments; rediscovery dedup possible
+ATLAS-36 | Build the reanalysis pipeline the queue depends on (learned behaviour descriptors with a synthetic positive control) and run RA-2 over GraphWorld + CW01 rows | EVIDENCE | 1.0 | M | ATLAS-07 | descriptor pipeline + RA-2 report with controls stated
+ATLAS-31 | Re-verify the catalogue's SEARCH_RESULT/UNVERIFIED links (192 of 834) and record which moved or died, as a catalog/2 pass | TOOLS | beta | M | none | url_status transitions per link in harvest counts
+ATLAS-32 | Expand the catalogue from its 16 source lists (awesome-open-ended ~101, ALife Encyclopedia platforms, OEE workshops) and the internal herakles/aporia lists, verifying each addition | EVIDENCE | beta | L | none | ECOSYSTEMS.jsonl growth with verified code share reported
+ATLAS-33 | Derive ANALOGUE_OF edges between external ecosystems and Prometheus experiments that share world/organism/pressure axes (ATLAS_DERIVED, rule + version) | EVIDENCE | 1.0 | M | none | edges with method; a positive control pair (SFE campaigns ~ Tierra-class soups) and a negative pair
+ATLAS-28 | Make local_files scale to dense logs: incremental (skip unchanged size+mtime), no hashing of logs or files > 5 MB, and a per-root "granularity" (file | dir_summary | rotating-log family) so a log tree becomes a handful of pointers, not thousands of rows | TOOLS | beta | M | none | pass time and row count on M1 roots before/after; registry rows declare granularity
+ATLAS-29 | Record each log's covered time span (first/last timestamp from a small head/tail read) on source.time_start/time_end, then link logs to attempts on the same host whose run window overlaps (edge basis INFERRED) | TOOLS | beta | M | ATLAS-28 | attempts with log links on M1; same code serves Atlas-M2 on M2
+ATLAS-30 | Add a growth/coverage view: bytes and files per host, root and week, and pointers whose files vanished, so the operator can see what exists and what is at risk before culling | ENGINE | beta | S | ATLAS-27 | atlas.v_local_volume + report section
 ATLAS-07 | Add an NPE QD-cells collector (primordial/ledger/qd/cells.jsonl, draws.jsonl, world_set_r8.json) as world x pressure x representation descriptors | TOOLS | beta | M | none | facts of kind world_descriptor/pressure_descriptor on graphworld experiments; R10 recomputed
 ATLAS-08 | Harvest the remaining local nestor/* branches (r2..r8 lanes, e05-replica, arch4-loop) and record which commits exist only there | TOOLS | beta | S | none | git_commit rows with seen_on_host=M1 per branch; source rows GIT_LOCAL:M1
 ATLAS-09 | Map pm-data epoch-logs (527 epochs-<hash> dirs) to rounds/epochs via ROUND_rN.json and epoch_log.jsonl | TOOLS | beta | M | none | file:// sources linked to graphworld campaigns instead of the engine
@@ -29,3 +45,11 @@ ATLAS-22 | Publish the manifest as a read-only view set (atlas.v_manifest etc.) 
 ATLAS-23 | Report the committed cleartext DB credentials in evidence_wiki/config.json to Mnemosyne if not already tracked (seen while wiring the connection; not Atlas's lane) | ENGINE | program | S | none | comms post id or a line citing the existing tracker entry
 ATLAS-25 | Add a per-campaign coverage table (what each adapter extracted vs the files present) so a recomb can target the biggest unextracted shapes first (v_shape_inventory) | TOOLS | beta | S | none | report section listing top 20 unextracted shapes by count
 ATLAS-26 | Decide with the operator whether Atlas may ask driving seats for an interface change (e.g. a hostname field in receipts) | ENGINE | program | XL | NEW: may Atlas request receipt fields (hostname, engine_instance) from Archaeon/Nestor? | decision recorded; until then Atlas infers and labels
+
+ATLAS-37 | Write the Cosmos export adapter (roles/Cosmos/campaigns/atlas_export_c0: 10 stores, ~4.3k edges, ~8.9k facts, MANIFEST with per-source sha256) as harvest/cosmos.py, verifying the MANIFEST hashes before ingest | TOOLS | beta | M | none (export committed; comms #544) | cosmos campaign + experiments in atlas.campaign; MANIFEST sha256 checked per file and recorded on each source row
+ATLAS-38 | Model Nestor's S-series replication forensics as first-class evidence (the 6,547 RECOMBINATION-axis events, the 1,031 -> 57 re-adjudication, the splice-artefact attribution) instead of one verbatim quote on P-copy-not-heredity | EVIDENCE | beta | M | none | proposition_evidence rows with per-event locators; P-copy-not-heredity confidence basis cites counts Atlas can recompute
+ATLAS-39 | Add detection rules for the 5 UNMEASURED primitives (error_correction, partial_heredity, reproductive_closure, temporal_gating, write_authority) so 'untested' stops being indistinguishable from 'unmeasurable' | EVIDENCE | beta | M | none | primitive_use rows for each, each with a positive control ecosystem and a negative one; ROADMAP section 2 UNMEASURED list shrinks with the rule named
+ATLAS-40 | Close the scoring loop: record outcome, theory_delta and theory_delta_score on experiment_score once a scored proposal has actually run, then refit the weights and open atlas.policy/3 with a rationale naming what /2 got wrong | EVIDENCE | 1.0 | L | at least 5 scored proposals executed by other seats | >= 5 scored rows with scored_outcome_at; policy/3 rationale cites measured rank correlation between predicted total and theory_delta_score
+ATLAS-41 | Commission the two OPEN blind spots as written proposals (BS-memory-outside-world: the world IS the memory, matched private-write arm; BS-parent-child-detectors: a parent-free propagation detector run on the SAME NPE logs) and route them | EVIDENCE | beta | M | none | both blind_spot rows move to COMMISSIONED with proposed_as set; each proposal carries a kill condition
+ATLAS-42 | Add the soup generator proper: propose WORLDS (not just pairs) by sampling underexplored primitive triples weighted by theory relevance x cross-engine evidence x novelty, and route each to the best-suited seat with its rationale | TOOLS | 1.0 | L | ATLAS-39 | proposals with arity-3 combination ids, a stated routing rule, and a negative control (a triple the evidence says is barren)
+ATLAS-43 | Make the MICRO/STRATEGY/THEORY cadence event-driven off newly indexed experiments (~10 / ~100 / ~1000) rather than operator-triggered, so a horizon fires when the corpus moves, not when Atlas is asked | ENGINE | beta | S | loop resumed by the operator | portfolio_update rows whose window boundaries follow indexed counts; the tick records the count that triggered it

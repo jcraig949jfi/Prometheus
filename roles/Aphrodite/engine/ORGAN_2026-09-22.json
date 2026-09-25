@@ -1,0 +1,81 @@
+{
+  "admissible": true,
+  "declared_at_commit": "abad582c9",
+  "generalised": {
+    "E": "[H2](acc, v)",
+    "F": "[H3]",
+    "INIT": "[H1]"
+  },
+  "hole_grammars": {
+    "E": {
+      "grammar": "expressions over {acc, v}, depth <= 2, declared primitives",
+      "kind": "operator"
+    },
+    "F": {
+      "grammar": "acc, or a single primitive application over {acc, last}",
+      "kind": "expression"
+    },
+    "INIT": {
+      "grammar": "{0, 1}",
+      "kind": "value"
+    }
+  },
+  "holes": [
+    {
+      "arity": 0,
+      "from": [
+        "0",
+        "1"
+      ],
+      "name": "H1"
+    },
+    {
+      "arity": 2,
+      "from": [
+        "add(acc, v)",
+        "mul(acc, v)"
+      ],
+      "name": "H2"
+    },
+    {
+      "arity": 0,
+      "from": [
+        "acc",
+        "mod(acc, last)"
+      ],
+      "name": "H3"
+    }
+  ],
+  "node_counts": {
+    "E": 3,
+    "F": 1,
+    "INIT": 1
+  },
+  "organ_sha256": "5488abb9f6354f02eb210909e180b17db644f3e3a2675d70f3a140f2e6acf79a",
+  "procedure": "first-order anti-unification (Plotkin LGG), AMENDMENT 7 section A",
+  "recovers_inputs": {
+    "list_prod_mod": true,
+    "list_sum": true
+  },
+  "skeleton": [
+    "acc = <INIT>",
+    "for v in vals:",
+    "    acc = <E>(acc, v)",
+    "return <F>(acc, last)"
+  ],
+  "source_artifact_sha256": "759ff1871011c11aac254ede998c0e27036e6d4929626d894bd2971b84a90146",
+  "source_structures": {
+    "list_prod_mod": {
+      "E": "(acc * v)",
+      "F": "(acc % last)",
+      "INIT": "1"
+    },
+    "list_sum": {
+      "E": "(acc + v)",
+      "F": "acc",
+      "INIT": "0"
+    }
+  },
+  "unique_without_human_choice": true,
+  "verdict": "ORGAN_IDENTIFIED"
+}

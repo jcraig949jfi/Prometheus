@@ -1,0 +1,108 @@
+{
+ "ledger": {
+  "guards": {
+   "learnability.require_controlled": {
+    "label": "learnability.require_controlled",
+    "guard": "require_controlled",
+    "proven": true,
+    "distinguishable": true,
+    "refused_bad": true,
+    "admitted_good": true,
+    "refusal": "UncontrolledComparison: G1/bad UNCONTROLLED - these differ between arms: ['force_disjunctive']",
+    "good_error": null,
+    "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+   },
+   "learnability.require_live": {
+    "label": "learnability.require_live",
+    "guard": "require_live",
+    "proven": true,
+    "distinguishable": true,
+    "refused_bad": true,
+    "admitted_good": true,
+    "refusal": "VacuousCheck: G2/bad VACUOUS - these were zero: ['info', 'components_carried']",
+    "good_error": null,
+    "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+   },
+   "learnability.require": {
+    "label": "learnability.require",
+    "guard": "require",
+    "proven": true,
+    "distinguishable": true,
+    "refused_bad": true,
+    "admitted_good": true,
+    "refusal": "NotLearnable: NOT LEARNABLE - do not spend budget",
+    "good_error": null,
+    "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+   },
+   "contract.require_matches": {
+    "label": "contract.require_matches",
+    "guard": "VerdictContract.require_matches",
+    "proven": true,
+    "distinguishable": true,
+    "refused_bad": true,
+    "admitted_good": true,
+    "refusal": "ContractViolation: driver contract c80b5bfd348f does not match committed 000f1f05b8bb; differing fields: ['budget_B']",
+    "good_error": null,
+    "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+   }
+  },
+  "n_proven": 4,
+  "n_total": 4,
+  "all_proven": true,
+  "_rule": "a guard is evidence only once it has been observed refusing a bad state"
+ },
+ "checks": [
+  {
+   "guard": "learnability.require_controlled",
+   "proven": true,
+   "distinguishable": true,
+   "refused_bad": true,
+   "admitted_good": true,
+   "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+  },
+  {
+   "guard": "learnability.require_live",
+   "proven": true,
+   "distinguishable": true,
+   "refused_bad": true,
+   "admitted_good": true,
+   "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+  },
+  {
+   "guard": "learnability.require",
+   "proven": true,
+   "distinguishable": true,
+   "refused_bad": true,
+   "admitted_good": true,
+   "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+  },
+  {
+   "guard": "contract.require_matches",
+   "proven": true,
+   "distinguishable": true,
+   "refused_bad": true,
+   "admitted_good": true,
+   "verdict": "PROVEN - observed refusing the bad state and admitting the good one"
+  },
+  {
+   "guard": "prove_refuses REFUSES a vacuous fixture",
+   "proven": true,
+   "distinguishable": false,
+   "refused_bad": false,
+   "admitted_good": true,
+   "verdict": "VACUOUS FIXTURE - the bad case is indistinguishable from the good case; this fixture cannot fail and proves nothing (CW01-D038a)"
+  },
+  {
+   "guard": "require_proven fails closed on vacuous",
+   "proven": true,
+   "verdict": "VacuousFixture raised"
+  },
+  {
+   "guard": "GuardLedger.require refuses unproven",
+   "proven": true,
+   "verdict": "GuardNotProven raised"
+  }
+ ],
+ "all_proven": true,
+ "_rule": "'guard exists' is not evidence; 'guard observed refusing' is evidence"
+}

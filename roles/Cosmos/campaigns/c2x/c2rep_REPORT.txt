@@ -1,0 +1,32 @@
+CWE CAMPAIGN 0 REPORT  c2rep
+==============================================================================
+code   head 95592c95f4  src fabdc2965204  dirty False
+graph  nodes 996 edges 662 runs 998 laws 1  edge kinds {'CONTROL_OF': 60, 'COORD_PRESERVING': 25, 'DEFORMATION_OF': 577}
+queries (chamber, excl. oracle) 920   wall 2079.5s
+------------------------------------------------------------------------------
+GATES
+  G0  PASS
+  G1  PASS
+  G2  PASS
+  G3  NOT REACHED (not run by campaign0; see G3 receipt)
+  G4  PASS
+  G5  NOT REACHED (holdout adjudicated separately; D/E are spent)
+  G6  NOT REACHED (holdout adjudicated separately; D/E are spent)
+  G7  PASS
+------------------------------------------------------------------------------
+INITIAL MINING (main dataset)
+  raw  CANDIDATE                  p=0.050 score=0.757
+       (N + log((C + N))) <= 2.169 AND (Q * exp(-(C * K))) <= 0.8725
+  v3   CANDIDATE                  p=0.050 score=0.877
+       (Q - (C * K)) <= 0.8385 AND (N - log((G - C))) <= 2.122
+  v4   CANDIDATE                  p=0.050 score=0.897
+       (Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945
+ADVERSARY
+  round 0  SURVIVED  confirmed 0 / confident 106
+    law  (Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945
+LAW LEDGER
+  e654764319 v1 parent=- cmap=v4  PROPOSED/ATTACKED/SURVIVED/FROZEN
+    (Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945
+FROZEN  (Q - (C * K)) <= 0.8385 AND (C - (G * exp(-N))) <= -0.0945  freeze 97f744115e29612e
+QUOTIENT  996 nodes -> 8 classes (0.008); boundary edge fraction {'CONTROL_OF': 0.8667, 'COORD_PRESERVING': 0.04, 'DEFORMATION_OF': 0.4822}
+==============================================================================

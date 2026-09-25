@@ -1,0 +1,159 @@
+{
+ "timings": {
+  "H1": {
+   "tier": "S",
+   "arms": [
+    [
+     "gate_off_cost_vm",
+     1.3972668647766113
+    ],
+    [
+     "gate_on_cost_vm",
+     1.392610788345337
+    ],
+    [
+     "gate_off_cost_free",
+     1.4398131370544434
+    ],
+    [
+     "gate_on_cost_free",
+     1.420886516571045
+    ]
+   ],
+   "mean_s_at_120_epochs": 1.413
+  },
+  "H2": {
+   "tier": "M",
+   "arms": [
+    [
+     "A_in_situ",
+     6.493602991104126
+    ],
+    [
+     "B_reimplant_actual",
+     6.278692007064819
+    ],
+    [
+     "C_reimplant_random",
+     6.534847736358643
+    ]
+   ],
+   "mean_s_at_120_epochs": 6.436
+  },
+  "H3": {
+   "tier": "M",
+   "arms": [
+    [
+     "A_easy_plus_migration",
+     6.086611032485962
+    ],
+    [
+     "B_homogeneous_same_migration",
+     5.559609889984131
+    ],
+    [
+     "C_easy_no_migration",
+     6.1329121589660645
+    ]
+   ],
+   "mean_s_at_120_epochs": 5.926
+  },
+  "H4": {
+   "tier": "L",
+   "arms": [
+    [
+     "endogenous",
+     0.6178560256958008
+    ],
+    [
+     "external",
+     2.45763897895813
+    ]
+   ],
+   "mean_s_at_120_epochs": 1.538
+  }
+ },
+ "projection": {
+  "per_hypothesis": {
+   "H1": {
+    "tier": "S",
+    "runs": 240,
+    "est_s_per_run": 7.1,
+    "est_cpu_hours": 0.47
+   },
+   "H2": {
+    "tier": "M",
+    "runs": 240,
+    "est_s_per_run": 107.3,
+    "est_cpu_hours": 7.15
+   },
+   "H3": {
+    "tier": "M",
+    "runs": 144,
+    "est_s_per_run": 98.8,
+    "est_cpu_hours": 3.95
+   },
+   "H4": {
+    "tier": "L",
+    "runs": 128,
+    "est_s_per_run": 51.3,
+    "est_cpu_hours": 1.82
+   }
+  },
+  "total_cpu_hours": 13.4,
+  "workers": 6,
+  "projected_wall_hours": 2.23,
+  "envelope_hours": 24.0,
+  "usable_hours": 20.4,
+  "fits": true
+ },
+ "rescaled": {
+  "per_hypothesis": {
+   "H1": {
+    "tier": "S",
+    "runs": 240,
+    "est_s_per_run": 7.1,
+    "est_cpu_hours": 0.47
+   },
+   "H2": {
+    "tier": "M",
+    "runs": 240,
+    "est_s_per_run": 107.3,
+    "est_cpu_hours": 7.15
+   },
+   "H3": {
+    "tier": "M",
+    "runs": 144,
+    "est_s_per_run": 98.8,
+    "est_cpu_hours": 3.95
+   },
+   "H4": {
+    "tier": "L",
+    "runs": 128,
+    "est_s_per_run": 51.3,
+    "est_cpu_hours": 1.82
+   }
+  },
+  "total_cpu_hours": 13.4,
+  "workers": 6,
+  "projected_wall_hours": 2.23,
+  "envelope_hours": 24.0,
+  "usable_hours": 20.4,
+  "fits": true
+ },
+ "scale_notes": null,
+ "manifest_hash_after_sizing": "eac49e63f53aba0a2eb7c108117fadbfecf9e750e43dff9822415c6accabb187",
+ "n_runs": 752,
+ "n_bundles": 252,
+ "by_hypothesis": {
+  "H1": 60,
+  "H2": 80,
+  "H3": 48,
+  "H4": 64
+ },
+ "bundle_integrity": {
+  "byte_equivalent": true,
+  "identical_verdicts": true
+ },
+ "gate": "PASS"
+}

@@ -1,0 +1,48 @@
+{
+ "perturbation_id": "P-G09",
+ "parent": "T-X18",
+ "co_parents": [
+  "T-X01",
+  "T-E06"
+ ],
+ "claim_type": "serendipity-cross",
+ "ids": [
+  "cw01-loop5-PG09-0",
+  "cw01-loop5-PG09-1",
+  "cw01-loop5-PG09-2"
+ ],
+ "rates": [
+  0.5,
+  1.0
+ ],
+ "generations": [
+  0,
+  20,
+  40,
+  80
+ ],
+ "sharing": [
+  true,
+  false
+ ],
+ "ruler": {
+  "family": "blind structural damage",
+  "geometry": "one unit (TAPE instruction / TREE internal-node contraction)",
+  "sampling_law": "uniform over units",
+  "normalisation": "ABSOLUTE score change on fixed probe items",
+  "denominator": "4 draws",
+  "price_assumptions": "score only (no price in the ruler)",
+  "viability_floor": "none",
+  "alters_baseline_function": "no",
+  "qualification": "absolute change; no ratio (D086)"
+ },
+ "readouts": "mean dscore and share rising for elite (top 5 by fitness) vs population sample, by substrate x generation x sharing",
+ "reading": "POPULATION_ARTEFACT if the population's share rising exceeds the elite's by >= .15 with the elite's share <= .2 in >= 3/4 generations > 0; ORGANISM_PROPERTY if the elite's share rising >= .3 in >= 2 generations; MIXED otherwise; NO_LOAD if shares <= .1 everywhere",
+ "material_rule": "the reading is not NO_LOAD, or sharing changes the share rising by >= .15",
+ "continuation": [
+  "load vs recombination rate",
+  "price 0"
+ ],
+ "written": "2026-09-19 03:20:54",
+ "prereg_sha256": "2cda42cdb7c3819ba168d77ef91ac4926a824613bee1fe33fe774498f1c723e1"
+}

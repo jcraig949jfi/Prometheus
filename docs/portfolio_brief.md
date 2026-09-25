@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-09-19 09:21:37 AM UTC*
+*Generated: 2026-09-25 09:21:43 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,8 +7,12 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 160856min (9651385s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 169496min (10169788s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
+
+**MachineProbe-M4 @ M4, M4 host resource time-series (60s) — DEAD, daemon stopped**
+No heartbeat for 12min (756s). Was last ALIVE at 2026-09-25T05:08:43.823850-04:00.
+Investigate the process on M4 and restart, or kill watchdog if intentional.
 
 ## Watch this
 
@@ -41,7 +45,7 @@ Check Pythia queue depth; refill DR ticket inbox if dry.
 
 ## Shadow review (Elenchus)
 
-Worklog passes: 218 | reviewed: 30 | awaiting review: 193
+Worklog passes: 219 | reviewed: 30 | awaiting review: 194
 - ELEN-2026-08-27T02:00Z-P176: **MIXED** (correction-needed) THE PREREGISTERED CONTROL CLASS WAS NOT BUILT; THE CONTROL COLUMN IS A SECOND REUSE COLUMN
 - ELEN-SELF-2: **SOUND** (note) Self-calibration against ELEN-2026-08-21T00:27Z-P50 (verdict SOUND), overdue by ten review
 - ELEN-BOOTSTRAP-2026-09-01: **MIXED** (note) Channel status. Five days since the last review cycle (2026-08-27). Two passes shipped in 
@@ -50,12 +54,12 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 803 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 239 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
-**2 agents ALIVE** (Pronoia, MachineProbe-M4).
+**1 agents ALIVE** (Pronoia).
 
-**Anomalies tracked:** 28 (Apollo, Hephaestus, Clio, Pythia, Hypatia).
+**Anomalies tracked:** 29 (Apollo, Hephaestus, Clio, Pythia, Hypatia).
 
 ---
 *Deterministic brief (primary mode) — every line computed from state; no LLM in the loop.*

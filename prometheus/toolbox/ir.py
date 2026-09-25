@@ -125,6 +125,10 @@ class Experiment:
             bad.append("budget.world_state must be 'episode' or 'lifetime'")
         if "max_runs" in b and (not isinstance(b["max_runs"], int) or b["max_runs"] < 1):
             bad.append("budget.max_runs must be a positive int when present")
+        if "episode_seeds" in b:
+            pol = b["episode_seeds"]
+            if not isinstance(pol, dict) or pol.get("kind") not in ("distinct", "recur") or (pol.get("kind") == "recur" and (not isinstance(pol.get("distinct"), int) or isinstance(pol.get("distinct"), bool) or pol.get("distinct") < 1)):
+                bad.append("budget.episode_seeds must be {kind: 'distinct'} or {kind: 'recur', distinct: int >= 1}")
         if "batch" in b and (not isinstance(b["batch"], int) or isinstance(b["batch"], bool) or b["batch"] < 0):
             bad.append("budget.batch must be a non-negative int when present (0/1 = scalar execution)")
         for path, vals in self.sweep.items():

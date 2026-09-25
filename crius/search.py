@@ -43,8 +43,15 @@ def random_arg(rng: random.Random, kind: str, length: int) -> int:
     return 0
 
 
+_OPSET = [None]
+
+
+def set_opset(cfg: dict) -> None:
+    _OPSET[0] = vm.opcode_names(cfg.get("substrate", {}))
+
+
 def random_instruction(rng: random.Random, length: int) -> tuple:
-    name = rng.choice(vm.OPNAMES)
+    name = rng.choice(_OPSET[0] or vm.opcode_names({}))
     kinds = vm.OPSPEC[name]
     return (vm.OP[name],) + tuple(random_arg(rng, k, length) for k in kinds)
 
@@ -153,6 +160,7 @@ _WORKER = {}
 
 def _init_worker(cfg: dict):
     _WORKER["cfg"] = cfg
+    vm.set_substrate(cfg.get("substrate", {}))
     _WORKER["tasks"] = {s: streams.lifetime(cfg, s, "search") for s in cfg["seeds"]["search"]}
 
 
@@ -236,11 +244,20 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
                run_id: str, mu: int = None, lam: int = None, out_root: str = None) -> str:
     mu = mu or cfg["search"]["mu"]
     lam = lam or cfg["search"]["lambda"]
+    set_opset(cfg)
+    vm.set_substrate(cfg.get("substrate", {}))
+    paired = int(cfg.get("streams", {}).get("paired", 1))
+    takeover = bool(cfg.get("streams", {}).get("takeover_check", False))
+    donors = []
+    for pname in cfg["search"].get("parts_donors", []):
+        from . import parts_c2
+        donors.append((pname, parts_c2.program(pname)))
     out = os.path.join(out_root or os.path.join("crius", "runs"), run_id)
     os.makedirs(out, exist_ok=True)
     meta = receipts.run_meta(cfg, config_path)
     meta.update({"run_id": run_id, "arm": arm, "iterations": iterations, "search_seed": seed, "mu": mu, "lambda": lam})
     receipts.write_json(os.path.join(out, "RUN_META.json"), meta)
+    take_f = open(os.path.join(out, "takeovers.jsonl"), "w", encoding="ascii", newline="\n")
     rng = random.Random("search:%s:%d" % (arm, seed))
     cand_f = open(os.path.join(out, "candidates.jsonl"), "w", encoding="ascii", newline="\n")
     iter_f = open(os.path.join(out, "iterations.jsonl"), "w", encoding="ascii", newline="\n")
@@ -251,7 +268,15 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
 
     # initial population
     rotate = cfg.get("streams", {}).get("rotate", False)
-    seeds_for = lambda it: ([streams.search_stream_seed(cfg, it, seed)] if rotate else list(cfg["seeds"]["search"]))
+
+    def seeds_for(it):
+        if not rotate:
+            return list(cfg["seeds"]["search"])
+        base = streams.search_stream_seed(cfg, it, seed)
+        return [base * 10 + k for k in range(paired)]  # paired common-random streams (DESIGN_C2 s3)
+
+    def check_seed(it):
+        return streams.search_stream_seed(cfg, it, seed) * 10 + 9
     if arm in ("seeded", "recombination"):
         seedprog = vm.enumerate_program()
         init = [(seedprog, None, "seed:ENUMERATE_VM")]
@@ -284,7 +309,8 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
             _, _, pcid, pprog, _ = rng.choice(population)
             child, mod = make_child(pprog, rng, cfg)
             if arm == "recombination" and rng.random() < cfg["search"].get("splice_fraction", 0.3):
-                _, _, dcid, dprog, _ = rng.choice(population)
+                dpool = [(p[2], p[3]) for p in population] + [("PART:" + n, prog) for n, prog in donors]
+                dcid, dprog = rng.choice(dpool)
                 child, m2 = splice(child, dprog, rng, cfg)
                 mod = mod + "+" + m2 + ":" + dcid
             ccid = vm.program_hash(child)
@@ -298,12 +324,43 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
             pevals = _eval_many(pool, [p[3] for p in population], cur_seeds)
             population = [(ev["fitness"], p[1], p[2], p[3], {**p[4], "reeval": ev}) for p, ev in zip(population, pevals)]
         evals = _eval_many(pool, [c[0] for c in children], cur_seeds)
+        elite_ids = {p[2] for p in population}
+        newcomers = []
         for (child, pcid, mod, ccid), ev in zip(children, evals):
             rec = {"candidate_id": ccid, "parent_id": pcid, "modification": mod, "iteration": it,
                    "program": vm.program_to_json(child), **ev}
             emit(rec)
-            population.append((ev["fitness"], len(child), ccid, child, rec))
-        population.sort(key=lambda x: (-x[0], x[1], x[2]))
+            newcomers.append((ev["fitness"], len(child), ccid, child, rec))
+        merged = sorted(population + newcomers, key=lambda x: (-x[0], x[1], x[2]))
+        if takeover and rotate:
+            # DESIGN_C2 s3: a child may displace an elite member only if it also wins on an independent check stream
+            proposed = merged[:mu]
+            displaced = [p for p in population if p[2] not in {q[2] for q in proposed}]
+            entering = [q for q in proposed if q[2] not in elite_ids]
+            if entering and displaced:
+                cs = [check_seed(it)]
+                cev = _eval_many(pool, [q[3] for q in entering] + [p[3] for p in displaced], cs)
+                ent_check = {q[2]: e["fitness"] for q, e in zip(entering, cev[: len(entering)])}
+                dis_check = sorted(((e["fitness"], p) for p, e in zip(displaced, cev[len(entering):])), key=lambda x: x[0])
+                keep_out = set()
+                for q in sorted(entering, key=lambda q: q[0]):  # weakest entrant against the strongest displaced
+                    if not dis_check:
+                        break
+                    dfit, dp = dis_check[-1]
+                    rec_t = {"iteration": it, "child": q[2], "child_paired": q[0], "child_check": ent_check[q[2]],
+                             "displaced": dp[2], "displaced_paired": dp[0], "displaced_check": dfit}
+                    if ent_check[q[2]] >= dfit:
+                        rec_t["outcome"] = "takeover"
+                        dis_check.pop()
+                    else:
+                        rec_t["outcome"] = "blocked"
+                        keep_out.add(q[2])
+                        dis_check.pop()
+                        merged = [m for m in merged if m[2] != q[2]] + [dp]
+                    take_f.write(json.dumps(rec_t) + "\n")
+                take_f.flush()
+                merged = sorted({m[2]: m for m in merged}.values(), key=lambda x: (-x[0], x[1], x[2]))
+        population = merged
         population = population[:mu]
         if population[0][0] > best_ever[0]:
             best_ever = population[0]
@@ -322,6 +379,7 @@ def run_search(cfg: dict, config_path: str, iterations: int, seed: int, arm: str
         pool.join()
     cand_f.close()
     iter_f.close()
+    take_f.close()
     final = {
         "run_id": run_id, "arm": arm, "iterations": iterations,
         "best": {"candidate_id": best_ever[2], "fitness": best_ever[0], "program": vm.program_to_json(best_ever[3]),

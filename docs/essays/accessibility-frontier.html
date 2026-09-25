@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Accessibility Frontier — Prometheus</title>
+<meta name="description" content="A mechanism can be useful, executable, transplantable and causally real, and still sit where adaptive search cannot reach it. An experimental result from Prometheus, and the candidate principle it suggests.">
+<style>
+  :root{
+    --bg:#fbfaf8; --panel:#ffffff; --ink:#1b1d21; --muted:#5d6570;
+    --rule:#e3e0da; --accent:#8a5a2b; --accent-soft:#f3ece3; --box:#f6f3ee;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1216; --panel:#151a20; --ink:#e8eaed; --muted:#98a2b0;
+      --rule:#272e37; --accent:#e0a96d; --accent-soft:#1d242c; --box:#191f26;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1216; --panel:#151a20; --ink:#e8eaed; --muted:#98a2b0;
+    --rule:#272e37; --accent:#e0a96d; --accent-soft:#1d242c; --box:#191f26;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    font-size:18px; line-height:1.66;
+  }
+  img{max-width:100%}
+  .wrap{max-width:43rem; margin:0 auto; padding:0 20px}
+  header.masthead{
+    border-bottom:1px solid var(--rule); background:var(--panel);
+    padding-block:10px; margin-bottom:44px;
+  }
+  .masthead .wrap{display:flex; gap:12px; align-items:baseline; justify-content:space-between; flex-wrap:wrap}
+  .brand{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);
+    text-decoration:none;
+  }
+  .brand b{color:var(--accent); font-weight:600}
+  .kicker{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:11.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 14px;
+  }
+  h1{font-size:clamp(2rem,6.2vw,3.05rem); line-height:1.08; letter-spacing:-.02em; margin:0 0 18px; font-weight:600}
+  .dek{font-size:1.2rem; color:var(--muted); line-height:1.5; margin:0 0 26px; font-style:italic}
+  .byline{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12px; color:var(--muted); letter-spacing:.04em;
+    border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+    padding:11px 0; margin:0 0 26px;
+  }
+  .about{
+    margin:0 0 40px; padding:16px 20px; background:var(--accent-soft);
+    border-radius:8px; font-size:.95rem; line-height:1.6; color:var(--ink);
+  }
+  .about p{margin:0 0 10px}
+  .about p:last-child{margin:0}
+  .about .tag{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:10.5px; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--accent); display:block; margin-bottom:7px;
+  }
+  h2{font-size:1.42rem; line-height:1.25; margin:52px 0 16px; font-weight:600; letter-spacing:-.01em}
+  h2 .num{color:var(--accent); font-family:ui-monospace,monospace; font-size:.8em; margin-right:.5em}
+  h3{font-size:1.1rem; margin:34px 0 12px; font-weight:600}
+  p{margin:0 0 20px}
+  .lede::first-letter{float:left; font-size:3.3em; line-height:.84; padding:.05em .08em 0 0; color:var(--accent); font-weight:600}
+  blockquote{margin:26px 0; padding:2px 0 2px 20px; border-left:3px solid var(--accent); font-style:italic}
+  blockquote p{margin:0 0 10px}
+  blockquote p:last-child{margin:0}
+  .terms{margin:22px 0; padding:16px 20px; background:var(--panel); border:1px solid var(--rule); border-radius:8px}
+  .terms p{margin:0 0 8px; font-style:italic; color:var(--muted)}
+  .terms p:last-child{margin:0}
+
+  /* ---- Mathematics: plain HTML + CSS. No JavaScript, no CDN, no fonts to fetch. ---- */
+  .m{
+    font-family:"Latin Modern Math","Cambria Math","STIX Two Math",Cambria,Georgia,"Times New Roman",serif;
+    font-style:italic; white-space:nowrap;
+  }
+  .m .up{font-style:normal}
+  .m sub,.m sup{font-style:normal; font-size:.72em; line-height:0}
+  .eq{
+    margin:26px 0; text-align:center; overflow-x:auto; overflow-y:hidden;
+    font-size:1.12rem; padding-bottom:2px;
+  }
+  .eq .m{white-space:normal}
+  .frac{display:inline-flex; flex-direction:column; vertical-align:-0.55em; text-align:center; margin:0 .18em}
+  .frac>span{display:block; padding:0 .45em}
+  .frac .den{border-top:1.4px solid currentColor; padding-top:.16em; margin-top:.14em}
+  .frac.words{font-style:normal; font-size:.82em; line-height:1.28}
+  .frac.words>span{padding:0 .6em}
+  .boxed{
+    margin:30px 0; padding:20px 22px; background:var(--box);
+    border:1px solid var(--rule); border-left:3px solid var(--accent);
+    border-radius:8px; text-align:center; overflow-x:auto;
+  }
+  .boxed .label{
+    display:block; font-family:ui-monospace,monospace; font-size:11px;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:12px; text-align:left;
+  }
+  .boxed .stmt{font-size:1.08rem; line-height:1.5}
+  .chain{
+    margin:26px 0; padding:18px 20px; background:var(--accent-soft);
+    border-radius:8px; text-align:center; overflow-x:auto; font-size:1rem; line-height:1.9;
+  }
+  .claim{margin:30px 0; padding:20px 22px; background:var(--panel); border:1px solid var(--accent); border-radius:8px}
+  .claim h3{margin:0 0 10px; color:var(--accent); font-size:1.05rem}
+  .claim p:last-child{margin:0}
+  hr.div{border:0; text-align:center; margin:44px 0; color:var(--muted); font-size:1.1rem}
+  hr.div::before{content:"⸻"; letter-spacing:.3em}
+  .dials{margin:22px 0; padding-left:0; list-style:none}
+  .dials li{padding:10px 0 10px 16px; border-left:2px solid var(--rule); margin-bottom:8px}
+  .dials li b{color:var(--accent)}
+  sup.ref{font-size:.62em; line-height:0; margin-left:.12em}
+  sup.ref a{color:var(--accent); text-decoration:none; font-weight:600}
+  sup.ref a:hover{text-decoration:underline}
+  .refs{
+    margin:52px 0 0; padding:24px 0 0; border-top:1px solid var(--rule);
+  }
+  .refs h2{margin-top:0}
+  .refs ol{
+    margin:0; padding-left:1.35em; font-size:.92rem; line-height:1.55; color:var(--ink);
+  }
+  .refs li{margin-bottom:13px}
+  .refs li:target{background:var(--accent-soft); border-radius:5px; padding:4px 6px; margin-left:-6px}
+  .refs .t{font-style:italic}
+  .refs .w{display:block; color:var(--muted); font-size:.93em; margin-top:2px}
+  .refs a{color:var(--accent)}
+  footer.foot{
+    margin:64px 0 40px; padding-top:22px; border-top:1px solid var(--rule);
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:12.5px; color:var(--muted); line-height:1.7;
+  }
+  footer.foot a{color:var(--accent)}
+  /* ---- A measured landscape, as a table. Scrolls sideways on a phone rather than overflowing. ---- */
+  .tbl{margin:26px 0; overflow-x:auto}
+  .tbl table{border-collapse:collapse; width:100%; font-size:.9rem; line-height:1.45}
+  .tbl th,.tbl td{padding:7px 10px; border-bottom:1px solid var(--rule); text-align:left; vertical-align:top; white-space:nowrap}
+  .tbl th{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .tbl td.n{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86rem; text-align:right}
+  .tbl th.n{text-align:right}
+  .tbl caption{caption-side:bottom; text-align:left; font-size:.86rem; color:var(--muted); padding-top:8px; white-space:normal}
+  .prov{margin:30px 0; padding:18px 20px; background:var(--panel); border:1px solid var(--rule); border-radius:8px; font-size:.95rem}
+  .prov h3{margin:0 0 8px; font-size:1rem; color:var(--accent)}
+  .prov p{margin:0 0 10px}
+  .prov p:last-child{margin:0}
+  @media (max-width:520px){
+    body{font-size:17px}
+    .wrap{padding:0 17px}
+    .eq{font-size:1.02rem}
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><b>Prometheus</b> &nbsp;/&nbsp; Physics of Intelligence</a>
+    <span class="brand">2026&#8209;09&#8209;24</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="kicker">Experimental result → candidate principle</p>
+
+  <h1>The Accessibility Frontier</h1>
+
+  <p class="dek">A mechanism can be useful, executable, transplantable and causally real, and still sit
+  somewhere adaptive search cannot get to. One Prometheus experiment built exactly that situation on
+  purpose, and then failed, thirty-six times, to evolve the thing it had already shown to work.</p>
+
+  <p class="byline">Working note · filed under Physics of Intelligence · from a closed experiment
+  (Crius, Campaign 2) · measured result, then a candidate principle stated to be attacked</p>
+
+  <div class="about">
+    <span class="tag">What Prometheus is</span>
+    <p>We build agents that build worlds, organisms and fitness functions — substrates to test
+    intelligence primitives in. A central premise is that human cognitive architecture is
+    <em>one</em> of many possible cognitive architectures, not the reference point — so the
+    primitives worth finding are the ones that survive across substrates that share none of our
+    machinery.</p>
+    <p>This is a working note from that programme. Unlike its predecessor, it starts from a measured
+    result rather than a conjecture: a campaign that ran to a hard close, and the larger idea the
+    closure made us wonder about. The result is stated with its receipts; the idea is stated to be
+    attacked.</p>
+  </div>
+
+  <p class="lede">What if evolution is standing next to a powerful cognitive primitive, the world
+  strongly rewards that primitive, and selection still cannot discover it?</p>
+
+  <p>That is not a thought experiment. Over the last week a Prometheus seat called Crius built a small
+  world in which the single most valuable thing an organism could do was to <em>learn a procedure and
+  reuse it</em>: notice which actions perform a hidden operation, keep that knowledge as an object,
+  and later apply the object to a new argument instead of rediscovering everything by trial. We knew
+  the mechanism was valuable, because a hand-written organism that used it solved more than twice as
+  many tasks as one that did not. We knew the value lived in the learned objects and not in the code,
+  because transplanting the objects alone into a naive copy of the same program carried the advantage
+  with them, and deleting them removed it. And we knew the substrate could express the mechanism,
+  because we wrote it in the organisms' own instruction set, in sixty-four instructions.</p>
+
+  <p>Then we ran evolutionary search toward it — thirty-six independent runs, with the mechanism's
+  building blocks made progressively cheaper to express, and finally with hand-written fragments of
+  the mechanism offered as recombination donors. Not one run assembled it. Not one run assembled a
+  <em>working part</em> of it. What search found instead was a family of things that look like the
+  mechanism and do nothing.</p>
+
+  <p>This note is about the distinction that result forces:</p>
+
+  <div class="boxed">
+    <span class="label">The distinction</span>
+    <span class="stmt"><strong>Capability</strong> asks whether a mechanism can work.
+    <strong>Accessibility</strong> asks whether an adaptive process can get there.</span>
+  </div>
+
+  <p>The two are usually run together. Ask whether some cognitive primitive — working memory, a
+  subroutine, a plan, a message — could evolve in some system, and the natural first question is
+  whether the system can represent it and whether it would pay. Crius is a case where both answers
+  were yes, measured, and the primitive still did not appear. The rest of this note says what was
+  measured, what we think it means, what would make us wrong, and how to test it somewhere else.</p>
+
+  <h2><span class="num">1</span>The situation Crius built</h2>
+
+  <p>The world is deliberately tiny. An organism lives for fifty tasks. Each task sets a small
+  state and asks for a target state; the organism acts on it through twelve primitive moves whose
+  labels are scrambled anew every lifetime, so the first thing any organism must do is discover
+  which label does what. Behind the scrambling sits a hidden <em>library</em> of three short
+  procedures — fixed sequences of primitives applied relative to a position — and every task is
+  a chain of one to four library procedures applied at some position. The organism is charged for
+  every interaction with the world and for every unit of storage and computation, and its fitness
+  is, essentially, the number of tasks it solves out of fifty, plus a small bonus for solving them
+  cheaply.</p>
+
+  <p>The budgets are the trick. A single-procedure task allows two thousand interactions — enough
+  to solve it by exhaustive trial. A chain task allows fifty. No amount of trial-and-error solves a
+  chain in fifty interactions. The only way to solve chains is to have <em>already learned the
+  procedures as objects</em> during the easy tasks, and to compose them, either by physically
+  trying stored procedures or by simulating them in the head. Reuse is not merely rewarded; past a
+  point it is the only thing that pays.</p>
+
+  <p>The intended mechanism is a chain of six links:</p>
+
+  <div class="chain">
+    acquisition &nbsp;⟶&nbsp; representation &nbsp;⟶&nbsp; retention &nbsp;⟶&nbsp; addressing
+    &nbsp;⟶&nbsp; invocation &nbsp;⟶&nbsp; composition
+  </div>
+
+  <p>Learn which label does which primitive; write a procedure down relative to its argument; keep
+  it; find the right one later; run it on a new argument; compose several. The experiment was a
+  ladder of four substrates that made these links successively cheaper to express. At rung A none of
+  the links was a single instruction. At rung B the organism's instruction set gained typed
+  procedure objects: one instruction opens a recording, one closes it, one invokes a stored
+  procedure with an argument. At rung C it gained <em>mental application</em>: an instruction that
+  applies a stored procedure to an imagined state without touching the world, so that planning a
+  chain becomes possible in the head. At rung D, the search's recombination operator was allowed to
+  splice fragments not only from the population but from three frozen, hand-written <em>parts</em>
+  — a recorder, an invoker, a planner — that were never themselves members of the population.</p>
+
+  <p>Every rung was gated before any search ran. Eight witnesses had to pass on sealed task streams,
+  the important four being: a positive control that accumulates procedures must beat the same
+  control with its memory wiped before every task; transplanting only the learned objects into a
+  naive copy of the same code must carry the advantage; deleting the objects must remove it; and the
+  transferred objects must be genuinely procedural — the same object, applied to three different
+  arguments, must produce three different behaviours, and a lookup table must gain nothing from the
+  same transplant. Search ran only on rungs whose gate passed.</p>
+
+  <h2><span class="num">2</span>The mechanism exists, and the world pays for it</h2>
+
+  <p>These are measured, on task streams the searches never saw.</p>
+
+  <p>The hand-written positive control — a program that records procedures, keeps them, and plans
+  over them — solves <strong>45.7 of 50</strong> tasks per lifetime with its memory intact and
+  <strong>20.3</strong> with its memory wiped before every task. Same code; the difference is the
+  objects it learned. It invokes a stored procedure about seventy-five times per lifetime.</p>
+
+  <p>Transplanting its learned objects, and nothing else, into a fresh copy of the same code
+  solves six of the remaining tasks where the code alone solves one, at about a fifth less cost;
+  ablating the objects returns the program to exactly the code-only figures. The advantage is in
+  the artifacts. A lookup-table control, given the same transplant treatment, gains nothing.</p>
+
+  <p>And the mechanism is cheap to write in the organisms' own language. A sixty-four-instruction
+  bytecode program containing a recorder, an invoker and a two-step planner solves
+  <strong>37.4</strong> tasks per lifetime against <strong>21.5</strong> for the nineteen-instruction
+  enumerator it was built from. Forty-seven edits separate the two. Sixteen tasks per lifetime is
+  what those forty-seven edits are worth once they are all present.</p>
+
+  <p>So: the reward exists, the mechanism exists, the artifacts are causal, and the substrate can
+  express the whole thing in a program shorter than this paragraph. If evolution's problem were
+  capability, there would be no problem.</p>
+
+  <h2><span class="num">3</span>What search did</h2>
+
+  <p>The search was ordinary mutation-and-selection: a population of eight, twenty-four children per
+  generation from point edits, duplications and spliced segments, three hundred generations, three
+  arms (random initial programs, programs seeded from the competent enumerator, and a recombination
+  arm). Every child was scored on two task streams shared by the whole generation, and a child that
+  would displace a parent had to confirm the displacement on a third, independent stream — so that
+  a lucky stream cannot carry a lineage. Three seeds per arm, nine runs per rung, thirty-six runs
+  across the ladder. The decisive rungs C and D evaluated 129,744 candidate programs. The survivors
+  of every run were then qualified on three sealed streams, with the full battery of memory-wipe,
+  transplant, ablation and lookup-table controls.</p>
+
+  <p>The measured outcome:</p>
+
+  <ul class="dials">
+    <li><b>Zero</b> candidates, in any of the thirty-six runs, showed a reproducible advantage of
+      accumulated memory over wiped memory on the sealed streams that survived the controls. At the
+      lower rungs a handful of lineages did show a reproducible advantage, and every one of them was
+      a <em>counter</em>: a lineage that used the running count of stored objects as a clock to
+      shift its enumeration order. Twenty empty records, made by nobody, reproduced the transplant
+      exactly. At the decisive rungs, not even that.</li>
+    <li><b>Zero</b> runs produced the complete mechanism — a candidate that recorded a procedure,
+      invoked its own recording, and solved a chain by doing so.</li>
+    <li>Partial machinery appeared constantly and went nowhere. The recording instruction, the
+      invocation instruction and the mental-application instruction were each executed by hundreds
+      to thousands of candidates per run; they persisted in the elite for up to 146 consecutive
+      generations; and they behaved throughout like neutral hitchhikers. Children that newly
+      acquired a recorder improved on their parent <em>less</em> often than children carrying any
+      other edit, in twelve of twelve runs; children newly acquiring an invoker, in ten of twelve.</li>
+    <li>The tiny positive steps were noise. Every ancestral step in which a surviving lineage first
+      executed a recorder or invoker was re-evaluated with its parent on the same sealed streams:
+      nineteen such steps, nine of them positive, every one by about a thousandth of a fitness
+      unit, with zero change in tasks solved on any stream. The same test applied to ancestral steps carrying no new
+      typed instruction at all marks up to three in eight of them as "positive" by the same margin.
+      The partial machinery was indistinguishable from the neutral-edit background.</li>
+    <li>Donated fragments were stripped for parts, and the wrong parts. At rung D, 1,771 children
+      carried a spliced fragment of a hand-written recorder, invoker or planner; sixty-three of
+      those children won a takeover. Five fragments survived into the ancestry of a final survivor.
+      Re-evaluated against their parents on the sealed streams, exactly one of the five paid — a
+      single instruction, a constant load, worth one extra task on two of three streams. The
+      fragment that made its carrier execute a procedure invocation was worth precisely zero. The
+      recorder's digit-loop scaffolding was neutral. No retained fragment carried a link of the
+      mechanism that executed with an effect.</li>
+  </ul>
+
+  <p>Rung D's non-recombination arms reproduced rung C's byte for byte — the same best candidate in
+  every seed — which is the expected determinism check and means everything rung D added lives in
+  the three donor runs above. The disposition was scored mechanically from the receipts, against a
+  rule written before the runs: <em>closed, frontier mapped</em>.</p>
+
+  <h2><span class="num">4</span>Invocation without content</h2>
+
+  <p>One fossil from the decisive rungs deserves its own section, because it may be the most
+  general thing in this note.</p>
+
+  <p>Two of the surviving lineages had, by every superficial measure, discovered reuse. They filled
+  the object store to its capacity of thirty-two blocks. They invoked those blocks forty-three and
+  forty-nine times per lifetime. Traced through a lifetime, they looked busy in exactly the way
+  the positive control looks busy.</p>
+
+  <p>Their fitness with memory intact, with memory wiped before every task, with memory reset at
+  stage boundaries, and with memory scrambled was <em>identical to the third decimal</em>. Nothing
+  they stored was read for anything. Nothing they invoked did anything the calling program could
+  not have done itself. Selection had found the <strong>syntax of reuse without the semantics of
+  reuse</strong>: the operations that constitute a memory system, arranged so that they cost
+  nothing and mean nothing.</p>
+
+  <p>Why would selection keep such a thing? Because in this substrate the store-and-invoke
+  operations were cheap, and once a lineage happens to execute them in a way that neither helps nor
+  hurts, nothing removes them. They are the recorder-as-hitchhiker of the previous section, grown
+  to full size. And they matter because they are precisely what a less careful assay would count
+  as success. A census of "organisms that use memory" would have scored them. A census of
+  "invocations per lifetime" would have scored them highly. Only the four-way comparison — the
+  same program with its memory intact, wiped, reset and scrambled — shows that the memory carries
+  nothing, and only the transplant and ablation controls show that the positive control's memory
+  does.</p>
+
+  <p>We suspect this pathology is broader than one bytecode world, and we suspect it is common.
+  Any adaptive system whose search space contains the <em>operations</em> of a capability can
+  discover those operations without the <em>content</em> that makes them a capability, whenever
+  the operations are cheap and the content is not on any local gradient. Stated as hypotheses,
+  not findings: memory operations without useful memory; communication without informative
+  messages; modularity without useful recombination; reasoning traces without causal
+  contribution to the answer; tool invocation without useful state transfer. Each of these has
+  been reported somewhere as a surprising failure mode. The Crius fossil suggests they may be one
+  failure mode with one cause, and it suggests the control that exposes it: hold the machinery
+  fixed and vary only whether its content is present.</p>
+
+  <h2><span class="num">5</span>The cliff</h2>
+
+  <p>Here is the landscape the campaign measured by construction, before any search ran. Each row is
+  a hand-written program; the value is fitness relative to the row's immediate ancestor, on ten
+  shared task streams, with the number of streams on which the sign was positive.</p>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Program</th><th>Adds</th><th class="n">Edits from base</th><th class="n">Δ fitness vs ancestor</th><th class="n">Streams positive</th><th class="n">Δ tasks / lifetime</th></tr></thead>
+      <tbody>
+        <tr><td>enumerator</td><td>—</td><td class="n">0</td><td class="n">—</td><td class="n">—</td><td class="n">—</td></tr>
+        <tr><td>+ recorder</td><td>records procedures, never uses them</td><td class="n">7</td><td class="n">−0.001</td><td class="n">0 / 10</td><td class="n">0.0</td></tr>
+        <tr><td>+ invoker</td><td>invokes procedures it never recorded</td><td class="n">20</td><td class="n">−0.002</td><td class="n">0 / 10</td><td class="n">0.0</td></tr>
+        <tr><td>+ recorder + invoker</td><td>records, then tries stored procedures physically</td><td class="n">26</td><td class="n">+1.138</td><td class="n">7 / 10</td><td class="n">+1.1</td></tr>
+        <tr><td>+ planner</td><td>plans over procedures it does not have</td><td class="n">41</td><td class="n">−0.057</td><td class="n">0 / 10</td><td class="n">0.0</td></tr>
+        <tr><td>+ recorder + invoker + planner</td><td>the complete mechanism</td><td class="n">47</td><td class="n">+15.974</td><td class="n">10 / 10</td><td class="n">+15.9</td></tr>
+      </tbody>
+      <caption>The measured assembly landscape. The planner alone is worth −0.057; the same planner
+      with procedures already in the store is worth +16.7. The value of every link is conditional on
+      the others being present. (Receipts: the PARTS diagnostic for rungs C and D, identical.)</caption>
+    </table>
+  </div>
+
+  <p>Read down the table and the shape is plain. The first link is worthless. The second link alone
+  is worthless. The two together are worth a little — one extra task per lifetime, at twenty-six
+  coordinated edits — and that little is the only foothold on the whole path. The planner alone
+  is slightly harmful. The planner on top of the pair is worth fifteen tasks. There is a valley one
+  link deep, a small ledge, and then a cliff.</p>
+
+  <p>Formally: the finished mechanism <span class="m">M</span> is a conjunction of links
+  <span class="m">ℓ<sub>1</sub>, …, ℓ<sub>k</sub></span>, and its value is large,</p>
+
+  <div class="eq"><span class="m"><span class="up">V</span>(M) ≫ 0</span></div>
+
+  <p>while the values of the links, and of most subsets of the links, are not:</p>
+
+  <div class="eq">
+    <span class="m"><span class="up">V</span>(ℓ<sub>1</sub>) ≈ 0, &nbsp;
+    <span class="up">V</span>(ℓ<sub>2</sub>) &lt; 0, &nbsp;
+    <span class="up">V</span>(ℓ<sub>3</sub>) ≈ 0, &nbsp; …</span>
+  </div>
+
+  <p>Local adaptive search moves by accepting variants whose value is not worse. It therefore
+  cannot be pulled toward <span class="m">M</span> by <span class="m"><span class="up">V</span>(M)</span>
+  until enough of <span class="m">M</span> exists at once for some subset to pay. The eventual
+  reward is real, but it casts no gradient back over the intermediate states. In the older language
+  of population genetics this is a fitness valley, and its exact formal signature — changes that are
+  separately unfavourable but jointly advantageous — is <em>reciprocal sign epistasis</em>, which
+  is known to be a necessary condition for a landscape to have more than one
+  peak.<sup class="ref"><a href="#r4">4</a></sup> Crius's recorder and invoker are a textbook
+  instance: each alone costs a little; together they pay.</p>
+
+  <p>Two intuitive versions. <strong>Selection cannot see around corners:</strong> it responds to the
+  value of what exists now, and the value of a half-built machine is the value of half a machine,
+  which is usually nothing. <strong>The mountain exists, but there is no uphill trail leading to
+  it:</strong> the summit's height is not in dispute; the question is whether every step from here
+  to there can be taken without going down.</p>
+
+  <p>The precision matters. Mutation and recombination <em>do</em> jump valleys sometimes, and
+  there is a literature on how: deleterious intermediates that persist long enough for a second
+  mutation to rescue them,<sup class="ref"><a href="#r6">6</a></sup> neutral drift along networks
+  of equivalent genotypes,<sup class="ref"><a href="#r9">9</a>,<a href="#r10">10</a></sup>
+  high-dimensional detours around what looks in low dimensions like an
+  impasse.<sup class="ref"><a href="#r8">8</a>,<a href="#r11">11</a></sup> Crius does not show that
+  the valley is uncrossable. It shows that under this search — point edits, duplication, segment
+  splice, a small elite, three hundred generations, competence-first selection with a takeover
+  check — the route <em>did not become an incremental selectable path</em>, in thirty-six attempts,
+  and that even handing the search the finished parts as donors did not make it one. The finding is
+  about the absence of a gradient, not about the impossibility of a jump.</p>
+
+  <h2><span class="num">6</span>Is this already known?</h2>
+
+  <p>Largely, yes — and it is worth being exact about which part.</p>
+
+  <p>That fitness landscapes have valleys, and that valleys constrain which paths selection can
+  take, is a century old and has been measured in proteins: of the 120 mutational orderings that
+  could assemble a five-mutation antibiotic-resistance allele, 102 were inaccessible to Darwinian
+  selection because some intermediate step went down.<sup class="ref"><a href="#r2">2</a></sup>
+  "Evolutionary accessibility" is an established term with a quantitative
+  theory.<sup class="ref"><a href="#r3">3</a>,<a href="#r5">5</a>,<a href="#r7">7</a></sup>
+  Evolutionary computation knows the same phenomenon as <em>deception</em>: objective functions
+  that lead search away from the objective,<sup class="ref"><a href="#r14">14</a></sup> and a
+  whole line of work — novelty search, quality-diversity — exists because rewarding the goal
+  directly so often fails to reach it.<sup class="ref"><a href="#r15">15</a></sup> Reinforcement
+  learning has had the credit-assignment problem since 1961<sup class="ref"><a href="#r16">16</a></sup>
+  and builds temporal abstractions largely to shorten the distance reward has to travel
+  back.<sup class="ref"><a href="#r17">17</a></sup></p>
+
+  <p>The closest experimental relative is older than all of Prometheus. When Lenski, Ofria, Pennock
+  and Adami evolved digital organisms toward a complex logic function, populations that were also
+  rewarded for the simpler functions it could be built from evolved it repeatedly — twenty-three of
+  fifty — and in their words the complex feature <em>never evolved when simpler functions were not
+  rewarded</em>.<sup class="ref"><a href="#r1">1</a></sup> That experiment removed the intermediate
+  rewards deliberately, to show they were necessary. Crius is the same experiment from the other
+  side: a world in which the intermediate steps toward a cognitive primitive are <em>naturally</em>
+  unrewarded — there is no reason a world should pay for a recorder that records nothing useful —
+  and in which making the steps cheaper to express, and even supplying them ready-made, did not
+  substitute for paying for them.</p>
+
+  <p>So the general phenomenon is not new, and this note claims no priority on it. What we think is
+  new, or at least newly sharp, is smaller and more useful:</p>
+
+  <ul class="dials">
+    <li><b>The subject.</b> The valley here is not between two alleles of an enzyme; it lies in
+      front of a cognitive primitive — procedural memory with reuse — in a substrate built to make
+      that primitive representable. Whether the assembly geometry of cognition is generally
+      valley-shaped is a question about intelligence, not about proteins.</li>
+    <li><b>The separation.</b> Existence, reward and path were each measured with their own controls.
+      Most reports of "it didn't evolve" cannot say which of the three failed. Crius can: the first
+      two passed, the third did not.</li>
+    <li><b>The fossil.</b> Syntax-without-semantics — a memory system that stores and invokes and
+      carries nothing — is the specific shape selection settles into at the foot of the cliff, and it
+      is detectable only by a content-varying control.</li>
+    <li><b>The rulers</b> (§8), which try to make "how far behind the frontier" a number that two
+      substrates can be compared on.</li>
+  </ul>
+
+  <p>Exaptation<sup class="ref"><a href="#r12">12</a></sup> and facilitated
+  variation<sup class="ref"><a href="#r13">13</a></sup> are the biological accounts of how nature
+  routinely gets across valleys of this kind: parts are useful for something else first, and
+  conserved core components make large coordinated changes available as small regulatory ones. Both
+  point directly at the experimental dials in §9. Crius had neither: no second use for a recorder,
+  and a representation in which a link is a link and nothing more.</p>
+
+  <h2><span class="num">7</span>A candidate principle</h2>
+
+  <p>Not a law. An interpretation the experiment made us write down, phrased so that it can lose.</p>
+
+  <div class="claim">
+    <h3>Assembly-geometry principle — candidate</h3>
+    <p>Whether a cognitive primitive appears in an adapting system is governed less by the
+    primitive's cost or value once assembled than by the <em>worst stretch of its best construction
+    path</em>: the longest run of consecutive links that receive no informative local credit.
+    Two substrates that contain the same finished mechanism and pay it the same reward can differ,
+    by the whole of accessibility, in whether adaptation ever finds it.</p>
+  </div>
+
+  <p>A weaker form, which Crius supports directly: a primitive is evolutionarily available only to
+  the extent that adaptive search can obtain informative local credit for incomplete machinery
+  leading toward it. A stronger form, which Crius merely suggests: the <em>effective</em>
+  complexity of a cognitive mechanism is not the size of the finished mechanism but the depth of the
+  deepest valley on the most accessible route to it — so that a forty-seven-edit mechanism with a
+  smooth path is simpler, for evolution, than a ten-edit mechanism behind a two-link valley.</p>
+
+  <p>If that is right, then one of the hidden axes of intelligence is not memory, or compute, or
+  representation size, or mutation rate, or modularity as such, but:</p>
+
+  <div class="boxed">
+    <span class="label">The hidden axis</span>
+    <span class="stmt">how much useful gradient the substrate exposes toward not-yet-complete
+    cognitive machinery</span>
+  </div>
+
+  <p>That would be a genuine property of a substrate, measurable independently of what the substrate
+  can represent or what its world rewards, and it predicts something specific and uncomfortable:
+  that a great many cognitive primitives are absent from a great many adaptive systems not because
+  they would not work and not because they would not pay, but because their first three parts are
+  worth nothing.</p>
+
+  <h2><span class="num">8</span>Rulers to attack</h2>
+
+  <p>A principle with no numbers is a slogan. These are attempts to make accessibility measurable;
+  they are rulers to attack, not results. Where Crius already gives a value, it is stated.</p>
+
+  <ul class="dials">
+    <li><b>Assembly distance</b> — the fewest edits from a competent baseline to the complete
+      mechanism, in the substrate's own edit operators. Crius: 47 (a hand-constructed upper bound;
+      evolution may know shorter routes we did not write).</li>
+    <li><b>Accessible path length</b> — the length of the shortest construction path along which
+      every intermediate is non-deleterious or positively selected. Crius: undefined; no such path
+      was found to exist, and the best route has a two-link stretch of zero or negative value before
+      the first ledge.</li>
+    <li><b>Valley depth</b> — the largest fitness loss any step on the best available path must
+      accept. Crius: shallow (−0.001 to −0.057) — which is the disquieting part. The valley is not
+      deep; it is <em>flat</em>, and a flat valley gives selection no more to work with than a deep
+      one.</li>
+    <li><b>Foothold density</b> — the fraction of incomplete states of the mechanism that receive
+      measurable positive local credit, above the neutral-edit background. Crius: 0 of 19 ancestral
+      partial-machinery steps exceeded the background; of the five hand-written partial states, one
+      (the pair) was positive.</li>
+    <li><b>Semantic-link survival</b> — when a fragment of the mechanism enters a lineage, the
+      probability that what selection keeps is the part carrying the causal link rather than
+      incidental scaffolding. Crius: of five donor fragments retained into surviving ancestries,
+      zero carried a working link; the one that paid was a constant load.</li>
+    <li><b>Accessibility ratio</b> — some comparison of the finished mechanism's value with the
+      length and depth of the best incremental route to it. We do not yet have a form we trust; a
+      first guess is</li>
+  </ul>
+
+  <div class="eq">
+    <span class="m">ρ =
+      <span class="frac">
+        <span><span class="up">V</span>(M)</span>
+        <span class="den"><span class="up">V</span>(M) + <span class="up">d</span><sub>flat</sub>&#8201;·&#8201;<span class="up">c</span></span>
+      </span>
+    </span>
+  </div>
+
+  <p>where <span class="m"><span class="up">d</span><sub>flat</sub></span> is the longest run of
+  consecutive links with no positive credit on the best path and
+  <span class="m"><span class="up">c</span></span> is the expected cost of crossing one such link by
+  drift under the substrate's operators. It is offered so that someone can show it is the wrong
+  quantity.</p>
+
+  <p>One instrument note that belongs with the rulers, because it is what made them measurable at
+  all. The search's own fitness values are not paired: a parent carries the fitness it earned on
+  earlier task streams, and the takeover check compares a child with the member it displaces, with
+  ties counting as takeovers. "Did this partial pay?" can only be answered by re-evaluating parent
+  and child on the same held-out streams and comparing the result with what neutral edits do under
+  the same test. Without that base rate, the +0.001 steps in §3 would have counted as footholds.</p>
+
+  <h2><span class="num">9</span>What this suggests we should build</h2>
+
+  <p>If the principle is right, then the interesting experimental variable is not the mechanism and
+  not the reward but the <em>construction landscape</em> between them, and there are many dials on
+  it that Crius held fixed:</p>
+
+  <ul class="dials">
+    <li><b>Locality of credit</b> — whether an incomplete mechanism can be paid for the part of the
+      outcome it causally contributed to, rather than only for tasks solved.</li>
+    <li><b>Independent utility of parts</b> — whether a recorder, an invoker, a planner have any
+      use on their own, for anything.</li>
+    <li><b>Ecological niches</b> — environments in which each link, alone, is the best available
+      strategy for some subpopulation.</li>
+    <li><b>Developmental staging</b> — task sequences in which the links become useful in order.</li>
+    <li><b>Exaptation</b> — parts that are selected for one role and are already present when a
+      second role appears.</li>
+    <li><b>Recombination granularity</b> — whether the operators that move fragments between
+      lineages move whole semantic links or only instruction runs.</li>
+    <li><b>Physical coupling</b> — substrate physics in which several mutually dependent components
+      arise from one primitive operation, so that the pair is one edit rather than twenty-six.</li>
+    <li><b>Representation</b> — encodings that shorten the semantic edit distance from a competent
+      program to a reusing one.</li>
+  </ul>
+
+  <p>Each of these is a way of changing the path while leaving the destination and the payoff
+  alone. That is the experiment.</p>
+
+  <h2><span class="num">10</span>Why a closed negative result is worth a note</h2>
+
+  <p>"We tried to evolve X and it didn't" is not, on its own, a result. What makes Crius worth
+  writing down is that the failure was localised. The world rewards reuse: measured. The complete
+  mechanism works and is short: measured. The learned objects, not the code, carry the advantage:
+  measured, by transplant and ablation. Search reaches the neighbourhood — it finds the store, the
+  invocation, the scaffolding of the parts, the syntax of the whole thing: measured. Search fails at
+  one step, the assembly of a semantic link whose value depends on another link being already
+  present: measured, by re-evaluating every such step against its background. That is a map with
+  one feature on it, and the feature has a name:</p>
+
+  <div class="boxed">
+    <span class="label">The accessibility frontier</span>
+    <span class="stmt">the boundary separating the mechanisms that exist in a substrate from the
+    mechanisms an adaptive process can reliably reach</span>
+  </div>
+
+  <p>Crius located that frontier for one primitive in one substrate: on the near side, counters,
+  clocks and content-free invocation; on the far side, one small ledge twenty-six edits out and the
+  whole mechanism twenty-one edits beyond it. The campaign was closed, rather than continued, because
+  the rule for closing it was written before the decisive runs and every clause of that rule came
+  out on the same side; because the moves that could change the outcome — lowering the gates,
+  adding budget, seeding parts into the population — would have measured our persistence rather
+  than the substrate; and because the shape was the same in every arm and at every rung. More search
+  under this substrate would have been a test of search budget. The frontier is the result.</p>
+
+  <h2>Three reasons this might not be fundamental</h2>
+
+  <p>A candidate principle should name its own best attackers. These are the ones that worry us.</p>
+
+  <p><strong>It may only be a bad representation.</strong> Typed procedural reuse may be inaccessible
+  in Crius's bytecode because Crius encoded it badly — because the recorder and the invoker are
+  separate instructions that must be separately acquired, because the argument passes through a
+  register that a loop can clobber, because the planner is a large structured edit in a
+  representation with only local operators. Another substrate could make the same concept locally
+  smooth, and then the valley is a fact about one encoding. We think this is likely to be partly
+  true. Note what it would and would not cost the argument: it would remove any claim that
+  procedural reuse is <em>generally</em> hard to reach, and it would <em>strengthen</em> the claim that
+  assembly geometry, not capability, is what decides — because the same mechanism with the same
+  payoff would then be reachable or not depending on how it is spelled. That is precisely the
+  controlled pair proposed below. The neutral-network literature<sup class="ref"><a href="#r9">9</a>,<a href="#r10">10</a>,<a href="#r11">11</a></sup>
+  is the strongest form of this objection: in biologically realistic genotype-phenotype maps,
+  fitness maxima can be reached from almost anywhere without crossing a valley, because the maps
+  are enormously many-to-one and the neutral networks percolate. Crius's map — programs to
+  behaviours — has some of that structure and evidently not enough of it near this phenotype.</p>
+
+  <p><strong>Evolution crosses valleys all the time.</strong> Drift, duplication, exaptation,
+  ecological heterogeneity, sexual recombination, development, population structure and changing
+  environments all construct things that competence-first hill-climbing cannot, and there is
+  experimental evidence that permitting deleterious intermediates produces higher long-run fitness
+  than forbidding them.<sup class="ref"><a href="#r6">6</a></sup> Crius tested one bounded search
+  regime — a small elite, local operators, three hundred generations — and not "evolution" in its
+  biological entirety. The result should be read as a statement about that regime. What survives
+  the objection is the accounting: whichever of those mechanisms would have crossed this valley, it
+  would have done so by supplying credit or persistence for the intermediates, which is to say by
+  changing the path rather than the destination — which is the principle, restated.</p>
+
+  <p><strong>Forty-seven edits may simply be too far for this campaign.</strong> Enough search finds
+  anything; perhaps a larger population or ten thousand generations would have hit the mechanism.
+  We do not doubt it. But the measured question was not whether the finished mechanism could
+  eventually be drawn in a lottery; it was whether the substrate created an incremental, selectable
+  path toward it, and on that question more tickets do not change the answer. If a future run finds
+  the mechanism by a single large jump with no selectable precursors, the principle is confirmed,
+  not refuted. What would refute it is a lineage that climbs — a recorder that pays before the
+  invoker exists, an invoker that pays before the planner — in a substrate where Crius's did not.</p>
+
+  <p>A fourth, which the evidence itself raises: the assembly distance of forty-seven is the length of
+  <em>our</em> hand-written route, and the valley is the valley along <em>our</em> route. Evolution
+  may know construction paths through this substrate that no one wrote down. Thirty-six runs did not
+  find one, which bounds their frequency but does not prove their absence.</p>
+
+  <h2>The experiment that would settle it</h2>
+
+  <p>The accessibility principle makes one prediction sharp enough to be a cross-engine test:</p>
+
+  <div class="boxed">
+    <span class="label">The controlled pair</span>
+    <span class="stmt">Same destination. Same payoff. Different assembly geometry.<br>
+    → radically different probability of discovering the cognitive primitive.</span>
+  </div>
+
+  <p>Build two worlds that contain exactly the same finished mechanism and assign it exactly the same
+  final reward, and vary only the construction landscape between the competent baseline and the
+  mechanism. Concretely, any of:</p>
+
+  <ul class="dials">
+    <li><b>A.</b> Give the partial components independent secondary uses.</li>
+    <li><b>B.</b> Add ecological niches in which the recorder, the invoker and the planner are each
+      independently the best thing to be.</li>
+    <li><b>C.</b> Alter recombination so that semantic links are physically coupled and move
+      together.</li>
+    <li><b>D.</b> Provide developmental stages in which each link becomes useful in sequence.</li>
+    <li><b>E.</b> Introduce local credit for downstream causal contribution, so that a partial
+      mechanism can be paid for the part of the outcome it produced.</li>
+    <li><b>F.</b> Change the substrate physics so that several mutually dependent components emerge
+      from one primitive operation.</li>
+    <li><b>G.</b> Transplant the Crius challenge — the same six-link chain, the same gates, the same
+      controls — into radically different substrates and see where the frontier falls.</li>
+  </ul>
+
+  <p>The prediction is that the mechanism's discovery rate will track the geometry and not the
+  payoff. The refutation is a pair in which it does not: where smoothing the path leaves the
+  primitive as absent as before, or where the primitive appears in the rough world as readily as in
+  the smooth one. Either would be worth more than this note.</p>
+
+  <p>Several Prometheus engines are shaped for pieces of this. Cosmos, the World-Graph Engine, is
+  built to change almost everything about a universe and measure what refuses to change, which is
+  the controlled pair by construction. BEE, the Worlds Kernel, can lower one experiment description
+  onto different machinery, which is test G. Ensorain's Tensor World Engine and Aether's AGE
+  ecosystem each have physics in which coupling components (F) and local credit (E) could be native
+  rather than bolted on. Nestor's engine is where a surviving claim would go for the preregistered
+  large-campaign treatment. None of this is a plan to reopen Crius. Crius's lane is closed; its
+  substrate, gates and controls are public and can be lifted whole.</p>
+
+  <div class="prov">
+    <h3>Provenance</h3>
+    <p><strong>What Crius measured</strong> (§1–§5, §8 values): the controls, gates, PARTS landscape,
+    thirty-six search runs, path evidence and paired re-evaluations, all from committed receipts.
+    The originating experiment is Campaign 2 of the Crius seat; its terminal review, preregistration
+    and fingerprinted disposition receipt are public in the Prometheus repository under
+    <a href="https://github.com/jcraig949jfi/Prometheus/tree/main/crius">crius/</a>
+    (terminal review: <a href="https://github.com/jcraig949jfi/Prometheus/blob/main/crius/CRIUS_C2_TERMINAL_REVIEW.md">CRIUS_C2_TERMINAL_REVIEW.md</a>;
+    closing commit 7069c0ce6, on main at 371d22952). The disposition was computed by a script from
+    the receipts against a rule written before the decisive runs.</p>
+    <p><strong>What Crius infers</strong> (§5, §6, §10): that the failure is one of accessibility
+    and not of capability or reward; that its shape is a flat valley followed by a cliff; that the
+    content-free invocation fossil is what selection settles into at the foot of it.</p>
+    <p><strong>What Crius proposes</strong> (§7–§9, the closing experiment): the assembly-geometry
+    principle, the hidden axis, the rulers and the controlled pair. None of these has been tested
+    anywhere. They are stated to be attacked.</p>
+  </div>
+
+  <section class="refs">
+    <h2>Sources</h2>
+    <ol>
+      <li id="r1">Richard E. Lenski, Charles Ofria, Robert T. Pennock, Christoph Adami,
+        <span class="t">“The evolutionary origin of complex features”</span>,
+        Nature <b>423</b>, 139–144 (2003).
+        <a href="https://www.nature.com/articles/nature01568">doi:10.1038/nature01568</a>
+        <span class="w">The closest experimental relative. Digital organisms evolved a complex logic
+        function in 23 of 50 populations when its simpler components were also rewarded, and the
+        feature “never evolved when simpler functions were not rewarded.” Crius is the same
+        experiment with the intermediate rewards naturally absent.</span></li>
+
+      <li id="r2">Daniel M. Weinreich, Nigel F. Delaney, Mark A. DePristo, Daniel L. Hartl,
+        <span class="t">“Darwinian evolution can follow only very few mutational paths to fitter
+        proteins”</span>, Science <b>312</b>, 111–114 (2006).
+        <a href="https://doi.org/10.1126/science.1123539">doi:10.1126/science.1123539</a>
+        <span class="w">Five mutations, 120 orderings, 102 of them inaccessible to selection because
+        an intermediate step goes down. Accessibility measured in a real protein.</span></li>
+
+      <li id="r3">Frank J. Poelwijk, Daniel J. Kiviet, Daniel M. Weinreich, Sander J. Tans,
+        <span class="t">“Empirical fitness landscapes reveal accessible evolutionary paths”</span>,
+        Nature <b>445</b>, 383–386 (2007).
+        <a href="https://www.nature.com/articles/nature05451">doi:10.1038/nature05451</a>
+        <span class="w">Intermediates, not endpoints, determine which paths evolution takes.</span></li>
+
+      <li id="r4">Frank J. Poelwijk, Sorin Tănase-Nicola, Daniel J. Kiviet, Sander J. Tans,
+        <span class="t">“Reciprocal sign epistasis is a necessary condition for multi-peaked fitness
+        landscapes”</span>, J. Theor. Biol. <b>272</b>, 141–144 (2011).
+        <a href="https://doi.org/10.1016/j.jtbi.2010.12.015">doi:10.1016/j.jtbi.2010.12.015</a>
+        <span class="w">Changes that are separately unfavourable but jointly advantageous: the exact
+        formal signature of Crius's recorder-and-invoker pair.</span></li>
+
+      <li id="r5">Jasper Franke, Alexander Klözer, J. Arjan G. M. de Visser, Joachim Krug,
+        <span class="t">“Evolutionary accessibility of mutational pathways”</span>,
+        PLoS Comput. Biol. <b>7</b>(8), e1002134 (2011).
+        <a href="https://doi.org/10.1371/journal.pcbi.1002134">doi:10.1371/journal.pcbi.1002134</a>
+        <span class="w">“Evolutionary accessibility” as a quantitative property of a landscape,
+        with a theory of how it scales.</span></li>
+
+      <li id="r6">Arthur W. Covert III, Richard E. Lenski, Claus O. Wilke, Charles Ofria,
+        <span class="t">“Experiments on the role of deleterious mutations as stepping stones in
+        adaptive evolution”</span>, Proc. Natl. Acad. Sci. USA <b>110</b>(34), E3171–E3178 (2013).
+        <a href="https://doi.org/10.1073/pnas.1313424110">doi:10.1073/pnas.1313424110</a>
+        <span class="w">Counter-evidence to any strong reading: populations allowed deleterious
+        intermediates reached higher long-run fitness than populations forbidden them, because some
+        intermediates were stepping stones across otherwise impassable valleys.</span></li>
+
+      <li id="r7">Stuart A. Kauffman, Simon Levin, <span class="t">“Towards a general theory of
+        adaptive walks on rugged landscapes”</span>, J. Theor. Biol. <b>128</b>(1), 11–45 (1987).
+        <a href="https://doi.org/10.1016/S0022-5193(87)80029-2">doi:10.1016/S0022-5193(87)80029-2</a>
+        <span class="w">The NK model: ruggedness as a tunable property of a landscape, and adaptive
+        walks as the process that ruggedness constrains.</span></li>
+
+      <li id="r8">Sergey Gavrilets, <span class="t">“Evolution and speciation on holey adaptive
+        landscapes”</span>, Trends Ecol. Evol. <b>12</b>(8), 307–312 (1997).
+        <a href="https://doi.org/10.1016/S0169-5347(97)01098-7">doi:10.1016/S0169-5347(97)01098-7</a>
+        <span class="w">In high enough dimension the valley-crossing problem may not exist: ridges of
+        near-equal fitness connect what looks separated in three dimensions. An objection this note
+        must survive.</span></li>
+
+      <li id="r9">Peter Schuster, Walter Fontana, Peter F. Stadler, Ivo L. Hofacker,
+        <span class="t">“From sequences to shapes and back: a case study in RNA secondary
+        structures”</span>, Proc. R. Soc. Lond. B <b>255</b>, 279–284 (1994).
+        <a href="https://doi.org/10.1098/rspb.1994.0040">doi:10.1098/rspb.1994.0040</a>
+        <span class="w">Neutral networks: all common structures reachable from an arbitrary sequence
+        by far fewer mutations than the chain length.</span></li>
+
+      <li id="r10">Andreas Wagner, <span class="t">“Robustness and evolvability: a paradox
+        resolved”</span>, Proc. R. Soc. B <b>275</b>, 91–100 (2008).
+        <a href="https://doi.org/10.1098/rspb.2007.1137">doi:10.1098/rspb.2007.1137</a>
+        <span class="w">Large connected neutral networks make phenotypes both robust and evolvable —
+        the mechanism by which real substrates avoid the trap Crius fell into.</span></li>
+
+      <li id="r11">Sam F. Greenbury, Ard A. Louis, Sebastian E. Ahnert, <span class="t">“The
+        structure of genotype–phenotype maps makes fitness landscapes navigable”</span>,
+        Nat. Ecol. Evol. <b>6</b>, 1742–1752 (2022).
+        <a href="https://doi.org/10.1038/s41559-022-01867-z">doi:10.1038/s41559-022-01867-z</a>
+        <span class="w">For RNA, protein and protein-complex maps, even under random fitness
+        assignment, maxima are reachable from almost any phenotype without crossing a valley. The
+        strongest version of the “bad representation” objection.</span></li>
+
+      <li id="r12">Stephen Jay Gould, Elisabeth S. Vrba, <span class="t">“Exaptation — a missing term
+        in the science of form”</span>, Paleobiology <b>8</b>(1), 4–15 (1982).
+        <a href="https://doi.org/10.1017/S0094837300004310">doi:10.1017/S0094837300004310</a>
+        <span class="w">Features not built for their current role but available for it: nature's
+        standard route across an assembly valley, and dial A of the closing experiment.</span></li>
+
+      <li id="r13">John Gerhart, Marc Kirschner, <span class="t">“The theory of facilitated
+        variation”</span>, Proc. Natl. Acad. Sci. USA <b>104</b>(suppl. 1), 8582–8589 (2007).
+        <a href="https://doi.org/10.1073/pnas.0701035104">doi:10.1073/pnas.0701035104</a>
+        <span class="w">Conserved core components make large coordinated phenotypic change available
+        as small regulatory change: an existence proof that substrates can shorten semantic edit
+        distance.</span></li>
+
+      <li id="r14">David E. Goldberg, <span class="t">“Simple genetic algorithms and the minimal,
+        deceptive problem”</span>, in L. Davis (ed.), <span class="t">Genetic Algorithms and Simulated
+        Annealing</span>, Morgan Kaufmann, 74–88 (1987).
+        <span class="w">Deception: objective functions that lead a genetic algorithm away from the
+        optimum. The evolutionary-computation name for the cliff.</span></li>
+
+      <li id="r15">Joel Lehman, Kenneth O. Stanley, <span class="t">“Abandoning objectives: evolution
+        through the search for novelty alone”</span>, Evolutionary Computation <b>19</b>(2), 189–223
+        (2011).
+        <a href="https://doi.org/10.1162/EVCO_a_00025">doi:10.1162/EVCO_a_00025</a>
+        <span class="w">A search method that exists because rewarding the goal directly so often
+        fails to reach it; the origin of the quality-diversity line.</span></li>
+
+      <li id="r16">Marvin Minsky, <span class="t">“Steps toward artificial intelligence”</span>,
+        Proc. IRE <b>49</b>(1), 8–30 (1961).
+        <a href="https://doi.org/10.1109/JRPROC.1961.287775">doi:10.1109/JRPROC.1961.287775</a>
+        <span class="w">The credit-assignment problem, named. Accessibility is credit assignment
+        across construction rather than across time.</span></li>
+
+      <li id="r17">Richard S. Sutton, Doina Precup, Satinder Singh, <span class="t">“Between MDPs and
+        semi-MDPs: a framework for temporal abstraction in reinforcement learning”</span>,
+        Artificial Intelligence <b>112</b>(1–2), 181–211 (1999).
+        <a href="https://doi.org/10.1016/S0004-3702(99)00052-1">doi:10.1016/S0004-3702(99)00052-1</a>
+        <span class="w">Options: temporal abstractions built largely to shorten the distance credit
+        must travel. Dial E of the closing experiment has the same shape.</span></li>
+    </ol>
+  </section>
+
+  <footer class="foot">
+    This page is the current version. The original 2026-09-24 text is preserved unedited as
+    <a href="2026-09-24-accessibility-frontier.md">2026-09-24-accessibility-frontier.md</a>; the
+    page may carry later revisions, so the two can differ by design. Citation verification is in
+    <a href="SOURCES_accessibility-frontier.md">SOURCES_accessibility-frontier.md</a>.<br>
+    Status: §1–§5 are a measured result from a closed Prometheus campaign (Crius, Campaign 2;
+    receipts in the repository, closing commit 7069c0ce6). §6–§10 are interpretation; §7–§9 and the
+    closing experiment are proposals, untested anywhere, stated to be attacked. Crius's experimental
+    lane remains closed; this note does not reopen it.<br>
+    Companion note: <a href="selective-irreversibility.html">Selective Irreversibility</a>.
+    Equations are typeset in plain HTML and CSS — no JavaScript, no external fonts, nothing to fail.
+  </footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+ "perturbation_id": "P-E05",
+ "parent": "T-ARCH4/S1",
+ "deformation": "C",
+ "escapes_stasis": "S1 froze depth because deeper walks under the original rule only accumulate length; P-D03 removed the accumulation under no_growth; depth is re-posed under that rule",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "stasis-escape-cross",
+ "grid": {
+  "rule": [
+   "orig",
+   "no_growth"
+  ],
+  "prop": [
+   "frozen",
+   "delheavy"
+  ],
+  "trap": "nop"
+ },
+ "depth": 64,
+ "archive": [
+  16,
+  32,
+  64
+ ],
+ "walkers": 2,
+ "measures": "per archived depth: exaptation (D6 rule), length delta, connected share, structural diversity; damage loss (delete k4 s1, delete k4 s4, operand k4; modulo; 4 draws) at depth 16 and 64",
+ "material_rule": "exaptation Wilson 95% bands at depth 64 vs 16 disjoint in any cell; OR paired sign-flip of loss(64) - loss(16) outside its band in any cell; OR paired sign-flip of loss under no_growth minus orig (same parent, walker, depth) outside its band",
+ "continuation": [
+  "depth 128",
+  "lencost rule",
+  "band width x depth"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-18 23:22:01",
+ "prereg_sha256": "e688db5d56c875477b88a0faf660bd30ab5dd73ea00ef6c47b5bf8031d2313db"
+}

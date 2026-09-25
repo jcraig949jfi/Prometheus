@@ -1,7 +1,32 @@
 # Bellerophon status
 
-Currency: 2026-09-19 09:49Z (end of the overnight TDD/playtest window; 150 cycles; report
+Currency: 2026-09-19 (Atlas -> BEE pilot COMPLETE; see roles/Bellerophon/atlas_bee/REVIEW_PACKET_2026-09-19.md).
+Earlier same day: end of the overnight TDD/playtest window (150 cycles; report
 roles/Bellerophon/OVERNIGHT_REPORT_2026-09-19.txt with its END-OF-WINDOW ADDENDUM).
+
+Z80 x ATLAS 72-HOUR CAMPAIGN (RUNNING; directive prompts/2026-09-19_z80_atlas_campaign/, given to Nestor, operator asked
+  Bellerophon to build the same on BEE-side infra): harness prometheus/z80atlas/ (Z80-like VM, six reproduction physics
+  with the endogenous guard, frozen 14-axis grammar, geometry rulers, mechanical triggers, 3-stage producer/consumer
+  scheduler, 16 tests). LIVE on M2/SPECTREX5 from a frozen code copy at C:/Users/James/z80atlas_campaign_2026-09-19/code
+  (commit 9af86659e + resume-robustness patches to scheduler/observatory/campaign that change neither frozen hash):
+  started 2026-09-19T14:39:46Z, ends 2026-09-22T14:39:46Z, 16 workers, 500 ticks x 256 cells, seed 20260919, pid in
+  campaign.pid. Positive controls PASS (5/5). Status: python -m prometheus.z80atlas.campaign --status --workdir <dir>;
+  early stop: kill the pid, then --finalize (packet from the checkpoint); --resume continues in the original window.
+  At the boundary it stops itself and writes CAMPAIGN_PACKET.md + families/runs/decisions .jsonl + flags/attribution/map
+  .json. Scientific interpretation is for the post-campaign review, not the harness. Parallel effort noticed:
+  archaeon/z80atlas/ (Nestor's own build) landed on main the same hour; separate path, no conflict.
+
+ATLAS -> BEE PILOT (temporary experimental role, directive prompts/2026-09-19_atlas_bee_pilot/): does BEE
+  (prometheus/toolbox) work as a THIRD ecosystem alongside SFE and NPE? Six Atlas experiments selected and FROZEN
+  (SELECTION_FROZEN.json), a light shim built (prometheus/atlas_bee/: freeze/manifest/harness/run/atlas_feed +
+  a1..a6), each question instantiated NATIVELY in BEE, frozen (PREREG_a*.json, hashed), run, replayed bit-for-bit
+  (replay_ok all six), compared (RESULT_a*.json). Verdicts: a1 INVERTED (overfitting-to-seed), a2 CHANGED
+  (subadditive 0.03), a3 CHANGED (recurrence-necessity inverted), a4 ABSENT (offspring cap unrepresentable), a5
+  ABSENT (delay-invariant optimum), a6 PRESERVED (P1 refuses as e07). Every case exposed a mechanism the source
+  ecosystem could not. BEE-native scaffolding added to the kernel with tests + mutants (M87-M93 CAUGHT): sequence.v1,
+  battery, seed_players, episode recurrence, kv_weather, objective.charge.v1. Recommendation: ADMIT BEE as a third
+  ecosystem for DIFFERENTIAL cross-ecosystem transplant studies. Atlas feed harvester-ready (ATLAS_FEED.jsonl) +
+  smallest-extension proposal (ATLAS_EXTENSION_PROPOSAL.md); nothing written to Atlas (read-only seat).
 
 seat state: ACTIVE. Charter in force: the WORLDS KERNEL directive
   (prompts/2026-09-18_worlds_kernel/, sha256 fc819348...). D-BELL-1..4

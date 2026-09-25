@@ -1,0 +1,193 @@
+{
+ "perturbation_id": "P-H02",
+ "parent": "T-X20",
+ "n_children": 792,
+ "n_valid": 637,
+ "names_by_pair": {
+  "start_anchored|start_anchored": {
+   "INVALID": 12,
+   "DISAPPEAR": 10,
+   "SILENT": 2,
+   "INTERFERE": 12
+  },
+  "start_anchored|schedule": {
+   "INVALID": 30,
+   "DISAPPEAR": 17,
+   "COMPOSE": 2,
+   "DOMINATE": 42,
+   "INTERFERE": 11,
+   "SILENT": 6
+  },
+  "start_anchored|periodic": {
+   "INVALID": 30,
+   "DOMINATE": 60,
+   "DISAPPEAR": 9,
+   "INTERFERE": 6,
+   "COMPOSE": 1,
+   "SILENT": 2
+  },
+  "start_anchored|ask_time": {
+   "DISAPPEAR": 44,
+   "INTERFERE": 18,
+   "INVALID": 25,
+   "DOMINATE": 16,
+   "SILENT": 4,
+   "NEW": 1
+  },
+  "schedule|schedule": {
+   "DISAPPEAR": 4,
+   "SILENT": 7,
+   "INTERFERE": 25
+  },
+  "schedule|periodic": {
+   "DISAPPEAR": 14,
+   "DOMINATE": 76,
+   "INTERFERE": 16,
+   "SILENT": 2
+  },
+  "schedule|ask_time": {
+   "COMPOSE": 5,
+   "INVALID": 29,
+   "DOMINATE": 40,
+   "INTERFERE": 14,
+   "DISAPPEAR": 14,
+   "SILENT": 5,
+   "NEW": 1
+  },
+  "periodic|periodic": {
+   "INTERFERE": 33,
+   "DISAPPEAR": 3
+  },
+  "periodic|ask_time": {
+   "DOMINATE": 58,
+   "INVALID": 29,
+   "SILENT": 3,
+   "INTERFERE": 11,
+   "DISAPPEAR": 7
+  },
+  "ask_time|ask_time": {
+   "INTERFERE": 28,
+   "SILENT": 2,
+   "DISAPPEAR": 6
+  }
+ },
+ "names_by_op": {
+  "splice_ab_0.25": {
+   "INVALID": 16,
+   "INTERFERE": 12,
+   "DISAPPEAR": 28,
+   "COMPOSE": 1,
+   "DOMINATE": 9
+  },
+  "splice_ba_0.25": {
+   "DISAPPEAR": 9,
+   "INTERFERE": 11,
+   "SILENT": 4,
+   "DOMINATE": 18,
+   "INVALID": 24
+  },
+  "splice_ab_0.50": {
+   "INVALID": 16,
+   "INTERFERE": 12,
+   "DISAPPEAR": 13,
+   "DOMINATE": 25
+  },
+  "splice_ba_0.50": {
+   "DISAPPEAR": 2,
+   "INTERFERE": 11,
+   "COMPOSE": 1,
+   "DOMINATE": 26,
+   "INVALID": 24,
+   "SILENT": 2
+  },
+  "splice_ab_0.75": {
+   "INVALID": 16,
+   "INTERFERE": 12,
+   "DISAPPEAR": 11,
+   "DOMINATE": 27
+  },
+  "splice_ba_0.75": {
+   "DISAPPEAR": 8,
+   "INTERFERE": 19,
+   "DOMINATE": 30,
+   "NEW": 1,
+   "SILENT": 2,
+   "INVALID": 6
+  },
+  "insert_b_into_a": {
+   "INVALID": 28,
+   "INTERFERE": 20,
+   "DOMINATE": 17,
+   "COMPOSE": 1
+  },
+  "insert_a_into_b": {
+   "INVALID": 25,
+   "DISAPPEAR": 5,
+   "INTERFERE": 12,
+   "DOMINATE": 21,
+   "SILENT": 1,
+   "COMPOSE": 2
+  },
+  "grammar_splice_ab_1": {
+   "DISAPPEAR": 16,
+   "INTERFERE": 14,
+   "SILENT": 5,
+   "DOMINATE": 30,
+   "COMPOSE": 1
+  },
+  "grammar_splice_ba_1": {
+   "DISAPPEAR": 10,
+   "INTERFERE": 17,
+   "SILENT": 7,
+   "DOMINATE": 31,
+   "NEW": 1
+  },
+  "grammar_splice_ab_2": {
+   "SILENT": 6,
+   "INTERFERE": 14,
+   "DOMINATE": 33,
+   "DISAPPEAR": 13
+  },
+  "grammar_splice_ba_2": {
+   "INTERFERE": 20,
+   "DISAPPEAR": 13,
+   "DOMINATE": 25,
+   "COMPOSE": 2,
+   "SILENT": 6
+  }
+ },
+ "compose_share_cross": 0.015841584158415842,
+ "n_new": 2,
+ "new_clusters": [],
+ "rewards_by_name": {
+  "COMPOSE": {
+   "W0": 0.5078125,
+   "W2_K2": 0.19921875,
+   "W1_d4": 0.0859375
+  },
+  "DOMINATE": {
+   "W0": 0.488013698630137,
+   "W2_K2": 0.5688142123287672,
+   "W1_d4": 0.07191780821917808
+  },
+  "INTERFERE": {
+   "W0": 0.5208333333333334,
+   "W2_K2": 0.2977729885057471,
+   "W1_d4": 0.10272988505747127
+  },
+  "DISAPPEAR": {
+   "W0": 0.09423828125,
+   "W2_K2": 0.048095703125,
+   "W1_d4": 0.0390625
+  },
+  "NEW": {
+   "W0": 0.03125,
+   "W2_K2": 0.046875,
+   "W1_d4": 0.0
+  }
+ },
+ "material": false,
+ "elapsed_s": 11.2,
+ "prereg_sha256": "a28d39639b7d26c7522e44da1908dc8691b26fd20f02f54c218eba9575949b1a",
+ "ts": "2026-09-19 06:03:07"
+}

@@ -1,0 +1,95 @@
+{
+  "candidates": [
+    {
+      "ADMISSIBLE": false,
+      "S1_unseen_in_slice2c": true,
+      "S2_basis_insufficient": {
+        "pass": true,
+        "with_last": {
+          "found": true,
+          "solves": false,
+          "validated_accuracy": 0.006666666666666667
+        },
+        "without_last": {
+          "found": true,
+          "solves": false,
+          "validated_accuracy": 0.006666666666666667
+        }
+      },
+      "S3_reachable_with_organ": {
+        "charges": 60,
+        "holes": null,
+        "pass": false,
+        "validated_accuracy": null
+      },
+      "S4_falsifiable": {
+        "note": "not reachable, not evaluated",
+        "pass": false
+      },
+      "S5_extrapolates": {
+        "accuracy_at_extrapolation": null,
+        "pass": false
+      },
+      "family": "list_alt_sum"
+    },
+    {
+      "ADMISSIBLE": true,
+      "S1_unseen_in_slice2c": true,
+      "S2_basis_insufficient": {
+        "pass": true,
+        "with_last": {
+          "found": true,
+          "solves": false,
+          "validated_accuracy": 0.57
+        },
+        "without_last": {
+          "found": true,
+          "solves": false,
+          "validated_accuracy": 0.57
+        }
+      },
+      "S3_reachable_with_organ": {
+        "charges": 12,
+        "holes": {
+          "body": "math.gcd(abs(acc), abs(v))",
+          "final": "acc",
+          "init": "0"
+        },
+        "pass": true,
+        "validated_accuracy": 1.0
+      },
+      "S4_falsifiable": {
+        "correct_solver": {
+          "counterexample_accuracy": 1.0,
+          "held_out_extrapolation": 1.0,
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0
+        },
+        "pass": true,
+        "rejects_a_non_solver": true
+      },
+      "S5_extrapolates": {
+        "accuracy_at_extrapolation": 1.0,
+        "pass": true
+      },
+      "family": "list_gcd"
+    }
+  ],
+  "catalog": [
+    "list_alt_sum",
+    "list_gcd",
+    "list_max",
+    "list_prod",
+    "list_sum_mod"
+  ],
+  "examined_in_order": [
+    "list_alt_sum",
+    "list_gcd"
+  ],
+  "organ_sha256": "5488abb9f6354f02eb210909e180b17db644f3e3a2675d70f3a140f2e6acf79a",
+  "selected_family": "list_gcd",
+  "selection_rule": "lexicographic; first family satisfying S1-S5; transplant performance plays no part",
+  "status": "CERTIFICATE ONLY -- no arm has been executed",
+  "verdict": "SELECTED list_gcd",
+  "written_utc": "2026-09-22T05:08:49Z"
+}

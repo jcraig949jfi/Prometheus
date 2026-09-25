@@ -1,0 +1,31 @@
+{
+ "perturbation_id": "P-H09",
+ "parent": "T-X20",
+ "co_parents": [
+  "T-X19",
+  "T-ARCH4/R1"
+ ],
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "serendipity-census",
+ "programs": "every P-F02 census program with a complete vector, cluster = nearest centroid",
+ "features": [
+  "persist",
+  "n_regs",
+  "tape_words",
+  "tick_budget",
+  "out_cap",
+  "code_writable",
+  "n_instr",
+  "persistent words",
+  "category shares",
+  "reach share (HALT probe)"
+ ],
+ "tests": "continuous: cluster mean vs 2000-permutation band of cluster labels; categorical: share vs band",
+ "material_rule": "any feature outside its band for the start-anchored or periodic cluster",
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 06:01:28",
+ "prereg_sha256": "25355d444ca36313a0db2fb5e8cbf46d056162a5105255d21ba4bf374d8f8be5"
+}

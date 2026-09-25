@@ -1,0 +1,163 @@
+{
+ "predicate_id": "C-R8-AP-01",
+ "floor_replay": 0.12835693359375,
+ "floor_rows": 0.12835693359375,
+ "floor_agrees": true,
+ "runs_replayed": 96,
+ "value_mismatches": [],
+ "balance": {
+  "control": {
+   "rows": 32,
+   "missing": [],
+   "extra": [],
+   "duplicates": [],
+   "balanced_32_4_8": true
+  },
+  "null": {
+   "rows": 32,
+   "missing": [],
+   "extra": [],
+   "duplicates": [],
+   "balanced_32_4_8": true
+  },
+  "cell": {
+   "rows": 32,
+   "missing": [],
+   "extra": [],
+   "duplicates": [],
+   "balanced_32_4_8": true
+  }
+ },
+ "binding_precheck_rows": {
+  "basis": {
+   "control_differs": [
+    "intervention_nonzero"
+   ],
+   "discriminator_resolves": [],
+   "oracle_fires": [
+    "oracle_measured"
+   ],
+   "pressure_binds": []
+  },
+  "ok": true,
+  "reasons": [],
+  "version": "G2-v1"
+ },
+ "null_check_replay": {
+  "null_predicate": "FAIL",
+  "median": 0.12353515625,
+  "iqr": 0.0,
+  "control_median": 0.58355712890625,
+  "control_iqr": 0.190460205078125,
+  "bar": 0.4883270263671875,
+  "floor": 0.12835693359375,
+  "P1_parity": false,
+  "P2_above_floor": false,
+  "P3_scramble_lowers_runs": 9,
+  "P3_uses_channel": false,
+  "n": 32,
+  "null_can_pass_by_construction": false
+ },
+ "null_check_rows": {
+  "null_predicate": "FAIL",
+  "median": 0.12353515625,
+  "iqr": 0.0,
+  "P3_scramble_lowers_runs": 9
+ },
+ "cell_replay": {
+  "median": 0.550567626953125,
+  "iqr": 0.250518798828125,
+  "control_median": 0.58355712890625,
+  "control_iqr": 0.190460205078125,
+  "bar": 0.4883270263671875,
+  "floor": 0.12835693359375,
+  "P1_parity": true,
+  "P2_above_floor": true,
+  "P3_scramble_lowers_runs": 32,
+  "P3_uses_channel": true,
+  "n": 32,
+  "vacuous": false,
+  "oracle_clean": true,
+  "full": true,
+  "primary": "PASS"
+ },
+ "summary_rows": {
+  "primary": "PASS",
+  "median": 0.550567626953125,
+  "iqr": 0.250518798828125,
+  "control_median": 0.58355712890625,
+  "control_iqr": 0.190460205078125,
+  "bar": 0.4883270263671875,
+  "floor": 0.12835693359375,
+  "P1_parity": true,
+  "P2_above_floor": true,
+  "P3_scramble_lowers_runs": 32,
+  "vacuous": false,
+  "oracle_clean": true,
+  "reasons": null
+ },
+ "summary_disagreements": {},
+ "verdict_agrees": true,
+ "rule_consistency": {
+  "predicate_id": "C-R8-AP-01",
+  "posts": 1,
+  "event_id": "1789592531410-0",
+  "predicate_ts": 1789592531.404,
+  "first_row_ts": 1789592540.55,
+  "code_sha": "7f3217b4d7d650d885e58e117c565f70b924b4df",
+  "pin": [
+   "7f3217b4d7d650d885e58e117c565f70b924b4df"
+  ],
+  "evidence": {
+   "evidence_class": "VERDICT",
+   "experiment_class": "ANTI_PRIOR",
+   "rule": "EVIDENCE_N_v1",
+   "sample": {
+    "families": [
+     4200,
+     2101,
+     3303,
+     5501
+    ],
+    "n_per_family": {
+     "2101": 8,
+     "3303": 8,
+     "4200": 8,
+     "5501": 8
+    },
+    "rng_family_count": 4,
+    "runs_per_family": 8,
+    "runs_total": 32
+   }
+  },
+  "ok": true,
+  "failures": []
+ },
+ "rows_path": "primordial/ledger/rows/C/C-R8-AP-01-pairwise-d1-corruption-graphblas.jsonl",
+ "rows_ref": "origin/nestor/sidequest-graphworld-2026-09-14",
+ "rows_count": 99,
+ "resolving_power_post_hoc": {
+  "post_hoc": true,
+  "pressure_direct_magnitude_train_flipped_tick_share": 0.052978515625,
+  "hand_code_yield_loss_under_pressure": 0.052978515625,
+  "median_cell_minus_control": -0.032989501953125,
+  "mannwhitney_p": 0.9518193838897537,
+  "ks_p": 0.6351394872698826,
+  "largest_relative_median_drop_P1_accepts": 0.16318899696684452,
+  "P1_fail_rate_for_planted_relative_drop": {
+   "0.05": 0.046,
+   "0.1": 0.162,
+   "0.15": 0.46,
+   "0.2": 0.7745
+  },
+  "draws": 2000,
+  "seed": 0
+ },
+ "judge_reading": {
+  "recorded_primary": "PASS",
+  "replay_primary": "PASS",
+  "values": "0 mismatches over 96 independently re-scored runs",
+  "dispute": "H disputes the READING, not the arithmetic. P2 and P3 do discriminate (cell median 0.551 vs FLOOR 0.128; scramble lowers held in 32/32 cell runs), so 'the evolved code uses the channel' is supported. P1 -- the ONLY component that carries the corruption pressure's effect -- does not resolve an effect of the pressure's own size: P1 accepts a median drop up to 16.3%; a planted drop equal to the pressure's direct magnitude (5.3% flipped ticks = hand-code loss 5.3%) fails P1 in 4.6% of 2000 draws (post hoc, disclosed); observed drop 5.7% (MWU p 0.95). The planted null cannot PASS by construction (silent arm <= FLOOR, P2 strict), so no control demonstrates that P1 rejects a pressured arm. Under the R8 invariant 'a PASS whose arms cannot discriminate is VACUOUS', H classifies the PRESSURE claim of this PASS as VACUOUS. C's preregistered VACUITY rule (IQR 0 and equal medians) did not fire and C's recorded primary PASS stands as recorded; both statements are preserved, neither overwrites the other.",
+  "packet_guard": "do not report as 'corruption robustness' or as an anti-prior surprise PASS without the VACUOUS-in-substance flag; calibration counts it with the flag."
+ }
+}

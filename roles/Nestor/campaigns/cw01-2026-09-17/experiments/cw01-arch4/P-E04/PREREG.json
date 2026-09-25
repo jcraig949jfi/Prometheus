@@ -1,0 +1,26 @@
+{
+ "perturbation_id": "P-E04",
+ "parent": "T-ARCH4/M1",
+ "deformation": "A",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "parameterized-dose-surface",
+ "coordinates": {
+  "role": "operand slot (a/b/c) x static opcode category of the hit instruction; k=2 adjacent instructions at 4 anchors; DYNAMIC REACH DROPPED (no per-instruction trace in the frozen VM) - translation loss",
+  "pairwise": "k=4 as two 2-windows at anchor pairs (6) vs each window alone; epistasis = loss_ij - [1-(1-loss_i)(1-loss_j)]",
+  "held_out": "delete k=4 at 1 / 4 sites scored on W0_heldout, W1_d1, W1_d4, W2_K2d1 (reward delta, exaptation)"
+ },
+ "draws": 4,
+ "programs": "viable parents, walker-16, C4-08 tops (n >= 8 instructions)",
+ "material_rule": "role: any slot or category marginal differs from the grand mean with a disjoint Wilson band; pairwise: mean epistasis outside its sign-flip band; held-out: exaptation rate on any family >= .05 with Wilson lower bound > 0",
+ "continuation": [
+  "triples",
+  "role map under trap-NOP",
+  "reach via a HALT probe"
+ ],
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 02:37:44",
+ "prereg_sha256": "cbd53c8bfc3173d88b82be97f0183edc302bc533cd8a5acd50e5194078d0b476"
+}

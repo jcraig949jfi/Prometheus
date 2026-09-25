@@ -77,6 +77,11 @@ class _C1:
         kind, pos = primitive_of(task.perm[action])
         return apply_primitive(kind, pos, x)
 
+    @staticmethod
+    def primitive_of_action(task, action: int) -> int:
+        """The world reveals what an executed action did (DESIGN_C2 s4, rung B observation)."""
+        return task.perm[action]
+
 
 worlds.register("c1", _C1)
 

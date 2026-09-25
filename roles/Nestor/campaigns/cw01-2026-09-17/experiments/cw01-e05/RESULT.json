@@ -1,0 +1,474 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "n_replicates": 4,
+ "replicates": [
+  {
+   "attempt_id": "cw01-e05-a01",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     2,
+     4
+    ],
+    "best_score": 1.8977760441328448,
+    "worst": [
+     4,
+     5,
+     7
+    ],
+    "worst_score": 1.0014873643613664,
+    "n_subsets": 56,
+    "median_score": 1.3205791134235167
+   },
+   "arms_match": true,
+   "did_points": 19.428009635421777,
+   "law_effect_best_points": 30.783334322455673,
+   "law_effect_worst_points": 11.355324687033896,
+   "superadditivity_mean_pct": 12.786340358023716,
+   "superadditivity_blocks": [
+    11.691900503807192,
+    18.488480147649174,
+    6.979838828755173,
+    14.025559566795593,
+    16.322631345612365,
+    15.454310298232295,
+    7.899972576506719,
+    11.428029596831225
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -7.513029416113628,
+   "null_p95": 8.124476374688584,
+   "ablation_targeted": 55.4893692267849,
+   "ablation_random_sham": 48.56004403199489,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 1.88130068580645,
+   "best_single_score": 0.794823903238696,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.8595531873962066,
+   "ancestor_mean": 1.3503882738241408,
+   "ancestor_relative_pct": 37.70507515813734,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 8.432638402596433,
+     "mixture_info": 133.73239070579586,
+     "additive_prediction": 123.33222973812065,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      2,
+      4
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -22.350695919859238,
+     "mixture_info": 251.29375403392078,
+     "additive_prediction": 323.62653730233563,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      2,
+      4
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": 0.0,
+     "mixture_info": 76.31338281375827,
+     "additive_prediction": 76.31338281375827,
+     "carry_cost": 9.0,
+     "carried": [
+      4,
+      5,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -11.355324687033896,
+     "mixture_info": 227.52145704222212,
+     "additive_prediction": 256.6668062564864,
+     "carry_cost": 9.0,
+     "carried": [
+      4,
+      5,
+      7
+     ],
+     "law": "disjunctive"
+    }
+   }
+  },
+  {
+   "attempt_id": "cw01-e05-r02",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     1,
+     2,
+     6
+    ],
+    "best_score": 1.6553100895117698,
+    "worst": [
+     0,
+     1,
+     4
+    ],
+    "worst_score": 0.7237802568130096,
+    "n_subsets": 56,
+    "median_score": 1.1658621116174004
+   },
+   "arms_match": true,
+   "did_points": 65.1260276821454,
+   "law_effect_best_points": 53.48998268951384,
+   "law_effect_worst_points": -11.636044992631575,
+   "superadditivity_mean_pct": 28.16696010981508,
+   "superadditivity_blocks": [
+    21.712666950147284,
+    26.206180469391946,
+    37.74557958200422,
+    26.022718426985104,
+    28.60460812534102,
+    31.573958461584866,
+    27.327924931534586,
+    26.142043931531603
+   ],
+   "superadditivity_clears_null": true,
+   "null_p05": -8.388968475172048,
+   "null_p95": 9.157165005453962,
+   "ablation_targeted": 59.357256562610274,
+   "ablation_random_sham": 47.60025720827883,
+   "ablation_all_load_bearing": true,
+   "n_load_bearing": 3,
+   "n_carried": 3,
+   "mixture_score": 1.5986014130136352,
+   "best_single_score": 0.6818895397167047,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.6352301074693392,
+   "ancestor_mean": 1.116416725844015,
+   "ancestor_relative_pct": 46.47130140701712,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": 29.58568997596219,
+     "mixture_info": 118.67852856204638,
+     "additive_prediction": 91.58305101748576,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      2,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -23.904292713551644,
+     "mixture_info": 245.1957945249636,
+     "additive_prediction": 322.22027137742333,
+     "carry_cost": 9.0,
+     "carried": [
+      1,
+      2,
+      6
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -34.92255332837729,
+     "mixture_info": 56.451054714737836,
+     "additive_prediction": 86.7444216113561,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      4
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -23.286508335745715,
+     "mixture_info": 184.37735037238974,
+     "additive_prediction": 240.34540257838756,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      1,
+      4
+     ],
+     "law": "disjunctive"
+    }
+   }
+  },
+  {
+   "attempt_id": "cw01-e05-r03",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     4,
+     5
+    ],
+    "best_score": 2.0986274793062143,
+    "worst": [
+     3,
+     6,
+     7
+    ],
+    "worst_score": 1.0523102729169616,
+    "n_subsets": 56,
+    "median_score": 1.6224295751740878
+   },
+   "arms_match": true,
+   "did_points": 21.411090841458574,
+   "law_effect_best_points": 22.512715529446616,
+   "law_effect_worst_points": 1.1016246879880427,
+   "superadditivity_mean_pct": -4.8236093479894055,
+   "superadditivity_blocks": [
+    -4.994000060497369,
+    -9.50274853346012,
+    -2.861337366765004,
+    -0.153108201072323,
+    -5.259325591020724,
+    -5.346158966482631,
+    -7.1452935598158005,
+    -3.326902504801267
+   ],
+   "superadditivity_clears_null": false,
+   "null_p05": -6.500546434305308,
+   "null_p95": 6.952959577445718,
+   "ablation_targeted": 52.504170175282866,
+   "ablation_random_sham": 43.00748468236393,
+   "ablation_all_load_bearing": false,
+   "n_load_bearing": 2,
+   "n_carried": 3,
+   "mixture_score": 2.1663031335924994,
+   "best_single_score": 0.97232185114787,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.9124079873757722,
+   "ancestor_mean": 1.4032941378215744,
+   "ancestor_relative_pct": 36.27990995134695,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": -4.045973099550022,
+     "mixture_info": 149.99995322815954,
+     "additive_prediction": 156.32481311470224,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      4,
+      5
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -26.558688628996638,
+     "mixture_info": 242.14180663271844,
+     "additive_prediction": 329.70790160525735,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      4,
+      5
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -9.544521018657472,
+     "mixture_info": 72.34376546773274,
+     "additive_prediction": 79.97720677887789,
+     "carry_cost": 9.0,
+     "carried": [
+      3,
+      6,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -10.646145706645514,
+     "mixture_info": 164.07737959735056,
+     "additive_prediction": 183.62652724377608,
+     "carry_cost": 9.0,
+     "carried": [
+      3,
+      6,
+      7
+     ],
+     "law": "disjunctive"
+    }
+   }
+  },
+  {
+   "attempt_id": "cw01-e05-r04",
+   "budget_B": 3,
+   "enumeration": {
+    "best": [
+     0,
+     3,
+     7
+    ],
+    "best_score": 1.743230551020504,
+    "worst": [
+     0,
+     2,
+     6
+    ],
+    "worst_score": 0.6734083399675388,
+    "n_subsets": 56,
+    "median_score": 1.1755735119565
+   },
+   "arms_match": true,
+   "did_points": 17.60309581382084,
+   "law_effect_best_points": 21.360829046057155,
+   "law_effect_worst_points": 3.7577332322363155,
+   "superadditivity_mean_pct": 0.07474017951886558,
+   "superadditivity_blocks": [
+    2.801651142692698,
+    2.2207805693162537,
+    1.1126271393376637,
+    -2.2714290962670955,
+    -0.29092822810613966,
+    -5.180632828589859,
+    2.823639704877543,
+    -0.6177869671101404
+   ],
+   "superadditivity_clears_null": false,
+   "null_p05": -6.478161263589991,
+   "null_p95": 6.929278818687627,
+   "ablation_targeted": 50.2486734853325,
+   "ablation_random_sham": 33.55510849880889,
+   "ablation_all_load_bearing": false,
+   "n_load_bearing": 1,
+   "n_carried": 3,
+   "mixture_score": 1.675335414749356,
+   "best_single_score": 0.7350980768708076,
+   "beats_best_single": true,
+   "evolved_final_mean": 1.652660596587162,
+   "ancestor_mean": 1.106283194835786,
+   "ancestor_relative_pct": 49.38856563146823,
+   "cells": {
+    "BEST|conjunctive": {
+     "nsa_pct": -1.8166198094985946,
+     "mixture_info": 116.08606035648862,
+     "additive_prediction": 118.23392119038002,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      7
+     ],
+     "law": "conjunctive"
+    },
+    "BEST|disjunctive": {
+     "nsa_pct": -23.17744885555575,
+     "mixture_info": 258.0087462552782,
+     "additive_prediction": 335.85027106189403,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      3,
+      7
+     ],
+     "law": "disjunctive"
+    },
+    "WORST|conjunctive": {
+     "nsa_pct": -10.774788929856848,
+     "mixture_info": 46.29081069195386,
+     "additive_prediction": 51.88086431710762,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      2,
+      6
+     ],
+     "law": "conjunctive"
+    },
+    "WORST|disjunctive": {
+     "nsa_pct": -14.532522162093164,
+     "mixture_info": 217.9560181701113,
+     "additive_prediction": 255.01632162759654,
+     "carry_cost": 9.0,
+     "carried": [
+      0,
+      2,
+      6
+     ],
+     "law": "disjunctive"
+    }
+   }
+  }
+ ],
+ "summary": {
+  "beats_best_single": "4/4",
+  "superadditivity_clears_null": "2/4",
+  "ablation_all_load_bearing": "2/4",
+  "m3_interaction_positive": "4/4",
+  "did_points_mean": 30.89205599321165,
+  "superadditivity_mean_pct": 9.051107824842063,
+  "ancestor_relative_pct_mean": 42.46121303699241
+ },
+ "tests": {
+  "beats_best_single": {
+   "ran": true,
+   "passed": true,
+   "detail": "4/4 mixtures beat the best single component",
+   "value": null
+  },
+  "superadditivity_clears_null": {
+   "ran": true,
+   "passed": false,
+   "detail": "2/4 clear the measured null band",
+   "value": null
+  },
+  "ablation_exceeds_solo": {
+   "ran": true,
+   "passed": false,
+   "detail": "2/4 have every carried component load-bearing",
+   "value": null
+  },
+  "m3_interaction": {
+   "ran": true,
+   "passed": true,
+   "detail": "4/4 show the composition law benefiting BEST more than WORST",
+   "value": null
+  },
+  "replication": {
+   "ran": true,
+   "passed": false,
+   "detail": "all conditions must hold in EVERY replicate",
+   "value": null
+  },
+  "backend": {
+   "ran": true,
+   "passed": true,
+   "detail": "36 comparisons; worst absolute divergence 0.000e+00",
+   "value": null
+  }
+ },
+ "decision_trace": [
+  {
+   "disposition": "NEGATIVE",
+   "skipped": false,
+   "matched": false
+  },
+  {
+   "disposition": "NULL",
+   "skipped": false,
+   "matched": true
+  }
+ ],
+ "backend_counterfactual": {
+  "equivalent": true,
+  "method": "bitmask arithmetic reimplementation vs python set operations",
+  "detail": "36 comparisons; worst absolute divergence 0.000e+00"
+ },
+ "disposition": "NULL",
+ "disposition_reason": "superadditivity does not clear its measured null, OR targeted ablation costs no more than solo value",
+ "freeze_rule": "once the first organism is evaluated under this attempt_id, no metric, normalisation, control, threshold, set-selection rule, budget, null or verdict criterion may change; a defect voids the verdict and opens a new attempt_id",
+ "wall_s": 30.2,
+ "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+ "verdict_contract_attempt_id": "cw01-e05-a01",
+ "verdict_contract_statistic": "difference_in_differences_normalised_information_superadditivity"
+}

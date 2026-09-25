@@ -1,0 +1,107 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e08",
+ "attempt_id": "cw01-e08-a01",
+ "world_schema_version": "rank-tax-tt-v1",
+ "_doc": "Declarative parameters for cw01-e08. Science fixed by PREREGISTRATION.md. Fields marked null are PRESSURE/BUDGET parameters frozen by the qualification procedure after their attainable range is measured, then hashed into the verdict contract.",
+ "world": {
+  "gen_seed": 13,
+  "_id": "Wf250db380cb2afd3 (w13), the only world that SURVIVED the R4 screen",
+  "A": 8,
+  "train_seeds": [
+   9100,
+   9107
+  ],
+  "held_seeds": [
+   30000,
+   30063
+  ]
+ },
+ "organism": {
+  "family": "tt_digits + per-bond ranks + per-core read mask",
+  "R_max": 5,
+  "init_G_noise": 0.3,
+  "_padding": "cores stored at R_max; every entry outside the declared ranks is exactly zero; burden is recounted from the raw cores"
+ },
+ "evolution": {
+  "n_org": 128,
+  "tournament": 3,
+  "elite": 4,
+  "mut_rate": 0.05,
+  "mut_sigma": 0.2,
+  "p_rank": 0.2,
+  "grow_sigma": 0.3,
+  "generations": 200,
+  "g_amp": 5,
+  "_generations_rule": "twice the pilot generation at which median top fitness first clears the train-seed best trivial fit, rounded up to 50, clamped to [200, 800]",
+  "_g_amp_rule": "max(5, generations // 40)"
+ },
+ "tax": {
+  "lambda": 390.0,
+  "weights": [
+   1.0,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "_coordinates": [
+   "bond",
+   "params",
+   "flops",
+   "bits"
+  ],
+  "sweep_fractions": [
+   0.0,
+   0.0625,
+   0.125,
+   0.25,
+   0.5,
+   1.0,
+   2.0
+  ],
+  "q3_gradient_min": 0.3,
+  "q3_dynamic_range_min": 0.5,
+  "_lambda_rule": "largest swept fraction of lambda_max satisfying Q3 (a)-(d); lambda_max = headroom / scalar(B_max)",
+  "lambda_fraction_of_max": 2.0
+ },
+ "arms": [
+  "CONTROL",
+  "TAX",
+  "AMP",
+  "TAX+AMP"
+ ],
+ "lineages_per_arm": 8,
+ "assay": {
+  "top_k": 8,
+  "s_amp": 3,
+  "competence_floor_held64": 166.47,
+  "_floor_source": "primordial/ledger/qd/worlds_r4.json cell w13 train128_held64 verdicts gate_in|HOLD floor"
+ },
+ "stats": {
+  "n_perm": 10000,
+  "overlap_min": 4,
+  "min_competent_lineages": 6,
+  "noncompetent_excess_max": 2
+ },
+ "gate": {
+  "pilot_lineages": 4,
+  "pilot_generations": 400,
+  "pilot_top_k": 8,
+  "q2_range_factor_min": 1.5,
+  "q4_local_retention_min": 0.25,
+  "q4_pilot_competent_min": 3,
+  "calibration_truncations": [
+   1,
+   2,
+   3,
+   4,
+   6,
+   8
+  ]
+ },
+ "rows": {
+  "generation_every": 10,
+  "_status_vocabulary": "record (TAX, TAX+AMP), control (CONTROL, AMP)"
+ },
+ "_frozen_from": "QUALIFY.json 2026-09-18 09:59:02"
+}

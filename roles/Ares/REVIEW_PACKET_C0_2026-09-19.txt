@@ -1,0 +1,122 @@
+======================================================================
+ARES REVIEW PACKET -- cycle 0 (pressure engineering sandbox)
+Seat: Ares (M2, SPECTREX5). Date: 2026-09-19. Code: 1c01bd535.
+Charter: roles/Ares/prompts/2026-09-19_charter/ (sha256 95a55073d40c).
+Prereg:  ares/DESIGN_C0.md (committed before any result, e19864f52).
+======================================================================
+
+WHAT WAS ASKED
+  Determine whether abstract selective PRESSURES (not architectures)
+  can steer the emergence of computational machinery. Build toy worlds,
+  a generic evolvable organism, controls; run a sweep; report which
+  pressures changed the KIND of machinery evolution finds.
+
+WHAT WAS BUILT AND RUN
+  Substrate: batched directed-graph organism, 9 arithmetic ops, bias,
+  keep coefficient, two input ports, per-edge plasticity rate (0 until
+  mutated), strict tick budget. No named modules. 10 mutation operators.
+  Worlds: W1 catastrophic tail, W2 rare override, W3 changing rules,
+  W4 hidden regime, W5 delayed revelation, W6 scarcity, W7 incompatible
+  regimes, W8 transplant, W9 ecological coupling, W10 development,
+  W11 irreversible commitment, W12 dying lineage. Each with modes
+  present / absent / shuffled.
+  Search: mutation-selection GA (P=128, G=120, 4 train eps/gen, elites
+  16, tournament 3). 32 balanced held-out episodes. Fitness = world
+  reward ONLY; no mechanism ever rewarded or named.
+  141 GA runs (3 seeds/cell) + champion dissection + transfer matrix +
+  W8 transplant + a combined-memory ablation. Controls: fixed policy,
+  random policy, gen-0 population, and per-champion substrate ablations
+  (no keep+reset, no plasticity, both). Cheat controls in tests:
+  hand-wired conditional-risk and memory organisms detected and
+  localised. tests 10/10.
+
+HEADLINE RESULT
+  W4 (hidden regime) is MATERIAL in 3/3 seeds: two regimes give
+  identical observations after a 3-step early cue and demand opposite
+  actions, with NO reward channel. Present champions reach late-life
+  accuracy 1.00 for both regimes (shuffled control 0.55 = chance).
+  The mechanism is necessary and specific:
+      ablation           held-out (W4 present, seed 3)
+      intact                 40.0
+      no activation memory    2.6   <- collapses to chance
+      no plasticity          40.0   <- irrelevant
+      no memory at all        2.6
+  Node ablation localises it to a GATE+MAX node pair (each removes
+  40 -> 2.6). The mechanism ACCRETED over ~13 lineage generations, not
+  one mutation. Frozen: ares/fossils/W4_activation_memory_s3/ (replays
+  to 40.0000). Nothing named or rewarded memory.
+
+FULL VERDICT (preregistered rule; ares/runs/sweep_c0/verdict.txt)
+  W1  catastrophic tail     MATERIAL (modest; conditional avoidance)
+  W2  rare override         REFLEX (conditional risk, no hidden node)
+  W3  changing rules        FITNESS WITHOUT ADAPTATION (pre-flip only)
+  W4  hidden regime         MATERIAL (activation-memory fossil)
+  W5  delayed revelation    CROSS-DELAY MEMORY (mislabelled by control)
+  W7  incompatible regimes  REFLEX (not separable)
+  W11 irreversible commit   DID NOTHING (immediate blind commitment)
+  W12 dying lineage         STATE-DEPENDENT RISK (threshold miscal.)
+  W8 transplant: evolved retention = random retention (no organs).
+  W9 coupling: Red Queen cycle (autocorr 0.67), no extra machinery.
+  W10 development: not faster than direct encoding.
+  W6 scarcity: compact champions (0-2 nodes vs 9-12 abundant).
+
+THE MOST RELIABLE OUTPUT: THREE CONTROLS FALSIFIED BY THEIR OWN DATA
+  1. The "no_state" ablation left PLASTICITY intact, so it did not
+     remove memory; a nostate organism scored 33 on W4 via plastic
+     weights. Fixed by a combined no_memory ablation, which is what
+     let W4 be attributed to activation memory specifically.
+  2. W5 present produced GENUINE cross-delay memory (dec_acc 1.00 in
+     2/3; both memory routes needed) -- contradicting the preregistered
+     P-W5 "does nothing". The verdict mislabels it because the balanced
+     seed set balances only the first hidden binary and W5's payout is
+     a second one, inflating the shuffled control.
+  3. The W12 fitness threshold was borrowed from the absent mode (~80),
+     which the present mode cannot reach because risk is costly; the
+     behaviour (state-dependent risk, gap 1.00) is present, the
+     threshold was wrong.
+  All three recorded in roles/Ares/calibration/LEDGER.md before this
+  packet.
+
+CONFLICTS OF INTEREST / LIMITS
+  - 3 seeds per cell: NO structural difference between modes is claimed
+    as a finding; winners rerun at 10 seeds in cycle 1 first.
+  - The verdict labels are mechanical; three are known to misfire (above)
+    and the report corrects them in prose rather than silently.
+  - Ares built and scored its own instruments; the W4 fossil is handed
+    to Nyx/Harmonia for interpretation rather than named here.
+
+WHAT WOULD FALSIFY THE HEADLINE
+  If the cycle-1 rerun of W4 with the corrected no_memory control shows
+  the collapse is an artifact of the ablation (e.g. resetting state
+  also breaks the input path), W4 is not a memory result. The replay
+  and the node-level ablation (GATE+MAX, not a global reset) argue
+  against this, but it is the test.
+
+WHAT SHOULD WE STOP
+  W11 (irreversible commitment) and the W3 within-lifetime-adaptation
+  framing produced nothing this substrate can host at this budget; do
+  not invest further without a substrate change. W8/W9/W10 gave clean
+  nulls and need no rerun unless a positive elsewhere motivates them.
+
+CAN THIS BE "NOT WORTH CONTINUING"?
+  Yes, and the stop condition is written (DESIGN_C0 s7 / report s7): if
+  cycle 1 shows W4 was the only load-bearing mechanism and every other
+  candidate is a reflex, the next question is a SUBSTRATE question, not
+  a pressure question, and the pressure catalogue is parked.
+
+NEXT THREE EXPERIMENTS
+  1. Fix the 3 mis-scored instruments; rerun W4/W5/W12 at 10 seeds
+     before any MATERIAL claim on W5 or W12.
+  2. Combine W4 (hidden regime) + W5 (delay) to stress the carrier;
+     hand the W4 fossil to Nyx/Harmonia.
+  3. Re-run W4 with activation memory blocked but plasticity on (does a
+     plastic carrier emerge?) and with both off (is memory the only
+     answer to hidden-regime pressure here?).
+
+ARTIFACTS
+  ares/ARES_PRESSURE_NOTES.md, PRESSURE_CATALOG.json, substrate.py,
+  worlds.py, search.py, develop.py, baselines.py, sweep.py, verdict.py,
+  supp_nomem.py, DESIGN_C0.md, ARES_FIRST_REPORT.md, tests/test_ares.py,
+  runs/sweep_c0/ (141 runs + summary + verdict + nomem),
+  fossils/W4_activation_memory_s3/. Code commit 1c01bd535.
+======================================================================

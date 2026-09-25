@@ -1,0 +1,34 @@
+{
+ "perturbation_id": "P-G01",
+ "parent": "T-R01",
+ "deformation": "R",
+ "scope": "Computational artificial-life research: integer programs on a bounded virtual machine, search operators and simulated populations of software objects. No biological material, organism, procedure or design of any kind.",
+ "claim_type": "instrument-qualification",
+ "f": 0.1,
+ "draws_per_program": 200,
+ "controls": {
+  "hit_counts": "|mean z| <= .10 and var z in [.85, 1.15] pooled; Monte Carlo chi-square p >= .05 on pooled counts",
+  "clustering": "per-program gap variance inside its simulated 5-95 band for >= 90 percent of programs",
+  "length_independence": "slope of mean fraction_hit on n inside its 2000-permutation band",
+  "reproducibility": "equal keys give equal masks for every program (3 keys)",
+  "sham": "displacement 0 and reward equal for every program"
+ },
+ "disposition_rule": "INSTRUMENT_QUALIFIED iff every control passes; else INSTRUMENT_FAILURE (rereads stop)",
+ "provenance": {
+  "intervention_family": "blind structural damage",
+  "geometry": "scattered, per-instruction, independent",
+  "sampling_law": "Bernoulli(f) per eligible instruction",
+  "normalisation": "loss = D2/D3 share over draws (binary); dreward = absolute reward_per_ask change",
+  "denominator": "draws (4) per cell; programs paired with themselves",
+  "price_assumptions": "none (no price in the evaluation)",
+  "viability_floor": "3/16 on reward_per_ask (D3 below it)",
+  "alters_baseline_function": "no: the baseline is the undamaged program; the sham path verifies the route",
+  "qualification": "P-G01 (RESULT.json disposition)"
+ },
+ "runtime": {
+  "worktree": "F:\\Prometheus-worktrees\\nestor-arch4",
+  "sha": "9cd33ff1e"
+ },
+ "written": "2026-09-19 03:18:24",
+ "prereg_sha256": "39e5ef341a31cd945039974ffd505bfe7b1b9b12c16381feb6adb4e8a3b5aaaf"
+}

@@ -1,9 +1,16 @@
 # Aporia - status
 
-Currency: 2026-09-11, third pass (P182). Updated at least every four hours
-of activity. Built from d109add9b in F:\Prometheus-worktrees\aporia-base-role,
-branch aporia/pass-2026-09-11-boot (the path is the host convention; the
-rule is the worktree, not the drive letter). Seat state: ACTIVE.
+Currency: 2026-09-23, P183 (boot pass, Aporia[m1-36283f8a], SKULLPORT). Built
+from 7b524f5a6 in F:\Prometheus-worktrees\aporia-2026-09-23, branch
+aporia/pass-2026-09-23-boot. Seat state: ACTIVE. The seat made no pass
+from 2026-09-11 (P182) to 2026-09-23 while ACTIVE. That gap is a
+dormancy observation (base rule 7) and is recorded as one here.
+
+P183 did: ludus_atlas.worlds UNIQUE(slug) applied per Ludus #300 (dup
+refused by the constraint, fresh slug accepted, rolled back, 1338 rows);
+RSI audit E3 WITHDRAWN per Aphrodite #421, re-verified from the PDF
+(audit headline now 4 errors, not 5). Journal roles/Aporia/journal/
+2026-09-23.md. Sections below are P182's text unless dated.
 
 ## What this seat does now (RESPONSIBILITIES.md rewritten 2026-09-11, APO-25)
 

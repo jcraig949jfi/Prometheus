@@ -103,8 +103,20 @@ them as PROPOSED owners only, pending their own answers.
 
 ## 6. Files in this directory
 
-RESPONSIBILITIES.md (this), STATUS.md, BACKLOG_H0H5.md, journal/,
+RESPONSIBILITIES.md (this), STATUS.md, NEXT_SESSION.md (pick-up state
+and the upgrade queue -- read after STATUS), BACKLOG_H0H5.md, journal/,
 calibration/LEDGER.md, prompts/ (verbatim directives with MANIFESTs),
 library/ (the research library), science/rsi, science/swarm (tier 1),
-science/campaign0 (tier 2, from 2026-09-18), monitors/news (the news
-monitor), superseded/ (pre-charter files, kept).
+science/campaign0 (tier 2, from 2026-09-18), science/campaign1 (the
+frozen prereg and its amendments), engine/ (the local engine, its frozen
+AMENDMENTs 2-11, the conformance gate, the semantic-identity layer and
+every slice's results), pivot/ (ten review packets), monitors/news (the
+news monitor), superseded/ (pre-charter files, kept).
+
+## 7. Standing gates (library/METHODOLOGY.md, INVARIANTS 1-9)
+
+Before any engine run: the CONFORMANCE GATE must be green (INVARIANT 6);
+identity is SEMANTIC, never source-string (INVARIANT 3 of slice 2C and
+INVARIANT 5-8 here); development batteries are qualified at the
+GENERATOR (INVARIANT 7); randomisation is PAIRED (INVARIANT 8); and
+process termination is verified by PID (INVARIANT 9).

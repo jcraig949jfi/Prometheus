@@ -1,0 +1,3258 @@
+{
+  "analytic_expected_charges_randomised_order": {
+    "ORGAN": 607680,
+    "SCRATCH": 113190480
+  },
+  "detail": {
+    "gcd_times_first": {
+      "ORGAN": [
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1655,
+          "artifact_sha256": "9cf561a922e0250f1c2bcf7f76aed144897fa80f3e9468ba7336e6636739ac0d",
+          "charges_to_solution": 628514,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 628514,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(v), abs((v - acc)))",
+              "(first * (math.gcd(abs(acc), abs(last))))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 0,
+          "rediscovered_fold": true,
+          "seconds": 3.89,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1657,
+          "artifact_sha256": "22b026d7c9fd09c49e6d6b0ad763e079732aff02bc030bbc849e398490388a30",
+          "charges_to_solution": 634097,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.980 ce=0.980 meta=True)",
+          "escrow_spent": 634097,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(acc))))",
+              "(((acc % last)) * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 1,
+          "rediscovered_fold": true,
+          "seconds": 4.75,
+          "tribunal": {
+            "counterexample_accuracy": 0.98,
+            "held_out_extrapolation": 0.98,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1655,
+          "artifact_sha256": "4a450f377a40e860cc64eb4414741b71044fae3bd697b82632443320bfeb2efe",
+          "charges_to_solution": 661563,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.980 ce=0.980 meta=True)",
+          "escrow_spent": 661563,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(v))))",
+              "(first * ((acc % last)))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 4.18,
+          "tribunal": {
+            "counterexample_accuracy": 0.98,
+            "held_out_extrapolation": 0.98,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "a76b88f6f0792925abce63d784621afb8283458cdc2ae4cb3d9b551f5464e68d",
+          "charges_to_solution": 607756,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 607756,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs((v - acc)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 4.89,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1646,
+          "artifact_sha256": "578cd497089e2aee718797649586757e1b01a37144253061288fd2ab38ce40ad",
+          "charges_to_solution": 629291,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 629291,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(acc))))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 4,
+          "rediscovered_fold": true,
+          "seconds": 3.6,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1655,
+          "artifact_sha256": "7e9497a0f2611f4864e6df984039a5e71c240d5093d0119b1a7b01f360462a7e",
+          "charges_to_solution": 609303,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 609303,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(v), abs((acc - v)))",
+              "((math.gcd(abs(acc), abs(last))) * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 5,
+          "rediscovered_fold": true,
+          "seconds": 3.64,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1639,
+          "artifact_sha256": "6222d36bd5bd4a0b2ccc25ac9d7c130846d2c73234d6b8a6912f9794452ace9c",
+          "charges_to_solution": 199503,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.360 ce=0.340 meta=False)",
+          "escrow_spent": 199503,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * math.gcd(abs(v), abs(acc)))",
+              "(first * ((acc // last)))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 6,
+          "rediscovered_fold": true,
+          "seconds": 1.47,
+          "tribunal": {
+            "counterexample_accuracy": 0.34,
+            "held_out_extrapolation": 0.36,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.46
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1655,
+          "artifact_sha256": "1dcd3438f8d5fada10d0fb2e938502e43130a4e652856847a31de8852612a64c",
+          "charges_to_solution": 5942,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 5942,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(v), abs((acc + v)))",
+              "(first * (math.gcd(abs(acc), abs(last))))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 7,
+          "rediscovered_fold": true,
+          "seconds": 0.03,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1632,
+          "artifact_sha256": "b4fd1fee7a14b4152623594d2d5b2ba996d42cd5fadaf19bbc870dad11f557ed",
+          "charges_to_solution": 15490,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.585 ce=0.500 meta=False)",
+          "escrow_spent": 15490,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v - acc)",
+              "((math.gcd(abs(acc), abs(last))) * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 8,
+          "rediscovered_fold": true,
+          "seconds": 0.11,
+          "tribunal": {
+            "counterexample_accuracy": 0.5,
+            "held_out_extrapolation": 0.585,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.56
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1672,
+          "artifact_sha256": "c88dfdca952c2bc004d3897eea2a7a14d229596805cc3d3f3ef2bfcdd2f7d3a5",
+          "charges_to_solution": 13039,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 13039,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(v))))",
+              "((math.gcd(abs(acc), abs(last))) * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 9,
+          "rediscovered_fold": true,
+          "seconds": 0.07,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1655,
+          "artifact_sha256": "0b54e0b86e7bd0d6e9f0de46cd7f0684f34e1b7af76c43593df1ee3d7c73afc1",
+          "charges_to_solution": 130224,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.980 ce=0.980 meta=True)",
+          "escrow_spent": 130224,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(v))))",
+              "(((acc % last)) * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 10,
+          "rediscovered_fold": true,
+          "seconds": 0.69,
+          "tribunal": {
+            "counterexample_accuracy": 0.98,
+            "held_out_extrapolation": 0.98,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1657,
+          "artifact_sha256": "469c16ecbb3c0a417c4fb6dc3cd5348227b26830767bf23dfcecd948cb4b0b3f",
+          "charges_to_solution": 2905,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 2905,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs((acc + v)))",
+              "(first * (math.gcd(abs(acc), abs(last))))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 11,
+          "rediscovered_fold": true,
+          "seconds": 0.02,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1638,
+          "artifact_sha256": "a2c27cda5e85a1715000415e4a310650774222599d44bd9e43dd22e8df84f28c",
+          "charges_to_solution": 3464,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.980 ce=0.980 meta=True)",
+          "escrow_spent": 3464,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(v), abs((acc + v)))",
+              "(first * ((acc % last)))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 12,
+          "rediscovered_fold": true,
+          "seconds": 0.05,
+          "tribunal": {
+            "counterexample_accuracy": 0.98,
+            "held_out_extrapolation": 0.98,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1640,
+          "artifact_sha256": "d2b59a0a25bb73a03e689fa1fad90a903606f87702c389415eb5f67a600f6a75",
+          "charges_to_solution": 9025,
+          "coordinate": "macro",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.980 ce=0.980 meta=True)",
+          "escrow_spent": 9025,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs((v - acc)))",
+              "(first * ((acc % last)))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 13,
+          "rediscovered_fold": true,
+          "seconds": 0.13,
+          "tribunal": {
+            "counterexample_accuracy": 0.98,
+            "held_out_extrapolation": 0.98,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1627,
+          "artifact_sha256": "202f8c66dba907a3551548ac48ee5143c171c2e35dea2ac60d620f14426ba377",
+          "charges_to_solution": 615160,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 615160,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(v), abs((v + acc)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 14,
+          "rediscovered_fold": true,
+          "seconds": 4.56,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1621,
+          "artifact_sha256": "693042ba5d480baa0414d55c335cc5c0a9ba70d9c999e3d64d9cd33c648b1ec1",
+          "charges_to_solution": 639433,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 639433,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "0",
+              "math.gcd(abs(acc), abs(v))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 15,
+          "rediscovered_fold": true,
+          "seconds": 5.16,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ],
+      "SCRATCH": [
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1640,
+          "artifact_sha256": "37bfae078eb0c9f9d9fdf72b862e94b5b734b1b23ebbf99c0c883af08fb97a18",
+          "charges_to_solution": 84494,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 84494,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(first * 1)",
+              "math.gcd(abs(v), abs((last - acc)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 0,
+          "rediscovered_fold": true,
+          "seconds": 0.61,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1639,
+          "artifact_sha256": "397760c89c00bed4809589002c42b79f23bfb0c36d242f766b09227d04451c65",
+          "charges_to_solution": 11209,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.065 ce=0.120 meta=False)",
+          "escrow_spent": 11209,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 % 1)",
+              "(first // math.gcd(abs(last), abs(0)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 1,
+          "rediscovered_fold": false,
+          "seconds": 0.07,
+          "tribunal": {
+            "counterexample_accuracy": 0.12,
+            "held_out_extrapolation": 0.065,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.12
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1644,
+          "artifact_sha256": "3732f4274a00eda96853ba6329e296db96c599601687ab44f0f87ba1b8a482cd",
+          "charges_to_solution": 10315,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.655 ce=0.700 meta=False)",
+          "escrow_spent": 10315,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(first - last)",
+              "math.gcd(abs(v), abs((acc + first)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 0.06,
+          "tribunal": {
+            "counterexample_accuracy": 0.7,
+            "held_out_extrapolation": 0.655,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.6
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1641,
+          "artifact_sha256": "0b43065be5d486bdb21304c98ab627664f38c43692a3dee30ac8d11955319a12",
+          "charges_to_solution": 46447,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.570 ce=0.560 meta=True)",
+          "escrow_spent": 46447,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(last // first)",
+              "math.gcd(abs(acc), abs((0 + v)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 0.31,
+          "tribunal": {
+            "counterexample_accuracy": 0.56,
+            "held_out_extrapolation": 0.57,
+            "metamorphic_pass": true,
+            "stress_length_200": 0.56
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1643,
+          "artifact_sha256": "8bd7029d0a5b3a206937732ea6c08fffc08b0d7b5da60b18378780ded67923f0",
+          "charges_to_solution": 2387,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 2387,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "pow(last, last)",
+              "math.gcd(abs(v), abs((first % v)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 4,
+          "rediscovered_fold": false,
+          "seconds": 0.01,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1645,
+          "artifact_sha256": "3a04843e359190efd682ec9f1fed6957f1cd6087a5e2a2df6e4cb9ea7e2a7c25",
+          "charges_to_solution": 7630,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 7630,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(first % last)",
+              "math.gcd(abs(first), abs((1 * last)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 5,
+          "rediscovered_fold": false,
+          "seconds": 0.07,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 6,
+          "seconds": 9.84
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 9.57
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1640,
+          "artifact_sha256": "ec11c62aa95b371a97d6fc9e55348b2424840ba327065009ce8760b020782f65",
+          "charges_to_solution": 16440,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 16440,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 + last)",
+              "(1 * math.gcd(abs(acc), abs(first)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 8,
+          "rediscovered_fold": false,
+          "seconds": 0.18,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 9,
+          "seconds": 8.01
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1666,
+          "artifact_sha256": "7032ea5ec782da7c6d9076719807a4afda8830e3f64b66c0ca76308a380cdf28",
+          "charges_to_solution": 3994,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 3994,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "pow(last, last)",
+              "math.gcd(abs(last), abs(math.gcd(abs(first), abs(last))))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 10,
+          "rediscovered_fold": false,
+          "seconds": 0.04,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1654,
+          "artifact_sha256": "da34cd4fd09e5839ae7b50fade5235b64c2dd7cd20c95a481f0cf3133989da76",
+          "charges_to_solution": 2390,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 2390,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "math.gcd(abs(0), abs(first))",
+              "math.gcd(abs(v), abs((acc - 0)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 11,
+          "rediscovered_fold": true,
+          "seconds": 0.02,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 11.38
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 13,
+          "seconds": 11.46
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 9.0
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1654,
+          "artifact_sha256": "5e1988005ac89fbe87cfe4784f880d2b0b56c67a61146d39cf8ee300622d01ad",
+          "charges_to_solution": 3246,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 3246,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 % first)",
+              "math.gcd(abs(v), abs(math.gcd(abs(0), abs(acc))))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 15,
+          "rediscovered_fold": true,
+          "seconds": 0.02,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ],
+      "SHAM": [
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1639,
+          "artifact_sha256": "73645d94d8c961d878ed275c98396d186b874c511abb206532763a55515b0543",
+          "charges_to_solution": 1220045,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1220045,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(first * 1)",
+              "math.gcd(abs(v), abs(pow(acc, 1)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 0,
+          "rediscovered_fold": true,
+          "seconds": 12.88,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1641,
+          "artifact_sha256": "a745d3e154a2af6214fb1ff67a9d726ce2b7e157f1505fa2a321e09fa15c0b00",
+          "charges_to_solution": 1293515,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.065 ce=0.120 meta=False)",
+          "escrow_spent": 1293515,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(1 + last)",
+              "(first * (first // v))",
+              "math.gcd(abs(acc), abs(acc))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 1,
+          "rediscovered_fold": false,
+          "seconds": 13.63,
+          "tribunal": {
+            "counterexample_accuracy": 0.12,
+            "held_out_extrapolation": 0.065,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.12
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1637,
+          "artifact_sha256": "80dc853095e359ca2a98d8ae68d6f1628f98c155a8115329d3246947649a3884",
+          "charges_to_solution": 1225641,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1225641,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(1 // last)",
+              "math.gcd(abs(acc), abs((v * 1)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 13.32,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1641,
+          "artifact_sha256": "497260662e4437eb6390312e1f8b49bb91514fb0f369419e6317ece11c429ef3",
+          "charges_to_solution": 1272816,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1272816,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(first // 1)",
+              "math.gcd(abs(v), abs((acc % last)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 14.67,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1640,
+          "artifact_sha256": "5a03b92191b3ccfe1778b10f456efdd9e60a342294c1698118f22ce077a9b3c9",
+          "charges_to_solution": 1222569,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1222569,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 - first)",
+              "math.gcd(abs(v), abs((acc - last)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 4,
+          "rediscovered_fold": true,
+          "seconds": 11.63,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 5,
+          "seconds": 12.47
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1641,
+          "artifact_sha256": "8463bf6cbd8461ded6988fb1763b63ed866d7855e42aafaa66a39b09879b22ed",
+          "charges_to_solution": 1221153,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1221153,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(first * 1)",
+              "math.gcd(abs(acc), abs((v % first)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 6,
+          "rediscovered_fold": true,
+          "seconds": 12.01,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1633,
+          "artifact_sha256": "649da6cc737d238a91481ea9793a5a48dea791dda87d38fca44707e656fc29d1",
+          "charges_to_solution": 1222242,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1222242,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "first",
+              "math.gcd(abs(acc), abs((v % acc)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 7,
+          "rediscovered_fold": true,
+          "seconds": 12.34,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1639,
+          "artifact_sha256": "9344ee7d88b8690a9efd8d53c80288cbadebc9b1679e96a4dbd0c74772bdd583",
+          "charges_to_solution": 1226535,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 1226535,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(1 + 1)",
+              "math.gcd(abs(first), abs((v % first)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 8,
+          "rediscovered_fold": false,
+          "seconds": 13.63,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1633,
+          "artifact_sha256": "cc1de143b69c6e80922b37df23a8bba7ff4fd27e19d30a55f1531deb60345c72",
+          "charges_to_solution": 1236625,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1236625,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 % 1)",
+              "math.gcd(abs(v), abs((1 * acc)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 9,
+          "rediscovered_fold": true,
+          "seconds": 12.48,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1659,
+          "artifact_sha256": "ac59228576dfa40882cab06d9be2b9be9c86d2fa94add5c2229851a4f53df873",
+          "charges_to_solution": 1231641,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 1231641,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 * 0)",
+              "math.gcd(abs(last), abs(math.gcd(abs(first), abs(first))))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 10,
+          "rediscovered_fold": false,
+          "seconds": 11.04,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1663,
+          "artifact_sha256": "dd1bd445954b4405bbf2d44d343d8fcfd6c41efdbee3420ce18efd7c0c61a0c8",
+          "charges_to_solution": 1218859,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.440 ce=0.440 meta=False)",
+          "escrow_spent": 1218859,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "math.gcd(abs(first), abs(1))",
+              "math.gcd(abs(first), abs(pow(last, acc)))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 11,
+          "rediscovered_fold": false,
+          "seconds": 11.86,
+          "tribunal": {
+            "counterexample_accuracy": 0.44,
+            "held_out_extrapolation": 0.44,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.4
+          }
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "gcd_times_first",
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 14.11
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1656,
+          "artifact_sha256": "18b95f741edb251a09e5df8ee6d8e5632d8f054e9dbe711c859c6e3555cd4506",
+          "charges_to_solution": 1221946,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1221946,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "pow(0, first)",
+              "math.gcd(abs(v), abs(math.gcd(abs(0), abs(acc))))",
+              "(first * acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 13,
+          "rediscovered_fold": true,
+          "seconds": 14.36,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1633,
+          "artifact_sha256": "0447fdeba9752e88ee78ea26ecba45846f672bdddd42890fd230a586a9898a50",
+          "charges_to_solution": 1268295,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1268295,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 + 0)",
+              "math.gcd(abs(v), abs((v + acc)))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 14,
+          "rediscovered_fold": true,
+          "seconds": 12.5,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1657,
+          "artifact_sha256": "f223806fd5684c773351150058f729293b4c7ae0c8a3ed01e689a4460a2580af",
+          "charges_to_solution": 1219953,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.600 ce=0.660 meta=False)",
+          "escrow_spent": 1219953,
+          "family": "gcd_times_first",
+          "program": {
+            "parts": [
+              "(0 + first)",
+              "math.gcd(abs(last), abs(math.gcd(abs(acc), abs(0))))",
+              "(acc * first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 15,
+          "rediscovered_fold": false,
+          "seconds": 13.39,
+          "tribunal": {
+            "counterexample_accuracy": 0.66,
+            "held_out_extrapolation": 0.6,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        }
+      ]
+    },
+    "prod_minus_first": {
+      "ORGAN": [
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1630,
+          "artifact_sha256": "58bc48ccedcd9e9cbe67e9c60338e5315e095322518237133ce870cd9993d081",
+          "charges_to_solution": 798790,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 798790,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 0,
+          "rediscovered_fold": true,
+          "seconds": 5.7,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "60566e8e5e3b9f126bd97f5765073d7698a7cfd72bcbd966bd4714dc1db154cd",
+          "charges_to_solution": 35114,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 35114,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 1,
+          "rediscovered_fold": true,
+          "seconds": 0.19,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "60566e8e5e3b9f126bd97f5765073d7698a7cfd72bcbd966bd4714dc1db154cd",
+          "charges_to_solution": 90093,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 90093,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 0.99,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 12255,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 12255,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 0.1,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 140893,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 140893,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 4,
+          "rediscovered_fold": true,
+          "seconds": 0.85,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 18459,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 18459,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 5,
+          "rediscovered_fold": true,
+          "seconds": 0.11,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "60566e8e5e3b9f126bd97f5765073d7698a7cfd72bcbd966bd4714dc1db154cd",
+          "charges_to_solution": 446406,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 446406,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 6,
+          "rediscovered_fold": true,
+          "seconds": 2.84,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 953704,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 953704,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 7,
+          "rediscovered_fold": true,
+          "seconds": 6.88,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1630,
+          "artifact_sha256": "58bc48ccedcd9e9cbe67e9c60338e5315e095322518237133ce870cd9993d081",
+          "charges_to_solution": 627049,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 627049,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 8,
+          "rediscovered_fold": true,
+          "seconds": 4.99,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1630,
+          "artifact_sha256": "58bc48ccedcd9e9cbe67e9c60338e5315e095322518237133ce870cd9993d081",
+          "charges_to_solution": 10408,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 10408,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 9,
+          "rediscovered_fold": true,
+          "seconds": 0.11,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1630,
+          "artifact_sha256": "58bc48ccedcd9e9cbe67e9c60338e5315e095322518237133ce870cd9993d081",
+          "charges_to_solution": 39520,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 39520,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 10,
+          "rediscovered_fold": true,
+          "seconds": 0.37,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 16291,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 16291,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 11,
+          "rediscovered_fold": true,
+          "seconds": 0.12,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 147320,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 147320,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 12,
+          "rediscovered_fold": true,
+          "seconds": 0.91,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "b9a58165d93a42e282bf21448c8aab27f9e190b8e58f06dfa6ab3b1eb57afe81",
+          "charges_to_solution": 31248,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 31248,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(v * acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 13,
+          "rediscovered_fold": true,
+          "seconds": 0.14,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "60566e8e5e3b9f126bd97f5765073d7698a7cfd72bcbd966bd4714dc1db154cd",
+          "charges_to_solution": 792884,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 792884,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 14,
+          "rediscovered_fold": true,
+          "seconds": 6.7,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1607,
+          "artifact_sha256": "60566e8e5e3b9f126bd97f5765073d7698a7cfd72bcbd966bd4714dc1db154cd",
+          "charges_to_solution": 339005,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 339005,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "1",
+              "(acc * v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 15,
+          "rediscovered_fold": true,
+          "seconds": 2.15,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ],
+      "SCRATCH": [
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 0,
+          "seconds": 10.21
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1655,
+          "artifact_sha256": "c2f219306a1be453bbcc35feda78502aa60f855c939d0906e287e79aff0ee50f",
+          "charges_to_solution": 110694,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 110694,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "math.gcd(abs(1), abs(1))",
+              "(v * math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 1,
+          "rediscovered_fold": true,
+          "seconds": 0.74,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1642,
+          "artifact_sha256": "d4ae4f8d4f132e77fe3600db6cc4d6a6165cb249f945560b2c2e1cf8aa72495d",
+          "charges_to_solution": 15023,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 15023,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "pow(1, first)",
+              "math.gcd(abs(0), abs((acc * v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 0.11,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 3,
+          "seconds": 11.15
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 4,
+          "seconds": 8.51
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 5,
+          "seconds": 10.43
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1657,
+          "artifact_sha256": "39a77b1a32b45e6a51be4f35d4fddbc85143eb28fb10d9080024771bdde08bf0",
+          "charges_to_solution": 31484,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 31484,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "math.gcd(abs(first), abs(1))",
+              "(acc * math.gcd(abs(0), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 6,
+          "rediscovered_fold": true,
+          "seconds": 0.17,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 10.52
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 8,
+          "seconds": 3.91
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 9,
+          "seconds": 9.43
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1639,
+          "artifact_sha256": "451a6784f445dcff6dc8bacba82f4016d6e78e8a28bf41807a5502b1803f772c",
+          "charges_to_solution": 37285,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 37285,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "math.gcd(abs(last), abs(1))",
+              "(0 + (v * acc))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 10,
+          "rediscovered_fold": true,
+          "seconds": 0.39,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 11,
+          "seconds": 11.56
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 10.24
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1645,
+          "artifact_sha256": "ad17a785466047c82cac2200ed711f9476160cf89b54b625951e5383e6e8f6ae",
+          "charges_to_solution": 69275,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 69275,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "(first // first)",
+              "(acc * math.gcd(abs(0), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 13,
+          "rediscovered_fold": true,
+          "seconds": 0.3,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 11.02
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 15,
+          "seconds": 8.67
+        }
+      ],
+      "SHAM": [
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 0,
+          "seconds": 16.15
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1642,
+          "artifact_sha256": "ef4285e86f6ee5e047683ffce7d2a636491f94605cae867d2844e054dfd7b045",
+          "charges_to_solution": 1409098,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1409098,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "pow(first, 0)",
+              "(acc * math.gcd(abs(v), abs(0)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 1,
+          "rediscovered_fold": true,
+          "seconds": 12.6,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1620,
+          "artifact_sha256": "4aa43722b95f5889d04b21c7ea82ab2c953af3bbc6829cf530fd50a6562b7c77",
+          "charges_to_solution": 1276894,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1276894,
+          "family": "prod_minus_first",
+          "program": {
+            "parts": [
+              "(1 * 1)",
+              "(v * (acc // 1))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 13.31,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 3,
+          "seconds": 15.97
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 4,
+          "seconds": 12.75
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 5,
+          "seconds": 16.24
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 6,
+          "seconds": 13.95
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 13.39
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 8,
+          "seconds": 16.88
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 9,
+          "seconds": 14.47
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 10,
+          "seconds": 15.35
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 11,
+          "seconds": 16.56
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 15.3
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 13,
+          "seconds": 12.89
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 15.05
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "prod_minus_first",
+          "qualified": false,
+          "recipient": 15,
+          "seconds": 14.51
+        }
+      ]
+    },
+    "sum_minus_first": {
+      "ORGAN": [
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 627649,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 627649,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 0,
+          "rediscovered_fold": true,
+          "seconds": 5.22,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1627,
+          "artifact_sha256": "5bae819e2b5937044c91c1b1a91dfd6f76ce35595aa0a31e88c3835391193960",
+          "charges_to_solution": 732979,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 732979,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 1,
+          "rediscovered_fold": true,
+          "seconds": 4.05,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1604,
+          "artifact_sha256": "366c155029de33532bd06ac36b90f4965c2869745a4d13cef363014dbaae0663",
+          "charges_to_solution": 746600,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 746600,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 4.27,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1604,
+          "artifact_sha256": "366c155029de33532bd06ac36b90f4965c2869745a4d13cef363014dbaae0663",
+          "charges_to_solution": 626308,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 626308,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 4.51,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 56764,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 56764,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 4,
+          "rediscovered_fold": true,
+          "seconds": 0.3,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1627,
+          "artifact_sha256": "5bae819e2b5937044c91c1b1a91dfd6f76ce35595aa0a31e88c3835391193960",
+          "charges_to_solution": 650087,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 650087,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 5,
+          "rediscovered_fold": true,
+          "seconds": 4.35,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 126988,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 126988,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 6,
+          "rediscovered_fold": true,
+          "seconds": 0.83,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1627,
+          "artifact_sha256": "5bae819e2b5937044c91c1b1a91dfd6f76ce35595aa0a31e88c3835391193960",
+          "charges_to_solution": 65294,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 65294,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 7,
+          "rediscovered_fold": true,
+          "seconds": 0.48,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1627,
+          "artifact_sha256": "5bae819e2b5937044c91c1b1a91dfd6f76ce35595aa0a31e88c3835391193960",
+          "charges_to_solution": 744415,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 744415,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 8,
+          "rediscovered_fold": true,
+          "seconds": 4.77,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 395100,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 395100,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 9,
+          "rediscovered_fold": true,
+          "seconds": 2.34,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1627,
+          "artifact_sha256": "5bae819e2b5937044c91c1b1a91dfd6f76ce35595aa0a31e88c3835391193960",
+          "charges_to_solution": 75724,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 75724,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 10,
+          "rediscovered_fold": true,
+          "seconds": 0.54,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1604,
+          "artifact_sha256": "366c155029de33532bd06ac36b90f4965c2869745a4d13cef363014dbaae0663",
+          "charges_to_solution": 214669,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 214669,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(acc + v)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 11,
+          "rediscovered_fold": true,
+          "seconds": 1.46,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 719048,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 719048,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 12,
+          "rediscovered_fold": true,
+          "seconds": 5.12,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 177256,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 177256,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 13,
+          "rediscovered_fold": true,
+          "seconds": 0.97,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1629,
+          "artifact_sha256": "c59c11ce4c6c776d2d9b404a6d82b4132d36e2f85169273401f2efa3e63c6cec",
+          "charges_to_solution": 670393,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 670393,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + math.gcd(abs(acc), abs(acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 14,
+          "rediscovered_fold": true,
+          "seconds": 4.09,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "ORGAN",
+          "artifact_bytes": 1604,
+          "artifact_sha256": "97410360d022e73318bac58306ae647cc87ba4cb7ed6d57383f8758ce24d1c0c",
+          "charges_to_solution": 295851,
+          "coordinate": "macro",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 295851,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "0",
+              "(v + acc)",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 15,
+          "rediscovered_fold": true,
+          "seconds": 2.31,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        }
+      ],
+      "SCRATCH": [
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1637,
+          "artifact_sha256": "add4af7a3983edaacf581448819784ccd814a258755131a14fbe7b2d86a4dc5b",
+          "charges_to_solution": 17304,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 17304,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(1 // last)",
+              "math.gcd(abs(0), abs((v + acc)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 0,
+          "rediscovered_fold": true,
+          "seconds": 0.1,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 1,
+          "seconds": 7.9
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1633,
+          "artifact_sha256": "35082e30e49c7b04b9ae3b38e21702db8be9cdf25a2855c7d1e2c59fae56ea36",
+          "charges_to_solution": 28113,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 28113,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(0 + first)",
+              "(acc - (v * 1))",
+              "math.gcd(abs(acc), abs(0))"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 2,
+          "rediscovered_fold": true,
+          "seconds": 0.12,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1625,
+          "artifact_sha256": "893d684b0461b691a46c70edd77235a1d0ef251f628e922e7ed6b4930b073fc8",
+          "charges_to_solution": 126787,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.780 ce=0.820 meta=False)",
+          "escrow_spent": 126787,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "pow(last, last)",
+              "(acc + (v // 1))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 0.79,
+          "tribunal": {
+            "counterexample_accuracy": 0.82,
+            "held_out_extrapolation": 0.78,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1619,
+          "artifact_sha256": "9ff53cfb11a28de01ddc5baeb679ee121dea58bf8be1c026d40cb41b18696a5b",
+          "charges_to_solution": 100862,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 100862,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(0 % last)",
+              "(acc + (0 + v))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 4,
+          "rediscovered_fold": true,
+          "seconds": 0.42,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1623,
+          "artifact_sha256": "dc61db9a579ed9777b3cc7dfbfcaef6a733d6e0772391c1fa5107408f97d459c",
+          "charges_to_solution": 244823,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 244823,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(last % last)",
+              "(v + (acc // 1))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 5,
+          "rediscovered_fold": true,
+          "seconds": 1.33,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 6,
+          "seconds": 9.12
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 9.78
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 8,
+          "seconds": 9.67
+        },
+        {
+          "arm": "SCRATCH",
+          "artifact_bytes": 1639,
+          "artifact_sha256": "1871ba181314eff3acf0362e2371a77cbcbfc9df8c0b89e111484dd8d768a223",
+          "charges_to_solution": 85164,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 85164,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(last - first)",
+              "math.gcd(abs(0), abs((acc + v)))",
+              "(acc - last)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 9,
+          "rediscovered_fold": true,
+          "seconds": 0.37,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 10,
+          "seconds": 12.01
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 11,
+          "seconds": 10.54
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 12,
+          "seconds": 9.11
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 13,
+          "seconds": 7.67
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 8.39
+        },
+        {
+          "arm": "SCRATCH",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 15,
+          "seconds": 11.3
+        }
+      ],
+      "SHAM": [
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 0,
+          "seconds": 15.79
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 1,
+          "seconds": 11.46
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 2,
+          "seconds": 12.18
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1616,
+          "artifact_sha256": "21aa5fd0ce02e68d9b19b6fab55028983b71b578cc98e8f759ea0c4809adabf7",
+          "charges_to_solution": 1224117,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1224117,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(first + 1)",
+              "(acc - (0 + v))",
+              "(1 - acc)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 3,
+          "rediscovered_fold": true,
+          "seconds": 13.45,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 4,
+          "seconds": 12.51
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 5,
+          "seconds": 13.45
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 6,
+          "seconds": 14.34
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 7,
+          "seconds": 14.1
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1620,
+          "artifact_sha256": "660764644973cb67bf271c27fe866441a4b38fd696153eb3e14a4a9e153d6c8d",
+          "charges_to_solution": 1242067,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1242067,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(1 // last)",
+              "(acc + (v + 0))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 8,
+          "rediscovered_fold": true,
+          "seconds": 12.49,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1619,
+          "artifact_sha256": "261906fbc8ed1dc2dd163adc51edef488fa5cdb82825650ae697027351374d8a",
+          "charges_to_solution": 1354536,
+          "coordinate": "fold",
+          "disposition": "QUALIFIED",
+          "escrow_spent": 1354536,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "(0 // 1)",
+              "(v + pow(acc, 1))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": true,
+          "recipient": 9,
+          "rediscovered_fold": true,
+          "seconds": 12.53,
+          "tribunal": {
+            "counterexample_accuracy": 1.0,
+            "held_out_extrapolation": 1.0,
+            "metamorphic_pass": true,
+            "stress_length_200": 1.0
+          }
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 10,
+          "seconds": 16.5
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 11,
+          "seconds": 15.36
+        },
+        {
+          "arm": "SHAM",
+          "artifact_bytes": 1642,
+          "artifact_sha256": "5cae59642e66b570b3da18e10fbbb62c2954bb86d0b433d6290eaaf5c968151b",
+          "charges_to_solution": 1238482,
+          "coordinate": "fold",
+          "disposition": "FALSE POSITIVE: dev-exact but tribunal-rejected (extrap=0.780 ce=0.820 meta=False)",
+          "escrow_spent": 1238482,
+          "family": "sum_minus_first",
+          "program": {
+            "parts": [
+              "pow(first, last)",
+              "(acc + math.gcd(abs(v), abs(v)))",
+              "(acc - first)"
+            ],
+            "shape": "fold"
+          },
+          "qualified": false,
+          "recipient": 12,
+          "rediscovered_fold": true,
+          "seconds": 13.29,
+          "tribunal": {
+            "counterexample_accuracy": 0.82,
+            "held_out_extrapolation": 0.78,
+            "metamorphic_pass": false,
+            "stress_length_200": 0.62
+          }
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 13,
+          "seconds": 13.0
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 14,
+          "seconds": 12.53
+        },
+        {
+          "arm": "SHAM",
+          "charges_to_solution": null,
+          "disposition": "no dev-exact program within escrow",
+          "escrow_spent": 1500000,
+          "family": "sum_minus_first",
+          "qualified": false,
+          "recipient": 15,
+          "seconds": 14.41
+        }
+      ]
+    }
+  },
+  "dev_per_recipient": 4,
+  "escrow": 1500000,
+  "families": [
+    "gcd_times_first",
+    "prod_minus_first",
+    "sum_minus_first"
+  ],
+  "grammar_version": "g4-imperative-v1",
+  "organ_sha256": "5488abb9f6354f02eb210909e180b17db644f3e3a2675d70f3a140f2e6acf79a",
+  "per_family": {
+    "gcd_times_first": {
+      "ORGAN": {
+        "M1_max_charges": 639433,
+        "M1_median_charges": 609303,
+        "M1_min_charges": 2905,
+        "M2_qualified": "9/16",
+        "M3_median_escrow_spent": 403629.5,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1650.5,
+        "M7_distinct_hashes": "16/16",
+        "M8_rediscovered_fold": "16/16",
+        "false_positives": "7/16"
+      },
+      "POSITIVE": {
+        "arm": "POSITIVE",
+        "artifact_bytes": 1621,
+        "family": "gcd_times_first",
+        "qualified": true,
+        "tribunal": {
+          "counterexample_accuracy": 1.0,
+          "held_out_extrapolation": 1.0,
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0
+        }
+      },
+      "SCRATCH": {
+        "M1_max_charges": 84494,
+        "M1_median_charges": 3246,
+        "M1_min_charges": 2390,
+        "M2_qualified": "3/16",
+        "M3_median_escrow_spent": 31443.5,
+        "M4_median_tribunal": 0.6,
+        "M5_median_stress200": 0.62,
+        "M6_median_bytes": 1643.5,
+        "M7_distinct_hashes": "10/16",
+        "M8_rediscovered_fold": "5/16",
+        "false_positives": "7/16"
+      },
+      "SHAM": {
+        "M1_max_charges": 1272816,
+        "M1_median_charges": 1222569,
+        "M1_min_charges": 1220045,
+        "M2_qualified": "9/16",
+        "M3_median_escrow_spent": 1226088.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1640.5,
+        "M7_distinct_hashes": "14/16",
+        "M8_rediscovered_fold": "9/16",
+        "false_positives": "5/16"
+      }
+    },
+    "prod_minus_first": {
+      "ORGAN": {
+        "M1_max_charges": 953704,
+        "M1_median_charges": 115493.0,
+        "M1_min_charges": 10408,
+        "M2_qualified": "16/16",
+        "M3_median_escrow_spent": 115493.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1607.0,
+        "M7_distinct_hashes": "3/16",
+        "M8_rediscovered_fold": "16/16",
+        "false_positives": "0/16"
+      },
+      "POSITIVE": {
+        "arm": "POSITIVE",
+        "artifact_bytes": 1607,
+        "family": "prod_minus_first",
+        "qualified": true,
+        "tribunal": {
+          "counterexample_accuracy": 1.0,
+          "held_out_extrapolation": 1.0,
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0
+        }
+      },
+      "SCRATCH": {
+        "M1_max_charges": 110694,
+        "M1_median_charges": 37285,
+        "M1_min_charges": 15023,
+        "M2_qualified": "5/16",
+        "M3_median_escrow_spent": 1500000.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1645,
+        "M7_distinct_hashes": "5/16",
+        "M8_rediscovered_fold": "5/16",
+        "false_positives": "0/16"
+      },
+      "SHAM": {
+        "M1_max_charges": 1409098,
+        "M1_median_charges": 1342996.0,
+        "M1_min_charges": 1276894,
+        "M2_qualified": "2/16",
+        "M3_median_escrow_spent": 1500000.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1631.0,
+        "M7_distinct_hashes": "2/16",
+        "M8_rediscovered_fold": "2/16",
+        "false_positives": "0/16"
+      }
+    },
+    "sum_minus_first": {
+      "ORGAN": {
+        "M1_max_charges": 746600,
+        "M1_median_charges": 510704.0,
+        "M1_min_charges": 56764,
+        "M2_qualified": "16/16",
+        "M3_median_escrow_spent": 510704.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1627.0,
+        "M7_distinct_hashes": "4/16",
+        "M8_rediscovered_fold": "16/16",
+        "false_positives": "0/16"
+      },
+      "POSITIVE": {
+        "arm": "POSITIVE",
+        "artifact_bytes": 1604,
+        "family": "sum_minus_first",
+        "qualified": true,
+        "tribunal": {
+          "counterexample_accuracy": 1.0,
+          "held_out_extrapolation": 1.0,
+          "metamorphic_pass": true,
+          "stress_length_200": 1.0
+        }
+      },
+      "SCRATCH": {
+        "M1_max_charges": 244823,
+        "M1_median_charges": 85164,
+        "M1_min_charges": 17304,
+        "M2_qualified": "5/16",
+        "M3_median_escrow_spent": 1500000.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1629.0,
+        "M7_distinct_hashes": "6/16",
+        "M8_rediscovered_fold": "6/16",
+        "false_positives": "1/16"
+      },
+      "SHAM": {
+        "M1_max_charges": 1354536,
+        "M1_median_charges": 1242067,
+        "M1_min_charges": 1224117,
+        "M2_qualified": "3/16",
+        "M3_median_escrow_spent": 1500000.0,
+        "M4_median_tribunal": 1.0,
+        "M5_median_stress200": 1.0,
+        "M6_median_bytes": 1619.5,
+        "M7_distinct_hashes": "4/16",
+        "M8_rediscovered_fold": "4/16",
+        "false_positives": "1/16"
+      }
+    }
+  },
+  "recipients_per_arm": 16,
+  "space_sizes": {
+    "G4_BODY": 10842,
+    "G4_FINAL": 180,
+    "G4_INIT": 116,
+    "G4_expr_shape_total": 180,
+    "G4_fold_shape_total": 226380960,
+    "ORGAN_H1": 2,
+    "ORGAN_H2": 422,
+    "ORGAN_H3": 8,
+    "ORGAN_macro_total": 1215360
+  },
+  "total_seconds": 1047.1,
+  "written_utc": "2026-09-22T07:48:06Z"
+}

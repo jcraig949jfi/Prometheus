@@ -1,0 +1,209 @@
+{
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e05",
+ "attempt_id": "cw01-e05-a01",
+ "verified_against": "COMMITTED state extracted from HEAD via git archive; the working tree was not used",
+ "commit_sha": "6c1251223dd07bd7b581d6be4b79a5d97041c452",
+ "commit_short": "6c1251223",
+ "branch": "nestor/sidequest-graphworld-2026-09-14",
+ "verdict_contract_sha256": "c80b5bfd348f7b87418166061f39c1446bd45c6e74ff060f9c5927e24b2c5619",
+ "binding_specification": {
+  "budget_B": 3,
+  "statistic_name": "difference_in_differences_normalised_information_superadditivity",
+  "statistic_formula": "DiD = (nsa(BEST,conj) - nsa(BEST,disj)) - (nsa(WORST,conj) - nsa(WORST,disj))",
+  "normalisation": "nsa(S,law) = 100 * (mixture_info(S,law) - additive_prediction(S,law)) / additive_prediction(S,law)",
+  "null_construction": "repeated measurement of the same quantity across at least 8 independent seed blocks; pairwise relative differences form the null",
+  "effect_clearing_rule": "infometrics.effect_clears_null at the 5th/95th percentile of the measured null, in the pre-declared direction",
+  "set_selection_procedure": "exhaustive enumeration of all C(K,B) subsets; BEST = argmax mean score, WORST = argmin; no hand-picked sets",
+  "baseline_law_rule": "solo baselines measured under the SAME composition law as the mixture they are compared to",
+  "BEST": [
+   0,
+   2,
+   4
+  ],
+  "WORST": [
+   4,
+   5,
+   7
+  ],
+  "n_subsets": 56
+ },
+ "fixtures": [
+  {
+   "fixture": "F1",
+   "passed": true,
+   "detail": "DiD +17.37 pp (BEST law effect +30.13 vs WORST +12.76) via the frozen statistic"
+  },
+  {
+   "fixture": "F2",
+   "passed": true,
+   "detail": "WORST/conjunction nsa +0.000% -> clears_null=False (null [-0.00, +0.00]); not admissible as superadditive evidence"
+  },
+  {
+   "fixture": "F3",
+   "passed": true,
+   "detail": "BEST/disjunction raw nsa -22.63% (overlap, not composition); WORST/disjunction -12.99%; frozen DiD remains +15.62 pp and is the only verdict quantity"
+  },
+  {
+   "fixture": "F4",
+   "passed": true,
+   "detail": "guard refused the D038a pair (yes); intervention reaches baselines (empty 0.00->0.00, solos moved=True)"
+  },
+  {
+   "fixture": "F5",
+   "passed": true,
+   "detail": "dead genome (info=0.0, carried=0) refused; live genome (info=228.7) admitted"
+  },
+  {
+   "fixture": "F6",
+   "passed": true,
+   "detail": "effect +0.24 inside null [-6.64, +7.11] refused; +17.11 outside admitted"
+  },
+  {
+   "fixture": "F7",
+   "passed": true,
+   "detail": "job() refused on ['budget_B'] before evaluating: run_episode calls=0, emits=0, ordering_breach=False; unmutated contract still admits=True"
+  }
+ ],
+ "consistency_gate": {
+  "part_a": [
+   {
+    "id": "A1_driver_matches_committed",
+    "passed": true,
+    "detail": "driver c80b5bfd348f7b87 vs committed c80b5bfd348f7b87"
+   },
+   {
+    "id": "A2_hash_is_the_frozen_one",
+    "passed": true,
+    "detail": "contract identity c80b5bfd348f7b87"
+   },
+   {
+    "id": "A3_committed_self_verifies",
+    "passed": true,
+    "detail": "stored hash matches its own body"
+   },
+   {
+    "id": "A4_budget_B_agrees",
+    "passed": true,
+    "detail": "contract 3, WORLD arms {'treatment': 3, 'control_disjunctive_only': 3}, QUALIFY 3"
+   },
+   {
+    "id": "A5_recorded_sets_agree",
+    "passed": true,
+    "detail": "WORLD best/worst [0, 2, 4]/[4, 5, 7] vs QUALIFY [0, 2, 4]/[4, 5, 7]"
+   },
+   {
+    "id": "A6_calibration_constants",
+    "passed": true,
+    "detail": "7 recorded figures agree"
+   },
+   {
+    "id": "A7_budget_rule_canonical",
+    "passed": true,
+    "detail": "['mean_conjunctive_demand_size|declared_before_superadditivity'] -> identical"
+   },
+   {
+    "id": "A8_superadditivity_basis",
+    "passed": true,
+    "detail": "all artifacts define it on information"
+   },
+   {
+    "id": "A9_statistic_identity",
+    "passed": true,
+    "detail": "all four read did_normalised_superadditivity"
+   },
+   {
+    "id": "A10_null_blocks",
+    "passed": true,
+    "detail": "contract requires >=8 blocks; driver N_BLOCKS=8"
+   },
+   {
+    "id": "A11_set_selection",
+    "passed": true,
+    "detail": "all artifacts: exhaustive_enumeration"
+   },
+   {
+    "id": "A12_ledger_records_defects",
+    "passed": true,
+    "detail": "all 7 e05 defects present; 0 still marked OPEN []"
+   },
+   {
+    "id": "A13_world_budget_guard",
+    "passed": true,
+    "detail": "load_cfg refuses a WORLD whose max_components disagrees with budget_B"
+   }
+  ],
+  "part_b": [
+   {
+    "id": "B1_subset_count",
+    "passed": true,
+    "detail": "evaluated 56 admissible subsets (binding: 56)"
+   },
+   {
+    "id": "B2_best_reconstructs",
+    "passed": true,
+    "detail": "BEST recomputes as [0, 2, 4] (binding: [0, 2, 4]), score 1.8978"
+   },
+   {
+    "id": "B3_worst_reconstructs",
+    "passed": true,
+    "detail": "WORST recomputes as [4, 5, 7] (binding: [4, 5, 7]), score 1.0015"
+   },
+   {
+    "id": "B4_ordering_procedure_unchanged",
+    "passed": true,
+    "detail": "argmax/argmin over mean score: best 1.8978 >= median 1.3206 >= worst 1.0015"
+   }
+  ],
+  "gate": "PASS"
+ },
+ "findings": [
+  {
+   "id": "S1_contract_hash_from_commit",
+   "passed": true,
+   "detail": "recomputed c80b5bfd348f7b87 from committed bytes"
+  },
+  {
+   "id": "S2_stored_hash_matches_body",
+   "passed": true,
+   "detail": "stored c80b5bfd348f7b87"
+  },
+  {
+   "id": "S3_committed_gate",
+   "passed": true,
+   "detail": "consistency_e05.py rc=0"
+  },
+  {
+   "id": "S4_committed_fixtures",
+   "passed": true,
+   "detail": "fixtures_e05.py rc=0"
+  },
+  {
+   "id": "S5_gate_parts",
+   "passed": true,
+   "detail": "Part A True, Part B True"
+  },
+  {
+   "id": "S6_fixtures_all",
+   "passed": true,
+   "detail": "7/7 fixtures passed under committed code"
+  },
+  {
+   "id": "S7_reconstruction_binding",
+   "passed": true,
+   "detail": "committed code reconstructs 56 subsets, BEST [0, 2, 4], WORST [4, 5, 7]"
+  },
+  {
+   "id": "S8_driver_admits_execute",
+   "passed": true,
+   "detail": "bind_contract() succeeded and froze c80b5bfd348f7b87"
+  },
+  {
+   "id": "S9_subtree_clean_at_commit",
+   "passed": true,
+   "detail": "no uncommitted campaign changes"
+  }
+ ],
+ "execute_admissible": true,
+ "freeze_rule": "once the first organism is evaluated under this attempt_id, no metric, normalisation, control, threshold, set-selection rule, budget, null or verdict criterion may change; a defect voids the verdict and opens a new attempt_id"
+}

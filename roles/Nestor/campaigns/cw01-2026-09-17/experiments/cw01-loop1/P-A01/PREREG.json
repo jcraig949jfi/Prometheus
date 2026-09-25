@@ -1,0 +1,18 @@
+{
+ "perturbation_id": "P-A01",
+ "parent": "T-E08",
+ "claim_type": "break-inconclusive-confirmatory",
+ "delta": "representatives by intact score on disjoint selection seeds 30100..30115; minimum eligible count per TAX level from a disjoint pilot rate with a one-SE margin; production only if >= 6",
+ "unchanged": "w13, organism, 4 arms x 8 lineages, lambda 390.0, g_amp 5, G 200, held64 assay, stratified randomisation, overlap rule, non-competent excess rule",
+ "attacks": "D066: eligibility frozen against a marginal pilot; train8-selected representatives do not generalise",
+ "pilot": "4 CONTROL lineages, seed component pilotB",
+ "rule": "min_count = floor(16 * (p - sqrt(p(1-p)/4))); run iff >= 6",
+ "decision": {
+  "COMPLETE": "c_tax < p05 with overlap, counts, excess",
+  "NULL": "counts and overlap ok, c_tax not < p05",
+  "INCONCLUSIVE": "counts or overlap fail",
+  "UNREACHABLE_UNDER_RULE": "pilot lower bound < 6: no production run"
+ },
+ "written": "2026-09-18 11:11:56",
+ "prereg_sha256": "5b94bdb7920f0b2c63788521c63544e41921abd6a7195816228fa8886bea2bd0"
+}

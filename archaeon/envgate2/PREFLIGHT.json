@@ -1,0 +1,280 @@
+{
+ "schema": "archaeon.envgate2.preflight.v1",
+ "assay": "ENVGATE-02",
+ "digest": "9e3fb887a4aeaa84",
+ "attribution_tests": {
+  "PASS": true,
+  "summary": [
+   "11 passed, 1 skipped in 9.36s"
+  ]
+ },
+ "pairing": {
+  "PASS": true,
+  "sha": "9e9ec9ad21a3ff10eed52b60d252c727d42d4f4ddf0f187855e16c13276cdf45"
+ },
+ "transforms": {
+  "PASS": true,
+  "violations": {},
+  "U_chi2_df255": 269.0,
+  "restored_rate_z": {
+   "R128_128": -0.52,
+   "RRIGHT_128": -0.52,
+   "RRIGHT_129": -0.2,
+   "RRIGHT_130": 0.26,
+   "RRIGHT_131": -0.06,
+   "RWEAK_125": 0.3,
+   "RWEAK_126": 0.44,
+   "RWEAK_127": -1.47,
+   "RWEAK_128": -0.52
+  },
+  "n": 2560000
+ },
+ "conformance": {
+  "PASS": true,
+  "core_equals_envgate_engine": true,
+  "taint_vm_mismatches_of_10000": 0
+ },
+ "rng_isolation": {
+  "PASS": true,
+  "world_draws": 0,
+  "mutation_draws": 0
+ },
+ "controls": {
+  "PASS": true,
+  "rule": "exact chamber copies iff gate in alphabet; inserted controls never establish",
+  "controls": {
+   "gate_128_08497c88": {
+    "U": {
+     "gate_available": true,
+     "chamber_exact_copies": 9,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RRIGHT": {
+     "gate_available": true,
+     "chamber_exact_copies": 13,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RWEAK": {
+     "gate_available": true,
+     "chamber_exact_copies": 11,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "R128": {
+     "gate_available": true,
+     "chamber_exact_copies": 12,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "BAND0": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    }
+   },
+   "gate_128_0f82550f": {
+    "U": {
+     "gate_available": true,
+     "chamber_exact_copies": 8,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RRIGHT": {
+     "gate_available": true,
+     "chamber_exact_copies": 10,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RWEAK": {
+     "gate_available": true,
+     "chamber_exact_copies": 10,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "R128": {
+     "gate_available": true,
+     "chamber_exact_copies": 9,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "BAND0": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    }
+   },
+   "gate_127_2a884ce1": {
+    "U": {
+     "gate_available": true,
+     "chamber_exact_copies": 20,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RRIGHT": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RWEAK": {
+     "gate_available": true,
+     "chamber_exact_copies": 20,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "R128": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "BAND0": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    }
+   },
+   "gate_129_32550f1d": {
+    "U": {
+     "gate_available": true,
+     "chamber_exact_copies": 25,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RRIGHT": {
+     "gate_available": true,
+     "chamber_exact_copies": 25,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RWEAK": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "R128": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "BAND0": {
+     "gate_available": false,
+     "chamber_exact_copies": 0,
+     "genetic_established": 0,
+     "PASS": true
+    }
+   },
+   "gate_243_052a8173": {
+    "U": {
+     "gate_available": true,
+     "chamber_exact_copies": 9,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RRIGHT": {
+     "gate_available": true,
+     "chamber_exact_copies": 10,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "RWEAK": {
+     "gate_available": true,
+     "chamber_exact_copies": 11,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "R128": {
+     "gate_available": true,
+     "chamber_exact_copies": 10,
+     "genetic_established": 0,
+     "PASS": true
+    },
+    "BAND0": {
+     "gate_available": true,
+     "chamber_exact_copies": 9,
+     "genetic_established": 0,
+     "PASS": true
+    }
+   }
+  }
+ },
+ "design_support": {
+  "PASS": true,
+  "design": {
+   "rright": [
+    128,
+    129,
+    130,
+    131
+   ],
+   "rweak": [
+    125,
+    126,
+    127,
+    128
+   ],
+   "width": 4,
+   "mass_rright": 240,
+   "mass_rweak": 146,
+   "mass_ratio": 0.6083,
+   "threshold": 40.5,
+   "identifiable": true,
+   "n_copiers": 81
+  },
+  "predictions": {
+   "per_arm": {
+    "U": {
+     "exact_copy_access_frac_census_exact_copiers": 1.0,
+     "viable_child_inputs_per_128_copier": 4.099,
+     "viability_mass": 332,
+     "branching_R0": 0.961
+    },
+    "RRIGHT": {
+     "exact_copy_access_frac_census_exact_copiers": 0.9271,
+     "viable_child_inputs_per_128_copier": 2.963,
+     "viability_mass": 240,
+     "branching_R0": 0.694
+    },
+    "RWEAK": {
+     "exact_copy_access_frac_census_exact_copiers": 0.9896,
+     "viable_child_inputs_per_128_copier": 1.802,
+     "viability_mass": 146,
+     "branching_R0": 0.422
+    },
+    "R128": {
+     "exact_copy_access_frac_census_exact_copiers": 0.9167,
+     "viable_child_inputs_per_128_copier": 1.0,
+     "viability_mass": 81,
+     "branching_R0": 0.234
+    },
+    "BAND0": {
+     "exact_copy_access_frac_census_exact_copiers": 0.0729,
+     "viable_child_inputs_per_128_copier": 0.0,
+     "viability_mass": 0,
+     "branching_R0": 0.0
+    }
+   },
+   "predicted_ordering": [
+    "U",
+    "RRIGHT",
+    "RWEAK",
+    "R128",
+    "BAND0"
+   ],
+   "ties": [],
+   "note": "ordinal prediction only; not fitted to ENVGATE-02"
+  },
+  "arrivals_per_arm_per_block": 1048576,
+  "expected_latent_exact_copiers_per_block": 10.07,
+  "blocks": 24,
+  "contrast_arms_differ_only_in_restored_set": true
+ },
+ "verdict": "PASS"
+}

@@ -338,4 +338,7 @@ ALL_NAMES = ("RANDOM_C1", "ENUMERATE_C1", "ENUMERATE_VM_C1", "QUIT_C1", "TABLE_M
 def make_baseline(name: str):
     if name == "ENUMERATE_VM_C1":
         return VMPlayer(vm.enumerate_program(), name="ENUMERATE_VM_C1")
+    if name.startswith("P_"):
+        from . import parts_c2
+        return parts_c2.player(name)
     return BASELINES[name]()

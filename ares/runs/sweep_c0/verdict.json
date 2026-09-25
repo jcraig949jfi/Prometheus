@@ -1,0 +1,658 @@
+{
+ "W1": {
+  "label": "MATERIAL",
+  "i": 3,
+  "ii": 3,
+  "iii": 3,
+  "absent_above": 3,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 17.11062502861023,
+    "absent": 21.78125,
+    "shuffled": 12.613128140568733,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "gap present 0.33 shuffled -0.01",
+    "load_bearing": 1,
+    "no_state": 14.129375040531158,
+    "struct": {
+     "id": 13451,
+     "n_hidden": 8,
+     "n_edges": 35,
+     "n_keep": 1,
+     "mean_keep": 0.10648708993738348,
+     "n_plastic": 2,
+     "n_cyclic": 3,
+     "self_loops": 1,
+     "two_cycles": 1,
+     "n_gate_like": 2
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 16.3700001090765,
+    "absent": 22.125,
+    "shuffled": 12.766250118613243,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "gap present 0.33 shuffled 0.01",
+    "load_bearing": 1,
+    "no_state": 11.405000180006027,
+    "struct": {
+     "id": 13415,
+     "n_hidden": 8,
+     "n_edges": 25,
+     "n_keep": 1,
+     "mean_keep": 0.05760360305959528,
+     "n_plastic": 4,
+     "n_cyclic": 5,
+     "self_loops": 2,
+     "two_cycles": -1,
+     "n_gate_like": 3
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 15.148124977946281,
+    "absent": 21.75,
+    "shuffled": 12.685034468770027,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "gap present 0.27 shuffled -0.01",
+    "load_bearing": 1,
+    "no_state": 14.587500125169754,
+    "struct": {
+     "id": 13244,
+     "n_hidden": 8,
+     "n_edges": 31,
+     "n_keep": 2,
+     "mean_keep": 0.12846647609363904,
+     "n_plastic": 3,
+     "n_cyclic": 6,
+     "self_loops": 5,
+     "two_cycles": -2,
+     "n_gate_like": 4
+    }
+   }
+  ]
+ },
+ "W2": {
+  "label": "REFLEX (fitness+behaviour without a load-bearing node)",
+  "i": 3,
+  "ii": 3,
+  "iii": 1,
+  "absent_above": 0,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 173.90625,
+    "absent": 60.0,
+    "shuffled": 75.34375,
+    "i": true,
+    "ii": true,
+    "iii": false,
+    "detail": "gap present 0.79 shuffled 0.27",
+    "load_bearing": 0,
+    "no_state": 172.90625,
+    "struct": {
+     "id": 13356,
+     "n_hidden": 8,
+     "n_edges": 34,
+     "n_keep": 3,
+     "mean_keep": 0.2009228359569203,
+     "n_plastic": 6,
+     "n_cyclic": 7,
+     "self_loops": 2,
+     "two_cycles": 0,
+     "n_gate_like": 4
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 174.28125,
+    "absent": 60.0,
+    "shuffled": 60.0,
+    "i": true,
+    "ii": true,
+    "iii": false,
+    "detail": "gap present 0.79 shuffled 0.00",
+    "load_bearing": 0,
+    "no_state": 174.28125,
+    "struct": {
+     "id": 13286,
+     "n_hidden": 8,
+     "n_edges": 33,
+     "n_keep": 0,
+     "mean_keep": 0.07653463970531117,
+     "n_plastic": 6,
+     "n_cyclic": 7,
+     "self_loops": 2,
+     "two_cycles": 1,
+     "n_gate_like": 2
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 173.09375,
+    "absent": 60.0,
+    "shuffled": 80.34375,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "gap present 0.80 shuffled 0.23",
+    "load_bearing": 2,
+    "no_state": 167.28125,
+    "struct": {
+     "id": 13310,
+     "n_hidden": 6,
+     "n_edges": 21,
+     "n_keep": 1,
+     "mean_keep": 0.1183493004904853,
+     "n_plastic": 3,
+     "n_cyclic": 4,
+     "self_loops": 2,
+     "two_cycles": 0,
+     "n_gate_like": 2
+    }
+   }
+  ]
+ },
+ "W3": {
+  "label": "FITNESS WITHOUT THE BEHAVIOUR (ii fails)",
+  "i": 3,
+  "ii": 1,
+  "iii": 1,
+  "absent_above": 3,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 30.21875,
+    "absent": 60.0,
+    "shuffled": 2.9375,
+    "i": true,
+    "ii": false,
+    "iii": false,
+    "detail": "pre 1.00 post5 0.00 post 0.00",
+    "load_bearing": 0,
+    "no_state": 30.21875,
+    "struct": {
+     "id": 5940,
+     "n_hidden": 2,
+     "n_edges": 12,
+     "n_keep": 0,
+     "mean_keep": 0.05835269689559937,
+     "n_plastic": 2,
+     "n_cyclic": 0,
+     "self_loops": 0,
+     "two_cycles": 0,
+     "n_gate_like": 4
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 30.25,
+    "absent": 60.0,
+    "shuffled": 2.25,
+    "i": true,
+    "ii": false,
+    "iii": false,
+    "detail": "pre 1.00 post5 0.00 post 0.00",
+    "load_bearing": 0,
+    "no_state": 28.3125,
+    "struct": {
+     "id": 13245,
+     "n_hidden": 8,
+     "n_edges": 25,
+     "n_keep": 0,
+     "mean_keep": 0.042346824299205436,
+     "n_plastic": 3,
+     "n_cyclic": 5,
+     "self_loops": 1,
+     "two_cycles": -1,
+     "n_gate_like": 3
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 53.8125,
+    "absent": 60.0,
+    "shuffled": 3.375,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "pre 0.97 post5 0.64 post 0.99",
+    "load_bearing": 1,
+    "no_state": 45.9375,
+    "struct": {
+     "id": 13429,
+     "n_hidden": 7,
+     "n_edges": 27,
+     "n_keep": 2,
+     "mean_keep": 0.22325356006622316,
+     "n_plastic": 7,
+     "n_cyclic": 2,
+     "self_loops": 0,
+     "two_cycles": 1,
+     "n_gate_like": 3
+    }
+   }
+  ]
+ },
+ "W4": {
+  "label": "MATERIAL",
+  "i": 3,
+  "ii": 3,
+  "iii": 2,
+  "absent_above": 3,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 40.0,
+    "absent": 40.0,
+    "shuffled": 0.75,
+    "i": true,
+    "ii": true,
+    "iii": false,
+    "detail": "late present 1.00 (r0 1.00 r1 1.00) shuffled 0.52",
+    "load_bearing": 0,
+    "no_state": 2.25,
+    "struct": {
+     "id": 4384,
+     "n_hidden": 2,
+     "n_edges": 10,
+     "n_keep": 0,
+     "mean_keep": 0.0008931815624237061,
+     "n_plastic": 2,
+     "n_cyclic": 2,
+     "self_loops": 2,
+     "two_cycles": -1,
+     "n_gate_like": 0
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 40.0,
+    "absent": 40.0,
+    "shuffled": 2.0,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "late present 1.00 (r0 1.00 r1 1.00) shuffled 0.53",
+    "load_bearing": 1,
+    "no_state": 3.25,
+    "struct": {
+     "id": 2747,
+     "n_hidden": 7,
+     "n_edges": 27,
+     "n_keep": 0,
+     "mean_keep": 0.05691091418266296,
+     "n_plastic": 3,
+     "n_cyclic": 4,
+     "self_loops": 4,
+     "two_cycles": -2,
+     "n_gate_like": 0
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 40.0,
+    "absent": 40.0,
+    "shuffled": 2.9375,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "late present 1.00 (r0 1.00 r1 1.00) shuffled 0.55",
+    "load_bearing": 2,
+    "no_state": 2.5625,
+    "struct": {
+     "id": 1720,
+     "n_hidden": 5,
+     "n_edges": 12,
+     "n_keep": 0,
+     "mean_keep": 0.0,
+     "n_plastic": 0,
+     "n_cyclic": 3,
+     "self_loops": 0,
+     "two_cycles": 0,
+     "n_gate_like": 5
+    }
+   }
+  ]
+ },
+ "W5": {
+  "label": "FITNESS WITHOUT THE BEHAVIOUR (ii fails)",
+  "i": 3,
+  "ii": 1,
+  "iii": 2,
+  "absent_above": 3,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 50.0,
+    "absent": 50.0,
+    "shuffled": 12.5,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "dec_acc present 1.00 (pos 1.00 neg 1.00) shuffled 0.62",
+    "load_bearing": 7,
+    "no_state": 6.25,
+    "struct": {
+     "id": 8762,
+     "n_hidden": 7,
+     "n_edges": 27,
+     "n_keep": 0,
+     "mean_keep": 0.028515154123306276,
+     "n_plastic": 2,
+     "n_cyclic": 2,
+     "self_loops": 0,
+     "two_cycles": 1,
+     "n_gate_like": 2
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 50.0,
+    "absent": 50.0,
+    "shuffled": 34.375,
+    "i": true,
+    "ii": false,
+    "iii": false,
+    "detail": "dec_acc present 1.00 (pos 1.00 neg 1.00) shuffled 0.84",
+    "load_bearing": 0,
+    "no_state": 0.0,
+    "struct": {
+     "id": 12633,
+     "n_hidden": 8,
+     "n_edges": 27,
+     "n_keep": 1,
+     "mean_keep": 0.06380335309288719,
+     "n_plastic": 4,
+     "n_cyclic": 9,
+     "self_loops": 2,
+     "two_cycles": 1,
+     "n_gate_like": 2
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 15.625,
+    "absent": 50.0,
+    "shuffled": 25.0,
+    "i": true,
+    "ii": false,
+    "iii": true,
+    "detail": "dec_acc present 0.66 (pos 0.50 neg 0.81) shuffled 0.75",
+    "load_bearing": 4,
+    "no_state": 0.0,
+    "struct": {
+     "id": 13243,
+     "n_hidden": 7,
+     "n_edges": 35,
+     "n_keep": 4,
+     "mean_keep": 0.2579092264175415,
+     "n_plastic": 5,
+     "n_cyclic": 8,
+     "self_loops": 4,
+     "two_cycles": 0,
+     "n_gate_like": 1
+    }
+   }
+  ]
+ },
+ "W7": {
+  "label": "REFLEX (fitness+behaviour without a load-bearing node)",
+  "i": 2,
+  "ii": 2,
+  "iii": 1,
+  "absent_above": 3,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 60.0,
+    "absent": 78.0,
+    "shuffled": 48.375,
+    "i": true,
+    "ii": true,
+    "iii": false,
+    "detail": "A 1.20 B 0.80 (shuffled A 0.63 B 1.00)",
+    "load_bearing": 0,
+    "no_state": 49.5,
+    "struct": {
+     "id": 12720,
+     "n_hidden": 5,
+     "n_edges": 21,
+     "n_keep": 0,
+     "mean_keep": 0.01412320975214243,
+     "n_plastic": 0,
+     "n_cyclic": 5,
+     "self_loops": 4,
+     "two_cycles": 1,
+     "n_gate_like": 2
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 52.75,
+    "absent": 90.75,
+    "shuffled": 48.375,
+    "i": false,
+    "ii": false,
+    "iii": false,
+    "detail": "A 0.76 B 1.00 (shuffled A 0.63 B 1.00)",
+    "load_bearing": 0,
+    "no_state": 52.0,
+    "struct": {
+     "id": 13133,
+     "n_hidden": 5,
+     "n_edges": 23,
+     "n_keep": 0,
+     "mean_keep": 0.022336959838867188,
+     "n_plastic": 4,
+     "n_cyclic": 4,
+     "self_loops": 2,
+     "two_cycles": -1,
+     "n_gate_like": 3
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 64.75,
+    "absent": 100.0,
+    "shuffled": 48.375,
+    "i": true,
+    "ii": true,
+    "iii": true,
+    "detail": "A 1.18 B 0.98 (shuffled A 0.63 B 1.00)",
+    "load_bearing": 1,
+    "no_state": 54.25,
+    "struct": {
+     "id": 10469,
+     "n_hidden": 8,
+     "n_edges": 23,
+     "n_keep": 1,
+     "mean_keep": 0.08411033587022261,
+     "n_plastic": 4,
+     "n_cyclic": 7,
+     "self_loops": 1,
+     "two_cycles": -1,
+     "n_gate_like": 8
+    }
+   }
+  ]
+ },
+ "W11": {
+  "label": "DID NOTHING",
+  "i": 1,
+  "ii": 0,
+  "iii": 3,
+  "absent_above": 3,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 19.278124997625127,
+    "absent": 58.0,
+    "shuffled": 15.0,
+    "i": true,
+    "ii": false,
+    "iii": true,
+    "detail": "commit step 1.59 acc 0.69 (shuffled step 0.00 acc 0.62)",
+    "load_bearing": 5,
+    "no_state": 3.3374999994412065,
+    "struct": {
+     "id": 13121,
+     "n_hidden": 4,
+     "n_edges": 24,
+     "n_keep": 2,
+     "mean_keep": 0.21582158974238805,
+     "n_plastic": 5,
+     "n_cyclic": 3,
+     "self_loops": 2,
+     "two_cycles": 0,
+     "n_gate_like": 1
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 7.5,
+    "absent": 58.25,
+    "shuffled": 18.75,
+    "i": false,
+    "ii": false,
+    "iii": true,
+    "detail": "commit step 0.00 acc 0.56 (shuffled step 0.00 acc 0.66)",
+    "load_bearing": 2,
+    "no_state": 0.0,
+    "struct": {
+     "id": 13349,
+     "n_hidden": 5,
+     "n_edges": 20,
+     "n_keep": 2,
+     "mean_keep": 0.22336755692958832,
+     "n_plastic": 3,
+     "n_cyclic": 5,
+     "self_loops": 2,
+     "two_cycles": 1,
+     "n_gate_like": 4
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 7.5,
+    "absent": 58.0,
+    "shuffled": 15.0,
+    "i": false,
+    "ii": false,
+    "iii": true,
+    "detail": "commit step 0.00 acc 0.56 (shuffled step 0.00 acc 0.62)",
+    "load_bearing": 1,
+    "no_state": 7.5,
+    "struct": {
+     "id": 13348,
+     "n_hidden": 8,
+     "n_edges": 27,
+     "n_keep": 1,
+     "mean_keep": 0.06366477771238847,
+     "n_plastic": 3,
+     "n_cyclic": 5,
+     "self_loops": 2,
+     "two_cycles": -1,
+     "n_gate_like": 5
+    }
+   }
+  ]
+ },
+ "W12": {
+  "label": "MERELY HARDER",
+  "i": 0,
+  "ii": 2,
+  "iii": 2,
+  "absent_above": 0,
+  "eligible": 3,
+  "rows": [
+   {
+    "seed": 1,
+    "heldout": 29.5625,
+    "absent": 80.0,
+    "shuffled": 23.8125,
+    "i": false,
+    "ii": true,
+    "iii": true,
+    "detail": "low-high present 1.00 shuffled -0.01 bins [1.0, 0.47, 0.35, 0.38, 0.0]",
+    "load_bearing": 4,
+    "no_state": 12.84375,
+    "struct": {
+     "id": 13422,
+     "n_hidden": 6,
+     "n_edges": 24,
+     "n_keep": 3,
+     "mean_keep": 0.18001341819763184,
+     "n_plastic": 8,
+     "n_cyclic": 1,
+     "self_loops": 1,
+     "two_cycles": -1,
+     "n_gate_like": 2
+    }
+   },
+   {
+    "seed": 2,
+    "heldout": 29.90625,
+    "absent": 80.0,
+    "shuffled": 26.375,
+    "i": false,
+    "ii": false,
+    "iii": true,
+    "detail": "low-high present 0.24 shuffled -0.66 bins [0.24, 0.0, 0.0, 0.0, None]",
+    "load_bearing": 2,
+    "no_state": 20.3125,
+    "struct": {
+     "id": 13376,
+     "n_hidden": 8,
+     "n_edges": 26,
+     "n_keep": 0,
+     "mean_keep": 0.08245823600075462,
+     "n_plastic": 3,
+     "n_cyclic": 4,
+     "self_loops": 4,
+     "two_cycles": -2,
+     "n_gate_like": 6
+    }
+   },
+   {
+    "seed": 3,
+    "heldout": 27.9375,
+    "absent": 80.0,
+    "shuffled": 22.96875,
+    "i": false,
+    "ii": true,
+    "iii": false,
+    "detail": "low-high present 1.00 shuffled -0.02 bins [1.0, 0.5, 0.0, 0.0, 0.0]",
+    "load_bearing": 0,
+    "no_state": 27.9375,
+    "struct": {
+     "id": 13375,
+     "n_hidden": 8,
+     "n_edges": 28,
+     "n_keep": 1,
+     "mean_keep": 0.0578330863605846,
+     "n_plastic": 8,
+     "n_cyclic": 2,
+     "self_loops": 0,
+     "two_cycles": 1,
+     "n_gate_like": 1
+    }
+   }
+  ]
+ }
+}

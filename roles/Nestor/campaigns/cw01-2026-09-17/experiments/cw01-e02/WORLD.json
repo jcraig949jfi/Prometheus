@@ -1,0 +1,281 @@
+{
+ "_doc": "Declarative world spec for cw01-e02 (ancestral efficiency ratchet). Written during PREFLIGHT, before implementation. The ratchet substrate is PURELY ECONOMIC: T2 is cheaper on a normalised payload, T3 is cheaper on a factored one. No rule rewards the ordering T1->T2->T3; if a lineage finds it, that is a finding.",
+ "campaign_id": "cw01-2026-09-17",
+ "experiment_id": "cw01-e02",
+ "attempt_id": "cw01-e02-a01",
+ "world_family": "transformation-economics-v1",
+ "payload": {
+  "_note": "Items arrive as structured payloads. size/dispersion/structure are physical properties that transformations change and prices read. Nothing is named 'feature' or 'model'.",
+  "size_distribution": {
+   "kind": "lognormal_discrete",
+   "median": 60,
+   "sigma": 0.8,
+   "clip": [
+    8,
+    400
+   ]
+  },
+  "dispersion_init": {
+   "kind": "uniform",
+   "lo": 0.55,
+   "hi": 1.0
+  },
+  "structure_init": {
+   "kind": "uniform",
+   "lo": 0.45,
+   "hi": 0.95
+  },
+  "recurrence_rate": 0.3,
+  "recurrence_gap_distribution": {
+   "kind": "geometric_discrete",
+   "mean_steps": 12,
+   "clip": [
+    2,
+    50
+   ]
+  }
+ },
+ "transformations": {
+  "_critical": "The ordering discount is the ratchet substrate and MUST be verified numerically by Q2. If T2 is not actually cheaper after T1, there is nothing for a ratchet to stand on.",
+  "T1_normalise": {
+   "cost": 2.0,
+   "effect": "dispersion *= 0.20",
+   "cheaper_after": null
+  },
+  "T2_factor": {
+   "cost_base": 4.0,
+   "cost_scales_with": "dispersion",
+   "cost_formula": "cost_base * (1.0 + 2.0 * dispersion)",
+   "effect": "structure *= 0.25",
+   "cheaper_after": "T1_normalise"
+  },
+  "T3_reduce": {
+   "cost_base": 0.05,
+   "cost_scales_with": "size and residual structure",
+   "cost_formula": "cost_base * size * (1.0 + 1.5 * structure)",
+   "effect": "emits output; info = log2(1+size) * (1.0 - structure)",
+   "cheaper_after": "T2_factor"
+  },
+  "T4_bind": {
+   "cost_write_per_cell": 1.0,
+   "cost_read_per_cell": 0.5,
+   "cost_hold_per_cell_per_step": 0.1,
+   "cells": 64,
+   "_note": "reuses e01's verified occupancy economics; retention is NOT the subject here"
+  }
+ },
+ "genome": {
+  "_note": "Small real-valued policy vector, as in e01. Honest limitation: not a rich program.",
+  "genes": {
+   "p_norm": [
+    0.0,
+    1.0
+   ],
+   "p_factor": [
+    0.0,
+    1.0
+   ],
+   "factor_threshold": [
+    0.0,
+    1.0
+   ],
+   "p_bind": [
+    0.0,
+    1.0
+   ],
+   "cells_frac": [
+    0.015,
+    0.125
+   ],
+   "persist_steps": [
+    1.0,
+    50.0
+   ],
+   "reduce_eagerness": [
+    0.0,
+    1.0
+   ],
+   "neutral_a": [
+    0.0,
+    1.0
+   ],
+   "neutral_b": [
+    0.0,
+    1.0
+   ]
+  },
+  "_neutral_genes": "neutral_a and neutral_b have NO phenotype by construction. They are the cost-matched sham for K1: reverting them must cost ~0. e01 (CW01-D011) had a gene under selection with no phenotype BY ACCIDENT; here two are declared deliberately and must be verified inert by Q6."
+ },
+ "pressure": {
+  "step_compute_budget": 100.0,
+  "steps_per_episode": 120,
+  "selection": "useful_information_transformed / total_resource_cost, ancestor-relative (II)",
+  "_forbidden": "raw fitness must never be used as the progress measure"
+ },
+ "population": {
+  "organisms": 64,
+  "generations_minimal_form": 80,
+  "generations_full": 300,
+  "elite_fraction": 0.25,
+  "mutation_sigma": 0.12
+ },
+ "gain_detection": {
+  "_critical": "Thresholds are fixed HERE, before running. A 'gain' fitted to a wiggle in the curve manufactures ratchets from noise (threat 2).",
+  "effect_size_min_pct": 12.3,
+  "persistence_generations": 5,
+  "definition": "a generation g is a GAIN if lineage mean at g exceeds the trailing baseline by >= effect_size_min_pct AND the elevated level persists for >= persistence_generations",
+  "null_calibration_required": true,
+  "min_sd_separation": 1.3,
+  "ordering_bar_pct": 20.0,
+  "baseline_window": 5,
+  "_calibration": {
+   "why": "The original 2.0% threshold sat far below the noise floor: the no-selection null has a lineage mean sd of 6.6-7.5% RELATIVE. A percent-lift criterion alone cannot separate a step from sampling variance at that scale (CW01-D022).",
+   "method": "3 independent no-selection nulls, 80 generations x 64 organisms each, 210 pooled candidate windows. Operating point set at the null's 99th percentile -- CALIBRATED from measurement, not tuned until the null went quiet.",
+   "null_distribution": {
+    "relative_sd_pct": [
+     6.6,
+     7.2,
+     7.5
+    ],
+    "lift_pct": {
+     "p50": 0.41,
+     "p95": 8.69,
+     "p99": 12.28,
+     "max": 14.07
+    },
+    "sd_separation": {
+     "p50": 0.07,
+     "p95": 1.07,
+     "p99": 1.29,
+     "max": 1.58
+    }
+   },
+   "verification_both_directions": {
+    "planted_0pct": "0 gains",
+    "planted_1pct": "0 gains",
+    "planted_5pct": "0 gains",
+    "planted_20pct": "found at gen 40",
+    "planted_40pct": "found at gen 39",
+    "held_out_nulls": "0 gains on 2 independent nulls"
+   },
+   "RESOLUTION_LIMIT": "A 10% planted step produced one gain at gen 65 while the true step was at gen 40. Near the floor, localization is unreliable. Since ratchet condition 1 is TEMPORAL ORDERING, ordering claims require gains above ordering_bar_pct (20%), where localization was verified exact. A gain between 12.3% and 20% may be COUNTED but may NOT carry an ordering claim.",
+   "consequence": "Ratchets smaller than ~12.3% are undetectable by this instrument. That is a stated limit; if e02 returns NULL it must be read as 'no ratchet above the detection floor', never as 'no ratchet'."
+  }
+ },
+ "interventions_post_hoc": {
+  "K1_revert_A": {
+   "effect": "restore the earlier gain's genes to pre-A ancestral values",
+   "sham": "revert an equal number of NEUTRAL genes (neutral_a/neutral_b)",
+   "in_minimal_form": true,
+   "_test": "ratchet requires loss(revert A from A+B) > gain(A alone, as measured when it arrived)"
+  },
+  "K2_transplant_B": {
+   "effect": "install the later gain's genes into the PRE-A ancestor",
+   "sham": "install them into the post-A background (expected ~neutral)",
+   "in_minimal_form": false,
+   "_test": "B must be worth more on the foundation than without it"
+  },
+  "K3_ancestor_restoration": {
+   "effect": "run the original ancestor in the descendant's world",
+   "in_minimal_form": false
+  },
+  "K4_price_shift": {
+   "effect": "re-run evolved lineages under altered transformation prices",
+   "in_minimal_form": false
+  },
+  "K5_harder_workload": {
+   "effect": "increase payload size distribution",
+   "in_minimal_form": false
+  },
+  "K6_frozen_transfer": {
+   "effect": "unseen world frozen at evaluation time",
+   "in_minimal_form": false
+  }
+ },
+ "measurements": {
+  "primary": "delta(useful_information_transformed / resource_cost) vs ancestor, matched world+budget",
+  "per_organism": [
+   "compute_used",
+   "t1_applied",
+   "t2_applied",
+   "t3_applied",
+   "binds",
+   "reads",
+   "cell_steps_held",
+   "world_interactions",
+   "transformations_total",
+   "latency_to_completion",
+   "info",
+   "cost",
+   "score"
+  ],
+  "lineage": [
+   "gain_generations",
+   "gain_sizes",
+   "gene_means_per_generation"
+  ],
+  "ratchet_statistic": "loss(K1 revert A) - gain(A when it arrived); superadditive if > 0"
+ },
+ "qualify_predicates": {
+  "_rule": "ALL must pass before science budget is spent. Q9-Q12 are STANDING GATES promoted from e01's failures (PACKAGE.md compression items).",
+  "Q1_prices_positive": "every transformation cost > 0 and occupancy price > 0",
+  "Q2_ordering_discount_is_real": "measured numerically: cost(T2 | after T1) < cost(T2 | no T1), and cost(T3 | after T2) < cost(T3 | no T2). Without this there is no ratchet substrate.",
+  "Q3_shams_are_cost_matched": "K1's sham reverts an equal number of genes and costs the same; reverting genes must cost NO resources (threat 3)",
+  "Q4_seeds_reconstructible": "lib/seeds.py, already verified cross-process in e01; re-asserted for this attempt_id",
+  "Q5_durable_without_redis": "at least one row written and fully interpretable with redis import blocked",
+  "Q6_neutral_genes_are_inert": "neutral_a/neutral_b have NO measurable effect: perturbing them changes no metric. They are the K1 sham, so if they are not inert the sham is not a sham.",
+  "Q7_pressure_actually_binds": "observed payload sizes and step budget make T3 non-trivial; items cannot all be completed free",
+  "Q8_not_a_free_lunch": "REACHABILITY PROBE: a hand-built best-case orderer (T1->T2->T3) must beat a hand-built worst-case (random order / no ordering), AND a badly-configured orderer must LOSE. The effect must be able to go both ways.",
+  "Q9_mechanism_fires": "STANDING GATE: in the hand-built best case, t1_applied/t2_applied are non-zero and the ordering actually occurs. e01 ran a whole experiment with the mechanism at zero (CW01-D009).",
+  "Q10_matched_arms": "STANDING GATE: with the mechanism disabled, matched arms must produce BIT-IDENTICAL info from the same stream seed. e01's arms were silently unmatched and produced a fake +40% (CW01-D010).",
+  "Q11_gain_detector_calibrated_on_null": "STANDING GATE, two-sided: on >=2 held-out no-selection nulls the detector must report ZERO gains, AND synthetic planted steps at/above the threshold must be FOUND AT THE RIGHT GENERATION. A null-only test would pass a detector that is simply blind.",
+  "Q12_disposition_rule_is_executable": "STANDING GATE: the disposition must be computed by code derived from PREREGISTRATION.md INCLUDING the replication clause. e01's driver awarded COMPLETE on a single seed (CW01-D016)."
+ },
+ "backend_counterfactual": {
+  "requirement_IX": "organism-visible physics of T4 reproducible on a second backend",
+  "primary_backend": "in-process arrays/dicts",
+  "secondary_backend": "redis hashes, namespace pm:cw01:e02:",
+  "equivalence_test": "same seeds + same arm on both backends must produce identical per-organism metric vectors",
+  "cap_rule": "if not exercised within timebox, disposition is capped at INCONCLUSIVE and may NOT be COMPLETE"
+ },
+ "arms": {
+  "_critical": "Arms differ ONLY in which affordances are enabled. The world stream is drawn from a stream_seed that never sees the arm (CW01-D010: arm-dependent seeding produced a fake +40% advantage in e01). Q10 asserts bit-identical info when the mechanism is disabled.",
+  "treatment": {
+   "T1_enabled": true,
+   "T2_enabled": true,
+   "T4_enabled": true
+  },
+  "control_no_T1": {
+   "T1_enabled": false,
+   "T2_enabled": true,
+   "T4_enabled": true,
+   "_tests": "no normalise -> dispersion stays high -> T2 stays expensive and the factor_threshold gate rarely opens. This is the foundation ablation."
+  },
+  "control_no_T2": {
+   "T1_enabled": true,
+   "T2_enabled": false,
+   "T4_enabled": true,
+   "_tests": "no factoring -> structure never falls -> T1 becomes pure cost"
+  },
+  "control_no_T4": {
+   "T1_enabled": true,
+   "T2_enabled": true,
+   "T4_enabled": false,
+   "_tests": "no retention; isolates the ordering effect from e01's retention effect"
+  }
+ },
+ "amendments": [
+  {
+   "n": 1,
+   "ts": "2026-09-17 17:41:01",
+   "phase": "QUALIFY (pre-EXECUTE)",
+   "trigger": "Q11 two-sided calibration failed: the detector fired on pure noise",
+   "changes": [
+    "effect_size_min_pct 2.0 -> 12.3 (null lift p99), added min_sd_separation 1.3 (null sd-sep p99)",
+    "added ordering_bar_pct 20.0: detection and ORDERING now have different bars, because near-floor gains are mislocated and ratchet condition 1 depends on location",
+    "Q11 restated as explicitly two-sided (null AND planted-step localization)"
+   ],
+   "_no_result_observed": "No selection run has been performed. These are pre-data corrections to the instrument; the positive controls were SYNTHETIC precisely to avoid peeking."
+  }
+ ]
+}

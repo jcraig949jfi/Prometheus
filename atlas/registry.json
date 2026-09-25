@@ -212,6 +212,62 @@
       "home_host": "M1",
       "status": "IGNORED",
       "notes": "observed 2026-09-19 by Atlas[m1-1c645957]: two foundry_service.py processes from F:/SerendipityD/var/deploy. Operator 2026-09-19: 'may have been repurposed to something else if it's still active. Ignore it for now.' No collector reads it; rows from the one stat pass are kept as history."
+    },
+    {
+      "engine_id": "cosmos",
+      "name": "Cosmos world-physics engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "roles/Cosmos"
+      ],
+      "owner_seats": [
+        "Cosmos"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "registered 2026-09-24 on Cosmos's delegation (comms #544): C0 closed, export at roles/Cosmos/campaigns/atlas_export_c0 (10 stores, ~4.3k edges, ~8.9k facts, MANIFEST with source sha256s) awaiting an Atlas adapter (ATLAS-37)"
+    },
+    {
+      "engine_id": "ensorain",
+      "name": "Ensorain Tensor World Engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "roles/Ensorain"
+      ],
+      "owner_seats": [
+        "Ensorain"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "registered 2026-09-24 from comms #541/#543/#545: E0/E1/E1.5 closed INDETERMINATE (planted TT cannot learn in a life; rank-1 unfolding beats TT per parameter); not yet harvested"
+    },
+    {
+      "engine_id": "crius",
+      "name": "Crius accessibility-frontier engine",
+      "kind": "ENGINE",
+      "code_paths": [
+        "crius"
+      ],
+      "owner_seats": [
+        "Crius"
+      ],
+      "home_host": "M2",
+      "status": "LIVE",
+      "notes": "registered 2026-09-24: campaign 2 rungs A-D with PARTS donors and takeovers.jsonl; RA-4 depends on indexing it (ATLAS-34)"
+    },
+    {
+      "engine_id": "ananke",
+      "name": "Ananke PTE substrate",
+      "kind": "ENGINE",
+      "code_paths": [
+        "roles/Ananke"
+      ],
+      "owner_seats": [
+        "Ananke"
+      ],
+      "home_host": null,
+      "status": "UNKNOWN",
+      "notes": "observed 2026-09-24 on main (0e89f7104: charter + substrate design spec PTE-SUB-1/PTE-OPS-1); no runs indexed"
     }
   ],
   "local_roots": [
@@ -219,19 +275,25 @@
       "host": "M1",
       "root": "D:/Prometheus-data/sfe",
       "mode": "sqlite_ledger",
-      "engine": "sfe"
+      "engine": "sfe",
+      "basis": "SFEngine task data dir on M1 since 2026-09-12 (MONITORS.md SFEngine row); idle since 2026-09-15",
+      "storage_role": "primary"
     },
     {
       "host": "M1",
       "root": "D:/Prometheus-data/c9",
       "mode": "sqlite_ledger",
-      "engine": "sfe"
+      "engine": "sfe",
+      "basis": "c9 burst-stall test copy (as-deployed snapshot)",
+      "storage_role": "copy"
     },
     {
       "host": "M1",
       "root": "F:/Prometheus/SerendipityFoundry/SerendipityFoundryEngine/var",
       "mode": "sqlite_ledger",
-      "engine": "sfe"
+      "engine": "sfe",
+      "basis": "the F: copy is the rollback copy (MONITORS.md SFEngine row)",
+      "storage_role": "copy"
     },
     {
       "host": "M1",
@@ -266,6 +328,83 @@
       "mode": "stat",
       "engine": "archaeon.frontier",
       "role": "log"
+    },
+    {
+      "host": "M2",
+      "root": "C:/Prometheus-data/sfe",
+      "mode": "stat",
+      "engine": "sfe",
+      "role": "log",
+      "no_hash": true,
+      "pattern": "^(?!m2\\.(key|crt)$).*",
+      "max_files": 400,
+      "_note": "LIVE SFE data dir (engine eng_906356f7 runs here; ledger moved to C: NVMe 2026-09-17). Stat-only by Atlas-M2 rule: the live ledger is never opened, not even ro/immutable (roles/Atlas-M2/RESPONSIBILITIES.md s3, AM2-12). Credential files excluded by pattern; blobs/ excluded by the collector.",
+      "storage_role": "primary",
+      "engine_instance": "eng_906356f7fb1da180131f9290",
+      "basis": "SerendipityFoundry/SerendipityFoundryEngine/deploy/DEPLOYED_BUILD_M2.json (engine_instance_id + data_dir C:/Prometheus-data/sfe; ledger moved off D: 2026-09-17T23:12Z; build, id and schema unchanged); live root, never opened by Atlas-M2"
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/sfe",
+      "mode": "sqlite_ledger",
+      "engine": "sfe",
+      "_note": "pre-2026-09-17 SFE ledger location on M2 (HDD); idle since 2026-09-17T23:12Z. Collector's idle rule (IDLE_S=900) governs whether it is read. DEPLOYED_BUILD_M2.json calls this the untouched rollback copy; storage_role copy per Atlas #507.",
+      "storage_role": "copy"
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/sfe-scratch",
+      "mode": "dir_summary",
+      "engine": "sfe",
+      "depth": 0,
+      "_note": "scratch outputs (*.out), 271 files / 165 MB on 2026-09-19; one pointer."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs",
+      "mode": "dir_summary",
+      "engine": "archaeon.frontier",
+      "depth": 2,
+      "_note": "git-ignored receipt tree of the Deep Frontier / Campaign 6 benches (runs/<family>/<spec>/RECEIPT.json + chunk_*.gz); Atlas #500: authoritative on M2. One pointer per spec dir here; receipts themselves are read by frontier_runs_m2 (Atlas-M2's module)."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/logs",
+      "mode": "stat",
+      "engine": "archaeon.frontier",
+      "role": "log",
+      "_note": "scheduler/loop logs of the frontier benches; small files."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/archaeon",
+      "mode": "stat",
+      "engine": "archaeon.campaign",
+      "role": "log",
+      "_note": "Campaign 1 SFE-0N run logs (cmp1-sfe0N.log/.err); idle since 2026-09-17."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-data/vivarium",
+      "mode": "dir_summary",
+      "engine": "vivarium",
+      "depth": 1,
+      "_note": "Vivarium M2 consumer data root: var/ (LIVE, deadman/deliverer state every 5 min), window/, backups/. Summaries only; nothing in var/ is opened."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/vivarium-consumer/vivarium/var",
+      "mode": "stat",
+      "engine": "vivarium",
+      "role": "other",
+      "_note": "pinned consumer worktree var/ (conformance_cache.json)."
+    },
+    {
+      "host": "M2",
+      "root": "D:/Prometheus-worktrees/archaeon-wse-2026-09-16/archaeon/frontier/runs",
+      "mode": "frontier_receipts",
+      "engine": "archaeon.frontier",
+      "_note": "Atlas-M2's frontier_runs_m2 collector: RECEIPT.json + chunk files -> the attempts/segments Atlas's frontier harvester keyed from RUN events (identity via the linked pointer only; see the module docstring). Same root as the dir_summary row above; the two modes write different things."
     }
   ],
   "harvester_hosts": {
@@ -295,6 +434,18 @@
       "M1",
       "M2"
     ],
-    "_note": "which hosts may run each harvester (roles/Atlas/SIBLINGS.md rule 6). A seat adding a harvester adds its row."
+    "_note": "which hosts may run each harvester (roles/Atlas/SIBLINGS.md rule 6). A seat adding a harvester adds its row.",
+    "frontier_runs_m2": [
+      "M2"
+    ],
+    "catalog": [
+      "M1"
+    ],
+    "proposals": [
+      "M1"
+    ],
+    "theory": [
+      "M1"
+    ]
   }
 }

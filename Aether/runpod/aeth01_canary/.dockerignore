@@ -1,0 +1,9 @@
+# Explicit build-context allowlist; never send operational journals or secrets.
+*
+!Dockerfile
+!.dockerignore
+!aeth01_cpu_oracle.py
+!aeth01_gpu_kernel.py
+!run_canary.py
+!pod_service.py
+!watchdog.sh

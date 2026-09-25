@@ -763,5 +763,68 @@
   "first_failure": "FAILED prometheus/toolbox/tests/test_search.py::test_a_refused_lowering_stops_the_search_with_the_reasons",
   "suite_tail": "1 failed, 1108 passed, 1 skipped, 1 deselected in 33.54s",
   "seconds": 34.2
+ },
+ {
+  "id": "M87",
+  "file": "ref/players.py",
+  "what": "open-loop sequence player replays only its first action; never advances or wraps",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_sequence_player_is_open_loop_and_admitted",
+  "suite_tail": "1 failed, 17 passed, 1 deselected in 1.04s",
+  "seconds": 1.3
+ },
+ {
+  "id": "M88",
+  "file": "ref/substrates.py",
+  "what": "kv weather does the damage but never counts a firing (erase reads zero ws_damage)",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_kv_weather_damages_retained_state_and_the_sham_only_costs",
+  "suite_tail": "1 failed, 22 passed, 1 deselected in 1.23s",
+  "seconds": 1.5
+ },
+ {
+  "id": "M89",
+  "file": "ref/substrates.py",
+  "what": "the sham rewrite is free: it restores the value but never pays the write it should",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_kv_weather_damages_retained_state_and_the_sham_only_costs",
+  "suite_tail": "1 failed, 22 passed, 1 deselected in 1.21s",
+  "seconds": 1.5
+ },
+ {
+  "id": "M90",
+  "file": "search.py",
+  "what": "the battery objective is the unweighted mean, ignoring the variant weights",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_battery_evaluates_every_proposal_on_weighted_world_variants",
+  "suite_tail": "1 failed, 19 passed, 1 deselected in 1.29s",
+  "seconds": 1.6
+ },
+ {
+  "id": "M91",
+  "file": "search.py",
+  "what": "the archive cannot tell an import lineage from a resident one (every row reads resident)",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_seed_players_enter_generation_zero_and_their_origin_is_inherited",
+  "suite_tail": "1 failed, 20 passed, 1 deselected in 1.21s",
+  "seconds": 1.5
+ },
+ {
+  "id": "M92",
+  "file": "backends/local.py",
+  "what": "recurring episode seeds do not cycle; every episode gets a distinct seed after all",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_recurring_episode_seeds_are_a_budget_policy_inside_the_digest",
+  "suite_tail": "1 failed, 21 passed, 1 deselected in 1.22s",
+  "seconds": 1.5
+ },
+ {
+  "id": "M93",
+  "file": "ref/observers.py",
+  "what": "objective.charge.v1 reads the first slot, not the best final charge",
+  "result": "CAUGHT",
+  "first_failure": "FAILED prometheus/toolbox/tests/test_atlas_scaffolding.py::test_charge_objective_reads_the_best_final_charge",
+  "suite_tail": "1 failed, 23 passed, 1 deselected in 1.25s",
+  "seconds": 1.7
  }
 ]

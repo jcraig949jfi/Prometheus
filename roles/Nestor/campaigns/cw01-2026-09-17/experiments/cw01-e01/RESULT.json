@@ -1,0 +1,128 @@
+{
+ "attempt_id": "cw01-e01-a01",
+ "generations": 40,
+ "n_org": 64,
+ "arms": {
+  "treatment": {
+   "ancestor_mean": 0.044502092157810605,
+   "final_mean": 0.04865690152941307,
+   "final_best": 0.06328471926317761,
+   "ancestor_relative": 0.0041548093716024664,
+   "final_reentries": 9.609375,
+   "final_p_write": 0.8737065323509721,
+   "final_p_reenter": 0.8657494255368462,
+   "final_persist": 45.62783922388351
+  },
+  "control_no_retention": {
+   "ancestor_mean": 0.045620690348275164,
+   "final_mean": 0.04532436329429118,
+   "final_best": 0.06095632262622233,
+   "ancestor_relative": -0.00029632705398398296,
+   "final_reentries": 0.0,
+   "final_p_write": 0.48229382381912855,
+   "final_p_reenter": 0.3248928002032683,
+   "final_persist": 39.84203998836113
+  },
+  "control_no_recurrence": {
+   "ancestor_mean": 0.045134201792215146,
+   "final_mean": 0.04599626236726466,
+   "final_best": 0.05516253194844921,
+   "ancestor_relative": 0.0008620605750495128,
+   "final_reentries": 0.0,
+   "final_p_write": 0.2662014171227238,
+   "final_p_reenter": 0.5097464562850325,
+   "final_persist": 9.974295453192827
+  }
+ },
+ "ancestor_contrast": {
+  "treatment": {
+   "ancestor": 0.04459239663525068,
+   "evolved": 0.04973369942405381,
+   "delta_pct": 11.529550274808262,
+   "anc_reentries": 1.140625,
+   "evo_reentries": 10.015625
+  },
+  "control_no_retention": {
+   "ancestor": 0.045640643517530256,
+   "evolved": 0.045640643517530256,
+   "delta_pct": 0.0,
+   "anc_reentries": 0.0,
+   "evo_reentries": 0.0
+  },
+  "control_no_recurrence": {
+   "ancestor": 0.044634758931921675,
+   "evolved": 0.04600284121690889,
+   "delta_pct": 3.0650603200834032,
+   "anc_reentries": 0.0,
+   "evo_reentries": 0.0
+  }
+ },
+ "dependence": {
+  "erase_minus_sham_pct": -11.119175158460205,
+  "paired_mean": -0.005881433446300224,
+  "paired_sd": 0.002537686785927448,
+  "negative_in": "32/32",
+  "n_streams": 32
+ },
+ "interventions": {
+  "baseline": {
+   "score": 0.05174981572923203,
+   "re_entries": 10.625,
+   "info": 573.5543808224066,
+   "cost": 11109.49918566384
+  },
+  "I1_sham": {
+   "score": 0.05289451207021628,
+   "re_entries": 10.625,
+   "info": 573.5543808224066,
+   "cost": 10865.652310663841
+  },
+  "I1_erase": {
+   "score": 0.04701307862391606,
+   "re_entries": 0.0,
+   "info": 527.9285493993863,
+   "cost": 11263.16432046437
+  }
+ },
+ "backend_counterfactual": {
+  "attempted": true,
+  "equivalent": true,
+  "detail": "identical metric vectors on 6/6 episodes"
+ },
+ "disposition": "COMPLETE",
+ "disposition_reason": "Retention-dependent advantage, replicated. Evolved treatment beats its matched non-retaining control in 5/5 replicates; the evolved population actually uses the mechanism (8.68 re-entries/episode, 5/5); destroying the retained state costs -10.21% on average (weakest -8.80%) against a cost-matched sham, 5/5; and the organism-visible physics survives a backend swap (mem vs redis, identical metric vectors 6/6).",
+ "wall_s": 7.6,
+ "_honest_limitation": "The minimal form evolves a 5-gene policy vector, not a rich program. This can show whether the ECONOMICS select for retention; it cannot say what machinery a richer organism would invent.",
+ "disposition_as_computed_by_driver": "COMPLETE",
+ "downgraded_local": "2026-09-17 17:20:37",
+ "conditions_met": {
+  "beats_matched_control": true,
+  "mechanism_actually_used": true,
+  "intervention_dependence": true,
+  "backend_counterfactual": true,
+  "replication": true
+ },
+ "_honest_note": "control_no_retention moved EXACTLY 0.00000 ancestor->evolved. That is correct, not a bug: with A1 disabled every gene is phenotypically inert, so that arm cannot evolve. It is a fixed baseline rather than a competing evolutionary process, which makes the 'beats control' comparison weaker than it looks and must be stated that way in the writeup.",
+ "replication_ref": "REPLICATION.json",
+ "upgraded_local": "2026-09-17 17:22:38",
+ "stated_limitations": [
+  "MINIMAL FORM: a 5-gene real-valued policy vector, not a rich program. This shows the ECONOMICS select for retention; it says nothing about what machinery a richer organism would invent.",
+  "control_no_retention CANNOT evolve: with A1 disabled every gene is phenotypically inert, so it is a fixed baseline rather than a competing evolutionary process. 'Beats control' is weaker than it sounds; the ancestor-relative contrast (+9.70% mean) and the intervention dependence carry the claim.",
+  "4 independent seeds + 1 exact re-run of the original (a01), not 5 independent replicates.",
+  "RECURRENCE WAS NOT SWEPT: the effect is established at recurrence 0.35 only. The pre-registration lists the sweep as expansion. The one other point available is the built-in zero-recurrence control, which correctly evolved AWAY from retention (p_write 0.266, persist 10.0) - weak evidence of conditionality.",
+  "Interventions I2 (scramble), I3 (sever), I4 (destroy-selected) and I5 (swap) were NOT run; they are expansion. In particular I2 would separate HAVING state from FINDING it, which this attempt cannot."
+ ],
+ "headline_numbers": {
+  "ancestor_relative_pct_mean": 9.704668157594815,
+  "ancestor_relative_pct_worst": 7.737823075680399,
+  "dependence_pct_mean": -10.205066922098188,
+  "dependence_pct_weakest": -8.800768029486616,
+  "evolved_reentries_mean": 8.684375,
+  "evolved_genes": {
+   "p_write": 0.8737065323509721,
+   "p_reenter": 0.8657494255368462,
+   "persist_steps": 45.62783922388351
+  },
+  "determinism": "a01 reproduced treatment_final=0.048657 control_final=0.045324 exactly from attempt_id alone"
+ }
+}

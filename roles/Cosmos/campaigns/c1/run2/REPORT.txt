@@ -1,0 +1,42 @@
+CWE CAMPAIGN 0 REPORT  c1_run2
+==============================================================================
+code   head 4b9c6895f4  src 6a83abaa008f  dirty False
+graph  nodes 1262 edges 714 runs 1282 laws 3  edge kinds {'CONTROL_OF': 60, 'COORD_PRESERVING': 74, 'DEFORMATION_OF': 580}
+queries (chamber, excl. oracle) 1208   wall 2945.8s
+------------------------------------------------------------------------------
+GATES
+  G0  PASS
+  G1  PASS
+  G2  NOT REACHED
+  G3  NOT REACHED (not run by campaign0; see G3 receipt)
+  G4  FAIL
+  G5  NOT REACHED
+  G6  NOT REACHED
+  G7  NOT REACHED
+------------------------------------------------------------------------------
+INITIAL MINING (main dataset)
+  raw  CANDIDATE                  p=0.050 score=0.767
+       (Q - (C * K)) <= 0.8713 AND (N + log((C + K))) <= 2.841
+  v3   CANDIDATE                  p=0.050 score=0.873
+       ((C - K) * C) <= -0.1451 AND (G - (C / exp(-N))) >= 0.0684
+  v4   CANDIDATE                  p=0.050 score=0.863
+       (Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075
+ADVERSARY
+  round 0  FAILED  confirmed 4 / confident 107
+    law  (Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075
+    revision picked v4 ; v4 CANDIDATE
+  round 1  FAILED  confirmed 2 / confident 106
+    law  (K / (N + log(C))) <= -0.5829 AND ((C * log(C)) + Q) <= 0.9112
+    revision picked v4 ; v4 CANDIDATE
+  round 2  FAILED  confirmed 4 / confident 108
+    law  (K / (N + log(C))) <= -0.5903 AND ((C * log(C)) + Q) <= 0.9105
+    revision picked v4 ; v4 CANDIDATE
+LAW LEDGER
+  eec9c5a571 v1 parent=- cmap=v4  PROPOSED/ATTACKED/FAILED/REVISED
+    (Q - (C * K)) <= 0.872 AND (K / (N + log(C))) <= -0.6075
+  9ed4a83871 v2 parent=eec9c5a571 cmap=v4  PROPOSED/ATTACKED/FAILED/REVISED
+    (K / (N + log(C))) <= -0.5829 AND ((C * log(C)) + Q) <= 0.9112
+  78d3bd6297 v3 parent=9ed4a83871 cmap=v4  PROPOSED/ATTACKED/FAILED
+    (K / (N + log(C))) <= -0.5903 AND ((C * log(C)) + Q) <= 0.9105
+QUOTIENT  1262 nodes -> 8 classes (0.006); boundary edge fraction {'CONTROL_OF': 0.65, 'COORD_PRESERVING': 0.0676, 'DEFORMATION_OF': 0.4806}
+==============================================================================

@@ -1,0 +1,919 @@
+{
+ "identity": {
+  "cosmos_src_sha": "7be109265d57d660e264ca246bf17a60010a4a0826ccdfb92e0eeab51c262a66",
+  "n_src": 62,
+  "git_head": "81f93aca8ca45345e328bd5097e5f7b7e3b8e00a",
+  "cosmos_dirty": false
+ },
+ "summary": {
+  "N0": {
+   "expected": "NONE",
+   "got": [
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE"
+   ],
+   "pass": true
+  },
+  "PV": {
+   "expected": "PASSIVE",
+   "got": [
+    "PASSIVE",
+    "PASSIVE",
+    "PASSIVE",
+    "PASSIVE",
+    "PASSIVE"
+   ],
+   "pass": true
+  },
+  "FX": {
+   "expected": "FUNCTIONAL",
+   "got": [
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL"
+   ],
+   "pass": true
+  },
+  "FD": {
+   "expected": "FUNCTIONAL",
+   "got": [
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL"
+   ],
+   "pass": true
+  },
+  "MC": {
+   "expected": "NONE",
+   "got": [
+    "INDETERMINATE",
+    "NONE",
+    "NONE",
+    "NONE",
+    "NONE"
+   ],
+   "pass": false
+  },
+  "NZ": {
+   "expected": "FUNCTIONAL",
+   "got": [
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL",
+    "FUNCTIONAL"
+   ],
+   "pass": true
+  }
+ },
+ "gate": "FAIL",
+ "rows": [
+  {
+   "system": "N0",
+   "seed": 1,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "D_generic": 0.0,
+    "D_readout": 0.0,
+    "null_max": 8.881784197001252e-16,
+    "null_median": 0.0,
+    "p": 1.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.24966666666666668,
+    "J_ablated": 0.24966666666666668,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 1.67
+  },
+  {
+   "system": "N0",
+   "seed": 2,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "D_generic": 0.0,
+    "D_readout": 0.0,
+    "null_max": 4.440892098500626e-16,
+    "null_median": 0.0,
+    "p": 1.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.257,
+    "J_ablated": 0.257,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 2.1
+  },
+  {
+   "system": "N0",
+   "seed": 3,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "D_generic": 0.0,
+    "D_readout": 0.0,
+    "null_max": 8.881784197001252e-16,
+    "null_median": 0.0,
+    "p": 1.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.25733333333333336,
+    "J_ablated": 0.25733333333333336,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 2.64
+  },
+  {
+   "system": "N0",
+   "seed": 4,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 4.440892098500626e-16,
+    "D_generic": 4.440892098500626e-16,
+    "D_readout": 0.0,
+    "null_max": 4.440892098500626e-16,
+    "null_median": 0.0,
+    "p": 1.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.24233333333333335,
+    "J_ablated": 0.24233333333333335,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 2.67
+  },
+  {
+   "system": "N0",
+   "seed": 5,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.0,
+    "D_generic": 0.0,
+    "D_readout": 0.0,
+    "null_max": 8.881784197001252e-16,
+    "null_median": 0.0,
+    "p": 1.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.24833333333333332,
+    "J_ablated": 0.24833333333333332,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 2.76
+  },
+  {
+   "system": "PV",
+   "seed": 1,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9623771346837293,
+    "D_generic": 1.9623771346837293,
+    "D_readout": 0.0,
+    "null_max": 0.0016470386735567555,
+    "null_median": 0.0,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.25266666666666665,
+    "J_ablated": 0.25266666666666665,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "PASSIVE",
+   "s": 2.92
+  },
+  {
+   "system": "PV",
+   "seed": 2,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9630186936551066,
+    "D_generic": 1.9630186936551066,
+    "D_readout": 0.0,
+    "null_max": 0.0,
+    "null_median": 0.0,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.25,
+    "J_ablated": 0.25,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "PASSIVE",
+   "s": 3.03
+  },
+  {
+   "system": "PV",
+   "seed": 3,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9607675302574734,
+    "D_generic": 1.9607675302574734,
+    "D_readout": 0.0,
+    "null_max": 0.0007208391712740791,
+    "null_median": 0.0,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.24833333333333332,
+    "J_ablated": 0.24833333333333332,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "PASSIVE",
+   "s": 2.95
+  },
+  {
+   "system": "PV",
+   "seed": 4,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9627368135800485,
+    "D_generic": 1.9627368135800485,
+    "D_readout": 0.0,
+    "null_max": 0.0007766941927500604,
+    "null_median": 0.0,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.24266666666666667,
+    "J_ablated": 0.24266666666666667,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "PASSIVE",
+   "s": 2.58
+  },
+  {
+   "system": "PV",
+   "seed": 5,
+   "class": "PASSIVE",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.962188307806438,
+    "D_generic": 1.962188307806438,
+    "D_readout": 0.0,
+    "null_max": 0.0007441434025334814,
+    "null_median": 0.0,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.243,
+    "J_ablated": 0.243,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "PASSIVE",
+   "s": 3.09
+  },
+  {
+   "system": "FX",
+   "seed": 1,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9623771346837293,
+    "D_generic": 1.9623771346837293,
+    "D_readout": 1.962375102638131,
+    "null_max": 0.0016470386735567555,
+    "null_median": -0.0023336330956773566,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 3.38
+  },
+  {
+   "system": "FX",
+   "seed": 2,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9630186936551066,
+    "D_generic": 1.9630186936551066,
+    "D_readout": 1.9630183317517447,
+    "null_max": -0.00010225879952097117,
+    "null_median": -0.0026098127770275426,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 3.17
+  },
+  {
+   "system": "FX",
+   "seed": 3,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9607675302574734,
+    "D_generic": 1.9607675302574734,
+    "D_readout": 1.9607654313054568,
+    "null_max": 0.0007208522242903026,
+    "null_median": -0.0029792023784371846,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 3.88
+  },
+  {
+   "system": "FX",
+   "seed": 4,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9627368135800485,
+    "D_generic": 1.9627368135800485,
+    "D_readout": 1.9627365873642488,
+    "null_max": 0.0007766941927500604,
+    "null_median": -0.00244562577968388,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 3.39
+  },
+  {
+   "system": "FX",
+   "seed": 5,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.962188307806438,
+    "D_generic": 1.962188307806438,
+    "D_readout": 1.9621877280825575,
+    "null_max": 0.0007442837670978975,
+    "null_median": -0.0025215034621624,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 3.67
+  },
+  {
+   "system": "FD",
+   "seed": 1,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9618921837328434,
+    "D_generic": 1.9618921837328434,
+    "D_readout": 1.9618896335433897,
+    "null_max": 0.0012412946274205083,
+    "null_median": -0.0026908614550475995,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.59
+  },
+  {
+   "system": "FD",
+   "seed": 2,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9624283614062445,
+    "D_generic": 1.9624283614062445,
+    "D_readout": 1.9624282902559145,
+    "null_max": 0.0011766773235384331,
+    "null_median": -0.002137721683850735,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.52
+  },
+  {
+   "system": "FD",
+   "seed": 3,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.962131125064472,
+    "D_generic": 1.9621309594453575,
+    "D_readout": 1.962131125064472,
+    "null_max": 0.0011336025874244537,
+    "null_median": -0.002320930504494001,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.72
+  },
+  {
+   "system": "FD",
+   "seed": 4,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9619584520800861,
+    "D_generic": 1.9619584520800861,
+    "D_readout": 1.9619573614681092,
+    "null_max": 0.0011977910644089818,
+    "null_median": -0.00269173869456818,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.55
+  },
+  {
+   "system": "FD",
+   "seed": 5,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 1.9609298163313211,
+    "D_generic": 1.9609298162342066,
+    "D_readout": 1.9609298163313211,
+    "null_max": 0.00025561227949388865,
+    "null_median": -0.002489758507643991,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 1.0,
+    "J_ablated": 0.0,
+    "effect": 1.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": Infinity,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.76
+  },
+  {
+   "system": "MC",
+   "seed": 1,
+   "class": "INDETERMINATE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009585311444573863,
+    "D_generic": 0.009585311444573863,
+    "D_readout": 0.00748106180826924,
+    "null_max": 0.009589116017620247,
+    "null_median": 0.00958011517334878,
+    "p": 0.08,
+    "held": false,
+    "indeterminate": true
+   },
+   "P2": {
+    "J_intact": 0.6423333333333333,
+    "J_ablated": 0.6423333333333333,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 9.83
+  },
+  {
+   "system": "MC",
+   "seed": 2,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009371996413285233,
+    "D_generic": 0.009371996413285233,
+    "D_readout": 0.007269546920063652,
+    "null_max": 0.00938131969996392,
+    "null_median": 0.009372147106315731,
+    "p": 0.52,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.6363333333333333,
+    "J_ablated": 0.6363333333333333,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 13.98
+  },
+  {
+   "system": "MC",
+   "seed": 3,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009312998621695767,
+    "D_generic": 0.009312998621695767,
+    "D_readout": 0.007225676750530763,
+    "null_max": 0.009323640865715133,
+    "null_median": 0.009312663481855443,
+    "p": 0.5,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.611,
+    "J_ablated": 0.611,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 22.7
+  },
+  {
+   "system": "MC",
+   "seed": 4,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009735085458258963,
+    "D_generic": 0.009735085458258963,
+    "D_readout": 0.007609885732655419,
+    "null_max": 0.009739139298635013,
+    "null_median": 0.009727409342077165,
+    "p": 0.14,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.614,
+    "J_ablated": 0.614,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 10.32
+  },
+  {
+   "system": "MC",
+   "seed": 5,
+   "class": "NONE",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.009733180708020317,
+    "D_generic": 0.009733180708020317,
+    "D_readout": 0.007621721066509268,
+    "null_max": 0.009738414727658684,
+    "null_median": 0.009726750074882329,
+    "p": 0.26,
+    "held": false,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.6233333333333333,
+    "J_ablated": 0.6233333333333333,
+    "effect": 0.0,
+    "se": 0.0,
+    "eps": 0.0,
+    "z": 0.0,
+    "held": false,
+    "indeterminate": false
+   },
+   "expected": "NONE",
+   "s": 14.1
+  },
+  {
+   "system": "NZ",
+   "seed": 1,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.010092670377086499,
+    "D_generic": 0.010092670377086499,
+    "D_readout": 0.010054878349602392,
+    "null_max": 0.0015672066521468242,
+    "null_median": -0.0025966692333234676,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.31133333333333335,
+    "J_ablated": 0.21933333333333332,
+    "effect": 0.092,
+    "se": 0.005189990741671461,
+    "eps": 0.015569972225014382,
+    "z": 17.726428538940123,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 11.0
+  },
+  {
+   "system": "NZ",
+   "seed": 2,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.02231307948752037,
+    "D_generic": 0.02231114277476931,
+    "D_readout": 0.02231307948752037,
+    "null_max": 0.0004789739089030576,
+    "null_median": -0.0024703210250800467,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.307,
+    "J_ablated": 0.22966666666666666,
+    "effect": 0.07733333333333334,
+    "se": 0.004522412702611624,
+    "eps": 0.013567238107834872,
+    "z": 17.10001683143038,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 9.99
+  },
+  {
+   "system": "NZ",
+   "seed": 3,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.014401375320594045,
+    "D_generic": 0.014401375320594045,
+    "D_readout": 0.014355461360965549,
+    "null_max": 0.0008334336164099732,
+    "null_median": -0.002308330197307251,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.314,
+    "J_ablated": 0.234,
+    "effect": 0.08,
+    "se": 0.00505806743991001,
+    "eps": 0.015174202319730028,
+    "z": 15.816317388093845,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 12.74
+  },
+  {
+   "system": "NZ",
+   "seed": 4,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.014017792159163989,
+    "D_generic": 0.014017792159163989,
+    "D_readout": 0.013989633926645428,
+    "null_max": 0.0005849717450598924,
+    "null_median": -0.0020397790304049757,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.31866666666666665,
+    "J_ablated": 0.23333333333333334,
+    "effect": 0.08533333333333333,
+    "se": 0.005274706752827194,
+    "eps": 0.015824120258481584,
+    "z": 16.177834585324664,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 6.78
+  },
+  {
+   "system": "NZ",
+   "seed": 5,
+   "class": "FUNCTIONAL",
+   "P1": {
+    "t": 7,
+    "D_bits": 0.014357672453080284,
+    "D_generic": 0.014270230458097943,
+    "D_readout": 0.014357672453080284,
+    "null_max": 0.00014537569918671167,
+    "null_median": -0.0025547158604051212,
+    "p": 0.02,
+    "held": true,
+    "indeterminate": false
+   },
+   "P2": {
+    "J_intact": 0.31233333333333335,
+    "J_ablated": 0.225,
+    "effect": 0.08733333333333333,
+    "se": 0.005125789939189489,
+    "eps": 0.015377369817568466,
+    "z": 17.03802425956278,
+    "held": true,
+    "indeterminate": false
+   },
+   "expected": "FUNCTIONAL",
+   "s": 4.09
+  }
+ ]
+}

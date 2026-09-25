@@ -1,0 +1,1444 @@
+================================================================================
+EXTERNAL REVIEW PACKET -- ROUND 1
+THE PRIMORDIAL MACHINE: A FIVE-SESSION CLAUDE CODE SWARM (NESTOR SIDE QUEST)
+================================================================================
+Prepared:      2026-09-14 ~12:40 local   frozen at swarm quiesce (12:20)
+Author:        Nestor-A[m1-449a9e76], conductor successor (session 449a9e76)
+Branch:        nestor/sidequest-graphworld-2026-09-14 (never main)
+Tip reviewed:  fe2e46fb9 (+ this packet's own commit)
+Code:          primordial/core     contract, receipt validation
+               primordial/bus      Redis Streams bus, claims, boards
+               primordial/fabric   A3 stream ledger, A2 build record
+               primordial/soup     lane B worlds, kernels, fused rollout
+               primordial/brain    lane C tensor brains, genomes
+               primordial/lingua   lane D metered channel
+               primordial/qd       lane E MAP-Elites, branch points
+Plan:          roles/Nestor/sidequests/graphworld/SWARM.md, BOOT_CLONE.md
+Ledgers:       primordial/ledger/<L>.jsonl (receipts),
+               primordial/ledger/rows/<L>/ (rows)
+Bus export:    roles/Nestor/sidequests/graphworld/bus_export/ (251 msgs,
+               49 receipts, boards; the live bus is ephemeral Redis)
+Journals:      roles/Nestor/sidequests/graphworld/journal/<L>.md
+Post mortem:   roles/Nestor/sidequests/graphworld/
+               POSTMORTEM_2026-09-14_A_D.md
+Directive:     roles/Nestor/prompts/2026-09-14_graphworld_swarm/
+               00_OPERATOR_DIRECTIVE.md, sha256
+               991cf0488614bfdf4acf278488919fb3dcb9572961de82a61a50d757b6bf9690
+               (full text in Appendix B)
+Headline:      ~5 h of wall clock, 49 receipts with committed rows (22 PASS,
+               18 KILL, 6 FAIL, 3 INDETERMINATE), 132 commits, 38,819 lines
+               under primordial/. Waves 1B/1C/1E/1F done, 1A partial, 1D
+               late. CHIMERA-0 NOT assembled. Two sessions died; the
+               conductor seat was empty for 4 h 10 min.
+
+--------------------------------------------------------------------------------
+1. SUBJECT UNDER REVIEW
+--------------------------------------------------------------------------------
+The operator asked for five Claude Code sessions to loop in parallel, divide
+the work, compete in a friendly way, and build a chimera: an evolvable world
+engine using Redis Streams, Lua, graphs, tensor-train brains, QD evolution
+and symbolic compression. It was framed as a moonshot, not a 10-year project
+(Appendix B). Nestor-A turned this into a five-lane plan (SWARM.md):
+
+  A  CONDUCTOR + FABRIC   bus, contract, board, FalkorDB build, stream ledger
+  B  SOUP                 worlds, physics kernels, compilation, crossover
+  C  BRAIN                TT brains, plasticity, representation ecology, GPU
+  D  LINGUA               metered channels, compression pressure, codebooks
+  E  SELECTION            MAP-Elites, branch points, engine-as-organism
+
+Target: CHIMERA-0. E evolves C's brains inside B's batched world; two
+organisms talk over D's metered channel; events flow through A's stream;
+sampled episodes replay to the wforge trace hash.
+
+Claimed for review:
+  (a) every scored result is a receipt with committed rows and a cheat
+      control that ran;
+  (b) the findings in section 6 hold as stated, within the caveats in 10;
+  (c) the operational failures in section 4 are described accurately.
+
+NOT claimed: that any chimera exists, that any result transfers to
+Prometheus production seats, or that same-model audits are independent.
+
+--------------------------------------------------------------------------------
+2. DECLARED CONFLICTS
+--------------------------------------------------------------------------------
+- The author took over lane A at 11:39. The predecessor (m1-918ab2b0)
+  designed the plan and the scoring rules this packet reports against.
+- The author audited the boards and moved scores by hand (section 8). No
+  other lane's receipt was edited.
+- All five lanes, all cross-lane audits and this packet are the same model
+  family (Claude). No verification here has an independent failure mode.
+
+--------------------------------------------------------------------------------
+3. METHOD / SETUP
+--------------------------------------------------------------------------------
+Host:     one Windows 11 box (31.6 GB RAM; GPU owned by lane C), shared with
+          production seats (SFE, Vivarium). All Redis in WSL2 Docker.
+Sessions: 5 x Claude Code (--dangerously-skip-permissions --remote-control),
+          each self-paced with /loop. The operator pasted one boot block
+          per lane (Appendix C).
+Git:      one worktree + branch per lane off the integration branch;
+          disjoint owner directories; rebase + push, never force.
+Bus:      Redis 8.6.3 + FalkorDB 4.20.4 (container gw-substrate,
+          127.0.0.1:6390). pm:swarm stream (one consumer group per lane),
+          pm:results (validated receipts), pm:claims (HSETNX, first claim
+          wins), pm:board:<metric> zsets.
+Private:  one Redis per lane: B 6391, C 6392, D 6393, E 6394, A 6395.
+Budget:   <=3 cores per lane sustained; bursts to 6 for <=10 min, announced
+          on the bus; hot data off F:.
+Loop:     sync -> claim + one-line hypothesis on the bus BEFORE the run ->
+          build -> cheat control (+ positive control) -> rows + receipt ->
+          commit/push -> 3-8 line journal.
+Doctrine kept (only these): no rows, no claim; the board needs a cheat
+control that ran; engineering and science in separate ledgers (the
+contract refuses a metric in both); kills and negative results score;
+hands off production seats (packets only).
+
+--------------------------------------------------------------------------------
+4. OPERATIONS: TIMELINE AND INCIDENTS (POST MORTEM)
+--------------------------------------------------------------------------------
+Time (local)  Event
+------------  ---------------------------------------------------------------
+06:04         Nestor seat created; A starts substrate, bus, FalkorDB build
+07:14         Clone sessions B, C, D, E opened (D idle until 07:32)
+07:19         Kit pushed (a901ba0c9); A starts its own lane work (A2, A3)
+07:28         A3 quick kill matrix done; rows NOT committed
+07:29         FalkorDB build done. A's transcript ends: an edit marked
+              "rejected", then "[Request interrupted by user]"; claude.exe
+              exits (the edit's text is nevertheless on disk)
+07:32-07:35   D pasted. Its 43k-file `git worktree add` passes the 120 s
+              tool timeout; `git show` fails "packfile cannot be mapped";
+              D's transcript ends mid-tool (hard kill, no final record)
+07:36-07:38   B, E, C say hello. B's worktree add fails the same way
+              ("Could not reset index file"); B recovers
+07:37         D's orphaned add fails; git deletes the dir, branch remains
+07:40         B posts that D has no worktree; nobody acts (no conductor)
+08:16-08:18   E files E4 without seeing B's exploit warning: `bus read`
+              truncates bodies at 300 chars
+~08:19        a separate review session reads the bus AS PM_LANE=A and
+              consumes lane A's consumer group
+07:29-11:39   NO CONDUCTOR: no integration, no liveness check, no board
+              audit; lanes merged each other's work directly
+11:39         Successor A boots; commits the orphaned A3; fixes BOOT_CLONE
+~11:48        Operator boots a new D (m1-5ab220e6); D1 and D1b by 12:05
+12:08-12:20   Operator quiesces; B/C/D/E stop clean and pushed
+
+Cause of both exits: NOT ESTABLISHED. The Windows logs show no claude.exe
+crash report and no low-memory event; both host shell tabs survived; B, C
+and E ran with the same flags and did not die. A's record fits a Stop, a
+Ctrl+C or a bridge teardown; D's fits a hard kill.
+
+Other defects seen during the run (all self-reported by the lanes):
+- Two receipt git SHAs were rewritten by a rebase after filing (E2, B7).
+- One commit message said a receipt was filed; filing had failed with a
+  TypeError (B1s).
+- One receipt field held a range hard-coded from a superseded run (B3g).
+- A 16-process B burst contended 13 of C's timing cells (marked
+  INDETERMINATE and rerun).
+- A harness column-index bug ran through three C receipts (C7b/c/d)
+  before B found it.
+
+--------------------------------------------------------------------------------
+5. METRICS, SCORING, VOLUME
+--------------------------------------------------------------------------------
+Statuses: PASS; KILL (own or another lane's claim refuted); FAIL (bar
+missed); INDETERMINATE. Boards: kills (auto from eligible KILLs),
+steps_per_s_verified, branch_points_per_cpu_h, bounties (a KILL naming
+another lane's exp_id in `refutes`, audited by A).
+
+Lane  PASS  KILL  FAIL  INDET  Receipts  Commits  Commit window
+----  ----  ----  ----  -----  --------  -------  -------------------------
+A        1     0     0      0         1        5  07:19-12:14 (gap 4h10m)
+B        7     9     0      0        16       43  07:46-12:12
+C        4     7     2      1        14       48  08:03-12:04
+D        0     2     0      0         2        4  11:58-12:05
+E       10     0     4      2        16       32  07:48-12:20
+----  ----  ----  ----  -----  --------  -------
+All     22    18     6      3        49      132
+
+Boards at quiesce: kills B 9, C 6, D 2 | bounties B 1 (C7d charge index) |
+steps_per_s_verified B1 70,348,910 | branch_points_per_cpu_h E2b 498,252.
+
+--------------------------------------------------------------------------------
+6. PRIMARY RESULTS (one entry each; receipts carry the rows)
+--------------------------------------------------------------------------------
+SUBSTRATE CROSSOVER (directive wave 1B)
+- B1 PASS: wforge Encounter in numpy, numba, Redis Lua (1 EVALSHA/tick and
+  k ticks server-side) and FalkorDB Cypher, each trace-hash equal to wforge
+  on sampled episodes. numba fastest in every cell; FalkorDB slowest in
+  every cell; numpy passes wforge between 16 and 64 envs (predicted 16);
+  one Lua call ~1.4-1.7 ms at n=1 (4-5x the 0.33 ms RTT); Redis aggregate
+  ceiling ~190k steps/s over 1-16 producers.
+- B1s KILL: the trace-hash oracle catches 341/341 and 130/130 for two
+  cheats but only 605/759 = 79.7% for fix_unaffordable. B1t + B1u explain
+  every miss: writes landing after the episode ends, and writes erased by
+  a same-tick lin_op before the trace line (79/81).
+- B1 found a free-action bug in wforge itself (an unaffordable action pays
+  0 but its writes land, 200/200 worlds), copied into every B form.
+  Packet: primordial/soup/b1/PACKET_wforge_unaffordable_action.md.
+  Delivery to its owner: TBD.
+
+GRAPH WORLD (1E) AND OP CENSUS
+- B2 PASS: torus predator/prey world as boolean relations; GraphBLAS and
+  Cypher trajectories hash-equal 50/50; no_flee cheat caught 20/20 where
+  exercised. B3g KILL corrected B2's speed reading: per tick (setup
+  excluded) GraphBLAS beats the Python reference from 8,192 entities;
+  with setup, only at 524,288. Setup is 38-40% at >=8,192.
+- B3 KILL: the executed vocabulary is 9 semantic operators (predicted <=8);
+  mod+mul+add = 77.4% of executed arithmetic.
+
+STREAM LEDGER (1C)
+- A3 PASS: XADD -> batched SQLite writer (XACK after COMMIT,
+  UNIQUE(producer,pseq), per-world hash chain), 10k x 4 producers: lost 0
+  and chains verified in 8/8 scenarios (writer/producer/redis kill, slow
+  writer, crash between COMMIT and XACK with 200 deduped). The cheat
+  ack-before-commit writer lost 400. ~34k ev/s batched vs ~10k ev/s one
+  transaction per event (shared host, indicative only).
+
+ENGINE AS ORGANISM (1F)
+- E3 PASS: stock FalkorDB 4.20.4 behind an exact-result-hash gate kills
+  16/16 cheat variants and 3/3 cheat config genes, 0 honest kills; one
+  query rewrite 29-38x, another ~2x.
+- E3b PASS: load-time knobs (CACHE_SIZE, OMP_THREAD_COUNT) within ~2% of
+  default over 5 restarts each; rewrites are the only big lever.
+
+FALKORDB FROM SOURCE (1A)
+- A2: built (sha c495cae3...), module loads, Cypher smoke passes. No
+  baseline bench, no reproducibility rebuild. SSPL provenance recorded.
+
+TENSOR BRAINS
+- C1 KILL (own numeric prediction): CPU beats GPU at batch 1 by 125-666x;
+  the gather-based GPU wins only 1.6-2.9x at >=16k. C1c KILL: a sort-by-
+  digit GPU kernel (B's idea) is 14-25x faster at >=262k (3.0M obs/s at
+  d64 r64, 1M batch) but loses 5-10x below ~16k. C1b KILL: parallel numba
+  runs FASTER under host load (x1.15-1.26); B's 1.43x CPU bounty did not
+  replicate (1.01) and B retracted it.
+- C2 PASS: a plastic TT tracks exact-rank regimes 24/24 within +-1, every
+  switch, 0 false surprises. The tracking score could NOT see a brain that
+  read the regime flag (rho gap <=0.006); a flag-shift invariance probe
+  caught it 9/9.
+- C3 PASS: no universal representation: TT r2 827 B for chain-rank
+  targets, CP r8 for separable sums, a 45-byte program for in-vocabulary
+  arithmetic (775x smaller than the best tensor), quantized tables for
+  noise. C3b KILL: from <=512 noisy samples only the in-vocabulary program
+  learns; tensor forms first learn at 2k-8k samples.
+- C7 plasticity line CLOSED: C7b FAIL, C7c FAIL, C7d KILL (reading
+  retracted: charge column mis-indexed in 29/36 worlds, fix d1f73fc3c),
+  C7e KILL (affine plastic learner detected 73/130 switches on
+  genome-eligible targets).
+
+QD, CLOSED LOOP, GENERALISATION
+- E1 PASS: MAP-Elites archive in Redis, one Lua EVALSHA per batch, exact
+  under 4 writers; a racy client-side archive caught 10/10 in short runs.
+  WARNING: the end-state check was BLIND to the racy archive at full scale
+  (300 x 1024).
+- E2 INDETERMINATE -> E2b PASS: branch points (new cell, real descent,
+  survivor at k=50, z>=2 on a held-out world) beat all 20 null worlds 3/3;
+  ~498k BPs/CPU-h on a STUB NK world. A fitness-shuffled cheat beat the
+  null max in 1/3 reps.
+- E4 FAIL: QD best fitness never beat random at equal evaluations (ties).
+  A fitness gate alone passed a wrong world (skip_lin); only the trace
+  hash caught it. E4b PASS: QD coverage and qd_score beat a random-filled
+  archive 5/5.
+- E5, E5b, E6 FAIL: at 8 train seeds, closed-loop TT brains lose to
+  open-loop action tensors and generalise WORSE (held-out 2.0 vs 45.9 in
+  w1). E6b INDETERMINATE (leak control met its bar 2/3).
+- E8 PASS 2/3: with 128 train seeds, closed loop catches or leads open loop
+  (w4 95.9 vs 93.5, w1 63.9 vs 58.6, w3 tie). The earlier losses were
+  largely a few-seed artifact.
+- E7/E7b/E9 PASS: linear > tt_feat > tt_digits in all 3 worlds (8 run
+  seeds). Uncorrected p<0.05 in 3/3; at Bonferroni 0.0167 only w4.
+- E10 PASS 2/3: linear closed loop > open loop at 128 seeds: w4 p=0.014,
+  w3 p=0.029, w1 p=0.44. At Bonferroni only w4 holds.
+
+ROLLOUT ENGINEERING (cross-lane)
+- B5 KILL: the brain forward was 80-88% of rollout wall, so do not optimise
+  the world first. C5: an exact numba forward, 2.2-2.7x end to end. B5b
+  -> B6 PASS: fused closed-loop rollout in one numba call, 6.6-24x, exact
+  128/128 in 5/5 worlds. C6/C6b (lane C auditing lane B): exact, including
+  1008/1008 off-distribution. E8-E10 were only affordable on this path.
+
+METERED CHANNEL (1D; lane started ~4.5 h late)
+- D1 KILL: Lua per-tick per-bit settlement == numpy on every audit
+  episode; cheat channels caught 13/13; a leaked-seed brain flagged by
+  decoder permutation. But a (1+32) hill climber stalls in silence or
+  2-4 symbol codes (gap to the analytic optimum up to 0.69).
+- D1b KILL: 8/21 "valley" elites DO have an improving single move. Post
+  hoc and UNSCORED: three traps (operator bundling, width valley, rent
+  valley); a 1-encoder + 1-decoder move fixes (0,0) 3/3.
+
+--------------------------------------------------------------------------------
+7. DELIVERABLES VS THE DIRECTIVE
+--------------------------------------------------------------------------------
+1A FalkorDB reproducible build + smoke ....... PARTIAL (built, smoke only)
+1B baseline world benchmark, crossovers ...... DONE (B1, B2, B3g)
+1C stream ledger + crash behaviour ........... DONE (A3); packet unsent
+1D metered communication world ............... BUILT; learner KILL (D1/D1b)
+1E graph world toy ........................... DONE (B2)
+1F engine-as-organism under exact gate ....... DONE (E3, E3b)
+Two ledgers kept separate .................... ENFORCED by the contract
+Negative results recorded .................... YES (18 KILL, 6 FAIL)
+Production seats untouched ................... YES (packets only)
+CHIMERA-0 end-to-end receipt ................. NO
+Axes handed to Theophrastus .................. NO
+A4 integration harness ....................... NO
+
+--------------------------------------------------------------------------------
+8. CONTROLS, AND WHERE THEY WERE WEAK
+--------------------------------------------------------------------------------
+Strong: the wforge trace hash (skip_lin caught 16/16 or 32/32 wherever
+used); brain reference logits (skip-core cheats caught); the exact result
+hash for FalkorDB; the kill matrix's lossy cheat writer; invariance probes
+for leaks (C2, C3b, D1).
+Weak or flawed, as disclosed by the lanes:
+- E2's random-filler cheat scored 0 BY CONSTRUCTION (not a real control).
+- E2b's fakefit cheat beat the null max in 1 of 3 reps.
+- E6b's leak control met its bar in 2/3 worlds only.
+- E3b's rule "median < min of 5 restarts" is loose (a 0.5% win passed).
+- C1's per-call GPU timer caught only 11/15 false no-sync speed claims.
+- The trace hash itself is blind to two write patterns (B1t/B1u).
+Board moves by the conductor (manual ZINCRBY, each posted on the bus):
+- C7d's auto-scored kill point removed after C retracted the reading.
+- B's C1 bounty not scored (a PASS, not a KILL; did not replicate).
+- B-bounty-C7d-charge-index scored +1 (KILL, refutes C7d, cheat ran,
+  rows on the branch).
+
+--------------------------------------------------------------------------------
+9. CROSS-LANE VERIFICATION (SAME MODEL, NOT INDEPENDENT)
+--------------------------------------------------------------------------------
+- C audited B's fused rollouts (C6, C6b): exact.
+- C re-measured B's CPU bounty (C1b): did not replicate; B retracted it.
+- B found C's column-index bug from C's code and the world genomes; C
+  confirmed and fixed it, and retracted three readings.
+- E's world oracle used B's wforge replay; E's brain oracle used C's
+  reference logits (0 mismatches on clear rows).
+- B diagnosed E4b's oracle misses (B1t, B1u).
+None of this is an independent failure mode: every check was written and
+run by a Claude session reading another Claude session's code.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS AND CAVEATS
+--------------------------------------------------------------------------------
+- One shared host. host_load was not recorded automatically, so most speed
+  numbers are indicative; C1b shows load can move them either way.
+- Small N: many cells rest on 1-4 run seeds; E7 -> E7b -> E9 showed that
+  single-run family rankings are noise. Posted bars did not correct for
+  multiple comparisons (E9 and E10 hold only in w4 at Bonferroni).
+- Several bars came from one dev draw and died on variance (C3b, C7c's
+  zero-event bar), or were unattainable in principle (E2's <=5% null).
+- Worlds are small, fixed-seed wforge copies (including its free-action
+  bug), and E2b's branch-point rate is on a STUB NK world.
+- Predictions were often wrong (the lanes said so). Hypotheses were
+  posted before runs but not frozen in git; the bus served as the
+  preregistration and was ephemeral (exported after the fact).
+- Redis runs AOF everysec: A3's zero loss under a Redis kill is one draw.
+- FalkorDB is SSPL; nothing here is cleared for redistribution.
+- The conductor was absent 4 h 10 min and lane D ~4.5 h: integration and
+  lane D science were under-sampled, and CHIMERA-0 was never attempted.
+- The cause of the two session deaths is unknown; it could recur.
+
+--------------------------------------------------------------------------------
+11. SUGGESTIONS FOR ROUND 2
+--------------------------------------------------------------------------------
+STABILITY
+ S1 Launch each lane through a wrapper that logs start time, session id,
+    exit code and end time to a file; today's exits left no trace at all.
+ S2 Heartbeat, not hello: every bus call refreshes pm:alive:<L>:<tag>
+    (TTL ~180 s); the conductor posts MISSING <L> when a key expires.
+ S3 The conductor does NO lane science. Fabric work (A2 bench, A4 harness)
+    becomes a bounty or a sixth lane.
+ S4 The conductor pre-creates all worktrees one at a time BEFORE the
+    operator pastes prompts, with sparse checkout (primordial/,
+    roles/Nestor/) to avoid 43k-file checkouts on the F: HDD.
+ S5 Rows are committed by the same script that writes them
+    (commit-on-write), so a dead session never strands results.
+ S6 For overnight runs, set WSL vmIdleTimeout=-1 and document substrate
+    restarts in the runbook.
+
+COMMS
+ C1 `bus read` shows FULL bodies for messages addressed to the reader.
+    Add structured to/cc fields and a `bus inbox` view (E4 was filed
+    without B's exploit warning).
+ C2 Add a read-only `bus tail` (XRANGE, no ack) and refuse a PM_LANE that
+    does not match the instance's registered tag, so an observer cannot
+    consume a lane's group again.
+ C3 Contract asks and bounty claims become tracked items with open/closed
+    state, so a missing conductor shows up as a growing queue.
+ C4 Auto-export pm:swarm and pm:results to committed JSONL every N
+    minutes; the bus is the preregistration record and must not be
+    ephemeral.
+
+LOGGING AND INSTRUMENTATION
+ L1 bus.receipt() records host load (per-core CPU, GPU, any announced
+    bursts in the window) and marks contended runs INDETERMINATE for speed.
+ L2 bus.receipt() refuses a git SHA that is not an ancestor of the pushed
+    integration tip, and a rows path absent at that SHA (fixes E2/B7's
+    rewritten SHAs and B1s's phantom filing).
+ L3 Receipt text fields are generated from rows only, with a test (fixes
+    B3g's stale hard-coded range).
+ L4 Burst announcements are machine-readable (pm:burst with a TTL);
+    timing harnesses refuse to record while another lane's burst is live.
+ L5 Every cross-lane import records its source lane, file and SHA in the
+    receipt (the code is read-only; the provenance is currently prose).
+ L6 A one-page live board (static HTML built from the bus export) for the
+    operator on mobile: lane liveness, last receipt, open asks.
+
+SCIENCE
+ X1 Declare a multiple-comparison rule per receipt before the run (Holm
+    across worlds) and require >=8 run seeds for any ranking claim.
+ X2 Derive bars from a variance estimate plus an eligibility count, never
+    from one dev draw; a zero-event bar needs a chance rate first.
+ X3 Harness invariants as gates: before interpreting, each harness asserts
+    its channel layout against an independent computation (the C7 column
+    bug survived three receipts).
+ X4 Oracle upgrade: trace hash plus a per-tick state-diff check or an
+    unpaid-write counter, to close the B1t/B1u blind spots; send the
+    wforge free-action packet to its owner.
+ X5 Prefer event-level audits to end-state checks for converging searches
+    (E1's blind spot).
+ X6 Make closed-loop claims only in worlds with per-episode randomisation,
+    with train-seed scaling (8/32/128) as the default design (E6 vs E8).
+ X7 Re-run branch points (E2b) on B's real Encounter, not the stub world.
+ X8 Lane D goes first in round 2: test D1b's post-hoc 1enc+1dec operator
+    prospectively, and measure whether learned codes transfer across
+    worlds (the directive's consequential symbols).
+ X9 Make CHIMERA-0 the single round-2 integration target with a posted
+    falsifier: closed-loop brains in B's world, messages over D's channel,
+    events through A's stream, sampled episodes replayed to wforge, and a
+    communication-ablated control that must lose.
+ X10 Independent failure mode: at least one non-Claude or scripted auditor
+    re-derives a sample of receipts from rows before anything is promoted.
+ X11 Hand-backs: A3 packet -> Daedalus, wforge packet -> its owner, and the
+    representation x channel x substrate axes -> Theophrastus.
+
+--------------------------------------------------------------------------------
+12. REPRODUCTION
+--------------------------------------------------------------------------------
+  git fetch origin
+  git worktree add <dir> origin/nestor/sidequest-graphworld-2026-09-14
+  PY=C:/Users/jcrai/lab/gw-venv/Scripts/python.exe
+  $PY -m pytest -q primordial/tests            (10 passed at 11:38)
+  Receipts: primordial/ledger/<L>.jsonl; rows: primordial/ledger/rows/<L>/
+  The bus as run: roles/Nestor/sidequests/graphworld/bus_export/*.jsonl
+  A3 spot check (start the WSL substrate on 6395 first):
+    wsl: bash primordial/ops/substrate.sh 6395 gw-fabric 2
+    $PY -m primordial.fabric.killmatrix --quick
+    expect lost=0 in every non-CHEAT row and lost>0 in the CHEAT row
+  Any lane: open its receipt, take `rows` and `git`, check the rows exist
+  at that SHA, and re-run the named script under primordial/<lane dir>/.
+
+--------------------------------------------------------------------------------
+13. VERDICT
+--------------------------------------------------------------------------------
+SWARM PRODUCED AUDITABLE RECEIPTS .............. YES (49, rows committed)
+CHEAT CONTROLS RAN ON SCORED RESULTS ........... YES (weak ones in 8)
+DIRECTIVE WAVE 1 COVERED ....................... 4 done, 1 partial, 1 late
+CHIMERA-0 ...................................... NOT ATTEMPTED
+OPERATIONS ROBUST .............................. NO (2 deaths, no liveness)
+FINDINGS INDEPENDENTLY VERIFIED ................ NO (same-model audits only)
+RECOMMENDATION ................................. ROUND 2, with S1-S5, C1-C4,
+                                                 L1-L3 and X1-X3 in place
+                                                 BEFORE lanes boot; target
+                                                 CHIMERA-0 (X9)
+
+Reviewer's bottom line: every cross-check was same-model, and most cells
+rest on 1-8 seeds on one shared host. Which section 6 findings would you
+accept as a basis for the round 2 design, and is CHIMERA-0 the right
+single target?
+
+================================================================================
+APPENDIX A. PROMPTS GIVEN TO THIS SESSION (verbatim; apostrophes as ASCII)
+================================================================================
+  1. "You're Nestor.  See roles.  He conducted a 5 node swarm, delegated,
+     then started his own work and then his Claude code session
+     disconnected from mobile.  Nestor D went away as well.  Perhaps you
+     can do a post mortem on their respective sessions."
+  2. "Yes.  Assume Neator's role as conductor and clean up his portion.
+     I'll also have another claude session assume Nestor D"
+  3. "You can commit and push.  I've asked the other 4 agents B-E to
+     quiesce, commit and push.  They shoild be stopped or winding down.
+     I think E was waiting on something to finish up."
+  4. "We can let stuff quiesce naturally, no forced shutdown necessary at
+     this point unless things are stuck or spamming errors"
+  5. This packet's request, committed verbatim at
+     roles/Nestor/prompts/2026-09-14_graphworld_swarm/
+     02_OPERATOR_REQUEST_REVIEW_PACKET_ROUND1.md
+
+================================================================================
+APPENDIX B. ORIGINAL OPERATOR DIRECTIVE TO NESTOR (the swarm's prompt)
+================================================================================
+  Authoritative text: 00_OPERATOR_DIRECTIVE.md, sha256 991cf048...6bf9690
+  (LF-normalised). Below is the same text with non-ASCII transliterated
+  (-- for the em dash, x for the times sign, -> for arrows, ---- for the
+  section rules, Greek letters spelled out) and long lines re-wrapped at
+  78 columns. No words changed.
+
+  Operator directive to Nestor, 2026-09-14, in chat (verbatim, including the
+  pasted ChatGPT brief that followed it in the same message).
+
+  ----------------------------------------------------------------------
+
+  Here's some ideas from chatgpt.  It might be too conservative ans single
+  threaded for my taste.  I'm thinking more along the lines of 5 agentic
+  claude sessions working together and  friendly competing to make this dream
+  a reality.  What could we tweak to run fast, quality qd, evolution, fitness
+  pressure, primordial soup, symbolic compression experiments leveraging the
+  beautiful intersection of redis + graphs +lua + streams.  This is a side
+  quest to shoot the moon, not carefully gate everything into a 10 year
+  project.   My idea:  5 claude code sessions looping, working together to
+  build their own chimera, divy up the woek iteratively building and testing
+  ideas in parallel for a new evolvable world engine that has plasticity baked
+  into the architeture via a tensor brain that can adapt.  Tensor train math,
+  all the shortcuts of graph mathematics?  Use all the tricks but discover new
+  ones.  Test tensor train algorithms,  get slow, useless english symbols out
+  of the mix.  Compile stuff into the fastest components that can work with
+  memory and disks.  Leverage redis streams for fast comms for example.
+
+  I can spin up 4 Nestor clones B, C, D, E of you but you can lay down tracks
+  for the others and then swarm this madness:
+
+  NESTOR -- GRAPHWORLD / PRIMORDIAL MACHINE SIDEQUEST
+
+  Branch:
+
+  nestor/sidequest-graphworld-2026-09-14
+
+  This is exploratory skunkworks work inside Prometheus.
+
+  Do not force an architectural decision prematurely.
+
+  The purpose of this sidequest is to explore a family of related ideas around
+  Redis, Valkey, FalkorDB, GraphBLAS, Streams, Lua/functions, sparse graphs,
+  tensor representations, GPU execution, symbolic compression, and evolvable
+  computational substrates.
+
+  Multiple approaches may coexist.
+
+  Some may become infrastructure.
+
+  Some may become experimental worlds.
+
+  Some may become organisms.
+
+  Some may become fossils.
+
+  The job is to make them falsifiable.
+
+  ----
+
+  0. WHAT WE KNOW NOW
+
+  Current measurements materially change the starting assumption.
+
+  SFE's step-by-step world loop is already mostly in-memory Python.
+
+  The major measured slowdown is persistence.
+
+  A 1,200-write burst took approximately:
+
+  * 20.6 seconds on NVMe
+  * 633.8 seconds on F:
+  * operational experiment throughput is around 1.4 rows/sec
+
+  A Vivarium result currently causes roughly twelve separate web interactions
+  before reaching the SQLite ledger.
+
+  Therefore:
+
+  Do not assume replacing Python world state with Redis or FalkorDB will make
+  ordinary world steps faster.
+
+  That hypothesis must earn survival experimentally.
+
+  At the same time, do not mistake the present bottleneck for the entire
+  research question.
+
+  There are at least three distinct opportunities:
+
+  1. faster experimental infrastructure;
+  2. new fitness pressures and representational ecologies;
+  3. evolution of the computational substrate itself.
+
+  Investigate all three.
+
+  ----
+
+  1. THE CENTRAL QUESTION
+
+  The interesting question is not:
+
+  Can Redis or FalkorDB make SFE faster?
+
+  It is broader:
+
+  What happens when storage, communication, representation, query execution,
+  and eventually the computational substrate itself become selectable parts of
+  the evolutionary ecology?
+
+  Prometheus currently evolves organisms inside worlds.
+
+  This sidequest asks whether we can also evolve:
+
+  * representations;
+  * communication protocols;
+  * query languages;
+  * indexes;
+  * relational encodings;
+  * compression schemes;
+  * query plans;
+  * kernels;
+  * computational operators;
+  * perhaps eventually the instruction set of the world itself.
+
+  The ultimate object is not "a faster FalkorDB."
+
+  Call the broader research object provisionally:
+
+  THE PRIMORDIAL MACHINE
+
+  A computational ecology in which mechanisms compete not only over behavior,
+  but over how information is represented, communicated, retrieved,
+  transformed, and executed.
+
+  ----
+
+  2. KEEP TWO LEDGERS SEPARATE
+
+  Nestor must distinguish:
+
+  ENGINEERING PERFORMANCE
+
+  Examples:
+
+  * events/sec
+  * world steps/sec
+  * persistence latency
+  * bytes written
+  * CPU instructions
+  * cache misses
+  * query latency
+  * recovery after crash
+  * memory consumption
+
+  from:
+
+  SCIENTIFIC PRODUCTIVITY
+
+  Examples:
+
+  * meaningful branch points/hour
+  * mechanisms exposed/hour
+  * falsifications/hour
+  * consequential representations discovered
+  * distinct strategies surviving transfer
+  * reusable compression operators
+  * substrate variants eliminated
+
+  A system that runs 50x more world steps but produces fewer meaningful branch
+  points is not necessarily better.
+
+  A useful high-level quantity is:
+
+  meaningful evolutionary branch points / compute-hour
+
+  Do not collapse this into raw throughput.
+
+  ----
+
+  3. TRACK A -- BASELINE CRUCIBLE
+
+  Before architectural enthusiasm, establish reality.
+
+  Run fixed workloads through multiple execution forms.
+
+  At minimum compare:
+
+  A1 -- Plain Python
+
+  Current in-memory world logic.
+
+  A2 -- Redis/Valkey
+
+  State transitions implemented through the smallest reasonable Redis
+  representation and atomic Lua/function execution.
+
+  A3 -- FalkorDB
+
+  Equivalent world represented relationally and manipulated through graph
+  operations.
+
+  Measure separately:
+
+  * pure world-step latency;
+  * batched throughput;
+  * single-organism latency;
+  * many-organism contention;
+  * event emission;
+  * persistence overhead;
+  * serialization;
+  * network/IPC round trips;
+  * CPU instructions where possible;
+  * memory.
+
+  Preregister the likely outcome:
+
+  Plain Python may win for tiny local steps because Redis/FalkorDB introduce
+  IPC and command overhead.
+
+  That prediction should be allowed to die.
+
+  Also test the opposite regime:
+
+  Redis/Valkey may dominate when many producers emit events and state
+  mutations concurrently.
+
+  Find the crossover, not a winner.
+
+  ----
+
+  4. TRACK B -- FAST EVENT FABRIC
+
+  The measured persistence bottleneck makes this immediately relevant.
+
+  Prototype:
+
+  world -> in-memory event stream -> batched durable writer -> SQLite/current
+  ledger
+
+  Redis Streams or Valkey Streams are candidate front ends.
+
+  Do not modify Daedalus-owned production machinery directly.
+
+  Prototype independently and produce evidence for Daedalus.
+
+  Test:
+
+  * 1 event
+  * 100 events
+  * 10k events
+  * multiple producers
+  * slow durable consumer
+  * process death
+  * Redis death
+  * writer death
+  * restart
+  * duplicate delivery
+  * partial batches
+  * ordering
+
+  Explicitly kill processes mid-write.
+
+  Account for:
+
+  * lost events;
+  * duplicates;
+  * replay;
+  * acknowledgement semantics;
+  * durable boundaries.
+
+  The goal is not merely speed.
+
+  It is:
+
+  faster ingestion without corrupting the evidentiary ledger.
+
+  Prometheus must not exchange epistemic integrity for throughput.
+
+  ----
+
+  5. TRACK C -- SYMBOLIC COMPRESSION PRESSURE
+
+  Symbolic compression currently exists mostly as an idea.
+
+  Make it executable.
+
+  Start with communication.
+
+  All organism<->world and organism<->organism messages in a test world may
+  pass through a metered channel.
+
+  Charge organisms for some combination of:
+
+  * bytes transmitted;
+  * symbols used;
+  * decoding computation;
+  * retrieval work;
+  * latency;
+  * state retained;
+  * reconstruction error;
+  * downstream behavioral error.
+
+  Do NOT reward compression alone.
+
+  Otherwise evolution discovers silence.
+
+  A candidate objective might resemble:
+
+  cost = alpha*message_bits + beta*decode_work + gamma*memory +
+  delta*behavioral_error
+
+  The exact coefficients are experimental variables, not truths.
+
+  The crucial concept is:
+
+  CONSEQUENTIAL COMPRESSION
+
+  A compressed representation survives only if it preserves distinctions that
+  matter for future action.
+
+  For example, evolution may begin with:
+
+  enemy_at(14,22)
+  enemy_type(knight)
+  enemy_health(31)
+  enemy_heading(NW)
+  terrain(14,22,mud)
+
+  and discover something analogous to:
+
+  Omega7(14,22,31)
+
+  If Omega7 reliably captures a recurring consequential configuration, it
+  becomes interesting.
+
+  Eventually a symbol might encode an entire relational subgraph.
+
+  Do not call such things reasoning primitives merely because they are
+  compact.
+
+  Test whether they:
+
+  * recur;
+  * transfer;
+  * compose;
+  * survive perturbation;
+  * improve action efficiency;
+  * preserve relevant distinctions.
+
+  ----
+
+  6. TRACK D -- GRAPH WORLDS
+
+  Create worlds whose physics are naturally relational.
+
+  Do not merely store Python objects as graph nodes.
+
+  Try representing world state directly as relations such as:
+
+  * ADJACENT
+  * SEES
+  * THREATENS
+  * OWNS
+  * CAN_REACH
+  * CONSUMES
+  * BLOCKS
+  * SUPPORTS
+
+  Then investigate whether world transition rules can become operations over
+  those relations.
+
+  Examples conceptually resemble:
+
+  CAN_ATTACK = ADJACENT  INTERSECT  ENEMY  INTERSECT  ARMED
+
+  or multi-hop reachability through compositions of adjacency relations.
+
+  FalkorDB is one implementation path because its graph representation
+  ultimately uses sparse linear algebra.
+
+  Raw GraphBLAS is another.
+
+  The scientific question is:
+
+  Does representing the world as relational algebra expose different or more
+  reusable circuitry than representing it as conventional mutable objects?
+
+  Do not assume yes.
+
+  ----
+
+  7. TRACK E -- QUERY LANGUAGE AS AN EVOLUTIONARY NICHE
+
+  A graph world enables another experiment.
+
+  Let organisms query the world.
+
+  Then meter queries by things such as:
+
+  * query length;
+  * result size;
+  * CPU instructions;
+  * touched edges;
+  * intermediate cardinality;
+  * execution time;
+  * memory;
+  * number of world observations purchased.
+
+  Reward organisms for acquiring enough information to act well while paying
+  less for it.
+
+  This creates pressure toward compact world interrogation.
+
+  Protect against memorization.
+
+  Between episodes vary:
+
+  * node identities;
+  * graph layout;
+  * irrelevant edges;
+  * labels where semantics permit;
+  * equivalent world encodings.
+
+  A strategy survives only if it captures transferable structure.
+
+  ----
+
+  8. TRACK F -- REPRESENTATION ECOLOGY
+
+  Do not declare graph representation the winner.
+
+  Allow multiple representational families to compete.
+
+  Potential encodings include:
+
+  * Python objects;
+  * hashes;
+  * sets;
+  * bitsets;
+  * sparse matrices;
+  * property graphs;
+  * vectors;
+  * quantized vectors;
+  * token dictionaries;
+  * macros;
+  * DAGs;
+  * CP decomposition;
+  * Tucker decomposition;
+  * tensor trains;
+  * small programs;
+  * cached relational operators.
+
+  Charge each representation for relevant costs:
+
+  memory + compute + communication + error
+
+  The experiment becomes:
+
+  Under different worlds and pressures, which representation families arise,
+  survive, hybridize, or die?
+
+  This turns representation into an evolutionary variable rather than a design
+  decision.
+
+  ----
+
+  9. TENSOR NETWORKS
+
+  Do not make "put tensors into FalkorDB" the project.
+
+  Instead treat tensor methods as one representation family.
+
+  A relational world could conceptually produce tensors like:
+
+  T[entity, relation, entity]
+
+  Possible competitors:
+
+  * dense tensor;
+  * sparse tensor;
+  * matrix slices;
+  * CP factorization;
+  * Tucker;
+  * tensor train;
+  * graph decomposition.
+
+  Tensor networks are particularly interesting because their topology is
+  itself a graph.
+
+  Graph machinery may therefore help plan:
+
+  * contractions;
+  * decompositions;
+  * reuse;
+  * dependency structure;
+  * shared cores.
+
+  Numeric execution should remain in an appropriate numerical engine.
+
+  The graph may describe and optimize computation without being responsible
+  for the floating-point payload.
+
+  ----
+
+  10. GPU TRACK
+
+  Do not make GPU execution foundational.
+
+  Test when it becomes justified.
+
+  Local interactive transitions may favor CPU because GPU launch and transfer
+  costs dominate.
+
+  Large-frontier/global operations may favor GPU.
+
+  Candidate experiment:
+
+  Allow a mechanism to choose between:
+
+  LOCAL_CPU
+
+  and
+
+  GLOBAL_ACCELERATED
+
+  and charge the actual computational cost.
+
+  This turns CPU-local versus GPU-global cognition into another selectable
+  strategy.
+
+  Potential future execution backends include graph and tensor GPU systems,
+  but integrate none merely because they are fashionable.
+
+  Require a crossover measurement.
+
+  ----
+
+  11. TRACK G -- EVOLVE THE ENGINE
+
+  This is one of the most Prometheus-native experiments.
+
+  Instead of organisms navigating a world, treat engine configurations as
+  organisms.
+
+  Possible genomes:
+
+  * query plans;
+  * optimizer choices;
+  * index layouts;
+  * batch sizes;
+  * plan-cache policies;
+  * GraphBLAS kernel sets;
+  * precompiled kernels;
+  * storage layouts;
+  * join order;
+  * traversal strategy;
+  * thread counts.
+
+  Use stock FalkorDB or another trusted implementation as a semantic oracle
+  where possible.
+
+  Fitness can include:
+
+  * exact output agreement;
+  * CPU instructions;
+  * wall time;
+  * allocations;
+  * cache misses;
+  * memory.
+
+  Correctness is a gate.
+
+  Performance acts only after semantic equivalence.
+
+  Do not let a fast wrong engine survive.
+
+  This track could eventually evolve specialized execution circuitry for
+  Prometheus-shaped workloads.
+
+  ----
+
+  12. TRACK H -- STRIP THE DATABASE AWAY
+
+  FalkorDB may ultimately be more useful as a fossil quarry than as the final
+  substrate.
+
+  Study its ideas:
+
+  * sparse relation matrices;
+  * GraphBLAS execution;
+  * batch processing;
+  * planner;
+  * optimizer passes;
+  * cache;
+  * relation tensor structures;
+  * execution operators;
+  * kernel compilation;
+  * benchmark methodology.
+
+  Then ask:
+
+  Which pieces remain necessary when we remove requirements unrelated to
+  Prometheus?
+
+  Prometheus organisms do not inherently need:
+
+  * general-purpose Cypher;
+  * arbitrary schemas;
+  * broad database compatibility;
+  * multi-purpose transactional semantics;
+  * human-oriented query ergonomics.
+
+  Perhaps a Prometheus-native machine only needs something like:
+
+  SCAN
+  FILTER
+  EXPAND
+  JOIN
+  MASK
+  MXM
+  REDUCE
+  ARGMIN
+  TOPK
+  READ
+  WRITE
+  EMIT
+  CACHE
+
+  Do not assume this list.
+
+  Measure actual workloads and derive the instruction vocabulary.
+
+  A narrow execution machine could potentially be dramatically simpler than a
+  general database.
+
+  ----
+
+  13. TRACK I -- EVOLVABLE INSTRUCTION SET
+
+  This is later-stage and intentionally strange.
+
+  Once a small machine exists, allow candidate operators to arise.
+
+  For example:
+
+  repeated operator sequences might be proposed as macros.
+
+  A candidate macro survives only if it:
+
+  * preserves semantics;
+  * reduces cost;
+  * recurs;
+  * transfers across appropriate worlds;
+  * does not merely memorize an episode.
+
+  This creates the possibility of evolution discovering instructions.
+
+  The substrate could move through something like:
+
+  operations
+  -> frequent compositions
+  -> macros
+  -> stable operators
+  -> instruction vocabulary
+
+  Do not anthropomorphize these as reasoning circuitry until they pass
+  behavioral tests.
+
+  But preserve them as candidates.
+
+  ----
+
+  14. TRACK J -- FALKORDB PERFORMANCE LAB
+
+  Fix the FalkorDB build because several experiments need a controlled binary.
+
+  Known current state:
+
+  * source exists at F:\lab\falkordb-lf;
+  * this is the LF-safe checkout;
+  * Techne's apparent successful build was not actually successful;
+  * libclang/compiler dependency remains unresolved;
+  * previous build container was ephemeral and would not have preserved
+    output.
+
+  Repair this cleanly.
+
+  After obtaining a reproducible binary:
+
+  establish an untouched baseline before changing anything.
+
+  Then investigate separately:
+
+  * plan cache;
+  * thread configuration;
+  * batch size;
+  * GraphBLAS kernel coverage;
+  * PreJIT specialization;
+  * Prometheus-specific query shapes;
+  * optimizer behavior.
+
+  Do not claim speedup without benchmark receipts.
+
+  ----
+
+  15. REDIS / VALKEY / FALKORDB ARE NOT ONE DECISION
+
+  Treat them as different experimental materials.
+
+  Redis/Valkey may be excellent for:
+
+  * Streams;
+  * event buffering;
+  * counters;
+  * atomic settlement;
+  * bitsets;
+  * hashes;
+  * queues;
+  * temporary state;
+  * high-rate event ingestion.
+
+  FalkorDB may be excellent for:
+
+  * graph-native worlds;
+  * relational state;
+  * sparse traversal;
+  * graph query experiments;
+  * query-plan evolution.
+
+  Raw GraphBLAS may be excellent for:
+
+  * narrow relational algebra;
+  * independent redistributable substrate work;
+  * experiments without full database machinery.
+
+  Python may continue to dominate:
+
+  * tiny local transitions;
+  * highly dynamic object logic;
+  * low-overhead single-process worlds.
+
+  Hybrids are allowed.
+
+  ----
+
+  16. LICENSING
+
+  Do not let licensing prematurely terminate scientific experiments, but
+  record it as an architectural constraint.
+
+  FalkorDB's SSPL status makes it suitable for internal research/fork
+  experiments but potentially awkward as the ancestor of something
+  redistributed.
+
+  Redis licensing also requires attention depending on version and intended
+  use.
+
+  Valkey is attractive as a permissively licensed Redis-compatible substrate.
+
+  Raw permissively licensed libraries may ultimately be preferable if a
+  Prometheus-native engine emerges.
+
+  Record ancestry carefully.
+
+  Do not copy SSPL implementation code into a supposedly clean permissive
+  implementation.
+
+  Ideas and measurements may inform independent implementation; code
+  provenance must stay explicit.
+
+  ----
+
+  17. OWNERSHIP BOUNDARIES
+
+  Nestor is exploratory.
+
+  Do not silently rewrite Daedalus, Vivarium, PEW, SFE, or other owners'
+  production systems.
+
+  Prototype on the Nestor branch.
+
+  When an experiment suggests a production change:
+
+  produce a packet containing:
+
+  * hypothesis;
+  * implementation;
+  * benchmark;
+  * failure cases;
+  * durability behavior;
+  * integration consequences;
+  * recommended change.
+
+  Then hand it to the owning role.
+
+  ----
+
+  18. FIRST EXPERIMENTAL WAVE
+
+  Do several cheap lines in parallel rather than betting the project on one.
+
+  WAVE 1A -- FIX FALKORDB BUILD
+
+  Produce a reproducible persistent build artifact and smoke test.
+
+  WAVE 1B -- BASELINE WORLD BENCHMARK
+
+  Same semantics:
+
+  * Python
+  * Redis/Valkey
+  * FalkorDB
+
+  Find crossover regimes.
+
+  WAVE 1C -- STREAM LEDGER PROTOTYPE
+
+  Measure batched in-memory ingestion and crash behavior.
+
+  WAVE 1D -- METERED COMMUNICATION WORLD
+
+  Implement the smallest real symbolic-compression pressure.
+
+  WAVE 1E -- GRAPHWORLD TOY
+
+  Construct one small world whose underlying physics are genuinely relational.
+
+  WAVE 1F -- ENGINE-AS-ORGANISM TOY
+
+  Take a small fixed query corpus and evolve or search one engine parameter
+  family under exact-output gating.
+
+  These experiments may run independently.
+
+  Do not wait for one to finish before learning from the others where
+  practical.
+
+  ----
+
+  19. IMPORTANT NEGATIVE RESULTS
+
+  The following are valuable outcomes:
+
+  * Python beats Redis everywhere tested.
+  * FalkorDB adds overhead with no scientific benefit.
+  * Streams improve throughput but make durability too difficult.
+  * message compression produces degenerate silence.
+  * organisms learn opaque episode-specific codes that do not transfer.
+  * graph worlds expose nothing new.
+  * tensor representations never earn their complexity.
+  * GPU acceleration never crosses over at our world sizes.
+  * engine evolution merely rediscovers existing optimizer defaults.
+  * a 5,000-line custom substrate is slower than existing software.
+
+  Record them.
+
+  Those deaths shrink the search space.
+
+  ----
+
+  20. SUCCESS IS NOT "WE BUILT A DATABASE"
+
+  The strongest possible output of this sidequest would be evidence that some
+  combination of:
+
+  * world representation;
+  * message language;
+  * compression;
+  * relational operators;
+  * memory structure;
+  * query strategy;
+  * execution plan;
+  * substrate operators
+
+  can itself undergo useful selection.
+
+  The conceptual progression is:
+
+  evolve behavior
+
+  -> evolve communication
+
+  -> evolve representation
+
+  -> evolve execution
+
+  -> evolve operators
+
+  -> perhaps eventually evolve computational substrate
+
+  That would put selection below the level at which Prometheus normally
+  operates.
+
+  ----
+
+  21. RELATION TO THE OTHER EXPLORERS
+
+  Archaeon searches for mechanisms through organism evolution.
+
+  Theophrastus systematically traverses:
+
+  mechanism x pressure x world x branch x intervention
+
+  Nestor explores another axis:
+
+  mechanism x representation x communication x storage x execution substrate
+
+  Nestor should feed useful experimental dimensions back to Theophrastus.
+
+  Theophrastus should eventually be able to cross a discovered mechanism not
+  merely with another world or pressure, but with another representational
+  substrate.
+
+  For example:
+
+  mechanism M
+  x pressure symbolic compression
+  x world W
+  x graph encoding
+  x stream communication
+  x bitset memory
+  x matrix execution
+
+  That dramatically enlarges the ecology.
+
+  ----
+
+  22. OPERATING RULE
+
+  Do not choose Redis.
+
+  Do not choose FalkorDB.
+
+  Do not choose GraphBLAS.
+
+  Do not choose tensors.
+
+  Do not choose Python.
+
+  Do not choose GPU.
+
+  Make them compete.
+
+  Instrument them.
+
+  Break them.
+
+  Hybridize them.
+
+  Remove pieces.
+
+  Allow narrow specializations.
+
+  Ask what survives under actual Prometheus workloads.
+
+  The skunkworks question is ultimately:
+
+  What computational forms does selection discover when representation,
+  communication, memory, and execution are themselves allowed into the soup?
+
+================================================================================
+APPENDIX C. CLONE BOOT PROMPT (as pasted for lane D; B/C/E differ in lane)
+================================================================================
+  You are Nestor-D (lane D: LINGUA -- symbolic compression pressure,
+  metered channels, codebooks) in the Primordial Machine swarm.
+  Do not pull. Boot: git fetch origin, then follow
+  roles/Nestor/sidequests/graphworld/BOOT_CLONE.md
+  (read it from origin/nestor/sidequest-graphworld-2026-09-14 with git show)
+  with L=D, l=d. Your charter is SWARM.md s3 lane D. First item: D1
+  metered channel (Streams + Lua per-bit settlement, anti-silence and
+  leaked-channel cheat controls). Private substrate port 6393.
+  Then loop per SWARM.md s6 and compete.
+
+================================================================================
+END OF PACKET
+================================================================================

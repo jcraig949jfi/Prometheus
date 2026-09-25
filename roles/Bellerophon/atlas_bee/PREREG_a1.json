@@ -1,0 +1,135 @@
+{
+ "freeze": {
+  "algo": "sha256-canonical-json-v1",
+  "canonical_bytes": 4570,
+  "sha256": "a3fb68ce21d94df16be2510aa586bd5d9a6c7b0e6d9d16f16c37f657bfef2bc5"
+ },
+ "prereg": {
+  "adaptation_id": "a1",
+  "budgets": {
+   "generations": 8,
+   "keep": 6,
+   "population": 20
+  },
+  "controls": [
+   "control.replay.v1 on every held-out evaluation (BIT determinism)"
+  ],
+  "decision_criteria": {
+   "PHENOMENON_ABSENT / NOT_COMPARABLE": "neither organism reaches positive charge on a world (no gradient to compare)",
+   "PHENOMENON_CHANGED": "closed > open on one world only, or both non-zero with no closed advantage",
+   "PHENOMENON_INVERTED": "open > closed on both worlds",
+   "PHENOMENON_PRESERVED": "closed mean held-out charge > open on BOTH worlds (matches the source's closed>open)"
+  },
+  "initial_state": "each search starts from a fresh random generation 0 (no seeded imports)",
+  "interventions": "none; the only manipulated variable is the organism class (closed vs open)",
+  "invariants": [
+   "held-out seeds disjoint from train seeds",
+   "closed and open share the same world, objective, seeds and budget -- only the organism class differs",
+   "every held-out evaluation replays bit-for-bit (control.replay MET)"
+  ],
+  "manifest": {
+   "adaptation_id": "a1",
+   "counts": {
+    "ANALOGOUS": 3,
+    "IDENTICAL": 3,
+    "MODIFIED": 1,
+    "OMITTED": 1,
+    "UNREPRESENTABLE": 1
+   },
+   "entries": [
+    {
+     "aspect": "world",
+     "bee": "world.wforge.encounter.v0(genome_seed=3|4)",
+     "reason": "the wforge Encounter world family IS the same de_novo generator; genome_seed selects the world",
+     "relation": "IDENTICAL",
+     "source": "NPE lane-B de_novo Encounter worlds w3/w4 (genome_seed 3/4)"
+    },
+    {
+     "aspect": "world w1",
+     "bee": "-",
+     "reason": "a single-organism closed-vs-open test on a 2-slot encounter needs a co-evolution / fixed-partner harness the light shim does not build; the source itself found w1 not significant",
+     "relation": "UNREPRESENTABLE",
+     "source": "NPE de_novo Encounter world w1 (genome_seed 1), 2 slots"
+    },
+    {
+     "aspect": "organism closed",
+     "bee": "statemachine.v1",
+     "reason": "a finite-state controller that reads the observation each tick; not the source's linear form but the same closed-loop class (behaviour depends on the observation)",
+     "relation": "ANALOGOUS",
+     "source": "linear closed-loop brain acting on the observation"
+    },
+    {
+     "aspect": "organism open",
+     "bee": "sequence.v1",
+     "reason": "the open-loop action tensor is exactly sequence.v1's action-per-tick",
+     "relation": "IDENTICAL",
+     "source": "open-loop action tensor (a fixed action per tick, blind to the observation)"
+    },
+    {
+     "aspect": "objective",
+     "bee": "objective.charge.v1 (best final charge from world_summary)",
+     "reason": "the wforge wrap surfaces charge/alive/ticks but not the per-slot yield_events the source scored; charge is the resource in the same outcome() and gives a gradient (0..1200 across organisms)",
+     "relation": "MODIFIED",
+     "source": "the encounter's native per-episode competence (reward / yield_events)"
+    },
+    {
+     "aspect": "train / held-out split",
+     "bee": "evolve on TRAIN seeds; execute() the best elite on disjoint HELD-OUT seeds",
+     "reason": "BEE evolves a population and re-evaluates the top elite on a disjoint seed range",
+     "relation": "ANALOGOUS",
+     "source": "train on N seeds, evaluate the best on 64 held-out seeds"
+    },
+    {
+     "aspect": "search / selection",
+     "bee": "search.evolve, selector.truncation.v1",
+     "reason": "hill-climb on charge; the source's exact optimiser is not reproduced, the generalisation question is",
+     "relation": "ANALOGOUS",
+     "source": "the source's training procedure"
+    },
+    {
+     "aspect": "control",
+     "bee": "control.replay.v1 (BIT)",
+     "reason": "the encounter world is replay_class BIT; the held-out evaluation replays bit-for-bit",
+     "relation": "IDENTICAL",
+     "source": "determinism / replay"
+    },
+    {
+     "aspect": "scientific-conclusion layer",
+     "bee": "-",
+     "reason": "BEE authors no scientific conclusion; the comparison packet is the conclusion layer",
+     "relation": "OMITTED",
+     "source": "NPE's disposition (POSITIVE)"
+    }
+   ],
+   "source_experiment": "nestor.graphworld/r1:E10-linear-closed-vs-open-128-seeds"
+  },
+  "objective": "objective.charge.v1 (best final charge over slots, from world_summary)",
+  "observations": [
+   "objective value per held-out seed",
+   "mean held-out charge per (world, organism)"
+  ],
+  "organisms": {
+   "closed": "statemachine.v1",
+   "open": "sequence.v1"
+  },
+  "question": "Does a closed-loop organism (acts on the observation) reach a higher held-out final charge than an open-loop one (a fixed action per tick), on the single-slot wforge Encounter worlds genome_seed 3 and 4?",
+  "seeds": {
+   "disjoint": true,
+   "heldout": {
+    "base": 9000,
+    "n_seeds": 20
+   },
+   "train": {
+    "base": 200,
+    "n_seeds": 10
+   }
+  },
+  "source_disposition": "POSITIVE",
+  "source_experiment": "nestor.graphworld/r1:E10-linear-closed-vs-open-128-seeds",
+  "stopping_rules": "fixed budget; no early stop; a search that finds no positive charge is a valid ABSENT/NOT_COMPARABLE result",
+  "worlds": [
+   "world.wforge.encounter.v0(genome_seed=3)",
+   "world.wforge.encounter.v0(genome_seed=4)"
+  ]
+ }
+}

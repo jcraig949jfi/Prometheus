@@ -1,0 +1,29 @@
+{
+ "perturbation_id": "P-F08",
+ "parent": "T-E03",
+ "escapes_stasis": "a heritable binary mask gene: zeros persist across births (T-E03's refined escape)",
+ "claim_type": "stasis-escape",
+ "phase1": {
+  "drift_generations": 30,
+  "ids": 4,
+  "flip_p": 0.02,
+  "attainable_if": "mean(start - end) of effective nz_share >= .10"
+ },
+ "phase2": {
+  "lambdas": [
+   "0",
+   "H"
+  ],
+  "ids": 4,
+  "generations": 60,
+  "n": 64
+ },
+ "unchanged": "e03 world, organism otherwise, elitism, MI ruler",
+ "material_rule": "phase 2: nz_share(H) - nz_share(0) below p05 AND (mi_excess or precision outside its band) -> BURDEN_CHANGES_CONDITIONALITY; nz below only -> SPARSITY_ONLY; phase 1 failure -> INSTRUMENT_UNATTAINABLE",
+ "continuation": [
+  "flip dose",
+  "magnitude burden"
+ ],
+ "written": "2026-09-19 02:36:34",
+ "prereg_sha256": "6d1116c49feeb4a528d07b812f6f650cb5638fd24cb1964944073d2944db502a"
+}
