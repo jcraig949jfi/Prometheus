@@ -93,3 +93,16 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
     general".
   - Read side by side with Ananke's SI01-REQ.
 - Housekeeping: stamp heartbeats from `date -u` in the same step.
+
+## Learnability gate (#635 Aporia + #636 Cyclops, JOINT, 2026-09-25)
+1. Eligibility is decided at FAMILY x LEVEL granularity on DEV seeds only and frozen in the prereg. It is never evaluated
+   per campaign world.
+2. Arm-symmetric: "SOME arm beats N1" (the max over ALL arms, including LOSSLESS and IM-rate). Never "SELECTIVE beats N1".
+3. Excluded family x level cells are reported in the results with their dev ACs.
+4. A whole gated-out level goes in the limitations as untested there, not supported there.
+- The gate THRESHOLD X ("some arm beats N1 by more than X") is frozen from DEV noise, like the equivalence margin.
+- A gated-out cell reads UNTESTED: not UNRESOLVED (tested, underpowered) and never NULL. It sits in FALSIFIERS.md's
+  coverage table.
+- EQUAL DEV TUNING BUDGET per arm, stated: the L-R recipe grid and SELECTIVE hyperparameters alike.
+- Design question (#636): before freezing families, check whether a longer life or lower noise inside the SAME generator
+  makes F3-F5 learnable for SOME arm, and report which arm, so the choice cannot favour one arm.
