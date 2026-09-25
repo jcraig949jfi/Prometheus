@@ -1,0 +1,9 @@
+[s1] G-S1.6 no target PASS=True
+[s1] G-S1.1 collapse 163/163 PASS=True
+[s1] G-S1.2 separation PASS=False mutants=1155
+[s1] G-S1.3 audit false merges=403 classes=6304 PASS=False (2081s)
+[s1] G-S1.4 refinement PASS=True
+[s1] standing conformance gate GREEN=True checked=21600 (49s)
+[s1] G-S1.5 conformance PASS=False
+[s1] G-S1.7 old fixtures PASS=True 7 passed in 0.05s
+[s1] OUTCOME S1_FAIL failed=['G_S1_2_separation', 'G_S1_3_audit', 'G_S1_5_conformance'] (2214s) -> S1_GATE_2026-09-23.json

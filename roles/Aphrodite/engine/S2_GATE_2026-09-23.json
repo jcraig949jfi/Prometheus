@@ -1,0 +1,190 @@
+{
+ "G_S2_1_identical_content": {
+  "PASS": true,
+  "canonical_differs": true,
+  "content_equal": true,
+  "costs_abstract": [
+   86,
+   10,
+   211,
+   58,
+   191,
+   76,
+   210,
+   100,
+   116238,
+   111899,
+   80249,
+   84963,
+   19973,
+   16312,
+   2247,
+   87192
+  ],
+  "costs_memorise": [
+   86,
+   10,
+   211,
+   58,
+   191,
+   76,
+   210,
+   100,
+   116238,
+   111899,
+   80249,
+   84963,
+   19973,
+   16312,
+   2247,
+   87192
+  ],
+  "tier3c_recorded": "memorise 13,479 vs abstract 51,018 (per-arm seeding)"
+ },
+ "G_S2_2_order_invariance": {
+  "PASS": true,
+  "costs_permuted": [
+   86,
+   10,
+   211,
+   58,
+   191,
+   76,
+   210,
+   100,
+   116238,
+   111899,
+   80249,
+   84963,
+   19973,
+   16312,
+   2247,
+   87192
+  ]
+ },
+ "G_S2_3_arm_invariance": {
+  "PASS": true,
+  "rows": {
+   "EVOLVED": [
+    226,
+    264,
+    19,
+    254,
+    79133,
+    22762,
+    4998,
+    8038
+   ],
+   "PRISTINE": [
+    226,
+    264,
+    19,
+    254,
+    79133,
+    22762,
+    4998,
+    8038
+   ],
+   "SHAM_3": [
+    226,
+    264,
+    19,
+    254,
+    79133,
+    22762,
+    4998,
+    8038
+   ]
+  }
+ },
+ "G_S2_4_charge_conservation": {
+  "PASS": true,
+  "checks": 32,
+  "mismatches": []
+ },
+ "G_S2_5_pairing": {
+  "PASS": true,
+  "memorise_paired": [
+   86,
+   10,
+   211,
+   58,
+   191,
+   76,
+   210,
+   100,
+   116238,
+   111899,
+   80249,
+   84963,
+   19973,
+   16312,
+   2247,
+   87192
+  ],
+  "memorise_unpaired": [
+   18,
+   214,
+   58,
+   306,
+   83,
+   245,
+   201,
+   92,
+   89324,
+   88932,
+   78001,
+   79893,
+   15944,
+   952,
+   80037,
+   12888
+  ],
+  "paired_summary_memorise_vs_pristine": {
+   "lower95_one_sided": 7593.95,
+   "mean_cost": 32500.94,
+   "mean_paired_saving": 20643.75,
+   "n_cells": 16,
+   "se": 7933.01
+  },
+  "pristine": [
+   78926,
+   77050,
+   35491,
+   2938,
+   4331,
+   22936,
+   27210,
+   85240,
+   115878,
+   111539,
+   79889,
+   84603,
+   19613,
+   15952,
+   1887,
+   86832
+  ],
+  "var_paired_diff": 943989060.9375,
+  "var_unpaired_diff": 1550240082.2460938
+ },
+ "G_S2_6_conformance": {
+  "B1_sha256_unchanged": true,
+  "PASS": true,
+  "part1_GREEN": true,
+  "part1_checked": 21600,
+  "part2_checked": 803480,
+  "part2_mismatches": 0,
+  "part2_programs": 40
+ },
+ "OUTCOME": "S2_PASS",
+ "R": 8,
+ "amendment": "AMENDMENT_13 @ 4a6bbf55d",
+ "failed_gates": [],
+ "families": [
+  "md_a_sum_times_last",
+  "md_c_prod_minus_first"
+ ],
+ "seconds": 92.7,
+ "started_utc": "2026-09-24T14:26:27Z"
+}

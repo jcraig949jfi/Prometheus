@@ -1,26 +1,12 @@
 # Aphrodite status
 
-Currency: 2026-09-22 (Tier 3C closed; engine work paused for upgrades).
+Currency: 2026-09-25 (seat reset requested; S1-S4 done, A15/A16 recursion attempts untestable -- see NEXT_SESSION.md).
 
 seat state: ACTIVE on its charter (APHRODITE-08 APPROVED 2026-09-18).
-what it asserts: PRESENT (comms), ACTIVE, PRODUCTIVE (engine tiers 1-3
-  and ten review packets committed); VALID not asserted. Evidence held:
-  TIER 1 (E1-E4, X1, X2, S1-S4, X-S3, X-Z). TIER 2: Campaign 0/0B/0C
-  and the local engine, all apparatus. TIER 3: designs, frozen
-  prereg + amendments. TIER 4: none, and none in prospect.
-workspace: worktree aphrodite-base-role, branch
-  aphrodite/engine-2026-09-21 (pushed, head 4469736ca). Host harry1 (M4).
-guard: linked worktree (git-dir differs from git-common-dir).
-comms: M1 canonical store via EW_DB_HOST=192.168.1.202.
+workspace: worktree aphrodite-base-role, branch aphrodite/engine-2026-09-21
+  (pushed). Host harry1 (M4). comms via EW_DB_HOST=192.168.1.202.
 
-READ NEXT: NEXT_SESSION.md -- pick-up state, the ORDERED causal sequence
-S1-S8 (operator ruling 2026-09-22; the steps are ordered, not a menu) and
-the standing gates G1-G5.
-
-The open question, in the operator's words: Aphrodite has demonstrated
-transferable local search leverage and experimentally shown that a
-reusable schema can generalise across unseen families, but has NOT yet
-demonstrated that the improver can discover that abstraction itself.
+READ FIRST: NEXT_SESSION.md (pick-up state, open questions Q-A..Q-E, where to resume), then journal/2026-09-23.md.
 
 ## Dispositions on record (never pooled with each other)
 
@@ -28,6 +14,18 @@ demonstrated that the improver can discover that abstraction itself.
   STRUCTURAL_SEARCH_LEVERAGE          YES        slice 4, equal expressivity
   TRANSFERABLE_SEARCH_LEVERAGE        YES_LOCAL  Tier 3B 47x, Tier 3C 345x
   BOUNDED_RECURSIVE_SELF_IMPROVEMENT  NO         Tiers 3A, 3B, 3C
+  GLOBAL_BEHAVIOR_IDENTITY            FAIL       S1 runs 1-3 (AMENDMENT 12 + ADD 1-2)
+  CAMPAIGN_RELEVANT_IDENTITY          PASS       S1-local gate (ADDENDUM 3)
+  FAIR_META_SELECTION (S2)            PASS       AMENDMENT 13
+  ENDOGENOUS_ABSTRACTION (S3)         YES        AMENDMENT 14: donor derived and
+                                                 selected (acc + {H})
+  ABSTRACTION_TRANSPLANT (S4)         YES        all 8 conditions; 5 unseen-body
+                                                 families; break-even 41.2 < 64
+                                                 ACCEPTED by operator 2026-09-24
+  BOUNDED_RSI                         NOT YET ESTABLISHED (operator 2026-09-24);
+                                                 A15: NO / UNTESTABLE_CATALOG
+                                                 A16: E1/E2 UNTESTABLE (time)
+  S1_NECESSITY (A16 E4)               INCONCLUSIVE WHOLE 3/3, BODY_ONLY 1/3
   Tier 3A also: PRIMARY_CAUSAL_INFERENCE = INCONCLUSIVE_CONTROL_INVALID
 
 ## Campaign 1
