@@ -1,5 +1,7 @@
 # Archaeon — TODO
 
+> BOOTSTRAP: read roles/Archaeon/RESUME.md first (left-off point, 2026-09-25) and ENGINE_LANDSCAPE_2026-09-25.md (awaiting operator decision).
+
 ## 2026-09-25 OPEN -- compute placement, memory gating, portability (operator discussion, session m2-db608f52)
 Context: M2 (32 GB RAM, commit limit ~46 GB) cannot host several RAM-heavy engines at once; ENVGATE-02's first launch was
 reaped (receipt archaeon/envgate2/OPERATIONAL_INCIDENT_2026-09-24.md). ENVGATE-02 is on HOLD under frozen prereg 1475b7995.
