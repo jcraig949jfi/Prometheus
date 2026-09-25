@@ -81,8 +81,10 @@ LRT p = 0.42): each founder is an independent ~13% lottery ticket, s(k) = 1-(1-p
    WEAK_SIGNAL: ffa6 4/8, 9cba 1/8, e160 1/8 vs own cell 3/8). The genome copies from a fresh state
    only in 7ae3's cell and the near-identical ffa6 (0.955) and in no other cell (0.0): competence
    belongs to the genome-cell pair. Exploratory; not confirmed. X-SWAP-ORIGIN: the 9cba and e160
-   runaways are native lineages, not the implant's; only ffa6 (2 of 4) shows founder-rooted runaway.
-   Scope: the runaway endpoint in this section is world-level (any lineage); see X-ROOT-AUDIT.
+   runaways lie outside the founder's CERTIFIED causal lineage. X-ATOMIC-RANDOM then showed that in 7ae3's
+   cell a random implant never runs away (0/80 vs 46/80) and that genome runaways are 100% founder-descended
+   by ancestry: certification breaks inside the lineage, it does not mark native lineages. Whether the
+   foreign runaways are founder-descended: X-SWAP-ANCESTRY.
 
 ## 4. Defects found and handled
 

@@ -344,6 +344,13 @@ lineage, until audited on a founder-rooted endpoint (X-ROOT-AUDIT, for C-ATOMIC 
 C1's 0.25 effect bar missed). 34 of the 46 ATOMIC runaways are carried by lineages outside the founder's causal
 lineage. The frozen C1 verdict stands for its declared world-level endpoint; the reading that erosion stops the
 IMPLANT's heredity is supported only at 12/80. Missing null under test: ATOMIC without the genome (X-ATOMIC-RANDOM).
+**X-ATOMIC-RANDOM (SIGNAL) reverses that qualification:** with a random 64-byte implant in place of the genome, ATOMIC
+gives 0/80 runaways vs 46/80 (p = 1.3e-18), and in every genome runaway 100% of the final population carries the
+founder's ancestry marker. The runaways ARE the implant's descendants; the P-11-certified causal chain from the
+founder breaks at uncertified births, so founder causal depth undercounts the lineage. C-ATOMIC C1 reads as stated.
+**Correction to X-SWAP-ORIGIN:** its NATIVE labels mean 'outside the certified causal lineage', not native ancestry;
+the random implant gave 0/8 runaways in 9cba and e160 too. The withdrawn post hoc is reopened, under test in
+X-SWAP-ANCESTRY. Open instrument question: which births break certification, and how often.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
