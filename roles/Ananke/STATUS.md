@@ -1,24 +1,19 @@
 # Ananke status
 
-Currency: 2026-09-24T12:08Z (from date -u; an earlier stamp of 12:10Z was an estimate, see calibration ledger).
+Currency: 2026-09-25T00:10Z (from date -u).
 
-seat state: ACTIVE. Campaign PTE-C1 RUNNING (launched 12:04Z; 17.5 h
-  hard cap; waves A0 -> A1 -> B/B2 -> C -> D -> E).
-what it asserts: PRESENT, ACTIVE, PRODUCTIVE (rows being produced).
-  VALID: nothing yet -- no verdict exists until the evidence package.
-charter: Packet-Tensor Engine (roles/Ananke/RESPONSIBILITIES.md; mission
-  verbatim roles/Ananke/prompts/2026-09-24_charter/).
-engine: prometheus/ananke/ (PTE-SUB-1 / PTE-OPS-1), 145 tests incl.
-  bit-exact conformance against an independently written CPU oracle.
-prereg: roles/Ananke/pte/PREREG_PTE_C1.md (78243a758);
-  freeze roles/Ananke/pte/FREEZE_PTE_C1.json (362f2189b, code eb7c4b40a).
-run state: ~/ananke_runs/pte-c1/ (heartbeat.json, log.txt, cells.jsonl).
-  Pinned worktree Prometheus-worktrees/ananke-pte-c1-pinned (detached
-  at 362f2189b; nobody edits it).
-monitors owned: AnankePTE_C1 (roles/base-role/MONITORS.md; bound 5
-  consecutive failed cells, accountable seat Ananke).
-workspace: worktree ananke-base-role, branch
-  ananke/base-role-adopt-2026-09-24.
-blockers: none.
-next executable action: report.py + atlas_export.py against smoke data
-  while the campaign runs; journal each wave transition.
+seat state: ACTIVE. PTE-C1 DONE (2026-09-24T12:04Z -> 2026-09-25T00:06Z,
+  12 h 02 m, 0 failed cells, 6596 rows).
+what it asserts: PRESENT, ACTIVE, PRODUCTIVE. VALID (the campaign's
+  question), graded: COMM_DEPENDENT + CAUSAL_SUPPORT + REPRODUCED for
+  RELAY routed relay (size-free to N=2304; topology-bound); no cross-family
+  transfer; XOR/FLIP NULL; SUPPORTED phase boundaries gate a hand design,
+  not evolved machinery. Not yet adversarially reviewed.
+evidence: roles/Ananke/pte/C1_REPORT.md, REVIEW_PACKET_PTE_C1.txt,
+  c1_report/ (report.py output), c1_a0/, c1_posthoc/.
+monitors owned: none running (AnankePTE_C1 row set DONE; task Disabled).
+blockers: adversarial review requested from Kairos (#564) and Elenchus
+  (#565); not blocking.
+next executable action: PTE-C1b prereg (adjudicate delay-line HOLD memory
+  and self-modifying MAJ properly), then PTE-C2 prereg (weather in the
+  causally verified habitable zone, three load axes, fixed boundary rule).
