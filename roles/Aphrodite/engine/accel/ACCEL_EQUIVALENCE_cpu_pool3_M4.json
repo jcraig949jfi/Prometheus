@@ -1,0 +1,57 @@
+{
+  "backend_run": {
+    "backend": "cpu_pool3",
+    "cells": 480,
+    "cpu_count": 8,
+    "head_sha": "391223a8fab47010c6770f717aff575e6791782d",
+    "host": "M4",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "start_method": "spawn",
+    "started_utc": "2026-09-23T20:42:38Z",
+    "wall_clock_seconds": 429.9,
+    "worker_pids": [
+      10456,
+      15856,
+      16960
+    ],
+    "workers": 3,
+    "written_utc": "2026-09-23T20:49:47Z"
+  },
+  "canary": "ACCEL_CANARY_v1",
+  "compared_utc": "2026-09-23T20:49:56Z",
+  "conformance": {
+    "GREEN": true,
+    "checked": 21600,
+    "expected_checked": 21600,
+    "mismatches": 0,
+    "ok": true,
+    "programs": 900,
+    "seconds": 136.753
+  },
+  "duplicate_rows": [],
+  "extra_rows": [],
+  "library_hashes": {
+    "EVOLVED": {
+      "backend": "2849244e1637412bee0a72b4239fb9b81037cbe1fc0f46afc599c5935e079766",
+      "reference": "2849244e1637412bee0a72b4239fb9b81037cbe1fc0f46afc599c5935e079766"
+    },
+    "PRISTINE": {
+      "backend": "c2fc843e829a593aaf163412d7bf9726223c25142d838c24a6e53110e1517c7b",
+      "reference": "c2fc843e829a593aaf163412d7bf9726223c25142d838c24a6e53110e1517c7b"
+    }
+  },
+  "library_hashes_ok": true,
+  "mismatch_count": 0,
+  "missing_rows": [],
+  "reference": {
+    "artifact_sha256": "afe040e960a0ee056160347c633553606a1bb848a611721699c928c1b7eb075e",
+    "results_sha256": "bdeb3ad831d25fca53b7297a6b8ecee450726e419f119177c3076c6ed9321bbd",
+    "serial_total_seconds_M4": 1196.7
+  },
+  "row_diffs": [],
+  "rows_compared": 480,
+  "rows_identical": 480,
+  "verdict": "EQUIVALENT",
+  "wall_clock_note": "reference serial time covers the whole Tier-3C pipeline (gate + qualification + meta + transplant); backend time covers arm rebuild + 480 transplant cells + FULL conformance sweep. Wall-clock is exempt from equivalence."
+}
