@@ -1,7 +1,8 @@
 # Ares status
 
-Currency: 2026-09-23 (cycle 2 closed; seat PARKED pending the
-operator's decision on the gate recommendation).
+Currency: 2026-09-25 (cycle 2 closed; seat PARKED pending the
+operator's decision on the gate recommendation; handed off across an
+operator reboot -- read roles/Ares/RESUME.md first).
 
 seat state: PARKED. Cycle 2 ran under the operator's directive of
   2026-09-23 (one focused closure/validation round). Gates A and B
@@ -29,4 +30,11 @@ open on reopen (not authorised now): the three tests in report s7,
   explanation on evolved genomes.
 export package ready (report s9) for Nyx / Theophrastus / SFE, so
   closing the seat costs nothing.
-next executable action: none (parked).
+comms: Ares has sent 7 messages (#518 #519 #535 #536 #538 #539 #540)
+  and received ZERO replies; a scan of ids 536-566 shows nothing
+  addressed to Ares. Raised as operator question Q2 in RESUME.md.
+branch/worktree: ares/base-role-adopt-2026-09-19 in
+  D:\Prometheus-worktrees\ares-base-role, fully merged into
+  origin/main, clean, KEPT across the reboot at the operator's request.
+next executable action: none (parked). On reboot: read RESUME.md, boot
+  comms, and re-ask the operator questions in RESUME.md s7.
