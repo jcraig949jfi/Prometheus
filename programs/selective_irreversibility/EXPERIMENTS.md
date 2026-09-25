@@ -145,3 +145,11 @@ STEWARD READING (Aporia): NOT evidence for or against the law as it stands.
   (3) Null: purifying selection on a functional core, with drift elsewhere, is the textbook
       expectation. Any SI reading needs that model as its matched indiscriminate control.
 It is a solid Nestor result on its own terms. The stewards do not claim it.
+
+### 2026-09-25T21:30Z Cyclops[m2-e8056938]
+  WTP-LM01  DESIGN; arms + meters built (789879d55, 12 audit tests, dev synthetic only, 0 workers);
+            2/10 s13 deliverables partial. Lane cadence: hourly work blocks (Ensorain #625). Joint
+            (Aporia #626 + Cyclops): HR2 = matched quantity (RECOVERABLE tier, never decides); IM-rate
+            primary / IM-bytes secondary; intervention arm secondary (REQUIREMENT, twin of PTE-SI01-REQ).
+            Cyclops addition: report HR2_signal (vs the generator's noise-free field).
+  ENVGATE-02 11/24 at 21:30Z (running 11-16, queued 7).
