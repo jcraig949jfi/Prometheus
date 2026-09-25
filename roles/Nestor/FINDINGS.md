@@ -306,7 +306,11 @@ X-TICKET (EXPLORE, WEAK_SIGNAL): the lottery is decided in ~12 epochs. Of 118 lo
 49 lose the causal lineage by epoch 5 (36 at epoch 1) and 69 keep it alive but stop copying (37
 never copy; the rest stop by epoch 11). Even 6 of 10 depth >= 5 "wins" are early bursts that stop
 by epoch 12; only the runaways keep copying. The dominant loss is cessation, not extinction.
-Suspect under test: per-epoch in-place mutation (X-DECAY).
+X-DECAY (WEAK_SIGNAL): in-place mutation is a minor factor (wins 6 -> 8/64 with it off, p = 0.39).
+X-STALL (SIGNAL): at epoch 100, 177/192 live lineage members cannot copy even from a fresh state,
+where the founder genome passes 166/192 in the same contexts: stalled lineages are genomically
+STERILE. P-11 certifies a causal rebuild of the victim half, not a fertile child. When sterility
+arises (at birth, or by accumulated mutation) is under test (X-STERILE).
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
