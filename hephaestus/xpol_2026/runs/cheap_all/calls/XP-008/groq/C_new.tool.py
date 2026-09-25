@@ -1,0 +1,289 @@
+import random
+from collections import defaultdict
+from typing import Dict
+
+"""
+ReasoningTool – proof‑graph + entropy‑weighted VCG scoring + dynamics stability.
+
+The tool parses logical propositions from a prompt / candidate answer,
+builds a tiny inference graph, weights each proposition by the entropy of
+its type distribution, and awards a VCG‑style payment based on a confidence
+estimate.  A KL‑penalty discourages deviating from a uniform reference
+distribution.  A deterministic 10‑dimensional state vector is updated by each
+proposition; variance of the final state over several random orderings yields a
+stability score that is added to the final ranking.  A lightweight NCD
+(zlib‑based) is used only as a tie‑breaker.
+
+The class also provides a meta‑confidence detector that looks for common
+ambiguity traps in the prompt and forces low confidence when they appear.
+"""
+
+import re
+import zlib
+import itertools
+import hashlib
+import numpy as np
+from collections import Counter, defaultdict
+from typing import List, Dict
+
+
+class ReasoningTool:
+    """Implements the proof‑graph / VCG / dynamics scoring pipeline."""
+
+    # --------------------------------------------------------------------- #
+    # 1.  Proposition extraction
+    # --------------------------------------------------------------------- #
+    _patterns = {
+        "negation": re.compile(r"\b(not|no|never|none|¬)\b", re.I),
+        "comparative": re.compile(
+            r"\b(greater than|less than|>=|<=|>|<|equal to|==)\b", re.I
+        ),
+        "conditional": re.compile(r"\bif\s+.+?\s+then\b|\b=>|⇒\b", re.I),
+        "numeric": re.compile(r"\b\d+(\.\d+)?\b"),
+        "causal": re.compile(r"\b(causes?|leads? to|results? in)\b", re.I),
+        "ordering": re.compile(r"\b(before|after|earlier|later|subset of|superset of)\b", re.I),
+        "quantifier": re.compile(r"\b(all|some|any|every|each)\b", re.I),
+    }
+
+    def __init__(self):
+        # No persistent state required
+        pass
+
+    # --------------------------------------------------------------------- #
+    # 2.  Core helpers
+    # --------------------------------------------------------------------- #
+    @staticmethod
+    def _extract_propositions(text: str) -> List[Dict]:
+        """Return a list of proposition dicts {'text':..., 'type':...}."""
+        sentences = re.split(r"[.!?]\s*", text.strip())
+        props = []
+        for s in sentences:
+            s = s.strip()
+            if not s:
+                continue
+            ptype = "other"
+            for t, pat in ReasoningTool._patterns.items():
+                if pat.search(s):
+                    ptype = t
+                    break
+            props.append({"text": s, "type": ptype})
+        return props
+
+    @staticmethod
+    def _build_graph(props: List[Dict]) -> Dict[int, List[int]]:
+        """Simple chain graph: edge i -> i+1."""
+        g = defaultdict(list)
+        for i in range(len(props) - 1):
+            g[i].append(i + 1)
+        return g
+
+    @staticmethod
+    def _shannon_entropy(types: List[str]) -> float:
+        cnt = Counter(types)
+        total = len(types)
+        probs = np.array(list(cnt.values())) / total
+        return -np.sum(probs * np.log2(probs + 1e-12))
+
+    @staticmethod
+    def _kl_divergence(p: np.ndarray, q: np.ndarray) -> float:
+        """KL(p||q) with smoothing."""
+        eps = 1e-12
+        p = p + eps
+        q = q + eps
+        return np.sum(p * np.log(p / q))
+
+    @staticmethod
+    def _numeric_confidence(prop: Dict) -> float:
+        """If a numeric comparison can be evaluated, give high confidence."""
+        txt = prop["text"]
+        # Very simple evaluator for patterns like 'X > Y' where X,Y are numbers
+        m = re.search(r"(\d+(\.\d+)?)\s*(>=|<=|>|<|==|=)\s*(\d+(\.\d+)?)", txt)
+        if m:
+            a = float(m.group(1))
+            op = m.group(3)
+            b = float(m.group(4))
+            try:
+                res = {
+                    ">": a > b,
+                    "<": a < b,
+                    ">=": a >= b,
+                    "<=": a <= b,
+                    "==": a == b,
+                    "=": a == b,
+                }[op]
+                return 0.9 if res else 0.6
+            except Exception:
+                pass
+        # default medium confidence
+        return 0.6
+
+    @staticmethod
+    def _hash_to_vector(s: str, dim: int = 10) -> np.ndarray:
+        """Deterministic hash -> vector in [0,1)."""
+        h = hashlib.md5(s.encode("utf-8")).digest()
+        ints = np.frombuffer(h, dtype=np.uint8).astype(np.float64)
+        # repeat / truncate to required dimension
+        if len(ints) < dim:
+            ints = np.resize(ints, dim)
+        else:
+            ints = ints[:dim]
+        return ints / 255.0
+
+    @staticmethod
+    def _ncd(a: str, b: str) -> float:
+        """Normalised Compression Distance using zlib."""
+        ca = len(zlib.compress(a.encode()))
+        cb = len(zlib.compress(b.encode()))
+        cab = len(zlib.compress((a + b).encode()))
+        return (cab - min(ca, cb)) / max(ca, cb + 1e-12)
+
+    # --------------------------------------------------------------------- #
+    # 3.  Scoring pipeline
+    # --------------------------------------------------------------------- #
+    def _score_candidate(self, prompt: str, cand: str) -> Dict:
+        """Score a single candidate answer."""
+        # 1) extract propositions from prompt + candidate (both matter)
+        props = self._extract_propositions(prompt + " " + cand)
+
+        # 2) proof graph (chain)
+        graph = self._build_graph(props)
+
+        # 3) entropy weighting
+        types = [p["type"] for p in props]
+        H = self._shannon_entropy(types)
+        w = 1.0 + H / max(1, len(props))
+
+        # 4) confidence per proposition (VCG style)
+        confidences = np.array([self._numeric_confidence(p) for p in props])
+        S_struct = w * confidences.sum()
+
+        # 5) KL penalty on edge‑type distribution
+        edge_types = [props[src]["type"] for src, dsts in graph.items() for dst in dsts]
+        if edge_types:
+            cnt = Counter(edge_types)
+            p = np.array(list(cnt.values()), dtype=float) / len(edge_types)
+            q = np.full_like(p, 1.0 / len(p))  # uniform reference
+            penalty = self._kl_divergence(p, q)
+        else:
+            penalty = 0.0
+
+        # 6) dynamics stability
+        dim = 10
+        state = np.zeros(dim)
+        for p in props:
+            state += self._hash_to_vector(p["text"], dim)
+        # permutations for stability test
+        perms = [np.random.RandomState(seed=i).permutation(len(props))
+                 for i in range(5)]
+        finals = []
+        for perm in perms:
+            s = np.zeros(dim)
+            for idx in perm:
+                s += self._hash_to_vector(props[idx]["text"], dim)
+            finals.append(s)
+        finals = np.stack(finals)
+        var = np.var(finals, axis=0).mean()
+        stability = 1.0 / (1.0 + var)          # higher = more stable
+        S_dyn = 0.5 * stability                # weight alpha = 0.5
+
+        # 7) combine
+        raw_score = S_struct + S_dyn - penalty
+
+        # 8) NCD tie‑breaker (small contribution)
+        ncd = self._ncd(prompt, cand)
+        final_score = raw_score - 0.1 * ncd   # at most ~10 % effect
+
+        # 9) human‑readable reasoning summary
+        reasoning = (
+            f"Entropy H={H:.3f}, weight={w:.3f}, "
+            f"struct_score={S_struct:.3f}, dyn_score={S_dyn:.3f}, "
+            f"KL_penalty={penalty:.3f}, NCD={ncd:.3f}"
+        )
+        return {
+            "candidate": cand,
+            "score": float(final_score),
+            "reasoning": reasoning,
+        }
+
+    # --------------------------------------------------------------------- #
+    # 4.  Meta‑confidence detection
+    # --------------------------------------------------------------------- #
+    @staticmethod
+    def _meta_confidence(prompt: str) -> float:
+        """Detect ambiguity / presupposition patterns; return base confidence."""
+        low = 0.2  # value used when a trap is hit
+        # 1. presupposition
+        if re.search(r"\bhave you (stopped|quit|ended) .+\b", prompt, re.I):
+            return low
+        if re.search(r"\bwhy did .+ (fail|stop|quit)\b", prompt, re.I):
+            return low
+        # 2. scope ambiguity
+        if re.search(r"\bevery .+ (does|did) .+ a .+\b", prompt, re.I):
+            return low
+        # 3. pronoun ambiguity
+        if re.search(r"\b(told|said) .+ (he|she|they) was\b", prompt, re.I):
+            return low
+        # 4. false dichotomy
+        if re.search(r"\beither .+ or .+(?!.*or)", prompt, re.I):
+            return low
+        # 5. subjectivity
+        if re.search(r"\b(best|worst|favorite|most|least) \b", prompt, re.I):
+            return low
+        # 6. unanswerability (no question mark or no clear interrogative)
+        if not re.search(r"\bwho|what|when|where|why|how\b", prompt, re.I):
+            return low
+        # default moderate confidence
+        return 0.8
+
+    # --------------------------------------------------------------------- #
+    # 5.  Public API
+    # --------------------------------------------------------------------- #
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """Rank candidates according to the composite score."""
+        results = [self._score_candidate(prompt, c) for c in candidates]
+        # sort descending by score
+        results.sort(key=lambda d: d["score"], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Return an honesty‑aware confidence in [0,1]."""
+        base = self._meta_confidence(prompt)
+        # If meta says low confidence, honour it
+        if base < 0.5:
+            return base
+
+        # Otherwise compute a normalized structural+dynamic score
+        sc = self._score_candidate(prompt, answer)["score"]
+        # Normalise using a simple sigmoid to keep in [0,1]
+        norm = 1.0 / (1.0 + np.exp(-0.1 * (sc - 0.0)))  # shift/scale heuristic
+        # Cap as required
+        conf = min(norm, 0.9)
+        return float(conf)
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

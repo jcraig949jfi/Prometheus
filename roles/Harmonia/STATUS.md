@@ -1,6 +1,6 @@
 # Harmonia status
 
-Currency: 2026-09-18 01:55 UTC (Harmonia[m2-ca1148a0], own block only; gandalf-6cd1348b block as of 2026-09-17 22:40 UTC; m2-038758c6 block as of 15:25 UTC). Updated at least every four hours of activity.
+Currency: 2026-09-25 11:00 UTC (Harmonia[m2-ca1148a0], own block, written at the operator's reset; gandalf-6cd1348b block as of 2026-09-17 22:40 UTC; m2-038758c6 block as of 2026-09-17 15:25 UTC). Updated at least every four hours of activity.
 Plain language, no dramatic words.
 
 ## Where I am working (one block per instance; convention in INSTANCES.md)
@@ -11,37 +11,44 @@ subjects and journal file. A block with no "closed" line is presumed live
 only if its journal has an entry within the last four hours (presence is
 derived from activity, never from a row).
 
-### Harmonia[m2-ca1148a0]  (M2 SPECTREX5, operator label "Harmonia B", 2026-09-18, this update's author)
+### Harmonia[m2-ca1148a0]  (M2 SPECTREX5, operator label "Harmonia B", 2026-09-18/25, this update's author)
 
-    worktree   D:/Prometheus-worktrees/harmonia-m2-ca1148a0-boot
-    branch     harmonia/m2-ca1148a0-boot-2026-09-17
-    base_sha   80e0822ee (origin/main at fetch, 2026-09-18 01:00Z); integrated by fast-forward through the pass
-    dirty      no at boot
+    worktree   D:/Prometheus-worktrees/harmonia-m2-ca1148a0-boot   KEPT at the operator's 09-25 reset
+    branch     harmonia/m2-ca1148a0-boot-2026-09-17                KEPT
+    base_sha   80e0822ee at boot; integrated by fast-forward/explicit merge through the pass
     session    ca1148a0-0323-4295-aec2-2e71161e3142 (harness); session_01UvPiXdppxA2h2mk2YQTXFr (bridge)
-    opened     2026-09-18 01:03 UTC
-    label      "Harmonia B" is the operator's label for this instance; the same label was given to
-               m2-f541bed9 on 2026-09-14 (idle since 09-14 07:12Z). The tag, not the label, is the identity.
-    comms      booted against the M1 canonical store (EW_DB_HOST=192.168.1.202); first sync 7 new
-               (#385 #387 #388 #391 #393 #397 #410), 0 queued; `who`: 1/6 Harmonia instances online (this one).
-               Per-instance receipts confirmed. GAP found: comms.api.inbox filters m.sender <> agent, so a
-               Harmonia -> Harmonia message never reaches a sibling instance; siblings coordinate only through
-               this file, INSTANCES.md and journals (reported to Archaeon).
-    siblings   gandalf-6cd1348b (M3, "Harmonia F"): particles 001/002 returned; POET/ALife steering (#381);
-               HARM-38 "started" 09-17 with no artifact; last sync 2026-09-17 18:31Z. m2-038758c6 (M2): gzip R1
-               open, HARM-38/39/43/44 NOT STARTED per its 09-17 journal; last sync 2026-09-17 11:17Z. Neither
-               online during this pass; HARM-43/44 taken (both idle > 14 h, no artifact); HARM-38/39 left in
-               the gzip lane.
-    done       operator ask "work through every unclaimed HARM row": 24 rows CLOSED, 4 SUPERSEDED, 1 DELEGATED.
-               HARM-44 ruling to Proteus (#412); HARM-43 contract re-verified (CONFORMANT x3, DRIFT control);
-               QR-1.2.0 / AF-1.1.0 / EX-1.0.0 / FP-1.0.0 (HARM-01/02/04/05..12/28/29/30/34; runner dead since
-               09-10 repaired; 25 tests); STANDING_RULES.md (31); VACUOUS_READINGS.md (03);
-               CALIBRATION_CORPUS_POLICY.md (14); HARM-13 delegated to Archaeon (#413) with the #260 reminder;
-               H3 analysis manifest (25); PEW encounter manifests (24); number-scope audit (32; H4-ADAPTIVE
-               1.0.1); Stage-A triage over 107 cuts (46); 15/17/26/27 SUPERSEDED with reasons.
-    open       every remaining OPEN row is blocked on another seat (#260 Archaeon: 16/18; C3-3 issue: 19/20;
-               pool: 21; Vivarium 404: 22; NK length: 23; credential: 33; Daedalus A0: 35) or in a sibling's
-               declared lane (38-42 gzip; 45, 47-51 gandalf).
+    opened     2026-09-18 01:03 UTC       state at 2026-09-25 11:00 UTC: CLOSED FOR THE OPERATOR'S RESET
+    RESUME     roles/Harmonia/RESUME_20260925_m2-ca1148a0.md  <- read this first on the next boot
+    comms      M1 canonical store (EW_DB_HOST=192.168.1.202). Final sync 2026-09-25 10:52Z:
+               59 new, 2 queued. QUEUE AT CLOSE: Aphrodite #490 (hostile adjudication contract,
+               five cheat fixtures) and #533 (Campaign 1 PATCH 1, E1-E6 on the production path).
+               Both UNSTARTED; they are the first work after boot.
+    delivered  backlog pass 2026-09-18: 26 rows CLOSED, 4 SUPERSEDED, 1 DELEGATED+returned, 24 OPEN
+               (every OPEN one blocked on a named seat or in a sibling's lane).
+               QR-1.2.1 / AF-1.1.0 / EX-1.0.0 / FP-1.0.0 / PR-1.0.0 / OQ-1.0.0 / LP-1.0.0;
+               STANDING_RULES, VACUOUS_READINGS, MULTIPLICITY, SIZING_RULE,
+               CALIBRATION_CORPUS_POLICY, number-scope audit, Stage-A triage (107 cuts),
+               rulings on the Proteus current instrument and on the SQLite->Postgres ledger move,
+               Campaign 6 observatory lane (HARM-52..55). Tests 33 + 11 + 11 green.
+    findings   the qualification runner had been UNRUNNABLE since the 09-10 rename (fixed);
+               the Proteus current instrument's only negative control cannot fail;
+               "0.577 = half the band edge in log terms" was wrong (linear half);
+               sqrt(2) "for any rho" never annotated after QR-1.1.0 corrected it (now annotated,
+               H4-ADAPTIVE -> 1.0.1); the learned H5 decoder's reach equals a random balanced
+               permutation's (11.72 vs 11.7305).
+    comms gap  a Harmonia instance cannot message a sibling instance (inbox excludes the seat's
+               own messages; reported #417). It caused a concurrent rewrite of STANDING_RULES.md
+               with gandalf-6cd1348b on 09-18, resolved as a union (main 72bc70365). Until it is
+               fixed, read origin/main's Harmonia log and INSTANCES.md before touching a shared file.
+    ownership  operator 2026-09-18: "Harmonia f owns asal" -- ASAL/POET/Avida rulers are
+               gandalf-6cd1348b's. Seat infrastructure binds every instance.
+    blocked    HARM-13/16/18 + d3.v2 live count: the 2026-09-10 corpus exists only in M1's SQLite
+               archive ledger; acceptance ruled (#448), instrument written (LP-1.0.0), nothing moved.
     journal    roles/Harmonia/journal/2026-09-17_m2-ca1148a0.md
+    open Qs    eight, listed in the RESUME s9 (ledger migration owner and sequencing; gzip lane
+               ownership; Campaign 6 recall threshold and fixture authorship; the HARM-55 id
+               collision with Techne; the Ubuntu target machine; whether to keep building gates
+               no lane has consumed)
 
 ### Harmonia[gandalf-6cd1348b]  (M3 GANDALF, operator label "Harmonia F", 2026-09-17, this update's author)
 

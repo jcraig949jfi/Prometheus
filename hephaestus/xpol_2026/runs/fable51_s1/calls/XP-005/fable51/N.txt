@@ -1,0 +1,18 @@
+**1. Algorithm: Iteratively-refined low-rank consistency scoring**
+
+Data structures: parse each candidate answer into a set of atomic claims via regex — triples `(subject, relation, object)` plus polarity, numeric value, and a comparator (`>`, `<`, `=`, `→`, `¬`). Build a 3-mode boolean/real tensor `T[claim_i, claim_j, relation_type]` over the union of claims from prompt + all candidates: entry `T[i,j,r]=1` if claim i relates to claim j by r (entails, contradicts, ordered-before, causes, numerically-implies). Prompt claims are "ground" fibers.
+
+Operations: (a) constraint propagation fills implied entries — transitivity on ordering slices, modus ponens on conditional slices, negation flips polarity, numeric slices are checked by direct evaluation. (b) Tucker/CP decomposition (numpy SVD per unfolding, rank k≈3–5) yields a low-rank reconstruction `T̂`. Residual `|T − T̂|` concentrates on claims that don't fit the dominant logical structure — these are candidate inconsistencies. (c) Feedback loop: treat the residual as error signal; a PI-style update reweights slices (`w_r ← w_r + Kp·e_r + Ki·Σe_r`) and re-propagates, stopping when residual change < ε or a divergence guard (Nyquist-like gain bound: reject if weights oscillate) fires. (d) Nash step: each candidate answer is a "player" whose strategy is its claim set; payoff = agreement with ground fibers minus penalty from contradictions with other high-payoff candidates. Iterate best-response until no candidate's score improves by dropping/keeping any claim — the fixed point gives final scores; mixed-strategy weights become confidence.
+
+Scoring: `score = α·(ground-consistency) − β·(propagated contradictions) − γ·(residual mass) + δ·(equilibrium payoff)`.
+
+**2. Parsed features:** negations (`not`, `no`, `never`), comparatives/superlatives (`greater than`, `at most`), conditionals (`if…then`, `unless`), numeric values with units and arithmetic, causal verbs (`causes`, `leads to`), ordering relations (`before`, `after`, `between`), quantifiers (`all`, `some`, `none`), and equality/assignment statements.
+
+**3. Novelty:** Partial. Tensor-factorization for knowledge-base consistency (RESCAL, Nickel et al.) and answer-set voting via game-theoretic aggregation exist; PID-tuned constraint propagation is uncommon. The combination — residual-driven reweighting of logical slices with a best-response fixed point across candidates — is not a known published tool, but each piece is well-trodden. Honest risk: the tensor step adds little over plain propagation when claim sets are small (<20); the Nash step degenerates to majority voting unless contradictions are dense.
+
+**4. Ratings**
+
+Reasoning: 7/10 — propagation over typed slices genuinely tests logical consistency; decomposition adds signal only at scale.
+Metacognition: 6/10 — residual mass and oscillation detection give an internal "I'm unsure" signal, but it's indirect.
+Hypothesis generation: 5/10 — the fixed point ranks candidates; it doesn't generate new claims beyond propagated implications.
+Implementability: 8/10 — regex, SVD, and a best-response loop are ~300 lines of numpy; tuning Kp/Ki and rank is the main fragility.

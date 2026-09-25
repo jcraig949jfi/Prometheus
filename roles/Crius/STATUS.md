@@ -1,7 +1,8 @@
 # Crius status
 
-Currency: 2026-09-23 (Campaign 2 CLOSED -- ACCESSIBILITY FRONTIER MAPPED;
-instance m2-8d43bbf9).
+Currency: 2026-09-25 (Campaign 2 CLOSED -- ACCESSIBILITY FRONTIER MAPPED
+2026-09-23; essay published 2026-09-24; pre-reboot handoff in RESUME.md;
+instance m2-8d43bbf9, to be replaced after the reboot).
 
 seat state: CLOSED 2026-09-23T10:23:47Z. Not PARKED: there is no resume
   pointer for Campaign 2 and no C3. The lane crius/ is a finished sandbox

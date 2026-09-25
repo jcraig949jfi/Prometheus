@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-24 (charter CHANGED by the operator's foundry directive;
+Currency: 2026-09-25 (WTP-01..03 complete; charter CHANGED by the operator's foundry directive;
 previous charter body -- the Tensor World Engine falsifier, 2026-09-23 --
 at superseded/RESPONSIBILITIES_2026-09-24_tensor_world_engine.md).
 
@@ -38,8 +38,18 @@ instances; controls adjudicate (directive s47).
 - ensorain/wtp/: World Genome schema, operator registry, legality
   grammar, mutation engine, executor, organisms, ledger, replay, anomaly
   detectors, observatory tables.
+- ensorain/wtp2/ (WTP-02 executor, frozen) and ensorain/wtp3/ (WTP-03 substrate collider: one
+  experience stream per world replayed to every substrate, null ladder N0-N5 + XC, pair-block
+  recombination, exact marginal surrogate, support-checked interventions, validation V1-V7).
+  These are the current instrument. The next campaign extends wtp3 and never edits a frozen engine.
 - ensorain/PREREG_WTP01.md and each campaign's preregistration, committed
   before its worlds run; campaign reports (ENSORAIN_WTPxx_REPORT.md).
+- Standing doctrine learned WTP-01..03:
+  - every competence metric needs a best-constant rung;
+  - a missing null means no claim;
+  - interventions must show support;
+  - a rate measured behind a phenomenon-selecting gate is not a base rate;
+  - "beyond known physics" requires beating a tuned same-class batch estimator.
 - The fossil archive: every anomaly's genome, seed, commit and events.
 
 ## 3. What Ensorain never does

@@ -1,0 +1,32 @@
+**Algorithmic design**
+
+1. **Hybrid quantum‑type‑SAT scorer**  
+   *Parsing → typing*: The candidate answer is first tokenised and a lightweight regex‑driven parser extracts atomic logical atoms (e.g., `A > B`, `¬C`, `if X then Y`). Each atom is wrapped in a `TypedTerm` object that stores a simple type (`Bool`, `Num`, `Order`) and, for dependent constructs, a list of bound variables.  
+   *Superposition of parses*: Ambiguous fragments (e.g., “A or B” without clear scope) generate multiple `ParseState` objects. All states are stored in a NumPy complex‑valued vector **ψ**, where each entry is an amplitude. Initially amplitudes are uniform; they are later scaled by type‑checking success (0 → 0, 1 → 1) and by a heuristic confidence score (e.g., numeric consistency).  
+   *SAT encoding*: For every distinct atom across all states a Boolean variable is assigned an index in a dictionary `var_idx`. Each `ParseState` yields a clause list (CNF) that is stored as a sparse boolean matrix `C` (shape = states × variables) using NumPy’s `bool_` dtype.  
+   *Constraint propagation*: A deterministic propagation step applies transitivity, modus‑ponens, and numeric consistency across the matrix, zero‑ing out clauses that become contradictory.  
+   *Collapse & scoring*: The matrix is fed to a tiny DPLL‑style SAT solver written with only Python loops and NumPy bit‑operations. For each state we obtain a satisfiability flag `sat_i`. The final score is  
+
+   \[
+   \text{score}= \frac{\sum_i |\psi_i|^2 \cdot \mathbf{1}_{\text{sat}_i}}{\sum_i |\psi_i|^2}
+   \]
+
+   giving a value in \([0,1]\) that rewards states that both type‑check and satisfy all logical constraints.
+
+2. **Structural features parsed**  
+   - Negations (`¬`, “not”)  
+   - Comparatives (`>`, `<`, “more than”)  
+   - Conditionals (`if … then …`, “=>”)  
+   - Numeric values and arithmetic relations  
+   - Causal claims (“because”, “leads to”) mapped to implication atoms  
+   - Ordering relations (temporal or sequence markers “first”, “after”)  
+   - Quantifiers (`all`, `some`, `exists`) captured as dependent‑type variables.
+
+3. **Novelty assessment**  
+   The exact combination—using a quantum‑style superposition of typed parse states that are reduced by a pure‑SAT constraint solver—is not present in existing evaluation suites. Related work exists in probabilistic logic programming and typed SAT encodings, but none integrate the three pillars in a deterministic, NumPy‑only pipeline.
+
+4. **Ratings**  
+Reasoning: 8/10 — strong logical propagation and type‑driven consistency.  
+Metacognition: 6/10 — limited self‑assessment beyond amplitude weighting.  
+Hypothesis generation: 7/10 — handles ambiguous parses via superposition but lacks richer generative models.  
+Implementability: 9/10 — pure Python/NumPy, no external solvers, straightforward to embed.

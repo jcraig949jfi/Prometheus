@@ -1,0 +1,42 @@
+**1. Algorithmic pipeline**  
+The tool builds a **Reservoir‑Encoded Predictive‑Coding Scorer (REPCS)** that runs entirely with NumPy arrays and plain‑Python containers.
+
+*Reservoir encoding* – Each candidate answer is tokenised (simple whitespace split) and mapped to a fixed‑size random embedding matrix **R** ∈ ℝ\(V × D\) (V = vocabulary size, D = reservoir dimension). For a token sequence *t₁…tₙ* the hidden state **h**ₖ is updated recursively:  
+
+```
+h_0 = zeros(D)
+h_k = tanh( R[t_k] + α·h_{k-1} )
+```
+
+where α is a constant leak factor. The final reservoir state **h_n** is the representation of the answer.
+
+*Predictive coding layer* – A second linear matrix **W** ∈ ℝ\(D × M\) (M = number of extracted logical predicates) generates a prediction vector **p** = softmax(Wᵀ·h_n). The reference answer is processed the same way, yielding **p\***. The error signal **e** = p − p\* is interpreted as a surprise measure.
+
+*Spectral analysis of error* – The error sequence over the answer tokens (e₁…eₙ) is treated as a 1‑D signal. Using NumPy’s FFT we compute its power spectral density (PSD). Low‑frequency power indicates systematic mismatches (e.g., missing premises), while high‑frequency power reflects scattered lexical differences. A scalar score is obtained by  
+
+```
+score = 1 / (1 + Σ PSD[f < f_cut] )
+```
+
+where *f_cut* is a pre‑defined cutoff (e.g., 0.1·Nyquist). The lower the low‑frequency energy, the higher the reasoning alignment.
+
+**2. Parsed structural features**  
+The preprocessing regex suite extracts:
+- Negations (`not`, `no`, `never`)  
+- Comparatives (`more than`, `less than`, `>=`, `<=`)  
+- Conditionals (`if … then …`, `=>`)  
+- Numeric values (integers, floats, fractions)  
+- Causal verbs (`cause`, `lead to`, `result in`)  
+- Ordering relations (`first`, `second`, `before`, `after`)  
+
+Each extraction yields a predicate token that populates the **M**‑dimensional predicate space used by the predictive layer.
+
+**3. Novelty**  
+Combining a random recurrent reservoir for dense encoding, a predictive‑coding error term, and a spectral‑energy penalty on that error is not present in standard evaluation suites. Existing work uses either symbolic constraint propagation or neural similarity; REPCS fuses them into a deterministic, purely algorithmic scorer, thus representing a novel hybrid.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — strong logical‑predicate extraction and error‑based scoring.  
+Metacognition: 6/10 — captures self‑consistency via prediction error but lacks self‑reflection.  
+Hypothesis generation: 5/10 — can flag missing premises but does not propose alternatives.  
+Implementability: 9/10 — relies only on NumPy, regex, and basic data structures; straightforward to deploy.

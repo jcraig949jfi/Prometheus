@@ -1,0 +1,14 @@
+**Computational mechanism**  
+Combining phase‑transition control, criticality, and neuromodulation yields a *Neuromodulated Critical Reservoir* (NCR). It is an echo‑state or liquid‑state network whose recurrent weights are kept near the edge of chaos by a self‑organizing criticality (SOC) rule (e.g., activity‑dependent synaptic scaling that drives the branching ratio toward 1). A neuromodulatory signal \(m(t)\) – modeled after dopamine or acetylcholine – multiplicatively rescales neuronal gains and short‑term plasticity rates, effectively moving the system across a *phase‑transition manifold* (ordered ↔ chaotic ↔ absorbing). The order parameter can be the spectral radius λ of the recurrent weight matrix; neuromodulation adjusts λ in real time, while a global “temperature” schedule (Phase‑Transition Scheduling, PTS) pushes the network toward a new regime when a hypothesis‑testing error metric exceeds a threshold.
+
+**Advantage for a self‑testing reasoning system**  
+When the system generates a hypothesis, the NCR can be driven into a highly susceptible critical regime, where tiny changes in input (evidence) produce large, coherent read‑out variations, enabling rapid discrimination of competing hypotheses. If a hypothesis appears promising, neuromodulators raise the gain, temporarily pushing the reservoir into a more ordered regime to stabilize the representation and allow deep logical chaining. Conversely, failure triggers a shift toward chaos, expanding the exploratory space. This dynamic gain‑controlled phase‑transition gives the reasoner both *precision* (stable inference) and *plasticity* (exploratory revision) without manual hyper‑parameter tuning.
+
+**Novelty**  
+Neuromodulated reservoir computing and criticality‑tuned recurrent networks exist separately, and phase‑transition scheduling has been used in annealing‑type algorithms. An integrated architecture that explicitly uses neuromodulatory signals to steer a self‑organizing critical reservoir across phase boundaries for hypothesis testing is not yet a defined field, though related work appears in adaptive echo‑state networks and “critical brain” models. Hence the combination is **largely novel**, with only peripheral precedents.
+
+**Ratings**  
+Reasoning: 8/10 — the mechanism supports flexible, high‑capacity inference.  
+Metacognition: 7/10 — self‑regulated criticality provides a meta‑control loop.  
+Hypothesis generation: 9/10 — critical susceptibility maximizes exploratory diversity.  
+Implementability: 6/10 — requires precise gain control and SOC algorithms but builds on existing reservoirs.

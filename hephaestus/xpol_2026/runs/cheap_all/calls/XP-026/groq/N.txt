@@ -1,0 +1,29 @@
+**1. Algorithmic core**  
+The tool builds a *spectro‑code matrix* M ∈ ℝⁿˣᵏ where *n* is the number of extracted logical tokens from the prompt (e.g., “if‑then”, “greater‑than”, numeric constants) and *k* is a fixed set of canonical reasoning primitives (negation, conjunction, comparison, causality, temporal order).  
+
+*Extraction* – a deterministic regex‑based lexer tokenises the candidate answer into a sequence of symbols S = [s₁,…,sₙ]. Each symbol is mapped to a one‑hot vector vᵢ ∈ {0,1}ᵏ indicating which primitive it belongs to.  
+
+*Spectral analysis* – using NumPy’s FFT, we compute the power spectral density (PSD) of the binary time‑series formed by each column of M (i.e., the occurrence pattern of a primitive across the answer). The PSD captures regularities such as repeated “if‑then” cycles or alternating negations, analogous to neural oscillatory bands.  
+
+*Error‑correcting code overlay* – each column’s PSD vector is treated as a codeword. We pre‑define a low‑density parity‑check (LDPC) matrix H for the chosen code length. The syndrome s = H·PSD (mod 2) is computed with NumPy integer arithmetic. A small syndrome weight indicates that the answer’s logical pattern conforms to the expected “code” (i.e., the canonical reasoning structure).  
+
+*Scoring* – the final score is a weighted sum:  
+ score = α·(1 – norm(s)/|s|) + β·(∑ log₁₀(PSD + ε)) + γ·coverage,  
+where *coverage* is the fraction of required primitives present, and α,β,γ are tunable constants. Higher scores mean the answer’s logical oscillations align with the error‑correcting template.
+
+**2. Parsed structural features**  
+- Negations and double‑negatives  
+- Comparative operators (>, <, =, ≈)  
+- Conditional clauses (“if…then”, “unless”)  
+- Numeric values and units  
+- Causal verbs (“causes”, “leads to”)  
+- Temporal/ordering relations (“first”, “after”, “subsequently”)  
+
+**3. Novelty**  
+The exact combination—FFT‑derived PSD of logical token streams coupled with LDPC syndrome checking—is not present in standard NLP evaluation literature. Similar ideas exist separately (spectral methods for discourse, ECC for sequence validation), but their integration for reasoning scoring is novel.
+
+**4. Ratings**  
+Reasoning: 8/10 — concrete logical‑pattern detection with quantitative backing  
+Metacognition: 6/10 — can expose self‑contradictions via syndrome weight but lacks self‑awareness  
+Hypothesis generation: 5/10 — limited to matching pre‑defined primitives, not creative inference  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, easy to embed in pipelines

@@ -2,9 +2,15 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-19 (charter received and adopted the same day the
-seat was created; initial cycle begun). The pre-charter version is kept
-at superseded/RESPONSIBILITIES_precharter_2026-09-19.md.
+Currency: 2026-09-25 (two cycles closed; seat PARKED pending an
+operator decision). The pre-charter version is kept at
+superseded/RESPONSIBILITIES_precharter_2026-09-19.md.
+
+>> AFTER A CONTEXT RESET READ roles/Ares/RESUME.md IMMEDIATELY AFTER
+>> THIS FILE. It carries the boot commands, the state of the science,
+>> the four instrument defects not to re-introduce, the fully
+>> specified next experiment, and the open questions for the operator.
+>> STATUS.md is the one-screen state; TODO.md is the queue.
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
@@ -117,6 +123,13 @@ Host M2 (SPECTREX5): EW_DB_HOST=192.168.1.202 before any comms call.
 - BACKLOG_H0H5.md -- backlog to the schema (20-60 items)
 - journal/YYYY-MM-DD.md -- what happened, commands, SHAs, what was not run
 - calibration/LEDGER.md -- past wrong calls
+- RESUME.md -- read first after a context reset (state of the science,
+  instrument defects, next experiment, operator questions)
+- TODO.md -- the queue; everything currently BLOCKED on the operator
 - prompts/2026-09-19_bootstrap/ -- creation directive, verbatim, MANIFEST
 - prompts/2026-09-19_charter/ -- the charter, verbatim, MANIFEST
+- prompts/2026-09-21_cycle1_directive/, 2026-09-23_cycle2_directive/,
+  2026-09-23_export/ -- later operator directives and the export note
+- ares/ (repository root) -- the sandbox: substrate, worlds, carriers,
+  three preregistrations, three reports, run receipts, fossils
 - superseded/ -- earlier versions of this file

@@ -1,0 +1,34 @@
+**Algorithm Overview**
+
+The tool builds a *causal‑information graph* (CIG) for each candidate answer.  
+1. **Parsing** – A deterministic finite‑state lexer (regex‑based) tokenises the prompt and answer into a sequence of *atoms*: literals, numeric values, operators ( =, ≠, >, <, ≤, ≥ ), logical connectives (and, or, not, if…then), comparatives (more/less, higher/lower) and causal markers (because, leads to, causes). Each atom is stored as a tuple `(type, value, position)`.  
+2. **Structure extraction** – From the atom list a directed acyclic graph `G = (V, E)` is constructed:  
+   * **V** – nodes representing propositions (e.g., “X > 5”, “Y causes Z”).  
+   * **E** – edges encode logical relations: implication (→), equivalence (↔), and ordering (≺). Edge attributes hold a *weight* derived from Shannon information: `w = -log₂(p)` where `p` is the empirical probability of the relation type in a pre‑computed corpus (stored as a NumPy array).  
+3. **Evolutionary fitness** – For each answer a *fitness vector* `f` is computed:  
+   * **Correctness** – binary match of each node against a gold‑standard graph (1 if identical, 0 otherwise).  
+   * **Diversity** – Hamming distance between the answer’s node set and previous candidates, encouraging novel reasoning paths.  
+   * **Stability** – count of cycles or contradictory edges; penalised heavily.  
+   The overall fitness is `F = α·correctness + β·diversity – γ·instability`, with coefficients tunable.  
+4. **Criticality scoring** – The CIG’s *susceptibility* is measured as the variance of node degrees: `χ = var(degree(G))`. A system near criticality (maximal `χ`) indicates a balanced mix of constraints and flexibility. The final score is `S = F·(1 + λ·(χ/χ_max))`, where `χ_max` is the observed maximum across all candidates.
+
+**Parsed Structural Features**
+
+- Negations (`not`, `no`, `never`)  
+- Comparatives and superlatives (`more`, `less`, `greater than`)  
+- Conditionals (`if … then`, `=>`)  
+- Numeric literals and ranges  
+- Causal claims (`because`, `causes`, `leads to`)  
+- Ordering relations (`before`, `after`, `precede`)  
+- Logical connectors (`and`, `or`, `xor`)  
+
+**Novelty Assessment**
+
+The combination of Shannon‑entropy weighted graph edges, an evolutionary fitness function, and a criticality‑based susceptibility multiplier is not present in existing rule‑based evaluators. Prior work uses either information‑theoretic weighting or evolutionary selection, but not both together with a criticality term for reasoning assessment.
+
+**Ratings**
+
+Reasoning: 8/10 — robust logical graph with information weighting captures depth.  
+Metacognition: 6/10 — tracks diversity and stability but lacks self‑reflection modeling.  
+Hypothesis generation: 7/10 — evolutionary component encourages novel proposition sets.  
+Implementability: 9/10 — relies only on regex, NumPy arrays, and standard‑library data structures.

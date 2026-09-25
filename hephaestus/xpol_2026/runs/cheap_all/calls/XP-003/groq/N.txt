@@ -1,0 +1,33 @@
+**Algorithmic design**
+
+The evaluator builds a *reasoning graph* G = (V,E) for each candidate answer.  
+*Vertices* V are elementary propositions extracted by regex‑based parsers (e.g., “X increases Y”, “if A then B”, numeric facts, negations). Each vertex stores a **type tag** (causal, comparative, quantitative) and a **value vector** v∈ℝⁿ (n≈5) encoding: polarity, magnitude, temporal order, logical depth, and a topological “hole‑indicator” (0 = fully connected, 1 = missing link).  
+
+*Edges* E encode logical relations: “implies”, “contradicts”, “same‑as”, “greater‑than”. Edge objects hold a **weight** w∈[‑1,1] derived from lexical cues (e.g., “but” → –0.8, “therefore” → +0.9) and a **delay** τ representing temporal distance (used later as a dynamical step).
+
+**Topology layer** – We compute the *Betti numbers* β0,β1 of the undirected version of G using a union‑find structure. A low β0 (few disconnected components) and β1≈0 (no cycles that violate causal direction) indicate structural coherence.  
+
+**Dynamical‑system layer** – Starting from an initial state s0 = Σv_i, we iterate s_{t+1}=A·s_t+ b, where A is a sparse adjacency matrix built from edge weights and τ (edges act as discrete‑time flows). After T≈|V| steps we obtain a trajectory {s_t}. Convergence (‖s_{T}‑s_{T‑1}‖<ε) yields a *Lyapunov‑like* stability score; divergence penalises contradictory reasoning.  
+
+**Sensitivity‑analysis layer** – Perturb each vertex vector by δ∈{‑0.1,0,+0.1} (simulating small wording changes) and recompute the final state s_T^. The *sensitivity index* SI = ‖s_T‑s_T^‖ / ‖δ‖ quantifies robustness: lower SI means the answer’s logical outcome is stable under minor lexical variations.
+
+**Scoring logic** – The final score = α·(1‑β0/|V|) + β·(1‑β1/|V|) + γ·(1‑Lyapunov) – λ·SI, with α+β+γ+λ=1 (tuned empirically). The score is bounded in [0,1] and can be linearly mapped to a 0‑10 rubric.
+
+**Parsed structural features**
+
+- Negations (“not”, “never”) → polarity flag  
+- Comparatives (“more than”, “less”) → quantitative edge weight  
+- Conditionals (“if…then”, “unless”) → directed implication edge  
+- Numeric values (integers, floats, percentages) → magnitude component of v  
+- Causal claims (“causes”, “leads to”) → causal‑type vertex  
+- Ordering relations (temporal markers “before”, “after”) → τ delay on edges  
+
+**Novelty assessment**
+
+The combination of topological invariants, discrete‑time dynamical propagation, and explicit sensitivity probing is not present in standard rule‑based evaluators, which usually stop at constraint propagation. While each ingredient appears in separate literature (graph‑based logic checking, dynamical‑system consistency, perturbation analysis), their integrated use for answer scoring is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical‑graph and stability analysis  
+Metacognition: 6/10 — captures self‑consistency but lacks reflective modeling  
+Hypothesis generation: 5/10 — can flag missing links but does not propose alternatives  
+Implementability: 9/10 — pure NumPy/stdlib, clear data structures, low engineering overhead

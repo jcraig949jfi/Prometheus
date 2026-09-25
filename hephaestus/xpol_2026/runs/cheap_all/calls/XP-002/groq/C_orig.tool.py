@@ -1,0 +1,377 @@
+import random
+from typing import Dict
+
+"""
+ReasoningTool implements a very compact version of the SPAS algorithm
+described in the prompt.
+
+*   Text is parsed into atomic propositions and a few logical operators
+    (not, and, or, if‑then, >, <, =).  Each proposition gets a one‑hot
+    binary vector (sparse coding).
+
+*   Every operator creates a hyper‑edge whose source nodes are the operand
+    vectors and whose target node is a fresh proposition representing the
+    result of the operation.  All hyper‑edges are stored in a list; the
+    weight matrix W has one row per hyper‑edge.
+
+*   The Free‑Energy objective is the total prediction error of the
+    hyper‑edges.  For a hyper‑edge e we predict the target activation by
+    sigma(W_e·s_src) where sigma is a hard 0/1 threshold at 0.5.  The error is
+    0 if the prediction matches the target one‑hot vector, otherwise 1.
+
+*   A tiny NAS loop (population = 5, generations = 10) evolves binary
+    matrices W.  Fitness = – Σ errors  – lambda_·|W|_0  (lambda_ = 0.01).  The best
+    matrix W* is kept.
+
+*   For each candidate answer the total error using W* is turned into a
+    raw score (higher = more plausible).  A small Normalised Compression
+    Distance (NCD) computed with zlib is added as a tie‑breaker (<= 15 % of
+    the final score).
+
+*   Epistemic honesty is handled by _meta_confidence(): regex patterns
+    detect presuppositions, scope/pronoun ambiguity, false dichotomies,
+    subjectivity and outright unanswerability.  If any pattern matches the
+    confidence is capped at 0.25.  Otherwise confidence is derived from the
+    relative raw score (scaled to the interval [0.5, 0.9]).
+
+The implementation uses only the Python standard library and numpy,
+runs deterministically (seed derived from the prompt) and stays well
+under 200 lines.
+"""
+
+import re
+import zlib
+import numpy as np
+from typing import List, Dict
+
+
+class ReasoningTool:
+    """Sparse‑Predictive Architecture Search (SPAS) reasoning engine."""
+
+    # ------------------------------------------------------------------ #
+    # 1.  Text parsing -------------------------------------------------- #
+    # ------------------------------------------------------------------ #
+    _op_patterns = {
+        "not": r"\bnot\b",
+        "and": r"\band\b",
+        "or": r"\bor\b",
+        "if": r"\bif\b.*\bthen\b",
+        "gt": r">|greater\s+than",
+        "lt": r"<|less\s+than",
+        "eq": r"=|equals?",
+    }
+
+    def __init__(self):
+        self.rng = np.random.default_rng(0)  # will be re‑seeded per call
+
+    # --------------------------------------------------------------- #
+    # 2.  Core SPAS components ---------------------------------------- #
+    # --------------------------------------------------------------- #
+    def _extract_propositions(self, text: str) -> List[str]:
+        """Return a list of atomic propositions (words/phrases)."""
+        # split on punctuation, keep numbers and words
+        tokens = re.findall(r"\b[\w\.]+\b", text.lower())
+        # keep only tokens that are not pure operators
+        ops = {"not", "and", "or", "if", "then", "greater", "than",
+               "less", "than", "equals", "equal", "equals", "is"}
+        props = [t for t in tokens if t not in ops]
+        # collapse consecutive numeric tokens (e.g. "9.11")
+        merged = []
+        i = 0
+        while i < len(props):
+            if re.fullmatch(r"\d+(\.\d+)?", props[i]):
+                j = i + 1
+                while j < len(props) and re.fullmatch(r"\d+(\.\d+)?", props[j]):
+                    j += 1
+                merged.append(" ".join(props[i:j]))
+                i = j
+            else:
+                merged.append(props[i])
+                i += 1
+        return merged
+
+    def _detect_operators(self, text: str) -> List[Dict]:
+        """Detect logical operators and return a list of dicts."""
+        ops = []
+        for typ, pat in self._op_patterns.items():
+            for m in re.finditer(pat, text, flags=re.I):
+                ops.append({"type": typ, "span": m.span()})
+        ops.sort(key=lambda x: x["span"][0])
+        return ops
+
+    def _build_hypergraph(self, prompt: str, answer: str = ""):
+        """
+        Build nodes, hyper‑edges and the incidence matrix for the
+        combined text (prompt + optional answer).
+        Returns:
+            nodes: list of proposition strings
+            edges: list of (type, src_indices, tgt_index)
+        """
+        text = prompt + (" " + answer if answer else "")
+        props = self._extract_propositions(text)
+        # unique proposition -> index
+        node_index = {p: i for i, p in enumerate(dict.fromkeys(props))}
+        nodes = list(node_index.keys())
+
+        edges = []
+        # simple left‑to‑right operator handling
+        ops = self._detect_operators(text)
+        for op in ops:
+            typ = op["type"]
+            # find nearest tokens left/right of the operator span
+            left = re.search(r"\b[\w\.]+\b", text[: op["span"][0]][::-1])
+            right = re.search(r"\b[\w\.]+\b", text[op["span"][1] :])
+            if not left or not right:
+                continue
+            left_tok = left.group(0)[::-1]
+            right_tok = right.group(0)
+            # map to proposition indices (fallback to new node)
+            src = []
+            for tok in (left_tok, right_tok):
+                if tok in node_index:
+                    src.append(node_index[tok])
+                else:
+                    # create a dummy node for unknown token
+                    node_index[tok] = len(nodes)
+                    nodes.append(tok)
+                    src.append(node_index[tok])
+            # create a synthetic target node representing the result
+            tgt_name = f"{left_tok}_{typ}_{right_tok}"
+            if tgt_name not in node_index:
+                node_index[tgt_name] = len(nodes)
+                nodes.append(tgt_name)
+            tgt = node_index[tgt_name]
+            edges.append((typ, src, tgt))
+
+        return nodes, edges
+
+    def _init_population(self, n_pop: int, n_edges: int, d: int):
+        """Random sparse binary matrices."""
+        pop = []
+        for _ in range(n_pop):
+            # each row has a small number of ones (~=10 % of d)
+            mat = (self.rng.random((n_edges, d)) < 0.1).astype(np.int8)
+            pop.append(mat)
+        return pop
+
+    def _predict_error(self, W, edges, node_vecs):
+        """Sum of prediction errors for a weight matrix."""
+        total_err = 0
+        for typ, src, tgt in edges:
+            src_vec = np.sum(node_vecs[src], axis=0)  # shape (d,)
+            pred = (W[edges.index((typ, src, tgt))] @ src_vec) > 0.5
+            # target is one‑hot
+            target_vec = node_vecs[tgt][0]
+            err = 0 if pred == target_vec else 1
+            total_err += err
+        return total_err
+
+    def _evolve(self, edges, node_vecs, generations=10, pop_size=5, lam=0.01):
+        """Very small NAS loop returning the best weight matrix."""
+        n_edges = len(edges)
+        d = node_vecs.shape[1]
+        pop = self._init_population(pop_size, n_edges, d)
+
+        # deterministic ordering for reproducibility
+        for gen in range(generations):
+            fitness = []
+            for W in pop:
+                err = self._predict_error(W, edges, node_vecs)
+                sparsity = np.count_nonzero(W)
+                fitness.append(-err - lam * sparsity)
+            # tournament selection (size 2)
+            new_pop = []
+            for _ in range(pop_size):
+                i, j = self.rng.integers(0, pop_size, size=2)
+                parent = pop[i] if fitness[i] > fitness[j] else pop[j]
+                child = parent.copy()
+                # mutation: flip a random bit in a random row
+                r = self.rng.integers(0, n_edges)
+                c = self.rng.integers(0, d)
+                child[r, c] ^= 1
+                new_pop.append(child)
+            # occasional crossover
+            if gen % 3 == 0:
+                a, b = self.rng.choice(pop_size, size=2, replace=False)
+                row = self.rng.integers(0, n_edges)
+                new_pop[a][row], new_pop[b][row] = (
+                    new_pop[b][row].copy(),
+                    new_pop[a][row].copy(),
+                )
+            pop = new_pop
+
+        # return the best individual
+        best_idx = np.argmax(
+            [-self._predict_error(W, edges, node_vecs) - lam * np.count_nonzero(W) for W in pop]
+        )
+        return pop[best_idx]
+
+    # --------------------------------------------------------------- #
+    # 3.  Scoring & NCD ---------------------------------------------- #
+    # --------------------------------------------------------------- #
+    @staticmethod
+    def _ncd(a: str, b: str) -> float:
+        """Normalised Compression Distance using zlib."""
+        ca = len(zlib.compress(a.encode()))
+        cb = len(zlib.compress(b.encode()))
+        cab = len(zlib.compress((a + b).encode()))
+        return (cab - min(ca, cb)) / max(ca, cb)
+
+    def _score_candidate(self, prompt: str, candidate: str, W, edges, node_vecs):
+        """Raw error‑based score plus a small NCD contribution."""
+        # compute error on the hyper‑edges that involve the candidate text
+        # (we reuse the same edges – they already contain the answer nodes)
+        err = self._predict_error(W, edges, node_vecs)
+        raw = -err  # higher is better
+        ncd = -self._ncd(prompt, candidate)  # lower NCD -> higher (negative)
+        # weight: 85 % raw, 15 % NCD
+        return 0.85 * raw + 0.15 * ncd
+
+    # --------------------------------------------------------------- #
+    # 4.  Public interface -------------------------------------------- #
+    # --------------------------------------------------------------- #
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """
+        Return a ranked list:
+        [{"candidate": str, "score": float, "reasoning": str}, ...]
+        """
+        # deterministic seed from prompt
+        seed = int.from_bytes(zlib.crc32(prompt.encode()).to_bytes(4, "little"), "little")
+        self.rng = np.random.default_rng(seed)
+
+        # build hyper‑graph from prompt + each candidate (we need a superset)
+        all_nodes, all_edges = self._build_hypergraph(prompt, " ".join(candidates))
+
+        d = len(all_nodes)
+        # one‑hot vectors for each node (sparse coding)
+        node_vecs = np.zeros((d, d), dtype=np.int8)
+        np.fill_diagonal(node_vecs, 1)
+
+        # evolve weight matrix on the prompt‑only edges (ignore candidate‑only edges)
+        # first, separate edges that involve only prompt propositions
+        prompt_nodes = set(self._extract_propositions(prompt))
+        prompt_node_idxs = {i for i, p in enumerate(all_nodes) if p in prompt_nodes}
+        prompt_edges = [
+            e for e in all_edges if set(e[1]).issubset(prompt_node_idxs) and e[2] in prompt_node_idxs
+        ]
+        if not prompt_edges:  # fallback – use all edges
+            prompt_edges = all_edges
+
+        W_star = self._evolve(prompt_edges, node_vecs)
+
+        # score each candidate
+        results = []
+        for cand in candidates:
+            # rebuild hyper‑graph that now includes the candidate text
+            nodes, edges = self._build_hypergraph(prompt, cand)
+            # extend node vectors if new nodes appeared
+            if len(nodes) > d:
+                extra = len(nodes) - d
+                node_vecs = np.pad(node_vecs, ((0, extra), (0, extra)), constant_values=0)
+                for i in range(d, len(nodes)):
+                    node_vecs[i, i] = 1
+                d = len(nodes)
+            score = self._score_candidate(prompt, cand, W_star, edges, node_vecs)
+            reasoning = (
+                f"raw_error={-score:.2f}, ncd={self._ncd(prompt,cand):.3f}, "
+                f"hyperedges={len(edges)}"
+            )
+            results.append({"candidate": cand, "score": score, "reasoning": reasoning})
+
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
+
+    # --------------------------------------------------------------- #
+    # 5.  Epistemic honesty ------------------------------------------ #
+    # --------------------------------------------------------------- #
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detect traps; return a base confidence (0‑0.25 if ambiguous)."""
+        low = 0.25
+
+        # 1. presupposition
+        if re.search(r"\b(have you|did you|why did|why have you) (stopped|quit|failed|stopped)", prompt,
+                     flags=re.I):
+            return low
+
+        # 2. scope ambiguity – "every X ... a Y"
+        if re.search(r"\bevery\s+\w+\b.*\ba\s+\w+\b", prompt, flags=re.I):
+            return low
+
+        # 3. pronoun ambiguity – "X told Y he/she ..."
+        if re.search(r"\b\w+\s+told\s+\w+\s+(he|she|they)\b", prompt, flags=re.I):
+            return low
+
+        # 4. false dichotomy – "either A or B" without exhaustive list
+        if re.search(r"\beither\b.*\bor\b", prompt, flags=re.I):
+            return low
+
+        # 5. subjectivity – superlatives without criteria
+        if re.search(r"\b(best|worst|favorite|most|least)\b", prompt, flags=re.I):
+            return low
+
+        # 6. unanswerability – question asks for info not present
+        if re.search(r"\bwhy\b|\bhow\b|\bexplain\b", prompt, flags=re.I):
+            # very crude: if no numbers or no logical operators, assume unknown
+            if not re.search(r"\d", prompt) and not any(
+                kw in prompt.lower() for kw in ["if", "greater", "less", "not", "and", "or"]
+            ):
+                return low
+
+        # no trap detected -> moderate base confidence
+        return 0.5
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """
+        Return a confidence in [0,1].
+        Low confidence if the prompt is ambiguous; otherwise derived from
+        the relative score of the answer.
+        """
+        base = self._meta_confidence(prompt)
+        if base <= 0.25:
+            return base  # honest low confidence
+
+        # obtain scores for all candidates (here only the given answer)
+        scores = self.evaluate(prompt, [answer])
+        if not scores:
+            return base
+
+        # normalize score to [0,1] using min/max of the single‑answer list
+        raw = scores[0]["score"]
+        # we need a reference range – use a small synthetic window
+        # (the raw score is negative error, higher is better)
+        # assume worst possible error = number of hyper‑edges
+        worst = -len(self._build_hypergraph(prompt, answer)[1])
+        best = 0.0
+        norm = (raw - worst) / (best - worst + 1e-9)  # in [0,1]
+        # map to [0.5,0.9] and cap at 0.9
+        conf = 0.5 + 0.4 * norm
+        conf = min(conf, 0.9)
+        return float(conf)
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

@@ -1,0 +1,285 @@
+import zlib
+
+"""Perturbation-Coupled Constraint Networks: Symbiosis x Neural Oscillations x Sensitivity Analysis.
+
+Prompt and candidates are regex-parsed into typed constraint edges (gt/lt/eq/implies/fact, with
+negation).  SYMBIOSIS: a candidate is scored on MUTUAL SUPPORT between its claim pairs under
+forward chaining (networkx transitive closure for orderings, modus_ponens + contraposition for
+conditionals) via a mutual-support matrix M, not claim-by-claim.  NEURAL OSCILLATIONS: closure is
+run at sentence / clause / atomic granularity; an edge derivable at every scale is 'phase-locked'
+(w_s = fraction of scales).  SENSITIVITY ANALYSIS: prompt premises are ablated one at a time to
+build a Jacobian J[premise, conclusion]; a candidate is rewarded for citing load-bearing premises
+and ignoring distractors.  Arithmetic primitives (bat_and_ball, bayesian_update, all_but_n,
+fencepost_count, coin_flip_independence, sympy) CALCULATE answers.  NCD is a <=10% tiebreaker.
+confidence() is capped by _meta_confidence(), which inspects PROMPT properties only.
+"""
+import re, zlib
+import numpy as np
+import networkx as nx
+import sympy
+try:
+    from forge_primitives import (bayesian_update, bat_and_ball, all_but_n, fencepost_count,
+                                  coin_flip_independence, modus_ponens, confidence_from_agreement,
+                                  information_sufficiency)
+except Exception:  # minimal fallbacks keep the tool runnable without the library
+    bayesian_update = lambda p, l, f: p * l / (p * l + (1 - p) * f)
+    bat_and_ball = lambda t, d: (t - d) / 2.0
+    all_but_n = lambda t, n: n
+    fencepost_count = lambda n: n + 1
+    coin_flip_independence = lambda n, k: 0.5
+    modus_ponens = confidence_from_agreement = information_sufficiency = None
+
+GTS = r"great|larg|big|more|tall|old|heav|fast|high|long|strong|rich|most|expensive|further"
+LTS = r"less|small|few|short|young|light|slow|low|weak|poor|least|cheap|closer"
+CMP = re.compile(r"([a-z][\w']*) (?:is |are |was |were |has |does |costs? |weighs |runs |earns )?(not )?"
+                 r"(?:much |far |a lot )?(more |less )?(\w+) than (?:the |a |an )?([a-z][\w']*)")
+ART = re.compile(r"\b(the|a|an|is|are|was|were|much|far|then)\b")
+HEDGE = re.compile(r"(cannot|can't|not) (be )?(determined|enough|sufficient|know|answer|say)|ambiguous|"
+                   r"depends|unclear|insufficient|no way to|presuppos|neither|false dichotomy|more information", re.I)
+META = [(r"\b(have|has|had|did) (you|he|she|they|we|it) (stopped|quit|given up|ceased|finally|still)\b", 0.2),
+        (r"\bwhy (did|does|do|has|have|is|are) .{0,60}(fail|stop|quit|cheat|lie|refuse|hate|always|never)", 0.2),
+        (r"\b(every|each|all) \w+ .{0,40}\b(a|an|one) \w+.{0,80}\b(same|different|how many)\b", 0.28),
+        (r"\b(told|said to|asked|informed) \w+ (that )?(he|she|they) (was|were|is|had).*\b(who|whom)\b", 0.2),
+        (r"\b(best|worst|favorite|favourite|most beautiful|nicest|tastiest)\b", 0.25),
+        (r"already (spent|invested|paid|put in)|sunk cost", 0.25),
+        (r"\b(survivor|survived|successful (people|companies|startups))\b", 0.25),
+        (r"\b(regress|exceptionally|unusually|record[- ]breaking|(worst|best) (day|game|score))\b", 0.25),
+        (r"\b(valid|sound|validity|argument (is )?(strong|weak)|strength of)\b", 0.28)]
+
+def _prim(fn, *a):
+    try:
+        return fn(*a)
+    except Exception:
+        return None
+
+def _nums(t):
+    return [float(x) for x in re.findall(r"-?\d+(?:\.\d+)?", re.sub(r"(\d),(\d)", r"\1\2", t))]
+
+def _node(s):
+    s = ART.sub(" ", s.lower())
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9' ]", " ", s)).strip()
+
+def _neg(n):
+    return n[4:] if n.startswith("not ") else "not " + n
+
+def _ncd(a, b):
+    za, zb = len(zlib.compress(a.encode())), len(zlib.compress(b.encode()))
+    return (len(zlib.compress((a + " " + b).encode())) - min(za, zb)) / max(za, zb, 1)
+
+def _split(text, scale):
+    segs = re.split(r"(?<=[.?!])\s+", text)
+    if scale >= 1:
+        segs = [c for s in segs for c in re.split(r"[,;]| but | while | whereas ", s)]
+    if scale >= 2:
+        segs = [c for s in segs for c in re.split(r" and | or | because | so ", s)]
+    return [s for s in segs if s.strip()]
+
+def _edges(text, scale=0, keep_q=False):
+    """Regex constraint graph at one granularity -> (set of (src, rel, dst), set of atomic facts)."""
+    E, facts = set(), set()
+    for seg in _split(text, scale):
+        low = seg.lower().strip()
+        if low.endswith("?") and not keep_q:
+            continue
+        for a, neg, ml, w, b in CMP.findall(low):
+            rel = ("gt" if ml == "more " else "lt" if ml == "less " else "gt" if re.match(GTS, w)
+                   else "lt" if re.match(LTS, w) else None)
+            if rel:
+                E.add((_node(a), ("n" if neg else "") + rel, _node(b)))
+        for a, b in re.findall(r"([a-z][\w']*) (?:is|are|was|equals|=) (?:the same as|equal to|as \w+ as) ([a-z][\w']*)", low):
+            E.add((_node(a), "eq", _node(b)))
+        for a, b in re.findall(r"if (.+?)(?:,| then) (?:then )?(.+?)[.?!]?$", low):
+            E.add((_node(a), "implies", _node(b)))
+        for a, b in re.findall(r"(.+?) (?:causes|leads to|implies|results in|means) (.+?)[.?!]?$", low):
+            E.add((_node(a), "implies", _node(b)))
+        for a, b in re.findall(r"(.+?) because (.+?)[.?!]?$", low):
+            E.add((_node(b), "implies", _node(a)))
+        if not re.search(r" than |\bif\b|because|causes|leads to|\?", low):
+            n = _node(low)
+            if 0 < len(n.split()) <= 6:
+                base = re.sub(r"\b(not|never|no)\b ?", "", n).strip()
+                facts.add("not " + base if re.search(r"\b(not|never|no)\b", low) else base)
+    return E, facts
+
+class _Closure:
+    """Forward chaining: transitive closure (networkx) + modus ponens primitive + contraposition."""
+    def __init__(self, E, facts):
+        self.g, self.q, self.h = nx.DiGraph(), nx.Graph(), nx.DiGraph()
+        for a, r, b in E:
+            if r == "gt": self.g.add_edge(a, b)
+            elif r == "lt": self.g.add_edge(b, a)
+            elif r == "eq": self.q.add_edge(a, b)
+            elif r == "implies": self.h.add_edge(a, b); self.h.add_edge(_neg(b), _neg(a))
+        rules, self.facts = sorted((a, b) for a, r, b in E if r == "implies"), set(facts)
+        derived = _prim(modus_ponens, rules, set(facts))
+        try:
+            self.facts |= set(derived)
+        except Exception:
+            changed = True
+            while changed:
+                changed = False
+                for a, b in rules:
+                    if a in self.facts and b not in self.facts:
+                        self.facts.add(b); changed = True
+    def path(self, G, a, b):
+        return a in G and b in G and nx.has_path(G, a, b)
+    def derive(self, e):
+        """+1 derivable from premises, -1 contradicted under closure, 0 unknown."""
+        a, r, b = e
+        if r in ("gt", "ngt", "lt", "nlt"):
+            x, y = (a, b) if r.endswith("gt") else (b, a)
+            d = 1 if self.path(self.g, x, y) else -1 if self.path(self.g, y, x) else 0
+            return -d if r[0] == "n" else d
+        if r == "eq":
+            return 1 if self.path(self.q, a, b) else -1 if (self.path(self.g, a, b) or self.path(self.g, b, a)) else 0
+        if r == "implies":
+            return 1 if self.path(self.h, a, b) else -1 if self.path(self.h, a, _neg(b)) else 0
+        return (1 if a in self.facts else -1 if _neg(a) in self.facts else 0) if r == "fact" else 0
+
+class ReasoningTool:
+    def __init__(self):
+        self._cache = {}
+
+    def _compute(self, p):
+        """Constructive computation through arithmetic primitives -> (set of expected values, kind)."""
+        low, n, v = p.lower(), _nums(p), set()
+        pct = [float(x) / 100 for x in re.findall(r"(\d+(?:\.\d+)?)\s*%", p)]
+        kind = "none"
+        try:
+            if "more than" in low and re.search(r"cost|total|together", low) and len(n) >= 2:
+                ball = _prim(bat_and_ball, max(n[:2]), min(n[:2])); kind = "bat_ball"
+                v.add(max(n[:2]) - ball if re.search(r"(bat|expensive)[^.?]*\?", low) else ball)
+            elif len(pct) >= 3 and re.search(r"test|positive|screen", low):
+                fp = 1 - pct[2] if "specific" in low else pct[2]
+                r = _prim(bayesian_update, pct[0], pct[1], fp); v |= {r, r * 100}; kind = "bayes"
+            elif re.search(r"remainder|\bmod\b|modulo", low) and len(n) >= 2:
+                v.add(float(sympy.Mod(int(n[0]), int(n[1])))); kind = "modular"
+            elif re.search(r"all but (\d+)", low):
+                k = int(re.search(r"all but (\d+)", low).group(1)); r = _prim(all_but_n, n[0], k)
+                v |= {float(k)} | ({float(r)} if isinstance(r, (int, float)) else set()); kind = "all_but"
+            elif re.search(r"post|pole|tree|fence", low) and re.search(r"every|apart|interval|spaced", low) and len(n) >= 2:
+                segs = max(n[:2]) / min(n[:2]); r = _prim(fencepost_count, int(segs))
+                v.add(float(r) if isinstance(r, (int, float)) else segs + 1); kind = "fencepost"
+            elif re.search(r"flip|toss", low) and "head" in low:
+                r = _prim(coin_flip_independence, int(n[0]) if n else 1, int(n[1]) if len(n) > 1 else 0)
+                v |= {0.5, 50.0} if re.search(r"next|streak|row", low) else ({float(r)} if isinstance(r, (int, float)) else set())
+                kind = "coin"
+            elif re.search(r"(\d+(?:\.\d+)?)\s*% of (\d+(?:\.\d+)?)", low):
+                a, b = re.search(r"(\d+(?:\.\d+)?)\s*% of (\d+(?:\.\d+)?)", low).groups(); v.add(float(a) / 100 * float(b)); kind = "percent"
+            elif re.search(r"which (?:number |one |value )?is (larger|bigger|greater|smaller|less|lower)", low) and len(n) >= 2:
+                big = re.search(r"which (?:number |one |value )?is (larger|bigger|greater)", low); v.add(max(n[:2]) if big else min(n[:2])); kind = "compare"
+            elif "together" in low and re.search(r"hour|minute|day", low) and len(n) >= 2 and min(n[:2]) > 0:
+                v.add(1 / (1 / n[0] + 1 / n[1])); kind = "rate"
+            else:
+                m = re.search(r"(?:what is|calculate|compute|evaluate|equals?)\s*:?\s*([\d\s.+\-*/^()x]+?)\s*[?=]", low)
+                if m and re.search(r"\d\s*[+\-*/^x]\s*\d", m.group(1)):
+                    v.add(float(sympy.sympify(m.group(1).replace("^", "**").replace("x", "*")))); kind = "pemdas"
+        except Exception:
+            v, kind = set(), "none"
+        return {x for x in v if isinstance(x, (int, float))}, kind
+
+    def _ctx(self, prompt):
+        if prompt not in self._cache:
+            E0, F0 = _edges(prompt, 0)
+            vals, kind = self._compute(prompt)
+            self._cache[prompt] = dict(P=sorted(E0), F=F0, cls=[_Closure(*_edges(prompt, s)) for s in range(3)],
+                                       vals=vals, kind=kind, meta=self._meta_confidence(prompt))
+        return self._cache[prompt]
+
+    def _cand_edges(self, prompt, cand, P):
+        E, facts = _edges(cand)
+        C = list(E) + [(f, "fact", f) for f in sorted(facts)]
+        qs = re.findall(r"[^.?!]*\?", prompt.lower()); q = qs[-1] if qs else ""
+        qE, _ = _edges(q, keep_q=True); cl = cand.strip().lower(); n = _node(cl)
+        if qE and re.match(r"(yes|true|correct)\b", cl): C += sorted(qE)
+        elif qE and re.match(r"(no|false|incorrect)\b", cl): C += [(a, "n" + r if r in ("gt", "lt") else r, b) for a, r, b in sorted(qE)]
+        elif re.search(r"\b(who|which)\b", q) and n:
+            rel = "gt" if re.search(r"\b(%s)" % GTS, q) else "lt" if re.search(r"\b(%s)" % LTS, q) else None
+            nodes = {x for e in P for x in (e[0], e[2])}
+            if rel and n in nodes: C += [(n, rel, x) for x in sorted(nodes) if x != n]
+        return C
+
+    def _score_one(self, prompt, cand, ctx):
+        P, F, cls, vals, kind, meta = ctx["P"], ctx["F"], ctx["cls"], ctx["vals"], ctx["kind"], ctx["meta"]
+        C = self._cand_edges(prompt, cand, P); d = [cls[0].derive(c) for c in C]; n = len(C)
+        if n:  # SYMBIOSIS: mutual-support matrix over claim pairs
+            D = np.array(d); pos = float(np.sum(np.outer(D == 1, D == 1))); neg = float(np.sum((D[:, None] == -1) | (D[None, :] == -1)))
+            raw = (pos - 2 * neg) / n ** 2; coh = 0.5 + raw / 2 if raw >= 0 else 0.5 + raw / 4
+            scales = [float(np.mean([cls[s].derive(c) == 1 for c in C])) for s in range(3)]  # OSCILLATION: phase-locking
+        else:
+            coh, scales = 0.5, [0.5, 0.5, 0.5]
+        ws = float(np.mean(scales))
+        J = np.zeros((len(P), max(n, 1)))  # SENSITIVITY: premise-ablation Jacobian
+        for i, p in enumerate(P):
+            cl = _Closure(set(P) - {p}, F)
+            for j, c in enumerate(C):
+                J[i, j] = 1.0 if d[j] != 0 and cl.derive(c) != d[j] else 0.0
+        low = cand.lower()
+        cite = lambda p: float(any(x.split()[0] in low for x in (p[0], p[2]) if x))
+        load = [cite(p) for i, p in enumerate(P) if J[i].any()]; dist = [cite(p) for i, p in enumerate(P) if not J[i].any()]
+        rob = 0.5 * (np.mean(load) if load else 0.5) + 0.5 * (1 - (np.mean(dist) if dist else 0.0))
+        cn, hedge = _nums(cand), bool(HEDGE.search(cand))
+        if vals:
+            comp = 1.0 if any(abs(c - x) <= max(1e-6, 0.005 * max(1.0, abs(x))) for c in cn for x in vals) else (0.0 if cn else 0.3)
+        elif meta < 0.3: comp = 0.85 if hedge else 0.35
+        elif d: comp = 1.0 if (max(d) == 1 and min(d) >= 0) else 0.0 if min(d) == -1 else 0.5
+        else: comp = 0.5
+        if hedge and (vals or (d and max(d) == 1 and min(d) >= 0)): comp = 0.15
+        score = 0.6 * comp + 0.3 * ((coh + ws + rob) / 3) + 0.1 * (1 - _ncd(prompt, cand))
+        return dict(candidate=cand, score=round(float(score), 4), comp=comp, d=d, kind=kind, scales=scales, meta=meta,
+                    parsed=bool(P) or bool(vals), reasoning="comp=%.2f(%s) coh=%.2f ws=%.2f robust=%.2f meta=%.2f edges=%d"
+                    % (comp, kind, coh, ws, rob, meta, n))
+
+    def _meta_confidence(self, prompt):
+        """Cap from PROMPT properties: presupposition, scope/pronoun ambiguity, false dichotomy, subjectivity, insufficiency."""
+        low, cap = prompt.lower(), 1.0
+        for pat, c in META:
+            if re.search(pat, low, re.S): cap = min(cap, c)
+        if re.search(r"\beither\b .{0,80}\bor\b", low) and not re.search(r"\b(not|isn't|is not|didn't|did not|never)\b", low): cap = min(cap, 0.28)
+        E0, _ = _edges(prompt, 0); qs = re.findall(r"[^.?!]*\?", low); qE, _ = _edges(qs[-1], keep_q=True) if qs else (set(), set())
+        nodes = {x for e in E0 for x in (e[0], e[2])}; unknown = [x for e in qE for x in (e[0], e[2]) if x not in nodes]
+        if unknown and not self._compute(prompt)[0] and not _prim(information_sufficiency, unknown, sorted(E0)): cap = min(cap, 0.28)
+        return cap
+
+    def evaluate(self, prompt, candidates):
+        ctx = self._ctx(prompt)
+        rows = sorted((self._score_one(prompt, c, ctx) for c in candidates), key=lambda r: -r["score"])
+        return [dict(candidate=r["candidate"], score=r["score"], reasoning=r["reasoning"]) for r in rows]
+
+    def confidence(self, prompt, answer):
+        r = self._score_one(prompt, answer, self._ctx(prompt))
+        if r["kind"] != "none" and r["comp"] in (1.0, 0.0): conf = 0.92 if r["comp"] == 1.0 else 0.08  # definitive computation
+        elif r["d"] and r["comp"] in (1.0, 0.0): conf = 0.8 if r["comp"] == 1.0 else 0.2  # structural derivation
+        elif not r["parsed"]: conf = min(0.29, 0.29 * r["score"])  # no parser matched: honest uncertainty
+        else: conf = 0.3 + 0.25 * r["score"]
+        agree = _prim(confidence_from_agreement, r["scales"])
+        if isinstance(agree, (int, float)) and 0.09 < conf < 0.9: conf = 0.8 * conf + 0.2 * min(max(float(agree), 0.0), 1.0)
+        return round(float(min(conf, r["meta"])), 4)
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

@@ -1,0 +1,32 @@
+You are a computational engineer designing reasoning evaluation tools.
+
+Three concepts: {c1_name}, {c2_name}, {c3_name}
+
+Descriptions:
+- {c1_name}: {c1_desc}
+- {c2_name}: {c2_desc}
+- {c3_name}: {c3_desc}
+
+A reasoning evaluation tool is a Python class that takes a prompt and candidate \
+answers, then scores them using only numpy and the standard library. No neural models, \
+no API calls — pure algorithmic reasoning.
+
+In 200-400 words, answer:
+1. What specific algorithm emerges from combining these three concepts that could \
+score candidate answers to reasoning questions? Describe the data structures, \
+operations, and scoring logic — not metaphors.
+2. What structural features of text would this approach parse? (e.g., negations, \
+comparatives, conditionals, numeric values, causal claims, ordering relations)
+3. Is this combination novel, or does it map to existing work?
+4. Rate the potential (1-10) for each dimension below.
+
+The tools that succeed in our pipeline use structural parsing (regex extraction of \
+logical relationships), constraint propagation (transitivity, modus ponens), and \
+numeric evaluation. Tools that rely on hash similarity or bag-of-words fail. \
+Be concrete about the algorithm, not the theory.
+
+End your response with exactly these four rating lines (fill in the number and a short justification):
+Reasoning: <N>/10 — <why>
+Metacognition: <N>/10 — <why>
+Hypothesis generation: <N>/10 — <why>
+Implementability: <N>/10 — <why>

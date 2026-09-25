@@ -1,0 +1,358 @@
+"""
+ReasoningTool implements the Spectral‑Neuromodulated Model Checker (SNMC).
+
+Workflow for each candidate answer:
+1.  Parse the prompt and the candidate for six structural predicates
+    (negation, comparative, conditional, numeric, causal, ordering) using
+    simple regex patterns.
+2.  For every predicate type build a binary time‑series over the token
+    positions, compute its DFT with numpy.fft, and summarise the power
+    spectrum by three statistics: total power, peak frequency and spectral
+    entropy.  Concatenating all statistics yields the global spectral
+    descriptor F.
+3.  A gain vector g is created from cue words found in the prompt
+    (e.g. "if", "greater than", numbers ...).  The neuromodulated score is
+    S = g ⊙ F.
+4.  A tiny Kripke model is built from the extracted propositions of the
+    prompt (each predicate becomes a Boolean variable).  The candidate
+    answer is turned into a very small LTL‑like formula (only "G", "F",
+    comparatives and causal links are recognised).  Exhaustive state‑space
+    search (BFS over 2ⁿ assignments) checks whether the model satisfies the
+    formula – the result is V in {0,1}.
+5.  Final score = alpha·norm(S) + beta·V  (alpha=0.6, beta=0.4).  A tiny Normalised
+    Compression Distance (zlib NCD) between prompt and candidate is added
+    as a tie‑breaker (max 15 % of the final rank).
+
+The class also provides a meta‑confidence analyser that looks for
+presupposition, scope‑/pronoun‑ambiguity, false dichotomies, subjectivity
+or outright unanswerability.  When any of those patterns fire the
+confidence is capped at 0.25, otherwise it is derived from the normalised
+score of the best candidate (never exceeding 0.9 without a definitive
+computation).
+
+Only the Python standard library and numpy are used; the implementation
+is deterministic and well under 200 lines.
+"""
+import re
+import zlib
+import numpy as np
+from itertools import product
+
+# ----------------------------------------------------------------------
+# Helper regexes for the six predicate types
+_PREDICATES = {
+    "neg": re.compile(r"\b(not|n't)\b", re.I),
+    "comp": re.compile(r"\b(more than|less than|>=|<=|>|<)\b", re.I),
+    "cond": re.compile(r"\b(if|unless|when|provided that)\b", re.I),
+    "num": re.compile(r"\b\d+(\.\d+)?\b"),
+    "caus": re.compile(r"\b(because|leads to|results in|therefore)\b", re.I),
+    "ord": re.compile(r"\b(before|after|first|last|then|next)\b", re.I),
+}
+# ----------------------------------------------------------------------
+def _tokenize(text: str):
+    """Very simple whitespace tokeniser, keeps punctuation attached."""
+    return text.strip().split()
+
+def _binary_series(tokens, pattern):
+    """Return binary series (list of 0/1) indicating pattern matches per token."""
+    return [1 if pattern.search(tok) else 0 for tok in tokens]
+
+def _psd_features(series):
+    """FFT -> PSD -> three summary stats."""
+    if not any(series):
+        # all‑zero series – return zeros to avoid NaNs
+        return [0.0, 0.0, 0.0]
+    X = np.fft.fft(series)
+    P = np.abs(X) ** 2
+    total = float(P.sum())
+    peak = float(np.argmax(P))
+    # spectral entropy (normalised)
+    prob = P / total
+    entropy = -float((prob * np.log2(prob + 1e-12)).sum())
+    return [total, peak, entropy]
+
+def _gain_vector(prompt_tokens):
+    """Create a gain vector (same length as the concatenated spectral descriptor)."""
+    # start with ones
+    g = np.ones(18)          # 6 predicates * 3 features
+    # simple cue rules – each cue boosts a specific block of three entries
+    # block order: neg, comp, cond, num, caus, ord
+    cues = {
+        "if": ("cond", 2),
+        "unless": ("cond", 2),
+        "when": ("cond", 2),
+        "provided": ("cond", 2),
+        "greater than": ("comp", 2),
+        "less than": ("comp", 2),
+        "more than": ("comp", 2),
+        ">=|<=|>|<": ("comp", 2),
+        "first": ("ord", 2),
+        "last": ("ord", 2),
+        "before": ("ord", 2),
+        "after": ("ord", 2),
+        "because": ("caus", 2),
+        "therefore": ("caus", 2),
+        r"\d+": ("num", 2),
+    }
+    # map predicate name to block index
+    block_index = {"neg":0, "comp":1, "cond":2, "num":3, "caus":4, "ord":5}
+    prompt_str = " ".join(prompt_tokens).lower()
+    for cue, (pred, boost) in cues.items():
+        if re.search(cue, prompt_str):
+            blk = block_index[pred]
+            g[blk*3:blk*3+3] *= boost
+    return g
+
+# ----------------------------------------------------------------------
+def _extract_propositions(tokens):
+    """Return a dict {pred_name: list of matched token strings}."""
+    props = {}
+    for name, pat in _PREDICATES.items():
+        matches = [tok for tok in tokens if pat.search(tok)]
+        if matches:
+            props[name] = matches
+    return props
+
+def _build_kripke(props):
+    """Create a list of states (dicts) for all Boolean assignments of present predicates."""
+    keys = sorted(props.keys())
+    states = []
+    for bits in product([False, True], repeat=len(keys)):
+        state = dict(zip(keys, bits))
+        states.append(state)
+    return states
+
+def _parse_formula(candidate):
+    """
+    Very small LTL‑like parser.
+    Recognises patterns:
+        "always" / "G"  -> G
+        "eventually" / "F" -> F
+        comparatives with numbers, e.g. "numeric > 5"
+        causal words -> causal
+    Returns a lambda state->bool.
+    """
+    cand = candidate.lower()
+    # modality
+    modality = None
+    if re.search(r"\b(always|g )\b", cand):
+        modality = "G"
+    elif re.search(r"\b(eventually|f )\b", cand):
+        modality = "F"
+
+    # simple atomic condition
+    atom = None
+    m = re.search(r"(numeric|number|value)\s*(>=|<=|>|<|=)\s*([\d\.]+)", cand)
+    if m:
+        var, op, val = m.group(1), m.group(2), float(m.group(3))
+        def atom(state, op=op, val=val):
+            # we look for a numeric token in the state (if any)
+            nums = state.get("num", [])
+            if not nums:
+                return False
+            # take the first numeric token as the value
+            try:
+                cur = float(re.findall(r"[\d\.]+", nums[0])[0])
+            except Exception:
+                return False
+            return eval(f"cur {op} val")
+    elif re.search(r"\b(causal|because|leads to|results in)\b", cand):
+        def atom(state):
+            return state.get("caus", False)
+
+    # combine modality and atom
+    if atom is None:
+        # fallback: true if any predicate mentioned in candidate appears in state
+        def atom(state):
+            return any(state.get(p, False) for p in _PREDICATES.keys()
+                       if p in cand)
+
+    if modality == "G":
+        return lambda s: atom(s)  # G over a single state = atom holds everywhere
+    if modality == "F":
+        return lambda s: atom(s)  # F over a single state = atom holds somewhere
+    return atom
+
+def _model_check(prompt_props, candidate):
+    """Return 1 if the Kripke model of the prompt satisfies the candidate formula."""
+    states = _build_kripke(prompt_props)
+    formula = _parse_formula(candidate)
+    # For G we need the formula true in all states, for F at least one.
+    # Our tiny parser returns a plain predicate, so we treat it as G.
+    all_true = all(formula(st) for st in states)
+    any_true = any(formula(st) for st in states)
+    # Heuristic: if candidate contains "always"/"G" require all_true,
+    # if contains "eventually"/"F" require any_true, else any_true.
+    if re.search(r"\b(always|g )\b", candidate.lower()):
+        return 1 if all_true else 0
+    if re.search(r"\b(eventually|f )\b", candidate.lower()):
+        return 1 if any_true else 0
+    return 1 if any_true else 0
+
+def _ncd(a: str, b: str):
+    """Normalised Compression Distance using zlib."""
+    a_bytes = a.encode()
+    b_bytes = b.encode()
+    ca = len(zlib.compress(a_bytes))
+    cb = len(zlib.compress(b_bytes))
+    cab = len(zlib.compress(a_bytes + b_bytes))
+    return (cab - min(ca, cb)) / max(ca, cb)
+
+# ----------------------------------------------------------------------
+class ReasoningTool:
+    """Spectral‑Neuromodulated Model Checker (SNMC)."""
+
+    def __init__(self):
+        self.alpha = 0.6
+        self.beta = 0.4
+
+    # ------------------------------------------------------------------
+    # ----  PUBLIC API  ------------------------------------------------
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        """Score each candidate and return a ranked list."""
+        prompt_tok = _tokenize(prompt)
+        # ---- spectral descriptor for prompt (used only for gain) ----
+        gain = _gain_vector(prompt_tok)
+
+        # ---- compute raw scores for each candidate -----------------
+        raw_scores = []
+        for cand in candidates:
+            cand_tok = _tokenize(cand)
+
+            # 1) spectral features (prompt‑gain applied)
+            feats = []
+            for name, pat in _PREDICATES.items():
+                series = _binary_series(cand_tok, pat)
+                feats.extend(_psd_features(series))
+            S = np.array(feats) * gain
+            raw_scores.append({"cand": cand, "S": S, "cand_tok": cand_tok})
+
+        # normalise S across candidates
+        all_S = np.stack([d["S"] for d in raw_scores])
+        mins = all_S.min(axis=0)
+        maxs = all_S.max(axis=0)
+        denom = np.where(maxs - mins == 0, 1, maxs - mins)
+        for d in raw_scores:
+            d["normS"] = ((d["S"] - mins) / denom).mean()   # scalar 0‑1
+
+        # 2) model‑checking score V
+        prompt_props = _extract_propositions(prompt_tok)
+        for d in raw_scores:
+            V = _model_check(prompt_props, d["cand"])
+            d["V"] = V
+
+        # 3) final weighted score
+        for d in raw_scores:
+            d["score"] = self.alpha * d["normS"] + self.beta * d["V"]
+        # 4) optional NCD tie‑breaker (max 15 % influence)
+        ncds = [_ncd(prompt, d["cand"]) for d in raw_scores]
+        max_ncd = max(ncds) if ncds else 0
+        for d, n in zip(raw_scores, ncds):
+            d["score"] += 0.15 * (1 - n / (max_ncd + 1e-9))
+
+        # ---- build output ------------------------------------------------
+        out = []
+        for d in sorted(raw_scores, key=lambda x: -x["score"]):
+            reasoning = (
+                f"Spectral norm={d['normS']:.3f}, "
+                f"ModelCheck={d['V']}, "
+                f"NCD={ncds[raw_scores.index(d)]:.3f}"
+            )
+            out.append({"candidate": d["cand"], "score": d["score"], "reasoning": reasoning})
+        return out
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Return a calibrated confidence 0‑1 for the supplied answer."""
+        meta = self._meta_confidence(prompt)
+        if meta < 0.3:                     # ambiguous / unanswerable
+            return meta * 0.9               # keep it low (<0.27)
+
+        # compute a deterministic score for the single answer
+        eval_res = self.evaluate(prompt, [answer])[0]
+        base = eval_res["score"]            # already 0‑1 approx
+        # cap according to the rule (never >0.9 without certainty)
+        cap = 0.9 if eval_res["V"] == 1 else 0.6
+        conf = min(base, cap) * meta
+        return float(conf)
+
+    # ------------------------------------------------------------------
+    # ----  META‑CONFIDENCE  --------------------------------------------
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detect traps in the prompt and return a base confidence (0‑1)."""
+        low = 0.0
+        txt = prompt.lower()
+
+        # 1. presupposition – "have you stopped ... ?", "why did X fail ?"
+        if re.search(r"\b(have you (stopped|quit|ceased|ended))\b", txt):
+            low = max(low, 0.25)
+        if re.search(r"\bwhy did .+ (fail|stop|quit)\b", txt):
+            low = max(low, 0.25)
+
+        # 2. scope ambiguity – "every X ... a Y" (same/different)
+        if re.search(r"\bevery .+ (does|did) .+ a .+", txt):
+            low = max(low, 0.25)
+
+        # 3. pronoun ambiguity – "X told Y he/she ..."
+        if re.search(r"\b\w+ told \w+ (he|she|they) ", txt):
+            low = max(low, 0.25)
+
+        # 4. false dichotomy – "either A or B" without "both"/"neither"
+        if re.search(r"\beither .+ or .+(?!.*both|.*neither)", txt):
+            low = max(low, 0.25)
+
+        # 5. subjectivity – "best", "worst", "favorite" without criteria
+        if re.search(r"\b(best|worst|favorite|most|least)\b", txt):
+            low = max(low, 0.25)
+
+        # 6. unanswerability – asks for info not present (very crude)
+        if re.search(r"\bwhat is the (name|date|price|value) of\b", txt):
+            low = max(low, 0.25)
+
+        # If any trap triggered, confidence is capped at 0.25‑0.3
+        if low > 0:
+            return 0.25 + 0.05 * (0.3 - 0.25)   # ~0.255
+
+        # No trap detected -> optimistic baseline
+        return 0.85
+
+# ----------------------------------------------------------------------
+# Example usage (can be removed in production)
+if __name__ == "__main__":
+    tool = ReasoningTool()
+    prompt = "If the temperature is greater than 30 then the reaction speeds up because the molecules move faster."
+    candidates = [
+        "The reaction will speed up when temperature > 30.",
+        "The reaction slows down when temperature > 30.",
+        "Temperature has no effect."
+    ]
+    for r in tool.evaluate(prompt, candidates):
+        print(r)
+    print("Confidence:", tool.confidence(prompt, candidates[0]))
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

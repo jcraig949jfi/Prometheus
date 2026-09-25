@@ -23,7 +23,7 @@ Every role below carries the banner on its primary document(s):
 | Charon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
 | Clymene | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/clymene/README.md is the March 2026 agent README, annotated by the seat file, not stamped) |
 | Coeus | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before and has never had a charter) |
-| Cosmos | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; new seat, charter PENDING the operator's direction; self-service row per Archaeon ruling #39) |
+| Cosmos | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; charters ADOPTED 2026-09-23/24 (CWE build + C0, closed at af2af37f4; C3 ownership), verbatim in roles/Cosmos/prompts/; rewritten 2026-09-25, pre-charter file at roles/Cosmos/superseded/; self-service row per Archaeon ruling #39) |
 | Ensorain | RESPONSIBILITIES.md (created 2026-09-23 on the seat's creation pass on M2; first charter (Tensor World Engine falsifier) 2026-09-23; charter CHANGED 2026-09-24 to the Tensor Physics of Intelligence Foundry, verbatim in roles/Ensorain/prompts/2026-09-24_foundry_directive/ with MANIFEST; earlier charter bodies at roles/Ensorain/superseded/; self-service row per Archaeon ruling #39) |
 | Crius | RESPONSIBILITIES.md (created 2026-09-18 on the seat's creation pass on M2; charter ADOPTED 2026-09-19 (Campaign 0: adaptive workspace sandbox), verbatim in roles/Crius/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Crius/superseded/; self-service row per Archaeon ruling #39) |
 | CrossDomainCartographer | RESPONSIBILITIES.md (already) |
@@ -92,7 +92,7 @@ BOOTSTRAP.md if the seat has one, else STARTUP.md, RESPONSIBILITIES.md, ROLE.md,
 | Charon | STARTUP.md |
 | Clymene | RESPONSIBILITIES.md |
 | Coeus | RESPONSIBILITIES.md |
-| Cosmos | RESPONSIBILITIES.md |
+| Cosmos | BOOTSTRAP.md (from 2026-09-25; was RESPONSIBILITIES.md) |
 | Crius | RESPONSIBILITIES.md |
 | CrossDomainCartographer | RESPONSIBILITIES.md |
 | Daedalus | RESPONSIBILITIES.md |

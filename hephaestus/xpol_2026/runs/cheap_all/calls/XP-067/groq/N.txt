@@ -1,0 +1,27 @@
+**1. Algorithmic core**  
+The tool builds a *Bayesian‑constrained bandit scorer*. For each candidate answer it creates a **state vector** `S = (c₁,…,c_k)` where each component is a Boolean or numeric predicate extracted from the text (e.g., “A > B”, “¬C”, “if D then E”). A **prior** distribution over the correctness of each predicate is initialized from a hand‑crafted reliability table (e.g., “numeric comparison” = 0.9, “causal claim” = 0.6).  
+
+During a single pass over the answer, a **multi‑armed bandit** treats each predicate as an arm. Pulling an arm means evaluating the predicate against the reference solution or a gold‑standard rule set. The reward is 1 if the predicate matches the reference, 0 otherwise. Using **Thompson sampling**, the algorithm draws a posterior for each arm from its Beta(α,β) parameters, selects the arm with the highest sampled value, updates α/β with the observed reward, and repeats for a fixed budget *B* (e.g., B = k + 5).  
+
+After the bandit loop, the posterior means of all arms are multiplied (assuming conditional independence) to obtain a **joint posterior score** for the whole answer. This Bayesian product acts as a calibrated confidence that the answer’s logical structure is correct. The final score is a real number in [0,1].
+
+**2. Parsed structural features**  
+- Negation markers (`not`, `¬`)  
+- Comparative operators (`>`, `<`, `≥`, `≤`)  
+- Conditional constructs (`if … then …`, `=>`)  
+- Numeric literals and units  
+- Causal verbs (`causes`, `leads to`) and their directionality  
+- Ordering relations (`first`, `after`, `subsequent`)  
+- Quantifiers (`all`, `some`, `none`)  
+
+Regular‑expression tokenizers populate the predicate vector; a lightweight dependency‑pattern matcher extracts subject‑object pairs for causal claims.
+
+**3. Novelty**  
+The exact combination—Bayesian posterior aggregation of bandit‑driven predicate verification—is not present in standard grading scripts. Prior work uses either Bayesian inference for answer confidence or bandit‑based adaptive testing, but coupling them to evaluate parsed logical predicates is a new, albeit incremental, synthesis of existing techniques.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — strong logical decomposition and calibrated scoring.  
+Metacognition: 6/10 — the algorithm reflects on its own uncertainty via posteriors but lacks self‑explanation.  
+Hypothesis generation: 7/10 — can propose alternative predicate sets when evidence is missing.  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, and fits existing pipelines.

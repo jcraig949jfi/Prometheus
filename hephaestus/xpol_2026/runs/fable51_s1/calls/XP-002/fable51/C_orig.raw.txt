@@ -1,0 +1,201 @@
+```python
+"""SPAS: Sparse-Predictive Architecture Search reasoning tool.
+
+Mechanism: the prompt is split into atomic propositions encoded as sparse binary
+vectors (sparse coding) joined by hyperedges (clause flow, if/then conditionals).
+A tiny evolutionary search (NAS) over ternary weight tensors W minimises hyperedge
+prediction error plus an L0 penalty (free-energy-style objective) and keeps W*.
+A candidate is scored by (a) a JUDGMENT term: hedged answers win only when the
+question itself is flagged as ambiguous/loaded, otherwise the deterministic
+solver's answer wins; (b) a STRUCTURAL term: prediction error the candidate
+induces as a target state under W*; (c) a COMPUTATION term from solvers (numeric
+comparison, PEMDAS, modular, Bayes, work-rate, modus tollens/ponens, transitivity);
+(d) zlib NCD as a <=15% tiebreaker. confidence() is capped by _meta_confidence(),
+which inspects only the QUESTION (presupposition, scope, pronoun, dichotomy...).
+"""
+import re, ast, zlib
+import numpy as np
+
+NUM = r'-?\d+(?:\.\d+)?'
+STOP = set('the a an is are was were be been it that this of to in on at and or if then so than '
+           'do does did has have had will would can could should not no'.split())
+NEG = r"\b(not|no|never|isn't|doesn't|didn't|wasn't|aren't|cannot|can't|won't)\b"
+HEDGE = (r"\b(cannot be determined|can't be determined|cannot tell|not enough information|insufficient|"
+         r"ambiguous|depends|unclear|neither|both|none of|false (dichotomy|premise)|presuppos\w*|loaded|"
+         r"unanswerable|no way to know|not necessarily|invalid|flawed|fallac\w*|irrelevant|sunk cost|"
+         r"survivorship|regression|does not follow|doesn't follow|other options?|more information)\b")
+META = [(r'\b(have|has|had|did|do|are) (you|he|she|they|we|it|people)( still)? (stopped|quit|ceased|given up|still)\b', 0.15),
+        (r'\bwhy (did|does|do|is|are|has|have|was|were) [^?]*\b(fail|stop|quit|lie|cheat|refuse|hate|worse|bad)', 0.15),
+        (r'\beither\b[^.?]{2,80}\bor\b', 0.2),
+        (r'\b(best|worst|favou?rite|most (beautiful|interesting|important|fun)|nicest|of all time)\b', 0.2),
+        (r'\b(already|have|has) (spent|invested|put in|sunk)\b', 0.2),
+        (r'\b(survivors?|successful (people|companies|founders)|dropouts?|(that|who) (succeeded|survived|made it))\b', 0.2),
+        (r'\b(regress|record (high|low)|worst (day|game|week)|best (day|game|week)|after (their|his|her) (best|worst))\b', 0.25),
+        (r'\b(deceiv\w*|bluff\w*|pretend\w*|lying|mislead\w*)\b', 0.25),
+        (r'\b(intend\w*|meant to|on purpose|accident\w*|blame)\b', 0.25),
+        (r'\b(valid|sound|strong|weak|cogent)\b[^.]*\bargument\b|\bargument\b[^.]*\b(valid|sound|strong|weak|cogent)\b', 0.25)]
+
+
+class ReasoningTool:
+    def __init__(self):
+        self.lam, self.pop, self.gens = 0.02, 8, 12
+
+    # ---------------- judgment about the QUESTION ----------------
+    def _meta_confidence(self, prompt):
+        p = ' ' + re.sub(r'\s+', ' ', prompt.lower()) + ' '
+        cap = 1.0
+        for rx, c in META:
+            if re.search(rx, p): cap = min(cap, c)
+        if re.search(r'\b(every|each|all)\b .{0,40}\b(a|an|one|some)\b', p) and re.search(r'\b(same|different|how many)\b', p):
+            cap = min(cap, 0.2)
+        if re.search(r'\b\w+ (told|said to|asked|informed) \w+ (that )?(he|she|they) ', p) and re.search(r'\bwho\b', p):
+            cap = min(cap, 0.15)
+        if re.search(r'\bwhat (is|was) (the|my|his|her|their) (name|age|colou?r|favou?rite|password)\b', p) and not re.search(NUM, p):
+            cap = min(cap, 0.25)
+        return cap
+
+    # ---------------- deterministic solvers (computation) ----------------
+    def _toks(self, s): return set(re.findall(r'[a-z]+', s.lower())) - STOP
+    def _key(self, s):
+        t = sorted(self._toks(s), key=len, reverse=True)
+        return t[0][:4] if t else ''
+
+    def _solve(self, prompt):
+        p = prompt.lower().replace(',', '')
+        nums = [float(x) for x in re.findall(NUM, p)]
+        m = re.search(r'(?:what is|compute|evaluate|calculate|result of)\s*([\d\.\s\+\-\*/\(\)x\^]+)\??', p)
+        if m and re.search(r'\d\s*[\+\-\*/x\^]\s*[\d\(]', m.group(1)):
+            try:
+                tree = ast.parse(m.group(1).replace('x', '*').replace('^', '**').strip(' =?'), mode='eval')
+                ok = all(isinstance(n, (ast.Expression, ast.BinOp, ast.UnaryOp, ast.Constant, ast.operator, ast.unaryop)) for n in ast.walk(tree))
+                if ok: return 'num', float(eval(compile(tree, '', 'eval')))
+            except Exception: pass
+        pct = [float(x) / 100 for x in re.findall(r'(' + NUM + r')\s*(?:%|percent)', p)]
+        if re.search(r'\b(test|screen|diagnos)\w*', p) and len(pct) >= 3:
+            pr, se, fp = pct[0], pct[1], pct[2]
+            den = pr * se + (1 - pr) * fp
+            if den > 0: return 'num', pr * se / den
+        m = re.search(r'(' + NUM + r')\s*(?:mod|modulo|%)\s*(' + NUM + ')', p)
+        if m and float(m.group(2)) != 0: return 'num', float(m.group(1)) % float(m.group(2))
+        if re.search(r'\btogether\b', p) and re.search(r'\b(hours?|minutes?|days?)\b', p) and len(nums) >= 2 and all(nums[:2]):
+            return 'num', 1.0 / (1.0 / nums[0] + 1.0 / nums[1])
+        if re.search(r'\bwhich\b', p) and re.search(r'\b(larger|bigger|greater|smaller|less|higher|lower|more)\b', p) and len(nums) >= 2:
+            big = bool(re.search(r'\b(larger|bigger|greater|higher|more)\b', p))
+            return 'num', max(nums[0], nums[1]) if big else min(nums[0], nums[1])
+        m = re.search(r'if (.+?),? then (.+?)[\.;]', p) or re.search(r'if (.+?), (.+?)[\.;]', p)
+        if m:
+            a, b, rest = m.group(1), m.group(2), p[m.end():]
+            ka, kb = self._key(a), self._key(b)
+            if kb and kb in rest and re.search(NEG, rest): return 'prop', ('not', ka)
+            if ka and ka in rest and not re.search(NEG, rest): return 'prop', ('yes', kb)
+            if (kb and kb in rest) or (ka and ka in rest): return 'prop', ('unknown', ka)
+        chain = re.findall(r'(\w+) is (\w+er|more \w+|less \w+) than (\w+)', p)
+        sup = re.search(r'\b(\w+est|most \w+|least \w+)\b', p)
+        if len(chain) >= 2 and sup:
+            root = lambda c: c[5:] if c.startswith(('more ', 'most ')) else (c[6:] if c.startswith('least ') else c[:-2] if c.endswith('er') else c[:-3])
+            r0 = root(chain[0][1])
+            edges = [(a, b) if root(c) == r0 else (b, a) for a, c, b in chain]
+            src, dst = {a for a, _ in edges}, {b for _, b in edges}
+            top, bot = list(src - dst), list(dst - src)
+            same = root(sup.group(1)) == r0 and not sup.group(1).startswith('least')
+            pick = top if same else bot
+            if len(pick) == 1: return 'name', pick[0]
+        return None
+
+    def _match(self, sol, cand):
+        kind, ans = sol
+        c = cand.lower()
+        if kind == 'num':
+            cn = [float(x) for x in re.findall(NUM, c.replace(',', ''))]
+            return any(abs(x - ans) <= 0.02 * abs(ans) + 0.011 or abs(x - 100 * ans) <= 1.0 for x in cn)
+        if kind == 'name': return ans in self._toks(c)
+        pol, key = ans
+        if pol == 'unknown': return bool(re.search(HEDGE, c))
+        neg = bool(re.search(NEG, c))
+        if c.strip(' .!') in ('yes', 'no'): return (c.strip(' .!') == 'no') == (pol == 'not')
+        return (key in c) and (neg == (pol == 'not'))
+
+    # ---------------- SPAS hypergraph + architecture search ----------------
+    def _graph(self, prompt):
+        clauses = [x for x in re.split(r'[.;?!,]|\bthen\b|\bif\b|\bbut\b', prompt.lower()) if self._toks(x)]
+        self.props = [self._toks(x) for x in clauses]
+        n = len(self.props)
+        enc = self._enc
+        edges = [(enc(clauses[i]), enc(clauses[i + 1])) for i in range(n - 1)]
+        for a, b in re.findall(r'if (.+?),? then (.+?)[\.;]', prompt.lower()): edges.append((enc(a), enc(b)))
+        return edges
+
+    def _enc(self, text):
+        t, neg = self._toks(text), bool(re.search(NEG, text.lower()))
+        s = np.array([1.0 if pr and len(t & pr) / len(pr) >= 0.5 else 0.0 for pr in self.props] + [float(neg)])
+        return s
+
+    def _search(self, edges, seed):
+        d, E = len(self.props) + 1, len(edges)
+        rng = np.random.default_rng(seed)
+        S = np.stack([s for s, _ in edges]); T = np.stack([t for _, t in edges])
+        def fit(W):
+            pred = (np.einsum('ed,edk->ek', S, W) > 0.5).astype(float)
+            return -np.abs(T - pred).sum() - self.lam * np.count_nonzero(W)
+        pop = [np.where(rng.random((E, d, d)) < 0.3, rng.choice([-1.0, 1.0], (E, d, d)), 0.0) for _ in range(self.pop)]
+        for _ in range(self.gens):
+            f = [fit(W) for W in pop]
+            new = [pop[int(np.argmax(f))]]
+            while len(new) < self.pop:
+                i, j = rng.integers(self.pop, size=2); a = pop[i] if f[i] >= f[j] else pop[j]
+                k, l = rng.integers(self.pop, size=2); b = pop[k] if f[k] >= f[l] else pop[l]
+                child = np.where(rng.random((E, d, 1)) < 0.5, a, b)
+                e, r, c = rng.integers(E), rng.integers(d), rng.integers(d)
+                child[e, r, c] = rng.choice([-1.0, 0.0, 1.0])
+                new.append(child)
+            pop = new
+        f = [fit(W) for W in pop]
+        return pop[int(np.argmax(f))], edges[-1][0]
+
+    def _structural(self, W, last_src, cand):
+        c = self._enc(cand)
+        err = sum(np.abs(c - (c @ W[e] > 0.5)).sum() for e in range(W.shape[0]))
+        err += np.abs(c - (last_src @ W[-1] > 0.5)).sum()
+        return 1.0 / (1.0 + err)
+
+    def _ncd(self, a, b):
+        za, zb = len(zlib.compress(a.encode())), len(zlib.compress(b.encode()))
+        return (len(zlib.compress((a + ' ' + b).encode())) - min(za, zb)) / max(za, zb, 1)
+
+    # ---------------- interface ----------------
+    def evaluate(self, prompt, candidates):
+        cap, sol, edges = self._meta_confidence(prompt), self._solve(prompt), self._graph(prompt)
+        Wl = self._search(edges, zlib.crc32(prompt.encode())) if edges else None
+        out = []
+        for cand in candidates:
+            hedge = 1.0 if re.search(HEDGE, cand.lower()) else 0.0
+            if cap < 0.3: judg, why = hedge, 'question flagged (cap %.2f); hedged answer preferred' % cap
+            elif sol: judg, why = float(self._match(sol, cand)), 'solver %s -> %s' % sol
+            else: judg, why = 1.0 - 0.5 * hedge, 'no solver; unhedged answer preferred'
+            comp = float(self._match(sol, cand)) if sol else 0.5
+            struct = self._structural(Wl[0], Wl[1], cand) if Wl else 0.5
+            ncd = 1.0 - self._ncd(prompt, cand)
+            score = 0.40 * judg + 0.30 * struct + 0.15 * comp + 0.15 * ncd
+            out.append({'candidate': cand, 'score': round(float(score), 4),
+                        'reasoning': '%s | struct=%.2f comp=%.2f ncd=%.2f' % (why, struct, comp, ncd)})
+        return sorted(out, key=lambda r: -r['score'])
+
+    def confidence(self, prompt, answer):
+        cap, sol = self._meta_confidence(prompt), self._solve(prompt)
+        if cap < 0.3: conf = 0.2
+        elif sol and sol[0] == 'prop' and sol[1][0] == 'unknown': conf = 0.85 if self._match(sol, answer) else 0.1
+        elif sol: conf = 0.92 if self._match(sol, answer) else 0.08
+        elif self._graph(prompt): conf = 0.4
+        else: conf = 0.25
+        return float(min(conf, cap))
+```
+
+Notes on the design choices, in the order they matter:
+
+- **Judgment (40%)** is decisive: if `_meta_confidence` flags the question (cap < 0.3), hedged candidates ("cannot be determined", "false dichotomy", "neither"...) win; if a solver fires, the solver's answer wins; otherwise unhedged answers are mildly preferred so the tool doesn't hedge on determinate questions.
+- **Solvers** actually compute: PEMDAS via an AST-whitelisted eval, Bayes posterior from three percentages, modular arithmetic, combined work-rate, numeric comparison (`9.11 < 9.9` handled as floats), modus tollens / modus ponens / affirming-the-consequent (the last returns `unknown` and rewards hedging), and transitivity chains with direction-normalised comparatives and top/bottom selection from the superlative.
+- **SPAS structural (30%)**: propositions are one-hot sparse codes plus a polarity bit; hyperedges are clause flow and if/then pairs; a seeded GA (tournament, uniform row crossover, single-entry ternary mutation) minimises `sum eps + lam*L0`; the candidate is scored by its self-consistency error as a target state under W*. Seed is `crc32(prompt)`, so it is deterministic.
+- **NCD** is 15% and only breaks ties.
+- **confidence()** depends on question properties: 0.2 when flagged, 0.92/0.08 only when a solver produced a definitive answer and the candidate matches/doesn't, 0.4 when only structure parsed, 0.25 when nothing parsed — always capped by `_meta_confidence`.
+
+One caveat: the two score-decomposition specs in the brief conflict (structural >= 50% vs judgment >= 40%); I followed Frame D, with solver agreement folded into the judgment term so Tier A answers stay decisive.

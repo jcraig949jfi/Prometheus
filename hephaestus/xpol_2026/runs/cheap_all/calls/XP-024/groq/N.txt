@@ -1,0 +1,33 @@
+**Algorithmic core**  
+The tool builds a *frequency‑domain representation* of a candidate answer by first tokenising the text into a fixed‑size vocabulary (e.g., the 5 000 most frequent lemmas). Each token position is encoded as a one‑hot vector; the sequence of one‑hots forms a binary matrix **S** ∈ {0,1}<sup>n × V</sup> where *n* is the number of tokens and *V* the vocabulary size. A discrete Fourier transform (DFT) is applied column‑wise using `numpy.fft.rfft`, yielding a complex spectrum **F** that captures global ordering patterns (periodicities, long‑range dependencies) without a learned model.
+
+A parallel *cellular‑automaton (CA) sweep* treats **S** as a 2‑D lattice. For a small radius *r* (e.g., 1), a deterministic rule‑set is defined that propagates logical markers:  
+- “NEG” for negation cues,  
+- “COND” for conditional words,  
+- “COMP” for comparatives,  
+- “NUM” for numeric tokens,  
+- “CAUSE” for causal verbs.  
+
+The rule updates each cell by a majority vote over its neighbourhood, producing a stabilized state **C** after a fixed number of steps (typically 3–5). The CA captures local syntactic structure and the emergence of higher‑order patterns such as nested conditionals.
+
+**Scoring logic**  
+1. **Spectral similarity** – the reference answer is pre‑processed the same way, giving **F_ref**. Compute the normalized Euclidean distance `d = np.linalg.norm(F-F_ref)/np.linalg.norm(F_ref)`.  
+2. **CA pattern match** – for each marker type *m*, count matching cells `match_m = np.sum(C[:,m]==C_ref[:,m])`. Convert to a proportion `p_m = match_m / total_m`.  
+3. **Composite score** – `score = (1‑α)* (1‑d) + α * Σ w_m * p_m`, where α∈[0,1] balances global ordering (Fourier) and local logical consistency (CA). The weights *w_m* are hand‑tuned to reflect the importance of each marker.
+
+**Parsed structural features**  
+- Negations (“not”, “never”) → NEG marker  
+- Comparatives & superlatives (“greater than”, “least”) → COMP marker  
+- Conditionals (“if…then”, “unless”) → COND marker  
+- Numeric values (digits, spelled numbers) → NUM marker  
+- Causal verbs (“cause”, “lead to”) → CAUSE marker  
+- Ordering relations (temporal adverbs, “first”, “after”) are captured indirectly by spectral phases.
+
+**Novelty assessment**  
+The exact combination—using a Fourier spectrum to encode global token ordering together with a deterministic CA to extract logical markers and then fusing them for a similarity score—is not present in prior evaluation toolkits. Similar ideas exist separately (spectral text analysis, rule‑based CA parsers), but their integration for reasoning scoring is novel.
+
+**Ratings**  
+Reasoning: 8/10 — captures both global coherence and local logical structure.  
+Metacognition: 6/10 — limited to surface markers, no self‑reflection modeling.  
+Hypothesis generation: 5/10 — can detect missing logical steps but cannot propose alternatives.  
+Implementability: 9/10 — pure NumPy + regex, fits the no‑API constraint.

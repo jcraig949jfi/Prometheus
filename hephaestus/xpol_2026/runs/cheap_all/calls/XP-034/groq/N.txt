@@ -1,0 +1,19 @@
+**Computational mechanism**
+
+The fusion yields a *Spectro‑Falsification Critical Engine* (SFCE): a recurrent architecture (e.g., a leaky‑integrate‑and‑fire network or an Echo State Network) whose connectivity is tuned to the edge of chaos by a self‑organized criticality rule (branching‑ratio ≈ 1, power‑law avalanche size distribution). The network maintains an internal “hypothesis bank” – a set of parametric generative models that predict future observations. After each prediction cycle the residual error signal is transformed with a fast Fourier transform; a periodogram (Welch’s method) provides a power‑spectral density (PSD).  
+
+A Popperian falsification loop evaluates each hypothesis by testing whether its residual‑error PSD deviates significantly from the null distribution expected under that hypothesis (e.g., using a Kolmogorov–Smirnov test on the cumulative PSD or a likelihood‑ratio test on fitted 1/f^α spectra). Hypotheses whose error spectra show excess low‑frequency power (signalling long‑range correlations) are flagged for rejection, while those whose PSD matches the critical‑state baseline (α≈1) are retained and refined. The critical dynamics guarantee that the system’s internal sensitivity (susceptibility) is maximal, so even tiny systematic mismatches generate measurable spectral signatures.
+
+**Advantage for a self‑testing reasoner**
+
+Because the engine operates at criticality, it amplifies minute, structured prediction failures into macroscopic spectral anomalies. The spectral test isolates the *shape* of the error—not just its magnitude—allowing the system to falsify hypotheses that are otherwise indistinguishable by scalar loss functions. This yields a principled, quantitative falsification criterion that scales with the complexity of the data stream and automatically focuses computational effort on the most informative frequency bands.
+
+**Novelty**
+
+Elements exist separately: criticality in reservoir computing, spectral hypothesis testing, and Popperian model selection. No known framework integrates all three into a closed‑loop falsification engine. Hence the combination is *largely novel*, though it draws on established algorithms (FFT, Welch PSD, branching‑process criticality, Bayesian model evidence).
+
+**Ratings**  
+Reasoning: 8/10 — the spectral‑critical loop provides a powerful, quantitative falsification signal.  
+Metacognition: 7/10 — self‑monitoring via PSD is concrete, though implementation complexity is non‑trivial.  
+Hypothesis generation: 6/10 — the mechanism excels at testing, not at inventing new conjectures.  
+Implementability: 5/10 — requires precise tuning of critical dynamics and robust spectral statistics; feasible but engineering‑heavy.
