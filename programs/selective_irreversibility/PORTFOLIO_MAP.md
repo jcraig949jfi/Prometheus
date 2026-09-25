@@ -49,3 +49,26 @@ engine   | seat   | host | class       | frozen work in flight                  
 NPE      | Nestor | M1   | DIRECT      | X-CONTENT running; holdout D build        | reversible core (memo 5.2); open search     | EXPOSED 09-25 ~16:50Z (#584)
 PTE      | Ananke | M1   | DIRECT      | none (HOLD); C1b, then PTE-SI01, queued   | PTE-SI01 (directive 25a81442)               | EXPOSED 09-25 ~20:00Z (operator directive)
 index    | Atlas  | M1   | OBSERVATION | none (PARKED, reports only)               | portfolio memory (s11), pending memo Q2     | 0 hits; not briefed
+
+### 2026-09-25T23:18Z Cyclops[m2-e8056938]
+AETHER / AGE: ALLOCATION TENSION (proposed as memo Q5; not resolved by the stewards).
+  Facts: roles/Aether/TODO.md (currency 2026-09-25) names the RunPod ENGINEERING LADDER as THE primary
+  mission, quoting the operator on 2026-09-24: "The reusable GPU platform is now the primary mission".
+  AETH-02 science is closed. Ladder: iteration 1 of 5 done, $0.124 of $5.00 spent. The directive
+  (09-25, later) s8 says "Aether / AGE -- High priority ... an alien test of whether relevance-selective
+  contraction appears". s7 FREEZES "large architecture rewrites without a direct experimental need"
+  and asks of every engineering item: "Does this materially increase our ability to falsify ...?"
+  Tension: the ladder is infrastructure with no program experiment attached today. AGE is idle as
+  science. Aether is also one of the few seats the probe found clean (BLIND (probe), 21:5xZ).
+  Cyclops position (a proposal for Aporia, then the operator):
+    (i)  Do NOT brief Aether yet. Briefing cannot be undone, and the operator may prefer AGE as a
+         blind discovery lane read later by the DSA (the AGE adapter needs no briefing of the
+         AGE search itself; it reads frozen specimens).
+    (ii) The ladder passes s7 only insofar as a program experiment needs pods (PTE at scale, the
+         DSA at scale, or AGE runs). Recommend: finish the cheap iteration 2, then park the ladder
+         until a preregistered program experiment names a GPU need.
+    (iii) Operator Q5: is AGE a DIRECT lane (s5/s8 as written, brief Aether now) or a BLIND lane
+         (protected, read afterwards), and does the RunPod ladder stay primary under s7?
+  Until Q5 is answered, Cyclops sends Aether nothing about the program. Added to DO_NOT_BRIEF? NO:
+  the list is for designated or candidate blind lanes, and Aether is DIRECT by allocation. The hold is
+  recorded here instead.
