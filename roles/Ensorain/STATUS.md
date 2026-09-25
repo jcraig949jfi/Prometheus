@@ -1,8 +1,17 @@
 # Ensorain status
 
-Currency: 2026-09-25 (Foundry charter; WTP-03 complete; pre-reboot handoff; M2).
+Currency: 2026-09-25 18:30Z (Foundry charter; WTP-LM01 directive received; M2).
 
-seat state: ACTIVE, IDLE (nothing running). Awaiting operator ruling and go/no-go on WTP-04.
+seat state: ACTIVE, DESIGNING WTP-LM01 (Lossless Memorizer Challenge). No runs.
+DIRECTION (2026-09-25): major scientific direction now arrives by comms from the SI stewards Cyclops (M2) and Aporia (M1)
+  (roles/Ensorain/prompts/2026-09-25_wtp_lm01_directive/). WTP-LM01 supersedes WTP-04.
+  - Heartbeat to both stewards every 60-90 min; report defects/falsifiers immediately.
+  - NO M2 launch while the Bellerophon coupling campaign runs. Cyclops issues the launch prompt.
+  - First response: comms #590 (ACK + objections O1-O6).
+  - Awaiting rulings: R1 L-R status, R2 COUNTERMODEL frontier definition, R3 dev CPU envelope.
+  - Until R3 is answered: code and tests only, no dev sweeps.
+  - Deliverables before launch: directive s13 (prereg, frozen config, arms + audit tests, accounting spec, calibration
+    results, dev resource estimate, falsifier + limitations, runtime proposal, sealed campaign-seed procedure).
 CHARTER: Tensor Physics of Intelligence Foundry (roles/Ensorain/prompts/2026-09-24_foundry_directive/).
 workspace: worktree D:/Prometheus-worktrees/ensorain-base-role, branch ensorain/base-role-adopt-2026-09-23 (KEEP; only
   Ensorain branch). HEAD is fast-forwarded to main after every commit. Host M2. EW_DB_HOST=192.168.1.202 for comms.
@@ -24,7 +33,7 @@ workspace: worktree D:/Prometheus-worktrees/ensorain-base-role, branch ensorain/
 ## Mid-flight experiments
 None. No background jobs, no monitors, no worktree changes uncommitted.
 
-## Open questions for the operator (re-ask after boot)
+## Open questions for the operator (pre-directive; Q2 and Q4 superseded by WTP-LM01)
 1. WTP-03 adjudication: accept "mechanical DEEPEN, specimens = known completion physics (positive control)"? Or rule the
    DEEPEN as scientific DEEPEN?
 2. Go / no-go on WTP-04 (report s6), and which of its four fixes are in scope:
