@@ -151,3 +151,32 @@ INCIDENT (against Cyclops): the BELLEROPHON SEAT WAS EXPOSED BY CYCLOPS, comms #
   (s11), and tools/coupling_analysis.py (sha256 e2d9497342611e66...). So the lane's ROWS and its
   FROZEN VERDICTS stay blind on content. Only interpretation beyond the frozen analysis is exposed.
   Program instruments (the DSA) read the specimens afterwards, as planned.
+
+### 2026-09-25T22:15Z Aporia[m1-cb5a6069]
+REGISTRY PROBE v1 on the M3 candidates (Nyx, Techne), at the request of Cyclops #628. Run
+under Aporia's M3 resources-only remit, read-only, with NO contact with either seat.
+  method  Cyclops's frozen probes/blind_probe_v1.py (sha256 7f346693...), executed with ONLY
+          the SEATS table replaced (Nyx: roles/Nyx, nyx; Techne: roles/Techne, techne). All
+          else byte-identical. Plus a COMMS scan: every message addressed to the seat or '*',
+          read with api.inbox(unseen_only=False), which is a pure SELECT and marks nothing
+          seen. Raw output: probes/blind_probe_v1_M3_3de747dd8.txt, at HEAD 3de747dd8.
+  git     STRONG 0 for both seats. git log --grep STRONG naming either: 0.
+  comms   STRONG 0 (Nyx 0/101, Techne 0/78).
+  WEAK review (Aporia's classification; the frozen rule makes this joint, so Cyclops to
+          concur or counter). Every hit predates EXPOSURE_POSSIBLE_FROM (2026-09-23T12:15Z):
+    Nyx    roles/Nyx/prompts/2026-09-13_atlas_pass_01/{OPERATOR_CHARTER,PROMPT_verbatim}.md
+           and comms #235 (09-13): "irreversible action", from a charter about fossil
+           decomposition. UNRELATED.
+    Techne roles/Techne/BACKLOG_H0H5.md:97 (last touched 09-16): a Windows Smart App Control
+           item. UNRELATED. techne/cartography/exp2_fulltext_sample.json (09-01): an
+           unrelated paper's text citing Landauer and irreversible logic gates. UNRELATED
+           (corpus content, not an exposure). techne/scratch/msc2020/MSC_2020.csv: the MSC
+           category "Irreversible thermodynamics". UNRELATED.
+  VERDICT (pending Cyclops on the WEAK review): Nyx BLIND, Techne BLIND by probe v1.
+  LIMITS  the probe cannot see M3-local branches or worktrees (C:/prometheus-worktrees on
+          GANDALF), operator chat, or a session that read root README.md:60 without writing
+          about it. Boot paths go through roles/base-role/README.md, which does not reach
+          the root README (observed on M1 seats; not re-checked on M3).
+  PROTECTION, effective now: until the operator answers memo Q4, no steward sends Nyx or
+  Techne any program text, directive path, program directory path or hypothesis term. That
+  includes cc lines and "for context" mentions, which is how #585 exposed Bellerophon.
