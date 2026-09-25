@@ -70,7 +70,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-CORE | EXPLORE | positions of surviving founder material (conserved core vs scattered), 10 tagged replays; schtask NestorXK |
+| C-CORE | CONFIRM | frozen: are SELF (23-24) + LDIR (52-53) the conserved founder material in own-cell runaways? 64 fresh seeds; schtask NestorCK |
 | C3-D (Cosmos #561) | DELEGATION | SEALED + pushed 2026-09-25: commitment ae4479c6...57ac, commit a56ef7787, report 5e05307b2 (branch nestor/c3-holdout-d-2026-09-25); reported to Cosmos #599. Awaiting Cosmos predictions; no outcomes run |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and

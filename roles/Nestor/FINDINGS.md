@@ -364,6 +364,9 @@ events, so 'founder-descended' may mean slot lineage, not inherited content; byt
 is even half founder bytes. **Every 'founder-descended' statement above (X-ATOMIC-RANDOM, X-SWAP-ANCESTRY, C-SWAP-ACQUIRE's
 endpoint) is lineage descent, not content inheritance.** What IS required is the genome at the start (random implant 0/80,
 0/240). Where the surviving founder bytes sit: X-CORE.
+X-CORE (WEAK_SIGNAL; the declared contiguous-core rule failed): post hoc, in all 5 own-cell runaways the founder bytes kept by
+>= 80% of the population include exactly the two world-op instructions, ED 32 (OP_SELF, positions 23-24) and ED B0 (LDIR,
+52-53), with most other bytes turned over. Hypothesis only; under CONFIRM in C-CORE (64 fresh seeds).
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
