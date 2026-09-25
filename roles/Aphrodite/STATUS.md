@@ -1,12 +1,12 @@
 # Aphrodite status
 
-Currency: 2026-09-24 (S1-S4 chain complete; returned to operator at S4).
+Currency: 2026-09-25 (seat reset requested; S1-S4 done, A15/A16 recursion attempts untestable -- see NEXT_SESSION.md).
 
 seat state: ACTIVE on its charter (APHRODITE-08 APPROVED 2026-09-18).
 workspace: worktree aphrodite-base-role, branch aphrodite/engine-2026-09-21
   (pushed). Host harry1 (M4). comms via EW_DB_HOST=192.168.1.202.
 
-READ NEXT: NEXT_SESSION.md, then journal/2026-09-23.md (covers 09-23 and 09-24).
+READ FIRST: NEXT_SESSION.md (pick-up state, open questions Q-A..Q-E, where to resume), then journal/2026-09-23.md.
 
 ## Dispositions on record (never pooled with each other)
 
@@ -23,7 +23,9 @@ READ NEXT: NEXT_SESSION.md, then journal/2026-09-23.md (covers 09-23 and 09-24).
                                                  families; break-even 41.2 < 64
                                                  ACCEPTED by operator 2026-09-24
   BOUNDED_RSI                         NOT YET ESTABLISHED (operator 2026-09-24);
-                                                 next: G1 -> G2 recursion campaign
+                                                 A15: NO / UNTESTABLE_CATALOG
+                                                 A16: E1/E2 UNTESTABLE (time)
+  S1_NECESSITY (A16 E4)               INCONCLUSIVE WHOLE 3/3, BODY_ONLY 1/3
   Tier 3A also: PRIMARY_CAUSAL_INFERENCE = INCONCLUSIVE_CONTROL_INVALID
 
 ## Campaign 1
