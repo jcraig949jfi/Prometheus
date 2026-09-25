@@ -109,7 +109,7 @@ def build() -> str:
             L.append("   {:<48} {}".format(k, v))
         L.append("")
         L.append("2. BY ENGINE (experiments / attempts / hosts seen on attempts)")
-        for row in q(cur, """SELECT e.engine_id, count(DISTINCT e.experiment_key), count(a.attempt_key),
+        for row in q(cur, """SELECT coalesce(e.engine_id, '(none: ' || e.kind || ')'), count(DISTINCT e.experiment_key), count(a.attempt_key),
                                     string_agg(DISTINCT coalesce(a.host_id,'?'), ',')
                              FROM atlas.experiment e LEFT JOIN atlas.attempt a USING (experiment_key)
                              GROUP BY 1 ORDER BY 2 DESC"""):
