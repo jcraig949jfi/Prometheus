@@ -40,10 +40,13 @@ def _exec_model(rec: dict) -> dict:
 
 
 def _rel_to(r: dict) -> str:
-    """The lineage-relation target. Techne's records use "to" (112 relations) but the 2026-09-19
-    capsule generation writes "target" (46 relations: the ASAL rollout fossils, poet-original-2019,
-    terralingua-data-abundant-exp-1). Accept both on READ so a schema drift cannot break the atlas;
-    the drift itself is reported to Techne rather than silently normalised in the record."""
+    """The lineage-relation target. Canonical key is "to". Between 2026-09-19 and 2026-09-25 the
+    capsule generation wrote "target" (it reached 80 of 192 edges); Techne closed that drift on
+    2026-09-25 (TECHNE-124, comms #575): every record migrated to "to", record.validate() refuses
+    "target", and a source-grep test guards the writers. The fallback below is therefore no longer
+    load-bearing (0 records carry "target" at the receipt) and is kept as defence in depth: a
+    reader that tolerates both keys cannot be broken by the same drift twice. Any drift is reported
+    to Techne, never normalised in the record."""
     v = r.get("to", r.get("target"))
     if v is None:
         raise KeyError(f"lineage relation has neither 'to' nor 'target': {r!r}")
