@@ -380,6 +380,12 @@ directive (18:57Z), so under that program's date rule it is THEORY-AWARE; my #62
 X-CORE-TIME (EXPLORE, SIGNAL, theory-aware): the core is HELD, not re-fixed -- in 7 of 8 runaways SELF+LDIR stay at ~0.99
 from epoch ~200 while all other founder material falls to 0 by epoch 300-900; one run shows a late sweep instead.
 Same limit as above: this is the purifying-selection trajectory.
+**Instrument note, X-CERT-BREAK (WEAK_SIGNAL):** inside runaway lineages ~5-16% of replication events are not P-11
+certified (mostly C2 + C4 failing: partial copies do not rebuild a randomized victim); one run 45%. A per-edge break
+rate p caps an unbroken certified chain from a fixed root at ~1/p generations, which is exactly the observed founder
+causal depth (5-22). So 'founder-rooted' (founder_depth >= 20) in X-SWAP-ORIGIN / X-ROOT-AUDIT measured the luck of a
+long unbroken run, not a different kind of heredity; lineage questions should use anc plus material (z8taint), and
+chain-depth endpoints should be read against the break rate.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
