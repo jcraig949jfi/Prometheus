@@ -322,7 +322,10 @@ epochs. Under CONFIRM: C-ATOMIC (fresh 7ae3 seeds, and generality over the other
 **C-ATOMIC C1 CONFIRMED (frozen at the C-ATOMIC freeze commit, 80 fresh seeds per arm):** with
 atomic write-back, runaway causal heredity in 46/80 vs 1/80 (Fisher p = 4e-17; depth >= 5 49 vs 9).
 **Tape-write erosion is what stops pair-tape heredity in 7ae3's cell (splice off).** C2
-(generality over the other 15 panel specimens) is running after an infrastructure amendment (A1).
+(generality over the other 15 panel specimens) is **NOT CONFIRMED**: 1/120 vs 0/120 runaways; 13 of 15
+specimens reach depth 5 in neither arm. Scope of the confirmed claim: 7ae3's cell. Post hoc, the
+other donors rarely make even one causal copy (36/120 vs 9/120 runs with any), so erosion is the
+barrier only once copying starts. Localization: X-DONOR-RATE.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
