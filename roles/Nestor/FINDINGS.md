@@ -213,6 +213,120 @@ not extinction. Evidence: `H4_AUTOPSY.md`.
 | C9-D10 | H2 arm B resolved implant bytes at run time from the predecessor first_replicator (fixed: embedded) |
 | C9-D11 | H3 certificate walks non-causal pair edges in RECOMBINATION cells (NOT repaired; operator decision) |
 | C9-D12 | H2 bar depth >= 5 has no precedent: max P-11 depth over 1,031 runs is 2 |
+| C9-D13 | H3 arm B (NICHES_HIGH_MIG) migrated at 0.08 vs the reservoir's 0.02; "identical migration" was false (fixed as ruled: RESERVOIR, easy niche off) |
+| C9-D14 | **validity, open, freeze stopped**: on the pair tape an organism keeps its id while its bytes are replaced (identity to its birth genome 0.97 after 1 epoch, 0.00 by 600, with no lineage event); the H3 certificate follows id, so it certifies identity, not heredity |
+
+### E-6 Non-pair heredity: self-location is the gate, discovery is the barrier -- HOLDS (CONFIRM)
+Autonomous-loop chain, 2026-09-24 (graph: X-NONPAIR-SEARCH -> X-NONPAIR-FIDELITY -> X-SELFLOC-FREE
+-> X-SELFLOC-SEEDED -> C-SELFLOC). In the FREE non-pair physics, per-epoch in-place mutation
+(search) unlocks declared births (0 -> 87) but none carries parent bytes (all 231 fid < 0.06);
+free self-location alone still yields no faithful copy (CLEAN_NULL). An IMPLANTED
+ALLOC;LDIR;BIRTH copier with free self-location sustains causal lineages; without
+self-location it never replicates. **CONFIRMED on fresh cells/seeds under a frozen rule:**
+depth >= 3 in 13/36 cells (max 23) vs 0/36, Fisher p = 1.6e-10. Scope: implanted copier
+only; says nothing about spontaneous discovery, which remains the barrier.
+Evidence: `campaigns/c9x-explore-2026-09-24/c_selfloc_confirm/`.
+
+### E-7 The depth-1 wall under energy economies is newborn starvation -- HOLDS (CONFIRM)
+Graph: X-ERROR-THRESHOLD (no dose effect; failure is per-cell) -> X-ENERGY-INHERIT -> C-ENERGY.
+An endogenous newborn starts with energy 0, and energy-economy pressures cap its slice at
+its energy, so it cannot afford its own copy: the seeded copier replicates once and stops.
+A conserved half-energy transfer at birth: **CONFIRMED on 40 fresh cells** - child
+replication 20/40 vs 4/40, sign p = 7.2e-5. My declared side-prediction that
+RESOURCE_GATED would not respond was **falsified** (2 -> 6 of 12). This is directive
+hypothesis (d), "a first faithful child that immediately dies", in mechanical form, and
+the same depth-1 wall the 72-hour record showed. Evidence:
+`campaigns/c9x-explore-2026-09-24/c_energy_confirm/`.
+
+### E-8 Spontaneous non-pair heredity: the discovery barrier is encoding length -- HOLDS (CONFIRM)
+Graph: X-SPONTANEOUS (CLEAN_NULL, 0/47 with every confirmed barrier relieved) -> X-NEARMISS
+(near-misses were slot residue: no partial copying exists) -> X-DENSE-OPS (INVALID: VM module
+leaked across reused pool workers, control contaminated; preserved) -> X-DENSE-OPS-R (23/47 vs
+0/47) -> C-DENSE. In the permissive FREE non-pair world (in-place search, free self-location,
+energy inheritance), giving ALLOC/LDIR/BIRTH ADDITIONAL 1-byte encodings (semantics
+unchanged, no program supplied) yields evidence-backed replication from random bytes:
+**CONFIRMED 13/40 vs 0/40 fresh cells, Fisher p = 3.8e-5** (depth >= 2 in 4; max 5). The
+remaining probability mass is consumed by assembling a 6-byte ordered op chain; at 3 bytes it
+is found. Scope: this permissive world; which relieved barriers remain necessary is
+X-DENSE-ABLATE. Evidence: `campaigns/c9x-explore-2026-09-24/c_dense_confirm/`.
+**Ablations under dense encodings (X-DENSE-ABLATE -> C-ABLATE, 40 fresh cells, frozen):** free
+self-location is NECESSARY (replication cells 15 -> 1, p = 6.1e-5) and in-place search is
+NECESSARY (15 -> 6, p = 0.0059) - CONFIRMED. The exploratory claim that energy inheritance
+matters for depth in SPONTANEOUS replicators did NOT confirm (depth >= 2: 3 vs 3); E-7
+(seeded copier) is unaffected.
+
+### E-9 Cycle 9 outcome
+C9 (frozen, protocol 5819bc6d; 1,200/1,200 runs; audit PASS 21/21). Frozen verdicts stand in
+`observatory/REPORT_C9.md`; mining classified them (`C9_OUTCOME_AND_ADDENDUM.md`):
+- **H1 -- INVALID in C9 (C9-D16)**: `world.Runner` never passed output_gate/cue_cost into the
+  task spec; all four arms were one experiment (identical to the last decimal). Repaired and
+  rerun as **C9-H1R** (fresh seeds, rule unchanged, fail-on-old-code gate PASS):
+  **COST_INTERACTION_ONLY** -- I = +0.20, M = -0.10. Gating the answer on cue consumption abolishes
+  competence when consuming the cue costs instructions (0.000 vs 0.200; crossings 0 vs 11.7%)
+  and is harmless when the cue is free (0.197 vs 0.197). The cycle-8 answer-before-read
+  obstruction is the price of reading the cue, not the ordering itself.
+  Transplanted (EXPLORE) to all 4 other transforms (I = +0.20..+0.34; gate+VM competence 0.000
+  everywhere; positive control: a correct reader scores identically under the gate, so the
+  zeros are evolutionary). Mechanism (EXPLORE): ungated competence is carried entirely by
+  answer-before-read guessers and no reader ever evolves; the gate removes the guessers and
+  paid reading stays rare and weak (my literal flat-landscape prediction failed: 3.8% weak
+  readers exist).
+- **H2 -- REPLICATION_EVENTS_WITHOUT_PROPAGATION** (both authorship readings); WEAK_SIGNAL
+  concentrated in one specimen, `7ae3f9c1437c8000`: implanted genome reaches depth >= 5 in 4/16
+  seeds, random bytes 0/16, in situ 0/16.
+- **H3 -- NOT_DEMONSTRATED** (R3 material certificates 1/1/0 of 64): crossings are frequent in
+  one cell but made of hard-niche material; the easy niche does not raise them.
+
+### E-10 The recombination splice prevents runaway pair-tape heredity -- HOLDS (CONFIRM)
+Graph: X-H2-TERMINATION (causal children overwritten a median 3 epochs after birth) ->
+X-H2-NORECOMB -> C-NORECOMB (threshold endpoint NOT confirmed, 5/48 vs 5/48) -> X-RUNAWAY
+(runaways are population-wide copying ecologies: 70-97% of organisms descend through P-11
+copies, ~75 causal copies/epoch for 1,800+ epochs, the implanted sequence itself lost) ->
+C-RUNAWAY. **CONFIRMED on 150 fresh seeds per arm:** runaway causal heredity (P-11 depth >= 20)
+in 7/150 implants with the world's RECOMBINATION splice off vs 0/150 with it on, Fisher
+p = 0.0073; max depth 549 vs 13. The operator that manufactured ~88% of the predecessor's
+"replicators" (Z80A-D05) is the operator that prevents real ones from running away.
+Scope: specimen 7ae3's cell, single founder. Evidence:
+`campaigns/c9x-explore-2026-09-24/c_runaway_confirm/`.
+
+Follow-ups (EXPLORE, hypotheses only): X-RUNAWAY-TRANSPLANT (0/7 other specimens run away);
+X-STATE / X-SUFFICIENCY (runaway copies are genome-sufficient, but so are stalled seeds' copies
+- sufficiency does not separate them; scale does: 3,901-13,298 P-11 copies by epoch 200 vs
+<= 31); X-CRITICAL-MASS (**WEAK_SIGNAL**: 4 founders vs 1, runaways 9/64 vs 0/64, depth >= 5
+32/64 vs 8/64, max depth 385 vs 10; the declared SIGNAL bar of 10 runaways missed by one).
+**C-CRITICAL-MASS CONFIRMED (frozen at e2bcf6e2b, 80 fresh seeds per arm):** 4 founders vs 1
+raise P-11 depth >= 5 from 5/80 to 41/80 (Fisher p = 8e-11; secondary runaways 15/80 vs 2/80,
+p = 7e-4). Pair-tape causal heredity in this cell is **establishment-limited**. Whether founders
+are superadditive (a true critical mass) is NOT yet claimed: post hoc, k=4 exceeds the
+independent-founders prediction (41 vs 18), and X-DOSE-CURVE tests it by declared LRT.
+**X-DOSE-CURVE (EXPLORE, CLEAN_NULL): founders are independent lottery tickets.** Over k = 1, 2,
+4, 8 (64 seeds each) the 1-parameter model s(k) = 1-(1-p)^k with p = 0.13 fits (LRT p = 0.42;
+runaways p = 0.57). No critical mass: the post-hoc excess was a noisy single-founder rate.
+X-TICKET (EXPLORE, WEAK_SIGNAL): the lottery is decided in ~12 epochs. Of 118 losing tickets,
+49 lose the causal lineage by epoch 5 (36 at epoch 1) and 69 keep it alive but stop copying (37
+never copy; the rest stop by epoch 11). Even 6 of 10 depth >= 5 "wins" are early bursts that stop
+by epoch 12; only the runaways keep copying. The dominant loss is cessation, not extinction.
+X-DECAY (WEAK_SIGNAL): in-place mutation is a minor factor (wins 6 -> 8/64 with it off, p = 0.39).
+X-STALL (SIGNAL): at epoch 100, 177/192 live lineage members cannot copy even from a fresh state,
+where the founder genome passes 166/192 in the same contexts: stalled lineages are genomically
+STERILE. P-11 certifies a causal rebuild of the victim half, not a fertile child. When sterility
+arises (at birth, or by accumulated mutation) is under test (X-STERILE).
+X-STERILE (CLEAN_NULL on copy error): children are FERTILE at birth (75-80%). X-STALL-F0 (SIGNAL):
+with in-place mutation OFF, 187/192 members are still sterile at epoch 100; 57% of their
+interactions change their genome (~5.5 bytes) because the pair tape writes BOTH halves back after
+every interaction - the member's own writes and its partner's (no change without a write). This
+tape-write EROSION is a ~5%/byte/epoch mutation, ~25x the nominal rate. Under test: X-ATOMIC.
+X-ATOMIC (EXPLORE, SIGNAL): making write-back atomic (a half changes only by an accepted copy, plus
+nominal mutation) raises runaways from 3/64 to 36/64 (p = 4e-11) and copy duration from 4 to 38
+epochs. Under CONFIRM: C-ATOMIC (fresh 7ae3 seeds, and generality over the other 15 specimens).
+**C-ATOMIC C1 CONFIRMED (frozen at the C-ATOMIC freeze commit, 80 fresh seeds per arm):** with
+atomic write-back, runaway causal heredity in 46/80 vs 1/80 (Fisher p = 4e-17; depth >= 5 49 vs 9).
+**Tape-write erosion is what stops pair-tape heredity in 7ae3's cell (splice off).** C2
+(generality over the other 15 panel specimens) is **NOT CONFIRMED**: 1/120 vs 0/120 runaways; 13 of 15
+specimens reach depth 5 in neither arm. Scope of the confirmed claim: 7ae3's cell. Post hoc, the
+other donors rarely make even one causal copy (36/120 vs 9/120 runs with any), so erosion is the
+barrier only once copying starts. Localization: X-DONOR-RATE.
+Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
 
@@ -240,3 +354,15 @@ These generalise beyond either campaign and should survive into any successor.
    "replicators" into splice artifacts.
 8. **A control inherited from a sibling is not a control.** Match seed and tier per run, and
    store the pairing on the run, not on the family (Z80A-D04).
+9. **An intervention must be tested at the measurement, not only at the mechanism.** C9-D16:
+   the H1 gate worked in the VM and in the task code, and was never handed from the world to
+   the task; four arms were one experiment. Identical arms are a defect signature, not a null.
+10. **A swapped module in a reused worker leaks.** X-DENSE-OPS: set every run's configuration
+    explicitly, one job per process when modules are swapped.
+11. **Before building a mechanism on a measurement, reproduce the discrepancy with the real
+    inputs.** X-POSITION "showed" copying needs register state; a captured real event with
+    fresh registers passed. The cause was partner sabotage in the assay draw. Withdrawn.
+12. **A baseline plugged in from a small arm can manufacture an interaction.** C-CRITICAL-MASS
+    k=4 "beat" the independent-founders prediction at p = 1e-6, using p1 = 5/80 as if exact. A
+    declared dose curve fitting p1 jointly (X-DOSE-CURVE) found no excess (LRT p = 0.42). Fit
+    the null model's parameters on all arms before calling anything superadditive.

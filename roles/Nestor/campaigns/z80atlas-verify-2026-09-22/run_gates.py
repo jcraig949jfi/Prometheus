@@ -24,8 +24,13 @@ GATES = [
     ("T-P7 bundles", [sys.executable, "tests/test_p7_bundles.py"], HERE),
     ("T-P11 pair-copy causality", [sys.executable, "tests/test_p11.py"], HERE),
     ("T-S3 engineering repairs", [sys.executable, "tests/test_s3_repairs.py"], HERE),
+    ("T-H3-P11 causal ancestry + arm B", [sys.executable, "tests/test_h3_p11_ancestry.py"], HERE),
+    ("T-H2 ruled decision rule", [sys.executable, "tests/test_h2_rule.py"], HERE),
+    ("T-H3-MAT material ruler tournament", [sys.executable, "tests/test_h3_material.py"], HERE),
+    ("T-INFRA runner/adjudicator/report/audit", [sys.executable, "tests/test_infra_c9.py"], HERE),
     ("P-6 report audit (predecessor)", [sys.executable, "test_report_audit.py"], PRED),
     ("calibration controls (PREFREEZE)", [sys.executable, "controls.py"], HERE),
+    ("T-MAN/T-HASH manifest + hash repro", [sys.executable, "tests/test_manifest_and_hashes.py"], HERE),
 ]
 
 

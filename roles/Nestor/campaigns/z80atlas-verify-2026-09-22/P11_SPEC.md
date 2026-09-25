@@ -6,7 +6,9 @@ Governing text: operator directive 2026-09-23, section S2
 file and that one differ, the directive wins and this file is wrong.
 
 Implementation: `p11.py`. Thresholds: `constants.py` (`C`, pinned sha256
-`ade1f755eaff9598e32eb9c768bd57b7094b4e0c7de555b0ebf2eb34b0b019ce`).
+`ade1f755...` at specification; re-pinned
+`b1c8a904d092dd61...` on 2026-09-24 when the H2/H3 decision thresholds were added; the
+P-11 values are unchanged).
 Tests: `tests/test_p11.py`, receipt `T_P11_RECEIPT.json`.
 
 ## 1. What P-11 replaces and what it keeps

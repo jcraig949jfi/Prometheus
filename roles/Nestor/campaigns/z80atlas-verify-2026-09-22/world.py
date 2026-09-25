@@ -25,6 +25,7 @@ models any biological system.
 """
 from __future__ import annotations
 
+import difflib
 import hashlib
 import random
 import zlib
@@ -34,6 +35,7 @@ import grammar as G
 import p11
 import tasks
 import z8
+import z8taint
 from constants import C       # S3-2: every verdict-bearing threshold, hash-covered
 
 REP_LEN = {"Z8_64": 64, "Z8_32": 32, "Z8_SHARED": 96, "Z8_SEPARATED": 96, "Z8_SLOTTED": 64}
@@ -51,7 +53,8 @@ def _pow2(n):
 class Org:
     __slots__ = ("oid", "slot", "length", "pc", "regs", "fz", "fc", "energy", "age",
                  "anc", "pid", "born", "comp", "held", "probe", "niche", "alive",
-                 "fidelity", "repro_span", "births", "ops", "last_tel")
+                 "fidelity", "repro_span", "births", "ops", "last_tel",
+                 "orig", "reg_taint")
 
     def __init__(self, oid, slot, length, anc, pid=None, born=0, niche=0):
         self.oid = oid
@@ -76,6 +79,8 @@ class Org:
         self.births = 0
         self.ops = 0
         self.last_tel = None
+        self.orig = None          # C9-D14: per-byte material tags (pair-tape RESERVOIR only)
+        self.reg_taint = None
 
 
 class Runner:
@@ -84,7 +89,7 @@ class Runner:
     def __init__(self, cell, seed, tier=None, max_epochs=None, observer=None, invaders=0,
                  init_niche_policy="BALANCED", output_gate="UNRESTRICTED", cue_cost="VM",
                  implant=None, implant_bytes=None, implant_len=None,
-                 migration_disabled=False):
+                 migration_disabled=False, easy_niche_disabled=False):
         self.cell = cell
         self.invaders = invaders
         # H2 arms B and C. ONE organism is implanted into an otherwise identical world:
@@ -99,6 +104,12 @@ class Runner:
         # H3 arm C. Migration suppressed while the easy niche is kept, isolating
         # transport from the existence of the reservoir.
         self.migration_disabled = migration_disabled
+        # H3 arm B (C9-D13). "Homogeneous niches + IDENTICAL migration": the RESERVOIR
+        # structure is kept - same four niches, same 0.02 migration rate, same P-8
+        # placement - and only the easy-niche task modifier is switched off. Rev B used
+        # NICHES_HIGH_MIG for this arm, which migrates at 0.08, four times the reservoir's
+        # rate, so the arms differed in transport as well as in the easy niche.
+        self.easy_niche_disabled = easy_niche_disabled
         # P-8. The predecessor left _place's niche=0 default in run(), so the entire
         # initial population began in niche 0. Under NICHES_ISOLATED that leaves three
         # niches permanently empty, because isolated means no migration can ever fill
@@ -177,6 +188,13 @@ class Runner:
         # done so, and no easy-niche ancestry certificate can be built.
         self.lineage_complete = True  # set False if anything is ever dropped in-run
         self.retain_full_lineage = cell.get("structure") == "RESERVOIR"
+        # C9-D14 / H3 ruler R3. On the pair tape an organism keeps its id while its bytes
+        # are replaced, so an id-based ancestry says nothing about material. Every byte
+        # therefore carries a tag naming the niche in which its VALUE was made (z8taint),
+        # and a reservoir certificate asks whether the crossing genome is easy-niche
+        # MATERIAL. Tracked only where H3 needs it: PAIR_EXECUTION x RESERVOIR.
+        self.track_material = (cell.get("structure") == "RESERVOIR"
+                               and cell.get("reproduction") == "PAIR_EXECUTION")
         self.birth_niche = {}         # oid -> niche at placement, never updated
 
     def _build_graph(self, m=2):
@@ -298,6 +316,8 @@ class Runner:
         self.birth_niche[o.oid] = niche
         self.next_oid += 1
         self.slot_owner[slot] = o.oid
+        if self.track_material:
+            o.orig = bytearray([niche]) * n
         self.orgs.append(o)
         return o
 
@@ -397,10 +417,18 @@ class Runner:
         """
         if not self.lineage_complete:
             return None
+        # H3 / C9-D11 (operator ruling 2026-09-24). Every hereditary PAIR_EXECUTION edge
+        # the chain traverses must itself be P-11 causal. A pair edge that only the
+        # predecessor criterion accepted - in RECOMBINATION cells almost always a splice,
+        # not a copy - BREAKS the certificate; it is never walked past.
+        noncausal_pair = {e["child"] for e in self.lineage
+                          if e["kind"] == "birth" and "p11" in e and not e["causal"]}
         chain, cur, seen = [], oid, set()
         while cur is not None and cur not in seen:
             seen.add(cur)
             chain.append(cur)
+            if cur in noncausal_pair and cur in parent:
+                return None
             cur = parent.get(cur)
         founder = chain[-1]
         if birth_niche.get(founder) != easy_niche:
@@ -749,91 +777,114 @@ class Runner:
             if self.cell["pressure"] == "MINIMAL_CRITERION" and self.d["has_task"] \
                     and min(a.comp, b.comp) < 0.35:
                 continue
-            ga, gb = self._genome(a), self._genome(b)
-            n = self.L
-            tape = bytearray(_pow2(2 * n))
-            tape[0:len(ga)] = ga
-            tape[n:n + len(gb)] = gb
-            ctxs = {}
-            # P-11: the exact pre-interaction state, so a candidate event can be re-executed
-            # against a randomized victim, and per-position provenance on the live tape.
-            st0 = ((None if a.regs is None else list(a.regs), a.fz, a.fc),
-                   (None if b.regs is None else list(b.regs), b.fz, b.fc))
-            prov, prov_lit = bytearray(len(tape)), bytearray(len(tape))
-            for who, start, org in ((0, 0, a), (1, n, b)):
-                ctx = z8.Ctx(tape, start, n, policy=z8.ARENA, rng=self.rng,
-                             copy_mut_rate=self.copy_mut, sense=who)
-                ctx.regs, ctx.fz, ctx.fc = org.regs, org.fz, org.fc
-                ctx.prov, ctx.prov_lit, ctx.who = prov, prov_lit, who + 1
+            self._pair_interact(i, a, b)
+
+    def _pair_interact(self, i, a, b):
+        """One pair-tape interaction (factored out of _pair_epoch unchanged, so a fixture
+        can drive a chosen pair through the real code path)."""
+        ga, gb = self._genome(a), self._genome(b)
+        n = self.L
+        tape = bytearray(_pow2(2 * n))
+        tape[0:len(ga)] = ga
+        tape[n:n + len(gb)] = gb
+        ctxs = {}
+        # P-11: the exact pre-interaction state, so a candidate event can be re-executed
+        # against a randomized victim, and per-position provenance on the live tape.
+        st0 = ((None if a.regs is None else list(a.regs), a.fz, a.fc),
+               (None if b.regs is None else list(b.regs), b.fz, b.fc))
+        prov, prov_lit = bytearray(len(tape)), bytearray(len(tape))
+        track = self.track_material
+        if track:
+            otape = bytearray([z8taint.UNKNOWN]) * len(tape)
+            otape[0:len(ga)] = a.orig[:len(ga)]
+            otape[n:n + len(gb)] = b.orig[:len(gb)]
+        for who, start, org in ((0, 0, a), (1, n, b)):
+            ctx = z8.Ctx(tape, start, n, policy=z8.ARENA, rng=self.rng,
+                         copy_mut_rate=self.copy_mut, sense=who)
+            ctx.regs, ctx.fz, ctx.fc = org.regs, org.fz, org.fc
+            ctx.prov, ctx.prov_lit, ctx.who = prov, prov_lit, who + 1
+            if track:
+                _pc, org.reg_taint = z8taint.run_tainted(
+                    ctx, start, self.t["slice"], self._ops_mask(), orig=otape,
+                    here=org.niche, reg_taint=org.reg_taint)
+            else:
                 z8.run(ctx, start, self.t["slice"], ops_enabled=self._ops_mask())
-                org.regs, org.fz, org.fc = ctx.regs, ctx.fz, ctx.fc
-                org.ops += ctx.ops
-                org.last_tel = ctx.telemetry()
-                ctxs[id(org)] = ctx          # keyed by identity: oid is reassigned below
-                self.ct["ops"] += ctx.ops
-                self.ct["slices"] += 1
-                self.ct["copy_bytes"] += ctx.copy_bytes
-            na, nb = bytes(tape[0:n]), bytes(tape[n:2 * n])
-            # Heredity, if any, is whatever is on the tape when the dust settles - but
-            # "this half is now a copy of the other" must mean the other one WROTE it.
-            # Once a pair-tape population converges, any two halves resemble each other,
-            # so a similarity test alone reports replication continuously and reports it
-            # loudest exactly where nothing is happening.
-            for org, old, new in ((a, ga, na), (b, gb, nb)):
-                pre_mut = new
-                new = self._mutate(new)
-                self.mem[org.slot:org.slot + self.slot_size] = bytes(self.slot_size)
-                self.mem[org.slot:org.slot + len(new)] = new
-                org.length = len(new)
-                fid_self = _fidelity(old, new)
-                other = gb if org is a else ga
-                donor = b if org is a else a
-                fid_other = _fidelity(other, new)
-                donor_wrote = ctxs[id(donor)].writes_other
-                if p11.predecessor_accepts(fid_other, fid_self, donor_wrote, n):
-                    # this half was overwritten by (a copy of) the other organism
-                    self.ct["replication_events"] += 1
-                    self.ct["births_endogenous"] += 1
-                    src = b if org is a else a
-                    # P-11. The predecessor branch above counts writes, not whether they
-                    # carried the donor's bytes; the edge is causal only if the donor also
-                    # rebuilds a randomized victim (see p11.py and P11_SPEC.md). The assay
-                    # re-executes this interaction on a private tape with a private RNG, so
-                    # it cannot perturb the world.
-                    vs = 0 if org is a else 1
-                    kw = dict(n=n, tape_len=len(tape), ga=ga, gb=gb, st_a=st0[0], st_b=st0[1],
-                              budget=self.t["slice"], ops_mask=self._ops_mask(),
-                              cmr=self.copy_mut, victim_side=vs,
-                              seed=(self.seed, G.cell_id(self.cell), self.epoch, i, vs))
-                    res = p11.assay(z8, **kw)
-                    v0 = 0 if vs == 0 else n
-                    diag = p11.ordinary_diagnostics(z8, final_half=pre_mut,
-                                                    prov_half=prov[v0:v0 + n],
-                                                    lit_half=prov_lit[v0:v0 + n], **kw)
-                    rec = {"pass": res["pass"], "draws_passed": res["draws_passed"],
-                           "C2": res["C2_majority"], "C4": res["C4_majority"],
-                           "C5": res["C5_majority"], **diag}
-                    if res["pass"]:
-                        self.ct["p11_events"] += 1
-                    for crit in ("C2", "C4", "C5"):
-                        if not rec[crit]:
-                            self.ct["p11_fail_" + crit] += 1
-                    src.births += 1
-                    src.fidelity = fid_other
-                    src.repro_span = n
-                    self._lin_birth(self.next_oid, src.oid, org.niche, fid_other, n,
-                                    res["pass"], causal_pred=True, p11_rec=rec)
-                    org.pid, org.anc, org.oid = src.oid, src.anc, self.next_oid
-                    self.next_oid += 1
-                    if self.first_replicator is None:
-                        self.first_replicator = {"epoch": self.epoch, "oid": src.oid,
-                                                 "fidelity": round(fid_other, 3),
-                                                 "genome": other.hex(), "repro_span": n,
-                                                 "donor_writes_other": donor_wrote,
-                                                 "seeded": self.d["seeded_instrument"],
-                                                 "slot": src.slot, "base_is_zero": src.slot == 0}
-                elif fid_other >= C["PAIR_FID_OTHER_MIN"] and fid_self < C["PAIR_FID_SELF_MAX"]:
-                    self.ct["births_similar_no_write"] += 1
+            org.regs, org.fz, org.fc = ctx.regs, ctx.fz, ctx.fc
+            org.ops += ctx.ops
+            org.last_tel = ctx.telemetry()
+            ctxs[id(org)] = ctx          # keyed by identity: oid is reassigned below
+            self.ct["ops"] += ctx.ops
+            self.ct["slices"] += 1
+            self.ct["copy_bytes"] += ctx.copy_bytes
+        na, nb = bytes(tape[0:n]), bytes(tape[n:2 * n])
+        # Heredity, if any, is whatever is on the tape when the dust settles - but
+        # "this half is now a copy of the other" must mean the other one WROTE it.
+        # Once a pair-tape population converges, any two halves resemble each other,
+        # so a similarity test alone reports replication continuously and reports it
+        # loudest exactly where nothing is happening.
+        for org, old, new in ((a, ga, na), (b, gb, nb)):
+            pre_mut = new
+            new = self._mutate(new)
+            if track:
+                h0 = 0 if org is a else n
+                org.orig = _mutated_orig(pre_mut, new, otape[h0:h0 + n], org.niche)
+            self.mem[org.slot:org.slot + self.slot_size] = bytes(self.slot_size)
+            self.mem[org.slot:org.slot + len(new)] = new
+            org.length = len(new)
+            fid_self = _fidelity(old, new)
+            other = gb if org is a else ga
+            donor = b if org is a else a
+            fid_other = _fidelity(other, new)
+            donor_wrote = ctxs[id(donor)].writes_other
+            if p11.predecessor_accepts(fid_other, fid_self, donor_wrote, n):
+                # this half was overwritten by (a copy of) the other organism
+                self.ct["replication_events"] += 1
+                self.ct["births_endogenous"] += 1
+                src = b if org is a else a
+                # P-11. The predecessor branch above counts writes, not whether they
+                # carried the donor's bytes; the edge is causal only if the donor also
+                # rebuilds a randomized victim (see p11.py and P11_SPEC.md). The assay
+                # re-executes this interaction on a private tape with a private RNG, so
+                # it cannot perturb the world.
+                vs = 0 if org is a else 1
+                kw = dict(n=n, tape_len=len(tape), ga=ga, gb=gb, st_a=st0[0], st_b=st0[1],
+                          budget=self.t["slice"], ops_mask=self._ops_mask(),
+                          cmr=self.copy_mut, victim_side=vs,
+                          seed=(self.seed, G.cell_id(self.cell), self.epoch, i, vs))
+                res = p11.assay(z8, **kw)
+                v0 = 0 if vs == 0 else n
+                diag = p11.ordinary_diagnostics(z8, final_half=pre_mut,
+                                                prov_half=prov[v0:v0 + n],
+                                                lit_half=prov_lit[v0:v0 + n], **kw)
+                # A-16: literal last-write authorship is a MANDATORY sensitivity reading,
+                # carried beside the primary (causal_value_authorship) on every edge.
+                lit_ok = sum(1 for d in res["draws"] if d["C2"] and d["C5"] and d["n_directed"]
+                             and d["donor_last_wrote_share"] >= C["P11_AUTHORSHIP"])
+                rec = {"pass": res["pass"], "draws_passed": res["draws_passed"],
+                       "pass_literal": lit_ok >= C["P11_MAJORITY"],
+                       "C2": res["C2_majority"], "C4": res["C4_majority"],
+                       "C5": res["C5_majority"], **diag}
+                if res["pass"]:
+                    self.ct["p11_events"] += 1
+                for crit in ("C2", "C4", "C5"):
+                    if not rec[crit]:
+                        self.ct["p11_fail_" + crit] += 1
+                src.births += 1
+                src.fidelity = fid_other
+                src.repro_span = n
+                self._lin_birth(self.next_oid, src.oid, org.niche, fid_other, n,
+                                res["pass"], causal_pred=True, p11_rec=rec)
+                org.pid, org.anc, org.oid = src.oid, src.anc, self.next_oid
+                self.next_oid += 1
+                if self.first_replicator is None:
+                    self.first_replicator = {"epoch": self.epoch, "oid": src.oid,
+                                             "fidelity": round(fid_other, 3),
+                                             "genome": other.hex(), "repro_span": n,
+                                             "donor_writes_other": donor_wrote,
+                                             "seeded": self.d["seeded_instrument"],
+                                             "slot": src.slot, "base_is_zero": src.slot == 0}
+            elif fid_other >= C["PAIR_FID_OTHER_MIN"] and fid_self < C["PAIR_FID_SELF_MAX"]:
+                self.ct["births_similar_no_write"] += 1
 
     # ------------------------------------------------------------------ external control
     def _external_births(self):
@@ -1018,6 +1069,8 @@ class Runner:
 
     def _apply_niche_modifier(self, spec, niche):
         """The structural modifier, applied to whatever task the environment proposed."""
+        if self.easy_niche_disabled:
+            return spec
         if self.cell["structure"] == "RESERVOIR" and niche == 0:
             return tasks.TaskSpec(transform=spec.transform, read_order="FORCED_READ",
                                   bridge="NEUTRAL_BRIDGE", n_episodes=spec.n_episodes,
@@ -1048,12 +1101,30 @@ class Runner:
             if o.held > self.held_max_ever:
                 self.held_max_ever = o.held
             if o.held >= C["CROSS"]:
-                ev = {"epoch": self.epoch, "oid": o.oid, "held": o.held,
-                      "comp": o.comp, "niche": o.niche, "anc": o.anc, "pid": o.pid,
-                      "seeded": self.d["seeded_instrument"], "reads_at_answer": o.probe}
-                self.cross_events.append(ev)
-                if self.first_cross is None:
-                    self.first_cross = dict(ev, genome=self._genome(o).hex())
+                self._record_cross(o)
+
+    def _record_cross(self, o):
+        ev = {"epoch": self.epoch, "oid": o.oid, "held": o.held,
+              "comp": o.comp, "niche": o.niche, "anc": o.anc, "pid": o.pid,
+              "seeded": self.d["seeded_instrument"], "reads_at_answer": o.probe}
+        if self.track_material and o.orig:
+            ev["easy_material_share"] = round(sum(1 for t in o.orig if t == 0) / len(o.orig), 4)
+        self.cross_events.append(ev)
+        if self.first_cross is None:
+            self.first_cross = dict(ev, genome=self._genome(o).hex())
+        return ev
+
+    def material_certificate(self):
+        """H3 ruler R3: the first crossing OUTSIDE the easy niche by a genome whose bytes
+        are at least C["H3_MATERIAL_SHARE"] easy-niche material. Returns a dict or None."""
+        for ev in self.cross_events:
+            share = ev.get("easy_material_share")
+            if ev["niche"] != 0 and share is not None and share >= C["H3_MATERIAL_SHARE"]:
+                return {"ruler": "R3_MATERIAL", "crossing_oid": ev["oid"],
+                        "crossing_niche": ev["niche"], "crossing_epoch": ev["epoch"],
+                        "crossing_held": ev["held"], "easy_material_share": share,
+                        "founder_niche": 0}
+        return None
 
     def step(self):
         self._env_epoch()
@@ -1211,6 +1282,10 @@ class Runner:
         pred_parent = {e["child"]: e["parent"] for e in self.lineage
                        if e["kind"] == "birth" and e.get("causal_pred")}
         agg["max_predecessor_replication_depth"] = self._depths(pred_parent)[0]
+        lit_parent = {e["child"]: e["parent"] for e in self.lineage
+                      if e["kind"] == "birth" and (e["causal"] if "p11" not in e
+                                                   else e["p11"].get("pass_literal"))}
+        agg["max_causal_replication_depth_literal"] = self._depths(lit_parent)[0]
         agg["p11_events"] = self.ct["p11_events"]
         agg["p11_fail_C2"] = self.ct["p11_fail_C2"]
         agg["p11_fail_C4"] = self.ct["p11_fail_C4"]
@@ -1234,6 +1309,11 @@ class Runner:
                         cert = None
                         continue
                     break
+        # C9-D14: on the pair tape the id-walked certificate is kept for comparison only;
+        # the H3 verdict reads the MATERIAL certificate (ruler R3, see H3_RULER_TOURNAMENT.md).
+        agg["id_certificate_legacy"] = cert
+        if self.track_material:
+            cert = self.material_certificate()
         agg["ancestry_certificate"] = cert
         agg["has_reservoir_certificate"] = bool(cert)
         agg["replication_rate"] = round(agg["births_endogenous"] / max(1, agg["slices"]), 5)
@@ -1268,6 +1348,28 @@ class Runner:
 
 
 # ---------------------------------------------------------------- small helpers
+def _mutated_orig(pre, new, orig, niche):
+    """Material tags after the world's mutation step. Bytes the mutation left in place keep
+    their tags, found by aligning the pre- and post-mutation genomes, so a frame-shifting
+    insertion or deletion does not re-tag everything downstream of it. Substituted or
+    inserted bytes are new material made in `niche`. The alignment can only miss a
+    surviving byte, never invent one, so it can only UNDERSTATE carried material."""
+    pre, new = bytes(pre), bytes(new)
+    if pre == new:
+        return bytearray(orig[:len(new)])
+    out = bytearray([niche]) * len(new)
+    if len(pre) == len(new):
+        for k in range(len(new)):
+            if new[k] == pre[k] and k < len(orig):
+                out[k] = orig[k]
+        return out
+    for i0, j0, size in difflib.SequenceMatcher(None, pre, new, autojunk=False).get_matching_blocks():
+        for k in range(size):
+            if i0 + k < len(orig):
+                out[j0 + k] = orig[i0 + k]
+    return out
+
+
 def _fidelity(a, b):
     if not a or not b:
         return 0.0

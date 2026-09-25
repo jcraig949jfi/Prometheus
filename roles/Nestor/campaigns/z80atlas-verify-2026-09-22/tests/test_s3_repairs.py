@@ -39,7 +39,9 @@ import world                 # noqa: E402
 
 CONSUMERS = {"adjudicate": adjudicate, "bundles": bundles, "p11": p11, "world": world}
 SCAN = ("adjudicate.py", "bundles.py", "p11.py", "world.py", "specials.py", "specimens.py",
-        "manifest.py", "observatory.py", "anticheat.py", "assays.py", "tasks.py", "controls.py")
+        "manifest.py", "observatory.py", "anticheat.py", "assays.py", "tasks.py", "controls.py",
+        "hypotheses.py", "adjudicate_c9.py", "report_c9.py", "report_audit_c9.py",
+        "run_campaign.py", "z8taint.py")
 THRESH_LITERALS = {0.9, 0.25, 0.5}
 # Comparisons against these literals that are NOT verdict thresholds, by exact source.
 # Each is PHYSICS (a probability or a world rule the organisms live under), not a

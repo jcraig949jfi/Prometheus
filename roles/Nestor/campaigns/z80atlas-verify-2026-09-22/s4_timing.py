@@ -60,23 +60,36 @@ def jobs():
     return out
 
 
+RULED_RUNS = {"H1": 240, "H2": 768, "H3": 192}     # operator rulings 2026-09-24
+
+
 def main():
-    J = jobs()
+    only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
+    J = [j for j in jobs() if only is None or j["h"] == only]
     # longest-expected first so the pool does not end on a straggler
     order = {"L": 0, "M": 1, "S": 2}
     J.sort(key=lambda j: order[j["tier"]])
     t0 = time.time()
     with mp.Pool(WORKERS) as pool:
         res = pool.map(_run, J, chunksize=1)
+    if only and (HERE / "S4_TIMING.json").exists():
+        prev = json.loads((HERE / "S4_TIMING.json").read_text())["runs"]
+        res = [r for r in prev if r["h"] not in (only, "H4")] + res
     per = {}
-    for h in ("H1", "H2", "H3", "H4"):
+    for h in ("H1", "H2", "H3"):
         rs = [r for r in res if r["h"] == h]
+        if not rs:
+            continue
         per[h] = {"runs_timed": len(rs), "mean_wall_s": round(sum(r["wall_s"] for r in rs) / len(rs), 2),
                   "max_wall_s": max(r["wall_s"] for r in rs)}
+    cpu = {h: round(RULED_RUNS[h] * per[h]["mean_wall_s"] / 3600, 2) for h in per}
     out = {"workers": WORKERS, "timing_seed": TIMING_SEED, "elapsed_s": round(time.time() - t0, 1),
-           "per_hypothesis": per, "runs": res}
+           "per_hypothesis": per, "runs": res,
+           "projection": {"runs": RULED_RUNS, "cpu_hours": cpu,
+                          "total_cpu_hours": round(sum(cpu.values()), 2),
+                          "wall_hours_at_workers": round(sum(cpu.values()) / WORKERS, 2)}}
     (HERE / "S4_TIMING.json").write_text(json.dumps(out, indent=1))
-    print(json.dumps(per, indent=1), "elapsed", out["elapsed_s"])
+    print(json.dumps({"per": per, "projection": out["projection"]}, indent=1), "elapsed", out["elapsed_s"])
 
 
 if __name__ == "__main__":
