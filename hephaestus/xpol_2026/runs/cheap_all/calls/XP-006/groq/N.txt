@@ -1,0 +1,23 @@
+**Algorithm sketch**  
+The evaluator builds three coupled layers that mirror the three concepts:
+
+1. **Symbiotic parsing layer** – a set of parallel structural parsers (dependency, predicate‑argument, and discourse‑relation). Each parser produces a graph `G_i=(V,E_i)` where vertices are tokens and edges encode a specific logical relation (e.g., “if‑then”, “causes”, “greater‑than”). The graphs are kept in *symbiosis*: after an initial pass, edge‑weights are exchanged between graphs and updated by a simple rule `w←α·w_self+(1‑α)·mean(w_others)`. This mutual reinforcement converges in a few iterations, yielding a unified graph that captures complementary relational views.
+
+2. **Neural‑oscillation scoring layer** – for every frequency band `f∈{θ,α,β,γ}` a sinusoidal mask `M_f` (size |V|) is generated with a distinct period. Multiplying the token‑level feature matrix `X∈ℝ^{|V|×d}` by each mask yields oscillatory embeddings `X_f = X⊙M_f`. Cross‑frequency coupling is measured by Pearson correlation between `X_f` and `X_{f'}` on edges that belong to the symbiotic graph. Strong coupling on edges that encode conditionals or causality boosts a *coherence factor* `C∈[0,1]`.
+
+3. **Sensitivity‑analysis layer** – the final score is the logical‑consistency baseline `B` (sum of satisfied constraints from the unified graph). To assess robustness, each edge weight is perturbed by a small ε and the change ΔB is recorded. The normalized variance `S = var(ΔB)/B` quantifies how fragile the answer is. The overall rating is  
+`Score = B·C·(1‑S)`.
+
+All operations use only NumPy arrays, adjacency matrices, and simple loops; no external models or APIs are required.
+
+**Parsed structural features**  
+The pipeline extracts: negation cues, comparative operators, conditional markers (“if”, “when”), numeric literals, explicit causal verbs (“causes”, “leads to”), temporal/ordering words (“first”, “then”), quantifiers, and modality (“might”, “must”). Regex patterns feed these tokens into the three parsers.
+
+**Novelty**  
+While each component (graph‑based constraint propagation, multi‑scale pattern detection, finite‑difference sensitivity) exists in isolation, their systematic integration—especially the symbiotic weight‑sharing across distinct logical graphs guided by oscillatory coupling—is not documented in prior evaluation tools. It therefore represents a novel algorithmic composition.
+
+**Ratings**  
+Reasoning: 8/10 — the method captures logical structure and cross‑frequency coherence.  
+Metacognition: 7/10 — sensitivity analysis gives a meta‑level robustness estimate.  
+Hypothesis generation: 6/10 — the algorithm can suggest missing links but does not create new hypotheses.  
+Implementability: 9/10 — pure NumPy and regex make a straightforward, reproducible implementation.

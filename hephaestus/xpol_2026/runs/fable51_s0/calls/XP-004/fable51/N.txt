@@ -1,0 +1,24 @@
+**1. Algorithm**
+
+Data structures: a directed multigraph `G` where nodes are atomic terms (entities, numeric literals, propositions) and typed edges are relations `{GT, LT, EQ, IMPLIES, CAUSES, BEFORE, NOT}`. Premise graph `G_p` is built once from the prompt; each candidate contributes a delta `G_c` (weight sharing: closure over `G_p` is cached and reused across all candidates).
+
+Search space (the NAS part): a small combinatorial space of inference-rule subsets — transitivity per relation type, modus ponens, contrapositive, negation flip (`NOT(a>b) ⇒ a≤b`), numeric arithmetic on literal edges, unit normalization. Each subset is an "architecture" of the prover. A performance predictor scores a rule subset cheaply before running full closure: number of premise edges it can fire on, plus a contradiction count.
+
+Pragmatic selection: a rule subset is kept only if it *works* — closure of `G_p` alone must yield zero contradictions (otherwise the rule set is over-eager) and must discriminate candidates (otherwise it's useless). Contradictions found in a later round remove the offending rule; that's the self-correcting loop.
+
+Network scoring: after closure, for each candidate's claim nodes compute (a) directed cascade reach into `G_p` — count of premise nodes on support paths, decayed by path length; (b) contradiction paths (claim reaches `x` and `NOT x`); (c) component membership — a claim whose nodes form a component disconnected from `G_p` gets zero (dangling assertion). Score = Σ support·0.7^len − 2·Σ contradiction·0.7^len, gated by connectivity.
+
+**2. Parsed features**
+
+Comparatives (`more/less than`, `at least`), numeric literals with units, negation scope (`not`, `no`, `never`), conditionals (`if…then`, `unless`), causal markers (`because`, `leads to`), ordering (`before/after`, `first/last`), equality/identity (`is`, `equals`), quantifiers (`all/some/none`) mapped to edge multiplicity.
+
+**3. Novelty**
+
+Components are not novel: graph-closure entailment (natural logic, Datalog-style provers), evidence propagation resembles PageRank/belief propagation, and rule-subset search is hyperparameter search over a symbolic prover. The modest twist is using contradiction-freedom on the premise graph as the selection objective for rule sets rather than held-out accuracy — no labels needed.
+
+**4. Ratings**
+
+Reasoning: 6/10 — Closure over typed relations with cascade scoring handles transitivity and modus ponens well; brittle on paraphrase and coreference.
+Metacognition: 5/10 — The pragmatic rule-set pruning is a genuine self-check on the prover's own reliability, but it only detects over-eager rules, not missing extractions.
+Hypothesis generation: 4/10 — Rule-subset search enumerates a tiny fixed space; it cannot invent new relation types or extractors.
+Implementability: 7/10 — Regex extractors, dict-of-sets graph, Floyd–Warshall-style closure, BFS cascades — all numpy/stdlib; the main cost is extractor coverage, not the algorithm.

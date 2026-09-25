@@ -1,0 +1,228 @@
+== A. SEED 3 (cycle-0 fossil genome) replay on the cycle-1 eval seeds: 40.0
+   cycle-1 final genome identical to the fossil genome: True
+   inventory: {'n_hidden': 5, 'n_edges': 12, 'self_loops': 0, 'self_loops_on_output': 0, 'recurrent_edges': 3, 'scc_nodes': [[7, 13, 15]]}
+   SCC nodes=[7, 13, 15] ops=['GATE', 'MAX', 'GATE'] loop_edges=[(13, 7, 2.05, 0.0), (15, 13, 1.09, 0.0), (7, 15, 1.76, 0.0)] cue_in=[(1, 13, -1.83, 0.0), (1, 15, -0.81, 0.0)] other_in=[(8, 13, -0.69, 0.0), (10, 13, -0.69, 0.0)] outputs_in_loop=[15]
+   regime-0 seeds [20002, 20003, 20004, 20005] regime-1 seeds [20000, 20001, 20010, 20012]
+   --- episode seed 20002 regime 0 (good action 1); t obs1 act | v7 v13 v15 | v14 v16
+   t= 0 obs1=-0.86 a=1 | +1.677 +1.185 +0.695 | -0.749 -0.216
+   t= 1 obs1=-1.42 a=1 | +4.551 +5.918 +5.436 | -0.749 -0.216
+   t= 2 obs1=-0.87 a=1 | +8.000 +8.000 +8.000 | -0.749 -0.216
+   t= 3 obs1=+0.65 a=1 | +8.000 +6.351 +8.000 | -0.749 -0.216
+   t= 4 obs1=+0.39 a=1 | +8.000 +6.828 +8.000 | -0.749 -0.216
+   t= 5 obs1=+0.23 a=1 | +8.000 +7.106 +8.000 | -0.749 -0.216
+   t=10 obs1=-0.13 a=1 | +8.000 +7.774 +8.000 | -0.749 -0.216
+   t=20 obs1=+0.76 a=1 | +8.000 +6.147 +8.000 | -0.749 -0.216
+   t=39 obs1=+0.24 a=1 | +8.000 +7.093 +8.000 | -0.749 -0.216
+   --- episode seed 20000 regime 1 (good action 2); t obs1 act | v7 v13 v15 | v14 v16
+   t= 0 obs1=+1.12 a=2 | -1.560 -0.760 -0.904 | -0.749 -0.216
+   t= 1 obs1=+1.00 a=2 | -1.560 -0.760 -3.558 | -0.749 -0.216
+   t= 2 obs1=+0.67 a=2 | -1.560 -0.760 -3.289 | -0.749 -0.216
+   t= 3 obs1=+0.25 a=2 | -1.560 -0.760 -2.952 | -0.749 -0.216
+   t= 4 obs1=-0.05 a=2 | -1.560 -0.760 -2.705 | -0.749 -0.216
+   t= 5 obs1=-0.09 a=2 | -1.560 -0.760 -2.679 | -0.749 -0.216
+   t=10 obs1=+0.11 a=2 | -1.560 -0.760 -2.842 | -0.749 -0.216
+   t=20 obs1=+0.27 a=2 | -1.560 -0.760 -2.967 | -0.749 -0.216
+   t=39 obs1=-0.35 a=2 | -1.560 -0.760 -2.463 | -0.749 -0.216
+   latch test on ring nodes [7,13,15]: {"r0": {"state_t39": [8.0, 7.609000205993652, 8.0], "state_t5": [8.0, 7.557000160217285, 8.0], "drift_after_t10": 1.762, "saturated": true}, "r1": {"state_t39": [-1.559999942779541, -0.7599999904632568, -2.6050000190734863], "state_t5": [-1.559999942779541, -0.7599999904632568, -2.638000011444092], "drift_after_t10": 1.1959, "saturated": false}}
+
+== A. SEED 3 substitutions / reductions (held-out on 32 eval seeds; cap 40, floor ~2.6)
+    40.00  intact
+    39.19  node7 GATE->ADD (gate condition is 0 > b = -0.37: always open; ADD adds the bias)
+    29.50  node15 GATE->ADD (port 2 unwired, always open; ADD adds bias -1.13)
+    40.00  node13 MAX->ADD (remove the rectifier, keep the clip)
+    38.12  node13 MAX->TANH (bounded at +-1 instead of the clip)
+     7.62  node7 GATE->TANH
+    40.00  remove 8,9,10 together (two constants + a dead end)
+    40.00  remove 7,8,9,10; bypass 7 with edge 13->15 w=2.052*1.762 (2-cycle 13<->15)
+    40.00  remove 7,8,9,10,13; output-15 self-loop w=3.92 (the ring's loop gain)
+     4.62  cut ring edge 15->13 only
+     2.56  cut ring edge 13->7 only
+     1.44  cut cue edge 1->13 only
+    38.19  cut cue edge 1->15 only
+     0.00  cut both cue edges into the ring
+
+== A. SEED 3 loop-gain basin: all three ring weights scaled by s (gain = 3.92 s^3)
+   s=0.2 gain=  0.03 fit=  3.44
+   s=0.3 gain=  0.11 fit=  2.75
+   s=0.4 gain=  0.25 fit=  5.44
+   s=0.5 gain=  0.49 fit=  5.62
+   s=0.6 gain=  0.85 fit=  6.44
+   s=0.7 gain=  1.35 fit= 24.69
+   s=0.8 gain=  2.01 fit= 40.00
+   s=1.0 gain=  3.92 fit= 40.00
+   s=1.5 gain= 13.24 fit= 40.00
+   s=2.0 gain= 31.38 fit= 40.00
+   s=3.0 gain=105.92 fit= 40.00
+
+== A. HAND-BUILT two-edge equivalent: zero hidden nodes, output-1 self-loop + cue edge
+   self=1.0  cue=-0.5:36.94  cue=-1.0:36.94  cue=-2.0:33.81
+   self=1.5  cue=-0.5:40.00  cue=-1.0:40.00  cue=-2.0:40.00
+   self=2.0  cue=-0.5:40.00  cue=-1.0:40.00  cue=-2.0:40.00
+   self=3.0  cue=-0.5:40.00  cue=-1.0:40.00  cue=-2.0:40.00
+   self=4.0  cue=-0.5:40.00  cue=-1.0:40.00  cue=-2.0:40.00
+   self=6.0  cue=-0.5:40.00  cue=-1.0:40.00  cue=-2.0:40.00
+
+== B. TEN LINEAGES (cycle-1 W4_present_s1..10; champion = the genome whose replay equals the dissect heldout)
+
+-- s1: key=final heldout=40.00 hidden=[6, 8] edges=10 SCCs=[[6], [15]] self_loops=2 (on output 1) keep_nodes=0
+   SCC nodes=[6] ops=['MIN'] loop_edges=[(6, 6, 0.95, 0.0)]
+       cue_in=[] other_in=[]
+       outputs_in_loop=[] downstream=[]
+   SCC nodes=[15] ops=['DIFF'] loop_edges=[(15, 15, -1.42, 0.0)]
+       cue_in=[] other_in=[(8, 15, 0.0, 0.02), (14, 15, -0.43, 1.02)]
+       outputs_in_loop=[15] downstream=[]
+   remove non-SCC hidden [8]: fit=40.00 | cut every recurrent edge: fit=2.44
+   latch test over sorted SCC nodes [6, 15]: {"r0": {"state_t39": [0.8069999814033508, 8.0], "state_t5": [0.8069999814033508, 8.0], "drift_after_t10": 0.0, "saturated": true}, "r1": {"state_t39": [0.8069999814033508, -8.0], "state_t5": [0.8069999814033508, -8.0], "drift_after_t10": 0.0, "saturated": true}}
+   output ops=['TANH', 'DIFF', 'DIFF'] bias=[-0.22, 0.33, 0.22]
+
+-- s2: key=final heldout=40.00 hidden=[6, 7, 8, 9, 10, 11, 12] edges=27 SCCs=[[6], [7], [9], [10]] self_loops=4 (on output 0) keep_nodes=2
+   SCC nodes=[6] ops=['TANH'] loop_edges=[(6, 6, 0.05, 0.0)]
+       cue_in=[] other_in=[]
+       outputs_in_loop=[] downstream=[(6, 14, 0.0, 0.83)]
+   SCC nodes=[7] ops=['MAX'] loop_edges=[(7, 7, 0.92, 0.0)]
+       cue_in=[] other_in=[(8, 7, -0.13, 0.0)]
+       outputs_in_loop=[] downstream=[]
+   SCC nodes=[9] ops=['DIFF'] loop_edges=[(9, 9, 0.0, -1.39)]
+       cue_in=[(1, 9, 0.0, -0.5)] other_in=[(3, 9, -0.62, 0.0), (4, 9, -1.89, 0.0), (16, 9, 0.0, -0.77)]
+       outputs_in_loop=[] downstream=[(9, 14, 0.0, 0.69), (9, 15, -0.76, 0.0)]
+   SCC nodes=[10] ops=['CONST'] loop_edges=[(10, 10, -0.24, 0.0)]
+       cue_in=[] other_in=[]
+       outputs_in_loop=[] downstream=[]
+   remove non-SCC hidden [8, 11, 12]: fit=38.91 | cut every recurrent edge: fit=5.06
+   latch test over sorted SCC nodes [6, 7, 9, 10]: {"r0": {"state_t39": [0.1550000011920929, -0.1459999978542328, -8.0, -0.12999999523162842], "state_t5": [0.1550000011920929, -0.1459999978542328, -8.0, -0.12999999523162842], "drift_after_t10": 0.0, "saturated": true}, "r1": {"state_t39": [0.1550000011920929, -0.1459999978542328, 8.0, -0.12999999523162842], "state_t5": [0.1550000011920929, -0.1459999978542328, 8.0, -0.12999999523162842], "drift_after_t10": 0.0, "saturated": true}}
+   output ops=['DIFF', 'ADD', 'ADD'] bias=[-0.53, 0.44, 0.22]
+
+-- s3: key=final heldout=40.00 hidden=[7, 8, 9, 10, 13] edges=12 SCCs=[[7, 13, 15]] self_loops=0 (on output 0) keep_nodes=0
+   SCC nodes=[7, 13, 15] ops=['GATE', 'MAX', 'GATE'] loop_edges=[(13, 7, 2.05, 0.0), (15, 13, 1.09, 0.0), (7, 15, 1.76, 0.0)]
+       cue_in=[(1, 13, -1.83, 0.0), (1, 15, -0.81, 0.0)] other_in=[(8, 13, -0.69, 0.0), (10, 13, -0.69, 0.0)]
+       outputs_in_loop=[15] downstream=[]
+   remove non-SCC hidden [8, 9, 10]: fit=40.00 | cut every recurrent edge: fit=2.56
+   latch test over sorted SCC nodes [7, 13, 15]: {"r0": {"state_t39": [8.0, 7.609000205993652, 8.0], "state_t5": [8.0, 7.557000160217285, 8.0], "drift_after_t10": 1.762, "saturated": true}, "r1": {"state_t39": [-1.559999942779541, -0.7599999904632568, -2.6050000190734863], "state_t5": [-1.559999942779541, -0.7599999904632568, -2.638000011444092], "drift_after_t10": 1.1959, "saturated": false}}
+   output ops=['DIFF', 'GATE', 'MUL'] bias=[-0.55, -1.13, -0.22]
+
+-- s4: key=final heldout=40.00 hidden=[7, 8, 9, 12] edges=23 SCCs=[[7, 14, 16], [15]] self_loops=2 (on output 2) keep_nodes=1
+   SCC nodes=[7, 14, 16] ops=['MAX', 'DIFF', 'THRESH'] loop_edges=[(14, 7, 0.0, -1.44), (14, 14, 0.0, 0.0), (16, 14, -2.42, 0.0), (7, 16, 0.48, 0.0)]
+       cue_in=[(1, 14, 0.9, 0.0), (1, 16, 1.43, -1.89)] other_in=[(9, 14, 0.0, 0.23), (12, 14, 0.0, 0.23), (2, 16, 0.0, -0.24), (9, 16, 0.0, -0.06), (12, 16, 0.0, -0.06)]
+       outputs_in_loop=[14, 16] downstream=[(14, 15, 0.0, -0.33)]
+   SCC nodes=[15] ops=['MUL'] loop_edges=[(15, 15, 0.0, 1.16)]
+       cue_in=[] other_in=[(3, 15, 0.79, 0.0), (5, 15, 1.42, 0.0), (8, 15, 0.0, -1.68), (9, 15, 0.0, -0.22), (12, 15, 0.0, -0.22), (14, 15, 0.0, -0.33)]
+       outputs_in_loop=[15] downstream=[]
+   remove non-SCC hidden [8, 9, 12]: fit=1.00 | cut every recurrent edge: fit=4.75
+   latch test over sorted SCC nodes [7, 14, 15, 16]: {"r0": {"state_t39": [5.883999824523926, -3.503000020980835, 8.0, 1.0], "state_t5": [5.506999969482422, -3.2760000228881836, 8.0, 1.0], "drift_after_t10": 1.0731, "saturated": true}, "r1": {"state_t39": [5.806000232696533, -3.2200000286102295, -8.0, 1.0], "state_t5": [5.769000053405762, -3.2960000038146973, -8.0, 1.0], "drift_after_t10": 0.8972, "saturated": true}}
+   output ops=['DIFF', 'MUL', 'THRESH'] bias=[-0.34, 0.18, -0.83]
+
+-- s5: key=final heldout=40.00 hidden=[7, 10, 12, 13] edges=20 SCCs=[[7, 10, 12], [16]] self_loops=4 (on output 1) keep_nodes=1
+   SCC nodes=[7, 10, 12] ops=['MIN', 'MIN', 'MIN'] loop_edges=[(7, 7, 0.0, 0.04), (10, 7, 0.0, 0.04), (12, 7, 0.0, 0.04), (7, 10, 0.0, 0.04), (10, 10, 0.0, 0.04), (12, 10, 0.0, 0.04), (7, 12, 0.0, 0.04), (10, 12, 0.0, 0.04), (12, 12, 0.0, 0.04)]
+       cue_in=[] other_in=[(0, 12, 0.0, -0.7)]
+       outputs_in_loop=[] downstream=[(7, 15, 0.0, 0.66), (10, 15, 0.0, 0.66), (12, 15, 0.0, 0.66)]
+   SCC nodes=[16] ops=['MIN'] loop_edges=[(16, 16, 0.0, 2.36)]
+       cue_in=[(1, 16, 0.0, 1.42)] other_in=[(4, 16, 0.0, 0.2)]
+       outputs_in_loop=[16] downstream=[(16, 13, -0.33, 0.0), (16, 15, 0.0, -0.41)]
+   remove non-SCC hidden [13]: fit=40.00 | cut every recurrent edge: fit=5.50
+   latch test over sorted SCC nodes [7, 10, 12, 16]: {"r0": {"state_t39": [-0.5910000205039978, -0.5910000205039978, -0.9580000042915344, -8.0], "state_t5": [-0.5920000076293945, -0.5920000076293945, -0.9919999837875366, -5.676000118255615], "drift_after_t10": 2.0036, "saturated": true}, "r1": {"state_t39": [-0.5849999785423279, -0.5849999785423279, -0.8159999847412109, 0.5199999809265137], "state_t5": [-0.5740000009536743, -0.5740000009536743, -0.5199999809265137, 0.4729999899864197], "drift_after_t10": 2.0424, "saturated": false}}
+   output ops=['ADD', 'GATE', 'MIN'] bias=[-0.2, 0.47, 0.52]
+
+-- s6: key=final heldout=40.00 hidden=[6, 8] edges=13 SCCs=[[6, 8], [15, 16]] self_loops=2 (on output 0) keep_nodes=0
+   SCC nodes=[6, 8] ops=['MAX', 'MAX'] loop_edges=[(6, 6, -0.79, 0.0), (8, 6, -0.79, 0.0), (6, 8, -0.79, 0.0), (8, 8, -0.79, 0.0)]
+       cue_in=[] other_in=[]
+       outputs_in_loop=[] downstream=[]
+   SCC nodes=[15, 16] ops=['DIFF', 'ADD'] loop_edges=[(16, 15, 0.0, 1.81), (15, 16, 0.0, -1.57)]
+       cue_in=[(1, 15, -2.85, 0.0)] other_in=[(2, 15, -1.2, 0.0), (5, 15, 0.0, -0.71)]
+       outputs_in_loop=[15, 16] downstream=[]
+   remove non-SCC hidden []: fit=40.00 | cut every recurrent edge: fit=2.62
+   latch test over sorted SCC nodes [6, 8, 15, 16]: {"r0": {"state_t39": [0.49000000953674316, 0.49000000953674316, 8.0, -8.0], "state_t5": [0.49000000953674316, 0.49000000953674316, 8.0, -8.0], "drift_after_t10": 0.0, "saturated": true}, "r1": {"state_t39": [0.49000000953674316, 0.49000000953674316, -8.0, 8.0], "state_t5": [0.49000000953674316, 0.49000000953674316, -8.0, 8.0], "drift_after_t10": 0.0, "saturated": true}}
+   output ops=['MIN', 'DIFF', 'ADD'] bias=[-0.45, 0.9, 0.29]
+
+-- s7: key=final heldout=40.00 hidden=[6, 7, 8, 9, 11] edges=14 SCCs=[[7], [9, 15]] self_loops=1 (on output 0) keep_nodes=1
+   SCC nodes=[7] ops=['DIFF'] loop_edges=[(7, 7, 0.0, -1.01)]
+       cue_in=[] other_in=[(0, 7, -0.3, 0.0)]
+       outputs_in_loop=[] downstream=[]
+   SCC nodes=[9, 15] ops=['GATE', 'GATE'] loop_edges=[(15, 9, 1.06, 0.0), (9, 15, 1.58, 0.0)]
+       cue_in=[(1, 15, -0.47, 0.0)] other_in=[(3, 9, -0.52, 0.0), (4, 9, -1.1, 0.0), (0, 15, 0.0, 0.13), (11, 15, 0.61, 0.0)]
+       outputs_in_loop=[15] downstream=[(15, 6, -0.07, 0.0), (9, 14, 0.0, -0.66)]
+   remove non-SCC hidden [6, 8, 11]: fit=40.00 | cut every recurrent edge: fit=2.06
+   latch test over sorted SCC nodes [7, 9, 15]: {"r0": {"state_t39": [-7.666999816894531, 7.440999984741211, 8.0], "state_t5": [-4.498000144958496, 8.0, 8.0], "drift_after_t10": 1.8846, "saturated": true}, "r1": {"state_t39": [-8.0, -8.0, -8.0], "state_t5": [-3.9749999046325684, -8.0, -8.0], "drift_after_t10": 1.7568, "saturated": true}}
+   output ops=['MUL', 'GATE', 'MAX'] bias=[-0.22, -1.15, -0.11]
+
+-- s8: key=final heldout=40.00 hidden=[7, 9, 11, 13] edges=12 SCCs=[[7], [9, 11, 13, 16], [15]] self_loops=2 (on output 1) keep_nodes=2
+   SCC nodes=[7] ops=['DIFF'] loop_edges=[(7, 7, 0.97, 0.0)]
+       cue_in=[] other_in=[(11, 7, -0.43, 0.0)]
+       outputs_in_loop=[] downstream=[]
+   SCC nodes=[9, 11, 13, 16] ops=['GATE', 'TANH', 'GATE', 'ADD'] loop_edges=[(16, 9, 1.34, 0.0), (16, 11, 1.34, 0.0), (16, 13, 1.34, 0.0), (9, 16, 1.12, 0.0), (11, 16, 0.7, 0.0), (13, 16, 1.09, 0.0)]
+       cue_in=[(1, 16, 0.27, 0.0)] other_in=[]
+       outputs_in_loop=[16] downstream=[(11, 7, -0.43, 0.0)]
+   SCC nodes=[15] ops=['TANH'] loop_edges=[(15, 15, -1.05, 0.0)]
+       cue_in=[] other_in=[(2, 15, 0.93, 0.0)]
+       outputs_in_loop=[15] downstream=[(15, 14, -0.18, 0.0)]
+   remove non-SCC hidden []: fit=40.00 | cut every recurrent edge: fit=0.50
+   latch test over sorted SCC nodes [7, 9, 11, 13, 15, 16]: {"r0": {"state_t39": [-8.0, -8.0, -1.0, -8.0, 0.2980000078678131, -8.0], "state_t5": [-5.644000053405762, -4.800000190734863, -1.0, -4.800000190734863, 0.164000004529953, -5.111000061035156], "drift_after_t10": 0.3488, "saturated": true}, "r1": {"state_t39": [-8.0, 8.0, 1.0, 8.0, 0.2980000078678131, 8.0], "state_t5": [-8.0, 8.0, 1.0, 8.0, 0.164000004529953, 8.0], "drift_after_t10": 0.0078, "saturated": true}}
+   output ops=['CONST', 'TANH', 'ADD'] bias=[-0.62, 0.63, 0.31]
+
+-- s9: key=final heldout=40.00 hidden=[] edges=6 SCCs=[[15]] self_loops=1 (on output 1) keep_nodes=0
+   SCC nodes=[15] ops=['ADD'] loop_edges=[(15, 15, 1.4, 0.0)]
+       cue_in=[(1, 15, -1.09, 0.0)] other_in=[(2, 15, 0.0, -0.71), (3, 15, 1.47, 0.0), (5, 15, 0.0, 0.42)]
+       outputs_in_loop=[15] downstream=[]
+   remove non-SCC hidden []: fit=40.00 | cut every recurrent edge: fit=3.88
+   latch test over sorted SCC nodes [15]: {"r0": {"state_t39": [8.0], "state_t5": [8.0], "drift_after_t10": 0.0, "saturated": true}, "r1": {"state_t39": [-8.0], "state_t5": [-8.0], "drift_after_t10": 0.0, "saturated": true}}
+   output ops=['TANH', 'ADD', 'CONST'] bias=[-0.51, -0.33, -0.35]
+
+-- s10: key=final heldout=40.00 hidden=[6, 8, 10, 11, 13] edges=20 SCCs=[[6, 10], [8, 13], [14]] self_loops=3 (on output 1) keep_nodes=3
+   SCC nodes=[6, 10] ops=['MAX', 'MAX'] loop_edges=[(10, 6, -1.2, 0.0), (6, 10, 2.25, 0.0)]
+       cue_in=[] other_in=[(2, 6, 0.0, 0.29), (4, 6, 0.24, -0.06), (8, 6, 0.0, -0.4), (13, 6, 0.0, -0.4), (16, 10, 0.75, 0.0)]
+       outputs_in_loop=[] downstream=[]
+   SCC nodes=[8, 13] ops=['ADD', 'ADD'] loop_edges=[(8, 8, 0.98, 0.0), (13, 8, 0.98, 0.0), (8, 13, 0.98, 0.0), (13, 13, 0.98, 0.0)]
+       cue_in=[(1, 8, -0.87, 0.0), (1, 13, -0.87, 0.0)] other_in=[]
+       outputs_in_loop=[] downstream=[(8, 6, 0.0, -0.4), (13, 6, 0.0, -0.4), (8, 15, 2.09, 0.0), (13, 15, 2.09, 0.0)]
+   SCC nodes=[14] ops=['MIN'] loop_edges=[(14, 14, 0.15, -0.1)]
+       cue_in=[] other_in=[(2, 14, 0.0, 1.8)]
+       outputs_in_loop=[14] downstream=[]
+   remove non-SCC hidden [11]: fit=40.00 | cut every recurrent edge: fit=3.81
+   latch test over sorted SCC nodes [6, 8, 10, 13, 14]: {"r0": {"state_t39": [-0.5540000200271606, 8.0, -0.0010000000474974513, 8.0, -0.15399999916553497], "state_t5": [-0.7590000033378601, 8.0, -0.0010000000474974513, 8.0, -0.15399999916553497], "drift_after_t10": 0.006, "saturated": true}, "r1": {"state_t39": [5.567999839782715, -8.0, 8.0, -8.0, -0.15399999916553497], "state_t5": [5.620999813079834, -8.0, 8.0, -8.0, -0.15399999916553497], "drift_after_t10": 0.0016, "saturated": true}}
+   output ops=['MIN', 'DIFF', 'THRESH'] bias=[-0.13, 0.55, 0.09]
+
+== C. SEED 3 ignition threshold: constant cue c on steps 0-2 then 0; ring at t=5 and t=39
+   c=+0.00  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   c=-0.10  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   c=-0.20  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   c=-0.30  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   c=-0.40  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   c=-0.50  t=5 v(7,13,15)=[8.0, 7.53, 8.0]  t=39 v=[8.0, 7.53, 8.0] action=1
+   c=-0.75  t=5 v(7,13,15)=[8.0, 7.53, 8.0]  t=39 v=[8.0, 7.53, 8.0] action=1
+   c=-1.00  t=5 v(7,13,15)=[8.0, 7.53, 8.0]  t=39 v=[8.0, 7.53, 8.0] action=1
+   c=+0.50  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   c=+1.00  t=5 v(7,13,15)=[-1.56, -0.76, -2.75]  t=39 v=[-1.56, -0.76, -2.75] action=2
+
+== C. resettability: set with c=-1 on 0-2, then opposite cue +r on 20-22
+   r=+0.5  t=19 v=[8.0, 7.53, 8.0]  t=22 v=[8.0, 6.62, 8.0]  t=39 v=[8.0, 7.53, 8.0] action=1
+   r=+1.0  t=19 v=[8.0, 7.53, 8.0]  t=22 v=[8.0, 5.7, 8.0]  t=39 v=[8.0, 7.53, 8.0] action=1
+   r=+2.0  t=19 v=[8.0, 7.53, 8.0]  t=22 v=[7.93, 3.87, 8.0]  t=39 v=[8.0, 7.53, 8.0] action=1
+   r=+3.0  t=19 v=[8.0, 7.53, 8.0]  t=22 v=[-1.56, -0.76, -5.17]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   r=+4.0  t=19 v=[8.0, 7.53, 8.0]  t=22 v=[-1.56, -0.76, -5.98]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   r=+8.0  t=19 v=[8.0, 7.53, 8.0]  t=22 v=[-1.56, -0.76, -8.0]  t=39 v=[-1.56, -0.76, -2.75] action=2
+
+== C. late SET from the LOW rest state: cue +1 on 0-2, then -r on 20-22
+   r=-0.3  t=19 v=[-1.56, -0.76, -2.75]  t=22 v=[-1.56, -0.76, -2.51]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   r=-0.5  t=19 v=[-1.56, -0.76, -2.75]  t=22 v=[-1.56, -0.76, -2.34]  t=39 v=[-1.56, -0.76, -2.75] action=2
+   r=-1.0  t=19 v=[-1.56, -0.76, -2.75]  t=22 v=[-1.56, -0.76, -1.94]  t=39 v=[-1.56, -0.76, -2.75] action=2
+
+== C. one-step cue of -1 at step 0: ring values and actions t=30..39
+   actions: [2, 1, 1, 2, 1, 1, 2, 1, 1, 2]
+   t=30 v(7,13,15)=[8.0, 7.53, -2.75]
+   t=31 v(7,13,15)=[-1.56, 7.53, 8.0]
+   t=32 v(7,13,15)=[8.0, -0.76, 8.0]
+   t=33 v(7,13,15)=[8.0, 7.53, -2.75]
+   t=34 v(7,13,15)=[-1.56, 7.53, 8.0]
+   t=35 v(7,13,15)=[8.0, -0.76, 8.0]
+
+== D. every W4 champion on W16 (cue window starts in [0,20], reward in the last 10 steps; cap 10)
+   prediction recorded before the run: all ten near the floor, present ~ shuffled
+   s1  W4=40.00  W16 present= 1.88  W16 shuffled= 1.25
+   s2  W4=40.00  W16 present= 1.88  W16 shuffled= 0.62
+   s3  W4=40.00  W16 present= 0.25  W16 shuffled= 0.75
+   s4  W4=40.00  W16 present= 1.25  W16 shuffled= 0.00
+   s5  W4=40.00  W16 present= 2.50  W16 shuffled= 1.25
+   s6  W4=40.00  W16 present= 1.25  W16 shuffled= 0.00
+   s7  W4=40.00  W16 present= 2.50  W16 shuffled= 2.50
+   s8  W4=40.00  W16 present= 0.00  W16 shuffled= 0.00
+   s9  W4=40.00  W16 present= 0.00  W16 shuffled= 0.62
+   s10 W4=40.00  W16 present= 1.88  W16 shuffled= 0.62

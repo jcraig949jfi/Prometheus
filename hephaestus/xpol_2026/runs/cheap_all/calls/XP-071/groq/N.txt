@@ -1,0 +1,17 @@
+**Computational mechanism** – *Ergodic Global‑Workspace Inference* (EGWI).  
+The system maintains a high‑dimensional attractor network (e.g., a continuous‑time Hopfield or a reservoir‑computing core) whose trajectories are guaranteed to be **ergodic** under a carefully chosen stochastic update rule (Langevin dynamics).  Over long runs, the time‑average visitation frequency of each state converges to its stationary probability, giving a faithful sample of the entire hypothesis space.  A *global‑workspace layer* (implemented as a transformer‑style attention broadcast or a neural “blackboard”) periodically “ignites” the most statistically significant states, making them globally accessible to all downstream modules (perception, planning, language).  Epistemic evaluation is performed by a meta‑module that assigns **justification scores** using a hybrid of reliabilist Bayesian updating and coherentist consistency checks (e.g., a belief‑network that computes the posterior coherence of the broadcast hypothesis with the current evidence base).  The whole loop can be expressed as an algorithm:  
+
+1. **Ergodic sampling** – run MCMC/Langevin dynamics on the hypothesis manifold → a set of candidate states.  
+2. **Workspace ignition** – compute attention weights → broadcast top‑k candidates.  
+3. **Epistemic filter** – evaluate each candidate with a Bayesian‑coherence metric → retain justified hypotheses.  
+4. **Feedback** – inject the justified set back into the dynamics as a bias term, reshaping the stationary distribution.
+
+**Advantage for self‑testing** – Because the sampling is ergodic, the system is guaranteed (in the limit) to explore *all* reachable hypotheses rather than getting trapped in a local basin.  The global‑workspace broadcast makes each candidate instantly testable by every module, while the epistemic filter supplies a principled justification score, allowing the system to *meta‑evaluate* its own predictions, detect contradictions, and re‑sample until convergence.  This yields a robust form of self‑calibration akin to scientific hypothesis testing, but executed continuously and in parallel.
+
+**Novelty** – The exact combination of formal ergodic sampling, a neural global‑workspace broadcast, and explicit epistemic justification is not a standard field.  It overlaps with active inference, Bayesian brain models, and replay‑based RL, yet the explicit “ergodic global‑workspace” architecture and its epistemic filter have not been codified as a distinct technique.
+
+**Ratings**  
+Reasoning: 8/10 — the ergodic guarantee plus workspace ignition yields deep, exhaustive search.  
+Metacognition: 7/10 — epistemic filter provides systematic self‑evaluation, though implementation complexity is high.  
+Hypothesis generation: 9/10 — ergodic dynamics ensure near‑complete coverage of hypothesis space.  
+Implementability: 5/10 — requires sophisticated stochastic neural hardware and reliable convergence diagnostics.

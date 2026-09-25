@@ -1,0 +1,32 @@
+**Algorithmic design**
+
+The evaluator is a *Kalman‑Adaptive Abstract Interpreter* (KAAI).  
+1. **Abstract interpretation layer** builds a lattice of logical predicates extracted from a candidate answer (e.g., “A → B”, “¬C”, “x > 5”). Each predicate is stored as a node in a directed graph; edges encode syntactic relations (negation, comparison, conditional, causal “because”, temporal ordering). The lattice element for a node is a tuple *(status, confidence)* where *status*∈{TRUE, FALSE, UNKNOWN} and *confidence*∈[0,1].  
+2. **Kalman filter layer** treats the lattice as a hidden state vector *xₖ* (the true logical consistency of the answer). The observation *zₖ* at step *k* is the raw extraction from the text (e.g., a numeric claim, a comparative phrase). The state transition matrix *F* encodes adaptive‑control‑style updates: if a predicate is reinforced by later sentences, its variance shrinks; if contradictions appear, variance grows. Process noise *Q* models linguistic ambiguity, measurement noise *R* models extraction errors. The filter yields a posterior mean *μₖ* (estimated truth value) and covariance *Σₖ* (uncertainty).  
+3. **Adaptive control loop** monitors the filter residual *rₖ = zₖ – H μₖ*. When |rₖ| exceeds a threshold, the controller adjusts the observation matrix *H* and the transition gains to give more weight to high‑confidence cues (e.g., explicit numeric evidence) and less to vague qualifiers. Parameter adaptation follows a simple recursive least‑squares rule, keeping the system online and data‑driven.
+
+**Scoring logic**  
+After processing the whole answer, the final state vector contains a confidence‑weighted truth assignment for each logical predicate. A score is computed as  
+
+\[
+\text{Score}= \frac{1}{N}\sum_{i=1}^{N}\bigl( \mathbf{1}_{\text{status}_i = \text{TRUE}} \cdot \mu_i - \lambda \, \Sigma_i \bigr)
+\]
+
+where *N* is the number of predicates, *λ* penalises uncertainty, and the indicator rewards correctly inferred truths.
+
+**Parsed structural features**  
+- Negations (“not”, “never”) → unary NOT nodes.  
+- Comparatives (“greater than”, “less than”, “as … as”) → binary inequality edges.  
+- Conditionals (“if … then”, “unless”) → directed implication edges.  
+- Numeric values and units → scalar observations for the Kalman update.  
+- Causal claims (“because”, “therefore”) → causal edges.  
+- Temporal/ordering relations (“first”, “after”) → precedence edges.
+
+**Novelty assessment**  
+The exact combination—using Kalman filtering to fuse abstract‑interpretation lattices with an adaptive‑control gain schedule—is not present in current automated grading literature. Similar ideas appear separately (abstract interpretation for static analysis, Kalman filters for sensor fusion, adaptive control for parameter tuning), but their integration for reasoning‑score estimation is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical consistency modeling, limited by extraction quality.  
+Metacognition: 6/10 — can detect self‑contradiction but not higher‑order reflection.  
+Hypothesis generation: 5/10 — only evaluates given claims, does not propose alternatives.  
+Implementability: 9/10 — relies solely on numpy, regex, and graph structures; straightforward to prototype.

@@ -1,0 +1,32 @@
+**Algorithm Overview**  
+The evaluator builds a *reasoning graph* G = (V, E). V stores extracted atomic propositions (tokens, numbers, causal clauses). E stores directed logical relations identified by regex‑driven parsers: implication (if A → B), contradiction (A ↮ B), comparison (A > B), and temporal order (A → later B). Each edge carries a confidence weight w∈[0,1] from pattern match scores.  
+
+1. **Topology step** – Using NumPy, construct the weighted adjacency matrix **A** and the graph Laplacian **L = D – A** (D diagonal of row‑sums). Compute the eigen‑spectrum λ₁…λₙ. The algebraic connectivity (second‑smallest eigenvalue λ₂) measures how well‑connected the reasoning chain is; a low λ₂ flags missing links or isolated sub‑arguments.  
+
+2. **Spectral analysis step** – Perform a discrete Fourier transform of the edge‑weight vector (flattened **A**) to obtain a power spectral density. Peaks indicate clusters of similar‑confidence edges (e.g., over‑reliance on a single premise). Spectral leakage beyond a preset bandwidth is penalized, encouraging balanced distribution of evidence.  
+
+3. **Sensitivity analysis step** – Perturb each edge weight by ±δ (δ≈0.05) and recompute λ₂ and the spectral penalty. The *sensitivity score* S = max |scoreₚₑᵣₜ – score₀| quantifies robustness; high S means the answer’s logical score collapses under tiny changes, indicating fragile reasoning.  
+
+**Scoring Logic**  
+Base logical score L = Σ ( satisfied modus‑ponens + transitive closures ) – Σ ( detected contradictions ).  
+Topology penalty T = α·(1 – λ₂/λ_max).  
+Spectral penalty P = β·(energy outside target bandwidth).  
+Final score Score = L – T – P – γ·S, with α,β,γ tuned empirically.
+
+**Parsed Structural Features**  
+- Negations (“not”, “never”)  
+- Comparatives (“greater than”, “less than”)  
+- Conditionals (“if … then”, “unless”)  
+- Numeric values and units  
+- Causal markers (“because”, “leads to”, “as a result of”)  
+- Temporal/ordering cues (“before”, “after”)  
+- Quantifiers (“all”, “some”, “none”)  
+- Logical connectives (“and”, “or”, “implies”)  
+
+**Novelty**  
+Graph‑based logical evaluation exists, and spectral graph metrics have been applied to discourse coherence, but the explicit coupling of Laplacian connectivity, spectral weight distribution, and systematic sensitivity perturbation into a single, pure‑NumPy scoring pipeline is not documented in prior work, making the combination effectively novel.
+
+Reasoning: 8/10 — solid logical graph + spectral + robustness measures  
+Metacognition: 7/10 — captures self‑consistency but lacks deeper model of intent  
+Hypothesis generation: 6/10 — can flag missing links but does not propose alternatives  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, easy to embed in pipelines

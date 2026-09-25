@@ -1,0 +1,29 @@
+**Algorithmic sketch**
+
+1. **Parsing & proposition graph** – The input prompt is tokenised (regex‑based split on whitespace and punctuation). A lightweight rule‑based parser extracts elementary propositions (subject‑predicate‑object triples) and tags structural markers: negation (“not”, “no”), comparatives (“more … than”), conditionals (“if … then”), numeric literals, causal verbs (“cause”, “lead to”), and temporal/ordering cues (“first”, “after”). Each proposition becomes a node in a directed graph; edges encode logical relations (e.g., “if A then B” creates a conditional edge A→B, “A > B” creates a comparator edge).
+
+2. **Thermodynamic “energy” of a candidate** – For every candidate answer we compute a compressed representation using a fast, deterministic compressor from the standard library (e.g., `zlib.compress`). The length `L` of the compressed byte string is taken as a proxy for Kolmogorov complexity. We define **entropy E = L / |text|**, i.e., bits per character. Lower E indicates higher regularity (more “order”) and is interpreted as lower thermodynamic free energy.
+
+3. **Falsification engine** – The question defines a set of *constraints* (derived from its own parsed propositions). The engine iteratively tries to falsify each node in the answer graph: for every edge, it checks consistency (e.g., a conditional must have the antecedent true before the consequent). Inconsistencies raise a **penalty P** proportional to the number of violated constraints. This implements Popper’s falsificationism: answers that survive more attempted refutations are scored higher.
+
+4. **Normalized Compression Distance (NCD) comparison** – When a reference solution is available, we compute  
+`NCD(A,R) = (C(A+R) - min(C(A),C(R))) / max(C(A),C(R))`  
+where `C(x)` is the compressed length of string `x`. The final score combines three terms:  
+`Score = w1·(E_ref – E_candidate) – w2·P – w3·NCD(A,R)`  
+with `w`’s set empirically (e.g., 0.4, 0.3, 0.3). A lower score denotes a better answer.
+
+**Parsed structural features**  
+- Negations, comparatives, superlatives  
+- Conditionals (if‑then, unless)  
+- Numeric values and units  
+- Causal verbs and “because/therefore” links  
+- Temporal/ordering markers (first, then, after)
+
+**Novelty assessment**  
+The exact coupling of a thermodynamic entropy proxy, Popperian falsification loops, and NCD‑based similarity in a pure‑numpy, regex‑driven scorer does not appear in existing literature; most similarity‑based tools ignore logical consistency, and falsification‑oriented evaluators rarely use compression metrics. Hence the combination is largely novel, though each component individually has precedents.
+
+**Ratings**  
+Reasoning: 8/10 — integrates logical graph checks with quantitative entropy reduction.  
+Metacognition: 7/10 — explicit falsification loop mirrors self‑critical reasoning.  
+Hypothesis generation: 6/10 — can suggest alternative propositions via constraint propagation but lacks generative depth.  
+Implementability: 9/10 — relies only on std‑lib compression, regex parsing, and numpy arrays; straightforward to prototype.

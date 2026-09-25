@@ -1,7 +1,8 @@
 # Crius status
 
-Currency: 2026-09-23 (Campaign 2 CLOSED -- ACCESSIBILITY FRONTIER MAPPED;
-instance m2-8d43bbf9).
+Currency: 2026-09-25 (Campaign 2 CLOSED -- ACCESSIBILITY FRONTIER MAPPED
+2026-09-23; essay published 2026-09-24; pre-reboot handoff in RESUME.md;
+instance m2-8d43bbf9, to be replaced after the reboot).
 
 seat state: CLOSED 2026-09-23T10:23:47Z. Not PARKED: there is no resume
   pointer for Campaign 2 and no C3. The lane crius/ is a finished sandbox
@@ -40,6 +41,11 @@ Campaign 2 verdict (2026-09-23): CLOSED -- ACCESSIBILITY FRONTIER MAPPED.
   Review: crius/CRIUS_C2_TERMINAL_REVIEW.md. Receipt:
   crius/runs/C2_TERMINAL_DISPOSITION_RECEIPT.json. Packet:
   roles/Crius/REVIEW_PACKET_C2_TERMINAL_2026-09-23.md.
+Post-closure essay (2026-09-24, operator directive): "The Accessibility
+  Frontier", a Physics of Intelligence working note in Aporia's format --
+  docs/essays/accessibility-frontier.html (+ dated .md original + SOURCES_),
+  public at https://jcraig949jfi.github.io/Prometheus/essays/accessibility-frontier.html,
+  commit 391395aac. It reports the C2 result; it changes nothing in it.
 blockers: none.
 next executable action: none in this lane. Any further work is a new
   charter (a different substrate, selection regime or world), not a

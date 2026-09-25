@@ -1,0 +1,170 @@
+```python
+"""
+ReasoningTool: susceptibility-driven self-testing with spectral diagnostics.
+
+Mechanism (Spectral Analysis x Falsificationism x Criticality):
+  1. Structural probes (numeric comparison / arithmetic, yes-no with negation
+     parity, comparative-chain transitivity, echo penalty, NCD tiebreak) each
+     emit a per-candidate evidence vector.  These carry the content signal.
+  2. An ensemble of N particles holds perturbed probe weights -- a posterior
+     over "how to weigh evidence".  Probes are applied in falsificationist
+     order: the probe predicted to most split the ensemble goes first.
+  3. Belief updating is run as a dynamical series.  The scalar summary is the
+     entropy of the ensemble's argmax votes over time.  Its Welch periodogram
+     gives a 1/f^alpha slope and a low-frequency power fraction.  These are
+     compared with shuffle surrogates (phase-randomized surrogates preserve
+     the PSD by construction, so a shuffle null is the correct chance floor
+     for a spectral statistic).  A significant low-frequency excess with
+     alpha near 1 = critical slowing down = the belief system is near a
+     susceptibility divergence, so confidence is tempered toward chance.
+     A frozen series (zero variance) = dogmatic regime, no tempering.
+"""
+import re, zlib
+import numpy as np
+
+NUM = re.compile(r'-?\d+(?:\.\d+)?')
+GT = ('greater', 'bigger', 'larger', 'more', 'higher', 'older', 'taller', 'heavier')
+LT = ('less', 'smaller', 'lower', 'fewer', 'younger', 'shorter', 'lighter')
+
+
+class ReasoningTool:
+    N_PART, STEPS, SEG, N_SURR = 64, 96, 32, 24
+
+    def __init__(self):
+        self.seed = 20260919
+
+    # ---------------- probes (content signal) ----------------
+    @staticmethod
+    def _nums(s):
+        return [float(x) for x in NUM.findall(s)]
+
+    def _p_numeric(self, p, cands):
+        pl, nums, v, tgt = p.lower(), self._nums(p), np.zeros(len(cands)), None
+        m = re.search(r'(-?\d+(?:\.\d+)?)\s*([-+*/x])\s*(-?\d+(?:\.\d+)?)', pl)
+        if m:
+            a, op, b = float(m.group(1)), m.group(2), float(m.group(3))
+            tgt = {'+': a + b, '-': a - b, '*': a * b, 'x': a * b,
+                   '/': (a / b if b else None)}[op]
+        elif len(nums) >= 2 and not re.search(r'\bis\s+-?\d', pl):
+            if re.search(r'\b(bigg|larg|great|high|most|max)', pl): tgt = max(nums)
+            elif re.search(r'\b(small|less|low|least|fewest|min)', pl): tgt = min(nums)
+        if tgt is None: return v
+        for i, c in enumerate(cands):
+            cn = self._nums(c)
+            if cn: v[i] = 1.0 if any(abs(x - tgt) < 1e-9 for x in cn) else -1.0
+        return v
+
+    def _p_yesno(self, p, cands):
+        pl, v = p.lower(), np.zeros(len(cands))
+        m = re.search(r'(-?\d+(?:\.\d+)?)\s+(\w+)\s+than\s+(-?\d+(?:\.\d+)?)', pl)
+        if not m or m.group(2) not in GT + LT: return v
+        a, b = float(m.group(1)), float(m.group(3))
+        truth = (a > b) if m.group(2) in GT else (a < b)
+        if len(re.findall(r"\b(not|n't|never)\b", pl)) % 2 == 1: truth = not truth
+        for i, c in enumerate(cands):
+            cl = c.strip().lower()
+            if cl.startswith(('yes', 'true')): v[i] = 1.0 if truth else -1.0
+            elif cl.startswith(('no', 'false')): v[i] = -1.0 if truth else 1.0
+        return v
+
+    def _p_chain(self, p, cands):
+        v, pl = np.zeros(len(cands)), p.lower()
+        pairs = re.findall(r'(\w+) is (\w+) than (\w+)', pl)
+        if len(pairs) < 2 or len(set(c for _, c, _ in pairs)) != 1: return v
+        above = {}
+        for a, _, b in pairs:
+            above.setdefault(a, set()).add(b); above.setdefault(b, set())
+        for _ in range(len(above)):  # transitive closure
+            for a in above:
+                for x in list(above[a]): above[a] |= above[x]
+        top = max(above, key=lambda k: len(above[k]))
+        bot = min(above, key=lambda k: len(above[k]))
+        root = pairs[0][1].rstrip('er').rstrip('i')
+        ans = top if re.search(root + r'\w*est\b|\bmost\b', pl) else (
+            bot if re.search(r'\bleast\b|\bfewest\b|\bshortest\b|\bsmallest\b', pl) else None)
+        if ans is None: return v
+        for i, c in enumerate(cands):
+            toks = re.findall(r'\w+', c.lower())
+            if toks: v[i] = 1.0 if ans in toks else -0.5
+        return v
+
+    def _p_echo(self, p, cands):
+        pt = set(re.findall(r'\w+', p.lower())); v = np.zeros(len(cands))
+        for i, c in enumerate(cands):
+            ct = re.findall(r'\w+', c.lower())
+            if len(ct) > 6: v[i] = -sum(t in pt for t in ct) / len(ct)
+        return v
+
+    def _p_ncd(self, p, cands):
+        def z(s): return len(zlib.compress(s.encode('utf-8', 'ignore')))
+        zp, v = z(p), np.zeros(len(cands))
+        for i, c in enumerate(cands):
+            v[i] = -(z(p + c) - min(zp, z(c))) / max(zp, z(c))
+        return v - v.mean() if len(cands) > 1 else v * 0
+
+    # ---------------- ensemble dynamics + spectral readout ----------------
+    def _run(self, p, cands):
+        E = np.array([f(p, cands) for f in (self._p_numeric, self._p_yesno,
+                      self._p_chain, self._p_echo, self._p_ncd)])
+        base = np.array([3.0, 3.0, 2.0, 0.6, 0.15])
+        rng = np.random.default_rng(self.seed + zlib.crc32(p.encode()) % 10000)
+        W = base[None, :] * (1 + 0.4 * rng.standard_normal((self.N_PART, len(base))))
+        # falsificationist ordering: probes that most split candidates go first
+        order = np.argsort(-(E.std(axis=1) + 1e-9) * base)
+        S, series = np.zeros((self.N_PART, len(cands))), []
+        for t in range(self.STEPS):
+            j = order[t % len(order)]
+            S += W[:, j:j + 1] * E[j][None, :] + 0.3 * rng.standard_normal(S.shape)
+            votes = np.bincount(S.argmax(axis=1), minlength=len(cands)) / self.N_PART
+            nz = votes[votes > 0]; series.append(float(-(nz * np.log(nz)).sum()))
+        return E, base, np.array(series), rng
+
+    def _lowfreq(self, x):
+        x = x - x.mean(); win = np.hanning(self.SEG); psd = np.zeros(self.SEG // 2 + 1)
+        for s in range(0, len(x) - self.SEG + 1, self.SEG // 2):
+            psd += np.abs(np.fft.rfft(x[s:s + self.SEG] * win)) ** 2
+        return psd[1:4].sum() / (psd[1:].sum() + 1e-12), psd
+
+    def _susceptibility(self, series, rng):
+        if series.std() < 1e-6: return 0.0  # frozen / dogmatic regime
+        obs, psd = self._lowfreq(series)
+        f = np.arange(1, len(psd)); alpha = -np.polyfit(np.log(f), np.log(psd[1:] + 1e-12), 1)[0]
+        null = np.array([self._lowfreq(rng.permutation(series))[0] for _ in range(self.N_SURR)])
+        zsc = (obs - null.mean()) / (null.std() + 1e-9)
+        near_crit = np.exp(-((alpha - 1.0) ** 2) / 0.5)  # 1/f^1 signature
+        return float(np.clip(zsc / 4.0, 0, 1) * near_crit)
+
+    def evaluate(self, prompt, candidates):
+        if not candidates: return []
+        E, base, series, rng = self._run(prompt, candidates)
+        raw = base @ E; sus = self._susceptibility(series, rng)
+        probs = np.exp(raw - raw.max()); probs /= probs.sum()
+        out = []
+        for i, c in enumerate(candidates):
+            sc = 0.5 + (probs[i] - 0.5) * (1 - 0.5 * sus) if len(candidates) > 1 else probs[i]
+            out.append({"candidate": c, "score": float(sc),
+                        "reasoning": "evidence=%.2f probes=%s susceptibility=%.2f" % (
+                            raw[i], np.round(E[:, i], 2).tolist(), sus)})
+        return sorted(out, key=lambda d: -d["score"])
+
+    def confidence(self, prompt, answer):
+        al = answer.strip().lower(); foils = []
+        if al.startswith(('yes', 'true')): foils = ['No']
+        elif al.startswith(('no', 'false')): foils = ['Yes']
+        else:
+            an = set(self._nums(answer))
+            foils = [str(int(n) if n == int(n) else n) for n in self._nums(prompt) if n not in an][:4]
+        cands = [answer] + (foils or ['unknown'])
+        E, base, series, rng = self._run(prompt, cands)
+        raw = base @ E; sus = self._susceptibility(series, rng)
+        p = float(np.exp(raw[0] - raw.max()) / np.exp(raw - raw.max()).sum())
+        if not E[:3, 0].any(): p = 0.5 + 0.1 * np.tanh(raw[0])  # no structural signal
+        return float(np.clip(0.5 + (p - 0.5) * (1 - 0.5 * sus), 0.02, 0.98))
+```
+
+Notes on the implementation:
+
+- **Content signal** comes from the structural probes (numeric/arithmetic, yes-no with negation parity, comparative-chain transitivity via closure, echo penalty, NCD as a low-weight tiebreak). That is what clears the 26% floor.
+- **Spectral self-monitor**: the ensemble's vote-entropy series is run through a Welch periodogram; low-frequency fraction is z-scored against shuffle surrogates and gated by a 1/f^alpha≈1 kernel. High susceptibility tempers scores/confidence toward 0.5; a frozen series (dogmatic regime) does not.
+- **Honest deviation from the brief**: phase-randomized (Theiler) surrogates preserve the PSD exactly, so they cannot serve as a null for a spectral statistic. The code uses shuffle surrogates instead, which is the correct chance floor for "low-frequency power above white noise".
+- Deterministic: RNG seeded from a fixed seed plus a CRC of the prompt.

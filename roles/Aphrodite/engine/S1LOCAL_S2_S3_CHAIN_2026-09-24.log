@@ -1,0 +1,96 @@
+[s1-local] families certified 16, splits []
+[s1-local] conformance {'part1_GREEN': True, 'part1_checked': 21600, 'part2_checked': 321392, 'part2_mismatches': 0, 'PASS': True}
+[s1-local] power {'run3_false_merges_split': '13 / 13', 'member_space_examples_split': '15 / 20 (recorded examples, first 6 members each)'}
+[s1-local] CAMPAIGN_RELEVANT_IDENTITY=PASS GLOBAL_BEHAVIOR_IDENTITY=FAIL (260s)
+[s2] G-S2.1 PASS=True
+[s2] G-S2.2 PASS=True
+[s2] G-S2.3 PASS=True
+[s2] G-S2.4 PASS=True
+[s2] G-S2.5 var paired 943989061 vs unpaired 1550240082
+[s2] G-S2.6 PASS=True
+[s2] OUTCOME S2_PASS [] (93s)
+[s3s4] G1 conformance part1=True (21600) part2 mismatches=0 over 1124872
+[s3s4] [gen-qual] md_a_sum_times_last              size=4 QUALIFIED=True
+[s3s4] [gen-qual] md_b_sumsq_plus_first            size=4 QUALIFIED=True
+[s3s4] [gen-qual] md_c_prod_minus_first            size=4 QUALIFIED=True
+[s3s4] [gen-qual] md_d_gcd_plus_last               size=None QUALIFIED=False
+[s3s4] [gen-qual] md_e_negsum_times_first          size=4 QUALIFIED=True
+[s3s4] [gen-qual] md_f_sumdec_plus_last            size=4 QUALIFIED=True
+[s3s4] [gen-qual] md_g_prodinc_minus_first         size=4 QUALIFIED=True
+[s3s4] [gen-qual] md_h_gcdinc_plus_first           size=None QUALIFIED=False
+[s3s4] [gen-qual] tc_new_gcdshift_times_first      size=None QUALIFIED=False
+[s3s4] [gen-qual] tc_new_negmod_plus_first         size=16 QUALIFIED=True
+[s3s4] [gen-qual] tc_new_sumdiv_plus_first         size=24 QUALIFIED=True
+[s3s4] [gen-qual] tc_new_sumgcdlast_minus_first    size=4 QUALIFIED=True
+[s3s4] [gen-qual] tc_new_summod_times_first        size=12 QUALIFIED=True
+[s3s4] [gen-qual] tc_new_sumscaled_minus_last      size=4 QUALIFIED=True
+[s3s4] [gen-qual] tc_rel_sum_minus_last            size=6 QUALIFIED=True
+[s3s4] [gen-qual] tc_rel_sumsq_times_first         size=4 QUALIFIED=True
+[s3s4] shams hashed: ['4132653025', '3200afdb69', '513ddf683a', '262dae5e3b', 'c99dfa8d25', '68f0cd4a3f', '44b19c3999', '44c1645dca']
+[s3s4] [D3] class 2078349206.. from ['md_a_sum_times_last']: 8 members, 4 distinct bodies (certified)
+[s3s4] [D3] class 2a461b4cac.. from ['md_c_prod_minus_first']: 4 members, 4 distinct bodies (certified)
+[s3s4] [D3] class 4f563efd33.. from ['md_b_sumsq_plus_first']: 3 members, 2 distinct bodies (certified)
+[s3s4] [D4] candidate schemas: ['(acc + {H})']
+[s3s4] [D6] UNCHANGED   mean cost 116364 saving 0 lower95 0 eligible=False
+[s3s4] [D6] MEMORISE    mean cost 119064 saving -2700 lower95 -3235 eligible=False
+[s3s4] [D6] SCHEMA_0    mean cost 22291 saving 94073 lower95 64604 eligible=True
+[s3s4] S3 ENDOGENOUS_ABSTRACTION=YES selected=SCHEMA_0 sha=4fed9489d956
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 264, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 213, in _process_chunk
+    return [fn(*args) for args in chunk]
+            ^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\run_s3s4.py", line 272, in run_recipient
+    sc = trib.score(art)
+         ^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\meta_tribunal.py", line 165, in score
+    "stress_length_200": acc(_cached_tasks(self.family, 40, seed,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\meta_tribunal.py", line 158, in acc
+    rr = E.Recipient.fresh(seed=4242)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\engine.py", line 801, in fresh
+    return cls(seed)
+           ^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\engine.py", line 787, in __init__
+    self.workspace.mkdir(parents=True, exist_ok=True)
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\jcrai\\AppData\\Local\\Temp\\aphrodite_engine_markers\\recipient_6a0d4cfd730f'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\run_s3s4.py", line 454, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\run_s3s4.py", line 439, in main
+    out = stage_transfer(quals, shams, art)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\run_s3s4.py", line 325, in stage_transfer
+    pilot = _pool_rows([(f, a, arms[a], i, quals[f]["qualified_dev_size"], "T3D-pilot")
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\run_s3s4.py", line 291, in _pool_rows
+    return dict(ex.map(run_recipient, jobs, chunksize=1))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 636, in _chain_from_iterable_of_lists
+    for element in iterable:
+                   ^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+PermissionError: [Errno 13] Access is denied: 'C:\\Users\\jcrai\\AppData\\Local\\Temp\\aphrodite_engine_markers\\recipient_6a0d4cfd730f'
+CHAIN_EXIT=1

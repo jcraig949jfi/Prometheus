@@ -1,0 +1,25 @@
+**Algorithmic synthesis**
+
+The tool treats a reasoning prompt as a *deterministic transition system* whose state is a vector of parsed logical predicates.  
+1. **Abstract interpretation layer** builds an over‑approximation of the candidate’s answer: a set of abstract domains (e.g., *Bool‑Interval*, *Numeric‑Range*, *Causal‑Graph*). Each domain is stored as a NumPy array (boolean masks for presence of predicates, float intervals for numeric claims, adjacency matrices for causal links). The abstract transformer extracts predicates from the text (see §2) and updates the domains by joining (union) with existing information, guaranteeing soundness (no missed claim).  
+2. **Pragmatic evaluation layer** assigns a *utility* to each abstract element based on how well it would serve a downstream task (e.g., answering the original question). Utility functions are simple heuristics: correct‑answer predicates get +1, irrelevant or contradictory ones get –0.5, and missing essential predicates incur –1. The total pragmatic score is the weighted sum of utilities.  
+3. **Chaos‑theory‑inspired perturbation layer** samples *nearby initial conditions* by randomly flipping a small percentage (ε≈0.01) of bits in the predicate vector and re‑running the abstract transformer. The Lyapunov‑like metric is the average change in pragmatic score across N≈100 perturbations, computed with NumPy’s `np.linalg.norm`. A high sensitivity indicates that the answer rests on fragile premises; the final score is `PragmaticScore – λ·Sensitivity` (λ a tunable damping factor). This deterministic‑yet‑sensitive pipeline yields a single scalar quality measure.
+
+**Parsed structural features**
+
+- Negation markers (`not`, `never`, `no`) → Boolean flag in predicate domain.  
+- Comparatives (`greater than`, `more`, `less`) → Numeric‑Range domain with inequality constraints.  
+- Conditionals (`if … then …`) → Directed edges in the causal graph with antecedent/consequent tags.  
+- Explicit numeric values → Stored in float intervals; consistency checked via interval arithmetic.  
+- Causal claims (`because`, `leads to`) → Edge creation in the causal adjacency matrix.  
+- Ordering relations (`first`, `after`, `subsequently`) → Temporal ordering encoded as a DAG.
+
+**Novelty assessment**
+
+The exact combination—abstract‑interpretation style over‑approximation, pragmatic utility weighting, and a chaos‑theory perturbation to measure fragility—is not present in prior static‑analysis or rubric‑based evaluators. It parallels work on *robustness testing* for program analyses but applies it to natural‑language reasoning, making it a novel interdisciplinary construction.
+
+**Ratings**  
+Reasoning: 8/10 — integrates logical abstraction with utility and robustness.  
+Metacognition: 7/10 — pragmatic layer reflects self‑correcting inquiry but lacks explicit reflection modeling.  
+Hypothesis generation: 6/10 — perturbation explores alternative interpretations but does not propose new hypotheses.  
+Implementability: 9/10 — pure NumPy/std‑lib code; clear data structures and deterministic steps.

@@ -35,6 +35,13 @@ LINEAGE_RELATIONS = ("forked_from", "derived_from", "rewrote", "superseded_by", 
                      "port_of", "reimplementation_of", "historical_version_of", "algorithm_from",
                      "shares_ancestor_with")
 RETIRED_RELATIONS = ("superseded",)
+#: The ONE key that names the far end of a lineage edge. 2026-09-19's preserve_rollouts.py wrote
+#: "target" instead (80 edges in 41 records + 78 in 39 capsules by 2026-09-25); Nyx's atlas reader
+#: tolerated both and reported the drift (#572). Canonical since the charter: "to". validate()
+#: refuses "target" outright so the drift cannot recur silently; migrate_lineage_key_20260925.py
+#: renamed every existing edge and left a receipt beside it.
+LINEAGE_EDGE_TARGET_KEY = "to"
+LINEAGE_EDGE_DRIFTED_KEYS = ("target",)
 TEST_CLASSES = ("UPSTREAM_TESTS_PASS", "UPSTREAM_TESTS_FAIL", "UPSTREAM_TESTS_NOT_RUN",
                 "UPSTREAM_DRIVERS_RUN_NO_ORACLE",   # the shipped test programs ran to completion and produced their tables; no reference output exists in the vault to grade them
                 "TECHNE_SMOKE_HARNESS_PASS", "TECHNE_SMOKE_HARNESS_FAIL", "NO_TESTS", "NOT_ATTEMPTED")
@@ -164,6 +171,20 @@ def skeleton(specimen_id: str, **fields) -> dict:
     return rec
 
 
+def lineage_edge_problems(e: dict) -> list[str]:
+    """The far-end key of a lineage edge is exactly LINEAGE_EDGE_TARGET_KEY, non-empty. A drifted
+    key is refused by name so the reader learns which writer drifted, not just that something did."""
+    out = []
+    for k in LINEAGE_EDGE_DRIFTED_KEYS:
+        if k in e:
+            out.append("lineage relation %r uses key %r; the canonical key is %r (run migrate_lineage_key_20260925.py)"
+                       % (e.get("relation"), k, LINEAGE_EDGE_TARGET_KEY))
+    v = e.get(LINEAGE_EDGE_TARGET_KEY)
+    if not isinstance(v, str) or not v.strip():
+        out.append("lineage relation %r has no non-empty %r" % (e.get("relation"), LINEAGE_EDGE_TARGET_KEY))
+    return out
+
+
 def validate(rec: dict) -> list[str]:
     problems = [k for k in REQUIRED if k not in rec]
     if rec.get("run_classification") not in RUN_CLASSES:
@@ -173,6 +194,7 @@ def validate(rec: dict) -> list[str]:
             problems.append("lineage relation %r is retired (undirected); use superseded_by / supersedes" % e.get("relation"))
         elif e.get("relation") not in LINEAGE_RELATIONS:
             problems.append("lineage relation %r not in LINEAGE_RELATIONS" % e.get("relation"))
+        problems.extend(lineage_edge_problems(e))
     if rec.get("test_classification") not in TEST_CLASSES:
         problems.append("test_classification %r not in TEST_CLASSES" % rec.get("test_classification"))
     if rec.get("source_type") not in SOURCE_TYPES:

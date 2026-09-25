@@ -16,9 +16,11 @@ from .world import D, NV
 ONEHOT = D * NV
 
 
-def _ridge(F, y, g_old, lam):
+def _ridge(F, y, g_old, lam, zero=False):
+    """Proximal ridge toward g_old; zero=True gives an ordinary ridge toward 0
+    (E2 from-scratch discovery fits; default False keeps E1 unchanged)."""
     k = F.shape[1]
-    return np.linalg.solve(F.T @ F + lam * np.eye(k), F.T @ y + lam * g_old)
+    return np.linalg.solve(F.T @ F + lam * np.eye(k), F.T @ y + (0.0 if zero else lam) * g_old)
 
 
 class Mem:
@@ -51,7 +53,7 @@ class NoMem(Mem):
 
 class TTAls(Mem):
     PERSISTENT = ("tt",)
-    CONFIG = ("lam", "sweeps", "order", "ranks")
+    CONFIG = ("lam", "sweeps", "order", "ranks", "prox_zero")
 
     def __init__(self, cap, order=tuple(range(D)), ranks=None, lam=1.0, sweeps=2, init_scale=0.5, seed=0):
         super().__init__(cap)
@@ -87,7 +89,7 @@ class TTAls(Mem):
                     if not s.any():
                         continue
                     F = np.einsum("ma,mb->mab", L[s], R[s]).reshape(s.sum(), a * b)
-                    cores[k][:, v, :] = _ridge(F, y[s], cores[k][:, v, :].reshape(-1), self.lam).reshape(a, b)
+                    cores[k][:, v, :] = _ridge(F, y[s], cores[k][:, v, :].reshape(-1), self.lam, getattr(self, "prox_zero", False)).reshape(a, b)
         return m * self.tt.n_params() * self.sweeps
 
 
@@ -114,7 +116,7 @@ def fit_ranks(profile, cap):
 
 class CP(Mem):
     PERSISTENT = ("U",)
-    CONFIG = ("lam", "sweeps", "R")
+    CONFIG = ("lam", "sweeps", "R", "prox_zero")
 
     def __init__(self, cap, R=None, lam=1.0, sweeps=2, init_scale=0.5, seed=0):
         super().__init__(cap)
@@ -142,7 +144,7 @@ class CP(Mem):
                 for v in range(NV):
                     s = A[:, k] == v
                     if s.any():
-                        self.U[k, v] = _ridge(P[s], y[s], self.U[k, v], self.lam)
+                        self.U[k, v] = _ridge(P[s], y[s], self.U[k, v], self.lam, getattr(self, "prox_zero", False))
         return m * self.U.size * self.sweeps
 
 
@@ -151,7 +153,7 @@ PARTITIONS = (((0, 1), (2, 3)), ((0, 2), (1, 3)), ((0, 3), (1, 2)))
 
 class LowRank(Mem):
     PERSISTENT = ("Ur", "Vc")
-    CONFIG = ("lam", "sweeps", "R", "part")
+    CONFIG = ("lam", "sweeps", "R", "part", "prox_zero")
 
     def __init__(self, cap, part=0, R=None, lam=1.0, sweeps=2, init_scale=0.5, seed=0):
         super().__init__(cap)
@@ -182,10 +184,10 @@ class LowRank(Mem):
         for _ in range(self.sweeps):
             for i in np.unique(I):
                 s = I == i
-                self.Ur[i] = _ridge(self.Vc[J[s]], y[s], self.Ur[i], self.lam)
+                self.Ur[i] = _ridge(self.Vc[J[s]], y[s], self.Ur[i], self.lam, getattr(self, "prox_zero", False))
             for j in np.unique(J):
                 s = J == j
-                self.Vc[j] = _ridge(self.Ur[I[s]], y[s], self.Vc[j], self.lam)
+                self.Vc[j] = _ridge(self.Ur[I[s]], y[s], self.Vc[j], self.lam, getattr(self, "prox_zero", False))
         return m * (self.Ur.size + self.Vc.size) * self.sweeps
 
 

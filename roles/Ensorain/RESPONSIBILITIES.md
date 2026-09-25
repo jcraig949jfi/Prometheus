@@ -2,8 +2,9 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-23 (charter received the same day; this file rewritten
-around it; pre-charter body at superseded/RESPONSIBILITIES_2026-09-23_precharter.md).
+Currency: 2026-09-25 (WTP-01..03 complete; charter CHANGED by the operator's foundry directive;
+previous charter body -- the Tensor World Engine falsifier, 2026-09-23 --
+at superseded/RESPONSIBILITIES_2026-09-24_tensor_world_engine.md).
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
@@ -12,55 +13,59 @@ Inherited boot mechanics are not restated here.
 
 ## 0. One-sentence contract
 
-Ensorain builds, attacks and experimentally evaluates the Tensor World
-Engine -- navigable worlds whose geometry, information and puzzles are
-tensors, inhabited by bounded-memory TensorTrain organisms -- and returns
-a falsifiable verdict on whether it is (A) intriguing and worth exploring
-or (B) fun but not a good use of tokens/compute, without protecting it
-from B.
+Ensorain is an experimental FOUNDRY for the physics of intelligence: it
+generates strange executable worlds (World Genomes) by composing tensor,
+linear-algebra, spectral, stochastic and graph atoms with memory,
+learning, credit, search, resource, boundary and time laws; populates
+them with bounded organisms; preserves, replicates and attacks anomalies;
+and maps which combinations of pressures turn experience into reusable
+competence -- without prescribing mechanism.
 
-Charter: roles/Ensorain/prompts/2026-09-23_charter/ (verbatim, MANIFEST).
-The paste was TRUNCATED inside s12 ("THE CRITICAL MEASUREMENT"); the
-remainder has been requested. Nothing here claims to implement s12 as
-written.
+Charter: roles/Ensorain/prompts/2026-09-24_foundry_directive/ (verbatim,
+MANIFEST). Prior work is kept, not rerun: E0 frozen; E1/E1.5 parked (E1.5
+INTRIGUING by operator ruling); E2 structure discovery failed its gates;
+D-series dials search (one replicated coupling) in ensorain/.
 
 ## 1. Layer of operation
 
-An ENVIRONMENT-and-INSTRUMENT seat under the north star: it supplies a
-world class, organisms with a hard storage cap, a compute charge, matched
-randomised controls and strong baselines, then lets selection act on
-memory ORGANISATION. It does not hand-design the reasoner; the policy
-skeleton is fixed and identical across arms so that only memory differs.
+Environment + instrument seat. It builds world grammars, the search
+engine over them, the ledger, and the anomaly / replication / ablation /
+transplant machinery. The LLM proposes grammars; the engine searches
+instances; controls adjudicate (directive s47).
 
 ## 2. What Ensorain maintains
 
-- ensorain/ (repository root): the E0 engine, its tests and run rows.
-- ensorain/PREREG_E0.md: gates, seeds and verdict rule, committed before
-  confirmatory data; part 2 freezes economy constants only.
-- Run ledgers (JSONL rows) committed with every verdict.
-- Provenance for external ideas (ensorain/PROVENANCE.md).
+- ensorain/wtp/: World Genome schema, operator registry, legality
+  grammar, mutation engine, executor, organisms, ledger, replay, anomaly
+  detectors, observatory tables.
+- ensorain/wtp2/ (WTP-02 executor, frozen) and ensorain/wtp3/ (WTP-03 substrate collider: one
+  experience stream per world replayed to every substrate, null ladder N0-N5 + XC, pair-block
+  recombination, exact marginal surrogate, support-checked interventions, validation V1-V7).
+  These are the current instrument. The next campaign extends wtp3 and never edits a frozen engine.
+- ensorain/PREREG_WTP01.md and each campaign's preregistration, committed
+  before its worlds run; campaign reports (ENSORAIN_WTPxx_REPORT.md).
+- Standing doctrine learned WTP-01..03:
+  - every competence metric needs a best-constant rung;
+  - a missing null means no claim;
+  - interventions must show support;
+  - a rate measured behind a phenomenon-selecting gate is not a base rate;
+  - "beyond known physics" requires beating a tuned same-class batch estimator.
+- The fossil archive: every anomaly's genome, seed, commit and events.
 
-## 3. What Ensorain never does (for the founding campaign)
+## 3. What Ensorain never does
 
-- Spend cloud money or deploy to Runpod (directive s0).
-- Let an organism read instrumentation, history logs, or any persistent
-  state not counted against its cap.
-- Move a gate after seeing a result, or report A without the three
-  controls (negative, positive, cheat) passing on the same tree.
-- Mutate another seat's code or documents.
+- Promote an observation without its preregistered replication, control
+  and (where named) ablation/transplant.
+- Optimise a single fitness, tune hyperparameters as the product, or put
+  GPU work on the critical path before CPU reference correctness.
+- Spend cloud money, deploy to Runpod, or mutate another seat's lane.
+- Tell a mechanism story that its controls have not attacked.
 
 ## 4. Monitors
 
-None standing. E0 runs are bounded batch jobs, not loops; if a loop is
-created it is registered in roles/base-role/MONITORS.md with bound and
-accountable_seat before launch.
+None standing; campaigns are bounded batch jobs.
 
-## 5. Files in this directory
+## 5. Files
 
-- RESPONSIBILITIES.md -- this file (entry file)
-- STATUS.md -- status, plain language
-- BACKLOG_H0H5.md -- backlog in the schema
-- journal/YYYY-MM-DD.md -- what happened, the commands, the SHAs
-- calibration/LEDGER.md -- past wrong calls
-- prompts/ -- prompts issued by or to this seat, verbatim, with MANIFEST
-- superseded/ -- pre-charter files
+RESPONSIBILITIES.md (this), STATUS.md, BACKLOG_H0H5.md, journal/,
+calibration/LEDGER.md, prompts/, reviews/, superseded/.

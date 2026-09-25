@@ -1,70 +1,82 @@
-# Nestor status
+# Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-23, written at the close of the session that finished the Cycle-9
-repair pass, immediately before an operator-requested context reset.
+Currency: 2026-09-25 ~07:20 EDT (pre-reboot save). Charter: budgeted autonomous scientific loop
+(RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
+(`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
+claim (E-6..E-10). Consolidated report:
+`campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
 
-**seat state:** PRODUCTIVE. Not blocked. Holding at a deliberate stop before the
-Cycle-9 freeze, awaiting operator review of the strategy.
+## RESUME AFTER REBOOT (2026-09-25, operator directive `prompts/2026-09-25_reboot_resume/`)
 
-**what it asserts:** PRESENT, ACTIVE, PRODUCTIVE (two campaigns closed or frozen, one
-built and gated), VALID for the claims in `FINDINGS.md` and for nothing else.
+Bootstrap: read RESPONSIBILITIES.md section 0-2, this file, then `python graph.py open`.
+Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forensics-2026-09-23`
+(merged to main at the reboot save).
 
-**workspace:** worktree `nestor-sidequest-graphworld`, branch
-`nestor/sidequest-graphworld-2026-09-14`. Merged to `main` on 2026-09-23.
+1. **X-DONOR-SWAP was mid-flight at the save** (44/96 runs at 07:17; ~15 min remaining). Check
+   `campaigns/c9x-explore-2026-09-24/x_donor_swap/run.log` for an `EXIT` line. If absent (the reboot
+   killed it), resume: `cd campaigns/c9x-explore-2026-09-24/x_donor_swap && python run_ds.py`
+   (it skips finished runs; its per-cell assay rates are recomputed, deterministic). Prefer a
+   one-shot schtask (template: any `launch_*.cmd` pattern in STATUS history; task NestorDS exists,
+   disabled - `schtasks /Change /TN NestorDS /ENABLE`, `/Run`, then `/DISABLE`).
+2. Record its result: graph node X-DONOR-SWAP (declared classification in `run_ds.py`), FINDINGS
+   E-10 tail, CAMPAIGN_REPORT section 3 item 5, commit + push.
+3. Next branches (charter: SIGNAL -> CONFIRM; null -> localize/targeted/orthogonal):
+   - if SIGNAL (competent donor runs away in foreign cells): C-DONOR-SWAP, fresh frozen confirm.
+   - if CLEAN_NULL: localize which cell factors block a competent donor (representation, pressure).
+   - open question worth a child: 7ae3 copies only from tape side 1 (runs second) - why, and does
+     side asymmetry matter in the world?
+4. Budget: window ends 2026-09-26 06:47 EDT (48 h from 09-24 06:47), <= 12 workers, 20% reserve.
+   Whether the reboot downtime counts against it is an OPEN operator question (below).
 
----
+### Questions pending for the operator (ask these right after bootstrapping)
+- Q1 Budget clock: does the reboot/upgrade downtime count against the 48 h window (ends
+  2026-09-26 06:47), or should the window be extended by the downtime?
+- Q2 Housekeeping, no decision needed unless you object: eight disabled one-shot schtasks
+  (NestorCCM, NestorDC, NestorTK, NestorDK, NestorSR, NestorAT, NestorCAT, NestorDS) remain; I will
+  delete them after X-DONOR-SWAP completes.
+- FYI (not my lane, not worked around): Harmonia reports test_base_role RED on origin/main
+  (Nyx manifest mismatch; Ananke MONITORS row); the merge of this branch does not touch it.
 
-## Read this first after a reset
+## Budget ledger (seat decision)
 
-`roles/Nestor/RESPONSIBILITIES.md` section 0 lists the bootstrap order. Short version:
-
-1. `FINDINGS.md` -- what is known, what was withdrawn.
-2. `prompts/2026-09-23_next_sequence/DIRECTIVE_VERBATIM.md` -- the operator's words.
-3. `campaigns/z80atlas-verify-2026-09-22/STRATEGY_POST_RESET.md` -- the plan, **proposed
-   not approved**.
-
-## Where each campaign stands
-
-| campaign | state |
+| item | value |
 |---|---|
-| `cw01-2026-09-17` | cycles 1-8 closed. Cycle 8 measured accessibility: answer-before-read plateau, 4-edit valley, a single witness fixes in 10 of 12 runs, partial seeded gateway |
-| `z80atlas-2026-09-19` | **FROZEN 2026-09-22.** 23,471 runs, 0 failed, 0 voided. Observatory is read-only forever. `REPORT.html` rev 2 passes its own audit, 40 checks, 0 failed |
-| `z80atlas-verify-2026-09-22` | **BUILT, GATED, NOT FROZEN, NOT LAUNCHED.** Repairs P-1..P-10 in, five gates exit 0, calibration 10 of 10, manifest 252 bundles / 752 runs |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 23.5 h left at 07:20 on 09-25) |
+| concurrency cap | 12 workers |
+| reserve | 20% |
+| external spend | none |
 
-## The stop line
+## Done
 
-No grammar, manifest or protocol hash is written into the Cycle-9
-`PREREGISTRATION.md`. No production observatory exists. Calibration output is named
-`CALIBRATION_PREFREEZE.json` so it cannot be mistaken for the freeze gate having passed.
+- **C9 inner experiment (frozen 5819bc6d)**: 1,200/1,200 runs, audit PASS. After mining: H1
+  INVALID (C9-D16), repaired and rerun as **C9-H1R: COST_INTERACTION_ONLY** (confirmatory). H2:
+  weak signal in specimen 7ae3. H3: retired structurally. See
+  `campaigns/z80atlas-verify-2026-09-22/observatory/C9_OUTCOME_AND_ADDENDUM.md`.
+- **Confirmed (CONFIRM lane):**
+  - **C-SELFLOC**: self-location gates non-pair heredity (13/36 vs 0/36).
+  - **C-ENERGY**: the depth-1 wall is newborn starvation (20/40 vs 4/40).
+  - **C-DENSE**: spontaneous non-pair heredity appears once world-op encodings are 1 byte
+    (13/40 vs 0/40).
+  - **C-ABLATE**: under dense encodings, self-location and search remain necessary.
+  - **C-RUNAWAY**: the recombination splice prevents runaway pair-tape heredity
+    (7/150 vs 0/150, p = 0.007).
+  - **C-ATOMIC C1**: tape-write erosion stops pair-tape heredity in 7ae3's cell (46/80 vs 1/80); C2 generality NOT confirmed.
+  - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
+- Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
+- Chain since C-CRITICAL-MASS: X-DOSE-CURVE null (independent founders) -> X-TICKET (copying stops by ~epoch 12) -> X-DECAY (in-place mutation minor) -> X-STALL (members sterile) -> X-STERILE (fertile at birth) -> X-STALL-F0 (tape-write erosion ~25x nominal) -> X-ATOMIC SIGNAL (36/64 vs 3/64 runaways).
+- Earlier EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64), confirmed by C-CRITICAL-MASS; X-DOSE-CURVE CLEAN_NULL (founders are independent ~13% tickets, no critical mass).
 
-**Freeze and launch require an operator instruction and must never be inferred.**
+## Running
 
-## Next executable action
+| experiment | lane | what |
+|---|---|---|
+| X-DONOR-SWAP | EXPLORE | 7ae3 genome in 11 foreign panel cells + own-cell control, ATOMIC, 8 seeds each; schtask NestorDS; 44/96 at 07:17 |
 
-Begin **S1**, the bounded forensic mining pass, per section 2 of the strategy. Three
-products, no general descriptive report:
+Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
+committed, before it runs.
 
-- **A** the replication failure funnel for every non-`PAIR_EXECUTION` random-start run,
-  which decides the shape of the exploratory campaign;
-- **B** H4 extinction forensics on `64dea50f417efb02-s1203-tL-a0` and its control,
-  which decides whether enlarging H4 is worth buying;
-- **C** deeper mining of the 1,031, which calibrates P-11's threshold.
+## Rules learned this campaign
 
-Known obstacle to name before starting A: two funnel steps -- "executed self-location"
-and "attempted BIRTH" -- are **not separately counted** in the frozen record;
-`world_op_calls` is a single total. Either re-run a sample with added counters into a
-**new** directory, or report a partial funnel. Do not discover this mid-analysis.
-
-## Open questions carried to the operator
-
-1. The Cycle-9 manifest uses 11% of its envelope. The directive resolves this: enlarge
-   H2, H3 and H4 unevenly, leave H1, target 5-8 wall hours.
-2. C9-D01 scope: H2 is a pair-tape propagation test, because all 1,031 admissible
-   spontaneous replicators are `PAIR_EXECUTION`. Confirmed as the operator's own reading
-   in the 2026-09-23 directive.
-3. H4's endogenous arm ran 4x faster than its control in smoke. Product B resolves it.
-
-## Monitors owned or fed
-
-None. No row in `roles/base-role/MONITORS.md`. No background process is running; the
-72-hour campaign completed and its scheduled task is finished.
+- Never edit a `.py` in `z80atlas-verify-2026-09-22`: `verify_freeze` would refuse.
+- If a job swaps a module, use one job per process (X-DENSE-OPS).
+- Identical arms are a defect signature, not a null (C9-D16).

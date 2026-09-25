@@ -60,6 +60,8 @@ def select(which: str, hist: Path, runs: dict, fams: dict, n: int) -> list:
         endo = ("ENDOGENOUS_COPY", "ENDOGENOUS_PARTIAL", "OVERWRITE", "CONSTRUCTIVE", "PAIR_EXECUTION")
         return sorted(r["run_dir"] for r in done if r["factor_vector"]["init"] == "random" and r["factor_vector"]["reproduction"] in endo
                       and "-t_" not in r["run_id"] and r["signals"]["extinct_epoch"] is None)
+    if which == "seeded_moat_advantage":                                       # FORENSIC-MOAT-01 (MOAT_LEDGER.json): the complete set, no sampling
+        return sorted(r["run_dir"] for r in done if r["factor_vector"]["init"] == "seeded_replicator" and "moat_advantage" in (r.get("flags") or {}))
     if which == "witness_sample":                                              # fixed-seed random sample of moat_advantage runs, per init
         rng = random.Random(20260923); out = []
         for init in ("seeded_replicator", "random"):
@@ -79,7 +81,11 @@ def main(argv=None) -> int:
     with ProcessPoolExecutor(a.workers) as ex:
         futs = {ex.submit(replay_one, str(hist), rd): rd for rd in todo}
         for fu in as_completed(futs):
-            r = fu.result(); results.append(r)
+            r = fu.result()
+            if a.set == "seeded_moat_advantage":                              # keep the crossing ledger, drop the bulky replication records
+                pv = r["provenance"]
+                r["provenance"] = {k: pv[k] for k in ("founders", "first_crossing", "first_clean_crossing", "births_endo_clean", "births_endo_inserted")}
+            results.append(r)
             print(json.dumps({k: r[k] for k in ("run_id", "admitted", "wall_s", "repaired_spontaneous_replication", "moat_crossed")}), flush=True)
     results.sort(key=lambda r: r["run_dir"])
     (OUT / ("REPLAY_%s.json" % a.set)).write_text(json.dumps({"set": a.set, "n": len(results), "admitted": sum(r["admitted"] for r in results),

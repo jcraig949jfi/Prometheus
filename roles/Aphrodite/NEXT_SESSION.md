@@ -1,150 +1,113 @@
 # Aphrodite -- pick-up state for the next session
 
-Written 2026-09-22 at the end of Tier 3C, for a session that will return
-to pick up upgrades. READ THIS SECOND, after STATUS.md.
-
-THE STATE TO RECOVER, in the operator's words (2026-09-22):
-
-  "Aphrodite has demonstrated transferable local search leverage and
-   experimentally shown that a reusable schema can generalize across
-   unseen families, but has not yet demonstrated that the improver can
-   discover that abstraction itself."
-
-That last clause is THE ENTIRE SCIENTIFIC FRONTIER. Everything in
-section 2 is ordered to attack it and nothing else.
+Written 2026-09-25, before an operator-requested reset. READ THIS FIRST,
+then STATUS.md, then journal/2026-09-23.md (it covers 09-23 to 09-24, every
+error in full). The previous handoff (2026-09-22) is
+superseded/NEXT_SESSION_2026-09-22.md.
 
 --------------------------------------------------------------------------
-1. WHERE THE SCIENCE STANDS (one paragraph)
+1. WHERE THE SCIENCE STANDS (dispositions, never pooled)
 --------------------------------------------------------------------------
 
-The local engine works end to end: lineages evolve, artifacts freeze and
-hash, fresh recipients receive them through a qualified membrane, and a
-hostile post-freeze tribunal judges the results. Four dispositions stand:
+  DIRECT_COMPETENCE_REUSE             NO          slice 3
+  STRUCTURAL_SEARCH_LEVERAGE          YES         slice 4
+  TRANSFERABLE_SEARCH_LEVERAGE        YES_LOCAL   Tier 3B 47x, Tier 3C 345x
+  BOUNDED_RECURSIVE_SELF_IMPROVEMENT  NO          Tiers 3A-3C (old criterion)
+  GLOBAL_BEHAVIOR_IDENTITY            FAIL        permanent (S1 runs 1-3)
+  CAMPAIGN_RELEVANT_IDENTITY          PASS        class certificates (cert.py)
+  FAIR_META_SELECTION (S2)            PASS
+  ENDOGENOUS_ABSTRACTION (S3)         YES         donor derived + selected (acc + {H})
+  ABSTRACTION_TRANSPLANT (S4)         YES         ACCEPTED by operator 2026-09-24
+  BOUNDED_RSI (operator)              NOT YET ESTABLISHED
+  AMENDMENT 15 (G1->G2)               BRSI = NO, INTERPRETATION = UNTESTABLE_CATALOG
+                                      (no donor ran; not evidence either way)
+  AMENDMENT 16 (4-h campaign)         returned early for TIME:
+      catalogs A/B FOUNDRY_INCOMPLETE_TIME; E1/E2 UNTESTABLE; E3 UNTESTABLE;
+      E4 S1_NECESSITY = INCONCLUSIVE (WHOLE 3/3, BODY_ONLY 1/3; F3 was not
+      fully adversarial -- my prereg flaw); cloud $0 (no credentials)
 
-    DIRECT_COMPETENCE_REUSE          NO        (slice 3)
-    STRUCTURAL_SEARCH_LEVERAGE       YES       (slice 4, equal expressivity)
-    TRANSFERABLE_SEARCH_LEVERAGE     YES_LOCAL (Tier 3B 47x, Tier 3C 345x)
-    BOUNDED_RECURSIVE_SELF_IMPROVEMENT  NO     (Tiers 3A, 3B, 3C)
-
-Nothing here is Campaign 1 evidence. Campaign 1 remains FROZEN and UNRUN.
-Tier 3A, 3B and 3C are never pooled with each other or with anything else.
-
---------------------------------------------------------------------------
-2. THE CAUSAL SEQUENCE (operator ruling, 2026-09-22 -- REPLACES my order)
---------------------------------------------------------------------------
-
-I had put "make the schema an arm" first. THE OPERATOR REVERSED THIS, and
-the reason is the point of the whole next slice:
-
-  Promoting `(acc + {H})` from lucky sham to treatment hands Aphrodite an
-  answer that SHE FOUND BY RETROSPECTIVE INSPECTION of her own controls.
-  That is a valid positive control. It CANNOT establish that the improver
-  learned the abstraction, which is the only open question.
-
-Each step needs an operator ruling before it runs; none is
-self-authorised. The steps are ordered, not a menu.
-
-S1  FIX THE ABSTRACTION UNIT FIRST.
-    Whole-program semantic normalisation / equivalence, so that
-    compensating factorisations COLLAPSE BEFORE abstraction is attempted.
-    `acc - v^2` with final `first - acc` and `acc + v^2` with final
-    `acc + first` must become one object. Until this holds, the donor is
-    abstracting over decomposition artifacts (INVARIANT 5), and every
-    downstream result is uninterpretable.
-
-S2  FIX PAIRED SEEDS.
-    So that library selection measures LIBRARY QUALITY rather than RNG.
-    Tier 3C scored two byte-identical libraries at 13,479 and 51,018.
-    Until this holds, the donor's own selection step carries no
-    information, and step S3 cannot be read.
-
-S3  HAVE THE DONOR MECHANICALLY DERIVE A SCHEMA FROM ITS OWN SUCCESSES.
-    With S1 and S2 in place, anti-unification over whole-program classes
-    should be able to produce a hole-bearing schema endogenously. Whether
-    it does is the experiment.
-
-S4  ONLY THEN MAKE THE DERIVED SCHEMA THE TREATMENT.
-    The treatment arm carries the schema THE DONOR DERIVED, not one the
-    seat selected by looking at results.
-
-S5  KEEP `(acc + {H})` AS A SENSITIVITY / POSITIVE CONTROL.
-    It proves what success should look like -- it solved both
-    unseen-body families 16/16 -- WITHOUT being allowed to count as
-    endogenous abstraction. It is the yardstick, never the claim.
-
-Supporting requirements, to be satisfied wherever they land in the above:
-
-S6  A VALIDATE SET THAT SURVIVES QUALIFICATION. Declare more validate
-    families than needed, so generator exclusions leave enough to measure
-    with. Tier 3C's collapsed to one family and the cross-validation
-    stopped working.
-
-S7  DIFFICULTY CONTROL ON TRANSFER FAMILIES. Two of three unseen-body
-    families were solvable only by the two lucky shams. Establish that
-    SOME arm can solve a family before using it to test transfer.
-
-S8  CAMPAIGN 1 REMAINS BLOCKED on contracts from Archaeon (#452/#492/#534),
-    Harmonia (#453/#490/#533) and Vivarium (#454/#491/#532), and on
-    benchmark receipts from Nestor (#471/#474) and Archaeon (#472/#475).
-    Unchanged since 2026-09-21.
+The operator's S4 review (2026-09-24), in short: it is a real positive for
+endogenous derivation plus causal transplant INSIDE THIS DSL, and recursion is
+not established. The catalog partly funnelled toward (acc + {H}) (Q1).
+Condition 7 must be rewritten before reuse -- no grandfathering (Q3; done in
+AMENDMENT 15 R3). Positive-control admission is to be removed in future
+(done: treatment-blind admission).
 
 --------------------------------------------------------------------------
-3. GATES AND DISCIPLINES THAT MUST NOT REGRESS
+2. WHERE TO RESUME THE SCIENCE
 --------------------------------------------------------------------------
 
-G1  THE CONFORMANCE GATE (engine/conformance.py) must be GREEN before any
-    run. 21,600 differential comparisons, search evaluator vs emitted
-    artifact evaluator, over normal / boundary / overflow / failure
-    values. Four separate slices were damaged before this existed.
-    Re-run it and report the number with every result.
+The live question is exactly one: does the inherited G1 abstraction help
+produce a NEW, semantically distinct abstraction that improves a fresh G2
+relative to G1 (AMENDMENT 15 chain, R1-R5)? It has NEVER been tested: both
+attempts died at family supply.
 
-G2  GENERATOR QUALIFICATION, not single-sample qualification. 200
-    independent draws per candidate development size; grow the battery
-    until the 95% upper bound on surviving wrong semantic classes is
-    < 0.05; REJECT the family otherwise. This took false positives from
-    4.688 per recipient to ZERO.
-
-G3  SEMANTIC IDENTITY, never source-string identity, anywhere. The layer
-    is engine/semantics.py with fixtures in engine/tests/test_semantics.py.
-    Source strings are provenance only.
-
-G4  PID-VERIFIED PROCESS TERMINATION. TaskStop does NOT kill the detached
-    python child. Verify with Get-CimInstance / Get-Process that the PID
-    is gone. Two orphans once survived for 18 hours at 3.8 GB and
-    contaminated wall-clock across two slices.
-
-G5  WALL-CLOCK FROM SLICE 4 AND TIER 3A IS PERMANENTLY CONTAMINATED and
-    is marked so in their packets. Charge-based endpoints are unaffected;
-    they are the primary endpoints in both amendments.
+Before any retry (needs a NEW preregistration and operator authorisation):
+  (1) FIX THE FOUNDRY: make Q2 calibration exact-fast (bitmask agreement
+      masks over the 240-probe pool); checkpoint every evaluated draw to disk;
+      budget from a CONTENDED pilot, not a solo timing (wave 1 took 62 min for
+      112 draws, ~6% acceptance).
+  (2) DECIDE FEASIBILITY: in G4, the mul/fdiv/gcd/powr strata accepted 0/64
+      draws each. A 4-per-stratum quota may be infeasible -- itself a finding
+      about the G4 task space. Options: drop the per-stratum quota for a
+      global one, or measure acceptance per stratum first (cheap once Q2 is
+      fast).
+  (3) OPTIONAL: E4 again with three genuinely adversarial forced observation
+      sets, to turn S1_NECESSITY from INCONCLUSIVE into a verdict.
+  (4) The G5 (depth-3) ceiling probe stays conditional on valid G4 negatives.
 
 --------------------------------------------------------------------------
-4. WHERE THINGS LIVE
+3. OPEN QUESTIONS FOR THE OPERATOR
 --------------------------------------------------------------------------
 
-  engine/                   the local engine, all tiers
-    AMENDMENT_*.md          every frozen design, in order 2..11
-    conformance.py          G1, the standing gate
-    semantics.py            G3, layered identity
-    tier3b.py, tier3c.py    frozen catalogs + qualification
-    *_RESULTS_*.json        per-slice data, never edited after the fact
-    SLICE2B_VALIDITY_SCAR.md  an impaired result, kept reproducible
-  pivot/APHRODITE_ENGINE_REVIEW_*.md   ten review packets, 1..10
-  library/METHODOLOGY.md    standing invariants
-  library/THEORIES.md       T0-T10
-  science/campaign1/        the frozen prereg and its amendments
-  journal/2026-09-22.md     today, including every error in full
-
-  branch aphrodite/engine-2026-09-21, pushed. Worktree
-  C:\Prometheus-worktrees\aphrodite-base-role. Host M4.
+  Q-A  Authorise AMENDMENT 17 = the AMENDMENT 16 E1/E2 design, with the
+       foundry fixes of s2(1), and with the quota rule chosen under s2(2)?
+  Q-B  Per-stratum quota vs a global quota with mechanical diversity, given
+       that 4 of 7 G4 operator strata looked empty?
+  Q-C  Provide cloud credentials (RUNPOD_API_KEY in the environment; az login
+       plus FSv2 quota) so the acceleration canaries can run ($1 per
+       provider)? RunPod fasteval is the stronger candidate (~12x end to end
+       locally, exact).
+  Q-D  Re-run E4 with a corrected fully-adversarial F3?
+  Q-E  Or declare the engine line complete at S4 (the "stop" answer remains
+       first-class).
 
 --------------------------------------------------------------------------
-5. THE ONE SENTENCE TO REMEMBER
+4. REPORTS AND FROZEN DESIGNS (all under roles/Aphrodite/)
 --------------------------------------------------------------------------
 
-Before evolving reusable parts, define a representation in which "part"
-is invariant enough to mean something. Otherwise evolution learns
-decomposition artifacts rather than mechanisms.
+  pivot/APHRODITE_ENGINE_REVIEW_11_2026-09-24.md        S1-S4 chain packet
+  pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-24.md  4-h campaign
+  engine/AMENDMENT_12_2026-09-23.md + ADDENDUM_1/_2/_3  S1 and certification
+  engine/AMENDMENT_13_2026-09-23.md                     S2
+  engine/AMENDMENT_14_2026-09-23.md                     S3 + S4
+  engine/AMENDMENT_15_2026-09-24.md                     G1->G2 assay (frozen)
+  engine/AMENDMENT_16_2026-09-24.md                     4-h master prereg
+  Results: engine/S1_GATE_RUN{1,2,3}*, S1_LOCAL_GATE, S2_GATE, S3_ARTIFACT,
+    S4_RESULTS, T3E_*, G2_RESULTS, A16_DRAWS, A16_E4_RESULT (+ .log files)
+  Code: identity.py, cert.py, fair.py, tier3d.py, tier3e.py, run_s3s4.py,
+    run_g2.py, a16.py, a16_report.py, s1_gate.py, s1_local_gate.py, s2_gate.py
 
-(And separately, measured here and not assumed: an improver that gets
-better at searching without getting better at judging arrives at wrong
-answers sooner.)
+--------------------------------------------------------------------------
+5. APPARATUS FACTS TO REMEMBER
+--------------------------------------------------------------------------
+
+  - behavior_id is a PROVISIONAL BUCKET; any class that affects science
+    needs a cert.py certificate (fresh B_CERT + threshold-adversarial A(S)).
+  - Identity domain D_TASK_T3_v1 (lengths 2-60, 80, 150, 200; values 2-30;
+    query 1-97). Conformance covers the ceiling edges (B1_BOUNDARY).
+  - Emitter v2 (output ceiling guard) for everything from S2 on; v1 is kept
+    byte-identical for reproducing Tiers 3A-3C.
+  - Recipient.fresh() wipes a GLOBAL marker dir: every process pool must use
+    a per-worker MARKER_DIR (see run_s3s4._worker_init).
+  - Family names must contain no digits (prompts are parsed by regex).
+  - The host Python has no pytest (use a venv). Commit with
+    -c user.name=Aphrodite. Never `git pull` in C:\Prometheus. Verify every
+    stopped process by PID (TaskStop does not kill detached children).
+  - Acceleration branches (engineering only, merged to main 2026-09-25):
+    accel-azure-cpu (process pool, 480/480 exact) and accel-runpod
+    (fasteval, 1.16M evaluations exact, ~12x). NEITHER is science-eligible
+    until its cloud canary passes.
+
+Campaign 1 remains FROZEN and UNRUN (contracts from Archaeon, Harmonia and
+Vivarium, plus benchmark receipts from Nestor and Archaeon, still outstanding).

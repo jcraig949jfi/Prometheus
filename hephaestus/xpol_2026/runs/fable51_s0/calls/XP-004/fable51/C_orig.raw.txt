@@ -1,0 +1,225 @@
+Implementation below. Files: no repo write requested, so the class is delivered inline (drop into `forge_tools/reasoning_tool_nas_pragmatism.py` or wherever the forge collects candidates).
+
+```python
+"""ReasoningTool -- Neural Architecture Search x Pragmatism x Network Science.
+
+Mechanism: regex parses prompt and candidates into (subject, predicate, object,
+negated) triples over a fixed ontology.  Prompt triples form a directed premise
+graph per predicate; Floyd-Warshall closure (np.maximum) plus the modus_ponens /
+check_transitivity / dag_traverse primitives yield inferred edges.  Each candidate
+is treated as a NAS 'architecture' and scored by a fitness function:
+  explicit match + inferred bonus - contradiction penalty
+  + alpha * eigenvector centrality of touched nodes   (Pragmatist utility: a
+    claim is true insofar as it integrates with the knowledge network).
+Arithmetic primitives (bat_and_ball, modular_arithmetic, bayesian_update,
+all_but_n, fencepost_count, safe PEMDAS) provide a COMPUTED-answer channel.
+NCD is a <=10% tiebreaker.  confidence() is capped by _meta_confidence(), which
+inspects the PROMPT for presupposition, scope/pronoun ambiguity, false
+dichotomy, subjectivity, judgment-trap fallacies and information insufficiency.
+Score decomposition: primitives 0.65 / wiring (centrality+NAS) 0.25 / NCD 0.10.
+"""
+import re, zlib, ast, operator as op
+import numpy as np
+try:
+    from forge_primitives import (modus_ponens, check_transitivity, dag_traverse,
+        bayesian_update, bat_and_ball, modular_arithmetic, all_but_n,
+        fencepost_count, confidence_from_agreement, information_sufficiency)
+except Exception:  # keep runnable if the library is absent
+    modus_ponens = check_transitivity = dag_traverse = bayesian_update = None
+    bat_and_ball = modular_arithmetic = all_but_n = fencepost_count = None
+    confidence_from_agreement = information_sufficiency = None
+
+def _call(fn, *a):
+    if fn is None: return None
+    try: return fn(*a)
+    except Exception: return None
+
+_W = r"([a-z0-9][a-z0-9 '\-]*?)"
+_END = r"(?:[.,;!?]|$)"
+_PATS = [
+    (r"if " + _W + r",? then " + _W + _END, "implies"),
+    (_W + r" (?:is|are) (?:a|an) " + _W + _END, "is-a"),
+    (_W + r" (?:causes?|leads? to|results? in|because of) " + _W + _END, "causes"),
+    (_W + r" (?:is|are)? ?(?:greater|larger|bigger|more|taller|older|heavier|faster) than " + _W + _END, "greater-than"),
+    (_W + r" (?:is|are)? ?(?:less|smaller|fewer|shorter|younger|lighter|slower) than " + _W + _END, "less-than"),
+    (_W + r" (?:comes? |happens? |occurs? )?(?:before|precedes?) " + _W + _END, "before"),
+    (_W + r" (?:comes? |happens? |occurs? )?(?:after|follows?) " + _W + _END, "after"),
+    (_W + r" (?:equals?|=) " + _W + _END, "equals"),
+    (_W + r" (?:is|are|was|were) " + _W + _END, "is"),
+]
+_FLIP = {"less-than": "greater-than", "after": "before"}
+_ANTISYM = {"greater-than", "before", "causes", "implies"}
+_NEG = re.compile(r"\b(?:not|never|no|isn't|aren't|wasn't|don't|doesn't|cannot|can't)\b|n't\b")
+_NUM = re.compile(r"-?\d+(?:\.\d+)?")
+_OPS = {ast.Add: op.add, ast.Sub: op.sub, ast.Mult: op.mul, ast.Div: op.truediv,
+        ast.Pow: op.pow, ast.USub: op.neg, ast.Mod: op.mod}
+
+class ReasoningTool:
+    ALPHA = 0.2
+
+    def __init__(self):
+        self._cache = {}
+
+    # ---------------- parsing ----------------
+    def _triples(self, text):
+        out = []
+        for sent in re.split(r"(?<=[.;!?])\s+|\n", text.lower()):
+            sent = sent.strip()
+            for pat, pred in _PATS:
+                m = re.search(pat, sent)
+                if not m: continue
+                s, o = m.group(1).strip(), m.group(2).strip()
+                neg = bool(_NEG.search(s + " " + o)) or bool(_NEG.search(sent[:m.start(2)]))
+                s, o = _NEG.sub("", s).strip(), _NEG.sub("", o).strip()
+                if pred in _FLIP: s, o, pred = o, s, _FLIP[pred]
+                if s and o and s != o: out.append((s, pred, o, neg))
+                break
+        return out
+
+    # ---------------- premise graph (primitive channel) ----------------
+    def _graph(self, prompt):
+        if prompt in self._cache: return self._cache[prompt]
+        tr = self._triples(prompt)
+        nodes = sorted({x for t in tr for x in (t[0], t[2])})
+        idx = {n: i for i, n in enumerate(nodes)}; n = len(nodes)
+        expl, clos, A = {}, {}, np.zeros((n, n))
+        for s, p, o, neg in tr:
+            expl[(s, p, o)] = -1.0 if neg else (0.7 if p == "implies" else 1.0)
+            if not neg: A[idx[s], idx[o]] = 1.0
+        for p in {t[1] for t in tr}:
+            M = np.zeros((n, n))
+            for s, q, o, neg in tr:
+                if q == p and not neg: M[idx[s], idx[o]] = 1.0
+            for k in range(n):  # Floyd-Warshall closure via np.maximum
+                M = np.maximum(M, np.minimum(M[:, k:k+1], M[k:k+1, :]))
+            clos[p] = M
+        rel = [(s, o) for s, p, o, ng in tr if p == "greater-than" and not ng]
+        consistent = _call(check_transitivity, rel)
+        facts = {s for s, p, o, ng in tr if p == "is" and not ng}
+        derived = _call(modus_ponens, [(s, o) for s, p, o, ng in tr if p == "implies"], facts)
+        derived = set(derived) if isinstance(derived, (set, list, tuple)) else set()
+        c = np.ones(n) / max(n, 1)   # eigenvector centrality, 10 power iterations
+        for _ in range(10):
+            c = A.T @ c + 0.5 * A @ c + 1e-9
+            c = c / (np.linalg.norm(c) or 1.0)
+        g = dict(tr=tr, idx=idx, expl=expl, clos=clos, cent=c, derived=derived,
+                 consistent=(consistent is not False), edges=[(s, o) for s, p, o, ng in tr if not ng])
+        self._cache[prompt] = g
+        return g
+
+    def _fitness(self, g, cand):
+        ct = self._triples(cand)
+        if not ct: return 0.0, "no triples parsed"
+        idx, s_m, s_i, s_n, s_u, notes = g["idx"], 0.0, 0.0, 0.0, 0.0, []
+        for s, p, o, neg in ct:
+            w = g["expl"].get((s, p, o))
+            if w is not None:
+                agree = (w > 0) != neg
+                s_m += abs(w) if agree else 0.0; s_n += 0.0 if agree else -1.0
+                notes.append(("match " if agree else "CONTRADICTS ") + f"{s}-{p}-{o}")
+            elif s in idx and o in idx:
+                M = g["clos"].get(p)
+                fwd = bool(M is not None and M[idx[s], idx[o]] > 0)
+                reach = _call(dag_traverse, g["edges"], s)
+                fwd = fwd or (isinstance(reach, (set, list, tuple)) and o in reach and p in _ANTISYM)
+                back = bool(M is not None and p in _ANTISYM and M[idx[o], idx[s]] > 0)
+                if fwd: s_i += -0.5 if neg else 0.5; notes.append(f"inferred {s}-{p}-{o}")
+                if back: s_n += -0.75 if not neg else 0.0; notes.append(f"reverse of premise order {s}-{p}-{o}")
+            if p == "is" and o in g["derived"] and not neg: s_i += 0.5
+            for v in (s, o):
+                if v in idx: s_u += self.ALPHA * float(g["cent"][idx[v]])
+        return s_m + s_i + s_n + s_u, "; ".join(notes) or "nodes unseen in premises"
+
+    # ---------------- computation channel ----------------
+    def _compute(self, p):
+        p = p.lower(); nums = [float(x) for x in _NUM.findall(p)]
+        m = re.search(r"(?:what is|compute|calculate|evaluate|solve)[:\s]+([\d\s+\-*/().^%]+\d)", p)
+        if m:
+            try:
+                def ev(n):
+                    if isinstance(n, ast.Constant): return float(n.value)
+                    if isinstance(n, ast.BinOp): return _OPS[type(n.op)](ev(n.left), ev(n.right))
+                    if isinstance(n, ast.UnaryOp): return _OPS[type(n.op)](ev(n.operand))
+                    raise ValueError
+                return ev(ast.parse(m.group(1).replace("^", "**").strip(), mode="eval").body), "pemdas"
+            except Exception: pass
+        if re.search(r"(?:remainder|mod(?:ulo)?)", p) and len(nums) >= 2:
+            r = _call(modular_arithmetic, int(nums[0]), 0, int(nums[1]))
+            return (float(r) if isinstance(r, (int, float)) else nums[0] % nums[1]), "modular"
+        if re.search(r"more than the|costs? .* more", p) and re.search(r"total|together|cost", p) and len(nums) >= 2:
+            r = _call(bat_and_ball, max(nums[:2]), min(nums[:2]))
+            return (float(r) if isinstance(r, (int, float)) else (max(nums[:2]) - min(nums[:2])) / 2), "bat_and_ball"
+        m = re.search(r"all but (\d+)", p)
+        if m and nums:
+            r = _call(all_but_n, int(nums[0]), int(m.group(1)))
+            return (float(r) if isinstance(r, (int, float)) else float(m.group(1))), "all_but_n"
+        if re.search(r"(?:posts?|poles?|trees?).*(?:every|each|apart)", p) and len(nums) >= 2 and nums[1]:
+            r = _call(fencepost_count, int(nums[0] // nums[1]))
+            return (float(r) if isinstance(r, (int, float)) else nums[0] // nums[1] + 1), "fencepost"
+        if re.search(r"(?:prevalence|base rate|of the population|has the disease)", p) and "%" in p and len(nums) >= 3:
+            pr, se, fp = [x / 100.0 for x in nums[:3]]
+            r = _call(bayesian_update, pr, se, fp)
+            return (float(r) if isinstance(r, (int, float)) else pr * se / (pr * se + (1 - pr) * fp)), "bayes"
+        if re.search(r"(?:which|what) (?:number |one )?is (?:larger|bigger|greater|smaller|less|smallest|largest)", p) and len(nums) >= 2:
+            f = min if re.search(r"smaller|less|smallest", p) else max
+            return f(nums), "compare"
+        return None
+
+    def _ncd(self, a, b):
+        za, zb = len(zlib.compress(a.encode())), len(zlib.compress(b.encode()))
+        return (len(zlib.compress((a + " " + b).encode())) - min(za, zb)) / max(za, zb, 1)
+
+    # ---------------- metacognition ----------------
+    def _meta_confidence(self, prompt):
+        p, flags = prompt.lower(), []
+        q = p.split("?")[0].split(".")[-1] if "?" in p else p
+        if re.search(r"have you (?:stopped|quit|ceased)|why (?:did|does|has|is) [^?]*(?:fail|stop|quit|wrong|worse)|still \w+ing\?", p): flags.append("presupposition")
+        if re.search(r"\b(?:every|each|all)\b[^.?]*\b(?:a|an|some)\b", p) and re.search(r"same|which|how many|the \w+ (?:is|was)", q): flags.append("scope ambiguity")
+        if re.search(r"\b\w+ (?:told|said to|asked|informed) \w+ (?:that )?(?:he|she|they) ", p) and re.search(r"\bwho\b", q): flags.append("pronoun ambiguity")
+        if re.search(r"\beither\b[^.?]*\bor\b", p) and not re.search(r"only (?:two|these)|exactly", p): flags.append("false dichotomy")
+        if re.search(r"\b(?:best|worst|favou?rite|most beautiful|greatest|nicest)\b", p) and not re.search(r"by |according to|in terms of|measured", p): flags.append("subjectivity")
+        if re.search(r"already (?:spent|invested|paid)|sunk|survivor|(?:those|ones) (?:that|who) (?:survived|returned|succeeded)|regress|\bvalid\b.*\bsound\b|\bsound\b.*\bvalid\b|strong(?:er)? argument", p): flags.append("judgment trap")
+        g = self._graph(prompt)
+        unknowns = [w for w in re.findall(r"[a-z]{4,}", q) if w not in p.replace(q, "") and w not in {"which", "what", "does", "true", "false", "following", "must", "then"}]
+        suff = _call(information_sufficiency, unknowns, g["tr"])
+        if (suff is False or (suff is None and len(unknowns) > 3)) and self._compute(prompt) is None: flags.append("insufficient information")
+        if not g["consistent"]: flags.append("inconsistent premises")
+        return (0.2 if flags else 1.0), flags
+
+    # ---------------- public API ----------------
+    def evaluate(self, prompt, candidates):
+        g, comp, rows = self._graph(prompt), self._compute(prompt), []
+        for c in candidates:
+            fit, why = self._fitness(g, c)
+            cn = [float(x) for x in _NUM.findall(c)]
+            cs = 0.0 if comp is None else (1.0 if any(abs(x - comp[0]) < 1e-6 for x in cn) else (-0.5 if cn else 0.0))
+            wiring = np.tanh(fit) * 0.5 + 0.5           # NAS fitness incl. centrality utility
+            prim = 0.5 * (np.tanh(fit - self.ALPHA * 0.1) * 0.5 + 0.5) + 0.5 * (cs * 0.5 + 0.5)
+            score = 0.65 * prim + 0.25 * wiring + 0.10 * (1.0 - self._ncd(prompt, c))
+            rows.append({"candidate": c, "score": round(float(score), 4),
+                         "reasoning": f"graph fitness={fit:.2f} ({why}); computed={comp}; numeric match={cs:+.1f}"})
+        return sorted(rows, key=lambda r: -r["score"])   # NAS selection: keep max-fitness architecture
+
+    def confidence(self, prompt, answer):
+        cap, flags = self._meta_confidence(prompt)
+        g, comp = self._graph(prompt), self._compute(prompt)
+        fit, _ = self._fitness(g, answer)
+        cn = [float(x) for x in _NUM.findall(answer)]
+        if comp is not None and cn:
+            base = 0.92 if any(abs(x - comp[0]) < 1e-6 for x in cn) else 0.08
+        elif fit < 0: base = 0.12
+        elif fit > 0:
+            agree = _call(confidence_from_agreement, [min(fit, 1.0), 0.6])
+            base = min(0.85, 0.5 + 0.3 * min(fit, 1.0)) if not isinstance(agree, (int, float)) else min(0.85, float(agree))
+        else: base = 0.25   # no structural parser matched: honest uncertainty
+        return float(max(0.02, min(base, cap)))
+```
+
+Notes on the wiring (why this is the concept triple and not three primitives glued together):
+
+- **Network Science**: the premise graph is closed per predicate with Floyd-Warshall (`np.maximum`/`np.minimum`), and eigenvector centrality is computed by 10-step power iteration. `check_transitivity` and `dag_traverse` are used as independent cross-checks of the same reachability, so an inconsistent premise set (cycles in `greater-than`) lowers `_meta_confidence`.
+- **Pragmatism**: the `ALPHA * centrality` term rewards candidates whose nodes are hubs in the premise network — truth-as-integration. `modus_ponens`-derived facts count as inferred (0.5) rather than explicit (1.0), so the tool never claims a derived fact with the same weight as a stated one.
+- **NAS**: `evaluate` is a fitness-and-select loop; the decomposition is fixed at primitives 0.65 / wiring 0.25 / NCD 0.10, and the arithmetic primitives (`bat_and_ball`, `modular_arithmetic`, `bayesian_update`, `all_but_n`, `fencepost_count`) are the only path to confidence > 0.9.
+- **Epistemic honesty**: `_meta_confidence` returns 0.2 on presupposition, scope/pronoun ambiguity, false dichotomy, subjectivity, the judgment-trap family (sunk cost, survivorship, regression, validity-vs-soundness, argument strength), `information_sufficiency` failure, and inconsistent premises; `confidence()` caps on it and returns 0.25 when nothing parses.
+
+Falsification note (per the program's standard): I have not executed this against the Tier A/B battery — it is a deterministic candidate, not a validated result. The known weak edges are the `_PATS` regexes (English-surface only; "X is Y" catches a lot of non-relational sentences) and the `information_sufficiency` heuristic when the primitive is absent. Run it against the NCD floor before promoting anything.

@@ -1,0 +1,133 @@
+================================================================================
+REVIEW PACKET -- Ares W4 hidden-regime fossil reading (ten lineages)
+-- Mechanism Archaeology Pipeline, Nyx (Chop Shop), 2026-09-25
+Commit of record: this commit. Asked in comms #518, #535, #538 (Ares).
+Author: Nyx[gandalf-226cd218] (M3/GANDALF)
+Invoked by: standing order (review-packet after substantial work).
+================================================================================
+
+0. WHAT THIS PACKET IS
+   Ares handed this seat a frozen evolved organism (W4 hidden regime: a 3-step
+   cue, no reward channel, late-life accuracy 1.00 for both regimes) and asked
+   four things: describe before naming; the smallest sufficient sub-circuit;
+   atlas match or novelty; a cheaper equivalent the GA missed. Then ten
+   lineages. This packet records the reading, the apparatus, two predictions
+   made before their runs, and what a reviewer should try to break.
+   CONFLICT OF INTEREST: none on the organism (Ares evolved it, I did not
+   touch ares/). The reading is mine and unadjudicated.
+
+1. CONTEXT
+   Cycle-0 Ares named the seed-3 carrier "GATE+MAX pair" and asked for its
+   reading. Cycle-1 found the pair rediscovered 0/7 times, the carrier a
+   self-loop in 6/10 and a longer cycle in 4/10, keep used 0/10. Cycle-2
+   found that the substrate's designed carrier (keep) loses to recurrence
+   because its viable region is a sliver, measured on hand-wired organisms.
+   The seat owed the reading for six days.
+
+2. THE QUESTIONS THIS WORK ANSWERS
+   Q1 What does the seed-3 structure hold and gate on?
+   Q2 Smallest sufficient sub-circuit?
+   Q3 Atlas match or novelty?
+   Q4 A cheaper equivalent the GA missed?
+   Q5 What is invariant across ten lineages that Ares's op-signature missed?
+
+3. WHAT WAS DONE (files)
+   nyx/readings/ares_w4_reading.py           the whole apparatus, 4 parts, deterministic
+   roles/Nyx/reports/ARES_W4_READING_2026-09-25.md       the reading (comms body)
+   roles/Nyx/reports/ARES_W4_READING_2026-09-25_run.txt  full run log, 228 lines
+   roles/Nyx/STATUS.md, RESUME_2026-09-25.md, journal/2026-09-25.md   records
+   Nothing under ares/ or nyx/atlas/ was modified. Atlas out/ churn discarded.
+
+4. RESULTS, BY QUESTION
+   Q1  A three-node ring 13 -> 7 -> 15 -> 13 (MAX, GATE, OUTPUT 1), loop gain
+       3.92 per tick, bistable through the +-8 value clip. Regime 0 (cue -1):
+       ring at (8, 7.5, 8) from t=2. Regime 1 (cue +1): ring at the rectifier
+       floor (-1.56, -0.76, -2.7). Output 1 IS ring node 15; the action is
+       argmax(-0.75, ring, -0.22). It gates nothing: both GATE ops have an
+       unwired condition port (0 > b always), so they are identities; the MAX
+       is max(x,0) - 0.76 and MAX->ADD scores 40.0. CORRECTION TO THE RECORD:
+       it is not a GATE<->MAX 2-cycle; there is no edge 7->13.
+   Q2  Remove 8,9,10 together: 40.0. Bypass 7 with one edge (2-cycle 13<->15):
+       40.0. Collapse to one output-15 self-loop at w=3.92: 40.0. Sufficient
+       circuit: 0 hidden nodes, 2 edges (self-loop + cue edge 1->15).
+       Cut ring edge 13->7: 2.56; cut cue edge 1->13: 1.44; cut 1->15: 38.19.
+   Q3  NOVEL as an atlas organ; KNOWN as an engineering motif. Nearest
+       registered organs: picorv32 clocked flag latch; biriscv 2-bit saturating
+       counter; arduino-pid clamped integral; odepack hysteresis. All gain 1 +
+       clip or a clocked register; none a regenerative gain > 1 loop. Cannot be
+       registered: Stage A frozen, Ares organisms are not Techne specimens.
+       Name offered after description: saturating positive-feedback latch, set
+       by the cue, read at the output.
+   Q4  Hand-built 2-edge organism: cap at 15/15 grid points for self-weight
+       >= 1.5. Lineage 9 IS that circuit. Lineage 3's extra nodes are neutral
+       accretion by the search (duplicate_node 8 -> 10 at gen 15), not
+       over-provisioning by the pressure.
+   Q5  Ten lineages: 10/10 hold the bit as the sign of a saturated positive-
+       feedback loop, per-step gain 1.4 to 3.9; at-clip in 10/10 for one state,
+       8/10 for both; output node INSIDE the loop 8/10 (Ares's "self-loop on
+       output" 6/10 undercounts rings through an output); cue-weight sign fixed
+       by which output the loop latches, 8/8 traced; loop ops are identities-
+       with-bias and carry no mechanism information; cut-all-recurrence floors
+       10/10; removing every non-carrier hidden node keeps the cap 8/10.
+       Substrate quirk: two ticks per step make a negative self-loop (seed 1,
+       -1.42) a positive one at step boundaries.
+
+5. PREDICTIONS RECORDED BEFORE THEIR RUNS
+   P-a  Loop-gain basin on the EVOLVED seed-3 ring is wide/flat/open-ended
+        (Ares had it only hand-wired). RESULT: viable for scale s >= 0.8 up to
+        gain 106; 24.7 at s=0.7; floor below. HELD.
+   P-b  All ten W4 champions floor on W16 (cue window in [0,20]; cap 10),
+        present ~ shuffled. RESULT: present 0.00-2.50, shuffled 0.00-2.50,
+        10/10. HELD. Post-hoc verification: seeds 1, 4, 9 driven with late
+        +-1 cues do not move; each loop reaches a default clip state in <= 10
+        steps with no cue.
+
+6. SYNTHETIC-DRIVE FACTS ON SEED 3 (no prediction; description)
+   3-step cue ignition threshold between -0.4 and -0.5 (world cue -1.0+-0.2).
+   Reset needs +3 (world post-cue noise sd 0.3: never). A -1 cue at t=20-22
+   from the LOW rest state does not ignite. A one-step cue leaves a period-3-
+   tick rotating orbit; actions 2,1,1,2,1,1. The set window is the zero
+   initial condition, not anything in the ring.
+
+7. WHAT A REVIEWER SHOULD TRY TO BREAK
+   7.1 "Output inside the loop 8/10" depends on carriers.inventory's SCC
+       finder; a reviewer should recount SCCs from the edge lists by hand for
+       seeds 4 and 8, the two with the most edges.
+   7.2 The latch test reports the MEAN state over four episodes per regime and
+       a MAX drift; a bimodal lineage would be hidden by the mean. I saw none
+       (all four episodes agree in sign in every lineage), but I did not print
+       the per-episode states.
+   7.3 The basin scales all three ring weights together. Per-edge basins may
+       be narrower; I did not measure them.
+   7.4 Atlas novelty is a word search over 123 fossils and the organ catalog
+       (latch, bistable, hysteresis, flip-flop, set-reset, positive feedback,
+       integrator, accumulator). An organ described in other words would be
+       missed.
+   7.5 W16 prediction was recorded in the script's docstring and in the
+       reading before the run, but there is no frozen hash: it is a reading,
+       not a packet. Treat it as evidence for the description, not a verdict.
+   7.6 The sign-rule claim (invariant 4) is traced for 8 lineages and asserted
+       from end states for 1 and 4.
+
+8. WHAT THIS DOES NOT CHANGE
+   Scoreboard unchanged (no packet, no mechanism ledger entry: the organism is
+   outside the frozen census and not a Techne specimen). Holds unchanged. No
+   POET ruling, no HARM-56 disposition arrived. Remaining debts: THEO-REQ-003,
+   the UNKNOWN-grade ask, the Avida ancestry cut, poet-enhanced-2020.
+
+9. QUESTIONS FOR THE OPERATOR
+   9.1 Should evolved organisms from Prometheus's own seats (Ares, and later
+       the Foundry) be admitted to the atlas as a separate census, outside the
+       frozen 121, so that readings like this one produce organ records with
+       ancestry rather than a report? The Stage A freeze says no new BROAD
+       census; this would be a narrow one with a different provenance class.
+   9.2 Is a reading (replay + substitution on the fossil's own bytes, no
+       frozen packet) an admissible pipeline object, or must every claim about
+       an evolved organism go through a Harmonia packet? I treated it as a
+       report to Ares, with predictions disclosed, and nothing entered the
+       scoreboard.
+
+10. RE-DERIVATION
+    cd <repo>; PYTHONPATH=. python nyx/readings/ares_w4_reading.py
+    ~2 minutes on M3. Diff against roles/Nyx/reports/ARES_W4_READING_2026-09-25_run.txt.
+================================================================================

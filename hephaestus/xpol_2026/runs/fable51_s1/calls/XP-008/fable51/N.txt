@@ -1,0 +1,25 @@
+**1. The algorithm: pivotal log-scoring over a normalized derivation closure**
+
+Data structures:
+- `Atom`: tuple `(pred, args, polarity)` — e.g. `("gt", ("x","y"), +)`, `("implies", (P,Q), +)`, `("eq", ("total", 42.0), +)`.
+- `Closure`: dict `Atom → (depth, rule, parents)` — a derivation DAG built by forward chaining from prompt atoms.
+- `Candidate`: extracted atom set `A`, plus an ordered list of stated intermediate steps if present.
+
+Operations:
+1. Regex-extract prompt atoms → premise set `P`.
+2. Forward-chain to fixpoint `C(P)` using rules: transitivity over `gt/lt/before/after`, modus ponens and contrapositive over `implies`, antisymmetry checks, arithmetic evaluation of numeric expressions (numpy), negation-consistency (`P` and `¬P` both present ⇒ flag).
+3. Per candidate, classify each atom: DERIVED (in `C(P)`), CONTRADICTED (its negation in `C(P)`), UNCONSTRAINED. Record derivation depth for DERIVED atoms.
+4. Proof-theory step: if the candidate states intermediate steps, rebuild its derivation and normalize — any stated lemma with no descendant reaching the conclusion is a "cut" (detour). Penalty `λ·cuts`; bonus if the candidate's step count equals the minimal depth found by BFS in `C(P)` (cut-free length).
+5. Information step: enumerate the consistent conclusion set `K` = all candidate conclusions not CONTRADICTED. Uniform prior `H₀ = log|K|`. The candidate's atoms select a subset `K_A`; posterior entropy `H_A = log|K_A|`. Base score = log-score `log(1/|K_A|)` if the target conclusion ∈ `K_A`, else a floor (−∞ clipped). Hedged answers ("either A or B") keep `|K_A|>1` and lose mass — a proper scoring rule, so hedging or overclaiming is never rewarded.
+6. Mechanism step: report `score(A) − score(P)` — the pivotal contribution. Restating the prompt scores exactly 0; only atoms that tighten the closure beyond what the premises already give earn credit. Contradictions subtract.
+
+Final: `pivotal_logscore − λ·cuts + μ·[depth == minimal_depth]`.
+
+**2. Parsed features:** negations (`not/no/never`), comparatives and ordering relations (`more than`, `before`, `≥`), conditionals (`if…then`, `unless`, `only if`), numeric values and arithmetic, causal claims (`because/leads to` as directed edges), equality/identity, limited quantifiers (`all/some/none`).
+
+**3. Novelty:** every piece exists — forward-chaining provers, natural-logic inference (MacCartney), proper scoring rules (Good 1952), VCG-style pivotal payments, proof-length as complexity measure. The specific combination (pivotal normalization against the premise closure + cut-count penalty) is not a standard package, but mechanism design contributes little beyond "use a proper scoring rule and subtract the baseline." Honest label: a recombination, not a new idea.
+
+Reasoning: 7/10 — closure + transitivity + numeric evaluation does real inference; ceiling is regex extraction quality.
+Metacognition: 4/10 — closure entropy gives a crude confidence signal, but the tool never inspects its own extraction failures.
+Hypothesis generation: 5/10 — enumerating `K` is a weak generator; it ranks, it doesn't propose.
+Implementability: 8/10 — ~400 lines of numpy/regex/dict code; the cut-detection step is the only fiddly part.

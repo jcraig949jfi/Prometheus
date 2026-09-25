@@ -1,0 +1,20 @@
+**Algorithmic synthesis**
+
+1. **Core algorithm** – A *Typed Bayesian Constraint Engine* (TBCE).  
+   *Parsing*: A deterministic finite‑state parser extracts logical predicates (e.g., `¬P`, `P→Q`, `x>y`, `A > B`) and tags each with a **type** from a lightweight dependent‑type grammar (e.g., `Prop`, `Num`, `Seq`). The result is a directed acyclic graph (DAG) whose nodes are *TypedAtoms* (`{type, token, position}`) and edges are explicit logical relations (implication, causal, ordering).  
+
+   *Evidence model*: For every atomic relation we maintain a **Bernoulli‑Beta** pair (`α,β`) representing prior belief that the relation is correct. Initial priors are uniform (`α=β=1`).  
+
+   *Neural‑oscillation scheduler*: A discrete oscillator vector `φ ∈ {0,…,T‑1}` cycles through phases. Phase 0 runs *type‑checking* (rejects ill‑typed edges). Phase 1 performs *constraint propagation* (transitivity, modus ponens, numeric consistency). Phase 2 aggregates *evidence* and updates posteriors via the conjugate Beta‑Bernoulli update `α←α+1` if the propagated constraint holds, `β←β+1` otherwise. The oscillator ensures each pass is applied in a regular rhythm, mimicking neural oscillatory gating without any neural net.
+
+   *Scoring*: After `K` cycles the posterior mean `μ = α/(α+β)` for each atom is summed, weighted by type‑importance (e.g., `Prop:1.0`, `Num:0.8`). The final score = `Σ w_i μ_i / Σ w_i`. A penalty proportional to the count of type violations is subtracted.
+
+2. **Parsed structural features** – negations, comparatives (“greater than”, “more than”), conditionals (“if…then”), numeric values (integers, floats, ranges), causal verbs (“causes”, “leads to”), ordering relations (“before”, “after”), quantifiers (“all”, “some”), and explicit logical connectives (`∧, ∨, →, ↔`).
+
+3. **Novelty** – The exact combination of dependent‑type parsing, a Bayesian evidence updater, and a deterministic oscillatory scheduler is not present in published QA scorers. Similar pieces exist (type‑based logical QA, Bayesian confidence scoring), but their integration in a single pure‑algorithmic pipeline is novel.
+
+4. **Ratings**  
+Reasoning: 8/10 — strong logical propagation with probabilistic confidence.  
+Metacognition: 6/10 — the system reflects on its own type violations but lacks self‑questioning.  
+Hypothesis generation: 5/10 — can propose alternative constraint completions but limited without generative models.  
+Implementability: 9/10 — pure Python, numpy, and regex suffice; the oscillator is a simple loop.

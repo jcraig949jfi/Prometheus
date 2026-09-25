@@ -1,0 +1,37 @@
+**1. Algorithm derived from Thermodynamics + Gene‑Regulatory‑Networks + Active‑Inference**  
+The scorer builds a *thermodynamic free‑energy graph* (FE‑graph). Nodes represent elementary logical propositions extracted from the answer (e.g., “X > Y”, “¬A”, “if B then C”). Each node stores a **state vector** `s = (energy, entropy, belief)` where:  
+* **energy** = a penalty proportional to violation of hard constraints (e.g., contradictory statements, broken transitivity).  
+* **entropy** = uncertainty derived from the number of compatible interpretations (more ambiguous phrasing → higher entropy).  
+* **belief** = a prior probability from a shallow lexical‑frequency model (counts of domain‑specific terms).  
+
+Edges encode regulatory‑like relationships: activation (support), inhibition (contradiction), and feedback loops (self‑referential claims). Edge weights are computed from *expected free energy* (EFE) used in active inference:  
+
+\[
+\text{EFE}_{ij}= \underbrace{D_{\mathrm{KL}}(P_i||P_j)}_{\text{epistemic cost}} + \underbrace{C_{ij}}_{\text{pragmatic cost}}
+\]
+
+where `D_KL` is the KL‑divergence between belief distributions of connected nodes and `C_ij` is a domain‑specific cost (e.g., violating a known causal law).  
+
+The scoring loop iteratively **relaxes** the FE‑graph: node energies are updated by summing incoming EFE, entropy is reduced by applying a simple Gibbs‑sampling step, and belief is renormalized. Convergence yields a scalar *total free energy* `F = Σ (energy + entropy)`. The final score is `score = 1 / (1 + F)`, bounded in [0,1]; lower free energy = higher reasoning quality.
+
+**2. Parsed structural features**  
+- Negations (`not`, `¬`)  
+- Comparatives (`greater than`, `≤`)  
+- Conditionals (`if…then`, `=>`)  
+- Numeric values and units  
+- Causal claims (`causes`, `leads to`)  
+- Temporal/ordering relations (`before`, `after`)  
+- Logical connectors (`and`, `or`, `xor`)  
+- Quantifiers (`all`, `some`, `none`)
+
+Regular‑expression pipelines tag these tokens, map them to proposition nodes, and attach appropriate edge types (activation, inhibition, feedback).
+
+**3. Novelty**  
+The exact combination—treating logical propositions as thermodynamic particles, wiring them with gene‑regulatory‑style activation/inhibition, and driving convergence with active‑inference free‑energy minimization—is not present in the literature. It parallels constraint‑propagation and belief‑propagation methods, but the explicit thermodynamic bookkeeping and regulatory‑graph metaphor constitute a novel algorithmic synthesis.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — robust constraint propagation and free‑energy minimization capture logical consistency well.  
+Metacognition: 6/10 — the method reflects self‑consistency checks but lacks explicit self‑modeling.  
+Hypothesis generation: 5/10 — can flag missing links but does not propose new premises.  
+Implementability: 9/10 — relies only on numpy, regex, and basic graph structures; straightforward to code.

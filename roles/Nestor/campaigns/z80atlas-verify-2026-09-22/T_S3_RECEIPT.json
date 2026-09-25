@@ -1,0 +1,80 @@
+{
+ "gate": "T-S3",
+ "ok": true,
+ "constants_sha256": "c0e488deabebd03afd398b5aa5665a1e6dbce4ddc2683385113ca4bd7b655719",
+ "pinned": "c0e488deabebd03afd398b5aa5665a1e6dbce4ddc2683385113ca4bd7b655719",
+ "checks": [
+  {
+   "kind": "REPAIRED",
+   "check": "S3-1 generator / tuple / list agree",
+   "result": "PASS",
+   "detail": "n_rows gen=7 list=7 tuple=7"
+  },
+  {
+   "kind": "REPAIRED",
+   "check": "S3-2a constants hash == pin",
+   "result": "PASS",
+   "detail": "live c0e488deabeb.. pinned c0e488deabeb.."
+  },
+  {
+   "kind": "REPAIRED",
+   "check": "S3-2b no module re-declares a threshold",
+   "result": "PASS",
+   "detail": "re-declared: none"
+  },
+  {
+   "kind": "REPAIRED",
+   "check": "S3-2c consumers share one object",
+   "result": "PASS",
+   "detail": "not the shared object: none"
+  },
+  {
+   "kind": "REPAIRED",
+   "check": "S3-2d constants object is immutable",
+   "result": "PASS",
+   "detail": "mutation refused (TypeError)"
+  },
+  {
+   "kind": "REPAIRED",
+   "check": "S3-2e no bare threshold literal compared",
+   "result": "PASS",
+   "detail": "bare threshold comparisons: none"
+  },
+  {
+   "kind": "INJECTED",
+   "check": "S3-1 predecessor len(list(rows)) restored",
+   "result": "caught",
+   "detail": "n_rows gen=None list=7 tuple=None"
+  },
+  {
+   "kind": "INJECTED",
+   "check": "S3-2a MARGIN drifted to 0.20",
+   "result": "caught",
+   "detail": "live d81b9b818a11.. pinned c0e488deabeb.."
+  },
+  {
+   "kind": "INJECTED",
+   "check": "S3-2b bundles re-declares MARGIN",
+   "result": "caught",
+   "detail": "re-declared: ['bundles.py:MARGIN']"
+  },
+  {
+   "kind": "INJECTED",
+   "check": "S3-2c equal-valued private copy",
+   "result": "caught",
+   "detail": "not the shared object: ['bundles']"
+  },
+  {
+   "kind": "INJECTED",
+   "check": "S3-2d plain dict",
+   "result": "caught",
+   "detail": "mutation ACCEPTED"
+  },
+  {
+   "kind": "INJECTED",
+   "check": "S3-2e world literal 0.90 restored",
+   "result": "caught",
+   "detail": "bare threshold comparisons: ['world.py:715 fid >= 0.90']"
+  }
+ ]
+}

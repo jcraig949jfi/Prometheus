@@ -1,0 +1,14 @@
+**Computational mechanism**  
+The three ideas fuse into a *Thermodynamic Morphogenetic Bandit* (TMB) architecture. A differentiable reaction‑diffusion simulator (e.g., a convolutional PDE layer) generates spatial patterns that obey a free‑energy functional \(F = E - T S\) (the thermodynamic “cost”). The system’s hypothesis space consists of parameter vectors \(\theta\) that set diffusion coefficients, production rates, and boundary conditions. At each trial the bandit controller selects a subset of parameters to perturb, using a classic explore‑exploit policy such as UCB‑1 or Thompson sampling over a posterior \(p(\theta|D)\). After the simulation runs, the resulting pattern is scored by two terms: (i) a physical plausibility term that penalises increases in free energy (simulated‑annealing style) and (ii) an information‑gain term that measures how much the pattern reduces uncertainty about the underlying morphogenetic rule (e.g., mutual information between pattern features and \(\theta\)). The reward feeds back to the bandit, closing the loop.
+
+**Advantage for a reasoning system**  
+A hypothesis‑testing agent can allocate its limited “experiments’’ to the regions of parameter space that are both thermodynamically viable and maximally informative. Because the bandit’s confidence bounds are updated after each simulated experiment, the system quickly discards implausible morphogenetic rules while still exploring exotic regimes that might yield novel patterns. This yields a principled, resource‑aware search that respects physical constraints—something a naïve exhaustive search cannot achieve.
+
+**Novelty**  
+Active‑learning for physical simulations and Bayesian experimental design exist, and the Free‑Energy Principle links thermodynamics to inference. However, an explicit multi‑armed‑bandit controller that selects reaction‑diffusion parameters under a free‑energy reward has not been formalised as a distinct field. The TMB thus represents a novel synthesis, though it draws on known components (UCB/Thompson, differentiable PDE solvers, simulated annealing).
+
+**Ratings**  
+Reasoning: 8/10 — integrates physical plausibility with principled exploration.  
+Metacognition: 7/10 — bandit feedback yields self‑assessment of hypothesis quality.  
+Hypothesis generation: 8/10 — leverages morphogenetic dynamics to propose rich, structured hypotheses.  
+Implementability: 6/10 — requires differentiable PDE engines and careful calibration of free‑energy terms, but all pieces are available.

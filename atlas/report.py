@@ -3,6 +3,7 @@ collision detection. `python -m atlas report --out <file>`."""
 from __future__ import annotations
 
 import json
+import textwrap
 from typing import List
 
 from atlas import db
@@ -108,7 +109,7 @@ def build() -> str:
             L.append("   {:<48} {}".format(k, v))
         L.append("")
         L.append("2. BY ENGINE (experiments / attempts / hosts seen on attempts)")
-        for row in q(cur, """SELECT e.engine_id, count(DISTINCT e.experiment_key), count(a.attempt_key),
+        for row in q(cur, """SELECT coalesce(e.engine_id, '(none: ' || e.kind || ')'), count(DISTINCT e.experiment_key), count(a.attempt_key),
                                     string_agg(DISTINCT coalesce(a.host_id,'?'), ',')
                              FROM atlas.experiment e LEFT JOIN atlas.attempt a USING (experiment_key)
                              GROUP BY 1 ORDER BY 2 DESC"""):
@@ -161,5 +162,137 @@ def status() -> str:
                                 left(counts::text, 90) FROM atlas.harvest_run ORDER BY harvest_id DESC LIMIT 15""")
         return "\n".join(" | ".join(str(x) for x in r) for r in rows) + "\n\n" + \
             "\n".join("{:<48} {}".format(k, v) for k, v in counts(cur))
+    finally:
+        conn.close()
+
+
+def _w(s, n):
+    return textwrap.wrap(str(s or ""), n) or [""]
+
+
+def _fit(lines, width=78):
+    """Hard-wrap any line past `width`, keeping the original indent plus two.
+
+    A report read in a terminal or pasted into a packet must not rely on the
+    reader's soft wrap; a truncated pointer is worse than a wrapped one.
+    """
+    out = []
+    for ln in lines:
+        if len(ln) <= width:
+            out.append(ln)
+            continue
+        lead = ln[:len(ln) - len(ln.lstrip())]
+        ind = lead + "  "
+        parts = textwrap.wrap(ln.strip(), width - len(ind), break_long_words=True,
+                              break_on_hyphens=False) or [""]
+        out.append(lead + parts[0])
+        out.extend(ind + x for x in parts[1:])
+    return out
+
+
+def roadmap() -> str:
+    """The research-policy view: theory, coverage, portfolio (ASCII, 78 cols).
+
+    Reads only what the policy layer already wrote. It reports the ISSUED
+    portfolio_update per horizon verbatim -- it does not recompute one, so a
+    stale horizon shows as stale rather than being quietly refreshed here.
+    """
+    conn = db.connect()
+    try:
+        cur = conn.cursor()
+        L = []
+        L.append("ATLAS RESEARCH ROADMAP -- generated from atlas.* on the M1 store")
+        L.append("=" * 78)
+        L.append("Atlas classifications and scores. A proposition is not a verdict, a")
+        L.append("score is a prediction, a directive is a suggestion. Seats decide.")
+        L.append("")
+        L.append("1. THEORY GRAPH (atlas.proposition; evidence counted both ways)")
+        L.append("   {:<34} {:<9} {:>4} {:>4} {:>4} {:>4}".format(
+            "proposition", "confidence", "sup", "con", "cfd", "pred"))
+        for row in q(cur, """SELECT proposition_id, confidence, n_supports, n_contradicts, n_confounds,
+                                    n_untested_predictions FROM atlas.v_theory_frontier
+                             ORDER BY array_position(ARRAY['STRONG','MODERATE','CONTESTED','WEAK','UNTESTED'],
+                                                     confidence), proposition_id"""):
+            L.append("   {:<34} {:<9} {:>4} {:>4} {:>4} {:>4}".format(row[0][:34], row[1], *row[2:]))
+        L.append("")
+        L.append("2. PRIMITIVE COVERAGE (atlas.primitive / primitive_use)")
+        tot, used = q(cur, """SELECT count(*), count(*) FILTER (WHERE EXISTS
+                                (SELECT 1 FROM atlas.primitive_use u WHERE u.primitive_id = p.primitive_id))
+                              FROM atlas.primitive p""")[0]
+        L.append("   primitives defined {}, with at least one detection hit {}".format(tot, used))
+        unm = q(cur, """SELECT primitive_id, detection_status FROM atlas.primitive
+                        WHERE detection_status IS DISTINCT FROM 'AXIS_RULE' ORDER BY 1""")
+        L.append("   UNMEASURED (the ledger declares no detection rule -- an")
+        L.append("   instrumentation gap, NOT a coverage claim):")
+        for pid, why in (unm or []):
+            L.append("     {} -- {}".format(pid, (why or "no reason recorded")))
+        if not unm:
+            L.append("     none")
+        L.append("")
+        L.append("3. COMBINATION COVERAGE (atlas.combination, arity 2)")
+        for v, n in q(cur, "SELECT verdict, count(*) FROM atlas.combination GROUP BY 1 ORDER BY 2 DESC"):
+            L.append("   {:<26} {:>5}".format(v, n))
+        L.append("   Highest-interest pairs never crossed in Prometheus:")
+        for pr, s, tr in q(cur, """SELECT primitives, interest_score, coalesce(theory_relevance,'-')
+                                   FROM atlas.combination WHERE verdict <> 'TESTED'
+                                   ORDER BY interest_score DESC, primitives LIMIT 10"""):
+            L.append("     {:<44} {:>5}  {}".format(" x ".join(pr)[:44], s, tr[:24]))
+        L.append("")
+        L.append("4. BLIND SPOTS (assumptions every engine checked holds)")
+        for b, a2, st, pa in q(cur, """SELECT blind_spot_id, assumption, status, coalesce(proposed_as,'-')
+                                       FROM atlas.blind_spot ORDER BY status, blind_spot_id"""):
+            L.append("   {:<26} {}".format(b, st))
+            for ln in _w(a2, 70):
+                L.append("       " + ln)
+            L.append("       anti-experiment: " + pa)
+        L.append("")
+        L.append("5. SCORED PROPOSALS (top 15 under the current policy version)")
+        pv = q(cur, """SELECT policy_version, rationale FROM atlas.policy_version
+                     ORDER BY created_at DESC LIMIT 1""")
+        if pv:
+            L.append("   policy " + pv[0][0])
+            for ln in _w(pv[0][1] or "", 72):
+                L.append("     " + ln)
+        L.append("   {:<30} {:>7} {:>6} {:>6} {:>6}".format("proposal", "total", "gain", "theory", "cost"))
+        for row in q(cur, """SELECT experiment_key, total, expected_information_gain, theory_impact, cost
+                             FROM atlas.experiment_score WHERE policy_version =
+                               (SELECT policy_version FROM atlas.policy_version ORDER BY created_at DESC LIMIT 1)
+                             ORDER BY total DESC LIMIT 15"""):
+            L.append("   {:<30} {:>7.4f} {:>6.2f} {:>6.2f} {:>6.2f}".format(
+                str(row[0]).split(":")[-1][:30], *[float(x or 0) for x in row[1:]]))
+        L.append("")
+        L.append("6. PORTFOLIO (atlas.portfolio_update, ISSUED, newest per horizon)")
+        for hz in ("MICRO", "STRATEGY", "THEORY"):
+            rows = q(cur, """SELECT update_id, window_from, window_to, n_experiments, summary, directives,
+                                    open_questions, issued_at FROM atlas.portfolio_update
+                             WHERE horizon = %s AND status = 'ISSUED' ORDER BY update_id DESC LIMIT 1""", (hz,))
+            L.append("   " + "-" * 74)
+            if not rows:
+                L.append("   {:<10} no ISSUED update (never computed, or superseded)".format(hz))
+                continue
+            u = rows[0]
+            L.append("   {:<10} update {}  issued {}".format(hz, u[0], str(u[7])[:19]))
+            L.append("              window {} .. {}  ({} experiments)".format(
+                str(u[1])[:19], str(u[2])[:19], u[3]))
+            for d in (u[5] if isinstance(u[5], list) else json.loads(u[5] or "[]")):
+                L.append("     {:<13} {}".format(d.get("action", "?"), (d.get("area") or "")[:56]))
+                for ln in _w("why: " + (d.get("reason") or ""), 66):
+                    L.append("         " + ln)
+                for ev in (d.get("evidence") or [])[:3]:
+                    L.append("         - " + json.dumps(ev, sort_keys=True, default=str)[:64])
+            for oq in (u[6] or [])[:6]:
+                L.append("     open question: " + str(oq)[:60])
+        L.append("")
+        L.append("7. INDEX COVERAGE LAG (a quiet window is not a quiet engine)")
+        row = q(cur, """SELECT max(coalesce(last_activity_at, first_seen_at)) FROM atlas.experiment
+                        WHERE kind IS DISTINCT FROM 'proposal'""")[0][0]
+        newest = q(cur, "SELECT max(authored_at) FROM atlas.git_commit")[0][0]
+        L.append("   newest modelled experiment activity  {}".format(str(row)[:19]))
+        L.append("   newest indexed commit                {}".format(str(newest)[:19]))
+        if row and newest:
+            L.append("   lag {:.1f} days -- activity newer than this is either unadapted or".format(
+                (newest - row).total_seconds() / 86400.0))
+            L.append("   not visible from this host; it is never reported as absence.")
+        return "\n".join(_fit(L)) + "\n"
     finally:
         conn.close()

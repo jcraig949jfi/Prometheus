@@ -1,0 +1,22 @@
+**1. Algorithm: Perturbation-Coupled Constraint Networks**
+
+Parse prompt and each candidate into a constraint graph: nodes = entities/quantities (regex-extracted noun phrases, numerals with units), edges = typed relations (`gt`, `lt`, `eq`, `causes`, `implies`, `not`). Store as `dict[(src, rel, dst)] -> weight in [0,1]`.
+
+*Symbiosis* contributes the scoring unit: a candidate is scored on **mutual support** between claim pairs, not claim-by-claim. For each pair of edges (e_i, e_j) in the candidate, compute whether one is derivable from the other plus prompt premises via forward chaining (transitivity closure over `gt/lt/eq`, modus ponens over `implies`, contraposition over `not`). Build a mutual-support matrix M where M[i,j] = 1 if e_i and e_j co-derive, -1 if they contradict under closure, 0 otherwise. Score_coherence = (sum of positive entries − 2·sum of |negative|) / n².
+
+*Neural oscillations* contribute **multi-scale binding**: run closure at three granularities—sentence-level, clause-level (split on `,;` and conjunctions), and atomic-predicate level. A relation that survives at all three scales is "phase-locked"; one appearing only at sentence-level is a rhetorical assertion without atomic grounding. Cross-scale agreement weight w_s = fraction of scales where edge is derivable.
+
+*Sensitivity analysis* contributes the **robustness score**: perturb the prompt's premise set K times (drop one premise; flip one numeric by ±10%; negate one conditional). Re-run closure; record which candidate conclusions survive. A correct answer should be *sensitive to load-bearing premises* and *insensitive to distractors*. Compute Jacobian-like matrix J[premise, conclusion] ∈ {0,1}; score = agreement between J's row support and the candidate's own cited premises.
+
+Final: `0.4·coherence + 0.3·mean(w_s) + 0.3·robustness_match`.
+
+**2. Parsed features:** numerals with units and comparison operators; comparatives (`more than`, `-er than`); negations with scope to clause boundary; conditionals (`if…then`, `unless`, `only if`); causal verbs (`causes`, `leads to`, `because`); ordering (`before/after`, `first/last`); quantifiers (`all/some/none`) mapped to constraint strength.
+
+**3. Novelty:** The components map to known work—constraint propagation is classic (AC-3), premise-ablation resembles LIME/leave-one-out sensitivity, multi-granularity parsing echoes hierarchical discourse parsing. The specific combination—using premise-perturbation Jacobians to grade *whether a candidate cites the premises it actually depends on*—is uncommon in pure-symbolic scorers. Not novel as theory; moderately novel as a scoring instrument.
+
+**4. Ratings**
+
+Reasoning: 7/10 — Closure + perturbation genuinely tests derivability, not surface match; weak on quantifier scope.
+Metacognition: 6/10 — Robustness-match detects whether the candidate knows which premises matter; no self-uncertainty modeling.
+Hypothesis generation: 4/10 — Scores given answers; perturbation set is fixed, doesn't propose alternatives.
+Implementability: 8/10 — Regex + dict-based closure + K perturbation loops; ~400 lines numpy/stdlib, deterministic, testable.

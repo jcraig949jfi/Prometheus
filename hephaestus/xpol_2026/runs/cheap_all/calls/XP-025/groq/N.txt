@@ -1,0 +1,32 @@
+**Algorithm Overview**  
+The tool builds a *topological constraint graph* from each candidate answer. Tokens are first tokenised and a lightweight regex‑based parser extracts logical predicates (e.g., `A → B`, `¬C`, `A > 5`). Each predicate becomes a node; directed edges encode inferred relations (transitivity, modus‑ponens). The graph is stored as a sparse adjacency matrix (`numpy.ndarray` of bools) together with a parallel weight matrix that holds *attention scores* for each node.  
+
+Attention is computed deterministically: for every predicate the tool counts its occurrence, its distance to the question stem, and the presence of cue words (e.g., “because”, “if”). These counts are normalised (softmax‑like) to produce a weight vector **w**. Multi‑head attention is simulated by splitting **w** into k equal slices, each slice weighting a different sub‑graph (e.g., causal vs. comparative edges).  
+
+The weighted graph is then translated into a SAT instance. Each node maps to a Boolean variable; edges become clauses (`¬x ∨ y` for implication, `x ∨ ¬x` for exclusive‑or, etc.). A tiny DPLL solver written with only the standard library explores assignments, propagating unit clauses and back‑jumping. During search the solver accumulates a *satisfaction score*:
+
+```
+score = Σ_i w_i * satisfied_i / Σ_i w_i
+```
+
+where `satisfied_i` is 1 if the clause derived from node i is satisfied under the found model, otherwise 0. The final answer score is this normalized weighted satisfaction (0 – 1).
+
+**Parsed Structural Features**  
+The regex front‑end recognises:
+- Negations (`not`, `¬`)  
+- Comparatives (`greater than`, `≤`, `more … than`)  
+- Conditionals (`if … then`, `→`)  
+- Numeric values (integers, floats, units)  
+- Causal claims (`because`, `due to`)  
+- Ordering relations (`first`, `after`, `precede`)  
+
+These are turned into predicates that populate the graph.
+
+**Novelty Assessment**  
+Weighted SAT for answer scoring exists in automated theorem‑proving, and graph‑based topology is used in knowledge‑graph reasoning. However, the explicit combination of a topological adjacency matrix, deterministic multi‑head attention weighting, and a pure‑numpy DPLL loop for scoring free‑form text is not present in prior open‑source evaluators, making the approach essentially novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical consistency via SAT, but limited to extracted predicates.  
+Metacognition: 6/10 — can detect self‑contradiction but cannot model confidence.  
+Hypothesis generation: 5/10 — only evaluates given text, no generative step.  
+Implementability: 9/10 — pure numpy and std‑lib, straightforward to prototype.

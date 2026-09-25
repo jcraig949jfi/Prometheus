@@ -1,0 +1,276 @@
+"""Entangled Plastic Model Checker (EPMC) reasoning tool.
+
+Mechanism: regex parsing extracts atomic propositions (clauses) and constraint
+edges (if/then, causal, ordering) from the prompt. Each candidate activates a
+truth assignment over the propositions (+1 true / -1 false / 0 unknown). Edge
+weights are Hebbian-updated by candidate co-activation over a critical period T
+and pruned below tau (plasticity). A BFS over the reachable truth-assignment
+states checks the spec G(antecedent -> consequent) along surviving edges (model
+checking). Candidate beliefs start in a uniform superposition and collapse by
+Born-like reweighting with each candidate's satisfaction ratio. Deterministic
+solvers (arithmetic, numeric comparison, transitive ordering, modus ponens /
+tollens) supply the computation term. _meta_confidence() inspects the prompt
+for presupposition, scope/pronoun ambiguity, false dichotomy, subjectivity,
+unanswerability and judgment traps, and caps confidence when any fires.
+"""
+import re
+import zlib
+import numpy as np
+
+
+class ReasoningTool:
+    T, ETA, TAU, PMAX = 5, 0.1, 0.2, 9
+    WORD = re.compile(r"[a-z][a-z']*|\d+(?:\.\d+)?")
+    NUM = re.compile(r"-?\d+(?:\.\d+)?")
+    NEG = re.compile(r"\bnot\b|n't\b|\bno\b|\bnever\b|\bcannot\b|\bneither\b|\bnor\b|\bfalse\b")
+    STOP = {"the", "a", "an", "is", "are", "was", "were", "be", "it", "that", "this", "then", "if", "of",
+            "to", "in", "and", "or", "so", "does", "do", "did", "will", "would", "not", "no"}
+    HEDGE = re.compile(r"cannot be determined|can'?t (be )?(determined|tell|know)|not enough|insufficient|"
+                       r"ambiguous|depends|unclear|no way to know|assumes|presuppos|loaded|false dichotomy|"
+                       r"neither|more information|unknown|not necessarily|does ?n[o']t follow|invalid|"
+                       r"other options|not (a )?valid|both|unanswerable|fallacy", re.I)
+    CMP = re.compile(r"\b([A-Z][a-z]+) (?:is|was|are|runs|weighs|has) (?:much |far |slightly )?"
+                     r"(\w+er|more \w+|less \w+) than ([A-Z][a-z]+)\b")
+    COND = re.compile(r"\bif\s+(.+?),\s*(?:then\s+)?(.+?)[.;]", re.I)
+    META = [
+        ("presupposition", r"\b(have|has|had|did|do|does) (you|he|she|they|it|we|i) (stopped|quit|ceased|finished|"
+                           r"given up|still)\b|\bwhy (did|does|has|have|is|are|was|were) [^?]*\b(fail|stop|quit|cheat|lie|refuse|hate)"),
+        ("pronoun", r"\b(told|said to|informed|asked|called|thanked)\b[^.]*\b(he|she|they|him|her|his)\b[^?]*\bwho\b"),
+        ("subjectivity", r"\b(best|worst|favou?rite|greatest|nicest|coolest|most (beautiful|important|interesting|fun))\b"),
+        ("survivorship", r"\bsurviv|success stories|successful (people|companies|founders|investors)|dropouts?|"
+                         r"returning (planes|aircraft|bombers)|those who made it"),
+        ("sunk_cost", r"\balready (spent|invested|paid|put in)|sunk cost|wasted if|come this far"),
+        ("regression", r"\bregress|after (an? )?(exceptional|record|extreme|terrible|great|unusually \w+) "
+                       r"(performance|year|game|season|score)|outlier|luck"),
+        ("validity", r"\b(valid|sound|strong|weak|cogent)\b[^.?]*\b(argument|reasoning|inference)|"
+                     r"\b(argument|reasoning)\b[^.?]*\b(valid|sound|strong|weak|cogent)\b"),
+        ("intention", r"\bintend|meant to|on purpose|accident|deceiv|bluff|lying|honest|trust|deliberate"),
+    ]
+
+    def _words(self, s):
+        return [re.sub(r"(ed|s)$", "", w) if len(w) > 3 and not w.endswith("ss") else w
+                for w in self.WORD.findall(s.lower()) if w not in self.STOP]
+
+    def _neg(self, s):
+        return bool(self.NEG.search(s.lower()))
+
+    def _meta_confidence(self, prompt):
+        """Return (cap, hits): cap=0.2 if the prompt itself is loaded/ambiguous/unanswerable."""
+        p = prompt.lower()
+        hits = [n for n, rx in self.META if re.search(rx, p)]
+        if re.search(r"\b(every|each|all)\b[^.?]*\b(a|an|one)\b", p) and re.search(r"\b(same|different)\b", p):
+            hits.append("scope")
+        if re.search(r"\beither\b[^.?]*\bor\b", p) and not self.NEG.search(p):
+            hits.append("false_dichotomy")
+        if re.search(r"\bhow (many|much|old|tall|far|long)\b", p) and not re.search(
+                r"\d|\b(one|two|three|four|five|six|seven|eight|nine|ten|twice|half|dozen)\b", p):
+            hits.append("unanswerable")
+        return (0.2, hits) if hits else (0.85, [])
+
+    def _solve(self, prompt, cands):
+        """Deterministic solvers. Returns (scores|None, note, undetermined)."""
+        p = prompt.lower()
+        m = re.search(r"\(?-?\d[\d.]*(?:\s*[-+*/^]\s*\(?-?\d[\d.]*\)?)+", prompt)
+        if m and re.fullmatch(r"[\d.\s+\-*/^()]+", m.group(0)):
+            try:
+                val = float(eval(compile(m.group(0).replace("^", "**"), "<e>", "eval"), {"__builtins__": {}}, {}))
+                return [1.0 if any(abs(float(x) - val) < 1e-6 for x in self.NUM.findall(c)) else 0.0
+                        for c in cands], "arithmetic %s = %g" % (m.group(0).strip(), val), False
+            except Exception:
+                pass
+        nums = [float(x) for x in self.NUM.findall(prompt)]
+        if len(nums) >= 2 and re.search(r"\b(larger|bigger|greater|higher|more|smaller|less|lower|fewer|least|most|max\w*|min\w*)\b", p):
+            small = bool(re.search(r"\b(smaller|less|lower|fewer|least|min\w*)\b", p))
+            tgt = min(nums) if small else max(nums)
+            out = []
+            for c in cands:
+                cn = [float(x) for x in self.NUM.findall(c)]
+                out.append(1.0 if tgt in cn else (0.0 if set(cn) & set(nums) else None))
+            return out, "numeric %s = %g" % ("min" if small else "max", tgt), False
+        trip = self.CMP.findall(prompt)
+        if trip:
+            g = {}
+            for a, cw, b in trip:
+                if cw.startswith("less "):
+                    a, b = b, a
+                g.setdefault(a, set()).add(b)
+                g.setdefault(b, set())
+
+            def reach(x, y, seen=()):
+                return y in g.get(x, ()) or any(reach(z, y, seen + (x,)) for z in g.get(x, ()) if z not in seen)
+            stem = lambda s: re.sub(r"(i?est|i?er)$", "", s.split()[-1])[:4]
+            q = re.split(r"[.!?]", prompt.strip().rstrip("?."))[-1]
+            by_name = lambda ans: [1.0 if re.search(r"\b%s\b" % ans, c) else
+                                   (0.0 if any(re.search(r"\b%s\b" % k, c) for k in g) else None) for c in cands]
+            mq = re.search(r"\b(?:[Ii]s|[Ww]as) ([A-Z][a-z]+) (\w+er|more \w+|less \w+) than ([A-Z][a-z]+)", q)
+            mw = re.search(r"(\w+er|more \w+|less \w+)\b[^?]*\b([A-Z][a-z]+) or ([A-Z][a-z]+)", q)
+            ms = re.search(r"\b(\w+est|most \w+|least \w+|fewest)\b", q)
+            if mq:
+                x, cw, y = mq.groups()
+                if cw.startswith("less "):
+                    x, y = y, x
+                ans = "yes" if reach(x, y) else ("no" if reach(y, x) else None)
+                if ans is None:
+                    return None, "ordering undetermined", True
+                return [1.0 if re.search(r"\b%s\b" % ans, c.lower()) else
+                        (0.0 if re.search(r"\b(yes|no)\b", c.lower()) else None) for c in cands], "ordering: " + ans, False
+            if mw:
+                cw, x, y = mw.groups()
+                if cw.startswith("less "):
+                    x, y = y, x
+                ans = x if reach(x, y) else (y if reach(y, x) else None)
+                return (by_name(ans), "ordering: " + ans, False) if ans else (None, "ordering undetermined", True)
+            if ms:
+                sup = ms.group(1)
+                top = (stem(sup) == stem(trip[0][1])) != sup.startswith("least ")
+                nodes = list(g)
+                pick = [a for a in nodes if all(reach(a, b) if top else reach(b, a) for b in nodes if b != a)]
+                if len(pick) != 1:
+                    return None, "ordering undetermined", True
+                return by_name(pick[0]), "ordering %s: %s" % ("top" if top else "bottom", pick[0]), False
+        mc = self.COND.search(prompt)
+        if mc:
+            A, B = mc.group(1), mc.group(2)
+            rest = [s for s in re.split(r"[.;?!]", prompt[mc.end():]) if s.strip()]
+            wa, wb = set(self._words(A)), set(self._words(B))
+            for s in (rest[:-1] or rest):
+                ws = set(self._words(s))
+                oa, ob = len(ws & wa) / max(1, len(wa)), len(ws & wb) / max(1, len(wb))
+                if max(oa, ob) < 0.5:
+                    continue
+                if oa >= ob:
+                    if self._neg(s) != self._neg(A):
+                        return None, "denying the antecedent", True
+                    text, flip, name = B, False, "modus ponens"
+                else:
+                    if self._neg(s) == self._neg(B):
+                        return None, "affirming the consequent", True
+                    text, flip, name = A, True, "modus tollens"
+                wt, tneg = set(self._words(text)), self._neg(text) != flip
+                q = rest[-1] if len(rest) > 1 else ""
+                qhit = len(set(self._words(q)) & wt) / max(1, len(wt)) >= 0.5
+                out = []
+                for c in cands:
+                    ov = len(set(self._words(c)) & wt) / max(1, len(wt))
+                    if ov >= 0.5:
+                        out.append(1.0 if self._neg(c) == tneg else 0.0)
+                    elif qhit and re.search(r"\b(yes|no|true|false)\b", c.lower()):
+                        out.append(1.0 if bool(re.search(r"\b(yes|true)\b", c.lower())) == (self._neg(q) == tneg) else 0.0)
+                    else:
+                        out.append(None)
+                return out, "%s: %s%s" % (name, "not " if tneg else "", text.strip()), False
+        return None, "", False
+
+    def _epmc(self, prompt, cands):
+        """Hebbian-weighted constraint graph + BFS model check; returns (belief, sat, n_edges)."""
+        cl = [c.strip() for c in re.split(r"[.;?!]|\bthen\b", prompt) if len(self._words(c)) >= 2][:self.PMAX]
+        p, n = len(cl), len(cands)
+        if p == 0:
+            return np.ones(n), np.ones(n), 0
+        adj = np.zeros((p, p), bool)
+        for i in range(p - 1):
+            if re.search(r"^(if|when|whenever|unless)\b|\b(causes?|leads? to|results? in|implies|before|precedes|after)\b", cl[i].lower()):
+                adj[i, i + 1] = True
+        act = np.zeros((n, p), int)
+        for c in range(n):
+            wc = set(self._words(cands[c]))
+            for i in range(p):
+                wi = set(self._words(cl[i]))
+                if wi and len(wc & wi) / len(wi) >= 0.5:
+                    act[c, i] = 1 if self._neg(cands[c]) == self._neg(cl[i]) else -1
+        w = np.where(adj, 0.5, 0.0)
+        for _ in range(self.T):
+            for c in range(n):
+                eng = act[c] != 0
+                both, one = eng[:, None] & eng[None, :], eng[:, None] ^ eng[None, :]
+                w = np.where(adj & both, w + self.ETA * (1 - w), np.where(adj & one, w - self.ETA * w, w))
+            w[w < self.TAU] = 0.0
+        edges = [(int(i), int(j)) for i, j in zip(*np.nonzero(w > 0))]
+        sat, belief = np.zeros(n), np.full(n, 1.0 / n)
+        for c in range(n):
+            init, free = tuple(bool(x) for x in act[c] == 1), [i for i in range(p) if act[c, i] == 0]
+            seen, frontier = {init}, [init]
+            while frontier and len(seen) < 4096:
+                s = frontier.pop()
+                nxt = [s[:i] + (not s[i],) + s[i + 1:] for i in free]
+                nxt += [s[:j] + (True,) + s[j + 1:] for i, j in edges if s[i] and not s[j] and act[c, j] != -1]
+                for t in nxt:
+                    if t not in seen:
+                        seen.add(t)
+                        frontier.append(t)
+            sat[c] = sum(all((not s[i]) or s[j] for i, j in edges) for s in seen) / len(seen)
+            belief[c] *= 0.05 + sat[c]
+        belief /= belief.sum()
+        return belief / belief.max(), sat, len(edges)
+
+    @staticmethod
+    def _ncd(a, b):
+        za, zb = len(zlib.compress(a.encode())), len(zlib.compress(b.encode()))
+        zab = len(zlib.compress((a + " " + b).encode()))
+        return min(1.0, max(0.0, (zab - min(za, zb)) / max(za, zb, 1)))
+
+    def evaluate(self, prompt, candidates):
+        cands = list(candidates)
+        if not cands:
+            return []
+        meta, hits = self._meta_confidence(prompt)
+        comp, note, undet = self._solve(prompt, cands)
+        struct, _, ne = self._epmc(prompt, cands)
+        loaded = bool(hits) or undet
+        out = []
+        for i, c in enumerate(cands):
+            hedge = bool(self.HEDGE.search(c))
+            j = (1.0 if hedge else 0.2) if loaded else (0.35 if hedge else 0.65)
+            cv = comp[i] if comp and comp[i] is not None else 0.5
+            st = 0.5 * struct[i] + 0.5 * cv if comp else float(struct[i])
+            nc = 1.0 - self._ncd(prompt, c)
+            score = 0.4 * j + 0.3 * st + 0.2 * cv + 0.1 * nc
+            reason = "judgment=%.2f(%s) structural=%.2f(edges=%d) computation=%.2f(%s) ncd=%.2f" % (
+                j, ",".join(hits) or ("undetermined:" + note if undet else "clean"), st, ne, cv, note or "no solver", nc)
+            out.append({"candidate": c, "score": round(float(score), 4), "reasoning": reason})
+        out.sort(key=lambda d: -d["score"])
+        return out
+
+    def confidence(self, prompt, answer):
+        meta, hits = self._meta_confidence(prompt)
+        comp, note, undet = self._solve(prompt, [answer])
+        _, sat, ne = self._epmc(prompt, [answer])
+        if hits or undet:
+            return min(meta, 0.25)
+        if comp and comp[0] is not None:
+            conf = 0.9 if comp[0] >= 1.0 else 0.1
+        elif comp:
+            conf = 0.15 if self.HEDGE.search(answer) else 0.4
+        elif ne:
+            conf = 0.12 + 0.3 * float(sat[0])
+        else:
+            conf = 0.25
+        return float(min(conf, meta))
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

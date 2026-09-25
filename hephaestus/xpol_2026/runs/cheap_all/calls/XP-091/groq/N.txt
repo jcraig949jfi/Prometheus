@@ -1,0 +1,26 @@
+**Algorithmic design**
+
+1. **Core algorithm** – *Statistical‑Mechanical Dual‑Process Property Tester (SMD‑PBT)*  
+
+   - **State space**: each candidate answer is represented as a vector **s** ∈ ℝ^k where each dimension encodes a parsed logical predicate (e.g., “A → B”, “A > B”, “¬C”). The vector is built by a deterministic parser (regex‑based extraction of negations, comparatives, conditionals, numeric literals, causal verbs, ordering words).  
+   - **Ensemble**: for a given question we generate a *micro‑ensemble* of N synthetic test cases using Hypothesis‑style property‑based generators that respect the specification extracted from the prompt (e.g., “for any x > 0, …”). Each generated case yields a Boolean outcome **o_i** for the candidate (True = passes, False = fails).  
+   - **Dual‑process scoring**:  
+     *System 1* (fast) computes a raw pass‑rate `p = (1/N) Σ o_i`.  
+     *System 2* (slow) evaluates the *energy* of the answer: `E = -log(p + ε) + λ·σ²`, where σ² is the variance of the Boolean outcomes across the ensemble and λ is a tunable regularizer that penalises instability.  
+   - **Statistical‑mechanical aggregation**: the final score is the Boltzmann‑weighted expectation over the ensemble: `score = Σ exp(-E_i) * w_i / Σ exp(-E_i)`, where `w_i` are optional weights derived from the importance of each parsed predicate (e.g., causal claims receive higher weight). All operations use only NumPy.
+
+2. **Parsed structural features** – the parser extracts:
+   - Negations (`not`, `no`, `without`)  
+   - Comparatives (`greater than`, `≤`, `more`, `less`)  
+   - Conditionals (`if … then`, `when`, `unless`)  
+   - Numeric values (integers, floats, scientific notation)  
+   - Causal verbs (`cause`, `lead to`, `result in`)  
+   - Ordering relations (`first`, `before`, `after`, `subsequent`)  
+
+3. **Novelty assessment** – The exact combination of a statistical‑mechanical energy model, a dual‑process fast/slow scoring split, and property‑based test generation for natural‑language reasoning has not been published as a single system. Existing work applies either ensemble‑based test generation or constraint‑propagation, but not together with an energy‑based aggregation inspired by statistical mechanics.
+
+**Ratings**  
+Reasoning: 8/10 — concrete logical parsing plus ensemble evaluation yields fine‑grained discrimination.  
+Metacognition: 7/10 — dual‑process layer mimics System 1/2 monitoring of answer stability.  
+Hypothesis generation: 9/10 — property‑based testing supplies exhaustive, automatically shrunk counter‑examples.  
+Implementability: 8/10 — relies only on NumPy, regex, and Python’s standard library; straightforward to prototype.

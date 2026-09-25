@@ -21,3 +21,4 @@ date | call made | what was true | corrected by | changed practice
 2026-09-23 | Hour-4 status: "laws proposed 10 | killed 8" | ledgers hold 9 proposed / 7 failed / 2 frozen | HANDOFF s5 | counts in statuses come from the stores, not from memory
 2026-09-23 | c2x: c2none (no lines, no selection, seed 29) fails the location gate | it SURVIVED round 1 | c2x/PREREG.md | my C1->C2 "method improvement" story was seed; attribute only across seeds
 2026-09-23 | c2x: c2none28 (no lines, no selection, seed 28) fails | it SURVIVED round 1 | c2x/PREREG.md | the only failing cell is lines-without-selection (1 seed); do not generalise from one seed
+2026-09-24 | C3 G1: the P1/P2 certificate passes its hard gate on the first implementation | smoke run: NZ INCOHERENT (fixed 0.05-bit P1 floor vs a 3-SE P2 test: unequal sensitivity) | c3/S1_PREREG_P1P2_GATE.md A1 | paired tests use the same statistical logic; magnitude floors only when derived from resolution

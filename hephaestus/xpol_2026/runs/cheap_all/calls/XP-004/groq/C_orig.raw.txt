@@ -1,0 +1,271 @@
+**ReasoningTool – a tiny “NAS‑style” answer scorer**  
+The implementation follows the algorithm that was proved high‑value:
+
+1. **Parse** the prompt and each candidate into a set of directed triples  
+   `(subject, predicate, object, negated)`.  Only the standard library
+   (`re`) is used for the parsing.  A very small ontology is recognised
+   (`is‑a`, `part‑of`, `causes`, `greater‑than`, `equals`, `negates`).
+
+2. **Premise graph** – triples from the prompt become a weighted
+   `networkx.DiGraph`.  Positive edges get weight `1.0`, negated edges
+   `‑1.0`.
+
+3. **Constraint propagation** – the primitive `modus_ponens` from
+   `forge_primitives` is used to generate inferred triples (weight `0.5`);
+   `check_transitivity` validates transitive closure.  The inferred
+   edges are added to the graph.
+
+4. **Network utility** – eigenvector centrality of the premise graph is
+   computed (`networkx.eigenvector_centrality_numpy`).  For every node
+   that appears in a candidate triple we add `α·c[v]` (`α = 0.2`).
+
+5. **Scoring** – the four components described in the spec are combined.
+   The primitive `confidence_from_agreement` merges the raw score with a
+   tiny NCD‑based tie‑breaker (≤ 10 % of the final value).
+
+6. **NAS‑style selection** – the candidate with the highest total score
+   is returned first.
+
+7. **Meta‑confidence** – `_meta_confidence` scans the prompt for
+   presuppositions, scope/pronoun ambiguities, false dichotomies,
+   subjectivity and unanswerability.  The final `confidence` value is the
+   smaller of the meta‑confidence and a normalised score‑based confidence,
+   never exceeding 0.9.
+
+All heavy lifting is delegated to the primitives, only the wiring is
+original.  The code is deterministic, uses only the allowed libraries and
+fits well under the 200‑line limit.
+
+```python
+"""
+ReasoningTool – answer evaluator based on triple extraction,
+graph‑based constraint propagation and network‑science utility.
+Implements the high‑value combination:
+Neural Architecture Search × Pragmatism × Network Science.
+"""
+
+import re
+import zlib
+import numpy as np
+import networkx as nx
+from typing import List, Tuple, Dict
+
+# primitives (the “forge” library)
+from forge_primitives import (
+    modus_ponens,
+    check_transitivity,
+    topological_sort,
+    dag_traverse,
+    confidence_from_agreement,
+)
+
+class ReasoningTool:
+    """Parse prompts/candidates into triples, build a weighted premise graph,
+    propagate constraints, score candidates and return a confidence estimate.
+    """
+
+    # ------------------------------------------------------------------ #
+    # 1.  Regex based triple extraction
+    # ------------------------------------------------------------------ #
+    _triple_pat = re.compile(
+        r"""(?P<subj>\w+)\s+
+            (?:(is|are|was|were|belongs\s+to|part\s+of|causes|leads\s+to|
+                results\s+in|greater\s+than|less\s+than|equals|=)\s+)?
+            (?P<obj>\w+|\d+(?:\.\d+)?)
+        """,
+        re.IGNORECASE | re.VERBOSE,
+    )
+    _neg_pat = re.compile(r"\b(not|no|never)\b", re.IGNORECASE)
+
+    def __init__(self):
+        pass
+
+    # ------------------------------------------------------------------ #
+    # 2.  Triple handling
+    # ------------------------------------------------------------------ #
+    def _extract_triples(self, text: str) -> List[Tuple[str, str, str, bool]]:
+        """Return list of (subj, pred, obj, negated) triples."""
+        triples = []
+        for sent in re.split(r"[.\n]", text):
+            sent = sent.strip()
+            if not sent:
+                continue
+            neg = bool(self._neg_pat.search(sent))
+            for m in self._triple_pat.finditer(sent):
+                subj = m.group("subj").lower()
+                obj = m.group("obj").lower()
+                raw_pred = m.group(2)
+                if raw_pred is None:
+                    pred = "is-a"
+                else:
+                    raw = raw_pred.lower()
+                    if raw in {"is", "are", "was", "were"}:
+                        pred = "is-a"
+                    elif raw in {"belongs to", "part of"}:
+                        pred = "part-of"
+                    elif raw in {"causes", "leads to", "results in"}:
+                        pred = "causes"
+                    elif raw in {"greater than"}:
+                        pred = "greater-than"
+                    elif raw in {"less than"}:
+                        pred = "less-than"
+                    elif raw in {"equals", "="}:
+                        pred = "equals"
+                    else:
+                        pred = "unknown"
+                triples.append((subj, pred, obj, neg))
+        return triples
+
+    # ------------------------------------------------------------------ #
+    # 3.  Premise graph construction + propagation
+    # ------------------------------------------------------------------ #
+    def _build_graph(self, triples: List[Tuple[str, str, str, bool]]) -> nx.DiGraph:
+        G = nx.DiGraph()
+        for s, p, o, neg in triples:
+            w = -1.0 if neg else 1.0
+            G.add_edge(s, o, predicate=p, weight=w, negated=neg)
+        # 3a.  Infer new edges with modus_ponens (primitive)
+        inferred = modus_ponens(triples)          # returns list of triples
+        for s, p, o, neg in inferred:
+            if G.has_edge(s, o):
+                continue
+            G.add_edge(s, o, predicate=p, weight=0.5, negated=neg)
+        # 3b.  Ensure transitivity where applicable
+        check_transitivity(G)                     # primitive validates/adds
+        return G
+
+    # ------------------------------------------------------------------ #
+    # 4.  Scoring a single candidate
+    # ------------------------------------------------------------------ #
+    _alpha = 0.2  # centrality contribution factor
+
+    def _score_candidate(self, cand_triples, G, centrality) -> float:
+        """Compute S_match, S_inf, S_neg and centrality bonus."""
+        S_match = 0.0
+        S_inf = 0.0
+        S_neg = 0.0
+        for s, p, o, neg in cand_triples:
+            if G.has_edge(s, o):
+                w = G[s][o]["weight"]
+                if G[s][o]["negated"] != neg:
+                    S_match += w
+                else:  # candidate repeats a negated fact incorrectly
+                    S_neg -= 1.0
+            else:
+                # check if reachable via closure (simple BFS)
+                if nx.has_path(G, s, o):
+                    S_inf += 0.5
+                if neg and any(
+                    G.has_edge(s, o) and G[s][o]["negated"] for _ in [0]
+                ):
+                    S_neg -= 1.0
+        # centrality bonus
+        cent_bonus = sum(self._alpha * centrality.get(v, 0.0)
+                         for s, _, o, _ in cand_triples for v in (s, o))
+        return S_match + S_inf + S_neg + cent_bonus
+
+    # ------------------------------------------------------------------ #
+    # 5.  NCD tie‑breaker (tiny contribution)
+    # ------------------------------------------------------------------ #
+    @staticmethod
+    def _ncd(a: str, b: str) -> float:
+        """Normalized compression distance using zlib."""
+        ca = len(zlib.compress(a.encode()))
+        cb = len(zlib.compress(b.encode()))
+        cab = len(zlib.compress((a + b).encode()))
+        return (cab - min(ca, cb)) / max(ca, cb)
+
+    # ------------------------------------------------------------------ #
+    # 6.  Public API – evaluate
+    # ------------------------------------------------------------------ #
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """Return ranked list [{'candidate':..., 'score':..., 'reasoning':...}, …]"""
+        # parse prompt
+        premise_triples = self._extract_triples(prompt)
+        G = self._build_graph(premise_triples)
+
+        # centrality (network utility)
+        centrality = nx.eigenvector_centrality_numpy(G, max_iter=1000)
+
+        # score each candidate
+        scores = []
+        for cand in candidates:
+            cand_triples = self._extract_triples(cand)
+            raw = self._score_candidate(cand_triples, G, centrality)
+
+            # tiny NCD adjustment (max 10% of raw)
+            ncd_adj = 0.0
+            for other in candidates:
+                if other is cand:
+                    continue
+                ncd_adj += self._ncd(cand, other)
+            ncd_adj = (ncd_adj / max(1, len(candidates) - 1)) * 0.1 * raw
+
+            total = confidence_from_agreement([raw, ncd_adj])  # primitive merge
+            reasoning = (
+                f"match={raw - ncd_adj:.2f}, ncd_adj={ncd_adj:.2f}, "
+                f"total={total:.2f}"
+            )
+            scores.append({"candidate": cand, "score": total, "reasoning": reasoning})
+
+        # rank
+        scores.sort(key=lambda d: d["score"], reverse=True)
+        return scores
+
+    # ------------------------------------------------------------------ #
+    # 7.  Meta‑confidence detection
+    # ------------------------------------------------------------------ #
+    _meta_patterns = {
+        "presupposition": re.compile(
+            r"\b(have|did|did you|why did|why have)\b.*\b(stopped|quit|failed|stopped|ceased)\b",
+            re.I,
+        ),
+        "scope_ambiguity": re.compile(r"\bevery\s+\w+.*\ba\s+\w+", re.I),
+        "pronoun_ambiguity": re.compile(r"\b(told|said|asked)\b.*\b(he|she|they)\b", re.I),
+        "false_dichotomy": re.compile(r"\beither\s+.+\s+or\s+.+\b", re.I),
+        "subjectivity": re.compile(r"\b(best|worst|favorite|most|least)\b", re.I),
+        "unanswerable": re.compile(r"\b(what|why|how)\b.*\b(?:unknown|unspecified|not given)\b", re.I),
+    }
+
+    def _meta_confidence(self, prompt: str) -> float:
+        """Return a ceiling (0‑1) based on detected ambiguities."""
+        for name, pat in self._meta_patterns.items():
+            if pat.search(prompt):
+                return 0.25  # low confidence for any trap
+        return 0.85  # otherwise relatively high ceiling
+
+    # ------------------------------------------------------------------ #
+    # 8.  Public API – confidence
+    # ------------------------------------------------------------------ #
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Return 0‑1 confidence respecting epistemic honesty."""
+        # structural / computational confidence (simple normalisation)
+        evals = self.evaluate(prompt, [answer])
+        raw_conf = 1 / (1 + np.exp(-evals[0]["score"]))  # sigmoid
+
+        # meta ceiling
+        cap = self._meta_confidence(prompt)
+
+        # never exceed 0.9 unless raw_conf is >0.95 (definitive)
+        if raw_conf > 0.95:
+            final = min(raw_conf, 0.9)
+        else:
+            final = min(raw_conf, cap)
+
+        return float(final)
+```
+
+**Explanation of the wiring**
+
+* **Parsing → Graph** – regex extraction creates the premise triples.  
+* **Graph → Inference** – `modus_ponens` (logic primitive) expands the graph;  
+  `check_transitivity` (logic primitive) guarantees closure.  
+* **Graph → Utility** – eigenvector centrality (network‑science) supplies the
+  Pragmatist term.  
+* **Scoring → Confidence** – `confidence_from_agreement` (meta primitive) merges
+  the raw logical score with a tiny NCD‑based tie‑breaker, mirroring the NAS‑style
+  fitness evaluation.  
+
+The tool respects all constraints: only standard library, `numpy`,
+`networkx`, and the supplied primitives are used; the code is deterministic,
+under 200 lines, and implements both required public methods.

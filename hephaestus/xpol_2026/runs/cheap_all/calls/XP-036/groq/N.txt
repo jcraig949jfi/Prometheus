@@ -1,0 +1,42 @@
+**Algorithmic core**
+
+1. **Parse → Proposition‑Graph**  
+   - A lightweight regex‑based parser extracts *atomic propositions* (subject‑verb‑object triples) and *logical operators* (¬, →, ∧, ∨, if‑then, comparatives, numeric qualifiers).  
+   - Each proposition becomes a node in a directed graph `G`. Edges encode explicit logical relations (e.g., “A → B”, “A > B”, “A causes B”). The graph is stored as two NumPy‑indexed arrays: `nodes[N]` (strings, type flags) and `edges[M,2]` (source, target indices) together with an `edge_type[M]` integer code.
+
+2. **Criticality layer**  
+   - For every node we compute a *susceptibility* score `χ = 1 / (1 + distance_to_boundary)`. The “boundary” is approximated by the graph’s *correlation length*: the average shortest‑path length of the largest connected component. Nodes that sit on long‑range bridges (high betweenness) receive larger `χ`, reflecting the critical‑system idea that small changes propagate widely.
+
+3. **Pragmatic weighting**  
+   - A context vector `c` is built from the prompt: key terms, question type (cause‑effect, comparison, numeric), and discourse markers. Each node receives a pragmatic relevance weight `π = exp(−||embed(node)−c||²)`. Because we cannot use embeddings, we approximate `embed` with a handcrafted one‑hot over a small taxonomy (action, quantity, entity) and compute Hamming distance via NumPy.
+
+4. **Free‑Energy minimisation as score**  
+   - For a candidate answer we construct its own proposition‑graph `Ĝ` and align it to the reference graph `G` using a greedy bipartite matching on node strings (O(N²) with NumPy broadcasting).  
+   - Prediction error for each matched pair is `e = 1` if propositions differ, `0` otherwise. The *variational free energy* for the candidate is  
+     \[
+     F = \sum_{i} χ_i·π_i·e_i + λ·\mathrm{entropy}(match)
+     \]  
+     where `λ` penalises many‑to‑one matches (encouraging parsimonious explanations). Lower `F` indicates a better answer; we return `score = -F`.
+
+5. **Constraint propagation**  
+   - After matching, we run a single pass of logical closure on `Ĝ` (transitivity, modus ponens) using NumPy boolean matrices. Violations add a fixed penalty to `F`.
+
+**Structural features parsed**
+
+- Negation cues (`not`, `no`, `never`) → unary ¬ edges.  
+- Comparatives (`greater than`, `less`, `as … as`) → weighted numeric edges.  
+- Conditionals (`if … then …`, `when`) → directed implication edges.  
+- Numeric values → scalar attributes attached to nodes.  
+- Causal verbs (`cause`, `lead to`, `result in`) → directed causal edges.  
+- Temporal/ordering markers (`first`, `after`, `subsequently`) → precedence edges.
+
+**Novelty**
+
+The exact combination—criticality‑derived susceptibility, pragmatic relevance vectors, and a free‑energy‑style loss computed on a propositional graph—is not present in prior symbolic‑reasoning evaluators. Existing work treats graph‑based scoring or pragmatic weighting separately; their integration under a variational free‑energy formulation is a novel, albeit conceptually inspired, synthesis.
+
+**Ratings**
+
+Reasoning: 8/10 — strong logical graph + constraint propagation, but limited semantic depth.  
+Metacognition: 6/10 — captures context relevance but lacks self‑reflection mechanisms.  
+Hypothesis generation: 7/10 — can propose alternative matches via free‑energy minimisation, yet relies on greedy alignment.  
+Implementability: 9/10 — pure NumPy/regex, no external models, straightforward to prototype.

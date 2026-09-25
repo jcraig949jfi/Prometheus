@@ -23,7 +23,7 @@ import json
 import grammar as G
 import specimens
 
-PROTOCOL_VERSION = "cycle9-verify-1"
+PROTOCOL_VERSION = "cycle9-verify-3"   # operator final rulings 2026-09-24
 
 # Reduction rule, declared before any timing is measured so the reduction cannot be
 # chosen to protect a preferred result: seeds are dropped from the LARGEST hypothesis
@@ -35,7 +35,13 @@ SCALE_RULE = ("drop seeds uniformly from the largest hypothesis first; never dro
 MIN_SEEDS = 5
 
 # Default sizing. Smoke timings decide whether these survive to freeze.
-SIZE = {"H1_seeds": 60, "H2_seeds": 5, "H3_seeds": 16, "H4_seeds": 16}
+# S4 candidate (operator directive 2026-09-23): enlarge unevenly. H1 unchanged. H2 more
+# seeds, but ONLY for P-11-surviving specimens (panel rebuilt, see specimens.manifest_p11).
+# H3 moderately more shared-seed exposure. H4 NOT enlarged: the S1-B autopsy found its
+# endogenous arm cannot reproduce (C9-D07), which is the directive's redesign exception.
+# Operator final rulings 2026-09-24: H4 WITHHELD (removed from the campaign; A-4 withdrawn,
+# autopsy preserved); H2 16 seeds on the 16-specimen P-11 panel; H3 repicked, 32 seeds.
+SIZE = {"H1_seeds": 60, "H2_seeds": 16, "H3_seeds": 32, "H4_seeds": 0}
 TIER = {"H1": "S", "H2": "M", "H3": "M", "H4": "L"}
 
 
@@ -91,7 +97,7 @@ def h2_bundles(n_seeds):
     B and C share background and RNG seed and differ ONLY in the implanted bytes, which
     is what separates "this genome propagates" from "this world produces depth".
     """
-    panel = specimens.manifest()
+    panel = specimens.manifest_p11()
     out = []
     for sp in panel["specimens"]:
         for s in range(n_seeds):
@@ -105,9 +111,15 @@ def h2_bundles(n_seeds):
                 "arms": [
                     {"arm": "A_in_situ", "cell": sp["cell"], "seed": seed,
                      "tier": TIER["H2"], "kwargs": {}},
+                    # The implanted bytes are IN the manifest (and so in its hash):
+                    # the donor genome of the specimen's first P-11-causal event. Resolving
+                    # them at run time from the predecessor's first_replicator would
+                    # implant the donor of the first PREDECESSOR-criterion event instead,
+                    # and would depend on gitignored per-run files (C9-D06).
                     {"arm": "B_reimplant_actual", "cell": sp["cell"], "seed": seed,
                      "tier": TIER["H2"], "kwargs": {"implant": "ACTUAL_GENOME",
-                                                    "implant_source": sp["run_id"]}},
+                                                    "implant_source": sp["run_id"],
+                                                    "implant_hex": sp["genome_hex"]}},
                     {"arm": "C_reimplant_random", "cell": sp["cell"], "seed": seed,
                      "tier": TIER["H2"], "kwargs": {"implant": "RANDOM_MATCHED",
                                                     "implant_len": sp["genome_len"]}},
@@ -125,10 +137,20 @@ def h3_cells():
     Chosen from the predecessor record before launch and recorded here, so there is no
     adaptive replacement of cells after results arrive.
     """
-    panel = specimens.manifest()
-    res = [s for s in panel["specimens"] if s["stratum"][1] == "RESERVOIR"]
-    res.sort(key=lambda s: s["run_id"])
-    return res
+    # Operator ruling 2026-09-24: repicked PROSPECTIVELY from the completed P-11 record.
+    # The two unique RESERVOIR cells among the 57 P-11 survivors: the cell of
+    # 4931614d912c52b2-s1190-tL-a0 (whose same-cell survivor is -s9368-tM-a0) and the cell
+    # of a62116831aa6d956-s7926-tM-a0. Pinned verbatim, independent of the H2 panel.
+    return [dict(run_id=r, cell=c) for r, c in H3_CELLS]
+
+
+H3_CELLS = (
+    ('4931614d912c52b2-s1190-tL-a0',
+     {"atlas_axis": "DELETERIOUS_LOAD", "bridge": "VALLEY", "copy_primitive": "BYTEWISE", "environment": "RESOURCE_LIMITED", "mutation_locality": "LOCAL", "mutation_operator": "OPCODE", "mutation_rate": "LOW", "pressure": "EXEC_TIME_COST", "read_order": "FORCED_READ", "representation": "Z8_32", "reproduction": "PAIR_EXECUTION", "seeding": "RANDOM", "self_location": "PC_RELATIVE", "structure": "RESERVOIR", "task_transform": "ADD37", "world": "PAIR_TAPE"}),
+    ('a62116831aa6d956-s7926-tM-a0',
+     {"atlas_axis": "STASIS_ESCAPE", "bridge": "NEUTRAL_BRIDGE", "copy_primitive": "BYTEWISE", "environment": "NONSTATIONARY_SHIFT", "mutation_locality": "STRUCTURAL", "mutation_operator": "OPERAND", "mutation_rate": "MID", "pressure": "NOVELTY", "read_order": "ANSWER_BEFORE_READ", "representation": "Z8_64", "reproduction": "PAIR_EXECUTION", "seeding": "RANDOM", "self_location": "PRIMITIVE", "structure": "RESERVOIR", "task_transform": "XOR5A", "world": "PAIR_TAPE"}),
+)
+H3_SAME_CELL_SURVIVORS = {"4931614d912c52b2-s1190-tL-a0": ["4931614d912c52b2-s9368-tM-a0"]}
 
 
 def h3_bundles(n_seeds):
@@ -139,16 +161,19 @@ def h3_bundles(n_seeds):
             seed = 9_300_000 + s
             out.append({
                 "hypothesis_id": "H3", "pair_seed": seed, "source_specimen": sp["run_id"],
-                "factor_deltas": {"structure": ["RESERVOIR", "NICHES_HIGH_MIG"],
+                "factor_deltas": {"easy_niche": ["ON", "OFF"],
                                   "migration": ["ON", "OFF"]},
                 "held_fixed": ["task", "representation", "reproduction", "pressure", "seed"],
                 "expected_cardinality": 3,
                 "arms": [
                     {"arm": "A_easy_plus_migration", "cell": dict(base, structure="RESERVOIR"),
                      "seed": seed, "tier": TIER["H3"], "kwargs": {}},
+                    # C9-D13: rev B used NICHES_HIGH_MIG here (migration 0.08 vs the
+                    # reservoir's 0.02). Arm B now keeps the RESERVOIR structure and
+                    # its migration physics exactly and switches off only the easy niche.
                     {"arm": "B_homogeneous_same_migration",
-                     "cell": dict(base, structure="NICHES_HIGH_MIG"),
-                     "seed": seed, "tier": TIER["H3"], "kwargs": {}},
+                     "cell": dict(base, structure="RESERVOIR"),
+                     "seed": seed, "tier": TIER["H3"], "kwargs": {"easy_niche_disabled": True}},
                     {"arm": "C_easy_no_migration", "cell": dict(base, structure="RESERVOIR"),
                      "seed": seed, "tier": TIER["H3"], "kwargs": {"migration_disabled": True}},
                 ],
@@ -203,7 +228,7 @@ def build(size=None):
     h1 = h1_bundles(size["H1_seeds"])
     h2, panel = h2_bundles(size["H2_seeds"])
     h3 = h3_bundles(size["H3_seeds"])
-    h4 = h4_bundles(size["H4_seeds"])
+    h4 = h4_bundles(size["H4_seeds"]) if size["H4_seeds"] else []   # H4 WITHHELD
     bundles = h1 + h2 + h3 + h4
     n_runs = sum(b["expected_cardinality"] for b in bundles)
     body = {"protocol_version": PROTOCOL_VERSION,

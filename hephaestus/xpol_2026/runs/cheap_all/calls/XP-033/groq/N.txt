@@ -1,0 +1,15 @@
+**1. Emerging computational mechanism**  
+Combining Global Workspace Theory (GWT), criticality, and compositionality yields a *Critical Global Workspace with Structured Binding* (CGWSB). In practice this can be realized as a layered reservoir‑computing architecture whose recurrent “reservoir” is tuned to the edge of chaos (e.g., using echo‑state networks with spectral radius ≈ 1). A sparsely‑connected “workspace” layer sits on top and implements a broadcast gate (similar to the attention‑based routing in Transformer‑style models). When a candidate representation reaches a firing threshold, the gate “ignites” and copies the pattern to all downstream modules. The content that is broadcast is a *compositional vector* built with a binding operator such as circular convolution or tensor‑product representations, guaranteeing that the meaning of a complex hypothesis is a systematic function of its parts.
+
+**2. Advantage for self‑testing reasoning**  
+Because the reservoir sits at criticality, small perturbations in the broadcasted hypothesis cause large, yet controlled, cascades of activity, providing a high‑sensitivity “what‑if” simulation. The compositional binding lets the system generate and manipulate structured hypotheses (e.g., “A → B ∧ C”) without retraining new weights. When a hypothesis is broadcast, every expert module (e.g., a learned predictor, a constraint‑solver, a memory retriever) simultaneously evaluates its consequences; the global read‑out aggregates the divergent responses, producing a rapid confidence signal. Thus the system can *hypothesize‑evaluate‑hypothesize* in a single forward pass, a capability that pure feed‑forward or non‑critical networks lack.
+
+**3. Novelty**  
+Research exists separately on (a) critical reservoirs, (b) global‑workspace‑style attention mechanisms, and (c) compositional neural bindings, but an integrated architecture that deliberately positions the broadcast hub at a critical point while using systematic binding for hypothesis representation is not a standard paradigm. Closest analogues are “critical consciousness networks” and “neural‑symbolic compositional models,” yet none combine all three principles in a single, operational design.
+
+**4. Rating**  
+
+Reasoning: 8/10 — the edge‑of‑chaos broadcast gives fast, distributed inference while preserving systematicity.  
+Metacognition: 7/10 — self‑monitoring via global confidence signals is plausible but needs calibrated thresholds.  
+Hypothesis generation: 9/10 — compositional binding plus a workspace enables combinatorial hypothesis space exploration.  
+Implementability: 6/10 — requires careful spectral‑radius tuning and efficient binding ops; feasible on modern GPUs but still experimentally demanding.

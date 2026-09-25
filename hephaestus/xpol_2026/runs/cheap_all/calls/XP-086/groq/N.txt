@@ -1,0 +1,50 @@
+**1. Algorithmic core**  
+The tool builds a *Bayesian‐inference‐driven scoring engine* that treats each parsed logical predicate as a random variable with a prior probability of being correct (e.g., 0.5). From the prompt we extract a set P of required predicates (facts, relations, numeric constraints). For each candidate answer we extract a set C of asserted predicates using regex‑based parsers (see §2).  
+
+*Data structures*  
+- `predicates: dict[str, int]` – maps a normalized predicate string to a unique index.  
+- `prior: np.ndarray` – 1‑D float array of size |P|, initialized to 0.5.  
+- `likelihood_matrix: np.ndarray` – binary matrix |P| × |C| where `L[i,j]=1` if candidate predicate j matches required predicate i (exact match, synonym map, or numeric tolerance).  
+- `evidence: np.ndarray` – vector of size |C| with 1 for each asserted predicate, 0 otherwise.  
+
+*Scoring logic*  
+1. Compute posterior for each required predicate using a conjugate Beta‑Bernoulli update:  
+
+   ```
+   alpha = prior*2 + L @ evidence
+   beta  = (1-prior)*2 + (1-L) @ evidence
+   posterior = alpha / (alpha + beta)
+   ```
+
+   The `2` in the prior counts acts as a weak prior strength.  
+2. Aggregate the posterior into a single score:  
+
+   ```
+   raw = posterior.mean()
+   penalty = 0.1 * (negations_misused + contradictions)
+   score = np.clip(raw - penalty, 0, 1)
+   ```
+
+   `negations_misused` and `contradictions` are counts derived from Dual‑Process checks (see below).  
+3. Return `score` multiplied by a confidence factor derived from the number of matched predicates (more matches → lower variance).
+
+**2. Parsed structural features**  
+The regex front‑end extracts:
+- Negation cues (`not`, `no`, `never`) attached to predicates.  
+- Comparative operators (`>`, `<`, `≥`, `≤`, `more than`, `less than`).  
+- Conditional clauses (`if … then …`, `when`, `unless`).  
+- Numeric literals (integers, floats, percentages) with unit normalisation.  
+- Causal verbs (`cause`, `lead to`, `result in`).  
+- Ordering relations (`before`, `after`, `first`, `second`).  
+
+Each extraction yields a normalized predicate string (e.g., `"temperature > 100"`).
+
+**3. Novelty assessment**  
+Combining Bayesian updating of predicate correctness with Dual‑Process‑style consistency checks and property‑based test generation is not present in standard automated graders. Existing work uses rule‑based scoring or neural similarity; the described probabilistic‑constraint engine is a new synthesis, though each component (Bayesian inference for answer confidence, constraint propagation, hypothesis shrinking) exists separately.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — strong logical aggregation, but limited to explicitly extracted predicates.  
+Metacognition: 7/10 — dual‑process checks catch contradictions and misuse of intuition, yet require handcrafted patterns.  
+Hypothesis generation: 6/10 — property‑based test ideas can be added (e.g., generate counter‑examples for missing predicates) but are not fully integrated yet.  
+Implementability: 9/10 — pure NumPy and regex; prototype can be built in a few days.

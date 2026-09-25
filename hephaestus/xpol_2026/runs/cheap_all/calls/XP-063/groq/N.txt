@@ -1,0 +1,15 @@
+**1. Emerging computational mechanism**  
+A *Kolmogorov‑regularized reservoir game* can be built by wiring a fixed random recurrent pool (an Echo‑State Network or Liquid‑State Machine) as a shared “feature reservoir” for a set of competing hypothesis‑agents. Each agent learns a linear read‑out \(w_i\) that maps reservoir states to a prediction or policy. The agents’ objectives are two‑fold: (a) minimise the description length of their read‑out (MDL‑style Kolmogorov complexity penalty \(\lambda\|w_i\|_0\) or a coding‑length bound) and (b) maximise a payoff that rewards correct predictions while penalising overlap with other agents. The payoff matrix is defined so that a Nash equilibrium corresponds to a set of read‑outs that jointly explain the data with minimal total description length – a game‑theoretic analogue of the Minimum Description Length principle.
+
+**2. Advantage for a self‑testing reasoning system**  
+When the system generates a hypothesis, it instantiates a new agent in the game. The reservoir instantly projects raw observations into a high‑dimensional dynamical space, allowing the hypothesis to be evaluated with only linear read‑outs. The MDL penalty forces each hypothesis to be as simple as possible, while the Nash equilibrium ensures that no hypothesis can improve its explanatory power without increasing complexity or contradicting the existing set. Consequently the system automatically prunes redundant or over‑fitted hypotheses and converges to a parsimonious, mutually consistent belief set.
+
+**3. Novelty**  
+The exact triad—fixed recurrent reservoir, MDL regularisation, and a multi‑agent Nash‑equilibrium training loop—has not been formalised as a distinct field. Related work exists in (i) reservoir‑based meta‑learning, (ii) MDL‑regularised linear read‑outs, and (iii) game‑theoretic training of ensembles (e.g., GANs, competitive mixture of experts). Their combination, however, yields a new architecture that we can call **Kolmogorov‑Regularized Reservoir Games (KRRGs)**.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — the game forces coherent, low‑complexity reasoning across agents.  
+Metacognition: 7/10 — self‑evaluation is built‑in via the equilibrium check, though the mechanism is indirect.  
+Hypothesis generation: 6/10 — generating new agents is cheap, but the quality depends on reservoir richness.  
+Implementability: 5/10 — requires careful tuning of MDL penalties and equilibrium solvers; prototype feasible with existing ESN and convex‑optimization libraries.

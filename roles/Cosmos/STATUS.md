@@ -1,11 +1,11 @@
 # Cosmos status
 
-Currency: 2026-09-23T20:40Z. Campaign 0 CLOSED PERMANENTLY at af2af37f4 (operator, 2026-09-23);
-C3 (causal accessibility of past information) in DESIGN -- roles/Cosmos/design/03_c3_design_draft_2026-09-23.md.
+Currency: 2026-09-25T10:50Z (context reset pending; entry file roles/Cosmos/BOOTSTRAP.md). C0 CLOSED at af2af37f4. C3 Session 1 COMPLETE (certificate qualified; visible-
+family law search, adversary and all substitution attacks run). Results WITHHELD until D seals.
 
-seat state: BLOCKED on operator decisions D1-D3 for C3 (design s9: which seats write/seal the foreign
-  holdouts D and E; Harmonia audit role; time/compute box). C3-0 (certificate module + planted
-  calibration) does not depend on them. Atlas harvest of C0 delegated (comms, prompts/2026-09-23_atlas_harvest).
+seat state: BLOCKED on holdout D (named blocker: Nestor on M1, comms #561, contract roles/Cosmos/c3/
+  D_CONTRACT.md). Next, in order: D's seal pushed -> publish the withheld branch (hash-committed in
+  roles/Cosmos/c3/INFO_LEDGER.md) -> Harmonia coordinate audit -> freeze law + intervention -> spend D once.
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE. VALID (the campaign's question), in three verdicts:
   chamber qualification PROVISIONALLY SUPPORTED; candidate law SURVIVED three sealed universes and
   fresh-world interventions (B over A not established); search method UNRESOLVED (active sampler and
@@ -20,7 +20,7 @@ reproducibility: C2 and c2none full reruns byte-identical; pinned C0b replay par
 operational state: COSMOS_HOME = C:/Users/James/cosmos_runs (never the D: SMR disk).
 sealed universes remaining: NONE (D, E, F spent). No generalization claim beyond them.
 monitors owned or fed: none.
-blockers: operator decisions D1-D3 (C3 only; design s9). Known repo defect outside this lane: archaeon/tests/test_base_role.py fails on Nyx's
+blockers: D's seal (Nestor, M1). Atlas harvest of C0 pending on Atlas (#544), not a blocker. Known repo defect outside this lane: archaeon/tests/test_base_role.py fails on Nyx's
   manifest drift (reported by Aether 2026-09-19; unchanged).
 next executable action: C3-0 -- the P1/P2 certificate (decodability + permutation null; interchange
   history ablation) with its planted calibration (FUNCTIONAL / PASSIVE / NONE / cheat systems), once the
