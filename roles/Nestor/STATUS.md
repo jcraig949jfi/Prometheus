@@ -1,6 +1,6 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-24 ~23:55 EDT. Charter: budgeted autonomous scientific loop
+Currency: 2026-09-25 ~04:05 EDT. Charter: budgeted autonomous scientific loop
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
 (`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
 claim (E-6..E-10). Consolidated report:
@@ -10,7 +10,7 @@ claim (E-6..E-10). Consolidated report:
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 31 h left) |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 26.7 h left) |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -31,13 +31,14 @@ claim (E-6..E-10). Consolidated report:
     (7/150 vs 0/150, p = 0.007).
   - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
 - Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
-- Latest EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64), confirmed by C-CRITICAL-MASS; X-DOSE-CURVE CLEAN_NULL (founders are independent ~13% tickets, no critical mass).
+- Chain since C-CRITICAL-MASS: X-DOSE-CURVE null (independent founders) -> X-TICKET (copying stops by ~epoch 12) -> X-DECAY (in-place mutation minor) -> X-STALL (members sterile) -> X-STERILE (fertile at birth) -> X-STALL-F0 (tape-write erosion ~25x nominal) -> X-ATOMIC SIGNAL (36/64 vs 3/64 runaways).
+- Earlier EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64), confirmed by C-CRITICAL-MASS; X-DOSE-CURVE CLEAN_NULL (founders are independent ~13% tickets, no critical mass).
 
 ## Running
 
 | experiment | lane | what |
 |---|---|---|
-| X-DECAY | EXPLORE | per-epoch in-place mutation dosed f in {1, 0.25, 0}; 64 seeds each; schtask NestorDK (disabled), ~1.5 h |
+| C-ATOMIC | CONFIRM | frozen: atomic write-back vs base; C1 7ae3 80 seeds/arm, C2 15 other panel specimens x 8 seeds/arm; schtask NestorCAT (disabled), ~1.5 h |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
