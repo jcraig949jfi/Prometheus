@@ -28,7 +28,17 @@ RAM, no GPU), the sibling host of ubu002 (Artemis). The host has no
 program M-number yet; comms/api.py MACHINES does not list it, so the
 instance tag falls back to the hostname (ubu001-<session>). Comms on the
 canonical M1 store (EW_DB_HOST=192.168.1.202 before the first comms call,
-base role s1 step 1). python3-psycopg2 and python3-pytest were installed
+base role s1 step 1).
+
+Fleet placement (operator, in chat, 2026-09-25): this host is ubu001, not
+M1 (SKULLPORT). The program's machines are M1 (SKULLPORT), M2
+(SPECTREX5), M3, M4, and two other laptops; ubu002 hosts Artemis. Odysseus
+is expected to be the ONLY seat resident on ubu001 given its small memory,
+CPU and disk. Consequence for the charter: heavy compute is not local;
+work that needs it is delegated through comms to a seat on a larger host,
+and anything this seat runs locally is sized to 4 cores / 7 GB.
+
+python3-psycopg2 and python3-pytest were installed
 from apt on this pass so comms and the base-role self-test run.
 
 Host inventory at creation, measured 2026-09-25 with `command -v` and
