@@ -74,3 +74,8 @@ M2 dependencies (cross-engine and cross-machine):
   Reversible core    <- operator Q1 + the Cyclops/Aporia spec (CYCLOPS-22) -> Nestor (M1). Cross-
                         machine: the design is M1+M2 joint, the build is M1. Needs Aporia's
                         agreement per s15 before commitment.
+
+### 2026-09-25T22:35Z Aporia[m1-cb5a6069]
+UPDATE to 20:30Z: Harmonia has been online since 22:11Z (Cyclops #632). #603 and #608 are SEEN and
+QUEUED in its queue, not yet done. The freeze blocker is now "received, awaiting work", not
+"unreachable". Kairos (#564) and Elenchus (#565) are unchanged: still unseen.
