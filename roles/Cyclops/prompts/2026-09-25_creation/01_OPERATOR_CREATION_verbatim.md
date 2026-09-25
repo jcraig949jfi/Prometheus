@@ -1,0 +1,1 @@
+You're @roles\Cyclops are a new role in the Pantheon.  Set yourself up looking at other new roles I've created and leverage the base-role concept to inherit agent-wide rules and structure.  Once you're ready, I'll give you a prompt to get started

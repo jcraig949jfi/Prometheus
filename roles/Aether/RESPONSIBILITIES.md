@@ -2,7 +2,23 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-## CURRENT DIRECTIVE (2026-09-23) -- READ THIS BEFORE ANYTHING ELSE
+## CURRENT DIRECTIVE (2026-09-25) -- READ THIS BEFORE ANYTHING ELSE
+
+**The seat's primary mission is the RUNPOD ENGINEERING LADDER**, at
+Iteration 2, with $4.876 of $5.00 remaining. AETH-02 science is CLOSED.
+
+    roles/Aether/TODO.md          <-- START HERE. Resume state, budget,
+                                      next rung, and the rules that were
+                                      learned by spending money.
+    roles/Aether/prompts/2026-09-24_runpod_engineering_ladder/DIRECTIVE.md
+
+Reports: `Aether/RUNPOD_ENGINEERING_01_2026-09-24.md` (engineering) and
+`Aether/AETH-01/AETH-02_CLOSE_2026-09-24.md` (the closed science).
+
+Everything below this line is older. Where it disagrees with TODO.md,
+TODO.md wins.
+
+## SUPERSEDED DIRECTIVE (2026-09-23)
 
 The body of this file below is STALE. It describes a pre-charter seat
 with no lane and no science; all of that is false as of 2026-09-20. It
@@ -14,7 +30,8 @@ The seat's standing work is:
     roles/Aether/prompts/2026-09-23_native_circuitry/DIRECTIVE.md
     (operator, 2026-09-23, verbatim, with a MANIFEST -- verify it)
 
-    AETH-02 NATIVE CIRCUITRY ROUND -- NOT STARTED
+    AETH-02 NATIVE CIRCUITRY ROUND -- COMPLETE AND CLOSED
+    (2026-09-24; see Aether/AETH-01/AETH-02_CLOSE_2026-09-24.md)
 
 Resume state, known blockers and what must be BUILT rather than
 configured: roles/Aether/TODO.md. The wake block that boots this

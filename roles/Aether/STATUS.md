@@ -1,5 +1,29 @@
 # Aether status
 
+> **CURRENCY 2026-09-25 -- UPDATE, read this first.** The body below is
+> from 2026-09-22 and describes the AETH-01 memory-wall round as the live
+> work. Two campaigns have finished since, and the seat's mission changed.
+>
+> seat state: ACTIVE, not blocked on any other seat. Halted cleanly for an
+>   operator reboot and Claude Code upgrade on 2026-09-25 with NO pods
+>   running, nothing billing, a clean working tree and everything pushed.
+> primary mission: the **RunPod engineering ladder**, at Iteration 2.
+>   $0.124 spent of a $5.00 campaign ceiling.
+> AETH-02: **CLOSED** 2026-09-24. $2.83 of $3.00. Four zero-dollar
+>   falsifiers run; H1 and H4 stand, H2 partly falsified, H3 unresolved.
+>   An instrument defect in the campaign runner was found and its bias
+>   measured, and one claimed validation was withdrawn.
+> what it asserts: PRESENT, ACTIVE, PRODUCTIVE (Iteration 1 flew on real
+>   hardware and passed; two reports and 148 tests are committed). VALID
+>   is asserted for nothing new.
+> resume from: **roles/Aether/TODO.md**, which is the authoritative resume
+>   state. This file is a status snapshot, not a work queue.
+> reports: `Aether/RUNPOD_ENGINEERING_01_2026-09-24.md`,
+>   `Aether/AETH-01/AETH-02_CLOSE_2026-09-24.md`,
+>   `Aether/AETH-01/NATIVE_CIRCUITRY_01_2026-09-24.md` (amended).
+
+## Snapshot of 2026-09-22, left standing rather than rewritten
+
 Currency: 2026-09-22 (bootstrap, then the AETH-01 memory-wall round
 through Phase 6, on BUCKKEEP as Aether[buckkeep-7a10ca4b]).
 Supersedes the 2026-09-19 status, which said the seat had no lane and

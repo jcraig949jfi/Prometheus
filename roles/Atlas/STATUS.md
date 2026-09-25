@@ -55,6 +55,15 @@ sibling seat: Atlas-M2 (m2-8f915f3d, M2), its own seat, one shared index
   (SIBLINGS.md).
 blockers: none. Waiting: Cosmos's atlas_export_c0 harvest (comms #544).
 ruled 2026-09-19: F:/SerendipityD is ignored for now (operator).
+ruled 2026-09-25 (operator): one index pass then PARKED (both seats);
+  REPORTS ONLY -- no portfolio directives posted to seats, anti-prior
+  proposals go to the operator first; ATLAS-26 = keep inferring hosts,
+  labelled, no interface requests; F:/SerendipityD still ignored.
+pass 2026-09-25 (Atlas[m1-a5680f90]): lag now 2.7 days (modelled
+  2026-09-22 15:07). Nestor C9, Ananke, Cosmos still unadapted.
+  OPEN DEFECT: frontier/3 indexed 299,991 identical BLOCKED_BY_SUPPRESSION
+  events as separate facts, so fact counts are distorted until frontier/4.
+  See journal/2026-09-25.md.
 reboot 2026-09-25: nothing in flight (Atlas runs no experiments; no
   collector, harvest or loop running). Tree clean, HEAD == origin/main at
   4e0fb48cb, all seven atlas/* branches merged. Index is ~1 day behind git

@@ -1,0 +1,292 @@
+{
+  "control": {
+    "comparison": {
+      "activity_density": {
+        "observed": 0.1917266845703125,
+        "reference_2048": 0.191052,
+        "relative_error": 0.0035314185159668592,
+        "within_tol": true
+      },
+      "change_rate": {
+        "observed": 0.1651397705078125,
+        "reference_2048": 0.18461,
+        "relative_error": 0.10546681919824219,
+        "within_tol": false
+      },
+      "contested_of_edges": {
+        "observed": 0.00606747026939568,
+        "reference_2048": 0.00670043088690677,
+        "relative_error": 0.09446565873068699,
+        "within_tol": false
+      },
+      "edge_fraction": {
+        "observed": 0.0377227783203125,
+        "reference_2048": 0.03760366439819336,
+        "relative_error": 0.0031676147531211826,
+        "within_tol": true
+      },
+      "energy_gini": {
+        "observed": 0.5865708150714047,
+        "reference_2048": 0.587116,
+        "relative_error": 0.0009285812830773351,
+        "within_tol": true
+      },
+      "entropy_opcode_bits": {
+        "observed": 5.5881718532506675,
+        "reference_2048": 5.5992,
+        "relative_error": 0.0019695932899936206,
+        "within_tol": true
+      },
+      "ge64_opcode": {
+        "observed": 0.07165706973768395,
+        "reference_2048": 0.06964,
+        "relative_error": 0.028964240920217578,
+        "within_tol": true
+      },
+      "starved_density": {
+        "observed": 0.23187255859375,
+        "reference_2048": 0.231455,
+        "relative_error": 0.001804059509407902,
+        "within_tol": true
+      },
+      "state_changing": {
+        "observed": 0.2573416390259688,
+        "reference_2048": 0.270794,
+        "relative_error": 0.04967747060138403,
+        "within_tol": true
+      },
+      "write_density": {
+        "observed": 0.4235992431640625,
+        "reference_2048": 0.422507,
+        "relative_error": 0.0025851480900020082,
+        "within_tol": true
+      }
+    },
+    "n": 256,
+    "passed": false,
+    "ticks": 2500,
+    "tolerance": 0.05
+  },
+  "h1": {
+    "arms": {
+      "ARM_P": {
+        "horizons": {
+          "1": {
+            "occupancy": 0.0,
+            "recurrence": 0.0
+          },
+          "10": {
+            "occupancy": 0.0,
+            "recurrence": 0.0
+          },
+          "50": {
+            "occupancy": 0.0,
+            "recurrence": 0.0
+          },
+          "100": {
+            "occupancy": 0.0,
+            "recurrence": 0.0
+          },
+          "250": {
+            "occupancy": 0.004464285714285714,
+            "recurrence": 0.0
+          },
+          "500": {
+            "occupancy": 0.0,
+            "recurrence": 0.0
+          }
+        },
+        "k": 224
+      },
+      "ARM_S": {
+        "horizons": {
+          "1": {
+            "occupancy": 0.03571428571428571,
+            "recurrence": 0.0
+          },
+          "10": {
+            "occupancy": 0.049107142857142856,
+            "recurrence": 0.004464285714285714
+          },
+          "50": {
+            "occupancy": 0.04017857142857143,
+            "recurrence": 0.004464285714285714
+          },
+          "100": {
+            "occupancy": 0.05357142857142857,
+            "recurrence": 0.013392857142857142
+          },
+          "250": {
+            "occupancy": 0.05357142857142857,
+            "recurrence": 0.013392857142857142
+          },
+          "500": {
+            "occupancy": 0.05357142857142857,
+            "recurrence": 0.004464285714285714
+          }
+        },
+        "k": 224
+      },
+      "ARM_SHAM": {
+        "horizons": {
+          "1": {
+            "occupancy": 0.9955357142857143,
+            "recurrence": 0.9955357142857143
+          },
+          "10": {
+            "occupancy": 0.96875,
+            "recurrence": 0.96875
+          },
+          "50": {
+            "occupancy": 0.96875,
+            "recurrence": 0.96875
+          },
+          "100": {
+            "occupancy": 0.9553571428571429,
+            "recurrence": 0.9553571428571429
+          },
+          "250": {
+            "occupancy": 0.96875,
+            "recurrence": 0.9642857142857143
+          },
+          "500": {
+            "occupancy": 0.9241071428571429,
+            "recurrence": 0.9241071428571429
+          }
+        },
+        "k": 224
+      }
+    },
+    "by_horizon": {
+      "1": {
+        "ARM_P": 0.0,
+        "ARM_S": 0.0,
+        "excess": 0.0
+      },
+      "10": {
+        "ARM_P": 0.0,
+        "ARM_S": 0.004464285714285714,
+        "excess": -0.004464285714285714
+      },
+      "50": {
+        "ARM_P": 0.0,
+        "ARM_S": 0.004464285714285714,
+        "excess": -0.004464285714285714
+      },
+      "100": {
+        "ARM_P": 0.0,
+        "ARM_S": 0.013392857142857142,
+        "excess": -0.013392857142857142
+      },
+      "250": {
+        "ARM_P": 0.0,
+        "ARM_S": 0.013392857142857142,
+        "excess": -0.013392857142857142
+      },
+      "500": {
+        "ARM_P": 0.0,
+        "ARM_S": 0.004464285714285714,
+        "excess": -0.004464285714285714
+      }
+    },
+    "excess_final": -0.004464285714285714,
+    "falsified": false,
+    "field": "opcode",
+    "follow": 500,
+    "k": 224,
+    "n": 256,
+    "warmup": 2500
+  },
+  "h2": {
+    "contested_predicted_well": false,
+    "contested_ratio": 2.3736649840343693,
+    "edge_ratio": 1.0019798959800443,
+    "edges_predicted_well": true,
+    "falsified": true,
+    "ge64_ratio": 3.0745707914737155,
+    "incomplete": false,
+    "observed_contested_share": 0.00606747026939568,
+    "observed_edge_fraction": 0.0377227783203125,
+    "observed_ge64": 0.07165706973768395,
+    "p_per_neighbour": 0.009586334228515625,
+    "per_tick_recurrence": 0.9762748909044681,
+    "persistence_predicted_well": false,
+    "predicted_contested_share": 0.014402141720134109,
+    "predicted_edge_fraction": 0.03779746549746499,
+    "predicted_ge64": 0.22031473361807816
+  },
+  "h3": {
+    "cycle_enrichment": 1.9681797724419456,
+    "cycle_nodes": 188,
+    "cycle_share": 0.015235008103727715,
+    "edges": {
+      "all": 12340,
+      "not_a_writer": 10869,
+      "on_cycle": 205,
+      "writer_not_cycle": 1266
+    },
+    "explained_by_writer_constraint": false,
+    "mapped_nodes": 12340,
+    "n": 256,
+    "rewired_cycle_nodes": {
+      "max": 560,
+      "mean": 517.75,
+      "min": 470,
+      "trials": 8
+    },
+    "state_changing": {
+      "not_a_writer": 0.23636029073511822,
+      "on_cycle": 0.4926829268292683,
+      "overall": 0.25032414910858997,
+      "writer_not_cycle": 0.33096366508688785
+    },
+    "writer_enrichment": 1.3221403778479106
+  },
+  "h4": {
+    "by_horizon": {
+      "1": {
+        "control": 0.009029388427734375,
+        "drop": 0.41064638783269963,
+        "treated": 0.005321502685546875
+      },
+      "2": {
+        "control": 0.0090179443359375,
+        "drop": 0.8519458544839256,
+        "treated": 0.00133514404296875
+      },
+      "5": {
+        "control": 0.00890350341796875,
+        "drop": 0.9048843187660668,
+        "treated": 0.00084686279296875
+      },
+      "10": {
+        "control": 0.008846282958984375,
+        "drop": 0.9344545062526951,
+        "treated": 0.000579833984375
+      },
+      "50": {
+        "control": 0.00897216796875,
+        "drop": 0.939625850340136,
+        "treated": 0.00054168701171875
+      },
+      "100": {
+        "control": 0.008769989013671875,
+        "drop": 0.9408438451500652,
+        "treated": 0.000518798828125
+      },
+      "500": {
+        "control": 0.00884246826171875,
+        "drop": 0.9452113891285591,
+        "treated": 0.000484466552734375
+      }
+    },
+    "energy_change_shift_at_tick1": 0.0,
+    "falsified": false,
+    "follow": 500,
+    "n": 256,
+    "observed_immediate_drop": 0.41064638783269963,
+    "predicted_immediate_drop": 0.38,
+    "ratio": 1.08064838903342,
+    "warmup": 2500
+  }
+}
