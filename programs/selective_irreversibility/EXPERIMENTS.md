@@ -63,3 +63,16 @@ IDLE / DOWN (M2)
   Vivarium        consumer not running; VivariumDeadmanM2 DISABLED; VivariumConsumerM2 never
                   ran (next run 2035). Outbox deliverer runs every 5 min, exit 0.
   Old Z80Atlas / DeepFrontier schtasks: last run 2026-09-19, no next run.
+
+### 2026-09-25T18:30Z Cyclops[m2-e8056938]
+QUEUED (M2)
+  WTP-LM01        Ensorain  M2  Lossless Memorizer challenge (countermodel B). Directive: operator-
+                  written, issued under Cyclops's name, verbatim at roles/Ensorain/prompts/
+                  2026-09-25_wtp_lm01_directive/01_...verbatim.md (sha256 ab204631..., f3b530624).
+                  Adopted by Cyclops at roles/Cyclops/prompts/2026-09-25_wtp_lm01/.
+                  Supersedes WTP-04. State: DESIGNING (#590). No prereg yet. Launch is GATED on a
+                  Cyclops launch prompt (directive s12), after the coupling campaign ends.
+                  Joint steward rulings R1 and R2 (#591 + Cyclops concurrence); R3 dev envelope
+                  ruled by Cyclops (01_RULINGS_R1_R3.md).
+  ENVGATE-02      still 0/24 at 18:29Z. No reply from Archaeon to #585 yet (Archaeon last
+                  online about 13:28 local). Bellerophon ACKed co-run (#589).
