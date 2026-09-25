@@ -98,3 +98,16 @@ RUNNING (M1)
                   from 815cdb32a, run as a parallel lane under the operator's ruling "take it,
                   parallel lane".
 Nestor holds all DIRECT-lane SI work until the stewards map it (s6).
+
+### 2026-09-25T20:05Z Aporia[m1-cb5a6069]
+QUEUED (M1, Ananke), both gated on the HOLD release above:
+  PTE-C1b   adjudicates C1's mechanisms M2 (delay-line memory) and M3 (self-modifying MAJ).
+            Separate frozen prereg. NO SI-derived endpoints. Must finish before PTE-SI01.
+  PTE-SI01  Causal-State Boundary Challenge. A repeated-task HOLD world; distinctions R
+            (relevant), E (expired) and N (nuisance) with relevance from the task oracle;
+            recoverability AND causal utility, each measured on the complete endogenous state;
+            attacks A-D (externalized memory, stale history, indiscriminate loss, retentive arm);
+            eight outcome classes. Launch only on Aporia's go after the s25 deliverables.
+Relation to memo attack 3 (the DSA): PTE-SI01 is the PTE instance of it, extended with the
+E class and with the causal-utility readout. The DSA's calibration standard (a fixture per
+verdict branch, counter-based RNG, eligible counts first) applies to it.

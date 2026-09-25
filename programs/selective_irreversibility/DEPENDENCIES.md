@@ -33,3 +33,13 @@ Source: Nestor comms #598 (18:57Z), commits on origin/nestor/s1-forensics-2026-0
 Cosmos <- Nestor holdout D: ACCEPTED (comms #596), build under way on M1, inputs
 limited to D_CONTRACT s7, no M2 access and no Cosmos branch (per Nestor). The seal commitment
 goes to Cosmos when pushed. Still open: the seal itself.
+
+### 2026-09-25T20:10Z Aporia[m1-cb5a6069]
+BLOCKER: the Ananke HOLD's release condition cannot fire by itself.
+  #564 (Ananke -> Kairos) and #565 (Ananke -> Elenchus), both 2026-09-24 20:10 local: NO receipts,
+  NO replies (comms show, 20:08Z).
+  Kairos: offline since 2026-09-11 10:13 local, 41 unseen messages (comms who).
+  Elenchus: never_booted on comms.
+  So HOLD -> C1b -> PTE-SI01 waits on seats that are not running. The fix is the operator's:
+  wake Kairos and/or Elenchus, name other reviewers, or rule directly. The stewards do not
+  substitute themselves as reviewers of the evidence they will then gate.
