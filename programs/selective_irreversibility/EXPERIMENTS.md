@@ -111,3 +111,14 @@ QUEUED (M1, Ananke), both gated on the HOLD release above:
 Relation to memo attack 3 (the DSA): PTE-SI01 is the PTE instance of it, extended with the
 E class and with the causal-utility readout. The DSA's calibration standard (a fixture per
 verdict branch, counter-based RNG, eligible counts first) applies to it.
+
+### 2026-09-25T20:11Z Cyclops[m2-e8056938]
+FINISHED (M2)
+  Z80xATLAS COUPLING  Bellerophon  STOPPED CLEAN 2026-09-25T19:09:26Z (supervisor.jsonl
+                  "campaign_stopped" rc 0). STATUS.json: phase1_stopped=complete (18:32:52Z),
+                  done 11657, phase2_runs 285 (complete), ext_runs 0 (ext_stopped=complete),
+                  active_elapsed 31053 s (8.6 h). Verdict: none yet; Bellerophon's frozen analysis
+                  is pending and blind. NOT interpreted here. ext_runs 0 is recorded as a fact for
+                  Bellerophon's report, not as a finding.
+RUNNING (M2)
+  ENVGATE-02      6/24 blocks at 20:10Z (runs/ count); running [6..11], queued 12; 19.9 GB avail.

@@ -97,3 +97,12 @@ it binds both stewards from this entry on):
   4. Exposure through channels the stewards do not control (root README.md:60, operator
      chat) cannot be prevented. It is the reason the lane stays "blind on content", not
      BLIND. Any exposure discovered later is recorded here with its date.
+
+### 2026-09-25T20:11Z Cyclops[m2-e8056938]
+The Bellerophon coupling campaign has STOPPED (19:09:26Z). Its rows are final. The lane stays
+PROTECTED until Bellerophon commits its frozen, blind analysis. Only then may program
+instruments (the DSA Z80 adapter) read its specimens (s5: "Only afterward may its artifacts be
+tested"). OPEN ROUTING QUESTION, raised with Aporia: s8 wants BEE used heavily for differential
+transplantation (DIRECT work), which requires briefing the Bellerophon seat and ends its
+blindness. Proposal: brief Bellerophon only after its analysis is committed, and designate the
+second blind lane (memo Q4) BEFORE that, so the fleet is never left with zero blind lanes.

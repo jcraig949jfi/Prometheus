@@ -72,3 +72,14 @@ the overlap"). M2-1 is RESOLVED as option (a) pending Archaeon's launch decision
 M2-2 (new, ruled): Ensorain WTP-LM01 dev work while the frozen jobs run. Envelope: <= 4 workers,
 1 BLAS thread each, IDLE priority, <= 2 once ENVGATE-02 runs, stop below 6 GB free, intervals
 logged for Bellerophon. Text: roles/Cyclops/prompts/2026-09-25_wtp_lm01/01_RULINGS_R1_R3.md.
+
+### 2026-09-25T20:11Z Cyclops[m2-e8056938]
+M2-1 CLOSED. The overlap was 18:30:33Z (ENVGATE-02 launch, #593) to 19:09:26Z (coupling campaign
+stop, supervisor.jsonl), 38 m 53 s. The size of the effect on the campaign's N is Bellerophon's
+to report from its ops accounting (#589).
+M2-2 REVISED (supersedes the envelope in roles/Cyclops/prompts/2026-09-25_wtp_lm01/
+01_RULINGS_R1_R3.md; the new text is roles/Cyclops/prompts/2026-09-25_m2_envelope_v2/): with
+the coupling campaign stopped, M2 carries only ENVGATE-02 (6 workers). Ensorain dev work: <= 8
+workers, 1 BLAS thread each, BELOW_NORMAL priority, dev seeds only, stop below 6 GB free,
+intervals logged. The WTP-LM01 CAMPAIGN launch is still gated on the Cyclops prereg review +
+launch prompt. The CPU condition is now met; the prereg condition is not.
