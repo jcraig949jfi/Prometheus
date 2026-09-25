@@ -1,6 +1,6 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-24 ~19:50 EDT. Charter: budgeted autonomous scientific loop
+Currency: 2026-09-24 ~23:10 EDT. Charter: budgeted autonomous scientific loop
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
 (`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
 claim (E-6..E-10). Consolidated report:
@@ -10,7 +10,7 @@ claim (E-6..E-10). Consolidated report:
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 35 h left) |
+| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 31.5 h left) |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -31,13 +31,13 @@ claim (E-6..E-10). Consolidated report:
     (7/150 vs 0/150, p = 0.007).
   - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
 - Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
-- Latest EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64), confirmed by C-CRITICAL-MASS.
+- Latest EXPLORE: X-CRITICAL-MASS WEAK_SIGNAL (4 founders vs 1: runaways 9/64 vs 0/64), confirmed by C-CRITICAL-MASS; X-DOSE-CURVE CLEAN_NULL (founders are independent ~13% tickets, no critical mass).
 
 ## Running
 
 | experiment | lane | what |
 |---|---|---|
-| X-DOSE-CURVE | EXPLORE | founders k in {1,2,4,8}, 64 seeds each; LRT superadditive vs independent founders; schtask NestorDC (disabled), ~2 h |
+| X-TICKET | EXPLORE | where losing single-founder tickets fail (early causal extinction vs persistence without depth); 128 seeds; schtask NestorTK (disabled), ~40 min |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
