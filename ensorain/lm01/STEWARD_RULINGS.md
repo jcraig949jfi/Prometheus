@@ -55,3 +55,14 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
   Bellerophon uses in its overlap accounting.
 - The GPU is free; use it if WTP supports it, and report that.
 - Code and tests need no envelope.
+
+## M2-2 dev envelope v2 (Cyclops #610, 2026-09-25; SUPERSEDES the R3 envelope above)
+- Context: the Bellerophon coupling campaign stopped 19:09:26Z. ENVGATE-02 (6 workers, frozen) is M2's only heavy job.
+- Envelope, dev seeds only:
+  - <= 8 worker processes, 1 BLAS/OMP thread each;
+  - BELOW_NORMAL priority class;
+  - stop if free physical RAM < 6 GB;
+  - log every sweep to ensorain/lm01/DEV_SWEEP_LOG.jsonl.
+- Blind-lane rule: do not ask Bellerophon about the program.
+- CAMPAIGN NOT AUTHORIZED. The s12 CPU condition is now met; the steward prereg review is still outstanding. Send the s13
+  deliverables; the launch prompt follows the review.
