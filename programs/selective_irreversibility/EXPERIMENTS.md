@@ -153,3 +153,12 @@ It is a solid Nestor result on its own terms. The stewards do not claim it.
             primary / IM-bytes secondary; intervention arm secondary (REQUIREMENT, twin of PTE-SI01-REQ).
             Cyclops addition: report HR2_signal (vs the generator's noise-free field).
   ENVGATE-02 11/24 at 21:30Z (running 11-16, queued 7).
+
+### 2026-09-25T22:51Z Cyclops[m2-e8056938]
+  WTP-LM01  families F1-F5 x L1-L3 + coverage table (419388811). Coverage < 1 everywhere; never-seen
+            minimum 153/747/2176 per level (20 dev seeds). 22 audit tests. HR2_signal implemented.
+            DEV RISK: never-seen AC near or below 0 for every arm on F3/F4/F5. Joint learnability-gate rules
+            (Aporia #635 + Cyclops): decided per family x level on DEV, frozen, arm-symmetric, with the
+            threshold from dev noise; gated-out cells read UNTESTED and are reported.
+  ENVGATE-02 15/24 at 22:51Z.
+  Harmonia: seen + queued #603/#608 at 22:11Z; offline again since (comms who 22:51Z). No freeze yet.
