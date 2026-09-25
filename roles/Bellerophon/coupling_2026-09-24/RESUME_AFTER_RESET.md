@@ -1,3 +1,6 @@
+# CLOSED 2026-09-25 ~19:50Z -- the coupling campaign finished (19:09:26Z) and the frozen analysis ran. Do NOT
+# relaunch anything. Read COUPLING_CAMPAIGN_REPORT.md. Everything below is historical.
+
 # UPDATE 2026-09-25T10:45Z -- CAMPAIGN RESUMED UNDER AMENDMENT 1 (supersedes sections 2-4 below)
 
 The operator authorised the restart (prompts/01_OPERATOR_RESTART_AUTHORIZATION_verbatim.md): active-runtime caps,

@@ -1,23 +1,27 @@
 # Bellerophon status
 
-Currency: 2026-09-25 ~06:45Z (written before a machine reboot + context reset).
+Currency: 2026-09-25 ~19:50Z (coupling campaign CLOSED; final report delivered).
 
-BOOT POINTER -- READ FIRST: roles/Bellerophon/coupling_2026-09-24/RESUME_AFTER_RESET.md
-  Coupling campaign RUNNING again since 2026-09-25T10:35:24Z under Amendment 1 (operator-authorised; active-runtime
-  caps; detached supervisor with standing authority to recover crashes). If it is not running after a reboot, follow
-  the UPDATE block at the top of RESUME_AFTER_RESET.md WITHOUT asking the operator.
-seat state: ACTIVE (autonomous campaign; no HITL until the final report). Worktree
-  D:/Prometheus-worktrees/bellerophon-post-campaign-forensics on branch bellerophon/coupling-campaign-2026-09-24.
+BOOT POINTER -- READ FIRST: roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md
+seat state: ACTIVE, nothing running from this seat. Worktree D:/Prometheus-worktrees/bellerophon-post-campaign-forensics
+  on branch bellerophon/coupling-campaign-2026-09-24 (pushed; NOT merged -- merge policy for this branch and
+  post-campaign-forensics-2026-09-23 is the operator's call, Q4 in RESUME_AFTER_RESET.md).
 
-COUPLING CAMPAIGN (physics v3) -- STOPPED BY HARNESS 2026-09-24T21:23Z, AWAITING OPERATOR RESTART
-  Branch bellerophon/coupling-campaign-2026-09-24; prereg frozen c9bed96de (plan a3bc8c8e..., 11,372 Phase-1 runs);
-  artifacts roles/Bellerophon/coupling_2026-09-24/. Started 20:07:31Z from pinned code
-  C:/Users/James/z80atlas_coupling_2026-09-24/code. Stopped by Claude Code's low-memory reaper at 959 results
-  (A 600/600, I 90/90, C 269/1800; 0 voids). Exact resume point: from the pinned code dir run
-    python -m prometheus.z80atlas.coupling_campaign --workdir C:/Users/James/z80atlas_coupling_2026-09-24
-           --inputs C:/Users/James/z80atlas_coupling_2026-09-24/coupling_inputs.json --workers N
-  (re-executes only missing runs; caps from the first start: Phase 1 by 2026-09-25T14:07Z, total by 18:07Z).
-  Memory: ~400 MB per worker; the machine was shared with ~48 other workers at the time.
+COUPLING CAMPAIGN (physics v3) -- COMPLETE 2026-09-25T19:09:26Z; ANALYSED ~19:38Z
+  Prereg frozen c9bed96de, Amendment 1 6607b3cb5 (operational). 11,657 runs (11,372 Phase 1 + 285 AUTO; EXT 0),
+  0 voids, 0 NOT_RUN, replay 341/341 identical, A8 control 40/40. Active runtime 8.63 h (wall 23.03 h).
+  Frozen readiness rule: READY_FOR_MULTIDAY (P1 P2 P3 P4 hold; P5 fails at ceiling; P6 4/60 vs 0/60 ns; 7 AUTO
+  CAUSAL_COUPLED / 6 mechanisms; 6/6 tasks, 6/8 substrates). Recorded scope limit: core effects are MAINTENANCE of
+  seeded code; ACQUISITION evidence is ECHO only (B-cop K40 29/150 ON vs 6/150 controls) plus 3 E2 repairs;
+  B-rand 0/3,200. Artifacts: COUPLING_CAMPAIGN_REPORT.md, COUPLING_CAUSAL_LEDGER.jsonl, COUPLING_ORIGIN_LEDGER.jsonl,
+  COUPLING_FAILURE_LEDGER.md (F1-F11), NEXT_MULTIDAY_CAMPAIGN.md (design only, nothing frozen or launched),
+  receipts/COUPLING_RESULTS.json, receipts/OPS_ACCOUNTING.json. Runtime evidence (not committed):
+  C:/Users/James/z80atlas_coupling_2026-09-24 (hashes in the report s6).
+  Exact resume point: nothing to resume. Next action = operator decision on NEXT_MULTIDAY_CAMPAIGN.md (prereg +
+  off-plan pilot first) and on the merge policy.
+
+OPEN QUEUE ITEM: comms #550 (Cosmos, C3 holdout D: build + seal one independent world family per
+  roles/Cosmos/c3/D_CONTRACT.md) -- held for the operator's word; not started.
 
 POST-CAMPAIGN FORENSICS + GROUNDING ROUND COMPLETE (2026-09-23, Bellerophon[m2-9e74888e]; branch
   bellerophon/post-campaign-forensics-2026-09-23; artifacts roles/Bellerophon/forensics_2026-09-23/):

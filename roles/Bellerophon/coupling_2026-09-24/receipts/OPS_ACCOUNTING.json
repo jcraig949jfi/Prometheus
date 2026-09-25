@@ -1,0 +1,101 @@
+{
+ "wall_clock_elapsed_h": 23.03,
+ "first_start_utc": "2026-09-24T20:07:31Z",
+ "end_utc": "2026-09-25T19:09:26Z",
+ "active_runtime_h": 8.63,
+ "segments": [
+  [
+   "2026-09-24T20:07:31Z",
+   "2026-09-24T21:23:31Z",
+   "segment 1 pre-OOM (operator: 1 h 16 min)"
+  ],
+  [
+   "2026-09-25T10:35:24Z",
+   "2026-09-25T10:59:15Z",
+   "segment 2",
+   "closed at last heartbeat: operator-requested stop for host reboot"
+  ],
+  [
+   "2026-09-25T12:11:44Z",
+   "2026-09-25T19:09:26Z",
+   "segment 3"
+  ]
+ ],
+ "oom_suspension_h": 13.2,
+ "pre_oom_observations_retained": 959,
+ "post_restart_observations": 10698,
+ "total_observations": 11657,
+ "duplicate_ids": 0,
+ "voids": [],
+ "not_run": {
+  "phase1": 0,
+  "phase2": 0,
+  "ext": 0
+ },
+ "planned": {
+  "phase1": 11372,
+  "phase2": 285,
+  "ext": 0
+ },
+ "concurrency_over_time": [
+  [
+   "2026-09-25T10:35:54Z",
+   20
+  ]
+ ],
+ "memory": {
+  "samples": 884,
+  "min_free_gb": 13.67,
+  "peak_tree_rss_mb": 3044,
+  "peak_worker_rss_mb": 300,
+  "pre_amendment_worker_rss_mb_observed": "~400 (2026-09-24, no recycling)"
+ },
+ "worker_recycling_every_n_runs": 6,
+ "supervisor_events": [
+  {
+   "utc": "2026-09-25T10:35:24Z",
+   "event": "launch",
+   "pid": 14116,
+   "workers": 20,
+   "relaunches": 0
+  },
+  {
+   "utc": "2026-09-25T10:59:42Z",
+   "event": "operator_stop_for_reboot",
+   "lines": 1359
+  },
+  {
+   "utc": "2026-09-25T12:11:44Z",
+   "event": "launch",
+   "pid": 6796,
+   "workers": 20,
+   "relaunches": 0
+  },
+  {
+   "utc": "2026-09-25T19:09:49Z",
+   "event": "campaign_stopped",
+   "rc": 0
+  }
+ ],
+ "relaunches": 0,
+ "tail_repairs": null,
+ "starts": [
+  "2026-09-24T20:07:31Z",
+  "2026-09-25T10:35:24Z",
+  "2026-09-25T12:11:44Z"
+ ],
+ "workers_by_start": [
+  [
+   "2026-09-25T10:35:24Z",
+   20,
+   6
+  ],
+  [
+   "2026-09-25T12:11:44Z",
+   20,
+   6
+  ]
+ ],
+ "pre_amendment_status_last_write": "2026-09-24T21:22:48Z",
+ "scientific_content_changed_by_amendment": false
+}
