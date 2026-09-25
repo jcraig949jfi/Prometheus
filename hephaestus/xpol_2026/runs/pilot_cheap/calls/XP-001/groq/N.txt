@@ -1,0 +1,32 @@
+**1. Algorithmic core**  
+The tool builds a *Quantum‑Neural Model‑Checker* (QNMC) that treats each candidate answer as a finite‑state transition system.  
+*Data structures* –  
+- **Token graph**: a directed multigraph G (V, E) where vertices are parsed logical units (facts, premises, conclusions). Edges carry a **type label** (e.g., “implies”, “contradicts”, “causes”) and a **weight** representing quantum‑inspired superposition confidence (a float ∈[0,1]).  
+- **State vector** S ∈ ℝ^|V| storing activation levels of each vertex; updated by a Hebbian‑style rule S←S+η·(A·S) where A is the adjacency matrix weighted by edge types.  
+- **Constraint matrix** C ∈ {0,1}^{|V|×|V|} encoding temporal‑logic specifications derived from the question (e.g., “if A then B”, “A before B”).  
+
+*Operations* –  
+1. **Parsing** extracts logical units and populates G. Edge weights are initialized from lexical cues (certainty words → high weight, hedges → low weight).  
+2. **Neural plasticity update** repeatedly applies the Hebbian rule, allowing strongly co‑occurring units to reinforce each other (synaptic strengthening) while a pruning step zeroes edges whose weight falls below a threshold (synaptic pruning).  
+3. **Quantum measurement** collapses the superposition: after a fixed number of iterations, each vertex’s activation is thresholded to 0/1, producing a deterministic truth assignment.  
+4. **Model checking** runs a depth‑first exploration of the induced Boolean transition system, verifying that all temporal‑logic constraints in C hold. Violations generate a penalty proportional to the minimal distance to a satisfying state (computed via BFS).  
+
+*Scoring* –  
+Score = 1 − (normalized penalty) × (average edge weight). Perfect compliance yields 1.0; any logical inconsistency or missing required relation reduces the score.
+
+**2. Parsed structural features**  
+- Negations (¬, “not”, “never”) – create “contradicts” edges.  
+- Comparatives (“greater than”, “more likely”) – generate numeric ordering edges.  
+- Conditionals (“if … then”) – encode temporal‑logic implication edges.  
+- Numeric values – stored as node attributes for quantitative checks.  
+- Causal claims (“causes”, “leads to”) – map to “causes” edge type.  
+- Ordering relations (“first”, “after”) – become precedence constraints in C.  
+
+**3. Novelty**  
+The exact combination of quantum‑inspired superposition weighting, Hebbian plasticity for adaptive edge reinforcement, and exhaustive model‑checking of the resulting Boolean system does not appear in prior literature. Closest analogues are separate works on probabilistic model checking and graph‑based neural reasoning, but their integration as a deterministic scorer is novel.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical verification, limited to finite‑state questions.  
+Metacognition: 6/10 — captures self‑consistency via pruning but lacks self‑explanation.  
+Hypothesis generation: 5/10 — focuses on evaluation, not on proposing new hypotheses.  
+Implementability: 9/10 — relies only on numpy, regex, and standard graph traversals; straightforward to code.

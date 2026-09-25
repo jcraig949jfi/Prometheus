@@ -1,0 +1,35 @@
+**Algorithmic design**
+
+1. **Parsing → symbolic grounding** – A lightweight tokenizer extracts logical atoms (e.g., *A‑is‑B*, *A > B*, *if A then B*), negations, comparatives, numeric literals and causal verbs. Each atom is assigned a unique integer ID and stored in a dictionary `{atom → id}`. The parsed sentence becomes a set of clause objects `{type, ids, polarity, value}`.
+
+2. **Sparse‑coding representation** – For every clause we build a *binary* vector `v ∈ {0,1}^N` where `N` is the number of distinct atoms. Only the positions of the atoms that appear in the clause are set to 1; all others stay 0. Using NumPy we keep these vectors in a **CSR‑like list** (`list[np.ndarray]`) that is extremely sparse (average density < 5 %). The whole answer is the concatenation of its clause vectors, giving a sparse “neural” fingerprint of the reasoning structure.
+
+3. **Property‑based test generation** – From a human‑written specification (e.g., “the answer must contain a conditional linking X to Y and a numeric comparison”), a small generator produces *mutations* of the atom set: it randomly flips polarities, substitutes comparable adjectives, or varies numeric values while preserving type constraints. Each generated test case yields a new clause set and thus a new sparse vector `v_test`.
+
+4. **SAT formulation & solving** – Each vector is interpreted as a clause in a Boolean formula: `v[i]=1` → literal `atom_i`, `v[i]=0` → literal `¬atom_i`. All `v_test` vectors are conjunctively added to a CNF. A lightweight DPLL solver (pure‑literal elimination, unit propagation) works directly on NumPy boolean arrays. If the CNF is **unsatisfiable**, the solver returns a minimal unsatisfiable core (a subset of literals) by iterative removal, exposing missing logical links in the candidate answer.
+
+5. **Scoring logic** –  
+   * **Coverage** = fraction of generated properties whose clauses are satisfied in the answer’s CNF.  
+   * **Sparsity penalty** = `λ * (non‑zero entries / N)` discouraging overly dense representations.  
+   * **Core size penalty** = `μ * |core| / |clauses|` – smaller cores indicate tighter reasoning.  
+   Final score = `Coverage – SparsityPenalty – CorePenalty`, a deterministic number in `[0,1]`.
+
+**Structural features parsed**
+
+- Negations (`not`, `no`, `without`)  
+- Comparatives & superlatives (`greater than`, `least`, `more…than`)  
+- Conditionals (`if…then`, `when`, `provided that`)  
+- Numeric values & units (`5 kg`, `≈ 3.2`)  
+- Causal verbs (`causes`, `leads to`, `results in`)  
+- Ordering relations (`first`, `subsequently`, `after`)  
+
+**Novelty assessment**
+
+Sparse binary encodings for logical clauses exist in SAT‑based NLP, and property‑based test generation is common in software verification, but their **joint use as a scoring engine for open‑ended reasoning answers is not documented**. The combination therefore constitutes a novel, fully algorithmic evaluation pipeline.
+
+**Ratings**
+
+Reasoning: 8/10 — integrates logical coverage and minimal unsat cores for deep assessment.  
+Metacognition: 6/10 — can detect missing self‑explanations via unsat cores but lacks introspection.  
+Hypothesis generation: 7/10 — property‑based mutators produce diverse test cases without learning.  
+Implementability: 9/10 — relies only on NumPy, regex parsing, and a few hundred lines of DPLL code.

@@ -1,0 +1,26 @@
+**1. Algorithm**  
+The scorer builds a multi‑scale representation of a candidate answer and then subjects each scale to falsification tests, propagating the results upward as in renormalization.
+
+*Data structures*  
+- `tokens : List[str]` – raw tokenised answer.  
+- `features : np.ndarray (n_tokens × d)` – one‑hot or embedding‑derived Boolean/numeric flags for structural cues (negation, comparative, conditional, numeric, causal, order).  
+- `wavelet_coeffs : List[np.ndarray]` – discrete wavelet transform (e.g., Haar) applied column‑wise to `features`, yielding coarse‑grained coefficient matrices for scales `s = 0 … S`.  
+- `constraints : Dict[int, Set[Tuple[int,int,str]]]` – for each scale, a set of logical triples `(i, j, relation)` derived from the cues (e.g., “if A then B”).  
+- `score : float` – accumulated penalty/reward.
+
+*Operations*  
+1. **Parse structural cues** with regexes, fill `features`.  
+2. **Wavelet decomposition**: `wavelet_coeffs = pywt.wavedec(features, 'haar', level=S, axis=0)`.  
+3. **Falsification at each scale**: for every `(i,j,rel)` in `constraints[s]` evaluate the truth of the relation using the coarse‑grained coefficients (e.g., compare averaged signs). If a relation is contradicted, add a penalty `p`. If a hypothesis is explicitly falsifiable and the test fails, add a larger penalty.  
+4. **Renormalization step**: propagate penalties upward: `penalty_s = penalty_s + α·penalty_{s‑1}` (α∈[0,1]) to reflect that low‑level violations affect higher‑level reasoning.  
+5. **Final score**: `score = Σ_s (weight_s * penalty_s)`, lower scores indicate stronger reasoning.
+
+**2. Parsed structural features** – negations, comparatives, conditionals, numeric values, causal verbs (“causes”, “leads to”), temporal/ordering words (“first”, “then”), and explicit hypothesis markers (“we hypothesize”, “the claim is”).
+
+**3. Novelty** – Multi‑scale wavelet analysis of textual logical features exists in signal‑processing‑in‑NLP work, and falsification‑based constraint checking is known in formal verification. Their combination—using wavelet‑based renormalization to aggregate falsification outcomes across scales—is not present in current evaluation literature, making it a novel hybrid.
+
+**4. Ratings**  
+Reasoning: 8/10 — concrete multi‑scale logical testing improves depth.  
+Metacognition: 6/10 — captures self‑consistency but lacks explicit self‑reflection modeling.  
+Hypothesis generation: 5/10 — can flag bold claims but does not create new hypotheses.  
+Implementability: 9/10 — relies only on numpy, regex, and a lightweight wavelet library, easy to prototype.

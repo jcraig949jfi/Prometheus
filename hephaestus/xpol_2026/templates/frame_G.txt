@@ -1,0 +1,17 @@
+
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME G: METACOGNITIVE
+
+Design a tool that KNOWS WHAT IT DOESN'T KNOW. When your tool cannot confidently solve a problem, it must return a calibrated low confidence score rather than guessing.
+
+A tool that says "I don't know" on 20% of problems and gets 95% of the rest correct is BETTER than a tool that guesses on everything and gets 74%.
+
+Your tool must handle problems where the correct answer is "Cannot be determined from the information given." This answer must emerge from COMPUTATION (counting degrees of freedom vs constraints, checking if the logical system is underdetermined) not from keyword detection (seeing the word "might" or "possibly").
+
+For every problem your tool solves, it should track internally WHY it is confident — which parsed constraints lead to the answer. If parsing is uncertain (e.g., ambiguous pronoun reference, multiple valid interpretations), confidence should be proportionally reduced.
+
+Implement uncertainty propagation: if 3 of 5 parsed variables are confident but 2 are ambiguous, score candidates based on the confident variables and reduce confidence proportionally for the ambiguous ones.
+
+ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition.
+
+Tier B meta-confidence MUST detect: presupposition traps ("have you stopped..."), quantifier scope ambiguity ("every...some"), false dichotomies ("either...or"), survivorship bias ("of those who succeeded..."), sunk cost framing ("already invested...").

@@ -1,0 +1,90 @@
+=======================================================================
+ADDENDUM 1 to REVIEW_PACKET_2026-09-19_xpol_small_set -- 2026-09-23
+Session arm (Fable 5.1 authoring in-session) + local 14B size control
+Hephaestus[m2-0ee6272b]; runs/session, runs/small_model
+=======================================================================
+
+Operator remark under test: "Smaller models aren't necessarily bad at
+this game." Two new arms, same ruler (186 traps), same floors:
+position-majority 0.4032 / NCD 0.3925 / constant-first 0.3387 /
+chance 0.3238. All numbers E3, single draw, C_orig (2026-03 analysis
+held constant; only the CODE step varies by model).
+
+1. THE TABLE
+-----------------------------------------------------------------------
+  packet   original   qwen14b   groq120b   fable cli      fable session
+  XP-001   (no code)  0.3387    0.3871*    0.5161/0.3656  --
+  XP-009   (no code)  0.3387    0.4086*    0.5215/0.4409  0.4839
+  XP-034   0.4731     0.3387    --         0.4247/0.3011  --
+  XP-059   0.4409     0.3226    --         --             0.4516
+  XP-078   0.4570     crash     --         --             0.4194
+  (* groq C_new; fable cli shows C_new/C_orig; session is C_orig)
+
+2. WHAT THE 14B ACTUALLY DID (the part the accuracy hides)
+-----------------------------------------------------------------------
+  Three of its four scored tools return score -0.0 for EVERY candidate
+  ("Optimized logical assignment") -- all ties, so the harness's first
+  candidate wins, and 0.3387 is EXACTLY the constant-first floor. The
+  fourth (XP-059, 0.3226) is at chance. Agreement with NCD picks 0.45
+  (it is not echoing NCD; it is doing nothing). The fifth crashed at
+  runtime. Every one of these passed syntax, imports, interface and a
+  smoke call: they are the 1.0 "decorative mechanism" exactly -- code
+  that reads as a free-energy / GA / model-checking pipeline and
+  computes a constant. The March 2026 gates admitted this class as
+  "forged"; the honest ruler puts it at the do-nothing floor.
+
+3. THE SIZE GRADIENT, RESTATED
+-----------------------------------------------------------------------
+  The remark is half right. Everything sits within 0.15 of the floor,
+  so a scoreboard makes the tiers look alike. But the FLOOR each tier
+  sits on is different, and that is the finding:
+    14B local           0.32-0.34   constant-first: no mechanism at all
+    120B (nemotron 03,  0.35-0.41   NCD echo: agreement with NCD picks
+     gpt-oss 09)                    0.84-0.89; one parser at most fires
+    Fable 5.1           0.42-0.52   several parsers fire (R1 .60-.83,
+                                    R3 .67-.78); R2 and R4 still ~floor
+  The gradient is not "better reasoning"; it is whether ANY structural
+  parser exists and fires. Model size buys the existence of the
+  mechanism, not its quality. The prompt architecture (regex + NCD
+  tiebreak) caps everyone; the ruler's R2/R4 tiers are unmoved by any
+  model at any size.
+
+4. PAIRED RECORD (committed original vs new code, same ruler)
+-----------------------------------------------------------------------
+  XP-034: original 0.473 beats fable cli 0.425 and 14B 0.339
+  XP-078: original 0.457 beats session 0.419; 14B crashed
+  XP-059: session 0.452 beats original 0.441 by two traps (noise)
+  Paired: originals 2, new models 1 (the 1 is inside noise). The claim
+  "newest models beat the 1.0 tools" is NOT supported on paired data.
+  What IS supported: the newest model reaches 0.48-0.52 on packets
+  where no committed original exists, above any 1.0 tool's 0.473.
+
+5. CONTAMINATION AND WHAT WAS NOT DONE
+-----------------------------------------------------------------------
+  fable51_session: author (this seat) had seen floors, tier medians,
+  category names and the prior results; did not open the trap generator
+  / static TRAPS / per-category rows while writing; one draw each; no
+  inspect-and-revise cycle (Master Smith not invoked). Never pooled with
+  fable51 (claude -p). qwen14b: raw call, temperature 0.4, 4x budget,
+  no contamination possible.
+
+6. WHAT WOULD MOVE THIS
+-----------------------------------------------------------------------
+  - One inspect-and-revise cycle on XP-009 targeting R2 (40 traps,
+    0.225 on every session tool; the cli 0.52 tool had R2 0.60). That
+    is the Master Smith loop and needs the operator's word.
+  - A 7B/3B local arm below 14B is not informative: 14B already sits
+    on the do-nothing floor.
+  - GPT-6 Astra remains the missing frontier comparison (unfunded).
+
+7. QUESTIONS
+-----------------------------------------------------------------------
+  Q1. Accept "size buys mechanism existence, not mechanism quality" as
+      the finding of this replay, and close the temporary mission on it?
+  Q2. Authorize one Master Smith cycle (inspect R2 failures, revise,
+      re-score) on XP-009, recorded as a separate with-feedback arm?
+  Q3. The 1.0 March gates admitted constant-output tools as forged;
+      the 14B reproduces that class today. Is a "constant-output
+      detector" (all scores equal -> reject) worth adding to the 1.0
+      validator as a repaired instrument, or leave the corpus frozen?
+=======================================================================

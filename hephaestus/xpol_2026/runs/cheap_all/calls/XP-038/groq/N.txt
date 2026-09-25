@@ -1,0 +1,40 @@
+**Algorithm Overview**  
+The evaluator builds a *symbolic‑spectral graph* for each answer.  
+
+1. **Parsing & Tokenisation** – A deterministic finite‑state parser extracts a flat list of logical units (predicates, operators, numbers, comparatives, negations, conditionals, causal verbs, ordering cues). Each unit is stored as a tuple `(type, value, position)`.  
+
+2. **Compositional Encoding** – For every unit a one‑hot vector of length *V* (vocabulary size) is created. A *composition stack* applies Frege‑style rules:  
+   * Conjunction → element‑wise **add**;  
+   * Implication / Modus Ponens → element‑wise **multiply**;  
+   * Negation → **1‑vector –** vector.  
+   The stack yields a 2‑D array `C (n_units × V)` that captures the meaning of the whole as a linear combination of its parts.  
+
+3. **Fourier Transform** – `numpy.fft.rfft` is applied row‑wise to `C`, producing a complex spectrum `S`. The magnitude spectrum `|S|` encodes global ordering and periodicity of logical structures (e.g., repeated “if‑then” patterns appear as low‑frequency peaks).  
+
+4. **Criticality Detection** – The variance of each frequency band across the answer is computed. Bands whose variance exceeds the mean + σ are marked *critical*; their indices form a mask `M`. Critical bands are assumed to carry the decisive logical load (analogous to a system poised at order‑disorder boundary).  
+
+5. **Scoring Logic** – A reference answer undergoes the same pipeline, producing `S_ref` and mask `M_ref`. The final score is  
+
+\[
+\text{score}= \frac{\sum_{i\in M\cup M_{ref}} |S_i - S^{ref}_i|}{|M\cup M_{ref}|}
+\]
+
+i.e. the average L1 distance over the union of critical frequencies, lower values indicating higher reasoning fidelity.  
+
+**Structural Features Parsed**  
+- Negation cues (`not`, `never`)  
+- Comparative operators (`greater than`, `≤`)  
+- Conditional constructs (`if … then …`, `unless`)  
+- Numeric literals and units  
+- Causal verbs (`causes`, `leads to`)  
+- Temporal/ordering words (`first`, `after`, `subsequently`)  
+- Logical connectives (`and`, `or`, `implies`)  
+
+**Novelty Assessment**  
+The exact combination—spectral analysis of a compositional logical vector with variance‑based criticality masking—is not present in standard NLP toolkits. It parallels spectral graph reasoning and critical‑state detection in physics, but applying all three jointly to pure text scoring is a novel engineering synthesis.
+
+**Ratings**  
+Reasoning: 8/10 — captures global logical patterns and local compositional rules.  
+Metacognition: 6/10 — can expose gaps via critical bands but lacks self‑reflection.  
+Hypothesis generation: 5/10 — deterministic pipeline, limited exploratory capacity.  
+Implementability: 9/10 — relies only on numpy and the std‑lib, straightforward to code.

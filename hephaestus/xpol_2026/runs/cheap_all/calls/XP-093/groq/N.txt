@@ -1,0 +1,24 @@
+**Algorithmic design**
+
+The tool builds a *reasoning‑graph* for each candidate answer.  
+1. **Parsing stage** extracts logical predicates (e.g., “A → B”, “A > B”, “not A”) using regular‑expression tokenisers. Each predicate becomes a node; directed edges encode explicit relations (causal, conditional, comparative, ordering, numeric inequality).  
+2. **Topological layer** computes the *graph topology*: connected components, cycles, and Betti‑0/Betti‑1 numbers (connectedness and “holes” where a required inference is missing). A candidate that leaves a hole (unresolved dependency) receives a penalty proportional to the size of the hole.  
+3. **Cognitive‑load layer** estimates the *intrinsic load* of the answer by counting the number of independent sub‑graphs (chunks) that must be held in working memory simultaneously. The *extraneous load* is measured by the depth of nested negations or conditionals; deeper nesting adds cost. The *germane load* is the proportion of edges that directly contribute to reaching the goal node. A composite load score \(L = w_i·I + w_e·E - w_g·G\) is subtracted from the raw correctness score.  
+4. **Bandit‑driven scoring** treats each answer as an arm in a contextual multi‑armed bandit. The context vector consists of the topological metrics (components, holes, Betti numbers) and load metrics. Using a UCB‑1 formula, the system maintains an empirical mean reward (previous human‑graded scores) and a confidence term; when a new answer is evaluated the arm’s index determines a *selection bonus* that favours answer patterns that have historically yielded higher human agreement. The final score = (graph‑correctness – load penalty) + bandit‑bonus.
+
+**Parsed structural features**  
+- Negations (¬, “not”)  
+- Comparatives (“greater than”, “more … than”)  
+- Conditionals (“if … then”)  
+- Numeric values and inequalities  
+- Causal claims (“because”, “leads to”)  
+- Ordering/temporal relations (“first”, “after”)  
+
+**Novelty assessment**  
+The exact combination—topological integrity checks, cognitive‑load budgeting, and a contextual bandit for adaptive weighting—has not been reported in the literature. Prior work uses graph‑based reasoning or bandits separately, but integrating all three for automated scoring is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical graph plus topology, but depends on parser quality.  
+Metacognition: 7/10 — load model captures working‑memory constraints, though coarse.  
+Hypothesis generation: 6/10 — bandit can explore new answer patterns, yet limited by initial data.  
+Implementability: 9/10 — pure NumPy/std‑lib, clear data structures, feasible to prototype.

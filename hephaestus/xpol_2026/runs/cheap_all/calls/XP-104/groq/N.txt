@@ -1,0 +1,28 @@
+**Algorithmic core**  
+The evaluator builds a *proof‑graph* G = (V,E) where each vertex v∈V represents a parsed proposition (premise, conclusion, intermediate claim). Edges are directed logical dependencies extracted by regex patterns (e.g., “if A then B”, “A because B”). The graph is stored as a sparse adjacency matrix **A** (NumPy int8) for fast transitive‑closure via repeated squaring (Warshall’s algorithm).  
+
+*Topological* analysis treats **A** as a combinatorial space: we compute Betti‑0 (connected components) to ensure a single reasoning chain, and Betti‑1 (cycles) to detect circular arguments. A cycle‑penalty = β₁·γ reduces the score.  
+
+*Thermodynamic* analogy assigns a “heat” h(v) to each vertex proportional to its information content (log‑frequency of its lexical tokens). Heat flows along edges according to a discrete diffusion step **h←h + α·A·h**, where α∈(0,1) is a conductivity constant. The steady‑state entropy S = −∑p log p (p = h/∑h) measures dispersion of reasoning effort; lower entropy (focused flow) yields a higher *coherence* bonus.  
+
+*Proof‑theoretic* normalization rewrites the graph into a cut‑free form: we repeatedly apply a NumPy‑implemented modus‑ponens rule that collapses a pattern (A→B, A) → B, removing the cut edge and counting each elimination step c. Fewer cuts (small c) indicate a more direct proof, contributing a *normalization* reward.  
+
+**Scoring**  
+Score = w₁·(1 − β₁·γ) + w₂·(1 − S/Sₘₐₓ) + w₃·(1 − c/Cₘₐₓ), with weights tuned on a validation set. The final value is normalized to [0,1].
+
+**Parsed structural features**  
+- Negation markers (“not”, “no”)  
+- Comparative adjectives (“greater than”, “less than”)  
+- Conditional clauses (“if… then”, “unless”)  
+- Numeric literals and units  
+- Causal connectives (“because”, “therefore”)  
+- Temporal/ordering words (“first”, “after”)  
+
+**Novelty**  
+Graph‑based argument scoring exists, and entropy‑based coherence has been explored, but the explicit fusion of topological Betti analysis, thermodynamic diffusion, and proof‑theoretic cut elimination into a single numpy‑only pipeline is not documented in prior literature, making the combination effectively novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical‑graph grounding, modest handling of nuanced language  
+Metacognition: 6/10 — can detect self‑referential structures but lacks explicit self‑awareness cues  
+Hypothesis generation: 5/10 — limited to extracting given claims, no generative component  
+Implementability: 9/10 — pure NumPy & regex, easy to embed in existing pipelines.

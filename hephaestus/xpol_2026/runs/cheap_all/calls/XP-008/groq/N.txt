@@ -1,0 +1,28 @@
+**1. Algorithmic core**  
+The scorer builds a *proof‑graph* G = (V,E) where each vertex v∈V is a parsed proposition (e.g., “X > Y”, “if A then B”). Edges encode logical inference rules (modus ponens, transitivity) derived from a tiny proof‑theory kernel. For every candidate answer the system:
+
+1. **Token → proposition extraction** – regex‑based parsers produce a list P of proposition objects (type, operands, polarity).  
+2. **Graph construction** – insert P into G, adding directed edges for detected inference patterns (e.g., “A ⇒ B” creates edge A→B).  
+3. **Entropy weighting** – compute Shannon entropy H over the multiset of proposition types (negation, comparison, conditional, numeric). Rare types receive higher weight w = 1 + H/|P|.  
+4. **Incentive‑compatible scoring** – treat each proposition as a self‑interested “agent” that reports a confidence c∈[0,1]. Using a Vickrey‑Clarke‑Groves (VCG) style payment, the final score S = Σ w·c − penalty, where penalty = Σ Δ where Δ is the information‑theoretic divergence (KL) between the empirical distribution of inferred relations in G and the reference distribution derived from a gold‑standard proof. This makes it optimal for the answer to reveal its true confidence (mechanism design) while rewarding informative, low‑entropy reasoning steps.
+
+All operations are pure NumPy (vectorised counting, entropy/KL) and plain Python data structures (lists, dicts, networkx‑like adjacency dict).
+
+**2. Parsed structural features**  
+- Negations (¬, “not”)  
+- Comparatives (“greater than”, “≤”)  
+- Conditionals (“if … then”, “⇒”)  
+- Numeric values and arithmetic relations  
+- Causal verbs (“causes”, “leads to”)  
+- Ordering relations (temporal “before/after”, set inclusion)  
+- Quantifiers (“all”, “some”)  
+
+**3. Novelty**  
+The exact combination—entropy‑weighted VCG payments on a proof‑graph built from regex‑extracted logical propositions—is not present in the literature. Prior work uses either information‑theoretic similarity or mechanism‑design incentives separately, but merging them with a lightweight proof‑theory kernel for deterministic scoring is a new formulation.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — the graph‑based proof check plus entropy weighting captures deep logical structure.  
+Metacognition: 7/10 — VCG incentives encourage honest confidence reporting, modelling self‑awareness.  
+Hypothesis generation: 6/10 — the system can suggest missing inference edges, but does not create novel hypotheses.  
+Implementability: 9/10 — relies only on regex, NumPy and basic Python, fitting the pipeline constraints.

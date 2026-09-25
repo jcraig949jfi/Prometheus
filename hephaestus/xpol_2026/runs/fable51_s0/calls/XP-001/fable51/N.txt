@@ -1,0 +1,30 @@
+**1. The algorithm**
+
+Model checking is the load-bearing piece; the other two reduce to concrete mechanisms.
+
+*Data structures:*
+- **Proposition table**: rows of `(subject, predicate, object, polarity, numeric_value, unit)` regex-extracted from a candidate answer.
+- **Kripke structure**: states = sets of propositions holding at a "step"; edges from ordering/causal cues (`then`, `after`, `because`, `leads to`, `if…then`). Numeric propositions carry intervals.
+- **Spec list** from the prompt: constraints in a tiny LTL-like form — `G(p → q)` (invariants), `F(q)` (a required conclusion), `p BEFORE q` (ordering), `x > y` (numeric).
+- **Interpretation set** (the "superposition"): when parsing is ambiguous — negation scope, pronoun binding, quantifier scope — keep a list of `(parse, weight)` rather than committing. This is just a weighted parse forest.
+- **Constraint weight vector** (the "plasticity"): one weight per constraint type.
+
+*Operations:*
+1. Extract propositions per interpretation; build the Kripke structure.
+2. Explore the state space (DFS with visited set; bounded depth) and check every spec. Also run closure: transitivity over `>`/`before`, modus ponens over conditionals, contradiction detection (`p` and `¬p` reachable in the same state).
+3. "Measurement": any interpretation that violates a hard constraint (contradiction, numeric inconsistency) is pruned; the remaining weights renormalise.
+4. Score = max over surviving interpretations of `Σ w_c · satisfied(c) / Σ w_c`, minus a penalty for unresolved propositions the prompt required.
+5. Hebbian update across a batch of candidates: constraint types whose satisfaction co-varies with inter-candidate agreement get weight increased; types with zero variance across candidates are pruned. Weights freeze after a calibration batch ("critical period") so scoring is deterministic thereafter.
+
+**2. Features parsed**
+Negations (with scope alternatives), conditionals, comparatives/numeric inequalities with units, temporal/causal ordering, universal/existential quantifiers (as `G`/`F`), explicit conclusions ("therefore").
+
+**3. Novelty**
+Not novel. The core is bounded model checking over text-derived transition systems plus weighted MaxSAT scoring; the "superposition" is a standard ambiguity-preserving parse forest; the Hebbian layer is online feature reweighting. NL-to-LTL translation and entailment-as-model-checking exist. The value is in the combination being disciplined, not in any new idea.
+
+**4. Ratings**
+
+Reasoning: 7/10 — state-space exploration plus transitivity/modus ponens closure is exactly the constraint-propagation core that works; ambiguity-preserving parses avoid brittle single-parse failures.
+Metacognition: 4/10 — Hebbian reweighting gives crude self-calibration but no genuine monitoring of its own parse confidence.
+Hypothesis generation: 5/10 — interpretation branching enumerates alternatives, but only within pre-defined ambiguity classes.
+Implementability: 8/10 — regex extraction, DFS, interval arithmetic and a weight vector are all trivial in numpy/stdlib; the temporal-logic subset must be kept tiny to stay tractable.

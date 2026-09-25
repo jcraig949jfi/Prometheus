@@ -1,0 +1,32 @@
+**1. Algorithmic core**  
+The tool builds a *finite‑state transition graph* (Model‑Checking) whose nodes are *semantic predicates* extracted from the prompt and each candidate answer. Each predicate is encoded as a fixed‑length numeric vector (e.g., one‑hot for predicate type + normalized numeric slots). Edges represent logical relations (implication, equivalence, temporal order) discovered by a lightweight parser.  
+
+A *spectral layer* computes the power‑spectral density of the adjacency matrix of this graph (via `numpy.fft.rfft`). High‑frequency components expose irregular, “noisy’’ connections such as contradictory edges or dangling predicates; low‑frequency mass captures coherent, well‑structured reasoning chains.  
+
+A *neuromodulatory weighting* vector is derived from cue words that signal gain control (e.g., “however”, “therefore”, “if”). The presence of a cue multiplies the corresponding edge weight by a factor > 1 (excitatory) or < 1 (inhibitory). The modulated adjacency matrix `W_mod = W * gain` is then re‑spectrally analysed.  
+
+**Scoring logic** –  
+1. Build predicate graph `G_prompt` and `G_candidate`.  
+2. Apply neuromodulatory gains → `W_p`, `W_c`.  
+3. Compute spectra `S_p = |rfft(W_p)|`, `S_c = |rfft(W_c)|`.  
+4. Align spectra by frequency bin and compute cosine similarity `sim = (S_p·S_c)/(‖S_p‖‖S_c‖)`.  
+5. Penalize high‑frequency mismatch (`pen = sum(max(0, S_c‑S_p)·freq_bin)`).  
+6. Final score = `sim – α·pen` (α tuned empirically). The result is a deterministic float in [0,1] reflecting structural and logical fidelity.
+
+**2. Parsed structural features**  
+- Negations (`not`, `never`)  
+- Comparatives (`more … than`, `greater … than`)  
+- Conditionals (`if … then …`, `unless`)  
+- Numeric values and units  
+- Causal verbs (`cause`, `lead to`, `result in`)  
+- Ordering relations (`first`, `after`, `subsequently`)  
+- Logical connectors (`and`, `or`, `implies`)  
+
+**3. Novelty**  
+No known system combines spectral analysis of a logical graph with neuromodulatory gain derived from discourse cues and then evaluates similarity via model‑checking‑style state graphs. Existing work treats either graph‑based model checking or spectral text similarity, but their integration as described is novel.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical graph + spectral consistency checks  
+Metacognition: 6/10 — captures cue‑driven gain but lacks self‑reflection loops  
+Hypothesis generation: 5/10 — can flag missing predicates but does not propose alternatives  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, fits pipeline constraints

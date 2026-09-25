@@ -1,0 +1,15 @@
+**1. Emergent computational mechanism**  
+A *prime‑driven analogical program synthesiser* (PD‑APS) that treats number‑theoretic regularities (e.g., prime gaps, ζ‑zero spacings) as relational templates. The system extracts a graph‑like structure from a conjecture about primes (nodes =  integers, edges =  “next‑prime”, “gap‑size”, “divides”). Using a Structure‑Mapping Engine (SME) it searches for isomorphic sub‑graphs in a source domain such as graph‑coloring or lattice walks. The mapped relational pattern becomes a *synthesis sketch* that is fed to a neural‑guided synthesiser (e.g., DreamCoder or the “Neural Guided Synthesis” model of Ellis et al., 2022) together with a type‑directed constraint solver (SMT‑based, Z3). The sketch is instantiated into concrete code that computes the analogue’s property; a final verification step checks whether the code, when re‑interpreted back in the prime domain, satisfies the original conjecture.  
+
+**2. Advantage for a self‑testing reasoning system**  
+The system can *auto‑generate and execute* hypothesis‑specific programs without hand‑written proofs. By analogically borrowing a well‑studied algorithm (e.g., a sieve for graph independence) and adapting it through synthesis, the system obtains a concrete witness or counter‑example for a prime conjecture far faster than symbolic reasoning alone. The tight loop—analogical mapping → sketch → neural‑guided synthesis → symbolic execution—lets the agent iteratively refine hypotheses, prune dead‑ends, and discover unexpected “prime‑gap” invariants that would be invisible to pure deductive search.
+
+**3. Novelty**  
+While automated conjecturing in number theory (e.g., Colton’s HR, the “Graffiti” system) and neural program synthesis are established, their *combined use with explicit analogical structure‑mapping* on prime‑theoretic graphs is not a recognized research area. PD‑APS therefore maps to a novel interdisciplinary niche, though it draws on existing components (SME, DreamCoder, Z3).
+
+**4. Ratings**  
+
+Reasoning: 8/10 — the architecture tightly couples relational analogy with concrete execution, yielding deep cross‑domain insight.  
+Metacognition: 7/10 — self‑testing loops are strong, but reliance on quality of analogies may limit introspection.  
+Hypothesis generation: 9/10 — analogical transfer produces rich, non‑obvious conjectures.  
+Implementability: 6/10 — all parts exist, yet integrating them and engineering robust prime‑graph extraction remains challenging.

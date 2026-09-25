@@ -1,0 +1,25 @@
+**1. Algorithm derived from the three concepts**  
+The tool builds a *state‑space* of the candidate answer that mimics an ergodic dynamical system. Each atomic proposition (e.g., “X > Y”, “A causes B”, “agent p believes q”) is a node in a directed graph G = (V,E). Edges encode logical relations extracted from the prompt: causal (→), temporal (⟶), comparative (≻), negation (¬), and mental‑state links (↔). A *measure* μ assigns a weight to each node based on its lexical salience (frequency, domain‑specific lexicon) and numeric magnitude (if any).  
+
+The algorithm iterates a deterministic “update map” T over G: for every node v, its new value is the weighted average of its predecessors’ values (time‑average). Because T is linear and the graph is finite, the system quickly reaches a stationary distribution – the ergodic invariant measure. The stationary weight of each node is interpreted as the *degree of support* the answer gives to that proposition.
+
+Scoring proceeds by comparing the invariant measure of the answer graph with a reference graph built from the gold‑standard solution. A distance metric (e.g., Earth‑Mover’s Distance on the node‑weight vectors) yields a numeric score; lower distance = higher correctness. The process is purely algebraic, requiring only NumPy for matrix multiplication and eigen‑vector computation.
+
+**2. Structural features parsed**  
+- Negation markers (“not”, “never”) → ¬ edges.  
+- Comparatives (“greater than”, “more … than”) → ≻ edges with numeric scaling.  
+- Conditionals (“if … then …”) → → edges with logical implication.  
+- Numeric values (integers, floats, ranges) → node attributes for quantitative weighting.  
+- Causal claims (“causes”, “leads to”) → → edges flagged as causal.  
+- Temporal ordering (“before”, “after”) → ⟶ edges.  
+- Mental‑state verbs (“believes”, “desires”, “knows”) → ↔ edges linking agent nodes to proposition nodes.
+
+**3. Novelty**  
+The exact combination—treating a parsed logical graph as an ergodic dynamical system and using its invariant distribution to compare against a reference—is not present in standard NLP evaluation literature. Existing work uses constraint propagation or graph‑matching separately, but the ergodic‑averaging perspective for scoring is a novel synthesis.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — the method captures logical flow and quantitative consistency without learning.  
+Metacognition: 7/10 — modeling Theory‑of‑Mind edges allows assessment of belief‑state reasoning.  
+Hypothesis generation: 6/10 — it can highlight missing causal or mental links but does not propose new ones.  
+Implementability: 9/10 — relies only on NumPy, regex‑based parsing, and linear algebra; straightforward to prototype.

@@ -1,0 +1,236 @@
+Here is the implementation. It builds the P×F×A structural tensor, factors it with a NumPy CP-ALS, tunes the answer-loading weights with a PID loop toward a gold structural-Jaccard target, refines them with per-component best-response ascent (local Nash), and puts a constructive computation module in front of all of that as the primary signal. Confidence is capped by `_meta_confidence()` on prompt properties alone.
+
+```python
+"""
+ReasoningTool: Tensor Decomposition x Feedback Control x Nash Equilibrium.
+
+Mechanism: the reference (prompt + computed answer) and every candidate are
+parsed into propositions carrying 7 binary structural features (negation,
+comparative, conditional, causal, numeric, ordering, quantifier).  Stacked as
+a P x F x A tensor and factored by CP-ALS (numpy only), the answer loadings
+C (A x R) are scored by a weight vector w.  A PID loop (Kp=.5, Ki=.1, Kd=.2)
+drives C.w toward a gold similarity target (Jaccard of structural signatures
+vs the reference); then each rank component acts as a player in best-response
+ascent (alpha=.05) until no component can raise alignment by > 1e-3 (a local
+Nash equilibrium).  A constructive computation module (decimal comparison,
+PEMDAS arithmetic, Bayes posteriors, expected value, work/rate, speed,
+modular, ordering/transitive closure, scheduling overlap, age offsets,
+compound percent) supplies the reference answer.  Score = 0.45 computation +
+0.40 structural + 0.15 NCD tiebreaker; the tool functions with NCD removed.
+"""
+import re, zlib, ast
+import numpy as np
+
+FEATS = [r"\b(not|no|never|none|cannot|can't|isn't|doesn't|don't|won't|neither)\b",
+         r"\b(more|less|greater|smaller|larger|fewer|bigger|higher|lower|twice|than)\b|[<>]",
+         r"\b(if|then|unless|provided|whenever|only if)\b",
+         r"\b(because|leads? to|results? in|causes?|therefore|hence|due to|since)\b",
+         r"-?\d+(?:\.\d+)?%?", r"\b(first|second|third|last|before|after|earlier|later|next|prior)\b",
+         r"\b(all|some|every|most|any|each|none|nobody|everyone)\b"]
+HEDGE = (r"cannot be determined|can't be determined|can't tell|cannot tell|ambiguous|depends|insufficient|"
+         r"not enough information|unclear|presuppos|not necessarily|loaded question|false dichotomy|"
+         r"neither|other options|unknown|no way to know|doesn't follow|does not follow|more information")
+LOWW = r"\b(shortest|youngest|slowest|lightest|smallest|poorest|last|latest|least|fewest|weakest)\b"
+NUM = r"-?\d+(?:\.\d+)?"
+STOP = {"Who", "Which", "What", "If", "Is", "The", "In", "Then", "But", "And", "After", "Before", "So", "Does",
+        "Did", "Was", "Were", "Are", "Given", "Since", "When", "Suppose", "Assume", "Also", "Both", "However"}
+
+def _nums(s): return [float(x) for x in re.findall(NUM, s.replace(",", ""))]
+def _props(t): return [p.strip() for p in re.split(r"[.;!?\n]+|\b(?:and|but|or|whereas)\b", t.lower()) if p.strip()]
+def _sig(t):
+    s = set()
+    for p in _props(t):
+        s.add("".join("1" if re.search(rx, p) else "0" for rx in FEATS))
+        s.update(re.findall(NUM, p)); s.update(re.findall(r"\b(?:not|no|never|neither)\s+\w+", p))
+    return s
+def _jac(a, b): return len(a & b) / max(1, len(a | b))
+def _ncd(a, b):
+    za, zb = len(zlib.compress(a.encode())), len(zlib.compress(b.encode()))
+    return (len(zlib.compress((a + b).encode())) - min(za, zb)) / max(za, zb, 1)
+def _safe_eval(node):
+    ops = {ast.Add: lambda a, b: a + b, ast.Sub: lambda a, b: a - b, ast.Mult: lambda a, b: a * b,
+           ast.Div: lambda a, b: a / b, ast.Pow: lambda a, b: a ** b, ast.USub: lambda a: -a}
+    if isinstance(node, ast.Expression): return _safe_eval(node.body)
+    if isinstance(node, ast.Constant): return float(node.value)
+    if isinstance(node, ast.BinOp): return ops[type(node.op)](_safe_eval(node.left), _safe_eval(node.right))
+    if isinstance(node, ast.UnaryOp): return ops[type(node.op)](_safe_eval(node.operand))
+    raise ValueError("unsafe")
+
+def _tensor(texts, pmax=8):
+    X = np.zeros((pmax, len(FEATS), len(texts)))
+    for a, t in enumerate(texts):
+        for i, p in enumerate(_props(t)[:pmax]):
+            X[i, :, a] = [1.0 if re.search(rx, p) else 0.0 for rx in FEATS]
+    return X
+def _cp_als(X, R=3, iters=25):
+    rs = np.random.RandomState(0); M = [rs.rand(n, R) + 0.1 for n in X.shape]
+    for _ in range(iters):
+        for m in range(3):
+            o = [M[k] for k in range(3) if k != m]
+            K = np.einsum("ir,jr->ijr", o[0], o[1]).reshape(-1, R)
+            G = (o[0].T @ o[0]) * (o[1].T @ o[1])
+            M[m] = np.moveaxis(X, m, 0).reshape(X.shape[m], -1) @ K @ np.linalg.pinv(G)
+    return M
+def _equilibrium(C, g):
+    """PID drives C.w toward gold similarity g; then per-component best response to a local Nash point."""
+    R = C.shape[1]; w = np.ones(R) / R; integ = np.zeros(R); prev = np.zeros(R)
+    lr = 1.0 / (np.sum(C * C) + 1e-9)
+    for _ in range(40):
+        grad = lr * (C.T @ (g - C @ w)); integ = np.clip(integ + grad, -1, 1)
+        w += 0.5 * grad + 0.1 * integ + 0.2 * (grad - prev); prev = grad
+    for _ in range(100):
+        gain = 0.0
+        for r in range(R):
+            e = g - C @ w; d = 0.05 * lr * (C[:, r] @ e); w[r] += d
+            gain = max(gain, abs(d * (C[:, r] @ e)))
+        if gain < 1e-3: break
+    return C @ w
+
+def _compute(q):
+    """Constructive solver: ("num", [values]) / ("str", [strings], distractors) / None."""
+    t = q.lower().replace(",", ""); n = _nums(t)
+    T = re.findall(r"(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\s*(?:-|to|until|till)\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)?", t)
+    if len(T) >= 2 and re.search(r"conflict|overlap|both|clash|same time|attend", t):
+        def mins(h, mm, ap): return ((int(h) % 12 + (12 if ap == "pm" else 0)) if ap else int(h)) * 60 + int(mm or 0)
+        iv = [(mins(a, b, c or f), mins(d, e, f or c)) for a, b, c, d, e, f in T]
+        clash = any(x[0] < y[1] and y[0] < x[1] for i, x in enumerate(iv) for y in iv[i + 1:])
+        return ("str", ["yes" if clash == bool(re.search(r"conflict|overlap|clash", t)) else "no"])
+    pc = [float(x) / 100 for x in re.findall(r"(\d+(?:\.\d+)?)\s*(?:%|percent)", t)]
+    m = re.search(r"1 in (\d+)", t)
+    if m and pc: pc = [1.0 / float(m.group(1))] + pc
+    if len(pc) == 2 and "accura" in t: pc.append(1 - pc[1])
+    if len(pc) >= 3 and re.search(r"\b(test|positive|screen|alarm|detect)", t):
+        base, sens, fp = pc[0], pc[1], pc[2]
+        if re.search(r"specificity|correctly identif\w+ .{0,20}(negative|healthy)", t): fp = 1 - fp
+        post = base * sens / (base * sens + (1 - base) * fp + 1e-12); return ("num", [post, post * 100])
+    if re.search(r"\b(chance|probability|expected)\b", t) and "$" in t:
+        ev, found = 0.0, 0
+        for p, mid, v in re.findall(r"(\d+(?:\.\d+)?)\s*(?:%|percent)([^$]{0,50})\$(\d+(?:\.\d+)?)", t):
+            ev += float(p) / 100 * float(v) * (-1 if re.search(r"los|pay|cost|forfeit", mid) else 1); found += 1
+        c = re.search(r"cost\w*\s*\$(\d+(?:\.\d+)?)", t)
+        if found: return ("num", [ev - (float(c.group(1)) if c else 0), ev])
+    if re.search(r"together|combined|both", t) and re.search(r"how (long|many)", t):
+        d = [float(x) for x in re.findall(r"(\d+(?:\.\d+)?)\s*(?:hours?|minutes?|days?)", t)]
+        if len(d) >= 2: return ("num", [1.0 / sum(1.0 / x for x in d)])
+    sp = re.search(r"(\d+(?:\.\d+)?)\s*(?:mph|km/h|kph|miles per hour|km per hour)", t)
+    if sp:
+        v = float(sp.group(1)); dist = re.search(r"(\d+(?:\.\d+)?)\s*(?:miles|km|kilometers)\b", t)
+        hrs = re.search(r"(\d+(?:\.\d+)?)\s*hours?", t)
+        if dist and re.search(r"how long|how many hours|time", t): return ("num", [float(dist.group(1)) / v, 60 * float(dist.group(1)) / v])
+        if hrs and re.search(r"how far|distance", t): return ("num", [v * float(hrs.group(1))])
+    m = re.search(r"remainder when (\d+) (?:is )?divided by (\d+)|(\d+)\s*mod(?:ulo)?\s*(\d+)", t)
+    if m: a, b = [x for x in m.groups() if x]; return ("num", [float(a) % float(b)])
+    m = re.search(r"(\d+(?:\.\d+)?)\s*(?:%|percent) of (\d+(?:\.\d+)?)", t)
+    if m and not re.search(r"increase|decrease", t): return ("num", [float(m.group(1)) * float(m.group(2)) / 100])
+    inc = re.findall(r"(increase|decrease|rise|fall|drop|grow)\w*\s*(?:by\s*)?(\d+(?:\.\d+)?)\s*(?:%|percent)", t)
+    if len(inc) >= 2:
+        f = 1.0
+        for k, v in inc: f *= 1 + float(v) / 100 * (-1 if k in ("decrease", "fall", "drop") else 1)
+        base = re.search(r"(?:\$|from |of |at )(\d+(?:\.\d+)?)", t)
+        return ("num", [(f - 1) * 100] + ([float(base.group(1)) * f] if base else []))
+    m = re.search(r"(\w+) (?:is|was) (\d+) years? (older|younger) than (\w+)", t)
+    ask = re.search(r"how old (?:is|was) (\w+)", t)
+    if m and ask:
+        a, d, rel, b = m.group(1), float(m.group(2)), m.group(3), m.group(4)
+        for who, oth, sgn in ((a, b, 1), (b, a, -1)):
+            g = re.search(r"\b%s (?:is|was) (\d+)\b(?! years? (?:older|younger))" % oth, t)
+            if ask.group(1) == who and g: return ("num", [float(g.group(1)) + sgn * d * (1 if rel == "older" else -1)])
+    P = [x for x in re.findall(r"\b([A-Z][a-z]+)\b[^.;]{0,25}?\b(before|after|earlier|later|taller|shorter|older|younger|"
+                                r"faster|slower|heavier|lighter|bigger|smaller|larger|stronger|weaker|richer|poorer)\b"
+                                r"(?: than)? ([A-Z][a-z]+)", q) if x[0] not in STOP and x[2] not in STOP]
+    if P and re.search(r"\b(who|which|what)\b", t):
+        low = ("after", "later", "shorter", "younger", "slower", "lighter", "smaller", "weaker", "poorer")
+        E = {(b, a) if r in low else (a, b) for a, r, b in P}; nodes = {x for e in E for x in e}
+        reach = {x: {x} for x in nodes}
+        for _ in nodes:
+            for a, b in E: reach[a] |= reach[b]
+        top = [x for x in nodes if reach[x] == nodes]; bot = [x for x in nodes if all(x in reach[y] for y in nodes)]
+        want = bot if re.search(LOWW, t) else top
+        if len(want) == 1: return ("str", [want[0]], sorted(nodes - {want[0]}))
+    m = re.search(r"\b(bigger|larger|greater|smaller|less|more|higher|lower)\b", t)
+    if m and len(n) == 2 and not re.search(r"[+*/^]|\bof\b", t):
+        big = m.group(1) in ("bigger", "larger", "greater", "more", "higher")
+        if re.search(r"\bis -?\d", t): return ("str", ["yes" if (n[0] > n[1]) == big else "no"])
+        return ("num", [max(n) if big else min(n)])
+    m = re.search(r"\(?-?\d[\d\.\s()+\-*/^x]*\d\)?", t)
+    if m and re.search(r"[+*/^]|\d\s*-\s*\d|\d\s*x\s*\d", m.group(0)):
+        try: return ("num", [_safe_eval(ast.parse(m.group(0).replace("^", "**").replace("x", "*"), mode="eval"))])
+        except Exception: pass
+    return None
+
+def _match(comp, cand):
+    kind, vals = comp[0], comp[1]; c = cand.lower()
+    if kind == "str":
+        if vals[0] in ("yes", "no"):
+            m = re.match(r"\W*(yes|no)\b", c); return 1.0 if m and m.group(1) == vals[0] else (0.0 if m else 0.3)
+        hit = any(re.search(r"\b%s\b" % re.escape(v.lower()), c) for v in vals)
+        other = any(re.search(r"\b%s\b" % re.escape(v.lower()), c) for v in (comp[2] if len(comp) > 2 else []))
+        return (0.5 if other else 1.0) if hit else 0.0
+    cn = _nums(c)
+    if not cn: return 0.3
+    rel = min(abs(x - v) / (abs(v) + 1e-9) for x in cn for v in vals)
+    return 1.0 if rel < 0.03 else max(0.0, 0.6 - rel)
+
+class ReasoningTool:
+    W = (0.45, 0.40, 0.15)  # computation, structural (tensor + PID + Nash), NCD tiebreaker
+    def __init__(self): self.rank = 3
+
+    def _structural(self, ref, cands):
+        X = _tensor([ref] + cands)
+        if X.sum() == 0: return [0.5] * len(cands)
+        C = _cp_als(X, self.rank)[2]; sref = _sig(ref)
+        s = _equilibrium(C, np.array([1.0] + [_jac(sref, _sig(c)) for c in cands]))
+        return [float(np.clip(x / (abs(s[0]) + 1e-9), 0, 1)) for x in s[1:]]
+
+    def _meta_confidence(self, prompt):
+        t = prompt.lower(); cap = 1.0
+        rules = [(r"\b(have|has|had|did) \w+ (stopped|quit|ceased|given up|finished) \w+ing", 0.15),
+                 (r"\bwhy (did|does|do|is|are|was|were|has|have) .{0,50}\b(fail|stop|quit|lie|cheat|hate|always|never)", 0.2),
+                 (r"\b(every|each|all) \w+ .{0,60}\b(a|an|some) \w+.{0,80}\b(same|different|how many)\b", 0.25),
+                 (r"\b(told|said to|asked|informed) \w+ (that )?(he|she|they) (was|were|is|are|had|would)\b", 0.2),
+                 (r"\bwho (is|was|does) (he|she|it|they)\b|\b(he|she|it|they) refer", 0.2),
+                 (r"\beither\b.{0,80}\bor\b", 0.25), (r"\b(best|worst|favou?rite|greatest|most beautiful|nicest)\b", 0.25),
+                 (r"\bsurviv\w*|successful (people|companies|founders)|those who made it", 0.25),
+                 (r"\balready (spent|invested|paid|put in)|sunk cost|wasted", 0.25),
+                 (r"\b(record|extreme|exceptional|unusually) \w+.{0,60}\b(next|following|again)\b|regress", 0.25),
+                 (r"\b(valid|sound|logically|follows? from|deductive|inductive|strong(er)? argument|premise)", 0.28)]
+        for rx, c in rules:
+            if re.search(rx, t): cap = min(cap, c)
+        if re.search(r"\bhow (many|much|old|far|long)\b", t) and len(_nums(t)) < 2: cap = min(cap, 0.25)
+        if _compute(prompt) is None and not any(re.search(rx, t) for rx in FEATS[:4]): cap = min(cap, 0.3)
+        return cap
+
+    def _components(self, prompt, cands):
+        comp = _compute(prompt); cap = self._meta_confidence(prompt); amb = cap < 0.3
+        ref = prompt + (" cannot be determined; it depends" if amb else (" " + " ".join(str(v) for v in comp[1]) if comp else ""))
+        out = []
+        for c, st in zip(cands, self._structural(ref, cands)):
+            cs = (1.0 if re.search(HEDGE, c.lower()) else 0.15) if amb else (_match(comp, c) if comp else 0.5)
+            out.append((cs, st, 1.0 - _ncd(ref, c), comp, cap))
+        return out
+
+    def evaluate(self, prompt, candidates):
+        res = []
+        for c, (cs, st, nc, comp, cap) in zip(candidates, self._components(prompt, candidates)):
+            score = self.W[0] * cs + self.W[1] * st + self.W[2] * nc
+            why = "computation=%.2f (%s) structural=%.2f ncd_sim=%.2f meta_cap=%.2f" % (
+                cs, "ambiguous" if cap < 0.3 else (comp[0] if comp else "none"), st, nc, cap)
+            res.append({"candidate": c, "score": round(float(score), 4), "reasoning": why})
+        return sorted(res, key=lambda d: -d["score"])
+
+    def confidence(self, prompt, answer):
+        cs, st, nc, comp, cap = self._components(prompt, [answer])[0]
+        if cap < 0.3: return round(min(cap, 0.1 + 0.15 * cs), 3)      # ambiguous / presupposing prompt
+        if comp is None: return round(min(cap, 0.1 + 0.18 * st), 3)   # no solver matched: honest < 0.3
+        return round(min(cap, 0.1 + 0.75 * cs + 0.1 * st), 3)        # >0.9 only on a definitive computed match
+```
+
+How the three concepts map onto the code:
+
+- **Tensor decomposition** — `_tensor` builds the P×F×A binary tensor (proposition slots × 7 structural features × [reference + candidates]); `_cp_als` is a plain-NumPy alternating least squares with Khatri–Rao via `einsum`, seeded with `RandomState(0)` for determinism. Mode-3 factor `C` gives each answer's loadings on R=3 latent structure patterns.
+- **Feedback control** — `_equilibrium` treats `w` as the controlled weights, error = gold similarity (Jaccard of structural signatures vs reference) minus `C·w`, and applies the PID law with Kp=0.5, Ki=0.1, Kd=0.2 (integral clipped, step normalised by ‖C‖² for stability).
+- **Nash equilibrium** — the same function then runs best-response ascent: each rank component `r` perturbs only `w_r` (α=0.05) against the alignment payoff; iteration stops once no player's gain exceeds 1e-3.
+- **Constructive computation (primary signal, 45%)** — `_compute` actually solves: scheduling overlap, Bayes posteriors (incl. "1 in N", accuracy-only, specificity), expected value with cost, work/rate harmonic sums, speed/distance/time, modular remainders, percent-of, compound percent changes, age offsets, transitive ordering/comparative closure (with distractor-name penalty), decimal comparison (`9.11 < 9.9`), and safe PEMDAS via `ast`.
+- **Epistemic honesty** — `_meta_confidence` caps on presupposition, scope, pronoun, false dichotomy, subjectivity, survivorship, sunk cost, regression, validity-vs-truth and unanswerability. On ambiguous prompts the "computed" answer becomes *hedging*, so candidates that say "cannot be determined" rank first while `confidence()` stays < 0.3. With no solver match, confidence is bounded at 0.28; it reaches 0.95 only when a computed answer matches.
+
+Score decomposition is 45% computation / 40% structural / 15% NCD; setting `W = (0.45, 0.40, 0.0)` removes NCD without breaking anything.

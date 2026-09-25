@@ -1,0 +1,21 @@
+**1. Algorithm: premise-perturbation free-energy scorer**
+
+*Data structures.* Parse the prompt into a constraint graph `G`: nodes are entities/propositions; typed edges are `LT/GT/EQ` (comparatives, orderings), `IMPLIES` (conditionals), `NOT` (polarity flag on a node), and numeric intervals `[lo, hi]` on entity attributes. Each candidate answer is parsed into an assertion set `A` with the same schema plus a *commitment weight* per assertion (hedges like "might/probably" → 0.5; "only/exactly" → 1.0 and expanded into exclusion facts).
+
+*Operations.*
+- `closure(G)`: fixed-point propagation — transitivity over orderings, modus ponens over conditionals, interval arithmetic over numerics. Yields fact set `F` with derivation depth `d(f)`.
+- `surprise(a, F)`: 0 if `a ∈ F`; 1 if `¬a ∈ F`; 0.4 if undetermined (unsupported claim). This is the FEP term — candidate assertions are predictions, the closure is the generative model, mismatch is prediction error. Complexity penalty: assertions whose entities don't appear in the question stem (Gricean relevance/quantity violation) add 0.2 each.
+- `susceptibility(candidate)`: for each premise `p_i`, perturb it (flip negation, reverse comparative, drop conditional), recompute closure, re-score. Produces vector `χ_i = |score(G) − score(G \ p_i)|`. This is the criticality term: a grounded answer is *highly susceptible* to exactly the premises in its derivation chain and insensitive elsewhere. Flat `χ` (nothing moves) means the answer isn't anchored in the premises; uniformly high `χ` means hedging/overfit.
+
+*Score* = `−Σ_a w_a·surprise(a) − λ·||χ − χ_expected||₁`, where `χ_expected` is nonzero only on premises reachable backward from the asked-about node. Answer-type match (yes/no vs. which vs. how-many) is a hard gate.
+
+**2. Parsed features:** negations (incl. scope over conjunctions), comparatives/superlatives, chained orderings, if-then and unless conditionals, numeric values with units and inequalities, "only/exactly/at least" quantifiers with their implicatures, hedge markers, and causal "because/therefore" links treated as `IMPLIES`.
+
+**3. Novelty:** The closure-and-contradiction core is standard CSP grading; hedge weighting resembles Rational Speech Acts (Goodman & Frank). The genuinely useful part is the susceptibility vector — essentially counterfactual premise attribution (cf. faithfulness-via-perturbation work). Criticality contributes one operational idea; "susceptibility divergence" is otherwise metaphor.
+
+**4. Ratings**
+
+Reasoning: 7/10 — closure + contradiction scoring directly tests inference validity; falls back to 0.4 uncertainty on anything regex misses.
+Metacognition: 6/10 — the susceptibility profile measures whether an answer depends on the *right* premises, a proxy for knowing-why; no self-model beyond that.
+Hypothesis generation: 4/10 — implicature expansion produces derived facts, not new candidate structures; the tool grades rather than proposes.
+Implementability: 7/10 — regex parsing, fixed-point propagation and a perturbation loop are all cheap numpy/stdlib; the pragmatic layer (scope of negation, implicature defeasibility) is the fragile part.

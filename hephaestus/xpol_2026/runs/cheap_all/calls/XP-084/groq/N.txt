@@ -1,0 +1,15 @@
+**1. Emerging computational mechanism**  
+Combining the three ideas yields a *Thermodynamic Incentive‑Optimized Predictive‑Coding Engine* (TIO‑PCE). The engine treats each inference sub‑module (e.g., a hypothesis generator, a data‑likelihood evaluator, a policy selector) as a self‑interested agent that **minimizes its variational free energy** while obeying **energy‑budget constraints** from thermodynamics. A *mechanism‑design layer* defines a market‑style auction over a shared resource pool (CPU cycles, memory, or physical energy). Each agent submits a bid equal to the expected free‑energy reduction per unit of energy spent; the auctioneer (a global scheduler) allocates resources using a Vickrey‑Clarke‑Groves (VCG) rule, guaranteeing incentive compatibility: no agent can gain by misreporting its expected gain. The resulting dynamics are a stochastic gradient descent on a free‑energy objective with an explicit *entropy‑regularized* temperature that follows the first law of thermodynamics (energy conserved, heat dissipated).  
+
+**2. Advantage for a reasoning system testing its own hypotheses**  
+The system automatically **prioritises hypotheses that promise the greatest expected reduction in prediction error per joule**. Because bids are truthful, the scheduler avoids wasteful exploration of low‑payoff hypotheses, and the thermodynamic temperature adapts to the current energy reserve, preventing “over‑heating” of the inference process. This yields a principled, energy‑aware *active inference* loop that scales gracefully with limited hardware and time.  
+
+**3. Novelty**  
+Active inference already couples free‑energy minimisation with thermodynamic analogues, and bounded‑rationality literature uses mechanism‑design concepts for decision‑making under resource limits. However, a concrete **VCG‑based resource auction embedded inside a predictive‑coding neural architecture** has not been formalised, making the proposal a novel synthesis rather than a re‑branding of existing work.  
+
+**4. Ratings**  
+
+Reasoning: 8/10 — integrates optimal inference with resource accounting, boosting efficiency.  
+Metacognition: 7/10 — the self‑budgeting auction gives a clear meta‑control signal, though implementation complexity is high.  
+Hypothesis generation: 7/10 — truthful bidding steers generation toward high‑gain hypotheses, but depends on accurate free‑energy forecasts.  
+Implementability: 5/10 — requires custom hardware‑aware schedulers and VCG mechanisms; feasible in simulation but challenging in current deep‑learning stacks.

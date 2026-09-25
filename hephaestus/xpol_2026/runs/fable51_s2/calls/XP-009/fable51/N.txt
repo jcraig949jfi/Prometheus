@@ -1,0 +1,20 @@
+**1. The algorithm: annealed counterexample search over a bounded state space**
+
+*Data structures.* From the prompt, a regex front-end extracts atomic propositions into a `Variable` table (name, domain: bool / small int range / ordinal rank) and a `Constraint` list (tuples like `("lt", a, b)`, `("implies", p, q)`, `("not", p)`, `("eq", x, 5)`). Each candidate answer is parsed the same way into a `Claim` list. A state is a numpy vector of variable assignments; the state space is the Cartesian product of domains (bounded by a cap, e.g. 10^6).
+
+*Model-checking core.* If the space is enumerable, exhaustively evaluate: `M = {s : all prompt constraints hold in s}`. A claim is *entailed* if it holds in every s ∈ M, *refuted* if it fails in every s, *contingent* otherwise. Transitivity and modus ponens are applied as constraint-propagation pre-passes to shrink domains before enumeration.
+
+*Genetic-algorithm layer.* When the space exceeds the cap, run a falsifier: population of ~200 states, fitness = (prompt constraints satisfied) − λ·(candidate claims satisfied). Crossover swaps variable blocks; mutation perturbs one domain value. The GA is searching for a witness that satisfies the prompt but violates the candidate — a counterexample.
+
+*Thermodynamic layer.* Two roles. (a) Mutation acceptance uses a Metropolis rule with a cooling schedule T_k = T₀·0.95^k, so early generations explore and late ones exploit. (b) Scoring uses a free-energy form: E = number of refuted claims (weighted by how many states witness the refutation), S = log|M ∩ candidate-consistent states| / log|M|. Score = exp(−E/T_final) · (1 − S). Low energy = no counterexample; low entropy = the answer pins down the state (is specific), not merely consistent.
+
+**2. Parsed features.** Negations (`not`, `never`, `no X`), comparatives (`more/less/greater than`, `at least`), conditionals (`if…then`, `unless`, `only if`), numeric literals and units, ordering relations (`before/after`, `larger than`), equalities, and causal claims (`because`, `leads to`) mapped to implications. Quantifiers (`all`, `some`) become domain-level constraints.
+
+**3. Novelty.** Not novel as a whole. This is bounded model checking with model counting (#SAT-style entropy), plus search-based falsification of temporal specifications — S-TaLiRo and Breach use simulated annealing and evolutionary search for exactly this. The specific combination (Boltzmann-weighted entailment score over an evolved counterexample population, applied to text-extracted constraints) is a repackaging, not a new idea.
+
+**4.**
+
+Reasoning: 7/10 — exhaustive entailment plus propagation handles genuine multi-step logic; ceiling set by the regex parser's recall.
+Metacognition: 5/10 — the entropy term gives a real specificity/uncertainty signal, but nothing reflects on parse failures.
+Hypothesis generation: 6/10 — the GA actively generates counterexample states, which is more than static checking; no new-constraint proposal.
+Implementability: 7/10 — every component is numpy/stdlib; the hard part is the fragile text-to-constraint layer, not the search.

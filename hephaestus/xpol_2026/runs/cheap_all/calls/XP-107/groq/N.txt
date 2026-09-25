@@ -1,0 +1,24 @@
+**Computational mechanism**
+
+Combining renormalization, self‑organized criticality (SOC) and neuromodulation yields a *scale‑adaptive, critical‑state learning engine* that we can call a **Renormalized Critical Neuromodulated Network (RCN²)**. The architecture consists of:
+
+1. **Coarse‑graining layers** that perform a renormalization‑group (RG) style pooling of neural representations (e.g., hierarchical graph‑neural‑network blocks that merge nodes based on similarity, akin to the “RG‑GNN” of Liu & Kondor, 2022).  
+2. **SOC dynamics** that monitor the activity avalanche distribution across layers and continuously adjust a global “temperature” parameter so that the system sits at the edge of a phase transition (power‑law avalanche exponent ≈ 1.5). This is implemented with an online estimator of the branching ratio (as in the “critical branching” algorithm of Haldeman & Beggs, 2005).  
+3. **Neuromodulatory gain control** that injects a scalar dopamine‑like signal into each RG block. The signal is computed from a meta‑error term (prediction‑error variance) and multiplicatively scales the RG‑block weights, effectively moving the system toward or away from criticality depending on task demand (mirroring the “dopamine‑gated plasticity” rule of Izhikevich, 2007).
+
+Together, the RG blocks provide *scale‑invariant representations*, SOC guarantees *maximal dynamic range* and *sensitivity to rare events*, and neuromodulation supplies *state‑dependent gain* that can steer the system to explore new scales when hypotheses fail.
+
+**Advantage for a self‑testing reasoning system**
+
+A reasoning agent equipped with RCN² can *self‑regulate its hypothesis‑testing budget*: when a current model yields high prediction error, the neuromodulatory signal pushes the network toward a more super‑critical regime, widening avalanches and prompting coarse‑grained re‑encoding of evidence (i.e., “zoom‑out”). Conversely, low error drives sub‑critical tightening, allowing fine‑grained verification. This dynamic allocation yields rapid detection of contradictions, efficient exploration of alternative explanations, and avoidance of combinatorial blow‑up—key for meta‑reasoning and hypothesis revision.
+
+**Novelty**
+
+Elements exist separately: RG‑inspired graph nets, criticality in spiking/Deep‑Net models, and neuromodulated reinforcement learning. However, an integrated architecture that *uses neuromodulation to maintain SOC while performing RG‑style coarse‑graining for meta‑cognitive reasoning* does not appear in the literature, making the combination largely novel.
+
+**Ratings**
+
+Reasoning: 8/10 — the multi‑scale, critical dynamics give robust, flexible inference.  
+Metacognition: 7/10 — neuromodulatory feedback provides a concrete self‑monitoring loop.  
+Hypothesis generation: 8/10 — avalanche‑driven scale shifts enable rapid exploration of novel explanatory spaces.  
+Implementability: 5/10 — requires non‑standard hardware for real‑time SOC monitoring and careful stability analysis, but software prototypes are feasible.

@@ -1,0 +1,135 @@
+import numpy as np
+import re
+
+class ReasoningTool:
+    def __init__(self):
+        self.eta = 0.1
+        self.tau = 0.2
+        self.T = 5
+
+    def _parse_prompt(self, prompt):
+        # Extract propositions
+        props = re.findall(r'\b\w+\b', prompt)
+        adj = np.zeros((len(props), len(props)), dtype=bool)
+        w = np.full((len(props), len(props)), 0.5)
+        state_vec = np.zeros(len(props), dtype=bool)
+        return props, adj, w, state_vec
+
+    def _parse_candidates(self, candidates, props):
+        cand_scores = np.full(len(candidates), 1.0 / len(candidates))
+        return cand_scores
+
+    def _constraint_propagation(self, props, adj, w, state_vec, cand_scores):
+        for _ in range(self.T):
+            for c, candidate in enumerate(candidates):
+                for i in range(len(props)):
+                    if props[i] in candidate:
+                        state_vec[i] = True
+                    else:
+                        state_vec[i] = False
+                    for j in range(len(props)):
+                        if adj[i, j]:
+                            if state_vec[i] and state_vec[j]:
+                                w[i, j] = min(1, w[i, j] + self.eta * (1 - w[i, j]))
+                            else:
+                                w[i, j] = max(0, w[i, j] - self.eta * w[i, j])
+            adj[w < self.tau] = False
+
+        return adj, w
+
+    def _state_exploration(self, props, adj, w, state_vec):
+        sat_ratio = np.zeros(len(candidates))
+        for c, candidate in enumerate(candidates):
+            for i in range(len(props)):
+                if props[i] in candidate:
+                    state_vec[i] = True
+                else:
+                    state_vec[i] = False
+            reachable_states = 0
+            satisfying_states = 0
+            queue = [state_vec.copy()]
+            visited = set()
+            while queue:
+                current_state = tuple(queue.pop(0))
+                if current_state not in visited:
+                    visited.add(current_state)
+                    reachable_states += 1
+                    if self._satisfies_spec(current_state):
+                        satisfying_states += 1
+                    for j in range(len(props)):
+                        if adj[i, j] and current_state[j]:
+                            new_state = current_state.copy()
+                            new_state[j] = not new_state[j]
+                            queue.append(new_state)
+            sat_ratio[c] = satisfying_states / reachable_states if reachable_states > 0 else 0
+        return sat_ratio
+
+    def _satisfies_spec(self, state):
+        # Simple temporal logic specification
+        # Placeholder for actual specification check
+        return True
+
+    def _meta_confidence(self, prompt):
+        # Check for presupposition, scope ambiguity, pronoun ambiguity, false dichotomy, subjectivity, unanswerability
+        if re.search(r'Have you stopped|Why did', prompt):
+            return 0.25
+        if re.search(r'Every \w+ a \w+', prompt):
+            return 0.25
+        if re.search(r'\bhe\b|\bher\b', prompt) and re.search(r'\bwho\b', prompt):
+            return 0.25
+        if re.search(r'Either \w+ or \w+', prompt):
+            return 0.25
+        if re.search(r'\bbest\b|\bworst\b|\bfavorite\b', prompt):
+            return 0.25
+        if re.search(r'unanswerable|unknown', prompt):
+            return 0.25
+        return 1.0
+
+    def evaluate(self, prompt, candidates):
+        props, adj, w, state_vec = self._parse_prompt(prompt)
+        cand_scores = self._parse_candidates(candidates, props)
+        adj, w = self._constraint_propagation(props, adj, w, state_vec, cand_scores)
+        sat_ratio = self._state_exploration(props, adj, w, state_vec)
+        cand_scores *= sat_ratio
+        cand_scores /= np.sum(cand_scores)
+        ranked_results = [{"candidate": candidates[c], "score": cand_scores[c], "reasoning": "Reasoning"} for c in np.argsort(cand_scores)[::-1]]
+        return ranked_results
+
+    def confidence(self, prompt, answer):
+        meta_conf = self._meta_confidence(prompt)
+        return min(0.9, meta_conf)
+
+# Example usage:
+# tool = ReasoningTool()
+# prompt = "Have you stopped eating junk food?"
+# candidates = ["Yes", "No", "Sometimes"]
+# print(tool.evaluate(prompt, candidates))
+# print(tool.confidence(prompt, "Yes"))
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

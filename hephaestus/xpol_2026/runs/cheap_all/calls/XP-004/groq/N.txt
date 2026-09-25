@@ -1,0 +1,38 @@
+**1. Algorithm derived from the three concepts**  
+The tool builds a *search‑guided reasoning graph* (SRG).  
+*Data structures* –  
+- **Node pool**: each node is a parsed proposition (subject‑predicate‑object triple) stored as a NumPy‑array of integer IDs (vocab → index).  
+- **Edge matrix** `E` (shape |V|×|V|) stores directed logical relations (implication = 1, equivalence = 2, contradiction = ‑1). Sparse representation is kept in a Python dict of (i,j)→weight for memory efficiency.  
+- **Search space**: a NAS‑style population of candidate sub‑graphs (fixed‑size adjacency slices) encoded as binary masks over `E`.  
+
+*Operations* –  
+1. **Parsing** extracts propositions and logical operators (negation, conditional, causal “because”, comparative “more … than”) into the node pool and populates initial edges by deterministic rules (e.g., “If A then B” → edge A→B).  
+2. **Constraint propagation** runs a lightweight transitive closure on `E` using NumPy broadcasting, applying modus ponens, symmetry of equivalence, and inconsistency detection.  
+3. **Performance predictor** (pragmatic evaluator) computes a scalar utility for each sub‑graph:  
+   \[
+   U = \alpha\frac{\#\text{consistent edges}}{|V|} + \beta\frac{\text{coverage of required claim nodes}}{|V|}
+   \]  
+   where α,β are tunable pragmatism weights (truth‑as‑usefulness).  
+4. **NAS loop** (weight‑sharing): a small population of masks is mutated (edge flip) and evaluated by `U`. The best mask after a fixed budget defines the *reasoning score*:  
+   \[
+   \text{Score}= \frac{U_{\text{best}}}{U_{\text{max}}}\in[0,1]
+   \]  
+   The final numeric score is returned.
+
+**2. Structural features parsed**  
+- Negation cues (`not`, `no`, `never`) → toggle sign on node truth value.  
+- Comparatives (`more/less … than`, `greater/ smaller`) → directed weighted edges.  
+- Conditionals (`if … then …`, `when …`) → implication edges.  
+- Numeric values and units → nodes with scalar attributes; arithmetic consistency checked via NumPy.  
+- Causal claims (`because`, `leads to`) → directed edges labeled “causal”.  
+- Temporal/ordering relations (`first`, `after`, `subsequently`) → precedence edges.
+
+**3. Novelty**  
+The exact combination—using NAS to optimise a constraint‑propagated reasoning graph, guided by a pragmatist utility function—is not present in prior literature. Existing work treats NAS for neural models, separate symbolic solvers for logic, or pragmatic scoring for answers, but the integration of all three into a pure‑numpy evaluator is new.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — strong logical propagation and graph‑based scoring, limited by lack of deep semantic understanding.  
+Metacognition: 6/10 — pragmatic utility captures “what works”, but self‑reflection is implicit.  
+Hypothesis generation: 7/10 — NAS mutation explores alternative inference structures efficiently.  
+Implementability: 9/10 — relies only on NumPy and std‑lib, straightforward to prototype.

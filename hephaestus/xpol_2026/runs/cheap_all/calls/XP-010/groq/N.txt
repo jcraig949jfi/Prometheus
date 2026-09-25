@@ -1,0 +1,31 @@
+**1. Algorithmic core**  
+The scorer builds a *reasoning lattice* for each candidate answer. First, a lightweight parser extracts logical propositions (subject‑predicate‑object triples) and numeric tokens. These are stored in a directed multigraph `G = (V, E)` where vertices `V` are unique concepts (terms, numbers, variables) and edges `E` encode relations (e.g., “causes”, “greater‑than”, “if‑then”).  
+
+Next, a *reaction‑diffusion* simulation is run on `G`. Each vertex holds a scalar concentration `c_i` (initialised from the reference answer: 1 for matching concepts, 0 otherwise). At each discrete time step `t` the update follows a Turing‑type scheme:
+
+```
+c_i(t+1) = c_i(t) + D*Laplacian(c)_i - R*sum_j w_ij * (c_i(t)-c_j(t))
+```
+
+where `D` (diffusion) and `R` (reaction) are global hyper‑parameters and `w_ij` are edge weights derived from relation strength (e.g., transitive closure adds a small weight). The simulation quickly settles into a spatial pattern of concentrations over the graph.
+
+The final concentration vector `c*` is transformed by a 1‑D *spectral analysis* (FFT) to obtain a power‑spectral density `P`. High‑frequency components correspond to abrupt, isolated mismatches; low‑frequency power reflects coherent, globally consistent reasoning.  
+
+A *Maximum‑Entropy* model then maps `P` to a probability distribution over possible scores. Using Jaynes’ principle, we maximise entropy subject to the observed mean spectral power `μ` and variance `σ²`. The closed‑form solution is a Gaussian `p(s) ∝ exp[-(s-μ)²/(2σ²)]`. The expected value `E[s]` is taken as the final score (scaled to 0‑100).
+
+**2. Parsed structural features**  
+- Negation cues (“not”, “no”, “without”)  
+- Comparative operators (“greater than”, “less than”, “as … as”)  
+- Conditional clauses (“if … then”, “when”, “unless”)  
+- Numeric and unit tokens (quantities, ranges)  
+- Causal verbs (“causes”, “leads to”, “results in”)  
+- Ordering relations (“first”, “subsequently”, “finally”)  
+
+**3. Novelty**  
+The exact combination—graph‑based morphogenetic diffusion, spectral fingerprinting of the steady‑state, and a maximum‑entropy mapping to a score—has not been published as a unified reasoning evaluator. Elements (diffusion on knowledge graphs, FFT‑based consistency checks, entropy‑based calibration) appear separately in computational biology, signal processing, and information‑theoretic inference, but their integration for pure‑numpy reasoning assessment is new.
+
+**4. Ratings**  
+Reasoning: 8/10 — captures global coherence and logical propagation  
+Metacognition: 6/10 — indirect, relies on pattern regularity rather than self‑reflection  
+Hypothesis generation: 5/10 — can flag missing links but does not propose alternatives  
+Implementability: 9/10 — pure‑numpy, graph structures and FFT are straightforward to code.

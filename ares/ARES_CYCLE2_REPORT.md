@@ -254,3 +254,23 @@ For Nyx / Theophrastus / SFE, with named consumers:
  - Two instrument warnings that generalise: never select the reported
    champion on the held-out set (D1); never score a transfer claim with
    a best-of-N statistic (D2).
+
+
+## ANNOTATION 2026-09-25 (sharpening s7.1; the original text stands)
+
+s7.1 proposed re-parameterising keep (store and mutate log(1/(1-keep)))
+as the decisive test of the basin explanation. That is the WEAKER test
+and is now demoted to a control, because the keep basin is narrow for a
+reason that re-parameterisation does not touch: the update rule itself,
+    v_new = keep*v_old + (1 - keep)*f,
+makes one scalar do two jobs. As keep approaches 1 the node holds well
+but the input term (1-keep) vanishes, so it can no longer load the cue;
+the viable region is a sliver because holding and loading are coupled.
+Moving where mutations land does not widen that region.
+The decisive test is therefore to DECOUPLE the trade-off -- run an arm
+with v_new = keep*v_old + f, so holding and loading are independent --
+and predict, before running, that keep becomes load-bearing in >= 5/10
+and its time-to-threshold approaches recurrence's. If keep still loses
+with a wide basin, the basin explanation is wrong. The full two-arm
+specification is in roles/Ares/RESUME.md s6.1. No result is changed by
+this annotation; only the proposed next experiment is sharpened.

@@ -1,0 +1,33 @@
+### 1. Algorithm: Quantum-Plastic Kripke Evaluator (QPKE)
+
+**Data Structures:**
+*   **State Vector ($\mathbf{v} \in \mathbb{C}^N$):** A complex unit vector representing a superposition over $N$ logical atomic states extracted from the prompt.
+*   **Transition Operator ($T \in \mathbb{C}^{N \times N}$):** Complex unitary matrices encoding transformations claimed by candidate answers.
+*   **Plasticity Matrix ($W \in \mathbb{R}^{N \times N}$):** Dynamic edge-weight matrix tracking valid transition paths.
+
+**Operations & Scoring Logic:**
+1. **Extraction & Initialization:** Regex parses prompt constraints into a state-transition specification $\Phi$ (finite state machine rules) and initializes $\mathbf{v}_0$ as an equal complex superposition over initial states ($v_j = 1/\sqrt{N}$).
+2. **State Propagation:** For each step in a candidate answer, convert candidate assertions into transition $T_k$. Compute $\mathbf{v}_{t+1} = (W \odot T_k)\mathbf{v}_t$.
+3. **Decoherence & Hebbian Pruning:** Compare state transitions against specification $\Phi$. Valid transitions execute a Hebbian update: $W_{ij} \leftarrow W_{ij} + \eta \text{Re}(v_i v_j^*)$. Invalid transitions inject destructive interference ($\pi$-phase shift $e^{i\pi}$) causing phase cancellation, and set $W_{ij} = 0$ (synaptic pruning).
+4. **Projective Measurement:** Project final state $\mathbf{v}_{\text{final}}$ onto valid terminal subspace matrix $P_{\Phi}$.
+5. **Score:** $S = \|P_{\Phi} \mathbf{v}_{\text{final}}\|^2$, yielding the normalized squared magnitude of valid computational paths.
+
+---
+
+### 2. Structural Features Parsed
+*   **Conditionals:** Parses `if A then B` $\rightarrow$ directional operator mapping state $S_A$ to $S_B$.
+*   **Temporal/Ordering Relations:** Parses `before`, `after`, `then` $\rightarrow$ sequence constraints enforced in model checker trace $\Phi$.
+*   **Negations:** Parses `not`, `never` $\rightarrow$ Pauli-X / $\pi$-phase flip shift operators causing interference.
+*   **Causal Claims:** Parses `causes`, `leads to` $\rightarrow$ directed weight dynamic update in matrix $W$.
+
+---
+
+### 3. Novelty vs. Existing Work
+This maps directly to Vector Symbolic Architectures (Smolensky’s Tensor Product Representations) integrated with Bounded Model Checking and Quantum-Like Cognitive Models (Busemeyer & Bruza). Combining dynamic Hebbian edge-pruning with complex amplitude interference for text evaluation without neural networks is a novel algorithmic synthesis.
+
+---
+
+Reasoning: 8/10 — Direct evaluation of multi-step logical path validity via matrix propagation and constraint enforcement.
+Metacognition: 4/10 — Quantifies state space entropy/uncertainty via vector norm, but lacks recursive meta-evaluation.
+Hypothesis generation: 6/10 — Generates parallel state trajectories in superposition, but bounded strictly by parsed input rules.
+Implementability: 9/10 — Highly efficient using standard library `re` for token parsing and `numpy` for matrix operations.

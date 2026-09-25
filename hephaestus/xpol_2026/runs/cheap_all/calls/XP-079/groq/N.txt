@@ -1,0 +1,14 @@
+**Computational mechanism**  
+The three ideas fuse into a *self‑organized‑critical evolutionary sampler* (SOC‑ES).  A population of hypothesis particles carries a full posterior (or an approximating variational distribution).  Each particle’s “fitness’’ is its log‑posterior, so selection implements Bayesian updating.  Particles undergo mutation/recombination as in an evolutionary algorithm, but the mutation rate is continuously tuned to keep the branching factor of successful offspring at ≈ 1 – the hallmark of a critical branching process.  In practice this can be realized by coupling an **Evolutionary Monte Carlo (EMC)** sampler with a **self‑organized‑criticality (SOC)** controller that monitors the effective reproduction number \(R_{\text{eff}}\) and nudges mutation amplitudes (or temperature in a Parallel‑Tempering ladder) to maintain \(R_{\text{eff}}≈1\).  The resulting dynamics explore the posterior like MCMC while preserving long‑range correlations characteristic of critical systems, giving a population‑based inference engine that automatically balances exploration (disorder) and exploitation (order).
+
+**Advantage for a reasoning system**  
+A system that tests its own hypotheses benefits from two synergistic effects: (1) *adaptive diversity*: criticality guarantees a power‑law distribution of lineage sizes, preventing premature collapse onto a single mode and allowing rare, high‑impact hypotheses to survive long enough to be evaluated; (2) *rapid adaptation*: selection on posterior fitness drives the population toward regions of high evidence, while the critical mutation schedule ensures that the search remains sensitive to new data, effectively providing a built‑in meta‑learning rate.  This yields faster convergence on the true model and more reliable detection of structural changes in the data stream.
+
+**Novelty**  
+Elements exist separately: Evolutionary Monte Carlo, Bayesian Model Averaging, and SOC in neural networks.  However, an explicit feedback loop that *tunes evolutionary operators to the critical point of a branching process* for the purpose of posterior sampling is not a standard technique.  It therefore occupies a niche that is largely unexplored, though it can be framed as an extension of adaptive MCMC and neuro‑dynamical criticality research.
+
+**Ratings**  
+Reasoning: 8/10 — the mechanism directly improves hypothesis evaluation and evidence integration.  
+Metacognition: 7/10 — self‑tuning mutation provides a meta‑level control of uncertainty.  
+Hypothesis generation: 9/10 — criticality yields a rich, scale‑free set of candidate models.  
+Implementability: 6/10 — requires careful calibration of SOC feedback and integration with existing Bayesian samplers, but all components are known.

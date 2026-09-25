@@ -1,0 +1,30 @@
+**1. Algorithmic core**  
+The tool builds a *spectral‑entropy constraint graph* for each answer.  
+*Parsing*: a lightweight tokenizer extracts tokens, then regex patterns identify logical predicates (e.g. “A > B”, “if X then Y”), comparatives, negations, numeric literals, and causal verbs. Each predicate becomes a node in a directed graph; edges encode explicit relations (e.g., “A → B” from “A causes B”) and inferred transitive links (via simple breadth‑first propagation).  
+
+*Reservoir*: a fixed random recurrent matrix **R** ∈ ℝⁿˣⁿ (n≈200) is generated once. Node feature vectors **h** (initially one‑hot for the predicate type) are iterated through the reservoir for *T* steps:  
+ h←tanh(R·h + b) (using only NumPy).  
+The final hidden state **h\*** captures a high‑dimensional echo of the logical structure without training.  
+
+*Spectral analysis*: the sequence of hidden states over the T steps is treated as a signal. Its discrete Fourier transform (np.fft.rfft) yields a power spectrum **S**. The *spectral density* summarizes how much “information” resides at different temporal frequencies of the logical flow.  
+
+*Maximum‑entropy scoring*: given a reference answer, we compute its spectrum **S\_ref** and its empirical entropy **H\_ref = –∑p·log p** where p = S/∑S. For a candidate, we compute **H\_cand** similarly. The final score is  
+ score = exp( –|H\_cand – H\_ref| ) · (1 – KL(p\_cand‖p\_ref)),  
+where KL is the Kullback‑Leibler divergence between normalized spectra. This rewards candidates whose structural dynamics (captured by the reservoir) match the reference while remaining maximally non‑committal beyond the observed constraints.
+
+**2. Parsed structural features**  
+- Negation cues (“not”, “never”) – flip predicate polarity.  
+- Comparatives/superlatives (“greater than”, “most”) – numeric or ordering edges.  
+- Conditionals (“if … then”, “unless”) – directed implication edges.  
+- Numeric values and units – attached as attribute nodes.  
+- Causal verbs (“causes”, “leads to”) – directed causal edges.  
+- Temporal/ordering words (“first”, “after”) – sequence edges.
+
+**3. Novelty**  
+The exact combination—using a fixed random recurrent “reservoir” to embed a parsed logical graph, then evaluating candidate–reference similarity via spectral entropy—is not present in mainstream evaluation suites. It parallels Echo State Networks for sequence embedding and MaxEnt for distribution comparison, but their joint use for reasoning‑score computation is new.
+
+**4. Ratings**  
+Reasoning: 8/10 — captures logical dependencies and penalizes missing constraints.  
+Metacognition: 6/10 — can detect self‑referential statements only via pattern rules.  
+Hypothesis generation: 5/10 — limited to explicit predicates, no creative inference.  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, easy to embed in pipelines.

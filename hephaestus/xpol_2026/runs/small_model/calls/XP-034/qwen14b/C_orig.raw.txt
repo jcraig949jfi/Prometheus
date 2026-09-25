@@ -1,0 +1,78 @@
+```python
+import numpy as np
+import zlib
+
+class ReasoningTool:
+    def __init__(self):
+        self.reservoir_size = 100
+        self.reservoir = np.random.rand(self.reservoir_size, self.reservoir_size)
+        self.readout_weights = np.random.rand(self.reservoir_size)
+        self.criticality_threshold = 0.5
+        self.high_frequency_threshold = 0.1
+
+    def _compute_psd(self, residuals):
+        # Simple PSD estimation using Welch's method (approximation)
+        nperseg = int(len(residuals) / 2)
+        f, Pxx_den = np.fft.welch(residuals, nperseg=nperseg)
+        return f, Pxx_den
+
+    def _falsification_loss(self, psd):
+        # High-frequency power as a loss signal
+        high_freq_power = np.sum(psd[psd > self.high_frequency_threshold])
+        return -high_freq_power
+
+    def _criticality_control(self, loss):
+        # Adjust reservoir gain based on SOC principles
+        if loss < -self.criticality_threshold:
+            self.reservoir *= 0.9  # Decrease gain
+        elif loss > self.criticality_threshold:
+            self.reservoir *= 1.1  # Increase gain
+
+    def _predict(self, input_data):
+        # Simple reservoir computing prediction
+        state = np.tanh(np.dot(self.reservoir, input_data))
+        prediction = np.dot(self.readout_weights, state)
+        return prediction
+
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        results = []
+        for candidate in candidates:
+            input_data = np.array([ord(c) for c in prompt + candidate])
+            prediction = self._predict(input_data)
+            residuals = input_data - prediction
+            _, psd = self._compute_psd(residuals)
+            loss = self._falsification_loss(psd)
+            self._criticality_control(loss)
+            score = -loss  # Higher loss means better prediction
+            reasoning = f"Score based on high-frequency power in residuals."
+            results.append({"candidate": candidate, "score": score, "reasoning": reasoning})
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        input_data = np.array([ord(c) for c in prompt + answer])
+        prediction = self._predict(input_data)
+        residuals = input_data - prediction
+        _, psd = self._compute_psd(residuals)
+        loss = self._falsification_loss(psd)
+        self._criticality_control(loss)
+        # Convert loss to confidence (0 to 1)
+        confidence = max(0, min(1, -loss / 10))
+        return confidence
+
+# Example usage:
+# tool = ReasoningTool()
+# prompt = "What is 2 + 2?"
+# candidates = ["4", "5", "3"]
+# print(tool.evaluate(prompt, candidates))
+# print(tool.confidence(prompt, "4"))
+```
+
+### Explanation:
+- **Reservoir Computing**: The tool uses a simple reservoir computing model to generate predictions. The reservoir is a matrix of random weights, and the readout is a linear layer.
+- **Spectral Analysis**: The `_compute_psd` method approximates the power spectral density of the residuals using Welch's method.
+- **Falsification Loss**: The `_falsification_loss` method calculates the loss based on high-frequency power in the residuals.
+- **Criticality Control**: The `_criticality_control` method adjusts the reservoir's gain based on the loss, simulating self-organized criticality.
+- **Prediction and Evaluation**: The `evaluate` method computes scores for each candidate based on the falsification loss, and the `confidence` method estimates the confidence in a given answer.
+
+This implementation is a simplified version and may not achieve the full potential of the theoretical framework described, but it captures the core mechanism using basic components.
