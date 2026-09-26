@@ -1,0 +1,121 @@
+{
+ "cause": "OK",
+ "checks": {
+  "P10_clock": {
+   "drift_s": 0.0266,
+   "end": 0.186,
+   "pass": true,
+   "start": 0.1594
+  },
+  "P11_controller_state": {
+   "absence_evidence": {
+    "agree": true,
+    "get_absent": true,
+    "list_omits": true,
+    "reads": 1
+   },
+   "creates": 0,
+   "pass": true,
+   "resumed": {
+    "controller_absent_s": 122.522,
+    "ledger_last_event": "watch",
+    "resumed_utc": "2026-09-26T16:00:49Z"
+   }
+  },
+  "P12_spend_accounting": {
+   "controller_last_spend": 0.282801,
+   "note": "the controller's last watch spend precedes retrieval and teardown, so the receipt is expected to be slightly higher",
+   "pass": true,
+   "receipt_cost": 0.28303
+  },
+  "P1_duration": {
+   "module_elapsed_s": 3900.009,
+   "pass": true
+  },
+  "P2_cost": {
+   "gpu": "NVIDIA RTX A5000",
+   "pass": true,
+   "usd": 0.28303
+  },
+  "P3_device_memory": {
+   "device_free_last": 24712118272,
+   "device_free_w30": 24712118272,
+   "pass": true,
+   "pool_held_distinct_after_w30": [
+    335544320
+   ]
+  },
+  "P4_host_memory": {
+   "pass": false,
+   "rel": 0.16669834460162733,
+   "rss_last10": 527994880,
+   "rss_w30_39": 452554752
+  },
+  "P5_throughput": {
+   "p50_last30": 0.008071,
+   "p50_w30_59": 0.008066,
+   "pass": true,
+   "rel": 0.0006198859409868332
+  },
+  "P6_tail_latency": {
+   "max_ratio": 1.0213483146067417,
+   "pass": true,
+   "share_windows_p99_over_p50_lt_1_5": 1.0
+  },
+  "P7_telemetry_cadence": {
+   "max_progress_gap_s": 10.290000000000077,
+   "pass": true,
+   "sampler_cost_p50_first10min": 0.033,
+   "sampler_cost_p50_last10min": 0.0349
+  },
+  "P8_artifact_growth": {
+   "artifact_dir_peak_b": 29831620.0,
+   "checkpoints": 6,
+   "mismatch": [],
+   "missing": [],
+   "pass": true,
+   "series_bytes_last": 121609,
+   "series_rows": 390,
+   "verified": [
+    "result.json",
+    "series.jsonl",
+    "ckpt.bin",
+    "telemetry.jsonl"
+   ]
+  },
+  "P9_provider_latency": {
+   "note": "fetch failures include every not-yet-up poll before first contact, so they are excluded from the 5% bound",
+   "pass": true,
+   "per_op": {
+    "fetch": {
+     "calls": 685,
+     "failure_share": 0.0,
+     "first_p50": 0.2212,
+     "second_p50": 0.2209
+    },
+    "get_pod": {
+     "calls": 30,
+     "failure_share": 0.0,
+     "first_p50": 0.4018,
+     "second_p50": 0.3181
+    },
+    "list_pods": {
+     "calls": 1,
+     "failure_share": 0.0,
+     "first_p50": null,
+     "second_p50": null
+    },
+    "terminate_pod": {
+     "calls": 1,
+     "failure_share": 0.0,
+     "first_p50": null,
+     "second_p50": null
+    }
+   }
+  }
+ },
+ "platform_samples": 392,
+ "result": "OK",
+ "run_id": "soak-20260926T153321Z",
+ "windows": 390
+}

@@ -323,7 +323,10 @@ def test_all_attempts_failing_cleanly_creates_nothing():
 def test_a_timeout_is_treated_as_ambiguous_too():
     fake = prov.FakeProvider(create_faults=[prov.Fault.request_timeout()])
     pod, status = prov.create_with_reconcile(fake, {"n": 1}, sleep=lambda s: None)
-    assert status == "CREATED" and fake.calls["list"] == 1
+    # Iteration 3: "created nothing" needs TWO LIST reads a few seconds
+    # apart, both showing none of ours, before the second create.
+    assert status == "CREATED" and fake.calls["list"] == 2
+    assert fake.calls["create"] == 2
 
 
 def test_a_pod_hidden_from_list_is_still_really_running():
