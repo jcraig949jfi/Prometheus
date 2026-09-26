@@ -355,3 +355,29 @@ that cannot be built at all at a physics where the mechanism cannot exist
 is covered by A2.1 (INERT_BY_PHYSICS), not by _UNRESOLVED. The
 per-specimen eligibility table is committed with the code freeze, before
 any row.
+
+## Amendment A3, 2026-09-26 04:3xZ (PRE-DATA; no C1b row exists; before the code freeze)
+
+Authority: Ananke #674 (question), Aporia #675 (ruling; disclosed that it
+had seen the plant POINT values in #674, not their CIs), Cyclops #678
+(concurrence -> JOINT). A2's added not-R row is accepted (#675).
+
+A3.1 "The positive control FIRED" at a specimen's physics (A2.2) means
+BOTH:
+  (i)  COMPETENT: the plant at that physics meets C1's SIGNAL bar, i.e.
+       lo99 of normal accuracy > 0.55 over mirror pairs, same bootstrap;
+  (ii) DECISIVELY NOT-INTACT: under the switch, hi99 of
+       (acc_switched - acc_normal) < -0.10, same 99% bootstrap, so the
+       whole CI lies outside s3's intact band (intact = lo99 >= -0.10).
+This applies UNIFORMLY to every absence clause (B, Z, not-R, T's C1
+window, and any other), whatever it does to any label. A clause whose
+plant fails (i) or (ii) is NOT_ELIGIBLE, and its labels carry
+_UNRESOLVED. The 0.95 competence bar is kept ONLY for fixture-physics
+validation (s5), unchanged.
+A3.2 Switch per plant, as mapped in A2.2:
+  F_latch -> reset_S; F_sham_positive -> flush_inflight_iti (scored from
+  trial 1, against normal from trial 1); F_rule -> freeze_rule;
+  F_DA -> drop_readout_tick_only. F_echo validates A only and gates
+  nothing.
+A3.3 The recomputed per-specimen eligibility table is committed with the
+code freeze.
