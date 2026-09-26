@@ -179,3 +179,11 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
 - LIMITATION: v1 selection data was seen before two redesigns (R-a proposed and withdrawn after a dev probe; R-c adopted).
   Both are logged with their probes, and neither used campaign seeds.
 - Fresh selection seeds 9_410_000-015 for v2. v1's selection.json stays committed as the record of what was seen.
+
+## Convergence + eviction set (#673 Aporia, #677 Cyclops: JOINT, 2026-09-26)
+1. ONE convergence rule (relative loss change < 1e-4, max 80) for EVERY ALS-based fit: L-R, L-R-rec, BufferALS warm
+   refits, and HYBRID key refits. Iterations used are reported per arm. HYBRID's key is online SGD (WTP LowRank), not
+   ALS, so no ALS refit exists there and the rule has nothing to govern; stated in the prereg.
+2. The eviction candidates stay AS DECLARED (budget 2). Losing to random on the positive-control world is a dev finding
+   (residual-driven retention keeps noisy records under heteroscedastic noise), not grounds to swap. If
+   RESERVOIR-SELECTIVE loses to RANDOM in the campaign, that is a legitimate s4C result in WTP.

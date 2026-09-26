@@ -1,18 +1,20 @@
 # Odysseus status
 
-Currency: 2026-09-25T22:36Z (from date -u).
+Currency: 2026-09-26T03:50Z (from date -u).
 
-seat state: ACTIVE (creation pass). Charter PENDING (operator: "then
-  we'll talk about a charter / responsibilities").
-what it asserts: PRESENT (comms boot on M1 store), ACTIVE (this pass),
-  NOT PRODUCTIVE (no domain output), VALID not applicable.
-host: ubu001 (Ubuntu 26.04.1, 192.168.1.218, 4 cores, 7 GB RAM, no GPU);
-  program name is ubu001 (operator 2026-09-25); comms label "ubu001".
-  worktree /home/jcraig/Prometheus-worktrees/odysseus-base-role,
-  branch odysseus/base-role-adopt-2026-09-25, base 22bfbc966.
-monitors owned or fed: none.
-incidents: one -- canonical-checkout `git pull --ff-only` before reading
-  the contract, moved 815cdb32a -> 22bfbc966 (calibration/LEDGER.md).
-blockers: none for the creation pass. Host is bare (git + python3
-  stdlib only; no compiler, numpy, GPU); toolchain waits on the charter.
-next executable action: discuss the charter with the operator.
+seat state: ACTIVE. Charter ADOPTED 2026-09-26 (distributed brain
+  substrate; prompts/2026-09-26_charter/).
+what it asserts: PRESENT, ACTIVE, PRODUCTIVE (brain v0 built and
+  tested on ubu001). VALID: Linux only so far; Windows PENDING
+  (ODYSSEUS-01); cross-host PENDING (ODYSSEUS-02).
+brain v0: odysseus/brain/ + odysseus/tests/ -- 71 tests pass on ubu001
+  (3 consecutive runs). Stress: 6 processes, 4000 neurons, 200 ticks,
+  40% datagram loss -> 18,462 dropped, all repaired, 200/200 tick roots
+  equal the in-process reference, full replay verifies; 57.6 s wall
+  (2.9 s with no loss).
+host: ubu001 (Ubuntu 26.04.1, 192.168.1.218, 4 cores, 7 GB, no GPU).
+monitors owned or fed: none (no resident process launched).
+blockers: Windows run needs a Windows seat (delegated); cross-host run
+  needs a node on ubu002; Windows inbound UDP needs an operator firewall
+  decision (ODYSSEUS-22).
+next executable action: ODYSSEUS-03 measurements, ODYSSEUS-04 install note.

@@ -72,3 +72,12 @@ AETHER / AGE: ALLOCATION TENSION (proposed as memo Q5; not resolved by the stewa
   Until Q5 is answered, Cyclops sends Aether nothing about the program. Added to DO_NOT_BRIEF? NO:
   the list is for designated or candidate blind lanes, and Aether is DIRECT by allocation. The hold is
   recorded here instead.
+
+### 2026-09-26T04:20Z Cyclops[m2-e8056938]
+NEW SEAT OBSERVED: Odysseus (charter roles/Odysseus/prompts/2026-09-26_charter/, operator, 2026-09-26): a
+distributed, sharded "brain" substrate across machines (Windows + Linux), with frames and playback. Cyclops ran
+its Windows test request as a light task (#679 -> receipt 428d4b44). Portfolio relation: directive s7 (09-25)
+freezes "creation of new general-purpose engines". The Odysseus charter is the operator's own and LATER
+(09-26), so it governs; this is NOT a moratorium conflict for the stewards to raise. Class: none yet (not
+briefed on the program, not a designated blind lane). Its "frames, playback, pause, rewind" machinery may later
+serve the DSA's replay-and-perturb gap (memo 9). That is noted, not requested.
