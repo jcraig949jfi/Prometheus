@@ -178,3 +178,100 @@ def test_str_rotates_direction_by_energy_quartile():
         for d2, (r2, c2) in V._DIR_OFFSET.items():
             if d2 != direction:
                 assert out[3][2 + r2, 2 + c2] == 0
+
+
+# ---------------------------------------------------------------- ladder 2
+
+@pytest.mark.parametrize("variant", ["mov", "m4"])
+def test_ladder2_variant_differs_from_v1_on_a_live_soup(variant):
+    rng = np.random.default_rng(5)
+    f = soup(48, rng)
+    a, b = [x.copy() for x in f], [x.copy() for x in f]
+    diff = False
+    for t in range(1, 6):
+        a = run("v1", a, tick=t, par=LIVE)
+        b = run(variant, b, tick=t, par=LIVE)
+        diff = diff or any(not np.array_equal(x, y) for x, y in zip(a, b))
+    assert diff
+
+
+def test_mov_clears_the_payload_of_a_winning_source_only():
+    # Two emitters contest one target; the winner's payload moves (is
+    # cleared), the loser keeps its payload. Run several ticks so both
+    # winners occur.
+    seen = set()
+    for tick in range(1, 30):
+        f = blank()
+        writer(f, 1, 2, K.SOUTH, K.ARG1, payload=40)
+        writer(f, 3, 2, K.NORTH, K.ARG1, payload=41)
+        out = run("mov", [x.copy() for x in f], tick=tick)
+        v1 = run("v1", [x.copy() for x in f], tick=tick)
+        won = int(out[2][2, 2])
+        assert won == int(v1[2][2, 2]) and won in (40, 41)
+        winner, loser = ((1, 2), (3, 2)) if won == 40 else ((3, 2), (1, 2))
+        assert out[3][winner] == 0
+        assert out[3][loser] == (41 if won == 40 else 40)
+        seen.add(won)
+    assert seen == {40, 41}
+
+
+def test_mov_keeps_an_incoming_payload_on_a_winning_source():
+    # A wins into C's payload while B writes into A's payload: A's payload
+    # becomes B's byte, not 0.
+    f = blank()
+    writer(f, 2, 1, K.EAST, K.PAYLOAD, payload=11)       # A -> (2, 2)
+    writer(f, 2, 0, K.EAST, K.PAYLOAD, payload=22)       # B -> A
+    out = run("mov", [x.copy() for x in f])
+    assert out[3][2, 2] == 11
+    assert out[3][2, 1] == 22
+    assert out[3][2, 0] == 0                             # B won and is not written
+
+
+def test_rcv_lets_a_written_inert_site_emit_for_one_tick():
+    f = blank()
+    writer(f, 2, 1, K.EAST, K.ARG1, payload=3)           # writes into (2, 2)
+    f[0][2, 2] = 7                                       # inert opcode
+    f[1][2, 2] = K.EAST                                  # aims at (2, 3)
+    f[3][2, 2] = 99
+    h, w = f[0].shape
+    out = V.step("rcv", H=h, W=w, seed=1, tick=1, opcode=f[0], arg0=f[1],
+                 arg1=f[2], payload=f[3], energy=f[4],
+                 received=np.zeros((h, w), dtype=bool), **QUIET)
+    got = list(out[:5])
+    rec = out[5]["received"]
+    assert rec[2, 2] and not rec[2, 3]
+    assert got[2][2, 2] == 3                             # arg1 now selects PAYLOAD
+    # Next tick the inert site emits its payload into (2, 3) because it
+    # was written; plain v1 would leave (2, 3) alone.
+    out2 = V.step("rcv", H=h, W=w, seed=1, tick=2, opcode=got[0], arg0=got[1],
+                  arg1=got[2], payload=got[3], energy=got[4], received=rec,
+                  **QUIET)
+    assert out2[3][2, 3] == 99
+    v1 = run("v1", [x.copy() for x in got], tick=2)
+    assert v1[3][2, 3] == 0
+    # ...and it paid WRITE_COST for doing so.
+    assert out2[4][2, 2] == got[4][2, 2] - 1
+
+
+def test_rcv_without_receipt_is_v1():
+    rng = np.random.default_rng(6)
+    f = soup(24, rng)
+    h, w = f[0].shape
+    out = V.step("rcv", H=h, W=w, seed=3, tick=1, opcode=f[0], arg0=f[1],
+                 arg1=f[2], payload=f[3], energy=f[4],
+                 received=np.zeros((h, w), dtype=bool), **LIVE)
+    ref = run("v1", [x.copy() for x in f], seed=3, par=LIVE)
+    for a, b in zip(out[:5], ref):
+        assert np.array_equal(a, b)
+
+
+def test_m4_low_bit_flips_of_arg1_leave_the_field_unchanged():
+    for arg1 in range(256):
+        field = (arg1 >> 3) % 5
+        for bit in range(3):
+            assert ((arg1 ^ (1 << bit)) >> 3) % 5 == field
+    counts = np.bincount([((a >> 3) % 5) for a in range(256)], minlength=5)
+    assert sorted(counts.tolist()) == [48, 48, 48, 56, 56]
+    f = blank()
+    writer(f, 2, 2, K.EAST, (K.PAYLOAD << 3), payload=77)  # field = PAYLOAD under m4
+    assert run("m4", [x.copy() for x in f])[3][2, 3] == 77
