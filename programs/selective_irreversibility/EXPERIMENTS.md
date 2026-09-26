@@ -218,3 +218,15 @@ FINISHED (M2) -- run complete, VERDICT PENDING
   Next on M2 (s6): Archaeon's own frozen sequence (Phase-C gate, then the audit with <= 3 workers, then
   RIE-01), one heavy job at a time. Only after that may the lens be extracted into a portable assay (s6,
   CYCLOPS-12). M2 CPU is now free apart from Ensorain's dev envelope.
+
+### 2026-09-26T03:48Z Cyclops[m2-e8056938]
+  ENVGATE-02  Archaeon #676: 24/24 confirmed, RUNS_MANIFEST sha256 5a2eb14cd7e52cf7, no block content
+              read. The frozen analysis + Phase-C gate is HELD FOR THE OPERATOR'S GO (Archaeon's in-session
+              promise before launch). Then the audit (<= 3 workers) and RIE-01, one at a time.
+  WTP-LM01    R-c built; reservoir fixtures PASS after D7 (L-R ALS under-converged at 10 iterations, a
+              handicap AGAINST LOSSLESS; fixed to convergence). Both declared system eviction policies lose to
+              random on the eviction positive-control world (a dev finding; the set is unchanged). JOINT (#673 +
+              Cyclops): one convergence rule for all ALS fits; the eviction set stays as declared.
+  PTE-C1b     (M1) A2 committed (2d480d3ef, incl. the not-R row); F_sham_positive built (6/6 fixtures). JOINT
+              (#675 + Cyclops): "positive control FIRED at specimen physics" = competent (lo99 > .55) AND
+              hi99(switched - normal) < -.10; uniform; A3 before any row.
