@@ -152,3 +152,30 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
     variants).
   - Never a per-world best-of on campaign rows.
   - The per-stratum choice is reported for every family.
+
+## D6 repair R-c (#664/#666 reports; #665, #667, #670 Aporia; #668 Cyclops: JOINT, 2026-09-26)
+- R-a (a replay SELECTIVE) was proposed, then WITHDRAWN after a dev probe showed replay does not close the gap (#666).
+- R-c adopted:
+  1. The HEADLINE moves to the same-optimizer RESERVOIR-REFIT curve: BufferALS over B up to the full store, with L-R at
+     its full-store end. SELECTIVE-proper vs LOSSLESS is SECONDARY, labelled "optimizer confounded (SGD vs ALS)".
+  2. Add RESERVOIR-SELECTIVE (eviction by the system's OWN learned signal) vs RESERVOIR-RANDOM at the same B, bytes and
+     optimizer (s4C at equal bytes). Relevance for the readout still comes only from the generator (G2). Read under the
+     equivalence + positive-control rule; the positive control is a planted world where oracle-relevant eviction beats
+     random.
+  3. "SATURATES" is defined before the dev margins: the smallest B whose never-seen AC is within the equivalence margin of
+     the full-store end, per stratum, under the equivalence + positive-control rule.
+  4. R-c is the SINGLE grid change; it lands before selection v2 is read. After v2, nothing is added except for a
+     fixture-demonstrated defect (#665 condition 4, "last grid change").
+  5. Fixtures first: (i) the curve is monotone in B and matches L-R within the margin at the full store; (ii) a planted
+     world where oracle eviction beats random eviction at matched B.
+  a. DUAL MATCHING for 2:
+     - (i) matched B (equal bytes), the primary reading;
+     - (ii) matched HR2: ladder the random reservoir's B up to the selective one's HR2 and charge the extra bytes, with
+       several random seeds per point.
+     - INDISCRIMINATE_EQUIVALENT needs equivalence under BOTH readings plus the positive control.
+     - A win at (i) that vanishes at (ii) is labelled SELECTIVE_BUYS_BYTES.
+  b. EVICTION-POLICY BUDGET: 1-2 declared candidates, chosen on dev only, with the count reported.
+- The reservoir is named an INTERMEDIATE mechanism; its HR2/HR2_signal and bytes are reported.
+- LIMITATION: v1 selection data was seen before two redesigns (R-a proposed and withdrawn after a dev probe; R-c adopted).
+  Both are logged with their probes, and neither used campaign seeds.
+- Fresh selection seeds 9_410_000-015 for v2. v1's selection.json stays committed as the record of what was seen.

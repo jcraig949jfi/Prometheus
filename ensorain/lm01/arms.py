@@ -100,7 +100,7 @@ class LosslessK(_StoreArm):
         return out
 
 
-def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None):
+def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None, tol=1e-4):
     """Batch ridge ALS on the best mode split (fewest parameters). Returns (U, V, s). Charges ops to meter."""
     D = len(dims)
     w = np.ones(len(y)) if w is None else w
@@ -109,7 +109,8 @@ def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None):
     J = np.ravel_multi_index(A[:, s:].T.astype(int), dims[s:])
     U = rng.normal(0, 0.3, (int(np.prod(dims[:s])), r))
     V = rng.normal(0, 0.3, (int(np.prod(dims[s:])), r))
-    for _ in range(iters):
+    prev = None
+    for _ in range(iters):       # D7 (fixture-demonstrated): run to convergence, rel. loss change < tol, max iters
         for M, N, P, Qx in ((U, V, I, J), (V, U, J, I)):
             order = np.argsort(P, kind="stable")
             Ps = P[order]
@@ -124,13 +125,17 @@ def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None):
                 c = len(y) * r * r + len(np.unique(P)) * r ** 3
                 meter.ops += c
                 meter.replay_ops += c
+        loss = float(np.sum(w * (y - (U[I] * V[J]).sum(1)) ** 2))
+        if prev is not None and prev - loss <= tol * max(prev, 1e-12):
+            break
+        prev = loss
     return U, V, s
 
 
 class LosslessR(_StoreArm):
     name, category = "L-R", "LOSSLESS"
 
-    def __init__(self, dims, rank=2, lam=0.1, iters=10, seed=0):
+    def __init__(self, dims, rank=2, lam=0.1, iters=80, seed=0):      # D7: max 80, convergence stop
         super().__init__(dims)
         self.rank, self.lam, self.iters, self.seed = rank, lam, iters, seed
 
@@ -385,9 +390,13 @@ class BufferALS(Metered):
     optimizer confound. With B >= history it degenerates to L-R with a kept fit (then the category is HYBRID)."""
     category = "SELECTIVE"
 
-    def __init__(self, dims, rank, B, every=64, iters=2, lam=0.1, seed=0):
+    EVICT = ("random", "keep_worst", "residual_reservoir", "oracle")   # R-c(b): 2 declared system candidates + fixture oracle
+
+    def __init__(self, dims, rank, B, every=64, iters=2, lam=0.1, seed=0, evict="random", oracle_keep=None):
         super().__init__()
-        self.name = f"S-bufALS-r{rank}-B{B}"
+        assert evict in self.EVICT
+        self.evict, self.oracle_keep = evict, oracle_keep     # oracle_keep: fixture-only relevance fn(A) -> bool
+        self.name = f"R-{evict}-r{rank}-B{B}"
         self.dims, self.r, self.B, self.every, self.iters, self.lam = list(dims), rank, int(B), every, iters, lam
         D = len(dims)
         self.s = min(range(1, D), key=lambda k: int(np.prod(dims[:k])) + int(np.prod(dims[k:])))
@@ -398,25 +407,50 @@ class BufferALS(Metered):
         self.by = np.zeros(0)
         self._seen = self._since = 0
         self._rr = np.random.default_rng(seed + 991)
+        self.bkey = np.zeros(0)                    # residual_reservoir keys / keep_worst |residual| / oracle relevance
 
     def persistent(self):
-        return [self.U, self.V, self.bA, self.by]
+        return [self.U, self.V, self.bA, self.by, self.bkey]
+
+    def _res(self, A, y):
+        i = np.ravel_multi_index(A[:, :self.s].T.astype(int), self.dims[:self.s])
+        j = np.ravel_multi_index(A[:, self.s:].T.astype(int), self.dims[self.s:])
+        self.meter.ops += len(y) * self.r
+        return np.abs(y - (self.U[i] * self.V[j]).sum(1))
+
+    def _key(self, a, v, res):
+        if self.evict == "keep_worst":
+            return res
+        if self.evict == "residual_reservoir":            # A-Res weighted reservoir: key = u^(1/w)
+            return self._rr.random() ** (1.0 / (res + 1e-3))
+        if self.evict == "oracle":
+            return float(self.oracle_keep(a[None])[0]) + self._rr.random() * 1e-3
+        return 0.0
 
     def _observe(self, A, y):
-        for a, v in zip(A.astype(np.int16), y):
+        res = self._res(A, y) if self.evict in ("keep_worst", "residual_reservoir") else np.zeros(len(y))
+        for a, v, rs in zip(A.astype(np.int16), y, res):
             self._seen += 1
             if len(self.by) < self.B:
                 self.bA = np.vstack([self.bA, a[None]])
                 self.by = np.append(self.by, v)
-            else:
+                self.bkey = np.append(self.bkey, self._key(a, v, rs))
+            elif self.evict == "random":
                 j = self._rr.integers(self._seen)
                 if j < self.B:
                     self.bA[j], self.by[j] = a, v
+            else:
+                k = self._key(a, v, rs)
+                j = int(np.argmin(self.bkey))
+                if k > self.bkey[j]:
+                    self.bA[j], self.by[j], self.bkey[j] = a, v, k
         self.meter.bytes_written += len(y) * (A.shape[1] * 2 + 8)
         self._since += len(y)
         if self._since >= self.every:
             self._since = 0
             self._refit()
+            if self.evict == "keep_worst" and len(self.by):     # residuals go stale after a refit
+                self.bkey = self._res(self.bA, self.by)
 
     def _refit(self):
         A, y = self.bA.astype(int), self.by
