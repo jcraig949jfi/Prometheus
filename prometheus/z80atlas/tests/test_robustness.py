@@ -23,6 +23,12 @@ def test_ineligible_without_the_trait():
     assert r["eligible"] is False and r["base_copy"] is True and r["base_task"] is False
 
 
+def test_competent_noncopier_is_eligible_for_task_robustness():
+    w = vm.witness_inc()                                            # computes INC, copies nothing
+    r = robustness(w, cfg(), Task("INC"), n=32, seed=1)
+    assert r["eligible"] is True and r["base_copy"] is False and 0.0 <= r["task"] <= 1.0
+
+
 def test_eligible_hybrid_bounds_and_determinism():
     c = cfg()
     a = robustness(HYB, c, Task("INC"), n=64, seed=7)
@@ -51,3 +57,13 @@ def test_unexecuted_padding_is_neutral():
     for i in pads[:4]:
         m = bytearray(t); m[i] = 0x7E                                  # an arbitrary non-zero byte in never-run padding
         assert A.verify_tape(bytes(m), c, Task("INC"))["exact"]
+
+
+def test_copy_only_mode_for_noncomputing_copier():
+    r = robustness(REP, cfg(), Task("INC"), n=32, seed=1, copy_only=True)
+    assert r["eligible"] is True and r["task"] is None and r["joint"] is None and 0.0 <= r["copy"] <= 1.0
+
+
+def test_copy_only_fragility_counts_copy_failures():
+    r = robustness(REP, cfg(), Task("INC"), n=256, seed=3, copy_only=True)
+    assert r["fragile_positions"] < r["sampled_positions"]            # padding past the copier is not fragile
