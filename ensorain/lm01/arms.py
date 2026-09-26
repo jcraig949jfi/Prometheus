@@ -70,6 +70,17 @@ class _StoreArm(Metered):
     def _reconstruct(self, idx, A):
         return self.store.y[idx].copy()          # exact: the record itself
 
+    half_life = None                             # P3/H-rec (#644): fraction of the store size; None = time unused
+
+    def _age_w(self):
+        """Recency weights from the STORED admission steps (a readout of exact state; nothing is discarded)."""
+        n = len(self.store.t)
+        if self.half_life is None or n == 0:
+            return np.ones(n)
+        age = (self.store.t[-1] - self.store.t).astype(float)
+        self.meter.bytes_read += self.store.t.nbytes
+        return 0.5 ** (age / max(1.0, self.half_life * n))
+
 
 class LosslessK(_StoreArm):
     name, category = "L-K", "LOSSLESS"
@@ -79,18 +90,20 @@ class LosslessK(_StoreArm):
         if len(V) == 0:
             return np.zeros(len(Q))
         out = np.empty(len(Q))
+        aw = self._age_w()
         for i in range(0, len(Q), 128):
             Dm = (Q[i:i + 128, None, :] != S[None, :, :]).sum(2)
-            W = Dm == Dm.min(1, keepdims=True)
+            W = (Dm == Dm.min(1, keepdims=True)) * aw[None]
             out[i:i + 128] = (W * V[None]).sum(1) / W.sum(1)
         self.meter.bytes_read += S.nbytes + V.nbytes
         self.meter.ops += len(Q) * len(V) * len(self.dims)
         return out
 
 
-def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None):
+def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None):
     """Batch ridge ALS on the best mode split (fewest parameters). Returns (U, V, s). Charges ops to meter."""
     D = len(dims)
+    w = np.ones(len(y)) if w is None else w
     s = min(range(1, D), key=lambda k: int(np.prod(dims[:k])) + int(np.prod(dims[k:])))
     I = np.ravel_multi_index(A[:, :s].T.astype(int), dims[:s])
     J = np.ravel_multi_index(A[:, s:].T.astype(int), dims[s:])
@@ -105,7 +118,8 @@ def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None):
                 if len(grp) == 0:
                     continue
                 B = N[Qx[grp]]
-                M[P[grp[0]]] = np.linalg.solve(B.T @ B + lam * np.eye(r), B.T @ y[grp])
+                Bw = B * w[grp, None]
+                M[P[grp[0]]] = np.linalg.solve(Bw.T @ B + lam * np.eye(r), Bw.T @ y[grp])
             if meter is not None:
                 c = len(y) * r * r + len(np.unique(P)) * r ** 3
                 meter.ops += c
@@ -121,12 +135,12 @@ class LosslessR(_StoreArm):
         self.rank, self.lam, self.iters, self.seed = rank, lam, iters, seed
 
     def _fit_data(self):
-        return self.store.A, self.store.y
+        return self.store.A, self.store.y, self._age_w()
 
     def _fit(self):
-        A, y = self._fit_data()
+        A, y, w = self._fit_data()
         self.meter.bytes_read += A.nbytes + y.nbytes
-        return als_lowrank(self.dims, A, y, self.rank, self.lam, np.random.default_rng(self.seed), self.iters, self.meter)
+        return als_lowrank(self.dims, A, y, self.rank, self.lam, np.random.default_rng(self.seed), self.iters, self.meter, w)
 
     def _apply(self, fit, Q):
         U, V, s = fit
@@ -170,7 +184,7 @@ class LRSubsample(LosslessR):
     def _fit_data(self):
         n = len(self.store.y)
         k = np.random.default_rng(self.seed + n).choice(n, size=max(1, n // 2), replace=False)
-        return self.store.A[k], self.store.y[k]
+        return self.store.A[k], self.store.y[k], self._age_w()[k]
 
 
 class Selective(Metered):
@@ -268,12 +282,14 @@ class Hybrid(_StoreArm):
         if len(V) == 0:
             return np.zeros(len(Q))
         ES, EQ = self._embed(S), self._embed(Q)
+        aw = self._age_w()
         out = np.empty(len(Q))
         k = min(self.k, len(V))
         for i in range(0, len(Q), 128):
             d = ((EQ[i:i + 128, None, :] - ES[None, :, :]) ** 2).sum(2)
             nn = np.argpartition(d, k - 1, axis=1)[:, :k]
-            out[i:i + 128] = V[nn].mean(1)
+            ww = aw[nn]
+            out[i:i + 128] = (V[nn] * ww).sum(1) / ww.sum(1)
         self.meter.bytes_read += S.nbytes + V.nbytes + nbytes(self.key.params())
         self.meter.ops += len(Q) * len(V) * ES.shape[1]
         return out
@@ -284,3 +300,30 @@ class Hybrid(_StoreArm):
         self.key.U[...] = self.key.U[rng.permutation(len(self.key.U))]
         self.key.V[...] = self.key.V[rng.permutation(len(self.key.V))]
         self.ablated = True
+
+
+class LosslessKRec(LosslessK):
+    """P3 (#642/#644): L-K whose readout weights records by stored age. Storage identical, exactly lossless."""
+    name = "L-K-rec"
+
+    def __init__(self, dims, half_life=0.25):
+        super().__init__(dims)
+        self.half_life = half_life
+
+
+class LosslessRRec(LosslessR):
+    """P3 (#642): recency-weighted FULL-store refit (R1d holds: all records read, weights from stored steps)."""
+    name = "L-R-rec"
+
+    def __init__(self, dims, half_life=0.25, **kw):
+        super().__init__(dims, **kw)
+        self.half_life = half_life
+
+
+class HybridRec(Hybrid):
+    """H-rec (#644): HYBRID whose k-NN readout weights retrieved records by stored age."""
+    name = "H-rec"
+
+    def __init__(self, dims, cap, half_life=0.25, **kw):
+        super().__init__(dims, cap, **kw)
+        self.half_life = half_life

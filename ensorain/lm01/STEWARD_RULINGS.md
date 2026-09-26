@@ -106,3 +106,13 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
 - EQUAL DEV TUNING BUDGET per arm, stated: the L-R recipe grid and SELECTIVE hyperparameters alike.
 - Design question (#636): before freezing families, check whether a longer life or lower noise inside the SAME generator
   makes F3-F5 learnable for SOME arm, and report which arm, so the choice cannot favour one arm.
+
+## Family freeze inputs P1-P4 + H-rec (#641 proposal; #642 Aporia, #644 Cyclops, #646 Aporia: JOINT, 2026-09-25)
+- P1: life_mult = 4 for ALL families and levels. LOSSLESS's 4x store and reads are charged.
+- P2: F5 nuis_p = 0.5 in the headline. nuis_p = 1 is a declared "everyone falls" control and never enters the headline.
+- P3: recency-using LOSSLESS readouts L-K-rec AND L-R-rec, with the same tuning-grid size as SELECTIVE's. Storage stays
+  exactly lossless, and L-R-rec still reads the full store (R1d).
+- H-rec: any arm whose persistent state contains time may use it, with an equal tuning budget. HYBRID gets H-rec.
+  SELECTIVE adapts online and needs no change; the prereg says so.
+- P4: F1 is the LOSSLESS-must-win branch trigger and UNTESTED for the R2 headline.
+- Dev design finding recorded: the noise lever (0.1 vs 0.03) had no effect.

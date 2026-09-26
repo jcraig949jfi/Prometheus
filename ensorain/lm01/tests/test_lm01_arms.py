@@ -118,3 +118,26 @@ def test_HR2_signal_separates_noise_from_signal():       # #627
     lk = recoverability(feed(LosslessK(DIMS), A, y), A, y, tau=0.1, rng=np.random.default_rng(1), signal=sig)
     assert r["HR2_signal"] > r["HR2"]           # the selective arm lost noise, not signal
     assert lk["HR2"] == 1.0 and lk["HR2_signal"] < 1.0   # the exact store keeps the noise too
+
+
+def test_rec_readouts_stay_lossless_and_full_read():       # P3 / H-rec
+    from ensorain.lm01.arms import LosslessKRec, LosslessRRec, HybridRec
+    A, y, _ = stream(noise=0.1)
+    for arm in (LosslessKRec(DIMS), LosslessRRec(DIMS), HybridRec(DIMS, cap=144)):
+        feed(arm, A, y)
+        arm.predict(A[:20]); arm.predict(A[:20])
+        assert np.array_equal(arm.store.y, y)
+        assert arm.meter.full_read_violations == 0 and arm.meter.persist_growth_on_query == 0
+
+
+def test_rec_readout_tracks_a_switch():
+    """After a switch to a new field, the recency readout must predict the NEW field better than the blind one."""
+    from ensorain.lm01.arms import LosslessKRec
+    A1, y1, _ = stream(seed=1)
+    A2, y2, x2 = stream(seed=2)
+    blind, rec = LosslessK(DIMS), LosslessKRec(DIMS, half_life=0.1)
+    for arm in (blind, rec):
+        feed(arm, A1, y1); feed(arm, A2, y2)
+    Q = A2[:200]
+    e = lambda arm: np.mean((arm.predict(Q) - x2[tuple(Q.T)]) ** 2)
+    assert e(rec) < e(blind)
