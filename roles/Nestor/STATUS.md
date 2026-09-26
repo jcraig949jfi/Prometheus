@@ -17,7 +17,7 @@ main fast-forwarded to 4d4141285. Stale delegations #285/#448/#471/#474 marked s
 
 | experiment | lane | what |
 |---|---|---|
-| X-DONOR-DISCOVERY | EXPLORE | random pops, 7ae3+ffa6 cells, ATOMIC, 48 seeds each; L1-L4 funnel every 100 epochs; schtask NestorDD |
+| X-DD-DENSE-COPY | EXPLORE | 1-byte LDIR/LDDR aliases vs plain, random pops, 2 cells x 48 x 2 arms; schtask NestorDC2 |
 
 ## WINDOW CLOSE (2026-09-26)
 
