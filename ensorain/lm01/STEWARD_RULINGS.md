@@ -187,3 +187,23 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
 2. The eviction candidates stay AS DECLARED (budget 2). Losing to random on the positive-control world is a dev finding
    (residual-driven retention keeps noisy records under heteroscedastic noise), not grounds to swap. If
    RESERVOIR-SELECTIVE loses to RANDOM in the campaign, that is a legitimate s4C result in WTP.
+
+## Prereg s6 review + margin/F3 (#691, #693, #697, #700 Aporia; #698 Cyclops: JOINT, 2026-09-26)
+- The margin is REPLICATE-based (instrument noise), a named deviation from R2a with its reason stated. The between-world
+  SD is reported beside it.
+- F3:
+  - the reservoir stays recency-blind (limitation);
+  - the headline curve ends at the recency-BLIND converged L-R in every stratum;
+  - L-R-rec vs the reservoir is reported separately;
+  - S-cp's bimodal modes are reported, with the fraction per mode per stratum.
+- s6:
+  - no falsifier conjoins an absence;
+  - BOUNDED_SUFFICES is reported with no verdict weight;
+  - falsifiers split into F-B (strict, L-K within MARGIN of full) and F-C (scoped to exact-record retention);
+  - NULL needs PASSING equivalence;
+  - firing is per stratum, with held-out replication symmetric for falsifiers and supports;
+  - 6.2 COUNTERMODEL needs a demonstrated win over every point.
+- Multiplicity:
+  - (a) report the strata TESTED and the EXPECTED chance firings per label;
+  - (b) the replication block is sized for >= 80% power at 2 x MARGIN, declared now. Unreplicable = UNREPLICATED.
+- Launch prompt: the exact-token launch-gate pattern with real-id negative controls (#699/#700).

@@ -12,7 +12,10 @@ No scalar exchange rate. Every arm carries one Meter that records separately:
   n_queries, n_obs   call counts
   external_bytes     storage outside the arm's state (declared; 0 unless an arm uses it)
 Audit fields used by the cheat fixtures:
-  full_read_violations   predict calls whose bytes_read < the store bytes they were obliged to read (R1d)
+  store_read             bytes of the exact store's RECORD arrays (cells + values) read. It is the R1d obligation counter
+                         and is kept separate from bytes_read. DEFECT D8 (H2 fixture, 2026-09-26): with one byte counter,
+                         a -rec readout's full read of the timestamp array masked a half-store subsample.
+  full_read_violations   predict calls whose store_read < the record bytes they were obliged to read (R1d)
   persist_growth_on_query predict calls after which persistent bytes grew (R1c: a refit kept between queries)"""
 import time
 
@@ -20,8 +23,8 @@ import numpy as np
 
 
 class Meter:
-    FIELDS = ("persistent_bytes", "peak_persistent", "bytes_written", "bytes_read", "ops", "replay_ops", "wall",
-              "n_queries", "n_obs", "external_bytes", "full_read_violations", "persist_growth_on_query")
+    FIELDS = ("persistent_bytes", "peak_persistent", "bytes_written", "bytes_read", "store_read", "ops", "replay_ops",
+              "wall", "n_queries", "n_obs", "external_bytes", "full_read_violations", "persist_growth_on_query")
 
     def __init__(self):
         for f in self.FIELDS:
@@ -66,12 +69,12 @@ class Metered:
 
     def predict(self, A):
         before = nbytes(self.persistent())
-        read0 = self.meter.bytes_read
+        read0 = self.meter.store_read
         t0 = time.perf_counter()
         out = self._predict(np.asarray(A))
         self.meter.wall += time.perf_counter() - t0
         self.meter.n_queries += 1
-        if self.meter.bytes_read - read0 < self.must_read_bytes():
+        if self.meter.store_read - read0 < self.must_read_bytes():
             self.meter.full_read_violations += 1
         if self._sync() > before:
             self.meter.persist_growth_on_query += 1
@@ -81,9 +84,9 @@ class Metered:
         """Best recovery of admitted observations idx (at cells A) from persistent state alone. Default: the
         arm's own prediction at the cell (a lossy arm cannot address individual records)."""
         m = self.meter
-        saved = (m.bytes_read, m.ops, m.wall, m.n_queries, m.full_read_violations, m.persist_growth_on_query)
+        saved = (m.bytes_read, m.store_read, m.ops, m.wall, m.n_queries, m.full_read_violations, m.persist_growth_on_query)
         out = self._reconstruct(np.asarray(idx), np.asarray(A))
-        m.bytes_read, m.ops, m.wall, m.n_queries, m.full_read_violations, m.persist_growth_on_query = saved
+        m.bytes_read, m.store_read, m.ops, m.wall, m.n_queries, m.full_read_violations, m.persist_growth_on_query = saved
         return out
 
     def _reconstruct(self, idx, A):

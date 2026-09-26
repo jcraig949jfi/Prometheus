@@ -96,6 +96,7 @@ class LosslessK(_StoreArm):
             W = (Dm == Dm.min(1, keepdims=True)) * aw[None]
             out[i:i + 128] = (W * V[None]).sum(1) / W.sum(1)
         self.meter.bytes_read += S.nbytes + V.nbytes
+        self.meter.store_read += S.nbytes + V.nbytes
         self.meter.ops += len(Q) * len(V) * len(self.dims)
         return out
 
@@ -149,6 +150,7 @@ class LosslessR(_StoreArm):
     def _fit(self):
         A, y, w = self._fit_data()
         self.meter.bytes_read += A.nbytes + y.nbytes
+        self.meter.store_read += A.nbytes + y.nbytes
         return als_lowrank(self.dims, A, y, self.rank, self.lam, np.random.default_rng(self.seed), self.iters, self.meter, w)
 
     def _apply(self, fit, Q):
@@ -300,6 +302,7 @@ class Hybrid(_StoreArm):
             ww = aw[nn]
             out[i:i + 128] = (V[nn] * ww).sum(1) / ww.sum(1)
         self.meter.bytes_read += S.nbytes + V.nbytes + nbytes(self.key.params())
+        self.meter.store_read += S.nbytes + V.nbytes
         self.meter.ops += len(Q) * len(V) * ES.shape[1]
         return out
 

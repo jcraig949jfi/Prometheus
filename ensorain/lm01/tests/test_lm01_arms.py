@@ -151,3 +151,49 @@ def test_replay_and_buffer_als_charge_their_buffers():      # D6
     for arm in (r, b):
         assert len(arm.by) == 100 and arm.meter.replay_ops > 0
         assert arm.meter.peak_persistent >= arm.bA.nbytes + arm.by.nbytes
+
+
+def test_H2_cheat_fixtures_flag_rec_variants():             # checklist H2 (#642/#644): R1c/R1d on every -rec arm
+    from ensorain.lm01.arms import LosslessRRec, HybridRec
+
+    class LRRecCache(LosslessRRec):
+        def __init__(self, dims, **kw):
+            super().__init__(dims, **kw)
+            self.cached = None
+
+        def persistent(self):
+            return self.store.arrays() + ([] if self.cached is None else [self.cached[0], self.cached[1]])
+
+        def _predict(self, Q):
+            if self.cached is None:
+                self.cached = self._fit()
+            return self._apply(self.cached, Q)
+
+    class LRRecSubsample(LosslessRRec):
+        def _fit_data(self):
+            n = len(self.store.y)
+            k = np.random.default_rng(n).choice(n, size=n // 2, replace=False)
+            return self.store.A[k], self.store.y[k], self._age_w()[k]
+
+    class HRecSubsample(HybridRec):
+        def _predict(self, Q):
+            full = self.store
+            half = len(full.y) // 2
+            S, V = full.A[half:], full.y[half:]            # silently reads only the newer half
+            ES, EQ = self._embed(S), self._embed(Q)
+            d = ((EQ[:, None, :] - ES[None]) ** 2).sum(2)
+            nn = np.argsort(d, 1)[:, :self.k]
+            self.meter.bytes_read += S.nbytes + V.nbytes
+            self.meter.store_read += S.nbytes + V.nbytes
+            return V[nn].mean(1)
+
+    A, y, _ = stream()
+    c = feed(LRRecCache(DIMS), A, y)
+    c.predict(A[:10]); c.predict(A[:10])
+    assert c.meter.persist_growth_on_query >= 1
+    s = feed(LRRecSubsample(DIMS), A, y)
+    s.predict(A[:10])
+    assert s.meter.full_read_violations >= 1
+    h = feed(HRecSubsample(DIMS, cap=144), A, y)
+    h.predict(A[:10])
+    assert h.meter.full_read_violations >= 1
