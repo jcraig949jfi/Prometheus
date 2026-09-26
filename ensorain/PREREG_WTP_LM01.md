@@ -195,14 +195,16 @@ Rules: ensorain/lm01/margins_reduce.py (committed before the sweep rows are read
   - 9_400_000.. (selection v1, seen);
   - 9_410_000.. (selection v2);
   - 9_500_000.. (margins).
-- HELD-OUT REPLICATION seeds (declared now, used for nothing else): rseed(stratum, i) = 10^9 + 5 x 10^8 +
-  int(sha256(f"{PREREG_SHA}|LM01-replication|{stratum}|{i}").hexdigest()[:8], 16). Materialised only for a firing
-  stratum, after the campaign verdict is computed.
-- CAMPAIGN seeds: seed(stratum, i) = 10^9 + int(sha256(f"{PREREG_SHA}|LM01-campaign|{stratum}|{i}").hexdigest()[:8], 16),
-  i = 0..N-1. PREREG_SHA is the commit that freezes this file.
-  - make_world refuses any seed outside the dev range below 10^9.
-  - The derivation code is committed with the freeze, and no campaign seed is materialised before the launch prompt.
-  - [BUILD] campaign runner.
+- LAUNCH GATE and SEEDS: ensorain/lm01/launch_gate.py (#699/#700 exact-token pattern).
+  - A release is a comms message with subject starting EXACTLY "WTP-LM01 LAUNCH:", kind ruling, from Cyclops (or the
+    operator), Ensorain among the recipients, created after the freeze commit, and carrying the freeze SHA.
+  - Negative controls on real messages (#592, #610, #698, #699, #701 and Ensorain's own #590/#625/#664/#692) are
+    rejected; a synthetic well-formed release is accepted. These were run against the live comms DB before the freeze.
+- CAMPAIGN seeds: 10^9 + (int(sha256(f"{FREEZE_SHA}|LM01-campaign|{stratum}|{i}")[:12 hex], 16) mod 4 x 10^8).
+  Materialised only by campaign_seeds(release_id, ...), which re-checks the release against the DB; a collision aborts.
+- HELD-OUT REPLICATION seeds: 2 x 10^9 + (the same hash with tag LM01-replication, mod 4 x 10^8). Disjoint from the
+  campaign range by construction. Materialised only for a firing stratum, after the campaign verdict.
+- make_world refuses any seed below 10^9 outside the dev range.
 
 ## 10. Campaign size, runtime, concurrency (G5) [MARGINS]
 
