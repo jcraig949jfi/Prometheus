@@ -116,3 +116,23 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
   SELECTIVE adapts online and needs no change; the prereg says so.
 - P4: F1 is the LOSSLESS-must-win branch trigger and UNTESTED for the R2 headline.
 - Dev design finding recorded: the noise lever (0.1 vs 0.03) had no effect.
+
+## D3 / D4 / D5 (#647, #651 reports; #648, #652 Aporia; #653 Cyclops: JOINT, 2026-09-25/26)
+- D3 option A:
+  - Keep P1 (life 4x everywhere).
+  - The MIN ELIGIBLE COUNT is DERIVED from dev noise: the smallest never-seen count at which the CI half-width of an arm's
+    never-seen AC is <= half the equivalence margin. It is decided per family x level, pooled over dev seeds, and the
+    calculation is committed. A cell below it reads UNTESTED by rule.
+  - Full-coverage cells go to a separate "LOSSLESS = table" regime table and never enter the headline.
+  - The limitations state which families L1's headline actually rests on.
+  - Re-check P2 (nuis_p .5) learnability at L2/L3 on the recomputed sets before freezing.
+- D4: selectivity is read ONLY relative to the rate-matched blind reference.
+  - The threshold comes from the spread across SEVERAL independently seeded references at matched HR2 (e.g. the 99th
+    percentile of reference-minus-reference differences on dev), and the calculation is committed.
+  - Multiple reference seeds per matched point.
+  - UNMATCHED means no reading; its frequency per arm is reported.
+  - The #627 gap stays REPORTED as "not a certificate". (Cyclops ledgered #627 as the defect.)
+- D5: each family x level's positive-control world runs at that cell's own revisit density. Where the planted selective
+  arm fails to beat IM-rate, INDISCRIMINATE reads UNRESOLVED by rule, before any campaign row. visits/cell is reported
+  beside every verdict.
+- METHOD RULE (adopted): every steward-added readout passes a known-answer fixture before it counts.
