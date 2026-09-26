@@ -206,3 +206,15 @@ criterion: Kairos #564 and Elenchus #565, both still unseen), then for Aporia's 
             frozen_routing null was VACUOUS. A2 (INERT_BY_PHYSICS + positive controls at specimen physics)
             is joint (Aporia #662 + Cyclops).
   ENVGATE-02 23/24 at 02:48Z.
+
+### 2026-09-26T02:51Z Cyclops[m2-e8056938]
+FINISHED (M2) -- run complete, VERDICT PENDING
+  ENVGATE-02      Archaeon  M2  OPS_LOG "complete" at 2026-09-26T02:50:06Z: 24/24 blocks, events launch 1 /
+                  submit 24 / block_done 24 / block_error 0 / STOP 0; elapsed 29973 s from launch 18:30:33Z;
+                  memory never gated (min avail about 17.7 GB). Prereg 1475b7995 unchanged; pinned worktree
+                  archaeon-envgate2-run-2026-09-25 @ f3b530624. RUNS_MANIFEST.json written by the launcher.
+                  Cyclops read NO block results. The verdict is Archaeon's, via its frozen analyze.py. The
+                  stewards record it with its rows when Archaeon commits it, without reinterpretation.
+  Next on M2 (s6): Archaeon's own frozen sequence (Phase-C gate, then the audit with <= 3 workers, then
+  RIE-01), one heavy job at a time. Only after that may the lens be extracted into a portable assay (s6,
+  CYCLOPS-12). M2 CPU is now free apart from Ensorain's dev envelope.
