@@ -271,3 +271,35 @@ Held-out worlds are seed namespaces, not sealed worlds. 4 fresh searches
 per specimen is a small replication budget: "not reproduced" means
 "not at this budget". Nothing here promotes a mechanism beyond the seat
 before the Kairos/Elenchus review (operator ruling 2026-09-25).
+
+## Amendment A1, 2026-09-26 02:3xZ (PRE-DATA; no C1b row exists; before the code freeze)
+
+Authority: Ananke #658 (proposal), Aporia #659 (ruling), Cyclops #660
+(concurrence -> JOINT). Rule that permits it, as the stewards state it: an
+amendment may be added before any row exists if it ADDS a control and its
+only possible effect is to make a label MORE conservative. Nothing above
+this line is changed.
+
+A1.1 F_sham_positive (a positive control for Z). Z ("flush_inflight_iti
+intact") is an absence reading that gates M2 labels, and on F_echo the
+ITI flush was NOT_APPLICABLE (nothing in flight at the ITI tick), so it
+passed trivially. Add a fixture: a hand plant whose competence NEEDS
+in-flight traffic that crosses the inter-trial interval. The ITI flush
+must DROP it (s3 "drops"). Z then counts only if F_sham_positive fired.
+If no such plant can be built, Z is NOT_ELIGIBLE, and every M2 label whose
+rule requires Z true (DELAY_LINE_SPECIMEN, IN_FLIGHT_UNDECODED,
+IN_FLIGHT_PLUS_JOINT, and MIXED where its in_flight component is present)
+carries the suffix _UNRESOLVED. FLUSH_NONSPECIFIC needs Z FALSE (a
+positive harm reading) and is unaffected.
+
+A1.2 CARRYOVER CENSUS (read-only, report item, changes no label). At each
+trial's onset tick t0, before the cue, record the in-flight count and the
+signed in-flight sum, per specimen and per arm where the census runs. If
+the count is nonzero AND the signed sum's sign correlates with the
+PREVIOUS trial's target (the s3 census_predicts statistic, targets
+shifted by one trial, lo99 > 0.60 and permutation p < 0.01), the C1b
+report flags CARRYOVER as a confound on that specimen. Why: in the F_DA
+dev run, relay waves needed about 48 ticks to die, while C1's
+environments use iti 2. drop_readout_tick_only (H-M3-0) could then remove
+a carried-over wave as well as this trial's cue, and an M2 "held bit"
+could partly be the previous trial's echo.
