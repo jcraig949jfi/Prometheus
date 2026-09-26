@@ -17,7 +17,7 @@ main fast-forwarded to 4d4141285. Stale delegations #285/#448/#471/#474 marked s
 
 | experiment | lane | what |
 |---|---|---|
-| X-DD-DENSE-COPY | EXPLORE | 1-byte LDIR/LDDR aliases vs plain, random pops, 2 cells x 48 x 2 arms; schtask NestorDC2 |
+| C-DENSE-COPY | CONFIRM | frozen: PLAIN vs DENSE_COPY L2 acquisition, 64 fresh seeds/arm; schtask NestorCDC |
 
 ## WINDOW CLOSE (2026-09-26)
 
