@@ -1,0 +1,12 @@
+[flight 11:33:21] REAL LAUNCH soak@1, budget ceiling $0.65
+[flight 11:33:21] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:33:21] credential source: host default key file
+[flight 11:33:21] bundle 21330d544d77 reachable at the pinned commit 162c7b7c981d
+[flight 11:33:22] advertised stock {'NVIDIA A40': None, 'NVIDIA GeForce RTX 4090': 'Low', 'NVIDIA L4': 'Low', 'NVIDIA RTX 4000 Ada Generation': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': 'Low'} -> trying NVIDIA RTX A5000 first
+[flight 11:33:22] create attempt on NVIDIA RTX A5000 (1 of 6)
+[flight 11:33:23] create attempt 1 -> accepted pod=ufxzb42i2p9i9k
+[flight 11:33:23] create CREATED -> confirmed pod=ufxzb42i2p9i9k gpu=NVIDIA RTX A5000
+[flight 11:33:24] artifact server not answering yet (status=404)
+[flight 11:33:42] pod clock unavailable; provisioning stays cross-clock
+[flight 11:34:04] pod clock offset +0.142 s (+/- 0.066 s)
+[flight 11:58:46] KILLING THE CONTROLLER NOW (os._exit 137) with pod ufxzb42i2p9i9k running; ledger C:\Prometheus-worktrees\aether-iter3\Aether\runpod\.ledger\soak-20260926T153321Z.json
