@@ -1,272 +1,271 @@
-# PREREG_WTP_LM01 -- Lossless Memorizer Challenge (DRAFT v0.2, NOT FROZEN)
+# PREREG_WTP_LM01 -- Lossless Memorizer Challenge (v0.3)
 
-Seat: Ensorain[m2-32b65655], M2. Directive: roles/Ensorain/prompts/2026-09-25_wtp_lm01_directive/
-01_CYCLOPS_WTP_LM01_DIRECTIVE_verbatim.md (sha256 ab204631...). Steward rulings: ensorain/lm01/STEWARD_RULINGS.md
-(the comms ids are cited per line). Review checklist: programs/selective_irreversibility/reviews/LM01_PREREG_CHECKLIST.md;
-the self-check table is s14.
+Seat: Ensorain[m2-32b65655], M2. Status line (set at the freeze): FROZEN v0.3 when committed by the freeze commit named in
+ensorain/lm01/FREEZE.json. The per-stratum numbers are in PREREG_WTP_LM01_TABLES.md (generated, frozen with this file).
 
-STATUS: DRAFT. Fields marked [MARGINS] are filled mechanically from dev/margins_reduced.json when the dev margin sweep
-(lm01_margins_v1) finishes. Fields marked [BUILD] name code that does not exist yet. No campaign seed exists. Nothing
-here may be read as a result.
+Authority and provenance:
+- Directive: roles/Ensorain/prompts/2026-09-25_wtp_lm01_directive/ (Cyclops; sha256 ab204631...).
+- Steward-era design record: ensorain/lm01/STEWARD_RULINGS.md. Everything adopted there is built into the code.
+- OPERATOR RULINGS 2026-09-26: roles/Ensorain/prompts/2026-09-26_lm01_operator_rulings/ (verbatim + MANIFEST). They
+  govern wherever they differ from the record.
+- Operator rulings of 2026-09-26 (#732/#733): steward management via comms is frozen; no Aporia/Cyclops sign-off.
 
-## 1. Claim under test (A1, A2)
+## 1. Claim under test
 
-The candidate law is s1 of the program directive; its frozen text is held by Harmonia (HYPOTHESIS.md). LM01 tests the
-PERSISTENT-STATE reading (#591 R1a): "a system that preserves its admitted experience exactly in PERSISTENT STATE does
-not reach the held-out / fresh-field competence of systems whose persistent state is a bounded, coarse-grained
-representation, under honestly accounted resources."
-- Contraction performed transiently at readout and discarded (L-R) is NOT persistent contraction. A win by L-R is
+The candidate law is s1 of the program directive (frozen text held by Harmonia). LM01 tests its PERSISTENT-STATE reading
+(#591 R1a):
+- A system that keeps its admitted experience exactly in PERSISTENT STATE does not reach the held-out / fresh-field
+  competence of systems whose persistent state is a bounded, coarse-grained representation, under honestly accounted
+  resources.
+- A contraction done transiently at readout and then discarded (L-R) is not persistent contraction. An L-R win is
   labelled LOSSLESS_TRANSIENT_CONTRACTION. It damages the persistent-state reading only and says nothing either way about
-  a computation-inclusive law (sentence fixed in advance, A2).
-- "Accessible" means operationally accessible to the acting system within its per-query budget (#608). Operational
-  access is tested by index ablation (s6.4).
+  a computation-inclusive law.
+- "Accessible" means operationally accessible to the acting system within its per-query budget (#608), tested by index
+  ablation (6.4).
+- WHETHER SELECTIVITY ITSELF IS CAUSALLY REQUIRED REMAINS UNTESTED in LM01 (operator ruling item 5; D11).
 
-## 2. Worlds (E1, E2, E7, E8)
+## 2. Worlds
 
-- WTP field generators (ensorain.wtp.world.base_field). LATENT_GENS = (lowrank, cp, tt, pairwise, spectral, sum) is
-  FROZEN (#655/#656).
+- WTP generators; LATENT_GENS = (lowrank, cp, tt, pairwise, spectral, sum), FROZEN.
 - Families (ensorain/lm01/families.py):
-  - F1 episodic (random field, revisit walk). The LOSSLESS-must-win branch trigger; UNTESTED for the headline.
+  - F1 episodic: a branch trigger; UNTESTED for the headline.
   - F2 latent.
   - F3 switch: 3 episodes; scored on the last.
-  - F4 fresh-field transfer: shared component w = .6.
-  - F5 nuisance mode: nuis_p = .5 in the headline; nuis_p = 1 is a declared "everyone falls" control, never in the
-    headline.
-- Levels: L1 8^3 / L2 12^3 / L3 16^3. life_mult = 4 for all (P1). Observation noise SD .1.
-- Exposure: a walk on WTP's tensor-index geometry with no carrier learner (declared design choice).
-- STRATUM = family x level x generator; 75 strata. Verdicts are per stratum. The pooled verdict is secondary, with the
-  declared uniform mixture. A split across strata reads GENERATOR_DEPENDENT.
-- Full-coverage cells (coverage ~1, too few never-seen cells) go to a separate "LOSSLESS = table" regime table and never
-  enter the headline (#648). On v2 dev data, all six L1-F2 strata are EMPTY.
+  - F4 fresh-field transfer: w = .6.
+  - F5 nuisance mode: nuis_p = .5; nuis_p = 1 is a declared "everyone falls" control, never in the headline.
+- Levels: L1 8^3, L2 12^3, L3 16^3. life_mult = 4 for all. Observation noise SD .1. Exposure is a tensor-index walk with
+  no carrier learner.
+- STRATUM = family x level x generator (75). Verdicts are per stratum. The pooled verdict is secondary (uniform mixture).
+  A split across strata reads GENERATOR_DEPENDENT.
+- F5 RESERVOIR SCALE (operator ruling item 3): GOVERNED by "real_cells". The capacity denominator c excludes the
+  nuisance mode (campaign.RUNG_SCALE).
+  - OLD interpretation, documented and not governing: "all_cells" counted the 4-level nuisance mode, so B = c/2 held
+    ~73% of an F5 history vs ~18% elsewhere, and the E6 positive control failed for that reason
+    (dev/margins/F5_* rows).
+  - The repaired dev rows are dev/margins_f5real/.
+- Full-coverage cells (L1-F2: all 6 strata EMPTY) go to a "LOSSLESS = table" regime table and never enter the
+  headline.
 
-## 3. Test sets (E3)
+## 3. Test sets
 
-- The headline is read on never-seen cells (F1-F3), fresh-field cells (F4) and OOD never-seen cells (F5), only where
-  coverage < 1.
-- Exact-hit cells are reported separately and never carry the headline.
+- The headline is read on never-seen (F1-F3), fresh-field (F4) and OOD never-seen (F5) cells, at coverage < 1 only.
+- Exact-hit cells are reported separately.
 
-## 4. Arms (B1-B10, H2) -- ensorain/lm01/arms.py
+## 4. Arms (ensorain/lm01/arms.py)
 
-- LOSSLESS: exact append-only store (int16 cells, float64 values, int64 admission step), bit-recoverable.
-  - Readouts:
-    - L-K: min-Hamming kernel over the FULL store;
-    - L-R: ridge ALS refit on the FULL store at each query, discarded after;
-    - L-K-rec / L-R-rec: recency weights from the stored steps.
-  - The per-query refit is charged (ops, reads, wall; R1b).
-  - Cheat fixtures (tests): LRCache (a fit kept between queries) -> persist_growth_on_query; LRSubsample -> full-read
-    violation. [BUILD] The same two cheat fixtures on L-R-rec and H-rec (H2).
-- SELECTIVE-proper: WTP-native online substrates (organism.py) at cap = cells/4. The capacity ladder is [BUILD, s6.2].
-  It needs no recency variant, since it adapts online (stated, B6).
-- HYBRID: exact store + an online-SGD low-rank key (k-NN in key space); H-rec. The key is SGD, not ALS, so no ALS rule
-  applies (B10).
-- RESERVOIR-REFIT (BufferALS; the intermediate mechanism, named, not forced into a category; #666/#667): bounded rank-3
-  factors + a reservoir of B exact records, warm ALS refit every >= 64 admissions (~100 at batch 50).
-  - Eviction: random (the reference) or one of the 2 DECLARED system candidates keep_worst / residual_reservoir (C5).
-  - The reservoir stores no admission step, so it is recency-blind; F3 limitation (s11).
-- IM-rate / IM-bytes: RandomMerge with bins bisected to HR2 (D2).
-- ALS convergence (B9): every ALS fit iterates until the relative loss change is < 1e-4, max 80. Iterations and the
-  cap-hit fraction are reported per arm and per rung; a rung with median cap-hit > .1 is flagged as a lower bound.
-- Arm formation (B7, B8): dev-only selection v2 on seeds 9_410_000-015, with an equal budget of 8 per family
-  (SELECTIVE, LOSSLESS, HYBRID) and 2 for the eviction candidates. The criterion is the median headline AC.
-  - The choice is frozen per stratum in ensorain/lm01/FROZEN_SELECTION.json (source selection_v2.json sha256
-    0091e59959cdc7ff...).
-  - v2 is the LAST grid change; only fixture-demonstrated defects may change the grid afterwards.
+- LOSSLESS: exact append-only store (bit-recoverable).
+  - Readouts: L-K (unlearned min-Hamming kernel over the full store); L-R (converged ridge ALS refit on the FULL store
+    per query, discarded after); L-K-rec / L-R-rec (recency from stored steps).
+  - Per-query refit charged.
+  - Cheat fixtures FLAG a kept fit and a subsample on L-R and on every -rec arm (H2). The record-read counter is
+    separate from timestamp reads (D8).
+- SELECTIVE-proper: WTP online substrates; capacity ladder cells/16 x 2^k up to LOSSLESS bytes (INCOMPATIBLE recorded).
+  It needs no recency variant (adapts online).
+- HYBRID: exact store + online-SGD low-rank key (the ALS rule does not apply; B10); H-rec.
+- RESERVOIR-REFIT (BufferALS): bounded rank-3 factors + a reservoir of B exact records, with warm ALS every >= 64
+  admissions. It is an intermediate mechanism, named and not forced into a category.
+  - Eviction: random (the reference) or the 2 DECLARED candidates keep_worst / residual_reservoir. Losing to random is a
+    result.
+  - Recency-blind (a limitation on F3).
+- IM-rate / IM-bytes: RandomMerge bisected to HR2 (the D2/D4 readouts).
+- ALS: one convergence rule (relative 1e-4, max 80) for every ALS fit. Iterations and cap-hit fraction are reported;
+  cap-bound rungs are flagged as lower bounds.
+- Arm formation: dev-only selection v2 (seeds 9_410_000-015), with an equal budget of 8/8/8 and 2 eviction candidates.
+  - FROZEN in ensorain/lm01/FROZEN_SELECTION.json (source sha256 0091e59959cdc7ff...).
+  - v2 was the last grid change; later changes are fixture-demonstrated defects only (D7, D8).
 
-## 5. Measurement (D1-D5, G2, G3)
+## 5. Measurement
 
-- AC = -log10(MSE / V0), V0 = 1 (standardised fields), clipped to [-3, 6].
-- Resources are MEASURED per arm: persistent bytes (peak), bytes written, bytes read, ops, replay ops, wall, and
-  external bytes (accounting.py). There is no exchange-rate scalar; comparisons are Pareto (G3).
-- Recoverability (recover.py):
-  - HR2 is the MATCHED quantity (RECOVERABLE tier; never decides a verdict alone);
-  - HR2_signal is REPORTED, and its gap is labelled "not a certificate";
-  - R(tau) and distinguishability are REPORTED.
-  - Declared reconstruction maps: store record / substrate readout / bin mean.
-- Selectivity is read RELATIVE to K = 5 seeded HR2-matched blind references. Threshold .0155 (99th percentile of
-  |ref-ref|, dev/selectivity_threshold.json). UNMATCHED means no reading; its frequency per arm is reported (D3).
-- Relevance comes from the GENERATOR only (D4).
+- AC = -log10(MSE/V0), V0 = 1, clipped to [-3, 6].
+- Resources MEASURED per arm: persistent (peak), written, read, store-record read, ops, replay ops, wall, external. There
+  is no exchange-rate scalar; comparisons are Pareto.
+- HR2 is the matched quantity (RECOVERABLE tier; never decides alone). REPORTED: HR2_signal (labelled "not a
+  certificate"), R(tau), distinguishability.
+- Reconstruction maps are declared (record / readout / bin mean). Selectivity is read relative to K = 5 HR2-matched blind
+  references (threshold .0155; UNMATCHED means no reading).
+- Relevance comes from the generator only.
 
-## 6. Readings and verdict mapping (A3, A4, A5, C1-C4, H1) -- JOINT after review (#697, #698, #700; #693)
+## 6. Decision rule and readings
 
-TESTABLE per stratum = ELIGIBLE (derived min count, E4) AND LEARNABLE (gate X, E5); otherwise UNTESTED, with dev ACs.
-- MARGIN (per stratum [MARGINS]) is REPLICATE-based: learner seed + an independent test bootstrap of the same world.
-  - This is a NAMED DEVIATION from #591 R2a's "across seeds" (#691/#698). The margin measures INSTRUMENT noise.
-    World-to-world spread enters each comparison's CI instead; counting it in both places would make "matched" too
-    permissive.
-  - The between-world SD is reported beside the MARGIN per stratum.
-- MATCH = within MARGIN; WIN = beyond 2 x MARGIN (H1).
-- Every no-difference reading needs a PASSING equivalence test (the 90% CI of the paired difference over worlds lies
-  inside +-MARGIN) plus a positive control detected by the same analysis. Otherwise UNRESOLVED (A4).
-- No verdict conjoins an absence (#697.1).
-
-6.1 HEADLINE: the same-optimizer RESERVOIR-REFIT curve (C1).
-  - Random eviction, rank 3, B in {c/8, c/4, c/2, c, 2c, full}.
-  - The full-store END is the recency-BLIND converged L-R (rank 3) in EVERY stratum, including F3 (#693), so the endpoint
-    is the rungs' readout family.
-  - The frozen LOSSLESS choice (e.g. L-R-rec on F3) vs the reservoir is reported separately, labelled
-    "recency-aware vs recency-blind" where it applies.
-  - EXACT_RETENTION_PAYS: AC(full) exceeds EVERY bounded rung by > 2 x MARGIN (a demonstrated win over each rung).
-    - STRICT form: additionally L-K is within MARGIN of full (equivalence passing) -> COUNTERMODEL_SIGNAL (F-B).
-    - Otherwise (the full end needs L-R's transient fit) -> LOSSLESS_TRANSIENT_CONTRACTION. It damages the
-      persistent-state reading only (A1/A2).
-  - BOUNDED_SUFFICES: B* < full with equivalence passing. REPORTED ONLY, with NO verdict weight either way (#697.2):
-    every rung carries a fixed, fitted, relevance-selective factor model, so "bounded suffices" means "a selective model
-    plus some blind exact records is enough".
+6.0 GOVERNING TOLERANCE (operator ruling item 2): DELTA = 0.30 AC (a 2x MSE ratio).
+  - Noise enters only through the CI: a 90% two-sided t-interval over worlds of the PAIRED per-world difference, i.e.
+    one-sided alpha .05 per direction (TOST for equivalence).
+  - EQUIVALENT: the CI lies inside (-0.30, +0.30).
+  - WIN: the CI lies entirely beyond +0.30 in the stated direction.
+  - Anything else is UNRESOLVED.
+  - No margin is derived from any arm's own instability; the v1 replicate-derived margin (#691) is RETIRED (D10).
+  - SENSITIVITY at 0.15 and 0.60 AC is computed for every reading and reported beside it. It is DESCRIPTIVE ONLY and
+    never changes a verdict.
+  - Stability diagnostics (replicate p97.5, the fraction of worlds with |a - b| > 1 AC) are reported per arm; they
+    decide nothing.
+  - TESTABLE per stratum = ELIGIBLE (N_MIN: the smallest n in {16, 32, 64, 128, 256, the stratum's n_test} with 1.96 x
+    bootstrap SD(n) <= 0.15; D9 extends the scan to the actual test size) AND LEARNABLE (the CI lower bound of the
+    max-arm gain over N1 > 0.30, arm-symmetric).
+  - Values are in the TABLES file. No reading uses a campaign world to decide eligibility.
+6.1 HEADLINE: the same-optimizer RESERVOIR curve, random eviction, rank 3, B in {c/8, c/4, c/2, c, 2c, full}.
+  ENDPOINTS (operator ruling item 4), BOTH reported side by side:
+  - (a) L-R, the declared lossless endpoint: per-query converged refit on the full store, recency-blind in every
+    stratum. It can suffer optimization / local-minimum variance (dev: seed p97.5 up to 1.11 AC); that noise stays in
+    its CI.
+  - (b) the warm full-store reservoir, a persistent learned-state endpoint. It is more stable but not computationally
+    equivalent to L-R. It is never substituted for (a).
+  Readings:
+  - EXACT_RETENTION_PAYS: a WIN of L-R over EVERY bounded rung.
+    - STRICT form: additionally L-K EQUIVALENT to L-R -> COUNTERMODEL_SIGNAL (F-B).
+    - Otherwise -> LOSSLESS_TRANSIENT_CONTRACTION.
+  - BOUNDED_SUFFICES: B* < full, with (L-R - AC(B*)) EQUIVALENT. B* is governed against endpoint (a); B* against (b) is
+    also reported. REPORTED with NO verdict weight: every rung carries a fixed selective factor model.
   - Otherwise UNRESOLVED.
-6.2 SECONDARY (C2): SELECTIVE-proper vs LOSSLESS, labelled "optimizer confounded (SGD vs ALS)". It never gates a
-    falsifier.
-  - SELECTIVE_ADVANTAGE: some SELECTIVE ladder point with <= bytes and <= reads beats the frozen LOSSLESS choice by more
-    than 2 x MARGIN.
-  - COUNTERMODEL_SIGNAL (secondary): for EVERY SELECTIVE ladder point at <= LOSSLESS bytes, LOSSLESS exceeds it by more
-    than 2 x MARGIN (a demonstrated win; #697). An L-R choice is labelled LOSSLESS_TRANSIENT_CONTRACTION.
-  - [BUILD] the SELECTIVE capacity ladder (cells/16 .. LOSSLESS bytes).
-6.3 EVICTION (C4, C5): RESERVOIR-SELECTIVE (the frozen candidate) vs RESERVOIR-RANDOM.
-  - Read (i) at matched B (primary) and (ii) at matched HR2 (random B interpolated, 3 seeds, extra bytes charged), at
-    B = c/4 and B = c.
-  - INDISCRIMINATE_EQUIVALENT: equivalence PASSES under (i) AND (ii), plus positive-control PASS (E6). Otherwise
-    UNRESOLVED.
-  - SELECTIVE_BUYS_BYTES: a win at (i), not at (ii).
-  - RESERVOIR_SELECTIVE_ADVANTAGE (added): a win at (i) AND (ii).
-  - RANDOM_BEATS_SELECTIVE (added): random wins at (i) by more than 2 x MARGIN (#673: a legitimate s4C result).
-6.4 HYBRID ACCESS (B5):
-  - Index ablation of the frozen HYBRID, within the same per-query budget. HYBRID_REQUIRED on a collapse > 2 x MARGIN.
-  - "No collapse" reads UNRESOLVED unless the positive-control HYBRID collapses under the same ablation.
-  - [BUILD]
-6.5 INTERVENTION (F1; secondary): the clone/swap design of #625. DEFECT D11: with an IM-rate RandomMerge swap the arm is
-    decided by construction on never-seen cells (the matched merge is a lookup table). PROPOSED (Aporia #728, Ensorain
-    concurs; binding on Cyclops/operator concurrence): DEFER. Option (i), a retrained-subsample swap, would measure
-    DATA value, not REQUIREMENT, since both arms stay selective. Limitation, verbatim in advance: "REQUIREMENT is
-    untested in WTP-LM01. The only identified REQUIREMENT test in the program is PTE's SI01-REQ (ANTI-MERGE: restore a
-    specimen's OWN discarded distinctions against a size-matched sham), where removing selectivity is on-manifold."
-    intervention.py and its fixtures stay in the repo, flagged NOT USED.
-  - Caveat, verbatim: "the selective state was needed for the rest of THIS life", not "selectivity in general".
-  - [BUILD]
-6.6 AGGREGATION AND NULL:
-  - GENERATOR_DEPENDENT: a reading holds in some generator strata of a family x level only.
-  - CROSSOVER: a reading switches with level within a generator.
-  - NULL: TESTABLE, the positive control passes, and equivalence PASSES among the compared arms (demonstrated no
-    difference, #697.4). Within-margin without a passing equivalence test is UNRESOLVED.
+6.2 SECONDARY, labelled "optimizer confounded (SGD vs ALS)": SELECTIVE-proper vs LOSSLESS. It never gates a falsifier.
+  - SELECTIVE_ADVANTAGE: some ladder point at <= bytes and <= reads WINS over the frozen LOSSLESS.
+  - COUNTERMODEL_SIGNAL (secondary): LOSSLESS WINS over EVERY ladder point at <= LOSSLESS bytes. An L-R choice is
+    labelled LOSSLESS_TRANSIENT_CONTRACTION.
+6.3 EVICTION: RESERVOIR-SELECTIVE (the frozen candidate) vs RESERVOIR-RANDOM at B = c/4 and c.
+  - Read (i) at matched B and (ii) at matched HR2 (random B interpolated; 3 seeds; bytes charged).
+  - INDISCRIMINATE_EQUIVALENT: EQUIVALENT under (i) AND (ii), plus E6 positive control PASS.
+  - SELECTIVE_BUYS_BYTES: a WIN at (i) only.
+  - RESERVOIR_SELECTIVE_ADVANTAGE: a WIN at (i) and (ii).
+  - RANDOM_BEATS_SELECTIVE: random WINS at (i).
+  - Otherwise UNRESOLVED.
+6.4 HYBRID ACCESS: the index-ablation gap of the frozen HYBRID. HYBRID_REQUIRED on a WIN (intact over ablated).
+  "No collapse" reads UNRESOLVED unless the positive-control HYBRID collapses under the same ablation (it does: dev gap
+  1.23).
+6.5 INTERVENTION: DEFERRED (operator ruling item 5; D11).
+  - As specified, the swap target (an HR2-matched blind merge) is a lookup table that cannot predict unseen cells, so the
+    arm could not falsify.
+  - The subsample repair would measure data value, not requirement. intervention.py is kept, flagged NOT USED.
+6.6 AGGREGATION:
+  - GENERATOR_DEPENDENT: holds in some generator strata of a family x level only.
+  - CROSSOVER: switches with level within a generator.
+  - NULL: TESTABLE, positive control PASS, and EQUIVALENT among the compared arms.
   - INSTRUMENT_FAILURE: a fixture or positive control fails where the instrument itself was the target.
-6.7 FALSIFIERS (A6), written before data. Split by countermodel; each fires, and is reported, on its own.
-  - F-B (lossless, s4B): a stratum reads COUNTERMODEL_SIGNAL (6.1 strict).
-  - F-C (indiscriminate, s4C): a stratum reads INDISCRIMINATE_EQUIVALENT or RANDOM_BEATS_SELECTIVE (6.3).
-    SCOPE, in advance: with the factor model held fixed, this tests relevance-selective retention of EXACT RECORDS, not
-    selective contraction as a whole.
-  - LOSSLESS_TRANSIENT_CONTRACTION is reported as damage to the persistent-state reading only. It is not an F-B firing.
-  - PER STRATUM: one clean stratum is a SCOPED counterexample, reported with family x level x generator (#697.5).
-  - REPLICATION (symmetric; #697.5, #698b): any firing of F-B / F-C AND any SUPPORT label (SELECTIVE_ADVANTAGE,
-    RESERVOIR_SELECTIVE_ADVANTAGE) must replicate on the pre-declared HELD-OUT block (s9) before it is sent as a
-    falsifier or a support.
-    - The block size per stratum gives the replication test >= 80% power for an effect of 2 x MARGIN, using the dev
-      between-world SD of the relevant paired difference [MARGINS].
-    - If that size exceeds 64 worlds per stratum (declared cap), the firing reads UNREPLICATED (neither falsifier nor
-      support).
-    - The replication is one-sided at alpha .05 in the firing's direction.
-  - MULTIPLICITY (#698a): beside the results, per label, report the number of strata TESTED and the number EXPECTED to
-    fire by chance at the label's error rate.
-    - Declared rates: WIN readings one-sided alpha .05 on the paired difference.
-    - EQUIVALENCE readings via TOST at .05 each side.
+  - UNTESTED: gated out (reported with dev values).
+  - UNREPLICATED: see 6.7.
+6.7 FALSIFIERS, written before data. Each fires on its own, PER STRATUM, and is reported with its scope.
+  - F-B (lossless): COUNTERMODEL_SIGNAL (6.1 strict). An L-R-only result is LOSSLESS_TRANSIENT_CONTRACTION (damages the
+    persistent-state reading only).
+  - F-C (indiscriminate): INDISCRIMINATE_EQUIVALENT or RANDOM_BEATS_SELECTIVE (6.3). SCOPE: with the factor model
+    fixed, this tests relevance-selective retention of EXACT RECORDS, not selective contraction as a whole.
+  - No falsifier conjoins an absence.
+  - Neither an UNFIRED F-B nor an UNFIRED F-C is support for the law. In particular F-B strict has near-zero power in
+    latent families: L-K ~0 AC on never-seen cells (operator ruling item 5).
+  - REPLICATION (symmetric for falsifiers and SUPPORT labels SELECTIVE_ADVANTAGE / RESERVOIR_SELECTIVE_ADVANTAGE):
+    - a firing must reproduce the same reading on the held-out block of N_REP worlds for that stratum (TABLES; 80%
+      power at a true effect of 2 x DELTA; floor 8; cap 64);
+    - above the cap it reads UNREPLICATED (neither falsifier nor support).
+  - MULTIPLICITY: for each label, report the strata TESTED and the EXPECTED chance firings (one-sided .05 per WIN
+    reading; TOST .05 per EQUIVALENCE reading).
 
-## 7. Controls and fixtures (G7, C6, E6)
+## 7. Controls and fixtures (status at freeze)
 
-- Instrument trio F-L / F-S / F-B passes under the relative reading at 0.8 / 1.6 / 2.9 visits/cell (selectivity.py).
-- Reservoir fixtures: the curve is monotone and the full store matches L-R; the eviction positive control fires
-  (oracle +.91) (dev/fixture_reservoir.json).
-- Per-stratum eviction positive control at the stratum's own density [MARGINS].
-- [BUILD] the R1e positive-control HYBRID; the intervention controls; H2 cheat fixtures on the -rec variants.
+- Instrument trio F-L / F-S / F-B under the relative selectivity reading: PASS at 0.8 / 1.6 / 2.9 visits/cell.
+- Reservoir curve fixture: monotone; full = L-R. PASS after D7.
+- Eviction positive control (oracle beats random at matched B): PASS (+.91). The two system candidates LOSE to random
+  there (a dev finding).
+- R1c/R1d cheat fixtures on L-R, L-R-rec, H-rec: FLAGGED (PASS).
+- R1e ablation positive-control HYBRID: PASS (gap 1.23).
+- Intervention controls fire, but the arm is deferred (D11).
+- Launch-gate negative controls: PASS, including the operator's own ruling text with its "<hash>" placeholder.
+- Per-stratum E6 positive control: PASS/FAIL per stratum in the TABLES. Where it fails, 6.3 reads UNRESOLVED by rule.
 
-## 8. Derived quantities [MARGINS]
+## 8. Derived quantities -> PREREG_WTP_LM01_TABLES.md (generated by ensorain/lm01/prereg_tables.py from
+dev/margins_reduced_v2.json; rules in ensorain/lm01/margins_reduce_v2.py).
 
-Per stratum:
-- MARGIN;
-- the win threshold 2 x MARGIN;
-- N_MIN;
-- the gate X;
-- LEARNABLE / ELIGIBLE;
-- B*;
-- END_OK;
-- the positive-control pass;
-- cap-bound rungs;
-- visits/cell.
-Rules: ensorain/lm01/margins_reduce.py (committed before the sweep rows are read).
+## 9. Seeds and LAUNCH GATE (operator ruling item 6)
 
-## 9. Seeds (G1)
+- Dev ranges used: 9_1xx_xxx .. 9_6xx_xxx (listed in DEV_SWEEP_LOG.jsonl and the code). make_world refuses any other
+  seed below 10^9.
+- AUTHORITY: OPERATOR ONLY, in direct chat. Aporia and Cyclops are REMOVED; no second seat; no comms approval.
+- The instruction "LAUNCH WTP-LM01 using frozen prereg <hash>" is recorded VERBATIM as a committed prompt file with a
+  verifying MANIFEST.
+  - launch_gate.campaign_seeds() opens only if that committed, verified file contains the instruction with a hex hash
+    (7-40 chars) that is a prefix of the FREEZE COMMIT SHA in ensorain/lm01/FREEZE.json.
+  - Any text lacking the matching hash does not launch.
+- CAMPAIGN seeds: 10^9 + (sha256(f"{FREEZE_COMMIT}|LM01-campaign|{stratum}|{i}")[:12 hex] mod 4 x 10^8); a collision
+  aborts.
+- REPLICATION seeds: 2 x 10^9 + (the same with LM01-replication). Disjoint by construction; used only for a firing
+  stratum after the campaign verdict.
 
-- Dev ranges used:
-  - 9_100_000.. (families/coverage);
-  - 9_200_000.. (learnability);
-  - 9_210_000.. (nuisance);
-  - 9_220_000.. (P2);
-  - 9_300_000.. / 9_310_000.. / 9_320_000.. / 9_330_000.. (fixtures);
-  - 9_400_000.. (selection v1, seen);
-  - 9_410_000.. (selection v2);
-  - 9_500_000.. (margins).
-- LAUNCH GATE and SEEDS: ensorain/lm01/launch_gate.py (#699/#700 exact-token pattern).
-  - A release is a comms message with subject starting EXACTLY "WTP-LM01 LAUNCH:", kind ruling, from a sender in the
-    single constant RELEASERS = (Cyclops, operator). RELEASERS is NOT FROZEN until operator Q6 is answered (does Aporia
-    cover M2?) or Cyclops is unparked (#725). The message must have Ensorain among the recipients, created after the freeze commit, and carrying the freeze SHA.
-  - Negative controls on real messages (#592, #610, #698, #699, #701 and Ensorain's own #590/#625/#664/#692) are
-    rejected; a synthetic well-formed release is accepted. These were run against the live comms DB before the freeze.
-- CAMPAIGN seeds: 10^9 + (int(sha256(f"{FREEZE_SHA}|LM01-campaign|{stratum}|{i}")[:12 hex], 16) mod 4 x 10^8).
-  Materialised only by campaign_seeds(release_id, ...), which re-checks the release against the DB; a collision aborts.
-- HELD-OUT REPLICATION seeds: 2 x 10^9 + (the same hash with tag LM01-replication, mod 4 x 10^8). Disjoint from the
-  campaign range by construction. Materialised only for a firing stratum, after the campaign verdict.
-- make_world refuses any seed below 10^9 outside the dev range.
+## 10. Campaign size, runtime, concurrency
 
-## 10. Campaign size, runtime, concurrency (G5) [MARGINS]
+- N = 48 worlds per TESTABLE stratum. The count of TESTABLE strata and the compute estimate are in the TABLES.
+- Plus replication blocks (N_REP per firing stratum).
+- Concurrency: 8 workers, 1 BLAS thread, BELOW_NORMAL priority, a stop at < 6 GB free RAM, rows written per stratum
+  from Python, start/end logged.
+- M2 must be free of other heavy jobs at launch (checked by process census, not assumed).
 
-- Proposal: N = 48 worlds per TESTABLE stratum (3 x dev).
-- Per-world cost is taken from the margin sweep (~83 s L3 / ~34 s L2 / a few s L1 at 1 worker, without replicate b).
-- Estimated ~4-6 h at 8 workers BELOW_NORMAL on M2, under Cyclops's envelope at launch.
+## 11. Limitations (written before data)
 
-## 11. Limitations (A7), written before data
+- Finite horizon.
+- Synthetic, generator-conditional: "SELECTIVE wins where its inductive bias matches the generator" is a candidate
+  reading.
+- The secondary comparison is optimizer-confounded.
+- v1 selection data was seen before two redesigns (R-a withdrawn, R-c adopted).
+- F5-lowrank split-rule artefact.
+- The reservoir is recency-blind (F3).
+- L-R has seed-sensitive local minima.
+- S-cp is bimodal across learner seeds.
+- F-B strict has near-zero power in latent families; an unfired F-B is not support.
+- REQUIREMENT (causal necessity of selectivity) is UNTESTED.
+- F-C covers exact-record retention with a fixed factor model only.
+- LOW-POWER REGIONS (from the TABLES):
+  - L1-F2 is EMPTY;
+  - F2-L2 is UNTESTED at 0.30 (66 never-seen cells);
+  - the E6 positive control FAILS in F3 (all), F4 (all), and F2 pairwise/sum, so INDISCRIMINATE readings there are
+    UNRESOLVED by rule;
+  - F5's status is per the real-cells rows.
+- The dev decision rule was changed after dev rows were read: D9 and D10 were ruled by the operator on disclosed
+  grounds; the sensitivity columns show how much hangs on 0.30.
 
-- Finite horizon: a LOSSLESS win does not show that indefinitely reusable bounded lossless intelligence exists.
-- Synthetic families: every verdict is conditional on the declared generators. "SELECTIVE wins where its inductive bias
-  matches the generator" is a candidate reading (#655.4).
-- The secondary comparison is optimizer-confounded (SGD vs ALS).
-- v1 selection data was seen before two redesigns (R-a proposed and withdrawn after a dev probe; R-c adopted). Neither
-  used campaign seeds.
-- F5-lowrank: every arm fails on dev, a likely artefact of the fixed fewest-parameter mode-split rule (#686).
-- The RESERVOIR is recency-blind (no stored step). On F3 the headline mechanism mixes episodes; its endpoint is the
-  recency-blind L-R (#693/#698).
-- SELECTIVE-proper stability: S-cp shows bimodal learner-seed convergence (dev smoke F3-L2-cp: 1.90 vs -.04). The
-  fraction per mode per stratum is reported [MARGINS].
-- The margin is replicate-based (a named deviation from R2a; s6).
-- F-C scope: exact-record retention with a fixed factor model, not selective contraction as a whole.
-- L1's headline rests only on the families that are TESTABLE there [MARGINS]. L1-F2 is EMPTY.
-- F-B STRICT POWER: the strict countermodel needs L-K (an unlearned min-Hamming kernel) within MARGIN of the full end.
-  On dev smoke worlds L-K scores ~0 AC on never-seen cells in latent families, because an unlearned readout cannot use
-  low-rank structure. F-B strict therefore has near-zero power where only a learned readout generalizes. An UNFIRED F-B
-  must NOT be read as support for the law. The informative lossless reading there is LOSSLESS_TRANSIENT_CONTRACTION
-  (L-R).
-- REQUIREMENT is untested (the intervention arm is deferred, D11; #728).
+## 12. Dev design findings (kept out of results)
 
-## 12. Dev design findings -- kept OUT of results (H4)
-
-- The rank-2 "55x" byte gap.
-- The noise lever: no effect.
-- Eviction losing to random on the positive-control world.
-- The selection "dev pictures" of #685.
+- The rank-2 55x byte gap.
+- The noise lever: null.
+- Eviction candidates losing to random on the positive-control world.
+- The selection "dev pictures".
 - Replay not closing the SGD/ALS gap.
-- Competence tracking retained exact records under an equalised optimizer (#666). This motivated R-c; it is not a
-  result.
+- Competence tracking retained exact records under an equalised optimizer.
+- Warm full reservoir more stable than cold L-R.
+- Learned-key HYBRID collapses under ablation.
+- L-K ~0 on never-seen cells.
 
-## 13. Defect ledger (H5) and lever provenance (H6)
+## 13. Defect ledger (self-reported; direction each cut)
 
-- D1 R(tau) non-monotone -> HR2 matched (neutral).
-- D2 rate vs bytes -> IM-rate primary (neutral).
-- D3 life 4x full coverage at L1 -> derived min count; L1 table regime (cuts against LOSSLESS's easiest wins).
-- D4 absolute selectivity readout certifies a blind merge -> relative reading (cut FOR SELECTIVE before the fix).
-- D5 revisit-density power limit -> per-stratum positive control.
-- D6 O3 replay SELECTIVE never built -> R-c (the optimizer confound cut FOR LOSSLESS).
-- D7 L-R under-converged -> convergence rule (cut AGAINST LOSSLESS).
-- Levers:
-  - life_mult 4 helped SELECTIVE on F3 and mixed elsewhere;
-  - nuis_p .5 mixed;
-  - noise: no effect;
-  - min count: derived [MARGINS].
+- D1: R(tau) non-monotone -> HR2 matched (neutral).
+- D2: rate vs bytes -> IM-rate primary (neutral).
+- D3: life 4x full coverage at L1 -> derived min count (against LOSSLESS's easiest wins).
+- D4: absolute selectivity readout certified a blind merge -> relative reading (had favoured SELECTIVE).
+- D5: revisit-density power limit -> per-stratum positive control.
+- D6: the O3 replay SELECTIVE never built -> R-c headline (the confound had favoured LOSSLESS).
+- D7: L-R under-converged -> one convergence rule (had cut AGAINST LOSSLESS).
+- D8: R1d byte counter masked by timestamp reads -> store-record counter (had hidden a LOSSLESS cost).
+- D9: N_MIN grid capped at 256 -> scan to the actual n_test (neutral; more strata testable).
+- D10: noise-derived pooled margin made equivalence easy for unstable arms (tilted toward F-C/NULL) -> fixed DELTA 0.30.
+- D11: intervention decided by construction -> deferred.
+- Operator-ruled scale defect: F5 all_cells rung scale -> real_cells (the positive control was failing for scale
+  reasons).
+- Also self-reported during the build: a fabricated commit hash in chat (corrected); an estimated heartbeat time
+  (corrected); an unverified contention claim (corrected, #704).
+- Lever provenance (H6): life 4x helped SELECTIVE on F3 and was mixed elsewhere; nuis_p .5 mixed; noise null; min
+  count now fixed-delta-derived.
 
-## 14. Checklist self-check (A1-H7)
+## 14. Checklist self-check (programs/selective_irreversibility/reviews/LM01_PREREG_CHECKLIST.md)
 
-[Filled at v0.2, once the [MARGINS] and [BUILD] items close. Each row cites the section above.]
+Marked against this file.
+- Row groups:
+  - A1 s1 | A2 s1, 6.1 | A3 6.7 | A4 6.0 (EQUIVALENT needs the CI inside +-.30; positive control 6.3) | A5 6.1-6.6 |
+    A6 6.7 | A7 s11: PASS.
+  - B1-B4 s4 | B5 6.4 + s7 | B6 s4 | B7-B8 s4 | B9 s4 (cap-bound flags in the TABLES) | B10 s4: PASS.
+  - C1 6.1 (L-R endpoint, warm reservoir beside it) | C2 6.2 | C3 6.1 B* | C4 6.3 | C5 s4 | C6 s7: PASS.
+  - D1-D5 s5: PASS.
+  - E1 s2 | E2 s2 | E3 s3 | E6 s7 + TABLES | E7 s2 | E8 s2 | E9 (16 dev worlds per stratum): PASS.
+  - F1 6.5: N/A (deferred by operator ruling item 5; limitation stated).
+  - G1 s9 | G2 s5 | G3 s5 | G4 DEV_SWEEP_LOG | G5 s10 + TABLES: PASS.
+  - H1 6.0 | H2 s4/s7 | H3 not run | H4 s12 | H5 s13 | H6 s13: PASS or N/A as stated.
+- AMENDED BY OPERATOR RULING (the checklist text predates it):
+  - E4 min count: now derived from the fixed DELTA, not a noise margin.
+  - E5 gate threshold: now DELTA, not a dev-noise X.
+  - G6/H7 Harmonia freeze: the operator froze steward process; Harmonia's freeze is not a launch precondition unless the
+    operator says so.
+  - G7 steward-added readouts each passed a fixture (HR2_signal is reported, labelled "not a certificate", after D4).
+- H3 (the O6 exploratory stratum): NOT RUN in LM01; stated.
