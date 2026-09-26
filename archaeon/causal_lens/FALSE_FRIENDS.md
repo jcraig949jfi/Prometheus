@@ -33,3 +33,12 @@ canonical one, and with what evidence.
 | FF-25 | fitness | all | NPE comp/held task competence (inherited provisionally); BEE none (score_ema, energy); PTE accuracy + shaping; Archaeon none | a shared selective quantity | not part of the causal lineage contract | no |
 
 Rows FF-26 onward are added by the differential tables (DIFFERENTIAL.md) when a measured disagreement shows a new false friend.
+
+## Added from the measured differentials (2026-09-26)
+
+| # | term | engine | native meaning | tempting wrong reading | canonical meaning | conversion |
+|---|---|---|---|---|---|---|
+| FF-26 | hosted (births_hosted) | Archaeon | births into a glin executed by ANOTHER glin (core.py: `host != gg`) -- lineage-level hosting | all hosting | host = the ENTITY that supplied execution without contributing its own material, including an organism of the same lineage | yes, measured on block 13: 82 cross-lineage (native, AGREES) + 277 same-lineage (LENS_ONLY) = 359 |
+| FF-27 | material = target (again, measured) | BEE | resemblance to the overwritten target beats resemblance to the writer | "the child's bytes came from the target" | provenance | measured: 847,000 births where the writer COPIED >= L/2 of its own bytes (trace) but out of position, so positional fidelity credits the target (e.g. 47/64 own bytes, fid_writer 0.64 vs fid_target 0.67) |
+| FF-28 | self-replication (SR) / "own code" | BEE | the copy INSTRUCTIONS ran from the writer's own region (pc < L) | "the writer mostly executed its own program" | executed material = where execution time went | measured: 38,817 native-SR births in which the writer spent more steps in window/partner code than in its own (lens DECOUPLED) |
+| FF-29 | authorship (C4) | NPE | donor rebuilds >= 90% of a RANDOMIZED victim's directed bytes (counterfactual re-execution) | "the donor wrote this child" | in-situ provenance share (donor_authored_share_ordinary) | measured: the two disagree in both directions on 12/34 pair births (8 in-situ >= 0.5 with C4 false; 4 in-situ < 0.5 with C4 true) |
