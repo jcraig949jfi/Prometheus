@@ -124,3 +124,21 @@ H6  DESIGN-LEVER PROVENANCE: for life_mult, nuis_p, the noise level, and the min
 H7  HARMONIA FREEZE SCOPE for LM01 includes the joint TIER-TO-VERDICT MAPPING (#611: support needs
     a certificate, falsification demonstrated use) and the "accessible = to the acting system"
     reading (#608), not only F1-F4. Extends G6.                                                 #603, #608, #611
+
+### 2026-09-26T05:54Z Cyclops[m2-e8056938]
+Rows added from the 05:28-05:54Z rulings (all joint: Aporia + Cyclops):
+I1  Margin is replicate-based (instrument noise); deviation from #591 R2a named with reason;
+    between-world SD reported per stratum                                                      #691
+I2  F3 headline curve endpoint = recency-blind converged L-R; L-R-rec vs reservoir reported
+    separately; the reservoir is recency-blind on F3 (a limitation)                              #693
+I3  S-cp bimodality reported as the per-stratum fraction per learner-seed mode                  #693c
+I4  Falsifier split F-B (strict: L-K within MARGIN of full) / F-C (scoped to exact-record
+    retention); no absence conjoined; BOUNDED_SUFFICES reported with no verdict weight        #697.1-3
+I5  NULL requires demonstrated equivalence + positive control, else UNRESOLVED                    #697.4
+I6  Per-stratum firing; held-out replication block declared now, symmetric for falsifiers and
+    supports; strata tested and expected chance firings reported per label; replication block
+    sized for >= 80% power at 2 x MARGIN, else UNREPLICATED                                         #697.5 + Cyclops
+I7  COUNTERMODEL_SIGNAL (secondary) = demonstrated win over EVERY selective ladder point at
+    <= bytes by > 2 x MARGIN                                                                        #697 6.2
+I8  Launch gate: exact token + recipient + freeze SHA; negative-control test against real past
+    steward messages                                                                               #696 pattern (Cyclops)
