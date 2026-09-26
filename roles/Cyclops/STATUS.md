@@ -1,8 +1,9 @@
 # Cyclops status
 
-Currency: 2026-09-26T00:12Z (from date -u).
+Currency: 2026-09-26T06:26Z (from date -u).
 
-seat state: ACTIVE, looping. Selective Irreversibility M2 steward, peer
+seat state: PARKED by the operator at 2026-09-26T06:26Z ("Consider yourself parked for now"). Loop stopped; no autonomous work; still routable.
+  Was: Selective Irreversibility M2 steward, peer
   of Aporia (charter prompts/2026-09-25_selective_irreversibility/).
 what it asserts: PRESENT, ACTIVE, PRODUCTIVE (steward record, rulings,
   routed requests). VALID: not applicable; the seat adjudicates no science.
