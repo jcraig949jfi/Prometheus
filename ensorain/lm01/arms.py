@@ -327,3 +327,117 @@ class HybridRec(Hybrid):
     def __init__(self, dims, cap, half_life=0.25, **kw):
         super().__init__(dims, cap, **kw)
         self.half_life = half_life
+
+
+class ReplaySelective(Selective):
+    """O3 (#590/#591; defect D6): SELECTIVE with a bounded replay buffer. The buffer is a RESERVOIR sample (uniform over
+    the admitted history; declared, not recency) of B exact records, charged as persistent bytes. Every `every` admitted
+    records, the substrate makes `sweeps` passes over the buffer with its own rule. The buffer is a partly exact store;
+    its HR2 is reported like any arm's."""
+
+    def __init__(self, kind, dims, cap, B, every=32, sweeps=2, seed=0, recipe=None):
+        super().__init__(kind, dims, cap, seed=seed, recipe=recipe)
+        self.name = f"S-{kind}+replay{B}"
+        self.B, self.every, self.sweeps = int(B), int(every), int(sweeps)
+        self.bA = np.zeros((0, len(dims)), np.int16)
+        self.by = np.zeros(0, np.float64)
+        self._seen = 0
+        self._since = 0
+        self._rr = np.random.default_rng(seed + 991)
+
+    def persistent(self):
+        return super().persistent() + [self.bA, self.by]
+
+    def _admit(self, A, y):
+        for a, v in zip(A.astype(np.int16), y):
+            self._seen += 1
+            if len(self.by) < self.B:
+                self.bA = np.vstack([self.bA, a[None]])
+                self.by = np.append(self.by, v)
+                self.meter.bytes_written += a.nbytes + 8
+            else:
+                j = self._rr.integers(self._seen)
+                if j < self.B:
+                    self.bA[j], self.by[j] = a, v
+                    self.meter.bytes_written += a.nbytes + 8
+
+    def _observe(self, A, y):
+        super()._observe(A, y)
+        self._admit(A, y)
+        self._since += len(y)
+        if self._since >= self.every and len(self.by):
+            self._since = 0
+            for _ in range(self.sweeps):
+                for i in range(0, len(self.by), 64):
+                    f = int(self.mem.learn(self.bA[i:i + 64].astype(int), self.by[i:i + 64], self.rule, self.lr))
+                    self.meter.ops += f
+                    self.meter.replay_ops += f
+            self.meter.bytes_read += (self.bA.nbytes + self.by.nbytes) * self.sweeps
+            for a in self.mem.params():
+                if not np.all(np.isfinite(a)):
+                    a[~np.isfinite(a)] = 0.0
+
+
+class BufferALS(Metered):
+    """D6 candidate: a BOUNDED low-rank state (U, V: the same factor shapes L-R fits) updated by warm-started ridge ALS over
+    a reservoir buffer of B exact records, every `every` admissions. Persistent = factors + buffer, all charged. It is
+    SELECTIVE in the persistent-state sense when B < history. It uses the same optimizer as L-R, which removes the
+    optimizer confound. With B >= history it degenerates to L-R with a kept fit (then the category is HYBRID)."""
+    category = "SELECTIVE"
+
+    def __init__(self, dims, rank, B, every=64, iters=2, lam=0.1, seed=0):
+        super().__init__()
+        self.name = f"S-bufALS-r{rank}-B{B}"
+        self.dims, self.r, self.B, self.every, self.iters, self.lam = list(dims), rank, int(B), every, iters, lam
+        D = len(dims)
+        self.s = min(range(1, D), key=lambda k: int(np.prod(dims[:k])) + int(np.prod(dims[k:])))
+        rng = np.random.default_rng(seed)
+        self.U = rng.normal(0, 0.3, (int(np.prod(dims[:self.s])), rank))
+        self.V = rng.normal(0, 0.3, (int(np.prod(dims[self.s:])), rank))
+        self.bA = np.zeros((0, D), np.int16)
+        self.by = np.zeros(0)
+        self._seen = self._since = 0
+        self._rr = np.random.default_rng(seed + 991)
+
+    def persistent(self):
+        return [self.U, self.V, self.bA, self.by]
+
+    def _observe(self, A, y):
+        for a, v in zip(A.astype(np.int16), y):
+            self._seen += 1
+            if len(self.by) < self.B:
+                self.bA = np.vstack([self.bA, a[None]])
+                self.by = np.append(self.by, v)
+            else:
+                j = self._rr.integers(self._seen)
+                if j < self.B:
+                    self.bA[j], self.by[j] = a, v
+        self.meter.bytes_written += len(y) * (A.shape[1] * 2 + 8)
+        self._since += len(y)
+        if self._since >= self.every:
+            self._since = 0
+            self._refit()
+
+    def _refit(self):
+        A, y = self.bA.astype(int), self.by
+        I = np.ravel_multi_index(A[:, :self.s].T, self.dims[:self.s])
+        J = np.ravel_multi_index(A[:, self.s:].T, self.dims[self.s:])
+        r = self.r
+        for _ in range(self.iters):
+            for M, N, P, Qx in ((self.U, self.V, I, J), (self.V, self.U, J, I)):
+                order = np.argsort(P, kind="stable")
+                bounds = np.flatnonzero(np.diff(P[order])) + 1
+                for grp in np.split(order, bounds):
+                    if len(grp):
+                        Bm = N[Qx[grp]]
+                        M[P[grp[0]]] = np.linalg.solve(Bm.T @ Bm + self.lam * np.eye(r), Bm.T @ y[grp])
+                c = len(y) * r * r + len(np.unique(P)) * r ** 3
+                self.meter.ops += c
+                self.meter.replay_ops += c
+        self.meter.bytes_read += self.bA.nbytes + self.by.nbytes
+
+    def _predict(self, Q):
+        i = np.ravel_multi_index(Q[:, :self.s].T.astype(int), self.dims[:self.s])
+        j = np.ravel_multi_index(Q[:, self.s:].T.astype(int), self.dims[self.s:])
+        self.meter.bytes_read += self.U.nbytes + self.V.nbytes
+        return (self.U[i] * self.V[j]).sum(1)

@@ -83,3 +83,9 @@ the coupling campaign stopped, M2 carries only ENVGATE-02 (6 workers). Ensorain 
 workers, 1 BLAS thread each, BELOW_NORMAL priority, dev seeds only, stop below 6 GB free,
 intervals logged. The WTP-LM01 CAMPAIGN launch is still gated on the Cyclops prereg review +
 launch prompt. The CPU condition is now met; the prereg condition is not.
+
+### 2026-09-26T02:51Z Cyclops[m2-e8056938]
+M2 at 02:50Z: ENVGATE-02 done, so no frozen heavy job is running on M2. Remaining claimants: Ensorain dev
+sweeps (envelope v2: <= 8 workers, BELOW_NORMAL) and Archaeon's next frozen step when it launches (its own
+worker caps). Envelope v2 stays in force. Any WTP-LM01 CAMPAIGN still needs the prereg review and the launch
+prompt, plus the Harmonia freeze (DEPENDENCIES, Aporia 20:30Z rule).

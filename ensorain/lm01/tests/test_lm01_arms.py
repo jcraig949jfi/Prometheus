@@ -141,3 +141,13 @@ def test_rec_readout_tracks_a_switch():
     Q = A2[:200]
     e = lambda arm: np.mean((arm.predict(Q) - x2[tuple(Q.T)]) ** 2)
     assert e(rec) < e(blind)
+
+
+def test_replay_and_buffer_als_charge_their_buffers():      # D6
+    from ensorain.lm01.arms import ReplaySelective, BufferALS
+    A, y, _ = stream(n=1500, noise=0.1)
+    r = feed(ReplaySelective("lowrank", DIMS, cap=144, B=100), A, y)
+    b = feed(BufferALS(DIMS, rank=2, B=100), A, y)
+    for arm in (r, b):
+        assert len(arm.by) == 100 and arm.meter.replay_ops > 0
+        assert arm.meter.peak_persistent >= arm.bA.nbytes + arm.by.nbytes
