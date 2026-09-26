@@ -810,3 +810,28 @@ def test_all_cards_refused_says_capacity_was_inferred(module_dir):
     r = controller(fake, module_dir, spec=spec).run()
     assert r["disposition"]["cause"] == "NO_CAPACITY"
     assert any("INFERRED" in n for n in r["notes"])
+
+
+def test_platform_samples_read_during_the_run_outlive_the_server(module_dir):
+    """F2c: the server died mid-run and every platform sample went with it,
+    because platform.jsonl was only fetched at retrieval."""
+    sample = json.dumps({"kind": "platform", "t_utc": "-", "t_elapsed_s": 1.0,
+                         "seq": 0, "gpus": [{"name": "G", "mem_used_mib": 5.0,
+                                             "util_pct": 90.0}]}) + "\n"
+    fake = prov.FakeProvider(served=served(tel=lambda i: START + PROG * (i + 1),
+                                           extra={launch.PLATFORM_PATH: sample}))
+    ctl = controller(fake, module_dir, unreachable_s=120.0)
+    original = ctl.raw_provider.fetch
+    seen = {"tel": 0}
+
+    def fetch(pod_id, path, **k):
+        if path == TEL:
+            seen["tel"] += 1
+        if seen["tel"] > 10:
+            return None
+        return original(pod_id, path, **k)
+    ctl.raw_provider.fetch = fetch
+    r = ctl.run()
+    assert r["disposition"]["cause"] == "ARTIFACT_SERVER_UNREACHABLE"
+    assert r["platform_summary"]["samples"] == 1
+    assert r["disposition"]["evidence_retained"]["platform_samples"] == 1

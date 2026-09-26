@@ -409,6 +409,9 @@ class Controller(object):
         # never asked again, and a whole run lost its clock sync.
         self._clock_tries = 0
         self.stock_at_launch = None
+        # Platform samples and stages are snapshotted every this many
+        # watch polls (~a minute at a 10 s poll).
+        self.snapshot_every_polls = 6
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -1184,6 +1187,8 @@ class Controller(object):
                     return "UNKNOWN"
             if self.clock_sync is None and polls % 3 == 0:
                 self._try_clock()
+            if polls % self.snapshot_every_polls == 0:
+                self._snapshot()
             self._health(polls, now, spend, text, loop_t0)
             self._ledger("watch", spend_usd=round(spend, 5))
             wait = self.poll_s
@@ -1192,6 +1197,24 @@ class Controller(object):
                     >= TIGHTEN_AT * self.expected_module_s):
                 wait = min(wait, TIGHT_POLL_S)
             self._sleep(wait)
+
+    def _snapshot(self):
+        """Keep the platform samples and stage file current DURING the run.
+
+        They used to be read only at retrieval, so a server that died
+        mid-run took every platform sample with it (flight F2c: telemetry
+        up to the fault was kept, platform samples were zero). A snapshot is
+        replaced only by a longer one, so a truncated read never shrinks
+        what is held.
+        """
+        platform = self._fetch(PLATFORM_PATH)
+        if platform is not None and len(platform) >= len(self.platform_text):
+            self.platform_text = platform
+        stages = self._fetch(STAGES_PATH)
+        if stages:
+            parsed = parse_stages(stages)
+            if len(parsed) >= len(self.stages_retrieved):
+                self.stages_retrieved = parsed
 
     def _pod_exists(self):
         """True/False from GET, or None when GET itself failed."""
@@ -1221,16 +1244,12 @@ class Controller(object):
         """
         import json as _json
         self._mark("retrieve_start")
-        stages = self._fetch(STAGES_PATH)
-        if stages:
-            self.stages_retrieved = parse_stages(stages)
+        self._snapshot()
+        if self.stages_retrieved:
             receipt_obj["pod_stages"] = self.stages_retrieved
         text = self._fetch(TELEMETRY_PATH)
         if text is not None:
             self.telemetry_text = text
-        platform = self._fetch(PLATFORM_PATH)
-        if platform is not None:
-            self.platform_text = platform
         receipt_obj["platform_summary"] = summarise_platform(
             self.platform_text)
 
