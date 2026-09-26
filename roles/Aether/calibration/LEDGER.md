@@ -132,3 +132,19 @@ about the law without the perturbation channel, and forgot a property my
 own falsification gate had proven. When predicting from the law, walk
 every phase including Mu, and re-read the gate results before writing
 the prediction.
+
+2026-09-26 | Preregistered a "carrier ablation" intervention for AETH-03
+ladder 2 -- starve a closed ring around the origin, ask whether
+propagation beyond it stops -- and ran it on rcv as a falsifier. |
+The outcome was forced by the law: in every aeth03 variant influence
+travels only by emission, and a zero-energy site cannot emit, so a fully
+starved closed ring blocks every difference by construction. 0/128 vs
+sham 17/128 was a semantics check, not evidence. Earlier the same day I
+had rejected a clamp "firewall" for exactly this reason and did not see
+that energy-0 is the same move in another form. | Reading the result:
+spread inside the ring was unchanged (30 vs 32 origins to radius 5) and
+nothing crossed it, too clean to be informative. | Before calling an
+intervention a falsifier, ask whether the law alone forces its outcome.
+If it does, it is a check of the semantics. A real intervention must
+leave the effect a route to survive (here: starve only one class of
+ring site, so the other can still carry influence across).
