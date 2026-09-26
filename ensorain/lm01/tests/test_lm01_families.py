@@ -35,3 +35,13 @@ def test_transfer_fields_share_family_component():
     w = make_world("F4_transfer", "L1", 9_100_004)
     (Aa, _, sa), (Ab, _, sb) = w["train"]
     assert len(sb) < len(sa)
+
+
+def test_latent_gens_frozen():                              # #655/#656
+    from ensorain.lm01.families import LATENT_GENS
+    assert LATENT_GENS == ("lowrank", "cp", "tt", "pairwise", "spectral", "sum")
+
+
+def test_gen_override_sets_stratum():
+    w = make_world("F2_latent", "L2", 9_100_005, gen="spectral")
+    assert w["gen"] == "spectral"
