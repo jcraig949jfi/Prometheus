@@ -13,10 +13,49 @@ def test_guard_refuses_without_a_release():
     assert "HOLD stands" in str(e.value)
 
 
-def test_guard_refuses_a_message_that_is_not_a_release():
-    with pytest.raises(SystemExit) as e:
-        c1b_run.guard("684")          # Aporia's A3 ack: not a HOLD release
-    assert "not a HOLD release" in str(e.value) or "cannot verify" in str(e.value)
+@pytest.mark.parametrize("msg_id", ["605", "631", "684"])
+def test_real_non_release_messages_are_refused(msg_id):
+    """#696 NEGATIVE CONTROLS from REAL comms ids. #605 and #631 mention both
+    HOLD and release in their subjects and passed the v1 substring guard."""
+    commit, when = c1b_run.freeze_commit()
+    m = c1b_run.fetch_message(msg_id)
+    assert c1b_run.check_release(m, commit, when), msg_id
+    with pytest.raises(SystemExit):
+        c1b_run.guard(msg_id)
+
+
+def _release(commit, when, **kw):
+    import datetime
+    m = {"id": 0, "sender": "Aporia", "kind": "ruling", "recipients": ["Ananke", "Cyclops"],
+         "subject": "C1B HOLD RELEASE: reviews answered; C1b may run",
+         "created_at": (when + datetime.timedelta(hours=1)).isoformat(),
+         "body": f"Releasing the HOLD for C1b at freeze {commit[:9]}."}
+    m.update(kw)
+    return m
+
+
+def test_synthetic_well_formed_release_passes():
+    """#696 POSITIVE CONTROL: the guard can say yes."""
+    commit, when = c1b_run.freeze_commit()
+    assert c1b_run.check_release(_release(commit, when), commit, when) == []
+
+
+@pytest.mark.parametrize("field,value", [
+    ("sender", "Cyclops"), ("kind", "prompt"), ("recipients", ["Cyclops"]),
+    ("subject", "Re: C1B HOLD RELEASE: not at the start"),
+    ("subject", "c1b hold release: wrong case"),
+    ("body", "Releasing the HOLD, no sha here."), ("body", "freeze 000000000 is wrong"),
+])
+def test_each_release_check_can_fail_on_its_own(field, value):
+    commit, when = c1b_run.freeze_commit()
+    assert c1b_run.check_release(_release(commit, when, **{field: value}), commit, when)
+
+
+def test_release_before_the_freeze_is_refused():
+    import datetime
+    commit, when = c1b_run.freeze_commit()
+    m = _release(commit, when, created_at=(when - datetime.timedelta(minutes=1)).isoformat())
+    assert any("before the freeze" in x for x in c1b_run.check_release(m, commit, when))
 
 
 def test_plan_covers_every_stage():
