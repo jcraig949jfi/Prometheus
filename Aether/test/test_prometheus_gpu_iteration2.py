@@ -478,3 +478,38 @@ def test_first_contact_through_the_proxy_is_its_own_interval(module_dir):
     assert ctl["accepted_to_first_contact_s"] > 0
     assert ctl["accepted_to_first_contact_s"] <= ctl[
         "accepted_to_first_telemetry_s"]
+
+
+def _plan(tmp_path, decision="PROCEED", units=3000.0, module="gpu-load@1",
+          prereg=True):
+    plan = {"decision": decision, "module": module, "ceiling_usd": 0.2,
+            "calibrated_estimate": {"expected_usd": 0.015, "margin": 0.2,
+                                    "requested_units": units},
+            "calibration": {"source": "scout receipt x",
+                            "gpu_used": "NVIDIA RTX A4000"}}
+    if prereg:
+        plan["preregistered_estimate"] = {"expected_usd": 0.0152}
+    path = tmp_path / "plan.json"
+    path.write_text(json.dumps(plan))
+    return str(path)
+
+
+def test_a_campaign_plan_rides_into_the_receipt(tmp_path, capsys):
+    flight = _flight()
+    mdir = flight.module_path("examples/gpu_load")
+    spec_ = flight.select_spec(mdir, pin_gpu="NVIDIA RTX A4000", units=3000)
+    assert spec_["work_units"]["estimate"] == 3000.0
+    plan = flight.load_campaign_plan(_plan(tmp_path), spec_)
+    assert flight.rehearse(mdir, spec_, 0.2, plan=plan) == 0
+    out = capsys.readouterr().out
+    assert "calibration" in out and "predicted $0.0150" in out
+
+
+@pytest.mark.parametrize("bad", [{"decision": "REFUSE"}, {"units": 6000.0},
+                                 {"module": "other@1"}, {"prereg": False}])
+def test_a_plan_for_some_other_run_is_refused(tmp_path, bad):
+    flight = _flight()
+    mdir = flight.module_path("examples/gpu_load")
+    spec_ = flight.select_spec(mdir, units=3000)
+    with pytest.raises(RuntimeError):
+        flight.load_campaign_plan(_plan(tmp_path, **bad), spec_)

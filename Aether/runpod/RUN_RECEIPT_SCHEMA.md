@@ -111,6 +111,23 @@ to the nearest familiar word and lose the distinction that mattered.
 | `telemetry_summary` | from `telemetry.summarise()` |
 | `notes` | free text |
 
+## Measurement blocks (Iteration 2)
+
+Informational; `validate()` does not require them, so older receipts still
+load.
+
+| field | what it holds |
+|:--|:--|
+| `lifecycle.pod_clock` | intervals between the pod's own stage markers |
+| `lifecycle.controller_clock` | intervals between controller instants, incl. `accepted_to_first_contact_s` (pod reachable through the proxy) |
+| `lifecycle.cross_clock` | the raw pod-minus-controller subtraction, labelled as such |
+| `lifecycle.synchronised` | the same intervals corrected by a MEASURED clock offset, with `uncertainty_s`; absent if `/_clock` was unreadable |
+| `clock_sync.start` / `.end` | offset, uncertainty, min RTT and sample count, measured at first contact and again at retrieval |
+| `ready_poll_s` | the controller's poll interval during the ready wait |
+| `platform_summary` | peaks and means of `platform.jsonl`: GPU memory/util/temp/power, host load and RAM (the host's, not the process's), disk, artifact bytes, and the sampler's own cost per sample |
+| `artifact_transfer` | total bytes, fetch seconds, rate, and the largest artifact with its own rate |
+| `artifacts[].fetch_s` | per-artifact fetch time |
+
 ## The receipt begins as the plan
 
 `receipt.from_plan(plan)` builds the skeleton from the dry-run plan, so

@@ -196,11 +196,18 @@ def test_overhead_is_added_per_pod_and_compute_is_divided(campaign,
     # Four pods finish sooner each, but the fixed cost is paid four times.
     assert four["per_pod_seconds"] < one["per_pod_seconds"]
     assert four["expected_usd"] > one["expected_usd"]
+    # The expectation carries the measured overhead three more times; the
+    # ceiling figure additionally carries the teardown reserve three more
+    # times (Iteration 2: the reserve is a guardrail, not an expectation).
+    rate = calibration["hourly_usd"]
     extra = four["expected_usd"] - one["expected_usd"]
-    expected_extra = 3 * (calibration["overhead_seconds"]
-                          + scout_mod.DEFAULT_TEARDOWN_RESERVE_S) / 3600.0 \
-        * calibration["hourly_usd"]
-    assert abs(extra - expected_extra) < 1e-9
+    assert abs(extra - 3 * calibration["overhead_seconds"] / 3600.0
+               * rate) < 1e-9
+    extra_ceiling = (four["usd_with_margin"] - four["expected_usd"]
+                     * (1 + four["margin"])) - (
+        one["usd_with_margin"] - one["expected_usd"] * (1 + one["margin"]))
+    assert abs(extra_ceiling - 3 * scout_mod.DEFAULT_TEARDOWN_RESERVE_S
+               / 3600.0 * rate) < 1e-9
 
 
 def test_calibration_refuses_degenerate_input(campaign):
@@ -214,7 +221,12 @@ def test_teardown_time_is_reserved_not_assumed_free(campaign, calibration):
         calibration, TRAJECTORY_UNITS, teardown_reserve_s=120.0)
     without = scout_mod.project_from_calibration(
         calibration, TRAJECTORY_UNITS, teardown_reserve_s=0.0)
-    assert with_reserve["expected_usd"] > without["expected_usd"]
+    # Reserved in what a ceiling is set from and the decision is taken on.
+    assert with_reserve["usd_with_margin"] > without["usd_with_margin"]
+    # And NOT in the expectation: a scout's measured overhead already
+    # contains a real teardown, so adding the reserve there counted it
+    # twice and put Iteration 2's calibrated estimate 19% high.
+    assert with_reserve["expected_usd"] == without["expected_usd"]
 
 
 def test_render_names_the_decision_and_the_proposal(campaign, calibration):

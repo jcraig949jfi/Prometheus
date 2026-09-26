@@ -69,7 +69,8 @@ def module_path(arg):
     return path
 
 
-def select_spec(module_dir, scout=None, pin_gpu=None, platform_interval=None):
+def select_spec(module_dir, scout=None, pin_gpu=None, platform_interval=None,
+                units=None):
     """The spec that will actually fly: campaign, scout, or pinned.
 
     Every override here edits the in-memory spec only. The bundle is built
@@ -77,6 +78,11 @@ def select_spec(module_dir, scout=None, pin_gpu=None, platform_interval=None):
     bundle the pod fetches -- is unchanged by any of them.
     """
     spec = spec_mod.load(os.path.join(module_dir, "module_spec.json"))
+    if units:
+        data = spec.to_dict()
+        data["work_units"] = dict(data["work_units"], estimate=float(units))
+        spec = spec_mod.from_dict(data, source="%s (%g units)"
+                                  % (spec.source, units))
     if platform_interval:
         data = spec.to_dict()
         data["telemetry"] = dict(data["telemetry"],
@@ -157,7 +163,7 @@ def show_plan(module_dir, spec, workload_seconds=None):
     return plan
 
 
-def rehearse(module_dir, spec, budget_usd):
+def rehearse(module_dir, spec, budget_usd, plan=None):
     """The whole controller path against the fake. Creates nothing."""
     units = (spec.get("work_units") or {}).get("estimate", 1)
     clock = [0.0]
@@ -184,6 +190,8 @@ def rehearse(module_dir, spec, budget_usd):
         ready_poll_s=3.0, now=lambda: clock[0],
         sleep=lambda s: clock.__setitem__(0, clock[0] + s), log=log)
     receipt_obj = ctl.run()
+    if plan is not None:
+        attach_plan(receipt_obj, plan)
     print(rc.render(receipt_obj))
     print("  clock sync  %s" % json.dumps(receipt_obj["clock_sync"]["start"]))
     print("  platform    %s" % json.dumps(receipt_obj["platform_summary"]))
@@ -221,7 +229,48 @@ def save_evidence(ctl, receipt_obj):
     return path
 
 
-def fly(module_dir, spec, budget_usd, poll_s, ready_poll_s):
+def load_campaign_plan(path, spec):
+    """A campaign plan from `--calibrate`, checked against what will fly.
+
+    Refuses a plan that did not PROCEED, one for a different module, or one
+    for a different amount of work: the receipt would otherwise carry an
+    estimate for some other run.
+    """
+    with open(path, encoding="utf-8") as fh:
+        plan = json.load(fh)
+    if plan.get("decision") != "PROCEED":
+        raise RuntimeError("the campaign plan decided %r, not PROCEED"
+                           % plan.get("decision"))
+    if plan.get("module") != spec.identity:
+        raise RuntimeError("the plan is for %s, not %s"
+                           % (plan.get("module"), spec.identity))
+    planned = float(plan["calibrated_estimate"]["requested_units"])
+    flying = float(spec["work_units"]["estimate"])
+    if planned != flying:
+        raise RuntimeError("the plan priced %g units but this flight does %g"
+                           % (planned, flying))
+    if plan.get("preregistered_estimate") is None:
+        raise RuntimeError("the plan has no preregistered_estimate; a "
+                           "calibration without what it replaced hides the "
+                           "miss (receipt.validate refuses it too)")
+    return plan
+
+
+def attach_plan(receipt_obj, plan):
+    """Both estimates into the receipt, beside what actually happened."""
+    receipt_obj["preregistered_estimate"] = plan["preregistered_estimate"]
+    receipt_obj["calibrated_estimate"] = plan["calibrated_estimate"]
+    receipt_obj["campaign_plan"] = {
+        "decision": plan["decision"],
+        "ceiling_usd": plan["ceiling_usd"],
+        "calibration_source": (plan.get("calibration") or {}).get("source"),
+        "calibration_gpu": (plan.get("calibration") or {}).get("gpu_used"),
+    }
+    rc.validate(receipt_obj)
+    return receipt_obj
+
+
+def fly(module_dir, spec, budget_usd, poll_s, ready_poll_s, plan=None):
     """The real launch. The only path here that can spend money."""
     source = credentials.install_into_environ()
     log("credential source: %s" % source)        # provenance, never the value
@@ -244,6 +293,8 @@ def fly(module_dir, spec, budget_usd, poll_s, ready_poll_s):
         return 3
     finally:
         if receipt_obj is not None:
+            if plan is not None:
+                attach_plan(receipt_obj, plan)
             log("receipt written to %s" % save_evidence(ctl, receipt_obj))
     print()
     print(rc.render(receipt_obj))
@@ -313,7 +364,12 @@ def main(argv=None):
     ap.add_argument("--workload-seconds", type=float, default=None)
     ap.add_argument("--calibrate", default=None,
                     help="scout receipt to calibrate a campaign from")
-    ap.add_argument("--units", type=float, default=None)
+    ap.add_argument("--units", type=float, default=None,
+                    help="work units to plan for, or to fly (in-memory; "
+                         "the bundle is unchanged)")
+    ap.add_argument("--plan", default=None,
+                    help="campaign plan from --calibrate; both estimates "
+                         "go into the receipt")
     ap.add_argument("--ceiling", type=float, default=None)
     ap.add_argument("--preregistered", type=float, default=None)
     ap.add_argument("--out", default=None)
@@ -321,7 +377,8 @@ def main(argv=None):
 
     module_dir = module_path(args.module)
     spec = select_spec(module_dir, args.scout, args.pin_gpu,
-                       args.platform_interval)
+                       args.platform_interval,
+                       units=None if args.calibrate else args.units)
 
     if args.calibrate:
         with open(args.calibrate, encoding="utf-8") as fh:
@@ -357,15 +414,21 @@ def main(argv=None):
             print("\nNothing was created. Pass --rehearse for a fake flight "
                   "or --go for the real one.")
         return 0
+    plan = load_campaign_plan(args.plan, spec) if args.plan else None
     if args.rehearse:
-        return rehearse(module_dir, spec, args.budget)
+        return rehearse(module_dir, spec, args.budget, plan=plan)
 
     log("REAL LAUNCH %s, budget ceiling $%.2f" % (spec.identity, args.budget))
     if not credentials.available():
         log("no RunPod credential configured; see credentials.py")
         return 4
     log("credential: %s" % json.dumps(credentials.describe(), sort_keys=True))
-    return fly(module_dir, spec, args.budget, args.poll, args.ready_poll)
+    if plan is not None:
+        log("campaign plan %s: calibrated $%.4f, preregistered $%.4f"
+            % (plan["decision"], plan["calibrated_estimate"]["expected_usd"],
+               plan["preregistered_estimate"]["expected_usd"]))
+    return fly(module_dir, spec, args.budget, args.poll, args.ready_poll,
+               plan=plan)
 
 
 if __name__ == "__main__":
