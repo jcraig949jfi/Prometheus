@@ -333,7 +333,12 @@ def label_tables() -> dict:
 def fixture_envs() -> dict:
     return {
         "hold": envs.EnvSpec(family="HOLD", gap=8, cue_len=2, trials=12),
-        "relay_da": envs.EnvSpec(family="RELAY", d=1, delta=4, cue_len=2, trials=12),
+        # iti 50: relay_flood waves from the previous trial must die first
+        # (half the 24-ring at latency 4 is ~48 ticks). At iti 2 stale waves
+        # reached the actuator and normal scored 0.948 at 64 worlds (dev run
+        # 2026-09-26, reported), while C1's drop window, which removes them,
+        # scored 1.0.
+        "relay_da": envs.EnvSpec(family="RELAY", d=1, delta=4, cue_len=2, trials=12, iti=50),
         "relay_route": envs.EnvSpec(family="RELAY", d=2, delta=8, cue_len=4, trials=12),
     }
 
