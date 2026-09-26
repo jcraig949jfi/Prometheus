@@ -45,6 +45,13 @@ class Controls:
     drop_packets_at   ticks at which the arriving mailbox slot is emptied
     distractor_chan   >= 0: every site also receives one random packet
                       per tick on this channel (irrelevant traffic)
+    reset_parts       which carriers reset_state_at resets (C1b):
+                      "S" (C1's only one), "inbox" (Acc_sum/Acc_cnt),
+                      "Kp", "w" (to 16), "En" (to e_max), "r" (to its
+                      initial rule)
+    flush_inflight_at ticks at which EVERY in-flight slot (Msum/Mcnt) is
+                      emptied, after that tick's emission (C1b)
+    freeze_rule       SETRULE writes ignored (C1b; routing unaffected)
     """
     zero_comm: bool = False
     shuffle_dest: bool = False
@@ -56,10 +63,15 @@ class Controls:
     reset_state_mask: object = None
     drop_packets_at: tuple = ()
     distractor_chan: int = -1
+    reset_parts: tuple = ("S",)
+    flush_inflight_at: tuple = ()
+    freeze_rule: bool = False
 
     def label(self) -> str:
         on = [f.name for f in dataclasses.fields(self)
-              if getattr(self, f.name) not in (False, (), None, -1)]
+              if f.name != "reset_parts" and getattr(self, f.name) not in (False, (), None, -1)]
+        if self.reset_state_at and tuple(self.reset_parts) != ("S",):
+            on.append("reset_parts=" + ",".join(self.reset_parts))
         return "+".join(on) if on else "none"
 
 
@@ -82,11 +94,15 @@ class Schedule:
 
 class World:
     def __init__(self, ph: Physics, genomes, world_seeds, device="cuda",
-                 ctrl: Controls | None = None, schedule: Schedule | None = None):
+                 ctrl: Controls | None = None, schedule: Schedule | None = None,
+                 census: bool = False):
         ph.validate()
         self.ph = ph
         self.dev = torch.device(device)
         self.ctrl = ctrl or Controls()
+        self.census = census
+        bad = set(self.ctrl.reset_parts) - {"S", "inbox", "Kp", "w", "En", "r"}
+        assert not bad, bad
         g = torch.as_tensor(np.array(genomes), dtype=I64, device=self.dev)
         assert g.dim() == 4 and g.shape[1:] == (ph.rules, ph.prog_len, 5), g.shape
         self.genome = g
@@ -125,6 +141,7 @@ class World:
         self.E = torch.full((B, N), ph.e_max, dtype=I32, device=dev)
         h = rng.chain(rng.site_base(self.ws, rng.INIT, 0, self.sites), 7)
         self.r = (h % ph.rules).to(I64)
+        self.r0 = self.r.clone()
         self.w = torch.full((B, N, max(self.R, 1)), 16, dtype=I32, device=dev)
         self.Kp = torch.zeros(B, N, L, dtype=I32, device=dev)
         self.Acc_sum = torch.zeros(B, N, C, P, dtype=I32, device=dev)
@@ -153,9 +170,13 @@ class World:
         # ---- schedule
         self.set_schedule(schedule)
         # ---- control tick tables
-        Tc = max([0, *self.ctrl.reset_state_at, *self.ctrl.drop_packets_at]) + 1
+        Tc = max([0, *self.ctrl.reset_state_at, *self.ctrl.drop_packets_at,
+                  *self.ctrl.flush_inflight_at]) + 1
         self._reset_tab = torch.zeros(Tc + 1, dtype=torch.bool, device=dev)
         self._drop_tab = torch.zeros(Tc + 1, dtype=torch.bool, device=dev)
+        self._flush_tab = torch.zeros(Tc + 1, dtype=torch.bool, device=dev)
+        for x in self.ctrl.flush_inflight_at:
+            self._flush_tab[x] = True
         for x in self.ctrl.reset_state_at:
             self._reset_tab[x] = True
         for x in self.ctrl.drop_packets_at:
@@ -177,6 +198,10 @@ class World:
         self.Tsch = self.sch_val.shape[0]
         self.trace = torch.zeros(max(self.Tsch, 1), self.B, self.read_idx.shape[1], dtype=I32, device=dev)
         self.tel["emit_trace"] = torch.zeros(max(self.Tsch, 1), self.B, dtype=I64, device=dev)
+        if self.census:
+            for k in ("c_inflight_cnt", "c_inflight_sum", "c_inflight_sum_ro", "c_inbox_sum_ro",
+                      "c_rule_changes", "c_r_ro"):
+                self.tel[k] = torch.zeros(max(self.Tsch, 1), self.B, dtype=I64, device=dev)
         self._graph = None
 
     # ------------------------------------------------------------------ io
@@ -283,7 +308,7 @@ class World:
         self.Acc_sum.masked_fill_(aw[..., None], 0)
         self.Acc_cnt.masked_fill_(aw, 0)
         adapt_ok = not ctrl.no_adapt
-        do_rule = adapt_ok and ph.setrule and ph.rules > 1
+        do_rule = adapt_ok and ph.setrule and ph.rules > 1 and not ctrl.freeze_rule
         do_wimm = adapt_ok and ph.wimm
         r_next = self.r.clone()
         Kp_next = self.Kp.clone()
@@ -338,6 +363,8 @@ class World:
                 cur = torch.gather(Kp_next, 2, idx)[..., 0]
                 Kp_next.scatter_(2, idx, torch.where(awake & (op == 15), Bv, cur)[..., None])
         self.S.copy_(regs[..., :D])
+        if self.census:
+            rule_changes = (r_next != self.r).sum(-1)
         self.r.copy_(r_next)
         self.Kp.copy_(Kp_next)
         O = regs[..., D + 4: D + 8 + P]
@@ -381,7 +408,25 @@ class World:
         # ablation hook (not normal physics): memory reset before decay
         if ctrl.reset_state_at:
             hit = self._reset_tab.index_select(0, t.clamp(max=self._Tc).reshape(1)) & self._reset_mask
-            self.S.masked_fill_(hit[..., None], 0)
+            parts = ctrl.reset_parts
+            if "S" in parts:
+                self.S.masked_fill_(hit[..., None], 0)
+            if "inbox" in parts:
+                self.Acc_sum.masked_fill_(hit[..., None, None], 0)
+                self.Acc_cnt.masked_fill_(hit[..., None], 0)
+            if "Kp" in parts:
+                self.Kp.masked_fill_(hit[..., None], 0)
+            if "w" in parts and self.R:
+                self.w.masked_fill_(hit[..., None], 16)
+            if "En" in parts:
+                self.E.masked_fill_(hit, ph.e_max)
+            if "r" in parts:
+                self.r.copy_(torch.where(hit, self.r0, self.r))
+        if ctrl.flush_inflight_at:
+            fl = self._flush_tab.index_select(0, t.clamp(max=self._Tc).reshape(1))
+            keep = (~fl).to(I32)
+            self.Msum.mul_(keep)
+            self.Mcnt.mul_(keep)
         # 9. DECAY ---------------------------------------------------------
         if ph.decay_shift > 0:
             self.S.sub_(self.S >> ph.decay_shift)
@@ -398,6 +443,19 @@ class World:
         tel["s0_changes"] += (s0n != tel["s0_prev"]).sum(-1)
         tel["s0_prev"].copy_(s0n)
         tel["emit_trace"].index_copy_(0, tv.reshape(1), want.sum(-1)[None].to(I64))
+        if self.census:
+            ro = self.read_idx[:, 0]
+            bi = torch.arange(B, device=dev)
+            cen = {
+                "c_inflight_cnt": self.Mcnt.sum((0, 2, 3)).to(I64),
+                "c_inflight_sum": self.Msum[..., 0].sum((0, 2, 3)).to(I64),
+                "c_inflight_sum_ro": self.Msum[:, bi, ro, :, 0].sum((0, 2)).to(I64),
+                "c_inbox_sum_ro": self.Acc_sum[bi, ro, :, 0].sum(-1).to(I64),
+                "c_rule_changes": rule_changes.to(I64),
+                "c_r_ro": self.r[bi, ro].to(I64),
+            }
+            for k, v in cen.items():
+                tel[k].index_copy_(0, tv.reshape(1), v[None])
         self.t_dev.add_(1)
 
     def _emit(self, want, chan, pay):
