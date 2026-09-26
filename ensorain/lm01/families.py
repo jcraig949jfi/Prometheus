@@ -39,6 +39,8 @@ LEVELS = {                      # complexity/horizon levels (directive s6); cove
 NOISE = 0.1                    # observation noise SD on standardised fields
 K_EPIS, W_COMMON, B_FRAC, K_NUIS, P_REV, P_JUMP = 3, 0.6, 0.15, 4, 0.5, 0.02
 DEV_SEEDS = range(9_100_000, 9_900_000)
+LIFE_MULT = 4.0                # P1 (#644 JOINT): one value for all families and levels; LOSSLESS's 4x store/reads charged
+NUIS_P = 0.5                   # P2 (#644 JOINT): F5 headline reliability; nuis_p=1.0 is the declared "everyone falls" control
 
 
 def _rng(seed, tag):
@@ -86,7 +88,7 @@ def _seen_cells(A, rng, n=512):
     return u[np.sort(rng.choice(len(u), size=min(n, len(u)), replace=False))]
 
 
-def make_world(family, level, seed, life_mult=1.0, noise=NOISE, nuis_p=1.0):
+def make_world(family, level, seed, life_mult=LIFE_MULT, noise=NOISE, nuis_p=NUIS_P):
     """One world. Returns dict: family, level, gen, dims, train=[(A, y, signal) segments in order],
     tests={name: (A, truth)}, coverage, n_unseen (the eligible count for the R2 headline)."""
     assert seed in DEV_SEEDS or seed >= 10 ** 9, "LM01: dev seeds 9.1M-9.9M; campaign seeds come only from the sealed procedure"
