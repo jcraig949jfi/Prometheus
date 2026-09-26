@@ -413,9 +413,18 @@ class Controller(object):
             pods, inventory_ok = self._teardown()
             receipt_obj["pods"] = pods
             receipt_obj["cleanup"] = rc.cleanup_block(pods, inventory_ok)
+            confirmed_nothing = (self.pod_id is None
+                                 and self.creation_outcome != "unknown")
+            # A pod the provider confirms was never created bills nothing,
+            # so the controller's own wall time is not a cost. An
+            # UNRESOLVED create keeps its wall-time estimate: a pod may
+            # exist, and pricing it at zero would hide that.
             receipt_obj["cost"] = cost_mod.actual(
-                max(0.0, ended - started), self._hourly(),
-                work_units=self._work_units(receipt_obj))
+                0.0 if confirmed_nothing else max(0.0, ended - started),
+                self._hourly(), work_units=self._work_units(receipt_obj))
+            if confirmed_nothing:
+                receipt_obj["cost"]["basis"] = (
+                    "no pod existed (provider confirmed); nothing to bill")
             # Only a create the provider CONFIRMED created nothing may be
             # downgraded to NOT_RUN here. An unresolved create also has no
             # pod id, and calling that a non-event is how a pod that may

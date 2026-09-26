@@ -1,0 +1,44 @@
+{
+  "accepted_differences": null,
+  "calibrated_estimate": {
+    "compute_seconds_total": 307.76599999999996,
+    "expected_usd": 0.043165956111111105,
+    "margin": 0.2,
+    "overhead_seconds_per_pod": 53.623400000000004,
+    "per_pod_expected_seconds": 361.38939999999997,
+    "per_pod_seconds": 481.38939999999997,
+    "pods": 1,
+    "requested_units": 3000.0,
+    "teardown_reserve_s": 120.0,
+    "teardown_reserve_usd": 0.014333333333333333,
+    "usd_per_unit": 1.2253646296296296e-05,
+    "usd_with_margin": 0.06613248066666666
+  },
+  "calibration": {
+    "compute_seconds": 30.7766,
+    "gpu_used": "NVIDIA L4",
+    "hourly_usd": 0.43,
+    "measured_with_instrumentation": true,
+    "overhead_seconds": 53.623400000000004,
+    "scout_wall_s": 84.4,
+    "seconds_per_unit": 0.10258866666666666,
+    "source": "scout receipt gpu-load-scout-20260926T071229Z",
+    "units_per_second": 9.747665434128526,
+    "usd_per_unit": 1.2253646296296296e-05,
+    "work_unit_name": "matmuls",
+    "work_units_done": 300.0
+  },
+  "ceiling_usd": 0.15,
+  "decision": "PROCEED",
+  "estimate_error": 0.669862905652267,
+  "fits": true,
+  "module": "gpu-load@1",
+  "preregistered_estimate": {
+    "expected_usd": 0.02585
+  },
+  "recommended_controller_ceiling_usd": 0.06613248066666666,
+  "representativeness": {
+    "differences": {},
+    "representative": true
+  }
+}

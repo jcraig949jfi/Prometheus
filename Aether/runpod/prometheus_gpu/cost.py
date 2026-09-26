@@ -40,9 +40,9 @@ OVERHEAD_S = {
 # the controller waits on PROGRESS rather than on a deadline.
 OVERHEAD_OBSERVED_RANGE_S = {
     "accept": (1.1, 2.9),
-    "provision": (2.1, 2.3),
+    "provision": (2.1, 22.1),
     "bootstrap": (6.0, 305.0),
-    "end_detection": (0.0, 10.0),
+    "end_detection": (0.4, 8.8),
     "retrieval": (0.6, 5.3),
     "teardown": (1.1, 4.1),
 }
@@ -50,6 +50,8 @@ OVERHEAD_PROVENANCE = {
     "accept": "measured, create_call_s 1.745/2.947 (I1), 1.208/1.115 (I2)",
     "provision": "MEASURED with the pod clock synchronised (min-RTT offset "
                  "against /_clock, +/-0.25 s): 2.14 s and 2.29 s (I2). "
+                 "Then 22.1 s (L4 scout) and 2.82 s (L4 campaign): it is a "
+                 "property of the HOST the pod lands on, not of the card. "
                  "Iteration 1's '<= 24 s' bound was almost all PROXY "
                  "reachability, which overlaps the bootstrap and is not "
                  "billed separately; see FAILURE_PLAYBOOK entry 21",
@@ -60,8 +62,9 @@ OVERHEAD_PROVENANCE = {
               "declared canary, not of the platform",
     "module_setup": "measured, I2 campaign: module elapsed 561.98 s minus "
                     "its loop 560.67 s. A property of the module",
-    "end_detection": "measured 8.8 s at a 10 s watch poll (I2 campaign); "
-                     "expected poll/2. A property of the controller's poll",
+    "end_detection": "measured 8.8 s at a 10 s watch poll and 0.39 s at a "
+                     "3 s poll (I2); expected ~poll/2. A property of the "
+                     "controller's poll, and cheap to shrink",
     "retrieval": "measured 5.28 s for 8.39 MB (I2 campaign), 0.56 s for "
                  "1.2 kB (I1); the proxy moved 8 MB at 5.4 MB/s",
     "teardown": "measured, terminate ACK to absence confirmed",

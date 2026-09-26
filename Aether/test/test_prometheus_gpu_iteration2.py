@@ -513,3 +513,30 @@ def test_a_plan_for_some_other_run_is_refused(tmp_path, bad):
     spec_ = flight.select_spec(mdir, units=3000)
     with pytest.raises(RuntimeError):
         flight.load_campaign_plan(_plan(tmp_path, **bad), spec_)
+
+
+def test_a_confirmed_non_event_costs_nothing(module_dir):
+    """Two Iteration 2 campaigns were refused for capacity and their
+    receipts still priced 0.5 s of controller time as spend."""
+    fake = prov.FakeProvider(create_faults=[prov.Fault(
+        status=400, message="There are no longer any instances available "
+        "with the requested specifications")])
+    clock = Clock()
+    r = launch.Controller(fake, spec(), module_dir, budget_usd=1.0,
+                          poll_s=10.0, now=clock.now,
+                          sleep=clock.sleep).run()
+    assert r["result"] == "NOT_RUN"
+    assert r["cost"]["usd_estimated"] == 0.0
+    assert "no pod existed" in r["cost"]["basis"]
+
+
+def test_an_unresolved_create_keeps_its_cost_estimate(module_dir):
+    fake = prov.FakeProvider(
+        create_faults=[prov.Fault.lost_response()] * 3,
+        list_faults=[None] + [prov.Fault.http(500)] * 20)
+    clock = Clock()
+    r = launch.Controller(fake, spec(), module_dir, budget_usd=1.0,
+                          poll_s=10.0, now=clock.now,
+                          sleep=clock.sleep).run()
+    assert r["result"] == "UNKNOWN"
+    assert "no pod existed" not in r["cost"]["basis"]

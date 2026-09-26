@@ -440,6 +440,32 @@ each side can observe.
 
 ---
 
+## 22. The calibrated card had no capacity
+
+**Looked like:** two `NOT_RUN` campaign flights in a row, 12 minutes after
+a scout had flown on an RTX A4000: *"no capacity for any declared GPU (NVIDIA
+RTX A4000)"*. $0.00; the provider confirmed nothing was created each time.
+
+**Cause:** calibration fidelity and availability pull against each other.
+A calibration is only valid on the card it was measured on, so the campaign
+is pinned to that card and drops its alternatives -- and a pinned campaign
+has exactly one card to be refused on.
+
+**Now:** the fallback is the whole path, not a looser pin: fly a fresh
+unpinned scout (it walks `gpu.alternatives` and takes what is available),
+then plan and fly the campaign pinned to the card the scout got,
+immediately. Iteration 2 did exactly that on an L4: scout, plan and
+campaign inside seven minutes, for $0.051.
+
+**Generalisation:** a pin is a bet that capacity will still be there. Keep
+the scout-to-campaign interval short, and treat a scout as cheap enough to
+repeat rather than as an asset to protect.
+
+**Not yet automated:** `flight.py` does not chain scout -> plan -> campaign
+on its own. It should, and that is Iteration 3's to build.
+
+---
+
 ## Diagnostics
 
 ```bash

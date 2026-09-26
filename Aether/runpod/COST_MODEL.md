@@ -26,14 +26,14 @@ Iteration 2 on an RTX A4000 (`gpu-load-scout-20260926T065221Z`,
 | phase | seconds | provenance |
 |:--|--:|:--|
 | `accept` | 1.5 | **measured** — create call 1.1–2.9 s over four flights |
-| `provision` | 2.3 | **measured, clock-synchronised** — 2.14 and 2.29 s, ± 0.25 s |
+| `provision` | 2.3 | **measured, clock-synchronised** — 2.1, 2.3, 2.8 and **22.1** s (± 0.25 s); a property of the host |
 | `bootstrap` | 8.0 | **measured** on the pod's clock; observed up to 305 s |
 | `canary` | 1.2 | **measured**; a property of your canary |
 | `module_setup` | 1.5 | **measured**; a property of your module |
-| `end_detection` | 5.0 | ≈ watch poll / 2; measured 8.8 s at a 10 s poll |
+| `end_detection` | 5.0 | ≈ watch poll / 2; measured 8.8 s at a 10 s poll, 0.4 s at 3 s |
 | `retrieval` | 5.3 | **measured** for 8.4 MB; scales with bytes (5.4 MB/s) |
 | `teardown` | 2.2 | **measured** — terminate ACK to absence confirmed |
-| **total** | **27.0** | measured overhead was 30.1 s (scout) and 30.2 s (campaign) |
+| **total** | **27.0** | measured 30.1 s (A4000 scout), 30.2 s (A4000 campaign, 10 s poll), 18.0 s (L4 campaign, 3 s poll) |
 
 **Provisioning is 2 seconds, not 24.** Iteration 1 could only bound it,
 because it subtracted a controller instant from a pod instant as though the
@@ -41,7 +41,11 @@ two machines shared a clock. Iteration 2 measures the offset: the artifact
 server answers `/_clock`, and the controller takes five round trips and
 keeps the shortest (offset = pod time − midpoint, uncertainty = RTT/2,
 ≈ 0.23 s). With that, the pod's shell is running **2.1–2.3 s** after the
-create is accepted.
+create is accepted -- on three of four hosts. The fourth, an L4 scout,
+took **22.1 s**; the L4 campaign minutes later landed on a host that took
+2.8 s. Provisioning is a property of the host a pod lands on, which the
+platform does not choose, so a projection carries the median and the
+observed range carries the tail.
 
 The rest of what Iteration 1 called provisioning is the provider's **proxy**:
 it answers 404 for ~25 s after the pod is already up
@@ -54,8 +58,9 @@ finish for up to ~25 s on a very short job. FAILURE_PLAYBOOK entry 21.
 
 **Scouts see a cold card.** The A4000 ran at its 140 W power cap and
 reached 75 °C within two minutes; throughput settled ~2% below the value a
-27-second scout measured. The calibrated compute estimate was 1.8% short
-for that reason. A scout shorter than the card's thermal settling time
+27-second scout measured, and the calibrated compute estimate was 1.8%
+short. The L4 did the same at its 72 W cap, by ~5% (10.72 → 10.19 TFLOP/s),
+and its compute estimate was 5.1% short. A scout shorter than the card's thermal settling time
 over-predicts throughput by about that much; the 20% planning margin
 covers it, and a scout of a few minutes would remove it.
 
@@ -80,6 +85,12 @@ reported separately in every receipt. The one interval that spans both —
 provisioning — is reported twice: raw under `cross_clock`, and corrected
 by the MEASURED offset under `synchronised`, with its uncertainty. When the
 pod's `/_clock` cannot be read, only the raw figure appears.
+
+**Spec sheets are not throughput.** The preregistration assumed 60% of
+spec-sheet FP32 peak for every card. The A4000 delivered 62%; the L4
+delivered **35%**, and the preregistered L4 campaign estimate was 37% low.
+The scout caught it: the calibrated estimate was within 5.4% of the
+measured cost. This is the whole case for scouting, on one card.
 
 ## What overhead does to a short job
 
