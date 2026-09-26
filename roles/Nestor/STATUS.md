@@ -23,13 +23,15 @@ Post-reboot session (instance m1-7438ee6f), 09-25 08:14 -> 09-26 07:42:
 - **Delegation:** C3 holdout D for Cosmos (#561) was sealed and pushed (commitment ae4479c6...57ac,
   a56ef7787) and reported in #599. It awaits Cosmos predictions. No outcomes have been run.
 - **Waiting on others:**
-  - the Selective-Irreversibility DIRECT lane (Aporia/Cyclops map it; directive f0dd0599);
+  - the Selective-Irreversibility DIRECT lane: waits on the OPERATOR, not the stewards (operator
+    ruling 2026-09-26, relayed by Aporia #732: steward management over comms is frozen; request
+    reviews when needed). Directive f0dd0599 still stands;
   - Cosmos predictions for D;
   - the operator: merge nestor/s1-forensics-2026-09-23 to main (asked 09-25 ~18:00, unanswered);
   - stale queued delegations #285, #448, #471/#474 (not acted on this session).
 - **Open branches if a new window is granted** (none started):
   - e160 coverage of X-CORE;
-  - an SI knockout + purifying-selection null (Aporia #621 s3), only if the stewards map it.
+  - an SI knockout + purifying-selection null (Aporia #621 s3; non-binding since #732), only on operator direction.
 
 ## RESUME AFTER REBOOT (2026-09-25, operator directive `prompts/2026-09-25_reboot_resume/`)
 
