@@ -34,9 +34,15 @@ def test_seek_costs_at_most_one_keyframe_interval(recorded):
     p.seek(39)
     assert p.stats.keyframes_loaded - k0 == 1
     assert p.stats.ticks_recomputed - r0 == 9  # from keyframe 30, not from 0
-    p.seek(41)
-    assert p.stats.keyframes_loaded - k0 == 1  # forward from the cursor is cheaper
-    assert p.stats.ticks_recomputed - r0 == 11
+    p.seek(33)  # backwards: keyframe 30, 3 ticks
+    assert p.stats.keyframes_loaded - k0 == 2
+    assert p.stats.ticks_recomputed - r0 == 12
+    p.seek(36)  # forward 3 from the cursor beats 6 from keyframe 30
+    assert p.stats.keyframes_loaded - k0 == 2
+    assert p.stats.ticks_recomputed - r0 == 15
+    p.seek(41)  # keyframe 40 (1 tick) beats the cursor (5 ticks)
+    assert p.stats.keyframes_loaded - k0 == 3
+    assert p.stats.ticks_recomputed - r0 == 16
 
 
 def test_step_and_step_back(recorded, ref):
