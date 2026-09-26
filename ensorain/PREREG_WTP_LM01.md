@@ -134,7 +134,7 @@ TESTABLE per stratum = ELIGIBLE (derived min count, E4) AND LEARNABLE (gate X, E
   - [BUILD]
 6.5 INTERVENTION (F1; secondary): the clone/swap design of #625. DEFECT D11: with an IM-rate RandomMerge swap the arm is
     decided by construction on never-seen cells (the matched merge is a lookup table). A replacement design is pending
-    a ruling (#726).
+    a ruling (#727).
   - Caveat, verbatim: "the selective state was needed for the rest of THIS life", not "selectivity in general".
   - [BUILD]
 6.6 AGGREGATION AND NULL:
