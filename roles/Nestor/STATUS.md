@@ -6,6 +6,19 @@ Nothing running. The loop is at rest, not retired. Charter: budgeted autonomous 
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**; the last line per id wins.
 Report: `campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
 
+## NPE WINDOW W1 -- donor discovery (operator directive 2026-09-26, prompts/2026-09-26_npe_window_donor_discovery/)
+
+Window: 12 wall-h from 2026-09-26 09:32 EDT -> **21:32 EDT**; 10 workers; ~25% reserve (keep ~3 h).
+Question: how do competent hereditary donors arise from non-competent material, and what barrier
+controls that transition? Campaign dir: `campaigns/npe-w1-donor-discovery-2026-09-26/`.
+Done before science: main merged into this branch (4d4141285, no conflicts, 0 roles/Nestor paths
+touched), verify_freeze OK, prompt manifests 8/8 OK, base-role self-test 11/11, graph consistent;
+main fast-forwarded to 4d4141285. Stale delegations #285/#448/#471/#474 marked superseded (not run).
+
+| experiment | lane | what |
+|---|---|---|
+| X-DONOR-DISCOVERY | EXPLORE | random pops, 7ae3+ffa6 cells, ATOMIC, 48 seeds each; L1-L4 funnel every 100 epochs; schtask NestorDD |
+
 ## WINDOW CLOSE (2026-09-26)
 
 Post-reboot session (instance m1-7438ee6f), 09-25 08:14 -> 09-26 07:42:
