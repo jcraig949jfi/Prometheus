@@ -1,0 +1,25 @@
+ODYSSEUS-01 Windows receipt -- run by Cyclops[m2-e8056938] on request #679 (prompt 4357454fd)
+run dir: the Cyclops session scratchpad (a TEMP-equivalent path), not in the repo
+Firewall: no prompt was observed (a headless session could not have seen one); loopback UDP worked without any rule change.
+Observation only, not a finding: per shard, naks_sent and retransmits differ (shard 2: 1/0, shard 3: 2/0). This is expected if they count opposite directions; verify root_ok=true.
+----- verbatim outputs -----
+HEAD 4b945b8c402c68fcb0c64f52f02792d7e40ee431
+worktree D:\Prometheus-worktrees\cyclops-base-role (host SPECTREX5, M2)
+date_utc 2026-09-26T04:19:33Z
+$ python --version
+Python 3.14.4
+$ python -c "import platform; print(platform.platform())"
+Windows-11-10.0.26200-SP0
+$ python -m pytest -q odysseus/tests
+.......................................................................  [100%]
+71 passed in 17.34s
+[pytest exit 0]
+$ python -m odysseus.brain local --run C:/Users/James/AppData/Local/Temp/claude/D--Prometheus/e8056938-cb2a-4717-b4d7-057d0641bf4a/scratchpad/ody_win --neurons 2000 --shards 4 --ticks 100 --mode process
+{"shard": 0, "ticks": 100, "naks_sent": 3, "retransmits": 3, "dropped": 0, "corrupt_received": 0, "foreign": 0, "wall_s": 0.227}
+{"shard": 1, "ticks": 100, "naks_sent": 1, "retransmits": 1, "dropped": 0, "corrupt_received": 0, "foreign": 0, "wall_s": 0.217}
+{"shard": 2, "ticks": 100, "naks_sent": 1, "retransmits": 0, "dropped": 0, "corrupt_received": 0, "foreign": 0, "wall_s": 0.214}
+{"shard": 3, "ticks": 100, "naks_sent": 2, "retransmits": 0, "dropped": 0, "corrupt_received": 0, "foreign": 0, "wall_s": 0.213}
+[local exit 0]
+$ python -m odysseus.brain verify --run C:/Users/James/AppData/Local/Temp/claude/D--Prometheus/e8056938-cb2a-4717-b4d7-057d0641bf4a/scratchpad/ody_win
+{"ticks": 100, "shards": 4, "root_ok": true, "error": null}
+[verify exit 0]
