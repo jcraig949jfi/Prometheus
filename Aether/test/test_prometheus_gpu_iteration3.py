@@ -835,3 +835,68 @@ def test_platform_samples_read_during_the_run_outlive_the_server(module_dir):
     assert r["disposition"]["cause"] == "ARTIFACT_SERVER_UNREACHABLE"
     assert r["platform_summary"]["samples"] == 1
     assert r["disposition"]["evidence_retained"]["platform_samples"] == 1
+
+
+# ---------------------------------------- flight L1, first attempt
+
+def test_a_ledger_that_cannot_be_replaced_never_ends_the_run(
+        module_dir, tmp_path, monkeypatch):
+    """L1: os.replace onto the ledger raised WinError 5 at +1,470 s and a
+    healthy run was sent to teardown. The ledger may not end a run."""
+    ledger = str(tmp_path / "l.json")
+    real_replace = os.replace
+    calls = {"n": 0}
+
+    def flaky(src, dst):
+        calls["n"] += 1
+        if str(dst) == ledger and calls["n"] > 3:
+            raise PermissionError(5, "Access is denied")
+        return real_replace(src, dst)
+    monkeypatch.setattr(os, "replace", flaky)
+    monkeypatch.setattr(launch.time, "sleep", lambda s: None)
+    fake = prov.FakeProvider(served=served())
+    r = controller(fake, module_dir, ledger_path=ledger).run()
+    assert r["result"] == "OK"
+    assert r["ledger_errors"], "the failures are recorded, not hidden"
+    assert fake.leaked() == []
+    # The last ledger that DID land is still valid JSON naming the pod.
+    assert launch.load_ledger(ledger)["pod_id"] == r["pods"][0]["id"]
+
+
+def test_a_transient_ledger_lock_is_retried_through(module_dir, tmp_path,
+                                                   monkeypatch):
+    ledger = str(tmp_path / "l.json")
+    real_replace = os.replace
+    fail = {"left": 2}
+
+    def once_locked(src, dst):
+        if str(dst) == ledger and fail["left"]:
+            fail["left"] -= 1
+            raise PermissionError(5, "Access is denied")
+        return real_replace(src, dst)
+    monkeypatch.setattr(os, "replace", once_locked)
+    monkeypatch.setattr(launch.time, "sleep", lambda s: None)
+    r = controller(prov.FakeProvider(served=served()), module_dir,
+                   ledger_path=ledger).run()
+    assert r["result"] == "OK" and "ledger_errors" not in r
+
+
+def test_an_error_mid_watch_still_retrieves_before_teardown(module_dir):
+    """L1: the exception skipped retrieval, so every artifact came back
+    MISSING although the pod held them all."""
+    fake = prov.FakeProvider(served=served(tel=lambda i: START + PROG * (i + 1)))
+    ctl = controller(fake, module_dir)
+    polls = {"n": 0}
+    original = ctl._health
+
+    def boom(*a, **k):
+        polls["n"] += 1
+        if polls["n"] == 4:
+            raise RuntimeError("an auxiliary write failed")
+        return original(*a, **k)
+    ctl._health = boom
+    r = ctl.run()
+    assert r["disposition"]["cause"] == "CONTROLLER_ERROR"
+    assert [a["path"] for a in r["artifacts"]] == ["result.json"]
+    assert r["artifacts"][0]["integrity"] == "verified"
+    assert fake.leaked() == []

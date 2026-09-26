@@ -409,6 +409,7 @@ class Controller(object):
         # never asked again, and a whole run lost its clock sync.
         self._clock_tries = 0
         self.stock_at_launch = None
+        self.ledger_errors = []
         # Platform samples and stages are snapshotted every this many
         # watch polls (~a minute at a 10 s poll).
         self.snapshot_every_polls = 6
@@ -485,17 +486,47 @@ class Controller(object):
             self.ledger_path = _os.path.join(self.ledger_dir,
                                              "%s.json" % self.run_id)
         if self.ledger_path:
-            import json as _json
-            import os as _os
+            self._write_ledger(st)
+        if self.crash_hook is not None:
+            self.crash_hook(event)
+
+    def _write_ledger(self, st, attempts=5):
+        """Atomic write, retried, and NEVER raised into the run.
+
+        Flight L1 (first attempt): at +1,470 s `os.replace` onto the ledger
+        failed with WinError 5 -- a transient sharing lock on Windows (an
+        indexer or scanner holding the file) -- and because the write was
+        allowed to raise, a best-effort durability record aborted a healthy
+        run and sent it to teardown. The ledger exists to make a run MORE
+        recoverable; it may never be the reason one ends. A write that
+        still fails after retries is recorded in `ledger_errors` and the
+        run goes on; the previous ledger on disk stays valid, because the
+        replace is atomic or does not happen.
+        """
+        import json as _json
+        import os as _os
+        try:
             folder = _os.path.dirname(_os.path.abspath(self.ledger_path))
             _os.makedirs(folder, exist_ok=True)
             tmp = self.ledger_path + ".tmp"
             with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
                 _json.dump(st, fh, indent=1, sort_keys=True)
                 fh.write("\n")
-            _os.replace(tmp, self.ledger_path)
-        if self.crash_hook is not None:
-            self.crash_hook(event)
+        except OSError as exc:
+            self.ledger_errors.append("write: %s" % exc)
+            return False
+        last = None
+        for attempt in range(attempts):
+            try:
+                _os.replace(tmp, self.ledger_path)
+                return True
+            except OSError as exc:
+                last = exc
+                time.sleep(0.05 * (2 ** attempt))
+        self.ledger_errors.append("replace: %s" % last)
+        self._log("LEDGER write failed after %d attempts (%s); the run "
+                  "continues, the previous ledger stands" % (attempts, last))
+        return False
 
     # -------------------------------------------------------- preconditions
     def preflight(self):
@@ -602,13 +633,32 @@ class Controller(object):
             self.disposition = self.disposition or "CONTROLLER_ERROR"
             receipt_obj["notes"].append(
                 "controller raised %s: %s" % (type(exc).__name__, exc))
-            self._log("controller raised %s; proceeding to teardown"
+            self._log("controller raised %s; retrieving, then teardown"
                       % type(exc).__name__)
+            self._retrieve_after_error(receipt_obj)
         finally:
             if not self._crashed:
                 self._finish(receipt_obj, result)
         rc.validate(receipt_obj)
         return receipt_obj
+
+    def _retrieve_after_error(self, receipt_obj):
+        """RETRIEVE BEFORE TERMINATING holds on the error path too.
+
+        Flight L1 (first attempt): an exception mid-watch went straight to
+        teardown, so a run with 1,450 s of healthy telemetry on the pod came
+        back with every artifact MISSING and zero platform samples. If the
+        pod is ours and retrieval has not happened, try it once; a failure
+        here is logged and never stops the teardown.
+        """
+        if self.pod_id is None or "retrieve_start" in self.marks:
+            return
+        try:
+            self._retrieve(receipt_obj)
+        except Exception as inner:          # teardown must still run
+            receipt_obj["notes"].append(
+                "retrieval after the error also failed: %s: %s"
+                % (type(inner).__name__, inner))
 
     def resume(self, ledger):
         """Pick up a run whose controller died, from its ledger alone.
@@ -706,6 +756,7 @@ class Controller(object):
             self.disposition = self.disposition or "CONTROLLER_ERROR"
             receipt_obj["notes"].append(
                 "controller raised %s: %s" % (type(exc).__name__, exc))
+            self._retrieve_after_error(receipt_obj)
         finally:
             if not self._crashed:
                 self._finish(receipt_obj, result)
@@ -767,6 +818,8 @@ class Controller(object):
         receipt_obj["telemetry_summary"] = self._telemetry_summary()
         receipt_obj["create_attempts"] = self.create_attempts
         receipt_obj["stock_at_launch"] = self.stock_at_launch
+        if self.ledger_errors:
+            receipt_obj["ledger_errors"] = list(self.ledger_errors)
         receipt_obj["last_stage"] = self.last_stage()
         receipt_obj["gpu_used"] = self.gpu_used
         receipt_obj["lifecycle"] = lifecycle(

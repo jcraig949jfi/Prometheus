@@ -1,0 +1,31 @@
+[flight 11:06:44] REAL LAUNCH soak@1, budget ceiling $0.65
+[flight 11:06:44] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:06:44] credential source: host default key file
+[flight 11:06:44] bundle 21330d544d77 reachable at the pinned commit 118930cc37d6
+[flight 11:06:45] advertised stock {'NVIDIA A40': None, 'NVIDIA GeForce RTX 4090': None, 'NVIDIA L4': 'Low', 'NVIDIA RTX 4000 Ada Generation': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': None} -> trying NVIDIA L4 first
+[flight 11:06:45] create attempt on NVIDIA L4 (1 of 6)
+[flight 11:06:47] create attempt 1 -> accepted pod=vttbcyqcag7262
+[flight 11:06:47] create CREATED -> confirmed pod=vttbcyqcag7262 gpu=NVIDIA L4
+[flight 11:06:48] artifact server not answering yet (status=404)
+[flight 11:07:05] pod clock offset +0.186 s (+/- 0.168 s)
+[flight 11:31:15] controller raised PermissionError; proceeding to teardown
+[flight 11:31:16] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\soak-20260926T150645Z.json
+
+RECEIPT  soak-20260926T150645Z
+  module        soak@1   result UNKNOWN
+  bundle        21330d544d7767a0dd8bee99bb2f35b4c49f8f984ba1ce503a3e3a5cb92a9281
+  window        2026-09-26T15:06:45Z -> 2026-09-26T15:31:15Z
+  cost          $0.1756 estimated over 1470.0 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     148 records, units=1450, complete=False
+  MISSING       result.json
+  MISSING       series.jsonl
+  MISSING       ckpt.bin
+  MISSING       telemetry.jsonl
+  note          controller raised PermissionError: [WinError 5] Access is denied: 'C:\\Prometheus-worktrees\\aether-iter3\\Aether\\runpod\\.ledger\\soak-20260926T150645Z.json.tmp' -> 'C:\\Prometheus-worktrees\\aether-iter3\\Aether\\runpod\\.ledger\\soak-20260926T150645Z.json'
+  lifecycle   {"pod_clock": {}, "controller_clock": {"create_call_s": 1.585, "accepted_to_first_telemetry_s": 16.357, "accepted_to_first_contact_s": 16.357, "terminate_ack_s": 0.885, "absence_confirm_s": 1.379, "total_wall_s": 1471.384}, "cross_clock": {}, "synchronised": {"offset_s": 0.1858, "uncertainty_s": 0.1677, "method": "min-RTT midpoint against the pod's /_clock"}, "module_reported_elapsed_s": 1450.821}
+  transfer    null
+  platform    null
+  disposition {"cause": "CONTROLLER_ERROR", "controller_believes": {"result": "UNKNOWN", "pod_id": "vttbcyqcag7262", "terminate_acknowledged": true}, "provider_believes": {"list_contains_pod": false, "get_returns_pod": false, "terminate_response": "ACK_204", "reads": 1}, "evidence_retained": {"telemetry_records": 148, "telemetry_complete": false, "platform_samples": 0, "artifacts_verified": [], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": ["result.json", "series.jsonl", "ckpt.bin", "telemetry.jsonl"], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "ABSENT: LIST omits it and GET returns nothing", "resumed": null}
+  api         {"create_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 1.1587, "p95": 1.1587, "p99": 1.1587, "max": 1.1587}}, "fetch": {"calls": 310, "failures": 8, "latency_s": {"n": 310, "p50": 0.593, "p95": 1.0459, "p99": 1.5819, "max": 2.5626}, "first_half_p50_s": 0.563, "second_half_p50_s": 0.6261, "first_half_failures": 8, "second_half_failures": 0}, "get_pod": {"calls": 17, "failures": 0, "latency_s": {"n": 17, "p50": 0.5654, "p95": 0.7178, "p99": 0.9451, "max": 0.9451}, "first_half_p50_s": 0.4984, "second_half_p50_s": 0.6257, "first_half_failures": 0, "second_half_failures": 0}, "list_pods": {"calls": 3, "failures": 0, "latency_s": {"n": 3, "p50": 0.2139, "p95": 0.3131, "p99": 0.3131, "max": 0.3131}}, "terminate_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.8846, "p95": 0.8846, "p99": 0.8846, "max": 0.8846}}}
+[flight 11:31:16] FLIGHT_FAIL
