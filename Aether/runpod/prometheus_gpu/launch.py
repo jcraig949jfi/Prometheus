@@ -404,6 +404,10 @@ class Controller(object):
         self._ledger_state = None
         self.module_rc = None
         self.bundle_sha256 = None
+        # Clock measurements attempted. Flight F2's proxy answered the
+        # stage file but not /_clock in the first seconds, the controller
+        # never asked again, and a whole run lost its clock sync.
+        self._clock_tries = 0
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -893,16 +897,14 @@ class Controller(object):
                 if "first_contact" not in self.marks:
                     self._mark("first_contact")
                 self._mark("first_telemetry")
-                if self.clock_sync is None:
-                    self.clock_sync = self.measure_clock()
+                self._try_clock()
                 return True
 
             stages_text = self._fetch(STAGES_PATH)
             if stages_text is not None:
                 if "first_contact" not in self.marks:
                     self._mark("first_contact")
-                if self.clock_sync is None:
-                    self.clock_sync = self.measure_clock()
+                self._try_clock()
                 stages = parse_stages(stages_text)
                 self.stages_seen = stages
                 fresh = [st for st in STAGE_ORDER
@@ -912,6 +914,10 @@ class Controller(object):
                     self._log("stage %s" % st)
                 if fresh:
                     last_progress = self._now()
+                if "restart" in stages:
+                    self._log("the pod's container RESTARTED during bootstrap")
+                    self.disposition = "CONTAINER_RESTARTED"
+                    return False
                 if "module_end" in stages:
                     # The module ran and exited before it ever wrote
                     # telemetry. Nothing more will come; stop waiting.
@@ -944,6 +950,13 @@ class Controller(object):
                   % (self.ready_timeout_s, self.last_stage() or "none"))
         self.disposition = "READY_CEILING"
         return False
+
+    def _try_clock(self, max_tries=6):
+        """Measure the pod clock if it is still unknown, a bounded number of
+        times in all. Each attempt is CLOCK_SAMPLES fetches."""
+        if self.clock_sync is None and self._clock_tries < max_tries:
+            self._clock_tries += 1
+            self.clock_sync = self.measure_clock()
 
     def measure_clock(self, samples=CLOCK_SAMPLES):
         """Pod clock offset, measured, with its uncertainty. Never raises.
@@ -984,16 +997,23 @@ class Controller(object):
         return reached[-1] if reached else None
 
     def _module_exit(self):
-        """(ended, rc) from the pod's stage file. rc is None if unknown."""
+        """(ended, rc, restarted) from the pod's stage file.
+
+        `restarted` means the bootstrap's restart guard fired: the
+        container's main process died, RunPod restarted the container, and
+        the module is NOT running any more (the guard stops it re-running).
+        """
         text = self._fetch(STAGES_PATH)
         if text is None:
-            return False, None
+            return False, None, False
         stages = parse_stages(text)
         self.stages_seen = stages
+        if "restart" in stages:
+            return False, None, True
         if "module_end" not in stages:
-            return False, None
+            return False, None, False
         rc_val = stages.get("module_rc")
-        return True, (int(rc_val) if rc_val is not None else None)
+        return True, (int(rc_val) if rc_val is not None else None), False
 
     def _watch(self, started):
         """Poll until the module finishes, the budget runs out, or time does.
@@ -1076,7 +1096,12 @@ class Controller(object):
                 if silent_since is None:
                     silent_since = self._now()
 
-            ended, rc_val = self._module_exit()
+            ended, rc_val, restarted = self._module_exit()
+            if restarted:
+                self._log("the pod's container RESTARTED; the module is not "
+                          "running and what it wrote before is all there is")
+                self.disposition = "CONTAINER_RESTARTED"
+                return "UNKNOWN"
             if ended:
                 # Re-read once: the module may have written `end` and
                 # exited between the two fetches of this poll.
@@ -1123,6 +1148,8 @@ class Controller(object):
                     self._log("pod VANISHED during the watch (GET)")
                     self.disposition = "POD_VANISHED"
                     return "UNKNOWN"
+            if self.clock_sync is None and polls % 3 == 0:
+                self._try_clock()
             self._health(polls, now, spend, text, loop_t0)
             self._ledger("watch", spend_usd=round(spend, 5))
             wait = self.poll_s

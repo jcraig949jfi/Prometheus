@@ -704,3 +704,72 @@ def test_fail_fast_stops_siblings_as_a_campaign_decision(module_dir):
     assert out["shards"][0]["result"] == "FAILED"
     assert out["shards"][1]["cause"] == "CAMPAIGN_FAIL_FAST"
     assert fake.leaked() == []
+
+
+# ---------------------------------------- container restart (flight F2)
+
+def _bootstrap():
+    from prometheus_gpu import dryrun as dr
+    spec = spec_mod.from_dict(dict(SPEC))
+    meta = {"run_id": "r", "seat": "Aether", "workdir": "/app/module",
+            "artifact_dir": "/app/out",
+            "telemetry_path": "/app/out/telemetry.jsonl", "image": "img"}
+    transport = {"fetch_cmd": "curl -o b.tar.gz http://x",
+                 "local_name": "b.tar.gz", "bundle_sha256": "a" * 64}
+    return dr.build_bootstrap(spec, meta, transport), spec
+
+
+def test_a_restarted_container_serves_but_never_reruns_the_module():
+    """RunPod restarts a container whose main process died, re-running the
+    bootstrap on the same disk. The guard must come before `stage boot`,
+    bring the server back, and exit without reaching the module."""
+    boot, spec = _bootstrap()
+    guard_at = boot.index("stage restart")
+    assert guard_at < boot.index("stage boot")
+    guard = boot[guard_at:boot.index("fi\n", guard_at)]
+    assert "python3 -u /app/_serve.py &" in guard
+    assert "exit 0" in guard
+    assert spec["entrypoint"] not in guard, "the guard must not run the module"
+    assert "pip install" not in guard
+
+
+def test_a_container_restart_during_the_watch_is_its_own_disposition(
+        module_dir):
+    fake = prov.FakeProvider(served=served(
+        tel=lambda i: START + PROG * (i + 1),
+        extra={launch.STAGES_PATH: frames(
+            stages("boot", "module_start"), stages("boot", "module_start"),
+            stages("boot", "module_start", "restart"))}))
+    r = controller(fake, module_dir).run()
+    d = six(r)
+    assert r["result"] == "UNKNOWN" and d["cause"] == "CONTAINER_RESTARTED"
+    assert d["cleanup_safe"] is True and fake.leaked() == []
+
+
+def test_the_soak_fault_kills_the_server_and_not_the_bootstrap_shell():
+    import importlib.util
+    path = os.path.join(os.path.dirname(__file__), "..", "runpod",
+                        "examples", "soak", "run.py")
+    spec = importlib.util.spec_from_file_location("soak_run", path)
+    soak = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(soak)
+    boot, _spec = _bootstrap()
+    assert soak.is_server_argv([b"python3", b"-u", b"/app/_serve.py"])
+    assert not soak.is_server_argv([b"/bin/bash", b"-c", boot.encode()])
+    assert not soak.is_server_argv([b"python3", b"-u", b"/app/_sample.py"])
+
+
+def test_a_pod_clock_that_answers_late_is_still_measured(module_dir):
+    """F2: /_clock failed in the first seconds and was never asked again."""
+    clock = Clock()
+    late = lambda i: (None if i < 12                       # noqa: E731
+                      else json.dumps({"epoch": clock.t + 1000.0}))
+    tel = lambda i: START + PROG * (i + 1) if i < 12 else START + END  # noqa
+    fake = prov.FakeProvider(served=served(tel=tel,
+                                           extra={launch.CLOCK_PATH: late}))
+    ctl = controller(fake, module_dir, clock=clock)
+    r = ctl.run()
+    assert r["result"] == "OK"
+    assert r["clock_sync"]["start"] is not None
+    assert r["clock_sync"]["start"]["offset_s"] == pytest.approx(1000.0, abs=1)
+    assert ctl._clock_tries <= 6

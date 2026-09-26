@@ -76,18 +76,33 @@ def rss_bytes():
     return None
 
 
+def is_server_argv(args):
+    """True only for `python3 ... /app/_serve.py`: an interpreter whose
+    ARGUMENT is the server script.
+
+    The first version matched `_serve.py` anywhere in the command line,
+    which also matched the pod's bootstrap shell -- `bash -c <script>`,
+    whose script text mentions the server -- and killed the container's
+    main process instead (Iteration 3, flight F2).
+    """
+    if not args or b"python" not in os.path.basename(args[0]):
+        return False
+    return any(a == b"_serve.py" or a.endswith(b"/_serve.py")
+               for a in args[1:])
+
+
 def kill_artifact_server():
-    """Kill every process whose command line runs the platform's server."""
+    """Kill the platform's artifact server, and nothing else."""
     killed = []
     for pid in os.listdir("/proc") if os.path.isdir("/proc") else []:
         if not pid.isdigit():
             continue
         try:
             with open("/proc/%s/cmdline" % pid, "rb") as fh:
-                cmd = fh.read().replace(b"\0", b" ")
+                args = [a for a in fh.read().split(b"\0") if a]
         except OSError:
             continue
-        if b"_serve.py" in cmd and int(pid) != os.getpid():
+        if is_server_argv(args) and int(pid) != os.getpid():
             try:
                 os.kill(int(pid), signal.SIGKILL)
                 killed.append(int(pid))

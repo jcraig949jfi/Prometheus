@@ -1,0 +1,35 @@
+[flight 10:35:35] REAL LAUNCH soak@1, budget ceiling $0.05
+[flight 10:35:35] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 10:35:35] credential source: host default key file
+[flight 10:35:35] bundle eaba0efd60e2 reachable at the pinned commit f369c6855ef6
+[flight 10:35:36] create attempt on NVIDIA RTX A4000 (1 of 5)
+[flight 10:35:37] create attempt 1 -> accepted pod=ym92fiyv5rajhp
+[flight 10:35:37] create CREATED -> confirmed pod=ym92fiyv5rajhp gpu=NVIDIA RTX A4000
+[flight 10:35:38] artifact server not answering yet (status=404)
+[flight 10:35:47] pod clock unavailable; provisioning stays cross-clock
+[flight 10:35:47] stage boot
+[flight 10:35:47] stage fetched
+[flight 10:35:47] stage verified
+[flight 10:35:47] stage unpacked
+[flight 10:35:51] pod clock unavailable; provisioning stays cross-clock
+[flight 10:53:23] BUDGET CEILING $0.0504 >= $0.0500 after 1067 s
+[flight 10:53:30] artifact dir listing retrieved (393 bytes)
+[flight 10:53:30] artifacts NOT retrieved: result.json, ckpt.bin
+[flight 10:53:31] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\soak-20260926T143535Z.json
+
+RECEIPT  soak-20260926T143535Z
+  module        soak@1   result ABORTED
+  bundle        eaba0efd60e22b6bccfb3dfbbabcec6d32424f7cf6eb3507d3059ded89d8368d
+  window        2026-09-26T14:35:36Z -> 2026-09-26T14:53:30Z
+  cost          $0.0507 estimated over 1073.9 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     141 records, units=50, complete=False
+  artifacts     2 retrieved
+  MISSING       result.json
+  MISSING       ckpt.bin
+  lifecycle   {"pod_clock": {"fetch_s": 0.249, "verify_s": 0.007, "unpack_s": 0.011, "dependency_install_s": 0.971, "canary_s": 0.941, "bootstrap_total_s": 2.193}, "controller_clock": {"create_call_s": 1.27, "accepted_to_first_telemetry_s": 13.86, "accepted_to_first_contact_s": 9.051, "artifact_transfer_s": 6.185, "terminate_ack_s": 0.837, "absence_confirm_s": 1.257, "teardown_total_s": 8.051, "total_wall_s": 1075.181}, "cross_clock": {"provision_s": 1013.508, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "module_reported_elapsed_s": 60.753}
+  transfer    {"bytes": 77480, "seconds": 1.1072, "bytes_per_s": 69978.3, "largest": {"path": "telemetry.jsonl", "bytes": 48382, "sha256": "834a752b8b1b9f640335553dfc35dfff50174842911abb7cc70ec1c0437caa9f", "fetch_s": 0.5949, "attempts": 1, "integrity": "verified"}, "largest_bytes_per_s": 81328.0}
+  platform    {"samples": 111, "span_s": 50.001, "gpu_names": ["NVIDIA RTX A4000"], "gpu_mem_used_mib_peak": 501.0, "gpu_mem_total_mib": 16376.0, "gpu_util_pct_mean": 85.5676, "gpu_util_pct_peak": 100.0, "gpu_temp_c_peak": 75.0, "gpu_power_w_peak": 140.09, "gpu_power_w_mean": 128.0139, "host_load1_peak": 6.36962890625, "host_mem_used_b_peak": 32084914176.0, "disk_free_b_min": 21176659968.0, "artifact_dir_b_peak": 133960.0, "sample_cost_s_mean": 0.0532, "sample_cost_s_peak": 0.1007, "gpu_errors": []}
+  disposition {"cause": "BUDGET_CEILING", "controller_believes": {"result": "ABORTED", "pod_id": "ym92fiyv5rajhp", "terminate_acknowledged": true}, "provider_believes": {"list_contains_pod": false, "get_returns_pod": false, "terminate_response": "ACK_204", "reads": 1}, "evidence_retained": {"telemetry_records": 141, "telemetry_complete": false, "platform_samples": 111, "artifacts_verified": ["series.jsonl", "telemetry.jsonl"], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": ["result.json", "ckpt.bin"], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "ABSENT: LIST omits it and GET returns nothing", "resumed": null}
+  api         {"create_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 1.2693, "p95": 1.2693, "p99": 1.2693, "max": 1.2693}}, "fetch": {"calls": 220, "failures": 86, "latency_s": {"n": 220, "p50": 0.5067, "p95": 0.8332, "p99": 0.9524, "max": 1.7588}, "first_half_p50_s": 0.4184, "second_half_p50_s": 0.5378, "first_half_failures": 49, "second_half_failures": 37}, "get_pod": {"calls": 13, "failures": 0, "latency_s": {"n": 13, "p50": 0.5505, "p95": 0.6357, "p99": 0.8785, "max": 0.8785}, "first_half_p50_s": 0.5505, "second_half_p50_s": 0.535, "first_half_failures": 0, "second_half_failures": 0}, "list_pods": {"calls": 3, "failures": 0, "latency_s": {"n": 3, "p50": 0.1975, "p95": 0.2098, "p99": 0.2098, "max": 0.2098}}, "terminate_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.8373, "p95": 0.8373, "p99": 0.8373, "max": 0.8373}}}
+[flight 10:53:31] FLIGHT_FAIL

@@ -303,11 +303,33 @@ def build_bootstrap(spec, run_meta, transport):
     fmt = chr(39) + '{"stage": "%s", "epoch": %s}' + chr(92) + "n" + chr(39)
     mark = ("stage() { printf " + fmt + ' "$1" "$(date +%s.%N)" >> '
             + stages + "; }")
+    # RESTART GUARD (Iteration 3, flight F2). When the container's main
+    # process dies, RunPod RESTARTS the container: this whole script runs
+    # again, on the same disk, and without this guard it re-ran the module
+    # from scratch, appended a second run to the same telemetry and
+    # artifacts, and did so in a loop -- while the controller saw an
+    # ordinary, progressing run. A restarted pod now brings the artifact
+    # server back (so what the first run wrote can still be retrieved),
+    # records a `restart` stage for the controller, and runs nothing else.
+    # The server script is already on disk from the first boot, so the
+    # guard only starts it (re-writing it here would put a heredoc inside
+    # an `if`, where its indentation and terminator are easy to break).
+    restart_guard = [
+        "if [ -f %s ] && grep -q '\"stage\": \"boot\"' %s; then"
+        % (stages, stages),
+        "  stage restart",
+        "  python3 -u /app/_serve.py &",
+        "  PROM_SERVER_PID=$!",
+        "  wait $PROM_SERVER_PID",
+        "  exit 0",
+        "fi",
+    ]
     lines = [
         "set -euo pipefail",
         "mkdir -p %s %s" % (workdir, artifacts),
         "cd %s" % workdir,
         mark,
+    ] + restart_guard + [
         "stage boot",
     ] + server_prelude() + [
         "stage server_up",

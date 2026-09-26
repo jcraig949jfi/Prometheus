@@ -589,7 +589,9 @@ def test_a_failing_module_does_not_take_the_server_down_with_it():
     assert boot.rindex("set +e", 0, entry) < entry, "module runs under set -e"
     assert "PROM_MODULE_RC=$?" in boot
     assert "module_rc" in boot, "the exit code is not recorded"
-    assert boot.index("PROM_MODULE_RC=$?") < boot.index("wait $PROM_SERVER_PID")
+    # The MAIN path's final wait (the restart guard, Iteration 3, has its
+    # own earlier `wait`, and never runs the module at all).
+    assert boot.index("PROM_MODULE_RC=$?") < boot.rindex("wait $PROM_SERVER_PID")
 
 
 def test_each_plan_gets_its_own_artifact_token(module_dir):
