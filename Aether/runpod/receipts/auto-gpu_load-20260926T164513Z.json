@@ -1,0 +1,86 @@
+{
+  "campaign_result": "OK",
+  "decision": "PROCEED",
+  "estimates": {
+    "actual_basis": "measured wall time at a quoted rate, not provider billing",
+    "actual_usd": 0.01546,
+    "error_convention": "(estimate - actual) / actual; positive = estimate was high",
+    "scout_calibrated_usd": 0.015693961111111113,
+    "scout_error": 0.0151,
+    "spec_sheet_error": -0.0427,
+    "spec_sheet_usd": 0.0148
+  },
+  "flights": [
+    {
+      "gpu_used": "NVIDIA GeForce RTX 4090",
+      "result": "OK",
+      "role": "scout",
+      "run_id": "gpu-load-scout-20260926T164014Z"
+    },
+    {
+      "gpu_used": null,
+      "result": "NOT_RUN",
+      "role": "campaign",
+      "run_id": "gpu-load-20260926T164050Z"
+    },
+    {
+      "gpu_used": "NVIDIA RTX A5000",
+      "result": "OK",
+      "role": "scout",
+      "run_id": "gpu-load-scout-20260926T164058Z"
+    },
+    {
+      "gpu_used": "NVIDIA RTX A5000",
+      "result": "OK",
+      "role": "campaign",
+      "run_id": "gpu-load-20260926T164138Z"
+    }
+  ],
+  "plan": {
+    "accepted_differences": null,
+    "calibrated_estimate": {
+      "compute_seconds_total": 198.89000000000001,
+      "expected_usd": 0.015693961111111113,
+      "margin": 0.2,
+      "overhead_seconds_per_pod": 18.410999999999998,
+      "per_pod_expected_seconds": 217.30100000000002,
+      "per_pod_seconds": 337.30100000000004,
+      "pods": 1,
+      "requested_units": 3000.0,
+      "teardown_reserve_s": 120.0,
+      "teardown_reserve_usd": 0.008666666666666666,
+      "usd_per_unit": 4.788092592592593e-06,
+      "usd_with_margin": 0.02749942
+    },
+    "calibration": {
+      "compute_seconds": 19.889,
+      "gpu_used": "NVIDIA RTX A5000",
+      "hourly_usd": 0.26,
+      "measured_with_instrumentation": true,
+      "overhead_seconds": 18.410999999999998,
+      "scout_wall_s": 38.3,
+      "seconds_per_unit": 0.06629666666666667,
+      "source": "scout receipt gpu-load-scout-20260926T164058Z",
+      "units_per_second": 15.083714616119462,
+      "usd_per_unit": 4.788092592592593e-06,
+      "work_unit_name": "matmuls",
+      "work_units_done": 300.0
+    },
+    "ceiling_usd": 0.3,
+    "decision": "PROCEED",
+    "estimate_error": 0.06040277777777784,
+    "fits": true,
+    "module": "gpu-load@1",
+    "preregistered_estimate": {
+      "expected_usd": 0.0148
+    },
+    "recommended_controller_ceiling_usd": 0.02749942,
+    "representativeness": {
+      "differences": {},
+      "representative": true
+    }
+  },
+  "rescouts": 1,
+  "schema": "prometheus-gpu/auto-campaign/1",
+  "stopped_because": null
+}

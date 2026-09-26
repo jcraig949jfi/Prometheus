@@ -1,0 +1,84 @@
+[flight 12:40:13] REAL LAUNCH gpu-load-scout@1, budget ceiling $0.30
+[flight 12:40:13] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 12:40:13] credential source: host default key file
+[flight 12:40:13] bundle 1ee24a08344c reachable at the pinned commit 93c559f538c0
+[flight 12:40:15] advertised stock {'NVIDIA A40': None, 'NVIDIA GeForce RTX 4090': 'Low', 'NVIDIA L4': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': None} -> trying NVIDIA GeForce RTX 4090 first
+[flight 12:40:15] create attempt on NVIDIA GeForce RTX 4090 (1 of 5)
+[flight 12:40:16] create attempt 1 -> accepted pod=35dvjkszrck4dm
+[flight 12:40:16] create CREATED -> confirmed pod=35dvjkszrck4dm gpu=NVIDIA GeForce RTX 4090
+[flight 12:40:16] artifact server not answering yet (status=404)
+[flight 12:40:46] pod clock offset +0.188 s (+/- 0.081 s)
+[flight 12:40:46] module reported end (status=ok)
+[flight 12:40:48] pod clock offset +0.190 s (+/- 0.083 s)
+[flight 12:40:49] artifact dir listing retrieved (434 bytes)
+[flight 12:40:49] artifacts NOT retrieved: state.bin
+[flight 12:40:50] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\gpu-load-scout-20260926T164014Z.json
+CAMPAIGN PLAN  gpu-load@1  ->  PROCEED
+  requested        3000 units across 1 pod(s)
+  calibrated       $0.0089 expected, $0.0220 with 20% margin
+  per pod          66 s compute + 28 s overhead + 120 s teardown reserve
+  unit cost        $2.09289e-06 per unit
+  preregistered    $0.0148  (calibration differs by -39.7%)
+  ceiling          $0.3000
+  RECOMMENDED controller ceiling $0.0220
+[flight 12:40:50] campaign pinned to NVIDIA GeForce RTX 4090 (the card the scout measured)
+[flight 12:40:50] credential source: environment RUNPOD_API_KEY
+[flight 12:40:50] bundle 1ee24a08344c reachable at the pinned commit 93c559f538c0
+[flight 12:40:51] create attempt on NVIDIA GeForce RTX 4090 (1 of 1)
+[flight 12:40:51] create attempt 1 failed status=500; reconciling inventory
+[flight 12:40:57] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:40:57] create NO_CAPACITY -> None pod=None gpu=None
+[flight 12:40:57] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\gpu-load-20260926T164050Z.json
+[flight 12:40:57] no capacity for NVIDIA GeForce RTX 4090; re-scouting unpinned
+[flight 12:40:57] credential source: environment RUNPOD_API_KEY
+[flight 12:40:57] bundle 1ee24a08344c reachable at the pinned commit 93c559f538c0
+[flight 12:40:58] advertised stock {'NVIDIA A40': None, 'NVIDIA GeForce RTX 4090': 'Low', 'NVIDIA L4': 'Low', 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': 'Low'} -> trying NVIDIA RTX A5000 first
+[flight 12:40:58] create attempt on NVIDIA RTX A5000 (1 of 5)
+[flight 12:40:59] create attempt 1 -> accepted pod=li701q9qkyt4eq
+[flight 12:40:59] create CREATED -> confirmed pod=li701q9qkyt4eq gpu=NVIDIA RTX A5000
+[flight 12:41:00] artifact server not answering yet (status=404)
+[flight 12:41:19] pod clock offset +0.181 s (+/- 0.078 s)
+[flight 12:41:19] stage boot
+[flight 12:41:19] stage fetched
+[flight 12:41:19] stage verified
+[flight 12:41:19] stage unpacked
+[flight 12:41:19] stage installed
+[flight 12:41:19] stage canary
+[flight 12:41:19] stage module_start
+[flight 12:41:34] module reported end (status=ok)
+[flight 12:41:36] pod clock offset +0.191 s (+/- 0.087 s)
+[flight 12:41:37] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\gpu-load-scout-20260926T164058Z.json
+CAMPAIGN PLAN  gpu-load@1  ->  PROCEED
+  requested        3000 units across 1 pod(s)
+  calibrated       $0.0157 expected, $0.0275 with 20% margin
+  per pod          199 s compute + 18 s overhead + 120 s teardown reserve
+  unit cost        $4.78809e-06 per unit
+  preregistered    $0.0148  (calibration differs by +6.0%)
+  ceiling          $0.3000
+  RECOMMENDED controller ceiling $0.0275
+[flight 12:41:37] campaign pinned to NVIDIA RTX A5000 (the card the scout measured)
+[flight 12:41:37] credential source: environment RUNPOD_API_KEY
+[flight 12:41:38] bundle 1ee24a08344c reachable at the pinned commit 93c559f538c0
+[flight 12:41:38] create attempt on NVIDIA RTX A5000 (1 of 1)
+[flight 12:41:39] create attempt 1 -> accepted pod=pozfkmm64n2i96
+[flight 12:41:39] create CREATED -> confirmed pod=pozfkmm64n2i96 gpu=NVIDIA RTX A5000
+[flight 12:41:40] artifact server not answering yet (status=404)
+[flight 12:41:58] pod clock offset +0.180 s (+/- 0.076 s)
+[flight 12:45:10] module reported end (status=ok)
+[flight 12:45:12] pod clock offset +0.184 s (+/- 0.079 s)
+[flight 12:45:13] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\gpu-load-20260926T164138Z.json
+[flight 12:45:13] auto campaign summary written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\auto-gpu_load-20260926T164513Z.json
+{
+ "decision": "PROCEED",
+ "stopped_because": null,
+ "rescouts": 1,
+ "estimates": {
+  "spec_sheet_usd": 0.0148,
+  "scout_calibrated_usd": 0.015693961111111113,
+  "actual_usd": 0.01546,
+  "spec_sheet_error": -0.0427,
+  "scout_error": 0.0151,
+  "error_convention": "(estimate - actual) / actual; positive = estimate was high",
+  "actual_basis": "measured wall time at a quoted rate, not provider billing"
+ }
+}
