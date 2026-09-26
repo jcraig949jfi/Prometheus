@@ -1,6 +1,7 @@
 # PREREG_WTP_LM01 -- Lossless Memorizer Challenge (v0.3)
 
-Seat: Ensorain[m2-32b65655], M2. STATUS: FROZEN v0.3. The freeze commit is the commit that introduced this line. Its
+Seat: Ensorain[m2-32b65655], M2. STATUS: FROZEN v0.3.1 (supersedes the v0.3 freeze 47526ff86, before any campaign row; defect D12 in s13). The freeze
+commit is the commit that introduced this line. Its
 full SHA and the hash of every frozen file are recorded in ensorain/lm01/FREEZE.json, committed right after. The
 per-stratum numbers are in PREREG_WTP_LM01_TABLES.md (generated; frozen with this file). No campaign row exists at the
 freeze.
@@ -220,7 +221,8 @@ dev/margins_reduced_v2.json; rules in ensorain/lm01/margins_reduce_v2.py).
     UNRESOLVED by rule;
   - F5-L1 UNTESTED (only 2 usable dev worlds). F5-L2 UNTESTED at 0.30 (65 never-seen cells).
   - F5-L3 is TESTABLE in 6/6 strata, with the E6 control passing in 5/6 (all but lowrank) under the repaired scale.
-  - Totals at 0.30: 41 of 75 strata TESTABLE; E6 passes in 10 of those 41.
+  - Totals at 0.30: 41 of 75 strata TESTABLE (3 of them F1 branch triggers; 38 carry the headline); E6 passes in 10 of
+    the 41 (1 is F1-L1).
 - The dev decision rule was changed after dev rows were read: D9 and D10 were ruled by the operator on disclosed
   grounds; the sensitivity columns show how much hangs on 0.30.
 
@@ -249,6 +251,11 @@ dev/margins_reduced_v2.json; rules in ensorain/lm01/margins_reduce_v2.py).
 - D9: N_MIN grid capped at 256 -> scan to the actual n_test (neutral; more strata testable).
 - D10: noise-derived pooled margin made equivalence easy for unstable arms (tilted toward F-C/NULL) -> fixed DELTA 0.30.
 - D11: intervention decided by construction -> deferred.
+- D12 (found after the v0.3 freeze 47526ff86, before any campaign row): the frozen analysis would have computed headline
+  labels and F-B/F-C firings for the 3 F1 strata from their EXACT-HIT cells. This contradicted s2/s3 (F1 is a branch
+  trigger; exact-hit never carries the headline). Fixed: F1 is reported only as a branch trigger (lossless_must_win) and
+  excluded from firings, supports and multiplicity. Re-frozen as v0.3.1. Direction: the defect would have let
+  exact-hit retrieval masquerade as a headline countermodel.
 - Operator-ruled scale defect: F5 all_cells rung scale -> real_cells (the positive control was failing for scale
   reasons).
 - Also self-reported during the build: a fabricated commit hash in chat (corrected); an estimated heartbeat time

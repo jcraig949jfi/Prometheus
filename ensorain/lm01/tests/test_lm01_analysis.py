@@ -74,3 +74,9 @@ def test_secondary_and_hybrid():
 
 def test_untested_gate():
     assert stratum(mk(), dict(DEV, frame="UNTESTED"), .3)["label"] == "UNTESTED"
+
+
+def test_F1_never_headline_never_fires():                      # D12 (found after freeze v0.3, before any campaign row)
+    v = stratum(mk(lk=2.5), DEV, .3, "F1_episodic")
+    assert v["firings"] == [] and v["supports_pending_replication"] == [] and v["role"].startswith("F1_BRANCH_TRIGGER")
+    assert v["lossless_must_win"] is True                      # L-K 2.5 vs SELECTIVE 1.0: the trigger fires

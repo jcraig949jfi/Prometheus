@@ -118,11 +118,17 @@ def hybrid(rows, d):
     return dict(gap=g, label="HYBRID_REQUIRED" if _win(g, d) else "UNRESOLVED")
 
 
-def stratum(rows, dev, d):
+def stratum(rows, dev, d, key_family=None):
     ok = [r for r in rows if r.get("status") == "OK"]
     if dev.get("frame") != "TESTABLE":
         return dict(label="UNTESTED", reason="dev gate (TABLES)")
     h, s, e, y = headline(ok, d), secondary(ok, d), eviction(ok, d, dev.get("posctl_pass")), hybrid(ok, d)
+    if key_family == "F1_episodic":                  # PREREG s2/s3: branch trigger on exact-hit cells; never headline
+        return dict(n=len(ok), role="F1_BRANCH_TRIGGER (exact-hit; never headline, never a firing or support)",
+                    headline=h, secondary=s, eviction=e, hybrid=y, firings=[], supports_pending_replication=[],
+                    lossless_must_win=_win(_paired(ok, lambda r: r["arms"]["L-K"]["AC"],
+                                                   lambda r: max(v["AC"] for v in r["arms"]["SELECTIVE_LADDER"]["ladder"].values()
+                                                                 if "AC" in v)), d))
     null = h["all_rungs_equivalent_to_LR"] and bool(dev.get("posctl_pass"))
     firings = []
     if h["label"] == "COUNTERMODEL_SIGNAL":
@@ -145,9 +151,9 @@ def analyse(campaign_dir, dev_path=os.path.join(HERE, "dev", "margins_reduced_v2
     for key, dv in dev.items():
         fn = os.path.join(campaign_dir, key.replace("|", "__") + ".jsonl")
         rows = [json.loads(l) for l in open(fn)] if os.path.exists(fn) else []
-        res[key] = {str(d): stratum(rows, dv, d) for d in (DELTA,) + SENS}
+        res[key] = {str(d): stratum(rows, dv, d, key.split('|')[0]) for d in (DELTA,) + SENS}
     gov = {k: v[str(DELTA)] for k, v in res.items()}
-    tested = [k for k, v in gov.items() if v.get("label") != "UNTESTED"]
+    tested = [k for k, v in gov.items() if v.get("label") != "UNTESTED" and not k.startswith("F1_episodic")]
     mult = {}
     for lab, getter in (("COUNTERMODEL_SIGNAL", lambda v: v["headline"]["label"]),
                         ("LOSSLESS_TRANSIENT_CONTRACTION", lambda v: v["headline"]["label"]),
