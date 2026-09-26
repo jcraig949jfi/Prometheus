@@ -386,6 +386,11 @@ rate p caps an unbroken certified chain from a fixed root at ~1/p generations, w
 causal depth (5-22). So 'founder-rooted' (founder_depth >= 20) in X-SWAP-ORIGIN / X-ROOT-AUDIT measured the luck of a
 long unbroken run, not a different kind of heredity; lineage questions should use anc plus material (z8taint), and
 chain-depth endpoints should be read against the break rate.
+**SI framing withdrawn (operator directive 2026-09-26, prompts/2026-09-26_direct_operator_control/):** C-CORE,
+X-CORE-TIME and the rest of this chain keep their original Nestor questions, verdicts and provenance (theory-aware by
+date). They are NOT offered as Selective-Irreversibility evidence: X-CORE-TIME's docstring sentence "bears on the
+selective-irreversibility program" and my comms #620 to Aporia retrofitted them, and both are withdrawn as claims of
+relevance. SI relevance, if any, is for the operator to adjudicate separately.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
