@@ -28,6 +28,13 @@ Fisher p at the expected counts (28 vs 12) is 2e-5; simulated power of the full 
 Secondary, never decisive: runaway per run, per cell.
 
     python run_csl.py -> VERDICT.json
+
+AMENDMENT A1 (infrastructure, 2026-09-26 18:07, after attempt 1 crashed at 18:05 and BEFORE any result
+existed): the parent job functions call (HERE / "results").mkdir() without parents, and HERE is redirected to
+the not-yet-existing subdirectories stateless/ and dense/, so every job raised FileNotFoundError on its
+first write and no result was recorded (attempt-1 log: run_attempt1.log). Repair: main() creates both
+results directories before the pool starts. Cells, seeds, arms, endpoint, rule, allocation and controls are
+unchanged. Fail-on-old: run_attempt1.log. Pass-on-new: the directories exist before the first job.
 """
 from __future__ import annotations
 
@@ -70,6 +77,8 @@ def fisher(a, b, n1, n2):
 def main():
     import run_sl
     ok, st = run_sl.selftest()
+    for sub in ("stateless", "dense"):            # AMENDMENT A1 (infrastructure): the job functions create
+        (HERE / sub / "results").mkdir(parents=True, exist_ok=True)   # only the leaf directory
     done = set()
     for sub, arm in (("stateless", "STATELESS"), ("dense", "DENSE")):
         d = HERE / sub / "results"
