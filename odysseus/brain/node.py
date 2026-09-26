@@ -13,6 +13,7 @@ After the last tick the node sends DONE and lingers answering NAKs until every
 peer has said DONE or `linger` expires (the two-generals limit, DESIGN s5).
 """
 import collections
+import sys
 import time
 
 from . import model, wire
@@ -48,7 +49,7 @@ class _PeerTick:
 
 class Node:
     def __init__(self, run_path, shard_id, endpoint, peers, ticks,
-                 nak_timeout=0.03, linger=2.0, max_wall=120.0):
+                 nak_timeout=0.03, linger=2.0, max_wall=120.0, progress=0):
         self.rundir = RunDir.open(run_path)
         self.spec = self.rundir.spec
         self.s = shard_id
@@ -56,6 +57,7 @@ class Node:
         self.peers = {p: tuple(a) for p, a in peers.items() if p != shard_id}
         self.ticks = ticks
         self.nak_timeout, self.linger, self.max_wall = nak_timeout, linger, max_wall
+        self.progress = progress
         self.shard = Shard(self.spec, shard_id)
         self.rec = self.rundir.recorder(shard_id)
         self.outbox = {}  # tick -> {peer: [datagrams]}
@@ -147,6 +149,10 @@ class Node:
                 if t % k == 0:
                     self.rec.keyframe(t, self.shard.state_bytes())
                 self._emit(t, out)
+                if self.progress and (t + 1) % self.progress == 0:
+                    print("shard %d tick %d/%d naks %d retransmits %d" % (
+                        self.s, t + 1, self.ticks, self.naks_sent, self.retransmits),
+                        file=sys.stderr, flush=True)
             # Peers have consumed our last useful tick once their final tick is complete.
             if self.ticks > 0:
                 self._wait_for(self.ticks - 1, t0)

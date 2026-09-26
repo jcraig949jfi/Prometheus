@@ -7,6 +7,7 @@ import socket
 import subprocess
 import sys
 import threading
+import time
 from pathlib import Path
 
 from . import model
@@ -89,7 +90,8 @@ def _free_ports(n):
 
 
 def run_local_cluster(spec, path, ticks, keyframe_interval, drop=0.0, corrupt=0.0,
-                      mode="thread", seed=0, nak_timeout=0.03, linger=2.0, run_id=None):
+                      mode="thread", seed=0, nak_timeout=0.03, linger=2.0, run_id=None,
+                      start_delay=None):
     """Run every shard as its own UDP node on this host (threads or processes)."""
     RunDir.create(path, spec, keyframe_interval, run_id=run_id)
     n = spec.n_shards
@@ -100,6 +102,8 @@ def run_local_cluster(spec, path, ticks, keyframe_interval, drop=0.0, corrupt=0.
 
         def go(s):
             try:
+                if start_delay and s in start_delay:
+                    time.sleep(start_delay[s])
                 results[s] = Node(path, s, eps[s], peers, ticks,
                                   nak_timeout=nak_timeout, linger=linger).run()
             except BaseException as e:  # surfaced below
