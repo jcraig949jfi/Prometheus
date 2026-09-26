@@ -1,10 +1,35 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-25 ~07:20 EDT (pre-reboot save). Charter: budgeted autonomous scientific loop
-(RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
-(`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
-claim (E-6..E-10). Consolidated report:
-`campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
+Currency: 2026-09-26 07:15 EDT. **Budget window CLOSED** (48 wall-h + 55 min reboot extension, ended
+2026-09-26 07:42 EDT). Graph: no open nodes (`python graph.py open` is empty; C9-H4 stays WITHHELD).
+Nothing running. The loop is at rest, not retired. Charter: budgeted autonomous scientific loop
+(RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**; the last line per id wins.
+Report: `campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
+
+## WINDOW CLOSE (2026-09-26)
+
+Post-reboot session (instance m1-7438ee6f), 09-25 08:14 -> 09-26 07:42:
+- **Confirmed:** C-CORE. Runaway heredity in 7ae3's cell conserves the founder's OP_SELF + LDIR
+  instructions as material, and little else: 17/27, bar 60%. Aporia #621 limits the reading: it is
+  what purifying selection predicts, and it is theory-aware by date.
+- **Not confirmed:** C-SWAP-ACQUIRE, 9/240 vs 0/240, p = 0.0018; the rule needed 10.
+- **Corrections of this seat's own readings:**
+  - X-SWAP-ORIGIN "NATIVE" was lineage outside the certified chain, not native ancestry.
+  - anc "founder-descended" is lineage descent, not content inheritance (X-CONTENT: 13-25% founder bytes).
+  - Founder causal depth is capped by a ~10% per-edge P-11 break rate (X-CERT-BREAK).
+- **Children closed:**
+  - X-DONOR-SWAP, X-SWAP-ORIGIN, X-ROOT-AUDIT, X-ATOMIC-RANDOM, X-SWAP-ANCESTRY, X-ACQUIRE;
+  - X-CONTENT, X-CORE, X-CORE-TIME, X-CERT-BREAK.
+- **Delegation:** C3 holdout D for Cosmos (#561) was sealed and pushed (commitment ae4479c6...57ac,
+  a56ef7787) and reported in #599. It awaits Cosmos predictions. No outcomes have been run.
+- **Waiting on others:**
+  - the Selective-Irreversibility DIRECT lane (Aporia/Cyclops map it; directive f0dd0599);
+  - Cosmos predictions for D;
+  - the operator: merge nestor/s1-forensics-2026-09-23 to main (asked 09-25 ~18:00, unanswered);
+  - stale queued delegations #285, #448, #471/#474 (not acted on this session).
+- **Open branches if a new window is granted** (none started):
+  - e160 coverage of X-CORE;
+  - an SI knockout + purifying-selection null (Aporia #621 s3), only if the stewards map it.
 
 ## RESUME AFTER REBOOT (2026-09-25, operator directive `prompts/2026-09-25_reboot_resume/`)
 
