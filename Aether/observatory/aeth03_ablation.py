@@ -11,6 +11,23 @@ enclose the origin.
 Measured per origin: whether the divergence ever reaches Manhattan radius
 >= 8 from the origin (outside the ring), and the max radius reached.
 
+CAVEAT, recorded after the first runs (2026-09-26): with `--target all`
+the result is FORCED by the law. In every aeth03 variant influence
+travels only through emissions, and a zero-energy site cannot emit, so a
+fully starved closed ring blocks every difference by construction. That
+arm confirms the semantics and is not a falsifier.
+
+`--target inert` and `--target writers` are the non-trivial arms (POST
+HOC, motivated by `aeth03_rcv_probe.py`, which found ~80% of rcv's
+secondary differences landing in inert sites). They starve only the
+ring sites whose opcode is NOT WRITE, or only those whose opcode IS
+WRITE, classified from world A each tick and applied identically to both
+twins; the other class keeps its energy and can still carry influence
+across. Prediction from the probe: starving the inert ring sites cuts
+reach beyond the ring by >= 50% relative to sham; starving the WRITE
+ring sites cuts it by < 50%. The inert-relay reading is FALSIFIED if the
+inert arm's reduction is < 20%.
+
 Supported (propagation runs through active matter) if the ABLATION share
 of origins reaching radius >= 8 is at least 80% lower than the SHAM
 share. Not supported otherwise -- then the law moves influence through
@@ -43,15 +60,22 @@ def ring_mask(n, r0, c0):
     return (d >= RING[0]) & (d <= RING[1])
 
 
-def ablated_pair(w0, origin, field, bit, par, tick0, ticks, ring):
+def ablated_pair(w0, origin, field, bit, par, tick0, ticks, ring,
+                 target="all"):
     n = w0.f[0].shape[0]
     dist = P.manhattan_from(n, *origin)
     a, b = w0.copy(), w0.copy()
     b.f[field][origin] ^= np.uint8(1 << bit)
     max_r = 0
     for t in range(1, ticks + 1):
+        if target == "all":
+            mask = ring
+        elif target == "inert":
+            mask = ring & (a.f[0] != 1)
+        else:
+            mask = ring & (a.f[0] == 1)
         for wld in (a, b):
-            wld.f[4] = np.where(ring, np.uint8(0), wld.f[4]).astype(np.uint8)
+            wld.f[4] = np.where(mask, np.uint8(0), wld.f[4]).astype(np.uint8)
         a.step(tick0 + t, par)
         b.step(tick0 + t, par)
         site, _pf = P.diff_masks(a, b)
@@ -68,6 +92,7 @@ def main(argv=None):
     ap.add_argument("--ticks", type=int, default=400)
     ap.add_argument("--origins", type=int, default=32)
     ap.add_argument("--seed-index", type=int, default=0)
+    ap.add_argument("--target", choices=("all", "inert", "writers"), default="all")
     ap.add_argument("--perturbation", choices=("off", "on"), default="off",
                     help="PHYSICS_DESIGN_02 s2.4 specifies off; 'on' is run "
                          "only as a labelled extension")
@@ -89,15 +114,16 @@ def main(argv=None):
         field, bit = int(rng.integers(5)), int(rng.integers(8))
         par = par_off if a.perturbation == "off" else par_on
         abl = ablated_pair(w, origin, field, bit, par, a.warmup, a.ticks,
-                           ring_mask(n, *origin))
+                           ring_mask(n, *origin), a.target)
         sham = ablated_pair(w, origin, field, bit, par, a.warmup, a.ticks,
-                            ring_mask(n, origin[0], (origin[1] + n // 4) % n))
+                            ring_mask(n, origin[0], (origin[1] + n // 4) % n),
+                            a.target)
         rows.append({"origin": list(origin), "field": field, "bit": bit,
                      "ablation": abl, "sham": sham})
     share_abl = float(np.mean([r["ablation"]["reached_outside"] for r in rows]))
     share_sham = float(np.mean([r["sham"]["reached_outside"] for r in rows]))
     out = {"variant": a.variant, "n": n, "seed_index": a.seed_index,
-           "perturbation": a.perturbation,
+           "perturbation": a.perturbation, "target": a.target,
            "ring": RING, "outside_radius": OUTSIDE, "rows": rows,
            "share_outside_ablation": share_abl, "share_outside_sham": share_sham,
            "reduction": (1 - share_abl / share_sham) if share_sham else None,

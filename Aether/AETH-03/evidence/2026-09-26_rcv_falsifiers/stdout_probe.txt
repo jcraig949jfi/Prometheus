@@ -1,0 +1,54 @@
+{
+ "post_hoc": true,
+ "n": 128,
+ "seed_index": 1,
+ "baseline": {
+  "active_by_opcode": 1898,
+  "active_by_receipt_only": 1377,
+  "receipt_share_of_active": 0.4204580152671756
+ },
+ "spread": {
+  "gen1": {
+   "new": 121,
+   "inert": 93,
+   "receipt_active_next": 104,
+   "fields": [
+    6,
+    4,
+    2,
+    4,
+    20,
+    90
+   ],
+   "fields_names": [
+    "opcode",
+    "arg0",
+    "arg1",
+    "payload",
+    "energy",
+    "received_flag"
+   ]
+  },
+  "gen_ge2": {
+   "new": 359,
+   "inert": 287,
+   "receipt_active_next": 316,
+   "fields": [
+    0,
+    6,
+    10,
+    14,
+    75,
+    269
+   ],
+   "fields_names": [
+    "opcode",
+    "arg0",
+    "arg1",
+    "payload",
+    "energy",
+    "received_flag"
+   ]
+  }
+ }
+}
