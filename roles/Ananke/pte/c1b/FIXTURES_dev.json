@@ -1,6 +1,6 @@
 {
  "all_pass": true,
- "code_sha": "03efea36548b3d259ec6f52944d11340e06e9c2b",
+ "code_sha": "cf3c15c5f3dc9ebad34fcd8a079e89b14d03dfae",
  "device": "cpu",
  "fixtures": {
   "F_DA": {
@@ -103,6 +103,18 @@
     "pass": true,
     "perm_p": 0.0004997501249375312
    }
+  },
+  "F_sham_positive": {
+   "acc": {
+    "flush_inflight_iti": 0.4602,
+    "normal": 1.0,
+    "normal_from1": 1.0
+   },
+   "checks": {
+    "iti flush drops": true,
+    "normal>=0.95": true
+   },
+   "pass": true
   }
  },
  "note": "hand plants only; no evolved specimen, no search (operator HOLD)",
