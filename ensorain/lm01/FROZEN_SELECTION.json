@@ -1,0 +1,544 @@
+{
+ "frozen_from": "dev/selection_v2.json",
+ "source_sha256": "0091e59959cdc7fff8082c13093f7e4d494c1473bf33eee4925eb68e2c6dfe28",
+ "seeds": [
+  9410000,
+  9410015
+ ],
+ "rule": "median headline AC over 16 dev seeds per stratum; ties by grid order; v2 is the LAST grid change (#665.4)",
+ "strata_without_worlds": [
+  "F2_latent|L1|lowrank",
+  "F2_latent|L1|cp",
+  "F2_latent|L1|tt",
+  "F2_latent|L1|pairwise",
+  "F2_latent|L1|spectral",
+  "F2_latent|L1|sum"
+ ],
+ "choices": {
+  "F1_episodic|L1|random": {
+   "SELECTIVE": "S-lowrank-lr.03",
+   "LOSSLESS": "L-K",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F1_episodic|L2|random": {
+   "SELECTIVE": "S-lowrank-lr.03",
+   "LOSSLESS": "L-K",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F1_episodic|L3|random": {
+   "SELECTIVE": "S-lowrank-lr.03",
+   "LOSSLESS": "L-K",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F2_latent|L1|lowrank": {
+   "SELECTIVE": null,
+   "LOSSLESS": null,
+   "HYBRID": null,
+   "RESERVOIR_EVICT": null,
+   "n_worlds": 0
+  },
+  "F2_latent|L1|cp": {
+   "SELECTIVE": null,
+   "LOSSLESS": null,
+   "HYBRID": null,
+   "RESERVOIR_EVICT": null,
+   "n_worlds": 0
+  },
+  "F2_latent|L1|tt": {
+   "SELECTIVE": null,
+   "LOSSLESS": null,
+   "HYBRID": null,
+   "RESERVOIR_EVICT": null,
+   "n_worlds": 0
+  },
+  "F2_latent|L1|pairwise": {
+   "SELECTIVE": null,
+   "LOSSLESS": null,
+   "HYBRID": null,
+   "RESERVOIR_EVICT": null,
+   "n_worlds": 0
+  },
+  "F2_latent|L1|spectral": {
+   "SELECTIVE": null,
+   "LOSSLESS": null,
+   "HYBRID": null,
+   "RESERVOIR_EVICT": null,
+   "n_worlds": 0
+  },
+  "F2_latent|L1|sum": {
+   "SELECTIVE": null,
+   "LOSSLESS": null,
+   "HYBRID": null,
+   "RESERVOIR_EVICT": null,
+   "n_worlds": 0
+  },
+  "F2_latent|L2|lowrank": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L2|cp": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L2|tt": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L2|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K-rec.3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L2|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L2|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L3|lowrank": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2-rec.3",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L3|cp": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L3|tt": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L3|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K-rec.3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L3|spectral": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F2_latent|L3|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F3_switch|L1|lowrank": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L1|cp": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L1|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L1|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L1|spectral": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L1|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L2|lowrank": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L2|cp": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L2|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L2|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L2|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L2|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L3|lowrank": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L3|cp": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k8-rec.1",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L3|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k8-rec.1",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L3|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.3",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L3|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k8-rec.1",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F3_switch|L3|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F4_transfer|L1|lowrank": {
+   "SELECTIVE": "S-lowrank-lr.03",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L1|cp": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L1|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.3",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F4_transfer|L1|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F4_transfer|L1|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F4_transfer|L1|sum": {
+   "SELECTIVE": "S-lowrank-lr.03",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L2|lowrank": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L2|cp": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L2|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L2|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K-rec.1",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L2|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k8-rec.1",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L2|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F4_transfer|L3|lowrank": {
+   "SELECTIVE": "S-lowrank-lr.03",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L3|cp": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.3",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L3|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.3",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L3|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K-rec.1",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L3|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c4-k8-rec.1",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F4_transfer|L3|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L1|lowrank": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2-rec.1",
+   "HYBRID": "H-c8-k8",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 4
+  },
+  "F5_nuisance|L1|cp": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 4
+  },
+  "F5_nuisance|L1|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 4
+  },
+  "F5_nuisance|L1|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K-rec.1",
+   "HYBRID": "H-c4-k4",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 4
+  },
+  "F5_nuisance|L1|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c8-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 4
+  },
+  "F5_nuisance|L1|sum": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 4
+  },
+  "F5_nuisance|L2|lowrank": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r1",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L2|cp": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c8-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L2|tt": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L2|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r2",
+   "HYBRID": "H-c4-k16",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L2|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L2|sum": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k8-rec.3",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L3|lowrank": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k32",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L3|cp": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L3|tt": {
+   "SELECTIVE": "S-lowrank",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c8-k8",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L3|pairwise": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-K",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L3|spectral": {
+   "SELECTIVE": "S-tt",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c2-k8",
+   "RESERVOIR_EVICT": "R-keep_worst",
+   "n_worlds": 16
+  },
+  "F5_nuisance|L3|sum": {
+   "SELECTIVE": "S-cp",
+   "LOSSLESS": "L-R-r3",
+   "HYBRID": "H-c4-k16",
+   "RESERVOIR_EVICT": "R-residual_reservoir",
+   "n_worlds": 16
+  }
+ }
+}
