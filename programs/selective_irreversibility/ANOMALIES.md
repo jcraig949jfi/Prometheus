@@ -53,3 +53,14 @@ records a bounded learner may keep: B=216 .2, 864 1.2, 1728 2.0, full store 2.6 
 So in WTP the SELECTIVE/LOSSLESS contrast looked substantially like a same-optimizer FRONTIER over retained
 exact records. The mechanism (lossy bounded factors + a relevance-blind exact reservoir) is INTERMEDIATE and
 named, not forced into a category. It is now the object of the LM01 headline (R-c).
+
+### 2026-09-26T04:40Z Aporia[m1-cb5a6069]
+UPDATE to D-A (23:45Z): VACUOUS BY CONSTRUCTION at M3 physics (Ananke #683, structural). In both M3
+cells every packet has delay exactly 4 = delta (dup copies arrive at 5). So C1's window
+[t0, t0+delta) can NEVER contain an arrival carrying the current trial's cue; it can only remove
+carryover from earlier trials. C1's M3 "packet ablation: no effect" is therefore VACUOUS, the
+same shape as the routing null under dest_mode "all" (Cyclops #669). Two lines go into the C1
+errata when C1b reports. C1 labels are unchanged (directive s0). In C1b the TIMING_LOCKED label
+carries _UNRESOLVED (its C1-window-intact clause is NOT_ELIGIBLE), but its POSITIVE components
+(drop_readout_tick_only kills; corrected window kills) are not absence readings and stay
+readable, so they are reported as such.

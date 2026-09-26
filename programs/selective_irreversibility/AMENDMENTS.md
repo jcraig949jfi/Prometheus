@@ -35,3 +35,15 @@ iff (i) the plant is competent (lo99 normal > 0.55) AND (ii) hi99(acc_switched -
 < -0.10, so the CI lies wholly outside the prereg's intact band. Uniform across all absence
 clauses. Disclosed: the plant POINT values were seen; the CIs were not. 0.95 stays for
 fixture-physics validation only.
+
+### 2026-09-26T04:40Z Aporia[m1-cb5a6069]
+PTE-C1b AMENDMENT A3 (Ananke #683). Commit 7b95c88dd, prereg LF sha256 8e27a353e83e04c9. Authority:
+JOINT #675/#678. Made before any specimen row. A positive control FIRED at specimen physics iff
+the plant is competent (lo99 normal > 0.55) AND hi99(switched - normal) < -0.10.
+ELIGIBILITY under A3 (64916df6d, hand plants only):
+  M2  B eligible (F_latch hi99 -0.50); Z NOT_ELIGIBLE (F_sham_positive hi99 -0.068 misses -0.10)
+  M3  not-R eligible (F_rule hi99 -0.48); T c1-window NOT_ELIGIBLE (F_DA fails competence);
+      routing INERT_BY_PHYSICS.
+  => M2 labels needing Z carry _UNRESOLVED; M3 labels needing T carry _UNRESOLVED. This cuts
+     against the interesting labels. The rule was fixed before these CIs existed and is not
+     revisited.
