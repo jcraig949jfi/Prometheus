@@ -39,14 +39,14 @@ from prometheus.z80atlas import coupling_campaign as CC
 
 SEED_BASE = 12_000_000_000_000        # disjoint: coupling 11e12.., grounding 9e12.., pilots 7e12..7.9e12
 PILOT_SHIFT = -4_300_000_000_000      # --pilot seeds land in 7.7e12.. (off-plan)
-TICKS = 10_000                        # frozen horizon (20x the coupling campaign); --pilot may override
+TICKS = 20_000                        # frozen horizon (40x the coupling campaign; pilot 2026-09-26); --pilot may override
 CELLS, BUDGET = CC.CELLS, CC.BUDGET
 CHECKPOINT_FRACS = (0.05, 0.1, 0.25, 0.5, 0.75, 1.0)
 ROBUST_N = 128
 TOTAL_CAP_H = 60.0                    # active runtime
 RECYCLE_TASKS = 2                     # long runs: recycle workers often (RSS bound)
 LANE_PRIORITY = {"LADDER1": 0, "COPIER": 1, "REPAIR": 2, "LADDER2": 3}
-N_SEEDS = {"LADDER1": 80, "COPIER": 60, "REPAIR": 80, "LADDER2": 60}
+N_SEEDS = {"LADDER1": 160, "COPIER": 120, "REPAIR": 160, "LADDER2": 120}
 PREV_RUNG = {"LADDER1": "ECHO", "LADDER2": "INC"}
 
 
@@ -254,7 +254,7 @@ def execute(P: List[Dict], wd: pathlib.Path, workers: int, deadline: float, st_:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--workdir"); ap.add_argument("--inputs", required=True); ap.add_argument("--workers", type=int, default=16)
+    ap.add_argument("--workdir"); ap.add_argument("--inputs", required=True); ap.add_argument("--workers", type=int, default=12)
     ap.add_argument("--plan-only", action="store_true"); ap.add_argument("--status", action="store_true")
     ap.add_argument("--pilot", type=int, default=0, help="OFF-PLAN pilot: a stratified subset of N pairs, seeds shifted to 7.7e12..")
     ap.add_argument("--ticks", type=int, default=None, help="pilot only: override the horizon")

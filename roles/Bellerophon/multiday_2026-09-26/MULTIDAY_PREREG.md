@@ -28,12 +28,12 @@ separate strata of the same seed-pair family.
 
 | lane | founders / start | task paid | arms | seeds per K | runs |
 |---|---|---|---|---|---|
-| LADDER1 | 4 ECHO acquirers (AUTO 2, 4, 5, 8), founder = k mod 4 | INC | ON OFF SHUFFLED YOKED | 80 | 640 |
-| COPIER | pure copiers (SEEDED_REPLICATOR), no task code | ECHO | ON OFF SHUFFLED YOKED | 60 | 480 |
-| REPAIR | REP + BAD (copier sweep wrecks its own INC code) | INC | ON OFF YOKED | 80 | 480 |
-| LADDER2 | 3 INC repairs (AUTO 14, 15, 18), founder = k mod 3 | COND_ONE | ON OFF SHUFFLED YOKED | 60 | 480 |
+| LADDER1 | 4 ECHO acquirers (AUTO 2, 4, 5, 8), founder = k mod 4 | INC | ON OFF SHUFFLED YOKED | 160 | 1,280 |
+| COPIER | pure copiers (SEEDED_REPLICATOR), no task code | ECHO | ON OFF SHUFFLED YOKED | 120 | 960 |
+| REPAIR | REP + BAD (copier sweep wrecks its own INC code) | INC | ON OFF YOKED | 160 | 960 |
+| LADDER2 | 3 INC repairs (AUTO 14, 15, 18), founder = k mod 3 | COND_ONE | ON OFF SHUFFLED YOKED | 120 | 960 |
 
-Total 2,080 runs. Founders: receipts/md_inputs.json (tapes, source runs, AUTO per-arm successes). Each founder was
+Total 4,160 runs. Founders: receipts/md_inputs.json (tapes, source runs, AUTO per-arm successes). Each founder was
 re-verified on 2026-09-26: ECHO founders are ECHO-exact and NOT INC-exact; INC founders are INC-exact and NOT
 ECHO-exact; all self-copy alone. So any competent self-replicator on the PAID task at the end of a LADDER run is an
 acquisition, not a founder. Ladder order follows the measured task family in tasks.py (ECHO -> INC -> COND_ONE); the
@@ -41,7 +41,7 @@ design note's SUM2 rung was replaced before freeze because SUM2 is a different f
 
 ## 4. Common settings
 
-Horizon TICKS = 10,000 (20x the coupling campaign). 256 cells, budget 256, GRID/LOCAL, Z80_64, SHARED,
+Horizon TICKS = 20,000 (40x the coupling campaign; set from the pilots, s12). 256 cells, budget 256, GRID/LOCAL, Z80_64, SHARED,
 ENDOGENOUS_COPY, IMPLICIT, NEUTRAL scoring, ABR, FIXED env, BYTE mutation MED; init RANDOM with the founder tape(s)
 as init_tapes (COPIER: init SEEDED_REPLICATOR). Seeds: 12e12 + lane*1e9 + K_block*1e5 + k (disjoint from coupling
 11e12, grounding 9e12, pilots 7e12..7.9e12); arms of one pair share the seed.
@@ -50,7 +50,7 @@ as init_tapes (COPIER: init SEEDED_REPLICATOR). Seeds: 12e12 + lane*1e9 + K_bloc
 
 Priority LADDER1, COPIER, REPAIR, LADDER2; within a lane, plan order. Continuous submission; YOKED released when its
 ON partner's result exists (a YOKED whose ON partner voided or never ran gets an empty yoke, recorded).
-Workers: TBD-PILOT, recycled every 2 runs. Active-runtime cap: TBD-PILOT h (sum of execution segments;
+Workers: 12, recycled every 2 runs. Active-runtime cap: 60 h (sum of execution segments;
 suspensions do not count; a crashed segment closes at its last heartbeat). Runs not completed at the cap are
 NOT_RUN by lane and K. A restart re-executes only runs without a result line. Voids are recorded, never re-seeded.
 Detached supervisor with standing recovery authority (as in the coupling campaign's Amendment 1).
@@ -58,8 +58,8 @@ Detached supervisor with standing recovery authority (as in the coupling campaig
 ## 6. Per-run measurements (frozen)
 
 End of run: everything the coupling campaign recorded (competence summary, ledger, births, dominant tapes, frozen
-architecture descriptor of the dominant competent SR tape). Checkpoints after ticks 499, 999, 2,499, 4,999, 7,499,
-9,999 (0-based tick index): alive, competent (paid task), competent self-replicators, SR alive, dominant competent SR
+architecture descriptor of the dominant competent SR tape). Checkpoints after ticks 999, 1,999, 4,999, 9,999, 14,999,
+19,999 (0-based tick index): alive, competent (paid task), competent self-replicators, SR alive, dominant competent SR
 tape, dominant SR tape, previous-rung competent count (LADDER1: ECHO; LADDER2: INC), robust_comp =
 robustness(dominant competent SR tape, n = 128, seed = run seed mod 2^31) and robust_sr_copy = copy-only robustness
 of the dominant SR tape. Robustness (prometheus/z80atlas/robustness.py): the fraction of n sampled single-byte
@@ -94,7 +94,7 @@ frozen architecture descriptors of acquired dominants; copy-only robustness drif
 
 instrument_ok := no VOID runs, no ledger imbalance, and a seeded 3% replay (random.Random(20260926)) of completed runs
 byte-identical (every field except wall_s). Pre-freeze evidence: 30/30 smoke runs (300 ticks, all lanes and arms,
-off-plan seeds) replayed identically; z80atlas tests TBD-PILOT/TBD-PILOT.
+off-plan seeds) replayed identically; z80atlas tests 75/75 at freeze.
 If instrument_ok fails, no hypothesis is interpreted; the report is INSTRUMENT_REPAIR_REQUIRED.
 
 ## 10. Disposition (frozen)
