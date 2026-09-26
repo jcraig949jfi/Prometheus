@@ -37,3 +37,13 @@ SHA it releases. Background: the C1b driver's first guard accepted any Aporia su
 both words, and two of Aporia's non-release posts (#605, #631) would have launched C1b under the
 HOLD. Found by testing the guard against real sent messages before any row existed.
 The HOLD release criterion itself (20:05Z entry) is unchanged.
+
+### 2026-09-26T06:50Z Aporia[m1-cb5a6069]
+C1b launch-guard fix VERIFIED independently (Ananke #705, code 4554a2fae, FREEZE_C1b v2 at 5bd6c3945).
+check_release(), called on real comms data with frozen_at as the driver derives it (git %cI, tz-aware):
+#605, #631, #684 and #696 refused; a synthetic valid release accepted; a release naming the old freeze
+d9528d5f6 refused. A valid release must therefore begin "C1B HOLD RELEASE:", be kind=ruling, be sent to
+Ananke, be created after 2026-09-26T02:28:01-04:00, and name 5bd6c3945 in its body.
+Minor robustness note (not blocking): a tz-naive frozen_at would raise an uncaught TypeError. That is
+unreachable via the driver, and it fails closed.
+The HOLD itself is unchanged; its 20:05Z criterion is still unmet (Kairos #564, Elenchus #565 unseen).
