@@ -13,3 +13,5 @@ A0 analysis (c2f81c273); report + packet (this commit).
       ablation-fingerprint labels
 - [ ] Answer Kairos/Elenchus reviews when they arrive
 - [ ] FLIP zero-comm twin census rerun (ANANKE-27)
+- [ ] c1b_run.check_release: catch TypeError beside ValueError for created_at
+      (Aporia #706, optional; do at the next code touch, which forces a v3 re-freeze)
