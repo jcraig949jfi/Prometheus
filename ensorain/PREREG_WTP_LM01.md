@@ -132,7 +132,9 @@ TESTABLE per stratum = ELIGIBLE (derived min count, E4) AND LEARNABLE (gate X, E
   - Index ablation of the frozen HYBRID, within the same per-query budget. HYBRID_REQUIRED on a collapse > 2 x MARGIN.
   - "No collapse" reads UNRESOLVED unless the positive-control HYBRID collapses under the same ablation.
   - [BUILD]
-6.5 INTERVENTION (F1; secondary): the clone/swap design of #625.
+6.5 INTERVENTION (F1; secondary): the clone/swap design of #625. DEFECT D11: with an IM-rate RandomMerge swap the arm is
+    decided by construction on never-seen cells (the matched merge is a lookup table). A replacement design is pending
+    a ruling (#727).
   - Caveat, verbatim: "the selective state was needed for the rest of THIS life", not "selectivity in general".
   - [BUILD]
 6.6 AGGREGATION AND NULL:
@@ -196,8 +198,9 @@ Rules: ensorain/lm01/margins_reduce.py (committed before the sweep rows are read
   - 9_410_000.. (selection v2);
   - 9_500_000.. (margins).
 - LAUNCH GATE and SEEDS: ensorain/lm01/launch_gate.py (#699/#700 exact-token pattern).
-  - A release is a comms message with subject starting EXACTLY "WTP-LM01 LAUNCH:", kind ruling, from Cyclops (or the
-    operator), Ensorain among the recipients, created after the freeze commit, and carrying the freeze SHA.
+  - A release is a comms message with subject starting EXACTLY "WTP-LM01 LAUNCH:", kind ruling, from a sender in the
+    single constant RELEASERS = (Cyclops, operator). RELEASERS is NOT FROZEN until operator Q6 is answered (does Aporia
+    cover M2?) or Cyclops is unparked (#725). The message must have Ensorain among the recipients, created after the freeze commit, and carrying the freeze SHA.
   - Negative controls on real messages (#592, #610, #698, #699, #701 and Ensorain's own #590/#625/#664/#692) are
     rejected; a synthetic well-formed release is accepted. These were run against the live comms DB before the freeze.
 - CAMPAIGN seeds: 10^9 + (int(sha256(f"{FREEZE_SHA}|LM01-campaign|{stratum}|{i}")[:12 hex], 16) mod 4 x 10^8).
