@@ -21,7 +21,7 @@ import numpy as np
 
 from .margins import (_feed, _ac_cells, _AC, _iters, _build, RANK, DUAL_AT, HERE)
 
-RUNG_SCALE = "all_cells"          # "all_cells" (as run in dev) | "real_cells" (#719 proposal for F5); set at the freeze
+RUNG_SCALE = "real_cells"         # operator ruling 2026-09-26 item 3 (governing); "all_cells" = the old dev-v1 interpretation
 OUTROOT = os.path.join(HERE, "campaign")
 
 
