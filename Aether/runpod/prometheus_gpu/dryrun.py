@@ -45,7 +45,8 @@ def run_id_for(spec, now=None):
     return "%s-%s" % (spec.name, stamp)
 
 
-ARTIFACT_SERVER = '''import http.server
+ARTIFACT_SERVER = '''import hashlib
+import http.server
 import json
 import os
 import socketserver
@@ -71,6 +72,35 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             # controller can measure the offset between the two machines
             # instead of subtracting one clock from the other and hoping.
             body = json.dumps({"epoch": time.time()}).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        if self.path.split("?")[0] == "/_manifest":
+            # Size and sha256 of every file, computed HERE, on the pod, at
+            # the instant of asking. The controller compares what it
+            # received against this, so a truncated or corrupted transfer
+            # is detected instead of being recorded as the artifact.
+            files = {}
+            for root, _dirs, names in os.walk(ROOT):
+                for name in sorted(names):
+                    full = os.path.join(root, name)
+                    rel = os.path.relpath(full, ROOT).replace(os.sep, "/")
+                    digest = hashlib.sha256()
+                    size = 0
+                    try:
+                        with open(full, "rb") as fh:
+                            for chunk in iter(lambda: fh.read(1 << 20), b""):
+                                digest.update(chunk)
+                                size += len(chunk)
+                    except OSError:
+                        continue
+                    files[rel] = {"bytes": size, "sha256": digest.hexdigest()}
+            body = json.dumps({"epoch": time.time(),
+                               "files": files}).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(body)))

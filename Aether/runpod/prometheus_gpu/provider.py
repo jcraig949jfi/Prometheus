@@ -152,12 +152,15 @@ class Fault(object):
     really happened and the caller was told it did not."""
 
     def __init__(self, status=None, timeout=False, phantom=False,
-                 omit_from_list=False, message=""):
+                 omit_from_list=False, message="", keep=False):
         self.status = status
         self.timeout = timeout
         self.phantom = phantom
         self.omit_from_list = omit_from_list
         self.message = message
+        # terminate only: the provider ACKs and the pod stays. The case in
+        # which an acknowledgement alone would be reported as cleanup.
+        self.keep = keep
 
     @staticmethod
     def http(status):
@@ -170,8 +173,27 @@ class Fault(object):
                      message="create accepted but response lost")
 
     @staticmethod
+    def lost_response_hidden():
+        """Create succeeds, the response is lost, AND the pod is omitted
+        from every LIST. Nothing the controller can read names it."""
+        return Fault(status=500, phantom=True, omit_from_list=True,
+                     message="create accepted, response lost, list omits it")
+
+    @staticmethod
+    def ambiguous():
+        """A transport-level failure with no HTTP status at all: the
+        request may or may not have reached the provider."""
+        return Fault(status=None, phantom=True,
+                     message="connection reset after send; no status")
+
+    @staticmethod
     def request_timeout():
         return Fault(timeout=True, message="timeout before response")
+
+    @staticmethod
+    def ack_but_keep():
+        """terminate: acknowledged, and the pod is still there."""
+        return Fault(keep=True, message="terminate acknowledged; pod remains")
 
 
 class FakeProvider(Provider):
@@ -183,7 +205,8 @@ class FakeProvider(Provider):
     """
 
     def __init__(self, create_faults=(), list_faults=(), terminate_faults=(),
-                 get_faults=(), hidden=(), served=None, fetch_faults=()):
+                 get_faults=(), hidden=(), served=None, fetch_faults=(),
+                 served_by_name=None, stale_list_reads=0, unnamed=False):
         self._ids = ("fake-%03d" % i for i in itertools.count(1))
         self.truth = {}                 # pod_id -> body, what really exists
         self.calls = {"create": 0, "list": 0, "get": 0, "terminate": 0}
@@ -198,7 +221,25 @@ class FakeProvider(Provider):
         # or a callable(call_index). Anything absent fetches as None,
         # which is how "the server is not up yet" is expressed.
         self.served = dict(served or {})
+        # Per-pod content, keyed by the pod's NAME (the run id), for
+        # several pods at once. Falls back to `served`.
+        self.served_by_name = dict(served_by_name or {})
         self._fetches = {}
+        # GET/LIST disagreement the other way round: a terminated pod keeps
+        # appearing in LIST for this many reads while GET says it is gone.
+        self._stale_list_reads = int(stale_list_reads)
+        self._stale = {}                # pod_id -> remaining stale reads
+        self._stale_names = {}
+        # A provider whose listings carry no names: ownership cannot be
+        # established from them.
+        self._unnamed = bool(unnamed)
+
+    def _record(self, pod_id):
+        body = self.truth.get(pod_id) or {}
+        rec = {"id": pod_id, "desiredStatus": "RUNNING"}
+        if not self._unnamed and body.get("name") is not None:
+            rec["name"] = body.get("name")
+        return rec
 
     def _next_fault(self, queue):
         return queue.pop(0) if queue else None
@@ -228,8 +269,14 @@ class FakeProvider(Provider):
         fault = self._next_fault(self._list_faults)
         if fault is not None:
             self._raise(fault)
-        return [{"id": pid, "desiredStatus": "RUNNING"}
-                for pid in sorted(self.truth) if pid not in self._hidden]
+        out = [self._record(pid)
+               for pid in sorted(self.truth) if pid not in self._hidden]
+        for pid in sorted(self._stale):
+            if self._stale[pid] > 0:
+                self._stale[pid] -= 1
+                out.append({"id": pid, "desiredStatus": "RUNNING",
+                            "name": self._stale_names.get(pid)})
+        return out
 
     def get_pod(self, pod_id):
         self.calls["get"] += 1
@@ -238,7 +285,11 @@ class FakeProvider(Provider):
             self._raise(fault)
         if pod_id not in self.truth:
             return None
-        return {"id": pod_id, "desiredStatus": "RUNNING"}
+        return self._record(pod_id)
+
+    def _served_for(self, pod_id):
+        name = (self.truth.get(pod_id) or {}).get("name")
+        return self.served_by_name.get(name, self.served)
 
     def fetch(self, pod_id, path, port=ARTIFACT_PORT, token=None, timeout=60):
         self.calls["fetch"] = self.calls.get("fetch", 0) + 1
@@ -247,11 +298,13 @@ class FakeProvider(Provider):
             return None                 # unreachable, not an exception
         if pod_id not in self.truth:
             return None
-        value = self.served.get(str(path).lstrip("/"))
+        key = str(path).lstrip("/")
+        value = self._served_for(pod_id).get(key)
         if value is None:
             return None
-        index = self._fetches.get(path, 0)
-        self._fetches[path] = index + 1
+        counter = (pod_id, key)
+        index = self._fetches.get(counter, 0)
+        self._fetches[counter] = index + 1
         if callable(value):
             value = value(index)
         elif isinstance(value, list):
@@ -264,9 +317,17 @@ class FakeProvider(Provider):
         self.calls["terminate"] += 1
         fault = self._next_fault(self._terminate_faults)
         if fault is not None:
+            if fault.keep:
+                return "ACK_204"        # acknowledged; the pod stays
             self._raise(fault)
+        if pod_id not in self.truth:
+            return "NOT_FOUND_404"
+        name = self.truth[pod_id].get("name")
         self.truth.pop(pod_id, None)
         self._hidden.discard(pod_id)
+        if self._stale_list_reads:
+            self._stale[pod_id] = self._stale_list_reads
+            self._stale_names[pod_id] = name
         return "ACK_204"
 
     # ------------------------------------------------------------ truth
@@ -330,8 +391,29 @@ def create_with_alternatives(provider, body, gpu_ids, log=lambda m: None,
     return None, "NO_CAPACITY", attempted
 
 
+# Seconds between the two LIST reads that must BOTH show none of our pods
+# before a failed create may be called clean. One empty read is one
+# listing's opinion; a pod still materialising, or an eventually
+# consistent LIST, can be absent from it and present a moment later.
+RECONCILE_CONFIRM_S = 5.0
+
+
+def _owned(pods, name):
+    """Split a listing into (ours, unnamed). Ours means the name matches.
+
+    Ownership is by NAME, which is the run id. Adopting "whatever is in
+    the account" was safe only while exactly one controller could ever
+    create; with several pods in flight, or another seat on the account,
+    the first pod in a listing may belong to someone else, and adopting it
+    means terminating it.
+    """
+    ours = [p for p in pods if p.get("name") == name]
+    unnamed = [p for p in pods if p.get("name") is None]
+    return ours, unnamed
+
+
 def create_with_reconcile(provider, body, log=lambda m: None, attempts=3,
-                          sleep=time.sleep):
+                          sleep=time.sleep, confirm_s=RECONCILE_CONFIRM_S):
     """Create exactly one pod, treating any failure as AMBIGUOUS.
 
     A failed create does not say whether a pod exists. The only safe
@@ -343,7 +425,15 @@ def create_with_reconcile(provider, body, log=lambda m: None, attempts=3,
     create of unknown outcome followed by an inventory read that also
     failed is exactly the state in which a retry produces a second
     billing pod, and guessing there is how one incident becomes two.
+
+    Iteration 3: adoption is by OWNERSHIP (the pod's name is this run's
+    id), a listed pod with no name makes ownership undecidable and so the
+    outcome AMBIGUOUS, and "created nothing" needs TWO LIST reads
+    `confirm_s` apart that both show none of ours. What remains uncovered,
+    and is said so in the receipt: a pod that every LIST omits cannot be
+    found by anything but its id, which a lost response never delivered.
     """
+    name = body.get("name")
     for attempt in range(1, attempts + 1):
         try:
             pod = provider.create_pod(body)
@@ -352,17 +442,28 @@ def create_with_reconcile(provider, body, log=lambda m: None, attempts=3,
         except ProviderError as exc:
             log("create attempt %d failed status=%s; reconciling inventory"
                 % (attempt, exc.status))
-            try:
-                existing = provider.list_pods()
-            except ProviderError as inner:
-                log("reconcile FAILED to list (status=%s): refusing to retry, "
-                    "because a pod may exist unobserved" % inner.status)
-                return None, "AMBIGUOUS_UNRECONCILED"
-            if existing:
-                log("reconcile: %d pod(s) present -> adopting %s, no further "
-                    "creates" % (len(existing), existing[0]["id"]))
-                return existing[0], "ADOPTED"
-            log("reconcile: inventory empty, so that failure created nothing")
+            for read in (1, 2):
+                try:
+                    existing = provider.list_pods()
+                except ProviderError as inner:
+                    log("reconcile FAILED to list (status=%s): refusing to "
+                        "retry, because a pod may exist unobserved"
+                        % inner.status)
+                    return None, "AMBIGUOUS_UNRECONCILED"
+                ours, unnamed = _owned(existing, name)
+                if ours:
+                    log("reconcile read %d: our pod %s is present -> adopting, "
+                        "no further creates" % (read, ours[0]["id"]))
+                    return ours[0], "ADOPTED"
+                if unnamed:
+                    log("reconcile read %d: %d listed pod(s) carry no name, so "
+                        "ownership cannot be decided; refusing to retry or "
+                        "adopt" % (read, len(unnamed)))
+                    return None, "AMBIGUOUS_UNRECONCILED"
+                if read == 1:
+                    sleep(confirm_s)
+            log("reconcile: two reads %.0f s apart show none of ours, so that "
+                "failure created nothing we can see" % confirm_s)
             if attempt < attempts:
                 sleep(2)
     return None, "FAILED_CLEAN"
