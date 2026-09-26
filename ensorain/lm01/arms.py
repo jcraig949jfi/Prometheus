@@ -110,6 +110,7 @@ def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None, tol=1e-4):
     U = rng.normal(0, 0.3, (int(np.prod(dims[:s])), r))
     V = rng.normal(0, 0.3, (int(np.prod(dims[s:])), r))
     prev = None
+    used = 0
     for _ in range(iters):       # D7 (fixture-demonstrated): run to convergence, rel. loss change < tol, max iters
         for M, N, P, Qx in ((U, V, I, J), (V, U, J, I)):
             order = np.argsort(P, kind="stable")
@@ -125,10 +126,13 @@ def als_lowrank(dims, A, y, r, lam, rng, iters, meter=None, w=None, tol=1e-4):
                 c = len(y) * r * r + len(np.unique(P)) * r ** 3
                 meter.ops += c
                 meter.replay_ops += c
+        used += 1
         loss = float(np.sum(w * (y - (U[I] * V[J]).sum(1)) ** 2))
         if prev is not None and prev - loss <= tol * max(prev, 1e-12):
             break
         prev = loss
+    if meter is not None:
+        meter.als_iters = getattr(meter, "als_iters", []) + [used]
     return U, V, s
 
 
@@ -392,12 +396,13 @@ class BufferALS(Metered):
 
     EVICT = ("random", "keep_worst", "residual_reservoir", "oracle")   # R-c(b): 2 declared system candidates + fixture oracle
 
-    def __init__(self, dims, rank, B, every=64, iters=2, lam=0.1, seed=0, evict="random", oracle_keep=None):
+    def __init__(self, dims, rank, B, every=64, iters=80, lam=0.1, seed=0, evict="random", oracle_keep=None, tol=1e-4):
         super().__init__()
         assert evict in self.EVICT
         self.evict, self.oracle_keep = evict, oracle_keep     # oracle_keep: fixture-only relevance fn(A) -> bool
         self.name = f"R-{evict}-r{rank}-B{B}"
-        self.dims, self.r, self.B, self.every, self.iters, self.lam = list(dims), rank, int(B), every, iters, lam
+        self.dims, self.r, self.B, self.every, self.iters, self.lam, self.tol = list(dims), rank, int(B), every, iters, lam, tol
+        self.als_iters = []                        # #677: iterations used per refit, reported
         D = len(dims)
         self.s = min(range(1, D), key=lambda k: int(np.prod(dims[:k])) + int(np.prod(dims[k:])))
         rng = np.random.default_rng(seed)
@@ -457,7 +462,9 @@ class BufferALS(Metered):
         I = np.ravel_multi_index(A[:, :self.s].T, self.dims[:self.s])
         J = np.ravel_multi_index(A[:, self.s:].T, self.dims[self.s:])
         r = self.r
-        for _ in range(self.iters):
+        prev, used = None, 0
+        for _ in range(self.iters):             # #677 JOINT: one convergence rule (rel. loss change < tol, max 80)
+            used += 1
             for M, N, P, Qx in ((self.U, self.V, I, J), (self.V, self.U, J, I)):
                 order = np.argsort(P, kind="stable")
                 bounds = np.flatnonzero(np.diff(P[order])) + 1
@@ -468,6 +475,11 @@ class BufferALS(Metered):
                 c = len(y) * r * r + len(np.unique(P)) * r ** 3
                 self.meter.ops += c
                 self.meter.replay_ops += c
+            loss = float(np.sum((y - (self.U[I] * self.V[J]).sum(1)) ** 2))
+            if prev is not None and prev - loss <= self.tol * max(prev, 1e-12):
+                break
+            prev = loss
+        self.als_iters.append(used)
         self.meter.bytes_read += self.bA.nbytes + self.by.nbytes
 
     def _predict(self, Q):

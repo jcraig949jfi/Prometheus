@@ -19,9 +19,11 @@ for _v in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS"):
 import numpy as np
 
 HERE = os.path.dirname(__file__)
-OUT = os.path.join(HERE, "dev", "selection.json")
+OUT_V1 = os.path.join(HERE, "dev", "selection.json")          # v1: seen; kept as the record (#665.2)
+OUT = os.path.join(HERE, "dev", "selection_v2.json")
 LOG = os.path.join(HERE, "DEV_SWEEP_LOG.jsonl")
-SEL_SEEDS = range(9_400_000, 9_400_016)
+SEL_SEEDS_V1 = range(9_400_000, 9_400_016)
+SEL_SEEDS = range(9_410_000, 9_410_016)            # v2: FRESH seeds (#665.2); v2 is the LAST grid change (#665.4)
 BUDGET = 8
 HEADLINE_SEL = {"F1_episodic": "exact_hit", "F2_latent": "never_seen", "F3_switch": "never_seen",
                 "F4_transfer": "fresh_field", "F5_nuisance": "ood_never_seen"}
@@ -37,6 +39,11 @@ HYBRID_GRID = [("H-c4-k4", (4, 4, None)), ("H-c4-k8", (4, 8, None)), ("H-c4-k16"
                ("H-c4-k32", (4, 32, None)), ("H-c8-k8", (8, 8, None)), ("H-c2-k8", (2, 8, None)),
                ("H-c4-k8-rec.1", (4, 8, 0.1)), ("H-c4-k8-rec.3", (4, 8, 0.3))]
 assert len(SELECTIVE_GRID) == len(LOSSLESS_GRID) == len(HYBRID_GRID) == BUDGET
+# R-c(b): the declared eviction-policy candidate set (budget 2, count reported), chosen per stratum at B = cells/2,
+# rank 3, under the one ALS convergence rule (#677). The random reservoir is the reference and is not selected.
+EVICT_GRID = [("R-keep_worst", "keep_worst"), ("R-residual_reservoir", "residual_reservoir")]
+FAMILIES_V2 = (("SELECTIVE", SELECTIVE_GRID), ("LOSSLESS", LOSSLESS_GRID), ("HYBRID", HYBRID_GRID),
+               ("RESERVOIR_EVICT", EVICT_GRID))
 
 
 def build(family, spec, dims):
@@ -51,6 +58,9 @@ def build(family, spec, dims):
             return LosslessK(dims) if p is None else LosslessKRec(dims, half_life=p)
         r, h = p
         return LosslessR(dims, rank=r) if h is None else LosslessRRec(dims, half_life=h, rank=r)
+    if family == "RESERVOIR_EVICT":
+        from .arms import BufferALS
+        return BufferALS(dims, 3, max(1, cells // 2), evict=spec)
     div, k, h = spec
     cap = max(160, cells // div)
     return Hybrid(dims, cap=cap, k=k) if h is None else HybridRec(dims, cap=cap, half_life=h, k=k)
@@ -67,7 +77,7 @@ def job(a):
     if len(T) < 8:
         return dict(a, status="TOO_FEW_TEST", n_test=int(len(T)))
     res = {}
-    for fam, grid in (("SELECTIVE", SELECTIVE_GRID), ("LOSSLESS", LOSSLESS_GRID), ("HYBRID", HYBRID_GRID)):
+    for fam, grid in FAMILIES_V2:
         for label, spec in grid:
             try:
                 arm = build(fam, spec, w["dims"])
@@ -94,7 +104,7 @@ def choose(rows):
     for f, l, g in strata():
         rs = [r for r in rows if (r["family"], r["level"], r["gen"]) == (f, l, g) and r["status"] == "OK"]
         entry = dict(n_worlds=len(rs))
-        for fam, grid in (("SELECTIVE", SELECTIVE_GRID), ("LOSSLESS", LOSSLESS_GRID), ("HYBRID", HYBRID_GRID)):
+        for fam, grid in FAMILIES_V2:
             med = {}
             for label, _ in grid:
                 v = [r["AC"][label] for r in rs if r["AC"].get(label) is not None]
@@ -111,7 +121,7 @@ def main(workers=8):
     t = lambda: time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(LOG, "a") as fh:
-        fh.write(json.dumps(dict(event="start", sweep="lm01_arm_selection_v1", t=t(), workers=workers,
+        fh.write(json.dumps(dict(event="start", sweep="lm01_arm_selection_v2", t=t(), workers=workers,
                                  priority="BELOW_NORMAL", seeds=f"{SEL_SEEDS.start}-{SEL_SEEDS.stop - 1}",
                                  n_jobs=len(jobs))) + "\n")
     t0 = time.time()
@@ -120,12 +130,11 @@ def main(workers=8):
         rows = p.map(job, jobs, chunksize=2)
     sel = choose(rows)
     with open(OUT, "w") as fh:
-        json.dump(dict(sweep="lm01_arm_selection_v1", seeds=[SEL_SEEDS.start, SEL_SEEDS.stop - 1], budget=BUDGET,
-                       grids=dict(SELECTIVE=[x for x, _ in SELECTIVE_GRID], LOSSLESS=[x for x, _ in LOSSLESS_GRID],
-                                  HYBRID=[x for x, _ in HYBRID_GRID]), selection=sel, rows=rows), fh)
+        json.dump(dict(sweep="lm01_arm_selection_v2", seeds=[SEL_SEEDS.start, SEL_SEEDS.stop - 1], budget=BUDGET,
+                       grids={fam: [x for x, _ in g] for fam, g in FAMILIES_V2}, selection=sel, rows=rows), fh)
     stops = sum(r["status"] == "STOP_RAM" for r in rows)
     with open(LOG, "a") as fh:
-        fh.write(json.dumps(dict(event="end", sweep="lm01_arm_selection_v1", t=t(), workers=workers, n_jobs=len(jobs),
+        fh.write(json.dumps(dict(event="end", sweep="lm01_arm_selection_v2", t=t(), workers=workers, n_jobs=len(jobs),
                                  n_stop_ram=stops, wall_s=round(time.time() - t0, 1))) + "\n")
     print("done", len(rows), "stop_ram", stops, "wall", round(time.time() - t0, 1))
 
