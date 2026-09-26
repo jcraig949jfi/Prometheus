@@ -66,6 +66,8 @@ def reduce_stratum(key, frozen, delta=DELTA):
                visits_per_cell=float(np.median([r["visits_per_cell"] for r in rows])) if rows else None)
     if frozen.get("n_worlds", 0) == 0 or not ok:
         return dict(out, frame="UNTESTED", reason="EMPTY stratum (no frozen arms) or no OK rows")
+    if len(ok) < 3:                                   # declared: a CI needs >= 3 usable dev worlds
+        return dict(out, frame="UNTESTED", reason=f"only {len(ok)} usable dev worlds (< 3; too few never-seen cells)")
     med_test = float(np.median([r["n_test"] for r in ok]))
     sizes = sorted(set(SIZES + [int(med_test)]))
     sd_n = {}
