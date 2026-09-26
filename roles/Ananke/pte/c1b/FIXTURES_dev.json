@@ -1,0 +1,111 @@
+{
+ "all_pass": true,
+ "code_sha": "03efea36548b3d259ec6f52944d11340e06e9c2b",
+ "device": "cpu",
+ "fixtures": {
+  "F_DA": {
+   "acc": {
+    "drop_readout_tick_only": 0.5,
+    "drop_window_c1": 1.0,
+    "drop_window_corrected": 0.5,
+    "normal": 1.0
+   },
+   "checks": {
+    "c1 window intact": true,
+    "corrected kills": true,
+    "normal>=0.95": true,
+    "readout-only kills": true
+   },
+   "pass": true
+  },
+  "F_echo": {
+   "acc": {
+    "flush_inflight": 0.5,
+    "flush_inflight_iti": 1.0,
+    "normal": 1.0,
+    "normal_from1": 1.0,
+    "reset_S": 1.0,
+    "reset_all_nonpacket": 1.0
+   },
+   "census": {
+    "acc": 1.0,
+    "hi99": 1.0,
+    "lo99": 1.0,
+    "pass": true,
+    "perm_p": 0.0004997501249375312
+   },
+   "checks": {
+    "census predicts": true,
+    "flush kills": true,
+    "iti sham intact": true,
+    "normal>=0.95": true,
+    "reset_S intact": true,
+    "reset_all_nonpacket intact": true
+   },
+   "pass": true,
+   "status": {
+    "flush_inflight": "RAN",
+    "flush_inflight_iti": "NOT_APPLICABLE",
+    "normal": "RAN",
+    "normal_from1": "RAN",
+    "reset_S": "RAN",
+    "reset_all_nonpacket": "RAN"
+   }
+  },
+  "F_latch": {
+   "acc": {
+    "flush_inflight": 1.0,
+    "normal": 1.0,
+    "reset_S": 0.5
+   },
+   "checks": {
+    "flush intact": true,
+    "normal>=0.95": true,
+    "reset_S kills": true
+   },
+   "pass": true,
+   "status": {
+    "flush_inflight": "NOT_APPLICABLE",
+    "normal": "RAN",
+    "reset_S": "RAN"
+   }
+  },
+  "F_route": {
+   "acc": {
+    "freeze_routing": 0.5,
+    "normal": 1.0
+   },
+   "checks": {
+    "freeze_routing drops": true,
+    "normal>=0.95": true
+   },
+   "pass": true
+  },
+  "F_rule": {
+   "acc": {
+    "freeze_rule": 0.5,
+    "normal": 1.0
+   },
+   "checks": {
+    "freeze_rule drops": true,
+    "normal>=0.95": true,
+    "rule predicts": true
+   },
+   "pass": true,
+   "rule_predicts": {
+    "acc": 1.0,
+    "hi99": 1.0,
+    "lo99": 1.0,
+    "map": {
+     "0": -1,
+     "1": 1
+    },
+    "pass": true,
+    "perm_p": 0.0004997501249375312
+   }
+  }
+ },
+ "note": "hand plants only; no evolved specimen, no search (operator HOLD)",
+ "seed_ns": "0xde7",
+ "worlds": 64
+}

@@ -101,3 +101,135 @@ def plant(name: str, ph: Physics) -> np.ndarray:
     else:
         raise KeyError(name)
     return np.broadcast_to(body, (ph.rules, *body.shape)).copy()
+
+
+# ------------------------------------------------ C1b known-answer fixtures
+# (PREREG_PTE_C1b s5). Each ships with the physics it is correct under;
+# none is ever a search seed.
+
+def c1b_echo_physics() -> Physics:
+    """Ring r1, flood to both neighbours, delay 5 = half of HOLD's
+    cue_len 2 + gap 8, lossless: a bit can ride out and back exactly once."""
+    return Physics(topology="ring", n_sites=24, radius=1, dest_mode="all", lat_base=5,
+                   lat_hop=0, lat_jitter=0, loss=0.0, payload_width=2, channels=1,
+                   update_mode="sync", update_period=1, decay_shift=0, state_dim=2,
+                   prog_len=28)
+
+
+def echo_hold(ph: Physics) -> np.ndarray:
+    """HOLD with the bit ONLY in flight. The sensor emits (cue, 3). A site
+    whose marker sum is exactly 3 relays (payload, 1) once. Every site sets
+    S0 := sign(payload) on arrival. The sensor's own S0 is written only by
+    the returning echo, at the readout tick, so resetting site state mid-gap
+    cannot hurt, and flushing the in-flight packets must."""
+    return assemble(ph, [
+        ("CONST", "T0", 0, 7, 1),            # 128
+        ("GT", "T1", "SENSE", "T0", 0),
+        ("SUB", "T2", "ZERO", "T0", 0),
+        ("GT", "T2", "T2", "SENSE", 0),
+        ("SUB", "T1", "T1", "T2", 0),        # cue sign*256 or 0
+        ("CONST", "T3", 0, 0, 3),
+        ("SUB", "T2", "IN0_1", "T3", 0),     # 0 iff marker sum == 3
+        ("GT", "T0", "T2", "ZERO", 0),
+        ("GT", "T3", "ZERO", "T2", 0),
+        ("ADD", "T0", "T0", "T3", 0),        # 256 iff marker != 3
+        ("CONST", "T3", 0, 7, 2),            # 256
+        ("SUB", "T3", "T3", "T0", 0),        # 256 iff relay
+        ("MULQ", "EMIT", "T1", "T1", 0),     # 256 iff cue
+        ("MOV", "PAY0", "EMIT", 0, 0),
+        ("SEL", "PAY0", "T1", "IN0_0", 0),   # cue ? cue : received payload
+        ("MOV", "PAY1", "EMIT", 0, 0),
+        ("CONST", "CHAN", 0, 0, 3),          # scratch (C=1: channel 0)
+        ("CONST", "RPORT", 0, 0, 1),         # scratch (no plastic routing)
+        ("SEL", "PAY1", "CHAN", "RPORT", 0),  # cue ? 3 : 1
+        ("ADD", "EMIT", "EMIT", "T3", 0),
+        ("GT", "T0", "IN0_0", "ZERO", 0),
+        ("GT", "T2", "ZERO", "IN0_0", 0),
+        ("SUB", "T0", "T0", "T2", 0),        # arrival sign*256 or 0
+        ("MULQ", "T2", "T0", "T0", 0),
+        ("SUB", "T1", "T0", "S0", 0),
+        ("MULQ", "T1", "T1", "T2", 0),
+        ("ADD", "S0", "S0", "T1", 0),        # S0 := arrival sign where one arrived
+    ])
+
+
+def c1b_rule_physics() -> Physics:
+    return Physics(topology="ring", n_sites=16, radius=1, rules=2, setrule=1, prog_len=8,
+                   update_mode="sync", update_period=1, decay_shift=0, state_dim=1)
+
+
+def rule_switch_hold(ph: Physics) -> np.ndarray:
+    """HOLD solved ONLY through SETRULE: the cue sign selects the rule, and
+    each rule writes a fixed sign into S0 every tick. freeze_rule must kill
+    it (the positive control for C1b's R clause). -> genome [2, L, 5]."""
+    assert ph.rules == 2 and ph.setrule
+    r0 = assemble(ph, [
+        ("CONST", "T0", 0, 7, 1),            # 128
+        ("GT", "T1", "SENSE", "T0", 0),      # 256 on a + cue
+        ("SHR", "T1", "T1", 8, 0),           # 1 / 0
+        ("SETRULE", "T3", "T1", 0, 0),       # -> rule 1 on a + cue, else stay 0
+        ("CONST", "S0", 0, 7, -2),           # -256
+    ])
+    r1 = assemble(ph, [
+        ("CONST", "T0", 0, 7, -1),           # -128
+        ("GT", "T1", "T0", "SENSE", 0),      # 256 on a - cue
+        ("SHR", "T1", "T1", 8, 0),
+        ("CONST", "T2", 0, 0, 1),
+        ("SUB", "T1", "T2", "T1", 0),        # 0 on a - cue, else 1
+        ("SETRULE", "T3", "T1", 0, 0),
+        ("CONST", "S0", 0, 7, 2),            # +256
+    ])
+    return np.stack([r0, r1])
+
+
+def c1b_route_physics() -> Physics:
+    """Ring r2: ports 0 and 3 are at distance 2, ports 1 and 2 at distance 1
+    (topology.build offsets -2,-1,1,2). RELAY at d=2 puts the actuator on a
+    distance-2 port of the sensor, whichever side it is on."""
+    return Physics(topology="ring", n_sites=64, radius=2, dest_mode="sample", fanout=8,
+                   plastic_route=1, adapt_shift=0, lat_base=1, lat_hop=0, lat_jitter=0,
+                   loss=0.0, payload_width=1, channels=1, update_mode="sync",
+                   update_period=1, decay_shift=0, state_dim=3, prog_len=24)
+
+
+def route_relay(ph: Physics) -> np.ndarray:
+    """RELAY solved ONLY through plastic routing. During the 4 cue ticks the
+    sensor walks its 4 ports (counter S2) and writes w: a + cue opens the
+    distance-2 ports and closes the distance-1 ports; a - cue does the
+    opposite. From then on the sensor (role latch S1) pings every tick
+    through w. The actuator's S0 := +256 if a ping arrived this tick, else
+    -256. freeze_routing must kill it (the positive control for
+    freeze_routing's absence reading)."""
+    return assemble(ph, [
+        ("CONST", "T0", 0, 7, 1),            # 128
+        ("GT", "T1", "SENSE", "T0", 0),
+        ("SUB", "T2", "ZERO", "T0", 0),
+        ("GT", "T2", "T2", "SENSE", 0),
+        ("ADD", "T3", "T1", "T2", 0),        # 256 iff cue
+        ("SUB", "T1", "T1", "T2", 0),        # cue sign*256 or 0
+        ("MAX", "S1", "S1", "T3", 0),        # role latch: I am the sensor
+        ("MOV", "RPORT", "S2", 0, 0),        # port j = counter (mod R in the engine)
+        ("SHR", "T2", "S2", 1, 0),
+        ("XOR", "T2", "S2", "T2", 0),
+        ("CONST", "T0", 0, 0, 1),
+        ("MOD", "T2", "T2", "T0", 0),        # near = bit0 ^ bit1 of j (1 on ports 1, 2)
+        ("CONST", "T0", 0, 7, 255),          # BIG = 32640
+        ("SUB", "CHAN", "ZERO", "T0", 0),    # -BIG (scratch; C=1: channel 0)
+        ("MOV", "RVAL", "T2", 0, 0),
+        ("SEL", "RVAL", "CHAN", "T0", 0),    # near ? -BIG : +BIG
+        ("MULQ", "RVAL", "RVAL", "T1", 0),   # x cue sign; 0 outside the cue
+        ("SHR", "T2", "T3", 8, 0),
+        ("ADD", "S2", "S2", "T2", 0),        # counter++ on cue ticks
+        ("MOV", "EMIT", "S1", 0, 0),         # ping every tick once I am the sensor
+        ("CONST", "PAY0", 0, 7, 2),
+        ("GT", "T0", "CNT0", "ZERO", 0),
+        ("ADD", "S0", "T0", "T0", 0),
+        ("ADDI", "S0", "S0", 0, -256),       # +256 if a ping arrived, else -256
+    ])
+
+
+def c1b_da_physics() -> Physics:
+    """The D-A fixture: delay == delta (RELAY d=1, delta 4, latency 4)."""
+    return Physics(topology="ring", n_sites=24, radius=1, dest_mode="all", lat_base=4,
+                   lat_hop=0, lat_jitter=0, loss=0.0, update_mode="sync",
+                   update_period=1, decay_shift=0, prog_len=12)
