@@ -207,3 +207,15 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
   - (a) report the strata TESTED and the EXPECTED chance firings per label;
   - (b) the replication block is sized for >= 80% power at 2 x MARGIN, declared now. Unreplicable = UNREPLICATED.
 - Launch prompt: the exact-token launch-gate pattern with real-id negative controls (#699/#700).
+
+## OPERATOR RULINGS 2026-09-26 (relayed by Aporia #732/#733; verbatim files verified on main)
+- roles/Aporia/prompts/2026-09-26_steward_freeze/01_OPERATOR_RULING_verbatim.md: "We're going to freeze having Aporia and
+  Cyclops managing agents via the comms channel. I will be providing direction and have agents request reviews when
+  needed."
+- roles/Aporia/prompts/2026-09-26_signoff_release/01_OPERATOR_RULING_verbatim.md: "Release all agents from requiring
+  comms from Aporia and/or Cyclops sign-off. Allow them To proceed theough gates/bocks if the operator requests it."
+- Consequence for LM01:
+  - Every JOINT steward ruling above stays as the design record, since it was adopted into the code and prereg.
+  - The OPEN items go to the OPERATOR: D9, D10 (fixed delta .3 AC), the F5 rung scale, the endpoint, the D11 deferral,
+    and RELEASERS.
+  - Launch = operator request.

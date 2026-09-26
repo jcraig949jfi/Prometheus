@@ -76,8 +76,19 @@ LRT p = 0.42): each founder is an independent ~13% lottery ticket, s(k) = 1-(1-p
    (p = 4e-17) in 7ae3's cell.
 5. *But not across the panel* (C-ATOMIC C2, not confirmed: 1/120 vs 0/120). The other donors
    mostly cannot copy at all from a fresh state (X-DONOR-RATE: 7ae3 96%, two others 29%, twelve
-   0%). Donor copy competence is the first barrier; erosion is the second. Whether the other
-   cells permit runaway given a competent donor is under test (X-DONOR-SWAP).
+   0%). Donor copy competence is the first barrier; erosion is the second. Given a competent
+   donor (7ae3's genome, atomic write-back), 3 of 11 other cells permit runaway (X-DONOR-SWAP,
+   WEAK_SIGNAL: ffa6 4/8, 9cba 1/8, e160 1/8 vs own cell 3/8). The genome copies from a fresh state
+   only in 7ae3's cell and the near-identical ffa6 (0.955) and in no other cell (0.0): competence
+   belongs to the genome-cell pair. Exploratory; not confirmed. X-SWAP-ORIGIN: the 9cba and e160
+   runaways lie outside the founder's CERTIFIED causal lineage. X-ATOMIC-RANDOM then showed that in 7ae3's
+   cell a random implant never runs away (0/80 vs 46/80) and that genome runaways are 100% founder-descended
+   by ancestry: certification breaks inside the lineage, it does not mark native lineages. Whether the
+   foreign runaways are founder-descended: X-SWAP-ANCESTRY.
+6. *What is inherited* (X-CONTENT, X-CORE; **confirmed by C-CORE**): runaway populations are founder-descended in
+   lineage but carry only 13-25% founder bytes; the founder material that almost every member keeps is the two
+   world-op instructions, OP_SELF and LDIR (17/27 runaways by the frozen endpoint; position 23 in 27/27). Heredity
+   here conserves the replication machinery's key instructions and replaces the rest.
 
 ## 4. Defects found and handled
 

@@ -326,6 +326,71 @@ atomic write-back, runaway causal heredity in 46/80 vs 1/80 (Fisher p = 4e-17; d
 specimens reach depth 5 in neither arm. Scope of the confirmed claim: 7ae3's cell. Post hoc, the
 other donors rarely make even one causal copy (36/120 vs 9/120 runs with any), so erosion is the
 barrier only once copying starts. Localization: X-DONOR-RATE.
+X-DONOR-RATE (SIGNAL): fresh-state P-11 pass rate 7ae3 0.96, cb7f and 4931 0.29, twelve donors 0.0;
+donor copy competence is the first barrier, erosion the second. X-DONOR-SWAP (EXPLORE, WEAK_SIGNAL):
+7ae3's genome implanted into the 11 eligible foreign cells (ATOMIC, 8 seeds each) runs away in 3 of 11
+(ffa6 4/8, 9cba 1/8, e160 1/8; pooled 6/88) vs its own cell 3/8; the declared SIGNAL bar was 4 cells.
+The genome's fresh-state assay rate is 0.955 only in 7ae3 and ffa6 (which differ only in representation and
+structure) and 0.0 in the ten other cells: **competence is a property of genome x cell, not of the genome.**
+Post hoc (hypothesis only): 9cba and e160 ran away although the founder's assay rate there is 0, so descendants
+can acquire competence the founder lacks.
+**X-SWAP-ORIGIN (CLEAN_NULL) withdraws that post hoc:** replayed with founder causal-lineage tracking, the 9cba and
+e160 runaways are NATIVE (founder depth 8 and 1 vs world depth 120 and 110); in ffa6 2 of 4 are founder-rooted.
+**Scope note (endpoint):** `max_causal_replication_depth` is WORLD-level. In 7ae3's own cell the world depth far
+exceeds the founder lineage's depth in 2 of 3 runaways (382 vs 71, 386 vs 27). C-RUNAWAY, C-CRITICAL-MASS and
+C-ATOMIC C1 are therefore claims about heredity in the cell carrying the implant, not about the implant's own
+lineage, until audited on a founder-rooted endpoint (X-ROOT-AUDIT, for C-ATOMIC C1).
+**X-ROOT-AUDIT (WEAK_SIGNAL):** on the founder-rooted endpoint C-ATOMIC C1 is 12/80 vs 0/80 (p = 1.6e-4, gap 0.15;
+C1's 0.25 effect bar missed). 34 of the 46 ATOMIC runaways are carried by lineages outside the founder's causal
+lineage. The frozen C1 verdict stands for its declared world-level endpoint; the reading that erosion stops the
+IMPLANT's heredity is supported only at 12/80. Missing null under test: ATOMIC without the genome (X-ATOMIC-RANDOM).
+**X-ATOMIC-RANDOM (SIGNAL) reverses that qualification:** with a random 64-byte implant in place of the genome, ATOMIC
+gives 0/80 runaways vs 46/80 (p = 1.3e-18), and in every genome runaway 100% of the final population carries the
+founder's ancestry marker. The runaways ARE the implant's descendants; the P-11-certified causal chain from the
+founder breaks at uncertified births, so founder causal depth undercounts the lineage. C-ATOMIC C1 reads as stated.
+**Correction to X-SWAP-ORIGIN:** its NATIVE labels mean 'outside the certified causal lineage', not native ancestry;
+the random implant gave 0/8 runaways in 9cba and e160 too. The withdrawn post hoc is reopened, under test in
+X-SWAP-ANCESTRY. Open instrument question: which births break certification, and how often.
+**X-SWAP-ANCESTRY (SIGNAL):** all five foreign runaways are founder-descended (anc0 share 0.99-1.0), including
+9cba and e160 where the founder genome cannot copy from a fresh state. Exploratory (one run per cell). Under
+CONFIRM: C-SWAP-ACQUIRE (240 fresh seeds per arm vs random implant). Mechanism under test: X-ACQUIRE.
+**C-SWAP-ACQUIRE NOT CONFIRMED** (frozen at 82b6caeb3): 9/240 vs 0/240 founder-descended runaways, p = 0.0018; the
+rule needed 10 vs 0. The claim is not made. X-ACQUIRE (WEAK_SIGNAL): 9-15% (lower bound) of the runaway populations
+carry genomes that copy from a fresh state where the founder cannot. **Caveat on every anc-based statement above:** the
+most frequent descendant genomes differ from the founder at 58-62 of 64 bytes. anc == 0 passes through overwrite
+events, so 'founder-descended' may mean slot lineage, not inherited content; byte-level provenance (z8taint) is next.
+**X-CONTENT (WEAK_SIGNAL) answers it:** in anc-descended runaway populations only a minority of bytes is founder material
+(z8taint, median 13% in 7ae3's cell, 25% in 9cba/e160; anc0 share ~1.0 everywhere), and in 17 of 19 populations no organism
+is even half founder bytes. **Every 'founder-descended' statement above (X-ATOMIC-RANDOM, X-SWAP-ANCESTRY, C-SWAP-ACQUIRE's
+endpoint) is lineage descent, not content inheritance.** What IS required is the genome at the start (random implant 0/80,
+0/240). Where the surviving founder bytes sit: X-CORE.
+X-CORE (WEAK_SIGNAL; the declared contiguous-core rule failed): post hoc, in all 5 own-cell runaways the founder bytes kept by
+>= 80% of the population include exactly the two world-op instructions, ED 32 (OP_SELF, positions 23-24) and ED B0 (LDIR,
+52-53), with most other bytes turned over. Hypothesis only; under CONFIRM in C-CORE (64 fresh seeds).
+**C-CORE CONFIRMED (frozen at 1c982e7e7, 64 fresh seeds):** in 7ae3's cell with atomic write-back, runaway pair-tape
+heredity conserves the founder's two world-op instructions as MATERIAL -- OP_SELF (ED 32, positions 23-24) and LDIR
+(ED B0, 52-53) -- and little else: 17/27 runaways meet the frozen CORE4-and-SPECIFIC endpoint (bar 60%); position 23 is
+conserved in 27/27, 52 in 23/27, and no other position in more than 13/27. What is inherited in a runaway is the
+self-location and copy instructions; the rest of the founder is replaced. Scope: 7ae3's cell, ATOMIC, single founder;
+thin margin over the bar.
+Interpretation limits (steward note, Aporia #621, accepted): C-CORE is exactly what PURIFYING SELECTION on a functional
+core plus drift elsewhere predicts; it is not evidence for any stronger account, and calling SELF/LDIR "relevant" because
+they survived would be circular. Provenance: C-CORE was frozen (19:53Z) after this seat read the selective-irreversibility
+directive (18:57Z), so under that program's date rule it is THEORY-AWARE; my #620 called it theory-blind, which was wrong.
+X-CORE-TIME (EXPLORE, SIGNAL, theory-aware): the core is HELD, not re-fixed -- in 7 of 8 runaways SELF+LDIR stay at ~0.99
+from epoch ~200 while all other founder material falls to 0 by epoch 300-900; one run shows a late sweep instead.
+Same limit as above: this is the purifying-selection trajectory.
+**Instrument note, X-CERT-BREAK (WEAK_SIGNAL):** inside runaway lineages ~5-16% of replication events are not P-11
+certified (mostly C2 + C4 failing: partial copies do not rebuild a randomized victim); one run 45%. A per-edge break
+rate p caps an unbroken certified chain from a fixed root at ~1/p generations, which is exactly the observed founder
+causal depth (5-22). So 'founder-rooted' (founder_depth >= 20) in X-SWAP-ORIGIN / X-ROOT-AUDIT measured the luck of a
+long unbroken run, not a different kind of heredity; lineage questions should use anc plus material (z8taint), and
+chain-depth endpoints should be read against the break rate.
+**SI framing withdrawn (operator directive 2026-09-26, prompts/2026-09-26_direct_operator_control/):** C-CORE,
+X-CORE-TIME and the rest of this chain keep their original Nestor questions, verdicts and provenance (theory-aware by
+date). They are NOT offered as Selective-Irreversibility evidence: X-CORE-TIME's docstring sentence "bears on the
+selective-irreversibility program" and my comms #620 to Aporia retrofitted them, and both are withdrawn as claims of
+relevance. SI relevance, if any, is for the operator to adjudicate separately.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---

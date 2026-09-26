@@ -1,10 +1,37 @@
 # Nestor status -- Cycle-9 campaign (autonomous loop)
 
-Currency: 2026-09-25 ~07:20 EDT (pre-reboot save). Charter: budgeted autonomous scientific loop
-(RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**
-(`python graph.py open`); the last line per id wins. FINDINGS section E has every promoted
-claim (E-6..E-10). Consolidated report:
-`campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
+Currency: 2026-09-26 07:15 EDT. **Budget window CLOSED** (48 wall-h + 55 min reboot extension, ended
+2026-09-26 07:42 EDT). Graph: no open nodes (`python graph.py open` is empty; C9-H4 stays WITHHELD).
+Nothing running. The loop is at rest, not retired. Charter: budgeted autonomous scientific loop
+(RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**; the last line per id wins.
+Report: `campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
+
+## WINDOW CLOSE (2026-09-26)
+
+Post-reboot session (instance m1-7438ee6f), 09-25 08:14 -> 09-26 07:42:
+- **Confirmed:** C-CORE. Runaway heredity in 7ae3's cell conserves the founder's OP_SELF + LDIR
+  instructions as material, and little else: 17/27, bar 60%. Aporia #621 limits the reading: it is
+  what purifying selection predicts, and it is theory-aware by date.
+- **Not confirmed:** C-SWAP-ACQUIRE, 9/240 vs 0/240, p = 0.0018; the rule needed 10.
+- **Corrections of this seat's own readings:**
+  - X-SWAP-ORIGIN "NATIVE" was lineage outside the certified chain, not native ancestry.
+  - anc "founder-descended" is lineage descent, not content inheritance (X-CONTENT: 13-25% founder bytes).
+  - Founder causal depth is capped by a ~10% per-edge P-11 break rate (X-CERT-BREAK).
+- **Children closed:**
+  - X-DONOR-SWAP, X-SWAP-ORIGIN, X-ROOT-AUDIT, X-ATOMIC-RANDOM, X-SWAP-ANCESTRY, X-ACQUIRE;
+  - X-CONTENT, X-CORE, X-CORE-TIME, X-CERT-BREAK.
+- **Delegation:** C3 holdout D for Cosmos (#561) was sealed and pushed (commitment ae4479c6...57ac,
+  a56ef7787) and reported in #599. It awaits Cosmos predictions. No outcomes have been run.
+- **Waiting on others:**
+  - CONTROL (operator directive 2026-09-26, prompts/2026-09-26_direct_operator_control/): operator +
+    ChatGPT -> Nestor -> evidence -> operator adjudication. Aporia/Cyclops are advisory only. No new
+    SI / program-level campaign without explicit operator authorization; proposals are allowed;
+  - Cosmos predictions for D;
+  - the operator: merge nestor/s1-forensics-2026-09-23 to main (asked 09-25 ~18:00, unanswered);
+  - stale queued delegations #285, #448, #471/#474 (not acted on this session).
+- **Open branches if a new window is granted** (none started):
+  - e160 coverage of X-CORE;
+  - an SI knockout + purifying-selection null (Aporia #621 s3; non-binding since #732), only on operator direction.
 
 ## RESUME AFTER REBOOT (2026-09-25, operator directive `prompts/2026-09-25_reboot_resume/`)
 
@@ -28,12 +55,12 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 4. Budget: window ends 2026-09-26 06:47 EDT (48 h from 09-24 06:47), <= 12 workers, 20% reserve.
    Whether the reboot downtime counts against it is an OPEN operator question (below).
 
-### Questions pending for the operator (ask these right after bootstrapping)
-- Q1 Budget clock: does the reboot/upgrade downtime count against the 48 h window (ends
-  2026-09-26 06:47), or should the window be extended by the downtime?
-- Q2 Housekeeping, no decision needed unless you object: eight disabled one-shot schtasks
-  (NestorCCM, NestorDC, NestorTK, NestorDK, NestorSR, NestorAT, NestorCAT, NestorDS) remain; I will
-  delete them after X-DONOR-SWAP completes.
+### Operator rulings on the reboot questions (2026-09-25 08:16)
+- Q1 Budget clock: **extend by the downtime**. Downtime 07:20 -> 08:15 (55 min); window now ends
+  **2026-09-26 07:42 EDT**.
+- Q2 Housekeeping: **keep** the eight disabled one-shot schtasks; do not delete them.
+- X-DONOR-SWAP was killed by the reboot at 66/96 (no EXIT line); resumed 08:15 via NestorDS
+  (enable, run, disable).
 - FYI (not my lane, not worked around): Harmonia reports test_base_role RED on origin/main
   (Nyx manifest mismatch; Ananke MONITORS row); the merge of this branch does not touch it.
 
@@ -41,7 +68,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | item | value |
 |---|---|
-| window | 48 wall-h, 2026-09-24 06:47 -> 2026-09-26 06:47 EDT (about 23.5 h left at 07:20 on 09-25) |
+| window | 48 wall-h + 55 min reboot downtime (operator Q1), 2026-09-24 06:47 -> **2026-09-26 07:42 EDT** |
 | concurrency cap | 12 workers |
 | reserve | 20% |
 | external spend | none |
@@ -61,6 +88,7 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
   - **C-RUNAWAY**: the recombination splice prevents runaway pair-tape heredity
     (7/150 vs 0/150, p = 0.007).
   - **C-ATOMIC C1**: tape-write erosion stops pair-tape heredity in 7ae3's cell (46/80 vs 1/80); C2 generality NOT confirmed.
+  - **C-CORE**: runaway heredity in 7ae3's cell conserves the founder's SELF + LDIR instructions as material, little else (17/27, bar 60%).
   - **C-CRITICAL-MASS**: with the splice off, heredity is establishment-limited (41/80 vs 5/80).
 - Not confirmed: C-NORECOMB (threshold endpoint); energy-for-depth arm of C-ABLATE.
 - Chain since C-CRITICAL-MASS: X-DOSE-CURVE null (independent founders) -> X-TICKET (copying stops by ~epoch 12) -> X-DECAY (in-place mutation minor) -> X-STALL (members sterile) -> X-STERILE (fertile at birth) -> X-STALL-F0 (tape-write erosion ~25x nominal) -> X-ATOMIC SIGNAL (36/64 vs 3/64 runaways).
@@ -70,7 +98,8 @@ Worktree `F:/Prometheus-worktrees/nestor-s1-forensics`, branch `nestor/s1-forens
 
 | experiment | lane | what |
 |---|---|---|
-| X-DONOR-SWAP | EXPLORE | 7ae3 genome in 11 foreign panel cells + own-cell control, ATOMIC, 8 seeds each; schtask NestorDS; 44/96 at 07:17 |
+| (none) | | X-CERT-BREAK closed 17:55 (WEAK_SIGNAL; founder depth capped by ~10% per-edge break rate). Chain at a natural pause: next is the SI lane when stewards map it, or a campaign-report consolidation |
+| C3-D (Cosmos #561) | DELEGATION | SEALED + pushed 2026-09-25: commitment ae4479c6...57ac, commit a56ef7787, report 5e05307b2 (branch nestor/c3-holdout-d-2026-09-25); reported to Cosmos #599. Awaiting Cosmos predictions; no outcomes run |
 
 Child experiments live in `campaigns/c9x-explore-2026-09-24/<id>/`. Each is declared, and
 committed, before it runs.
