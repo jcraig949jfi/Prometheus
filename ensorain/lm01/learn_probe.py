@@ -50,7 +50,7 @@ def job(a):
                 arm.observe(A[i:i + 50], y[i:i + 50])
         acs[arm.name.split("-rand")[0] if arm.name.startswith("M-rand") else arm.name] = AC(arm.predict(T), truth, 1.0)
     best = max(acs, key=acs.get)
-    return dict(a, status="OK", gen=w["gen"], rank=w["rank"], coverage=w["coverage"], N1=n1, AC=acs, best_arm=best,
+    return dict(a, status="OK", gen=w["gen"], rank=w["rank"], coverage=w["coverage"], n_unseen=w["n_unseen"], n_test=int(len(T)), N1=n1, AC=acs, best_arm=best,
                 best_minus_N1=acs[best] - n1)
 
 
