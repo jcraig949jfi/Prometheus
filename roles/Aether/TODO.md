@@ -1,15 +1,56 @@
 # Aether TODO
 
-Currency: **2026-09-25.** Written for the instance that boots after a
+Currency: **2026-09-26.** Written for the instance that boots after a
 context reset, a reboot, or a Claude Code upgrade. Read this AFTER the
 base-role chain and BEFORE starting anything.
 
-Branch: `aether/aeth02-native-circuitry-2026-09-23`. Check
-`git log --oneline origin/main -1` before assuming where main is.
+Check `git log --oneline origin/main -1` before assuming where main is.
+Cut a fresh task branch from origin/main; the 09-26 branches
+(`aether/aeth03-physics-2026-09-26`, `aether/runpod-iter2-2026-09-26`)
+are integrated.
 
 ---
 
-## THE ONE OPEN MISSION
+## CURRENT DIRECTIVE (2026-09-26) -- supersedes "THE ONE OPEN MISSION" below
+
+    roles/Aether/prompts/2026-09-26_resume_science/DIRECTIVE.md
+    python -m comms.manifest verify roles/Aether/prompts/2026-09-26_resume_science
+
+Three lanes in parallel. No other seat's approval is needed; comms is for
+coordination, never a permission gate. Report the lanes separately:
+infrastructure progress is not science, and a science null is not an
+infrastructure failure.
+
+1. **RunPod ladder** -- still the primary operational mission.
+   Iteration 2 DONE (below). **Next: Iteration 3** (long run + failure
+   injection). Iteration 2's leftovers: scout -> plan -> campaign is
+   three commands with no chaining or automatic re-scout on refusal; the
+   watch poll does not tighten near expected end; the 6-305 s dependency
+   install variance is unexplained; the pinned-A4000 3000-matmul plan
+   never flew (capacity).
+2. **AETH-02: fully CLOSED 2026-09-26.** H2 closed (null-model defect +
+   energy supply, causally tested); H3 closed as a question (opcode and
+   arg1 mechanisms, one tested). The two "loose ends" listed further down
+   are DONE -- do not rerun them. **Stop mining aeth01.v1.**
+3. **AETH-03 physics design.** Read
+   `Aether/AETH-03/PHYSICS_DESIGN_01_2026-09-26.md` first. Ladder 1
+   (add/hys/chg/cnd/str): four killed, `add` unresolved and mostly
+   trivial; no scale-up. The finding that sets the next round: **the
+   substrate lacks propagation** (a one-bit difference stays within ~1
+   site for 500 ticks in every law tried). **Next: ladder 2** -- `mov`,
+   `rcv`, `m4` as proposed in s8 of that document: write their
+   preregistered thresholds FIRST, commit, then scout with
+   `Aether/observatory/aeth03_scouts.py` (add the variants to
+   `aeth03_variants.py` with a fixture test each; the v1 bit-identity test
+   must stay green).
+
+**BUCKKEEP is an i7-1260P laptop.** At 512^2 more than ~3 concurrent
+NumPy jobs thrash the cache and every job slows ~10x; run scouts at
+BelowNormal priority and keep 512^2 jobs to two.
+
+---
+
+## THE ONE OPEN MISSION (2026-09-24/25; superseded by the block above)
 
 **THE RUNPOD ENGINEERING LADDER IS THE PRIMARY MISSION.** The operator
 said so on 2026-09-24: *"The reusable GPU platform is now the primary
@@ -21,7 +62,9 @@ mission."* AETH-02 science is **closed**; do not reopen it.
     python -m comms.manifest verify \
         roles/Aether/prompts/2026-09-24_runpod_engineering_ladder
 
-**Budget: $5.00 total campaign. SPENT: $0.124. Remaining: $4.876.**
+**Budget: $5.00 total campaign. SPENT: $0.2055 (after Iteration 2).
+Remaining: $4.7945.** Iteration 2 figures are wall time x quoted rate, not
+billing-reconciled.
 
 ### Where the ladder stands
 
@@ -29,8 +72,8 @@ mission."* AETH-02 science is **closed**; do not reopen it.
 |:--|:--|
 | 0 — zero-dollar dry run | **DONE**, $0.00 |
 | 1 — one tiny pod end to end | **DONE and PASSED**, $0.124, 6 attempts |
-| 2 — scale up | **NEXT** |
-| 3 — long run + failure injection | not started |
+| 2 — scale up | **DONE**, $0.0815, 6 flights (4 OK, 2 NOT_RUN no-capacity, $0). Report: `Aether/RUNPOD_ENGINEERING_02_2026-09-26.md`. Provision now measured (pod up 2.1-22 s after create; most of Iteration 1's "24 s" was proxy 404 time); overhead 97% -> ~5%; 8 MiB artifacts at ~5 MB/s, sha256 verified; scout path flown, calibrated estimate 5.9% high vs actual. Playbook entries 19-22. |
+| 3 — long run + failure injection | **NEXT** |
 | 4 — 2–3 pod fan-out | not started |
 | 5 — a foreign seat's module | not started |
 
@@ -42,7 +85,7 @@ Entry point for any seat: `Aether/runpod/README.md`. Do not start by
 reading the platform source; the guide is meant to be sufficient, and if
 it is not, that is the defect to fix.
 
-### Iteration 2: what to do, and why these axes
+### Iteration 2: what to do, and why these axes (DONE 2026-09-26; kept as history)
 
 The directive requires each rung to increase at least one axis and leave
 reusable machinery behind. Iteration 1's own measurements point at three:

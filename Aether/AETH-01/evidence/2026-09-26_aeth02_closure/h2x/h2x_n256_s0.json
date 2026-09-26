@@ -1,0 +1,58 @@
+{
+ "arms": {
+  "CUT": {
+   "16": 0.9325,
+   "32": 0.8525,
+   "64": 0.7625,
+   "128": 0.6225,
+   "200": 0.515
+  },
+  "NONE": {
+   "16": 0.935,
+   "32": 0.87,
+   "64": 0.8075,
+   "128": 0.6925,
+   "200": 0.595
+  },
+  "SHAM": {
+   "16": 0.935,
+   "32": 0.87,
+   "64": 0.8075,
+   "128": 0.6925,
+   "200": 0.595
+  }
+ },
+ "falsified": true,
+ "feeders_cut": 62,
+ "n": 256,
+ "observation": {
+  "all_sites": {
+   "energy_mean": 84.14633178710938,
+   "fed_fraction_last64": 0.01299142837524414,
+   "fed_now": 0.0129852294921875
+  },
+  "persistent": {
+   "edges": 1000,
+   "run_gt_255": 654,
+   "run_gt_255_source_fed_fraction_last64": 0.15350248470948014,
+   "source_energy_mean": 93.671,
+   "source_fed_fraction_last64": 0.14484375,
+   "source_fed_now": 0.137
+  },
+  "short": {
+   "edges": 7450,
+   "run_gt_255": 0,
+   "run_gt_255_source_fed_fraction_last64": null,
+   "source_energy_mean": 6.6648322147651005,
+   "source_fed_fraction_last64": 0.004177852348993288,
+   "source_fed_now": 0.0044295302013422815
+  }
+ },
+ "post_hoc": true,
+ "sampled_persistent_edges": 400,
+ "seed_index": 0,
+ "semantics": "aeth01.v1",
+ "sham_lesions": 62,
+ "sources_with_a_feeder": 62,
+ "warmup": 2500
+}
