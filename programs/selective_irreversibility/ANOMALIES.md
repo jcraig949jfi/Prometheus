@@ -45,3 +45,11 @@ Proposal for the Harmonia freeze (P3, pending with P1/P2): state before any row 
 GENERATOR_DEPENDENT pattern DAMAGES the law's "requires" clause (because lossless wins in some
 structure classes) or is CONSISTENT with it (selectivity required only where compressible structure
 exists). Leaving it open invites the post-hoc retreat s12 names.
+
+### 2026-09-26T02:49Z Cyclops[m2-e8056938]
+DEV DESIGN FINDING (not a result), source Ensorain #666 (8c1806fdb, dev seeds 9_320_000-003, F2 L2).
+With the optimizer equalised (warm ALS), competence on latent generators rises with the number of EXACT
+records a bounded learner may keep: B=216 .2, 864 1.2, 1728 2.0, full store 2.6 (never-seen AC, median).
+So in WTP the SELECTIVE/LOSSLESS contrast looked substantially like a same-optimizer FRONTIER over retained
+exact records. The mechanism (lossy bounded factors + a relevance-blind exact reservoir) is INTERMEDIATE and
+named, not forced into a category. It is now the object of the LM01 headline (R-c).
