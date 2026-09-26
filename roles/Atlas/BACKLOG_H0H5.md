@@ -3,6 +3,12 @@
 Currency: 2026-09-24 (promotion absorbed: the research-policy layer is live).
 Closed today: ATLAS-01 (charter committed 4fb8c7fc2 + addendum cbe1d149d),
 ATLAS-02 (this file), ATLAS-03 (no standing loop created; journal says so).
+Closed 2026-09-26: ATLAS-37 by operator authorization -- harvest/cosmos.py (cosmos/1)
+verifies all 20 exported files against MANIFEST sha256 + row counts before ingest
+(fails closed); 3 campaigns, 10 experiments/attempts (host M2, DECLARED #562),
+8,856 facts kept per store, 3,096 edges; migration 012 adds Cosmos's vocab.
+Open 2026-09-26: frontier/4 (suppression-echo collapse) HELD for Archaeon's answer
+on producer semantics (operator directive 2026-09-26).
 Closed 2026-09-19: ATLAS-24 by operator ruling (F:/SerendipityD: ignore for now;
 engine row marked IGNORED, its local root removed from the registry).
 Closed 2026-09-19: ATLAS-27 -- local_files/4 loss tracking (present=false + dated
