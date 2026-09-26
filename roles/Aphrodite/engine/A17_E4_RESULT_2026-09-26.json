@@ -1,0 +1,202 @@
+{
+ "F3_star_substitutions": [
+  {
+   "certificate_PASS": true,
+   "index": 6,
+   "original": [
+    "fold",
+    "0",
+    "(acc + (v * v))",
+    "(acc + last)"
+   ],
+   "replacement": [
+    "fold",
+    "0",
+    "(acc - (v * v))",
+    "(last - acc)"
+   ]
+  }
+ ],
+ "S1_NECESSITY": "SUPPORTED",
+ "body_only_recovered": 0,
+ "results": {
+  "F1/BODY_ONLY": {
+   "RECOVERED": false,
+   "certificates": [],
+   "derived": [],
+   "selected": "INHERITED",
+   "table": {
+    "INHERITED": {
+     "eligible": false,
+     "lower95_one_sided": 0.0,
+     "mean_paired_saving": 0
+    },
+    "MEMORISE": {
+     "eligible": false,
+     "lower95_one_sided": -1789.26,
+     "mean_paired_saving": -1440
+    }
+   }
+  },
+  "F1/WHOLE": {
+   "RECOVERED": true,
+   "certificates": [
+    {
+     "PASS": true,
+     "bucket": "207834920656f1f8abfd3b68e0202cd852eb7cbf510a67488e8f9dccb6a83c65",
+     "sub_buckets": 1
+    },
+    {
+     "PASS": true,
+     "bucket": "2a461b4cac157534912aea34ab1b7891287d38a36eee61c752b0f6b0123ded52",
+     "sub_buckets": 1
+    },
+    {
+     "PASS": true,
+     "bucket": "4f563efd33219ccb5f41bbc3fac43e7e23879c6736f033ee7a390ee9ee6a291e",
+     "sub_buckets": 1
+    }
+   ],
+   "derived": [
+    "(acc + {H})"
+   ],
+   "selected": "SCHEMA_0",
+   "table": {
+    "INHERITED": {
+     "eligible": false,
+     "lower95_one_sided": 0.0,
+     "mean_paired_saving": 0
+    },
+    "MEMORISE": {
+     "eligible": false,
+     "lower95_one_sided": -2982.1,
+     "mean_paired_saving": -2400
+    },
+    "SCHEMA_0": {
+     "eligible": true,
+     "lower95_one_sided": 70025.55,
+     "mean_paired_saving": 99997.42
+    }
+   }
+  },
+  "F2/BODY_ONLY": {
+   "RECOVERED": false,
+   "certificates": [],
+   "derived": [],
+   "selected": "INHERITED",
+   "table": {
+    "INHERITED": {
+     "eligible": false,
+     "lower95_one_sided": 0.0,
+     "mean_paired_saving": 0
+    },
+    "MEMORISE": {
+     "eligible": false,
+     "lower95_one_sided": -894.63,
+     "mean_paired_saving": -720
+    }
+   }
+  },
+  "F2/WHOLE": {
+   "RECOVERED": true,
+   "certificates": [
+    {
+     "PASS": true,
+     "bucket": "207834920656f1f8abfd3b68e0202cd852eb7cbf510a67488e8f9dccb6a83c65",
+     "sub_buckets": 1
+    },
+    {
+     "PASS": true,
+     "bucket": "4f563efd33219ccb5f41bbc3fac43e7e23879c6736f033ee7a390ee9ee6a291e",
+     "sub_buckets": 1
+    }
+   ],
+   "derived": [
+    "(acc + {H})"
+   ],
+   "selected": "SCHEMA_0",
+   "table": {
+    "INHERITED": {
+     "eligible": false,
+     "lower95_one_sided": 0.0,
+     "mean_paired_saving": 0
+    },
+    "MEMORISE": {
+     "eligible": false,
+     "lower95_one_sided": -1789.26,
+     "mean_paired_saving": -1440
+    },
+    "SCHEMA_0": {
+     "eligible": true,
+     "lower95_one_sided": 65736.68,
+     "mean_paired_saving": 100377.75
+    }
+   }
+  },
+  "F3/BODY_ONLY": {
+   "RECOVERED": false,
+   "certificates": [],
+   "derived": [],
+   "selected": "INHERITED",
+   "table": {
+    "INHERITED": {
+     "eligible": false,
+     "lower95_one_sided": 0.0,
+     "mean_paired_saving": 0
+    },
+    "MEMORISE": {
+     "eligible": false,
+     "lower95_one_sided": -1866.76,
+     "mean_paired_saving": -1530
+    }
+   }
+  },
+  "F3/WHOLE": {
+   "RECOVERED": true,
+   "certificates": [
+    {
+     "PASS": true,
+     "bucket": "207834920656f1f8abfd3b68e0202cd852eb7cbf510a67488e8f9dccb6a83c65",
+     "sub_buckets": 1
+    },
+    {
+     "PASS": true,
+     "bucket": "2396390795510dce296465d093ce9a5be61ec9cbc2dbd98b851f879bb457ac8d",
+     "sub_buckets": 1
+    },
+    {
+     "PASS": true,
+     "bucket": "27c7d7c5e76680c5d9bd6c8bf210a277604b799d285b9138829ac0c06924762d",
+     "sub_buckets": 1
+    },
+    {
+     "PASS": true,
+     "bucket": "7467bc893fe5b98b5061a8b993213a7dc7669461847e5c9470510b371bdaa1d0",
+     "sub_buckets": 1
+    }
+   ],
+   "derived": [
+    "(acc + {H})"
+   ],
+   "selected": "SCHEMA_0",
+   "table": {
+    "INHERITED": {
+     "eligible": false,
+     "lower95_one_sided": 0.0,
+     "mean_paired_saving": 0
+    },
+    "MEMORISE": {
+     "eligible": false,
+     "lower95_one_sided": -8400.41,
+     "mean_paired_saving": -6885
+    },
+    "SCHEMA_0": {
+     "eligible": true,
+     "lower95_one_sided": 61151.6,
+     "mean_paired_saving": 94212.17
+    }
+   }
+  }
+ },
+ "whole_recovered": 3
+}
