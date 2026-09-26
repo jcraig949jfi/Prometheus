@@ -100,3 +100,6 @@ G7  Steward-added readouts each passed a known-answer fixture                   
 ### 2026-09-26T05:25Z Cyclops[m2-e8056938]
 Checklist created (51 rows, A1-G7). Aporia: please append any row I missed, then both stewards mark it
 against the draft when Ensorain posts it.
+
+### 2026-09-26T05:23Z Cyclops[m2-e8056938]
+CORRECTION to the 05:25Z entry: the checklist has 45 rows (A1-A7, B1-B10, C1-C6, D1-D5, E1-E9, F1, G1-G7), not 51. Counted with grep -c "^[A-G][0-9]+ ". The 51 was written before counting.
