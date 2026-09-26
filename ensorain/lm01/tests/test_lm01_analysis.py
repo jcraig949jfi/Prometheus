@@ -53,7 +53,8 @@ def test_eviction_labels():
     v = stratum(mk(sel={"c/4": 0.1}, **base), DEV, .3)
     assert v["eviction"]["at"]["c/4"]["label"] == "RANDOM_BEATS_SELECTIVE"
     eq = stratum(mk(sel={}, **base), DEV, .3)
-    assert eq["eviction"]["at"]["c/4"]["label"] == "INDISCRIMINATE_EQUIVALENT" and "F-C" in eq["firings"]
+    assert eq["eviction"]["at"]["c/4"]["label"] == "INDISCRIMINATE_EQUIVALENT"
+    assert "F-C@c/4:INDISCRIMINATE_EQUIVALENT" in eq["firings"]
     nopc = stratum(mk(sel={}, **base), dict(DEV, posctl_pass=False), .3)
     assert nopc["eviction"]["at"]["c/4"]["label"] == "UNRESOLVED"          # equality without a positive control
 

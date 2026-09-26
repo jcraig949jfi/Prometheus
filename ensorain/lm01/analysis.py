@@ -127,9 +127,13 @@ def stratum(rows, dev, d):
     firings = []
     if h["label"] == "COUNTERMODEL_SIGNAL":
         firings.append("F-B")
-    if e["label"] in ("INDISCRIMINATE_EQUIVALENT", "RANDOM_BEATS_SELECTIVE"):
-        firings.append("F-C")
-    supports = [x for x in (s["label"], e["label"]) if x in ("SELECTIVE_ADVANTAGE", "RESERVOIR_SELECTIVE_ADVANTAGE")]
+    # each eviction B point (c/4, c) is its own reading (PREREG 6.3/6.7): fires / supports are named with the point
+    for g, a in e.get("at", {}).items():
+        if a["label"] in ("INDISCRIMINATE_EQUIVALENT", "RANDOM_BEATS_SELECTIVE"):
+            firings.append(f"F-C@{g}:{a['label']}")
+    supports = [s["label"]] if s["label"] == "SELECTIVE_ADVANTAGE" else []
+    supports += [f"RESERVOIR_SELECTIVE_ADVANTAGE@{g}" for g, a in e.get("at", {}).items()
+                 if a["label"] == "RESERVOIR_SELECTIVE_ADVANTAGE"]
     return dict(n=len(ok), headline=h, secondary=s, eviction=e, hybrid=y, NULL=null, firings=firings,
                 supports_pending_replication=supports, n_rep=dev.get("n_rep"), replicable=dev.get("replicable"),
                 visits_per_cell=dev.get("visits_per_cell"))
@@ -148,12 +152,13 @@ def analyse(campaign_dir, dev_path=os.path.join(HERE, "dev", "margins_reduced_v2
     for lab, getter in (("COUNTERMODEL_SIGNAL", lambda v: v["headline"]["label"]),
                         ("LOSSLESS_TRANSIENT_CONTRACTION", lambda v: v["headline"]["label"]),
                         ("SELECTIVE_ADVANTAGE", lambda v: v["secondary"]["label"]),
-                        ("INDISCRIMINATE_EQUIVALENT", lambda v: v["eviction"]["label"]),
-                        ("RANDOM_BEATS_SELECTIVE", lambda v: v["eviction"]["label"]),
-                        ("RESERVOIR_SELECTIVE_ADVANTAGE", lambda v: v["eviction"]["label"]),
                         ("HYBRID_REQUIRED", lambda v: v["hybrid"]["label"])):
         fired = [k for k in tested if getter(gov[k]) == lab]
-        mult[lab] = dict(tested=len(tested), fired=len(fired), expected_by_chance=round(0.05 * len(tested), 2), strata=fired)
+        mult[lab] = dict(readings=len(tested), fired=len(fired), expected_by_chance=round(0.05 * len(tested), 2), strata=fired)
+    for lab in ("INDISCRIMINATE_EQUIVALENT", "RANDOM_BEATS_SELECTIVE", "RESERVOIR_SELECTIVE_ADVANTAGE", "SELECTIVE_BUYS_BYTES"):
+        pts = [(k, g) for k in tested for g, a in gov[k]["eviction"].get("at", {}).items() if a["label"] == lab]
+        n_pts = sum(len(gov[k]["eviction"].get("at", {})) for k in tested)
+        mult[lab] = dict(readings=n_pts, fired=len(pts), expected_by_chance=round(0.05 * n_pts, 2), points=pts)
     agg = {}
     for k in tested:
         f, l, g = k.split("|")

@@ -1,7 +1,9 @@
 # PREREG_WTP_LM01 -- Lossless Memorizer Challenge (v0.3)
 
-Seat: Ensorain[m2-32b65655], M2. Status line (set at the freeze): FROZEN v0.3 when committed by the freeze commit named in
-ensorain/lm01/FREEZE.json. The per-stratum numbers are in PREREG_WTP_LM01_TABLES.md (generated, frozen with this file).
+Seat: Ensorain[m2-32b65655], M2. STATUS: FROZEN v0.3. The freeze commit is the commit that introduced this line. Its
+full SHA and the hash of every frozen file are recorded in ensorain/lm01/FREEZE.json, committed right after. The
+per-stratum numbers are in PREREG_WTP_LM01_TABLES.md (generated; frozen with this file). No campaign row exists at the
+freeze.
 
 Authority and provenance:
 - Directive: roles/Ensorain/prompts/2026-09-25_wtp_lm01_directive/ (Cyclops; sha256 ab204631...).
@@ -120,7 +122,9 @@ The candidate law is s1 of the program directive (frozen text held by Harmonia).
   - SELECTIVE_ADVANTAGE: some ladder point at <= bytes and <= reads WINS over the frozen LOSSLESS.
   - COUNTERMODEL_SIGNAL (secondary): LOSSLESS WINS over EVERY ladder point at <= LOSSLESS bytes. An L-R choice is
     labelled LOSSLESS_TRANSIENT_CONTRACTION.
-6.3 EVICTION: RESERVOIR-SELECTIVE (the frozen candidate) vs RESERVOIR-RANDOM at B = c/4 and c.
+6.3 EVICTION: RESERVOIR-SELECTIVE (the frozen candidate) vs RESERVOIR-RANDOM at B = c/4 and c. EACH B POINT IS ITS OWN
+    READING: labels, falsifier firings and supports are named with the point (e.g. F-C@c/4). Multiplicity counts both
+    points.
   - Read (i) at matched B and (ii) at matched HR2 (random B interpolated; 3 seeds; bytes charged).
   - INDISCRIMINATE_EQUIVALENT: EQUIVALENT under (i) AND (ii), plus E6 positive control PASS.
   - SELECTIVE_BUYS_BYTES: a WIN at (i) only.
@@ -188,8 +192,9 @@ dev/margins_reduced_v2.json; rules in ensorain/lm01/margins_reduce_v2.py).
 
 ## 10. Campaign size, runtime, concurrency
 
-- N = 48 worlds per TESTABLE stratum. The count of TESTABLE strata and the compute estimate are in the TABLES.
-- Plus replication blocks (N_REP per firing stratum).
+- N = 48 worlds per TESTABLE stratum. 41 TESTABLE strata gives 1,968 campaign worlds.
+- Compute estimate from the dev walls: ~72 worker-hours = ~9 h wall at 8 workers.
+- Plus replication blocks (N_REP per firing stratum: 8-58 worlds each; TABLES).
 - Concurrency: 8 workers, 1 BLAS thread, BELOW_NORMAL priority, a stop at < 6 GB free RAM, rows written per stratum
   from Python, start/end logged.
 - M2 must be free of other heavy jobs at launch (checked by process census, not assumed).
@@ -213,7 +218,9 @@ dev/margins_reduced_v2.json; rules in ensorain/lm01/margins_reduce_v2.py).
   - F2-L2 is UNTESTED at 0.30 (66 never-seen cells);
   - the E6 positive control FAILS in F3 (all), F4 (all), and F2 pairwise/sum, so INDISCRIMINATE readings there are
     UNRESOLVED by rule;
-  - F5's status is per the real-cells rows.
+  - F5-L1 UNTESTED (only 2 usable dev worlds). F5-L2 UNTESTED at 0.30 (65 never-seen cells).
+  - F5-L3 is TESTABLE in 6/6 strata, with the E6 control passing in 5/6 (all but lowrank) under the repaired scale.
+  - Totals at 0.30: 41 of 75 strata TESTABLE; E6 passes in 10 of those 41.
 - The dev decision rule was changed after dev rows were read: D9 and D10 were ruled by the operator on disclosed
   grounds; the sensitivity columns show how much hangs on 0.30.
 
