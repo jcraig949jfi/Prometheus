@@ -1,9 +1,11 @@
 # PREREG PTE-C1b -- adjudicate the two unexpected C1 mechanisms (M2, M3)
 
-Currency: 2026-09-25 (date -u 23:3xZ). Seat: Ananke. Status: DRAFT v0.
-Committed for steward review under the operator HOLD. It is NOT frozen:
-it becomes PREREGISTERED at its freeze commit, which lands on its own,
-before the C1b code freeze and before any C1b row exists. No C1b run may
+Currency: 2026-09-26 (v1; date -u 00:3xZ). Seat: Ananke. Status:
+PREREGISTERED v1 (frozen). This file is committed on its own, before the
+C1b code freeze and before any C1b row exists. History: DRAFT v0
+77a55ec8f; steward review #643 (Aporia) items 1-5 applied in v1; D-A
+independently re-derived in #640. Any later change is a dated annotation
+beside the original. No C1b run may
 start until Aporia releases the HOLD over comms (directive
 roles/Ananke/prompts/2026-09-25_pte_si01_directive/, s2-s3).
 
@@ -68,9 +70,12 @@ D-A PACKET-ABLATION WINDOW EXCLUDES THE READOUT TICK.
     defect is ledgered.
     The same window rule applies to RELAY and HOLD, but there the
     ablation already fired, so it cannot have produced a false SUPPORT.
-    It can only have produced false NOT_SUPPORTED. C1b re-runs the battery
-    with the corrected window on the 7 D-wave promoted cells as a side
-    table (label CORRECTED_WINDOW_RECHECK), reported beside C1's labels.
+    It can only have produced false NOT_SUPPORTED. The exclusion is
+    FAMILY-GENERAL (HOLD included: an arrival exactly at the HOLD readout
+    tick also survives), per the independent re-derivation #640.
+    C1b re-runs the battery with the corrected window on EVERY D-wave
+    adjudicated cell, all families including HOLD, as a side table
+    (label CORRECTED_WINDOW_RECHECK), reported beside C1's labels.
 D-B C1 "MEMORY ABLATION" RESET ONLY S.
     Controls.reset_state_at zeroes S. It leaves Acc_sum/Acc_cnt (delivered
     but unread inbox), Kp (writable immediates; M2 has WIMM 1), w (routing
@@ -94,8 +99,13 @@ tick), on H = 64 held-out worlds (32 mirror pairs), namespace s6.
   reset_inbox                Acc_sum, Acc_cnt := 0
   reset_Kp                   Kp := 0
   reset_w                    w := initial (16)
-  reset_all_nonpacket        S, inbox, Kp, w (r is constant: rules 1)
+  reset_En                   En := e_max (energy carrier; review #643.1)
+  reset_all_nonpacket        S, inbox, Kp, w, En (r is constant: rules 1)
   flush_inflight             Msum, Mcnt := 0 (every ring slot) at t_m
+  flush_inflight_iti         the same flush at the first ITI tick of every
+                             trial (t0 + cue_len + gap + 1), scored on the
+                             trials that follow it (trial 0 excluded):
+                             the sham for flush (review #643.2)
   flush_inflight_late        same at t0 + cue_len + gap - 1
   drop_window_corrected      arrivals dropped over [t0, readout] incl.
   zero_comm, randomize_payload, shuffle_time   (C1 controls, repeated)
@@ -105,16 +115,40 @@ same restricted to slots addressed to the readout site; the inbox sum.
 Fingerprint statistic: held-out accuracy of predicting the target from
 sign(signed in-flight sum) at t_m, against a permutation null over mirror
 pairs (2000 permutations).
-Labels (mechanical; CI = 99% bootstrap over mirror pairs, as C1):
-  DELAY_LINE_SPECIMEN iff
-    (a) flush_inflight hi99 <= 0.60, AND
-    (b) reset_all_nonpacket: lo99 of (acc - normal) >= -0.10, AND
-    (c) the in-flight sign predicts the target at t_m with lo99 > 0.60
-        and beats the permutation null (p < 0.01).
-  INBOX_CARRIER    (a) fails, reset_inbox hi99 <= 0.60, (b) fails.
-  OTHER_CARRIER    (b) fails for a named carrier (Kp, w or S): named.
-  MIXED            more than one single-carrier reset drops acc by >= 0.10.
-  NOT_SUPPORTED    none of the above.
+En note: in M2 and M3 the economy is OFF, so En is held at e_max every
+tick and cannot carry a sign. reset_En is still run: its no-op guard is
+then expected to return NOT_APPLICABLE, which itself confirms the point.
+Component booleans (CI = 99% bootstrap over mirror pairs, as C1;
+"kills" = hi99 <= 0.60; "drops" = point drop >= 0.10 vs normal with the
+lo99 of the difference < -0.05; "intact" = lo99 of (acc - normal)
+>= -0.10, which is an ABSENCE reading and counts only where its positive
+control fixture (s5) fired):
+  A   flush_inflight kills
+  Z   flush_inflight_iti intact (the sham)
+  B   reset_all_nonpacket intact
+  C   the in-flight sign predicts the target at t_m (lo99 > 0.60 and
+      permutation p < 0.01)
+  I   reset_inbox drops
+  Kx  reset_x drops, for x in {S, Kp, w, En}
+Label = the FIRST rule that matches (an ordered decision list, total by
+construction; review #643.4):
+  1 INSTRUMENT_FAILURE      any s5 fixture failed
+  2 FLUSH_NONSPECIFIC       A and not Z (the flush hurts even outside the
+                            gap: generic disruption, not a delay line)
+  3 DELAY_LINE_SPECIMEN     A and Z and B and C
+  4 IN_FLIGHT_UNDECODED     A and Z and B and not C (the bit rides in
+                            flight but not as the signed sum)
+  5 MIXED                   two or more of {A and Z, I, K_S, K_Kp, K_w,
+                            K_En} (carriers named)
+  6 INBOX_CARRIER           I
+  7 OTHER_CARRIER           exactly one Kx (x named)
+  8 IN_FLIGHT_PLUS_JOINT    A and Z and not B (in flight, plus a non-packet
+                            contribution that no single reset shows)
+  9 JOINT_NONPACKET         not B (only the joint non-packet reset hurts)
+ 10 NOT_SUPPORTED           otherwise
+The code enumerates all 2^9 combinations of the component booleans
+(A, Z, B, C, I, K_S, K_Kp, K_w, K_En), asserts that each maps to exactly
+one label, and commits that table with the code freeze, before any row.
   DELAY_LINE_REPRODUCED iff DELAY_LINE_SPECIMEN and >= 1 of the 4
     fresh-seed searches (s5) reaches SIGNAL AND passes (a)-(c) itself.
     A fresh search that reaches SIGNAL with a site latch is reported as
@@ -136,21 +170,31 @@ Then the self-modification split:
 Census: per trial, the fraction of sites whose rule pointer r changed;
 at the readout tick, the actuator's r and whether it predicts the target
 (held-out, with a permutation null).
-Labels:
-  TIMING_LOCKED_TRANSPORT iff drop_readout_tick_only hi99 <= 0.60 AND
-    drop_window_corrected hi99 <= 0.60 AND drop_window_c1 lo99 >= 0.62.
-    That is H-M3-0 confirmed: C1's null was the window, and M3 is transport
-    whose packets land on the readout tick.
-  RULE_SWITCH_REQUIRED iff freeze_rule <= normal - 0.10 (lo99 of the
-    difference < -0.05 and point <= -0.10) AND freeze_routing within
-    0.05. Reported whether or not TIMING_LOCKED_TRANSPORT also holds:
-    both can be true (transport delivers, the rule switch reads).
-  SELF_MODIFYING_CONFIRMED iff RULE_SWITCH_REQUIRED AND the actuator's r
-    at readout predicts the target above the permutation null. The rule
-    state carries the cue, not just the capacity to read it.
-  NOT_SUPPORTED    none of the above.
-  M3_REPRODUCED iff a label above holds and >= 1 of 4 fresh-seed searches
-    per cell reaches SIGNAL with the same label.
+Component booleans (definitions as s3):
+  T   drop_readout_tick_only kills AND drop_window_corrected kills AND
+      drop_window_c1 intact (lo99 >= 0.62): H-M3-0 confirmed, i.e. C1's
+      null was the window and the packets land on the readout tick
+  X   drop_window_c1 kills (C1's own control does NOT reproduce on fresh
+      held-out worlds)
+  R   freeze_rule drops AND freeze_routing intact (freeze_routing's
+      absence reading counts only if the routing positive-control plant
+      fired, s5; otherwise R is computed without that clause and the
+      label carries the suffix _ROUTING_UNRESOLVED)
+  M   the actuator's r at readout predicts the target (lo99 > 0.60,
+      permutation p < 0.01): the rule state carries the cue
+One PRODUCT label per cell (review #643.4), first match wins:
+  1 INSTRUMENT_FAILURE          any s5 fixture failed
+  2 C1_CONTROL_NOT_REPRODUCED   X (reported; the rest is still computed
+                                and shown, but no M3 label is issued)
+  3 TRANSPORT+SELF_MODIFYING    T and R and M
+  4 TRANSPORT+RULE_SWITCH       T and R and not M
+  5 TRANSPORT_ONLY              T and not R
+  6 SELF_MODIFYING_ONLY         not T and R and M
+  7 RULE_SWITCH_ONLY            not T and R and not M
+  8 NOT_SUPPORTED               otherwise
+Same exhaustive enumeration + assert as s3 (2^4 combinations).
+  M3_REPRODUCED iff the cell's label is one of 3-7 and >= 1 of 4 fresh-seed
+    searches per cell reaches SIGNAL with the same label.
 WIMM, mut_site: NOT_APPLICABLE by physics (D-C).
 
 ## 5. What gets built (no physics change)
@@ -173,7 +217,20 @@ hand plants with known answers:
   an echo plant (the bit only in flight): flush kills it, reset_S does
     not;
   relay_flood with delay == delta: drop_window_c1 does NOT kill it,
-    drop_readout_tick_only DOES (the D-A fixture).
+    drop_readout_tick_only DOES (the D-A fixture);
+  echo plant under flush_inflight_iti: the next trial is intact (the sham
+    cannot fire on a pure in-gap delay line);
+  a rule-switch plant (rules 2; the cue sign selects the rule by SETRULE,
+    and each rule writes a fixed sign into S0 at readout): freeze_rule
+    MUST drop it (the positive control for R; review #643.3);
+  a plastic-routing plant (the cue sign writes w toward or away from the
+    actuator; the actuator reads its arrival count): freeze_routing MUST
+    drop it (the positive control for freeze_routing's absence reading).
+Every "intact" (absence) reading counts only where its positive control
+fired (joint rule #611/#617/#618). If a positive-control plant CANNOT be
+constructed at the specimen's physics, the absence clause it guards is
+declared NOT_ELIGIBLE in the code freeze, before any row, and labels that
+need it carry the suffix _UNRESOLVED.
 Any fixture failing -> INSTRUMENT_FAILURE; no C1b label is issued.
 
 ## 6. Seeds, budget, stopping
@@ -205,9 +262,11 @@ C1b-P6 CORRECTED_WINDOW_RECHECK changes no RELAY verdict.
 ## 8. Conflicts of interest and limits
 
 Same author as C1 (substrate, envs, search, detectors, and now this
-battery). D-A was found by that author reading its own code. An
-independent reviewer should re-derive D-A from assays.py and engine.py
-(tick order: delivery, sense, wake, run, emit, readout trace).
+battery). D-A was found by that author reading its own code. It was
+independently re-derived from engine.py and assays.py by Aporia (comms
+#640, read before this draft's reasoning): mechanism CONFIRMED in code,
+family-general. #640 did NOT verify that the M3 cells have
+delay == delta; H-M3-0 settles that.
 Held-out worlds are seed namespaces, not sealed worlds. 4 fresh searches
 per specimen is a small replication budget: "not reproduced" means
 "not at this budget". Nothing here promotes a mechanism beyond the seat
