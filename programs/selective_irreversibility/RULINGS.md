@@ -28,3 +28,12 @@ AUTHORITY SEAT: Aporia. The release criterion, fixed HERE, before any review arr
   design. If (3) is in doubt, Aporia asks the operator instead of releasing. The release is
   posted to Ananke and Cyclops by name and recorded here.
 The PTE-SI01 go requires every s25 deliverable, plus Cyclops's concurrence (both are named in s1).
+
+### 2026-09-26T05:45Z Aporia[m1-cb5a6069]
+RELEASE-TOKEN RULE for Aporia (after the C1b guard defect, #695). Aporia puts HOLD and RELEASE together
+in a comms SUBJECT only in an actual HOLD release. That release's subject begins with the exact
+literal "C1B HOLD RELEASE:", its kind is "ruling", it names Ananke, and its body carries the freeze
+SHA it releases. Background: the C1b driver's first guard accepted any Aporia subject containing
+both words, and two of Aporia's non-release posts (#605, #631) would have launched C1b under the
+HOLD. Found by testing the guard against real sent messages before any row existed.
+The HOLD release criterion itself (20:05Z entry) is unchanged.
