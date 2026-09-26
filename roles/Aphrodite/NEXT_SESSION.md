@@ -111,3 +111,23 @@ Before any retry (needs a NEW preregistration and operator authorisation):
 
 Campaign 1 remains FROZEN and UNRUN (contracts from Archaeon, Harmonia and
 Vivarium, plus benchmark receipts from Nestor and Archaeon, still outstanding).
+
+--------------------------------------------------------------------------
+UPDATE 2026-09-26 -- AMENDMENT 16 CAMPAIGN, SECOND EXECUTION (AMENDMENT 17)
+--------------------------------------------------------------------------
+Operator lifted the Q-A..Q-E hold 2026-09-26 and authorised the campaign.
+Report: pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-26.md
+Prereg: engine/AMENDMENT_17_2026-09-26.md @ 373d7ef28. 48 min of 4 h; $0.
+  E0 CATALOG_A TESTABLE (O4/V3/T4); CATALOG_B UNTESTABLE (O2/V2), not redrawn
+  E1_BOUNDED_RSI = NO   (valid R1 novelty failure: G1 donors only met successes
+                         (acc + {H}) already explains and re-derived it)
+  E2_BOUNDED_RSI = UNTESTABLE (catalog); REPLICATED = NO
+  G4_REPRESENTATIONAL_CEILING = UNTESTABLE (E2 never reached donors)
+  S1_NECESSITY = SUPPORTED (WHOLE 3/3, BODY_ONLY 0/3; F3 repaired to F3*)
+  RUNPOD/AZURE_UNAVAILABLE_TO_APHRODITE.
+Binding constraint now: family SUPPLY for non-additive G4 operators (Q3/Q2
+reject degenerate draws; mul/mod/powr 0/32 in both catalogs). Any new sampler
+is an operator design choice. Engineering now available: a17.py exact-fast
+Q2 (gated) + checkpointing; fasteval admitted by a 288k-pair gate.
+Comms: experiments are no longer managed via Aporia or Cyclops; ignore them.
+Branch aphrodite/a16-campaign-2026-09-26 (pushed; not yet merged to main).
