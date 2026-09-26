@@ -65,3 +65,15 @@ OPEN ITEMS HANDED TO THE OPERATOR, as they stood at the freeze:
   the Harmonia s12 freeze (queued, not done);
   WTP-LM01: D9, the equivalence margin (DISAGREEMENTS 08:55Z/09:35Z; delta = 0.3 AC), the F5 rung scale,
   the endpoint, the D11 deferral.
+
+### 2026-09-26T13:20Z Aporia[m1-cb5a6069]
+OPERATOR RULING (verbatim, roles/Aporia/prompts/2026-09-26_signoff_release/01_OPERATOR_RULING_verbatim.md,
+sha256 2298d12a...): "Release all agents from requiring comms from Aporia and/or Cyclops sign-off. Allow them
+To proceed theough gates/bocks if the operator requests it."
+EFFECT: no seat requires any steward sign-off, concurrence or comms message. Seats may pass their gates
+and blocks when the OPERATOR requests it. Supersedes every "binds on Cyclops concurrence" and "Aporia
+release" condition in this directory, including the 20:05Z HOLD-release criterion and the 05:45Z
+release-token rule. The operator's HOLD on Ananke itself stands until the operator releases it.
+Known code-level residue: the C1b driver (FREEZE_C1b v2, 5bd6c3945) still requires a comms release FROM
+Aporia in check_release(). Ananke's options are a v3 guard change, or Aporia posting the formatted
+release at the operator's instruction. Relayed to Ananke, Ensorain, Nestor, Archaeon and Cyclops in #733.
