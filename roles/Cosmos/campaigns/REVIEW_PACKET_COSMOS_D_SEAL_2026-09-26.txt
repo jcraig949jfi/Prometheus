@@ -1,0 +1,209 @@
++==========================================================================+
+|  COSMOS -- C3 HOLDOUT D RECEIVED AND VERIFIED; SEAT STATE AFTER REBOOT    |
+|  Author : Cosmos[m2-5ba02701] (M2 / SPECTREX5)                            |
+|  Date   : 2026-09-26 (UTC 23:54)                                          |
+|  For    : HITL operator + external reviewers                              |
+|  Status : D SEALED (by Nestor, M1) and commitment VERIFIED by hash;       |
+|           seal commit NOT yet an ancestor of origin/main; next phase      |
+|           NOT started (awaits explicit operator trigger)                  |
+|  Scope  : PUBLIC facts only. The C3 law, coordinates, visible-world       |
+|           results and failure regions are WITHHELD and appear nowhere     |
+|           in this packet.                                                 |
+|  Self-contained: no repo access needed to follow the argument.            |
++==========================================================================+
+
+-----
+0. SUMMARY / VERDICT UP FRONT
+-----
+Cosmos runs campaign C3: does a relation fitted on Cosmos-authored "visible"
+worlds predict *functional use of past information* in a world authored by
+someone who never saw that relation? The test needs a foreign holdout world,
+D, authored off the machine that holds the withheld material.
+
+State at 2026-09-26 23:54Z:
+  - D EXISTS. Nestor (M1 / SKULLPORT) accepted the request on 2026-09-25
+    14:54 EDT (#596) and posted the seal at 15:01 EDT (#599).
+  - Cosmos re-derived the commitment itself: the sealed spec's git blob
+    hashes to exactly the sha256 Nestor posted. MEASURED, not trusted.
+  - Order of commitments is correct in both directions: Cosmos hash-committed
+    its withheld branch on 2026-09-24 (public, head 0ecafed1...), BEFORE D
+    existed; D was sealed and pushed 2026-09-25, BEFORE any Cosmos
+    prediction was sent (none has been sent).
+  - ONE GATE IS OPEN: Cosmos's own rule says D's seal commit must be an
+    ancestor of origin/main before the withheld branch is published. It is
+    pushed only on origin/nestor/c3-holdout-d-2026-09-25. Not satisfied.
+  - Cosmos has taken NO next-phase action: the withheld branch is unpublished,
+    Harmonia has not been invoked, D has not been run.
+
+Verdicts, kept separate:
+  instrument : the P1/P2 certificate -- unchanged since Session 1 (frozen).
+  law        : UNTESTED on D. Nothing in this packet bears on it.
+  method     : the foreign-holdout protocol has so far WORKED as designed
+               (two-sided commitments, off-machine author, verified hash),
+               with three process holes recorded in section 4.
+
+-----
+1. WHAT EXISTED BEFORE D (public)
+-----
+  - C0 (chamber qualification) CLOSED PERMANENTLY at af2af37f4 (2026-09-23).
+  - C3 Session 1 COMPLETE (2026-09-24). Public: the P1/P2 certificate
+    definitions + reference implementation, the D contract, the information
+    ledger. P1 = history about the cue present in the full causal state and
+    absent from the current observation, vs a permutation null. P2 = paired
+    episodes differing only in the cue; exchange full causal states at t = k;
+    drop in accuracy = causal effect. Classes NONE / PASSIVE / FUNCTIONAL.
+  - Withheld: everything else about C3, on one LOCAL branch on M2, whose
+    head 0ecafed159f9bc9756baefd55ec37fd75b83b822 was hash-committed on main
+    on 2026-09-24. When published, anyone can check it is unchanged.
+  - Operator freeze 2026-09-25: no methodological change before D.
+
+-----
+2. WHAT COSMOS NOW KNOWS ABOUT D (everything; all KNOWN_TO_COSMOS_BEFORE_FREEZE)
+-----
+From #596 / #599 (Nestor -> Cosmos), no outcomes:
+  author        Nestor[m1-7438ee6f], M1 / SKULLPORT only; Python 3.12.10,
+                numpy 2.2.6; states no M2 access, no Cosmos branch read
+  branch        nestor/c3-holdout-d-2026-09-25, cut from origin/main 815cdb32a
+  sealed commit a56ef778722b35bd425c59f9647194a8927477dd (2026-09-25 15:00 -04:00)
+  commitment    sha256(sealed_spec_D.json) =
+                ae4479c6125a29cfa53624013c7f4ba5d322205c2ef442ce7371d5fd812e57ac
+  package       prometheus/cosmos/c3_holdout_D/ (import refused unless
+                COSMOS_BROKER=1)
+  hidden worlds 128 plus run seeds, drawn by a secrets nonce (COUNT ONLY)
+  native params L sites 6-48 int | D sites^2/step 0-2 | v sites/step 0-3 |
+                p_decay 1/step 0-1 | kappa 1/(cu*step) 0-1 | q cu 0.25-4 |
+                sigma cu/step 0-1 | x_in sites 0-47 | d_patch sites 0-47 |
+                w_patch sites 1-48 | V species 2-8 | k steps {2,4,8};
+                constraint x_in + d_patch + w_patch <= L
+  knob API      medium.build(**knobs), medium.intervene(world, **changes)
+  selftest      replay identical T; interchange round-trip T; interchange
+                transplant T; history-free control certifies NONE T;
+                injected-defect controls all F (as required); pytest 15 passed
+  commit title  "reactive-channel family" (Cosmos has not read the source)
+
+Cosmos did NOT open: medium.py, sealed_spec_D.json contents, SELFTEST.json,
+PROVENANCE.md, or the report file's parameter meanings. The spec was hashed
+from the git object without being displayed.
+
+-----
+3. VERIFICATION PERFORMED BY COSMOS (2026-09-26, on M2)
+-----
+  check                                                    result
+  a56ef7787 resolves on origin                              YES (full id above)
+  git blob a56ef7787:.../sealed_spec_D.json | sha256sum     ae4479c6...57ac  MATCH
+  .gitattributes marks the spec -text (bytes not rewritten) YES
+  commits after the seal on D's branch                      1 (5e05307b2), adds
+                                                            only roles/Nestor/
+                                                            C3_HOLDOUT_D_REPORT.md
+  sealed files changed after the seal                       NONE
+  D branch base                                             815cdb32a = merge-base
+                                                            with origin/main
+  seal commit is an ancestor of origin/main (51638e216)     NO  <-- open gate
+  prediction sent to D before the seal                      NONE sent at all
+  Cosmos withheld branch pushed                             NO (no upstream; not
+                                                            on origin)
+
+-----
+4. INCIDENTS AND PROCESS HOLES (recorded plainly)
+-----
+H1  Request latency. #561 was posted 2026-09-24 16:07 EDT. Nestor's comms
+    were last synced 09-23, so it sat unread until an operator ruling on
+    09-25 put Nestor on it. The comms system has no "addressee has not
+    synced since posting" alarm; the sender learns only by asking.
+
+H2  Cosmos's own detection lag (~33 h). Cosmos's boot report at 2026-09-25
+    12:12Z correctly said #561 had no receipt. Nestor accepted it 2.7 h later
+    and sealed within 7 minutes of accepting. Cosmos then ran no watch
+    (seat frozen), so it learned of the seal only at 2026-09-26 23:53Z.
+    CONSEQUENCE: on 2026-09-26 the operator drafted a directive elevating
+    #561 to Nestor's top priority, based on Cosmos's stale report, although
+    D had been sealed for ~33 h. Cosmos did not relay that directive. If it
+    was pasted into Nestor, Nestor may have paused its campaign for work
+    already done. (Nestor's own record says its budget window closed
+    2026-09-26 07:42 on its own clock, before the directive.)
+    FIX ADOPTED: an hourly comms watch now runs on the Cosmos seat.
+
+H3  Unthreaded reply. Cosmos answered Atlas's two ATLAS-37 questions in
+    #562, not threaded to #558; Atlas saw it and still reported "waiting".
+    Re-answered as a reply in #581; Atlas's adapter has since landed on
+    main (7190591f4).
+
+H4  Seal location vs Cosmos's rule. Cosmos's publish gate asks for D's seal
+    commit to be an ancestor of origin/main. Nestor pushed it to a branch.
+    Immutability is already established by the hash chain (commitment in
+    comms and ledger, blob re-hashed), so the gate's remaining purpose is
+    durability (a branch can be deleted or force-pushed; main cannot under
+    D-23). Not a defect of Nestor's: the D contract s6 says "commit and PUSH",
+    not "merge to main". The gap is in Cosmos's contract wording.
+
+H5  Residual firewall asymmetry. The firewall is technical in one direction
+    only. D's author (M1) cannot see Cosmos's withheld objects. But D's
+    sealed spec -- including the hidden world list -- is readable by Cosmos
+    in plaintext on origin now. Cosmos not reading it before its freeze is
+    HONOR + ATTESTATION (this packet is that attestation), the same weakness
+    the operator rejected for the other direction on 2026-09-24.
+
+-----
+5. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES: a foreign world exists, authored off-machine by a seat that states it
+read only the published contract; its bytes are bound by a verified hash;
+both sides' commitments precede any cross-exposure.
+DOES NOT: say anything about whether the C3 relation predicts D; say that D
+is a hard or a fair test (Cosmos has not read D and must not before freeze);
+certify Nestor's independence beyond its own statement plus the machine
+separation (M1 is a separate clone without M2-local objects -- a property of
+the setup, not re-measured here).
+
+-----
+6. DECISION FOR THE OPERATOR (Cosmos's lean in brackets)
+-----
+D1  Close the open gate: either Nestor merges nestor/c3-holdout-d-2026-09-25
+    into main, or the operator rules that a pushed branch + verified hash
+    satisfies the gate. [Lean: merge -- durability is cheap, and the rule
+    should be met, not waived.]
+D2  If the Nestor directive of 2026-09-26 was delivered, tell Nestor D is
+    already sealed so no further pause is taken on its account.
+D3  Then, on explicit trigger only: publish the withheld branch (verify
+    0ecafed1 is an ancestor) -> Harmonia audits the coordinate layer only ->
+    on AUDIT_PASS freeze predictions + one intervention, hash, push ->
+    spend D once.
+D4  "Stop" remains available: if the reviewer judges the one-direction
+    firewall (H5) disqualifying, D should be re-sealed with its hidden list
+    encrypted or held off-repo by the author, before Cosmos freezes.
+
+-----
+7. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+Q1  H5: is an honor-based "Cosmos did not read D's world list" acceptable,
+    when the operator rejected honor-based protection the other way? What
+    would a commit-reveal scheme for D's hidden list cost here?
+Q2  Is the ancestor-of-main gate doing real work, or is it ritual now that
+    the hash is verified? If ritual, delete it rather than waive it.
+Q3  Nestor accepted and sealed within 7 minutes of its ack. Does that
+    suggest D was built before the ack, or in a parallel lane beforehand?
+    Is anything about D's independence lost if it was?
+Q4  H2 cost the operator a directive. Should a blocked seat be forbidden
+    from going watch-less, i.e. is "frozen" allowed to mean "deaf"?
+Q5  What evidence would convince you D was NOT unconsciously built to
+    agree with a Cosmos-shaped hypothesis, given Nestor read the public P1/P2
+    definitions?
+
+-----
+8. ARTIFACTS (paths + commits)
+-----
+  roles/Cosmos/c3/INFO_LEDGER.md           D rows 2026-09-25/26 (this commit)
+  roles/Cosmos/c3/D_CONTRACT.md            the contract D was built to
+  roles/Cosmos/c3/S1_PREREG_P1P2_GATE.md   P1/P2 definitions (public)
+  roles/Cosmos/BOOTSTRAP.md                seat entry + publish sequence
+  origin/nestor/c3-holdout-d-2026-09-25    a56ef7787 (seal), 5e05307b2 (report)
+  comms                                    #561 request, #596 ack, #599 seal,
+                                           #562/#581 Atlas, #737 Bellerophon
+  Cosmos withheld head commitment          0ecafed159f9bc9756baefd55ec37fd75b83b822
+  this packet                              roles/Cosmos/campaigns/
+                                           REVIEW_PACKET_COSMOS_D_SEAL_2026-09-26.txt
+
++==========================================================================+
+|  "Not worth continuing" is a first-class answer. So is "re-seal D with   |
+|  its hidden list encrypted before Cosmos is allowed to freeze."           |
++==========================================================================+
