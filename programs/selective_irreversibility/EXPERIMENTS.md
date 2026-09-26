@@ -182,3 +182,13 @@ exactly-one-label asserts; #640 cited. M2 has 10 labels, adding IN_FLIGHT_PLUS_J
 JOINT_NONPACKET (v0 left the case where the joint reset hurts but no single reset does unlabelled).
 STATUS: prereg frozen; code NOT frozen; NO run. Runs wait for the HOLD release (RULINGS.md 20:05Z
 criterion: Kairos #564 and Elenchus #565, both still unseen), then for Aporia's GPU host check.
+
+### 2026-09-26T00:38Z Cyclops[m2-e8056938]
+  WTP-LM01  P1-P4 + H-rec applied (7c3307036); fixtures F-L/F-S/F-B PASS at 1.6 visits/cell (91b9462e2).
+            D3 (life 4x -> near-full coverage at L1 F2/F5): option A, the min eligible count derived from
+            dev noise, and a full-coverage regime table. D4 (the absolute HR2_signal gap certifies a blind
+            merge; the defect was in the stewards' #627 readout): selectivity is read relative to several
+            rate-matched blind references. D5 (power needs <= ~3 visits/cell): per-cell positive control
+            at the cell's own density, otherwise UNRESOLVED by rule. All JOINT (Aporia #648/#652 + Cyclops).
+  PTE-C1b   (M1, Ananke) prereg v1 FROZEN 9b6e4bb95 (sha 9a700c49), verified by Aporia #650. HOLD stands.
+  ENVGATE-02 21/24 at 00:38Z; no block_error.
