@@ -487,6 +487,21 @@ def carryover(run: Run, env: envs.EnvSpec) -> dict:
 
 
 # ------------------------------------------------ A2.2 eligibility
+COMPETENT_LO = 0.55     # A3.1 (i): C1's SIGNAL bar
+FIRED_HI = -0.10        # A3.1 (ii): hi99 of (switched - normal) below the intact band
+
+
+def fired(normal: Run, switched: dict) -> dict:
+    """A3.1: the positive control fired iff the plant is competent at this
+    physics AND the switch is decisively not-intact."""
+    lo_n = ci(normal.pairs)[1]
+    if switched["status"] != "RAN":
+        return {"competent_lo99": lo_n, "diff_hi99": 0.0, "fired": False}
+    hi_d = ci(switched["run"].pairs - normal.pairs)[2]
+    return {"competent_lo99": lo_n, "diff_hi99": hi_d,
+            "fired": bool(lo_n > COMPETENT_LO and hi_d < FIRED_HI)}
+
+
 def _check_latch(ph, env, seeds, device):
     g = plants.fix_const_shift(plants.hold_latch(ph), 0, 7)
     g = np.broadcast_to(g, (ph.rules, *g.shape)).copy()
@@ -494,7 +509,7 @@ def _check_latch(ph, env, seeds, device):
     res = run_battery({k: bat[k] for k in ("normal", "reset_S")}, g, env, seeds, device)
     n = res["normal"]["run"]
     chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95, "reset_S kills": kills(res["reset_S"])}
-    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}, fired(n, res["reset_S"])
 
 
 def _check_sham(ph, env, seeds, device):
@@ -505,7 +520,7 @@ def _check_sham(ph, env, seeds, device):
     n1 = res["normal_from1"]["run"]
     chk = {"normal>=0.95": ci(res["normal"]["run"].pairs)[0] >= 0.95,
            "iti flush drops": drops(res["flush_inflight_iti"], n1)}
-    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()},         fired(n1, res["flush_inflight_iti"])
 
 
 def _check_echo(ph, env, seeds, device):
@@ -516,7 +531,7 @@ def _check_echo(ph, env, seeds, device):
     n = res["normal"]["run"]
     chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95, "flush kills": kills(res["flush_inflight"]),
            "reset_S intact": intact(res["reset_S"], n)}
-    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()},         fired(n, res["flush_inflight"])
 
 
 def _check_da(ph, env, seeds, device):
@@ -528,7 +543,7 @@ def _check_da(ph, env, seeds, device):
     chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95,
            "c1 window intact": ci(res["drop_window_c1"]["run"].pairs)[1] >= C1_INTACT_LO,
            "readout-only kills": kills(res["drop_readout_tick_only"])}
-    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()},         fired(n, res["drop_readout_tick_only"])
 
 
 def _check_rule(ph, env, seeds, device):
@@ -537,12 +552,13 @@ def _check_rule(ph, env, seeds, device):
     res = run_battery({k: bat[k] for k in ("normal", "freeze_rule")}, g, env, seeds, device)
     n = res["normal"]["run"]
     chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95, "freeze_rule drops": drops(res["freeze_rule"], n)}
-    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}, fired(n, res["freeze_rule"])
 
 
 def eligibility(device="cpu", M: int = H_WORLDS, rows: str = ROWS) -> dict:
     """A2.2 table: each positive-control plant at each specimen's physics and
-    timing. A failing plant makes the absence clause it guards NOT_ELIGIBLE.
+    timing. A plant that did not FIRE (A3.1) makes the absence clause it
+    guards NOT_ELIGIBLE. The 0.95-bar checks are kept as dev information.
     Hand plants only; no specimen genome is evaluated."""
     seeds = assays.world_seeds(DEV_NS + 1, M)
     out = {}
@@ -555,11 +571,12 @@ def eligibility(device="cpu", M: int = H_WORLDS, rows: str = ROWS) -> dict:
                 ("F_sham_positive", _check_sham, plants.c1b_echo_physics().replace(prog_len=64), "Z"),
                 ("F_echo", _check_echo, plants.c1b_echo_physics(), "(validates A; gates nothing)")):
             ph = at_specimen(pph, sph)
-            chk, acc = fn(ph, hold, seeds, device)
-            rows_[name] = {"guards": guards, "pass": all(chk.values()), "checks": chk, "acc": acc}
+            chk, acc, fr = fn(ph, hold, seeds, device)
+            rows_[name] = {"guards": guards, "fired": fr["fired"], "a3": fr,
+                           "dev_bar_checks": chk, "acc": acc}
         out[cid] = {"mechanism": "M2", "dest_mode": sph.dest_mode, "plants": rows_,
                     "NOT_ELIGIBLE": sorted(v["guards"] for v in rows_.values()
-                                           if not v["pass"] and len(v["guards"]) == 1)}
+                                           if not v["fired"] and len(v["guards"]) == 1)}
     for cid in SPECIMENS["M3"]:
         sph, senv = specimen_physics_env(cid, rows)
         relay = dataclasses.replace(senv, family="RELAY", d=1)
@@ -569,10 +586,11 @@ def eligibility(device="cpu", M: int = H_WORLDS, rows: str = ROWS) -> dict:
                 ("F_DA", _check_da, plants.c1b_da_physics(), relay, "T_c1_window"),
                 ("F_rule", _check_rule, plants.c1b_rule_physics(), hold, "not_R")):
             ph = at_specimen(pph, sph)
-            chk, acc = fn(ph, env, seeds, device)
-            rows_[name] = {"guards": guards, "pass": all(chk.values()), "checks": chk, "acc": acc}
+            chk, acc, fr = fn(ph, env, seeds, device)
+            rows_[name] = {"guards": guards, "fired": fr["fired"], "a3": fr,
+                           "dev_bar_checks": chk, "acc": acc}
         routing = "INERT_BY_PHYSICS" if sph.dest_mode == "all" else "F_route required"
         out[cid] = {"mechanism": "M3", "dest_mode": sph.dest_mode, "routing_clause": routing,
                     "plants": rows_,
-                    "NOT_ELIGIBLE": sorted(v["guards"] for v in rows_.values() if not v["pass"])}
+                    "NOT_ELIGIBLE": sorted(v["guards"] for v in rows_.values() if not v["fired"])}
     return out
