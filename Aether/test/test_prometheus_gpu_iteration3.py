@@ -773,3 +773,40 @@ def test_a_pod_clock_that_answers_late_is_still_measured(module_dir):
     assert r["clock_sync"]["start"] is not None
     assert r["clock_sync"]["start"]["offset_s"] == pytest.approx(1000.0, abs=1)
     assert ctl._clock_tries <= 6
+
+
+def test_advertised_stock_reorders_the_walk_but_drops_nothing(module_dir):
+    fake = prov.FakeProvider(served=served())
+    fake.stock_status = lambda ids: {"NVIDIA RTX A4000": None,
+                                     "NVIDIA L4": "Low",
+                                     "NVIDIA A40": "High"}
+    spec = dict(SPEC, gpu={"class": "NVIDIA RTX A4000", "count": 1,
+                           "alternatives": ["NVIDIA L4", "NVIDIA A40",
+                                            "NVIDIA RTX A5000"]})
+    ctl = controller(fake, module_dir, spec=spec)
+    assert ctl.gpu_candidates() == ["NVIDIA A40", "NVIDIA L4",
+                                    "NVIDIA RTX A4000", "NVIDIA RTX A5000"]
+    r = ctl.run()
+    assert r["gpu_used"] == "NVIDIA A40"
+    assert r["stock_at_launch"]["NVIDIA A40"] == "High"
+
+
+def test_a_failed_stock_read_leaves_the_declared_order(module_dir):
+    fake = prov.FakeProvider(served=served())
+
+    def broken(ids):
+        raise RuntimeError("graphql down")
+    fake.stock_status = broken
+    spec = dict(SPEC, gpu={"class": "NVIDIA RTX A4000", "count": 1,
+                           "alternatives": ["NVIDIA L4"]})
+    assert controller(fake, module_dir, spec=spec).gpu_candidates() == [
+        "NVIDIA RTX A4000", "NVIDIA L4"]
+
+
+def test_all_cards_refused_says_capacity_was_inferred(module_dir):
+    fake = prov.FakeProvider(create_faults=[prov.Fault.http(400)] * 2)
+    spec = dict(SPEC, gpu={"class": "NVIDIA RTX A4000", "count": 1,
+                           "alternatives": ["NVIDIA L4"]})
+    r = controller(fake, module_dir, spec=spec).run()
+    assert r["disposition"]["cause"] == "NO_CAPACITY"
+    assert any("INFERRED" in n for n in r["notes"])

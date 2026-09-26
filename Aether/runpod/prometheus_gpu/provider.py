@@ -111,6 +111,38 @@ class RunPodProvider(Provider):
     def terminate_pod(self, pod_id):
         return self._wrap(self._api.terminate_pod, pod_id)
 
+    def stock_status(self, gpu_ids):
+        """{gpu_id: "High"|"Medium"|"Low"|None} for SECURE cloud. Read-only.
+
+        Iteration 3 flight F2b walked five declared cards into five capacity
+        refusals; a single GraphQL read at the same moment showed one card
+        in stock that was not on the list. Advisory only: stock changes by
+        the second, so this reorders the walk, it never removes a card.
+        Returns {} if the read fails -- never raises into a launch.
+        """
+        import json as _json
+        import os as _os
+        from urllib.request import Request, build_opener, ProxyHandler
+        query = ("query { gpuTypes { id lowestPrice(input: {gpuCount: 1, "
+                 "secureCloud: true}) { stockStatus } } }")
+        try:
+            req = Request(
+                "https://api.runpod.io/graphql",
+                data=_json.dumps({"query": query}).encode("utf-8"),
+                method="POST",
+                headers={"Content-Type": "application/json",
+                         "User-Agent": USER_AGENT,
+                         "Authorization": "Bearer "
+                         + _os.environ.get("RUNPOD_API_KEY", "")})
+            with build_opener(ProxyHandler({})).open(req, timeout=20) as r:
+                rows = (_json.loads(r.read()).get("data") or {}).get(
+                    "gpuTypes") or []
+        except Exception:
+            return {}
+        wanted = set(gpu_ids)
+        return {g["id"]: (g.get("lowestPrice") or {}).get("stockStatus")
+                for g in rows if g.get("id") in wanted}
+
     def fetch(self, pod_id, path, port=ARTIFACT_PORT, token=None, timeout=60):
         """Read from the pod's HTTP proxy. UNQUALIFIED against hardware.
 

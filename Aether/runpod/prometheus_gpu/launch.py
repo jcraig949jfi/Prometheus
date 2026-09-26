@@ -408,6 +408,7 @@ class Controller(object):
         # stage file but not /_clock in the first seconds, the controller
         # never asked again, and a whole run lost its clock sync.
         self._clock_tries = 0
+        self.stock_at_launch = None
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -565,6 +566,18 @@ class Controller(object):
                         "confirms nothing exists. Declare more "
                         "gpu.alternatives or try again later."
                         % ", ".join(refused))
+                    # The qualified client discards the 400 body, so every
+                    # card refusing cleanly is also what a MALFORMED request
+                    # looks like. Iteration 3 flight F2b: a direct probe of
+                    # the identical body read the provider's own words
+                    # ("no longer any instances available"); nothing here
+                    # did. FAILURE_PLAYBOOK 23.
+                    receipt_obj["notes"].append(
+                        "capacity is INFERRED from every create failing "
+                        "cleanly with a 4xx; the response bodies were not "
+                        "read, so a request the provider rejects as invalid "
+                        "would look identical. Confirm with a direct probe "
+                        "of the same body before changing the request.")
                 else:
                     self.disposition = "CREATE_FAILED_CLEAN"
                     receipt_obj["notes"].append(
@@ -750,6 +763,7 @@ class Controller(object):
         receipt_obj["artifacts_expected"] = list(self.spec["artifacts"])
         receipt_obj["telemetry_summary"] = self._telemetry_summary()
         receipt_obj["create_attempts"] = self.create_attempts
+        receipt_obj["stock_at_launch"] = self.stock_at_launch
         receipt_obj["last_stage"] = self.last_stage()
         receipt_obj["gpu_used"] = self.gpu_used
         receipt_obj["lifecycle"] = lifecycle(
@@ -846,13 +860,33 @@ class Controller(object):
         self.marks[name] = self._now()
 
     def gpu_candidates(self):
-        """The declared GPU, then its declared alternatives, in order."""
+        """The declared GPU, then its declared alternatives, in order --
+        reordered by advertised stock when the provider can say.
+
+        Stable: within a stock level the declared order is kept, and a card
+        with unknown stock keeps its place after the in-stock ones. Nothing
+        is ever dropped, because advertised stock is advice, not a promise.
+        """
         gpu = self.spec["gpu"]
         out = [gpu.get("class")]
         for alternative in gpu.get("alternatives", []):
             if alternative not in out:
                 out.append(alternative)
-        return [g for g in out if g]
+        out = [g for g in out if g]
+        probe = getattr(self.raw_provider, "stock_status", None)
+        if probe is None or len(out) < 2:
+            return out
+        try:
+            stock = probe(out) or {}
+        except Exception:
+            stock = {}
+        self.stock_at_launch = stock
+        rank = {"High": 0, "Medium": 1, "Low": 2}
+        reordered = sorted(out, key=lambda g: rank.get(stock.get(g), 3))
+        if reordered != out:
+            self._log("advertised stock %s -> trying %s first"
+                      % (stock, reordered[0]))
+        return reordered
 
     def _create(self, request):
         self._mark("create_requested")

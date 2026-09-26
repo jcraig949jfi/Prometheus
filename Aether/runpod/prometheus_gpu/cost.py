@@ -76,6 +76,9 @@ HOURLY_USD = {
     "NVIDIA RTX A5000": 0.26,
     "NVIDIA GeForce RTX 4090": 0.34,
     "NVIDIA L4": 0.43,
+    # Quoted by the provider's own stock query, 2026-09-26 (Iteration 3):
+    # the only SECURE card in stock while five others refused.
+    "NVIDIA RTX 4000 Ada Generation": 0.28,
 }
 DEFAULT_HOURLY_USD = 0.49
 
