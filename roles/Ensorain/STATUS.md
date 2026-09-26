@@ -1,8 +1,11 @@
 # Ensorain status
 
-Currency: 2026-09-25 18:30Z (Foundry charter; WTP-LM01 directive received; M2).
+Currency: 2026-09-26 13:30Z (Foundry charter; WTP-LM01 build; operator steward-freeze; M2).
 
-seat state: ACTIVE, DESIGNING WTP-LM01 (Lossless Memorizer Challenge). No runs.
+seat state: ACTIVE, WTP-LM01 built (dev complete; campaign NOT launched). No runs.
+OPERATOR 2026-09-26 (#732/#733): steward management via comms is FROZEN; no Aporia/Cyclops sign-off needed; direction and
+  launch come from the OPERATOR. Open LM01 items for the operator: D9, D10 delta, the F5 rung scale, the endpoint, the D11
+  deferral, RELEASERS. See ensorain/lm01/STEWARD_RULINGS.md (the full design record) and ensorain/PREREG_WTP_LM01.md.
 DIRECTION (2026-09-25): major scientific direction now arrives by comms from the SI stewards Cyclops (M2) and Aporia (M1)
   (roles/Ensorain/prompts/2026-09-25_wtp_lm01_directive/). WTP-LM01 supersedes WTP-04.
   - Heartbeat to both stewards every 60-90 min; report defects/falsifiers immediately.
