@@ -1,0 +1,173 @@
+{
+  "args": [],
+  "artifact_bytes_total": 1164,
+  "artifacts": [
+    {
+      "bytes": 185,
+      "path": "result.json",
+      "sha256": "4aa18567f6eb2fc21c6411ad5da0d5dae50666e842da277fe0f1e6dca7023458"
+    },
+    {
+      "bytes": 979,
+      "path": "telemetry.jsonl",
+      "sha256": "f8b70d6944e6d2887e7189e73265e2f6c1a483c3490656c29794232174ddbb13"
+    }
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "d363c477cf1bda385836415e7f784079b0fecf295e3dad208ecf31f9d66139ba",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 33.8,
+    "hourly_usd": 0.34,
+    "usd_estimated": 0.00319,
+    "work_units": {
+      "actual": 200.0,
+      "name": "steps",
+      "usd_per_1e9_units": 15962.767124176029,
+      "usd_per_unit": 1.596276712417603e-05
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A5000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA GeForce RTX 4090",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-24T21:24:27Z",
+  "ended_utc": "2026-09-24T21:25:01Z",
+  "entrypoint": "run.py",
+  "git": {
+    "available": true,
+    "commit": "ae881cabd05d6990f41da0a45f89bceee6c17c91",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA GeForce RTX 4090",
+  "guardrails": {
+    "disk_gb": 10,
+    "max_runtime_s": 300,
+    "telemetry_interval_s": 10
+  },
+  "last_stage": null,
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 1.64,
+      "accepted_to_first_telemetry_s": 31.387,
+      "artifact_transfer_s": 0.56,
+      "create_call_s": 1.745,
+      "teardown_total_s": 2.201,
+      "terminate_ack_s": 1.455,
+      "total_wall_s": 35.444
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 1.461
+    },
+    "module_reported_elapsed_s": 0.67,
+    "pod_clock": {
+      "bootstrap_total_s": 7.0,
+      "canary_s": 1.0,
+      "dependency_install_s": 6.0,
+      "execution_s": 0.0,
+      "fetch_s": 0.0,
+      "unpack_s": 0.0,
+      "verify_s": 0.0
+    }
+  },
+  "module": "hello-gpu@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 300.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.0,
+      "bootstrap": 40.0,
+      "canary": 12.0,
+      "provision": 20.0,
+      "teardown": 5.0
+    },
+    "overhead_fraction": 0.2063,
+    "overhead_s": 78.0,
+    "total_s": 378.0,
+    "usd_compute": 0.0142,
+    "usd_overhead": 0.0037,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.0179,
+    "work_units": {
+      "estimate": 200.0,
+      "name": "steps",
+      "units_per_usd": 11204.481792717086,
+      "usd_per_1e9_units": 89250.0,
+      "usd_per_unit": 8.925e-05
+    }
+  },
+  "pod_stages": {
+    "boot": 1790285071.0,
+    "canary": 1790285078.0,
+    "fetched": 1790285071.0,
+    "installed": 1790285077.0,
+    "module_end": 1790285078.0,
+    "module_rc": 0.0,
+    "module_start": 1790285078.0,
+    "server_up": 1790285071.0,
+    "unpacked": 1790285071.0,
+    "verified": 1790285071.0
+  },
+  "pods": [
+    {
+      "created_utc": "2026-09-24T21:25:03Z",
+      "creation_outcome": "confirmed",
+      "id": "e6guyayu0yr8bb",
+      "observed_absent": true,
+      "terminate_acknowledged": true
+    }
+  ],
+  "preregistered_estimate": null,
+  "result": "OK",
+  "run_id": "hello-gpu-20260924T212427Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "4a487e24de50c852a78ccd04dfe9a60afc06e9463e2a8e159026805ec4b8b047",
+  "started_utc": "2026-09-24T21:24:27Z",
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 0.67,
+    "errors": 0,
+    "first_utc": "2026-09-24T21:24:38Z",
+    "kinds": {
+      "end": 1,
+      "progress": 4,
+      "start": 1
+    },
+    "last_utc": "2026-09-24T21:24:38Z",
+    "max_gap_s": 0.297,
+    "module_status": "ok",
+    "records": 6,
+    "units_final": 200,
+    "units_per_s": 298.5075,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

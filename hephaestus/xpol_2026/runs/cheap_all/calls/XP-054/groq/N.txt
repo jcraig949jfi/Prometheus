@@ -1,0 +1,21 @@
+**Algorithm Overview**  
+The algorithm treats a candidate answer as a *signal* over a discrete time axis (sentence order). First, a **wavelet‑based multi‑resolution parser** decomposes the text into hierarchical “chunks” using a Haar‑like wavelet on token indices. At the finest level each token is represented by a tuple {type, value, position}; at coarser levels the wavelet coefficients aggregate adjacent tokens, yielding a tree of *chunks* that mirrors Cognitive Load Theory’s “chunking” principle.  
+
+Next, a **constraint‑propagation engine** (inspired by Mechanism Design) assigns a *payment* (score) to each chunk. Each chunk proposes a local “utility” equal to the number of correctly identified logical relations (negation, conditional, comparison, numeric, causal, ordering) multiplied by a *germane‑load weight* w_g. Extraneous load is estimated by the entropy of the chunk’s token distribution; high entropy incurs a penalty p_e. The engine runs a **Vickrey‑Clarke‑Groves (VCG) style auction** among overlapping chunks: each chunk bids its utility‑minus‑penalty, and the auction selects a non‑overlapping set of chunks that maximizes total net utility while respecting the hierarchy (a parent chunk can be chosen only if its children are not). The final score is the sum of winning bids, normalized by the maximum possible utility for the prompt.
+
+**Parsed Structural Features**  
+- Negations (“not”, “never”)  
+- Comparatives and superlatives (“greater than”, “least”)  
+- Conditionals (“if… then”, “unless”)  
+- Numeric values and arithmetic expressions  
+- Causal claims (“because”, “leads to”)  
+- Ordering relations (“first”, “subsequently”)  
+
+**Novelty Assessment**  
+The combination is largely novel. Wavelet‑based chunking has been used for text segmentation, and VCG‑style scoring appears in incentive‑compatible evaluation, but their integration with cognitive‑load‑driven weighting to produce a deterministic reasoning scorer has not been reported in the literature.
+
+**Ratings**  
+Reasoning: 8/10 — robust logical extraction and optimal chunk selection.  
+Metacognition: 7/10 — models load and self‑regulation but lacks explicit self‑reflection signals.  
+Hypothesis generation: 6/10 — can infer missing steps via transitivity but no generative component.  
+Implementability: 9/10 — relies only on NumPy, regex, and standard‑library data structures, easy to prototype.

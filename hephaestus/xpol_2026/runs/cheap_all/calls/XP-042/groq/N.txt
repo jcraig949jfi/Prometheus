@@ -1,0 +1,26 @@
+**Algorithmic sketch**
+
+1. **Pre‑processing & parsing** – The input answer is tokenised and a lightweight constituency‑style parse is built using regular‑expression rules that recognise six structural primitives: negation cues (`not`, `never`), comparatives (`more … than`, `greater than`), conditionals (`if … then`), numeric literals (integers, floats, fractions), causal verbs (`cause`, `lead to`) and explicit ordering markers (`first`, `next`, `finally`). Each primitive becomes a node in a flat list `features = []` where a node is a tuple `(type, span, value)`.  
+
+2. **Multi‑resolution encoding (Wavelet Transform)** – For every primitive we construct a binary feature vector `v ∈ ℝ^L` (L = total token count) with a 1 at the token positions belonging to the span and 0 elsewhere. A 1‑D Haar‑wavelet decomposition is applied to `v` using only NumPy (iterative averaging/differencing). The resulting coefficients are stored in a dict `coeffs[scale][node_id] = array`. Low‑scale coefficients capture coarse placement (e.g., “first” vs. “finally”), high‑scale coefficients capture fine‑grained localisation (exact numeric token). This yields a multi‑resolution representation of the logical structure.
+
+3. **Incentive‑compatible scoring (Mechanism Design)** – Each answer is treated as a self‑reporting agent. We define a proper‑scoring rule `S = –∑_s w_s * ‖coeffs_s – ref_s‖²` where `ref_s` are reference coefficients derived from a gold‑standard solution and `w_s` are decreasing weights for finer scales (coarser reasoning gets higher weight). Because the rule is strictly convex, an agent maximises its expected score by reporting the true coefficient vector, guaranteeing incentive compatibility.
+
+4. **Free‑Energy evaluation** – The score is interpreted as negative variational free energy:  
+`F = ½∑_s w_s * ‖coeffs_s – ref_s‖² – H(p)` where `H(p)` is the Shannon entropy of the coefficient distribution (computed from the squared coefficients normalised to a probability simplex). Minimising `F` favours answers that both match the reference pattern (prediction error) and are internally consistent (high entropy penalises over‑confident, brittle claims). The final numeric grade is `grade = max(0, 1 – F/ F_max)`.
+
+**Parsed structural features** – The algorithm extracts and encodes:  
+- Negations,  
+- Comparatives,  
+- Conditionals,  
+- Numeric values (including units),  
+- Causal claims,  
+- Ordering relations (temporal or procedural).
+
+**Novelty assessment** – Multi‑scale wavelet encoding of logical primitives combined with a proper‑scoring mechanism and a free‑energy objective has not been reported in the literature; existing work isolates any two of these ideas (e.g., wavelet‑based text analysis or incentive‑compatible grading). Hence the combination is essentially novel, though it draws on established components.
+
+**Ratings**  
+Reasoning: 8/10 — strong multi‑scale consistency checking, but limited semantic depth.  
+Metacognition: 6/10 — entropy term captures confidence, yet no explicit self‑reflection modelling.  
+Hypothesis generation: 5/10 — algorithm can flag missing premises but does not propose new ones.  
+Implementability: 9/10 — pure NumPy and regex, straightforward to prototype and integrate.

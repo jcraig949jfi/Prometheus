@@ -1,0 +1,31 @@
+**Algorithmic design**
+
+The tool builds a *symbiotic property‑based evaluator* (S‑PBE).  
+1. **Parsing stage** – a lightweight lexer extracts a directed‑graph representation of the answer: nodes are *propositions* (e.g., “X > 5”, “if A then B”), edges encode logical relations (implication, equivalence, ordering). The graph is stored as adjacency lists of tuples `(source, relation, target)`.  
+2. **Property generation** – from each node the evaluator derives a *property* (a predicate over a symbolic input space). Using a Hypothesis‑style generator, it automatically creates a *population* of concrete test cases that satisfy the specification of the question (the “question model”). The *symbiosis* step merges the answer’s graph with the question model: constraints from the answer are injected into the generator, producing *co‑evolved* inputs that are simultaneously valid for the question and stress the answer’s claims.  
+3. **Sensitivity analysis** – each generated test case is perturbed by small random changes (±δ on numeric fields, synonym swaps on lexical fields). The answer’s graph is re‑evaluated on the perturbed case; the proportion of unchanged truth‑values yields a *stability score* `S ∈ [0,1]`.  
+4. **Scoring logic** – for a candidate answer `a`:  
+   - `P = fraction of generated cases that satisfy all answer‑derived predicates` (property‑based pass rate).  
+   - `S = average stability over perturbations`.  
+   - Final score `score = α·P + (1‑α)·S` (α≈0.6).  
+   The algorithm runs in O(N·M) where N is the number of generated cases and M the number of graph nodes, using only NumPy for vectorised perturbations and the Python standard library for parsing.
+
+**Structural features parsed**
+
+- Negation markers (`not`, `no`, `without`)  
+- Comparative and superlative forms (`greater than`, `at least`)  
+- Conditional clauses (`if…then`, `unless`)  
+- Numeric literals and units  
+- Causal verbs (`causes`, `leads to`) and explicit cause‑effect edges  
+- Temporal/ordering cues (`first`, `after`, `subsequently`)  
+- Quantifiers (`all`, `some`, `none`) and logical connectors (`and`, `or`, `implies`).
+
+**Novelty assessment**
+
+While automated grading systems use constraint propagation and property‑based testing separately, the explicit *symbiotic* co‑generation of test inputs that respect both the question model and the answer’s inferred constraints, followed by a quantitative sensitivity analysis, is not present in prior literature. The combination therefore constitutes a novel methodological niche.
+
+**Ratings**  
+Reasoning: 8/10 — robust logical graph + test generation captures depth.  
+Metacognition: 6/10 — limited self‑reflection; relies on static parsing.  
+Hypothesis generation: 9/10 — property‑based test synthesis is very strong.  
+Implementability: 7/10 — feasible with NumPy/regex, but parsing edge cases add overhead.

@@ -1,0 +1,22 @@
+**Algorithmic design**  
+The tool implements a *dual‑process optimal‑control evaluator* (DPOCE).  
+1. **Fast‐path (System 1) parser** tokenises the prompt and each answer with a lightweight finite‑state regex engine that extracts a *symbolic proposition graph*: nodes are entities, predicates, numeric literals; edges encode logical relations (e.g., “if A then B”, “A > B”, “not C”). This stage runs in O(n) time per text.  
+2. **Deliberate (System 2) optimiser** treats the proposition graph as a discrete‑time dynamical system. A cost vector **c** is built from violations of desired constraints (logical consistency, numeric bounds, causal direction). Using a finite‑horizon Linear‑Quadratic Regulator‑style dynamic program, the algorithm computes a control sequence **u\_t** that drives the state **x\_t** (the current answer’s graph) toward a reference “ideal” state **x\*_t** (derived from the prompt’s gold‑standard graph). The optimal cost J = Σ (x\_t−x\*_t)ᵀQ(x\_t−x\*_t)+u\_tᵀRu\_t is solved by backward recursion (discrete Riccati), yielding a scalar *optimality score* (lower = better).  
+3. **Free‑energy regulariser** adds a variational term F = KL(q‖p) where q is the empirical distribution of extracted predicates and p is a prior learned from a small corpus of correct reasoning patterns (stored as count tables). The total score = α·J + β·F, with α,β tunable.
+
+**Parsed structural features**  
+- Negation markers (“not”, “no”, “without”)  
+- Comparative operators (“greater than”, “≤”, “more … than”)  
+- Conditional clauses (“if … then”, “when”, “unless”)  
+- Numeric values and units (extracted via regex)  
+- Causal verbs (“causes”, “leads to”, “results in”)  
+- Temporal/ordering cues (“first”, “after”, “subsequently”)  
+
+**Novelty**  
+The exact combination—using a dual‑process pipeline, an optimal‑control cost over a proposition graph, and a free‑energy KL regulariser—is not present in prior literature. Related work exists separately (regex‑based logical parsers, constraint‑propagation evaluators, and Bayesian free‑energy models), but their integration into a single, deterministic scoring engine is novel.
+
+**Ratings**  
+Reasoning: 8/10 — the algorithm explicitly enforces logical consistency and causal ordering.  
+Metacognition: 7/10 — dual‑process mirrors human monitoring, but lacks self‑reflection beyond the cost.  
+Hypothesis generation: 6/10 — can suggest missing links via constraint propagation, yet does not create novel hypotheses.  
+Implementability: 9/10 — relies only on numpy, regex, and simple DP; easy to embed in pipelines.

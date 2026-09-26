@@ -1,0 +1,28 @@
+**1. Algorithmic core**  
+The tool builds a *sparse‑coded logical graph* for each question‑answer pair and then runs a bounded *model‑checking* pass that is weighted by a lightweight *pragmatic relevance* vector.
+
+*Parsing* – a deterministic regex‑based front‑end extracts atomic predicates (e.g., `A > B`, `X causes Y`), logical connectives (¬, ∧, →, iff), conditionals, comparatives, and numeric literals. Each distinct predicate is assigned an integer id and stored in a global dictionary.
+
+*Sparse coding* – for every sentence a binary feature vector `v ∈ {0,1}^P` (P = number of predicates) is created with ones only at the indices of predicates that appear. The vectors are stored as NumPy’s `int8` arrays together with a list of active indices, i.e., a CSR‑like representation, keeping memory O(k) where k is the number of active predicates. This yields an *energy‑efficient* representation that makes set‑operations (union, intersection) cheap: `v1 & v2` is a simple `np.intersect1d` on the index lists.
+
+*Pragmatic weighting* – a second sparse vector `w` encodes contextual cues (question focus, discourse markers, modality). During parsing, words such as “only”, “always”, “usually”, “if” increase the weight of the associated predicate indices. The final relevance score for a candidate answer is `r = Σ_i w_i * (v_q[i] ∧ v_a[i])`, where `v_q` is the question vector and `v_a` the answer vector.
+
+*Model checking* – the predicate graph is turned into a transition system: each predicate becomes a state; edges encode logical implications extracted from the text (`p → q`). A depth‑limited DFS explores all reachable states from the question’s premises, applying modus‑ponens, transitivity, and numeric consistency checks (e.g., `x > 5` together with `x ≤ 3` yields a violation). The candidate answer is *accepted* if every predicate it asserts is reachable without encountering a contradiction. The final score combines coverage (`|v_a ∧ reachable| / |v_a|`) and pragmatic relevance `r`.
+
+**2. Parsed structural features**  
+- Negations (¬) and double negatives  
+- Comparatives and superlatives (`>`, `<`, “more … than”)  
+- Conditionals and biconditionals (`if … then …`, “iff”)  
+- Numeric values and arithmetic relations  
+- Causal claims (“causes”, “leads to”)  
+- Temporal ordering (“before”, “after”)  
+- Modality markers (“always”, “sometimes”, “only”)  
+
+**3. Novelty**  
+The exact combination—sparse binary encoding of logical predicates, pragmatic weight vectors, and a finite‑state model‑checking pass—is not present in a single published system. Sparse logical encodings have been used for SAT solving, pragmatics has been modeled with weighted discourse trees, and model checking is common in formal verification, but integrating them for pure‑Python reasoning evaluation is a novel engineering synthesis.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical coverage and constraint propagation, limited by handcrafted parsing.  
+Metacognition: 6/10 — pragmatic weights capture some self‑awareness of relevance but lack deeper theory‑of‑mind.  
+Hypothesis generation: 5/10 — the system checks given hypotheses rather than inventing new ones.  
+Implementability: 9/10 — relies only on NumPy and std‑lib, straightforward to prototype and scale.

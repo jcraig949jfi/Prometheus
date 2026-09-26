@@ -1,0 +1,18 @@
+
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME E: COMPUTATIONAL
+
+Your tool must work by COMPUTING answers, not matching patterns. For every problem type:
+1. Parse the prompt into a FORMAL INTERMEDIATE REPRESENTATION (graph, constraint set, variable binding table, state machine, or logic program)
+2. EXECUTE COMPUTATION on that representation (BFS, constraint propagation, arithmetic evaluation, logical inference, Bayesian updating)
+3. Match the COMPUTED RESULT against candidate answers
+
+Your tool must NEVER: match candidate text directly against prompt keywords, use NCD as a primary scorer, or hardcode category-specific regex patterns that dispatch to different handlers.
+
+The test battery includes: stateful register machines (2-4 registers, 3-8 sequential operations), multi-agent belief tracking (Sally-Anne variants with 2-4 agents), constraint satisfaction (3-5 entities with elimination), recursive function evaluation (base case + recurrence), counterfactual dependency tracing (DAG + premise alteration), Bayesian probability updates (prior + likelihood + false positive), and information sufficiency detection (solvable vs underdetermined systems).
+
+You WILL be scored on categories where regex tools score 0%. The only way to pass is to actually compute.
+
+You may use regex for PARSING (extracting structure from text) but not for SCORING (deciding which candidate is correct). The scoring must come from computation over the parsed representation.
+
+ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition. These are easy points — don't leave them on the table.

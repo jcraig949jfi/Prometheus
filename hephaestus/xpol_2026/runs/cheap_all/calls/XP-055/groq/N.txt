@@ -1,0 +1,41 @@
+**1. Algorithmic core**  
+The evaluator is a *Maximum‑Entropy Bandit‑Controlled Scorer* (ME‑BACS).  
+*State*: a vector `s ∈ ℝ^k` where each component holds a running estimate of the probability that a parsed logical predicate (e.g. “A → B”, “A < B”) is satisfied by the candidate.  
+*Action*: for each predicate extracted from the prompt, the algorithm selects a *feedback gain* `g_i` (proportional, integral, derivative terms) that updates `s_i` after observing the binary outcome of a cheap constraint‑propagation check (true/false). The update follows a PID‑like rule:  
+
+```
+e_i = target_i – s_i
+int_i ← int_i + e_i
+der_i ← e_i – prev_e_i
+s_i ← s_i + Kp*e_i + Ki*int_i + Kd*der_i
+```
+
+*Bandit layer*: predicates are grouped into arms; each arm’s reward is the log‑likelihood improvement of the whole answer under a maximum‑entropy model `p(x) ∝ exp(∑_i λ_i f_i(x))`. Thompson sampling draws λ from the posterior (Gaussian with mean = current s, variance ∝ 1/visits) and selects the arm with highest sampled reward. After each answer, the selected arm’s λ is updated via the PID controller, closing the feedback loop.
+
+*Scoring*: the final score is the normalized log‑probability of the answer under the learned exponential family, i.e.  
+
+```
+score = (∑_i λ_i * f_i(answer) – log Z(λ)) / |answer|
+```
+
+where `f_i` are binary feature functions derived from the parsed predicates.
+
+**2. Parsed structural features**  
+The front‑end regex/finite‑state parser extracts:  
+- Negations (“not”, “never”)  
+- Comparatives (“greater than”, “≤”) and numeric literals  
+- Conditionals (“if … then”, “→”)  
+- Causal verbs (“causes”, “leads to”)  
+- Temporal/ordering cues (“first”, “after”)  
+- Quantifiers (“all”, “some”, “at least k”)  
+
+Each yields a predicate `f_i` that becomes a feature for the entropy model.
+
+**3. Novelty**  
+While PID control appears in adaptive grading and bandits are used for question selection, their tight coupling with a maximum‑entropy exponential‑family scorer for per‑answer evaluation has not been documented as a single, closed‑form algorithm. The design therefore constitutes a novel synthesis, though each component maps to existing literature (control‑theoretic adaptation, contextual bandits, and ME inference).
+
+**4. Ratings**  
+Reasoning: 8/10 — the algorithm directly measures logical consistency and numeric relations.  
+Metacognition: 7/10 — feedback control provides self‑tuning but lacks explicit self‑explanation.  
+Hypothesis generation: 6/10 — bandit exploration creates alternative λ hypotheses, yet limited to extracted predicates.  
+Implementability: 9/10 — pure NumPy, regex, and standard‑library data structures make a prototype straightforward.

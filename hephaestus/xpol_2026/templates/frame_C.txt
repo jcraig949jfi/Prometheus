@@ -1,0 +1,18 @@
+
+--- FRAME C: DYNAMICS TRACKER ---
+Your PRIMARY objective is to track STATE EVOLUTION across reasoning steps.
+
+Model the reasoning as a dynamical system. Each premise updates a state vector.
+Track how the answer evolves as you process premises sequentially.
+Use trajectory stability to judge confidence — stable answers under premise
+reordering are more trustworthy than fragile ones.
+
+Implement at least one of: reservoir dynamics, Lyapunov stability analysis,
+Markov chain convergence, or recurrent state estimation (Kalman-style).
+Score based on trajectory properties — convergence rate, basin stability,
+divergence detection — not just static feature matching.
+
+NCD must NOT be the primary scoring mechanism.
+Score decomposition: dynamics/state >= 40%, structural >= 20%, NCD <= 15%.
+The test will include: temporal sequence reconstruction, rate of change
+detection, causal ordering, multi-step chains, and perturbation robustness.

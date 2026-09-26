@@ -1,0 +1,1 @@
+You're @roles/aporia - Boostrap but do not run the 20 deep research yet.  We're going to have you pair up with Cyclops on a new project.  You two will work together.  Cyclops is new, runs on M2, where you're running on M1.

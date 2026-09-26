@@ -1,0 +1,40 @@
+**Algorithmic core**  
+The tool builds a *symbolic‑numeric lattice* that merges three layers:
+
+1. **Prime‑indexed feature vectors** – each logical predicate extracted from the prompt is assigned a unique prime (via a deterministic hash → next unused prime). A candidate answer is tokenised, predicates are identified, and a sparse vector `v ∈ ℕ^P` (P = number of distinct predicates) stores the exponent of each prime: exponent = 1 if the predicate is asserted, 0 otherwise. Multiplying the vector’s primes yields a *Gödel‑style* product `G = ∏ p_i^{e_i}` that uniquely encodes the answer’s logical footprint.
+
+2. **Type‑theoretic term lattice** – predicates are further wrapped in simple dependent‑type objects `(type, arity, polarity)`. A dictionary maps each type to a *type‑mask* (binary numpy array) that records which argument positions are filled. This enables checking well‑formedness (e.g., “if‑then” expects a Boolean antecedent) and propagating constraints across the lattice.
+
+3. **Abstract‑interpretation abstract domain** – for each predicate we compute an abstract value in a flat domain `{⊤, ⊥, UNKNOWN}`. Using numpy’s vectorised logical operators we perform a single‑pass *over‑approximation*:  
+   - `⊤` (true) if the predicate appears positively,  
+   - `⊥` (false) if it appears negated,  
+   - `UNKNOWN` otherwise.  
+   Constraint propagation (transitivity, modus‑ponens) is implemented as matrix multiplication over a Boolean adjacency matrix of implication edges, iterating until a fix‑point.
+
+**Scoring logic**  
+Given the Gödel product `G_ref` of the reference solution and `G_cand` of a candidate, we compute:
+
+- `structural_match = np.gcd(G_ref, G_cand) / G_ref` (fraction of required predicates present).  
+- `type_consistency = np.mean(type_mask_ref == type_mask_cand)` (numpy vector equality).  
+- `abstract_soundness = np.mean(abstract_ref ≤ abstract_cand)` where the domain ordering is `⊥ < UNKNOWN < ⊤`.  
+
+The final score is a weighted sum `0.5*structural_match + 0.3*type_consistency + 0.2*abstract_soundness`, yielding a deterministic 0‑1 value.
+
+**Parsed structural features**  
+The regex‑driven front‑end extracts:  
+- Negations (`not`, `no`, `never`)  
+- Comparatives (`greater than`, `≤`) and numeric literals  
+- Conditionals (`if … then …`, `=>`)  
+- Causal verbs (`causes`, `leads to`)  
+- Ordering relations (`before`, `after`, `precedes`)  
+- Quantifiers (`all`, `some`, `exists`)  
+
+These are normalised into the predicate‑prime map and typed accordingly.
+
+**Novelty assessment**  
+The exact combination—prime‑encoded Gödel products, lightweight dependent‑type masks, and a flat abstract‑interpretation domain—has not been published as a single scoring engine. It draws separately from Gödel numbering, type‑theoretic term checking, and classic abstract interpretation, but the integrated pipeline is novel.
+
+Reasoning: 8/10 — strong logical coverage with deterministic scoring  
+Metacognition: 6/10 — limited self‑reflection, but type masks capture meta‑structure  
+Hypothesis generation: 5/10 — can suggest missing predicates but no generative model  
+Implementability: 9/10 — pure numpy/std‑lib, straightforward to prototype

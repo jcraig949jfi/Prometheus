@@ -1,0 +1,31 @@
+**Algorithmic sketch**  
+The tool builds a **Reservoir‑Analogical‑Abductive Scorer (RAAS)**.  
+
+1. **Reservoir encoding** – A fixed random recurrent matrix \(R\in\{-1,0,1\}^{d\times d}\) (generated once with `numpy.random.randint`) defines a sparse echo‑state network. Each candidate answer is tokenised, each token mapped to a one‑hot vector of length \(v\) (vocabulary size). The sequence is fed through the reservoir:  
+   \[
+   h_{t}= \tanh(R\,h_{t-1}+W_{in}x_{t}),\qquad h_{0}=0
+   \]  
+   The final hidden state \(h_T\) (size \(d\)) is the **dynamic representation** of the answer. The read‑out layer is not trained; it simply stores the reference answer’s reservoir state \(h^{*}\). Similarity is measured by cosine distance using only `numpy`.
+
+2. **Analogical mapping** – The prompt is parsed into a set of **relational triples** \((a,R,b)\) (e.g., “A causes B”). A lightweight structure‑mapper extracts a bipartite graph of prompt‑relations and candidate‑relations. Using a greedy maximal‑matching (Hungarian algorithm via `scipy` is disallowed, so we use a simple O(n²) heuristic) we compute a **structure‑alignment score**: fraction of prompt triples that find a counterpart with the same relation label after variable renaming.
+
+3. **Abductive evaluation** – From the prompt we generate a minimal set of **explanatory constraints** (e.g., “if X then Y”). Candidate triples are checked for **explanatory coherence**: each candidate hypothesis is scored by how many constraints it satisfies (using Boolean propagation). Violations are penalised; satisfied constraints add a bonus proportional to \(\exp(-\text{distance})\) where distance is the reservoir cosine distance.
+
+**Overall score** = α·cosine + β·alignment + γ·abductive‑coherence (α+β+γ = 1, configurable).
+
+**Parsed structural features**  
+- Negation cues (“not”, “no”)  
+- Comparatives/superlatives (“more … than”, “largest”)  
+- Conditionals (“if … then”, “when”)  
+- Numeric expressions and units  
+- Causal verbs (“cause”, “lead to”)  
+- Temporal/ordering markers (“first”, “after”)  
+
+**Novelty**  
+The exact combination—using a fixed reservoir as a content‑sensitive embedding, greedy analogical triple matching, and constraint‑based abductive scoring—is not documented as a single system. Similar pieces appear separately (reservoir embeddings, analogical mapping, abductive constraint propagation), but their integration for pure‑algorithmic answer scoring is novel.
+
+**Ratings**  
+Reasoning: 8/10 — integrates multiple logical layers without learning.  
+Metacognition: 6/10 — can detect self‑contradiction via constraints but lacks self‑monitoring.  
+Hypothesis generation: 7/10 — abductive module proposes explanations from incomplete triples.  
+Implementability: 9/10 — relies only on `numpy` and basic Python data structures; straightforward to code.

@@ -1,9 +1,9 @@
 # Aether calibration ledger
 
-Currency: 2026-09-22. Kept because it will be unflattering (base role s2).
+Currency: 2026-09-23. Kept because it will be unflattering (base role s2).
 
 One row per call this seat made that later proved wrong, with the
-correction and what the seat now does differently. One row.
+correction and what the seat now does differently. Two rows.
 
 date | call made | what was true | corrected by | changed practice
 
@@ -25,3 +25,110 @@ behaviour. Before calling anything a regression, run the pre-change
 code and check -- a one-line experiment here would have prevented a
 wrong claim in three committed documents.
 
+2026-09-23 | Treated `pytest ... | tail -3` inside a `&&` chain as a
+gate, and pushed commit 9f29f3ccd (the AETH-02 preregistration) with the
+terminology audit RED on one word. | The pipeline's exit status comes
+from `tail`, not from pytest, so a failing test cannot stop an `&&`
+chain built that way. The audit had in fact failed. | The next run of
+the audit on its own, one command later. | This is the SECOND time --
+commit cf7e4efea did the same thing on 2026-09-22 and my own TODO.md
+already carried the line "Run the full suite BEFORE pushing, not after".
+A rule I wrote down and then broke is worse than one I never wrote.
+Practice now: run the gate as its OWN command, read its summary line,
+and only then stage and commit. Never put a test inside a `&&` chain
+whose later stages can mask the exit status, and never pipe a gate
+through `tail` when its exit code is what I am relying on.
+
+
+2026-09-24 | Preregistered the AETH-02 trajectory cost at $0.83 per
+2048^2 x 50,000-tick world, $2.49 for three, and set the controller
+ceiling at $2.60 on that basis. | Measured from 3,918 s of the live run:
+7.72 ticks/s, $0.889 per trajectory, $2.67 for three. The projection was
+7.2% low, so the run will stop against its ceiling near tick 146,000 of
+150,000 instead of finishing, truncating the third trajectory and costing
+it the terminal 50,000-tick edge window. AETH-02 lands at ~$2.82 of $3.00,
+leaving $0.18 rather than the ~$0.33 the directive asked be held back. |
+Deriving throughput from the orchestrator's own progress log while the
+run was still in flight. | The error was in the throughput figure, not
+the price: observed billing was $0.4897/h against A40 list $0.49/h, so
+the rate model was fine. I carried a site-ticks/s figure from an
+UNINSTRUMENTED 4096^2 First Light run into an INSTRUMENTED 2048^2 run
+without re-measuring, and neither the lattice size nor the causal-edge
+observer was held constant. A cost projection is a throughput claim
+wearing a dollar sign; the throughput has to be measured on the
+configuration that will actually run, and a short paid probe before
+committing the campaign would have cost about $0.02. Measured rates now
+live in `Aether/runpod/COST_MODEL.md` with their provenance, and
+`prometheus_gpu.cost` marks inferred overhead terms as inferred, so the
+next projection starts from observations rather than from recollection.
+Second lesson: set the ceiling ABOVE the projection by more than the
+projection's own uncertainty, or the guard converts a small estimate
+error into lost science at the end of the last replicate.
+
+2026-09-24 | Recorded the GPU flight system's fixed overhead as 78 s, with
+`provision` (20 s) and `bootstrap` (40 s) marked INFERRED, and used that
+total in COST_MODEL.md, in every projection, and in a test threshold. |
+Iteration 1 measured the same path end to end at about 35 s: accept 1.75 s,
+pod-side bootstrap 6.0 s, canary 1.0 s, teardown 2.2 s, total wall 35.4 s.
+The model was 2.3x too high and the error was almost entirely in the two
+terms marked inferred. | The first real flight of the platform's own launch
+path, receipt hello-gpu-20260924T212427Z. | Labelling a number INFERRED was
+right and was NOT ENOUGH: nothing forced it to be measured, and it
+propagated into a document, every estimate, and a test that asserted
+overhead exceeds 50% of a one-minute job -- which was true only of the
+inflated figure, so the better measurement FAILED THE TEST. Two practice
+changes. First, an inferred term now carries what would isolate it, and
+`provision` is recorded as a BOUND (9-24 s, not isolated) rather than a
+value, because 15 s of the interval is my own poll granularity. Second, a
+test must assert the property it cares about, not a figure it did not
+derive; a threshold pinned to an estimate fails exactly when the estimate
+improves. Also found: the cost breakdown's parts were each rounded
+independently of the total, so they did not sum -- small, and still a
+defect in a money report.
+
+2026-09-24 | Treated the AETH-02 trajectory round's four-way edge
+classification and change rates as per-tick measurements, and reported them
+as such in NATIVE_CIRCUITRY_01, including describing an algebraic identity
+between two functions as an "observer consistency check". |
+`aeth02_runner.py` refreshes its `prev` snapshot only when it emits a
+sample, so every comparison was against the state 250 TICKS EARLIER.
+Measured the bias directly on one lattice by classifying the same tick
+against both reference states: STATE_CHANGING +7.3% relative, SAME_VALUE
+-2.7%, change_rate +12.1%, per-field opcode change rate +128%. And
+`changed_by_field` versus `STATE_CHANGING` agree because they are the same
+expression in two functions -- an identity, not a check. | Building H2,
+which needed a per-tick change rate and got an implausible one. | I read
+`change_rate(xp, prev, device)` and saw the right function without checking
+what `prev` HELD. A variable named `prev` that is refreshed on a different
+cadence from its use is a trap, and the cure is to verify the OPERAND, not
+just the operation. The corrected figures move every conclusion slightly
+FURTHER in the direction already reported, which is luck and not
+vindication. Second lesson: when two quantities agree exactly, suspect an
+identity before claiming a validation -- an exact 1.0000 ratio across
+hundreds of samples should have prompted me to look for why it could not
+have come out otherwise.
+
+2026-09-26 | Appended a speculative `git checkout origin/main --` to the
+end of a gate command during the integration merge, and started the full
+Aether suite in the background right after. | The trailing checkout
+detached the worktree onto origin/main while the suite was starting, so
+the run was about to test the wrong tree. Caught on the very next command
+(`git branch --show-current` came back empty); suite stopped, branch
+reattached, suite rerun with HEAD recorded before AND after (both
+6fa670744). Nothing lost; nothing pushed from the wrong tree. | The next
+status check, before any push. | One intent per command. A command whose
+purpose is "run the gate" must contain nothing that can move HEAD, and a
+background run that tests a tree should record the SHA it tested at both
+ends so a mid-run move is detectable rather than silent.
+
+2026-09-26 | Preregistered H3-P2 as "deficit in opcode and arg0; arg1,
+payload, energy near 1", reasoning only from which writes break a
+member's topology on the NEXT tick. | arg1 turned out to be the most
+suppressed field (0.002x null) and energy enriched (1.58x). The arg1
+mechanism runs through perturbation's K2 property (every one-bit flip of
+arg1 changes it mod 5), a property recorded in this seat's own freeze
+candidate. | The 256^2 per-field table, then the H3-X test. | I reasoned
+about the law without the perturbation channel, and forgot a property my
+own falsification gate had proven. When predicting from the law, walk
+every phase including Mu, and re-read the gate results before writing
+the prediction.

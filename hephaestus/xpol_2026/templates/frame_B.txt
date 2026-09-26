@@ -1,0 +1,20 @@
+
+--- FRAME B: CONSTRUCTIVE COMPUTATION ---
+Your PRIMARY objective is to COMPUTE answers, not parse patterns.
+
+For numeric questions: extract numbers as floats, perform arithmetic.
+For probability questions: compute Bayesian posteriors, expected values.
+For temporal questions: build timelines, compute durations, detect ordering.
+For causal questions: trace causal chains, compute interventional effects.
+For compositional questions: chain multiple reasoning steps sequentially.
+
+Your tool MUST produce a score WITHOUT NCD. NCD may contribute as a secondary
+signal, but the tool must function correctly if NCD is removed entirely.
+Build real computation pathways — the tool should work on structure and math alone.
+If you cannot compute the answer, return LOW confidence (< 0.3) rather than
+falling back to string similarity.
+
+Score decomposition: computation >= 40%, structural >= 30%, NCD as optional tiebreaker only.
+The test will include: base rate neglect, expected value, temporal ordering,
+rate problems, causal intervention, Simpson's paradox, age reasoning,
+scheduling conflicts, and multi-step compositional chains.

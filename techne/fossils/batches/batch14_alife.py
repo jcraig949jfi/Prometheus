@@ -71,7 +71,7 @@ S = [
         upstream_docs=["arXiv:1901.01753", "GECCO 2019 DOI 10.1145/3321707.3321799"],
         human_capability_summary={"built_to": "co-generate environments and their solutions with periodic transfer", "pressure": "same as Enhanced POET", "success_means": "environments solved that direct optimisation cannot reach"},
         known_human_problem_solved="open-ended coevolution of problems and solvers (first version)",
-        lineage_relations=[{"relation": "superseded_by", "target": "poet-enhanced-2020", "note": "same repository, branch master"}],
+        lineage_relations=[{"relation": "superseded_by", "to": "poet-enhanced-2020", "note": "same repository, branch master"}],
         acquisition_tags=["operator-directive-2026-09-17", "poet_alife", "TECHNE-104", "TECHNE-18"]),
 
     record.skeleton("asal-sakana-2024",
@@ -160,7 +160,7 @@ S = [
         upstream_docs=["hf GPaolo/TerraLingua README (Total size ~4.7 GB, 40 experiments)"],
         human_capability_summary={"built_to": "record one ecology run for post-hoc analysis", "pressure": "n/a (data)", "success_means": "n/a (data)"},
         known_human_problem_solved="n/a (data slice for TECHNE-108)",
-        lineage_relations=[{"relation": "derived_from", "target": "terralingua-2026", "note": "produced by the code at or before the pinned commit; exact commit not stated by the dataset"}],
+        lineage_relations=[{"relation": "derived_from", "to": "terralingua-2026", "note": "produced by the code at or before the pinned commit; exact commit not stated by the dataset"}],
         acquisition_tags=["operator-directive-2026-09-17", "poet_alife", "TECHNE-108", "data-slice"]),
     record.skeleton("lenia-chan-2019",
         canonical_name="Lenia -- Biology of Artificial Life, reference implementation and lifeform catalogue (Bert Wang-Chak Chan, 2018-)",

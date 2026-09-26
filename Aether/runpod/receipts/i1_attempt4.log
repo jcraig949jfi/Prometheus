@@ -1,0 +1,28 @@
+[i1 17:14:08] REAL LAUNCH, budget ceiling $0.30
+[i1 17:14:08] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[i1 17:14:08] credential source: host default key file
+[i1 17:14:09] bundle d363c477cf1b reachable at the pinned commit d71a52e94641
+[i1 17:14:10] create attempt on NVIDIA RTX A4000 (1 of 5)
+[i1 17:14:10] create attempt 1 failed status=400; reconciling inventory
+[i1 17:14:10] reconcile: inventory empty, so that failure created nothing
+[i1 17:14:10] create attempt on NVIDIA RTX A5000 (2 of 5)
+[i1 17:14:11] create attempt 1 failed status=400; reconciling inventory
+[i1 17:14:11] reconcile: inventory empty, so that failure created nothing
+[i1 17:14:11] create attempt on NVIDIA GeForce RTX 4090 (3 of 5)
+[i1 17:14:12] create attempt 1 -> accepted pod=ucrf1r9dardwew
+[i1 17:14:12] create CREATED -> confirmed pod=ucrf1r9dardwew gpu=NVIDIA GeForce RTX 4090
+[i1 17:14:12] not reachable yet: https:/ status=404 HTTPError: HTTP Error 404: Not Found
+[i1 17:14:44] module reported end (status=ok)
+[i1 17:14:44] artifacts NOT retrieved: result.json
+[i1 17:14:45] receipt written to C:\Prometheus-worktrees\aether-memwall\Aether\runpod\receipts\hello-gpu-20260924T211409Z.json
+
+RECEIPT  hello-gpu-20260924T211409Z
+  module        hello-gpu@1   result OK
+  bundle        d363c477cf1bda385836415e7f784079b0fecf295e3dad208ecf31f9d66139ba
+  window        2026-09-24T21:14:10Z -> 2026-09-24T21:14:44Z
+  cost          $0.0032 estimated over 34.0 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     6 records, units=200, complete=True
+  artifacts     1 retrieved
+  MISSING       result.json
+[i1 17:14:45] ITERATION_1_PASS

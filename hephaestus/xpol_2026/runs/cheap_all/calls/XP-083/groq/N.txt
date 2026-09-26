@@ -1,0 +1,25 @@
+**Algorithmic core**  
+The tool builds a *reasoning graph* G = (V, E) for each candidate answer.  
+- **Nodes (V)** store elementary propositions extracted from the text (e.g., “heat flows from A to B”, “species X has higher fitness”). Each node carries a type tag from the three concept families (Thermo, Evolution, ToM) and a numeric payload when applicable (energy value, fitness score, belief‐certainty).  
+- **Edges (E)** encode logical relations discovered by regex‑driven parsers: → (implication), ↔ (equivalence), ¬ (negation), < (ordering), ≤ / ≥  (comparatives), and conditional arrows (if‑then). Edges are annotated with a *confidence* weight derived from lexical cues (e.g., “always”, “sometimes”).  
+
+**Scoring pipeline**  
+1. **Parsing** – A deterministic finite‑automaton scans the answer, extracts tokens, and populates V and E.  
+2. **Constraint propagation** – Using a union‑find structure for equivalence classes and a topological sort for directed acyclic sub‑graphs, the system enforces transitivity, modus ponens, and thermodynamic constraints (e.g., ΔS ≥ 0, energy conservation). Evolutionary constraints enforce monotonic fitness increase along speciation edges; Theory‑of‑Mind constraints propagate belief updates (e.g., if agent A believes p and p → q, then A believes q).  
+3. **Energy‑entropy metric** – For each thermodynamic sub‑graph, compute ΔE and ΔS; penalize violations of the second law.  
+4. **Fitness‑drift metric** – Sum weighted fitness differences; penalize unsupported jumps (speciation without intermediate steps).  
+5. **Belief‑consistency metric** – Count contradictions in ToM chains (e.g., false‑belief violations).  
+
+The final score = w₁·(thermo‑penalty) + w₂·(evolution‑penalty) + w₃·(ToM‑penalty) where weights are configurable. Lower total penalty → higher quality.
+
+**Parsed structural features**  
+- Negations (¬), comparatives (<, >, ≤, ≥), conditionals (“if … then”), numeric values (energy, fitness, probability), causal verbs (“causes”, “leads to”), temporal ordering (“first”, “later”), and explicit belief clauses (“A thinks that …”).
+
+**Novelty**  
+The combination is not a direct replica of existing parsers; it fuses thermodynamic invariants, evolutionary fitness landscapes, and recursive belief propagation into a unified constraint‑propagation engine. Similar ideas appear separately in physics‑informed reasoning and Bayesian ToM models, but an integrated, pure‑numpy graph‑based scorer is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical propagation, limited by lexical coverage.  
+Metacognition: 7/10 — models beliefs recursively but lacks probabilistic nuance.  
+Hypothesis generation: 6/10 — can flag missing steps but does not propose alternatives.  
+Implementability: 9/10 — pure‑numpy, deterministic, and fits existing pipelines.

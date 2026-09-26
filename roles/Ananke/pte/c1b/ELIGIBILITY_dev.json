@@ -1,0 +1,164 @@
+{
+ "code_sha": "4554a2faee5e4126483f046083e9f735ca823182",
+ "device": "cpu",
+ "rule": "A2.2: hand plants at each specimen's communication physics; FIRED per A3.1 (competent lo99>0.55 AND hi99(switched-normal)<-0.10); 0.95 checks kept as dev info only",
+ "seed_ns": "0xde8",
+ "specimens": {
+  "0a23398f20cc41a2": {
+   "NOT_ELIGIBLE": [
+    "T_c1_window"
+   ],
+   "dest_mode": "all",
+   "mechanism": "M3",
+   "plants": {
+    "F_DA": {
+     "a3": {
+      "competent_lo99": 0.49869140625,
+      "diff_hi99": 0.013027343749999828,
+      "fired": false
+     },
+     "acc": {
+      "drop_readout_tick_only": 0.5117,
+      "drop_window_c1": 0.7344,
+      "normal": 0.5599
+     },
+     "dev_bar_checks": {
+      "c1 window intact": true,
+      "normal>=0.95": false,
+      "readout-only kills": true
+     },
+     "fired": false,
+     "guards": "T_c1_window"
+    },
+    "F_rule": {
+     "a3": {
+      "competent_lo99": 0.9791666666666666,
+      "diff_hi99": -0.47916666666666663,
+      "fired": true
+     },
+     "acc": {
+      "freeze_rule": 0.5,
+      "normal": 0.9922
+     },
+     "dev_bar_checks": {
+      "freeze_rule drops": true,
+      "normal>=0.95": true
+     },
+     "fired": true,
+     "guards": "not_R"
+    }
+   },
+   "routing_clause": "INERT_BY_PHYSICS"
+  },
+  "4ab2ba014aac967e": {
+   "NOT_ELIGIBLE": [
+    "Z"
+   ],
+   "dest_mode": "sample",
+   "mechanism": "M2",
+   "plants": {
+    "F_echo": {
+     "a3": {
+      "competent_lo99": 0.8932291666666667,
+      "diff_hi99": -0.09505208333333334,
+      "fired": false
+     },
+     "acc": {
+      "flush_inflight": 0.7695,
+      "normal": 0.9271,
+      "reset_S": 0.8984
+     },
+     "dev_bar_checks": {
+      "flush kills": false,
+      "normal>=0.95": false,
+      "reset_S intact": true
+     },
+     "fired": false,
+     "guards": "(validates A; gates nothing)"
+    },
+    "F_latch": {
+     "a3": {
+      "competent_lo99": 1.0,
+      "diff_hi99": -0.5,
+      "fired": true
+     },
+     "acc": {
+      "normal": 1.0,
+      "reset_S": 0.5
+     },
+     "dev_bar_checks": {
+      "normal>=0.95": true,
+      "reset_S kills": true
+     },
+     "fired": true,
+     "guards": "B"
+    },
+    "F_sham_positive": {
+     "a3": {
+      "competent_lo99": 0.7784090909090909,
+      "diff_hi99": -0.06818181818181819,
+      "fired": false
+     },
+     "acc": {
+      "flush_inflight_iti": 0.6875,
+      "normal": 0.8385,
+      "normal_from1": 0.8267
+     },
+     "dev_bar_checks": {
+      "iti flush drops": true,
+      "normal>=0.95": false
+     },
+     "fired": false,
+     "guards": "Z"
+    }
+   }
+  },
+  "f6b623cdb23afd2c": {
+   "NOT_ELIGIBLE": [
+    "T_c1_window"
+   ],
+   "dest_mode": "all",
+   "mechanism": "M3",
+   "plants": {
+    "F_DA": {
+     "a3": {
+      "competent_lo99": 0.4908723958333333,
+      "diff_hi99": 0.01953124999999998,
+      "fired": false
+     },
+     "acc": {
+      "drop_readout_tick_only": 0.5143,
+      "drop_window_c1": 0.7344,
+      "normal": 0.556
+     },
+     "dev_bar_checks": {
+      "c1 window intact": true,
+      "normal>=0.95": false,
+      "readout-only kills": true
+     },
+     "fired": false,
+     "guards": "T_c1_window"
+    },
+    "F_rule": {
+     "a3": {
+      "competent_lo99": 0.9791666666666666,
+      "diff_hi99": -0.47916666666666663,
+      "fired": true
+     },
+     "acc": {
+      "freeze_rule": 0.5,
+      "normal": 0.9922
+     },
+     "dev_bar_checks": {
+      "freeze_rule drops": true,
+      "normal>=0.95": true
+     },
+     "fired": true,
+     "guards": "not_R"
+    }
+   },
+   "routing_clause": "INERT_BY_PHYSICS"
+  }
+ },
+ "worlds": 64
+}

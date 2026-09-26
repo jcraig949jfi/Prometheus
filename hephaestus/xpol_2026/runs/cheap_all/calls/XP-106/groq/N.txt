@@ -1,0 +1,17 @@
+**1. Emergent computational mechanism**  
+A concrete architecture that fuses the three ideas is a **Neuromodulated Critical Reservoir (NCR)**. The core is a recurrent spiking‑network reservoir that is driven to a self‑organized critical (SOC) regime by a local “activity‑gradient” rule (e.g., the sand‑pile toppling rule applied to synaptic weights). Neuromodulators (dopamine‑like gain signals) are emitted by a meta‑controller that monitors the reservoir’s free‑energy, computed from the statistical‑mechanics partition function  
+\(Z=\sum_{\mathbf{s}}e^{-\beta H(\mathbf{s})}\)  
+where \(H\) is a Hamiltonian encoding the current hypothesis (e.g., a Boltzmann machine energy). The neuromodulator scales neuronal excitability (gain) and plasticity rates, pushing the system toward the critical point where avalanche size distributions follow a power law. At criticality the reservoir exhibits maximal dynamic range and information‑theoretic capacity, while the free‑energy term provides a principled objective for hypothesis evaluation (the lower the free‑energy, the better the fit).
+
+**2. Advantage for a self‑testing reasoning system**  
+Because SOC yields scale‑free avalanches, the NCR can generate hypotheses of widely varying granularity without explicit tuning. Neuromodulatory gain acts as a rapid, low‑dimensional “temperature” knob: increasing dopamine lowers the effective temperature, sharpening the posterior around a promising hypothesis; decreasing it raises temperature, encouraging exploratory avalanches that probe alternative explanations. The statistical‑mechanics free‑energy provides a quantitative “self‑consistency” score, allowing the system to accept, reject, or refine its own conjectures in a single forward pass rather than via costly iterative sampling.
+
+**3. Novelty**  
+Elements exist in isolation: critical brain dynamics, neuromodulated plasticity, and free‑energy‑based inference. However, a unified **Neuromodulated Critical Reservoir** that explicitly uses SOC dynamics as a computational substrate for free‑energy‑guided hypothesis testing has not been formalized as a distinct framework. It therefore represents a novel interdisciplinary synthesis, though it will draw on prior work in critical reservoir computing, dopamine‑modulated reinforcement learning, and the statistical‑mechanics formulation of the free‑energy principle.
+
+**4. Ratings**  
+
+Reasoning: 8/10 — The architecture supplies a principled, scalable inference engine that balances exploration and exploitation.  
+Metacognition: 7/10 — Free‑energy monitoring gives a clear self‑assessment signal, though implementation of accurate Hamiltonians may be challenging.  
+Hypothesis generation: 9/10 — SOC avalanches naturally produce a spectrum of candidate structures without hand‑crafted proposal mechanisms.  
+Implementability: 5/10 — Requires precise control of criticality and biologically plausible neuromodulation; feasible in simulation but hardware realization remains non‑trivial.

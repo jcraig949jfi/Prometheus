@@ -1,0 +1,36 @@
+**1. Algorithmic core**  
+The tool builds a **probabilistic constraint‑graph evaluator** that fuses three primitives:
+
+* **Information‑theoretic weights** – each extracted logical predicate (e.g., “A > B”, “if C then D”) is assigned a Shannon‑entropy based confidence \(w = -\log_2(p)\) where \(p\) is the empirical frequency of that predicate type in a reference corpus. Rare, high‑information predicates (e.g., “causal chain of three steps”) receive larger weights, while common fillers (e.g., “also”) get near‑zero weight.
+
+* **Swarm‑style propagation** – the weighted predicates are nodes in a directed graph. Each node holds a belief vector \(\mathbf{b}\in[0,1]^k\) (k = number of epistemic statuses: asserted, inferred, contradicted). Simple agents repeatedly apply local update rules:  
+  – **stigmergic reinforcement**: when two nodes share a variable, their belief vectors are combined by weighted averaging using the information‑theoretic weights.  
+  – **pheromone decay**: after each iteration, belief strength decays by a factor \(δ\) to avoid runaway accumulation.  
+  The process iterates until the graph stabilizes (Δ < ε) – analogous to ant‑colony convergence.
+
+* **Epistemic scoring** – after convergence, each answer receives a scalar score:  
+  \[
+  S = \sum_{n\in\text{nodes}} w_n \cdot \bigl(\mathbf{b}_n\cdot\mathbf{e}\bigr)
+  \]  
+  where \(\mathbf{e}\) encodes the target epistemic profile (e.g., high justification, low contradiction). Normalising by total weight yields a 0‑1 confidence that can be mapped to a rubric.
+
+**2. Parsed structural features**  
+The front‑end uses deterministic regex / finite‑state parsers to extract:  
+- Negations (¬, “not”, “without”)  
+- Comparatives and superlatives (“greater than”, “more efficient”)  
+- Conditionals (“if … then”, “provided that”)  
+- Numeric values and units (quantities, percentages)  
+- Causal claims (“causes”, “leads to”)  
+- Temporal / ordering relations (“first”, “after”)  
+- Logical connectors (and, or, xor)  
+
+These tokens become graph edges with typed labels.
+
+**3. Novelty**  
+The exact combination—entropy‑weighted swarm propagation on a logical constraint graph—is not present in standard grading tools, which rely on static similarity or rule‑based checklists. The closest analogues are probabilistic graphical models for NLI and ant‑colony optimisation for SAT solving, but integrating epistemic profiles with information‑theoretic weighting is a novel synthesis.
+
+**4. Ratings**  
+Reasoning: 8/10 — the graph‑based inference captures multi‑step logical chains beyond surface matching.  
+Metacognition: 7/10 — entropy weighting reflects awareness of informational value, though self‑reflection is indirect.  
+Hypothesis generation: 6/10 — the swarm can propose inferred predicates, but generation is limited to recombination of extracted facts.  
+Implementability: 9/10 — relies only on numpy, regex, and basic data structures; feasible within a few hundred lines.

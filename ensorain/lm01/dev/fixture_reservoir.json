@@ -1,0 +1,35 @@
+{
+ "curve": {
+  "median_AC": {
+   "c/8": 0.29072291628844943,
+   "c/4": 0.4085969524257085,
+   "c/2": 1.4066010649949447,
+   "c": 1.9129241331264115,
+   "2c": 2.346796311869276,
+   "full": 2.653155152230119,
+   "L-R": 2.624406715451349
+  },
+  "monotone": true,
+  "full_matches_LR": true,
+  "PASS": true
+ },
+ "positive_control": {
+  "median_AC": {
+   "random": -0.3347169607706459,
+   "oracle": 0.5759374867478908,
+   "keep_worst": -0.4732386649668724,
+   "residual_reservoir": -0.4566550544761565
+  },
+  "oracle_minus_random": 0.9106544475185367,
+  "PASS": true
+ },
+ "tolerances": {
+  "MONO_TOL": 0.05,
+  "FULL_TOL": 0.15,
+  "POS_MIN": 0.2
+ },
+ "seeds": [
+  9330000,
+  9330003
+ ]
+}

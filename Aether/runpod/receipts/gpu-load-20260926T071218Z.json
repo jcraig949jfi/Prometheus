@@ -1,0 +1,133 @@
+{
+  "args": [],
+  "artifacts": [],
+  "artifacts_missing": [
+    "result.json",
+    "state.bin",
+    "telemetry.jsonl"
+  ],
+  "bundle_sha256": "1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab",
+  "calibrated_estimate": {
+    "compute_seconds_total": 276.06600000000003,
+    "expected_usd": 0.014457527222222223,
+    "margin": 0.2,
+    "overhead_seconds_per_pod": 30.093400000000003,
+    "per_pod_expected_seconds": 306.1594,
+    "per_pod_seconds": 426.1594,
+    "pods": 1,
+    "requested_units": 3000.0,
+    "teardown_reserve_s": 120.0,
+    "teardown_reserve_usd": 0.005666666666666667,
+    "usd_per_unit": 4.345483333333334e-06,
+    "usd_with_margin": 0.023015699333333334
+  },
+  "campaign_plan": {
+    "calibration_gpu": "NVIDIA RTX A4000",
+    "calibration_source": "scout receipt gpu-load-scout-20260926T065221Z",
+    "ceiling_usd": 0.15,
+    "decision": "PROCEED"
+  },
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 0,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": null,
+    "start": null
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 0.5,
+    "hourly_usd": 0.17,
+    "usd_estimated": 2e-05
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    }
+  ],
+  "created_utc": "2026-09-26T07:12:18Z",
+  "ended_utc": "2026-09-26T07:12:19Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/gpu-load-20260926T071218Z",
+  "evidence_kept": [],
+  "git": {
+    "available": true,
+    "commit": "c065bf1d6bb0d22522d7cc74fde275382a73b385",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": null,
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 900,
+    "telemetry_interval_s": 10
+  },
+  "last_stage": null,
+  "lifecycle": {
+    "controller_clock": {
+      "create_call_s": 0.525
+    },
+    "cross_clock": {},
+    "pod_clock": {}
+  },
+  "module": "gpu-load@1",
+  "notes": [
+    "no capacity for any declared GPU (NVIDIA RTX A4000); provider confirms nothing exists. Declare more gpu.alternatives or try again later."
+  ],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 900.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0291,
+    "overhead_s": 27.0,
+    "total_s": 927.0,
+    "usd_compute": 0.0425,
+    "usd_overhead": 0.0013,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.0438,
+    "work_units": {
+      "estimate": 3000.0,
+      "name": "matmuls",
+      "units_per_usd": 68532.26727584237,
+      "usd_per_1e9_units": 14591.666666666668,
+      "usd_per_unit": 1.4591666666666668e-05
+    }
+  },
+  "pods": [],
+  "preregistered_estimate": {
+    "expected_usd": 0.01517
+  },
+  "ready_poll_s": 3.0,
+  "result": "NOT_RUN",
+  "run_id": "gpu-load-20260926T071218Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "35da1e3b807f4188b392578c794fce3b9b2c2db77da7c1868ec2ce9d738d181e",
+  "started_utc": "2026-09-26T07:12:18Z",
+  "telemetry_summary": {
+    "complete": false,
+    "note": "no telemetry; the workload may never have started",
+    "records": 0
+  },
+  "transport": "repo-pinned"
+}

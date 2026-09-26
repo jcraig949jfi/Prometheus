@@ -1,0 +1,18 @@
+
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME F: ADVERSARIAL ROBUSTNESS
+
+A determined adversary will rewrite every prompt to break your regex patterns while preserving the logical structure:
+- Variable names are randomized (not Alice/Bob — could be Kenji, Priya, Zara)
+- Surface forms vary (5+ different phrasings for the same logical structure)
+- Irrelevant sentences are injected as distractors
+- Keywords that would trigger wrong handlers appear in misleading contexts
+- Prompt lengths vary from 2 sentences to 2 paragraphs
+
+Design a tool that identifies the LOGICAL STRUCTURE of a problem regardless of how it's expressed. Your tool should work on prompts it has never seen before, not by matching templates but by building a model of the problem and reasoning over the model.
+
+If your tool uses regex, it should be for STRUCTURAL EXTRACTION ("find all statements of the form 'X is Y'" or "identify constraint phrases") not for CATEGORY DETECTION ("if the prompt contains 'causes' and 'intervene', use the causal handler").
+
+Test yourself: would your tool work if every proper noun were replaced with a random string? If every "causes" were replaced with "leads to" or "results in" or "produces"? If the key information were buried in paragraph 2 of 3?
+
+ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition.

@@ -1,0 +1,28 @@
+**1. Algorithmic core**  
+The tool builds a *symbolic state‑space* for each candidate answer.  
+*Data structures* – a directed multigraph `G = (V,E)` where each vertex `v∈V` is a parsed proposition (e.g., “temperature > 30”, “if A then B”). Edges encode logical relations: `E_type∈{implication, equivalence, ordering, causal}`. Each proposition carries a numeric vector `p = (t, c, s)` for *type* (0=boolean, 1=numeric, 2=causal), *confidence* (initially 1.0), and *semantic hash* (a deterministic fingerprint from a lexical‐normalisation function).  
+
+*Operations* –  
+1. **Ergodic averaging**: For a given answer, repeatedly traverse `G` using a random walk that respects edge types. After `T` steps (e.g., 10 000) compute the empirical distribution of visited proposition types; this approximates the long‑run “importance” of each logical component.  
+2. **Adaptive control**: A PID‑style controller updates a weight vector `w` for each edge class based on the error between the current walk distribution and a *reference distribution* derived from a gold‑standard solution graph.  
+3. **Compositional scoring**: The final score is `S = Σ_v w_type(v) * f(p(v))`, where `f` maps the proposition’s numeric content (e.g., magnitude of a numeric claim, depth of a conditional) to a scalar. Because `w` adapts online, the system self‑tunes to the difficulty of the question.
+
+**2. Parsed structural features**  
+- Negations (`not`, `no`),  
+- Comparatives (`greater than`, `≤`),  
+- Conditionals (`if…then`, `=>`),  
+- Numeric values (integers, floats, units),  
+- Causal verbs (`cause`, `lead to`),  
+- Temporal/ordering cues (`first`, `after`, `until`),  
+- Logical connectors (`and`, `or`, `but`).  
+
+These are extracted with deterministic regex/finite‑state tokenisers and mapped to vertices/edges.
+
+**3. Novelty**  
+The exact combination—ergodic random‑walk averaging over a proposition graph, PID‑style adaptive weight tuning, and compositional aggregation—has not been published as a single reasoning‑evaluation pipeline. Similar ideas appear separately in graph‑based semantic parsers, adaptive scoring in online learning, and ergodic analyses of Markov chains, but their integration is new.
+
+**4. Ratings**  
+Reasoning: 8/10 — strong logical graph handling and adaptive weighting.  
+Metacognition: 6/10 — can reflect on its own error but lacks self‑explanation.  
+Hypothesis generation: 5/10 — limited to evaluating given propositions, not proposing new ones.  
+Implementability: 9/10 — pure Python, numpy, regex; no external services required.

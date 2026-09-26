@@ -1,0 +1,35 @@
+**Algorithmic design**  
+The tool builds a *search‑guided similarity tree* that fuses three primitives:
+
+1. **Parsing layer (Gauge‑style symmetry extraction).**  
+   The input prompt is tokenised and a lightweight grammar (regex‑based production rules) extracts logical predicates, quantifiers, and relational operators (¬, →, ↔, >, <, =, if‑then, because, because‑of). Each predicate becomes a node in a *constraint graph*; edges encode symmetry relations (e.g., “A ↔ B” creates a bidirectional edge, “A → B” a directed edge). This graph is the “fiber bundle” on which the rest of the algorithm operates.
+
+2. **Monte‑Carlo Tree Search (MCTS) over answer candidates.**  
+   For every candidate answer we instantiate a *state* consisting of the parsed predicate set plus a *compression signature* (see below). The MCTS root holds the prompt state; each child node corresponds to applying one candidate’s predicate set to the current constraint graph (i.e., adding, removing or modifying edges). The selection step uses Upper‑Confidence‑Bound (UCB1) on a value = ‑NCD + constraint‑violation penalty. Expansion adds a new candidate node; rollout performs a random walk of up to *k* constraint‑propagation steps (transitivity, modus‑ponens) to test logical closure. Back‑propagation aggregates the average score of rollouts.
+
+3. **Normalized Compression Distance (NCD) scorer.**  
+   For a leaf node we compute two compressed byte strings:  
+   - `C(P+A)` – compression of the concatenated prompt + answer text.  
+   - `C(P) + C(A)` – sum of separate compressions.  
+   NCD = `(C(P+A) – min(C(P),C(A))) / max(C(P),C(A))`.  
+   The NCD is inverted (lower distance → higher similarity) and combined with a penalty proportional to the number of unsatisfied constraints in the graph.
+
+**Scoring logic**  
+Score = α·(1 – NCD) – β·(constraint violations). The MCTS returns the candidate with maximal expected score after a fixed budget of simulations.
+
+**Parsed structural features**  
+- Negations (¬) and logical operators (∧, ∨, →, ↔)  
+- Quantifiers (∀, ∃) expressed via “all/any” patterns  
+- Comparatives and superlatives (>, <, ≥, ≤, more/less)  
+- Conditionals (“if … then …”) and causal cues (“because”, “so that”)  
+- Numeric values and units (extracted with regex)  
+- Temporal/ordering relations (“first”, “after”, “before”)  
+
+**Novelty assessment**  
+The exact combination—using gauge‑theoretic symmetry graphs to encode logical structure, guiding a Monte‑Carlo tree over candidate answer states, and scoring each leaf with a compression‑based distance—is not documented in prior literature. Existing work applies MCTS to theorem proving or uses NCD for plagiarism detection, but their integration with a symmetry‑based constraint graph for reasoning evaluation is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical graph + constraint propagation  
+Metacognition: 6/10 — can detect self‑contradiction but lacks self‑explanation  
+Hypothesis generation: 5/10 — limited to candidate set, no novel hypothesis creation  
+Implementability: 9/10 — pure Python, numpy, regex, zlib compression suffice.

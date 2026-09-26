@@ -1,0 +1,28 @@
+### 1. Algorithm: Quantum-Plastic Model Checker (QPMC)
+
+* **Data Structures**:
+  * **Superposition State Vector** $v \in \mathbb{R}^N$: Normalized amplitude vector over $N$ extracted state propositions.
+  * **Kripke Transition Matrix** $T \in \mathbb{R}^{N \times N}$: Adjacency matrix representing valid logical transitions defined by the prompt.
+  * **Plasticity Matrix** $W \in \mathbb{R}^{N \times N}$: Dynamic state weight matrix initialized to $T$.
+  * **Projection Matrix** $P_{spec} \in \mathbb{R}^{N \times N}$: Diagonal Boolean filter for terminal specification states.
+
+* **Operations & Scoring Logic**:
+  1. **Graph Generation**: Parse prompt into atomic propositions (nodes) and valid relations (edges) to form $T$.
+  2. **State Evolution**: Parse candidate answer steps into permutation/transition matrices $O_t$. Evolve the state: $v_{t+1} = O_t (W \odot T) v_t$.
+  3. **Plasticity & Decoherence**: Apply Hebbian reinforcement to active transitions ($W_{ij} \leftarrow W_{ij} + \alpha v_i v_j$). Perform synaptic pruning by setting $W_{ij} = 0$ for all $W_{ij} < \theta$. Amplitudes on invalid paths decay to zero (decoherence).
+  4. **Measurement/Scoring**: Compute final state projection onto the specification subspace: 
+     $$\text{Score} = \frac{\|P_{spec} v_{\text{final}}\|^2}{\|v_{\text{final}}\|^2 + \epsilon}$$
+
+### 2. Parsed Structural Features
+* **Conditionals & Causal Claims**: Regex captures `if...then`, `causes`, `leads to` to generate directed edges in $T$.
+* **Ordering Relations**: Words like `before`, `after`, `then` dictate the operator sequence order $O_1, O_2, \dots, O_k$.
+* **Negations**: `not`, `never`, `false` inject phase/sign flips or orthogonal projection operators that cancel vector components.
+* **Numeric Constraints**: Expressions like `x > 5` are parsed and evaluated to set initial state bits ($v_i = 1$).
+
+### 3. Novelty and Mapping
+This approach maps to **Quantum Cognition** (vector space representations of multi-hypothesis superposition) combined with **Bounded Model Checking** (Kripke structure verification via temporal logic). Using **Hebbian dynamic pruning** directly within state-space matrix operations to eliminate invalid symbolic execution paths without deep learning frameworks is a novel architectural synthesis.
+
+Reasoning: 8/10 — Directly validates deterministic temporal logic, causal dependencies, and state transitions using linear algebra.
+Metacognition: 4/10 — Scores candidate path validity but lacks explicit self-reflective monitoring of its own internal scoring biases.
+Hypothesis generation: 6/10 — Superposition state vectors allow simultaneous evaluation of multiple non-deterministic path hypotheses.
+Implementability: 9/10 — Relies entirely on basic standard library regex parsing and standard NumPy matrix operations.

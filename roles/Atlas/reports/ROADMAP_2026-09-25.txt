@@ -1,0 +1,233 @@
+ATLAS RESEARCH ROADMAP -- generated from atlas.* on the M1 store
+==============================================================================
+Atlas classifications and scores. A proposition is not a verdict, a
+score is a prediction, a directive is a suggestion. Seats decide.
+
+1. THEORY GRAPH (atlas.proposition; evidence counted both ways)
+   proposition                        confidence  sup  con  cfd pred
+   P-measurement-before-mechanism     STRONG       1    0    0    1
+   P-accessibility-cliffs             MODERATE     1    0    0    2
+   P-copy-not-heredity                MODERATE     0    0    0    2
+   P-selection-not-search             MODERATE     1    0    0    1
+   P-task-competence-not-mechanism    MODERATE     1    0    0    1
+   P-clean-null-value                 WEAK         0    0    0    1
+   P-heredity-bootstrap-barrier       WEAK         1    0    0    2
+   P-organization-not-reproduction    UNTESTED     0    0    0    1
+   P-persistence-not-self-maintenance UNTESTED     0    0    0    1
+   P-reproduction-machinery-not-advan UNTESTED     0    0    0    1
+
+2. PRIMITIVE COVERAGE (atlas.primitive / primitive_use)
+   primitives defined 20, with at least one detection hit 15
+   UNMEASURED (the ledger declares no detection rule -- an
+   instrumentation gap, NOT a coverage claim):
+     error_correction -- UNMEASURED -- needs a measured fidelity and a
+       channel baseline to compare it with; neither is recorded on catalogued
+       systems. Needs ATLAS-39.
+     partial_heredity -- UNMEASURED -- no indexed source records
+       offspring-parent similarity as a continuous quantity; the catalogue
+       axes only say whether a copy mechanism exists, so Atlas cannot tell
+       partial heredity from full copying. Needs ATLAS-39.
+     reproductive_closure -- UNMEASURED -- requires an ablation (remove the
+       runner's birth step) that no indexed experiment reports; presence
+       cannot be read off a description. Needs ATLAS-39.
+     temporal_gating -- UNMEASURED -- operator availability over history is
+       a property of the interpreter, invisible in world/organism/pressure
+       axes. Needs ATLAS-39.
+     write_authority -- UNMEASURED -- write permissions live in substrate
+       specs and code, not in any axis the catalogue or the index records.
+       Needs ATLAS-39.
+
+3. COMBINATION COVERAGE (atlas.combination, arity 2)
+   TESTED                        89
+   UNEXPLORED                    85
+   SUGGESTED_BY_EVIDENCE         16
+   Highest-interest pairs never crossed in Prometheus:
+     copy_mechanism x partial_heredity              1.3
+       P-copy-not-heredity, P-h
+     environmental_feedback x error_correction      1.3
+       P-persistence-not-self-m
+     partial_heredity x temporal_gating             1.3
+       P-heredity-bootstrap-bar
+     copy_mechanism x reproductive_closure          0.9
+       P-heredity-bootstrap-bar
+     copy_mechanism x temporal_gating               0.9
+       P-heredity-bootstrap-bar
+     copy_mechanism x write_authority               0.9  P-copy-not-heredity
+     error_correction x memory_persistence          0.9
+       P-persistence-not-self-m
+     niche_separation x reproductive_closure        0.9
+       P-organization-not-repro
+     operator_composability x temporal_gating       0.9
+       P-accessibility-cliffs
+     partial_heredity x reproductive_closure        0.9
+       P-heredity-bootstrap-bar
+
+4. BLIND SPOTS (assumptions every engine checked holds)
+   BS-discrete-individuals    COMMISSIONED
+       The unit that reproduces, competes, inherits and is measured is one
+       discrete organism with a fixed boundary.
+       anti-experiment: atlas.proposal/2026-09-21_prior_art_raid:TI-1
+   BS-explicit-fitness-everywhere COMMISSIONED
+       Every engine carries an explicit fitness term, even when it also uses
+       quality-diversity or novelty.
+       anti-experiment: atlas.proposal/2026-09-19_cross_ecosystem:XE-07
+   BS-fixed-environments      COMMISSIONED
+       Worlds are fixed or procedurally generated; no engine lets the
+       environment itself be selected or co-evolved with its organisms.
+       anti-experiment: atlas.proposal/2026-09-21_prior_art_raid:UED-1
+   BS-fixed-interpreter       COMMISSIONED
+       The interpreter and the copy machinery are outside the heritable unit:
+       organisms vary, the machine that runs them does not.
+       anti-experiment: atlas.proposal/2026-09-21_prior_art_raid:AL-1
+   BS-heldout-task-competence COMMISSIONED
+       Competence means performance on a held-out task set defined by us
+       before the run.
+       anti-experiment: atlas.proposal/2026-09-21_prior_art_raid:RA-2
+   BS-memory-outside-world    OPEN
+       Memory belongs to the organism and the world is a separate, mostly
+       non-writable object.
+       anti-experiment: -
+   BS-parent-child-detectors  OPEN
+       Replication detectors assume an individual parent and an individual
+       child, so anything that propagates without that shape is invisible.
+       anti-experiment: -
+
+5. SCORED PROPOSALS (top 15 under the current policy version)
+   policy atlas.policy/2
+     atlas.policy/2. Weights as in /1 (information gain and theory impact
+     dominate, cost penalised, novelty modest so a cheap confound-removing
+     null can outrank a novel demo), but two features are repaired: /1
+     measured novelty against CATALOGUED EXTERNAL coverage, where almost
+     every primitive pair is tested, so novelty was 0.000 for all 46
+     proposals; /2 measures it against PROMETHEUS coverage (primitive_use on
+     our own experiments). /1 also let theory_impact saturate at 1.0 for any
+     proposal touching 4+ propositions; /2 weights each proposition by how
+     unsettled it is (UNTESTED 1.0, WEAK/CONTESTED 0.8, MODERATE 0.5, STRONG
+     0.2), so a proposal aimed at a settled proposition scores lower. Weights
+     remain a hypothesis, to be refitted against theory_delta (proposition
+     P-clean-null-value).
+   proposal                         total   gain theory   cost
+   UED-4                           0.7363   1.00   0.93   0.30
+   AL-3                            0.7208   1.00   0.95   0.60
+   EV-8                            0.7137   1.00   0.88   0.30
+   QD-3                            0.7137   1.00   0.88   0.30
+   UED-1                           0.7033   1.00   1.00   0.60
+   UED-2                           0.6937   1.00   0.68   0.30
+   QD-8                            0.6909   1.00   1.00   0.60
+   EV-1                            0.6837   1.00   0.88   0.60
+   RA-2                            0.6837   1.00   0.88   0.30
+   GEA-1                           0.6786   1.00   0.93   0.60
+   AL-1                            0.6714   1.00   1.00   0.60
+   QD-9                            0.6673   0.75   1.00   0.30
+   F5-5                            0.6613   1.00   0.62   0.30
+   RA-4                            0.6512   0.75   0.88   0.10
+   EV-10                           0.6504   1.00   0.88   0.60
+
+6. PORTFOLIO (atlas.portfolio_update, ISSUED, newest per horizon)
+   --------------------------------------------------------------------------
+   MICRO      update 13  issued 2026-09-25 08:47:46
+              window 2026-09-21 18:00:22 .. 2026-09-22 15:07:51  (10
+                experiments)
+     NOTE          index coverage lag
+         why: newest MODELLED experiment activity is 2026-09-22 15:07 but
+         the newest indexed commit is 2026-09-25 08:25 (2.72 days later): a
+         quiet window may be adapter coverage, not quiet engines
+         - {"lag_days": 2.72, "newest_commit": "2026-09-25 08:25:45-04:00",
+     HOLD          nothing anomalous in the window
+         why: the 10 most recently active experiments carry no new anomaly,
+         open signal or unresolved reading
+     open question: P-heredity-bootstrap-barrier: 2 untested predictions
+     open question: P-clean-null-value: 1 untested predictions
+     open question: P-organization-not-reproduction: 1 untested predictions
+     open question: P-persistence-not-self-maintenance: 1 untested predictions
+     open question: P-reproduction-machinery-not-advantage: 1 untested
+       predictio
+   --------------------------------------------------------------------------
+   STRATEGY   update 14  issued 2026-09-25 08:47:46
+              window 2026-09-19 06:09:06 .. 2026-09-22 15:07:51  (100
+                experiments)
+     NOTE          index coverage lag
+         why: newest MODELLED experiment activity is 2026-09-22 15:07 but
+         the newest indexed commit is 2026-09-25 08:25 (2.72 days later): a
+         quiet window may be adapter coverage, not quiet engines
+         - {"lag_days": 2.72, "newest_commit": "2026-09-25 08:25:45-04:00",
+     INCREASE      primitive pairs implicated by evidence but never crossed
+         why: two or more propositions implicate both primitives and no
+         indexed experiment of ours exercises them together
+         - {"combination": ["copy_mechanism", "partial_heredity"], "proposi
+         - {"combination": ["environmental_feedback", "error_correction"], 
+         - {"combination": ["partial_heredity", "temporal_gating"], "propos
+     REDUCE        further replication searches at the same birth interface
+         why: P-heredity-bootstrap-barrier: where variation is gated behind
+         a completed copy, more random starts do not search; the re-
+         adjudication showed most candidates were splice artefacts
+         - {"proposition": "P-heredity-bootstrap-barrier"}
+         - {"experiment": "nestor.cw01/cw01-2026-09-17"}
+     INCREASE      ruler conditioning before new mechanism claims
+         why: recurring defect classes dominate our reversals
+         (P-measurement-before-mechanism, STRONG)
+         - {"defect_class": "RECOVERY", "n": 28}
+         - {"defect_class": "SCIENCE_DEFECT", "n": 26}
+         - {"defect_class": "LANDSCAPE", "n": 21}
+     INSPECT       signal kinds recurring across the corpus
+         why: one rule firing on many subjects is either a real pattern or
+         a rule too loose
+         - {"n": 40, "signal_kind": "CALIBRATION_SPECIMEN"}
+         - {"n": 35, "signal_kind": "VISITED_ONCE"}
+         - {"n": 33, "signal_kind": "NULL_WITH_TELEMETRY"}
+     PREPARE       highest-scoring proposals under atlas.policy/2
+         why: a policy score is a prediction, not a verdict; preparing them
+         is what generates the outcome data the weights need
+         - {"experiment": "UED-4", "score": 0.7363}
+         - {"experiment": "AL-3", "score": 0.7208}
+         - {"experiment": "EV-8", "score": 0.7137}
+     open question: P-heredity-bootstrap-barrier: 2 untested predictions
+     open question: P-clean-null-value: 1 untested predictions
+     open question: P-organization-not-reproduction: 1 untested predictions
+     open question: P-persistence-not-self-maintenance: 1 untested predictions
+     open question: P-reproduction-machinery-not-advantage: 1 untested
+       predictio
+   --------------------------------------------------------------------------
+   THEORY     update 11  issued 2026-09-24 07:18:45
+              window 2026-09-05 18:12:46 .. 2026-09-19 08:55:42  (1947
+                experiments)
+     NOTE          index coverage lag
+         why: newest MODELLED experiment activity is 2026-09-19 08:55 but
+         the newest indexed commit is 2026-09-24 07:09 (4.93 days later): a
+         quiet window may be adapter coverage, not quiet engines
+         - {"lag_days": 4.93, "newest_commit": "2026-09-24 07:09:05-04:00",
+     ADD           instrumentation for unmeasured primitives
+         why: these primitives have no axis rule, so Atlas cannot
+         distinguish untested from unmeasurable for them: an
+         instrumentation gap, not a coverage claim
+         - {"primitives": ["error_correction", "partial_heredity", "reprodu
+     ADD           anti-prior experiments for assumptions every engine shar
+         why: blind spots are invisible from inside any single engine; each
+         one has catalogued counterexamples outside Prometheus
+         - {"assumption": "The unit that reproduces, competes, inherits and
+         - {"assumption": "Every engine carries an explicit fitness term, e
+         - {"assumption": "Worlds are fixed or procedurally generated; no e
+     DEPRIORITIZE  raw population scaling in worlds with no pre-birth varia
+         why: P-selection-not-search: persistence without variation is not
+         search; equal-compute controls are cheaper than scaling, and the
+         flat-elite reading is still PROVISIONAL
+         - {"idea": "archaeon.frontier/LIN-ffc7ae5d"}
+         - {"proposition": "P-selection-not-search"}
+     REVIEW        propositions at MODERATE or STRONG
+         why: settled propositions are where we stop looking; each should
+         carry a live falsifier
+         - {"confidence": "MODERATE", "proposition": "P-accessibility-cliff
+         - {"confidence": "MODERATE", "proposition": "P-copy-not-heredity"}
+         - {"confidence": "STRONG", "proposition": "P-measurement-before-me
+     open question: P-heredity-bootstrap-barrier: 2 untested predictions
+     open question: P-clean-null-value: 1 untested predictions
+     open question: P-organization-not-reproduction: 1 untested predictions
+     open question: P-persistence-not-self-maintenance: 1 untested predictions
+     open question: P-reproduction-machinery-not-advantage: 1 untested
+       predictio
+
+7. INDEX COVERAGE LAG (a quiet window is not a quiet engine)
+   newest modelled experiment activity  2026-09-22 15:07:51
+   newest indexed commit                2026-09-25 08:25:45
+   lag 2.7 days -- activity newer than this is either unadapted or
+   not visible from this host; it is never reported as absence.

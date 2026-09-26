@@ -1,0 +1,35 @@
+**1. Algorithmic core**
+
+The scorer is a **rule‑based dynamical evaluator** that treats a candidate answer as a discrete state vector `S = (s₁,…,sₙ)` where each component encodes a parsed logical unit (e.g., “A → B”, “A > B”, “¬C”).  
+* **Cellular‑automaton layer** – The vector lives on a 1‑D lattice; a radius‑1 neighbourhood updates each cell by a deterministic transition table `T` that implements elementary logical inference (modus ponens, transitivity, numeric comparison). The update rule is applied synchronously for `k` steps, producing a trajectory `S⁰ → S¹ → … → Sᵏ`.  
+* **Dynamical‑system monitor** – After each CA step we compute a scalar “consistency energy” `E(t) = Σ w_i·vi(t)`, where `vi(t)` is 1 if cell i satisfies its local constraint and 0 otherwise, and `w_i` are importance weights derived from a **mechanism‑design** auction of constraints. The auction asks the answer author (implicitly) to “bid” on which constraints matter most; in practice we pre‑assign bids based on a rubric (e.g., correctness of causal claim = 5, numeric precision = 3).  
+* **Scoring logic** – The final score is a weighted combination of (a) the minimum energy observed `E_min` (lower = more consistent), (b) the convergence speed `τ` (steps until `E(t)` stops decreasing), and (c) the total “payment” collected from the constraint auction. Formally:  
+
+```
+Score = α·(1‑E_min/E₀) + β·(1/τ) + γ·(∑ bids)/Bmax
+```
+
+All calculations use only `numpy` arrays and standard‑library loops.
+
+**2. Parsed structural features**
+
+The front‑end regex/finite‑state parser extracts:
+- Negations (`not`, `no`, `without`)
+- Comparatives (`greater than`, `≤`, `more … than`)
+- Conditionals (`if … then …`, `=>`)
+- Numeric values (integers, floats, units)
+- Causal claims (`causes`, `leads to`, `because`)
+- Ordering relations (`first`, `after`, sequence markers)
+
+Each extraction yields a propositional clause stored in the CA lattice.
+
+**3. Novelty assessment**
+
+The exact combination—CA‑driven logical propagation coupled with a dynamical‑system energy monitor and a mechanism‑design‑inspired constraint auction—has not been published as a unified scoring engine. Similar pieces appear separately (rule‑based inference, energy‑based consistency, incentive‑weighted rubrics), but their integration is novel.
+
+**4. Ratings**
+
+Reasoning: 8/10 — strong logical propagation and consistency measurement  
+Metacognition: 6/10 — can detect self‑referential claims only via explicit patterns  
+Hypothesis generation: 5/10 — limited to enumerated logical forms, no creative inference  
+Implementability: 9/10 — pure NumPy/stdlib, straightforward to code and test

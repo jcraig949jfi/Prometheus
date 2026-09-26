@@ -1,0 +1,25 @@
+**Algorithmic design**
+
+The tool implements a **Typed‑Contextual Bandit Scorer (TCBS)**.  
+1. **Typed representation** – each parsed clause is stored as a record `TypedNode{id, type, value, ctx}` where `type` is drawn from a small type‑theory ontology (e.g., *Proposition*, *Numeric*, *Conditional*, *Comparative*). Dependent types allow a node’s `value` to be a function of earlier nodes, enabling expressions such as “if X then Y”. A global dictionary `type_env` maps identifiers to their inferred types and constraints.  
+2. **Pragmatic context** – a lightweight pragmatics module extracts *speech‑act tags* (assertion, negation, request, implication) and Grice‑maxim “quantity” and “relevance” scores from surrounding tokens. These tags are attached to each `TypedNode` as a `prag` field.  
+3. **Bandit arm selection** – each candidate answer is treated as an arm of a multi‑armed bandit. For a given question, the scorer builds a **feature vector** for each arm: counts of typed nodes, pragmatic tag frequencies, and constraint‑satisfaction scores (see below). A **UCB‑type** index `score_i = μ_i + √(2·ln T / n_i)` is maintained, where `μ_i` is the running average of the arm’s logical‑consistency reward and `n_i` the number of times the arm has been evaluated. The arm with highest index is selected for detailed evaluation; the others receive a cheap proxy score.  
+4. **Scoring logic** – after selection, the answer’s `TypedNode` graph is **constraint‑propagated**: transitivity of ordering, modus‑ponens on conditionals, numeric consistency (e.g., “greater than” vs. extracted numbers). Each satisfied constraint adds +1, each violation –1. Pragmatic penalties are applied for missing relevance or over‑information. The final reward `r_i` = (constraint_score) – λ·pragmatic_penalty is fed back to update `μ_i`.
+
+**Parsed structural features**  
+- Negations and polarity shifts  
+- Comparative and superlative adjectives (>, <, ≥, ≤)  
+- Conditionals (if‑then, unless) and logical connectors (and, or, not)  
+- Numeric values and units, arithmetic relations  
+- Causal verbs (“causes”, “leads to”)  
+- Temporal/ordering cues (“first”, “after”)  
+- Speech‑act markers (assertion, question, request)
+
+**Novelty assessment**  
+The exact combination—typed‑theoretic clause graphs, pragmatic tags, and a UCB bandit for arm‑wise evaluation—is not present in prior evaluation suites, which usually separate parsing from scoring. It parallels work on “type‑driven semantic parsing” and “bandit‑based active evaluation”, but the integrated TCBS pipeline is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical constraint handling with type safety  
+Metacognition: 6/10 — pragmatic tags give modest self‑awareness of relevance  
+Hypothesis generation: 5/10 — bandit exploration creates limited answer variants  
+Implementability: 9/10 — pure Python, numpy, regex; no external services required

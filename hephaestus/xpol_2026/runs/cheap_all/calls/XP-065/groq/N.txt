@@ -1,0 +1,35 @@
+**Algorithmic design**  
+The evaluator builds a *prime‑indexed compositional graph* (PIC‑Graph).  
+1. **Tokenisation & parsing** – a deterministic regex‑based parser extracts logical predicates, operators (¬, →, ↔), comparatives, numerics, and causal markers, producing a shallow dependency tree. Each node stores:  
+   * `token` (string)  
+   * `prime_id` – the *n‑th* prime where *n* is the node’s depth‑first index (pre‑computed with a simple sieve).  
+   * `epigenetic_state` – a mutable flag set {inactive, active, repressed}.  
+2. **Epigenetic propagation** – rules mimic biological marks: a causal token (“because”, “leads to”) *activates* its child nodes, a negation *represses* the downstream claim, and a comparative “greater than” *primes* a transitive boost. The state is updated by a single pass of constraint propagation (mod‑transitivity, modus ponens).  
+3. **Compositional scoring** – each node contributes a numeric score:  
+
+\[
+s_i = \begin{cases}
+0 & \text{if state = repressed}\\
+\text{sign}(value_i)\times \log(p_i) & \text{if state = active}\\
+\text{sign}(value_i)\times \tfrac12\log(p_i) & \text{otherwise}
+\end{cases}
+\]
+
+where `p_i` is the node’s prime and `value_i` is a numeric literal (or 1 for Boolean predicates). Using NumPy, the vector of `s_i` is summed, then normalized by the total log‑prime mass. The final score ∈[0,1] reflects logical completeness, correct numeric handling, and causal coherence.
+
+**Parsed structural features**  
+- Negations (¬, “not”) – trigger repression.  
+- Comparatives (“greater than”, “less than”, “more/less … than”) – induce ordering relations and transitive boosts.  
+- Conditionals (“if … then …”) – generate implication edges for modus ponens.  
+- Numeric values – provide `value_i` for weighted log‑prime contribution.  
+- Causal claims (“because”, “therefore”) – activate downstream nodes.  
+- Ordering relations (temporal or logical sequence) – enforce transitive consistency.
+
+**Novelty assessment**  
+The combination of prime‑based weighting, epigenetic‑style state propagation, and strict compositional rule‑application does not appear in existing rule‑based graders, which usually rely on bag‑of‑words or static weighting. The approach is therefore novel, though it draws on known concepts (prime hashing, constraint propagation, compositional semantics).
+
+**Ratings**  
+Reasoning: 8/10 — strong logical consistency, limited to propositional structures.  
+Metacognition: 6/10 — can track self‑contradiction via repression but lacks self‑explanation.  
+Hypothesis generation: 5/10 — focuses on evaluation, not on creating new claims.  
+Implementability: 9/10 — pure Python/NumPy, deterministic, no external services.

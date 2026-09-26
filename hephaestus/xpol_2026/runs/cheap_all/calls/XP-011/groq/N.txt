@@ -1,0 +1,37 @@
+**Algorithmic sketch**
+
+1. **Representation (Abstract‑Interpretation lattice).**  
+   Each candidate answer is mapped to a *property lattice* \(L\) whose nodes are logical predicates extracted from the text (e.g., “A → B”, “A > B”, “¬C”).  The lattice is built with two monotone dimensions: (i) **certainty** (from 0 = unknown to 1 = proved) and (ii) **granularity** (from concrete numeric facts to abstract relational facts).  Elements are stored as tuples `(predicate, certainty, granularity)` in a Python `namedtuple`; the whole answer is a `set` of such tuples.
+
+2. **Boundary encoding (Holography Principle).**  
+   The “boundary” is a compact *signature vector* \(v\in\mathbb{R}^k\) built from the lattice via a fixed hash‑based feature map: each predicate contributes a one‑hot slot, weighted by its certainty and granularity.  This vector is the *information‑dense encoding* of the answer, analogous to a holographic screen that stores bulk logical structure.
+
+3. **Equilibrium scoring (Nash‑Equilibrium).**  
+   For a given question we pre‑define a *reference lattice* \(R\) (the ideal answer) and its signature \(v_R\).  Scoring is cast as a two‑player zero‑sum game:  
+   - Player A (the evaluator) chooses a weight vector \(w\) over the \(k\) dimensions.  
+   - Player B (the candidate) implicitly selects a point \(v_C\) (its signature).  
+   The payoff is \(u(w,v_C)=w\cdot(v_R - v_C)\).  The evaluator seeks a *max‑min* strategy, and the candidate a *min‑max* strategy.  Computing the Nash equilibrium of this bilinear game reduces to solving a linear program (LP) with `numpy.linalg.lstsq` or the simplex method from the standard library.  The equilibrium value is taken as the **score**: lower values mean the candidate’s signature is close to the reference under the worst‑case weight distribution.
+
+4. **Constraint propagation.**  
+   Before encoding, the extracted predicates are run through a lightweight abstract interpreter that applies transitivity, modus‑ponens, and numeric consistency checks (e.g., if “A > B” and “B > C” then add “A > C”).  Violations lower certainty of involved nodes.
+
+**Parsed structural features**
+
+- Negations (¬, “not”)  
+- Comparatives and inequalities (>, <, ≥, ≤)  
+- Conditionals (→, “if … then”)  
+- Numeric values and units (quantities, ranges)  
+- Causal claims (“because”, “leads to”)  
+- Ordering relations (temporal or logical sequences)  
+- Quantifiers (∀, ∃, “all”, “some”)  
+
+**Novelty**
+
+The exact combination—using a holographic vector to store an abstract‑interpretation lattice and evaluating it via a Nash‑equilibrium LP—is not present in current evaluation toolkits.  It draws separately on program‑analysis lattices, holographic encoding ideas, and game‑theoretic scoring, but the integrated pipeline is novel.
+
+**Ratings**
+
+Reasoning: 8/10 — the lattice + equilibrium captures logical depth and robustness.  
+Metacognition: 6/10 — it reflects certainty but lacks self‑assessment of strategy.  
+Hypothesis generation: 5/10 — the method scores given hypotheses but does not create new ones.  
+Implementability: 9/10 — all components are expressible with NumPy and the std‑lib; only an LP solver is needed, which can be coded directly.

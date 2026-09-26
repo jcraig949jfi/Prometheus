@@ -1,0 +1,30 @@
+**Algorithmic design**
+
+1. **Parsing & graph construction** – The tool first tokenises the prompt and each candidate answer. Regular‑expression patterns extract logical primitives (negation `¬`, comparatives `> / <`, conditionals `if‑then`, causal verbs `causes`, numeric literals, and temporal/order markers). Each primitive becomes a node in a directed graph `G = (V, E)`. Edges encode explicit relations (e.g., “A → B” for “A causes B”) and implicit ordering (sentence i → sentence i+1). A lightweight adjacency‑matrix (NumPy `int8`) stores `E`.
+
+2. **Topological consistency check** – Using the adjacency matrix we compute a *graph‑theoretic Betti‑0* (connected components) and *Betti‑1* (simple cycles) via depth‑first search. A correct reasoning answer should have a single component (no dangling sub‑claims) and minimal cycles (no contradictory loops). The “topology score” `τ = 1 – (β1 / |V|)` penalises unnecessary cycles.
+
+3. **Constraint propagation (adaptive control)** – A set of logical constraints (modus ponens, transitivity of “greater‑than”, numeric consistency) is encoded as Boolean functions. An online adaptive controller maintains a weight vector `w` (NumPy `float64`) for each constraint type. After evaluating a small validation batch, the controller updates `w` with a simple LMS rule `w ← w + η·(target−score)·grad`, allowing the system to emphasise constraints that most discriminate good from bad answers without any external model.
+
+4. **Counterfactual reasoning module** – For each extracted conditional edge `c: if X then Y`, the algorithm generates a *counterfactual graph* `G'` by toggling the antecedent truth value. It recomputes the propagated constraints on `G'` and measures the *counterfactual distance* `δ = ‖prop(G) – prop(G')‖₂`. Answers that remain internally consistent under plausible counterfactuals receive a higher *counterfactual score* `κ = e^{‑δ}`.
+
+5. **Final scoring** – The overall score is a weighted sum  
+`S = α·τ + β·(∑ w_i·c_i) + γ·κ`  
+with `α,β,γ` fixed (e.g., 0.3, 0.5, 0.2). The algorithm runs in O(|V|²) time using only NumPy and the standard library.
+
+**Parsed structural features**  
+- Negations (`not`, `never`)  
+- Comparatives (`greater than`, `less than`, `as … as`)  
+- Conditionals (`if … then …`, `unless`)  
+- Numeric values and units  
+- Explicit causal claims (`causes`, `leads to`)  
+- Temporal/ordering cues (`first`, `after`, `subsequently`)
+
+**Novelty assessment**  
+Individually, topological graph checks, adaptive weighting of logical constraints, and simple counterfactual toggling have appeared in symbolic reasoning systems. Their tight integration into a single, pure‑NumPy scorer for open‑ended reasoning answers is, to our knowledge, novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical depth, limited by simplistic graph cycles  
+Metacognition: 7/10 — adaptive weighting mimics self‑evaluation but lacks self‑awareness  
+Hypothesis generation: 6/10 — counterfactual toggling creates alternative states but is shallow  
+Implementability: 9/10 — pure NumPy/std‑lib, deterministic, easy to embed in pipelines

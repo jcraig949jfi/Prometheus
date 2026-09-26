@@ -1,0 +1,25 @@
+**1. Algorithm: Innovation-Weighted Abstract Consistency Scorer**
+
+Data structures:
+- `AbstractState`: `intervals: dict[var → (lo, hi)]` (interval domain for numerics), `order: DAG` over entities for comparatives/ordering, `facts: dict[predicate → polarity ∈ {+1, −1, 0}]`, `conditionals: list[(antecedent_facts, consequent_facts)]`.
+- `Belief` per candidate: scalar mean `μ` and variance `σ²` (1-D Kalman state = "probability this candidate is consistent with the prompt").
+- `ExtractorNoise`: `R[k]` per regex-extractor type k (numeric, comparative, negation, conditional, causal), the adaptive parameters.
+
+Operations:
+1. **Abstract interpretation of the prompt.** Each regex extractor emits constraints into `AbstractState`. Propagate: interval arithmetic for equations, Floyd–Warshall transitive closure on the order DAG, modus ponens over conditionals against `facts`. This yields the sound over-approximation `S⁺` (everything the prompt entails). Widening caps propagation depth so it terminates on cyclic chains. A separate under-approximation `S⁻` is built by only using constraints extracted with zero regex ambiguity.
+2. **Measurement.** Parse the candidate into claims `c_i`. Each claim is checked: entailed by `S⁻` → z=1; contradicts `S⁺` → z=0; else z=0.5 (abstained—the soundness/completeness gap, reported explicitly).
+3. **Kalman update.** Predict `μ` unchanged, `σ² += Q`. Update with each `z_i` using gain `K = σ²/(σ² + R[k_i])`. Claims from noisy extractors move the belief less.
+4. **Adaptive tuning.** Innovation `ν_i = z_i − μ`. Per extractor type, track running innovation variance; if it exceeds the predicted `σ² + R[k]`, inflate `R[k]` (self-tuning regulator on measurement noise). Across the candidate set, an extractor whose claims contradict `S⁺` on *every* candidate is flagged as likely mis-parsing the prompt and its `R` is raised—this is the model-reference check.
+
+Score = final `μ`, with `σ²` returned as confidence and the abstained-claim count as a coverage diagnostic.
+
+**2. Parsed features:** numeric values and units, equations (`x = 3y + 2`), comparatives (`taller than`, `at least`), negations (`not`, `never`, scope-limited), conditionals (`if…then`, `unless`), ordering chains, causal claims (`because`, `leads to`, treated as directed edges), quantifiers (`all/some/none` → polarity + domain).
+
+**3. Novelty:** Each piece exists—interval abstract domains, transitive-closure checkers, Bayesian truth-tracking of noisy annotators (Dawid–Skene is the closest cousin). The innovation-driven reweighting of extractors *across the candidate set* is a modest but real combination; it is not literature-novel.
+
+**4. Risk:** the Kalman layer adds little beyond a weighted vote if `R` never adapts; the real work is steps 1–2.
+
+Reasoning: 7/10 — constraint propagation with explicit sound/unsound split does genuine entailment checking; abstention is honest.
+Metacognition: 6/10 — variance and abstention counts expose the tool's own uncertainty; adaptive R detects its own broken extractors.
+Hypothesis generation: 4/10 — the tool scores, it does not propose; no mechanism generates new constraints.
+Implementability: 8/10 — ~400 lines of numpy/regex; Floyd–Warshall, interval arithmetic and scalar Kalman are all trivial; hardest part is extractor coverage.

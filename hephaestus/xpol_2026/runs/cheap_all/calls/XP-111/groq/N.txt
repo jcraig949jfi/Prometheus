@@ -1,0 +1,15 @@
+**1. Emerging computational mechanism**  
+Combining morphogenesis, neural oscillations, and pragmatics yields a **Self‑Organizing Pragmatic Oscillatory Network (SOPON)**.  The substrate is a Neural Cellular Automata (NCA) – a reaction‑diffusion grid that grows and reshapes its connectivity according to morphogen gradients (e.g., Turing‑type activator‑inhibitor equations).  Each cell hosts a Kuramoto‑type phase oscillator whose frequency band (theta, gamma, etc.) is modulated by local morphogen concentration, producing cross‑frequency coupling that temporally binds distributed activity.  Pragmatic inference is injected as a Bayesian “Rational Speech Acts” (RSA) layer that supplies context‑dependent priors to the oscillatory dynamics: the current discourse context selects which morphogen gradients are amplified, thereby gating which patterns are allowed to crystallize.  The result is a dynamical system that simultaneously **spatially self‑organizes its hypothesis space** (via morphogenesis) and **temporally gates candidate hypotheses** (via oscillatory phase coherence), while **contextual relevance** is enforced by pragmatic priors.
+
+**2. Advantage for a reasoning system testing its own hypotheses**  
+SOPON can instantiate many competing hypotheses as overlapping reaction‑diffusion patterns.  Cross‑frequency coupling lets higher‑frequency gamma bursts lock onto the phase of slower theta waves that encode the current pragmatic context, so only hypotheses compatible with the context achieve phase synchrony and thus survive.  Failed hypotheses are suppressed by inhibitory morphogen fields, pruning the search space without explicit back‑propagation.  This yields a **fast, parallel, self‑pruning hypothesis‑testing loop** that exploits both spatial competition and temporal binding.
+
+**3. Novelty**  
+The exact trio—reaction‑diffusion morphogenetic growth, Kuramoto‑based oscillatory binding, and RSA‑style pragmatic gating—does not map onto an established field.  Related work exists in developmental robotics (morphogenetic self‑assembly), neuromorphic oscillatory networks, and pragmatic language models, but their integration in a single self‑organizing inference engine is novel.
+
+**4. Rating**  
+
+Reasoning: 8/10 — spatial pattern competition plus temporal binding gives robust, parallel inference.  
+Metacognition: 7/10 — pragmatic gating provides context awareness, though explicit self‑monitoring is still indirect.  
+Hypothesis generation: 9/10 — reaction‑diffusion naturally spawns diverse candidate structures.  
+Implementability: 6/10 — Requires hybrid simulation (NCA + coupled oscillators + Bayesian RSA), feasible but engineering‑heavy.

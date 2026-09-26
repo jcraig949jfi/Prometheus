@@ -1,0 +1,302 @@
+from typing import Dict
+
+"""
+ReasoningTool – a lightweight Kalman‑Adaptive Abstract Interpreter (KAAI).
+
+* Parses candidate answers into logical predicates (negation, implication,
+  comparison, conditional).
+* Builds a directed graph (networkx) whose nodes hold (status, confidence).
+* Runs a simple Kalman‑style update for each predicate, using
+  forge_primitives.bayesian_update as the belief‑fusion primitive.
+* Checks global logical consistency with solve_sat.
+* Scores candidates by confidence‑weighted truth minus uncertainty,
+  plus a small NCD tie‑breaker.
+* Provides an epistemically honest confidence estimate via meta‑analysis
+  of the prompt.
+"""
+
+import re
+import zlib
+import numpy as np
+import networkx as nx
+from typing import List, Dict
+
+# ---- primitives ---------------------------------------------------------
+from forge_primitives import (
+    solve_sat,               # SAT solver for logical clauses
+    bayesian_update,         # belief update primitive
+    topological_sort,       # deterministic ordering of graph nodes
+)
+
+# ---- helper functions ---------------------------------------------------
+
+def _extract_predicates(text: str):
+    """Return a list of predicate dicts extracted from *text*."""
+    preds = []
+
+    # Negations: "not X" or "never X"
+    for m in re.finditer(r'\b(not|never)\s+([A-Za-z_][A-Za-z0-9_]*)\b', text, flags=re.I):
+        preds.append({'type': 'neg', 'var': m.group(2), 'raw': m.group(0)})
+
+    # Implications: "A -> B" or "if A then B"
+    for m in re.finditer(r'\bif\s+([^,.;]+?)\s+then\s+([^,.;]+?)\b', text, flags=re.I):
+        preds.append({'type': 'imp', 'ante': m.group(1).strip(),
+                      'cons': m.group(2).strip(), 'raw': m.group(0)})
+    for m in re.finditer(r'([A-Za-z_][A-Za-z0-9_]*)\s*->\s*([A-Za-z_][A-Za-z0-9_]*)', text):
+        preds.append({'type': 'imp', 'ante': m.group(1), 'cons': m.group(2),
+                      'raw': m.group(0)})
+
+    # Comparisons: "x > 5", "y <= 3.2"
+    comp_pat = r'([A-Za-z_][A-Za-z0-9_]*)\s*(>=|<=|>|<|==|!=)\s*([0-9\.]+)'
+    for m in re.finditer(comp_pat, text):
+        preds.append({'type': 'cmp', 'left': m.group(1), 'op': m.group(2),
+                      'right': float(m.group(3)), 'raw': m.group(0)})
+
+    # Conditionals without explicit "if": "A because B"
+    for m in re.finditer(r'([A-Za-z0-9_ ]+?)\s+because\s+([A-Za-z0-9_ ]+)', text, flags=re.I):
+        preds.append({'type': 'causal', 'effect': m.group(1).strip(),
+                      'cause': m.group(2).strip(), 'raw': m.group(0)})
+
+    return preds
+
+
+def _evaluate_comparison(pred):
+    """Return (truth, confidence) for a numeric comparison."""
+    ops = {
+        '>':  lambda a, b: a > b,
+        '<':  lambda a, b: a < b,
+        '>=': lambda a, b: a >= b,
+        '<=': lambda a, b: a <= b,
+        '==': lambda a, b: a == b,
+        '!=': lambda a, b: a != b,
+    }
+    # In a real system we would look up the variable value; here we treat the
+    # left‑hand side as unknown and assign low confidence.
+    truth = ops[pred['op']](0, pred['right'])  # placeholder (0) -> unknown
+    return truth, 0.4  # modest confidence because variable unknown
+
+
+def _ncd(a: str, b: str) -> float:
+    """Normalized Compression Distance using zlib."""
+    ca = len(zlib.compress(a.encode()))
+    cb = len(zlib.compress(b.encode()))
+    cab = len(zlib.compress((a + b).encode()))
+    return (cab - min(ca, cb)) / max(ca, cb)
+
+
+# ---- core class ---------------------------------------------------------
+
+class ReasoningTool:
+    """
+    Kalman‑Adaptive Abstract Interpreter (KAAI).
+
+    evaluate(prompt, candidates) -> ranked list of {"candidate", "score", "reasoning"}.
+    confidence(prompt, answer)   -> epistemically honest confidence in [0,1].
+    """
+
+    def __init__(self):
+        # hyper‑parameters
+        self.lambda_unc = 0.5          # penalty for uncertainty
+        self.residual_thr = 0.3        # adaptive‑control threshold
+        self.max_confidence = 0.9
+
+    # --------------------------------------------------------------------
+    # meta‑analysis of the prompt (Tier B handling)
+    # --------------------------------------------------------------------
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detect ambiguous / presupposition patterns and return a base confidence."""
+        low = 0.2  # default low confidence for ambiguous prompts
+
+        # 1. Presupposition
+        if re.search(r'\bhave you (stopped|quit|ceased)\b', prompt, flags=re.I):
+            return low
+        if re.search(r'\bwhy did .* (fail|stop|quit)\b', prompt, flags=re.I):
+            return low
+
+        # 2. Scope ambiguity ("Every X ... a Y")
+        if re.search(r'\bevery\s+\w+\b.*\ba\s+\w+\b', prompt, flags=re.I):
+            return low
+
+        # 3. Pronoun ambiguity
+        if re.search(r'\b\w+\s+told\s+\w+\s+he|she|they\b', prompt, flags=re.I):
+            return low
+
+        # 4. False dichotomy
+        if re.search(r'\beither\b.*\bor\b', prompt, flags=re.I):
+            return low
+
+        # 5. Subjectivity without measurable criteria
+        if re.search(r'\b(best|worst|favorite|most|least)\b', prompt, flags=re.I):
+            return low
+
+        # 6. Unanswerability (requires external knowledge)
+        if re.search(r'\bwhat is the (population|price|distance) of\b', prompt, flags=re.I):
+            return low
+
+        # No trap detected -> moderate confidence
+        return 0.6
+
+    # --------------------------------------------------------------------
+    # public confidence method
+    # --------------------------------------------------------------------
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Return a calibrated confidence in [0,1] respecting epistemic honesty."""
+        base = self._meta_confidence(prompt)
+
+        # If the prompt is ambiguous we stay low regardless of answer content.
+        if base < 0.3:
+            return base
+
+        # Otherwise boost confidence if answer contains concrete numeric evidence.
+        has_num = bool(re.search(r'\b\d+(\.\d+)?\b', answer))
+        boost = 0.2 if has_num else 0.0
+        conf = min(self.max_confidence, base + boost)
+        return conf
+
+    # --------------------------------------------------------------------
+    # core evaluation pipeline
+    # --------------------------------------------------------------------
+    def _process_candidate(self, prompt: str, cand: str) -> (float, str):
+        """Parse, run Kalman‑adaptive updates and return (score, reasoning)."""
+        preds = _extract_predicates(cand)
+
+        # Build graph
+        G = nx.DiGraph()
+        for i, p in enumerate(preds):
+            node_id = f"P{i}"
+            G.add_node(node_id, pred=p,
+                       mu=0.5, sigma=0.25)   # prior belief = 0.5, var = 0.25
+
+            # Add edges according to type
+            if p['type'] == 'imp':
+                G.add_edge(f"P{i}_ante", node_id)   # dummy antecedent node
+            if p['type'] == 'causal':
+                G.add_edge(f"P{i}_cause", node_id)
+
+        # Topological order for deterministic passes
+        order = topological_sort(list(G.nodes())) if hasattr(nx, 'topological_sort') else list(G.nodes())
+
+        # Kalman‑like update per predicate
+        for nid in order:
+            data = G.nodes[nid]
+            pred = data['pred']
+            mu, sigma = data['mu'], data['sigma']
+
+            # Observation from predicate
+            if pred['type'] == 'cmp':
+                truth, obs_conf = _evaluate_comparison(pred)
+                z = 1.0 if truth else 0.0
+                R = 1.0 - obs_conf          # observation noise inversely related to confidence
+            elif pred['type'] == 'neg':
+                # Negation: we treat "not X" as evidence that X is false
+                z = 0.0
+                R = 0.2
+            else:
+                # For other textual predicates we have weak evidence
+                z = 0.5
+                R = 0.5
+
+            # Adaptive control: enlarge R if residual large
+            residual = abs(z - mu)
+            if residual > self.residual_thr:
+                R = min(1.0, R + 0.2)
+
+            # Kalman gain
+            K = sigma / (sigma + R)
+
+            # Bayesian/Kalman update (using primitive)
+            mu_new, sigma_new = bayesian_update(mu, sigma, z, R)
+
+            # Simple linear blend as fallback if primitive not available
+            if mu_new is None:
+                mu_new = mu + K * (z - mu)
+                sigma_new = (1 - K) * sigma
+
+            G.nodes[nid]['mu'] = mu_new
+            G.nodes[nid]['sigma'] = sigma_new
+
+        # Consistency check via SAT (convert to simple clauses)
+        # Very rough: each implication becomes (¬ante ∨ cons)
+        clauses = []
+        var_index = {}
+        idx = 1
+        for nid in G.nodes():
+            p = G.nodes[nid]['pred']
+            if p['type'] == 'imp':
+                for lit in (p['ante'], p['cons']):
+                    if lit not in var_index:
+                        var_index[lit] = idx
+                        idx += 1
+                clauses.append([ -var_index[p['ante']], var_index[p['cons']] ])
+        sat_ok = True
+        if clauses:
+            sat_ok = solve_sat(clauses, len(var_index))
+
+        # Compute final score
+        mus = np.array([G.nodes[n]['mu'] for n in G.nodes()])
+        sigmas = np.array([G.nodes[n]['sigma'] for n in G.nodes()])
+        if mus.size == 0:
+            logic_score = 0.0
+        else:
+            logic_score = np.mean(mus - self.lambda_unc * sigmas)
+
+        # Penalise inconsistency
+        if not sat_ok:
+            logic_score *= 0.6
+
+        # Small NCD term (scaled to 0‑0.1)
+        ncd_score = (1 - _ncd(prompt, cand)) * 0.1
+
+        final_score = 0.85 * logic_score + ncd_score
+
+        # Build reasoning string
+        reasoning = (f"Extracted {len(preds)} predicates, "
+                     f"mean belief={mus.mean():.2f}, "
+                     f"mean uncertainty={sigmas.mean():.2f}, "
+                     f"SAT={sat_ok}, "
+                     f"NCD={ncd_score:.3f}")
+
+        return final_score, reasoning
+
+    # --------------------------------------------------------------------
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """Rank candidates by KAAI score."""
+        results = []
+        for cand in candidates:
+            score, reasoning = self._process_candidate(prompt, cand)
+            results.append({
+                "candidate": cand,
+                "score": float(score),
+                "reasoning": reasoning
+            })
+        # Sort descending by score
+        results.sort(key=lambda d: d["score"], reverse=True)
+        return results
+
+
+# --- Auto-fix: ensure confidence() returns float in [0, 1] ---
+_orig_confidence = ReasoningTool.confidence
+def _safe_confidence(self, prompt, answer):
+    try:
+        result = _orig_confidence(self, prompt, answer)
+        if result is None:
+            return 0.5
+        return max(0.0, min(1.0, float(result)))
+    except (TypeError, ValueError):
+        return 0.5
+ReasoningTool.confidence = _safe_confidence
+
+
+# --- Auto-fix: ensure evaluate() returns list[dict] ---
+_orig_evaluate = ReasoningTool.evaluate
+def _safe_evaluate(self, prompt, candidates):
+    try:
+        result = _orig_evaluate(self, prompt, candidates)
+        if result is None:
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        if not isinstance(result, list):
+            return [{"candidate": c, "score": 0.5, "reasoning": "fallback"} for c in candidates]
+        return result
+    except Exception:
+        return [{"candidate": c, "score": 0.5, "reasoning": "error"} for c in candidates]
+ReasoningTool.evaluate = _safe_evaluate

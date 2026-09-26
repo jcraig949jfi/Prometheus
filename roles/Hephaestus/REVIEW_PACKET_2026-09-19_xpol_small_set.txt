@@ -1,0 +1,165 @@
+=======================================================================
+REVIEW PACKET -- xpol_2026 cross-pollination replay, Fable small set
+Hephaestus[m2-0ee6272b]  2026-09-19  host SPECTREX5 (M2)
+worktree D:\Prometheus-worktrees\hephaestus-boot-2026-09-19
+commits b826e6e32 (infra) c6b19d048 (aggregator/shape) + this packet
+=======================================================================
+
+0. WHAT THIS IS
+-----------------------------------------------------------------------
+Operator temporary mission (2026-09-19): revive the 1.0 premise -- weird
+solutions from cross-pollinating distant fields -- take ~100 results that
+were interesting, rerun with the newest models. Then, after the first
+launch: "run a small set through Fable, the API burns a lot of tokens."
+
+The small set ran and STOPPED ITSELF partway: the Fable subscription hit
+"You're out of usage credits" at packet XP-036. 10 packets were scored
+through Fable before that; every call after XP-036 failed fast (~2 s,
+api_call_failed). This packet reports the 10 that completed. It is a
+provisional read, not a campaign result.
+
+Conflict of interest: this seat wrote the replay harness, the selection
+lenses, and the ruler wrapper. The ruler itself is the frozen 1.0 battery
+(trap_generator_extended, seed 42), not authored this session.
+
+1. THE RULER AND ITS FLOORS (published before any model call)
+-----------------------------------------------------------------------
+186 traps / 89 categories / tiers R1-R6. floors.json:
+    position-majority decoy (always pick index 1)   0.4032   <- key line
+    NCD baseline (the 1.0 pass gate's comparator)    0.3925
+    random ranking, 200 seeds                        0.3252 (max 0.4086)
+    chance                                           0.3238
+A tool scoring below ~0.41 has NOT been shown to do anything a constant
+index does not. Provenance grade of every accuracy below: E3 (executed
+this session in a child process with a timeout).
+
+2. HEADLINE NUMBERS (E3)
+-----------------------------------------------------------------------
+                              n    median   max     >=0.4032  >=0.50
+  ORIGINAL 1.0 code          65    0.355    0.473    17        0
+  Fable 5.1  C_new           10    0.433    0.5215    7        2
+  Fable 5.1  C_orig          10    0.422    0.473     7        0
+  groq gpt-oss-120b C_new    10    0.355    0.409     3        0
+  groq gpt-oss-120b C_orig   10    0.339    0.414     1        0
+  gemini-3.6-flash           mostly 503-failed (1-2 scored; not reported)
+
+  C_new  = model writes BOTH the analysis and the code.
+  C_orig = model writes code from the ORIGINAL 2026-03 nemotron analysis.
+  "ORIGINAL 1.0 code" = the March-era tools re-scored on the honest ruler
+  (they were only ever certified on 15 traps; those certs are vacuous --
+  Necropolis 2026-09-10).
+
+3. WHAT SURVIVES SCRUTINY, WHAT DOES NOT
+-----------------------------------------------------------------------
+SURVIVES (weakly, n=10):
+  - Fable 5.1 clears the position-majority decoy on 7 of 10 packets and
+    reaches 0.5215 (XP-009 Thermodynamics+Genetic Algorithms+Model
+    Checking) and 0.5161 (XP-001 Quantum Mechanics+Neural Plasticity+
+    Model Checking). NO original 1.0 tool exceeded 0.473; NO cheap 2026
+    model (groq/gemini) exceeded 0.414. Two Fable tools >= 0.50 is a
+    thing neither the 2026-03 pipeline nor 2026-09 cheap models did.
+  - The lift is TIER-3 (R3 median 0.667 for Fable vs the ruler's NCD
+    floor 0.639 and originals' weaker R3). R4 stays low (0.18) for
+    everyone -- the wall is unmoved there.
+
+DOES NOT survive / must not be claimed:
+  - "Newest model invents a novel reasoning mechanism." FALSE by the
+    shape fingerprint (shape.py). Fable tools are the SAME costume as
+    1.0: regex structural parsing + NCD tiebreak + meta_confidence. What
+    changed is DEGREE, not kind -- Fable writes ~30 regex calls / 49
+    regex literals per tool vs the originals' 3 / 7. The 2026-03 models
+    leaned on NCD and mostly IGNORED the prompt's "structural >= 50%,
+    NCD <= 15%" instruction; Fable FOLLOWS it. The gain is instruction-
+    following on the architecture constraint, not a new mechanism.
+  - "Fable beats the original tools." NOT SHOWN cleanly. Only ONE
+    Fable-scored packet (XP-034 Spectral Analysis+Falsificationism+
+    Criticality) had committed original code to pair against, and there
+    the ORIGINAL WON: original 0.473 vs Fable C_orig 0.425 / C_new 0.301.
+    The 9 stronger Fable packets (XP-001..007, 009) are honest-era (Apr/
+    May) whose original code was forged on M3 and NEVER COMMITTED, so the
+    comparison is distribution-vs-distribution, not paired. The single
+    clean paired test favors 1.0.
+  - The idea is not the lever. C_new (0.433) ~= C_orig (0.422): giving
+    Fable the 2026-03 analysis instead of its own barely moves the code
+    score. The 2026-09 improvement lives in the code step, not the
+    cross-pollination analysis step.
+  - Cheap 2026 models are NOT the story. groq sits at the original/
+    random level (median 0.355) and its picks agree with the NCD
+    baseline 0.84 of the time (it echoes the baseline). Fable's picks
+    agree with NCD only 0.76 -- it diverges from the trivial decoy more,
+    which is consistent with it doing more real parsing.
+
+4. NON-RESULTS / WHAT WAS NOT RUN
+-----------------------------------------------------------------------
+  - GPT-6 Astra: DEFINED but BLOCKED. openrouter:openai/gpt-6-astra
+    exists; the key can afford 3 tokens (HTTP 402). OpenAI direct: no
+    credits. So "the newest models" is Fable-only + cheap contrasts.
+  - 104 of 114 packets never reached Fable (credits). gemini largely
+    503. groq is still running free over all 114 (background, ~XP-011).
+  - No replicate: single draw per (packet, stage). Pilot XP-001 gave
+    C_new 0.5161 then 0.3656 on a re-draw -- single-draw variance ~0.15
+    on this arm. EVERY number in section 2 is one sample.
+  - Master Smith loop NOT invoked: one prompt per stage, no repair, no
+    iteration (the 1.0 protocol). The agentic loop was not used.
+
+5. DEVIATIONS FROM THE 1.0 PROTOCOL (all recorded per call)
+-----------------------------------------------------------------------
+  - Fable runs via claude -p (subscription), not raw API (Anthropic key
+    unfunded). It is an agent harness with a fixed system prompt;
+    temperature not settable. This is a real confound vs the 1.0 raw
+    API calls and is why the arm is labeled fable51, not "claude".
+  - PYTHONUTF8=1 (1.0 scrapped 85 tools on a cp1252 UnicodeEncodeError
+    that was an environment bug its own sanitizer targeted).
+  - Hosted arms given 4x the 1.0 token budget (2026 models spend it on
+    thinking; gemini truncated code at the 1.0 budget).
+  - Coeus enrichment section omitted from the code prompt.
+
+6. WHAT WOULD FALSIFY THE ONE POSITIVE
+-----------------------------------------------------------------------
+The only positive is "Fable reaches 0.50-0.52, above the whole 1.0 and
+cheap-2026 field." It dies if: (a) a 3-draw replicate on XP-009/XP-001
+regresses to the mean (< 0.45 median); or (b) the same two triples,
+scored on Charon's blind held-out battery rather than this development
+ruler, fall to the field. Neither has run. Until (a) and (b), treat
+0.52 as a development-ruler single draw.
+
+7. WHAT TO STOP / NOT WORTH CONTINUING
+-----------------------------------------------------------------------
+  - Do NOT spend more Fable credits on breadth. The signal that exists
+    is at the TOP of the distribution (two 0.50+ tools), so the next
+    Fable spend should be a 3-draw REPLICATE of XP-009 and XP-001, not
+    10 more fresh packets.
+  - gemini arm is not worth its wall-clock (503-saturated); drop it.
+  - The cross-pollination ANALYSIS step (Nous replay) is not where the
+    2026 gain is (section 3); if compute is scarce, replay C_orig only
+    (original analysis, new code) and skip stage N.
+
+8. NUMBERED REVIEWER QUESTIONS
+-----------------------------------------------------------------------
+  Q1. Is a 2-triple, 3-draw replicate on a development ruler worth the
+      Fable credits, or should the next spend go to the blind held-out
+      (Charon) directly, skipping replication?
+  Q2. The one clean paired test favors the 1.0 tool. Does that sink the
+      "newest models do better" premise for this task, or is the honest-
+      era (uncommitted-code) distribution comparison admissible evidence?
+  Q3. Fund GPT-6 Astra? Without it this is a Fable-vs-cheap study, not a
+      frontier comparison. Rough cost: 10 packets x 3 stages x ~8k tok.
+  Q4. The gain is instruction-following (structural parsing), not a new
+      mechanism. Is that a result worth having for the 2.0 program, or
+      only interesting if a genuinely novel mechanism appears?
+  Q5. What would falsify the whole exercise: if no 2026 model, funded or
+      not, exceeds ~0.55 on this ruler, is the cross-pollination premise
+      itself retired, or is the RULER the thing under suspicion?
+
+9. REPRODUCE
+-----------------------------------------------------------------------
+  cd <worktree>
+  PYTHONUTF8=1 PYTHONPATH="<worktree>;D:\Prometheus" \
+    python hephaestus/xpol_2026/floors.py           # floors (deterministic)
+  python hephaestus/xpol_2026/extract.py            # 114 packets, read-only
+  python hephaestus/xpol_2026/replay.py --run <r> --arms fable51 \
+    --stages N C_new C_orig --ids XP-009 XP-001      # one arm, named ids
+  python hephaestus/xpol_2026/report.py             # runs/SUMMARY.txt
+  python hephaestus/xpol_2026/shape.py --orig       # mechanism costume
+  Raw calls: hephaestus/xpol_2026/runs/<r>/calls/<id>/<arm>/*.txt
+=======================================================================

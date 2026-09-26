@@ -99,6 +99,7 @@ def rho_vec(seed, tick, packed, replenish_numer):
 def gpu_step(
     H, W, seed, tick, write_cost, maintenance_cost, replenish_numer,
     replenish_amount, mut_numer, opcode, arg0, arg1, payload, energy,
+    observer=None,
 ):
     """One tick, whole-grid vectorized. See `gpu_aeth01.py` for full
     phase-by-phase commentary (identical algorithm)."""
@@ -120,7 +121,12 @@ def gpu_step(
         best_has = np.zeros((H, W), dtype=bool)
         best_priority = np.zeros((H, W), dtype=np.uint64)
         best_value = np.zeros((H, W), dtype=np.int16)
-        for dr, dc, required_dir in _NEIGHBOR_SLOTS:
+        watched = observer is not None
+        best_slot = np.full((H, W), 255, dtype=np.uint8) if watched else None
+        contenders = np.zeros((H, W), dtype=np.uint8) if watched else None
+        n_differ = np.zeros((H, W), dtype=np.uint8) if watched else None
+        pre_value = (template[f] if f != ENERGY else energy_i) if watched else None
+        for slot, (dr, dc, required_dir) in enumerate(_NEIGHBOR_SLOTS):
             shift = (-dr, -dc)
             n_active = np.roll(active, shift, axis=(0, 1))
             n_dir = np.roll(direction, shift, axis=(0, 1))
@@ -132,7 +138,13 @@ def gpu_step(
             cond = slot_valid & (~best_has | (prio > best_priority))
             best_priority = np.where(cond, prio, best_priority)
             best_value = np.where(cond, n_value, best_value)
+            if watched:
+                best_slot = np.where(cond, np.uint8(slot), best_slot)
+                contenders = contenders + slot_valid.astype(np.uint8)
+                n_differ = n_differ + (slot_valid & (n_value != pre_value)).astype(np.uint8)
             best_has = best_has | slot_valid
+        if watched:
+            observer.append((best_slot, contenders, n_differ))
         if f == ENERGY:
             winner4_has, winner4_val = best_has, best_value
         else:

@@ -1,0 +1,241 @@
+**ReasoningTool – a compact Quantum‑Neural Model‑Checker**  
+
+```python
+"""
+ReasoningTool
+==============
+
+A lightweight implementation of the Quantum‑Neural Model‑Checker (QNMC)
+described in the prompt.  For each candidate answer we
+
+1. **Parse** the prompt (and the candidate) into logical tokens.
+2. Build a **token graph** G(V,E) where edges carry a quantum‑style
+   confidence weight (high for certainty words, low for hedges).
+3. Apply a few **Hebbian updates**  S←S+η·(A·S)  to let co‑occurring tokens
+   reinforce each other; edges below a pruning threshold are removed.
+4. **Measure** the superposition by thresholding the activation vector S
+   to a Boolean truth assignment.
+5. **Model‑check** a set of temporal‑logic constraints extracted from the
+   prompt (simple “if … then …” implications).  Violations give a penalty.
+6. Combine the penalty with the average edge weight and a tiny
+   Normalised‑Compression‑Distance (NCD) term to obtain a final score.
+
+The class also provides an epistemically honest **confidence** estimate.
+A private `_meta_confidence` scans the prompt for presuppositions,
+scope/pronoun ambiguities, false dichotomies, subjectivity and
+unanswerability.  When any of these traps fire the confidence is capped
+at 0.25; otherwise a base of 0.8 is used and multiplied by the candidate
+score (capped at 0.9).
+
+Only the Python standard library and NumPy are required.
+"""
+
+import re
+import zlib
+import numpy as np
+from itertools import combinations
+from collections import defaultdict
+
+
+class ReasoningTool:
+    """Quantum‑Neural Model‑Checker with epistemic‑honesty confidence."""
+
+    # --------------------------------------------------------------------- #
+    # 1.  Meta‑confidence helpers (detect ambiguous / presupposition traps) #
+    # --------------------------------------------------------------------- #
+    _presupp_pat = re.compile(
+        r'\b(have you (stopped|quit|ceased|given up)|why (did|do) .+ (fail|stop|quit))\b',
+        re.I,
+    )
+    _scope_pat = re.compile(r'\bevery\s+\w+\s+.*\s+a\s+\w+', re.I)
+    _pronoun_pat = re.compile(r'\b\w+\s+told\s+\w+\s+([hs]e|[hs]is)\b', re.I)
+    _dichotomy_pat = re.compile(r'\beither\s+.+\s+or\s+.+\b', re.I)
+    _subjective_pat = re.compile(r'\b(best|worst|favorite|most|least)\b', re.I)
+
+    def __init__(self):
+        self.eta = 0.3          # Hebbian learning rate
+        self.prune_thr = 0.1    # edge weight pruning threshold
+        self.iterations = 4     # number of Hebbian steps
+        self.thresh = 0.5       # measurement threshold
+        self.ncd_weight = 0.15  # max contribution of NCD to final score
+
+        # lexical cue dictionaries
+        self._certainty = {"always", "certainly", "definitely", "surely", "never not"}
+        self._hedge = {"maybe", "perhaps", "likely", "possibly", "could", "might"}
+
+    # --------------------------------------------------------------------- #
+    # 2.  Public API                                                       #
+    # --------------------------------------------------------------------- #
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        """Score and rank candidates for *prompt*."""
+        results = []
+        for cand in candidates:
+            score, reason = self._score_candidate(prompt, cand)
+            results.append({"candidate": cand, "score": score, "reasoning": reason})
+        # sort descending by score
+        return sorted(results, key=lambda d: d["score"], reverse=True)
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Epistemically honest confidence (0‑1) for *answer* to *prompt*."""
+        base = self._meta_confidence(prompt)
+        # if meta‑confidence already low, return it directly
+        if base < 0.3:
+            return base
+        # otherwise combine with candidate quality (but never exceed 0.9)
+        score, _ = self._score_candidate(prompt, answer)
+        conf = base * min(score, 0.9)
+        return float(min(conf, 0.9))
+
+    # --------------------------------------------------------------------- #
+    # 3.  Core QNMC pipeline                                                #
+    # --------------------------------------------------------------------- #
+    def _score_candidate(self, prompt: str, cand: str) -> tuple[float, str]:
+        """Return (score, reasoning_string) for a single candidate."""
+        # 1. tokenisation ---------------------------------------------------
+        tokens, token_idx = self._tokenise(prompt + " " + cand)
+        n = len(tokens)
+
+        # 2. build adjacency matrix -----------------------------------------
+        A = np.zeros((n, n))
+        avg_w = 0.0
+        edge_cnt = 0
+        for i, j in combinations(range(n), 2):
+            w = self._edge_weight(tokens[i], tokens[j])
+            if w > 0:
+                A[i, j] = A[j, i] = w
+                avg_w += w
+                edge_cnt += 1
+        avg_w = avg_w / max(edge_cnt, 1)
+
+        # 3. Hebbian plasticity ---------------------------------------------
+        S = np.full(n, 0.5)                     # initial activation
+        for _ in range(self.iterations):
+            S = S + self.eta * (A @ S)
+            # prune weak edges
+            A[A < self.prune_thr] = 0.0
+
+        # 4. quantum measurement --------------------------------------------
+        bool_state = (S > self.thresh).astype(int)
+
+        # 5. extract simple temporal‑logic constraints ----------------------
+        constraints = self._extract_implications(prompt)
+        violations = 0
+        for a, b in constraints:
+            if a in token_idx and b in token_idx:
+                if bool_state[token_idx[a]] == 1 and bool_state[token_idx[b]] == 0:
+                    violations += 1
+        penalty = violations / max(len(constraints), 1)
+
+        # 6. raw QNMC score -------------------------------------------------
+        raw_score = 1.0 - penalty * avg_w
+        raw_score = max(0.0, min(1.0, raw_score))
+
+        # 7. NCD tie‑breaker (small contribution) ---------------------------
+        ncd = self._ncd(prompt, cand)
+        final = (1 - self.ncd_weight) * raw_score + self.ncd_weight * (1 - ncd)
+
+        # 8. reasoning string -----------------------------------------------
+        reason = (
+            f"violations={violations}/{len(constraints)}; "
+            f"avg_edge={avg_w:.2f}; penalty={penalty:.2f}; "
+            f"raw={raw_score:.3f}; ncd={ncd:.3f}; final={final:.3f}"
+        )
+        return float(final), reason
+
+    # --------------------------------------------------------------------- #
+    # 4.  Helper methods                                                    #
+    # --------------------------------------------------------------------- #
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detect traps in *prompt* and return a base confidence."""
+        low = 0.2  # used when a trap fires
+        # presupposition
+        if self._presupp_pat.search(prompt):
+            return low
+        # scope ambiguity
+        if self._scope_pat.search(prompt):
+            return low
+        # pronoun ambiguity
+        if self._pronoun_pat.search(prompt):
+            return low
+        # false dichotomy
+        if self._dichotomy_pat.search(prompt):
+            return low
+        # subjectivity / opinion‑only questions
+        if self._subjective_pat.search(prompt):
+            return low
+        # unanswerable: no question mark and no explicit query word
+        if not re.search(r'\b(what|why|how|when|where|who|which|does|is|are|do|can)\b', prompt, re.I):
+            return low
+        # otherwise we are fairly confident
+        return 0.8
+
+    def _tokenise(self, text: str) -> tuple[list[str], dict]:
+        """Split *text* into lower‑cased tokens, returning list and index map."""
+        # keep numbers, words and simple operators
+        raw = re.findall(r'\b\d+(?:\.\d+)?\b|\b\w+\b|[<>]=?|!=|==', text.lower())
+        tokens = list(dict.fromkeys(raw))          # unique while preserving order
+        token_idx = {tok: i for i, tok in enumerate(tokens)}
+        return tokens, token_idx
+
+    def _edge_weight(self, a: str, b: str) -> float:
+        """Heuristic weight for an edge between two tokens."""
+        # certainty / hedge cues dominate
+        if a in self._certainty or b in self._certainty:
+            base = 0.9
+        elif a in self._hedge or b in self._hedge:
+            base = 0.5
+        else:
+            base = 0.7
+        # boost if tokens are numeric and comparable
+        if self._is_number(a) and self._is_number(b):
+            base = 0.95
+        # boost for explicit logical connectors
+        logical = {"if", "then", "implies", "and", "or", "not", "contradicts"}
+        if a in logical or b in logical:
+            base = 0.9
+        return base
+
+    @staticmethod
+    def _is_number(tok: str) -> bool:
+        try:
+            float(tok)
+            return True
+        except ValueError:
+            return False
+
+    def _extract_implications(self, text: str) -> list[tuple[str, str]]:
+        """Return list of (antecedent, consequent) strings from simple if‑then."""
+        pat = re.compile(r'if\s+([^,.]+?)\s+then\s+([^,.]+)', re.I)
+        impl = []
+        for ant, cons in pat.findall(text):
+            ant = ant.strip().split()[-1]      # take last word as key
+            cons = cons.strip().split()[0]    # first word as key
+            impl.append((ant, cons))
+        return impl
+
+    @staticmethod
+    def _ncd(s1: str, s2: str) -> float:
+        """Normalised Compression Distance using zlib."""
+        c1 = len(zlib.compress(s1.encode()))
+        c2 = len(zlib.compress(s2.encode()))
+        # common substring approximation: compress concatenated strings
+        c12 = len(zlib.compress((s1 + s2).encode()))
+        ncd = (c12 - min(c1, c2)) / max(c1, c2)
+        return max(0.0, min(1.0, ncd))
+
+
+# --------------------------------------------------------------------- #
+# Example usage (can be removed in production)                         #
+# --------------------------------------------------------------------- #
+if __name__ == "__main__":
+    tool = ReasoningTool()
+    prompt = "If the temperature is above 30 then the ice will melt."
+    candidates = [
+        "The ice melts when it is hot.",
+        "Ice never melts.",
+        "If it is cold the ice stays solid."
+    ]
+    for r in tool.evaluate(prompt, candidates):
+        print(r)
+    print("Confidence:", tool.confidence(prompt, candidates[0]))
+```

@@ -1,0 +1,32 @@
+[flight 02:54:07] REAL LAUNCH gpu-load@1, budget ceiling $0.25
+[flight 02:54:07] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 02:54:07] credential source: host default key file
+[flight 02:54:08] bundle 1ee24a08344c reachable at the pinned commit 3b22826cf4cd
+[flight 02:54:09] create attempt on NVIDIA RTX A4000 (1 of 1)
+[flight 02:54:10] create attempt 1 -> accepted pod=1q2c5vxfis842r
+[flight 02:54:10] create CREATED -> confirmed pod=1q2c5vxfis842r gpu=NVIDIA RTX A4000
+[flight 02:54:12] artifact server not answering yet (status=404)
+[flight 02:54:32] pod clock offset +0.389 s (+/- 0.246 s)
+[flight 02:54:32] stage boot
+[flight 02:54:32] stage fetched
+[flight 02:54:32] stage verified
+[flight 02:54:32] stage unpacked
+[flight 02:54:32] stage installed
+[flight 02:54:32] stage canary
+[flight 02:54:32] stage module_start
+[flight 03:03:53] module reported end (status=ok)
+[flight 03:04:00] pod clock offset +0.359 s (+/- 0.208 s)
+[flight 03:04:02] receipt written to C:\Prometheus-worktrees\aether-iter2\Aether\runpod\receipts\gpu-load-20260926T065409Z.json
+
+RECEIPT  gpu-load-20260926T065409Z
+  module        gpu-load@1   result OK
+  bundle        1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab
+  window        2026-09-26T06:54:09Z -> 2026-09-26T07:04:00Z
+  cost          $0.0279 estimated over 590.9 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     26 records, units=6000, complete=True
+  artifacts     3 retrieved
+  lifecycle   {"pod_clock": {"fetch_s": 0.414, "verify_s": 0.004, "unpack_s": 0.007, "dependency_install_s": 7.278, "canary_s": 1.184, "bootstrap_total_s": 8.896, "execution_s": 562.193}, "controller_clock": {"create_call_s": 1.115, "accepted_to_first_telemetry_s": 25.764, "artifact_transfer_s": 5.276, "terminate_ack_s": 1.46, "absence_confirm_s": 1.748, "teardown_total_s": 9.376, "total_wall_s": 592.695}, "cross_clock": {"provision_s": 2.679, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.3892, "uncertainty_s": 0.2465, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 2.29, "accepted_to_module_start_s": 11.185}, "module_reported_elapsed_s": 561.979}
+  transfer    {"bytes": 8393083, "seconds": 2.9181, "bytes_per_s": 2876215.0, "largest": {"path": "state.bin", "bytes": 8388608, "sha256": "48b516eb66c187bd9738c5b25f897bbf04c7da3d27e3745e941d5e6822d4d7c1", "fetch_s": 1.5471}, "largest_bytes_per_s": 5422149.8}
+  platform    {"samples": 194, "span_s": 579.083, "gpu_names": ["NVIDIA RTX A4000"], "gpu_mem_used_mib_peak": 7605.0, "gpu_mem_total_mib": 16376.0, "gpu_util_pct_mean": 96.2423, "gpu_util_pct_peak": 100.0, "gpu_temp_c_peak": 75.0, "gpu_power_w_peak": 140.22, "gpu_power_w_mean": 135.2686, "host_load1_peak": 48.81494140625, "host_mem_used_b_peak": 134022254592.0, "disk_free_b_min": 21155446784.0, "artifact_dir_b_peak": 8483116.0, "sample_cost_s_mean": 0.0488, "sample_cost_s_peak": 0.0957, "gpu_errors": []}
+[flight 03:04:02] FLIGHT_PASS

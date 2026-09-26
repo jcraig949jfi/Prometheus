@@ -1,0 +1,26 @@
+**Algorithmic design**  
+The tool implements a *Genetic‑Ecosystem Mechanism Scorer* (GEMS).  
+1. **Population** – each candidate answer is encoded as a chromosome: a list of parsed predicates (subject‑relation‑object triples) plus numeric tokens. The chromosome is stored in a NumPy structured array for fast vectorised access.  
+2. **Fitness function** – derived from a *mechanism‑design* objective: maximize truth‑preserving constraints while penalising violations of logical consistency. For a given chromosome the fitness = Σ w_i·c_i where c_i are constraint‑satisfaction scores (e.g., transitivity, modus‑ponens, numeric bounds) and w_i are calibrated by a simple auction‑style bidding process that rewards constraints that most frequently differentiate high‑quality answers (the “keystone” constraints).  
+3. **Selection & crossover** – tournament selection picks the fittest chromosomes. Crossover swaps sub‑trees of predicate graphs (preserving ordering relations) to explore new reasoning structures.  
+4. **Mutation** – random edits: flip a relation, insert a missing numeric value, or negate a predicate. Mutations are guided by an *ecosystem dynamics* model: each predicate type has an energy level; high‑energy (frequently used) predicates are less likely to mutate, mimicking resilience, while low‑energy (rare) predicates receive higher mutation rates to encourage diversity.  
+5. **Iteration** – after a fixed number of generations the chromosome with highest fitness yields the final score (normalized to [0,1]).
+
+**Parsed structural features**  
+The parser extracts:  
+- Negations (`not`, `never`)  
+- Comparatives (`greater than`, `more … than`)  
+- Conditionals (`if … then …`)  
+- Numeric values and units  
+- Causal claims (`because`, `leads to`)  
+- Ordering relations (`first`, `subsequent`, `precede`)  
+These are stored as directed edges in a predicate graph for constraint checking.
+
+**Novelty**  
+The exact combination of GA population dynamics, ecosystem‑inspired mutation rates, and a mechanism‑design‑based fitness objective is not present in prior scoring systems, which typically use static rule‑based or similarity metrics. It therefore constitutes a novel hybrid algorithm, though each component (GA, constraint propagation, incentive‑compatible scoring) has precedents.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical constraint handling and adaptive mutation.  
+Metacognition: 6/10 — can evaluate its own constraint weights but lacks self‑reflection loops.  
+Hypothesis generation: 7/10 — crossover creates plausible alternative reasoning paths.  
+Implementability: 9/10 — relies only on NumPy, regex, and standard‑library graph utilities.

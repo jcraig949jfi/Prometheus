@@ -1,0 +1,172 @@
+Here is the implementation. The triad is realised as: structural checks generate a **residual signal** (passed check = smooth low-frequency segment, violated check = fast alternating burst), a fixed echo-state reservoir with an **SOC gain loop** amplifies it near criticality, and the **Welch PSD high-frequency power** is the falsification signal. Structural logic carries the ranking; the spectral readout is a nonlinear aggregator; NCD is only a tiebreaker.
+
+```python
+"""
+ReasoningTool -- spectral falsification at criticality.
+
+Each candidate is a hypothesis about the prompt. Structural checks (numeric
+comparison / arithmetic, transitive comparatives, yes-no polarity, negation
+parity, modus tollens / ponens, prompt-echo) write a residual signal r(t):
+a passed check writes a smooth low-frequency segment, a violated check writes
+a fast alternating burst. r(t) drives a fixed echo-state reservoir whose gain
+is tuned by an SOC loop toward criticality; the Welch PSD of the readout is
+integrated above f_c. High-frequency power is the falsification signal: the
+more of it, the more the hypothesis is contradicted. zlib NCD is a tiebreaker.
+"""
+import re, zlib
+import numpy as np
+
+HI = frozenset("bigger larger greater more higher taller older heavier faster longer "
+               "biggest largest tallest oldest highest most fastest longest".split())
+LO = frozenset("smaller less fewer lower shorter younger lighter slower smallest "
+               "least lowest shortest youngest fewest".split())
+NEG = re.compile(r"\b(not|no|never|none|neither|nor|cannot|isn't|aren't|doesn't|don't|"
+                 r"won't|can't|wasn't|weren't|didn't|false)\b", re.I)
+NUM = re.compile(r"-?\d+(?:\.\d+)?")
+FACT = re.compile(r"\b([A-Z][a-z]+)\s+(?:is|are|was)\s+(\w+)\s+than\s+([A-Z][a-z]+)")
+ARITH = re.compile(r"(-?\d+(?:\.\d+)?)\s*([-+*/x])\s*(-?\d+(?:\.\d+)?)")
+COND = re.compile(r"\bif\s+(.+?),\s*(?:then\s+)?(.+?)[.;]", re.I)
+
+
+class ReasoningTool:
+    def __init__(self, n=32, seed=7):
+        rng = np.random.RandomState(seed)
+        W = rng.randn(n, n)
+        self.W = W / np.max(np.abs(np.linalg.eigvals(W)))  # unit spectral radius
+        self.w_in = rng.randn(n)
+        self.f_c = 0.25  # cutoff (cycles/sample) separating confirm vs falsify bands
+
+    @staticmethod
+    def _ncd(a, b):
+        a, b = a.encode(), b.encode()
+        ca, cb = len(zlib.compress(a)), len(zlib.compress(b))
+        return (len(zlib.compress(a + b)) - min(ca, cb)) / max(ca, cb, 1)
+
+    @staticmethod
+    def _words(s):
+        return set(w for w in re.findall(r"[a-z]+", s.lower()) if len(w) > 3)
+
+    @staticmethod
+    def _graph(prompt):
+        gt = {}
+        for a, c, b in FACT.findall(prompt):
+            if c.lower() in HI: gt.setdefault(a, set()).add(b)
+            elif c.lower() in LO: gt.setdefault(b, set()).add(a)
+        return gt
+
+    @staticmethod
+    def _reach(gt, a, b):
+        seen, stack = set(), [a]
+        while stack:
+            x = stack.pop()
+            if x == b: return True
+            if x not in seen: seen.add(x); stack.extend(gt.get(x, ()))
+        return False
+
+    def _truth(self, prompt, gt):
+        q = [s for s in re.split(r"[.!?]", prompt) if s.strip()]
+        q = q[-1] if q else prompt
+        ws = set(re.findall(r"[a-z]+", q.lower()))
+        hi, lo = bool(ws & HI), bool(ws & LO)
+        if hi == lo: return None
+        nodes = set(gt) | set().union(*gt.values()) if gt else set()
+        names = [x for x in re.findall(r"\b([A-Z][a-z]+)\b", q) if x in nodes]
+        if len(names) >= 2:
+            if self._reach(gt, names[0], names[1]): return hi
+            if self._reach(gt, names[1], names[0]): return lo
+            return None
+        nums = [float(x) for x in NUM.findall(q)]
+        if len(nums) >= 2: return (nums[0] > nums[1]) if hi else (nums[0] < nums[1])
+        return None
+
+    @staticmethod
+    def _target(prompt):
+        m = ARITH.search(prompt)
+        if m:
+            a, op, b = float(m.group(1)), m.group(2), float(m.group(3))
+            try: return {"+": a + b, "-": a - b, "*": a * b, "x": a * b, "/": a / b}[op]
+            except ZeroDivisionError: return None
+        nums, ws = [float(x) for x in NUM.findall(prompt)], set(re.findall(r"[a-z]+", prompt.lower()))
+        if len(nums) >= 2 and ws & HI and not ws & LO: return max(nums)
+        if len(nums) >= 2 and ws & LO and not ws & HI: return min(nums)
+        return None
+
+    def _checks(self, prompt, cand):
+        out, low, gt = [], cand.lower(), self._graph(prompt)
+        cnums, t = [float(x) for x in NUM.findall(cand)], self._target(prompt)
+        if t is not None and cnums:  # numeric hypothesis vs computed target
+            out.append((0.0 if any(abs(c - t) < 1e-6 for c in cnums) else 1.0, 3.0))
+        truth, yn = self._truth(prompt, gt), re.match(r"\s*(yes|no|true|false)\b", low)
+        if truth is not None and yn:  # yes/no polarity vs derived truth
+            out.append((float((yn.group(1) in ("yes", "true")) != truth), 3.0))
+        if gt:  # named answer to superlative question over the comparative graph
+            nodes = set(gt) | set().union(*gt.values())
+            hit = [n for n in nodes if n.lower() in low]
+            top = [n for n in nodes if not any(n in v for v in gt.values())]
+            bot = [n for n in nodes if n not in gt]
+            want = top if set(re.findall(r"[a-z]+", prompt.lower())) & HI else bot
+            if len(hit) == 1 and len(want) == 1: out.append((float(hit[0] != want[0]), 2.0))
+        for s in re.split(r"[.!?;]", prompt):  # negation parity with negated premises
+            if NEG.search(s) and len(self._words(s) & self._words(cand)) >= 2:
+                out.append((0.0 if NEG.search(cand) else 0.6, 1.0))
+        m = COND.search(prompt)
+        if m:  # modus tollens / ponens on "if A, then B"
+            aw, bw, cw = self._words(m.group(1)), self._words(m.group(2)), self._words(cand)
+            rest = re.split(r"[.!?;]", prompt[m.end():])
+            neg_b = any(NEG.search(s) and self._words(s) & bw for s in rest)
+            aff_a = any(not NEG.search(s) and len(self._words(s) & aw) >= 1 for s in rest)
+            if neg_b and aw & cw: out.append((0.0 if NEG.search(cand) else 1.0, 2.0))
+            elif aff_a and bw & cw: out.append((1.0 if NEG.search(cand) else 0.0, 2.0))
+        nc = self._ncd(prompt, cand)
+        if nc < 0.25 and len(cand) > 0.6 * len(prompt): out.append((1.0, 1.0))  # echo
+        return out, nc
+
+    @staticmethod
+    def _signal(checks, nc, L=16):
+        burst = np.cos(np.pi * np.arange(L))  # Nyquist-frequency falsification burst
+        segs = [w * (v * burst + (1 - v) * 0.3) for v, w in checks]
+        segs.append(0.5 * (nc * burst + (1 - nc) * 0.3))  # NCD as weak residual
+        return np.concatenate(segs)
+
+    def _hf(self, r):
+        g, hf, seg, win = 0.9, 0.5, 16, np.hanning(16)
+        f = np.fft.rfftfreq(seg)
+        for _ in range(4):  # SOC loop: push gain toward the critical point
+            x, ys = np.zeros(len(self.w_in)), []
+            for u in r:
+                x = np.tanh(g * self.W @ x + self.w_in * u); ys.append(x.mean())
+            y, psd = np.array(ys) - np.mean(ys), np.zeros(seg // 2 + 1)
+            for s in range(0, max(1, len(y) - seg + 1), seg // 2):  # Welch
+                psd += np.abs(np.fft.rfft(win * y[s:s + seg], n=seg)) ** 2
+            hf = float(psd[f >= self.f_c].sum() / (psd.sum() + 1e-12))
+            g = float(np.clip(g + 0.15 * (0.5 - hf), 0.5, 1.4))
+        return hf
+
+    def _score(self, prompt, cand):
+        checks, nc = self._checks(prompt, cand)
+        wsum = sum(w for _, w in checks)
+        struct = 1.0 - sum(v * w for v, w in checks) / wsum if checks else 0.5
+        k = min(1.0, wsum / 4.0)  # how much structural evidence we actually have
+        hf = self._hf(self._signal(checks, nc))
+        score = 0.75 * (k * struct + (1 - k) * 0.5) + 0.25 * (1 - hf) - 0.03 * nc
+        why = "checks=%d violation=%.2f hf_power=%.2f ncd=%.2f" % (len(checks), 1 - struct, hf, nc)
+        return float(np.clip(score, 0.0, 1.0)), why
+
+    def evaluate(self, prompt, candidates):
+        rows = []
+        for c in candidates:
+            s, why = self._score(prompt, c)
+            rows.append({"candidate": c, "score": s, "reasoning": why})
+        return sorted(rows, key=lambda d: -d["score"])
+
+    def confidence(self, prompt, answer):
+        return self._score(prompt, answer)[0]
+```
+
+**How the mechanism maps:**
+- **Spectral monitor** — `_hf` runs a Hann-windowed, 50%-overlap Welch periodogram on the reservoir readout and integrates power above `f_c`.
+- **Falsification-driven loss** — `_signal` encodes every violated structural check as a Nyquist-frequency burst and every passed check as a DC plateau, so HF power *is* the contradiction signal; `_score` rewards low HF power.
+- **Criticality controller** — the 4-step SOC loop nudges the reservoir gain `g` toward the setpoint where HF fraction ~0.5 (the edge where sensitivity is maximal), then reads out the residual spectrum at that gain.
+- **Quality-floor guards** — numeric comparison/arithmetic, transitive comparatives, yes/no polarity from derived truth, negation parity, modus tollens/ponens carry the weight; NCD only breaks ties and penalises prompt-echo candidates; unknown cases fall to a 0.5 prior for calibration.
+
+One caveat: I could not execute the code in this session (no shell tool exposed), so it is untested-by-run; the logic is traced by hand on the 9.11/9.9, yes/no, and A>B>C transitivity cases.

@@ -1,6 +1,24 @@
 # Nyx status
 
-Currency: 2026-09-19 ~10:45 UTC (instance gandalf-9e21f277 on M3/GANDALF).
+BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot commands, the
+  frozen-artifact hashes, what is in flight on other seats, the holds, my debts, and the traps
+  that have actually bitten this seat. Then this file. Then `python -m comms sync Nyx`.
+
+2026-09-25 (instance gandalf-226cd218, rebooted): booted per the resume record; comms sync 0 new
+  after #571 (no POET ruling, no HARM-56 disposition; every hold stands). Validators green
+  (123 fossils / 6 mechanisms / probes intact / 45 tests). DEBT 1 PAID: the Ares W4 fossil
+  reading (#518/#535/#538) -- roles/Nyx/reports/ARES_W4_READING_2026-09-25.md, apparatus
+  nyx/readings/ares_w4_reading.py, run log ..._run.txt. Headline: the seed-3 carrier is a
+  3-node ring THROUGH OUTPUT NODE 15 (13->7->15->13, gain 3.92, clip-bistable), not a GATE<->MAX
+  2-cycle; both GATEs are always-open identities, the MAX is a dispensable rectifier; 3 of 5
+  hidden nodes are neutral; a 2-edge output self-loop is sufficient (lineage 9 IS that circuit).
+  Ten lineages: 10/10 hold the bit as the sign of a saturated positive-feedback loop, gain > 1
+  closed through the clip, on or driving an output node (8/10 with the output inside the loop).
+  Predictions held: W16 floor 10/10; evolved-ring gain basin wide/flat/open-ended (s >= 0.8 up
+  to gain 106). Atlas: NOVEL as an organ (nearest registered organs are gain-1 saturating
+  accumulators and a clocked latch), known engineering motif outside it.
+
+Currency: 2026-09-25 ~13:30 UTC (instance gandalf-226cd218 on M3/GANDALF).
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1

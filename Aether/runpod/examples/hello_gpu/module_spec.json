@@ -1,0 +1,44 @@
+{
+  "args": [],
+  "artifacts": [
+    "result.json",
+    "telemetry.jsonl"
+  ],
+  "canary": "python3 -c \"import cupy; cupy.arange(8).sum()\"",
+  "dependencies": {
+    "pip": [
+      "cupy-cuda12x==13.3.0",
+      "numpy==2.2.0"
+    ]
+  },
+  "description": "Smallest useful GPU module: copy this and change the entrypoint.",
+  "disk_gb": 10,
+  "entrypoint": "run.py",
+  "env": {
+    "HELLO_STEPS": "200"
+  },
+  "env_allowlist": [
+    "HELLO_STEPS"
+  ],
+  "gpu": {
+    "alternatives": [
+      "NVIDIA RTX A5000",
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA L4",
+      "NVIDIA A40"
+    ],
+    "class": "NVIDIA RTX A4000",
+    "cloud": "SECURE",
+    "count": 1
+  },
+  "max_runtime_s": 300,
+  "name": "hello-gpu",
+  "telemetry": {
+    "interval_s": 10
+  },
+  "version": "1",
+  "work_units": {
+    "estimate": 200.0,
+    "name": "steps"
+  }
+}

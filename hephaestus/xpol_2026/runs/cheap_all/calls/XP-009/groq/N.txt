@@ -1,0 +1,41 @@
+**1. Algorithmic core**
+
+The tool builds a *Thermodynamic‑Genetic Model‑Checker* (TG‑MC).  
+*State representation*: each candidate answer is tokenised and mapped to a directed constraint graph **G** = (V, E). Vertices are atomic propositions (e.g., “A > B”, “temperature rises”). Edges encode logical relations extracted by regex (negation, implication, comparatives, conditionals, causal arrows, ordering).  
+*Energy function*: an “entropy” E(s) is computed for a state *s* (a graph) as the sum of penalty terms:  
+- **Logical violation penalty** – each unsatisfied temporal‑logic clause (e.g., “if X then Y”) adds a large constant.  
+- **Inconsistency penalty** – cycles that contradict transitivity increase E.  
+- **Numeric deviation penalty** – distance between extracted numbers and expected ranges (if a reference solution is supplied).  
+Low energy corresponds to a high‑quality answer.
+
+*Genetic search*: a population **P** of candidate‑answer encodings is evolved. Each individual stores its graph **G** and cached energy. Operators:  
+- **Crossover** – exchange sub‑graphs rooted at matching proposition types.  
+- **Mutation** – flip a negation edge, replace a comparative operator, or perturb a numeric node within a small delta.  
+Fitness = –E(s). The GA runs a fixed number of generations, keeping the best‑scoring individuals.
+
+*Model checking*: after each generation, a lightweight explicit‑state model checker runs on every **G** to verify a finite set of temporal‑logic specifications (e.g., “∀ p ∈ V: if p is a cause then a later effect exists”). The checker returns a Boolean “valid” flag; invalid graphs receive an additional energy surcharge, forcing the GA to discard logically inconsistent structures.
+
+The final score for a candidate answer is the minimal energy observed across its evolutionary trajectory, normalised to [0, 1].
+
+**2. Parsed structural features**
+
+- Negation markers (`not`, `no`, `without`)  
+- Comparatives (`greater than`, `≤`, `more … than`)  
+- Conditionals (`if … then …`, `provided that`)  
+- Numeric values (integers, floats, units)  
+- Causal claims (`causes`, `leads to`)  
+- Temporal/ordering relations (`before`, `after`, `simultaneously`)  
+- Quantifiers (`all`, `some`, `none`)  
+
+These are extracted with deterministic regexes and stored as labelled edges in **G**.
+
+**3. Novelty**
+
+The exact coupling of a thermodynamic‑style energy minimisation, a genetic‑algorithm population, and an explicit model‑checking verification loop for textual answer scoring is not documented in the literature. Related work exists separately (energy‑based parsing, GA‑driven rule learning, and model checking of logical forms), but their integration in a pure‑numpy scoring pipeline is a novel engineering synthesis.
+
+**4. Ratings**
+
+Reasoning: 8/10 — the algorithm enforces logical consistency and quantitative alignment without statistical shortcuts.  
+Metacognition: 6/10 — it can detect self‑contradiction but does not model reflective reasoning.  
+Hypothesis generation: 7/10 — GA mutation explores alternative interpretations, effectively proposing hypotheses about missing premises.  
+Implementability: 9/10 — all components (graph handling, GA loop, explicit model checker) can be built with numpy and the Python std‑lib.

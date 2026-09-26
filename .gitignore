@@ -185,6 +185,11 @@ agents/nemesis/grid/grid.json
 # behind the AETH-01 scaling verdicts -- and a verdict whose ledger is
 # not committed is an assertion (roles/base-role/RESPONSIBILITIES.md s2).
 !Aether/AETH-01/evidence/**/*.log
+# Iteration-1 flight consoles are the engineering ladder's evidence,
+# and a broad *.log rule was swallowing them. Narrow negation rather
+# than `git add -f`, which works once and hides the problem from the
+# next person (FAILURE_PLAYBOOK entry 7).
+!Aether/runpod/receipts/**/*.log
 
 # Dashboard data moved to docs/ for GitHub Pages serving (2026-05-15).
 # See "Docs — local research drafts" block below for the docs/ exceptions.

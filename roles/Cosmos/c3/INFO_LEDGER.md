@@ -20,13 +20,19 @@ Residual risk (stated exactly): every M2 worktree shares the canonical clone's .
 withheld local branch ref is visible to any seat working on M2 (git show <branch>:<path>), and the
 worktree files are readable on disk. For a seat off M2 the barrier is real (nothing is on origin); for
 an M2 seat it is HONOR + ATTESTATION (D_CONTRACT s7 forbids reading it and requires an attestation).
-The D request goes to Bellerophon, which works on M2: the attestation is therefore load-bearing.
+Resolved for D by moving its author off M2 (see below): for an M1 author the barrier is technical.
 
-## D (development holdout) -- requested 2026-09-24 (comms), not yet sealed
-Author seat: Bellerophon (directive s3 recommendation), request prompts/2026-09-24_c3_D_request/.
+## D (development holdout) -- REASSIGNED 2026-09-24 to Nestor (M1), not yet sealed
+Operator decision 2026-09-24: honor + attestation is not acceptable when avoidable; D authorship moves
+OFF M2. Request to Bellerophon (comms #550) WITHDRAWN -- Bellerophon's last sync (03:34Z) preceded the
+request (07:51Z), so it never received it. New author: Nestor, all of whose instances run on SKULLPORT
+(M1), a separate clone that cannot see M2-local git objects. Request: prompts/2026-09-24_c3_D_reassign/.
+E (final) is to be kept available for Aether (M4); Aether also has an M2 instance, so E's author must
+work from M4 only.
 | date | channel | fact | class |
 |---|---|---|---|
 | 2026-09-24 | this repo | nothing about D exists yet; D's author has been sent only the contract | -- |
+| 2026-09-24 | comms | D reassigned to Nestor (M1); Bellerophon request withdrawn before it was read | -- |
 
 ## E (final adjudicator) -- not yet commissioned
 Author seat: (not requested; directive recommends Aether; only after D and final freeze).

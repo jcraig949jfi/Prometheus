@@ -1,0 +1,31 @@
+**Algorithm Overview**  
+The tool treats each candidate answer as a *thermodynamic system*.  A feature extractor parses the text (see §2) and produces a binary‑numeric **feature vector** \(f\in\{0,1\}^k\).  A **constraint graph** \(G=(V,E)\) stores logical relations (e.g., “if A then B”, “A > B”).  Scoring uses a free‑energy formulation  
+
+\[
+F = E(f,w) - T\;S(f)
+\]
+
+where **energy** \(E\) is a weighted sum of violation penalties, **entropy** \(S = -\sum_i p_i\log p_i\) measures uncertainty in the activated feature set, and **T** is a temperature hyper‑parameter.  
+
+**Neural Architecture Search (NAS)‑style weight discovery**: a population of weight vectors \(w\) (and optional temperature values) is evolved with a lightweight evolutionary algorithm.  Each individual is evaluated on a held‑out set of reference answers; the fitness is the average free energy.  The search space is defined by a small DAG of operations (addition, scaling, ReLU‑like clipping) that can be combined without any learned neural layers.  Weight sharing is achieved by re‑using the same feature‑extraction code across individuals, so the NAS step only mutates scalar parameters.
+
+**Scoring Logic**: for a new candidate, the parser builds \(f\) and \(G\), computes violation counts (e.g., unmet antecedents, contradictory comparatives) → raw penalty \(p\).  Energy \(E = w^\top p\).  Entropy is computed from the distribution of active features.  The final score is the free energy; lower scores indicate higher logical consistency, appropriate pragmatics, and minimal “thermal” disorder.
+
+**Parsed Structural Features**  
+- Negations and scope (¬)  
+- Comparatives/superlatives (>, ≥, <)  
+- Conditionals (if‑then, ↔)  
+- Numeric values and units  
+- Causal claims (“because”, “leads to”)  
+- Ordering relations (first, then, subsequently)  
+- Discourse markers (however, therefore)  
+- Modal and speech‑act cues (should, must, ask)
+
+**Novelty Assessment**  
+Thermodynamic free‑energy scoring and NAS for metric tuning exist separately, and pragmatic cue extraction is known in computational linguistics.  Their tight integration into a pure‑numpy, constraint‑propagation evaluator is, to the best of our knowledge, novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical grounding, but limited to extracted constraints.  
+Metacognition: 6/10 — can detect self‑contradiction but lacks self‑explanation.  
+Hypothesis generation: 5/10 — weight evolution creates hypotheses about feature importance but not content.  
+Implementability: 9/10 — pure‑numpy, regex, and simple evolutionary loop are straightforward to code.

@@ -1,0 +1,26 @@
+**Algorithm Overview**  
+1. **Parsing → Predicate Tensor** – A deterministic parser scans the prompt and each candidate answer with regular‑expression rules that recognise six structural motifs: negation (`not`, `never`), comparatives (`greater than`, `as … as`), conditionals (`if … then`), numeric literals, causal verbs (`causes`, `leads to`), and ordering words (`first`, `after`). Each motif yields a *predicate* of the form *(subject, relation, object, position)*. Subjects and objects are mapped to integer IDs, relations to a small enum, and position to the token index. All predicates are stored in a three‑dimensional sparse Boolean tensor **T** of shape *(|E|, |R|, |P|)* where *E* = entity set, *R* = relation set, *P* = token positions.
+
+2. **Tensor Decomposition Check** – The reference answer (ground‑truth) is pre‑decomposed with a CP‑rank‑k factorisation **{A, B, C}** (numpy `linalg.svd` on matricised slices). For a candidate, we compute its tensor **T̂** and obtain its rank‑k CP factors **{Â, ̂B, ̂C}** using alternating least‑squares (ALS) limited to a few iterations (pure numpy). The reconstruction error  
+   \[
+   \epsilon = \|T̂ - [[Â,̂B,̂C]]\|_F / \|T̂\|_F
+   \]  
+   measures structural fidelity; lower ε means the candidate captures the same relational pattern.
+
+3. **Property‑Based Test Generation** – From the parsed question we derive a *specification* of admissible predicate sets (e.g., “if X > 5 then Y must be true”). A lightweight property‑based engine enumerates perturbations of numeric values and boolean flags, producing a bounded set of test cases **S** (≤ 50). For each test case we encode the candidate’s predicates as propositional clauses (subject‑relation‑object → literal) and run a tiny DPLL SAT solver (implemented with only lists and recursion). A test passes if the clause set is satisfiable; otherwise the minimal unsatisfiable core (found by recursive clause removal) is recorded.
+
+4. **Scoring Logic** –  
+   *Structural score* = 1 − ε (clipped to [0,1]).  
+   *Test score* = |passed| / |S|.  
+   *Core penalty* = Σ |core_i| / |S| (larger cores penalise more).  
+   Final score = 0.5·structural + 0.4·test − 0.1·core penalty, yielding a deterministic value in [0,1].
+
+**Parsed Text Features** – The pipeline explicitly extracts: (a) negations, (b) comparative operators, (c) conditional clauses, (d) numeric literals, (e) causal verbs, (f) temporal/ordering markers, and (g) entity–relation bindings.
+
+**Novelty Assessment** – Combining CP‑tensor decomposition for relational pattern matching with a property‑based test harness and an in‑process SAT core analysis is not present in existing open‑source evaluators; the design maps loosely to “semantic parsing + formal verification” but the exact three‑way integration is novel.
+
+**Ratings**  
+Reasoning: 8/10 — strong logical consistency check with SAT and tensor similarity.  
+Metacognition: 6/10 — limited to structural parsing; no self‑reflection.  
+Hypothesis generation: 7/10 — systematic test case creation from specifications.  
+Implementability: 9/10 — pure numpy and std‑lib; modest code size and runtime.
