@@ -5,9 +5,11 @@
 
 It refuses to run unless: prometheus/ananke and the prereg are clean in
 git; the code SHA and the prereg sha256 equal roles/Ananke/pte/c1b/
-FREEZE_C1b.json; and --release names a comms message FROM Aporia whose
-subject says the HOLD is released (the operator HOLD of 2026-09-25 can be
-lifted only by Aporia over comms). Stages:
+FREEZE_C1b.json; and --release names a comms message that passes check_release():
+from Aporia, kind ruling, to Ananke, subject starting with the exact token
+"C1B HOLD RELEASE:", created after the freeze commit, and naming that commit
+in its body (#696/#699; the operator HOLD of 2026-09-25 can be lifted only
+by Aporia over comms). Stages:
   S1 specimen batteries (M2, M3) on C1b held-out worlds
   S2 fresh-seed searches, 4 per specimen, and their batteries
   S3 CORRECTED_WINDOW_RECHECK on every C1 D-wave adjudicated cell
@@ -18,10 +20,12 @@ from __future__ import annotations
 
 import argparse
 import dataclasses
+import datetime
 import gzip
 import hashlib
 import json
 import pathlib
+import re
 import subprocess
 import sys
 import time
@@ -77,16 +81,63 @@ def guard(release: str | None) -> dict:
         problems.append("no --release: the operator HOLD stands until Aporia releases it on comms")
     else:
         try:
-            m = json.loads(subprocess.check_output([sys.executable, "-m", "comms", "show", str(release)],
-                                                   cwd=REPO, text=True))
-            subj = (m.get("subject") or "").upper()
-            if m.get("sender") != "Aporia" or "HOLD" not in subj or "RELEASE" not in subj:
-                problems.append(f"comms #{release} is not a HOLD release from Aporia")
+            commit, when = freeze_commit()
+            problems += check_release(fetch_message(release), commit, when)
         except Exception as e:                          # noqa: BLE001
             problems.append(f"cannot verify comms #{release}: {e}")
     if problems:
         raise SystemExit("C1b driver REFUSES to start:\n  " + "\n  ".join(problems))
     return fz
+
+
+RELEASE_TOKEN = "C1B HOLD RELEASE:"      # #696/#699: exact subject prefix, case-sensitive
+
+
+def freeze_commit() -> tuple[str, datetime.datetime]:
+    """The commit that last wrote FREEZE_C1b.json, and its commit time."""
+    rel = str(FREEZE.relative_to(REPO))
+    sha = git("log", "-1", "--format=%H", "--", rel)
+    if not sha:
+        raise RuntimeError("FREEZE_C1b.json is not committed")
+    return sha, datetime.datetime.fromisoformat(git("show", "-s", "--format=%cI", sha))
+
+
+def fetch_message(msg_id) -> dict:
+    """The full comms message (with body) from Ananke's inbox."""
+    out = subprocess.check_output([sys.executable, "-m", "comms", "inbox", "--all", "--json",
+                                   "Ananke"], cwd=REPO, text=True)
+    d = json.loads(out)
+    msgs = d if isinstance(d, list) else d.get("messages", d)
+    for m in msgs:
+        if str(m.get("id")) == str(msg_id):
+            return m
+    raise KeyError(f"comms #{msg_id} not in Ananke's inbox")
+
+
+def check_release(m: dict, commit: str, frozen_at: datetime.datetime) -> list[str]:
+    """ALL of (#696): sender Aporia; subject STARTS WITH the exact token;
+    kind == ruling; Ananke among the recipients; created after the freeze
+    commit; the body names the freeze commit (>= 9 hex chars of its SHA).
+    Returns the list of failures (empty = a valid release)."""
+    bad = []
+    if m.get("sender") != "Aporia":
+        bad.append("sender is not Aporia")
+    if not (m.get("subject") or "").startswith(RELEASE_TOKEN):
+        bad.append(f"subject does not start with {RELEASE_TOKEN!r}")
+    if m.get("kind") != "ruling":
+        bad.append("kind is not ruling")
+    if "Ananke" not in (m.get("recipients") or []):
+        bad.append("Ananke is not a recipient")
+    try:
+        created = datetime.datetime.fromisoformat(str(m.get("created_at")))
+        if created <= frozen_at:
+            bad.append("created before the freeze commit")
+    except ValueError:
+        bad.append("unparseable created_at")
+    words = re.findall(r"[0-9a-f]{9,40}", m.get("body") or "")
+    if not any(commit.startswith(w) for w in words):
+        bad.append(f"body does not name the freeze commit {commit[:9]}")
+    return [f"comms #{m.get('id')}: {b}" for b in bad]
 
 
 # ------------------------------------------------------------ specimens

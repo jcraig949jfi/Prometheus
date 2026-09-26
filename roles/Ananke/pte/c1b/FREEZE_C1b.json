@@ -1,6 +1,6 @@
 {
  "what": "PTE-C1b code freeze",
- "code_tree_commit": "b78ae3694dbd2f476abf306c3b2bcf8736d4c113",
+ "code_tree_commit": "4554a2faee5e4126483f046083e9f735ca823182",
  "prereg": "roles/Ananke/pte/PREREG_PTE_C1b.md",
  "prereg_sha256": "8e27a353e83e04c93daefaab9872203c0f4e1ede06dd6a83b862906182e11f84",
  "prereg_versions": {
@@ -11,9 +11,9 @@
  },
  "golden_c1_controls": "3451ae720",
  "artifacts_lf_sha256": {
-  "roles/Ananke/pte/c1b/LABEL_TABLES.json": "6d2fd0edbdc7bd66e8362e0cf602930cf66dfd4c4ca6046a8698a7f335202995",
-  "roles/Ananke/pte/c1b/FIXTURES_dev.json": "09541af4a438acd6edb156ed40cff0481efae44abce4bf202ba7985fcff4512b",
-  "roles/Ananke/pte/c1b/ELIGIBILITY_dev.json": "e38ff8e4ac4ca2d10c5bcd9d4dff452c7e9864db8b3475e96284305c0e3ba1a7"
+  "roles/Ananke/pte/c1b/LABEL_TABLES.json": "26ae84173e38776fafff2b2b781fd3c6cb7db6cc3621fc9e03c6f2e7297903c1",
+  "roles/Ananke/pte/c1b/FIXTURES_dev.json": "bc46291b2f26fb24b3b3908fa6d00082b5ef5018a1be4bdb656a3f8e985ab758",
+  "roles/Ananke/pte/c1b/ELIGIBILITY_dev.json": "2f5bec5499ef812c0178a78eac46930ce0cbeefbc28be4323e74703e636f66bf"
  },
  "specimens": {
   "M2": [
@@ -29,6 +29,9 @@
  "worlds": 64,
  "fresh_per_specimen": 4,
  "cap_h": 3,
- "tests": "174 passed (CPU) at code_tree_commit",
- "run_gate": "HOLD: runs need a comms HOLD release from Aporia (driver-enforced)"
+ "tests": "185 passed (CPU) at code_tree_commit",
+ "run_gate": "comms message passing c1b_run.check_release: sender Aporia, kind ruling, Ananke a recipient, subject starts with 'C1B HOLD RELEASE:', created after THIS file's commit, body names THIS file's commit SHA (>=9 hex)",
+ "version": 2,
+ "supersedes": "d9528d5f6 (v1)",
+ "why": "v1 release guard matched substrings and would have accepted #605/#631 as releases (#696/#699 JOINT); fixed at 4554a2fae"
 }
