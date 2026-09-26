@@ -1,0 +1,421 @@
+{
+ "definitions": "Instrumented replay: re-run a historical run with the FROZEN harness plus byte-provenance tracing, and classify\nevery birth the harness registered. The tracer is a line-for-line copy of vm.execute with bookkeeping added; its\nfidelity to the original is CHECKED on every replay: the regenerated summary must equal the stored one (minus\nwall_s), else the row is marked TRACER_DIVERGED and not used.\n\nBirth classes (frozen before the first traced replay; see POST_CAMPAIGN_FORENSICS.md s3.1):\n  COPY_EVENT         any birth the harness registered (endogenous physics)\n  SELF_REPLICATION   COPY_EVENT where (a) material == writer and fidelity vs the writer's tape >= 0.9 BOTH after and\n                     BEFORE its execution (v2, 2026-09-23: the pre-execution test closes the self-smear hole the blind\n                     audit named M1; the post-only count is kept as self_rep_postonly for comparison), (b) >= 90% of\n                     the child's L bytes were last written by a copy op (LDI/LDIR/COPYALL) whose SOURCE address lay in\n                     the writer's own tape [0,L), and (c) >= 90% of those writes were executed with the PC inside the\n                     writer's own tape (the writer's code did it, not the partner's code it ran into).\n  lineage depth      sr_depth(child) = sr_depth(writer) + 1 for a SELF_REPLICATION birth, else 0.\n  SUSTAINED_LINEAGE  a run in which some SELF_REPLICATION chain reaches depth >= 3.\n  EVOLUTIONARILY_ACTIVE_LINEAGE  a run in which a SELF_REPLICATION birth with child != writer tape (a heritable\n                     variant) is itself the root of a SELF_REPLICATION chain of depth >= 2 (the variant is transmitted).\n\n    python traced_replay.py --set spontaneous --workers 14\n    python traced_replay.py --set baseline --n 300 --seed 11\n    python traced_replay.py r000123 ...\nWrites receipts/TRACED_<tag>.json (per-run rows) -- small; per-birth detail stays in LOCAL.",
+ "n": 2,
+ "rows": [
+  {
+   "alive_end": 256,
+   "alive_end_sr_born": 234,
+   "births": 80356,
+   "births_by_partner_code": 12002,
+   "births_changed_le_2_bytes": 12855,
+   "births_into_empty": 166,
+   "births_tail": 3802,
+   "evolutionarily_active": false,
+   "first_self_rep": {
+    "fid": 1.0,
+    "own_steps": 5,
+    "tick": 0,
+    "win_steps": 0,
+    "writer": 11
+   },
+   "hifi_births_tail": 3791,
+   "hifi_births_tail_not_selfrep": 176,
+   "intervention": false,
+   "kind": "positive control: known_replicator_repli",
+   "material_target": 166,
+   "max_sr_depth": 395,
+   "n_origins": 29,
+   "n_origins_alive_at_end": 2,
+   "origins": [
+    {
+     "alive_descendants_end": 0,
+     "root": 11,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 5,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 16,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 9,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 13,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 8,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 204,
+     "root": 14,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 15,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 1,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 30,
+     "root": 4,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 7,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 10,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 3,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 6,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 2,
+     "tape": "07000840034015ff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 12,
+     "tape": "07000840034015ff00000000000000000000000000000000000000000000007d0000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 1
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 234,
+     "tape": "000840034015ff00000000000000000000000000000000000000000000000000000000cf00000000000000000000000000000000000000000000000000000000",
+     "tick": 2
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 17702,
+     "tape": "000840034015fffd008a00e200000000000000000c00000000000000004e00000000f70000009fa100000000000000df000000000000000000800000d4000000",
+     "tick": 121
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 20394,
+     "tape": "000840034015ff00000000000000a700000000000000006900000000000000000000780038360000000000c2000000009000a600000000000000000000006f00",
+     "tick": 145
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 39123,
+     "tape": "2a000840034015ff00004c00b20000a700000000990000006900c000787500000000000000000000000000000000000000000000000000000000000000000000",
+     "tick": 273
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 42740,
+     "tape": "d9002b0000000000003f9e00f50000c2009a00000000000000dc0008400339159f001596f43800d9002b0000000000003f9e00f50000c2009a00000000000000",
+     "tick": 293
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 45518,
+     "tape": "2a0008409240157900002d00b50000a700000000990000006900c094787500007cf000960038366cc620005dc276d900ea9000a6e5770067000000000043006f",
+     "tick": 308
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 45796,
+     "tape": "2a00084003c6157900002d00b50000a700000000990000006900c094787500007cf000960038366cc620005d6176d900ea9000a6e5770067000000000043006f",
+     "tick": 308
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 47461,
+     "tape": "2a0c0840034015021131bb00b2a000a700800000990000006900a3ec00e4099d1dbc0018005c3600096d00a8c2000000006500a6277700d3985800000043006f",
+     "tick": 317
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 48319,
+     "tape": "00084003d215ff0000117caf0000ff00000000a9c9fc000067df2600000000ae8900000000239f00000000000000d98b443e00f1100000ca80d8000095007c00",
+     "tick": 322
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 49894,
+     "tape": "ca80d80000d4c97c000000000000000000000000000000000000000000000000000000000700084003d215ff00008a00134e00ff6400000010c9fc000067df26",
+     "tick": 330
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 52247,
+     "tape": "d80000d4c97c0000000000a4f40000000000000000000000000000000000000000000700084003d215ff00008a00134e00ff6400000010c9fc000067df260000",
+     "tick": 342
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 62285,
+     "tape": "000000000000000000000700084003d2150000008a0013805aff6400000010c9fc1e0067df260000000000000000000000000000000000000000000000000000",
+     "tick": 399
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 76510,
+     "tape": "0000000000000700084003d21500002f8a0013805ab432006d0010a56500d267df26000000000000000000000000000000000000000000000000000000000000",
+     "tick": 479
+    }
+   ],
+   "run": "r000001",
+   "self_rep": 66743,
+   "self_rep_into_empty": 144,
+   "self_rep_postonly": 66743,
+   "self_rep_tail": 3615,
+   "sustained_lineage": true,
+   "top_tape": "cb00084003d215ff00008ae5134800c800000000a983fc000067df26bbd20000be2b00000001009f00000041dd002bd9e74460002d100000ca80d80000d4007c",
+   "tracer_diverged": [],
+   "vec": {
+    "env_dynamics": "FIXED",
+    "init": "SEEDED_REPLICATOR",
+    "layout": "SHARED",
+    "mutation": "BYTE",
+    "mutation_rate": "LOW",
+    "pressure": "IMPLICIT",
+    "read_gate": "ABR",
+    "recombination": "NONE",
+    "representation": "Z80_64",
+    "reproduction": "ENDOGENOUS_COPY",
+    "scoring": "ATOMIC",
+    "spatial": "LOCAL",
+    "task": "INC",
+    "world": "GRID"
+   }
+  },
+  {
+   "alive_end": 256,
+   "alive_end_sr_born": 222,
+   "births": 83975,
+   "births_by_partner_code": 0,
+   "births_changed_le_2_bytes": 24951,
+   "births_into_empty": 128,
+   "births_tail": 3394,
+   "evolutionarily_active": true,
+   "first_self_rep": {
+    "fid": 1.0,
+    "own_steps": 37,
+    "tick": 0,
+    "win_steps": 0,
+    "writer": 86
+   },
+   "hifi_births_tail": 3394,
+   "hifi_births_tail_not_selfrep": 459,
+   "intervention": false,
+   "kind": "sparse pairwise coverage (+0 new pairs)",
+   "material_target": 13,
+   "max_sr_depth": 356,
+   "n_origins": 23,
+   "n_origins_alive_at_end": 1,
+   "origins": [
+    {
+     "alive_descendants_end": 222,
+     "root": 86,
+     "tape": "f78fe90840155ab6d5a5e179e11baf91fcc2fbe5d6d94c0129cc1df3db7d14c776b625a6714f56dd4b79db4dd76258d7648e50c67010f194e31356f005e3dbf6",
+     "tick": 0
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 53131,
+     "tape": "65a5be798623bf4dfcc2fbdfa1004c0129101df3dbc814c781b6daa6714f562755d9dbead76258d7648eb9c670109a94e31356e6a2badbfaf78fe90840155ad1",
+     "tick": 316
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 61463,
+     "tape": "f77be90840155ab6d5a5c578e1ad419199167ce55ad94c0129cca9f3db2714c755b676a6a16b56b32e799b6ed76258d764e4948f70063c94ff13e467797ee01b",
+     "tick": 375
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 64134,
+     "tape": "f77be9084015f1b6d5a53978e1ad419199167ce55ad94c0129cca9f3db2714c755b676a6a16b56b92e79436ed76258d764e4948f70063c94ff13e467797ee01b",
+     "tick": 383
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 68916,
+     "tape": "f73ee9084015f1b6c8a53978e1ad419199167ce55ad94ca429cca9f3db2714c737b633a6a16bac152e799b6ed76258d764e4948f70063c94ff13e467797ee01b",
+     "tick": 411
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 68786,
+     "tape": "f77be90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3db2714c755b676a6a16b56a12e799b6ed78d58d764e4948f70063c94ff13e467797ee01b",
+     "tick": 412
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 69332,
+     "tape": "f77be9084015f1b6d5a53978e1ad41915a167ce55a294ca429cca9f3db4314c755b676a6a16b56ca2e799b6ed76258d701e4948f70063c94ff13e467797ee01b",
+     "tick": 413
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 69562,
+     "tape": "f7d9e90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3db2714c755b676a6a16b56522e799b6ed78d58d764e4948f70064494ff13e467797ee01b",
+     "tick": 415
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 69967,
+     "tape": "f77be908402df1b6d5a53978e1ad419199167ce55a294ca429cca9f3db2714c755b676a6a16b56e92e799b6ed76258d764e4948f70063c94ff13e467797ee01b",
+     "tick": 417
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 71286,
+     "tape": "bcc3e908401534b6d50de179831b1de1fcdb33e5d6874c1229bec6f3db67064ee5cb5ea6539056ddc5bcc3e908401534b6d50de179831b1de1fcdb33e5d6874c",
+     "tick": 424
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 71201,
+     "tape": "bcc3e908401534b6d50de179831b1de1fcdb33e5d6874c1229bec6f3db10064ee5cb5ea6539056ddc5bcc3e908401534b6d50de179831b1de1fcdb33e5d6874c",
+     "tick": 424
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 71528,
+     "tape": "e908401534b6d50de179831b1de1fcdb33e5d6874c1229bec6f3db670699e5cb5ea653d856ddc56d0814d722c84cb49c39c67010f1fde61364960518dbf614e9",
+     "tick": 425
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 71374,
+     "tape": "e908401534b6d50de179831b1de1fcdb33e5d6874c1229bec6f3db670699e5cb5ea653d856ddc56d0814d722c84cb49c39c67010f1fde61364960518dbf614e9",
+     "tick": 425
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 72921,
+     "tape": "f77be9084015f1b6d5a52c78e1adba9199167ce55ad94ca429cc4ef3db4314c755b676a6a16b33152e799b6ed76258d701e4948f70063c94ff13e4677955e01b",
+     "tick": 434
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 72891,
+     "tape": "f77be9084015aab6d5a52c78e1adba9199167ce55ad94ca429cc4ef3db4314c755b676a6a16b56622e799b6ed76258d701e4948f70703c94ff13e4677955e01b",
+     "tick": 435
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 74773,
+     "tape": "f7d9e90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3db2714c755b676a6a16b56092e799b6ed78d58d764e4948f70064494ff13e467797ee01b",
+     "tick": 445
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 75628,
+     "tape": "f77be9084015aab6d5a52c78e1adba9199167ce55ad94cc829cc4ef3db4314c755b676a6a16b568b2e799b6ed76258d701e4948f70703c94ff13e4677955e01b",
+     "tick": 454
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 76939,
+     "tape": "b37be90840157eb6d5a52c78e1adba9199167ce55ad94ca429cc4ef3db43c2c755b676a6a16b56932e799b6ed76258d701e4948f70703c94ff13e4677955e01b",
+     "tick": 458
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 77281,
+     "tape": "01c3e9084015bcb6d50de179831b1de1fcdb33e57d874c1229bec6f3db67064ee5cb5ea65390a7ddc501c3e9084015bcb6d50de179831b1de1fcdb33e57d874c",
+     "tick": 459
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 76319,
+     "tape": "f7d9e90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3982714c755b676a6a16b56c92e799b6ed78d58d764e4948f70064494ff13e467797ee01b",
+     "tick": 463
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 77573,
+     "tape": "f77be90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3db272bc755de76a6a16b561c2e799b6ed78d58d764e4948f70064094ff13e467797ee01b",
+     "tick": 464
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 78442,
+     "tape": "f77be90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3db272bc7e2de76a6a16b56ec2e799b6ed78d58d764e4948f70064094ff13e467797ee01b",
+     "tick": 469
+    },
+    {
+     "alive_descendants_end": 0,
+     "root": 79424,
+     "tape": "f77be90840155a5cd5a5c578e1ad410299167ce55ad94c0129cca9f3db272bc755de76a6a16b56322e799b6ed78d58d764e4948f70064094ff13e467797ee01b",
+     "tick": 473
+    }
+   ],
+   "run": "r000625",
+   "self_rep": 80549,
+   "self_rep_into_empty": 128,
+   "self_rep_postonly": 80550,
+   "self_rep_tail": 2935,
+   "sustained_lineage": true,
+   "top_tape": "f78fca0840155ab6c416e103db86af91fc5f3499d6c1909229cc1d96f87d35c787ee0994449956af4bbcdb85be62c40b64f650c67010320ae38098f079e64a7d",
+   "tracer_diverged": [],
+   "vec": {
+    "env_dynamics": "DRIFT",
+    "init": "RANDOM",
+    "layout": "SEPARATED",
+    "mutation": "OPCODE",
+    "mutation_rate": "LOW",
+    "pressure": "IMPLICIT",
+    "read_gate": "ABR",
+    "recombination": "NONE",
+    "representation": "VM_COPY",
+    "reproduction": "ENDOGENOUS_COPY",
+    "scoring": "NEUTRAL",
+    "spatial": "NICHES_HIGH_MIG",
+    "task": "ECHO",
+    "world": "NICHES"
+   }
+  }
+ ],
+ "tag": "smoke2"
+}

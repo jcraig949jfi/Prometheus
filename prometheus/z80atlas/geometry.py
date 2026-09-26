@@ -97,3 +97,56 @@ def damage_cliff(tape: bytes, cfg: Config, task: Task, seed: int, trials: int = 
             rep += e["replicates"]; solve += e["score"] >= 0.999
         out["k%d" % k] = {"replicates": round(rep / trials, 3), "solves": round(solve / trials, 3)}
     return {"base_replicates": base["replicates"], "base_solves": base["score"] >= 0.999, "cliff": out}
+
+
+# ---- paired geometry (added 2026-09-23, forensics C6/M9) -----------------------------------------------------------------
+# scan() above scores the base on 3 fresh inputs and every mutant on 3 OTHER fresh inputs: an identical 'mutant' of an
+# input-dependent partial solver is scored 'better' up to 90% of the time, and the campaign's beneficial-density gain
+# was that noise (receipts/GEOM_AUDIT_*.json). scan_paired() scores the base and every mutant on ONE fixed input panel
+# (common random numbers), over a fixed mutant set (every position x DELTAS), on the task it is given (the caller
+# passes the CONFIGURED task, never an easier niche task), and reports the identity-mutant false-beneficial rate as
+# its own self-check (0 by construction; a non-zero value means the evaluation is not a function of the tape).
+DELTAS = (1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 128, 144, 170, 200, 233, 255)
+
+
+def _panel_score(t: bytes, cfg: Config, task: Task, panel) -> float:
+    L = cfg.L; sc = "ATOMIC" if cfg.scoring == "NEUTRAL" else cfg.scoring
+    tot = 0.0
+    for inputs in panel:
+        mem = bytearray(256); mem[:L] = t
+        for k, v in enumerate(inputs):
+            mem[vm.IN_BASE + k] = v
+        if cfg.layout == "SEPARATED":
+            tr = vm.execute(mem, L, 0, cfg.budget // 2, inputs, region=(0, L // 2), allow_copyall=cfg.allow_copyall)
+            tr2 = vm.execute(mem, L, L // 2, cfg.budget // 2, inputs, region=(L // 2, L), allow_copyall=cfg.allow_copyall)
+            outs = tr.outputs + tr2.outputs
+            fi = tr.first_in_step if tr.first_in_step is not None else tr2.first_in_step
+            fo = tr.first_out_step if tr.first_out_step is not None else tr2.first_out_step
+        else:
+            tr = vm.execute(mem, L, 0, cfg.budget, inputs, allow_copyall=cfg.allow_copyall)
+            outs, fi, fo = tr.outputs, tr.first_in_step, tr.first_out_step
+        tot += task_score(task, outs, task.expected(inputs), sc, cfg.read_gate, fo, fi)
+    return tot / len(panel)
+
+
+def scan_paired(tape: bytes, cfg: Config, task: Task, seed: int, n_panel: int = 8, deltas=DELTAS) -> Dict:
+    L = cfg.L; tape = _pad(tape, L)
+    rng = random.Random(seed)
+    panel = [task.inputs(rng) for _ in range(n_panel)]
+    b = _panel_score(tape, cfg, task, panel)
+    null_better = int(_panel_score(tape, cfg, task, panel) > b + 1e-9)
+    better = same = worse = 0
+    for p in range(L):
+        for d in deltas:
+            t = bytearray(tape); t[p] = (t[p] + d) & 0xFF
+            s = _panel_score(bytes(t), cfg, task, panel)
+            if s > b + 1e-9:
+                better += 1
+            elif abs(s - b) < 1e-9:
+                same += 1
+            else:
+                worse += 1
+    n = L * len(deltas)
+    return {"n": n, "panel": n_panel, "task": task.to_dict(), "base_score": round(b, 4),
+            "beneficial_density": round(better / n, 4), "neutral_fraction": round(same / n, 4), "deleterious_fraction": round(worse / n, 4),
+            "null_false_beneficial": float(null_better)}
