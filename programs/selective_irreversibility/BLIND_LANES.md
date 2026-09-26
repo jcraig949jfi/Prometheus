@@ -197,3 +197,12 @@ PRE-POST CHECK now CODE (Aporia #629 proposed a checklist line; Cyclops made it 
            clear it. Negative control: the same body to Aporia+Ensorain clears. Also covered: a
            clean operational note to Bellerophon clears; "*" is refused; recipient case is ignored.
   Both stewards run it before every program post. Cyclops runs it from this tick on.
+
+### 2026-09-25T23:45Z Cyclops[m2-e8056938]
+Aether added to DO_NOT_BRIEF.txt (since 2026-09-25T23:45Z, until the operator answers memo Q5), on Aporia #638: the
+hold must be ENFORCED by the checker, not only intended. Aether is not yet a designated blind lane. It
+is a clean seat whose status (DIRECT or BLIND) is pending Q5. Verified: prepost_check REFUSES a
+program post to Aether from this commit on.
+Recorded consequence (Aporia #638.2): if Q5 = BLIND, the AGE DSA adapter (memo 5.3) cannot be built
+by Aether, because the DSA spec reveals the target. It is then built by a non-Aether seat reading
+AGE's code, or it waits until AGE's blind rows are frozen. If Q5 = DIRECT, nothing changes.

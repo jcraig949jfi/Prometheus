@@ -68,9 +68,9 @@ def _field(gen, dims, rank, rng):
     return _std(np.real(base_field(gen, list(dims), rank, rng)))
 
 
-def _obs(x, A, rng):
+def _obs(x, A, rng, noise=NOISE):
     s = x[tuple(A.T)]
-    return s + NOISE * rng.normal(size=len(A)), s
+    return s + noise * rng.normal(size=len(A)), s
 
 
 def _unseen(dims, A, rng, n=512):
@@ -86,20 +86,20 @@ def _seen_cells(A, rng, n=512):
     return u[np.sort(rng.choice(len(u), size=min(n, len(u)), replace=False))]
 
 
-def make_world(family, level, seed):
+def make_world(family, level, seed, life_mult=1.0, noise=NOISE, nuis_p=1.0):
     """One world. Returns dict: family, level, gen, dims, train=[(A, y, signal) segments in order],
     tests={name: (A, truth)}, coverage, n_unseen (the eligible count for the R2 headline)."""
     assert seed in DEV_SEEDS or seed >= 10 ** 9, "LM01: dev seeds 9.1M-9.9M; campaign seeds come only from the sealed procedure"
     L = LEVELS[level]
-    dims, n = tuple(L["dims"]), L["n_obs"]
+    dims, n = tuple(L["dims"]), int(round(L["n_obs"] * life_mult))
     rw, rx, rt = _rng(seed, f"{family}:world"), _rng(seed, f"{family}:walk"), _rng(seed, f"{family}:test")
     gen = "random" if family == "F1_episodic" else LATENT_GENS[int(rw.integers(len(LATENT_GENS)))]
     rank = int(rw.integers(1, 4))
-    out = dict(family=family, level=level, seed=int(seed), gen=gen, rank=rank, dims=list(dims), tests={})
+    out = dict(family=family, level=level, seed=int(seed), life_mult=life_mult, noise=noise, gen=gen, rank=rank, dims=list(dims), tests={})
     if family in ("F1_episodic", "F2_latent"):
         x = _field(gen, dims, rank, rw)
         A = walk(dims, n, rx, p_rev=P_REV if family == "F1_episodic" else 0.0)
-        y, s = _obs(x, A, rx)
+        y, s = _obs(x, A, rx, noise)
         out["train"] = [(A, y, s)]
         U, nu, cov = _unseen(dims, A, rt)
         H = _seen_cells(A, rt)
@@ -109,7 +109,7 @@ def make_world(family, level, seed):
         for k in range(K_EPIS):
             x = _field(gen, dims, rank, rw)
             A = walk(dims, m, rx)
-            y, s = _obs(x, A, rx)
+            y, s = _obs(x, A, rx, noise)
             segs.append((A, y, s))
         out["train"] = segs
         U, nu, cov = _unseen(dims, segs[-1][0], rt)
@@ -122,8 +122,8 @@ def make_world(family, level, seed):
         nb = max(20, int(B_FRAC * n))
         Aa = walk(dims, n - nb, rx)
         Ab = walk(dims, nb, rx)
-        ya, sa = _obs(xa, Aa, rx)
-        yb, sb = _obs(xb, Ab, rx)
+        ya, sa = _obs(xa, Aa, rx, noise)
+        yb, sb = _obs(xb, Ab, rx, noise)
         out["train"] = [(Aa, ya, sa), (Ab, yb, sb)]
         U, nu, cov = _unseen(dims, Ab, rt)
         out["tests"] = dict(fresh_field=(U, xb[tuple(U.T)]))
@@ -132,9 +132,12 @@ def make_world(family, level, seed):
     elif family == "F5_nuisance":
         x = _field(gen, dims, rank, rw)
         A = walk(dims, n, rx)
-        y, s = _obs(x, A, rx)
+        y, s = _obs(x, A, rx, noise)
         q = np.quantile(y, np.linspace(0, 1, K_NUIS + 1)[1:-1])
-        An = np.hstack([A, np.searchsorted(q, y)[:, None]])     # predictive in training only
+        nz = np.searchsorted(q, y)
+        flip = rx.random(len(y)) >= nuis_p                         # nuis_p < 1: the nuisance is only partly reliable
+        nz[flip] = rx.integers(0, K_NUIS, int(flip.sum()))
+        An = np.hstack([A, nz[:, None]])     # predictive in training only
         out["train"] = [(An, y, s)]
         out["dims"] = list(dims) + [K_NUIS]
         U, nu, cov = _unseen(dims, A, rt)

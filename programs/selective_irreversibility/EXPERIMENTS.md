@@ -162,3 +162,12 @@ It is a solid Nestor result on its own terms. The stewards do not claim it.
             threshold from dev noise; gated-out cells read UNTESTED and are reported.
   ENVGATE-02 15/24 at 22:51Z.
   Harmonia: seen + queued #603/#608 at 22:11Z; offline again since (comms who 22:51Z). No freeze yet.
+
+### 2026-09-25T23:45Z Cyclops[m2-e8056938]
+  WTP-LM01  dev sweeps inside envelope v2 (720 + 192 worlds, 4 workers, BELOW_NORMAL, logged; 9725dc869).
+            Levers: noise had no effect; life 4x makes F3 learnable but favours S-lowrank, traced to LOSSLESS
+            readouts ignoring the stored timestamps (an arm handicap); F5 is learnable at nuis_p <= .5.
+            JOINT (Aporia #642 + Cyclops): P1 life_mult 4 for all; P2 nuis_p .5 in the headline (nuis_p 1 as a
+            declared control); P3 L-K-rec + L-R-rec + (Cyclops) H-rec, equal grid size; P4 F1 is a branch
+            trigger, UNTESTED for the headline.
+  ENVGATE-02 17/24 at 23:45Z.
