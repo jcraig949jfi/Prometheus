@@ -1,4 +1,6 @@
-"""WTP-LM01 INTERVENTION arm (secondary; the REQUIREMENT falsifier; #619, #625, #626; checklist F1).
+"""STATUS: NOT USED in WTP-LM01 (D11; proposed deferral #728, pending concurrence). Kept to preserve the analysis.
+
+WTP-LM01 INTERVENTION arm (secondary; the REQUIREMENT falsifier; #619, #625, #626; checklist F1).
 
 At t* = half of the admitted stream (declared), the frozen SELECTIVE arm is cloned:
   KEEP   continues learning on the identical remaining stream (the collider guarantees identity)

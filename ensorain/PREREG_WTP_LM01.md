@@ -133,8 +133,12 @@ TESTABLE per stratum = ELIGIBLE (derived min count, E4) AND LEARNABLE (gate X, E
   - "No collapse" reads UNRESOLVED unless the positive-control HYBRID collapses under the same ablation.
   - [BUILD]
 6.5 INTERVENTION (F1; secondary): the clone/swap design of #625. DEFECT D11: with an IM-rate RandomMerge swap the arm is
-    decided by construction on never-seen cells (the matched merge is a lookup table). A replacement design is pending
-    a ruling (#727).
+    decided by construction on never-seen cells (the matched merge is a lookup table). PROPOSED (Aporia #728, Ensorain
+    concurs; binding on Cyclops/operator concurrence): DEFER. Option (i), a retrained-subsample swap, would measure
+    DATA value, not REQUIREMENT, since both arms stay selective. Limitation, verbatim in advance: "REQUIREMENT is
+    untested in WTP-LM01. The only identified REQUIREMENT test in the program is PTE's SI01-REQ (ANTI-MERGE: restore a
+    specimen's OWN discarded distinctions against a size-matched sham), where removing selectivity is on-manifold."
+    intervention.py and its fixtures stay in the repo, flagged NOT USED.
   - Caveat, verbatim: "the selective state was needed for the rest of THIS life", not "selectivity in general".
   - [BUILD]
 6.6 AGGREGATION AND NULL:
@@ -231,7 +235,12 @@ Rules: ensorain/lm01/margins_reduce.py (committed before the sweep rows are read
 - The margin is replicate-based (a named deviation from R2a; s6).
 - F-C scope: exact-record retention with a fixed factor model, not selective contraction as a whole.
 - L1's headline rests only on the families that are TESTABLE there [MARGINS]. L1-F2 is EMPTY.
-- The intervention arm shows necessity for the rest of THIS life only.
+- F-B STRICT POWER: the strict countermodel needs L-K (an unlearned min-Hamming kernel) within MARGIN of the full end.
+  On dev smoke worlds L-K scores ~0 AC on never-seen cells in latent families, because an unlearned readout cannot use
+  low-rank structure. F-B strict therefore has near-zero power where only a learned readout generalizes. An UNFIRED F-B
+  must NOT be read as support for the law. The informative lossless reading there is LOSSLESS_TRANSIENT_CONTRACTION
+  (L-R).
+- REQUIREMENT is untested (the intervention arm is deferred, D11; #728).
 
 ## 12. Dev design findings -- kept OUT of results (H4)
 
