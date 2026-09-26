@@ -58,7 +58,10 @@ def add_events(g: Graph, events: Iterable[dict], reg: dict, prefix: str = "ev", 
         nbr_glin = None
         if ev["copied_nbr"] > 0 or ev["exec_counts"].get("nbr", 0) > 0:
             others = [c for c in ev["contributors"] if c != ev["executor_glin"]]
-            nbr_glin = ev["template_glin"] if ev["template"] == "neighbour" and ev["template_glin"] is not None else (others[0] if len(others) == 1 else None)
+            if ev["template"] == "neighbour" and ev["template_glin"] is not None: nbr_glin = ev["template_glin"]
+            elif len(others) == 1: nbr_glin = others[0]
+            elif not others and ev["executor_glin"] in ev["contributors"]: nbr_glin = ev["executor_glin"]   # occupant shares the executor's glin
+            else: nbr_glin = None                                                                               # (defect D1, fixed 2026-09-26)
         nbr_mat = None
         if nbr_glin is not None:
             nbr_mat = _org_material(g, None, nbr_glin, reg, "occupant@%s" % t); g.node("occ:%s" % t, "ENTITY", cell=ev["child_cell"]); g.edge("occ:%s" % t, "owns", nbr_mat)

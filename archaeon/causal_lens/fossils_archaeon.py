@@ -25,7 +25,7 @@ from archaeon.causal_lens.adapters import archaeon as AD
 from archaeon.causal_lens.schema import Graph, dump, spontaneous
 
 REPO = Path(__file__).resolve().parents[2]
-OUT = REPO / "archaeon/causal_lens/results/archaeon"
+OUT = REPO / "archaeon/causal_lens/out/archaeon"
 EVID = Path(r"C:\Prometheus-data\evidence\portability01_2026-09-26\archaeon")
 REPL = T.pad(T.replicator(True), 32)
 RESIDENT15 = bytes.fromhex("c180094094938d528ef73c4ab400de8e7eb7a99cab37f38650832a8d607194a5")
