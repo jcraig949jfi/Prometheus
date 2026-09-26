@@ -17,7 +17,7 @@ main fast-forwarded to 4d4141285. Stale delegations #285/#448/#471/#474 marked s
 
 | experiment | lane | what |
 |---|---|---|
-| X-DD-STATELESS | EXPLORE | fresh registers before every execution, DENSE random pops, 96 runs vs DENSE (same seeds); schtask NestorSL |
+| C-STATELESS | CONFIRM | frozen: establishment STATELESS vs DENSE, 24 fresh seeds/cell/arm; schtask NestorCSL |
 | (done) | CONFIRM | **C-DENSE-COPY CONFIRMED** 12:48: donor acquisition 1/64 -> 39/64 with a 1-byte block-copy encoding |
 
 ## WINDOW CLOSE (2026-09-26)
