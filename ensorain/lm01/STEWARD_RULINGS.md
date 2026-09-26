@@ -136,3 +136,19 @@ b. Compute the ATTAINABLE RANGE first: the fraction covered per level, before fr
   arm fails to beat IM-rate, INDISCRIMINATE reads UNRESOLVED by rule, before any campaign row. visits/cell is reported
   beside every verdict.
 - METHOD RULE (adopted): every steward-added readout passes a known-answer fixture before it counts.
+
+## Generator strata + arm formation (#654 finding; #655/#657 Aporia, #656 Cyclops: JOINT, 2026-09-26)
+1. POWER PER STRATUM (family x level x generator): the derived min eligible count (D3) and the positive control (D5) are
+   computed per stratum. A stratum without power reads UNRESOLVED by rule, before campaign data.
+2. LATENT_GENS is FROZEN as it stands: ("lowrank", "cp", "tt", "pairwise", "spectral", "sum").
+3. Label: a verdict holding in some strata only reads GENERATOR_DEPENDENT (not CROSSOVER, which is horizon/complexity),
+   with the per-stratum table.
+4. LIMITATION, in advance: every LM01 verdict is conditional on the declared generator families. "SELECTIVE wins where its
+   inductive bias matches the generator" is a candidate reading, stated now.
+- At least 16 dev seeds per cell for margins.
+- ARM FORMATION, symmetric across families:
+  - Either one declared arm, or a selection procedure run on DEV seeds only and frozen per stratum before campaign data,
+    with an EQUAL selection budget for SELECTIVE (WTP substrates), LOSSLESS (L-K, L-R, -rec forms) and HYBRID (its
+    variants).
+  - Never a per-world best-of on campaign rows.
+  - The per-stratum choice is reported for every family.

@@ -29,7 +29,7 @@ import numpy as np
 
 from ensorain.wtp.world import base_field, _std
 
-LATENT_GENS = ("lowrank", "cp", "tt", "pairwise", "spectral", "sum")
+LATENT_GENS = ("lowrank", "cp", "tt", "pairwise", "spectral", "sum")   # FROZEN (#655/#656 JOINT, 2026-09-26)
 FAMILIES = ("F1_episodic", "F2_latent", "F3_switch", "F4_transfer", "F5_nuisance")
 LEVELS = {                      # complexity/horizon levels (directive s6); coverage < 1 is checked by coverage_table()
     "L1": dict(dims=(8, 8, 8), n_obs=700),
@@ -88,14 +88,15 @@ def _seen_cells(A, rng, n=512):
     return u[np.sort(rng.choice(len(u), size=min(n, len(u)), replace=False))]
 
 
-def make_world(family, level, seed, life_mult=LIFE_MULT, noise=NOISE, nuis_p=NUIS_P):
+def make_world(family, level, seed, life_mult=LIFE_MULT, noise=NOISE, nuis_p=NUIS_P, gen=None):
     """One world. Returns dict: family, level, gen, dims, train=[(A, y, signal) segments in order],
     tests={name: (A, truth)}, coverage, n_unseen (the eligible count for the R2 headline)."""
     assert seed in DEV_SEEDS or seed >= 10 ** 9, "LM01: dev seeds 9.1M-9.9M; campaign seeds come only from the sealed procedure"
     L = LEVELS[level]
     dims, n = tuple(L["dims"]), int(round(L["n_obs"] * life_mult))
     rw, rx, rt = _rng(seed, f"{family}:world"), _rng(seed, f"{family}:walk"), _rng(seed, f"{family}:test")
-    gen = "random" if family == "F1_episodic" else LATENT_GENS[int(rw.integers(len(LATENT_GENS)))]
+    g_draw = "random" if family == "F1_episodic" else LATENT_GENS[int(rw.integers(len(LATENT_GENS)))]
+    gen = g_draw if gen is None else gen          # stratum override (#655): the stream draw is consumed either way
     rank = int(rw.integers(1, 4))
     out = dict(family=family, level=level, seed=int(seed), life_mult=life_mult, noise=noise, gen=gen, rank=rank, dims=list(dims), tests={})
     if family in ("F1_episodic", "F2_latent"):
