@@ -1,7 +1,7 @@
 # MULTI-DAY CAMPAIGN PREREGISTRATION -- Bellerophon, physics v3: acquisition, protection, repair
 
-Status: DRAFT (becomes FROZEN at the commit that fills the freeze record in s12; nothing above the amendments section
-may change after the first scientific run). Authority: operator rulings 2026-09-26
+Status: FROZEN at the commit that adds the s12 freeze record (code commit a3086cece). Nothing above the amendments
+section may change after the first scientific run. Authority: operator rulings 2026-09-26
 (prompts/00_OPERATOR_RULINGS_verbatim.md), ruling 2: the coupling closeout issued READY_FOR_MULTIDAY, so the scoped
 campaign proceeds autonomously. Scope source: roles/Bellerophon/coupling_2026-09-24/NEXT_MULTIDAY_CAMPAIGN.md.
 
@@ -114,5 +114,34 @@ None except VOID runs (listed). Extinct runs are data (acquired 0; robustness un
 
 ## 12. Freeze record
 
-TBD at freeze: plan sha256; sha256 of multiday_campaign.py, robustness.py, coupling.py, world.py, vm.py, tasks.py,
-adjudication.py, md_analysis.py, md_inputs.json; pilot receipts; pinned code copy path.
+Plan: 4,160 runs, sha256 1ab324d59bc702688716514d95de46b9ea944a59f6612f5d5318b63e2c7f4259 (MD.plan(md_inputs.json)).
+Code commit a3086cece (branch bellerophon/multiday-campaign-2026-09-26). File sha256 = git blob bytes (LF) at that
+commit:
+  prometheus/z80atlas/multiday_campaign.py                   4792a2cb2fa5b77bb4b84a0b6ba91f095adb5f53016363abad3c6d511d72b731
+  prometheus/z80atlas/multiday_supervisor.py                 895c243ad728041e74fbed8cf5582491d1b9ff67392a82db9a63232d7ace4fc7
+  prometheus/z80atlas/robustness.py                          840904e730b7c0f3ae200f5f87a04a571744177a9f2f5a105f462eadf06b5796
+  prometheus/z80atlas/coupling.py                            1c3e1efd239e7d0158c25711cf3b2b095c3adc1f90b2201669eccdef1154b948
+  prometheus/z80atlas/world.py                               e8dacd5c84e07793a6e50a354a03e3550a8834ad9dd3fc41524530b0a04eb2c1
+  prometheus/z80atlas/vm.py                                  f76ae4e16cb904dd2daa62a98479506a179e7e0ea18277f26a0383e3b53dd096
+  prometheus/z80atlas/tasks.py                               fda62560861001aaa7891325c927e9a4912946a8b05d3dd09ee4c7ce6b5659c7
+  prometheus/z80atlas/adjudication.py                        8682629b64626bfc791aa76ba3ac9301aeb493ca36e3a5b6153f2a1cccfb4aff
+  prometheus/z80atlas/grammar.py                             3767d73d15d8dd1c91fa6057bb77685ab964a0b108b468a5f401b9e2058bfefc
+  prometheus/z80atlas/coupling_campaign.py                   2a8978f4fc855f85824ea3e4f692adc32431874ac6ad7fb68b6a444b09cdc0cc
+  roles/Bellerophon/multiday_2026-09-26/tools/md_analysis.py 73b1e918bde45f9b1295eeb416206267523fa462c5fa0c5f6b6ca8fa78f27df6
+  roles/Bellerophon/multiday_2026-09-26/receipts/md_inputs.json dbeb49790e3d89f14bd7dadc49c0eba268850194503fd7c465ac333e61291b11
+world.py and adjudication.py are byte-identical to the coupling campaign freeze (c9bed96de).
+Tests at freeze: 75/75 z80atlas. Pre-freeze pilots (all OFF-PLAN seeds shifted -4.3e12, engineering only, no outcome
+inspected beyond extinction/cost): smoke 30 runs x 300 ticks (0 voids, replay 30/30); 10k-tick 15 runs (max 610 s,
+490 MB); 20k-tick 30 runs, K16 + K40 (0 voids, max 2,034 s, 1,016 MB per process, mean 279 s/run, min free RAM
+14.4 GB) -> receipts/PILOT10K_*, PILOT20K_*. Horizon 20,000, 12 workers and seeds doubled (160/120/160/120) were set
+from these costs so the ~27 h expected runtime uses the authorised multi-day window for power; 60 h active cap.
+Launch: pinned copy of this commit's tree at C:/Users/James/md_campaign_2026-09-26/code (git archive), inputs pinned
+at C:/Users/James/md_campaign_2026-09-26/md_inputs.json;
+  python -m prometheus.z80atlas.multiday_supervisor --workdir C:/Users/James/md_campaign_2026-09-26
+         --inputs C:/Users/James/md_campaign_2026-09-26/md_inputs.json --workers 12
+started detached (Start-Process, hidden), not from a Claude Code shell.
+Analysis (after stop): tools/md_analysis.py --workdir <that> --code <pinned code> --inputs <pinned inputs> --replay 0.03
+
+## AMENDMENTS
+
+(none)
