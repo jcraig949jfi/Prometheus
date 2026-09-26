@@ -303,3 +303,55 @@ dev run, relay waves needed about 48 ticks to die, while C1's
 environments use iti 2. drop_readout_tick_only (H-M3-0) could then remove
 a carried-over wave as well as this trial's cue, and an M2 "held bit"
 could partly be the previous trial's echo.
+
+## Amendment A2, 2026-09-26 03:3xZ (PRE-DATA; no C1b row exists; before the code freeze)
+
+Authority: Ananke #661 (observation), Aporia #662 (ruling), Cyclops #669
+(concurrence -> JOINT). A2.1 is added under the stewards' rule (a control
+added before any row, whose only effect is a more conservative label).
+A2.2 is a CLARIFICATION of the frozen s5 text (line 231, "constructed at
+the specimen's physics"), not a relaxation. Nothing above is changed.
+
+A2.1 INERT_BY_PHYSICS. Under dest_mode "all", engine._emit sends to the
+whole neighbour table and never reads w, and no instruction loads w
+(independently confirmed, #662). In such cells routing cannot carry
+anything, so R's routing clause reads INERT_BY_PHYSICS, with no
+_ROUTING_UNRESOLVED suffix. WORDING GUARD (binding on the report): in such
+a cell a label containing RULE_SWITCH means "SETRULE is required; routing
+could not carry anything". It must NOT be read or written as "the rule,
+rather than routing, was shown to carry it". The D-wave side table marks
+the C1 frozen_routing result of every dest_mode "all" cell as VACUOUS.
+Both M3 cells are dest_mode "all".
+
+A2.2 POSITIVE CONTROLS AT EACH SPECIMEN'S PHYSICS. Fixtures at fixture
+physics validate the instrument. They do NOT satisfy the eligibility
+clause. Before the code freeze, each positive-control plant is rerun at
+each specimen's physics and environment:
+  specimen physics = the specimen's levels for topology, n_sites,
+    radius, dest_mode, fanout, loss, loss_per_hop, lat_base, lat_hop,
+    lat_jitter, dup, noise, cap, collision, update_mode, update_p,
+    update_period, decay_shift, economy, mut_site;
+  plant-structural fields set to the plant's needs (these are genome
+    space, not communication physics): prog_len, state_dim,
+    payload_width, channels, rules, setrule, wimm, plastic_route,
+    adapt_shift.
+  Specimen env = the specimen's env (M2: HOLD gap 8; M3: MAJ, delta 4).
+  A plant written for another family runs on that family's env with the
+  specimen's timing dials (gap, delta, cue_len, iti).
+Absence clause -> the plant that must fire at that physics:
+  M2  B (reset_all_nonpacket intact) ........ F_latch (reset_S kills it)
+  M2  Z (ITI flush intact) .................. F_sham_positive (A1.1)
+  M3  T's "drop_window_c1 intact" ........... F_DA (C1 window leaves it;
+                                              readout-tick drop kills it)
+  M3  R's "freeze_routing intact" ........... INERT_BY_PHYSICS (A2.1)
+  M3  not-R ("freeze_rule did not drop") .... F_rule (freeze_rule drops
+                                              it). This row is ADDED here
+                                              under the same conservative
+                                              rule: a null freeze_rule
+                                              reading is an absence too.
+Every absence clause whose plant fails at the specimen's physics is
+NOT_ELIGIBLE, and each label that uses it carries _UNRESOLVED. A plant
+that cannot be built at all at a physics where the mechanism cannot exist
+is covered by A2.1 (INERT_BY_PHYSICS), not by _UNRESOLVED. The
+per-specimen eligibility table is committed with the code freeze, before
+any row.
