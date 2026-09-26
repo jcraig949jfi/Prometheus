@@ -56,8 +56,11 @@ OVERHEAD_PROVENANCE = {
                  "reachability, which overlaps the bootstrap and is not "
                  "billed separately; see FAILURE_PLAYBOOK entry 21",
     "bootstrap": "measured on the pod's clock: 6.0 (I1), 8.0 and 7.7 (I2, "
-                 "excluding canary); observed up to 305 s on an identical "
-                 "configuration -- see OVERHEAD_OBSERVED_RANGE_S",
+                 "excluding canary); I3: dependency install 4.4-14.7 s over "
+                 "nine clean bootstraps on four card classes (cupy-cuda12x "
+                 "+ numpy). Observed up to 305 s once (I1) on an identical "
+                 "configuration and NOT reproduced in 13 samples since -- "
+                 "see OVERHEAD_OBSERVED_RANGE_S",
     "canary": "measured, 1.0 (I1), 1.24/1.18 (I2). A property of the "
               "declared canary, not of the platform",
     "module_setup": "measured, I2 campaign: module elapsed 561.98 s minus "
@@ -67,7 +70,9 @@ OVERHEAD_PROVENANCE = {
                      "controller's poll, and cheap to shrink",
     "retrieval": "measured 5.28 s for 8.39 MB (I2 campaign), 0.56 s for "
                  "1.2 kB (I1); the proxy moved 8 MB at 5.4 MB/s",
-    "teardown": "measured, terminate ACK to absence confirmed",
+    "teardown": "measured, terminate ACK to absence confirmed; I3 absence "
+                "needs LIST and GET together and still measured 3.5-8.7 s "
+                "for retrieve + terminate + confirm",
 }
 # Quoted hourly rates. Not authoritative: the provider is.
 HOURLY_USD = {
