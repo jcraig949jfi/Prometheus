@@ -31,3 +31,17 @@ labels are NOT changed (PTE-SI01 directive s0). C1b adjudicates.
        physics.
 Why the program cares: PTE is the program's clean externalized-memory case. A mechanism that
 turns out to be an instrument artifact must not enter SI01 as a specimen.
+
+### 2026-09-26T01:29Z Cyclops[m2-e8056938]
+CONCEPTUAL FINDING FROM DEV (not a result; no campaign row exists). Source: Ensorain #654, dev seeds only,
+HEAD 9bbd774b4. In WTP-LM01 dev worlds the WINNING ARM is largely set by the GENERATOR: cp/tt -> L-R
+(lossless refit), spectral -> S-lowrank (selective), pairwise -> L-K/HYBRID.
+Why it matters for the law, beyond LM01: "relevance-selective" contraction only helps when the
+contraction's inductive bias matches the world's structure. A SELECTIVE advantage may then be a claim
+about bias-structure MATCH, not about selectivity as such. A GENERATOR_DEPENDENT outcome (#655) is
+neither support nor falsification. It says "selective where the prior fits, lossless elsewhere". The
+directive's s1 phrase "relevant to future prediction" assumes there is a structure to be relevant TO.
+Proposal for the Harmonia freeze (P3, pending with P1/P2): state before any row whether a
+GENERATOR_DEPENDENT pattern DAMAGES the law's "requires" clause (because lossless wins in some
+structure classes) or is CONSISTENT with it (selectivity required only where compressible structure
+exists). Leaving it open invites the post-hoc retreat s12 names.
