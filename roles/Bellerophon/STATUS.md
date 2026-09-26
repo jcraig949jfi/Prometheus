@@ -1,11 +1,16 @@
 # Bellerophon status
 
-Currency: 2026-09-25 ~19:50Z (coupling campaign CLOSED; final report delivered).
+Currency: 2026-09-26 ~14:20Z (operator rulings 2026-09-26 executed; multi-day campaign PREPARATION started).
 
-BOOT POINTER -- READ FIRST: roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md
-seat state: ACTIVE, nothing running from this seat. Worktree D:/Prometheus-worktrees/bellerophon-post-campaign-forensics
-  on branch bellerophon/coupling-campaign-2026-09-24 (pushed; NOT merged -- merge policy for this branch and
-  post-campaign-forensics-2026-09-23 is the operator's call, Q4 in RESUME_AFTER_RESET.md).
+BOOT POINTER -- READ FIRST: roles/Bellerophon/multiday_2026-09-26/prompts/00_OPERATOR_RULINGS_verbatim.md
+seat state: ACTIVE, autonomous (no further HITL for the defined transitions). Worktree
+  D:/Prometheus-worktrees/bellerophon-multiday on branch bellerophon/multiday-campaign-2026-09-26 (from main 874ea23a7).
+  Forensics + coupling branches MERGED to main (14a1ea268, cc63d7e8a). #550 closed (D is Nestor's).
+
+MULTI-DAY CAMPAIGN (scoped: acquisition ladder, protection, long repair) -- AUTHORIZED, PREPARATION, NOTHING LAUNCHED
+  Gate met: coupling closeout READY_FOR_MULTIDAY. Design: roles/Bellerophon/coupling_2026-09-24/NEXT_MULTIDAY_CAMPAIGN.md.
+  Order before launch: instrument repairs F6-F11 -> resumable snapshots -> prereg frozen -> off-plan pilot ->
+  dedicated-host declaration -> detached launch. Artifacts: roles/Bellerophon/multiday_2026-09-26/.
 
 COUPLING CAMPAIGN (physics v3) -- COMPLETE 2026-09-25T19:09:26Z; ANALYSED ~19:38Z
   Prereg frozen c9bed96de, Amendment 1 6607b3cb5 (operational). 11,657 runs (11,372 Phase 1 + 285 AUTO; EXT 0),
@@ -17,11 +22,9 @@ COUPLING CAMPAIGN (physics v3) -- COMPLETE 2026-09-25T19:09:26Z; ANALYSED ~19:38
   COUPLING_FAILURE_LEDGER.md (F1-F11), NEXT_MULTIDAY_CAMPAIGN.md (design only, nothing frozen or launched),
   receipts/COUPLING_RESULTS.json, receipts/OPS_ACCOUNTING.json. Runtime evidence (not committed):
   C:/Users/James/z80atlas_coupling_2026-09-24 (hashes in the report s6).
-  Exact resume point: nothing to resume. Next action = operator decision on NEXT_MULTIDAY_CAMPAIGN.md (prereg +
-  off-plan pilot first) and on the merge policy.
+  Exact resume point: nothing to resume. Closed and merged; see the multi-day block above.
 
-OPEN QUEUE ITEM: comms #550 (Cosmos, C3 holdout D: build + seal one independent world family per
-  roles/Cosmos/c3/D_CONTRACT.md) -- held for the operator's word; not started.
+#550 CLOSED 2026-09-26 (operator ruling: D reassigned to Nestor; ack #737).
 
 POST-CAMPAIGN FORENSICS + GROUNDING ROUND COMPLETE (2026-09-23, Bellerophon[m2-9e74888e]; branch
   bellerophon/post-campaign-forensics-2026-09-23; artifacts roles/Bellerophon/forensics_2026-09-23/):
