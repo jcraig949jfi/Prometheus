@@ -21,15 +21,17 @@ or evaluations for another seat. The platform must not impose one.
 # Observed on AETH-01/AETH-02 runs on this account, A40 SECURE.
 # Replace from measurement; do not tune to make a projection look good.
 OVERHEAD_S = {
-    # MEASURED by Iteration 1 through the platform's own launch path, on an
-    # RTX 4090, receipt hello-gpu-20260924T212427Z. The previous values were
-    # inferred from AETH-01/02 orchestrator timings and were 2.3x too high
-    # in total.
-    "accept": 1.8,        # create call -> id returned
-    "provision": 24.0,    # create accepted -> pod shell running (see below)
-    "bootstrap": 6.0,     # fetch, verify, unpack, dependency install
-    "canary": 1.0,        # the DECLARED canary; scales with what it does
-    "teardown": 2.2,      # terminate request -> absence confirmed
+    # MEASURED through the platform's own launch path: Iteration 1 (RTX 4090,
+    # hello-gpu-20260924T212427Z) and Iteration 2 (RTX A4000, receipts
+    # gpu-load-scout-20260926T065221Z and gpu-load-20260926T065409Z).
+    "accept": 1.5,         # create call -> id returned
+    "provision": 2.3,      # create accepted -> pod shell running (clock-synced)
+    "bootstrap": 8.0,      # fetch, verify, unpack, dependency install
+    "canary": 1.2,         # the DECLARED canary; scales with what it does
+    "module_setup": 1.5,   # module start -> its own work loop begins
+    "end_detection": 5.0,  # module end -> controller notices; ~ watch poll / 2
+    "retrieval": 5.3,      # artifacts back; SCALES WITH BYTES (8 MB here)
+    "teardown": 2.2,       # terminate request -> absence confirmed
 }
 # The spread that matters more than the median. Iteration 1 measured the
 # same bootstrap at 6 s and at over 300 s on consecutive flights with the
@@ -37,25 +39,36 @@ OVERHEAD_S = {
 # high-variance term and a point estimate of it is misleading. This is why
 # the controller waits on PROGRESS rather than on a deadline.
 OVERHEAD_OBSERVED_RANGE_S = {
-    "accept": (1.7, 2.9),
+    "accept": (1.1, 2.9),
+    "provision": (2.1, 22.1),
     "bootstrap": (6.0, 305.0),
+    "end_detection": (0.4, 8.8),
+    "retrieval": (0.6, 5.3),
     "teardown": (1.1, 4.1),
 }
 OVERHEAD_PROVENANCE = {
-    "accept": "measured, Iteration 1 create_call_s 1.745-2.947",
-    "provision": "UPPER BOUND. accepted_to_first_telemetry 31.4 s minus 7.0 s "
-                 "of pod-side bootstrap; up to 15 s of the remainder is the "
-                 "controller's own poll interval, so the true value is "
-                 "between about 9 s and 24 s and is not yet isolated",
-    "bootstrap": "measured on the pod's own clock, 6.0 s median; observed up "
-                 "to 305 s on an identical configuration -- see "
-                 "OVERHEAD_OBSERVED_RANGE_S",
-    "canary": "measured, Iteration 1 canary_s 1.0 for `import cupy`. AETH's "
-              "300-case GPU canary measured 10.9-12.9 s; this term is a "
-              "property of the declared canary, not of the platform",
-    "teardown": "measured, Iteration 1 terminate ACK to absence confirmed",
+    "accept": "measured, create_call_s 1.745/2.947 (I1), 1.208/1.115 (I2)",
+    "provision": "MEASURED with the pod clock synchronised (min-RTT offset "
+                 "against /_clock, +/-0.25 s): 2.14 s and 2.29 s (I2). "
+                 "Then 22.1 s (L4 scout) and 2.82 s (L4 campaign): it is a "
+                 "property of the HOST the pod lands on, not of the card. "
+                 "Iteration 1's '<= 24 s' bound was almost all PROXY "
+                 "reachability, which overlaps the bootstrap and is not "
+                 "billed separately; see FAILURE_PLAYBOOK entry 21",
+    "bootstrap": "measured on the pod's clock: 6.0 (I1), 8.0 and 7.7 (I2, "
+                 "excluding canary); observed up to 305 s on an identical "
+                 "configuration -- see OVERHEAD_OBSERVED_RANGE_S",
+    "canary": "measured, 1.0 (I1), 1.24/1.18 (I2). A property of the "
+              "declared canary, not of the platform",
+    "module_setup": "measured, I2 campaign: module elapsed 561.98 s minus "
+                    "its loop 560.67 s. A property of the module",
+    "end_detection": "measured 8.8 s at a 10 s watch poll and 0.39 s at a "
+                     "3 s poll (I2); expected ~poll/2. A property of the "
+                     "controller's poll, and cheap to shrink",
+    "retrieval": "measured 5.28 s for 8.39 MB (I2 campaign), 0.56 s for "
+                 "1.2 kB (I1); the proxy moved 8 MB at 5.4 MB/s",
+    "teardown": "measured, terminate ACK to absence confirmed",
 }
-
 # Quoted hourly rates. Not authoritative: the provider is.
 HOURLY_USD = {
     "NVIDIA A40": 0.49,

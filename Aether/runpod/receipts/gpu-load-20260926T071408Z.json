@@ -1,0 +1,261 @@
+{
+  "args": [],
+  "artifact_bytes_total": 8391344,
+  "artifact_transfer": {
+    "bytes": 8391344,
+    "bytes_per_s": 3547537.0,
+    "largest": {
+      "bytes": 8388608,
+      "fetch_s": 1.5423,
+      "path": "state.bin",
+      "sha256": "952ede08fd2c8e1d687afb6a159d9c8f07968306c6709da2866b66164760b842"
+    },
+    "largest_bytes_per_s": 5439024.8,
+    "seconds": 2.3654
+  },
+  "artifacts": [
+    {
+      "bytes": 563,
+      "fetch_s": 0.4138,
+      "path": "result.json",
+      "sha256": "538cee6830b158d160cf09e8a7ec7fe82fcd9e0234343693c10dc35b95e4afc7"
+    },
+    {
+      "bytes": 8388608,
+      "fetch_s": 1.5423,
+      "path": "state.bin",
+      "sha256": "952ede08fd2c8e1d687afb6a159d9c8f07968306c6709da2866b66164760b842"
+    },
+    {
+      "bytes": 2173,
+      "fetch_s": 0.4093,
+      "path": "telemetry.jsonl",
+      "sha256": "6d45e0206103e3d104027df2046a33e9f9ee3796f8d3763a0e05e5290af580ab"
+    }
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab",
+  "calibrated_estimate": {
+    "compute_seconds_total": 307.76599999999996,
+    "expected_usd": 0.043165956111111105,
+    "margin": 0.2,
+    "overhead_seconds_per_pod": 53.623400000000004,
+    "per_pod_expected_seconds": 361.38939999999997,
+    "per_pod_seconds": 481.38939999999997,
+    "pods": 1,
+    "requested_units": 3000.0,
+    "teardown_reserve_s": 120.0,
+    "teardown_reserve_usd": 0.014333333333333333,
+    "usd_per_unit": 1.2253646296296296e-05,
+    "usd_with_margin": 0.06613248066666666
+  },
+  "campaign_plan": {
+    "calibration_gpu": "NVIDIA L4",
+    "calibration_source": "scout receipt gpu-load-scout-20260926T071229Z",
+    "ceiling_usd": 0.15,
+    "decision": "PROCEED"
+  },
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.3279,
+      "rtt_min_s": 0.3384,
+      "samples": 5,
+      "uncertainty_s": 0.1692
+    },
+    "start": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.3366,
+      "rtt_min_s": 0.3703,
+      "samples": 5,
+      "uncertainty_s": 0.1851
+    }
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 341.8,
+    "hourly_usd": 0.43,
+    "usd_estimated": 0.04083,
+    "work_units": {
+      "actual": 3000.0,
+      "name": "matmuls",
+      "usd_per_1e9_units": 13609.339847829606,
+      "usd_per_unit": 1.3609339847829606e-05
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA L4",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-26T07:14:08Z",
+  "ended_utc": "2026-09-26T07:19:50Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/gpu-load-20260926T071408Z",
+  "evidence_kept": [
+    "platform.jsonl",
+    "result.json",
+    "telemetry.jsonl"
+  ],
+  "git": {
+    "available": true,
+    "commit": "c065bf1d6bb0d22522d7cc74fde275382a73b385",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA L4",
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 900,
+    "telemetry_interval_s": 10
+  },
+  "last_stage": "module_end",
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 1.182,
+      "accepted_to_first_contact_s": 24.359,
+      "accepted_to_first_telemetry_s": 30.543,
+      "artifact_transfer_s": 4.323,
+      "create_call_s": 1.117,
+      "teardown_total_s": 7.474,
+      "terminate_ack_s": 0.92,
+      "total_wall_s": 342.998
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 3.158
+    },
+    "module_reported_elapsed_s": 324.731,
+    "pod_clock": {
+      "bootstrap_total_s": 6.306,
+      "canary_s": 0.791,
+      "dependency_install_s": 5.19,
+      "execution_s": 324.885,
+      "fetch_s": 0.312,
+      "unpack_s": 0.004,
+      "verify_s": 0.003
+    },
+    "synchronised": {
+      "accepted_to_module_start_s": 9.127,
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.3366,
+      "provision_s": 2.821,
+      "uncertainty_s": 0.1851
+    }
+  },
+  "module": "gpu-load@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 900.0,
+    "gpu_class": "NVIDIA L4",
+    "gpu_count": 1,
+    "hourly_usd": 0.43,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0291,
+    "overhead_s": 27.0,
+    "total_s": 927.0,
+    "usd_compute": 0.1075,
+    "usd_overhead": 0.0032,
+    "usd_per_pod_minute": 0.007167,
+    "usd_total": 0.1107,
+    "work_units": {
+      "estimate": 3000.0,
+      "name": "matmuls",
+      "units_per_usd": 27094.152178821405,
+      "usd_per_1e9_units": 36908.333333333336,
+      "usd_per_unit": 3.6908333333333334e-05
+    }
+  },
+  "platform_summary": {
+    "artifact_dir_b_peak": 8442253.0,
+    "disk_free_b_min": 21168443392.0,
+    "gpu_errors": [],
+    "gpu_mem_total_mib": 23034.0,
+    "gpu_mem_used_mib_peak": 7630.0,
+    "gpu_names": [
+      "NVIDIA L4"
+    ],
+    "gpu_power_w_mean": 70.0745,
+    "gpu_power_w_peak": 77.39,
+    "gpu_temp_c_peak": 71.0,
+    "gpu_util_pct_mean": 96.4286,
+    "gpu_util_pct_peak": 100.0,
+    "host_load1_peak": 10.6064453125,
+    "host_mem_used_b_peak": 69215100928.0,
+    "sample_cost_s_mean": 0.0286,
+    "sample_cost_s_peak": 0.1185,
+    "samples": 112,
+    "span_s": 333.009
+  },
+  "pod_stages": {
+    "boot": 1790406852.997471,
+    "canary": 1790406859.2976856,
+    "fetched": 1790406853.3094132,
+    "installed": 1790406858.506325,
+    "module_end": 1790407184.189306,
+    "module_rc": 0.0,
+    "module_start": 1790406859.3038297,
+    "server_up": 1790406853.0001652,
+    "unpacked": 1790406853.3165379,
+    "verified": 1790406853.3127105
+  },
+  "pods": [
+    {
+      "created_utc": "2026-09-26T07:19:51Z",
+      "creation_outcome": "confirmed",
+      "id": "qrfafv10ixqhw5",
+      "observed_absent": true,
+      "terminate_acknowledged": true
+    }
+  ],
+  "preregistered_estimate": {
+    "expected_usd": 0.02585
+  },
+  "ready_poll_s": 3.0,
+  "result": "OK",
+  "run_id": "gpu-load-20260926T071408Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "fd5e3b1c03f785362a5217c61d309e7b32b5193fb274ce81f77ef23ba4f0d521",
+  "started_utc": "2026-09-26T07:14:08Z",
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 324.731,
+    "errors": 0,
+    "first_utc": "2026-09-26T07:14:19Z",
+    "kinds": {
+      "end": 1,
+      "progress": 12,
+      "start": 1
+    },
+    "last_utc": "2026-09-26T07:19:44Z",
+    "max_gap_s": 27.241,
+    "module_status": "ok",
+    "records": 14,
+    "units_final": 3000,
+    "units_per_s": 9.2384,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

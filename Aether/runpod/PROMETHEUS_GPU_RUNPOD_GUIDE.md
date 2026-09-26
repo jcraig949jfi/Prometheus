@@ -155,20 +155,42 @@ before you spend anything.
 
 ### Launch
 
-**Not yet available as `prometheus-gpu run`.** The controller in
-`prometheus_gpu/launch.py` is complete and qualified against the fake
-provider, including the cases that cost money: a lost create response, an
-unreadable inventory, a pod hidden from the listing, a terminate that
-will not acknowledge, a budget ceiling, and a controller that raises
-mid-run. What it has **not** done is fly on hardware, and until it has,
-exposing `run` would invite spending through an unproven path.
+```bash
+cd Aether/runpod
+python flight.py path/to/your_module --build      # write the bundle to examples/dist/
+git add <the bundle> && git commit && git push    # the pod fetches it from the pinned commit
+python flight.py path/to/your_module --dry        # what would happen; no pod
+python flight.py path/to/your_module --rehearse   # the whole path against the fake
+python -u flight.py path/to/your_module --go --budget 0.25 > flight.log 2>&1
+```
 
-Until it lands, a real run goes through the qualified orchestrators in
-`aeth01_firstlight/` or `aeth02_circuitry/`, or through Aether.
+`flight.py` drives the qualified controller (`prometheus_gpu/launch.py`),
+which has flown on hardware: Iteration 1 (hello_gpu, RTX 4090) and
+Iteration 2 (gpu_load scout and a 10-minute campaign, RTX A4000). It
+refuses to create a pod if any pod is already active or the inventory
+cannot be read, and refuses to launch a bundle the pod could not fetch.
+Every run writes `receipts/<run_id>.json` and `receipts/<run_id>/` with the
+platform samples, your telemetry and every artifact up to 1 MB.
 
-What exists today: `estimate`, `dry-run`, `rehearse`, `bundle`,
-`inventory`, `cleanup`, `validate-telemetry`, `validate-receipt`. This
-section is updated when `run` is qualified.
+`--budget` is a guardrail, not a plan: set it several times above the
+projection. Use `python -u` and redirect to a file; piping to `tail`
+buffers the whole run.
+
+### Scout, then campaign
+
+```bash
+python flight.py mod --scout 0.05 --build          # same bundle bytes; commit it
+python -u flight.py mod --scout 0.05 --go --budget 0.15 > scout.log 2>&1
+python flight.py mod --pin-gpu "<the card the scout got>"     --calibrate receipts/<scout run>.json --ceiling 0.50     --preregistered <your estimate before the scout> --out plan.json
+python -u flight.py mod --pin-gpu "<same card>" --go --budget 0.50 > run.log 2>&1
+```
+
+The scout is the campaign with `work_units.estimate` scaled down; your
+module receives the count as `PROMETHEUS_WORK_UNITS` and everything else
+identical. The calibration is pinned to the card the scout actually got,
+and `--calibrate` refuses to price a different one. A scout of under a
+minute measures a COLD card: on an A4000 at its power cap, throughput
+settled ~2% lower within three minutes.
 
 ## 9. Telemetry
 
@@ -190,10 +212,20 @@ your workload into Aether's vocabulary. Schema: `TELEMETRY_SCHEMA.md`.
 
 ## 10. Artifacts
 
-List them in `artifacts`, relative to `$PROMETHEUS_ARTIFACT_DIR`. Keep
-them small enough to travel: the artifact channel serves at most 8 MB
-and keeps the FIRST 8 MB, so an overrun silently discards the END of
-your run. Compress or subsample rather than hoping.
+List them in `artifacts`, relative to `$PROMETHEUS_ARTIFACT_DIR`, with no
+directory prefix. The pod's artifact server serves the directory as it is;
+Iteration 2 moved an 8.4 MB artifact through the provider proxy at
+5.4 MB/s, with the controller's sha256 matching the module's own. The
+receipt records bytes, digest and fetch time for each artifact.
+
+The platform also writes two files of its own beside yours and retrieves
+them for you: `stages.jsonl` (bootstrap stage markers) and
+`platform.jsonl` (GPU memory, utilisation, temperature and power, host
+load and RAM, disk, artifact bytes, sampled every
+`telemetry.platform_interval_s` seconds -- default your `interval_s`,
+minimum 1 s -- from before the dependency install onward). You do not
+declare them. Note that host RAM is the HOST's, which the container sees
+whole; it is not your process's footprint.
 
 ## 11. Cleanup
 

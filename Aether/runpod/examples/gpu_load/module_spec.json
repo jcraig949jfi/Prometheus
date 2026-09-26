@@ -1,0 +1,54 @@
+{
+  "args": [],
+  "artifacts": [
+    "result.json",
+    "state.bin",
+    "telemetry.jsonl"
+  ],
+  "canary": "python3 -c \"import cupy; (cupy.ones((256,256),dtype=cupy.float32)@cupy.ones((256,256),dtype=cupy.float32)).sum()\"",
+  "dependencies": {
+    "pip": [
+      "cupy-cuda12x==13.3.0",
+      "numpy==2.2.0"
+    ]
+  },
+  "description": "Sustained GPU load for platform measurement: matmul throughput, per-step latency, a device-memory ballast and a multi-MB artifact. Work units are matmuls, read from PROMETHEUS_WORK_UNITS.",
+  "disk_gb": 20,
+  "entrypoint": "run.py",
+  "env": {
+    "LOAD_ARTIFACT_MB": "8",
+    "LOAD_BALLAST_MB": "6144",
+    "LOAD_N": "8192",
+    "LOAD_REPORT_EVERY": "250",
+    "LOAD_SEED": "20260926"
+  },
+  "env_allowlist": [
+    "LOAD_ARTIFACT_MB",
+    "LOAD_BALLAST_MB",
+    "LOAD_N",
+    "LOAD_REPORT_EVERY",
+    "LOAD_SEED"
+  ],
+  "gpu": {
+    "alternatives": [
+      "NVIDIA RTX A5000",
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA L4",
+      "NVIDIA A40"
+    ],
+    "class": "NVIDIA RTX A4000",
+    "cloud": "SECURE",
+    "count": 1
+  },
+  "max_runtime_s": 900,
+  "name": "gpu-load",
+  "telemetry": {
+    "interval_s": 10,
+    "platform_interval_s": 3
+  },
+  "version": "1",
+  "work_units": {
+    "estimate": 6000.0,
+    "name": "matmuls"
+  }
+}

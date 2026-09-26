@@ -107,3 +107,28 @@ vindication. Second lesson: when two quantities agree exactly, suspect an
 identity before claiming a validation -- an exact 1.0000 ratio across
 hundreds of samples should have prompted me to look for why it could not
 have come out otherwise.
+
+2026-09-26 | Appended a speculative `git checkout origin/main --` to the
+end of a gate command during the integration merge, and started the full
+Aether suite in the background right after. | The trailing checkout
+detached the worktree onto origin/main while the suite was starting, so
+the run was about to test the wrong tree. Caught on the very next command
+(`git branch --show-current` came back empty); suite stopped, branch
+reattached, suite rerun with HEAD recorded before AND after (both
+6fa670744). Nothing lost; nothing pushed from the wrong tree. | The next
+status check, before any push. | One intent per command. A command whose
+purpose is "run the gate" must contain nothing that can move HEAD, and a
+background run that tests a tree should record the SHA it tested at both
+ends so a mid-run move is detectable rather than silent.
+
+2026-09-26 | Preregistered H3-P2 as "deficit in opcode and arg0; arg1,
+payload, energy near 1", reasoning only from which writes break a
+member's topology on the NEXT tick. | arg1 turned out to be the most
+suppressed field (0.002x null) and energy enriched (1.58x). The arg1
+mechanism runs through perturbation's K2 property (every one-bit flip of
+arg1 changes it mod 5), a property recorded in this seat's own freeze
+candidate. | The 256^2 per-field table, then the H3-X test. | I reasoned
+about the law without the perturbation channel, and forgot a property my
+own falsification gate had proven. When predicting from the law, walk
+every phase including Mu, and re-read the gate results before writing
+the prediction.

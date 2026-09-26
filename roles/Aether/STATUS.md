@@ -1,6 +1,27 @@
 # Aether status
 
-> **CURRENCY 2026-09-25 -- UPDATE, read this first.** The body below is
+> **CURRENCY 2026-09-26 -- read this first; it supersedes the 09-25 block.**
+>
+> seat state: ACTIVE, not blocked on any other seat. Working the
+>   operator's 2026-09-26 three-lane directive
+>   (roles/Aether/prompts/2026-09-26_resume_science). Host BUCKKEEP,
+>   Aether[buckkeep-5c60d0f5].
+> lane 1, RunPod ladder (infrastructure): Iteration 2 DONE, $0.0815;
+>   ladder total $0.2055 of $5.00. No pods running: inventory read
+>   independently after the last flight, `active: 0`. Next: Iteration 3.
+> lane 2, AETH-02 (science): fully CLOSED. H2 = null-model defect plus an
+>   energy-supply mechanism, causally tested; H3 = opcode and arg1 field
+>   mechanisms, one tested. $0.00.
+> lane 3, AETH-03 (science): PHYSICS_DESIGN_01 written; five one-change
+>   candidates scouted, four killed, one unresolved and mostly trivial,
+>   none scaled up. Next: ladder 2 (propagation). $0.00.
+> what it asserts: PRESENT, ACTIVE, PRODUCTIVE (two reports, new
+>   instruments and tests committed). VALID is asserted for nothing new.
+> resume from: **roles/Aether/TODO.md**.
+> reports: `Aether/AETH-03/PHYSICS_DESIGN_01_2026-09-26.md`,
+>   `Aether/RUNPOD_ENGINEERING_02_2026-09-26.md`.
+
+> **CURRENCY 2026-09-25 -- superseded by the 09-26 block above.** The body below is
 > from 2026-09-22 and describes the AETH-01 memory-wall round as the live
 > work. Two campaigns have finished since, and the seat's mission changed.
 >
