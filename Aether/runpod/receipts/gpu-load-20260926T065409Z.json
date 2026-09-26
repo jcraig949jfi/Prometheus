@@ -1,0 +1,236 @@
+{
+  "args": [],
+  "artifact_bytes_total": 8393083,
+  "artifact_transfer": {
+    "bytes": 8393083,
+    "bytes_per_s": 2876215.0,
+    "largest": {
+      "bytes": 8388608,
+      "fetch_s": 1.5471,
+      "path": "state.bin",
+      "sha256": "48b516eb66c187bd9738c5b25f897bbf04c7da3d27e3745e941d5e6822d4d7c1"
+    },
+    "largest_bytes_per_s": 5422149.8,
+    "seconds": 2.9181
+  },
+  "artifacts": [
+    {
+      "bytes": 573,
+      "fetch_s": 0.6605,
+      "path": "result.json",
+      "sha256": "fe0b21ccd07780b195c374429f02e902f43e53b501a9304d4d21ebaab972e902"
+    },
+    {
+      "bytes": 8388608,
+      "fetch_s": 1.5471,
+      "path": "state.bin",
+      "sha256": "48b516eb66c187bd9738c5b25f897bbf04c7da3d27e3745e941d5e6822d4d7c1"
+    },
+    {
+      "bytes": 3902,
+      "fetch_s": 0.7105,
+      "path": "telemetry.jsonl",
+      "sha256": "212aa3a781f429198fc73c36109b1115819dbe528ccbae822f19aff4a6d7b8b0"
+    }
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.3586,
+      "rtt_min_s": 0.4168,
+      "samples": 5,
+      "uncertainty_s": 0.2084
+    },
+    "start": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.3892,
+      "rtt_min_s": 0.493,
+      "samples": 5,
+      "uncertainty_s": 0.2465
+    }
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 590.9,
+    "hourly_usd": 0.17,
+    "usd_estimated": 0.02791,
+    "work_units": {
+      "actual": 6000.0,
+      "name": "matmuls",
+      "usd_per_1e9_units": 4650.970173875491,
+      "usd_per_unit": 4.650970173875491e-06
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-26T06:54:09Z",
+  "ended_utc": "2026-09-26T07:04:00Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/gpu-load-20260926T065409Z",
+  "evidence_kept": [
+    "platform.jsonl",
+    "result.json",
+    "telemetry.jsonl"
+  ],
+  "git": {
+    "available": true,
+    "commit": "3b22826cf4cd6153fcc9c8a2c1db51a95e989bc1",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA RTX A4000",
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 900,
+    "telemetry_interval_s": 10
+  },
+  "last_stage": "module_end",
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 1.748,
+      "accepted_to_first_telemetry_s": 25.764,
+      "artifact_transfer_s": 5.276,
+      "create_call_s": 1.115,
+      "teardown_total_s": 9.376,
+      "terminate_ack_s": 1.46,
+      "total_wall_s": 592.695
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 2.679
+    },
+    "module_reported_elapsed_s": 561.979,
+    "pod_clock": {
+      "bootstrap_total_s": 8.896,
+      "canary_s": 1.184,
+      "dependency_install_s": 7.278,
+      "execution_s": 562.193,
+      "fetch_s": 0.414,
+      "unpack_s": 0.007,
+      "verify_s": 0.004
+    },
+    "synchronised": {
+      "accepted_to_module_start_s": 11.185,
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.3892,
+      "provision_s": 2.29,
+      "uncertainty_s": 0.2465
+    }
+  },
+  "module": "gpu-load@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 900.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.8,
+      "bootstrap": 6.0,
+      "canary": 1.0,
+      "provision": 24.0,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0374,
+    "overhead_s": 35.0,
+    "total_s": 935.0,
+    "usd_compute": 0.0425,
+    "usd_overhead": 0.0017,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.0442,
+    "work_units": {
+      "estimate": 6000.0,
+      "name": "matmuls",
+      "units_per_usd": 135891.7898710286,
+      "usd_per_1e9_units": 7358.796296296297,
+      "usd_per_unit": 7.358796296296297e-06
+    }
+  },
+  "platform_summary": {
+    "artifact_dir_b_peak": 8483116.0,
+    "disk_free_b_min": 21155446784.0,
+    "gpu_errors": [],
+    "gpu_mem_total_mib": 16376.0,
+    "gpu_mem_used_mib_peak": 7605.0,
+    "gpu_names": [
+      "NVIDIA RTX A4000"
+    ],
+    "gpu_power_w_mean": 135.2686,
+    "gpu_power_w_peak": 140.22,
+    "gpu_temp_c_peak": 75.0,
+    "gpu_util_pct_mean": 96.2423,
+    "gpu_util_pct_peak": 100.0,
+    "host_load1_peak": 48.81494140625,
+    "host_mem_used_b_peak": 134022254592.0,
+    "sample_cost_s_mean": 0.0488,
+    "sample_cost_s_peak": 0.0957,
+    "samples": 194,
+    "span_s": 579.083
+  },
+  "pod_stages": {
+    "boot": 1790405653.5176718,
+    "canary": 1790405662.4035687,
+    "fetched": 1790405653.931582,
+    "installed": 1790405661.2200284,
+    "module_end": 1790406224.6059675,
+    "module_rc": 0.0,
+    "module_start": 1790405662.4132943,
+    "server_up": 1790405653.521149,
+    "unpacked": 1790405653.9424553,
+    "verified": 1790405653.9356558
+  },
+  "pods": [
+    {
+      "created_utc": "2026-09-26T07:04:02Z",
+      "creation_outcome": "confirmed",
+      "id": "1q2c5vxfis842r",
+      "observed_absent": true,
+      "terminate_acknowledged": true
+    }
+  ],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "OK",
+  "run_id": "gpu-load-20260926T065409Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "c5e127352b798a53c57dc5a973083d20fa883ebadf059e4935b8c5c8e6a45f48",
+  "started_utc": "2026-09-26T06:54:09Z",
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 561.979,
+    "errors": 0,
+    "first_utc": "2026-09-26T06:54:22Z",
+    "kinds": {
+      "end": 1,
+      "progress": 24,
+      "start": 1
+    },
+    "last_utc": "2026-09-26T07:03:44Z",
+    "max_gap_s": 23.507,
+    "module_status": "ok",
+    "records": 26,
+    "units_final": 6000,
+    "units_per_s": 10.6766,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

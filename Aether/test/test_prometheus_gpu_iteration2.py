@@ -438,3 +438,43 @@ def test_a_scout_receipt_becomes_a_calibration(tmp_path, monkeypatch):
     assert cal["overhead_seconds"] == pytest.approx(45.0)
     assert cal["gpu_used"] == "NVIDIA RTX A4000"
     assert cal["hourly_usd"] == 0.17
+
+
+def test_flight_overrides_do_not_move_the_bundle():
+    """Scout, pin and sampling overrides edit the spec, never the files, so
+    the committed bundle the pod fetches is the same bytes for all of them."""
+    flight = _flight()
+    from prometheus_gpu import bundle as bundle_mod
+    mdir = flight.module_path("examples/gpu_load")
+    base = bundle_mod.build(mdir, flight.select_spec(mdir)).sha256
+    for kw in ({"scout": 0.05}, {"pin_gpu": "NVIDIA RTX A4000"},
+               {"platform_interval": 1.0},
+               {"scout": 0.05, "pin_gpu": "NVIDIA RTX A4000",
+                "platform_interval": 1.0}):
+        varied = flight.select_spec(mdir, **kw)
+        assert bundle_mod.build(mdir, varied).sha256 == base, kw
+    assert flight.select_spec(mdir, platform_interval=1.0)[
+        "telemetry"]["platform_interval_s"] == 1.0
+
+
+def test_first_contact_through_the_proxy_is_its_own_interval(module_dir):
+    """Pod running and pod reachable are different instants. The gap between
+    them is the proxy's, and Iteration 2 measured it at ~25 s."""
+    clock = Clock()
+    fake = _fake_with_pod_clock(clock, offset=0.0, stall_frames=3)
+    real_fetch = fake.fetch
+    calls = {"n": 0}
+
+    def late_proxy(pod_id, path, **kw):
+        calls["n"] += 1
+        if calls["n"] <= 6:          # the proxy 404s for the first polls
+            return None
+        return real_fetch(pod_id, path, **kw)
+    fake.fetch = late_proxy
+    r = launch.Controller(fake, spec(), module_dir, budget_usd=5.0,
+                          poll_s=30.0, ready_poll_s=3.0, now=clock.now,
+                          sleep=clock.sleep).run()
+    ctl = r["lifecycle"]["controller_clock"]
+    assert ctl["accepted_to_first_contact_s"] > 0
+    assert ctl["accepted_to_first_contact_s"] <= ctl[
+        "accepted_to_first_telemetry_s"]

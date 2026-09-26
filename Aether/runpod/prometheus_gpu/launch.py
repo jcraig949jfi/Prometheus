@@ -115,6 +115,11 @@ def lifecycle(marks, stages, telemetry_summary=None, clock_sync=None):
     ctl_gap("create_call_s", "create_requested", "create_answered")
     ctl_gap("accepted_to_first_telemetry_s", "create_answered",
             "first_telemetry")
+    # When the pod first answered through the provider's proxy at all.
+    # Iteration 2 found this, not provisioning, is where the time goes: the
+    # pod booted ~2 s after the create was accepted and the proxy returned
+    # 404 for ~25 s more.
+    ctl_gap("accepted_to_first_contact_s", "create_answered", "first_contact")
     ctl_gap("artifact_transfer_s", "retrieve_start", "retrieve_end")
     ctl_gap("terminate_ack_s", "terminate_requested", "terminate_acknowledged")
     ctl_gap("absence_confirm_s", "terminate_requested", "absence_confirmed")
@@ -501,6 +506,8 @@ class Controller(object):
         reported = set()
         while self._now() < deadline:
             if self._fetch(TELEMETRY_PATH) is not None:
+                if "first_contact" not in self.marks:
+                    self._mark("first_contact")
                 self._mark("first_telemetry")
                 if self.clock_sync is None:
                     self.clock_sync = self.measure_clock()

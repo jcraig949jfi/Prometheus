@@ -1,0 +1,42 @@
+{
+  "accepted_differences": null,
+  "calibrated_estimate": {
+    "compute_seconds_total": 552.1320000000001,
+    "expected_usd": 0.03316064388888889,
+    "margin": 0.2,
+    "overhead_seconds_per_pod": 30.093400000000003,
+    "per_pod_seconds": 702.2254,
+    "pods": 1,
+    "requested_units": 6000.0,
+    "teardown_reserve_s": 120.0,
+    "usd_per_unit": 4.345483333333334e-06,
+    "usd_with_margin": 0.03979277266666666
+  },
+  "calibration": {
+    "compute_seconds": 27.6066,
+    "gpu_used": "NVIDIA RTX A4000",
+    "hourly_usd": 0.17,
+    "measured_with_instrumentation": true,
+    "overhead_seconds": 30.093400000000003,
+    "scout_wall_s": 57.7,
+    "seconds_per_unit": 0.092022,
+    "source": "scout receipt gpu-load-scout-20260926T065221Z",
+    "units_per_second": 10.866966594944687,
+    "usd_per_unit": 4.345483333333334e-06,
+    "work_unit_name": "matmuls",
+    "work_units_done": 300.0
+  },
+  "ceiling_usd": 0.25,
+  "decision": "PROCEED",
+  "estimate_error": 0.15542313201703448,
+  "fits": true,
+  "module": "gpu-load@1",
+  "preregistered_estimate": {
+    "expected_usd": 0.0287
+  },
+  "recommended_controller_ceiling_usd": 0.03979277266666666,
+  "representativeness": {
+    "differences": {},
+    "representative": true
+  }
+}

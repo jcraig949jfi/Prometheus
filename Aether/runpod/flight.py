@@ -69,9 +69,20 @@ def module_path(arg):
     return path
 
 
-def select_spec(module_dir, scout=None, pin_gpu=None):
-    """The spec that will actually fly: campaign, scout, or pinned."""
+def select_spec(module_dir, scout=None, pin_gpu=None, platform_interval=None):
+    """The spec that will actually fly: campaign, scout, or pinned.
+
+    Every override here edits the in-memory spec only. The bundle is built
+    from the module directory's files, so its hash -- and the committed
+    bundle the pod fetches -- is unchanged by any of them.
+    """
     spec = spec_mod.load(os.path.join(module_dir, "module_spec.json"))
+    if platform_interval:
+        data = spec.to_dict()
+        data["telemetry"] = dict(data["telemetry"],
+                                 platform_interval_s=float(platform_interval))
+        spec = spec_mod.from_dict(data, source="%s (platform every %gs)"
+                                  % (spec.source, platform_interval))
     if pin_gpu:
         data = spec.to_dict()
         data["gpu"] = dict(data["gpu"], alternatives=[])
@@ -289,6 +300,8 @@ def main(argv=None):
                     help="fly a scout at this fraction of the work units")
     ap.add_argument("--pin-gpu", default=None,
                     help="pin the GPU class and drop the alternatives")
+    ap.add_argument("--platform-interval", type=float, default=None,
+                    help="override telemetry.platform_interval_s")
     ap.add_argument("--build", action="store_true", help="write the bundle")
     ap.add_argument("--dry", action="store_true", help="plan only")
     ap.add_argument("--rehearse", action="store_true")
@@ -307,7 +320,8 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     module_dir = module_path(args.module)
-    spec = select_spec(module_dir, args.scout, args.pin_gpu)
+    spec = select_spec(module_dir, args.scout, args.pin_gpu,
+                       args.platform_interval)
 
     if args.calibrate:
         with open(args.calibrate, encoding="utf-8") as fh:
