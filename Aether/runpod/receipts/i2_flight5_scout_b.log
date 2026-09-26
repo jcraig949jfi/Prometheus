@@ -1,0 +1,38 @@
+[flight 03:12:28] REAL LAUNCH gpu-load-scout@1, budget ceiling $0.15
+[flight 03:12:28] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 03:12:28] credential source: host default key file
+[flight 03:12:29] bundle 1ee24a08344c reachable at the pinned commit c065bf1d6bb0
+[flight 03:12:30] create attempt on NVIDIA RTX A4000 (1 of 5)
+[flight 03:12:30] create attempt 1 failed status=400; reconciling inventory
+[flight 03:12:30] reconcile: inventory empty, so that failure created nothing
+[flight 03:12:30] create attempt on NVIDIA RTX A5000 (2 of 5)
+[flight 03:12:30] create attempt 1 failed status=400; reconciling inventory
+[flight 03:12:31] reconcile: inventory empty, so that failure created nothing
+[flight 03:12:31] create attempt on NVIDIA GeForce RTX 4090 (3 of 5)
+[flight 03:12:31] create attempt 1 failed status=400; reconciling inventory
+[flight 03:12:31] reconcile: inventory empty, so that failure created nothing
+[flight 03:12:31] create attempt on NVIDIA L4 (4 of 5)
+[flight 03:12:33] create attempt 1 -> accepted pod=h85k3mbfiqha7h
+[flight 03:12:33] create CREATED -> confirmed pod=h85k3mbfiqha7h gpu=NVIDIA L4
+[flight 03:12:34] artifact server not answering yet (status=404)
+[flight 03:13:08] pod clock offset +0.349 s (+/- 0.201 s)
+[flight 03:13:08] stage boot
+[flight 03:13:08] stage fetched
+[flight 03:13:08] stage verified
+[flight 03:13:08] stage unpacked
+[flight 03:13:48] module reported end (status=ok)
+[flight 03:13:54] pod clock offset +0.342 s (+/- 0.178 s)
+[flight 03:13:55] receipt written to C:\Prometheus-worktrees\aether-iter2\Aether\runpod\receipts\gpu-load-scout-20260926T071229Z.json
+
+RECEIPT  gpu-load-scout-20260926T071229Z
+  module        gpu-load-scout@1   result OK
+  bundle        1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab
+  window        2026-09-26T07:12:30Z -> 2026-09-26T07:13:54Z
+  cost          $0.0101 estimated over 84.4 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     3 records, units=300, complete=True
+  artifacts     3 retrieved
+  lifecycle   {"pod_clock": {"fetch_s": 0.3, "verify_s": 0.004, "unpack_s": 0.005, "dependency_install_s": 12.212, "canary_s": 1.122, "bootstrap_total_s": 13.652, "execution_s": 36.066}, "controller_clock": {"create_call_s": 3.133, "accepted_to_first_telemetry_s": 39.564, "accepted_to_first_contact_s": 33.352, "artifact_transfer_s": 4.278, "terminate_ack_s": 0.651, "absence_confirm_s": 0.843, "teardown_total_s": 7.084, "total_wall_s": 85.239}, "cross_clock": {"provision_s": 22.484, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.3491, "uncertainty_s": 0.2007, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 22.134, "accepted_to_module_start_s": 35.786}, "module_reported_elapsed_s": 35.904}
+  transfer    {"bytes": 8389774, "seconds": 2.8394, "bytes_per_s": 2954770.0, "largest": {"path": "state.bin", "bytes": 8388608, "sha256": "a34cb5667ce925d3797dc8cbd7e69be3b8071c2a9350c5862334a18cda94e27c", "fetch_s": 1.7819}, "largest_bytes_per_s": 4707676.1}
+  platform    {"samples": 19, "span_s": 54.001, "gpu_names": ["NVIDIA L4"], "gpu_mem_used_mib_peak": 7630.0, "gpu_mem_total_mib": 23034.0, "gpu_util_pct_mean": 57.8947, "gpu_util_pct_peak": 100.0, "gpu_temp_c_peak": 60.0, "gpu_power_w_peak": 77.92, "gpu_power_w_mean": 49.5584, "host_load1_peak": 10.6181640625, "host_mem_used_b_peak": 71544315904.0, "disk_free_b_min": 21073534976.0, "artifact_dir_b_peak": 8398384.0, "sample_cost_s_mean": 0.0283, "sample_cost_s_peak": 0.0491, "gpu_errors": []}
+[flight 03:13:55] FLIGHT_PASS

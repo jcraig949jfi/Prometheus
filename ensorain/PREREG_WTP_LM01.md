@@ -1,4 +1,4 @@
-# PREREG_WTP_LM01 -- Lossless Memorizer Challenge (DRAFT v0.1, NOT FROZEN)
+# PREREG_WTP_LM01 -- Lossless Memorizer Challenge (DRAFT v0.2, NOT FROZEN)
 
 Seat: Ensorain[m2-32b65655], M2. Directive: roles/Ensorain/prompts/2026-09-25_wtp_lm01_directive/
 01_CYCLOPS_WTP_LM01_DIRECTIVE_verbatim.md (sha256 ab204631...). Steward rulings: ensorain/lm01/STEWARD_RULINGS.md
@@ -86,55 +86,86 @@ representation, under honestly accounted resources."
   |ref-ref|, dev/selectivity_threshold.json). UNMATCHED means no reading; its frequency per arm is reported (D3).
 - Relevance comes from the GENERATOR only (D4).
 
-## 6. Readings and verdict mapping (A3, A4, A5, C1-C4, H1) -- PROPOSED, for steward review
+## 6. Readings and verdict mapping (A3, A4, A5, C1-C4, H1) -- JOINT after review (#697, #698, #700; #693)
 
-Per stratum, a reading is made only if the stratum is TESTABLE: eligible (derived min count, E4) AND learnable (gate X,
-E5). Otherwise it is UNTESTED (reported with dev ACs). Margins are per stratum [MARGINS]: MATCH = within MARGIN; WIN =
-beyond 2 x MARGIN (H1). Every no-difference reading needs an equivalence test (the CI of the difference inside the
-MARGIN) plus a positive control detected by the same analysis; otherwise UNRESOLVED (A4).
+TESTABLE per stratum = ELIGIBLE (derived min count, E4) AND LEARNABLE (gate X, E5); otherwise UNTESTED, with dev ACs.
+- MARGIN (per stratum [MARGINS]) is REPLICATE-based: learner seed + an independent test bootstrap of the same world.
+  - This is a NAMED DEVIATION from #591 R2a's "across seeds" (#691/#698). The margin measures INSTRUMENT noise.
+    World-to-world spread enters each comparison's CI instead; counting it in both places would make "matched" too
+    permissive.
+  - The between-world SD is reported beside the MARGIN per stratum.
+- MATCH = within MARGIN; WIN = beyond 2 x MARGIN (H1).
+- Every no-difference reading needs a PASSING equivalence test (the 90% CI of the paired difference over worlds lies
+  inside +-MARGIN) plus a positive control detected by the same analysis. Otherwise UNRESOLVED (A4).
+- No verdict conjoins an absence (#697.1).
 
-6.1 HEADLINE: the same-optimizer RESERVOIR-REFIT curve (C1). Random eviction, B in {c/8, c/4, c/2, c, 2c, full};
-    full = L-R.
-  - EXACT_RETENTION_PAYS: AC(full) - AC(largest bounded rung below full) > 2 x MARGIN, AND B* = none (no bounded rung
-    within MARGIN of full). Label LOSSLESS_TRANSIENT_CONTRACTION, because the full end is L-R (A2). It is
-    COUNTERMODEL_SIGNAL (strict) only if L-K (no transient contraction) is itself within MARGIN of full.
-  - BOUNDED_SUFFICES (added label): B* < full, with equivalence of AC(B*) and AC(full) inside MARGIN and a positive
-    control (the curve fixture's monotone detection at this stratum's density).
-    - This neither supports nor damages the law by itself: the reservoir discards relevance-blindly.
-    - It is reported with B*/n (the retained fraction) and bytes.
-  - UNRESOLVED otherwise.
-6.2 SECONDARY (C2): SELECTIVE-proper vs LOSSLESS, labelled "optimizer confounded (SGD vs ALS)".
+6.1 HEADLINE: the same-optimizer RESERVOIR-REFIT curve (C1).
+  - Random eviction, rank 3, B in {c/8, c/4, c/2, c, 2c, full}.
+  - The full-store END is the recency-BLIND converged L-R (rank 3) in EVERY stratum, including F3 (#693), so the endpoint
+    is the rungs' readout family.
+  - The frozen LOSSLESS choice (e.g. L-R-rec on F3) vs the reservoir is reported separately, labelled
+    "recency-aware vs recency-blind" where it applies.
+  - EXACT_RETENTION_PAYS: AC(full) exceeds EVERY bounded rung by > 2 x MARGIN (a demonstrated win over each rung).
+    - STRICT form: additionally L-K is within MARGIN of full (equivalence passing) -> COUNTERMODEL_SIGNAL (F-B).
+    - Otherwise (the full end needs L-R's transient fit) -> LOSSLESS_TRANSIENT_CONTRACTION. It damages the
+      persistent-state reading only (A1/A2).
+  - BOUNDED_SUFFICES: B* < full with equivalence passing. REPORTED ONLY, with NO verdict weight either way (#697.2):
+    every rung carries a fixed, fitted, relevance-selective factor model, so "bounded suffices" means "a selective model
+    plus some blind exact records is enough".
+  - Otherwise UNRESOLVED.
+6.2 SECONDARY (C2): SELECTIVE-proper vs LOSSLESS, labelled "optimizer confounded (SGD vs ALS)". It never gates a
+    falsifier.
   - SELECTIVE_ADVANTAGE: some SELECTIVE ladder point with <= bytes and <= reads beats the frozen LOSSLESS choice by more
     than 2 x MARGIN.
-  - COUNTERMODEL_SIGNAL (secondary): the frozen LOSSLESS choice is matched or beaten by no SELECTIVE ladder point
-    (R2), with an L-R choice labelled LOSSLESS_TRANSIENT_CONTRACTION.
-  - [BUILD] the SELECTIVE capacity ladder (cells/16 .. up to LOSSLESS bytes).
+  - COUNTERMODEL_SIGNAL (secondary): for EVERY SELECTIVE ladder point at <= LOSSLESS bytes, LOSSLESS exceeds it by more
+    than 2 x MARGIN (a demonstrated win; #697). An L-R choice is labelled LOSSLESS_TRANSIENT_CONTRACTION.
+  - [BUILD] the SELECTIVE capacity ladder (cells/16 .. LOSSLESS bytes).
 6.3 EVICTION (C4, C5): RESERVOIR-SELECTIVE (the frozen candidate) vs RESERVOIR-RANDOM.
-  - (i) matched B (primary) and (ii) matched HR2: the random B is interpolated, 3 seeds, extra bytes charged.
-  - INDISCRIMINATE_EQUIVALENT: equivalence under (i) AND (ii), plus positive-control PASS (E6); otherwise UNRESOLVED.
-  - SELECTIVE_BUYS_BYTES: the selective candidate wins at (i) but not at (ii).
-  - RESERVOIR_SELECTIVE_ADVANTAGE (added label): it wins at both (i) and (ii).
-  - RANDOM_BEATS_SELECTIVE (added label): random wins at (i) by more than 2 x MARGIN. A legitimate s4C result (#673).
-6.4 HYBRID ACCESS (B5): index ablation of the frozen HYBRID within the same per-query budget.
-  - HYBRID_REQUIRED if competence collapses by more than 2 x MARGIN.
+  - Read (i) at matched B (primary) and (ii) at matched HR2 (random B interpolated, 3 seeds, extra bytes charged), at
+    B = c/4 and B = c.
+  - INDISCRIMINATE_EQUIVALENT: equivalence PASSES under (i) AND (ii), plus positive-control PASS (E6). Otherwise
+    UNRESOLVED.
+  - SELECTIVE_BUYS_BYTES: a win at (i), not at (ii).
+  - RESERVOIR_SELECTIVE_ADVANTAGE (added): a win at (i) AND (ii).
+  - RANDOM_BEATS_SELECTIVE (added): random wins at (i) by more than 2 x MARGIN (#673: a legitimate s4C result).
+6.4 HYBRID ACCESS (B5):
+  - Index ablation of the frozen HYBRID, within the same per-query budget. HYBRID_REQUIRED on a collapse > 2 x MARGIN.
   - "No collapse" reads UNRESOLVED unless the positive-control HYBRID collapses under the same ablation.
-  - [BUILD] the ablation run + positive-control HYBRID.
-6.5 INTERVENTION (F1; secondary): clone the frozen SELECTIVE at t* = life/2, then swap in an IM-rate merge of the same
-    prefix (HR2-matched).
-  - Negative control: an independently seeded SELECTIVE of equal HR2. Positive control: a planted must-hurt world.
+  - [BUILD]
+6.5 INTERVENTION (F1; secondary): the clone/swap design of #625. DEFECT D11: with an IM-rate RandomMerge swap the arm is
+    decided by construction on never-seen cells (the matched merge is a lookup table). PROPOSED (Aporia #728, Ensorain
+    concurs; binding on Cyclops/operator concurrence): DEFER. Option (i), a retrained-subsample swap, would measure
+    DATA value, not REQUIREMENT, since both arms stay selective. Limitation, verbatim in advance: "REQUIREMENT is
+    untested in WTP-LM01. The only identified REQUIREMENT test in the program is PTE's SI01-REQ (ANTI-MERGE: restore a
+    specimen's OWN discarded distinctions against a size-matched sham), where removing selectivity is on-manifold."
+    intervention.py and its fixtures stay in the repo, flagged NOT USED.
   - Caveat, verbatim: "the selective state was needed for the rest of THIS life", not "selectivity in general".
-  - [BUILD].
-6.6 AGGREGATION:
-  - GENERATOR_DEPENDENT when a reading holds in some generator strata of a family x level only.
-  - CROSSOVER when it switches with level (complexity/horizon) within a generator.
-  - NULL: testable, the positive control passes, and every reading is within MARGIN without the equivalence CI passing.
-  - INSTRUMENT_FAILURE: a fixture or a positive control fails where the instrument itself was the target.
-6.7 FALSIFIER (A6), written before data: "In WTP, selective contraction is not necessary for the tested form of reusable
-    generalization" is sent to the stewards if, in at least one TESTABLE stratum per family among F2-F5 at L2 or L3:
-    - (a) the headline reads EXACT_RETENTION_PAYS or BOUNDED_SUFFICES with RANDOM eviction; AND
-    - (b) the secondary shows no SELECTIVE_ADVANTAGE; AND
-    - (c) the eviction reading is INDISCRIMINATE_EQUIVALENT or RANDOM_BEATS_SELECTIVE.
-    [Steward review: this is my proposal. The stewards may tighten it to "a majority of strata".]
+  - [BUILD]
+6.6 AGGREGATION AND NULL:
+  - GENERATOR_DEPENDENT: a reading holds in some generator strata of a family x level only.
+  - CROSSOVER: a reading switches with level within a generator.
+  - NULL: TESTABLE, the positive control passes, and equivalence PASSES among the compared arms (demonstrated no
+    difference, #697.4). Within-margin without a passing equivalence test is UNRESOLVED.
+  - INSTRUMENT_FAILURE: a fixture or positive control fails where the instrument itself was the target.
+6.7 FALSIFIERS (A6), written before data. Split by countermodel; each fires, and is reported, on its own.
+  - F-B (lossless, s4B): a stratum reads COUNTERMODEL_SIGNAL (6.1 strict).
+  - F-C (indiscriminate, s4C): a stratum reads INDISCRIMINATE_EQUIVALENT or RANDOM_BEATS_SELECTIVE (6.3).
+    SCOPE, in advance: with the factor model held fixed, this tests relevance-selective retention of EXACT RECORDS, not
+    selective contraction as a whole.
+  - LOSSLESS_TRANSIENT_CONTRACTION is reported as damage to the persistent-state reading only. It is not an F-B firing.
+  - PER STRATUM: one clean stratum is a SCOPED counterexample, reported with family x level x generator (#697.5).
+  - REPLICATION (symmetric; #697.5, #698b): any firing of F-B / F-C AND any SUPPORT label (SELECTIVE_ADVANTAGE,
+    RESERVOIR_SELECTIVE_ADVANTAGE) must replicate on the pre-declared HELD-OUT block (s9) before it is sent as a
+    falsifier or a support.
+    - The block size per stratum gives the replication test >= 80% power for an effect of 2 x MARGIN, using the dev
+      between-world SD of the relevant paired difference [MARGINS].
+    - If that size exceeds 64 worlds per stratum (declared cap), the firing reads UNREPLICATED (neither falsifier nor
+      support).
+    - The replication is one-sided at alpha .05 in the firing's direction.
+  - MULTIPLICITY (#698a): beside the results, per label, report the number of strata TESTED and the number EXPECTED to
+    fire by chance at the label's error rate.
+    - Declared rates: WIN readings one-sided alpha .05 on the paired difference.
+    - EQUIVALENCE readings via TOST at .05 each side.
 
 ## 7. Controls and fixtures (G7, C6, E6)
 
@@ -170,11 +201,17 @@ Rules: ensorain/lm01/margins_reduce.py (committed before the sweep rows are read
   - 9_400_000.. (selection v1, seen);
   - 9_410_000.. (selection v2);
   - 9_500_000.. (margins).
-- CAMPAIGN seeds: seed(stratum, i) = 10^9 + int(sha256(f"{PREREG_SHA}|LM01-campaign|{stratum}|{i}").hexdigest()[:8], 16),
-  i = 0..N-1. PREREG_SHA is the commit that freezes this file.
-  - make_world refuses any seed outside the dev range below 10^9.
-  - The derivation code is committed with the freeze, and no campaign seed is materialised before the launch prompt.
-  - [BUILD] campaign runner.
+- LAUNCH GATE and SEEDS: ensorain/lm01/launch_gate.py (#699/#700 exact-token pattern).
+  - A release is a comms message with subject starting EXACTLY "WTP-LM01 LAUNCH:", kind ruling, from a sender in the
+    single constant RELEASERS = (Cyclops, operator). RELEASERS is NOT FROZEN until operator Q6 is answered (does Aporia
+    cover M2?) or Cyclops is unparked (#725). The message must have Ensorain among the recipients, created after the freeze commit, and carrying the freeze SHA.
+  - Negative controls on real messages (#592, #610, #698, #699, #701 and Ensorain's own #590/#625/#664/#692) are
+    rejected; a synthetic well-formed release is accepted. These were run against the live comms DB before the freeze.
+- CAMPAIGN seeds: 10^9 + (int(sha256(f"{FREEZE_SHA}|LM01-campaign|{stratum}|{i}")[:12 hex], 16) mod 4 x 10^8).
+  Materialised only by campaign_seeds(release_id, ...), which re-checks the release against the DB; a collision aborts.
+- HELD-OUT REPLICATION seeds: 2 x 10^9 + (the same hash with tag LM01-replication, mod 4 x 10^8). Disjoint from the
+  campaign range by construction. Materialised only for a firing stratum, after the campaign verdict.
+- make_world refuses any seed below 10^9 outside the dev range.
 
 ## 10. Campaign size, runtime, concurrency (G5) [MARGINS]
 
@@ -191,9 +228,19 @@ Rules: ensorain/lm01/margins_reduce.py (committed before the sweep rows are read
 - v1 selection data was seen before two redesigns (R-a proposed and withdrawn after a dev probe; R-c adopted). Neither
   used campaign seeds.
 - F5-lowrank: every arm fails on dev, a likely artefact of the fixed fewest-parameter mode-split rule (#686).
-- The RESERVOIR is recency-blind (no stored step). On F3 its curve mixes episodes (#692; pending ruling).
+- The RESERVOIR is recency-blind (no stored step). On F3 the headline mechanism mixes episodes; its endpoint is the
+  recency-blind L-R (#693/#698).
+- SELECTIVE-proper stability: S-cp shows bimodal learner-seed convergence (dev smoke F3-L2-cp: 1.90 vs -.04). The
+  fraction per mode per stratum is reported [MARGINS].
+- The margin is replicate-based (a named deviation from R2a; s6).
+- F-C scope: exact-record retention with a fixed factor model, not selective contraction as a whole.
 - L1's headline rests only on the families that are TESTABLE there [MARGINS]. L1-F2 is EMPTY.
-- The intervention arm shows necessity for the rest of THIS life only.
+- F-B STRICT POWER: the strict countermodel needs L-K (an unlearned min-Hamming kernel) within MARGIN of the full end.
+  On dev smoke worlds L-K scores ~0 AC on never-seen cells in latent families, because an unlearned readout cannot use
+  low-rank structure. F-B strict therefore has near-zero power where only a learned readout generalizes. An UNFIRED F-B
+  must NOT be read as support for the law. The informative lossless reading there is LOSSLESS_TRANSIENT_CONTRACTION
+  (L-R).
+- REQUIREMENT is untested (the intervention arm is deferred, D11; #728).
 
 ## 12. Dev design findings -- kept OUT of results (H4)
 

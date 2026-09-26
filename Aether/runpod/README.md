@@ -21,6 +21,7 @@ Two examples ship, and the second one is the honest check:
 |:--|:--|
 | `examples/hello_gpu/` | the smallest useful module; copy this |
 | `examples/param_sweep/` | an ordinary experiment written from ANOTHER seat's point of view: counts `evaluations`, unrelated to Aether's physics, imports nothing from the platform |
+| `examples/gpu_load/` | sustained GPU load for measuring the platform: matmul throughput, per-step latency, a memory ballast and a multi-MB artifact; reads `PROMETHEUS_WORK_UNITS` so it can be scouted |
 
 Both are EXECUTED by `Aether/test/test_prometheus_gpu_examples.py`, which
 validates their telemetry and checks every declared artifact was actually
@@ -43,8 +44,11 @@ python -m prometheus_gpu.cli validate-receipt   receipt.json
 
 `estimate`, `dry-run` and `rehearse` cost nothing and cannot create a
 pod. `rehearse` flies the entire controller path against a fake provider
-using your spec. `run` is deliberately absent until that path has flown on
-hardware — see the guide, s8.
+using your spec.
+
+A real launch goes through `flight.py`, generic over any module directory
+(build, dry run, rehearse, `--go`, `--scout`, `--pin-gpu`, `--calibrate`)
+— see the guide, s8. It has flown on hardware in Iterations 1 and 2.
 
 ## Layout
 
@@ -63,6 +67,8 @@ hardware — see the guide, s8.
 python -m pytest Aether/test/test_prometheus_gpu.py -q
 python -m pytest Aether/test/test_prometheus_gpu_launch.py -q
 python -m pytest Aether/test/test_prometheus_gpu_examples.py -q
+python -m pytest Aether/test/test_prometheus_gpu_scout.py -q
+python -m pytest Aether/test/test_prometheus_gpu_iteration2.py -q
 ```
 
 Run it as its own command and read the result. Piping a gate into `tail`

@@ -47,3 +47,21 @@ Ananke, be created after 2026-09-26T02:28:01-04:00, and name 5bd6c3945 in its bo
 Minor robustness note (not blocking): a tz-naive frozen_at would raise an uncaught TypeError. That is
 unreachable via the driver, and it fails closed.
 The HOLD itself is unchanged; its 20:05Z criterion is still unmet (Kairos #564, Elenchus #565 unseen).
+
+### 2026-09-26T13:05Z Aporia[m1-cb5a6069]
+OPERATOR RULING (verbatim, roles/Aporia/prompts/2026-09-26_steward_freeze/01_OPERATOR_RULING_verbatim.md,
+sha256 9ac807d2...): "We're going to freeze having Aporia and Cyclops managing agents via the comms
+channel. I will be providing direction and have agents request reviews when needed."
+EFFECT: steward DIRECTION of engine seats over comms is FROZEN. This directory remains the program
+record. Every Aporia position and "Aporia-only" item in it is a RECORD, binding on no seat. Items that
+awaited Cyclops's or the operator's concurrence now go to the operator. The PTE-SI01 gates delegated to
+Aporia (the Ananke HOLD release, the SI01 go, the GPU check) revert to the operator. Relayed to Ensorain,
+Ananke, Nestor and Cyclops by name in #732.
+OPEN ITEMS HANDED TO THE OPERATOR, as they stood at the freeze:
+  Q1 the reading (now load-bearing: does transient query-time contraction count? FALSIFIERS 12:40Z);
+  Q2 Atlas; Q4 second blind lane (Nyx/Techne, on DO_NOT_BRIEF); Q5 Aether DIRECT/BLIND;
+  Q6 M2 coverage / WTP-LM01 RELEASERS;
+  Ananke HOLD (Kairos #564 / Elenchus #565 never seen);
+  the Harmonia s12 freeze (queued, not done);
+  WTP-LM01: D9, the equivalence margin (DISAGREEMENTS 08:55Z/09:35Z; delta = 0.3 AC), the F5 rung scale,
+  the endpoint, the D11 deferral.

@@ -7,6 +7,13 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-09-26 (session m2-1034e815): ENVGATE-02 CLOSED -- WINDOW_NOT_SUPPORTED, sequence STOPPED
+24/24 blocks complete 2026-09-26T02:50:06Z. Frozen analysis run on the operator's "Do phase C". The Phase-C gate FAILED on
+condition 6 (P2 0+/2-, P3 1+/0-). Blocking replicates (U 24 vs BAND0 5); the window rescue fails (RRIGHT 3 / RWEAK 2 /
+R128 5). Record: archaeon/envgate2/VERDICT_2026-09-26.md (branch commit c5ba19571). Rows are off-repo at
+C:/Prometheus-data/evidence/envgate02_2026-09-26/. The audit and RIE-01 are NOT started. Next = the operator's call
+(ENVGATE-03 prereg? lens portability, directive f0dd0599 s6?). Nothing running.
+
 ## UPDATE 2026-09-25T18:30Z (session m2-1034e815): ENVGATE-02 RUNNING
 Hold lifted by operator directive roles/Cyclops/prompts/2026-09-25_selective_irreversibility/01_OPERATOR_DIRECTIVE_verbatim.md
 (sha256 f0dd0599..., s6: "Archaeon -- ENVGATE-02. Run the frozen experiment unchanged"; it also frames Archaeon as an

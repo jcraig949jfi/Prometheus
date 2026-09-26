@@ -1,0 +1,34 @@
+[flight 03:14:07] REAL LAUNCH gpu-load@1, budget ceiling $0.15
+[flight 03:14:07] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 03:14:07] campaign plan PROCEED: calibrated $0.0432, preregistered $0.0259
+[flight 03:14:07] credential source: host default key file
+[flight 03:14:07] bundle 1ee24a08344c reachable at the pinned commit c065bf1d6bb0
+[flight 03:14:08] create attempt on NVIDIA L4 (1 of 1)
+[flight 03:14:09] create attempt 1 -> accepted pod=qrfafv10ixqhw5
+[flight 03:14:09] create CREATED -> confirmed pod=qrfafv10ixqhw5 gpu=NVIDIA L4
+[flight 03:14:10] artifact server not answering yet (status=404)
+[flight 03:14:36] pod clock offset +0.337 s (+/- 0.185 s)
+[flight 03:14:36] stage boot
+[flight 03:14:36] stage fetched
+[flight 03:14:36] stage verified
+[flight 03:14:36] stage unpacked
+[flight 03:14:36] stage installed
+[flight 03:14:36] stage canary
+[flight 03:14:36] stage module_start
+[flight 03:19:44] module reported end (status=ok)
+[flight 03:19:50] pod clock offset +0.328 s (+/- 0.169 s)
+[flight 03:19:51] receipt written to C:\Prometheus-worktrees\aether-iter2\Aether\runpod\receipts\gpu-load-20260926T071408Z.json
+
+RECEIPT  gpu-load-20260926T071408Z
+  module        gpu-load@1   result OK
+  bundle        1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab
+  window        2026-09-26T07:14:08Z -> 2026-09-26T07:19:50Z
+  calibration   predicted $0.0432, ran $0.0408 (-5.4%)
+  cost          $0.0408 estimated over 341.8 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     14 records, units=3000, complete=True
+  artifacts     3 retrieved
+  lifecycle   {"pod_clock": {"fetch_s": 0.312, "verify_s": 0.003, "unpack_s": 0.004, "dependency_install_s": 5.19, "canary_s": 0.791, "bootstrap_total_s": 6.306, "execution_s": 324.885}, "controller_clock": {"create_call_s": 1.117, "accepted_to_first_telemetry_s": 30.543, "accepted_to_first_contact_s": 24.359, "artifact_transfer_s": 4.323, "terminate_ack_s": 0.92, "absence_confirm_s": 1.182, "teardown_total_s": 7.474, "total_wall_s": 342.998}, "cross_clock": {"provision_s": 3.158, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.3366, "uncertainty_s": 0.1851, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 2.821, "accepted_to_module_start_s": 9.127}, "module_reported_elapsed_s": 324.731}
+  transfer    {"bytes": 8391344, "seconds": 2.3654, "bytes_per_s": 3547537.0, "largest": {"path": "state.bin", "bytes": 8388608, "sha256": "952ede08fd2c8e1d687afb6a159d9c8f07968306c6709da2866b66164760b842", "fetch_s": 1.5423}, "largest_bytes_per_s": 5439024.8}
+  platform    {"samples": 112, "span_s": 333.009, "gpu_names": ["NVIDIA L4"], "gpu_mem_used_mib_peak": 7630.0, "gpu_mem_total_mib": 23034.0, "gpu_util_pct_mean": 96.4286, "gpu_util_pct_peak": 100.0, "gpu_temp_c_peak": 71.0, "gpu_power_w_peak": 77.39, "gpu_power_w_mean": 70.0745, "host_load1_peak": 10.6064453125, "host_mem_used_b_peak": 69215100928.0, "disk_free_b_min": 21168443392.0, "artifact_dir_b_peak": 8442253.0, "sample_cost_s_mean": 0.0286, "sample_cost_s_peak": 0.1185, "gpu_errors": []}
+[flight 03:19:51] FLIGHT_PASS

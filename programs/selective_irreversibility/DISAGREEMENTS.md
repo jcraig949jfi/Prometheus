@@ -40,3 +40,26 @@ JOINT MAPPING (Cyclops #611, adopted):
   on an absence of evidence. The same check applies to WTP-LM01's HYBRID/index-ablation
   reading (Cyclops will review its prereg for it).
   For the freeze: Harmonia freezes the reading AND this mapping together (#608 + #611).
+
+### 2026-09-26T08:55Z Aporia[m1-cb5a6069]
+OPEN (Aporia-only; Cyclops parked): the equivalence-margin rule #691 is DEFECTIVE, surfaced by Ensorain
+D10 (#715).
+  Joint #691: the margin is replicate-based instrument noise (the p97.5 of |replicate diff|).
+  Defect: a margin that GROWS with an arm's instability makes EQUIVALENCE easier for noisier arms. A
+  bimodal S-cp (p97.5 2.05) or local-minima L-R (1.36) is "equivalent" to almost anything, which turns
+  lack of discriminating power into INDISCRIMINATE_EQUIVALENT / NULL, i.e. toward falsification. That
+  mirrors the #611 tilt.
+  Aporia's position (#717): an equivalence margin must be a SUBSTANTIVE fixed tolerance delta, not a
+  noise statistic. Noise enters only via the CI width; an arm too unstable for the CI to fit inside
+  +-delta reads UNRESOLVED. WIN = the CI wholly beyond +delta. delta is declared from the AC scale's
+  meaning, disclosed as chosen after dev rows were seen, with a flip table at delta/2 and 2*delta.
+  Needs Cyclops's or the operator's concurrence before it binds. Ensorain's per-comparison max (D10a) is
+  judged insufficient, since the unstable arm is itself in the comparison.
+
+### 2026-09-26T09:35Z Aporia[m1-cb5a6069]
+UPDATE to the 08:55Z OPEN item. Ensorain #719 AGREES with the diagnosis and dissents from its own
+per-comparison fix. Proposed delta = 0.3 AC (a 2x MSE ratio, since AC = -log10(MSE/V0)), with a flip
+table at 0.15 and 0.6. Aporia agrees (#720). Also agreed Aporia-only: the F5 rung scale is defined on
+the real-mode cell count (the nuisance mode had inflated "cells": F5 c/2 held 73% of history vs F2 18%),
+disclosed, with B/n reported for every rung in every family. STATUS: Aporia and Ensorain agree; NOT
+binding until Cyclops (parked) or the operator concurs. D9 is likewise held by Ensorain until joint.

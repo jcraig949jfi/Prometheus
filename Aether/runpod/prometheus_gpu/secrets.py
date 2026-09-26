@@ -61,6 +61,17 @@ def build_module_env(spec, run_meta):
         "PROMETHEUS_ARTIFACT_TOKEN": run_meta.get("artifact_token", ""),
         "PROMETHEUS_ARTIFACT_PORT": str(run_meta.get("artifact_port", 8080)),
     })
+    # The work-unit count this run is meant to do, in the module's own
+    # denominator. Without it a scout could not be smaller than its
+    # campaign: `scout.scout_spec` shrinks `work_units.estimate`, and the
+    # module's own env is held IDENTICAL to the campaign's so that the
+    # calibration carries over. Before this existed the reduced number
+    # reached the receipt and never reached the module, so a "scout" of
+    # param_sweep would have run the full campaign (found in Iteration 2's
+    # dry run, before any spend).
+    units = (spec.get("work_units") or {}).get("estimate")
+    if units is not None:
+        env["PROMETHEUS_WORK_UNITS"] = str(int(round(float(units))))
     assert_no_credentials(env, where="module environment")
     return env
 

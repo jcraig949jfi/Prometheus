@@ -100,7 +100,7 @@ def representativeness(scout, campaign):
 
 
 def calibrate(work_units_done, elapsed_seconds, spec, hourly=None,
-              overhead_seconds=None, source="scout"):
+              overhead_seconds=None, source="scout", gpu_used=None):
     """Throughput and unit cost MEASURED, with overhead kept separate.
 
     `elapsed_seconds` is compute time only -- the module's own start-to-end
@@ -130,29 +130,43 @@ def calibrate(work_units_done, elapsed_seconds, spec, hourly=None,
         "usd_per_unit": per_unit_s / 3600.0 * rate,
         "overhead_seconds": overhead,
         "measured_with_instrumentation": True,
+        # The card the scout ACTUALLY got. A spec may declare alternatives,
+        # and seconds per unit on an RTX 4090 say little about an A4000.
+        "gpu_used": gpu_used or gpu.get("class"),
     }
 
 
 def project_from_calibration(calibration, requested_units, pods=1,
                              margin=DEFAULT_MARGIN,
                              teardown_reserve_s=DEFAULT_TEARDOWN_RESERVE_S):
-    """Campaign cost from measured throughput. Overhead is per POD."""
+    """Campaign cost from measured throughput. Overhead is per POD.
+
+    `expected_usd` is the EXPECTATION: compute plus the calibration's own
+    overhead. The teardown reserve is NOT in it. A scout's measured
+    overhead already contains a real teardown, so adding the reserve to
+    the expectation counted teardown twice -- Iteration 2's campaign came
+    in 16% under a calibrated estimate for exactly that reason. The reserve
+    is a GUARDRAIL and is added only to `usd_with_margin`, which is what a
+    ceiling is set from and what the decision is taken on.
+    """
     compute_s = calibration["seconds_per_unit"] * float(requested_units)
     per_pod_compute = compute_s / max(1, pods)
-    per_pod_total = (per_pod_compute + calibration["overhead_seconds"]
-                     + teardown_reserve_s)
+    per_pod_expected = per_pod_compute + calibration["overhead_seconds"]
     rate = calibration["hourly_usd"]
-    usd = pods * per_pod_total / 3600.0 * rate
+    usd = pods * per_pod_expected / 3600.0 * rate
+    reserve_usd = pods * teardown_reserve_s / 3600.0 * rate
     return {
         "requested_units": float(requested_units),
         "pods": int(pods),
         "compute_seconds_total": compute_s,
-        "per_pod_seconds": per_pod_total,
+        "per_pod_seconds": per_pod_expected + teardown_reserve_s,
+        "per_pod_expected_seconds": per_pod_expected,
         "overhead_seconds_per_pod": calibration["overhead_seconds"],
         "teardown_reserve_s": teardown_reserve_s,
+        "teardown_reserve_usd": reserve_usd,
         "expected_usd": usd,
         "margin": margin,
-        "usd_with_margin": usd * (1.0 + margin),
+        "usd_with_margin": usd * (1.0 + margin) + reserve_usd,
         "usd_per_unit": calibration["usd_per_unit"],
     }
 
@@ -179,6 +193,22 @@ def plan_campaign(spec, calibration, requested_units, ceiling_usd, pods=1,
             "differences do not change seconds per unit."
             % ", ".join(sorted(rep["differences"])))
 
+    # A calibration measured on one card does not price another. The
+    # campaign must be pinned to the card the scout ran on, or the caller
+    # must accept the difference in as many words.
+    measured_on = calibration.get("gpu_used")
+    campaign_gpu = spec["gpu"].get("class")
+    campaign_alts = [g for g in spec["gpu"].get("alternatives", [])
+                     if g != measured_on]
+    if measured_on and not accept_differences and (
+            campaign_gpu != measured_on or campaign_alts):
+        raise CampaignRefused(
+            "the calibration was measured on %s, but the campaign may run on "
+            "%s. Pin the campaign to %s (class, no other alternatives), or "
+            "pass accept_differences=True."
+            % (measured_on, ", ".join([campaign_gpu] + campaign_alts),
+               measured_on))
+
     projection = project_from_calibration(
         calibration, requested_units, pods=pods, margin=margin,
         teardown_reserve_s=teardown_reserve_s)
@@ -186,10 +216,13 @@ def plan_campaign(spec, calibration, requested_units, ceiling_usd, pods=1,
 
     # The largest workload that WOULD fit, as information for the seat.
     # It is a proposal, not an instruction, and nothing here acts on it.
-    budget_per_pod_s = (ceiling_usd / (1.0 + margin)) * 3600.0 / \
-        max(calibration["hourly_usd"], 1e-12) / max(1, pods)
-    usable_s = budget_per_pod_s - calibration["overhead_seconds"] \
-        - teardown_reserve_s
+    # The exact inverse of `usd_with_margin`: margin on the expectation,
+    # reserve added once, outside it.
+    rate = max(calibration["hourly_usd"], 1e-12)
+    reserve_usd = max(1, pods) * teardown_reserve_s / 3600.0 * rate
+    budget_per_pod_s = (max(0.0, ceiling_usd - reserve_usd)
+                        / (1.0 + margin)) * 3600.0 / rate / max(1, pods)
+    usable_s = budget_per_pod_s - calibration["overhead_seconds"]
     affordable_units = max(0.0, usable_s * pods
                            / calibration["seconds_per_unit"])
 

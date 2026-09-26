@@ -6,7 +6,7 @@ superseded/BACKLOG_H0H5_pre-charter_2026-09-25.md). First five start today.
 ODYSSEUS-01 | Run the odysseus/tests suite on a Windows host and commit its receipt | TOOLS | alpha | S | a Windows seat (delegation to M1/M2) | receipt file with python version, OS build, pytest tail
 ODYSSEUS-02 | Run a two-host UDP brain ubu001 <-> ubu002 and verify against the in-process reference | ENGINE | alpha | S | Artemis (node on ubu002) | committed run receipt + verify output + reference match count
 ODYSSEUS-03 | Measure tick rate, datagrams/tick and bytes/tick vs loss rate on one host and commit the table | EVIDENCE | alpha | S | none | odysseus/measurements/ table with commands
-ODYSSEUS-04 | Commit a node install note for Linux and Windows (python only, firewall rule, bind address) | TOOLS | alpha | S | none | odysseus/INSTALL.md
+ODYSSEUS-04 | Commit a node install note for Linux and Windows (python only, firewall rule, bind address) | TOOLS | alpha | S | none | odysseus/INSTALL.md (DONE 2026-09-26, rehearsed on one host)
 ODYSSEUS-05 | Add a cross-host run launcher that starts nodes from a fleet manifest (host, port, shard, cap) | ENGINE | alpha | M | none | odysseus/brain/fleet.py + test with loopback manifest
 ODYSSEUS-06 | Replicate every keyframe and log segment to a second host and prove recovery after deleting the original | ENGINE | beta | M | ODYSSEUS-02 | test that deletes a shard dir and replays from the replica
 ODYSSEUS-07 | Replace the per-shard in-memory log index with an on-disk tick index so logs of millions of ticks open in O(1) | ENGINE | beta | M | none | test opening a 10^6-tick log under a time bound

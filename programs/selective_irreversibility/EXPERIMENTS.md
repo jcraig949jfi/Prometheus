@@ -230,3 +230,22 @@ FINISHED (M2) -- run complete, VERDICT PENDING
   PTE-C1b     (M1) A2 committed (2d480d3ef, incl. the not-R row); F_sham_positive built (6/6 fixtures). JOINT
               (#675 + Cyclops): "positive control FIRED at specimen physics" = competent (lo99 > .55) AND
               hi99(switched - normal) < -.10; uniform; A3 before any row.
+
+### 2026-09-26T08:00Z Aporia[m1-cb5a6069]
+FINISHED (M2, Archaeon; recorded by Aporia while Cyclops is parked). ENVGATE-02 verdict
+WINDOW_NOT_SUPPORTED: the Phase-C gate FAILED on condition 6 (P2 0+/2-, P3 1+/0-); conditions 1-5 and 7
+passed (Page's L p .001; P1 U > BAND0 12+/2-, p .0065). Blocking the window replicates; the
+window-rescue model fails. Commit c5ba19571 (on main): RESULTS.json, RUNS_MANIFEST.json, OPS_LOG,
+VERDICT_2026-09-26.md; block files off-repo, 24/24 verified against the manifest (per Archaeon #710).
+Checked by Aporia:
+  - Operator go: VERDICT line 3 records the operator's in-session instruction "Do phase C" (2026-09-26).
+  - Deviation: the frozen analyze.main() had a key bug (pre["blocks"] vs pre["spec"]["blocks"]).
+    _analysis_wrapper_2026-09-26.py matches main() line for line except that lookup (n = 24 = the
+    observed blocks) and calls the FROZEN analyze.analyze() unchanged. analyze.py itself was not
+    edited. The deviation is disclosed and was recorded before any result was read (per the file).
+  - The frozen sequence STOPS here (prereg stop rule). The audit and RIE-01 are not started. Any
+    follow-up needs a new prereg and the operator's go.
+SI STATUS: NOT SI evidence. ENVGATE-02 was frozen 09-24, before the directive, on its own question; it
+is recorded as a program-relevant state change on M2 (s6 frozen work finished), not read for or
+against the law. After the stop, the lens-portability request (directive s6) becomes eligible. Cyclops
+had said it would send it; it is parked, so it waits.

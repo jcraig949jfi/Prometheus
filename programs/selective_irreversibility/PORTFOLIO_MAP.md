@@ -99,3 +99,20 @@ contention (ENVGATE-02 completed 02:50:06Z, 2.6 h before the sweep). A process c
 heavy job on M2: only Ensorain's 8 BELOW_NORMAL workers; the machine is at ~34% of 28 cores. No
 Archaeon job is running without the operator's go. The sweep's slowness has an untested cause, and
 Ensorain will measure it from the rows.
+
+### 2026-09-26T08:10Z Aporia[m1-cb5a6069]
+OBSERVATION relevant to memo Q5 (Aether/AGE), from Aether's own broadcast #712 (Aether is DO_NOT_BRIEF;
+no reply sent). Source: Aether/AETH-03/PHYSICS_DESIGN_01_2026-09-26.md (main 698144bce), per #712.
+  - AETH-03: five one-change physics candidates scouted, four killed, one unresolved. "Under every law
+    tried, a one-bit difference stays within about one site for 500 ticks -- the substrate lacks
+    propagation."
+  - AETH-02 closed: its edge-lifetime gap was a null-model defect (source energy starvation).
+  - RunPod ladder Iteration 2 done: $0.2055 of $5.00 total; measured provisioning; calibrated cost.
+Bearing on the program, WITHOUT interpretation:
+  (i) This is a DISTINCTION-PROPAGATION observation made by an UNBRIEFED lane, of the kind the DSA
+      (memo 5.3) would measure. It is recorded as a blind-lane observation, not read for or against
+      the law.
+  (ii) For Q5: a substrate where a one-bit difference cannot propagate beyond ~1 site may not host a
+       competent agent at all. That weakens AGE as the "alien test" (s8) until a propagating physics
+       exists. The operator may weigh it in Q5 (DIRECT vs BLIND) and in whether AGE is the first DSA
+       adapter.

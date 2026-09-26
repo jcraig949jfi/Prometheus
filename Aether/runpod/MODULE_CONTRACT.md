@@ -91,6 +91,7 @@ At entry, in the module's working directory:
 | `PROMETHEUS_TELEMETRY_PATH` | a JSON-lines file to append to |
 | `PROMETHEUS_RUN_ID` | the run identity, safe to embed in your own output |
 | `PROMETHEUS_MODULE` | `name@version` |
+| `PROMETHEUS_WORK_UNITS` | `work_units.estimate`, as an integer, when declared. **Read your work count from here** if you want to be scoutable: a scout differs from its campaign ONLY in this number |
 | the allowlisted variables | those of `env_allowlist` that exist on the host, plus all of `env` |
 | **no provider credential** | see below |
 

@@ -3,6 +3,9 @@
     python -m odysseus.brain node   --run DIR --shard S --bind HOST:PORT --peers 0=H:P,1=H:P,... --ticks N
     python -m odysseus.brain local  --run DIR --neurons N --shards S --ticks T [--keyframe K] [--drop P]
     python -m odysseus.brain verify --run DIR     (full replay of every shard, root check per tick)
+    python -m odysseus.brain check  --run DIR --shard S
+                                (one machine, its own shard only: replay it and compare every
+                                 tick to a reference of the whole brain computed locally)
 
 On a fleet, each machine runs one `node`; every machine needs the same
 run.json (created by `init`), and writes only its own shard directory.
@@ -42,6 +45,9 @@ def main(argv=None):
     n.add_argument("--seed", type=int, default=0)
     n.add_argument("--nak-timeout", type=float, default=0.03)
     n.add_argument("--linger", type=float, default=2.0)
+    n.add_argument("--max-wall", type=float, default=900.0,
+                   help="give up if the run has not finished after this many seconds")
+    n.add_argument("--progress", type=int, default=0, help="print a line every N ticks")
 
     lo = sub.add_parser("local")
     lo.add_argument("--run", required=True)
@@ -55,6 +61,10 @@ def main(argv=None):
 
     v = sub.add_parser("verify")
     v.add_argument("--run", required=True)
+
+    c = sub.add_parser("check")
+    c.add_argument("--run", required=True)
+    c.add_argument("--shard", type=int, required=True)
 
     a = ap.parse_args(argv)
 
@@ -72,7 +82,8 @@ def main(argv=None):
         ep = UdpEndpoint(bind=a.bind, drop=a.drop, corrupt=a.corrupt, seed=a.seed)
         try:
             summary = Node(a.run, a.shard, ep, peers, a.ticks,
-                           nak_timeout=a.nak_timeout, linger=a.linger).run()
+                           nak_timeout=a.nak_timeout, linger=a.linger,
+                           max_wall=a.max_wall, progress=a.progress).run()
         finally:
             ep.close()
         print(json.dumps(summary._asdict()))
@@ -104,6 +115,28 @@ def main(argv=None):
         print(json.dumps({"ticks": last + 1, "shards": len(g.players),
                           "root_ok": ok, "error": err}))
         return 0 if ok else 1
+    if a.cmd == "check":
+        from .cluster import reference_run
+        from .player import Player, ReplayDivergence
+        p = Player(a.run, a.shard)
+        ticks = p.last_tick + 1
+        res = {"shard": a.shard, "ticks": ticks, "replay_ok": False,
+               "reference_match": 0, "first_mismatch": None, "error": None}
+        try:
+            p.play()  # every tick checked against the shard's own log
+            res["replay_ok"] = True
+        except ReplayDivergence as e:
+            res["error"] = str(e)
+        ref = reference_run(p.spec, ticks)
+        log = p.log
+        for t in range(ticks):
+            if log.record(t).state_hash == ref.shard_hashes[t][a.shard]:
+                res["reference_match"] += 1
+            elif res["first_mismatch"] is None:
+                res["first_mismatch"] = t
+        p.close()
+        print(json.dumps(res))
+        return 0 if res["replay_ok"] and res["reference_match"] == ticks else 1
     return 2
 
 
