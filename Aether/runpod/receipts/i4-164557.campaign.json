@@ -1,0 +1,70 @@
+{
+  "billing_reconciled": false,
+  "campaign_id": "i4-164557",
+  "distinct_pods": true,
+  "fail_fast": false,
+  "operational_cleanup": true,
+  "result": "PARTIAL",
+  "schema": "prometheus-gpu/campaign-receipt/1",
+  "shards": [
+    {
+      "artifacts_missing": [],
+      "artifacts_verified": [
+        "result.json",
+        "series.jsonl",
+        "ckpt.bin",
+        "telemetry.jsonl"
+      ],
+      "cause": "OK",
+      "gpu_used": "NVIDIA RTX A5000",
+      "operational_cleanup": true,
+      "pod_ids": [
+        "r9aobv18by0sis"
+      ],
+      "result": "OK",
+      "run_id": "i4-164557-a",
+      "shard": "a",
+      "usd_estimated": 0.01967
+    },
+    {
+      "artifacts_missing": [],
+      "artifacts_verified": [
+        "result.json",
+        "series.jsonl",
+        "ckpt.bin",
+        "telemetry.jsonl"
+      ],
+      "cause": "OK",
+      "gpu_used": "NVIDIA GeForce RTX 4090",
+      "operational_cleanup": true,
+      "pod_ids": [
+        "9ljmtmdlx15b6v"
+      ],
+      "result": "OK",
+      "run_id": "i4-164557-b",
+      "shard": "b",
+      "usd_estimated": 0.02571
+    },
+    {
+      "artifacts_missing": [
+        "result.json",
+        "ckpt.bin"
+      ],
+      "artifacts_verified": [
+        "series.jsonl",
+        "telemetry.jsonl"
+      ],
+      "cause": "MODULE_EXITED_WITHOUT_END",
+      "gpu_used": "NVIDIA L4",
+      "operational_cleanup": true,
+      "pod_ids": [
+        "c2mn7dix9gtgnc"
+      ],
+      "result": "FAILED",
+      "run_id": "i4-164557-c",
+      "shard": "c",
+      "usd_estimated": 0.01158
+    }
+  ],
+  "usd_estimated_total": 0.05696
+}
