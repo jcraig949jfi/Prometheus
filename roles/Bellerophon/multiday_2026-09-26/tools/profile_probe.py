@@ -3,11 +3,11 @@ import cProfile, io, pathlib, pstats, sys, argparse
 ROOT = pathlib.Path(__file__).resolve().parents[4]; sys.path.insert(0, str(ROOT))
 from prometheus.z80atlas import coupling_campaign as CC, grammar as G
 from prometheus.z80atlas.world import World
-ap = argparse.ArgumentParser(); ap.add_argument("--ticks", type=int, default=1000); ap.add_argument("--out", required=True); a = ap.parse_args()
+ap = argparse.ArgumentParser(); ap.add_argument("--ticks", type=int, default=1000); ap.add_argument("--out", required=True); ap.add_argument("--seed", type=int, default=None); a = ap.parse_args()
 vec = dict(CC.COMMON, task="ECHO", init="SEEDED_REPLICATOR")
 cfg = G.to_config(vec, a.ticks, CC.CELLS, CC.BUDGET, ())
 for k, v in dict(CC.V3, **CC.K["K40"], coupling="ON").items(): setattr(cfg, k, v)
-w = World(cfg, 7_600_000_000_000 + a.ticks)
+w = World(cfg, a.seed if a.seed is not None else 7_600_000_000_000 + a.ticks)
 pr = cProfile.Profile(); pr.enable()
 import time; marks = []; t0 = time.time()
 for i in range(a.ticks):

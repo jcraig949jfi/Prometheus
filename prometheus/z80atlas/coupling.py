@@ -164,13 +164,13 @@ class Competence:
     def of(self, tape: bytes) -> tuple:
         r = self.cache.get(tape)
         if r is None:
-            from prometheus.z80atlas.tasks import verify_tape, panel
+            from prometheus.z80atlas.tasks import verify_exact
             from prometheus.z80atlas import vm
             cfg = self.w.cfg
-            v = verify_tape(tape, self.w.L, self.task, cfg.read_gate, cfg.budget, cfg.layout, cfg.allow_copyall)
+            exact = verify_exact(tape, self.w.L, self.task, cfg.read_gate, cfg.budget, cfg.layout, cfg.allow_copyall)
             mem = bytearray(256); mem[:self.w.L] = tape
             tr = vm.execute(mem, self.w.L, 0, cfg.budget, [42], allow_copyall=cfg.allow_copyall, ldir=cfg.ldir, undefined=cfg.undefined_op)
-            r = (bool(v["exact"]), bool(tr.outputs and tr.outputs[0] == IRRELEVANT_BYTE))
+            r = (bool(exact), bool(tr.outputs and tr.outputs[0] == IRRELEVANT_BYTE))
             if len(self.cache) < 200000:
                 self.cache[tape] = r
         return r

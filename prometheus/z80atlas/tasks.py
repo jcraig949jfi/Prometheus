@@ -175,3 +175,28 @@ def verify_tape(tape: bytes, L: int, task: Task, read_gate: str, budget: int = 2
             outs, fi, fo = t1.outputs, t1.first_in_step, t1.first_out_step
         right += score(task, outs, task.expected(inputs), "ATOMIC", read_gate, fo, fi) >= 0.999
     return {"exact": right == len(P), "accuracy": right / len(P), "n": len(P)}
+
+
+def verify_exact(tape: bytes, L: int, task: Task, read_gate: str, budget: int = 256, layout: str = "SHARED", allow_copyall: bool = False) -> bool:
+    """verify_tape(...)["exact"] with an early exit at the first wrong panel answer (multi-day campaign, 2026-09-26).
+    Identical boolean by construction (each panel input is scored independently on a fresh memory image); it exists
+    because the measurement-only competence tracker spent ~77% of long coupled runs re-verifying mutant tapes.
+    Equivalence is tested against verify_tape on random, fixture and mutant tapes (tests/test_verify_exact.py)."""
+    from prometheus.z80atlas import vm
+    tape = bytes(tape[:L]) + bytes(max(0, L - len(tape)))
+    for inputs in panel(task):
+        mem = bytearray(256); mem[:L] = tape
+        for k, v in enumerate(inputs):
+            mem[vm.IN_BASE + k] = v
+        if layout == "SEPARATED":
+            t1 = vm.execute(mem, L, 0, budget // 2, inputs, region=(0, L // 2), allow_copyall=allow_copyall)
+            t2 = vm.execute(mem, L, L // 2, budget // 2, inputs, region=(L // 2, L), allow_copyall=allow_copyall)
+            outs = t1.outputs + t2.outputs
+            fi = t1.first_in_step if t1.first_in_step is not None else (None if t2.first_in_step is None else t2.first_in_step + t1.steps)
+            fo = t1.first_out_step if t1.first_out_step is not None else (None if t2.first_out_step is None else t2.first_out_step + t1.steps)
+        else:
+            t1 = vm.execute(mem, L, 0, budget, inputs, allow_copyall=allow_copyall, stop_at_first_out=True)
+            outs, fi, fo = t1.outputs, t1.first_in_step, t1.first_out_step
+        if not score(task, outs, task.expected(inputs), "ATOMIC", read_gate, fo, fi) >= 0.999:
+            return False
+    return True
