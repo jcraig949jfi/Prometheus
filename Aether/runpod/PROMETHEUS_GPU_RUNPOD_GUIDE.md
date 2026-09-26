@@ -192,6 +192,49 @@ and `--calibrate` refuses to price a different one. A scout of under a
 minute measures a COLD card: on an A4000 at its power cap, throughput
 settled ~2% lower within three minutes.
 
+### The easy path: one command (Iteration 3)
+
+```bash
+python -u flight.py mod --go --auto --units <campaign units>     --preregistered <your spec-sheet estimate, $> --ceiling 0.50 > auto.log 2>&1
+```
+
+Scout (unpinned, walking your alternatives), calibrate on the card it
+got, fly the campaign pinned to that card, and -- if that card is refused
+for capacity -- re-scout once and try again. The campaign receipt carries
+`estimates`: your spec-sheet estimate, the scout-calibrated one, the
+actual, and both errors. Iteration 2's L4 is why this is the default: the
+spec sheet was 37% low, the scout 5.9% high.
+
+### Several pods at once (Iteration 4)
+
+```bash
+python flight.py mod --rehearse --fanout shards.json     # $0, fake provider
+python -u flight.py mod --go --fanout shards.json > fan.log 2>&1
+```
+
+`shards.json`: `{"campaign_id": "...", "budget_usd_per_shard": 0.08,
+"shards": [{"id": "a", "env": {...}, "units": 240}, ...]}`. Each shard is an
+ordinary single-pod run with its own run id, ledger, receipt and cleanup.
+Before ANY shard creates, the account must hold nothing but this
+campaign's pods. A failed shard is isolated and its siblings finish;
+`--fail-fast` is opt-in. The campaign receipt is `PARTIAL` when some shards
+failed, never `OK`.
+
+### If the controller dies
+
+Every run keeps a ledger in `Aether/runpod/.ledger/<run_id>.json`
+(gitignored: it holds the artifact token). A controller that is killed
+leaves its pod running and billing; recover with
+
+```bash
+python -u flight.py mod --resume .ledger/<run_id>.json > resume.log 2>&1
+```
+
+Resume never creates. It checks the pod still exists AND still answers to
+this run's name before touching it, then continues where the ledger
+stopped and writes a normal receipt, with cost counted from the original
+create.
+
 ## 9. Telemetry
 
 Append JSON lines to `$PROMETHEUS_TELEMETRY_PATH`. Every record should
@@ -254,6 +297,14 @@ Read `FAILURE_PLAYBOOK.md`. The one rule worth memorising:
 > A failed create does not tell you whether a pod exists. Never retry a
 > create blindly. Read the inventory first; adopt what is there; and if
 > the inventory read ALSO fails, stop rather than guess.
+
+Since Iteration 3, "adopt what is there" means adopt only a pod whose NAME
+is this run's id: another seat's pod is never adopted, and a listing that
+carries no names makes the outcome ambiguous. A run ends with a
+`disposition` block that answers six questions -- what the controller
+believes, what the provider believes, what evidence was retained, whether
+it can resume, whether cleanup is safe, and which statements are ABSENCE
+and which are only UNCERTAINTY. Read it first when a run ends badly.
 
 ## 13. Your own metrics
 
