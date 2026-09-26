@@ -34,7 +34,7 @@ def one(job, max_epochs=None):
     t0 = time.time(); kw = dict(job["kwargs"])
     if max_epochs: kw["max_epochs"] = max_epochs
     rec = A.replay(job["cell"], job["seed"], job["tier"], kw); rec["wall_s"] = round(time.time() - t0, 1)
-    name = "%s__%s" % (job["specimen"], job["arm"])
+    name = "%s__s%d__%s" % (job["specimen"], job["seed"], job["arm"])
     if not max_epochs:
         EVID.mkdir(parents=True, exist_ok=True)
         (EVID / (name + ".replay.json")).write_text(json.dumps({"job": job, **{k: v for k, v in rec.items() if k != "summary"},
