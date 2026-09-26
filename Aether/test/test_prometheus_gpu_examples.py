@@ -37,6 +37,13 @@ EXAMPLES = {
     "param_sweep": {"SWEEP": True,
                     "env": {"SWEEP_CANDIDATES": "8", "SWEEP_GRID": "256"},
                     "result": "sweep.json", "banner": "PARAM_SWEEP_OK"},
+    # Iteration 2's load module, at a size a CPU finishes in a second. The
+    # work-unit count arrives the way the platform sends it.
+    "gpu_load": {"SWEEP": False,
+                 "env": {"PROMETHEUS_WORK_UNITS": "6", "LOAD_N": "64",
+                         "LOAD_BALLAST_MB": "1", "LOAD_ARTIFACT_MB": "1",
+                         "LOAD_REPORT_EVERY": "2"},
+                 "result": "result.json", "banner": "GPU_LOAD_OK"},
 }
 
 

@@ -48,6 +48,11 @@ from . import telemetry as tel_mod
 # "out/" prefix that the server root already accounted for.
 TELEMETRY_PATH = "telemetry.jsonl"
 STAGES_PATH = "stages.jsonl"
+# Written by the platform sampler, not the module (dryrun.PLATFORM_SAMPLER).
+PLATFORM_PATH = "platform.jsonl"
+# Served by the artifact server: the pod's clock at the instant of asking.
+CLOCK_PATH = "_clock"
+CLOCK_SAMPLES = 5
 
 # Pod stages, in order. The intervals between consecutive
 # stages are what the cost model's overhead terms are made of.
@@ -80,7 +85,7 @@ def parse_stages(text):
     return out
 
 
-def lifecycle(marks, stages, telemetry_summary=None):
+def lifecycle(marks, stages, telemetry_summary=None, clock_sync=None):
     """Named intervals, each labelled with the clock it came from.
 
     Pod-to-pod intervals are sound. Controller-to-controller intervals are
@@ -128,15 +133,117 @@ def lifecycle(marks, stages, telemetry_summary=None):
             "controller instant subtracted from a pod instant; the two "
             "clocks are not synchronised and the offset is not measured here")
 
+    # With a MEASURED offset the cross-clock interval becomes a measurement
+    # with an error bar. Iteration 1 could only bound provisioning at <= 24 s
+    # because the raw subtraction above assumes the clocks agree.
+    if clock_sync and clock_sync.get("offset_s") is not None:
+        out["synchronised"] = {
+            "offset_s": clock_sync["offset_s"],
+            "uncertainty_s": clock_sync["uncertainty_s"],
+            "method": clock_sync.get("method"),
+        }
+        if "create_answered" in marks and "boot" in stages:
+            boot_ctl = stages["boot"] - clock_sync["offset_s"]
+            out["synchronised"]["provision_s"] = round(
+                boot_ctl - marks["create_answered"], 3)
+        if "create_answered" in marks and "module_start" in stages:
+            out["synchronised"]["accepted_to_module_start_s"] = round(
+                stages["module_start"] - clock_sync["offset_s"]
+                - marks["create_answered"], 3)
+
     if telemetry_summary and telemetry_summary.get("elapsed_s"):
         out["module_reported_elapsed_s"] = telemetry_summary["elapsed_s"]
     return out
 
 
+def estimate_offset(samples):
+    """Pod-minus-controller clock offset from (t_send, pod_epoch, t_recv).
+
+    The pod read its clock somewhere inside the round trip, so the offset
+    is pod_epoch - midpoint, known to within half the round trip. The
+    sample with the SHORTEST round trip gives the tightest bound, which is
+    the standard NTP-style estimate. Returns None without usable samples.
+    """
+    usable = [(t1 - t0, pod - (t0 + t1) / 2.0)
+              for t0, pod, t1 in samples
+              if pod is not None and t1 >= t0]
+    if not usable:
+        return None
+    rtt, offset = min(usable)
+    return {"offset_s": round(offset, 4),
+            "uncertainty_s": round(rtt / 2.0, 4),
+            "rtt_min_s": round(rtt, 4),
+            "samples": len(usable),
+            "method": "min-RTT midpoint against the pod's /_clock"}
+
+
+def summarise_platform(text):
+    """Peak and mean of what the platform sampler recorded. Never raises."""
+    import json as _json
+    recs = []
+    for line in str(text or "").splitlines():
+        try:
+            rec = _json.loads(line)
+        except ValueError:
+            continue
+        if isinstance(rec, dict) and rec.get("kind") == "platform":
+            recs.append(rec)
+    if not recs:
+        return {"samples": 0}
+
+    def gpu_vals(key):
+        vals = []
+        for r in recs:
+            for g in (r.get("gpus") or []):
+                if g.get(key) is not None:
+                    vals.append(float(g[key]))
+        return vals
+
+    def host_vals(key):
+        return [float(r[key]) for r in recs if r.get(key) is not None]
+
+    def peak(vals):
+        return max(vals) if vals else None
+
+    def mean(vals):
+        return round(sum(vals) / len(vals), 4) if vals else None
+
+    mem = gpu_vals("mem_used_mib")
+    util = gpu_vals("util_pct")
+    avail = host_vals("mem_available_b")
+    total = host_vals("mem_total_b")
+    costs = host_vals("sample_cost_s")
+    free = host_vals("disk_free_b")
+    names = sorted({g.get("name") for r in recs for g in (r.get("gpus") or [])
+                    if g.get("name")})
+    return {
+        "samples": len(recs),
+        "span_s": round(float(recs[-1].get("t_elapsed_s", 0))
+                        - float(recs[0].get("t_elapsed_s", 0)), 3),
+        "gpu_names": names,
+        "gpu_mem_used_mib_peak": peak(mem),
+        "gpu_mem_total_mib": peak(gpu_vals("mem_total_mib")),
+        "gpu_util_pct_mean": mean(util),
+        "gpu_util_pct_peak": peak(util),
+        "gpu_temp_c_peak": peak(gpu_vals("temp_c")),
+        "gpu_power_w_peak": peak(gpu_vals("power_w")),
+        "gpu_power_w_mean": mean(gpu_vals("power_w")),
+        "host_load1_peak": peak(host_vals("load1")),
+        "host_mem_used_b_peak": (peak([t - a for t, a in zip(total, avail)])
+                                 if total and avail else None),
+        "disk_free_b_min": min(free) if free else None,
+        "artifact_dir_b_peak": peak(host_vals("artifact_dir_b")),
+        "sample_cost_s_mean": mean(costs),
+        "sample_cost_s_peak": peak(costs),
+        "gpu_errors": sorted({r["gpu_error"] for r in recs
+                              if r.get("gpu_error")}),
+    }
+
+
 class Controller(object):
     def __init__(self, provider, spec, module_dir, budget_usd,
                  transport_factory=dryrun.local_transport, seat="Aether",
-                 poll_s=30.0, ready_timeout_s=900.0,
+                 poll_s=30.0, ready_timeout_s=900.0, ready_poll_s=None,
                  stall_timeout_s=300.0, artifact_token=None,
                  now=time.time, sleep=time.sleep, log=None):
         self.provider = provider
@@ -146,6 +253,12 @@ class Controller(object):
         self.transport_factory = transport_factory
         self.seat = seat
         self.poll_s = float(poll_s)
+        # The ready wait polls faster than the watch. Iteration 1 polled
+        # both at 20 s, and that granularity was most of the uncertainty
+        # in its provisioning figure. Polling is a few HTTP reads; the
+        # pod bills the same whether or not we ask.
+        self.ready_poll_s = float(ready_poll_s if ready_poll_s is not None
+                                  else min(self.poll_s, 5.0))
         self.ready_timeout_s = float(ready_timeout_s)
         # How long with NO bootstrap progress before the pod is given up on.
         # This, not the total elapsed time, is what distinguishes a stuck pod
@@ -165,6 +278,12 @@ class Controller(object):
         self.gpu_used = None
         self.stages_seen = {}
         self.stages_retrieved = {}
+        self.clock_sync = None
+        self.clock_sync_end = None
+        self.platform_text = ""
+        # Retrieved bytes, kept so a caller can store the evidence itself.
+        # The receipt carries only size and digest.
+        self.artifact_blobs = {}
 
     # ------------------------------------------------------------ helpers
     def _hourly(self):
@@ -307,7 +426,11 @@ class Controller(object):
             receipt_obj["gpu_used"] = self.gpu_used
             receipt_obj["lifecycle"] = lifecycle(
                 self.marks, receipt_obj.get("pod_stages"),
-                receipt_obj.get("telemetry_summary"))
+                receipt_obj.get("telemetry_summary"),
+                clock_sync=self.clock_sync)
+            receipt_obj["clock_sync"] = {"start": self.clock_sync,
+                                         "end": self.clock_sync_end}
+            receipt_obj["ready_poll_s"] = self.ready_poll_s
         rc.validate(receipt_obj)
         return receipt_obj
 
@@ -379,10 +502,16 @@ class Controller(object):
         while self._now() < deadline:
             if self._fetch(TELEMETRY_PATH) is not None:
                 self._mark("first_telemetry")
+                if self.clock_sync is None:
+                    self.clock_sync = self.measure_clock()
                 return True
 
             stages_text = self._fetch(STAGES_PATH)
             if stages_text is not None:
+                if "first_contact" not in self.marks:
+                    self._mark("first_contact")
+                if self.clock_sync is None:
+                    self.clock_sync = self.measure_clock()
                 stages = parse_stages(stages_text)
                 self.stages_seen = stages
                 fresh = [st for st in STAGE_ORDER
@@ -410,10 +539,37 @@ class Controller(object):
                     return False
             except prov.ProviderError:
                 pass            # a control-plane blip is not a verdict
-            self._sleep(self.poll_s)
+            self._sleep(self.ready_poll_s)
         self._log("ready ceiling %.0f s reached; last stage was %s"
                   % (self.ready_timeout_s, self.last_stage() or "none"))
         return False
+
+    def measure_clock(self, samples=CLOCK_SAMPLES):
+        """Pod clock offset, measured, with its uncertainty. Never raises.
+
+        Uses the controller's own `now`, so under a fake clock it is as
+        deterministic as everything else here.
+        """
+        import json as _json
+        rows = []
+        for _ in range(samples):
+            t0 = self._now()
+            text = self._fetch(CLOCK_PATH)
+            t1 = self._now()
+            pod = None
+            if text is not None:
+                try:
+                    pod = float(_json.loads(text)["epoch"])
+                except (ValueError, KeyError, TypeError):
+                    pod = None
+            rows.append((t0, pod, t1))
+        found = estimate_offset(rows)
+        if found:
+            self._log("pod clock offset %+.3f s (+/- %.3f s)"
+                      % (found["offset_s"], found["uncertainty_s"]))
+        else:
+            self._log("pod clock unavailable; provisioning stays cross-clock")
+        return found
 
     def last_stage(self, stages=None):
         """The furthest bootstrap stage the pod reported reaching.
@@ -430,6 +586,14 @@ class Controller(object):
         """Poll until the module finishes, the budget runs out, or time does."""
         hourly = self._hourly()
         runtime_cap = float(self.spec["max_runtime_s"])
+        # `max_runtime_s` bounds the MODULE, which is what the cost model
+        # prices it as (compute + overhead, added separately). It used to
+        # be measured from the create, so a bootstrap that spent 305 s
+        # installing wheels -- observed in Iteration 1 -- ate the module's
+        # whole allowance, and a scout (whose bound is a small fraction of
+        # its campaign's) would have timed out before running at all.
+        # Money is bounded separately and from the create: the budget.
+        module_origin = self.marks.get("first_telemetry", started)
         while True:
             elapsed = self._now() - started
             spend = elapsed / 3600.0 * hourly
@@ -437,7 +601,7 @@ class Controller(object):
                 self._log("BUDGET CEILING $%.4f >= $%.4f after %.0f s"
                           % (spend, self.budget_usd, elapsed))
                 return "ABORTED"
-            if elapsed >= runtime_cap:
+            if self._now() - module_origin >= runtime_cap:
                 self._log("max_runtime_s %.0f reached" % runtime_cap)
                 return "TIMEOUT"
             text = self._fetch(TELEMETRY_PATH)
@@ -464,18 +628,42 @@ class Controller(object):
         text = self._fetch(TELEMETRY_PATH)
         if text is not None:
             self.telemetry_text = text
+        platform = self._fetch(PLATFORM_PATH)
+        if platform is not None:
+            self.platform_text = platform
+        receipt_obj["platform_summary"] = summarise_platform(
+            self.platform_text)
         got, missing = [], []
         for path in self.spec["artifacts"]:
+            t0 = self._now()
             blob = self._fetch_bytes(path)
+            t1 = self._now()
             if blob is None:
                 missing.append(path)
                 continue
+            self.artifact_blobs[path] = blob
             got.append({"path": path, "bytes": len(blob),
-                        "sha256": hashlib.sha256(blob).hexdigest()})
+                        "sha256": hashlib.sha256(blob).hexdigest(),
+                        "fetch_s": round(t1 - t0, 4)})
         self._mark("retrieve_end")
+        if self.clock_sync is not None:
+            # A second offset at the end bounds the drift over the run.
+            self.clock_sync_end = self.measure_clock()
         receipt_obj["artifacts"] = got
         receipt_obj["artifacts_missing"] = missing
         receipt_obj["artifact_bytes_total"] = sum(a["bytes"] for a in got)
+        fetch_s = sum(a["fetch_s"] for a in got)
+        largest = max(got, key=lambda a: a["bytes"]) if got else None
+        receipt_obj["artifact_transfer"] = {
+            "bytes": receipt_obj["artifact_bytes_total"],
+            "seconds": round(fetch_s, 4),
+            "bytes_per_s": (round(receipt_obj["artifact_bytes_total"]
+                                  / fetch_s, 1) if fetch_s > 0 else None),
+            "largest": largest,
+            "largest_bytes_per_s": (
+                round(largest["bytes"] / largest["fetch_s"], 1)
+                if largest and largest["fetch_s"] > 0 else None),
+        }
         if missing:
             # A missing artifact is a question, and the pod can still answer
             # it. The server's document root is the artifact directory, so

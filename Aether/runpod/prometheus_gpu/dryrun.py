@@ -46,8 +46,10 @@ def run_id_for(spec, now=None):
 
 
 ARTIFACT_SERVER = '''import http.server
+import json
 import os
 import socketserver
+import time
 
 ROOT = os.environ.get("PROMETHEUS_ARTIFACT_DIR", "/app/out")
 TOKEN = os.environ.get("PROMETHEUS_ARTIFACT_TOKEN", "")
@@ -64,6 +66,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if TOKEN and self.headers.get("Authorization") != "Bearer " + TOKEN:
             self.send_error(401, "artifact token required")
             return
+        if self.path.split("?")[0] == "/_clock":
+            # The pod's clock, read at the instant of the request, so the
+            # controller can measure the offset between the two machines
+            # instead of subtracting one clock from the other and hoping.
+            body = json.dumps({"epoch": time.time()}).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+            return
         super().do_GET()
 
     def log_message(self, *a):
@@ -74,6 +88,151 @@ socketserver.TCPServer.allow_reuse_address = True
 with socketserver.TCPServer(("", PORT), Handler) as httpd:
     httpd.serve_forever()
 '''
+
+
+PLATFORM_FILE = "platform.jsonl"
+
+# Platform telemetry, sampled by the PLATFORM rather than by the module, so
+# every run gets GPU memory, utilisation, temperature, power, host CPU/RAM
+# and disk without a seat writing a line of it. It never raises: a sampler
+# that crashed would be a monitor that looks alive and records nothing
+# (base rule 7), so every failure becomes a field in the record instead.
+# `sample_cost_s` is the sampler's own cost, recorded on every record, so
+# observer overhead is a measurement rather than an assumption.
+PLATFORM_SAMPLER = '''import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+
+OUT = os.environ.get("PROMETHEUS_ARTIFACT_DIR", "/app/out")
+PATH = os.path.join(OUT, "platform.jsonl")
+INTERVAL = float(os.environ.get("PROMETHEUS_PLATFORM_INTERVAL_S", "5"))
+ONCE = os.environ.get("PROMETHEUS_PLATFORM_ONCE") == "1"
+ORIGIN = time.monotonic()
+QUERY = ("name,memory.used,memory.total,utilization.gpu,temperature.gpu,"
+         "power.draw")
+
+
+def num(text):
+    try:
+        return float(text)
+    except (TypeError, ValueError):
+        return None
+
+
+def gpus():
+    try:
+        out = subprocess.run(
+            ["nvidia-smi", "--query-gpu=" + QUERY,
+             "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=10)
+    except Exception as exc:
+        return None, type(exc).__name__
+    if out.returncode:
+        return None, "nvidia-smi rc=%d" % out.returncode
+    rows = []
+    for line in out.stdout.strip().splitlines():
+        parts = [p.strip() for p in line.split(",")]
+        if len(parts) < 6:
+            continue
+        rows.append({"name": parts[0], "mem_used_mib": num(parts[1]),
+                     "mem_total_mib": num(parts[2]),
+                     "util_pct": num(parts[3]), "temp_c": num(parts[4]),
+                     "power_w": num(parts[5])})
+    return rows, None
+
+
+def host():
+    out = {}
+    try:
+        out["load1"] = os.getloadavg()[0]
+        out["cpus"] = os.cpu_count()
+    except Exception as exc:
+        out["load_error"] = type(exc).__name__
+    try:
+        mem = {}
+        with open("/proc/meminfo") as fh:
+            for line in fh:
+                key, _, rest = line.partition(":")
+                mem[key] = int(rest.split()[0]) * 1024
+        out["mem_total_b"] = mem.get("MemTotal")
+        out["mem_available_b"] = mem.get("MemAvailable")
+    except Exception as exc:
+        out["mem_error"] = type(exc).__name__
+    try:
+        usage = shutil.disk_usage(OUT)
+        out["disk_used_b"] = usage.used
+        out["disk_free_b"] = usage.free
+    except Exception as exc:
+        out["disk_error"] = type(exc).__name__
+    try:
+        total = 0
+        for root, _dirs, files in os.walk(OUT):
+            for name in files:
+                total += os.path.getsize(os.path.join(root, name))
+        out["artifact_dir_b"] = total
+    except Exception as exc:
+        out["artifact_error"] = type(exc).__name__
+    return out
+
+
+def main():
+    os.makedirs(OUT, exist_ok=True)
+    seq = 0
+    while True:
+        t0 = time.monotonic()
+        rows, err = gpus()
+        rec = {"kind": "platform",
+               "t_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+               "t_elapsed_s": round(t0 - ORIGIN, 3),
+               "epoch": time.time(), "seq": seq, "gpus": rows}
+        if err:
+            rec["gpu_error"] = err
+        rec.update(host())
+        rec["sample_cost_s"] = round(time.monotonic() - t0, 4)
+        with open(PATH, "a") as fh:
+            fh.write(json.dumps(rec) + "\\n")
+        seq += 1
+        if ONCE:
+            return 0
+        time.sleep(max(0.0, INTERVAL - (time.monotonic() - t0)))
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except Exception:
+        sys.exit(0)
+'''
+
+
+def sampler_prelude(interval_s):
+    """Write and start the platform sampler, detached from `set -e`.
+
+    Started after the artifact server and before the fetch, so the
+    bootstrap itself -- including a dependency install that has measured
+    anywhere from 6 s to 305 s -- is on the record.
+    """
+    return ["cat > /app/_sample.py <<'PROM_SAMPLER_EOF'",
+            PLATFORM_SAMPLER.rstrip("\n"),
+            "PROM_SAMPLER_EOF",
+            "PROMETHEUS_PLATFORM_INTERVAL_S=%s python3 -u /app/_sample.py "
+            "> /dev/null 2>&1 &" % _interval_text(interval_s)]
+
+
+def _interval_text(value):
+    value = float(value)
+    return ("%d" % value) if value == int(value) else ("%g" % value)
+
+
+def platform_interval(spec):
+    """Seconds between platform samples. `telemetry.platform_interval_s`,
+    else the module's own telemetry interval, never below 1 s."""
+    tel = spec["telemetry"]
+    return max(1.0, float(tel.get("platform_interval_s",
+                                  tel.get("interval_s", 15))))
 
 
 def server_prelude():
@@ -122,6 +281,7 @@ def build_bootstrap(spec, run_meta, transport):
         "stage boot",
     ] + server_prelude() + [
         "stage server_up",
+    ] + sampler_prelude(platform_interval(spec)) + [
         transport["fetch_cmd"],
         "stage fetched",
         "printf '%%s  %%s\\n' '%s' '%s' > bundle.sha256"

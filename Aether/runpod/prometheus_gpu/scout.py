@@ -100,7 +100,7 @@ def representativeness(scout, campaign):
 
 
 def calibrate(work_units_done, elapsed_seconds, spec, hourly=None,
-              overhead_seconds=None, source="scout"):
+              overhead_seconds=None, source="scout", gpu_used=None):
     """Throughput and unit cost MEASURED, with overhead kept separate.
 
     `elapsed_seconds` is compute time only -- the module's own start-to-end
@@ -130,6 +130,9 @@ def calibrate(work_units_done, elapsed_seconds, spec, hourly=None,
         "usd_per_unit": per_unit_s / 3600.0 * rate,
         "overhead_seconds": overhead,
         "measured_with_instrumentation": True,
+        # The card the scout ACTUALLY got. A spec may declare alternatives,
+        # and seconds per unit on an RTX 4090 say little about an A4000.
+        "gpu_used": gpu_used or gpu.get("class"),
     }
 
 
@@ -178,6 +181,22 @@ def plan_campaign(spec, calibration, requested_units, ceiling_usd, pods=1,
             "accept_differences=True to say in as many words that these "
             "differences do not change seconds per unit."
             % ", ".join(sorted(rep["differences"])))
+
+    # A calibration measured on one card does not price another. The
+    # campaign must be pinned to the card the scout ran on, or the caller
+    # must accept the difference in as many words.
+    measured_on = calibration.get("gpu_used")
+    campaign_gpu = spec["gpu"].get("class")
+    campaign_alts = [g for g in spec["gpu"].get("alternatives", [])
+                     if g != measured_on]
+    if measured_on and not accept_differences and (
+            campaign_gpu != measured_on or campaign_alts):
+        raise CampaignRefused(
+            "the calibration was measured on %s, but the campaign may run on "
+            "%s. Pin the campaign to %s (class, no other alternatives), or "
+            "pass accept_differences=True."
+            % (measured_on, ", ".join([campaign_gpu] + campaign_alts),
+               measured_on))
 
     projection = project_from_calibration(
         calibration, requested_units, pods=pods, margin=margin,

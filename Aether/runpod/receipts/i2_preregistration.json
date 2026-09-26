@@ -1,0 +1,118 @@
+{
+  "iteration": 2,
+  "lifecycle_predictions": {
+    "artifact_transfer": {
+      "falsified_if": "< 1 MB/s",
+      "prediction": ">= 1 MB/s for the 8 MB state.bin through the RunPod proxy"
+    },
+    "clock_offset": {
+      "falsified_if": "uncertainty >= 0.5 s",
+      "prediction": "|offset| < 5 s with uncertainty < 0.5 s"
+    },
+    "overhead_fraction_campaign": {
+      "falsified_if": ">= 25%",
+      "prediction": "< 25% on every declared GPU"
+    },
+    "provision_s": {
+      "falsified_if": "synchronised provision_s outside [5, 60] s",
+      "prediction": "between 9 and 24 s (Iteration 1 bound)"
+    }
+  },
+  "module": "gpu-load@1",
+  "overhead_basis": "cost.OVERHEAD_S as committed after Iteration 1 (35.0 s)",
+  "per_flight_budget_usd": {
+    "campaign": 0.25,
+    "scout": 0.15
+  },
+  "per_gpu": {
+    "NVIDIA A40": {
+      "campaign": {
+        "compute_s": 294.0,
+        "expected_usd": 0.0448,
+        "overhead_s": 35.0,
+        "units": 6000
+      },
+      "fp32_peak_tflops_spec_sheet": 37.4,
+      "scout": {
+        "compute_s": 14.7,
+        "expected_usd": 0.0068,
+        "overhead_s": 35.0,
+        "units": 300
+      },
+      "seconds_per_matmul": 0.049
+    },
+    "NVIDIA GeForce RTX 4090": {
+      "campaign": {
+        "compute_s": 133.1,
+        "expected_usd": 0.0159,
+        "overhead_s": 35.0,
+        "units": 6000
+      },
+      "fp32_peak_tflops_spec_sheet": 82.6,
+      "scout": {
+        "compute_s": 6.7,
+        "expected_usd": 0.0039,
+        "overhead_s": 35.0,
+        "units": 300
+      },
+      "seconds_per_matmul": 0.02219
+    },
+    "NVIDIA L4": {
+      "campaign": {
+        "compute_s": 362.9,
+        "expected_usd": 0.0475,
+        "overhead_s": 35.0,
+        "units": 6000
+      },
+      "fp32_peak_tflops_spec_sheet": 30.3,
+      "scout": {
+        "compute_s": 18.1,
+        "expected_usd": 0.0063,
+        "overhead_s": 35.0,
+        "units": 300
+      },
+      "seconds_per_matmul": 0.06048
+    },
+    "NVIDIA RTX A4000": {
+      "campaign": {
+        "compute_s": 572.7,
+        "expected_usd": 0.0287,
+        "overhead_s": 35.0,
+        "units": 6000
+      },
+      "fp32_peak_tflops_spec_sheet": 19.2,
+      "scout": {
+        "compute_s": 28.6,
+        "expected_usd": 0.003,
+        "overhead_s": 35.0,
+        "units": 300
+      },
+      "seconds_per_matmul": 0.09544
+    },
+    "NVIDIA RTX A5000": {
+      "campaign": {
+        "compute_s": 395.5,
+        "expected_usd": 0.0311,
+        "overhead_s": 35.0,
+        "units": 6000
+      },
+      "fp32_peak_tflops_spec_sheet": 27.8,
+      "scout": {
+        "compute_s": 19.8,
+        "expected_usd": 0.004,
+        "overhead_s": 35.0,
+        "units": 300
+      },
+      "seconds_per_matmul": 0.06592
+    }
+  },
+  "schema": "prometheus-gpu/preregistration/1",
+  "spend_cap_usd": 1.0,
+  "workload": {
+    "assumed_efficiency_of_fp32_peak": 0.6,
+    "basis": "spec-sheet FP32 peak x an ASSUMED 0.60 efficiency; this is a guess written down so the scout can be scored against it, not a measurement",
+    "flop_per_matmul": 1099511627776,
+    "matmul_n": 8192
+  },
+  "written_utc": "2026-09-26 before any Iteration 2 flight"
+}
