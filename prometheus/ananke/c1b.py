@@ -400,6 +400,18 @@ def run_fixtures(device="cpu", M: int = H_WORLDS) -> dict:
     out["F_DA"] = {"pass": all(chk.values()), "checks": chk,
                    "acc": {k: acc(v["run"]) for k, v in res.items()}}
 
+    # F-sham-positive (A1.1): relays must be re-armed by a packet in flight
+    # across the ITI. The ITI flush must drop it.
+    ph = plants.c1b_echo_physics().replace(prog_len=64)
+    g = plants.sham_positive_hold(ph)[None]
+    bat = m2_battery(ph, E["hold"])
+    res = run_battery({k: bat[k] for k in ("normal", "normal_from1", "flush_inflight_iti")},
+                      g, E["hold"], seeds, device)
+    chk = {"normal>=0.95": acc(res["normal"]["run"]) >= 0.95,
+           "iti flush drops": drops(res["flush_inflight_iti"], res["normal_from1"]["run"])}
+    out["F_sham_positive"] = {"pass": all(chk.values()), "checks": chk,
+                              "acc": {k: acc(v["run"]) for k, v in res.items()}}
+
     # F-rule: SETRULE carries the bit. freeze_rule drops it; the rule at
     # readout predicts the target.
     ph = plants.c1b_rule_physics()
@@ -424,4 +436,143 @@ def run_fixtures(device="cpu", M: int = H_WORLDS) -> dict:
            "freeze_routing drops": drops(res["freeze_routing"], n)}
     out["F_route"] = {"pass": all(chk.values()), "checks": chk,
                       "acc": {k: acc(v["run"]) for k, v in res.items()}}
+    return out
+
+
+# ------------------------------------------------ specimens (read-only)
+SPECIMENS = {"M2": ("4ab2ba014aac967e",), "M3": ("0a23398f20cc41a2", "f6b623cdb23afd2c")}
+ROWS = "roles/Ananke/pte/c1_rows/cells.jsonl.gz"
+PLANT_STRUCT = ("prog_len", "state_dim", "payload_width", "channels", "rules", "setrule",
+                "wimm", "plastic_route", "adapt_shift")      # A2.2: genome space, set by the plant
+
+
+def specimen_row(cell_id: str, rows: str = ROWS) -> dict:
+    import gzip
+    import json
+    with gzip.open(rows, "rt") as f:
+        for line in f:
+            r = json.loads(line)
+            if r["cell_id"] == cell_id and r["kind"] == "evolve":
+                return r
+    raise KeyError(cell_id)
+
+
+def specimen_physics_env(cell_id: str, rows: str = ROWS):
+    r = specimen_row(cell_id, rows)
+    return Physics.from_dict(r["physics"]), envs.EnvSpec(**r["env"])
+
+
+def at_specimen(plant_ph: Physics, spec_ph: Physics) -> Physics:
+    """A2.2: the specimen's communication physics, the plant's genome-space fields."""
+    return spec_ph.replace(**{k: getattr(plant_ph, k) for k in PLANT_STRUCT})
+
+
+# ------------------------------------------------ A1.2 carryover census
+def carryover(run: Run, env: envs.EnvSpec) -> dict:
+    """In-flight state at each trial's onset (end of tick t0-1), trials >= 1:
+    mean count, and whether the signed sum predicts the PREVIOUS trial's
+    target (report item; changes no label)."""
+    tk = ticks(env)
+    t_on = [t0 - 1 for t0 in tk["t0"][1:]]
+    cnt = np.stack([run.tel["c_inflight_cnt"][t] for t in t_on], 1)
+    s = np.stack([run.tel["c_inflight_sum"][t] for t in t_on], 1)
+    y_prev = run.ep.y[:, :-1]
+    c = np.where(s == 0, 0.5, (np.sign(s) == y_prev).astype(float))
+    per_world = c.mean(1)
+    m, lo, hi = ci(per_world.reshape(-1, 2).mean(-1))
+    p = _perm_p(per_world, s, y_prev)
+    flag = bool(cnt.mean() > 0 and lo > PRED_LO and p < PERM_P)
+    return {"mean_inflight_at_onset": float(cnt.mean()), "prev_target_acc": m, "lo99": lo,
+            "hi99": hi, "perm_p": float(p), "CARRYOVER": flag}
+
+
+# ------------------------------------------------ A2.2 eligibility
+def _check_latch(ph, env, seeds, device):
+    g = plants.fix_const_shift(plants.hold_latch(ph), 0, 7)
+    g = np.broadcast_to(g, (ph.rules, *g.shape)).copy()
+    bat = m2_battery(ph, env)
+    res = run_battery({k: bat[k] for k in ("normal", "reset_S")}, g, env, seeds, device)
+    n = res["normal"]["run"]
+    chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95, "reset_S kills": kills(res["reset_S"])}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+
+
+def _check_sham(ph, env, seeds, device):
+    g = plants.sham_positive_hold(ph)[None]
+    bat = m2_battery(ph, env)
+    res = run_battery({k: bat[k] for k in ("normal", "normal_from1", "flush_inflight_iti")},
+                      g, env, seeds, device)
+    n1 = res["normal_from1"]["run"]
+    chk = {"normal>=0.95": ci(res["normal"]["run"].pairs)[0] >= 0.95,
+           "iti flush drops": drops(res["flush_inflight_iti"], n1)}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+
+
+def _check_echo(ph, env, seeds, device):
+    g = plants.echo_hold(ph)[None]
+    bat = m2_battery(ph, env)
+    res = run_battery({k: bat[k] for k in ("normal", "flush_inflight", "reset_S")},
+                      g, env, seeds, device)
+    n = res["normal"]["run"]
+    chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95, "flush kills": kills(res["flush_inflight"]),
+           "reset_S intact": intact(res["reset_S"], n)}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+
+
+def _check_da(ph, env, seeds, device):
+    g = plants.plant("relay_flood", ph)
+    bat = m3_battery(ph, env)
+    res = run_battery({k: bat[k] for k in ("normal", "drop_window_c1", "drop_readout_tick_only")},
+                      g, env, seeds, device)
+    n = res["normal"]["run"]
+    chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95,
+           "c1 window intact": ci(res["drop_window_c1"]["run"].pairs)[1] >= C1_INTACT_LO,
+           "readout-only kills": kills(res["drop_readout_tick_only"])}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+
+
+def _check_rule(ph, env, seeds, device):
+    g = plants.rule_switch_hold(ph)
+    bat = m3_battery(ph, env)
+    res = run_battery({k: bat[k] for k in ("normal", "freeze_rule")}, g, env, seeds, device)
+    n = res["normal"]["run"]
+    chk = {"normal>=0.95": ci(n.pairs)[0] >= 0.95, "freeze_rule drops": drops(res["freeze_rule"], n)}
+    return chk, {k: round(ci(v["run"].pairs)[0], 4) for k, v in res.items()}
+
+
+def eligibility(device="cpu", M: int = H_WORLDS, rows: str = ROWS) -> dict:
+    """A2.2 table: each positive-control plant at each specimen's physics and
+    timing. A failing plant makes the absence clause it guards NOT_ELIGIBLE.
+    Hand plants only; no specimen genome is evaluated."""
+    seeds = assays.world_seeds(DEV_NS + 1, M)
+    out = {}
+    for cid in SPECIMENS["M2"]:
+        sph, senv = specimen_physics_env(cid, rows)
+        hold = dataclasses.replace(senv, family="HOLD")
+        rows_ = {}
+        for name, fn, pph, guards in (
+                ("F_latch", _check_latch, plants.c1b_echo_physics().replace(prog_len=12, payload_width=1), "B"),
+                ("F_sham_positive", _check_sham, plants.c1b_echo_physics().replace(prog_len=64), "Z"),
+                ("F_echo", _check_echo, plants.c1b_echo_physics(), "(validates A; gates nothing)")):
+            ph = at_specimen(pph, sph)
+            chk, acc = fn(ph, hold, seeds, device)
+            rows_[name] = {"guards": guards, "pass": all(chk.values()), "checks": chk, "acc": acc}
+        out[cid] = {"mechanism": "M2", "dest_mode": sph.dest_mode, "plants": rows_,
+                    "NOT_ELIGIBLE": sorted(v["guards"] for v in rows_.values()
+                                           if not v["pass"] and len(v["guards"]) == 1)}
+    for cid in SPECIMENS["M3"]:
+        sph, senv = specimen_physics_env(cid, rows)
+        relay = dataclasses.replace(senv, family="RELAY", d=1)
+        hold = dataclasses.replace(senv, family="HOLD")
+        rows_ = {}
+        for name, fn, pph, env, guards in (
+                ("F_DA", _check_da, plants.c1b_da_physics(), relay, "T_c1_window"),
+                ("F_rule", _check_rule, plants.c1b_rule_physics(), hold, "not_R")):
+            ph = at_specimen(pph, sph)
+            chk, acc = fn(ph, env, seeds, device)
+            rows_[name] = {"guards": guards, "pass": all(chk.values()), "checks": chk, "acc": acc}
+        routing = "INERT_BY_PHYSICS" if sph.dest_mode == "all" else "F_route required"
+        out[cid] = {"mechanism": "M3", "dest_mode": sph.dest_mode, "routing_clause": routing,
+                    "plants": rows_,
+                    "NOT_ELIGIBLE": sorted(v["guards"] for v in rows_.values() if not v["pass"])}
     return out

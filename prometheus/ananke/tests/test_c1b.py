@@ -44,6 +44,15 @@ def fixtures():
     return c1b.run_fixtures(device="cpu", M=32)
 
 
-@pytest.mark.parametrize("name", ["F_latch", "F_echo", "F_DA", "F_rule", "F_route"])
+@pytest.mark.parametrize("name", ["F_latch", "F_echo", "F_sham_positive", "F_DA", "F_rule", "F_route"])
 def test_known_answer_fixture(fixtures, name):
     assert fixtures[name]["pass"], fixtures[name]["checks"]
+
+
+def test_carryover_census_runs_and_is_quiet_on_the_echo_plant():
+    from prometheus.ananke import assays, plants
+    ph = plants.c1b_echo_physics()
+    env = c1b.fixture_envs()["hold"]
+    r = c1b.evaluate(ph, plants.echo_hold(ph)[None], env, assays.world_seeds(c1b.DEV_NS, 16))
+    co = c1b.carryover(r, env)
+    assert co["mean_inflight_at_onset"] == 0.0 and not co["CARRYOVER"]

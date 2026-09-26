@@ -233,3 +233,68 @@ def c1b_da_physics() -> Physics:
     return Physics(topology="ring", n_sites=24, radius=1, dest_mode="all", lat_base=4,
                    lat_hop=0, lat_jitter=0, loss=0.0, update_mode="sync",
                    update_period=1, decay_shift=0, prog_len=12)
+
+
+def _eq(k: int, src: str, dst: str) -> list:
+    """dst := 256 iff src == k, else 0 (uses T0, T3 as scratch)."""
+    return [
+        ("CONST", "T3", 0, 0, k),
+        ("SUB", dst, src, "T3", 0),
+        ("GT", "T0", dst, "ZERO", 0),
+        ("GT", "T3", "ZERO", dst, 0),
+        ("ADD", "T0", "T0", "T3", 0),
+        ("CONST", dst, 0, 7, 2),
+        ("SUB", dst, dst, "T0", 0),
+    ]
+
+
+def sham_positive_hold(ph: Physics) -> np.ndarray:
+    """F_sham_positive (PREREG_PTE_C1b A1.1): echo_hold whose relays must be
+    RE-ARMED by a packet that is in flight across the inter-trial interval.
+    The sensor, on receiving its echo (marker sum 2) at the readout tick,
+    emits an arming packet (0, 7). A neighbour relays a cue (marker 3) only
+    if armed, then disarms itself (S1 := 256); an arming packet clears S1.
+    Relays start armed, so trial 0 works. Flushing in-flight traffic at the
+    first ITI tick kills the arming packets, so every later trial fails.
+    Physics: c1b_echo_physics (delay 5; HOLD cue_len 2, gap 8, iti 2)."""
+    return assemble(ph, [
+        ("CONST", "T0", 0, 7, 1),            # 128
+        ("GT", "T1", "SENSE", "T0", 0),
+        ("SUB", "T2", "ZERO", "T0", 0),
+        ("GT", "T2", "T2", "SENSE", 0),
+        ("SUB", "T1", "T1", "T2", 0),        # cue sign*256 or 0
+        ("MOV", "RVAL", "T1", 0, 0),         # hold the cue (scratch: no plastic routing)
+        *_eq(3, "IN0_1", "T1"),              # T1 = 256 iff a cue packet arrived
+        ("GT", "T2", "S1", "ZERO", 0),       # 256 iff disarmed
+        ("CONST", "T0", 0, 7, 2),
+        ("SUB", "T2", "T0", "T2", 0),        # 256 iff armed
+        ("MULQ", "T1", "T1", "T2", 0),       # relay = cue packet AND armed
+        ("MAX", "S1", "S1", "T1", 0),        # disarm after relaying
+        *_eq(7, "IN0_1", "T2"),              # T2 = 256 iff an arming packet arrived
+        ("CONST", "T0", 0, 7, 2),
+        ("SUB", "T0", "T0", "T2", 0),
+        ("MULQ", "S1", "S1", "T0", 0),       # re-arm: S1 := 0
+        *_eq(2, "IN0_1", "T2"),              # T2 = 256 iff my echo arrived
+        ("MULQ", "EMIT", "RVAL", "RVAL", 0),
+        ("ADD", "EMIT", "EMIT", "T1", 0),
+        ("ADD", "EMIT", "EMIT", "T2", 0),    # emit on cue, relay or echo
+        ("MULQ", "PAY0", "RVAL", "RVAL", 0),
+        ("MULQ", "T0", "IN0_0", "T1", 0),    # relayed payload (0 unless relaying)
+        ("SEL", "PAY0", "RVAL", "T0", 0),    # cue ? cue : relayed payload
+        ("CONST", "T3", 0, 0, 1),
+        ("CONST", "T0", 0, 0, 7),
+        ("MOV", "PAY1", "T1", 0, 0),
+        ("SEL", "PAY1", "T3", "T0", 0),      # relay ? 1 : 7
+        ("MOV", "T0", "PAY1", 0, 0),
+        ("MULQ", "CHAN", "RVAL", "RVAL", 0),  # scratch (C=1: channel 0)
+        ("CONST", "T3", 0, 0, 3),
+        ("MOV", "PAY1", "CHAN", 0, 0),
+        ("SEL", "PAY1", "T3", "T0", 0),      # cue ? 3 : previous
+        ("GT", "T0", "IN0_0", "ZERO", 0),
+        ("GT", "T2", "ZERO", "IN0_0", 0),
+        ("SUB", "T0", "T0", "T2", 0),        # arrival sign*256 or 0
+        ("MULQ", "T2", "T0", "T0", 0),
+        ("SUB", "T1", "T0", "S0", 0),
+        ("MULQ", "T1", "T1", "T2", 0),
+        ("ADD", "S0", "S0", "T1", 0),        # S0 := arrival sign where one arrived
+    ])
