@@ -431,3 +431,15 @@ These generalise beyond either campaign and should survive into any successor.
     k=4 "beat" the independent-founders prediction at p = 1e-6, using p1 = 5/80 as if exact. A
     declared dose curve fitting p1 jointly (X-DOSE-CURVE) found no excess (LRT p = 0.42). Fit
     the null model's parameters on all arms before calling anything superadditive.
+
+## W1 (NPE window 2026-09-26, donor discovery; theory-aware by date)
+
+**E-W1-1 C-DENSE-COPY CONFIRMED (frozen at 57c1cd359, 64 fresh seeds per arm):** in random populations of the
+7ae3/ffa6 pair-tape cell class with atomic write-back, spontaneous acquisition of a fresh-start-competent hereditary
+donor is limited by the ENCODING ACCESSIBILITY of the block-copy instruction: giving LDIR/LDDR an additional one-byte
+encoding (semantics and ops-mask gating unchanged) raises donor acquisition from 1/64 to 39/64 runs (p = 1e-14).
+Presence is not the barrier: block-copy encodings occur in 87/96 plain populations (X-DD-DENSE-COPY) without any donor.
+Path: X-DONOR-DISCOVERY (acquisition-limited, 1/96; the one spontaneous donor copies WITHOUT OP_SELF, via LDIR/LDDR and
+incidental register state -- hypothesis, n = 1) -> X-DD-DENSE-COPY (0/96 -> 49/96) -> C-DENSE-COPY.
+Barrier map moved: variation -> [acquisition: was the gate; relieved by encoding accessibility] -> [establishment
+L2->L4, ~0.4: now the limit] -> sustained heredity. Scope: this cell class, ATOMIC, the one-byte alias treatment.
