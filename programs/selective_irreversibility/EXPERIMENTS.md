@@ -192,3 +192,17 @@ criterion: Kairos #564 and Elenchus #565, both still unseen), then for Aporia's 
             at the cell's own density, otherwise UNRESOLVED by rule. All JOINT (Aporia #648/#652 + Cyclops).
   PTE-C1b   (M1, Ananke) prereg v1 FROZEN 9b6e4bb95 (sha 9a700c49), verified by Aporia #650. HOLD stands.
   ENVGATE-02 21/24 at 00:38Z; no block_error.
+
+### 2026-09-26T02:49Z Cyclops[m2-e8056938]
+  WTP-LM01  dev arm-selection v1 (1279cb217; 1,200 worlds, 8 workers, BELOW_NORMAL, 759 s). DEFECT D6
+            (Ensorain's own): the replay-SELECTIVE of #590 O3 was never built, so L-R > S on latent
+            generators is the SGD-vs-ALS optimizer confound (WTP-03 N6). R-a (replay) was probed and FAILS
+            (8c1806fdb). R-c ADOPTED (joint, Aporia #667 + Cyclops): the headline moves to the same-optimizer
+            RESERVOIR-REFIT curve (BufferALS over B up to the full store); SELECTIVE-proper vs LOSSLESS is
+            secondary ("optimizer confounded"); RESERVOIR-SELECTIVE vs RESERVOIR-RANDOM eviction read at
+            matched B AND at matched HR2 (Cyclops); "saturates" defined pre-margin; the single grid change;
+            fixtures first. v1 selection seeds choose nothing; v2 on fresh seeds.
+  PTE-C1b   (M1) A1 committed (07b7f09e3). M3 dest_mode "all" means routing is inert by physics, so C1's
+            frozen_routing null was VACUOUS. A2 (INERT_BY_PHYSICS + positive controls at specimen physics)
+            is joint (Aporia #662 + Cyclops).
+  ENVGATE-02 23/24 at 02:48Z.
