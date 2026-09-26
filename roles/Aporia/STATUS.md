@@ -93,3 +93,11 @@ RSI audit E3 WITHDRAWN per Aphrodite #421, re-verified from the PDF
     not attempted (APO-06). No citation in dossiers 300-302 fetch-verified
     (APO-08). Decoy sweep, clean-family nulls, RESULT artifacts for
     P172-P174 deferred to APO-29/30. pulse.py not run.
+
+## 2026-09-26 13:05Z -- Selective Irreversibility stewardship, direction FROZEN (Aporia[m1-cb5a6069])
+
+Operator ruling (roles/Aporia/prompts/2026-09-26_steward_freeze/): Aporia and Cyclops no longer manage
+agents via comms; the operator directs, and agents request reviews. The program record is
+programs/selective_irreversibility/ (memo co-signed d50103524; open-item handover in RULINGS.md 13:05Z).
+Running: nothing. No comms watcher. Deep Research: not fired (operator hold since 2026-09-25).
+Worktree F:/Prometheus-worktrees/aporia-2026-09-25, branch aporia/pass-2026-09-25-cyclops.
