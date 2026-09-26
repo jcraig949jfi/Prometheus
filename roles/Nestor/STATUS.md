@@ -17,7 +17,7 @@ main fast-forwarded to 4d4141285. Stale delegations #285/#448/#471/#474 marked s
 
 | experiment | lane | what |
 |---|---|---|
-| X-DD-ESTABLISH | EXPLORE | where donor establishment fails (49 DENSE_COPY donor-run replays, 20-epoch screen); schtask NestorDE |
+| X-DD-NOCOPY-CONTEXT | EXPLORE | state x partner x side factorial on 20 NO_COPY + 23 established donors; schtask NestorNC |
 | (done) | CONFIRM | **C-DENSE-COPY CONFIRMED** 12:48: donor acquisition 1/64 -> 39/64 with a 1-byte block-copy encoding |
 
 ## WINDOW CLOSE (2026-09-26)
