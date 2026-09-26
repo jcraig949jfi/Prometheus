@@ -1,7 +1,7 @@
 {
- "code_sha": "cf3c15c5f3dc9ebad34fcd8a079e89b14d03dfae",
+ "code_sha": "39aa683b3287446d3e918690993b4d5606780809",
  "device": "cpu",
- "rule": "A2.2: hand plants at each specimen's communication physics; bar as fixtures (normal >= 0.95); PENDING steward ruling on the bar",
+ "rule": "A2.2: hand plants at each specimen's communication physics; FIRED per A3.1 (competent lo99>0.55 AND hi99(switched-normal)<-0.10); 0.95 checks kept as dev info only",
  "seed_ns": "0xde8",
  "specimens": {
   "0a23398f20cc41a2": {
@@ -12,30 +12,40 @@
    "mechanism": "M3",
    "plants": {
     "F_DA": {
+     "a3": {
+      "competent_lo99": 0.49869140625,
+      "diff_hi99": 0.013027343749999828,
+      "fired": false
+     },
      "acc": {
       "drop_readout_tick_only": 0.5117,
       "drop_window_c1": 0.7344,
       "normal": 0.5599
      },
-     "checks": {
+     "dev_bar_checks": {
       "c1 window intact": true,
       "normal>=0.95": false,
       "readout-only kills": true
      },
-     "guards": "T_c1_window",
-     "pass": false
+     "fired": false,
+     "guards": "T_c1_window"
     },
     "F_rule": {
+     "a3": {
+      "competent_lo99": 0.9791666666666666,
+      "diff_hi99": -0.47916666666666663,
+      "fired": true
+     },
      "acc": {
       "freeze_rule": 0.5,
       "normal": 0.9922
      },
-     "checks": {
+     "dev_bar_checks": {
       "freeze_rule drops": true,
       "normal>=0.95": true
      },
-     "guards": "not_R",
-     "pass": true
+     "fired": true,
+     "guards": "not_R"
     }
    },
    "routing_clause": "INERT_BY_PHYSICS"
@@ -48,43 +58,58 @@
    "mechanism": "M2",
    "plants": {
     "F_echo": {
+     "a3": {
+      "competent_lo99": 0.8932291666666667,
+      "diff_hi99": -0.09505208333333334,
+      "fired": false
+     },
      "acc": {
       "flush_inflight": 0.7695,
       "normal": 0.9271,
       "reset_S": 0.8984
      },
-     "checks": {
+     "dev_bar_checks": {
       "flush kills": false,
       "normal>=0.95": false,
       "reset_S intact": true
      },
-     "guards": "(validates A; gates nothing)",
-     "pass": false
+     "fired": false,
+     "guards": "(validates A; gates nothing)"
     },
     "F_latch": {
+     "a3": {
+      "competent_lo99": 1.0,
+      "diff_hi99": -0.5,
+      "fired": true
+     },
      "acc": {
       "normal": 1.0,
       "reset_S": 0.5
      },
-     "checks": {
+     "dev_bar_checks": {
       "normal>=0.95": true,
       "reset_S kills": true
      },
-     "guards": "B",
-     "pass": true
+     "fired": true,
+     "guards": "B"
     },
     "F_sham_positive": {
+     "a3": {
+      "competent_lo99": 0.7784090909090909,
+      "diff_hi99": -0.06818181818181819,
+      "fired": false
+     },
      "acc": {
       "flush_inflight_iti": 0.6875,
       "normal": 0.8385,
       "normal_from1": 0.8267
      },
-     "checks": {
+     "dev_bar_checks": {
       "iti flush drops": true,
       "normal>=0.95": false
      },
-     "guards": "Z",
-     "pass": false
+     "fired": false,
+     "guards": "Z"
     }
    }
   },
@@ -96,30 +121,40 @@
    "mechanism": "M3",
    "plants": {
     "F_DA": {
+     "a3": {
+      "competent_lo99": 0.4908723958333333,
+      "diff_hi99": 0.01953124999999998,
+      "fired": false
+     },
      "acc": {
       "drop_readout_tick_only": 0.5143,
       "drop_window_c1": 0.7344,
       "normal": 0.556
      },
-     "checks": {
+     "dev_bar_checks": {
       "c1 window intact": true,
       "normal>=0.95": false,
       "readout-only kills": true
      },
-     "guards": "T_c1_window",
-     "pass": false
+     "fired": false,
+     "guards": "T_c1_window"
     },
     "F_rule": {
+     "a3": {
+      "competent_lo99": 0.9791666666666666,
+      "diff_hi99": -0.47916666666666663,
+      "fired": true
+     },
      "acc": {
       "freeze_rule": 0.5,
       "normal": 0.9922
      },
-     "checks": {
+     "dev_bar_checks": {
       "freeze_rule drops": true,
       "normal>=0.95": true
      },
-     "guards": "not_R",
-     "pass": true
+     "fired": true,
+     "guards": "not_R"
     }
    },
    "routing_clause": "INERT_BY_PHYSICS"
