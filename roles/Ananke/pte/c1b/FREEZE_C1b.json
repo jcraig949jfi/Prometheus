@@ -1,0 +1,34 @@
+{
+ "what": "PTE-C1b code freeze",
+ "code_tree_commit": "b78ae3694dbd2f476abf306c3b2bcf8736d4c113",
+ "prereg": "roles/Ananke/pte/PREREG_PTE_C1b.md",
+ "prereg_sha256": "8e27a353e83e04c93daefaab9872203c0f4e1ede06dd6a83b862906182e11f84",
+ "prereg_versions": {
+  "v1": "9b6e4bb95",
+  "A1": "07b7f09e3",
+  "A2": "2d480d3ef",
+  "A3": "7b95c88dd"
+ },
+ "golden_c1_controls": "3451ae720",
+ "artifacts_lf_sha256": {
+  "roles/Ananke/pte/c1b/LABEL_TABLES.json": "6d2fd0edbdc7bd66e8362e0cf602930cf66dfd4c4ca6046a8698a7f335202995",
+  "roles/Ananke/pte/c1b/FIXTURES_dev.json": "09541af4a438acd6edb156ed40cff0481efae44abce4bf202ba7985fcff4512b",
+  "roles/Ananke/pte/c1b/ELIGIBILITY_dev.json": "e38ff8e4ac4ca2d10c5bcd9d4dff452c7e9864db8b3475e96284305c0e3ba1a7"
+ },
+ "specimens": {
+  "M2": [
+   "4ab2ba014aac967e"
+  ],
+  "M3": [
+   "0a23398f20cc41a2",
+   "f6b623cdb23afd2c"
+  ]
+ },
+ "held_ns": "0xC1B0",
+ "search_ns": "0xC1B5",
+ "worlds": 64,
+ "fresh_per_specimen": 4,
+ "cap_h": 3,
+ "tests": "174 passed (CPU) at code_tree_commit",
+ "run_gate": "HOLD: runs need a comms HOLD release from Aporia (driver-enforced)"
+}
