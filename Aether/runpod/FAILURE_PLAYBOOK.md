@@ -373,6 +373,99 @@ with diagnostics identified the cause in its first second.
 
 ---
 
+## 19. A scout that was not smaller than its campaign
+
+**Looked like:** nothing. `cli scout` printed a spec with
+`work_units.estimate` reduced by 50x, a scout ceiling of a few cents, and
+`representative: True`. Found in Iteration 2's dry run, before any spend.
+
+**Cause:** the reduced estimate lived only in the spec. The module never
+received it, and representativeness requires the module's own `env` to be
+IDENTICAL to the campaign's, so no module-side knob could differ either.
+Flown, the "scout" would have run the full campaign under a scout's
+runtime bound, and been killed or billed as the campaign.
+
+**Now:** the platform sets `PROMETHEUS_WORK_UNITS` from
+`work_units.estimate`. A module reads its count from there; the rest of
+its environment stays identical, so the calibration still carries over.
+
+**Generalisation:** a planning number that never reaches the thing it
+plans is a label. Check the value arrives where the work is done.
+
+**Prevention:** `test_a_scout_is_smaller_than_its_campaign_and_otherwise_identical`.
+
+---
+
+## 20. A runtime bound spent on installing wheels
+
+**Looked like:** nothing yet; found reading the controller before
+Iteration 2 flew. `max_runtime_s` was measured from the CREATE, while the
+cost model prices it as module compute, with overhead added separately.
+
+**Cause:** the same dependency install has measured 6 s and 305 s. At
+305 s, a module with `max_runtime_s: 120` -- a scout's bound, derived from
+its campaign's -- would have been stopped as `TIMEOUT` before running.
+
+**Now:** the runtime bound starts at first telemetry, when the module is
+demonstrably running. Money is still bounded from the create, by the
+budget ceiling, which is the guard that actually matters for a bill.
+
+**Prevention:** `test_a_slow_bootstrap_does_not_eat_the_modules_runtime`,
+confirmed to FAIL against the old origin before the fix was restored.
+
+---
+
+## 21. "Provisioning" that was the proxy
+
+**Looked like:** Iteration 1 bounded provisioning at <= 24 s and could
+not isolate it. The interval from create-accepted to first telemetry was
+31 s, of which 7 s was on the pod's clock.
+
+**Cause:** two different instants had been treated as one. With the pod's
+clock MEASURED (the `/_clock` endpoint, min-RTT offset, +/- 0.2 s), the
+pod's shell was running **2.1 s** after the create was accepted. The
+provider's proxy then answered **404 for about 25 s more** before routing
+to the pod at all. Most of the "provisioning" time was reachability.
+
+**Now:** the receipt reports `synchronised.provision_s` (pod running) and
+`controller_clock.accepted_to_first_contact_s` (pod reachable) separately.
+
+**Generalisation:** a subtraction across two clocks is not a measurement,
+and a single interval that spans two mechanisms cannot be attributed to
+either. Measure the offset, then split the interval at the first instant
+each side can observe.
+
+**Prevention:** `test_the_controller_measures_the_pod_clock_and_corrects_provisioning`,
+`test_first_contact_through_the_proxy_is_its_own_interval`.
+
+---
+
+## 22. The calibrated card had no capacity
+
+**Looked like:** two `NOT_RUN` campaign flights in a row, 12 minutes after
+a scout had flown on an RTX A4000: *"no capacity for any declared GPU (NVIDIA
+RTX A4000)"*. $0.00; the provider confirmed nothing was created each time.
+
+**Cause:** calibration fidelity and availability pull against each other.
+A calibration is only valid on the card it was measured on, so the campaign
+is pinned to that card and drops its alternatives -- and a pinned campaign
+has exactly one card to be refused on.
+
+**Now:** the fallback is the whole path, not a looser pin: fly a fresh
+unpinned scout (it walks `gpu.alternatives` and takes what is available),
+then plan and fly the campaign pinned to the card the scout got,
+immediately. Iteration 2 did exactly that on an L4: scout, plan and
+campaign inside seven minutes, for $0.051.
+
+**Generalisation:** a pin is a bet that capacity will still be there. Keep
+the scout-to-campaign interval short, and treat a scout as cheap enough to
+repeat rather than as an asset to protect.
+
+**Not yet automated:** `flight.py` does not chain scout -> plan -> campaign
+on its own. It should, and that is Iteration 3's to build.
+
+---
+
 ## Diagnostics
 
 ```bash

@@ -18,30 +18,51 @@ you actually pay for a short experiment is dominated by the fixed part.
 
 ## Overhead, measured
 
-Defaults in `cost.OVERHEAD_S`, **measured by Iteration 1 through the
-platform's own launch path** on an RTX 4090 (receipt
-`hello-gpu-20260924T212427Z`):
+Defaults in `cost.OVERHEAD_S`, **measured through the platform's own launch
+path**: Iteration 1 on an RTX 4090 (`hello-gpu-20260924T212427Z`) and
+Iteration 2 on an RTX A4000 (`gpu-load-scout-20260926T065221Z`,
+`gpu-load-20260926T065409Z`):
 
 | phase | seconds | provenance |
 |:--|--:|:--|
-| `accept` | 1.8 | **measured** — create call 1.745–2.947 s |
-| `provision` | 24.0 | **UPPER BOUND** — not isolated; see below |
-| `bootstrap` | 6.0 | **measured** on the pod's clock; observed up to 305 s |
-| `canary` | 1.0 | **measured** for `import cupy`; a property of your canary |
+| `accept` | 1.5 | **measured** — create call 1.1–2.9 s over four flights |
+| `provision` | 2.3 | **measured, clock-synchronised** — 2.1, 2.3, 2.8 and **22.1** s (± 0.25 s); a property of the host |
+| `bootstrap` | 8.0 | **measured** on the pod's clock; observed up to 305 s |
+| `canary` | 1.2 | **measured**; a property of your canary |
+| `module_setup` | 1.5 | **measured**; a property of your module |
+| `end_detection` | 5.0 | ≈ watch poll / 2; measured 8.8 s at a 10 s poll, 0.4 s at 3 s |
+| `retrieval` | 5.3 | **measured** for 8.4 MB; scales with bytes (5.4 MB/s) |
 | `teardown` | 2.2 | **measured** — terminate ACK to absence confirmed |
-| **total** | **35.0** | |
+| **total** | **27.0** | measured 30.1 s (A4000 scout), 30.2 s (A4000 campaign, 10 s poll), 18.0 s (L4 campaign, 3 s poll) |
 
-The previous values totalled 78 s and were inferred from orchestrator
-timings rather than measured. **They were 2.3× too high**, and the error
-sat almost entirely in the two terms that had been marked *inferred*.
-Marking them was right; it was not enough, because nothing forced them to
-be measured.
+**Provisioning is 2 seconds, not 24.** Iteration 1 could only bound it,
+because it subtracted a controller instant from a pod instant as though the
+two machines shared a clock. Iteration 2 measures the offset: the artifact
+server answers `/_clock`, and the controller takes five round trips and
+keeps the shortest (offset = pod time − midpoint, uncertainty = RTT/2,
+≈ 0.23 s). With that, the pod's shell is running **2.1–2.3 s** after the
+create is accepted -- on three of four hosts. The fourth, an L4 scout,
+took **22.1 s**; the L4 campaign minutes later landed on a host that took
+2.8 s. Provisioning is a property of the host a pod lands on, which the
+platform does not choose, so a projection carries the median and the
+observed range carries the tail.
 
-**`provision` is a bound, not a measurement.** 31.4 s elapsed from
-create-accepted to first telemetry, of which 7.0 s is accounted for on the
-pod's own clock. Up to 15 s of the remainder is the controller's poll
-interval, so the true value is between about 9 s and 24 s. A shorter poll
-interval would tighten it.
+The rest of what Iteration 1 called provisioning is the provider's **proxy**:
+it answers 404 for ~25 s after the pod is already up
+(`accepted_to_first_contact_s`). That delay overlaps the bootstrap, so it is
+not billed on top of it — but it is why a controller cannot see a module
+finish for up to ~25 s on a very short job. FAILURE_PLAYBOOK entry 21.
+
+**Overhead is now 4.9% of a 10-minute run**, against 97% for Iteration 1's
+0.67-second workload: 30.2 s of 590.9 s on the Iteration 2 campaign.
+
+**Scouts see a cold card.** The A4000 ran at its 140 W power cap and
+reached 75 °C within two minutes; throughput settled ~2% below the value a
+27-second scout measured, and the calibrated compute estimate was 1.8%
+short. The L4 did the same at its 72 W cap, by ~5% (10.72 → 10.19 TFLOP/s),
+and its compute estimate was 5.1% short. A scout shorter than the card's thermal settling time
+over-predicts throughput by about that much; the 20% planning margin
+covers it, and a scout of a few minutes would remove it.
 
 **The variance matters more than the median.** The same bootstrap measured
 **6.0 s and over 305 s** on consecutive flights with the same image,
@@ -61,26 +82,33 @@ it calls both dead.
 
 **Two clocks.** Pod-side stage intervals and controller-side instants are
 reported separately in every receipt. The one interval that spans both —
-provisioning — is labelled `cross_clock`, because the two machines' clocks
-are not synchronised and that offset is not measured here.
+provisioning — is reported twice: raw under `cross_clock`, and corrected
+by the MEASURED offset under `synchronised`, with its uncertainty. When the
+pod's `/_clock` cannot be read, only the raw figure appears.
+
+**Spec sheets are not throughput.** The preregistration assumed 60% of
+spec-sheet FP32 peak for every card. The A4000 delivered 62%; the L4
+delivered **35%**, and the preregistered L4 campaign estimate was 37% low.
+The scout caught it: the calibrated estimate was within 5.4% of the
+measured cost. This is the whole case for scouting, on one card.
 
 ## What overhead does to a short job
 
-35 seconds is fixed, so cost per unit of work falls hyperbolically with
+27 seconds is fixed, so cost per unit of work falls hyperbolically with
 workload length. On an A40 at $0.49/h:
 
 | workload | total | cost | overhead share |
 |--:|--:|--:|--:|
-| 10 s | 45 s | $0.0062 | **78%** |
-| 60 s | 95 s | $0.0130 | 37% |
-| 300 s | 335 s | $0.0456 | 10% |
-| 1,800 s | 1,835 s | $0.2498 | 2% |
-| 14,400 s | 14,435 s | $1.9648 | <1% |
+| 10 s | 37 s | $0.0050 | **73%** |
+| 60 s | 87 s | $0.0118 | 31% |
+| 300 s | 327 s | $0.0445 | 8% |
+| 1,800 s | 1,827 s | $0.2487 | 1% |
+| 14,400 s | 14,427 s | $1.9637 | <1% |
 
 The operational consequence is unchanged and now cheaper to state:
 **batch small experiments.** Ten 10-second probes as separate pods cost
-$0.061 and spend $0.048 of it on nothing. The same ten inside one pod cost
-$0.0182 and spend $0.0048 on overhead.
+$0.050 and spend $0.037 of it on overhead. The same ten inside one pod cost
+$0.0173 and spend $0.0037 on overhead.
 
 ## The cheaper GPU often wins
 
