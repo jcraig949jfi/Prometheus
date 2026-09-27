@@ -133,15 +133,27 @@ Cheapest: one shared metric -- neutral-path distance from the population to
 the capability -- computed on the WSE shelf (S3 data) and Crius.
 Rel: POI-022, POI-025.
 
-### POI-022 -- The neutral shelf: why does a 62%-neutral plateau offer no way up? (reframed by spike S3)
-State SHARP | origin raw/I4-04, raw/E6 C4, spike S3
+### POI-022 -- The neutral shelf: why does a 62%-neutral plateau offer no way up? (reframed by S3, R4)
+State SHARP (run R4_A-001 done) | origin raw/I4-04, raw/E6 C4, spike S3
 Known (S3): of 5,472 cited edits only 1,568 were eligible; 0 improved;
 61.7% neutral, 4.7% deleterious, 33.6% lethal. Plateau, not cliff; the
 cited 0/5,472 overstated the evidence ~3.5x (rule-of-three bound 0.0019).
-Unknown: whether 2- and 3-step neutral walks reach improvement; whether the
-plateau connects to the summit at all.
-Cheapest: neutral random walks of length 2-5 from the 19 shelf parents.
-Rel: POI-021, POI-026; reported to Hephaestus (HEPH-32 cites the number).
+Known (run R4_A-001, fresh worker, runs/R4_A-001/RESULT.md): within 6 neutral
+steps the shelf does not connect to any real improvement (1 find in 38,714
+edits at k=3 was a test-order artefact: 0.5285 vs parent 0.5317 on 2,000
+episodes); matched random walk and random sampling found 0; neutral fraction
+stays ~0.60 so walks never stall; the neutral network is HUGE IN GENOTYPES
+(21,948 distinct of 23,365 neutral edits) and TINY IN BEHAVIOURS (91 total,
+median 3 per parent); distance to a hand-written summit program stays ~26.5
+edits. Correction to S3: the "0.688" parents are the same test-order
+artefact -- on 2,000 episodes all 19 score 0.529-0.536: one shelf, not two.
+Prior work the packet missed: C4-05 (neutral walks from these parents) and
+C3-SFE-02 (0/480 three-step paths to the summit).
+Reading: accessibility is blocked not by a lack of neutral paths but by
+BEHAVIOURAL POVERTY of the neutral network -- drift is free, novelty is not.
+Unknown: is behavioural poverty a property of this VM's encoding (compare
+NPE, BEE) or of the evaluator's granularity (raw/I4-12)?
+Rel: POI-021 (strong), POI-020, POI-026; reported to Hephaestus (HEPH-32).
 
 ### POI-023 -- Basin width, not capability, decides the mechanism | SHARP | raw/I2 T23, raw/I3 T18, raw/I6 T07 | ARES (14/23 vs 3/25), PTE
 Cheapest: in Ares, sweep parameter ranges so basins equalise and see whether the winner changes.
@@ -199,7 +211,15 @@ claimed size into every control/gate; require detection; flag arms that
 cannot differ) would have caught ~20 of 80 (estimate).
 ### POI-051 -- The dumbest sufficient explanation ladder and base rates | SHARP | raw/I6 T08 T14 | a pre-launch checklist of trivial baselines per claim type.
 ### POI-052 -- Can law discovery escape declared coordinates? | SHARP | raw/I3 T6 T7, raw/I6 T15 | CWE C3 on Nestor's sealed D is the test (waits on the operator per raw/I3); map D's parameters to coordinates is unowned.
-### POI-053 -- Does the Selective Irreversibility law have empirical content beyond a theorem? | SHARP, spike S2 running | raw/I3 T1-T5 | SI stewards retired; Cosmos SELECTIVE_PAYS unlinked.
+### POI-053 -- Does the Selective Irreversibility law have empirical content beyond a theorem?
+State SHARP (spike S2 done) | raw/I3 T1-T5 | SI stewards retired; Cosmos SELECTIVE_PAYS unlinked.
+Known (S2, dev rows only, 0.30 AC margin, 2000-permutation nulls): the winning memory arm is set by task
+family AND generator jointly (I(win;family|gen) ~0.54, I(win;gen|family) ~0.48) -- neither alone; selective
+arms win 71/164 pairwise worlds beyond the margin (not 139/164); per-stratum only 1-3 of 11 are wins.
+REVERSED: raw/I3 T4 "random eviction beats declared policies" -- on matched worlds the declared policies beat
+random by +0.08..+0.16 AC (p <= 0.001); the recorded loss exists only on one positive-control fixture, inside the margin.
+Unknown: whether "selective" adds anything beyond prior/structure match (raw/I3 T2); the requirement test
+(PTE-SI01) never ran. Rel: POI-052 (author smuggles the answer).
 ### POI-054 -- A rediscovery detector | CANDIDATE | raw/I6 T16, raw/I5 TH-24.
 ### POI-055 -- Phase of measurement in tick-ordered worlds | SHARP | raw/I6 T05 | PTE errata; a timing sweep of every ablation window.
 ### POI-056 -- Why do phenomena invert across ecosystems? substrate-bound findings | SHARP | raw/I3 T15, Artemis T6 | 5 of 6 inverted under transplant.
@@ -208,13 +228,24 @@ cannot differ) would have caught ~20 of 80 (estimate).
 ----------------------------------------------------------------------------
 ## F -- Endogenous learning and non-reproductive accumulation (new-lens territory)
 
-### POI-060 -- A habituation floor assay for every engine (instrument) | SHARP, spike S5 running | raw/E5 L1.
+### POI-060 -- A habituation floor assay for every engine (instrument)
+State READY as instrument v0 (spike S5) | raw/E5 L1
+Known (S5): with/without-stimulus paired from a saved state; LTI 0/1,000 pass; naive peak-minus-baseline gives 3.7% false positives; positive family 90.5%; all cheats rejected; random-nonlinear base rate 0.25% [0.15, 0.44] with one pre-declared test, 2.2-7.4% if the best of 12 readouts is taken.
+Needs from an engine: deterministic save/restore of full state incl. RNG; two stimulus channels for specificity; declare readouts searched.
+Next: apply to one engine per class (PTE, BEE, Aether); re-measure the base rate on random instances of that engine.
 ### POI-061 -- Where does a local learning rule come from? natural induction in a Prometheus substrate
 State SHARP, NEW-LENS | origin raw/E5 L7 Q1
-Minimal conditions to realise: slow stress-yielding couplings, repeated
-perturbation/reset, dissipation. Cheapest: a stdlib toy (spin network with
-yielding couplings) reproducing the Hebbian-direction signature with a
-frozen-coupling control; then ask which engine can host it.
+Known (spike S6, stdlib toy): REPRODUCED on random +/-1 couplings (N=50) under
+preregistered rules, 5/5 seeds (E0 -246.4 vs -220.9 no-yield; 1.2-2.0 SD);
+modular family FAILED the prereg rule at the pilot-chosen rate and passed only
+post hoc at a slower rate (labelled). Controls: reversed sign worse; foreign
+states and scrambled labels give nothing -- the system's OWN visited states
+matter. All three ingredients required (slow yield, resets, relaxation); the
+timescale window is narrow. It does NOT beat best-of-1,000 restarts: it
+internalises good minima (falls into them from most starts) rather than
+finding new ones. Engine requirements: spikes/S6_natural_induction/RECEIPT.md.
+Next: host it in a Prometheus substrate (which engine can expose yielding
+couplings + reset + relaxation?) and test transfer to a problem never seen.
 ### POI-062 -- Memory base rates in random dynamics of each engine's class | SHARP | raw/E5 Q2 | the null every "memory found" claim needs.
 ### POI-063 -- Environmental periodicity as the teacher (temporal contrast) | CANDIDATE | raw/E5 L6 | a PTE or Aether arm with periodic forcing.
 ### POI-064 -- What makes a world inhabitable by a learner? | CANDIDATE | raw/I3 T16.
@@ -238,6 +269,9 @@ frozen-coupling control; then ask which engine can host it.
 ### POI-082 -- Open-endedness with a neutral shadow and an endogenous observer | CANDIDATE, NEW-LENS | raw/E1 Q11 Q12, raw/I5 TH-15.
 ### POI-083 -- Is an LLM necessary as a generator? (gravity check) | SHARP | raw/I5 TH-22, raw/E4 Q7 | matched-compute LLM-free arm.
 ### POI-084 -- Heredity without fidelity (17% mean-fidelity establishments) | SHARP | raw/I1 T21 | ENVGATE-01.
+
+### POI-096 -- The two residual BAND0 establishments (blocks 4, 15) (NEW, from spike S4)
+State SHARP | S4 partly confirmed raw/I1 T3: 3 of 5 are cross-arm takeovers (not band-gated, slowest blocks); 2 near-copiers with no exact gate established ONLY in BAND0. Why only there? Owner Archaeon (TH-001); reported comms #749.
 ### POI-085 -- Host-conditioned reproduction across three engines -> LINKED to TH-003 (owner Archaeon). raw/I1 T5.
 ### POI-086 -- Copiers that read their destination from the environment | CANDIDATE | raw/I1 T17 | 85% of Archaeon vmcopy32 copiers.
 ### POI-087 -- New attractors or reweighting? the GARD test on Z80 lineages | SHARP | raw/E2 (Vasas 2010) | cheap on lineage logs.

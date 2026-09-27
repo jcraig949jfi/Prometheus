@@ -158,3 +158,37 @@ C4 Individuation (s2) is the least-instrumented dimension relative to
 ## 8. Revision log
 
 (entries added as evidence arrives; nothing silently rewritten)
+
+2026-09-27 (after harvest I1-I6, raid E1-E6, spikes S1-S5):
+- C1 SUPPORTED: no engine is designed for the non-reproductive routes
+  (CROSSWALK reading 3); WTP/SI install the learner.
+- C2 SPLIT: for lattice substrates the binding gate is P2/P3 (content and
+  JOINT causation: Aether 2 of 2,793 joint causes, raw/I2 T12); for the Z80
+  worlds content moves by construction and the binding gates are H2 and
+  O6 (causal control of heredity; accumulation), plus attribution (s2).
+- C3 SUPPORTED AND SHARPENED: 80 reversals, 13 shapes (raw/I6); spike S1
+  found a new instance in an unquestioned result (20 of 68 "competent
+  self-replicators" cannot self-copy). X7 is the program's binding
+  constraint for claims about growth.
+- C4 SUPPORTED: every engine but Aether installs the boundary (CROSSWALK
+  reading 1).
+- ADDED X8 REACHABILITY (promoted out of X2): whether a capability that
+  EXISTS in a substrate can be REACHED -- set by encoding length of key
+  primitives (copy: NPE, BEE, ARC census; external: universality does not
+  imply replicators), neutral-network connectivity (spike S3: the "cliff"
+  is a 62%-neutral plateau with no uphill neighbour) and basin width
+  (Ares, PTE). Candidate cross-engine law (POI-020).
+- ADDED to X7: DISCOVERY vs TAKEOVER. A signal can track the spread of a
+  thing rather than its appearance (BFF 2026: compression tracked
+  takeover); every "emergence" claim must say which it measures.
+- ADDED to X7: EVALUATOR EXPLOITATION is substrate-general (raw/E4 s3):
+  any system under selection will game an observable evaluator.
+- ADDED to P4: HEREDITY HAS A THERMODYNAMIC PRICE (persistent copies need
+  sustained driving, raw/E2); Prometheus's Z80 worlds copy for free.
+- ADDED to s3: REPRODUCTION THAT REQUIRES COMPUTATION (raw/E6 C8) as a
+  distinct coupling -- the condition external work judges most missing.
+- ADDED to s4: MINIMAL CONDITIONS for rule-free learning (raw/E5 s3):
+  separated timescales, use-dependent change with decay, repeated
+  perturbation, dissipation; contrast can come from timing.
+- ADDED to O6: accumulation is a LINEAGE property (Clade-Metaproductivity;
+  raw/E6, raw/E4); individual fitness predicts descendants poorly.

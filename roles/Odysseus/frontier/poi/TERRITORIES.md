@@ -29,6 +29,16 @@ ranking (directive). Pure ASCII.
    agree qualitatively; nobody has the shared metric. Territory C.
    Spike S3 sharpened it: the famous cliff is a 62%-neutral plateau with no
    uphill neighbour -- an accessibility fact, not a robustness fact.
+   Run R4_A-001 sharpened it again: the neutral network is huge in
+   genotypes (21,948 distinct) and tiny in behaviours (91; median 3 per
+   parent). Drift is free; behavioural novelty is not. Candidate unifier
+   for four threads that looked separate: "existence is not accessibility"
+   (POI-021), decorative load -- non-load-bearing parts as the main product
+   of unguided generation (POI-093), function without content (POI-066),
+   and Apollo's survivors all having exactly two primitives (raw/I4-17).
+   Testable: compare behaviours-per-genotype of neutral networks across
+   VMs (WSE, NPE, BEE) -- if it is low everywhere, it is the physics of
+   these encodings; if it varies, it is a design knob (territory C).
 4. THE ACCUMULATION QUESTION IS UNANSWERED EVERYWHERE, INSIDE AND OUT. No
    engine documents acquisition of an unseeded competence (raw/I3 T14);
    no external system shows multi-level accumulation without installed

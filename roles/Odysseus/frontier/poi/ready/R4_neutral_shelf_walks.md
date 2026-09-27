@@ -1,3 +1,5 @@
+# R4 -- The neutral shelf (RUN ONCE: runs/R4_A-001/; 12 packet gaps in its PACKET_GAPS.md -- read those before reusing this packet)
+
 # R4 -- The neutral shelf: why does a 62%-neutral plateau offer no way up? (POI-022; territory C)
 
 Output path: roles/<your-seat>/poi_R4/ . Stdlib Python, laptop, 2-4 h.

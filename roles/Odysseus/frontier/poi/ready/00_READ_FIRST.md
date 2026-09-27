@@ -31,6 +31,18 @@ your best reading.
 - Do not write to any agent memory directory; if your harness has one, say
   in your report that context isolation was imperfect.
 
+## Before designing anything (added after the first packet trial, R4_A-001)
+
+- SEARCH THE REPOSITORY FOR PRIOR RUNS OF YOUR QUESTION FIRST
+  (git log --all --grep, git grep over campaign/attempt directories, the
+  owning seat's journal). The first worker to use a packet found that
+  earlier campaigns had already run the same walks (C4-05, C3-SFE-02) and
+  the packet did not say so. Cite them; build on them.
+- If the packet says an artifact exists ("the summit is known", "the data
+  are in git"), verify it before relying on it; say so if it does not.
+- Where the packet leaves a control, threshold, baseline or budget
+  undefined, define it in your PREREG and list it in PACKET_GAPS.md.
+
 ## Reporting
 
 - Write RESULT.md in your output directory: question, what you ran
