@@ -1,0 +1,301 @@
+{
+ "inputs": {
+  "archaeon/envgate2/RESULTS.json": {
+   "last_commit": "c5ba19571c0c539d537b2f11e89d90f906d52b20",
+   "sha256": "5f13a717ae9cb05580015ebf868309dea39afda4732ba9abbf05c63ad99770e1"
+  },
+  "archaeon/envgate2/analyze.py": {
+   "last_commit": "87f51c5ee0ca4b559e96d3953a967cdf8c9e6cde",
+   "sha256": "77324ca696ac51e565460d0e9e6e12400ae0c4d313b51ea98d24b89ac3e239ef"
+  },
+  "archaeon/envgate2/mechanism.py": {
+   "last_commit": "87f51c5ee0ca4b559e96d3953a967cdf8c9e6cde",
+   "sha256": "695085d23951a5bc8ad3f788c1c6bb9ed7c366bd9dce0cb45c9c606d2183058d"
+  },
+  "archaeon/envgate2/PREREG.json": {
+   "last_commit": "1475b79950d8cba66e553b34ce11d4f7a0725ed7",
+   "sha256": "2bb468d3fdbc8288c956b91738f55622b124140b7c3d07432d09002e13cbfc96"
+  },
+  "archaeon/envgate2/OPS_LOG.jsonl": {
+   "last_commit": "c5ba19571c0c539d537b2f11e89d90f906d52b20",
+   "sha256": "a29030d03b6eaf854e137c42f953160d53e7108214966d253e74c4a7fecfed14"
+  },
+  "archaeon/lineage/core.py": {
+   "last_commit": "87f51c5ee0ca4b559e96d3953a967cdf8c9e6cde",
+   "sha256": "2237603d707bc798eb5579c758e62643b750235944a9c6bc340e36b7bfda20e6"
+  },
+  "archaeon/lineage/assay_block.py": {
+   "last_commit": "87f51c5ee0ca4b559e96d3953a967cdf8c9e6cde",
+   "sha256": "b3c165ff242fd63f6129b9510a9105f696a43f481c1231f7c3c333784dc735a5"
+  },
+  "archaeon/envgate2/VERDICT_2026-09-26.md": {
+   "last_commit": "c5ba19571c0c539d537b2f11e89d90f906d52b20",
+   "sha256": "c17c231b09e4ad509de1216d66d16e478cdae370dce93fda4c865918f68618fb"
+  },
+  "archaeon/envgate2/ENVGATE_CLOSURE_2026-09-26.md": {
+   "last_commit": "13cdec715eb21902d6c71488d8b77ec9993c31e4",
+   "sha256": "d3c87b2630591be41b51f34af7fb0fa4b3ef267ea26673e0a99be5b7be57b989"
+  },
+  "ops/threads/TH-001.md": {
+   "last_commit": "0a5c0895d9286c54cc5d1a7ea64283c9edf81144",
+   "sha256": "04fd65b575de129b39ddfa4bcaf7356f2afa5a200ecb6b36c467352fbeb8466b"
+  },
+  "roles/Odysseus/frontier/poi/raw/I1_z80_lineage_worlds.md": {
+   "last_commit": "e82bf231171775474a27ef3b1f637081332af943",
+   "sha256": "b557c566878d6986be73e2ee62443db2bbb722712e201677f834d38e9a20a0fa"
+  }
+ },
+ "head": "e82bf231171775474a27ef3b1f637081332af943",
+ "per_block_consistent_with_established_glins": true,
+ "n_rows": 39,
+ "totals": {
+  "U": 24,
+  "RRIGHT": 3,
+  "RWEAK": 2,
+  "R128": 5,
+  "BAND0": 5
+ },
+ "band0_establishments": [
+  {
+   "block": 4,
+   "arm": "BAND0",
+   "glin": 1019,
+   "arrival": 688130,
+   "tape12": "b1f5c641816b",
+   "ruler_class": "NEAR_COPIER",
+   "gate": "NO_EXACT_GATE",
+   "exact_inputs": [],
+   "first_birth_input": 15,
+   "fbi_in_band": false,
+   "fbi_in_arm_open_set": false,
+   "peak": 125,
+   "births": 2351,
+   "max_ggen": 28,
+   "last_alive": 21855,
+   "established_in_arms": [
+    "BAND0"
+   ],
+   "n_arms": 1,
+   "tapes_identical_across_arms": true
+  },
+  {
+   "block": 11,
+   "arm": "BAND0",
+   "glin": 16,
+   "arrival": 17983,
+   "tape12": "c1829c8f4495",
+   "ruler_class": "NEAR_COPIER",
+   "gate": "NO_EXACT_GATE",
+   "exact_inputs": [],
+   "first_birth_input": 221,
+   "fbi_in_band": false,
+   "fbi_in_arm_open_set": false,
+   "peak": 128,
+   "births": 3776795,
+   "max_ggen": 30467,
+   "last_alive": 32948,
+   "established_in_arms": [
+    "U",
+    "RRIGHT",
+    "R128",
+    "BAND0"
+   ],
+   "n_arms": 4,
+   "tapes_identical_across_arms": true
+  },
+  {
+   "block": 13,
+   "arm": "BAND0",
+   "glin": 481,
+   "arrival": 541685,
+   "tape12": "41e341808a14",
+   "ruler_class": "EXACT_UNGATED",
+   "gate": "UNGATED_ALL_256",
+   "exact_inputs": "all 256",
+   "first_birth_input": 45,
+   "fbi_in_band": false,
+   "fbi_in_arm_open_set": false,
+   "peak": 128,
+   "births": 1899890,
+   "max_ggen": 15525,
+   "last_alive": 32948,
+   "established_in_arms": [
+    "U",
+    "RRIGHT",
+    "RWEAK",
+    "R128",
+    "BAND0"
+   ],
+   "n_arms": 5,
+   "tapes_identical_across_arms": true
+  },
+  {
+   "block": 14,
+   "arm": "BAND0",
+   "glin": 198,
+   "arrival": 74051,
+   "tape12": "23c1800bb4ce",
+   "ruler_class": "EXACT_UNGATED",
+   "gate": "UNGATED_ALL_256",
+   "exact_inputs": "all 256",
+   "first_birth_input": 78,
+   "fbi_in_band": false,
+   "fbi_in_arm_open_set": false,
+   "peak": 128,
+   "births": 3714371,
+   "max_ggen": 30035,
+   "last_alive": 32948,
+   "established_in_arms": [
+    "U",
+    "RRIGHT",
+    "RWEAK",
+    "R128",
+    "BAND0"
+   ],
+   "n_arms": 5,
+   "tapes_identical_across_arms": true
+  },
+  {
+   "block": 15,
+   "arm": "BAND0",
+   "glin": 945,
+   "arrival": 574357,
+   "tape12": "335b0aab50a8",
+   "ruler_class": "NEAR_COPIER",
+   "gate": "NO_EXACT_GATE",
+   "exact_inputs": [],
+   "first_birth_input": 170,
+   "fbi_in_band": false,
+   "fbi_in_arm_open_set": false,
+   "peak": 33,
+   "births": 81,
+   "max_ggen": 12,
+   "last_alive": 18196,
+   "established_in_arms": [
+    "BAND0"
+   ],
+   "n_arms": 1,
+   "tapes_identical_across_arms": true
+  }
+ ],
+ "arm_invariant_arrivals_(>=4_arms)": [
+  [
+   11,
+   17983
+  ],
+  [
+   13,
+   541685
+  ],
+  [
+   14,
+   74051
+  ]
+ ],
+ "window_dependence_by_definition": {
+  "U": {
+   "total": 24,
+   "D1_arm_unique": 21,
+   "D2_not_in_BAND0": 21,
+   "D3_notBAND0_and_(input_or_gate_in_open_set)": 20,
+   "D4_notBAND0_and_input_in_open_set": 16,
+   "D2_minus_D3_rows": [
+    [
+     23,
+     185273,
+     "NEAR_COPIER",
+     "NO_EXACT_GATE",
+     116
+    ]
+   ]
+  },
+  "RRIGHT": {
+   "total": 3,
+   "D1_arm_unique": 0,
+   "D2_not_in_BAND0": 0,
+   "D3_notBAND0_and_(input_or_gate_in_open_set)": 0,
+   "D4_notBAND0_and_input_in_open_set": 0,
+   "D2_minus_D3_rows": []
+  },
+  "RWEAK": {
+   "total": 2,
+   "D1_arm_unique": 0,
+   "D2_not_in_BAND0": 0,
+   "D3_notBAND0_and_(input_or_gate_in_open_set)": 0,
+   "D4_notBAND0_and_input_in_open_set": 0,
+   "D2_minus_D3_rows": []
+  },
+  "R128": {
+   "total": 5,
+   "D1_arm_unique": 2,
+   "D2_not_in_BAND0": 2,
+   "D3_notBAND0_and_(input_or_gate_in_open_set)": 0,
+   "D4_notBAND0_and_input_in_open_set": 0,
+   "D2_minus_D3_rows": [
+    [
+     13,
+     1036173,
+     "NON_HIT",
+     "NO_EXACT_GATE",
+     71
+    ],
+    [
+     14,
+     314642,
+     "NON_HIT",
+     "NO_EXACT_GATE",
+     163
+    ]
+   ]
+  },
+  "BAND0": {
+   "total": 5,
+   "D1_arm_unique": 2,
+   "D2_not_in_BAND0": 0,
+   "D3_notBAND0_and_(input_or_gate_in_open_set)": 0,
+   "D4_notBAND0_and_input_in_open_set": 0,
+   "D2_minus_D3_rows": []
+  }
+ },
+ "block_wall_h": {
+  "0": 1.47,
+  "1": 1.47,
+  "2": 1.47,
+  "3": 1.48,
+  "4": 1.51,
+  "5": 1.5,
+  "6": 0.94,
+  "7": 0.95,
+  "8": 0.96,
+  "9": 0.95,
+  "10": 0.99,
+  "11": 5.93,
+  "12": 0.97,
+  "13": 3.34,
+  "14": 5.9,
+  "15": 0.96,
+  "16": 0.98,
+  "17": 0.96,
+  "18": 0.97,
+  "19": 0.93,
+  "20": 0.99,
+  "21": 0.95,
+  "22": 0.99,
+  "23": 0.84
+ },
+ "median_wall_h": 0.98,
+ "slowest3": [
+  11,
+  14,
+  13
+ ],
+ "nonU_establishments_by_block": {
+  "4": 1,
+  "11": 3,
+  "13": 5,
+  "14": 5,
+  "15": 1
+ },
+ "frozen_takeover_worlds": 13,
+ "frozen_establishments_in_takeover_worlds": 15
+}

@@ -25,9 +25,14 @@ pinned commit, and `ensure_bundle_committed` refuses otherwise.
 
 EVIDENCE. A real flight writes `receipts/<run_id>.json` plus a directory
 `receipts/<run_id>/` holding the platform samples, the module's telemetry
-and every retrieved artifact up to `KEEP_ARTIFACT_BYTES`; larger artifacts
-are recorded by size and digest only, which is what the receipt already
-proves about them.
+and every retrieved artifact up to `KEEP_ARTIFACT_BYTES`. Larger artifacts
+are NOT dropped: they are written OUTSIDE the repository, to
+`LARGE_ARTIFACT_DIR/<run_id>/` (default `<checkout parent>/Prometheus-data/
+runpod_artifacts`, override with `--keep-large DIR`), and the receipt's
+`large_artifacts` lists each one's path, size and sha256. Until 2026-09-27
+they were recorded by size and digest only and the bytes were discarded
+without a log line; a science module whose result was one 9 MB file lost it
+that way (RUNPOD_ENGINEERING / C-002 pilot finding).
 """
 
 import argparse
@@ -55,11 +60,21 @@ from prometheus_gpu import spec as spec_mod        # noqa: E402
 
 DIST_DIR = os.path.join(HERE, "examples", "dist")
 REPO_DIST = "Aether/runpod/examples/dist"
+# The seat that OWNS the workload, recorded in every plan and receipt.
+# Defaulted to "Aether" through Iteration 4, when every module was
+# Aether's; Iteration 5 flew another seat's suite and would have been
+# receipted as Aether's. Set with --seat.
+SEAT = "Aether"
 RECEIPT_DIR = os.path.join(HERE, "receipts")
 # Controller ledgers hold the artifact token, so they live OUTSIDE the
 # repository's tracked tree (gitignored). A receipt never carries one.
 LEDGER_DIR = os.path.join(HERE, ".ledger")
 KEEP_ARTIFACT_BYTES = 1 << 20
+# Where artifacts above KEEP_ARTIFACT_BYTES go: next to the checkout, never
+# inside it (the repository stays lean; the bytes are kept).
+LARGE_ARTIFACT_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))))), "Prometheus-data", "runpod_artifacts")
 DEFAULT_BUDGET_USD = 0.25
 
 
@@ -199,7 +214,7 @@ def rehearse(module_dir, spec, budget_usd, plan=None):
         served.setdefault(path, '{"rehearsal": true}')
     fake = prov.FakeProvider(served=served)
     ctl = launch.Controller(
-        fake, spec, module_dir, budget_usd=budget_usd, poll_s=10.0,
+        fake, spec, module_dir, budget_usd=budget_usd, seat=SEAT, poll_s=10.0,
         ready_poll_s=3.0, now=lambda: clock[0],
         sleep=lambda s: clock.__setitem__(0, clock[0] + s), log=log)
     receipt_obj = ctl.run()
@@ -224,11 +239,26 @@ def save_evidence(ctl, receipt_obj):
                   encoding="utf-8", newline="\n") as fh:
             fh.write(ctl.platform_text)
         kept.append("platform.jsonl")
+    large = []
     for path, blob in sorted(ctl.artifact_blobs.items()):
         if len(blob) <= KEEP_ARTIFACT_BYTES:
             with open(os.path.join(run_dir, path), "wb") as fh:
                 fh.write(blob)
             kept.append(path)
+        else:
+            big_dir = os.path.join(LARGE_ARTIFACT_DIR, receipt_obj["run_id"])
+            os.makedirs(big_dir, exist_ok=True)
+            dest = os.path.join(big_dir, path)
+            with open(dest, "wb") as fh:
+                fh.write(blob)
+            import hashlib
+            large.append({"path": path, "bytes": len(blob),
+                          "sha256": hashlib.sha256(blob).hexdigest(),
+                          "stored_at": dest.replace(os.sep, "/")})
+            log("artifact %s is %d bytes (> %d): kept OUTSIDE the repository at %s"
+                % (path, len(blob), KEEP_ARTIFACT_BYTES, dest))
+    if large:
+        receipt_obj["large_artifacts"] = large
     for name, rows in (("controller_health.jsonl", ctl.health),
                        ("api_calls.jsonl", ctl.api_calls)):
         if rows:
@@ -330,7 +360,7 @@ def make_controller(module_dir, spec, budget_usd, poll_s, ready_poll_s,
         kwargs["expected_module_s"] = (est["per_pod_expected_seconds"]
                                        - est["overhead_seconds_per_pod"])
     return launch.Controller(provider or prov.RunPodProvider(), spec,
-                             module_dir, budget_usd=budget_usd,
+                             module_dir, budget_usd=budget_usd, seat=SEAT,
                              poll_s=poll_s, ready_poll_s=ready_poll_s,
                              ready_timeout_s=900.0,
                              transport_factory=transport_factory(spec, commit),
@@ -587,6 +617,7 @@ def rehearsal_fake(shards, campaign_id):
 
 
 def main(argv=None):
+    global LARGE_ARTIFACT_DIR
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("module", nargs="?", default="examples/gpu_load")
     ap.add_argument("--scout", type=float, default=None,
@@ -604,6 +635,11 @@ def main(argv=None):
     ap.add_argument("--go", action="store_true",
                     help="THE REAL LAUNCH; creates a pod and spends money")
     ap.add_argument("--budget", type=float, default=DEFAULT_BUDGET_USD)
+    ap.add_argument("--keep-large", default=None,
+                    help="directory OUTSIDE the repository for artifacts larger "
+                         "than KEEP_ARTIFACT_BYTES (default: %s)" % LARGE_ARTIFACT_DIR)
+    ap.add_argument("--seat", default="Aether",
+                    help="the seat that owns the workload (receipt attribution)")
     ap.add_argument("--scout-budget", type=float, default=0.05)
     ap.add_argument("--poll", type=float, default=10.0)
     ap.add_argument("--ready-poll", type=float, default=3.0)
@@ -637,6 +673,10 @@ def main(argv=None):
                     help="shard file: several pods at once")
     ap.add_argument("--fail-fast", action="store_true")
     args = ap.parse_args(argv)
+    if args.keep_large:
+        LARGE_ARTIFACT_DIR = os.path.abspath(args.keep_large)
+    global SEAT
+    SEAT = args.seat
 
     module_dir = module_path(args.module)
     env = parse_env(args.env)
@@ -680,6 +720,19 @@ def main(argv=None):
             return 0
     if args.resume:
         log("RESUME from ledger %s (never creates)" % args.resume)
+        # The ledger names the module the pod is running. Resuming with a
+        # DIFFERENT module's spec retrieves the wrong artifact list and then
+        # terminates the pod -- the real artifacts are lost (2026-09-27: a
+        # resume without the module argument fell back to examples/gpu_load
+        # and a 4-unit science flight's units.tar was never fetched). Refuse.
+        with open(args.resume, encoding="utf-8") as fh:
+            ledger_module = json.load(fh).get("module", "")
+        spec_module = "%s@%s" % (spec["name"], spec.get("version", ""))
+        if ledger_module and ledger_module.split("@")[0] != spec["name"]:
+            log("REFUSED: the ledger's pod runs %r but this resume was given "
+                "module %r (%s). Pass the module directory that built it."
+                % (ledger_module, spec_module, module_dir))
+            return 5
         if not credentials.available():
             log("no RunPod credential configured; see credentials.py")
             return 4
