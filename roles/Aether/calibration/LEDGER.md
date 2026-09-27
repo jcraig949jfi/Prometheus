@@ -148,3 +148,30 @@ intervention a falsifier, ask whether the law alone forces its outcome.
 If it does, it is a check of the semantics. A real intervention must
 leave the effect a route to survive (here: starve only one class of
 ring site, so the other can still carry influence across).
+
+2026-09-27 | Edited the aether_units module (added a unit-set selector) while
+its --auto flight was between scout and campaign. | The campaign leg
+re-read the module, its bundle hash no longer matched a committed bundle,
+and the platform refused before create. The scout ($0.03) had to be
+treated as calibration-only; no pod was lost, nothing was billed beyond it.
+| The campaign leg's refusal message. | A module under an in-flight
+--auto is frozen. Prepare the next version in a copy, or wait for the
+flight to land. The platform's refusal was correct and is the reason this
+cost nothing.
+
+2026-09-27 | Committed 7e01f564a with the terminology audit reporting
+"1 failed" as the first line of the same command's output. | The audit
+hits were wording in the audit document; fixed in d8b47a199. No code was
+affected, but a red gate was pushed. | Re-reading the command output
+after the push. | The gate line is read BEFORE `git commit`, in its own
+command, every time -- the rule already in this ledger (2026-09-2x,
+"run the gate as its own command and read its summary line"). Repeated.
+
+2026-09-27 | The portable-unit runner's Windows peak-memory probe returned
+0.0 MB for every BUCKKEEP unit. | ctypes called GetProcessMemoryInfo
+without declaring 64-bit handle types; the pseudo-handle was truncated and
+the call silently filled nothing. The Linux pod's figure (39 MB) made the
+zero visibly wrong. | Comparing the same unit's resource line across two
+hosts. | A resource figure of exactly zero is a probe failure until shown
+otherwise; check each new measurement against a second host or a known
+value before recording it.
