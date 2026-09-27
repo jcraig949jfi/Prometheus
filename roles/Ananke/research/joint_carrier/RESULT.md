@@ -57,3 +57,14 @@ T-JC-3 Why does C1's "integration beyond one sensor" work here? Are the
        than at a site? Carrier: a per-sensor swap.
 T-JC-4 A generic "source vs transit" profile instrument: erase-at-role
        curves (sensors / actuator / relays) x erase-channel curves.
+
+## Cross-check with W-C (2026-09-27)
+W-C's single-cue twin census puts 4781b0a1 in the SOURCE-PRESENCE class:
+the sensors fire or stay silent according to cue sign, and packets then
+travel unchanged. That is consistent with "source-latched regeneration":
+the latch decides WHETHER the sensor emits. It also offers a cheaper
+reading of the "present but unused" pay0. Under superposition, packets
+present in one sign only make any payload sum decodable (carrier-swap
+F7), so pay0's decodability may be presence leaking into content, not a
+separate stored value. Test (added as T-JC-5): the physical difference
+class of pay0 vs pay1 from twins (firing vs value difference).
