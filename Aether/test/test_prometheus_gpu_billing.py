@@ -110,3 +110,22 @@ def test_billing_rows_never_become_free_when_missing(tmp_path):
     out = billing.reconcile(str(tmp_path), [])
     assert out["rows"][0]["status"].startswith("NOT_YET_BILLED")
     assert out["totals"]["billed_usd_matched"] == 0.0
+
+
+def test_flight_records_the_owning_seat_not_aether(tmp_path):
+    # Iteration 5 flew Ananke's suite; the platform used to receipt every
+    # module as Aether's. The owning seat must reach the controller.
+    import importlib.util
+    path = os.path.join(_RUNPOD, "flight.py")
+    sp = importlib.util.spec_from_file_location("flight_seat", path)
+    flight = importlib.util.module_from_spec(sp)
+    sp.loader.exec_module(flight)
+    from prometheus_gpu import provider as prov, spec as spec_mod
+    spec_obj = spec_mod.from_dict({"name": "x", "entrypoint": "run.py"})
+    flight.SEAT = "Ananke"
+    ctl = flight.make_controller(str(tmp_path), spec_obj, 0.1, 10.0, 3.0,
+                                 "0" * 40, provider=prov.FakeProvider(served={}))
+    assert ctl.seat == "Ananke"
+    assert flight.main.__code__.co_varnames  # --seat is parsed in main
+    ap_src = open(path, encoding="utf-8").read()
+    assert '"--seat"' in ap_src
