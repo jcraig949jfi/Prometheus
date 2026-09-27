@@ -1,0 +1,28 @@
+[flight 11:31:26] REAL LAUNCH aether-units-scout@1, budget ceiling $0.45
+[flight 11:31:26] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:31:26] credential source: host default key file
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 725, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 714, in main
+    return auto(module_dir, args, env)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 490, in auto
+    out = campaign_mod.run(fly_scout, calibrate, fly_campaign,
+                           max_rescouts=args.max_rescouts, log=log)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\prometheus_gpu\campaign.py", line 50, in run
+    scout = fly_scout()
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 457, in fly_scout
+    _code, rec = fly_receipt(module_dir, spec, args.scout_budget,
+                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             args.poll, args.ready_poll,
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             ctl_kwargs=ctl_kwargs)
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 353, in fly_receipt
+    built, transport = ensure_bundle_committed(module_dir, spec, commit)
+                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 154, in ensure_bundle_committed
+    raise RuntimeError("bundle %s is not built. Run --build, commit and "
+                       "push it first." % bundle_name(spec, built))
+RuntimeError: bundle aether-units-scout-3804f162ea2d.tar.gz is not built. Run --build, commit and push it first.
