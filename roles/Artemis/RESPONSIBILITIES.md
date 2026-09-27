@@ -5,6 +5,17 @@
 Currency: 2026-09-25 (seat created on ubu002; base role adopted; charter
 PENDING the operator's discussion).
 
+## CURRENT THREAD (2026-09-27)
+
+The operator assigned the seat's first substantive Thread, "SFE
+RETROSPECTIVE AND PROMETHEUS ENGINE ECOLOGY", verbatim at
+roles/Artemis/prompts/2026-09-27_sfe_retrospective_thread/ (MANIFEST).
+It is research and synthesis only, read-only toward every engine and
+store; it is not the charter. Deliverable:
+roles/Artemis/threads/sfe_retrospective/REPORT.md. Section 0 below
+("NO lane", "NO science") is otherwise still accurate: the thread
+changes no engine.
+
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
 aporia/doctrine/critical_memories.md) BEFORE this seat's local bootstrap.
@@ -96,6 +107,7 @@ maintains, what it never does, and the first backlog in the schema
 
 - RESPONSIBILITIES.md -- this file (entry file)
 - WAKE.md -- the base wake block with this seat's name filled in
+- ABOUT.md -- who this seat is and the ubu002 host: specs, software, reachability
 - STATUS.md -- status, plain language
 - TODO.md -- dated working list
 - BACKLOG_H0H5.md -- provisional; below the schema's floor until the
