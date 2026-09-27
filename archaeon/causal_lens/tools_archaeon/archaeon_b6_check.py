@@ -37,7 +37,7 @@ def classify(tape, nbr, x):
     k = []
     if ex["self"] > loc_own: k.append("SELF_CODE_IN_NEIGHBOUR_REGION")
     if ex["nbr"] > loc_nbr: k.append("FOREIGN_CODE_IN_OWN_REGION")
-    return {"steps": steps, "loc_own": loc_own, "loc_nbr": loc_nbr, "mat_self": ex["self"], "mat_nbr": ex["nbr"], "mat_other": ex["other"],
+    return {"child": r["nbr_window"], "steps": steps, "loc_own": loc_own, "loc_nbr": loc_nbr, "mat_self": ex["self"], "mat_nbr": ex["nbr"], "mat_other": ex["other"],
             "divergence": "+".join(k) or "NONE_DETECTED"}
 
 
@@ -54,18 +54,21 @@ def main():
             for x in range(256):
                 n += 1; r = classify(tape, nb, x)
                 if r is None: continue
-                c[r["divergence"]] += 1; by_class[(h["class"], nb_name, r["divergence"])] += 1
+                r.pop("child"); c[r["divergence"]] += 1; by_class[(h["class"], nb_name, r["divergence"])] += 1
                 if r["divergence"] != "NONE_DETECTED" and len(ex_rows) < 20: ex_rows.append(dict(r, tape=h["tape"], nbr=nb_name, x=x))
     L = json.load(open("archaeon/envgate/LINEAGES.json", encoding="utf-8"))["lineages"]
     hosts = [bytes.fromhex(r["founder_tape"]) for r in L if r["block"] == 15 and r["arm"] == "U" and r["founder_class"] == "INERT"]
-    hp = Counter(); hosting = 0
+    hp = Counter(); hosting = 0; mat = Counter()
     for hst in hosts:
         for x in range(256):
             r = classify(hst, RESIDENT15, x)
             if r is None: continue
-            hosting += 1; hp[r["divergence"]] += 1
+            ch = r.pop("child"); kind = "child=resident" if ch == RESIDENT15 else ("child=host" if ch == hst else "child=other")
+            maj = "exec_material_majority=" + ("nbr(resident)" if r["mat_nbr"] > r["mat_self"] + r["mat_other"] else ("self(host)" if r["mat_self"] > r["mat_nbr"] + r["mat_other"] else "mixed"))
+            hosting += 1; hp[(kind, r["divergence"])] += 1; mat[(kind, maj, r["divergence"])] += 1
     res = {"task": "T-004 archaeon side", "copier_tapes": len(hits), "executions": n, "births": sum(c.values()), "divergence": dict(c),
-           "by_class": {" | ".join(k): v for k, v in by_class.most_common()}, "block15_host_panel": {"hosts": len(hosts), "hosting_births": hosting, "divergence": dict(hp)},
+           "by_class": {" | ".join(k): v for k, v in by_class.most_common()}, "block15_host_panel": {"hosts": len(hosts), "hosting_births": hosting, "divergence": {" | ".join(k): v for k, v in hp.most_common()},
+                                   "by_material": {" | ".join(k): v for k, v in mat.most_common()}},
            "examples": ex_rows, "wall_s": round(time.time() - t0, 1)}
     res["result_sha256"] = hashlib.sha256(json.dumps({k: v for k, v in res.items() if k != "wall_s"}, sort_keys=True).encode()).hexdigest()
     json.dump(res, open(out_path, "w", encoding="utf-8"), indent=1)
