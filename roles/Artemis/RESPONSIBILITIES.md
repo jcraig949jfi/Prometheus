@@ -96,6 +96,7 @@ maintains, what it never does, and the first backlog in the schema
 
 - RESPONSIBILITIES.md -- this file (entry file)
 - WAKE.md -- the base wake block with this seat's name filled in
+- ABOUT.md -- who this seat is and the ubu002 host: specs, software, reachability
 - STATUS.md -- status, plain language
 - TODO.md -- dated working list
 - BACKLOG_H0H5.md -- provisional; below the schema's floor until the
