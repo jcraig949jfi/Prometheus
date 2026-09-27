@@ -84,34 +84,64 @@ def stencil(variant):
 
 
 class World:
-    """Five byte fields plus rcv's received flag, stepped under one law."""
+    """Five byte fields plus EVERY piece of per-site state the law carries
+    across ticks, stepped under one law.
 
-    def __init__(self, variant, fields, received=None):
+    `extra` holds the carried state beyond the five bytes: the received flag
+    for the RCV_FAMILY, and the received byte for `fwd`. `diff_masks` compares
+    all of it. (PROPAGATION_ASSAY_AUDIT.md: a twin predicate that omitted
+    carried state would let a hidden difference cause a visible one with no
+    visible differing neighbour.)
+    """
+
+    def __init__(self, variant, fields, received=None, extra=None):
         self.variant = variant
         self.f = [x.copy() for x in fields]
         n = fields[0].shape[0]
-        self.received = (received.copy() if received is not None
-                         else np.zeros((n, n), dtype=bool))
+        self.extra = {k: v.copy() for k, v in (extra or {}).items()}
+        if variant in V.RCV_FAMILY and "received" not in self.extra:
+            self.extra["received"] = (received.copy() if received is not None
+                                      else np.zeros((n, n), dtype=bool))
+        if variant == "fwd" and "received_value" not in self.extra:
+            self.extra["received_value"] = np.zeros((n, n), dtype=np.uint8)
+        if "received" not in self.extra:
+            # Laws without the flag still expose an all-False one so callers
+            # can read `.received` uniformly; it never changes and never differs.
+            self.extra["received"] = np.zeros((n, n), dtype=bool)
+
+    @property
+    def received(self):
+        return self.extra["received"]
+
+    @received.setter
+    def received(self, value):
+        self.extra["received"] = value
 
     def copy(self):
-        return World(self.variant, self.f, self.received)
+        return World(self.variant, self.f, extra=self.extra)
 
     def step(self, tick, par):
         h, w = self.f[0].shape
+        kw = {}
+        if self.variant in V.RCV_FAMILY:
+            kw["received"] = self.extra["received"]
+        if self.variant == "fwd":
+            kw["received_value"] = self.extra["received_value"]
         out = V.step(self.variant, H=h, W=w, tick=tick, opcode=self.f[0],
                      arg0=self.f[1], arg1=self.f[2], payload=self.f[3],
-                     energy=self.f[4],
-                     received=self.received if self.variant == "rcv" else None,
-                     **par)
+                     energy=self.f[4], **kw, **par)
         self.f = list(out[:5])
-        if self.variant == "rcv":
-            self.received = out[5]["received"]
+        if self.variant in V.RCV_FAMILY:
+            self.extra["received"] = out[5]["received"]
+        if self.variant == "fwd":
+            self.extra["received_value"] = out[5]["received_value"]
 
 
 def diff_masks(a, b):
     per_field = [a.f[i] != b.f[i] for i in range(5)]
     site = per_field[0] | per_field[1] | per_field[2] | per_field[3] | per_field[4]
-    site = site | (a.received != b.received)
+    for key in a.extra:
+        site = site | (a.extra[key] != b.extra[key])
     return site, per_field
 
 
@@ -184,6 +214,18 @@ def pair_run(a0, origin, field, bit, par, tick0, ticks, dist, null=False):
     last_alive = 0 if site.any() else -1
     last_new_gen_tick = 0
     rows = {}
+    # CONTENT metrics (research block, Block E). A new difference in a
+    # TEMPLATE field (0-3) is "content". Its XOR between the twins is its
+    # signature: equal to the origin's flip (1 << bit) means the same bit
+    # of content arrived unchanged ("preserved"); anything else means the
+    # content that differs is not the flipped bit ("altered": a different
+    # byte was written in one world, or bits combined).
+    sig0 = np.uint8(1 << bit)
+    _s, prev_pf = diff_masks(a, b)
+    content = {"new": 0, "preserved": 0, "altered": 0, "gen_ge2": 0,
+               "preserved_gen_ge2": 0, "max_radius": 0,
+               "preserved_max_radius": 0, "max_generation": 0,
+               "preserved_max_generation": 0}
     for t in range(1, ticks + 1):
         prev_site, prev_gen = site, gen
         a.step(tick0 + t, par)
@@ -195,6 +237,30 @@ def pair_run(a0, origin, field, bit, par, tick0, ticks, dist, null=False):
         violations += int(orphan.sum())
         gen = np.where(site & prev_site, prev_gen, BIG)
         gen = np.where(newly & ~orphan, pmin + 1, gen)
+        for i in range(4):
+            fresh = per_field[i] & ~prev_pf[i]
+            if fresh.any():
+                xs = a.f[i][fresh] ^ b.f[i][fresh]
+                g = gen[fresh]
+                d = dist[fresh]
+                same = xs == sig0
+                content["new"] += int(fresh.sum())
+                content["preserved"] += int(same.sum())
+                content["altered"] += int((~same).sum())
+                content["gen_ge2"] += int(((g >= 2) & (g < BIG)).sum())
+                content["preserved_gen_ge2"] += int((same & (g >= 2) & (g < BIG)).sum())
+                content["max_radius"] = max(content["max_radius"], int(d.max()))
+                gv = g[g < BIG]
+                if len(gv):
+                    content["max_generation"] = max(content["max_generation"], int(gv.max()))
+                if same.any():
+                    content["preserved_max_radius"] = max(content["preserved_max_radius"],
+                                                          int(d[same].max()))
+                    gs = g[same & (g < BIG)]
+                    if len(gs):
+                        content["preserved_max_generation"] = max(
+                            content["preserved_max_generation"], int(gs.max()))
+        prev_pf = per_field
         nk = int(newly.sum())
         if nk:
             new_total += nk
@@ -238,6 +304,7 @@ def pair_run(a0, origin, field, bit, par, tick0, ticks, dist, null=False):
         "reentries": int(reentries),
         "locality_violations": int(violations),
         "final_differing_fraction": float(site.mean()),
+        "content": content,
     }
     summary["class"] = classify(summary)
     return rows, summary
@@ -266,7 +333,7 @@ def assay(variant, n, warmup, ticks, origins, seed_index, null=False):
     for t in range(1, warmup + 1):
         w.step(t, par_on)
     em = S.emitters(variant, w.f, par_on["write_cost"])
-    if variant == "rcv":
+    if variant in V.RCV_FAMILY:
         em = em | (w.received & (w.f[4].astype(np.int64) >= par_on["write_cost"]))
     cand = np.argwhere(em)
     pick = cand[rng.choice(len(cand), min(origins, len(cand)), replace=False)]
