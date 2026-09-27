@@ -79,3 +79,5 @@ Predictions: HOLD latches: sitestate FLIP, inflight NO-EFFECT. RELAY and
 MAJ: inflight FLIP, payload-only FLIP, counts-only NO-EFFECT, sitestate
 NO-EFFECT. No cell carries the bit in counts (timing-only codes absent:
 T-TM-1 prior = none).
+
+ADDENDUM 3 (before running): joint swap on MAJ 4781b0a1 (inflight CHANCE and sitestate CHANCE, S-CT). Prediction: swapping inflight+sitestate together FLIPS -> the bit is JOINTLY carried (T-DM-2 candidate). Also the same at t0+1 and t0+3 to see where the split moves.
