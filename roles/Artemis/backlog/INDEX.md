@@ -20,7 +20,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
 | FR-001 | Construction landscape, not payoff, decides discovery (5 engines) | SHARPENED | H-D3-64 H-D3-60 H-D1-45 H-D1-23 H-D5-40 | umbrella of FR-002..009, FR-132, FR-133 | L |
-| FR-002 | Basin width predicts which primitive evolution selects (Ares falsifier unrun) | SHARPENED | H-D3-56 H-D3-57 | narrower-than FR-001 | L |
+| FR-002 | Basin width predicts which primitive evolution selects (Ares falsifier unrun) (Ares demoted its own falsifier 09-25; basin/peak confound confirmed in basin.json) | SHARPENED | H-D3-56 H-D3-57 | narrower-than FR-001 | L |
 | FR-003 | Accessibility rulers (foothold density, flat valley, rho) on a second substrate | RAW | H-D1-46 H-D3-62 | instrument for FR-001 | L |
 | FR-004 | Is the Crius frontier a genotype-phenotype-map artefact (neutral networks)? | RAW | H-D3-61 | narrower-than FR-001; prior art PA_accessibility | L |
 | FR-005 | Invocation without content: content-free scaffolding as an attractor | RAW | H-D3-63 | narrower-than FR-001 | L |
@@ -28,7 +28,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-007 | XOR/FLIP composition never assembled in PTE | RAW | H-D3-44 | narrower-than FR-001 | G/S |
 | FR-008 | Aether D-15 accessibility transplant and K7/K8 gates | RAW | H-D3-12 H-D3-13 | narrower-than FR-001 | L/S |
 | FR-009 | Selection cannot value enabling actions (horizon/myopia) | RAW | H-D5-40 | narrower-than FR-001 | L |
-| FR-132 | Missing primitive or missing search operator? (W2_K2 valley, lane-2 keyed memory, tape reach, C5 boundary) | SHARPENED | H-D4-16 H-D4-60 H-D4-31 H-D4-70 H-D4-27 | narrower-than FR-001; related FR-049 | L |
+| FR-132 | Missing primitive or missing search operator? (W2_K2 valley, lane-2 keyed memory, tape reach, C5 boundary) (partly answered: PROTEUS-46 0/4,267 and 0/4,881 useful one-step children; pop-size family tracks seed, digest 939e4f39e) | SHARPENED | H-D4-16 H-D4-60 H-D4-31 H-D4-70 H-D4-27 | narrower-than FR-001; related FR-049 | L |
 | FR-133 | Damage cliff and neutral drift: can long neutral walks or duplication cross it? | RAW | H-D4-59 H-D4-57 H-D4-61 H-D4-01 H-D4-02 H-D1-24 | narrower-than FR-001; related FR-004 | L |
 | FR-134 | Evolvable variation: heritable operators in modularly varying worlds (Toussaint x Kouvaris) | RAW | H-D4-44 H-D4-45 H-D4-34 H-D5-29 H-D4-49 H-D5-30 | related FR-001 FR-004 | L |
 
@@ -36,8 +36,8 @@ science | N program infrastructure | Z answered or superseded at harvest
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-010 | Are the three Z80 builds independent evidence? (convergence audit) | SHARPENED | H-D2-01 H-D1-66 H-D1-20 H-D2-51 | related FR-011 FR-100; SFE T6 | L |
-| FR-011 | Must the program author its unit of inheritance? (heredity without a supplied copy primitive) | SHARPENED | H-D2-02 H-D1-35 H-D2-33 | umbrella of FR-090 FR-091; related FR-013 | L |
+| FR-010 | Are the three Z80 builds independent evidence? (convergence audit) (common-cause half ANSWERED: shared published ancestor arXiv 2607.09211 via the 09-19 directive) | MATURE | H-D2-01 H-D1-66 H-D1-20 H-D2-51 | related FR-011 FR-100; SFE T6 | L |
+| FR-011 | Must the program author its unit of inheritance? (heredity without a supplied copy primitive) | MATURE | H-D2-02 H-D1-35 H-D2-33 | umbrella of FR-090 FR-091; related FR-013 | L |
 | FR-012 | Which barrier dominates origin: acquisition or establishment; lottery or construction? | RAW | H-D2-06 H-D2-07 H-D2-28 H-D1-17 H-D2-42 H-D2-43 H-D4-24 | contradicts-internal (Archaeon vs BEE vs NPE W1) | L/M2 |
 | FR-013 | Encoding accessibility as a substrate-neutral coordinate of replication origin | RAW | H-D2-08 | narrower-than FR-011 | L |
 | FR-014 | Hidden effective-mutation channels and error thresholds; heredity lost in carried state | RAW | H-D2-09 H-D2-10 | related FR-015 | L |
@@ -73,8 +73,8 @@ science | N program infrastructure | Z answered or superseded at harvest
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-035 | Three memory certificates, no common instrument (Cosmos P1/P2, Ensorain LM01, Ananke SI01) | SHARPENED | H-D3-66 H-D3-26 H-D3-28 H-D3-41 H-D3-42 | umbrella of FR-036..041 | L |
-| FR-036 | SI law freeze: is query-time contraction the required contraction? generator dependence; blind lanes | BLOCKED-R | H-D1-38 H-D1-39 H-D1-67 | blocked-by operator Q1/Q4 (programs/selective_irreversibility/RULINGS.md) | O |
+| FR-035 | Three memory certificates, no common instrument (Cosmos P1/P2, Ensorain LM01, Ananke SI01) | MATURE | H-D3-66 H-D3-26 H-D3-28 H-D3-41 H-D3-42 | umbrella of FR-036..041 | L |
+| FR-036 | SI law freeze: is query-time contraction the required contraction? generator dependence; blind lanes (prior art: bounded-space computation is reversible in the same space at exponential time -- the law needs priced compute; PA_memory_and_sagacity) | BLOCKED-R | H-D1-38 H-D1-39 H-D1-67 | blocked-by operator Q1/Q4 (programs/selective_irreversibility/RULINGS.md) | O |
 | FR-037 | LM01: exact vs coarse retention; is selectivity causally required? | BLOCKED-R | H-D3-31 H-D3-32 H-D3-39 H-D1-40 | blocked-by operator LAUNCH | O |
 | FR-038 | Surprise-driven eviction loses to random; capacity vs order; recency confounds relevance | SHARPENED | H-D3-33 H-D1-68 H-D5-23 H-D4-32 H-D4-33 | related FR-035 | L |
 | FR-039 | Reversible-core experiment and the Distinction-Survival Assay; common replay-and-perturb hook | RAW | H-D1-41 H-D1-42 H-D1-43 | instrument for FR-035 | L |
@@ -91,14 +91,14 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-046 | Are inherited libraries on the causal path of winners? (reuse audits, IQ-NULL no-op test) | RAW | H-D5-17 H-D5-18 H-D5-19 H-D5-20 H-D5-22 | related FR-047 | L |
 | FR-047 | Automated vocabulary growth; library-learning family choice; A3 attempt two | RAW | H-D5-15 H-D5-16 H-D5-21 H-D1-32 H-D1-33 H-D4-22 | related FR-046 | L |
 | FR-048 | Search leverage without recursion (Aphrodite: 40% cheaper, nothing new derived) | RAW | H-D3-52 H-D3-53 H-D5-41 | related FR-006 | L |
-| FR-049 | State injection: separate a representation ceiling from a mechanism ceiling | SHARPENED | H-D5-49 | related FR-132 FR-044 | L |
+| FR-049 | State injection: separate a representation ceiling from a mechanism ceiling (partly answered: IQ-PORT-1 28761a6f9 ran two injections, parser 0/5 vs port 5/5) | SHARPENED | H-D5-49 | related FR-132 FR-044 | L |
 | FR-050 | Portable organs; Engine Five's kill rung (persistence beyond equal-information context) | RAW | H-D1-52 H-D1-53 | related FR-114 | L |
 
 ## F. Failure as evidence
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-051 | Do failure-conditioned proposals beat blind ones at matched budget? (fossil-directed vs uniform) | SHARPENED | H-D5-09 H-D5-10 H-D5-11 H-D4-41 | contradicts H-D5-10 (external review: traces may be exhaust) | L |
+| FR-051 | Do failure-conditioned proposals beat blind ones at matched budget? (fossil-directed vs uniform) (partly answered: Archaeon S1 bc6e8c13d fossil-directed vs uniform NO_DETECTABLE_ADVANTAGE 8/12 p 0.19) | SHARPENED | H-D5-09 H-D5-10 H-D5-11 H-D4-41 | contradicts H-D5-10 (external review: traces may be exhaust) | L |
 | FR-052 | Close the loop: failure -> residue -> descendant -> improvement, with ablation; return the witness | RAW | H-D5-05 H-D5-06 H-D1-27 H-D4-49 H-D5-03 | depends-on FR-051 | L |
 | FR-053 | Does the offspring-outcome distribution deform before fitness moves? (fitness-free heredity signal) | RAW | H-D5-12 | related FR-134 | L |
 | FR-054 | Failure surfaces instead of binary falsification | RAW | H-D1-58 | related FR-057 | L |
@@ -109,7 +109,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-057 | Cross-engine failure catalogue and reversal rate (ruler defects vs substrate facts) | SHARPENED | H-D1-64 H-D1-54 H-D5-51 H-D5-53 | umbrella of FR-058..065; SFE T5 | L |
+| FR-057 | Cross-engine failure catalogue and reversal rate (ruler defects vs substrate facts) | MATURE | H-D1-64 H-D1-54 H-D5-51 H-D5-53 | umbrella of FR-058..065; SFE T5; related: Odysseus physics-of-intelligence frontier I6 (80 reversals, 13 shapes; comms #751) -- UNLOCATED, not on any origin ref; asked #752 | L |
 | FR-058 | Threshold provenance: verdicts decided by the bar, not the physics | SHARPENED | H-D3-67 H-D3-08 H-D3-43 | narrower-than FR-057 | L |
 | FR-059 | Every gate ships a positive control: census of gates that have ever fired | SHARPENED | H-D5-43 H-D5-42 H-D5-46 H-D4-11 H-D4-29 H-D1-26 | narrower-than FR-057 | L |
 | FR-060 | Emergent phenomenon or rule restated? | RAW | H-D3-04 H-D3-23 | related FR-067 | L |
@@ -167,7 +167,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-085 | Deep Frontier P-boom: population capture inverts spiking on shared streams | RAW | H-D1-25 H-D4-28 | deep | M2 |
 | FR-087 | Three campaigns, zero supported positives: gates or substrate? | RAW | H-D1-21 | related FR-132 | L |
 | FR-117 | Ludus: circuit value -- world, circuit or partner? audited rules; adversary interfaces | RAW | H-D4-52 H-D4-53 H-D4-54 | deep | L |
-| FR-118 | W16: which re-armable latch does evolution build? (Ares data exists, unread) | SHARPENED | H-D4-56 | cheap; related FR-038 | L |
+| FR-118 | W16: which re-armable latch does evolution build? (Ares data exists, unread) | MATURE | H-D4-56 | cheap; related FR-038 | L |
 | FR-119 | Density-CA lines: exp one-class collapse; does the signed-margin curve transport? | RAW | H-D4-63 H-D4-64 | deep | L |
 | FR-120 | Metis channel composition; Hypatia grounding gate abstains on half the corpus | RAW | H-D4-65 H-D4-66 | deep | L |
 | FR-121 | program_ecology: 20 untested mechanism x substrate cells (ew.hypotheses) | RAW | H-D4-36 | deep | L |
@@ -178,7 +178,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
 | FR-088 | H0-H5 were never tested with power: what corpus could answer them? | RAW | H-D1-29 | umbrella of FR-101..103, FR-107 | L |
-| FR-101 | H2: does the CA compute, or the encoding? cheap reset-lattice falsification (never run) | SHARPENED | H-D4-18 H-D4-19 H-D4-67 H-D1-31 | narrower-than FR-088 | L |
+| FR-101 | H2: does the CA compute, or the encoding? cheap reset-lattice falsification (never run) | MATURE | H-D4-18 H-D4-19 H-D4-67 H-D1-31 | narrower-than FR-088 | L |
 | FR-102 | H3: does any archive/QD policy beat top-K on a real stream? | RAW | H-D4-20 | narrower-than FR-088 | L |
 | FR-103 | H5: can a learned decoder beat the permutation bound? (learned decoder = random balanced so far) | RAW | H-D4-21 H-D1-30 | narrower-than FR-088; related FR-134 | L |
 | FR-104 | The delay-invariant reader: dissect it; does the curriculum construct or select? half-credit shelf | RAW | H-D4-13 H-D4-14 H-D4-17 H-D4-30 | related FR-132 | L |
@@ -198,7 +198,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 |---|---|---|---|---|---|
 | FR-092 | SFE disposition and ledger custody (89,939 + 2,070 experiments off-repo) | BLOCKED-R | H-D1-61 | SFE T1; blocked-by host access M1/M2 + operator | O |
 | FR-093 | Provenance as an embeddable receipt contract, not a service | RAW | H-D1-62 | SFE T2 | L |
-| FR-094 | Where the ecology's evidence lives; portable verification; observer fields missing from the BEE multi-day campaign | SHARPENED | H-D1-63 H-D1-06 H-D2-20 H-D1-43 | SFE T3; ops: TH-006; unlocks FR-016 FR-019 FR-024..027 | L |
+| FR-094 | Where the ecology's evidence lives; portable verification; observer fields missing from the BEE multi-day campaign | MATURE | H-D1-63 H-D1-06 H-D2-20 H-D1-43 | SFE T3; ops: TH-006; unlocks FR-016 FR-019 FR-024..027 | L |
 | FR-095 | Host coupling and placement | RAW | H-D1-65 | SFE T4 | L |
 | FR-096 | Interpretive degrees of freedom across independent workers; one maturity ladder or two | RAW | H-D1-10 H-D1-59 | related FR-057 | L |
 | FR-098 | Corpus hygiene: 360 of 423 deep-research items never sent; off-target Moros reports | RAW | D5 cross-domain pointers | related FR-099 | L |
@@ -221,3 +221,54 @@ science | N program infrastructure | Z answered or superseded at harvest
 Numbering gaps (FR-042, FR-086, FR-089, FR-097, FR-106, FR-108) are
 ids retired during pass-1 merging before any file used them; they are
 never reused.
+
+## Ops-pilot cross-reference (linked, never edited)
+
+ops/threads/ ids are not unique across branches on 2026-09-27, so
+references here are branch-qualified. Verified with `git ls-tree` on
+every origin/* branch at 2026-09-27 ~18:00Z; re-checked 18:30Z after
+origin/main moved to 5ad544cee (Aether research block merged).
+
+| ops id (where) | title (abridged) | FR |
+|---|---|---|
+| TH-001 (main) | causal identity, heredity, authorship | FR-023 |
+| TH-002 (main) | BEE-wide SR recount | FR-024 |
+| TH-003 (main; revised on archaeon/deep-block) | NPE host-conditioned reproduction (framing withdrawn on the branch: 6/34 P-11-causal) | FR-025 |
+| TH-004 (main) | AN8, donor writes not necessary | FR-026 |
+| TH-005 (main) | BEE code at pc >= 2L | FR-027 |
+| TH-006 (main) | evidence portability, verification locality | FR-094 |
+| TH-007 (main since 5ad544cee) | Aether: minimal local physics for causal influence | FR-073 FR-074 |
+| TH-008 (main since 5ad544cee) | Aether: can content travel on a rewritable medium? | FR-073 FR-074 |
+| TH-009 (main since 5ad544cee) | Aether: the frozen-medium problem | FR-074 FR-079 |
+| TH-010 (main since 5ad544cee) | Aether as a known-answer benchmark | FR-078 |
+| TH-011 (main since 5ad544cee) | one-bit twins with counterfactual parents for other engines | FR-039 FR-072 |
+| TH-012 (main since 5ad544cee) | RunPod platform as a Prometheus asset | FR-095 |
+| "TH-007" (archaeon/deep-block F_FRONTIER, no file) | cargo erosion vs machinery conservation | FR-015 |
+| "TH-008" (same, no file) | harness-copy hazard as a ruler law | FR-031 |
+| "TH-009" (same, no file) | reproduction vs copying (Griesemer) | FR-032 |
+| "TH-010" (same, no file) | code referent at population scale | FR-024 |
+| "TH-011" (same, no file) | dependence does not chain | FR-030 |
+
+COLLISION: Aether's TH-007..TH-012 files reached origin/main at
+5ad544cee (2026-09-27 ~18:15Z), so main now owns those ids. Archaeon's
+unmerged deep block (72923db05) still names TH-007..TH-011 for five
+different lineage threads (announced as "New Thread files"; no such
+files exist on any branch). If that branch merges as written, five ids
+will each name two questions. Artemis does not renumber anyone's
+threads; the FR ids above disambiguate, and the collision is reported
+in FRONTIER.md for the ops pilot's owner.
+
+
+## Corrections to the harvest (harvest files are append-only; corrected here)
+
+| harvest id | harvested claim | what is true | evidence |
+|---|---|---|---|
+| H-D4-41 | fossil-directed vs uniform (F/C) never run | ran as Archaeon S1 on 2026-09-12: NO_DETECTABLE_ADVANTAGE (8/12 wins, p 0.19, d +0.107); S2 scope too sparse; S3 no advantage | bc6e8c13d (Artemis verified) |
+| H-D5-49 | state injection never run | Aporia IQ-PORT-1 ran the preregistered injection branch: parser output 0/5, port output 5/5 | 28761a6f9 (Artemis verified) |
+| H-D4-18 | D-18 v2 never written | reset_v2.py exists and three campaigns used it; only the Vivarium kind registration is missing | herakles/ca_stream/reset_v2.py @ 5a0458fd6 (FR-101) |
+| H-D4-27 | flat elite: population size untested | the equal-compute population-size family ran; maxima .479-.562 track seed, not N (sharpener's reading; no seat readout exists) | DIGEST @ 939e4f39e (FR-132) |
+| H-D3-56/57 | widen keep's range is the falsifier | Ares demoted it 09-25; its replacement cannot separate basin from payoff; a payoff-matched cell is needed | FR-002 |
+| H-D5-39 | Avida STERILIZE_BENEFICIAL is in-population pressure | only Avida's parent-relative in-situ path is; the test-CPU path is the detectable episode | PA_instruments_and_gaming (devosoft/avida source) |
+| H-D5-37 | co-evolve the selector with the improvers | contradicted in its optimistic form by coevolution work (collusion/cycling without a fixed outside scorer) | PA_instruments_and_gaming |
+| H-D3-33 / H-D1-68 | surprise eviction losing to random is an anomaly; random is a blind control | expected in noisy regimes (prior art); in committed LM01 dev rows surprise eviction BEATS random in 63-72% of rows; "random" is distribution matching, a strong baseline | FR-038; PA_memory_and_sagacity |
+| H-D2-01 | the three Z80 builds may share priors | confirmed and sharper: one published design ancestor (arXiv 2607.09211) paraphrased by the directive | FR-010 (Artemis verified directive text and 98972f55a) |
