@@ -1,0 +1,48 @@
+[flight 11:36:54] REAL LAUNCH aether-units-scout@1, budget ceiling $0.40
+[flight 11:36:54] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:36:54] credential source: host default key file
+[flight 11:36:55] bundle 26899856079b reachable at the pinned commit 04ddbeb12dee
+[flight 11:36:57] advertised stock {'NVIDIA L4': 'Low', 'NVIDIA RTX 4000 Ada Generation': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': None} -> trying NVIDIA L4 first
+[flight 11:36:57] create attempt on NVIDIA L4 (1 of 4)
+[flight 11:36:59] create attempt 1 -> accepted pod=lt1t7ofxvgrwoq
+[flight 11:36:59] create CREATED -> confirmed pod=lt1t7ofxvgrwoq gpu=NVIDIA L4
+[flight 11:37:00] artifact server not answering yet (status=404)
+[flight 11:38:31] pod clock unavailable; provisioning stays cross-clock
+[flight 11:38:56] pod clock offset +0.151 s (+/- 0.206 s)
+[flight 11:41:01] module reported end (status=)
+[flight 11:41:16] pod clock offset +0.100 s (+/- 0.145 s)
+[flight 11:41:17] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-scout-20260927T153656Z.json
+CAMPAIGN PLAN  aether-units@2  ->  PROCEED
+  requested        10000 units across 1 pod(s)
+  calibrated       $0.2198 expected, $0.2801 with 20% margin
+  per pod          1506 s compute + 109 s overhead + 120 s teardown reserve
+  unit cost        $2.05001e-05 per unit
+  ceiling          $0.4000
+  RECOMMENDED controller ceiling $0.2801
+[flight 11:41:18] campaign pinned to NVIDIA L4 (the card the scout measured)
+[flight 11:41:18] credential source: environment RUNPOD_API_KEY
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 725, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 714, in main
+    return auto(module_dir, args, env)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 490, in auto
+    out = campaign_mod.run(fly_scout, calibrate, fly_campaign,
+                           max_rescouts=args.max_rescouts, log=log)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\prometheus_gpu\campaign.py", line 68, in run
+    camp = fly_campaign(plan, gpu)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 484, in fly_campaign
+    _code, rec = fly_receipt(module_dir, spec, budget, args.poll,
+                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             args.ready_poll, plan=plan,
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                             ctl_kwargs=ctl_kwargs)
+                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 353, in fly_receipt
+    built, transport = ensure_bundle_committed(module_dir, spec, commit)
+                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 154, in ensure_bundle_committed
+    raise RuntimeError("bundle %s is not built. Run --build, commit and "
+                       "push it first." % bundle_name(spec, built))
+RuntimeError: bundle aether-units-01b65bbc5b49.tar.gz is not built. Run --build, commit and push it first.

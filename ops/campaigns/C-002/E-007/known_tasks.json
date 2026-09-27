@@ -1,0 +1,128 @@
+[
+ {
+  "task_id": "T-001",
+  "lane": "known",
+  "unit_id": "v1-s0-off-0_4-d92e40726f",
+  "inputs": {
+   "law": "v1",
+   "seed_index": 0,
+   "arm": "off",
+   "slice": [
+    0,
+    4
+   ],
+   "n": 128,
+   "warmup": 1500,
+   "ticks": 400,
+   "origins_total": 32,
+   "instrument": "aeth03_propagation.assay"
+  },
+  "expected_legacy_sha256": "1aa05bb79de90692da1813ed24e833ae569c7c47872b9d8a12acf6f989ec9499",
+  "expected_from": "AETH-03/evidence/2026-09-26_propagation/prop_v1_n128_s0.json"
+ },
+ {
+  "task_id": "T-002",
+  "lane": "known",
+  "unit_id": "rcv-s1-off-0_4-ec75ff498f",
+  "inputs": {
+   "law": "rcv",
+   "seed_index": 1,
+   "arm": "off",
+   "slice": [
+    0,
+    4
+   ],
+   "n": 128,
+   "warmup": 1500,
+   "ticks": 400,
+   "origins_total": 32,
+   "instrument": "aeth03_propagation.assay"
+  },
+  "expected_legacy_sha256": "8226926864b03e088f2014a81fa299c229fa495362a4801b3beb11cef8bf2cf4",
+  "expected_from": "AETH-03/evidence/2026-09-26_propagation/prop_rcv_n128_s1.json"
+ },
+ {
+  "task_id": "T-003",
+  "lane": "known",
+  "unit_id": "add-s2-on-4_8-2189bcb0c3",
+  "inputs": {
+   "law": "add",
+   "seed_index": 2,
+   "arm": "on",
+   "slice": [
+    4,
+    8
+   ],
+   "n": 128,
+   "warmup": 1500,
+   "ticks": 400,
+   "origins_total": 32,
+   "instrument": "aeth03_propagation.assay"
+  },
+  "expected_legacy_sha256": "8df7a44c1f94b0577cece49ae8fc8d4989f24778f80fa8662bc6d1da8a80c57b",
+  "expected_from": "AETH-03/evidence/2026-09-26_propagation/prop_add_n128_s2.json"
+ },
+ {
+  "task_id": "T-004",
+  "lane": "known",
+  "unit_id": "mov-s3-off-8_12-739e24597f",
+  "inputs": {
+   "law": "mov",
+   "seed_index": 3,
+   "arm": "off",
+   "slice": [
+    8,
+    12
+   ],
+   "n": 128,
+   "warmup": 1500,
+   "ticks": 400,
+   "origins_total": 32,
+   "instrument": "aeth03_propagation.assay"
+  },
+  "expected_legacy_sha256": "a45c23b4f1022a32b35da7c62c38efce40fd1edf8059b64f746488cbdbb47ee4",
+  "expected_from": "AETH-03/evidence/2026-09-26_propagation/prop_mov_n128_s3.json"
+ },
+ {
+  "task_id": "T-005",
+  "lane": "known",
+  "unit_id": "m4-s0-on-12_16-36ae2ce4e5",
+  "inputs": {
+   "law": "m4",
+   "seed_index": 0,
+   "arm": "on",
+   "slice": [
+    12,
+    16
+   ],
+   "n": 128,
+   "warmup": 1500,
+   "ticks": 400,
+   "origins_total": 32,
+   "instrument": "aeth03_propagation.assay"
+  },
+  "expected_legacy_sha256": "3c0322ce87e749a413650dd1f7a685786f585883f6043eddefa57bb0ad5dd028",
+  "expected_from": "AETH-03/evidence/2026-09-26_propagation/prop_m4_n128_s0.json"
+ },
+ {
+  "task_id": "T-006",
+  "lane": "known",
+  "unit_id": "rcv-s2-on-16_20-8200d4406f",
+  "inputs": {
+   "law": "rcv",
+   "seed_index": 2,
+   "arm": "on",
+   "slice": [
+    16,
+    20
+   ],
+   "n": 128,
+   "warmup": 1500,
+   "ticks": 400,
+   "origins_total": 32,
+   "instrument": "aeth03_propagation.assay"
+  },
+  "expected_legacy_sha256": "fca16945e70d43921d8c2c608d280846bcbed25508459fb7ec0ca4bc1b8039a6",
+  "expected_from": "AETH-03/evidence/2026-09-26_propagation/prop_rcv_n128_s2.json"
+ }
+]

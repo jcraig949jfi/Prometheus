@@ -2,7 +2,11 @@
 
 Currency: 2026-09-26 13:30Z (Foundry charter; WTP-LM01 build; operator steward-freeze; M2).
 
-seat state: ACTIVE, WTP-LM01 built (dev complete; campaign NOT launched). No runs.
+seat state: ACTIVE, WTP-LM01 PREREG v0.3.1 FROZEN at 768ea8ce9e84a1a078bba34813908d4fafbb268b (FREEZE.json 87d06770c).
+  NOT LAUNCHED; gate closed. Launch ONLY on the operator's direct-chat "LAUNCH WTP-LM01 using frozen prereg <prefix>":
+  record it verbatim + MANIFEST under roles/Ensorain/prompts/<date>_lm01_launch/, commit, then run
+  `python -m ensorain.lm01.launch <that file>` from a PINNED worktree. Review packet: ensorain/LM01_PREREG_REVIEW_2026-09-26.md.
+  Comms: watch-only loop, no heartbeats (operator ruling item 7).
 OPERATOR 2026-09-26 (#732/#733): steward management via comms is FROZEN; no Aporia/Cyclops sign-off needed; direction and
   launch come from the OPERATOR. Open LM01 items for the operator: D9, D10 delta, the F5 rung scale, the endpoint, the D11
   deferral, RELEASERS. See ensorain/lm01/STEWARD_RULINGS.md (the full design record) and ensorain/PREREG_WTP_LM01.md.

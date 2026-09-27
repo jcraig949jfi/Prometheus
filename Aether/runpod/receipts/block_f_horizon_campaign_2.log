@@ -1,0 +1,35 @@
+[flight 11:43:55] REAL LAUNCH aether-units@2, budget ceiling $0.30
+[flight 11:43:55] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:43:55] credential source: host default key file
+[flight 11:43:55] bundle 65c8836b69a5 reachable at the pinned commit 74e1361dca58
+[flight 11:43:56] advertised stock {'NVIDIA A40': 'Low', 'NVIDIA GeForce RTX 3090': None, 'NVIDIA L4': 'Low', 'NVIDIA RTX 2000 Ada Generation': 'Low', 'NVIDIA RTX 4000 Ada Generation': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': None, 'NVIDIA RTX A6000': None} -> trying NVIDIA L4 first
+[flight 11:43:56] create attempt on NVIDIA L4 (1 of 8)
+[flight 11:43:57] create attempt 1 -> accepted pod=8ntjwsusanubt8
+[flight 11:43:57] create CREATED -> confirmed pod=8ntjwsusanubt8 gpu=NVIDIA L4
+[flight 11:43:57] artifact server not answering yet (status=404)
+[flight 11:44:19] pod clock unavailable; provisioning stays cross-clock
+[flight 11:44:40] pod clock offset +0.055 s (+/- 0.060 s)
+[flight 11:50:05] telemetry unchanged for 304 s and no module exit: HUNG
+[flight 11:50:08] pod clock offset +0.054 s (+/- 0.059 s)
+[flight 11:50:08] artifact dir listing retrieved (1216 bytes)
+[flight 11:50:08] artifacts NOT retrieved: result.json, units_manifest.json, units.tar
+[flight 11:50:09] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-20260927T154355Z.json
+
+RECEIPT  aether-units-20260927T154355Z
+  module        aether-units@2   result ABORTED
+  bundle        65c8836b69a5449408a0ae75d6059537c8547864dc461e5ef9fd7ef508f6cef6
+  window        2026-09-27T15:43:55Z -> 2026-09-27T15:50:08Z
+  cost          $0.0507 estimated over 372.2 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     22 records, units=None, complete=False
+  artifacts     1 retrieved
+  MISSING       result.json
+  MISSING       units_manifest.json
+  MISSING       units.tar
+  lifecycle   {"pod_clock": {"fetch_s": 0.142, "verify_s": 0.006, "unpack_s": 0.008, "bootstrap_total_s": 0.405}, "controller_clock": {"create_call_s": 1.389, "accepted_to_first_telemetry_s": 21.601, "accepted_to_first_contact_s": 21.601, "artifact_transfer_s": 2.015, "terminate_ack_s": 0.608, "absence_confirm_s": 1.057, "teardown_total_s": 3.896, "total_wall_s": 373.286}, "cross_clock": {"provision_s": 2.427, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.0551, "uncertainty_s": 0.0605, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 2.372, "accepted_to_module_start_s": 2.777}, "module_reported_elapsed_s": 53.249}
+  transfer    {"bytes": 2988, "seconds": 0.1509, "bytes_per_s": 19801.2, "largest": {"path": "telemetry.jsonl", "bytes": 2988, "sha256": "8058d9e0adb2c256f693f33ec0f08f962c055c639d948ee27d07c908460c0d40", "fetch_s": 0.1509, "attempts": 1, "integrity": "verified"}, "largest_bytes_per_s": 19801.2}
+  platform    {"samples": 13, "span_s": 360.002, "gpu_names": ["NVIDIA L4"], "gpu_mem_used_mib_peak": 0.0, "gpu_mem_total_mib": 23034.0, "gpu_util_pct_mean": 0.0, "gpu_util_pct_peak": 0.0, "gpu_temp_c_peak": 29.0, "gpu_power_w_peak": 16.42, "gpu_power_w_mean": 16.3692, "host_load1_peak": 19.46435546875, "host_mem_used_b_peak": 74445459456.0, "disk_free_b_min": 21457776640.0, "artifact_dir_b_peak": 114346.0, "sample_cost_s_mean": 0.0396, "sample_cost_s_peak": 0.0707, "gpu_errors": []}
+  disposition {"cause": "TELEMETRY_STALLED", "controller_believes": {"result": "ABORTED", "pod_id": "8ntjwsusanubt8", "terminate_acknowledged": true}, "provider_believes": {"list_contains_pod": false, "get_returns_pod": false, "terminate_response": "ACK_204", "reads": 1}, "evidence_retained": {"telemetry_records": 22, "telemetry_complete": false, "platform_samples": 13, "artifacts_verified": ["telemetry.jsonl"], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": ["result.json", "units_manifest.json", "units.tar"], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "ABSENT: LIST omits it and GET returns nothing", "resumed": null}
+  api         {"create_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.9117, "p95": 0.9117, "p99": 0.9117, "max": 0.9117}}, "fetch": {"calls": 121, "failures": 27, "latency_s": {"n": 121, "p50": 0.1575, "p95": 0.234, "p99": 0.2655, "max": 0.276}, "first_half_p50_s": 0.1586, "second_half_p50_s": 0.153, "first_half_failures": 18, "second_half_failures": 9}, "get_pod": {"calls": 10, "failures": 0, "latency_s": {"n": 10, "p50": 0.2981, "p95": 0.4683, "p99": 0.4683, "max": 0.4683}, "first_half_p50_s": 0.2826, "second_half_p50_s": 0.3262, "first_half_failures": 0, "second_half_failures": 0}, "list_pods": {"calls": 3, "failures": 0, "latency_s": {"n": 3, "p50": 0.2203, "p95": 0.2647, "p99": 0.2647, "max": 0.2647}}, "terminate_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.6078, "p95": 0.6078, "p99": 0.6078, "max": 0.6078}}}
+[flight 11:50:09] FLIGHT_FAIL
+horizon exit=1

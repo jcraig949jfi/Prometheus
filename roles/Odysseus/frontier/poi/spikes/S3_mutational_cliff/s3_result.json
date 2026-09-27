@@ -1,0 +1,178 @@
+{
+ "applied_nondegenerate_all_parents_outcomes": {
+  "deleterious": 103,
+  "improved": 0,
+  "lethal": 1711,
+  "n": 3855,
+  "neutral": 2041
+ },
+ "edits_by_stratum_env_parentreward_degenerate": [
+  {
+   "edits": 1056,
+   "env": "W1_d4",
+   "parent_degenerate": false,
+   "parent_reward": 1.0,
+   "stratum": "delay_general"
+  },
+  {
+   "edits": 1056,
+   "env": "W0",
+   "parent_degenerate": true,
+   "parent_reward": 0.0,
+   "stratum": "gen0_random"
+  },
+  {
+   "edits": 96,
+   "env": "W0",
+   "parent_degenerate": true,
+   "parent_reward": 0.0625,
+   "stratum": "gen0_random"
+  },
+  {
+   "edits": 1632,
+   "env": "W2_K2",
+   "parent_degenerate": false,
+   "parent_reward": 0.5312,
+   "stratum": "shelf"
+  },
+  {
+   "edits": 192,
+   "env": "W2_K2",
+   "parent_degenerate": false,
+   "parent_reward": 0.6875,
+   "stratum": "shelf"
+  },
+  {
+   "edits": 1440,
+   "env": "W0",
+   "parent_degenerate": false,
+   "parent_reward": 1.0,
+   "stratum": "w0_solver"
+  }
+ ],
+ "eligible_D6_exaptive": 30,
+ "eligible_D_labels": {
+  "D2": 409,
+  "D3": 141,
+  "D4": 40,
+  "D5": 948,
+  "D6": 30
+ },
+ "eligible_by_operator": {
+  "config_perturbation": {
+   "deleterious": 1,
+   "lethal": 40,
+   "neutral": 99
+  },
+  "deletion": {
+   "deleterious": 15,
+   "lethal": 68,
+   "neutral": 69
+  },
+  "duplication": {
+   "deleterious": 8,
+   "lethal": 33,
+   "neutral": 47
+  },
+  "insertion": {
+   "deleterious": 2,
+   "lethal": 35,
+   "neutral": 51
+  },
+  "movement": {
+   "deleterious": 10,
+   "lethal": 65,
+   "neutral": 77
+  },
+  "operand_perturbation": {
+   "deleterious": 2,
+   "lethal": 24,
+   "neutral": 126
+  },
+  "randomization": {
+   "deleterious": 9,
+   "lethal": 74,
+   "neutral": 69
+  },
+  "reference_redirection": {
+   "deleterious": 4,
+   "lethal": 7,
+   "neutral": 141
+  },
+  "region_swap": {
+   "deleterious": 12,
+   "lethal": 67,
+   "neutral": 73
+  },
+  "replacement": {
+   "deleterious": 6,
+   "lethal": 54,
+   "neutral": 92
+  },
+  "splice": {
+   "deleterious": 5,
+   "lethal": 60,
+   "neutral": 59
+  },
+  "unreachable_removal": {
+   "neutral": 64
+  }
+ },
+ "eligible_incl_could_not_apply": 1824,
+ "eligible_loose_parent_below_1": 1568,
+ "eligible_outcomes": {
+  "deleterious": {
+   "count": 74,
+   "frac": 0.047193877551020405,
+   "wilson95_upper": 0.058841826157592404
+  },
+  "improved": {
+   "count": 0,
+   "frac": 0.0,
+   "wilson95_upper": 0.0024439226103821093
+  },
+  "lethal": {
+   "count": 527,
+   "frac": 0.3360969387755102,
+   "wilson95_upper": 0.35985316931023786
+  },
+  "neutral": {
+   "count": 967,
+   "frac": 0.6167091836734694,
+   "wilson95_upper": 0.6404608699017802
+  }
+ },
+ "eligible_reward_exactly_unchanged": {
+  "count": 966,
+  "frac": 0.6160714285714286
+ },
+ "eligible_silent_displacement0": {
+  "count": 961,
+  "frac": 0.6128826530612245
+ },
+ "funnel": {
+  "eligible": 1568,
+  "excluded_could_not_apply": 256,
+  "excluded_parent_at_ceiling": 2496,
+  "excluded_parent_degenerate": 1152
+ },
+ "improvement_upper95": {
+  "clopper_pearson_one_sided": 0.001908719615243415,
+  "k": 0,
+  "n": 1568,
+  "pooled_4866_applied_rule_of_three": 0.0006165228113440197,
+  "pooled_5472_rule_of_three_for_contrast": 0.0005482456140350877,
+  "rule_of_three": 0.001913265306122449,
+  "wilson_two_sided_upper": 0.0024439226103821093
+ },
+ "n_edits": 5472,
+ "n_eligible_parents": 19,
+ "n_rows": 5586,
+ "raw_sha256_verified": "770390365b2f245927baba4d7be7ba674b0fbaaef5aaaddba62255dbffca63db",
+ "source": "archaeon/campaign4/C4-01/attempts/a02/children.json.gz",
+ "thresholds": {
+  "band": 0.0625,
+  "floor": 0.1875,
+  "max_reward": 1.0
+ }
+}

@@ -1,0 +1,199 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 1,
+      "failures": 1,
+      "latency_s": {
+        "max": 0.5258,
+        "n": 1,
+        "p50": 0.5258,
+        "p95": 0.5258,
+        "p99": 0.5258
+      }
+    },
+    "list_pods": {
+      "calls": 4,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.235,
+        "n": 4,
+        "p50": 0.2102,
+        "p95": 0.235,
+        "p99": 0.235
+      }
+    }
+  },
+  "args": [],
+  "artifacts": [],
+  "artifacts_expected": [
+    "result.json",
+    "state.bin",
+    "telemetry.jsonl"
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "1ee24a08344cc5053b7dc40d79c4159253dda8c4c551c5101f214b98cd512aab",
+  "calibrated_estimate": {
+    "compute_seconds_total": 66.48,
+    "expected_usd": 0.008928022222222224,
+    "margin": 0.2,
+    "overhead_seconds_per_pod": 28.052000000000003,
+    "per_pod_expected_seconds": 94.53200000000001,
+    "per_pod_seconds": 214.532,
+    "pods": 1,
+    "requested_units": 3000.0,
+    "teardown_reserve_s": 120.0,
+    "teardown_reserve_usd": 0.011333333333333334,
+    "usd_per_unit": 2.092888888888889e-06,
+    "usd_with_margin": 0.022046960000000004
+  },
+  "campaign_plan": {
+    "calibration_gpu": "NVIDIA GeForce RTX 4090",
+    "calibration_source": "scout receipt gpu-load-scout-20260926T164014Z",
+    "ceiling_usd": 0.3,
+    "decision": "PROCEED"
+  },
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 0,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": null,
+    "start": null
+  },
+  "controller_health": {
+    "polls": 0
+  },
+  "cost": {
+    "basis": "no pod existed (provider confirmed); nothing to bill",
+    "billing_reconciled": false,
+    "elapsed_s": 0.0,
+    "hourly_usd": 0.34,
+    "usd_estimated": 0.0
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA GeForce RTX 4090",
+      "outcome": "FAILED_CLEAN"
+    }
+  ],
+  "created_utc": "2026-09-26T16:40:51Z",
+  "disposition": {
+    "cause": "NO_CAPACITY",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": null,
+      "result": "NOT_RUN",
+      "terminate_acknowledged": false
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [],
+      "artifacts_unverified": [],
+      "artifacts_verified": [],
+      "ledger": true,
+      "platform_samples": 0,
+      "telemetry_complete": false,
+      "telemetry_records": 0
+    },
+    "pod_state": "never created (provider confirmed by LIST)",
+    "provider_believes": {},
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-09-26T16:40:57Z",
+  "entrypoint": "run.py",
+  "estimates": {
+    "actual_basis": "measured wall time at a quoted rate, not provider billing",
+    "actual_usd": 0.0,
+    "error_convention": "(estimate - actual) / actual; positive = estimate was high",
+    "scout_calibrated_usd": 0.008928022222222224,
+    "scout_error": null,
+    "spec_sheet_error": null,
+    "spec_sheet_usd": 0.0148
+  },
+  "evidence_dir": "receipts/gpu-load-20260926T164050Z",
+  "evidence_kept": [
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "93c559f538c04d926ec42b66c870ec32ebeca748",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": null,
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 900,
+    "telemetry_interval_s": 10
+  },
+  "last_stage": null,
+  "lifecycle": {
+    "controller_clock": {
+      "create_call_s": 5.941
+    },
+    "cross_clock": {},
+    "pod_clock": {}
+  },
+  "module": "gpu-load@1",
+  "notes": [
+    "no capacity for any declared GPU (NVIDIA GeForce RTX 4090); provider confirms nothing exists. Declare more gpu.alternatives or try again later.",
+    "capacity is INFERRED from every create failing cleanly with a 4xx; the response bodies were not read, so a request the provider rejects as invalid would look identical. Confirm with a direct probe of the same body before changing the request.",
+    "absence of a created pod rests on two LIST reads that showed none named gpu-load-20260926T164050Z; a pod omitted from every LIST cannot be excluded without its id"
+  ],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 900.0,
+    "gpu_class": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "hourly_usd": 0.34,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0291,
+    "overhead_s": 27.0,
+    "total_s": 927.0,
+    "usd_compute": 0.085,
+    "usd_overhead": 0.0026,
+    "usd_per_pod_minute": 0.005667,
+    "usd_total": 0.0876,
+    "work_units": {
+      "estimate": 3000.0,
+      "name": "matmuls",
+      "units_per_usd": 34266.133637921186,
+      "usd_per_1e9_units": 29183.333333333336,
+      "usd_per_unit": 2.9183333333333336e-05
+    }
+  },
+  "pods": [],
+  "preregistered_estimate": {
+    "expected_usd": 0.0148
+  },
+  "ready_poll_s": 3.0,
+  "result": "NOT_RUN",
+  "run_id": "gpu-load-20260926T164050Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "dfdb6ecb049112690667a195793093343a867f36a130041cbc160b16420ef718",
+  "started_utc": "2026-09-26T16:40:51Z",
+  "stock_at_launch": null,
+  "telemetry_summary": {
+    "complete": false,
+    "note": "no telemetry; the workload may never have started",
+    "records": 0
+  },
+  "transport": "repo-pinned"
+}

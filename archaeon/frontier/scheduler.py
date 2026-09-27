@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import gzip
 import json
+import os
 import sys
 import time
 import traceback
@@ -255,6 +256,74 @@ def spec_of(reg: Registry, item: dict) -> Optional[dict]:
     return None
 
 
+ENFORCEMENT_FILE = "SUPPRESSION_ENFORCEMENT.json"
+
+
+def _canon(x) -> str:
+    return json.dumps(x, sort_keys=True, separators=(",", ":"), default=str)
+
+
+class Enforcement:
+    """OPERATIONAL ACCOUNTING of suppression enforcement per queued item -- NOT observations (instrumentation repair 2026-09-26).
+
+    Defect repaired: step() wrote one full BLOCKED_BY_SUPPRESSION event on EVERY retry of a blocked item. With one pending item the
+    loop re-popped it each tick, so EVENTS.jsonl got 299,991 identical rows for ONE decision (PROTEUS-46 on C4-cliff.T1). That
+    historical file is NOT touched.
+
+    Rule now: a scientific event is written only on an enforcement-STATE TRANSITION of an item (lineage_id, transformation):
+      * BLOCKED_BY_SUPPRESSION when the item becomes blocked, or when its tuple (suppression, canonical source_state) changes;
+      * SUPPRESSION_LIFTED when a previously blocked item is next found unblocked.
+    Retries under an unchanged tuple only update this file: retries, first_blocked_at, last_blocked_at. It lives beside EVENTS.jsonl
+    as <registry>/SUPPRESSION_ENFORCEMENT.json and carries an explicit `accounting_only` flag. Closed episodes are kept in
+    `closed` (reason SUPERSEDED | LIFTED)."""
+
+    def __init__(self, root: Path):
+        self.path = Path(root) / ENFORCEMENT_FILE
+        if self.path.exists():
+            self.d = json.loads(self.path.read_text(encoding="utf-8"))
+        else:
+            self.d = {"schema": "archaeon.frontier.suppression_enforcement.v1", "accounting_only": True,
+                      "note": "operational retry accounting; NOT scientific observations; scientific transitions are the events in EVENTS.jsonl",
+                      "open": {}, "closed": []}
+
+    @staticmethod
+    def key(lid: str, tid: str) -> str:
+        return lid + "|" + tid
+
+    def _save(self):
+        tmp = self.path.with_suffix(".tmp")
+        tmp.write_text(json.dumps(self.d, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n"); os.replace(tmp, self.path)
+
+    def blocked(self, lid: str, tid: str, suppression: str, source_state, now: str) -> bool:
+        """Record one blocked retry. True = an enforcement-state transition (the caller writes the scientific event)."""
+        k = self.key(lid, tid); canon = _canon(source_state); cur = self.d["open"].get(k)
+        if cur is not None and cur["suppression"] == suppression and cur["source_state_canonical"] == canon:
+            cur["retries"] += 1; cur["last_blocked_at"] = now; self._save(); return False
+        if cur is not None:
+            self.d["closed"].append(dict(cur, closed_at=now, reason="SUPERSEDED"))
+        self.d["open"][k] = {"lineage_id": lid, "transformation": tid, "suppression": suppression, "source_state_canonical": canon,
+                             "first_blocked_at": now, "last_blocked_at": now, "retries": 1}
+        self._save(); return True
+
+    def unblocked(self, lid: str, tid: str, now: str) -> Optional[dict]:
+        """The item passed the suppression check. Returns the closed episode if it had been blocked (a transition), else None."""
+        cur = self.d["open"].pop(self.key(lid, tid), None)
+        if cur is None: return None
+        rec = dict(cur, closed_at=now, reason="LIFTED"); self.d["closed"].append(rec); self._save(); return rec
+
+    def get(self, lid: str, tid: str) -> Optional[dict]:
+        return self.d["open"].get(self.key(lid, tid))
+
+
+_ENF: Dict[str, Enforcement] = {}
+
+
+def enforcement(reg: Registry) -> Enforcement:
+    k = str(Path(reg.root).resolve())
+    if k not in _ENF: _ENF[k] = Enforcement(reg.root)
+    return _ENF[k]
+
+
 def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> dict:
     pool = choose_pool(q, shares, spent)
     if pool is None:
@@ -293,8 +362,17 @@ def step(reg: Registry, q: Queues, shares, spent, thr, frozen, caps, sups) -> di
     if sup:
         q.set_state(pool, item["item_id"], "PENDING", note="BLOCKED_BY_SUPPRESSION " + sup["suppression_id"])
         it = dict(q.items[pool][item["item_id"]]); it["priority"] -= 1.0; q._append(pool, it)
-        reg.event(lid, "BLOCKED_BY_SUPPRESSION", {"transformation": tid, "suppression": sup["suppression_id"], "source_state": sup.get("_source_state")})
-        return {"status": "BLOCKED_BY_SUPPRESSION", "lineage": lid, "transformation": tid, "suppression": sup["suppression_id"]}
+        now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()); enf = enforcement(reg)
+        transition = enf.blocked(lid, tid, sup["suppression_id"], sup.get("_source_state"), now)
+        if transition:                                                    # one scientific event per enforcement-state transition
+            reg.event(lid, "BLOCKED_BY_SUPPRESSION", {"transformation": tid, "suppression": sup["suppression_id"], "source_state": sup.get("_source_state"),
+                                                      "enforcement": "STATE_TRANSITION"})
+        return {"status": "BLOCKED_BY_SUPPRESSION", "lineage": lid, "transformation": tid, "suppression": sup["suppression_id"],
+                "event_written": transition, "retries": enf.get(lid, tid)["retries"]}
+    lifted = enforcement(reg).unblocked(lid, tid, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
+    if lifted is not None:
+        reg.event(lid, "SUPPRESSION_LIFTED", {"transformation": tid, "suppression": lifted["suppression"],
+                                              "source_state": json.loads(lifted["source_state_canonical"]), "enforcement": "STATE_TRANSITION"})
     before = sum(1 for _ in open(reg.events_path, encoding="utf-8"))
     receipt = execute(spec, thr, frozen, caps)
     INT.check_registry_write(reg.events_path, before)

@@ -461,8 +461,116 @@ campaign inside seven minutes, for $0.051.
 the scout-to-campaign interval short, and treat a scout as cheap enough to
 repeat rather than as an asset to protect.
 
-**Not yet automated:** `flight.py` does not chain scout -> plan -> campaign
-on its own. It should, and that is Iteration 3's to build.
+**Now automated (Iteration 3):** `flight.py --go --auto` chains dry-run ->
+scout -> calibrated plan -> pinned campaign and re-scouts unpinned once on a
+confirmed capacity refusal (`prometheus_gpu/campaign.py`). It never re-flies
+a campaign that ran or whose create was ambiguous.
+
+---
+
+## 23. "No capacity" that nobody read
+
+**Looked like:** flight F2b, five declared SECURE cards, five `400`s, a
+`NOT_RUN` receipt saying *"no capacity for any declared GPU"*. $0.00.
+
+**Cause:** nothing had read the reason. The qualified client discards 400
+bodies, so "every card refused cleanly" is also exactly what a malformed
+request looks like -- and F2b followed a change to the bootstrap.
+
+**Found by:** a one-off direct POST of the identical body, which read the
+provider's own words: *"There are no longer any instances available with
+the requested specifications."* Then a read-only GraphQL stock query, which
+showed one SECURE card in stock that the spec did not declare (RTX 4000 Ada).
+
+**Now:** a `NO_CAPACITY` receipt says the capacity is INFERRED. Before
+changing a request after an all-cards refusal, probe the same body once and
+read what comes back. `RunPodProvider.stock_status` reads advertised SECURE
+stock and the controller tries in-stock cards first -- it reorders, never
+drops, because advertised stock is advice. F2c and F3 each landed on the
+first card tried this way.
+
+---
+
+## 24. A fault injector that killed the wrong process
+
+**Looked like:** flight F2 ran to its $0.05 ceiling (1,074 s) on a 300 s
+module. The controller saw an ordinary, progressing run the whole time.
+
+**Cause:** the soak module's `killserver` fault matched `_serve.py`
+anywhere in a process command line. The pod's bootstrap runs as
+`bash -c <script>`, and the script text mentions the server, so the
+injector killed the container's MAIN process. RunPod restarted the
+container, the bootstrap re-ran from the top on the same disk, and the
+module started again, appending a second run to the same telemetry. In a
+loop: the stage file showed 80 lines, ten boots.
+
+**Now:** the injector matches argv (an interpreter whose argument IS the
+server script); a test asserts the bootstrap shell is not matched.
+
+---
+
+## 25. A restarted container re-runs the module
+
+**Looked like:** entry 24's loop. Any death of the container's main
+process -- an OOM of the shell, an injector, a provider-side restart --
+gets the same treatment.
+
+**Cause:** the provider restarts a container whose main process exits, and
+nothing in the bootstrap knew it had already run.
+
+**Now:** the bootstrap's first act (before `stage boot`) is a RESTART GUARD:
+if the stage file already holds a `boot`, it records `stage restart`,
+brings the artifact server back so what the first run wrote can still be
+retrieved, and exits without touching the module. The controller reads
+`restart` from the stage file and stops with `CONTAINER_RESTARTED`
+(`UNKNOWN`), in the ready wait and in the watch.
+
+**Not covered:** a restart that also loses the disk. Then the guard sees no
+stage file, the module runs again from scratch, and only the telemetry
+sequence resetting would show it.
+
+---
+
+## 26. Evidence that lived only on the pod
+
+**Looked like:** flight F2c, server killed mid-run: telemetry up to the
+fault was in the receipt, platform samples were ZERO.
+
+**Cause:** telemetry was polled during the watch, but `platform.jsonl` and
+the stage file were fetched only at retrieval, and by then the server was
+gone.
+
+**Now:** both are snapshotted every 6 watch polls, and a snapshot is only
+replaced by a longer one, so a truncated read never shrinks what is held.
+
+---
+
+## 27. The pod clock was asked once
+
+**Looked like:** flight F2: *"pod clock unavailable; provisioning stays
+cross-clock"* for the whole run.
+
+**Cause:** the stage file answered through the proxy a few seconds before
+`/_clock` did, the controller measured the clock at first contact, got
+nothing, and never asked again.
+
+**Now:** the clock is re-measured (bounded: 6 attempts) until it answers,
+including during the watch.
+
+---
+
+## 28. Acknowledged, and still there
+
+**Qualified on the fake, not seen on hardware:** a terminate that is
+acknowledged (`ACK_204`) while the pod keeps running, combined with a LIST
+that omits it. Iteration 2's teardown reported this clean -- acknowledged
+and absent from the listing.
+
+**Now:** absence needs LIST to omit the pod AND GET to return nothing; a
+disagreement is re-read up to four times and, if it persists, recorded as
+`UNCERTAIN` in `disposition.pod_state`, never resolved by preference. The
+receipt validator refuses `observed_absent` when its evidence contradicts
+it.
 
 ---
 

@@ -1,0 +1,49 @@
+[flight 12:49:19] REAL LAUNCH aether-units@4, budget ceiling $0.40
+[flight 12:49:19] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 12:49:19] credential source: host default key file
+[flight 12:49:19] bundle 1387724818e4 reachable at the pinned commit 76e226c90623
+[flight 12:49:20] advertised stock {'NVIDIA A40': None, 'NVIDIA GeForce RTX 3090': None, 'NVIDIA L4': 'Low', 'NVIDIA RTX 2000 Ada Generation': None, 'NVIDIA RTX 4000 Ada Generation': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': None, 'NVIDIA RTX A6000': None} -> trying NVIDIA L4 first
+[flight 12:49:20] create attempt on NVIDIA L4 (1 of 8)
+[flight 12:49:20] create attempt 1 failed status=400; reconciling inventory
+[flight 12:49:26] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:49:26] create attempt on NVIDIA RTX A4000 (2 of 8)
+[flight 12:49:26] create attempt 1 failed status=400; reconciling inventory
+[flight 12:49:32] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:49:32] create attempt on NVIDIA RTX A5000 (3 of 8)
+[flight 12:49:32] create attempt 1 failed status=400; reconciling inventory
+[flight 12:49:37] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:49:37] create attempt on NVIDIA RTX 4000 Ada Generation (4 of 8)
+[flight 12:49:38] create attempt 1 failed status=400; reconciling inventory
+[flight 12:49:43] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:49:43] create attempt on NVIDIA RTX 2000 Ada Generation (5 of 8)
+[flight 12:49:43] create attempt 1 failed status=400; reconciling inventory
+[flight 12:49:49] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:49:49] create attempt on NVIDIA GeForce RTX 3090 (6 of 8)
+[flight 12:49:49] create attempt 1 failed status=400; reconciling inventory
+[flight 12:49:54] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:49:54] create attempt on NVIDIA A40 (7 of 8)
+[flight 12:49:55] create attempt 1 failed status=400; reconciling inventory
+[flight 12:50:00] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:50:00] create attempt on NVIDIA RTX A6000 (8 of 8)
+[flight 12:50:00] create attempt 1 failed status=400; reconciling inventory
+[flight 12:50:06] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 12:50:06] create NO_CAPACITY -> None pod=None gpu=None
+[flight 12:50:06] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-20260927T164919Z.json
+
+RECEIPT  aether-units-20260927T164919Z
+  module        aether-units@4   result NOT_RUN
+  bundle        1387724818e4bb510afba0475570b3a974f986a1c03e58134c5800d96fd161be
+  window        2026-09-27T16:49:20Z -> 2026-09-27T16:50:06Z
+  cost          $0.0000 estimated over 0.0 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     0 records, units=None, complete=False
+  note          no capacity for any declared GPU (NVIDIA L4, NVIDIA RTX A4000, NVIDIA RTX A5000, NVIDIA RTX 4000 Ada Generation, NVIDIA RTX 2000 Ada Generation, NVIDIA GeForce RTX 3090, NVIDIA A40, NVIDIA RTX A6000); provider confirms nothing exists. Declare more gpu.alternatives or try again later.
+  note          capacity is INFERRED from every create failing cleanly with a 4xx; the response bodies were not read, so a request the provider rejects as invalid would look identical. Confirm with a direct probe of the same body before changing the request.
+  note          absence of a created pod rests on two LIST reads that showed none named aether-units-20260927T164919Z; a pod omitted from every LIST cannot be excluded without its id
+  lifecycle   {"pod_clock": {}, "controller_clock": {"create_call_s": 45.85}, "cross_clock": {}}
+  transfer    null
+  platform    null
+  disposition {"cause": "NO_CAPACITY", "controller_believes": {"result": "NOT_RUN", "pod_id": null, "terminate_acknowledged": false}, "provider_believes": {}, "evidence_retained": {"telemetry_records": 0, "telemetry_complete": false, "platform_samples": 0, "artifacts_verified": [], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": [], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "never created (provider confirmed by LIST)", "resumed": null}
+  api         {"create_pod": {"calls": 8, "failures": 8, "latency_s": {"n": 8, "p50": 0.2684, "p95": 0.2788, "p99": 0.2788, "max": 0.2788}}, "list_pods": {"calls": 18, "failures": 0, "latency_s": {"n": 18, "p50": 0.2109, "p95": 0.2556, "p99": 0.2714, "max": 0.2714}, "first_half_p50_s": 0.2164, "second_half_p50_s": 0.2063, "first_half_failures": 0, "second_half_failures": 0}}
+[flight 12:50:06] FLIGHT_FAIL
+combinations exit=1

@@ -1,0 +1,49 @@
+[flight 11:58:22] REAL LAUNCH aether-units@3, budget ceiling $0.30
+[flight 11:58:22] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:58:22] credential source: host default key file
+[flight 11:58:23] bundle 0225b7b68528 reachable at the pinned commit c89c2255545a
+[flight 11:58:24] create attempt on NVIDIA RTX A4000 (1 of 8)
+[flight 11:58:25] create attempt 1 failed status=400; reconciling inventory
+[flight 11:58:30] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:58:30] create attempt on NVIDIA RTX A5000 (2 of 8)
+[flight 11:58:30] create attempt 1 failed status=400; reconciling inventory
+[flight 11:58:36] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:58:36] create attempt on NVIDIA RTX 4000 Ada Generation (3 of 8)
+[flight 11:58:36] create attempt 1 failed status=400; reconciling inventory
+[flight 11:58:41] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:58:41] create attempt on NVIDIA L4 (4 of 8)
+[flight 11:58:42] create attempt 1 failed status=400; reconciling inventory
+[flight 11:58:47] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:58:47] create attempt on NVIDIA RTX 2000 Ada Generation (5 of 8)
+[flight 11:58:47] create attempt 1 failed status=400; reconciling inventory
+[flight 11:58:53] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:58:53] create attempt on NVIDIA GeForce RTX 3090 (6 of 8)
+[flight 11:58:53] create attempt 1 failed status=400; reconciling inventory
+[flight 11:58:58] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:58:58] create attempt on NVIDIA A40 (7 of 8)
+[flight 11:58:59] create attempt 1 failed status=400; reconciling inventory
+[flight 11:59:04] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:59:04] create attempt on NVIDIA RTX A6000 (8 of 8)
+[flight 11:59:05] create attempt 1 -> accepted pod=mrldta5ra8df4j
+[flight 11:59:05] create CREATED -> confirmed pod=mrldta5ra8df4j gpu=NVIDIA RTX A6000
+[flight 11:59:06] artifact server not answering yet (status=404)
+[flight 11:59:25] pod clock offset +0.086 s (+/- 0.092 s)
+[flight 12:06:16] module reported end (status=)
+[flight 12:06:19] pod clock offset +0.067 s (+/- 0.073 s)
+[flight 12:06:20] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-20260927T155823Z.json
+
+RECEIPT  aether-units-20260927T155823Z
+  module        aether-units@3   result OK
+  bundle        0225b7b6852803f305e5806d185074206e790e9276bf461ae98d4a5ae53652cf
+  window        2026-09-27T15:58:24Z -> 2026-09-27T16:06:19Z
+  cost          $0.0699 estimated over 475.1 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     45 records, units=10000, complete=True
+  artifacts     4 retrieved
+  lifecycle   {"pod_clock": {"fetch_s": 0.129, "verify_s": 0.003, "unpack_s": 0.006, "bootstrap_total_s": 0.391, "execution_s": 427.123}, "controller_clock": {"create_call_s": 41.317, "accepted_to_first_telemetry_s": 18.569, "accepted_to_first_contact_s": 18.569, "artifact_transfer_s": 1.74, "terminate_ack_s": 0.67, "absence_confirm_s": 1.16, "teardown_total_s": 3.705, "total_wall_s": 476.24}, "cross_clock": {"provision_s": 1.412, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.0859, "uncertainty_s": 0.0916, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 1.327, "accepted_to_module_start_s": 1.717}, "module_reported_elapsed_s": 427.069}
+  transfer    {"bytes": 367822, "seconds": 0.9681, "bytes_per_s": 379942.2, "largest": {"path": "units.tar", "bytes": 358400, "sha256": "266c598241429db01279f1b18cc13b561ac398c3c44a439aeaf27455b4060a5e", "fetch_s": 0.4531, "attempts": 1, "integrity": "verified"}, "largest_bytes_per_s": 790995.4}
+  platform    {"samples": 15, "span_s": 420.002, "gpu_names": ["NVIDIA RTX A6000"], "gpu_mem_used_mib_peak": 1.0, "gpu_mem_total_mib": 49140.0, "gpu_util_pct_mean": 0.0, "gpu_util_pct_peak": 0.0, "gpu_temp_c_peak": 49.0, "gpu_power_w_peak": 86.21, "gpu_power_w_mean": 36.3767, "host_load1_peak": 19.86572265625, "host_mem_used_b_peak": 63240724480.0, "disk_free_b_min": 21457645568.0, "artifact_dir_b_peak": 244767.0, "sample_cost_s_mean": 0.0577, "sample_cost_s_peak": 0.1015, "gpu_errors": []}
+  disposition {"cause": "OK", "controller_believes": {"result": "OK", "pod_id": "mrldta5ra8df4j", "terminate_acknowledged": true}, "provider_believes": {"list_contains_pod": false, "get_returns_pod": false, "terminate_response": "ACK_204", "reads": 1}, "evidence_retained": {"telemetry_records": 45, "telemetry_complete": true, "platform_samples": 15, "artifacts_verified": ["result.json", "units_manifest.json", "telemetry.jsonl", "units.tar"], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": [], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "ABSENT: LIST omits it and GET returns nothing", "resumed": null}
+  api         {"create_pod": {"calls": 8, "failures": 7, "latency_s": {"n": 8, "p50": 0.2961, "p95": 1.0019, "p99": 1.0019, "max": 1.0019}}, "fetch": {"calls": 120, "failures": 10, "latency_s": {"n": 120, "p50": 0.2191, "p95": 0.3049, "p99": 0.3332, "max": 0.453}, "first_half_p50_s": 0.1953, "second_half_p50_s": 0.2257, "first_half_failures": 10, "second_half_failures": 0}, "get_pod": {"calls": 9, "failures": 0, "latency_s": {"n": 9, "p50": 0.3384, "p95": 0.5287, "p99": 0.5287, "max": 0.5287}}, "list_pods": {"calls": 17, "failures": 0, "latency_s": {"n": 17, "p50": 0.2064, "p95": 0.2536, "p99": 0.2729, "max": 0.2729}, "first_half_p50_s": 0.2021, "second_half_p50_s": 0.2096, "first_half_failures": 0, "second_half_failures": 0}, "terminate_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.6702, "p95": 0.6702, "p99": 0.6702, "max": 0.6702}}}
+[flight 12:06:20] FLIGHT_PASS
+horizon exit=0

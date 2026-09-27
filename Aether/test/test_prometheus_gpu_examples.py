@@ -44,6 +44,13 @@ EXAMPLES = {
                          "LOAD_BALLAST_MB": "1", "LOAD_ARTIFACT_MB": "1",
                          "LOAD_REPORT_EVERY": "2"},
                  "result": "result.json", "banner": "GPU_LOAD_OK"},
+    # Iteration 3's soak module: two seconds of soak at a CPU-sized matrix,
+    # windows and checkpoints small enough that both actually happen.
+    "soak": {"SWEEP": False,
+             "env": {"PROMETHEUS_WORK_UNITS": "2", "SOAK_N": "64",
+                     "SOAK_REPORT_S": "0.5", "SOAK_CKPT_EVERY_S": "1",
+                     "SOAK_CKPT_MB": "1"},
+             "result": "result.json", "banner": "SOAK_OK"},
 }
 
 
@@ -181,3 +188,30 @@ def test_param_sweep_is_reproducible_from_its_recorded_seed(tmp_path):
         b = json.load(fh)
     assert a["scores"] == b["scores"]
     assert a["seed"] == b["seed"]
+
+
+def test_the_soak_exit_fault_crashes_without_an_end_record(tmp_path):
+    """The controlled fault Iteration 3 flies on real hardware must behave
+    as a crash: non-zero status and no `end`, so only the stage file can
+    tell the controller the module is gone."""
+    proc, out_dir = run_example("soak", tmp_path,
+                                extra_env={"PROMETHEUS_WORK_UNITS": "30",
+                                           "SOAK_FAULT": "exit",
+                                           "SOAK_FAULT_AT_S": "1"})
+    assert proc.returncode == 3, proc.stderr
+    records = tel_mod.read_jsonl(str(out_dir / "telemetry.jsonl"))
+    kinds = [r["kind"] for r in records]
+    assert "end" not in kinds and "event" in kinds
+
+
+def test_the_soak_series_grows_and_reports_windowed_latency(tmp_path):
+    proc, out_dir = run_example("soak", tmp_path)
+    assert proc.returncode == 0, proc.stderr
+    rows = [json.loads(line) for line in
+            (out_dir / "series.jsonl").read_text().splitlines()]
+    assert len(rows) >= 2
+    for row in rows:
+        assert row["latency_p50_s"] <= row["latency_p99_s"] <= row["latency_max_s"]
+    progress = [r for r in tel_mod.read_jsonl(str(out_dir / "telemetry.jsonl"))
+                if r["kind"] == "progress"]
+    assert progress[-1]["series_bytes"] > progress[0]["series_bytes"]

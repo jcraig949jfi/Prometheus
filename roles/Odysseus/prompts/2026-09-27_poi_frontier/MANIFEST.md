@@ -1,0 +1,9 @@
+# Manifest for 2026-09-27_poi_frontier
+
+sha256 over LF-normalised bytes (equals the git blob for text files); see comms/manifest.py.
+
+- 01_OPERATOR_DIRECTIVE_verbatim.md  sha256:f3a90bfed59763dfcc0c5b69e87ffa7af30a9a1a82405642b28f1e45e77d627a
+- 02_REPORT_TO_BELLEROPHON_S1.md  sha256:f50c71381fbf588f7e5218ec083e884d19f765f5763dbcdbd5c9d86d4586edbc
+- 03_REPORT_TO_ARCHAEON_S4_BAND0.md  sha256:cad99472f598cb1c110bb1f558d0a10bd050584fadd933b40abe6b9c7c7f136b
+- 04_REPORT_TO_HEPHAESTUS_S3_CLIFF.md  sha256:d2175d31d3f76f6487f8cd747708a6216491d5578efdc2ebdd5a9f867eb8f326
+- 05_OFFER_TO_ARTEMIS_R3.md  sha256:ea9ddbd4a1387f4a02d5ab5edbc231e122da8b36319d32544912eeb39579d7ec

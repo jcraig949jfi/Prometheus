@@ -60,3 +60,22 @@ Measured cost:
   births are UNRESOLVED because the majority source is not persisted, and CAPTURE cannot name its donor HU.
 - NPE: persist the victim's pre-rename oid in pair-tape birth events, and `wrote_bytes`/residue separately from `repro_span`.
 - PTE: log GA parent indices in `evolve` (one list per generation).
+
+## v0.2 revision (2026-09-27): minimum online fields for later causal reconstruction
+LIGHT stays native-fields-only. B6 changes what the minimum is: governance fields must say WHICH referent they carry (WHO = executing
+body/context, WHERE = code location, WHAT = code material). Only WHAT answers write_governing; the others are kept but labelled.
+
+Proposed ASK fields. Nothing here changes another seat's engine without coordination.
+
+| engine | ASK field | closes |
+|---|---|---|
+| BEE | `replaced` (occupant id) and the cell (BODY) in every traced birth row | B2; CAPTURE donor HU; host body |
+| BEE | per-birth write counts by (source region) x (code MATERIAL: own-region / self-copied-in-window / foreign / elsewhere), i.e. the B6 probe as a native counter | B3/B6; 33% UNRESOLVED; AN1 |
+| BEE | step counts by code material (same split) | execution_share by WHAT |
+| BEE | crossover mate id; mutation count per birth | recombination / mutation provenance |
+| NPE | victim slot (BODY) + pre-rename oid in pair-tape birth events; donor slot | B2 (today only via an observer subclass) |
+| NPE | per pair birth: directed positions, donor-context vs victim-context writes (prov), literal vs value writes (lit), same-value retained count | factual shares; 25/34 continuity NI |
+| NPE | intervention ids + per-draw outcomes of P-11 tests, and the code material of the writing instructions (not only the context) | B5 traceability; B6 |
+| PTE | GA parent indices, crossover mask counts, operator id per offspring | GA provenance without replay |
+| PTE | a non-saturating behavioural probe set (worlds where perfect champions differ) | B7 |
+| Archaeon | per-write governing label (taint label of the code that executed each write) | write_governing in the 'mixed' case |

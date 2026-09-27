@@ -1,0 +1,33 @@
+{
+  "name": "ananke-conformance",
+  "version": "1",
+  "entrypoint": "run.py",
+  "description": "Ananke (another seat) PTE engine conformance suite, unmodified, fetched from a pinned commit with per-file sha256 verification: GPU engine vs independent CPU oracle bit-identical, CUDA-graph and checkpoint/resume tests (CUDA-only), plus a wrapper-side eager-vs-graph timing. Engineering only; no Ananke science.",
+  "dependencies": {
+    "pip": [
+      "pytest==8.3.3"
+    ]
+  },
+  "canary": "python3 -c \"import torch; assert torch.cuda.is_available(); print(torch.__version__, torch.cuda.get_device_name(0))\"",
+  "gpu": {
+    "class": "NVIDIA RTX A4000",
+    "alternatives": [
+      "NVIDIA RTX A5000",
+      "NVIDIA RTX 4000 Ada Generation",
+      "NVIDIA L4"
+    ],
+    "cloud": "SECURE",
+    "count": 1
+  },
+  "disk_gb": 20,
+  "max_runtime_s": 1500,
+  "artifacts": [
+    "result.json",
+    "pytest_junit.xml",
+    "pytest.log",
+    "telemetry.jsonl"
+  ],
+  "telemetry": {
+    "interval_s": 15
+  }
+}

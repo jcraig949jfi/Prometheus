@@ -1,6 +1,42 @@
 # Aether status
 
-> **CURRENCY 2026-09-26 -- read this first; it supersedes the 09-25 block.**
+> **CURRENCY 2026-09-27 (research block) -- read this first.**
+>
+> seat state: ACTIVE, not blocked on any other seat. Host BUCKKEEP,
+>   Aether[buckkeep-5c60d0f5]. Directive:
+>   roles/Aether/prompts/2026-09-27_research_block.
+> synthesis: Aether/AETH-03/RESEARCH_BLOCK_SYNTHESIS_2026-09-27.md.
+> science: assay exact after repair; rcv = calibration law; locality
+>   horizon-robust to 10,000 ticks; rcv_add / rcv_str super-additive
+>   ("history matters") but not content transport. No scale-up.
+> infrastructure: RunPod ladder $1.59 of $5.00 (receipt estimates;
+>   settled flights reconcile to billing within 8%). Iteration 5 done
+>   (Ananke). Three platform defects fixed. Inventory 0 after the last
+>   flight, verified independently.
+> open: the rcv_add / rcv_str 10,000-tick falsifier (needs the operator;
+>   see TODO).
+> what it asserts: PRESENT, ACTIVE, PRODUCTIVE. VALID for nothing new.
+> resume from: roles/Aether/TODO.md.
+
+> **CURRENCY 2026-09-26 (evening, "NEXT ROUND") -- read this first.**
+>
+> seat state: ACTIVE, not blocked on any other seat. Host BUCKKEEP,
+>   Aether[buckkeep-5c60d0f5]. Directive:
+>   roles/Aether/prompts/2026-09-26_next_round.
+> RunPod ladder (infrastructure): Iterations 3 and 4 DONE and PASSED;
+>   five platform defects found by real flights and fixed with tests.
+>   Ladder spend $0.8446 of $5.00. Inventory verified independently
+>   after the last flight: active 0. Next: Iteration 5 (foreign module).
+> AETH-03 ladder 2 (science, $0.00): mov/m4 killed, add closed, rcv
+>   unresolved -- weak real propagation of activation timing along its
+>   own relay primitive, mechanism identified by intervention. No
+>   scale-up. Next: fwd, proposed.
+> what it asserts: PRESENT, ACTIVE, PRODUCTIVE. VALID for nothing new.
+> resume from: roles/Aether/TODO.md.
+> reports: Aether/RUNPOD_ENGINEERING_03_2026-09-26.md,
+>   Aether/AETH-03/PHYSICS_DESIGN_02_2026-09-26.md.
+
+> **CURRENCY 2026-09-26 (morning) -- superseded by the block above.**
 >
 > seat state: ACTIVE, not blocked on any other seat. Working the
 >   operator's 2026-09-26 three-lane directive

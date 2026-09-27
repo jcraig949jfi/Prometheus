@@ -1,12 +1,11 @@
 # Odysseus TODO
 
-Currency: 2026-09-26T03:50Z (from date -u). Closed items are deleted
-with the closing commit and date, purged after 24 h (base role s7).
+Currency: 2026-09-27T18:52Z (from date -u).
 
-- [ ] ODYSSEUS-01 Windows test run (delegated through comms; await receipt)
-- [ ] ODYSSEUS-02 two-host run with ubu002 (ask Artemis / operator)
-- [ ] ODYSSEUS-03 commit substrate measurements
-- [ ] ODYSSEUS-04 odysseus/INSTALL.md
+- [ ] POI frontier: dispatch R1, R5, R6 to idle nodes/workers (no HITL needed)
+- [ ] POI frontier: fold owner replies (#748-#751) into BACKLOG.md
+- [ ] POI frontier: recompute remaining delegate COMPUTED-HERE numbers
+- [ ] POI frontier: sharpen the 24 CANDIDATE threads (next pass)
+- [ ] TH-006: receive Archaeon's M2 attestation; record in th006/REPORT.md
+- [ ] (frozen) brain lane
 - [ ] Read aporia/doctrine/critical_memories.md and MONITORS.md in full
-Closed 2026-09-26: charter committed with MANIFEST; RESPONSIBILITIES
-rewritten; backlog filed (23 rows).

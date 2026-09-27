@@ -1,20 +1,50 @@
 # Bellerophon status
 
-Currency: 2026-09-19 (Atlas -> BEE pilot COMPLETE; see roles/Bellerophon/atlas_bee/REVIEW_PACKET_2026-09-19.md).
-Earlier same day: end of the overnight TDD/playtest window (150 cycles; report
-roles/Bellerophon/OVERNIGHT_REPORT_2026-09-19.txt with its END-OF-WINDOW ADDENDUM).
+Currency: 2026-09-25 ~19:50Z (coupling campaign CLOSED; final report delivered).
 
-Z80 x ATLAS 72-HOUR CAMPAIGN (RUNNING; directive prompts/2026-09-19_z80_atlas_campaign/, given to Nestor, operator asked
-  Bellerophon to build the same on BEE-side infra): harness prometheus/z80atlas/ (Z80-like VM, six reproduction physics
-  with the endogenous guard, frozen 14-axis grammar, geometry rulers, mechanical triggers, 3-stage producer/consumer
-  scheduler, 16 tests). LIVE on M2/SPECTREX5 from a frozen code copy at C:/Users/James/z80atlas_campaign_2026-09-19/code
-  (commit 9af86659e + resume-robustness patches to scheduler/observatory/campaign that change neither frozen hash):
-  started 2026-09-19T14:39:46Z, ends 2026-09-22T14:39:46Z, 16 workers, 500 ticks x 256 cells, seed 20260919, pid in
-  campaign.pid. Positive controls PASS (5/5). Status: python -m prometheus.z80atlas.campaign --status --workdir <dir>;
-  early stop: kill the pid, then --finalize (packet from the checkpoint); --resume continues in the original window.
-  At the boundary it stops itself and writes CAMPAIGN_PACKET.md + families/runs/decisions .jsonl + flags/attribution/map
-  .json. Scientific interpretation is for the post-campaign review, not the harness. Parallel effort noticed:
-  archaeon/z80atlas/ (Nestor's own build) landed on main the same hour; separate path, no conflict.
+BOOT POINTER -- READ FIRST: roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md
+seat state: ACTIVE, nothing running from this seat. Worktree D:/Prometheus-worktrees/bellerophon-post-campaign-forensics
+  on branch bellerophon/coupling-campaign-2026-09-24 (pushed; NOT merged -- merge policy for this branch and
+  post-campaign-forensics-2026-09-23 is the operator's call, Q4 in RESUME_AFTER_RESET.md).
+
+COUPLING CAMPAIGN (physics v3) -- COMPLETE 2026-09-25T19:09:26Z; ANALYSED ~19:38Z
+  Prereg frozen c9bed96de, Amendment 1 6607b3cb5 (operational). 11,657 runs (11,372 Phase 1 + 285 AUTO; EXT 0),
+  0 voids, 0 NOT_RUN, replay 341/341 identical, A8 control 40/40. Active runtime 8.63 h (wall 23.03 h).
+  Frozen readiness rule: READY_FOR_MULTIDAY (P1 P2 P3 P4 hold; P5 fails at ceiling; P6 4/60 vs 0/60 ns; 7 AUTO
+  CAUSAL_COUPLED / 6 mechanisms; 6/6 tasks, 6/8 substrates). Recorded scope limit: core effects are MAINTENANCE of
+  seeded code; ACQUISITION evidence is ECHO only (B-cop K40 29/150 ON vs 6/150 controls) plus 3 E2 repairs;
+  B-rand 0/3,200. Artifacts: COUPLING_CAMPAIGN_REPORT.md, COUPLING_CAUSAL_LEDGER.jsonl, COUPLING_ORIGIN_LEDGER.jsonl,
+  COUPLING_FAILURE_LEDGER.md (F1-F11), NEXT_MULTIDAY_CAMPAIGN.md (design only, nothing frozen or launched),
+  receipts/COUPLING_RESULTS.json, receipts/OPS_ACCOUNTING.json. Runtime evidence (not committed):
+  C:/Users/James/z80atlas_coupling_2026-09-24 (hashes in the report s6).
+  Exact resume point: nothing to resume. Next action = operator decision on NEXT_MULTIDAY_CAMPAIGN.md (prereg +
+  off-plan pilot first) and on the merge policy.
+
+OPEN QUEUE ITEM: comms #550 (Cosmos, C3 holdout D: build + seal one independent world family per
+  roles/Cosmos/c3/D_CONTRACT.md) -- held for the operator's word; not started.
+
+POST-CAMPAIGN FORENSICS + GROUNDING ROUND COMPLETE (2026-09-23, Bellerophon[m2-9e74888e]; branch
+  bellerophon/post-campaign-forensics-2026-09-23; artifacts roles/Bellerophon/forensics_2026-09-23/):
+  POST_CAMPAIGN_FORENSICS.md, ISSUE_AND_REPAIR_LEDGER.md (34 rows), SPECIMEN_LEDGER.jsonl (2,188), GROUNDING_PREREG.md
+  (frozen a1b066309), GROUNDING_REPORT.md (12,130/12,130 runs, 16:46:50Z), NEXT_CAMPAIGN_RECOMMENDATION.md.
+  Verdict: all five historical flag classes collapsed; spontaneous own-code self-replication CONFIRMED_CAUSAL;
+  instrument READY; physics NOT ready for a multi-day run: no pathway by which computation affects reproduction.
+  Next executable action: design + preregister ONE reproduction-computation coupling and a <= 6 h pilot (NEXT_...
+  part B2) -- awaiting operator direction before building it. Local evidence: C:/Users/James/z80atlas_grounding_2026-09-23.
+  Note (D3): this file at 2df98af3e called archaeon/z80atlas "Nestor's own build"; it is Archaeon's (c7610ea19).
+
+DIRECTIVE (being executed):
+  prompts/2026-09-23_post_campaign_forensics/00_OPERATOR_DIRECTIVE_verbatim.md
+  Read it in full before taking any action. It is a 10-phase forensic + grounding mandate, not a
+  campaign launch. The directive is authoritative; this STATUS entry is only a pointer to it.
+
+Z80 x ATLAS 72-HOUR CAMPAIGN (COMPLETE 2026-09-22T14:38:42Z):
+  63,247 runs / 49,412 families / 1,629 high-value flags. Final local evidence:
+    workdir:  C:/Users/James/z80atlas_campaign_2026-09-19/
+    packet:   C:/Users/James/z80atlas_campaign_2026-09-19/CAMPAIGN_PACKET.md  (NOT in git — local only)
+    harness:  prometheus/z80atlas/ (commit 98b2149a7 + subsequent patches)
+  DO NOT mistake earlier 44.6h snapshot numbers for the final campaign.
+  Scientific interpretation is the subject of the next directive above.
 
 ATLAS -> BEE PILOT (temporary experimental role, directive prompts/2026-09-19_atlas_bee_pilot/): does BEE
   (prometheus/toolbox) work as a THIRD ecosystem alongside SFE and NPE? Six Atlas experiments selected and FROZEN
