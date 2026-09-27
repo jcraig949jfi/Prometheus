@@ -61,6 +61,37 @@ def fetch_pinned(manifest, dest, tel):
     emit(tel, "progress", stage="fetched", files=len(manifest["files"]), commit=commit)
 
 
+def effective_cpus():
+    """CPUs this CONTAINER may use, not the host's core count.
+
+    os.cpu_count() reports the host (48 on an RTX 2000 Ada pod whose container
+    had a few vCPUs); sizing concurrency from it oversubscribed the container
+    so badly that no unit reported progress for 300 s and the platform's
+    stall detector aborted the flight (C-002 pilot finding). Read the cgroup
+    v2 quota, then v1, then CPU affinity; fall back to cpu_count."""
+    import math
+    try:
+        with open("/sys/fs/cgroup/cpu.max") as fh:
+            quota, period = fh.read().split()[:2]
+        if quota != "max":
+            return max(1, int(math.floor(int(quota) / float(period))))
+    except (OSError, ValueError):
+        pass
+    try:
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_quota_us") as fh:
+            quota = int(fh.read())
+        with open("/sys/fs/cgroup/cpu/cpu.cfs_period_us") as fh:
+            period = int(fh.read())
+        if quota > 0:
+            return max(1, int(math.floor(quota / float(period))))
+    except (OSError, ValueError):
+        pass
+    try:
+        return max(1, len(os.sched_getaffinity(0)))
+    except (AttributeError, OSError):
+        return os.cpu_count() or 1
+
+
 def main():
     for name in FORBIDDEN:
         if os.environ.get(name):
@@ -76,9 +107,11 @@ def main():
     units = sets[unit_set]
     lh_ticks = int(os.environ.get("PROMETHEUS_WORK_UNITS", "10000"))
     import platform
-    ncpu = os.cpu_count() or 1
+    ncpu = effective_cpus()
+    ncpu_reported = os.cpu_count() or 1
     emit(tel, "start", run_id=os.environ.get("PROMETHEUS_RUN_ID"), commit=manifest["commit"],
-         cpus=ncpu, python=platform.python_version(), lh_ticks=lh_ticks,
+         cpus=ncpu, cpus_reported=ncpu_reported,
+         python=platform.python_version(), lh_ticks=lh_ticks,
          n_tasks=len(units), unit_set=unit_set)
     src = os.path.join(HERE, "src")
     fetch_pinned(manifest, src, tel)
@@ -156,6 +189,7 @@ def main():
                     tar.add(os.path.join(art, name), arcname=name)
     with open(os.path.join(art, "units_manifest.json"), "w", encoding="utf-8") as fh:
         json.dump({"commit": manifest["commit"], "lh_ticks": lh_ticks, "cpus": ncpu,
+                   "cpus_reported": ncpu_reported,
                    "unit_set": unit_set, "units": record}, fh, indent=1, sort_keys=True)
     ok = all(r["exit_code"] == 0 and r["artifact_sha256"] for r in record)
     with open(os.path.join(art, "result.json"), "w", encoding="utf-8") as fh:
