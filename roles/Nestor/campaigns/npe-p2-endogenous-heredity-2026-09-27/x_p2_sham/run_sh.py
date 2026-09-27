@@ -21,6 +21,8 @@ block to the destination on the SHAM VM but must write 8 bytes somewhere; on the
 Classification: SIGNAL (density/soup dynamics produce donors) if SHAM L2 runs >= 10 of 96; CLEAN_NULL (the effect
 needs a usable one-byte copier) if SHAM L2 runs <= 3 of 96 (PLAIN + 3); WEAK_SIGNAL otherwise. Reported: which
 encodings the SHAM donors (if any) use.
+AMENDMENT A1 (infrastructure, 19:06, after attempt 1 crashed at its first checkpoint with KeyError 'epoch', BEFORE
+any result existed): the checkpoint record now sets its epoch; nothing else changed. Attempt-1 log: run_attempt1.log.
 """
 from __future__ import annotations
 
@@ -107,6 +109,7 @@ def job(args):
             if self.epoch % run_dd.EVERY == 0:
                 gs = sorted({bytes(self._genome(o)) for o in self.orgs if o.alive})
                 c = run_dd.screen(world, self, gs, ("X-P2-SHAM", cell, seed, self.epoch))
+                c["epoch"] = self.epoch          # A1: screen() does not set it (the W1 scripts add it after)
                 cps.append({k: c[k] for k in ("epoch", "distinct", "stage1", "L2", "best_fid_final", "competent_genomes")})
 
     r = Sh(dict(a["cell"], atlas_axis="NONE"), seed, tier=a["tier"])
