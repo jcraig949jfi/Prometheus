@@ -720,6 +720,19 @@ def main(argv=None):
             return 0
     if args.resume:
         log("RESUME from ledger %s (never creates)" % args.resume)
+        # The ledger names the module the pod is running. Resuming with a
+        # DIFFERENT module's spec retrieves the wrong artifact list and then
+        # terminates the pod -- the real artifacts are lost (2026-09-27: a
+        # resume without the module argument fell back to examples/gpu_load
+        # and a 4-unit science flight's units.tar was never fetched). Refuse.
+        with open(args.resume, encoding="utf-8") as fh:
+            ledger_module = json.load(fh).get("module", "")
+        spec_module = "%s@%s" % (spec["name"], spec.get("version", ""))
+        if ledger_module and ledger_module.split("@")[0] != spec["name"]:
+            log("REFUSED: the ledger's pod runs %r but this resume was given "
+                "module %r (%s). Pass the module directory that built it."
+                % (ledger_module, spec_module, module_dir))
+            return 5
         if not credentials.available():
             log("no RunPod credential configured; see credentials.py")
             return 4

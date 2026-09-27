@@ -43,3 +43,12 @@ def test_large_artifact_is_kept_outside_and_receipted(tmp_path, monkeypatch):
     assert entry["path"] == "units.tar" and entry["bytes"] == len(big)
     import hashlib
     assert entry["sha256"] == hashlib.sha256(big).hexdigest()
+
+
+def test_resume_refuses_a_module_other_than_the_ledgers(tmp_path):
+    # A resume given the wrong module would fetch the wrong artifact list and
+    # then terminate the pod, losing the real artifacts. It must refuse.
+    ledger = tmp_path / "ledger.json"
+    ledger.write_text(json.dumps({"module": "aether-units@5", "pod_id": "x",
+                                  "pod_name": "aether-units-T"}))
+    assert flight.main(["--resume", str(ledger)]) == 5
