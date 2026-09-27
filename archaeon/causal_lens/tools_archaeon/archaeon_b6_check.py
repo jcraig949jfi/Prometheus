@@ -44,7 +44,8 @@ def classify(tape, nbr, x):
 def main():
     out_path = sys.argv[sys.argv.index("--out") + 1]
     t0 = time.time()
-    hits = json.load(open("archaeon/z80atlas/census/HITS.json", encoding="utf-8"))["hits"]
+    raw = json.load(open("archaeon/z80atlas/census/HITS.json", encoding="utf-8"))["hits"]
+    hits = raw["vmcopy32"]                          # HITS.json groups copiers by representation; only vmcopy32 is this 32-byte VM
     rr = SplitMix64(seed_from("t004.nbr", 0)); rnd = bytes(rr.randbelow(256) for _ in range(G))
     c = Counter(); by_class = Counter(); n = 0; ex_rows = []
     for h in hits:
