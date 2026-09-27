@@ -99,7 +99,8 @@ def test_cheat_relevant_field_that_changes_the_claim(spec, tmp_path):
     v = _verify(pack_path, pack_sha, _replay_file(tmp_path, bad, cp))
     assert v["verdict"] == "FAIL"
     assert v["identity"]["status"] == "FAIL"
-    assert v["identity"]["first_bad_row"] == i
+    # Localisation is per 1000-row chunk + per field: per-row hashes would outweigh the source.
+    assert v["identity"]["first_bad_chunk"] == i // 1000
     assert v["identity"]["fields_changed"] == [9]
     assert v["identity"]["claim_fields_changed"] == [9]
     assert v["claim"]["status"] == "FAIL"
