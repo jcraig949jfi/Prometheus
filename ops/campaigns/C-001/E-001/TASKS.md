@@ -54,3 +54,4 @@
 | A-001 | T-003 | ubu001 | RUNNING; claimed 2026-09-27T13:05:11Z |
 | A-001 | T-004 (Archaeon-side measurement) | ubu002 | FAILED (claimed 2026-09-27T13:07:09Z; pin 742060b38): my script assumed HITS.json "hits" is a list; it is a dict keyed by representation (vmcopy32 176, vmcopy64 21, z80_32 0). A script defect, not host or science. The fix also restricts to vmcopy32, the only representation this 32-byte VM runs |
 | A-002 | T-004 (Archaeon-side measurement) | ubu002 | DONE (claimed 2026-09-27T13:07:41Z; pin 2a0470fed): 90,112 executions, 19,615 copier births, no location/material divergence detected; block-15 host panel: 3,598 hosting births, 1,024 with host material running in the neighbour region. 15.5 s, 22 MB. Superseded by A-003 for the child identity (the same measurement plus the child class) |
+| A-003 | T-004 (Archaeon-side measurement + child identity) | ubu002 | RUNNING; claimed 2026-09-27T13:08:33Z; code pinned at d911d43bc |
