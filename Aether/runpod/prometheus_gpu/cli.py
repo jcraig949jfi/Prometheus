@@ -274,6 +274,32 @@ def cmd_validate_receipt(args):
     return 0
 
 
+def cmd_billing(args):
+    """Reconcile receipts against what the provider actually billed.
+
+    Read-only. Writes a separate reconciliation file; receipts already
+    written are evidence and are never edited.
+    """
+    from . import billing as bill
+    rows = bill.fetch_pod_billing(args.since, bucket="day")
+    out = bill.reconcile(args.receipts, rows)
+    out["account"] = bill.account_state()
+    out["billing_query"] = {"endpoint": bill.REST + "/billing/pods",
+                            "since": args.since, "bucket": "day",
+                            "rows": len(rows)}
+    for r in out["rows"]:
+        print("%-16s %-24s quote %-5s est %-9s billed %-9s x%s  (%s)" % (
+            r["pod_id"], (r.get("gpu") or "?")[:24], r["quote_usd_per_h"],
+            r["receipt_estimate_usd"], r.get("billed_usd"),
+            r.get("billed_over_estimate"), r["status"]))
+    print("totals: %s" % json.dumps(out["totals"], sort_keys=True))
+    if args.out:
+        with open(args.out, "w", encoding="utf-8", newline="\n") as fh:
+            json.dump(out, fh, indent=2, sort_keys=True)
+            fh.write("\n")
+    return 0
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="prometheus-gpu",
                                 description="Prometheus GPU flight system")
@@ -287,6 +313,7 @@ def build_parser():
                                  ("campaign", cmd_campaign, True),
                                  ("inventory", cmd_inventory, False),
                                  ("cleanup", cmd_cleanup, False),
+                                 ("billing", cmd_billing, False),
                                  ("validate-telemetry",
                                   cmd_validate_telemetry, False),
                                  ("validate-receipt",
@@ -316,6 +343,10 @@ def build_parser():
         if name == "rehearse":
             sp.add_argument("--budget", type=float, default=None)
             sp.add_argument("--verbose", action="store_true")
+        if name == "billing":
+            sp.add_argument("--receipts", default="receipts")
+            sp.add_argument("--since", default="2026-09-20T00:00:00Z")
+            sp.add_argument("--out", default=None)
         if name == "cleanup":
             sp.add_argument("--pod", action="append")
             sp.add_argument("--all", action="store_true")

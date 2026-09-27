@@ -1,0 +1,189 @@
+{
+  "commit": "ee81c047464d28eb4b5e26df64b5e40bd06bc5e4",
+  "files_verified": 27,
+  "owner_seat": "Ananke",
+  "pytest_exit_code": 0,
+  "pytest_seconds": 35.3,
+  "pytest_summary": "139 passed in 34.62s",
+  "scope": "engineering conformance only; no Ananke science",
+  "tests": [
+    "prometheus/ananke/tests/test_conformance.py",
+    "prometheus/ananke/tests/test_oracle_selfcheck.py",
+    "prometheus/ananke/tests/test_envs_assays.py"
+  ],
+  "timing": {
+    "device": "cuda",
+    "label": "WRAPPER-SIDE timing of Ananke's World on Ananke's own random_physics configs (test_conformance.py); not Ananke's benchmark, not the C1 configuration",
+    "rows": [
+      {
+        "B": 256,
+        "graph": false,
+        "n_sites": 16,
+        "seconds": 2.8399,
+        "seed": 0,
+        "site_updates_per_s": 281246.3,
+        "ticks": 195,
+        "topology": "smallworld"
+      },
+      {
+        "B": 256,
+        "graph": true,
+        "n_sites": 16,
+        "seconds": 0.2628,
+        "seed": 0,
+        "site_updates_per_s": 3039496.4,
+        "ticks": 195,
+        "topology": "smallworld"
+      },
+      {
+        "B": 2048,
+        "graph": false,
+        "n_sites": 16,
+        "seconds": 2.8421,
+        "seed": 0,
+        "site_updates_per_s": 2248227.8,
+        "ticks": 195,
+        "topology": "smallworld"
+      },
+      {
+        "B": 2048,
+        "graph": true,
+        "n_sites": 16,
+        "seconds": 0.3551,
+        "seed": 0,
+        "site_updates_per_s": 17993749.6,
+        "ticks": 195,
+        "topology": "smallworld"
+      },
+      {
+        "B": 256,
+        "graph": false,
+        "n_sites": 25,
+        "seconds": 2.1551,
+        "seed": 1,
+        "site_updates_per_s": 579082.0,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 256,
+        "graph": true,
+        "n_sites": 25,
+        "seconds": 0.1983,
+        "seed": 1,
+        "site_updates_per_s": 6292281.4,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 2048,
+        "graph": false,
+        "n_sites": 25,
+        "seconds": 2.1606,
+        "seed": 1,
+        "site_updates_per_s": 4620925.1,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 2048,
+        "graph": true,
+        "n_sites": 25,
+        "seconds": 0.3061,
+        "seed": 1,
+        "site_updates_per_s": 32620936.7,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 256,
+        "graph": false,
+        "n_sites": 5,
+        "seconds": 2.8253,
+        "seed": 2,
+        "site_updates_per_s": 88343.4,
+        "ticks": 195,
+        "topology": "ring"
+      },
+      {
+        "B": 256,
+        "graph": true,
+        "n_sites": 5,
+        "seconds": 0.2565,
+        "seed": 2,
+        "site_updates_per_s": 973065.5,
+        "ticks": 195,
+        "topology": "ring"
+      },
+      {
+        "B": 2048,
+        "graph": false,
+        "n_sites": 5,
+        "seconds": 2.8705,
+        "seed": 2,
+        "site_updates_per_s": 695637.7,
+        "ticks": 195,
+        "topology": "ring"
+      },
+      {
+        "B": 2048,
+        "graph": true,
+        "n_sites": 5,
+        "seconds": 0.3028,
+        "seed": 2,
+        "site_updates_per_s": 6593430.5,
+        "ticks": 195,
+        "topology": "ring"
+      },
+      {
+        "B": 256,
+        "graph": false,
+        "n_sites": 25,
+        "seconds": 2.4879,
+        "seed": 3,
+        "site_updates_per_s": 501635.4,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 256,
+        "graph": true,
+        "n_sites": 25,
+        "seconds": 0.2491,
+        "seed": 3,
+        "site_updates_per_s": 5010333.8,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 2048,
+        "graph": false,
+        "n_sites": 25,
+        "seconds": 2.5102,
+        "seed": 3,
+        "site_updates_per_s": 3977415.2,
+        "ticks": 195,
+        "topology": "torus"
+      },
+      {
+        "B": 2048,
+        "graph": true,
+        "n_sites": 25,
+        "seconds": 0.4951,
+        "seed": 3,
+        "site_updates_per_s": 20165941.5,
+        "ticks": 195,
+        "topology": "torus"
+      }
+    ]
+  },
+  "versions": {
+    "cuda_available": true,
+    "gpu": "NVIDIA RTX 4000 Ada Generation",
+    "numpy": "1.26.3",
+    "pytest": "8.3.3",
+    "python": "3.11.10",
+    "torch": "2.4.1+cu124",
+    "torch_cuda": "12.4"
+  }
+}

@@ -437,7 +437,14 @@ def test_a_scout_receipt_becomes_a_calibration(tmp_path, monkeypatch):
     assert cal["seconds_per_unit"] == pytest.approx(0.055)
     assert cal["overhead_seconds"] == pytest.approx(45.0)
     assert cal["gpu_used"] == "NVIDIA RTX A4000"
-    assert cal["hourly_usd"] == 0.17
+    # The property: the calibration is priced at the rate of the card that
+    # RAN. This used to pin the literal 0.17 -- the A4000's COMMUNITY
+    # price, which provider billing showed was never what this SECURE
+    # launcher paid (RUNPOD_ENGINEERING_04). Assert the property, not the
+    # figure.
+    from prometheus_gpu import cost as cost_mod
+    assert cal["hourly_usd"] == cost_mod.hourly_for("NVIDIA RTX A4000")
+    assert cal["hourly_usd"] != cost_mod.hourly_for("NVIDIA A40")
 
 
 def test_flight_overrides_do_not_move_the_bundle():

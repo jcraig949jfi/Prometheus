@@ -551,6 +551,11 @@ class Controller(object):
     # ------------------------------------------------------------- the run
     def run(self):
         self.preflight()
+        # Price from the provider, not from memory. Only against the real
+        # provider (a fake has no prices), read-only, and a failure falls
+        # back to the dated SECURE table -- the receipt records which.
+        if type(self.raw_provider).__name__ == "RunPodProvider":
+            cost_mod.refresh_quotes()
 
         # The plan is what gets recorded; the request is what gets sent.
         # They are built together, from the same inputs, so the receipt
@@ -800,7 +805,9 @@ class Controller(object):
         # exist, and pricing it at zero would hide that.
         receipt_obj["cost"] = cost_mod.actual(
             0.0 if confirmed_nothing else max(0.0, ended - started),
-            self._hourly(), work_units=self._work_units(receipt_obj))
+            self._hourly(), work_units=self._work_units(receipt_obj),
+            quote_source=cost_mod.quote_source(
+                self.gpu_used or self.spec["gpu"].get("class")))
         if confirmed_nothing:
             receipt_obj["cost"]["basis"] = (
                 "no pod existed (provider confirmed); nothing to bill")
