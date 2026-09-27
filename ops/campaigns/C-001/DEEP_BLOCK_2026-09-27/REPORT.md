@@ -51,10 +51,10 @@ differently per engine; nothing requires identical mechanics.
 
 ## 4. Z80 synthesis: what only three lenses establish
 1. **Harness channels that move material get credited to organisms.** The same error was made independently by all three teams
-   (transplant flags; migration copy; recombination splice). It is a design law, not a bug (TH-008).
+   (transplant flags; migration copy; recombination splice). It is a design law, not a bug (TH-014).
 2. **Cargo erodes while copy FUNCTION persists unless paid for** (BEE, NPE). But material identity of the machinery is conserved only
    where its encoding lacks neutral sites. NPE conserves OP_SELF / LDIR as material; Archaeon's dominant block-13 lineage retains 0.0
-   founder material at every position after 14,800 epochs, despite 82% exact copies (measured this block) (TH-007).
+   founder material at every position after 14,800 epochs, despite 82% exact copies (measured this block) (TH-013).
 3. **Acquisition, establishment and maintenance are distinct barriers, and acquisition is not the hardest** (all three, different
    rulers).
 4. **Origins are scaffolded.** BEE: 160/160 first self-replicators were built by others' copying (verified). Archaeon: host-mediated
@@ -63,7 +63,7 @@ differently per engine; nothing requires identical mechanics.
    causal) and on a diagnostic that NPE does not certify (found by worker W1). So "three independent sightings" become two, plus
    NPE's pair-tape scaffolding.
 6. **About 16% of births in Archaeon block 13 transmit material but NOT the capacity to reproduce.** By mechanism, children that are
-   copiers: SELF_COPY 86.7%, HOST 47%, NEIGHBOUR 35%, ORIGINATION 0% (measured this block) (TH-009; Griesemer's challenge).
+   copiers: SELF_COPY 86.7%, HOST 47%, NEIGHBOUR 35%, ORIGINATION 0% (measured this block) (TH-015; Griesemer's challenge).
 
 ## 5. Prior art
 Rediscoveries:
@@ -86,15 +86,15 @@ Genuinely different in Prometheus:
 - one question across three independent substrates;
 - per-event named-intervention counterfactuals.
 
-## 6. Frontier (F_FRONTIER.md, threads TH-007..TH-011)
+## 6. Frontier (F_FRONTIER.md, threads TH-013..TH-017)
 
 | thread | question | cheapest next step |
 |---|---|---|
-| TH-007 | cargo vs machinery | record machinery STATE in the same replay (is function conserved while material turns over?) |
-| TH-008 | harness-leak law | synthetic leak fixtures against v0.3 |
-| TH-009 | capacity transmission | the same measure in BEE / NPE |
-| TH-010 | B6 at population scale | a random 20-run BEE sample on the nodes (coordinate with Bellerophon) |
-| TH-011 | dependence does not chain | archival classification |
+| TH-013 | cargo vs machinery | record machinery STATE in the same replay (is function conserved while material turns over?) |
+| TH-014 | harness-leak law | synthetic leak fixtures against v0.3 |
+| TH-015 | capacity transmission | the same measure in BEE / NPE |
+| TH-016 | B6 at population scale | a random 20-run BEE sample on the nodes (coordinate with Bellerophon) |
+| TH-017 | dependence does not chain | archival classification |
 
 Also: TH-003 revised (cross-execution in P-11-failing overwrites), and the host-conditioned assay re-assessed NOT_READY.
 
@@ -142,3 +142,13 @@ Also: TH-003 revised (cross-execution in P-11-failing overwrites), and the host-
 - B7 is not a broad engine failure. The engines guard it; the lens didn't.
 - B8 should not be named; it is textbook IBD / IBS.
 - Several of Prometheus's "new" concepts have mature external names. Adopting them would prevent re-deriving known pitfalls.
+
+## Ops-pilot finding: thread ID collision (occurred during this block)
+- Aether's research block (roles/Aether) opened TH-007..TH-012 on main while this block drafted its own TH-007..TH-011 on a branch.
+  Git surfaced it only at merge (add/add conflicts on five files).
+- This block's threads were renumbered TH-013..TH-017, with every reference updated. Worker outputs W1-W3 are unedited, and they did
+  not cite thread numbers.
+- The one-file-per-object layout avoids EDIT conflicts but provides no ID allocation. Two seats working in parallel will collide
+  again.
+- The smallest remedy the evidence justifies: allocate an ID by committing an empty stub to main before drafting (claim first). Not
+  built here; recorded for TH-006 / the pilot.

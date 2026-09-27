@@ -99,7 +99,7 @@ Each engine claim below cites the lens file that reconstructs it; those files ci
    - The "three independent sightings of host-conditioned reproduction" therefore reduce to TWO (Archaeon by material; BEE
      foreign-material governance, 8,166 births in r016299, M2-local evidence) plus NPE's pair-tape scaffolding (point 4).
 
-## 3b. Capacity transmission (TH-009, measured this block, Archaeon block 13; 4,079 sampled births)
+## 3b. Capacity transmission (TH-015, measured this block, Archaeon block 13; 4,079 sampled births)
 The fraction of children that are copiers on their own (frozen copier ruler), by birth mechanism:
 
 | mechanism | children that are copiers | sample |
