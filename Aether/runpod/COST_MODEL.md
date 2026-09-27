@@ -195,3 +195,27 @@ claim in through the cost block.
    specific discriminating counterfactual appeared.
 4. Set `max_runtime_s` as a real bound. It is the mechanism that stops a
    hung workload from becoming an unbounded bill.
+
+
+## Iteration 3 additions (2026-09-26)
+
+- **Stock-ordered creates.** The controller reads advertised SECURE stock
+  (read-only GraphQL) and tries in-stock cards first. The price of a run is
+  the price of the card it LANDS on, which is now usually not the first one
+  declared: Iteration 3 flew an A4000, an RTX 4000 Ada ($0.28/h, added to
+  the rate table), L4s, a 4090 and A5000s. A preregistered estimate priced
+  on one card and flown on another misses by the rate ratio -- F2c and F3
+  both exceeded a $0.02 A4000 bound for exactly that reason.
+- **Estimates in the receipt.** A campaign flown from a plan carries
+  `estimates`: spec sheet, scout-calibrated, actual, and both errors
+  (`receipt.estimates_block`). Iteration 2's L4 (spec sheet -36.5%, scout
+  +5.9%) is a regression test; Iteration 3's A1 (spec sheet -4.3%, scout
+  +1.5%, after an automatic re-scout from a refused 4090 to an A5000) is
+  the second data point.
+- **Long-run accounting agrees.** On the 65-minute soak the controller's
+  own running spend at its last watch poll ($0.2828) and the receipt's cost
+  ($0.2830) differ by 0.08%.
+- **Dependency install** 4.4-14.7 s over nine clean bootstraps on four card
+  classes; the 305 s tail seen once in Iteration 1 has not reproduced in 13
+  samples since and stays in the observed range as a real, unexplained
+  event.

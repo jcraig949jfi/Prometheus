@@ -1,0 +1,2546 @@
+{
+ "built_by_copy_detail": {
+  "material=target,changed<=2=False,into_empty=False": 54,
+  "material=target,changed<=2=True,into_empty=False": 10,
+  "material=writer,changed<=2=False,into_empty=False": 146,
+  "material=writer,changed<=2=False,into_empty=True": 14,
+  "material=writer,changed<=2=True,into_empty=False": 5,
+  "material=writer,changed<=2=True,into_empty=True": 4
+ },
+ "classes": {
+  "BUILT_BY_COPY": 233,
+  "INIT_AT_TICK0": 30,
+  "INIT_LATER": 98
+ },
+ "definition": "G6 historical (exploratory): how did each historical origin's first self-replicating writer come to exist?\nFrom the traced birth logs (LOCAL births/<run>.jsonl.gz; row fields per traced_replay.py). Classes:\n  INIT_AT_TICK0      the writer is an initial organism and self-replicated at tick 0 (a cliff present at init)\n  INIT_LATER         the writer is an initial organism that first self-replicated later (background mutation of an\n                     init tape or context change; the historical logs hold no per-tick tapes to separate these)\n  BUILT_BY_COPY      the writer was itself born by a registered non-SR COPY_EVENT (constructed by another's writes);\n                     the class of that construction (material target = capture/chimera, writer = partial copy)\nAncestor TAPES were not recorded historically, so the RAMP test is left to the grounding round (G6).\nWrites receipts/G6_HISTORICAL.json.",
+ "n": 361,
+ "rows": [
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 9,
+   "run": "r000272",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 460,
+   "run": "r000266",
+   "set": "spontaneous",
+   "writer_birth": 423
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 19,
+   "run": "r000339",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 37,
+   "run": "r000330",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r000625",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 12,
+   "run": "r000880",
+   "set": "spontaneous",
+   "writer_birth": 11
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r001010",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 122,
+   "run": "r001139",
+   "set": "spontaneous",
+   "writer_birth": 119
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 266,
+   "run": "r001294",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 218,
+   "run": "r001488",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 76,
+   "run": "r002249",
+   "set": "spontaneous",
+   "writer_birth": 74
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 107,
+   "run": "r002280",
+   "set": "spontaneous",
+   "writer_birth": 105
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r002419",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r002487",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 7,
+   "run": "r002886",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 26,
+   "run": "r003314",
+   "set": "spontaneous",
+   "writer_birth": 25
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 64,
+   "run": "r003423",
+   "set": "spontaneous",
+   "writer_birth": 35
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 57,
+   "run": "r003503",
+   "set": "spontaneous",
+   "writer_birth": 52
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 240,
+   "run": "r003626",
+   "set": "spontaneous",
+   "writer_birth": 238
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 49,
+   "run": "r003695",
+   "set": "spontaneous",
+   "writer_birth": 47
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 170,
+   "run": "r003887",
+   "set": "spontaneous",
+   "writer_birth": 170
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r003914",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 468,
+   "run": "r004041",
+   "set": "spontaneous",
+   "writer_birth": 467
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 393,
+   "run": "r004044",
+   "set": "spontaneous",
+   "writer_birth": 391
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 82,
+   "run": "r004161",
+   "set": "spontaneous",
+   "writer_birth": 64
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r004362",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 473,
+   "run": "r004878",
+   "set": "spontaneous",
+   "writer_birth": 473
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r005160",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 270,
+   "run": "r005579",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r005610",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 85,
+   "run": "r005650",
+   "set": "spontaneous",
+   "writer_birth": 72
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 2,
+   "run": "r005743",
+   "set": "spontaneous",
+   "writer_birth": 1
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 37,
+   "run": "r005835",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 36,
+   "run": "r005901",
+   "set": "spontaneous",
+   "writer_birth": 36
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r006150",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r006310",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 143,
+   "run": "r006541",
+   "set": "spontaneous",
+   "writer_birth": 142
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 162,
+   "run": "r006798",
+   "set": "spontaneous",
+   "writer_birth": 161
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 23,
+   "run": "r007348",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 57,
+   "run": "r008297",
+   "set": "spontaneous",
+   "writer_birth": 56
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 463,
+   "run": "r008577",
+   "set": "spontaneous",
+   "writer_birth": 463
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r009174",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 168,
+   "run": "r009279",
+   "set": "spontaneous",
+   "writer_birth": 140
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 20,
+   "run": "r009677",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 193,
+   "run": "r010161",
+   "set": "spontaneous",
+   "writer_birth": 192
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 15,
+   "run": "r010247",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 215,
+   "run": "r010290",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 169,
+   "run": "r010699",
+   "set": "spontaneous",
+   "writer_birth": 169
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 216,
+   "run": "r010898",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 14,
+   "run": "r011375",
+   "set": "spontaneous",
+   "writer_birth": 13
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r011568",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 8,
+   "run": "r013061",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 82,
+   "run": "r013693",
+   "set": "spontaneous",
+   "writer_birth": 81
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 21,
+   "run": "r013744",
+   "set": "spontaneous",
+   "writer_birth": 18
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 32,
+   "run": "r013985",
+   "set": "spontaneous",
+   "writer_birth": 31
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 401,
+   "run": "r014164",
+   "set": "spontaneous",
+   "writer_birth": 401
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 119,
+   "run": "r014291",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 456,
+   "run": "r014351",
+   "set": "spontaneous",
+   "writer_birth": 422
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 14,
+   "run": "r014575",
+   "set": "spontaneous",
+   "writer_birth": 11
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 258,
+   "run": "r014680",
+   "set": "spontaneous",
+   "writer_birth": 257
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 378,
+   "run": "r014738",
+   "set": "spontaneous",
+   "writer_birth": 376
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 92,
+   "run": "r014789",
+   "set": "spontaneous",
+   "writer_birth": 90
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 20,
+   "run": "r015123",
+   "set": "spontaneous",
+   "writer_birth": 19
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 220,
+   "run": "r015149",
+   "set": "spontaneous",
+   "writer_birth": 218
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 154,
+   "run": "r015557",
+   "set": "spontaneous",
+   "writer_birth": 153
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 292,
+   "run": "r015721",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 23,
+   "run": "r015761",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 13,
+   "run": "r016189",
+   "set": "spontaneous",
+   "writer_birth": 11
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 174,
+   "run": "r016299",
+   "set": "spontaneous",
+   "writer_birth": 173
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 32,
+   "run": "r016739",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 303,
+   "run": "r017064",
+   "set": "spontaneous",
+   "writer_birth": 282
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 44,
+   "run": "r017523",
+   "set": "spontaneous",
+   "writer_birth": 38
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r017555",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 446,
+   "run": "r018194",
+   "set": "spontaneous",
+   "writer_birth": 445
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 183,
+   "run": "r018721",
+   "set": "spontaneous",
+   "writer_birth": 183
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 87,
+   "run": "r018746",
+   "set": "spontaneous",
+   "writer_birth": 87
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 290,
+   "run": "r018869",
+   "set": "spontaneous",
+   "writer_birth": 281
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 125,
+   "run": "r019142",
+   "set": "spontaneous",
+   "writer_birth": 94
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 289,
+   "run": "r019397",
+   "set": "spontaneous",
+   "writer_birth": 288
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 30,
+   "run": "r019632",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 209,
+   "run": "r019893",
+   "set": "spontaneous",
+   "writer_birth": 208
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 4,
+   "run": "r020070",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 187,
+   "run": "r020162",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 27,
+   "run": "r020244",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 1,
+   "run": "r020373",
+   "set": "spontaneous",
+   "writer_birth": 0
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 10,
+   "run": "r020569",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 406,
+   "run": "r020593",
+   "set": "spontaneous",
+   "writer_birth": 406
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 220,
+   "run": "r020586",
+   "set": "spontaneous",
+   "writer_birth": 220
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 485,
+   "run": "r020629",
+   "set": "spontaneous",
+   "writer_birth": 412
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 200,
+   "run": "r020788",
+   "set": "spontaneous",
+   "writer_birth": 199
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 218,
+   "run": "r020911",
+   "set": "spontaneous",
+   "writer_birth": 217
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 63,
+   "run": "r020934",
+   "set": "spontaneous",
+   "writer_birth": 63
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 42,
+   "run": "r020968",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 183,
+   "run": "r020999",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 2,
+   "run": "r021060",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 219,
+   "run": "r021378",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 131,
+   "run": "r021470",
+   "set": "spontaneous",
+   "writer_birth": 116
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 71,
+   "run": "r021659",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 422,
+   "run": "r022079",
+   "set": "spontaneous",
+   "writer_birth": 421
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 239,
+   "run": "r022153",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 1,
+   "run": "r022214",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 157,
+   "run": "r022264",
+   "set": "spontaneous",
+   "writer_birth": 156
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 146,
+   "run": "r022422",
+   "set": "spontaneous",
+   "writer_birth": 143
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 71,
+   "run": "r022555",
+   "set": "spontaneous",
+   "writer_birth": 70
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 321,
+   "run": "r022789",
+   "set": "spontaneous",
+   "writer_birth": 320
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 23,
+   "run": "r022956",
+   "set": "spontaneous",
+   "writer_birth": 22
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r023016",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r023173",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 178,
+   "run": "r023332",
+   "set": "spontaneous",
+   "writer_birth": 165
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 233,
+   "run": "r023302",
+   "set": "spontaneous",
+   "writer_birth": 233
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 32,
+   "run": "r023422",
+   "set": "spontaneous",
+   "writer_birth": 30
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 447,
+   "run": "r023490",
+   "set": "spontaneous",
+   "writer_birth": 446
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 55,
+   "run": "r023481",
+   "set": "spontaneous",
+   "writer_birth": 54
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 5,
+   "run": "r023503",
+   "set": "spontaneous",
+   "writer_birth": 4
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 10,
+   "run": "r023640",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 164,
+   "run": "r024199",
+   "set": "spontaneous",
+   "writer_birth": 164
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 4,
+   "run": "r024604",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 40,
+   "run": "r024702",
+   "set": "spontaneous",
+   "writer_birth": 40
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 92,
+   "run": "r025146",
+   "set": "spontaneous",
+   "writer_birth": 91
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 2,
+   "run": "r025215",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 286,
+   "run": "r025336",
+   "set": "spontaneous",
+   "writer_birth": 286
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 329,
+   "run": "r025464",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 210,
+   "run": "r025597",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 352,
+   "run": "r025778",
+   "set": "spontaneous",
+   "writer_birth": 350
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 86,
+   "run": "r025910",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r025979",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 37,
+   "run": "r026055",
+   "set": "spontaneous",
+   "writer_birth": 37
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 105,
+   "run": "r026054",
+   "set": "spontaneous",
+   "writer_birth": 105
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 56,
+   "run": "r026317",
+   "set": "spontaneous",
+   "writer_birth": 52
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 382,
+   "run": "r026405",
+   "set": "spontaneous",
+   "writer_birth": 377
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 280,
+   "run": "r026491",
+   "set": "spontaneous",
+   "writer_birth": 279
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 101,
+   "run": "r026560",
+   "set": "spontaneous",
+   "writer_birth": 100
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r026811",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 173,
+   "run": "r027146",
+   "set": "spontaneous",
+   "writer_birth": 172
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 41,
+   "run": "r027184",
+   "set": "spontaneous",
+   "writer_birth": 41
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 409,
+   "run": "r027229",
+   "set": "spontaneous",
+   "writer_birth": 409
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 26,
+   "run": "r027222",
+   "set": "spontaneous",
+   "writer_birth": 25
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 65,
+   "run": "r027400",
+   "set": "spontaneous",
+   "writer_birth": 26
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 9,
+   "run": "r027495",
+   "set": "spontaneous",
+   "writer_birth": 8
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 76,
+   "run": "r027848",
+   "set": "spontaneous",
+   "writer_birth": 75
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 191,
+   "run": "r028001",
+   "set": "spontaneous",
+   "writer_birth": 190
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 172,
+   "run": "r028397",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 498,
+   "run": "r028451",
+   "set": "spontaneous",
+   "writer_birth": 498
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 29,
+   "run": "r028479",
+   "set": "spontaneous",
+   "writer_birth": 29
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 92,
+   "run": "r028676",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 131,
+   "run": "r028881",
+   "set": "spontaneous",
+   "writer_birth": 122
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 475,
+   "run": "r028927",
+   "set": "spontaneous",
+   "writer_birth": 474
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 98,
+   "run": "r029079",
+   "set": "spontaneous",
+   "writer_birth": 97
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 289,
+   "run": "r029104",
+   "set": "spontaneous",
+   "writer_birth": 285
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 36,
+   "run": "r029384",
+   "set": "spontaneous",
+   "writer_birth": 0
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 58,
+   "run": "r029561",
+   "set": "spontaneous",
+   "writer_birth": 57
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 247,
+   "run": "r029603",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 31,
+   "run": "r030500",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 60,
+   "run": "r030553",
+   "set": "spontaneous",
+   "writer_birth": 59
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 330,
+   "run": "r030746",
+   "set": "spontaneous",
+   "writer_birth": 329
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 176,
+   "run": "r030848",
+   "set": "spontaneous",
+   "writer_birth": 175
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 184,
+   "run": "r030921",
+   "set": "spontaneous",
+   "writer_birth": 184
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 345,
+   "run": "r031037",
+   "set": "spontaneous",
+   "writer_birth": 344
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r031207",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 165,
+   "run": "r031235",
+   "set": "spontaneous",
+   "writer_birth": 131
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 235,
+   "run": "r031425",
+   "set": "spontaneous",
+   "writer_birth": 233
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 66,
+   "run": "r031509",
+   "set": "spontaneous",
+   "writer_birth": 56
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 189,
+   "run": "r032220",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 321,
+   "run": "r032664",
+   "set": "spontaneous",
+   "writer_birth": 320
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 29,
+   "run": "r032700",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 444,
+   "run": "r032834",
+   "set": "spontaneous",
+   "writer_birth": 443
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 75,
+   "run": "r033029",
+   "set": "spontaneous",
+   "writer_birth": 74
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 13,
+   "run": "r033171",
+   "set": "spontaneous",
+   "writer_birth": 12
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 197,
+   "run": "r033221",
+   "set": "spontaneous",
+   "writer_birth": 194
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 208,
+   "run": "r033315",
+   "set": "spontaneous",
+   "writer_birth": 208
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 423,
+   "run": "r033509",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 250,
+   "run": "r033733",
+   "set": "spontaneous",
+   "writer_birth": 249
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 29,
+   "run": "r033947",
+   "set": "spontaneous",
+   "writer_birth": 27
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 11,
+   "run": "r033973",
+   "set": "spontaneous",
+   "writer_birth": 10
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 6,
+   "run": "r034104",
+   "set": "spontaneous",
+   "writer_birth": 6
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 243,
+   "run": "r034103",
+   "set": "spontaneous",
+   "writer_birth": 241
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 220,
+   "run": "r034199",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 2,
+   "run": "r034536",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 35,
+   "run": "r034583",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 124,
+   "run": "r034767",
+   "set": "spontaneous",
+   "writer_birth": 123
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 203,
+   "run": "r034918",
+   "set": "spontaneous",
+   "writer_birth": 201
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 85,
+   "run": "r034920",
+   "set": "spontaneous",
+   "writer_birth": 83
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 22,
+   "run": "r035003",
+   "set": "spontaneous",
+   "writer_birth": 21
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 438,
+   "run": "r035156",
+   "set": "spontaneous",
+   "writer_birth": 437
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 218,
+   "run": "r035878",
+   "set": "spontaneous",
+   "writer_birth": 201
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 48,
+   "run": "r036340",
+   "set": "spontaneous",
+   "writer_birth": 48
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 485,
+   "run": "r036450",
+   "set": "spontaneous",
+   "writer_birth": 485
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 318,
+   "run": "r036531",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 22,
+   "run": "r036550",
+   "set": "spontaneous",
+   "writer_birth": 21
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 6,
+   "run": "r036632",
+   "set": "spontaneous",
+   "writer_birth": 2
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 67,
+   "run": "r036721",
+   "set": "spontaneous",
+   "writer_birth": 66
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r036774",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 162,
+   "run": "r037189",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 131,
+   "run": "r037264",
+   "set": "spontaneous",
+   "writer_birth": 99
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 57,
+   "run": "r037314",
+   "set": "spontaneous",
+   "writer_birth": 55
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 246,
+   "run": "r037412",
+   "set": "spontaneous",
+   "writer_birth": 236
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 80,
+   "run": "r037629",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 14,
+   "run": "r037742",
+   "set": "spontaneous",
+   "writer_birth": 11
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 138,
+   "run": "r037783",
+   "set": "spontaneous",
+   "writer_birth": 137
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r037850",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 39,
+   "run": "r037885",
+   "set": "spontaneous",
+   "writer_birth": 11
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r037899",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 218,
+   "run": "r037925",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 3,
+   "run": "r037961",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 94,
+   "run": "r037991",
+   "set": "spontaneous",
+   "writer_birth": 93
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 284,
+   "run": "r038335",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 408,
+   "run": "r038500",
+   "set": "spontaneous",
+   "writer_birth": 407
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 43,
+   "run": "r038503",
+   "set": "spontaneous",
+   "writer_birth": 40
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r038512",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 98,
+   "run": "r038535",
+   "set": "spontaneous",
+   "writer_birth": 98
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 57,
+   "run": "r038576",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 275,
+   "run": "r038569",
+   "set": "spontaneous",
+   "writer_birth": 275
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 20,
+   "run": "r038751",
+   "set": "spontaneous",
+   "writer_birth": 18
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 110,
+   "run": "r038920",
+   "set": "spontaneous",
+   "writer_birth": 108
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 181,
+   "run": "r039034",
+   "set": "spontaneous",
+   "writer_birth": 181
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 121,
+   "run": "r039194",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 55,
+   "run": "r039272",
+   "set": "spontaneous",
+   "writer_birth": 54
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 2,
+   "run": "r039371",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 235,
+   "run": "r039366",
+   "set": "spontaneous",
+   "writer_birth": 233
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 100,
+   "run": "r039585",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 147,
+   "run": "r039699",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 31,
+   "run": "r039753",
+   "set": "spontaneous",
+   "writer_birth": 29
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 23,
+   "run": "r039751",
+   "set": "spontaneous",
+   "writer_birth": 5
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 64,
+   "run": "r039798",
+   "set": "spontaneous",
+   "writer_birth": 62
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 167,
+   "run": "r040167",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 174,
+   "run": "r040314",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 261,
+   "run": "r040570",
+   "set": "spontaneous",
+   "writer_birth": 261
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 124,
+   "run": "r040697",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 448,
+   "run": "r040830",
+   "set": "spontaneous",
+   "writer_birth": 446
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 161,
+   "run": "r040855",
+   "set": "spontaneous",
+   "writer_birth": 161
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 154,
+   "run": "r041304",
+   "set": "spontaneous",
+   "writer_birth": 153
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 173,
+   "run": "r041506",
+   "set": "spontaneous",
+   "writer_birth": 167
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 33,
+   "run": "r041548",
+   "set": "spontaneous",
+   "writer_birth": 32
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 342,
+   "run": "r041668",
+   "set": "spontaneous",
+   "writer_birth": 341
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 28,
+   "run": "r041843",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 89,
+   "run": "r041873",
+   "set": "spontaneous",
+   "writer_birth": 88
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 81,
+   "run": "r042040",
+   "set": "spontaneous",
+   "writer_birth": 70
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 297,
+   "run": "r042099",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 238,
+   "run": "r042110",
+   "set": "spontaneous",
+   "writer_birth": 237
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r042145",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r042183",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 325,
+   "run": "r042311",
+   "set": "spontaneous",
+   "writer_birth": 324
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 366,
+   "run": "r042349",
+   "set": "spontaneous",
+   "writer_birth": 365
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 382,
+   "run": "r042482",
+   "set": "spontaneous",
+   "writer_birth": 381
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 20,
+   "run": "r042723",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 9,
+   "run": "r043047",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 1,
+   "run": "r043270",
+   "set": "spontaneous",
+   "writer_birth": 0
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 231,
+   "run": "r043325",
+   "set": "spontaneous",
+   "writer_birth": 230
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r043457",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 116,
+   "run": "r043555",
+   "set": "spontaneous",
+   "writer_birth": 115
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 65,
+   "run": "r043642",
+   "set": "spontaneous",
+   "writer_birth": 59
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 200,
+   "run": "r043704",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 390,
+   "run": "r043974",
+   "set": "spontaneous",
+   "writer_birth": 390
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 239,
+   "run": "r044009",
+   "set": "spontaneous",
+   "writer_birth": 233
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 196,
+   "run": "r044052",
+   "set": "spontaneous",
+   "writer_birth": 187
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 152,
+   "run": "r044097",
+   "set": "spontaneous",
+   "writer_birth": 146
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 15,
+   "run": "r044294",
+   "set": "spontaneous",
+   "writer_birth": 14
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 107,
+   "run": "r044372",
+   "set": "spontaneous",
+   "writer_birth": 106
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 61,
+   "run": "r044412",
+   "set": "spontaneous",
+   "writer_birth": 59
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 20,
+   "run": "r044571",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 311,
+   "run": "r045210",
+   "set": "spontaneous",
+   "writer_birth": 311
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 65,
+   "run": "r045245",
+   "set": "spontaneous",
+   "writer_birth": 63
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 1,
+   "run": "r045318",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 329,
+   "run": "r045506",
+   "set": "spontaneous",
+   "writer_birth": 327
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 29,
+   "run": "r045679",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 351,
+   "run": "r045697",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 409,
+   "run": "r045726",
+   "set": "spontaneous",
+   "writer_birth": 409
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r045781",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 138,
+   "run": "r045921",
+   "set": "spontaneous",
+   "writer_birth": 137
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 304,
+   "run": "r046076",
+   "set": "spontaneous",
+   "writer_birth": 304
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 307,
+   "run": "r046088",
+   "set": "spontaneous",
+   "writer_birth": 306
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 142,
+   "run": "r046273",
+   "set": "spontaneous",
+   "writer_birth": 135
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 268,
+   "run": "r046365",
+   "set": "spontaneous",
+   "writer_birth": 156
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 150,
+   "run": "r046368",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 133,
+   "run": "r046461",
+   "set": "spontaneous",
+   "writer_birth": 131
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r046473",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 16,
+   "run": "r046642",
+   "set": "spontaneous",
+   "writer_birth": 0
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 360,
+   "run": "r046635",
+   "set": "spontaneous",
+   "writer_birth": 360
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 154,
+   "run": "r046889",
+   "set": "spontaneous",
+   "writer_birth": 114
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 19,
+   "run": "r046908",
+   "set": "spontaneous",
+   "writer_birth": 18
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 19,
+   "run": "r047520",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 93,
+   "run": "r047762",
+   "set": "spontaneous",
+   "writer_birth": 92
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 52,
+   "run": "r048156",
+   "set": "spontaneous",
+   "writer_birth": 51
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 39,
+   "run": "r048326",
+   "set": "spontaneous",
+   "writer_birth": 20
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 458,
+   "run": "r048825",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 458,
+   "run": "r048827",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 458,
+   "run": "r048826",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 186,
+   "run": "r048856",
+   "set": "spontaneous",
+   "writer_birth": 185
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 430,
+   "run": "r049279",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 153,
+   "run": "r049320",
+   "set": "spontaneous",
+   "writer_birth": 151
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 153,
+   "run": "r049319",
+   "set": "spontaneous",
+   "writer_birth": 151
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 153,
+   "run": "r049321",
+   "set": "spontaneous",
+   "writer_birth": 151
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 81,
+   "run": "r049324",
+   "set": "spontaneous",
+   "writer_birth": 50
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 81,
+   "run": "r049328",
+   "set": "spontaneous",
+   "writer_birth": 50
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 81,
+   "run": "r049327",
+   "set": "spontaneous",
+   "writer_birth": 50
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 31,
+   "run": "r049565",
+   "set": "spontaneous",
+   "writer_birth": 21
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 291,
+   "run": "r049634",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 115,
+   "run": "r049633",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 85,
+   "run": "r049990",
+   "set": "spontaneous",
+   "writer_birth": 85
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 42,
+   "run": "r050097",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 44,
+   "run": "r050111",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 265,
+   "run": "r050302",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 343,
+   "run": "r050440",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 2,
+   "run": "r050732",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 216,
+   "run": "r051086",
+   "set": "spontaneous",
+   "writer_birth": 215
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 37,
+   "run": "r051109",
+   "set": "spontaneous",
+   "writer_birth": 37
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 307,
+   "run": "r051113",
+   "set": "spontaneous",
+   "writer_birth": 299
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 307,
+   "run": "r051112",
+   "set": "spontaneous",
+   "writer_birth": 299
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 307,
+   "run": "r051114",
+   "set": "spontaneous",
+   "writer_birth": 299
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 255,
+   "run": "r051559",
+   "set": "spontaneous",
+   "writer_birth": 255
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 43,
+   "run": "r051562",
+   "set": "spontaneous",
+   "writer_birth": 42
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 43,
+   "run": "r051563",
+   "set": "spontaneous",
+   "writer_birth": 42
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 76,
+   "run": "r051564",
+   "set": "spontaneous",
+   "writer_birth": 75
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 110,
+   "run": "r053596",
+   "set": "spontaneous",
+   "writer_birth": 109
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 341,
+   "run": "r055627",
+   "set": "spontaneous",
+   "writer_birth": 305
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 341,
+   "run": "r055628",
+   "set": "spontaneous",
+   "writer_birth": 305
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 47,
+   "run": "r055632",
+   "set": "spontaneous",
+   "writer_birth": 45
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 335,
+   "run": "r055654",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 99,
+   "run": "r055773",
+   "set": "spontaneous",
+   "writer_birth": 94
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 213,
+   "run": "r056931",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 213,
+   "run": "r056929",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 213,
+   "run": "r056930",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 93,
+   "run": "r057205",
+   "set": "spontaneous",
+   "writer_birth": 90
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 129,
+   "run": "r057230",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 206,
+   "run": "r057472",
+   "set": "spontaneous",
+   "writer_birth": 204
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 206,
+   "run": "r057473",
+   "set": "spontaneous",
+   "writer_birth": 204
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 208,
+   "run": "r057758",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 240,
+   "run": "r058206",
+   "set": "spontaneous",
+   "writer_birth": 233
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 442,
+   "run": "r060406",
+   "set": "spontaneous",
+   "writer_birth": 437
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 258,
+   "run": "r060427",
+   "set": "spontaneous",
+   "writer_birth": 253
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 258,
+   "run": "r060428",
+   "set": "spontaneous",
+   "writer_birth": 253
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 258,
+   "run": "r060429",
+   "set": "spontaneous",
+   "writer_birth": 253
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 282,
+   "run": "r060736",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 282,
+   "run": "r060733",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 202,
+   "run": "r060927",
+   "set": "spontaneous",
+   "writer_birth": 202
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 18,
+   "run": "r061053",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 305,
+   "run": "r061056",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 157,
+   "run": "r061054",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r061511",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 300,
+   "run": "r061499",
+   "set": "spontaneous",
+   "writer_birth": 298
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 19,
+   "run": "r061728",
+   "set": "spontaneous",
+   "writer_birth": 17
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r061731",
+   "set": "spontaneous",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 489,
+   "run": "r062072",
+   "set": "spontaneous",
+   "writer_birth": 487
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 117,
+   "run": "r062073",
+   "set": "spontaneous",
+   "writer_birth": 117
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 414,
+   "run": "r062204",
+   "set": "spontaneous",
+   "writer_birth": 413
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 86,
+   "run": "r062411",
+   "set": "spontaneous",
+   "writer_birth": 83
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 1,
+   "run": "r033747",
+   "set": "baseline",
+   "writer_birth": null
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 214,
+   "run": "r025765",
+   "set": "baseline",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 190,
+   "run": "r028977",
+   "set": "baseline",
+   "writer_birth": 188
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 4,
+   "run": "r012467",
+   "set": "baseline",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 22,
+   "run": "r001105",
+   "set": "baseline",
+   "writer_birth": 1
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 164,
+   "run": "r050736",
+   "set": "baseline",
+   "writer_birth": 130
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 133,
+   "run": "r032316",
+   "set": "baseline",
+   "writer_birth": 129
+  },
+  {
+   "class": "INIT_AT_TICK0",
+   "first_sr_tick": 0,
+   "run": "r011564",
+   "set": "baseline",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 491,
+   "run": "r004050",
+   "set": "baseline",
+   "writer_birth": 491
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 141,
+   "run": "r012390",
+   "set": "baseline",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 29,
+   "run": "r042449",
+   "set": "baseline",
+   "writer_birth": 26
+  },
+  {
+   "class": "INIT_LATER",
+   "first_sr_tick": 449,
+   "run": "r037082",
+   "set": "baseline",
+   "writer_birth": null
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 30,
+   "run": "r039410",
+   "set": "baseline",
+   "writer_birth": 3
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 265,
+   "run": "r032795",
+   "set": "baseline",
+   "writer_birth": 261
+  },
+  {
+   "class": "BUILT_BY_COPY",
+   "first_sr_tick": 56,
+   "run": "r004133",
+   "set": "baseline",
+   "writer_birth": 56
+  }
+ ]
+}

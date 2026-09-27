@@ -1,0 +1,48 @@
+{
+ "archaeon": {
+  "taint_vm_us_per_exec": 141.4,
+  "plain_vm_us_per_exec": 97.6,
+  "ratio": 1.45,
+  "bench": "4,256 executions (4,000 random + 256 replicator inputs), best of 3",
+  "envgate02_block00_taint_calls_all_arms": 11937,
+  "block_wall_s": 5309.1,
+  "taint_share_of_block_wall_est": "~1.7 s / 5309 s = 0.03%",
+  "block13_fossil_replay_wall_s": 1518.2,
+  "block13_births": 54616
+ },
+ "bee": {
+  "light_lens_birth_rows": 28964089,
+  "light_lens_cpu_s": 399.0,
+  "us_per_birth": 13.78,
+  "engine_ms_per_birth_est": 0.75,
+  "engine_basis": "median 25.5 s per run (POST_CAMPAIGN_FORENSICS) / 34,277 mean births per traced run",
+  "online_overhead_est_pct": 1.8
+ },
+ "npe": {
+  "observer_overhead_pct": 0.0,
+  "plain_s": [
+   25.88,
+   25.87
+  ],
+  "observed_s": [
+   25.87,
+   25.98
+  ],
+  "epochs": 600,
+  "arm": "H2 RESERVOIR B",
+  "full_replay_wall_s_per_arm": "175-212 on 9 concurrent workers",
+  "non_perturbing": "summary + lineage bit-identical (3 arms, 120 epochs)"
+ },
+ "pte": {
+  "instrumented_evolve_s": 58,
+  "pair_with_uninstrumented_check_s": 115.9,
+  "spec": {
+   "pop": 16,
+   "gens": 6,
+   "M": 2,
+   "M_final": 2,
+   "M_held": 4
+  },
+  "non_perturbing": "champion + curve identical"
+ }
+}

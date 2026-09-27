@@ -22,15 +22,25 @@ def vm_executes() -> Dict:
     L = 64; checks = {}
     mem = bytearray(256); mem[:8] = vm.replicator(L); tr = vm.execute(mem, L, 0, 512, [])
     checks["replicator_copies_exactly"] = bytes(mem[L:2 * L]) == bytes(mem[:L]) and tr.halted
-    for name, prog, task, inp in (("const", vm.witness_const(9), Task("CONST", k=9), [0]), ("echo", vm.witness_echo(), Task("ECHO"), [42]),
-                                  ("inc", vm.witness_inc(), Task("INC"), [200]), ("cond_one", vm.witness_cond_one(), Task("COND_ONE"), [201]),
-                                  ("cond_multi", vm.witness_cond_multi(), Task("COND_MULTI"), [130]), ("sum2", vm.witness_sum2(), Task("SUM2"), [250, 10])):
-        mem = bytearray(256); mem[:len(prog)] = prog
-        for k, v in enumerate(inp):
-            mem[vm.IN_BASE + k] = v
-        tr = vm.execute(mem, L, 0, 256, inp)
-        checks["witness_" + name] = score(task, tr.outputs, task.expected(inp), "ATOMIC", "FORCED", tr.first_out_step, tr.first_in_step) >= 0.999 or name == "const"
+    for name, prog in (("const", vm.witness_const(9)), ("echo", vm.witness_echo()), ("inc", vm.witness_inc()),
+                       ("cond_one", vm.witness_cond_one()), ("cond_multi", vm.witness_cond_multi()), ("sum2", vm.witness_sum2())):
+        checks["witness_" + name] = witness_check(name, prog)
     return {"name": "vm_executes", "passed": all(checks.values()), "checks": checks}
+
+
+_WITNESS_CASES = {"const": (Task("CONST", k=9), [0]), "echo": (Task("ECHO"), [42]), "inc": (Task("INC"), [200]),
+                  "cond_one": (Task("COND_ONE"), [201]), "cond_multi": (Task("COND_MULTI"), [130]), "sum2": (Task("SUM2"), [250, 10])}
+
+
+def witness_check(name: str, prog: bytes, L: int = 64) -> bool:
+    """A witness must answer its task (FORCED gate where the task needs a read). The v1 check accepted ANY program for
+    'const' (`or name == "const"`; forensics m4)."""
+    task, inp = _WITNESS_CASES[name]
+    mem = bytearray(256); mem[:len(prog)] = prog
+    for k, v in enumerate(inp):
+        mem[vm.IN_BASE + k] = v
+    tr = vm.execute(mem, L, 0, 256, inp)
+    return score(task, tr.outputs, task.expected(inp), "ATOMIC", "FORCED", tr.first_out_step, tr.first_in_step) >= 0.999
 
 
 CONTROL_VECS: List[Dict] = [

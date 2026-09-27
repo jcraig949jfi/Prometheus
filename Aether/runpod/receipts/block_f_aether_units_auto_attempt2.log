@@ -1,0 +1,39 @@
+[flight 11:32:12] REAL LAUNCH aether-units-scout@1, budget ceiling $0.45
+[flight 11:32:12] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:32:12] credential source: host default key file
+[flight 11:32:13] bundle 3804f162ea2d reachable at the pinned commit 6b2aed43aa22
+[flight 11:32:15] create attempt on NVIDIA RTX A4000 (1 of 4)
+[flight 11:32:16] create attempt 1 failed status=400; reconciling inventory
+[flight 11:32:21] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:32:21] create attempt on NVIDIA RTX A5000 (2 of 4)
+[flight 11:32:21] create attempt 1 failed status=400; reconciling inventory
+[flight 11:32:27] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:32:27] create attempt on NVIDIA RTX 4000 Ada Generation (3 of 4)
+[flight 11:32:27] create attempt 1 failed status=400; reconciling inventory
+[flight 11:32:33] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:32:33] create attempt on NVIDIA L4 (4 of 4)
+[flight 11:32:34] create attempt 1 -> accepted pod=xcd5801d7gq579
+[flight 11:32:34] create CREATED -> confirmed pod=xcd5801d7gq579 gpu=NVIDIA L4
+[flight 11:32:35] artifact server not answering yet (status=404)
+[flight 11:33:10] pod clock unavailable; provisioning stays cross-clock
+[flight 11:33:36] pod clock offset +0.168 s (+/- 0.211 s)
+[flight 11:35:07] module reported end (status=)
+[flight 11:35:30] pod clock offset +0.181 s (+/- 0.235 s)
+[flight 11:35:31] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-scout-20260927T153214Z.json
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 725, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 714, in main
+    return auto(module_dir, args, env)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 490, in auto
+    out = campaign_mod.run(fly_scout, calibrate, fly_campaign,
+                           max_rescouts=args.max_rescouts, log=log)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\prometheus_gpu\campaign.py", line 59, in run
+    plan = calibrate(scout)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 467, in calibrate
+    cal = calibration_from_receipt(scout_receipt, spec)
+  File "C:\Prometheus-worktrees\aether-block\Aether\runpod\flight.py", line 426, in calibration_from_receipt
+    raise RuntimeError("the scout's telemetry has no end record with "
+                       "elapsed_s; nothing was measured")
+RuntimeError: the scout's telemetry has no end record with elapsed_s; nothing was measured

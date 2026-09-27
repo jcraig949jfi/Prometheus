@@ -30,6 +30,12 @@ def run_spec(spec: Dict) -> Dict:
     t0 = time.time()
     vec = spec["vec"]
     cfg = G.to_config(vec, spec["ticks"], spec["cells"], spec.get("budget", 256), tuple(spec.get("init_tapes") or ()))
+    # grounding runs (2026-09-23) set Config fields the factor grammar does not carry (physics, ablations, ext_mut_mult,
+    # levels outside the frozen grammar such as mutation_rate VLOW); they are applied here and frozen into config.json
+    for k, v in (spec.get("config_overrides") or {}).items():
+        if k not in cfg.__dataclass_fields__:
+            raise KeyError("config_overrides: %r is not a Config field" % k)
+        setattr(cfg, k, v)
     w = World(cfg, spec["seed"])
     summary = w.run()
     # the endogenous guard: the population manager never reproduced under an endogenous treatment
@@ -71,11 +77,23 @@ def run_spec(spec: Dict) -> Dict:
             # did the lineage's reproductive machinery RAISE the density of beneficial neighbours since its first replicator?
             if scans and scans[0]["base_replicates"] and geo["first_replicator"]["base_replicates"]:
                 geo["beneficial_density_gain"] = round(scans[0]["beneficial_density"] - geo["first_replicator"]["beneficial_density"], 3)
+        # v2 (forensics 2026-09-23, C6/M9): PAIRED scans on the CONFIGURED task, top specimen vs the first
+        # SELF_REPLICATION writer (not the first copy event); the v1 fields above are kept for replay only
+        if spec.get("geometry_v2", True):
+            ctask = w.configured_task()
+            g2 = {"task": ctask.to_dict(), "top": geometry.scan_paired(bytes.fromhex(summary["top"][0]["tape"]), cfg, ctask, spec["seed"] * 53)}
+            fsr = summary.get("first_self_replication")
+            if fsr:
+                g2["first_self_replicator"] = geometry.scan_paired(bytes.fromhex(fsr["tape"]), cfg, ctask, spec["seed"] * 53)   # same panel
+                g2["beneficial_density_gain_paired"] = round(g2["top"]["beneficial_density"] - g2["first_self_replicator"]["beneficial_density"], 4)
+            geo["v2"] = g2
         write_json(rd / "geometry.json", geo)
     summary["geometry"] = {"beneficial_density_gain": geo.get("beneficial_density_gain"),
                            "top_beneficial_density": (geo.get("top") or [{}])[0].get("beneficial_density"),
                            "top_moat_density": (geo.get("top") or [{}])[0].get("moat_density"),
-                           "top_damage_k4_replicates": ((geo.get("top") or [{}])[0].get("damage") or {}).get("cliff", {}).get("k4", {}).get("replicates")}
+                           "top_damage_k4_replicates": ((geo.get("top") or [{}])[0].get("damage") or {}).get("cliff", {}).get("k4", {}).get("replicates"),
+                           "v2_top_beneficial_density_paired": ((geo.get("v2") or {}).get("top") or {}).get("beneficial_density"),
+                           "v2_beneficial_density_gain_paired": (geo.get("v2") or {}).get("beneficial_density_gain_paired")}
     summary["wall_s"] = round(time.time() - t0, 2)
     summary["config_sha256"] = frozen["config_sha256"]
     write_json(rd / "summary.json", summary)

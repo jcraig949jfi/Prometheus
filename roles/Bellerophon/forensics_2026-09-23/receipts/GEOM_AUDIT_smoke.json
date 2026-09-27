@@ -1,0 +1,399 @@
+{
+ "DELTAS": [
+  1,
+  2,
+  3,
+  5,
+  8,
+  13,
+  21,
+  34,
+  55,
+  89,
+  128,
+  144,
+  170,
+  200,
+  233,
+  255
+ ],
+ "K_RESEED": 12,
+ "PANEL": 8,
+ "method": "Adjudicate REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY: is the geometry ruler an instrument or noise?\n\nFor each run: rebuild (cfg, task) exactly, and CHECK the rebuild by reproducing the stored geometry.json scans\nbit-for-bit with the frozen geometry.scan (else the row is REBUILD_MISMATCH and unused). Then, for the top specimen\n(T) and the first replicator (F):\n  null      the frozen scan procedure with the \"mutant\" == the unmutated tape: the fraction scored 'better' is\n            the instrument's false-beneficial rate (a sound ruler reads 0)\n  reseed    the frozen scan re-run with K fresh seeds: the sampling distribution of beneficial_density for the SAME\n            tape, and of the gain T - F (does the flagged gain reproduce?)\n  paired    a common-random-numbers scan: every mutant AND the base are scored on the SAME fixed input panel, over a\n            fixed mutant set (every position x 16 fixed substitution deltas): a deterministic beneficial density\n            with no input-sampling noise; gain_paired = BD_paired(T) - BD_paired(F)\n    python geom_audit.py --set flagged --workers 18\n    python geom_audit.py --set control --n 493 --seed 5      (runs with a defined gain that were NOT flagged)",
+ "n": 6,
+ "rows": [
+  {
+   "null_F": 0.0,
+   "null_T": 0.2,
+   "paired_F": {
+    "base": 1.0,
+    "bd": 0.0,
+    "n": 1024,
+    "neutral": 0.8838
+   },
+   "paired_T": {
+    "base": 0.6641,
+    "bd": 0.0,
+    "n": 1024,
+    "neutral": 0.9258
+   },
+   "paired_gain": 0.0,
+   "reseed_frac_gt_0p1": 0.833,
+   "reseed_gain_mean": 0.4854,
+   "reseed_gains": [
+    0.025,
+    0.375,
+    0.125,
+    0.75,
+    0.525,
+    0.925,
+    0.35,
+    0.9,
+    0.5,
+    0.725,
+    0.55,
+    0.075
+   ],
+   "run": "r000093",
+   "status": "OK",
+   "stored": {
+    "F_base": 1.0,
+    "F_bd": 0.0,
+    "T_base": 0.617,
+    "T_bd": 0.2
+   },
+   "stored_gain": 0.2,
+   "task": {
+    "k": 135,
+    "kind": "SUM2"
+   },
+   "vec": {
+    "env_dynamics": "ENV_REPRO",
+    "init": "SEEDED_HYBRID",
+    "layout": "SHARED",
+    "mutation": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "pressure": "EXPLOIT",
+    "read_gate": "ABR",
+    "recombination": "NONE",
+    "representation": "Z80_64",
+    "reproduction": "PAIR_EXECUTION",
+    "scoring": "INCREMENTAL",
+    "spatial": "NICHES_ENV_MIG",
+    "task": "SUM2",
+    "world": "NICHES"
+   }
+  },
+  {
+   "null_F": 0.0,
+   "null_T": 0.875,
+   "paired_F": {
+    "base": 1.0,
+    "bd": 0.0,
+    "n": 1024,
+    "neutral": 0.8838
+   },
+   "paired_T": {
+    "base": 0.5234,
+    "bd": 0.0029,
+    "n": 1024,
+    "neutral": 0.9775
+   },
+   "paired_gain": 0.0029,
+   "reseed_frac_gt_0p1": 0.917,
+   "reseed_gain_mean": 0.5646,
+   "reseed_gains": [
+    0.6,
+    0.7,
+    0.8,
+    0.025,
+    0.625,
+    0.875,
+    0.625,
+    0.7,
+    0.4,
+    0.325,
+    0.45,
+    0.65
+   ],
+   "run": "r044061",
+   "status": "OK",
+   "stored": {
+    "F_base": 1.0,
+    "F_bd": 0.0,
+    "T_base": 0.279,
+    "T_bd": 0.875
+   },
+   "stored_gain": 0.875,
+   "task": {
+    "k": 6,
+    "kind": "SUM2"
+   },
+   "vec": {
+    "env_dynamics": "ENV_REPRO",
+    "init": "SEEDED_HYBRID",
+    "layout": "SHARED",
+    "mutation": "STRUCTURAL",
+    "mutation_rate": "LOW",
+    "pressure": "EXPLOIT",
+    "read_gate": "ABR",
+    "recombination": "NONE",
+    "representation": "Z80_64",
+    "reproduction": "PAIR_EXECUTION",
+    "scoring": "INCREMENTAL",
+    "spatial": "NICHES_ENV_MIG",
+    "task": "SUM2",
+    "world": "NICHES"
+   }
+  },
+  {
+   "null_F": 0.0,
+   "null_T": 0.15,
+   "paired_F": {
+    "base": 0.0,
+    "bd": 0.0,
+    "n": 1024,
+    "neutral": 1.0
+   },
+   "paired_T": {
+    "base": 0.5205,
+    "bd": 0.0039,
+    "n": 1024,
+    "neutral": 0.9854
+   },
+   "paired_gain": 0.0039,
+   "reseed_frac_gt_0p1": 0.75,
+   "reseed_gain_mean": 0.425,
+   "reseed_gains": [
+    0.125,
+    0.35,
+    0.075,
+    0.55,
+    0.7,
+    0.55,
+    0.075,
+    0.35,
+    0.65,
+    0.75,
+    0.05,
+    0.875
+   ],
+   "run": "r000124",
+   "status": "OK",
+   "stored": {
+    "F_base": 0.0,
+    "F_bd": 0.0,
+    "T_base": 0.716,
+    "T_bd": 0.175
+   },
+   "stored_gain": 0.175,
+   "task": {
+    "k": 1,
+    "kind": "INC"
+   },
+   "vec": {
+    "env_dynamics": "ENV_REPRO",
+    "init": "SEEDED_REPLICATOR",
+    "layout": "SEPARATED",
+    "mutation": "STRUCTURAL",
+    "mutation_rate": "HIGH",
+    "pressure": "GATED_INTERACTION",
+    "read_gate": "FORCED",
+    "recombination": "NONE",
+    "representation": "VM_COPY",
+    "reproduction": "ENDOGENOUS_COPY",
+    "scoring": "INCREMENTAL",
+    "spatial": "NICHES_ENV_MIG",
+    "task": "INC",
+    "world": "NICHES"
+   }
+  },
+  {
+   "null_F": 0.0,
+   "null_T": 0.9,
+   "paired_F": {
+    "base": 0.625,
+    "bd": 0.0,
+    "n": 1024,
+    "neutral": 0.9092
+   },
+   "paired_T": {
+    "base": 0.625,
+    "bd": 0.001,
+    "n": 1024,
+    "neutral": 0.9072
+   },
+   "paired_gain": 0.001,
+   "reseed_frac_gt_0p1": 0.333,
+   "reseed_gain_mean": 0.0208,
+   "reseed_gains": [
+    -0.3,
+    -0.25,
+    -0.1,
+    -0.2,
+    0.05,
+    0.275,
+    0.0,
+    0.5,
+    -0.325,
+    0.4,
+    -0.5,
+    0.7
+   ],
+   "run": "r000567",
+   "status": "OK",
+   "stored": {
+    "F_base": 1.0,
+    "F_bd": 0.0,
+    "T_base": 0.0,
+    "T_bd": 0.75
+   },
+   "stored_gain": 0.75,
+   "task": {
+    "k": 149,
+    "kind": "COND_ONE"
+   },
+   "vec": {
+    "env_dynamics": "DRIFT",
+    "init": "SEEDED_HYBRID",
+    "layout": "SEPARATED",
+    "mutation": "OPERAND",
+    "mutation_rate": "MED",
+    "pressure": "GATED_INTERACTION",
+    "read_gate": "FORCED",
+    "recombination": "NONE",
+    "representation": "Z80_64",
+    "reproduction": "ENDOGENOUS_COPY",
+    "scoring": "ATOMIC",
+    "spatial": "NICHES_LOW_MIG",
+    "task": "COND_ONE",
+    "world": "NICHES"
+   }
+  },
+  {
+   "null_F": 0.175,
+   "null_T": 0.7,
+   "paired_F": {
+    "base": 0.25,
+    "bd": 0.04,
+    "n": 1024,
+    "neutral": 0.8096
+   },
+   "paired_T": {
+    "base": 0.873,
+    "bd": 0.0,
+    "n": 1024,
+    "neutral": 0.917
+   },
+   "paired_gain": -0.04,
+   "reseed_frac_gt_0p1": 0.333,
+   "reseed_gain_mean": 0.0625,
+   "reseed_gains": [
+    0.05,
+    0.65,
+    0.1,
+    -0.025,
+    0.5,
+    0.4,
+    0.375,
+    0.05,
+    -0.075,
+    -0.225,
+    -0.625,
+    -0.425
+   ],
+   "run": "r000790",
+   "status": "OK",
+   "stored": {
+    "F_base": 0.667,
+    "F_bd": 0.225,
+    "T_base": 0.667,
+    "T_bd": 0.725
+   },
+   "stored_gain": 0.5,
+   "task": {
+    "k": 157,
+    "kind": "COND_MULTI"
+   },
+   "vec": {
+    "env_dynamics": "DRIFT",
+    "init": "SEEDED_HYBRID",
+    "layout": "SHARED",
+    "mutation": "OPCODE",
+    "mutation_rate": "LOW",
+    "pressure": "NOVELTY",
+    "read_gate": "ABR",
+    "recombination": "NONE",
+    "representation": "Z80_64",
+    "reproduction": "ENDOGENOUS_COPY",
+    "scoring": "INCREMENTAL",
+    "spatial": "NICHES_COMPETENCE_MIG",
+    "task": "COND_MULTI",
+    "world": "NICHES"
+   }
+  },
+  {
+   "null_F": 0.525,
+   "null_T": 0.875,
+   "paired_F": {
+    "base": 0.375,
+    "bd": 0.0361,
+    "n": 1024,
+    "neutral": 0.8096
+   },
+   "paired_T": {
+    "base": 0.3652,
+    "bd": 0.04,
+    "n": 1024,
+    "neutral": 0.8086
+   },
+   "paired_gain": 0.0039,
+   "reseed_frac_gt_0p1": 0.417,
+   "reseed_gain_mean": -0.0146,
+   "reseed_gains": [
+    0.175,
+    0.025,
+    0.375,
+    -0.3,
+    0.55,
+    -0.675,
+    -0.425,
+    -0.8,
+    -0.175,
+    -0.125,
+    0.4,
+    0.8
+   ],
+   "run": "r018907",
+   "status": "OK",
+   "stored": {
+    "F_base": 0.333,
+    "F_bd": 0.5,
+    "T_base": 0.0,
+    "T_bd": 0.775
+   },
+   "stored_gain": 0.275,
+   "task": {
+    "k": 244,
+    "kind": "COND_MULTI"
+   },
+   "vec": {
+    "env_dynamics": "SHIFT",
+    "init": "SEEDED_HYBRID",
+    "layout": "SEPARATED",
+    "mutation": "OPERAND",
+    "mutation_rate": "MED",
+    "pressure": "IMPLICIT",
+    "read_gate": "FORCED",
+    "recombination": "NONE",
+    "representation": "Z80_64",
+    "reproduction": "ENDOGENOUS_COPY",
+    "scoring": "INCREMENTAL",
+    "spatial": "NICHES_PERIODIC",
+    "task": "COND_MULTI",
+    "world": "NICHES"
+   }
+  }
+ ],
+ "tag": "smoke"
+}

@@ -93,8 +93,15 @@ def _iters(arm):
                 cap_frac=float(np.mean(np.array(it) >= 80)) if it else None)
 
 
-def _rungs(dims, n):
-    c = int(np.prod(dims))
+def _cellcount(dims, family, scale):
+    """Operator ruling 2026-09-26 item 3: for F5 under scale "real_cells" the nuisance mode is excluded from the capacity
+    denominator. "all_cells" is the original (dev v1) definition."""
+    d = dims[:-1] if (scale == "real_cells" and family == "F5_nuisance") else dims
+    return int(np.prod(d))
+
+
+def _rungs(dims, n, family=None, scale="all_cells"):
+    c = _cellcount(dims, family, scale)
     r = {"c/8": c // 8, "c/4": c // 4, "c/2": c // 2, "c": c, "2c": 2 * c, "full": n}
     return {k: v for k, v in r.items() if v <= n or k == "full"}
 
@@ -119,7 +126,7 @@ def job(a):
     y_all = np.concatenate([s[1] for s in segs])
     s_all = np.concatenate([s[2] for s in segs])
     n = len(y_all)
-    out["visits_per_cell"] = n / float(np.prod(w["dims"]))
+    out["visits_per_cell"] = n / float(_cellcount(w["dims"], f, a.get("scale", "all_cells")))
     if len(T) < 8:
         return dict(out, status="TOO_FEW_TEST", wall=time.time() - t0)
     rng = np.random.default_rng(sd + 77)
@@ -141,7 +148,9 @@ def job(a):
     tau = 0.1
     rr = lambda arm: recoverability(arm, A_all, y_all, tau, np.random.default_rng(sd + 1), signal=s_all)
     lad = {}
-    for rung, B in _rungs(w["dims"], n).items():
+    scale = a.get("scale", "all_cells")
+    out["rung_scale"] = scale
+    for rung, B in _rungs(w["dims"], n, f, scale).items():
         for ev in ("random", ch.get("RESERVOIR_EVICT_POLICY")):
             if ev is None:
                 continue
@@ -178,7 +187,7 @@ def job(a):
     keep = T[:, 0] >= d0 // 2
     pc = {}
     if keep.sum() >= 8:
-        Bp = max(1, int(np.prod(w["dims"])) // 2)
+        Bp = max(1, _cellcount(w["dims"], f, scale) // 2)
         for evp in ("random", "oracle"):
             arm = _feed(BufferALS(w["dims"], RANK, Bp, evict=evp, oracle_keep=lambda X, d0=d0: X[:, 0] >= d0 // 2), csegs)
             pc[evp] = _AC(_ac_cells(arm.predict(T[keep]), truth[keep]))

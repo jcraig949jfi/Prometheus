@@ -64,6 +64,12 @@ pass 2026-09-25 (Atlas[m1-a5680f90]): lag now 2.7 days (modelled
   OPEN DEFECT: frontier/3 indexed 299,991 identical BLOCKED_BY_SUPPRESSION
   events as separate facts, so fact counts are distorted until frontier/4.
   See journal/2026-09-25.md.
+repair 2026-09-26 (operator-authorized, bounded; Atlas stays PARKED):
+  ATLAS-37 DONE -- cosmos/1 ingests the MANIFEST-verified C0 export (engine
+  cosmos: 3 campaigns, 10 experiments, 10 attempts on M2, 8,856 facts,
+  3,096 edges). frontier/4 HELD: Archaeon has not answered the operator's
+  producer-semantics question, so the 299,991 suppression-echo facts still
+  inflate CONCLUDED counts. See journal/2026-09-26.md.
 reboot 2026-09-25: nothing in flight (Atlas runs no experiments; no
   collector, harvest or loop running). Tree clean, HEAD == origin/main at
   4e0fb48cb, all seven atlas/* branches merged. Index is ~1 day behind git

@@ -102,3 +102,16 @@ ABI_DIFF.md.
 - prompts/2026-09-18_worlds_kernel/ -- the WORLDS KERNEL directive,
   verbatim, with MANIFEST (the charter in force)
 - prompts/2026-09-18_drafts_not_posted/ -- held delegations
+
+## 7. Addendum 2026-09-25 -- current mandate (operator directives 2026-09-23 and 2026-09-24)
+
+The operator addressed this seat as "responsible for the Z80 x Atlas emergence substrate and campaign harness"
+(prompts under roles/Bellerophon/prompts/2026-09-23_post_campaign_forensics/ and
+roles/Bellerophon/coupling_2026-09-24/prompts/). In addition to the kernel lane above, the seat now owns:
+- prometheus/z80atlas/ (the Z80-like substrate, physics v1 historical / v2 repaired / v3 coupled, the grounding and
+  coupling campaign drivers, adjudication detectors) and its tests;
+- running its campaigns under frozen preregistrations, and their forensic adjudication. Unlike s4's "never runs
+  experiments for a scientific claim of its own", these directives explicitly commission substrate science on this
+  harness; claims are made only through preregistered tests, never from detector counts.
+Standing rules learned: verdicts ship with rows; v1 physics stays byte-replayable; long runs go from pinned code
+copies and outside Claude Code background shells (the low-memory reaper kills them); worker memory must be bounded.

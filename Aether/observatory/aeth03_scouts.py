@@ -81,7 +81,7 @@ def initial(variant, n, rng_seed):
     fields, _ = R.build_initial("sparse_soup", n, n, rng_seed,
                                 write_density=0.50)
     fields = [f.copy() for f in fields]
-    if variant == "cnd":
+    if variant in V.CND_FAMILY:
         # Give the second opcode a presence to start from: half the
         # emitters become 0x02. Stated in the report as an initial-state
         # difference, not hidden.
@@ -94,7 +94,7 @@ def initial(variant, n, rng_seed):
 def emitters(variant, fields, write_cost):
     op = fields[0]
     is_em = op == 1
-    if variant == "cnd":
+    if variant in V.CND_FAMILY:
         is_em = is_em | (op == V.COND_OPCODE)
     return is_em & (fields[4].astype(np.int64) >= write_cost)
 

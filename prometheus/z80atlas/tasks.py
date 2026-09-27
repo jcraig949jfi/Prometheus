@@ -140,3 +140,38 @@ class Environment:
         if change:
             self.history.append(change)
         return change
+
+
+# ---- verified solving (added 2026-09-23, forensics C2/C3/C4) ---------------------------------------------------------
+# A 'solver' in the v1 telemetry is score_ema >= 0.85 under the run's scoring: under INCREMENTAL that accepts answers
+# ~19 off, under ATOMIC a half-right program reaches it by luck. The verified test below is the one ruler every arm
+# shares: the tape, ALONE (empty neighbour window), answers EVERY input of a fixed panel exactly, under the run's read
+# gate, for the CONFIGURED task (never an easier niche task).
+_PANEL_1 = (0, 1, 2, 42, 64, 100, 126, 127, 128, 129, 130, 170, 200, 213, 254, 255)
+
+
+def panel(task: Task) -> List[List[int]]:
+    if task.kind == "SUM2":
+        return [[a, b] for a, b in zip(_PANEL_1, reversed(_PANEL_1))]
+    return [[x] for x in _PANEL_1]
+
+
+def verify_tape(tape: bytes, L: int, task: Task, read_gate: str, budget: int = 256, layout: str = "SHARED", allow_copyall: bool = False) -> dict:
+    from prometheus.z80atlas import vm
+    tape = bytes(tape[:L]) + bytes(max(0, L - len(tape)))
+    right = 0; P = panel(task)
+    for inputs in P:
+        mem = bytearray(256); mem[:L] = tape
+        for k, v in enumerate(inputs):
+            mem[vm.IN_BASE + k] = v
+        if layout == "SEPARATED":
+            t1 = vm.execute(mem, L, 0, budget // 2, inputs, region=(0, L // 2), allow_copyall=allow_copyall)
+            t2 = vm.execute(mem, L, L // 2, budget // 2, inputs, region=(L // 2, L), allow_copyall=allow_copyall)
+            outs = t1.outputs + t2.outputs
+            fi = t1.first_in_step if t1.first_in_step is not None else (None if t2.first_in_step is None else t2.first_in_step + t1.steps)
+            fo = t1.first_out_step if t1.first_out_step is not None else (None if t2.first_out_step is None else t2.first_out_step + t1.steps)
+        else:
+            t1 = vm.execute(mem, L, 0, budget, inputs, allow_copyall=allow_copyall)
+            outs, fi, fo = t1.outputs, t1.first_in_step, t1.first_out_step
+        right += score(task, outs, task.expected(inputs), "ATOMIC", read_gate, fo, fi) >= 0.999
+    return {"exact": right == len(P), "accuracy": right / len(P), "n": len(P)}

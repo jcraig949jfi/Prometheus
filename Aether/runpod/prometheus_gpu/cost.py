@@ -56,8 +56,11 @@ OVERHEAD_PROVENANCE = {
                  "reachability, which overlaps the bootstrap and is not "
                  "billed separately; see FAILURE_PLAYBOOK entry 21",
     "bootstrap": "measured on the pod's clock: 6.0 (I1), 8.0 and 7.7 (I2, "
-                 "excluding canary); observed up to 305 s on an identical "
-                 "configuration -- see OVERHEAD_OBSERVED_RANGE_S",
+                 "excluding canary); I3: dependency install 4.4-14.7 s over "
+                 "nine clean bootstraps on four card classes (cupy-cuda12x "
+                 "+ numpy). Observed up to 305 s once (I1) on an identical "
+                 "configuration and NOT reproduced in 13 samples since -- "
+                 "see OVERHEAD_OBSERVED_RANGE_S",
     "canary": "measured, 1.0 (I1), 1.24/1.18 (I2). A property of the "
               "declared canary, not of the platform",
     "module_setup": "measured, I2 campaign: module elapsed 561.98 s minus "
@@ -67,21 +70,91 @@ OVERHEAD_PROVENANCE = {
                      "controller's poll, and cheap to shrink",
     "retrieval": "measured 5.28 s for 8.39 MB (I2 campaign), 0.56 s for "
                  "1.2 kB (I1); the proxy moved 8 MB at 5.4 MB/s",
-    "teardown": "measured, terminate ACK to absence confirmed",
+    "teardown": "measured, terminate ACK to absence confirmed; I3 absence "
+                "needs LIST and GET together and still measured 3.5-8.7 s "
+                "for retrieve + terminate + confirm",
 }
 # Quoted hourly rates. Not authoritative: the provider is.
+#
+# FALLBACK ONLY, used when the provider's live price cannot be read. The
+# platform launches on SECURE cloud, and these are SECURE prices as read
+# from the provider (GraphQL gpuTypes.securePrice) on 2026-09-27.
+#
+# History, because it cost 20% on every receipt through Iteration 4: the
+# previous table mixed COMMUNITY prices (A4000 0.17, 4090 0.34) and stale
+# ones (L4 0.43, A5000 0.26) into a SECURE-cloud launcher. Provider
+# billing (RUNPOD_ENGINEERING_04) matched securePrice on every card to
+# within ~$0.003/h (container-disk storage), and the 4090 was billed at
+# 2.18x its quote. Billed SECONDS matched the controller's wall time to
+# 0.93-1.003x; the rate was the whole error.
 HOURLY_USD = {
     "NVIDIA A40": 0.49,
-    "NVIDIA RTX A4000": 0.17,
-    "NVIDIA RTX A5000": 0.26,
-    "NVIDIA GeForce RTX 4090": 0.34,
-    "NVIDIA L4": 0.43,
+    "NVIDIA RTX A4000": 0.25,
+    "NVIDIA RTX A5000": 0.27,
+    "NVIDIA GeForce RTX 4090": 0.74,
+    "NVIDIA L4": 0.49,
+    "NVIDIA RTX 4000 Ada Generation": 0.28,
+    "NVIDIA RTX A6000": 0.53,
+    "NVIDIA GeForce RTX 3090": 0.50,
+    "NVIDIA A100 80GB PCIe": 1.59,
 }
+HOURLY_TABLE_DATE = "2026-09-27"
 DEFAULT_HOURLY_USD = 0.49
+
+# Live SECURE prices, filled by refresh_quotes(); {gpu_id: usd_per_hour}.
+_LIVE = {}
+_LIVE_AT = None
+
+
+def refresh_quotes(fetch=None):
+    """Read SECURE prices from the provider. Read-only; never raises.
+
+    `fetch` is injectable for tests: a callable returning the GraphQL
+    `gpuTypes` list. Returns the number of prices cached.
+    """
+    global _LIVE_AT
+    try:
+        if fetch is not None:
+            rows = fetch()
+        else:
+            import json as _json
+            from urllib.request import Request
+            from . import billing as _b, credentials as _c
+            key, _src = _c.resolve()
+            h = _b._headers(key)
+            h["Content-Type"] = "application/json"
+            q = "query { gpuTypes { id securePrice } }"
+            req = Request(_b.GRAPHQL, data=_json.dumps({"query": q}).encode(),
+                          method="POST", headers=h)
+            with _b._open(req, timeout=20) as r:
+                rows = (_json.loads(r.read()).get("data") or {}).get("gpuTypes") or []
+    except Exception:
+        return 0
+    n = 0
+    for g in rows or []:
+        price = g.get("securePrice")
+        if g.get("id") and price:
+            _LIVE[g["id"]] = float(price)
+            n += 1
+    if n:
+        import time as _t
+        _LIVE_AT = _t.strftime("%Y-%m-%dT%H:%M:%SZ", _t.gmtime())
+    return n
 
 
 def hourly_for(gpu_class):
+    if gpu_class in _LIVE:
+        return _LIVE[gpu_class]
     return HOURLY_USD.get(gpu_class, DEFAULT_HOURLY_USD)
+
+
+def quote_source(gpu_class):
+    """Where hourly_for's number came from, for the receipt."""
+    if gpu_class in _LIVE:
+        return "provider securePrice read %s" % _LIVE_AT
+    if gpu_class in HOURLY_USD:
+        return "static SECURE table dated %s (provider not read)" % HOURLY_TABLE_DATE
+    return "DEFAULT_HOURLY_USD guess (card not in table, provider not read)"
 
 
 def overhead_seconds(include_canary=True):
@@ -139,7 +212,7 @@ def project(spec, workload_seconds=None, hourly=None, include_canary=True):
     return out
 
 
-def actual(elapsed_s, hourly, work_units=None, phases=None):
+def actual(elapsed_s, hourly, work_units=None, phases=None, quote_source=None):
     """Measured cost of a completed run.
 
     ESTIMATED, not reconciled. Computed from measured wall time at a
@@ -155,7 +228,10 @@ def actual(elapsed_s, hourly, work_units=None, phases=None):
         "billing_reconciled": False,
         "basis": "measured wall time at a quoted rate; no provider billing "
                  "data was obtained",
+        "reconcile_with": "python -m prometheus_gpu.cli billing --receipts <dir>",
     }
+    if quote_source:
+        out["quote_source"] = quote_source
     if phases:
         out["phases_s"] = {k: round(v, 1) for k, v in phases.items()}
         known = sum(phases.values())
