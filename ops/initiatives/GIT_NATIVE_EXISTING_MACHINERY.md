@@ -88,8 +88,8 @@ lease is a *declaration and record*; whether live enforcement stays in Postgres/
   M2 SPECTREX5, M3 GANDALF (Hephaestus), M4 HARRY1 (Aphrodite), BUCKKEEP (Aether), UBU002 (Linux, Artemis),
   UBU001 (Linux, Odysseus), DESKTOP-RUAPVAI (no known seat). Supporting: `roles/Odysseus/journal/`,
   `roles/Odysseus/receipts/`.
-- `docs/ubuntu_server_machines.md` (Harmonia, 2026-09-25): hardware facts for ubu001/ubu002 (X1 Carbon 5th gen, 4 threads,
-  8 GB RAM, 238 GB NVMe, Wi-Fi, battery health). Not in this commit.
+- `infra/ubuntu_nodes/ubuntu_server_machines.md` (Harmonia, 2026-09-25): hardware facts for ubu001/ubu002 (X1 Carbon 5th gen, 4 threads,
+  8 GB RAM, 238 GB NVMe, Wi-Fi, battery health).
 - **Proposal only:** Odysseus's table seeds `ops/resources/FLEET.yaml`. Odysseus's charter is **not** changed here.
 
 ## 7. Atlas

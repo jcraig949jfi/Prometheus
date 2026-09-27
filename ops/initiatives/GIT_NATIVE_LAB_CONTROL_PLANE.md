@@ -278,7 +278,7 @@ The future inventory should capture: OS; CPU/core count; RAM; GPU model/VRAM; di
 installed runtimes; service-critical responsibilities (what must not be starved); safe execution/resource envelopes;
 cloud-controller capabilities. **No secrets or credentials belong in the inventory.**
 
-(Existing per-host fact sheets are inputs to that seed, e.g. Harmonia's ubu001/ubu002 hardware log at `docs/ubuntu_server_machines.md` in the M2 canonical checkout, not yet committed.)
+(Existing per-host fact sheets are inputs to that seed, e.g. Harmonia's ubu001/ubu002 hardware log at `infra/ubuntu_nodes/ubuntu_server_machines.md`.)
 
 ## 15. First pilot (recorded intent only)
 
