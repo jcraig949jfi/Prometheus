@@ -17,7 +17,7 @@ main fast-forwarded to 4d4141285. Stale delegations #285/#448/#471/#474 marked s
 
 | experiment | lane | what |
 |---|---|---|
-| C-STATELESS-FFA6 | CONFIRM | frozen: ffa6-only establishment STATELESS vs DENSE, 48 fresh seeds/arm; schtask NestorCSF |
+| (none running) | | **W1 CLOSED 2026-09-26 ~20:50** -- report: campaigns/npe-w1-donor-discovery-2026-09-26/W1_REPORT.md. C-DENSE-COPY and C-STATELESS-FFA6 CONFIRMED; C-STATELESS NOT_CONFIRMED |
 | (done) | CONFIRM | C-STATELESS NOT_CONFIRMED 19:18 (0.46 -> 0.79, p = 0.012; effect only in ffa6) |
 | (done) | CONFIRM | **C-DENSE-COPY CONFIRMED** 12:48: donor acquisition 1/64 -> 39/64 with a 1-byte block-copy encoding |
 

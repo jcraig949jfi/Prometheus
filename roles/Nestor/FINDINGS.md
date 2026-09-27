@@ -443,3 +443,14 @@ Path: X-DONOR-DISCOVERY (acquisition-limited, 1/96; the one spontaneous donor co
 incidental register state -- hypothesis, n = 1) -> X-DD-DENSE-COPY (0/96 -> 49/96) -> C-DENSE-COPY.
 Barrier map moved: variation -> [acquisition: was the gate; relieved by encoding accessibility] -> [establishment
 L2->L4, ~0.4: now the limit] -> sustained heredity. Scope: this cell class, ATOMIC, the one-byte alias treatment.
+
+**E-W1-2 C-STATELESS-FFA6 CONFIRMED (frozen 0cba4eb5c, 48 fresh seeds per arm; the ffa6 restriction was chosen
+post hoc from C-STATELESS and is declared as such):** in the ffa6 cell (Z8_SLOTTED, NICHES_HIGH_MIG; one-byte
+block-copy encodings, ATOMIC write-back, random populations), establishment of a spontaneous hereditary donor is
+limited by REGISTER-STATE PERSISTENCE across executions: starting every execution from the fresh state raises
+runaway-given-donor from 11/33 to 34/42 (p = 3e-5). Mechanism chain: X-DD-ESTABLISH (80% of stalled donors never copy
+in-world) -> X-DD-SELFSTATE (every stalled donor copies at 0.0 from the state its OWN execution leaves:
+self-poisoning) -> X-DD-STATE-RESET (reset only on genome change: CLEAN_NULL -- it is not the inherited state, it
+is the self-produced one) -> X-DD-STATELESS (0.38 -> 0.90) -> C-STATELESS (both cells: NOT_CONFIRMED, p = 0.012; the
+effect sat entirely in ffa6) -> C-STATELESS-FFA6 (confirmed). **Not confirmed in 7ae3's cell.** Withdrawn along the way:
+'inherited state blocks the donor' (X-DD-NOCOPY-CONTEXT post hoc; killed by X-DD-STATE-RESET).
