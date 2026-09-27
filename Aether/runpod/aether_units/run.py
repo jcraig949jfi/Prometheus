@@ -71,13 +71,15 @@ def main():
     with open(os.path.join(HERE, "aether_files.json"), encoding="utf-8") as fh:
         manifest = json.load(fh)
     with open(os.path.join(HERE, "units.json"), encoding="utf-8") as fh:
-        units = json.load(fh)
+        sets = json.load(fh)
+    unit_set = os.environ.get("AETHER_UNIT_SET", "horizon")
+    units = sets[unit_set]
     lh_ticks = int(os.environ.get("PROMETHEUS_WORK_UNITS", "10000"))
     import platform
     ncpu = os.cpu_count() or 1
     emit(tel, "start", run_id=os.environ.get("PROMETHEUS_RUN_ID"), commit=manifest["commit"],
          cpus=ncpu, python=platform.python_version(), lh_ticks=lh_ticks,
-         n_tasks=len(units))
+         n_tasks=len(units), unit_set=unit_set)
     src = os.path.join(HERE, "src")
     fetch_pinned(manifest, src, tel)
     unit_py = os.path.join(src, "Aether", "observatory", "aeth03_unit.py")
@@ -112,9 +114,17 @@ def main():
             emit(tel, "progress", stage="unit_end", task_id=tid, exit_code=rc,
                  wall_s=record[-1]["wall_s"])
             del running[tid]
+    # One archive per flight keeps the declared artifact list fixed whichever
+    # unit set ran; every member's sha256 is in units_manifest.json.
+    import tarfile
+    with tarfile.open(os.path.join(art, "units.tar"), "w") as tar:
+        for r in sorted(record, key=lambda x: x["task_id"]):
+            for name in (r["task_id"] + ".json", r["task_id"] + ".log"):
+                if os.path.exists(os.path.join(art, name)):
+                    tar.add(os.path.join(art, name), arcname=name)
     with open(os.path.join(art, "units_manifest.json"), "w", encoding="utf-8") as fh:
         json.dump({"commit": manifest["commit"], "lh_ticks": lh_ticks, "cpus": ncpu,
-                   "units": record}, fh, indent=1, sort_keys=True)
+                   "unit_set": unit_set, "units": record}, fh, indent=1, sort_keys=True)
     ok = all(r["exit_code"] == 0 and r["artifact_sha256"] for r in record)
     with open(os.path.join(art, "result.json"), "w", encoding="utf-8") as fh:
         json.dump({"ok": ok, "units": len(record)}, fh)

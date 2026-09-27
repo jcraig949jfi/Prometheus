@@ -1,8 +1,8 @@
 {
   "name": "aether-units",
-  "version": "1",
+  "version": "2",
   "entrypoint": "run.py",
-  "description": "Aether portable work units (research block Blocks F/G): known-answer assay slices with expected hashes from committed evidence, and long-horizon propagation units (open science). Code fetched from a pinned commit with per-file sha256 verification; NumPy on CPU only, the GPU pod is used as a disposable Linux executor.",
+  "description": "Aether portable work units (research block Blocks F/G; unit set chosen by AETHER_UNIT_SET: 'horizon' = known-answer + long-horizon, 'combinations' = Block D/E assay): known-answer assay slices with expected hashes from committed evidence, and long-horizon propagation units (open science). Code fetched from a pinned commit with per-file sha256 verification; NumPy on CPU only, the GPU pod is used as a disposable Linux executor.",
   "dependencies": {
     "pip": []
   },
@@ -27,36 +27,12 @@
     "result.json",
     "units_manifest.json",
     "telemetry.jsonl",
-    "T-001.json",
-    "T-001.log",
-    "T-002.json",
-    "T-002.log",
-    "T-003.json",
-    "T-003.log",
-    "T-004.json",
-    "T-004.log",
-    "T-005.json",
-    "T-005.log",
-    "T-006.json",
-    "T-006.log",
-    "T-007.json",
-    "T-007.log",
-    "T-008.json",
-    "T-008.log",
-    "T-009.json",
-    "T-009.log",
-    "T-010.json",
-    "T-010.log",
-    "T-011.json",
-    "T-011.log",
-    "T-012.json",
-    "T-012.log",
-    "T-013.json",
-    "T-013.log",
-    "T-014.json",
-    "T-014.log"
+    "units.tar"
   ],
   "telemetry": {
     "interval_s": 30
-  }
+  },
+  "env_allowlist": [
+    "AETHER_UNIT_SET"
+  ]
 }

@@ -1,212 +1,1296 @@
-[
- {
-  "task_id": "T-001",
-  "lane": "known",
-  "instrument": "assay",
-  "args": [
-   "--law",
-   "v1",
-   "--seed-index",
-   "0",
-   "--arm",
-   "off",
-   "--slice",
-   "0:4"
-  ]
- },
- {
-  "task_id": "T-002",
-  "lane": "known",
-  "instrument": "assay",
-  "args": [
-   "--law",
-   "rcv",
-   "--seed-index",
-   "1",
-   "--arm",
-   "off",
-   "--slice",
-   "0:4"
-  ]
- },
- {
-  "task_id": "T-003",
-  "lane": "known",
-  "instrument": "assay",
-  "args": [
-   "--law",
-   "add",
-   "--seed-index",
-   "2",
-   "--arm",
-   "on",
-   "--slice",
-   "4:8"
-  ]
- },
- {
-  "task_id": "T-004",
-  "lane": "known",
-  "instrument": "assay",
-  "args": [
-   "--law",
-   "mov",
-   "--seed-index",
-   "3",
-   "--arm",
-   "off",
-   "--slice",
-   "8:12"
-  ]
- },
- {
-  "task_id": "T-005",
-  "lane": "known",
-  "instrument": "assay",
-  "args": [
-   "--law",
-   "m4",
-   "--seed-index",
-   "0",
-   "--arm",
-   "on",
-   "--slice",
-   "12:16"
-  ]
- },
- {
-  "task_id": "T-006",
-  "lane": "known",
-  "instrument": "assay",
-  "args": [
-   "--law",
-   "rcv",
-   "--seed-index",
-   "2",
-   "--arm",
-   "on",
-   "--slice",
-   "16:20"
-  ]
- },
- {
-  "task_id": "T-007",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "v1",
-   "--seed-index",
-   "0",
-   "--arm",
-   "off"
-  ]
- },
- {
-  "task_id": "T-008",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "v1",
-   "--seed-index",
-   "1",
-   "--arm",
-   "off"
-  ]
- },
- {
-  "task_id": "T-009",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "add",
-   "--seed-index",
-   "0",
-   "--arm",
-   "off"
-  ]
- },
- {
-  "task_id": "T-010",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "add",
-   "--seed-index",
-   "1",
-   "--arm",
-   "off"
-  ]
- },
- {
-  "task_id": "T-011",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "rcv",
-   "--seed-index",
-   "0",
-   "--arm",
-   "off"
-  ]
- },
- {
-  "task_id": "T-012",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "rcv",
-   "--seed-index",
-   "1",
-   "--arm",
-   "off"
-  ]
- },
- {
-  "task_id": "T-013",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "rcv",
-   "--seed-index",
-   "0",
-   "--arm",
-   "on"
-  ]
- },
- {
-  "task_id": "T-014",
-  "lane": "open",
-  "instrument": "longhorizon",
-  "args": [
-   "--instrument",
-   "longhorizon",
-   "--law",
-   "rcv",
-   "--seed-index",
-   "1",
-   "--arm",
-   "on"
-  ]
- }
-]
+{
+ "horizon": [
+  {
+   "task_id": "T-001",
+   "lane": "known",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:4"
+   ]
+  },
+  {
+   "task_id": "T-002",
+   "lane": "known",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:4"
+   ]
+  },
+  {
+   "task_id": "T-003",
+   "lane": "known",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "4:8"
+   ]
+  },
+  {
+   "task_id": "T-004",
+   "lane": "known",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "mov",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "8:12"
+   ]
+  },
+  {
+   "task_id": "T-005",
+   "lane": "known",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "m4",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "12:16"
+   ]
+  },
+  {
+   "task_id": "T-006",
+   "lane": "known",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "16:20"
+   ]
+  },
+  {
+   "task_id": "T-007",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "v1",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off"
+   ]
+  },
+  {
+   "task_id": "T-008",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "v1",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off"
+   ]
+  },
+  {
+   "task_id": "T-009",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "add",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off"
+   ]
+  },
+  {
+   "task_id": "T-010",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "add",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off"
+   ]
+  },
+  {
+   "task_id": "T-011",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "rcv",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off"
+   ]
+  },
+  {
+   "task_id": "T-012",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "rcv",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off"
+   ]
+  },
+  {
+   "task_id": "T-013",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "rcv",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on"
+   ]
+  },
+  {
+   "task_id": "T-014",
+   "lane": "open",
+   "instrument": "longhorizon",
+   "args": [
+    "--instrument",
+    "longhorizon",
+    "--law",
+    "rcv",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on"
+   ]
+  }
+ ],
+ "combinations": [
+  {
+   "task_id": "T-015",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-016",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-017",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-018",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-019",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-020",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-021",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-022",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "v1",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-023",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-024",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-025",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-026",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-027",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-028",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-029",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-030",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "add",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-031",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-032",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-033",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-034",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-035",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-036",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-037",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-038",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "str",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-039",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-040",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-041",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-042",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-043",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-044",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-045",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-046",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "cnd",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-047",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-048",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-049",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-050",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-051",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-052",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-053",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-054",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-055",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-056",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-057",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-058",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-059",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-060",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-061",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-062",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "fwd",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-063",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-064",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-065",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-066",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-067",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-068",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-069",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-070",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_add",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-071",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-072",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-073",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-074",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-075",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-076",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-077",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-078",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_cnd",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-079",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "0",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-080",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "0",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-081",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "1",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-082",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "1",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-083",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "2",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-084",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "2",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-085",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "3",
+    "--arm",
+    "off",
+    "--slice",
+    "0:32"
+   ]
+  },
+  {
+   "task_id": "T-086",
+   "lane": "open",
+   "instrument": "assay",
+   "args": [
+    "--law",
+    "rcv_str",
+    "--seed-index",
+    "3",
+    "--arm",
+    "on",
+    "--slice",
+    "0:32"
+   ]
+  }
+ ]
+}
