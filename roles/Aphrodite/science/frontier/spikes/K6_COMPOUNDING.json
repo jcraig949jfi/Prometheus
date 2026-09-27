@@ -1,0 +1,429 @@
+{
+ "rows": [
+  {
+   "schema": "((acc + {H}) + acc)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(acc + (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) + v)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(v + (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) + first)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(first + (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) + last)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(last + (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) + 0)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "(0 + (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "((acc + {H}) + 1)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(1 + (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) // acc)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(acc // (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) // v)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(v // (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) // first)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(first // (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) // last)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(last // (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) // 0)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(0 // (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) // 1)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "(1 // (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(acc))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs((acc + {H})))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(v))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs(v), abs((acc + {H})))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(first))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs(first), abs((acc + {H})))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(last))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs(last), abs((acc + {H})))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(0))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs(0), abs((acc + {H})))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(1))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "math.gcd(abs(1), abs((acc + {H})))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) % acc)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(acc % (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) % v)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(v % (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) % first)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(first % (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) % last)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(last % (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) % 0)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(0 % (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) % 1)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 192
+  },
+  {
+   "schema": "(1 % (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) * acc)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(acc * (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) * v)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(v * (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) * first)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(first * (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) * last)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "(last * (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) * 0)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 192
+  },
+  {
+   "schema": "(0 * (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 192
+  },
+  {
+   "schema": "((acc + {H}) * 1)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "(1 * (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "pow((acc + {H}), acc)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "pow(acc, (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "pow((acc + {H}), v)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "pow(v, (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "pow((acc + {H}), first)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "pow(first, (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "pow((acc + {H}), last)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "pow(last, (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "pow((acc + {H}), 0)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 192
+  },
+  {
+   "schema": "pow(0, (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "pow((acc + {H}), 1)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "pow(1, (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) - acc)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(acc - (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) - v)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(v - (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) - first)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(first - (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) - last)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(last - (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) - 0)",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 252
+  },
+  {
+   "schema": "(0 - (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  },
+  {
+   "schema": "((acc + {H}) - 1)",
+   "atom_filler_inst": 1,
+   "depth1_filler_inst": 26
+  },
+  {
+   "schema": "(1 - (acc + {H}))",
+   "atom_filler_inst": 6,
+   "depth1_filler_inst": 66
+  }
+ ],
+ "totals": {
+  "atom_filler_inst": 409,
+  "depth1_filler_inst": 6590
+ },
+ "g1_inst": 161
+}
