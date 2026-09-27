@@ -4,7 +4,7 @@
 |---|---|---|---|---|
 | T-001 | BEE r038751 replay (code-material provenance) | DONE (A-002) | Archaeon[m2-1034e815] | ubu001 |
 | T-002 | contrasting BEE replay with genuine foreign material (r016299) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu002 |
-| T-003 | NPE provenance mapping (NPE's own terms) | READY | -- | portable |
+| T-003 | NPE provenance mapping (NPE's own terms) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 |
 | T-004 | cross-engine comparison | BLOCKED on T-001..T-003 | -- | any |
 | T-005 | semantic adjudication | BLOCKED on T-004 | -- | any |
 | T-006 | report | BLOCKED on T-005 | -- | any |
@@ -32,6 +32,18 @@
   probe); rows identical to BEE's preserved r016299.jsonl.gz (83,384; checked on M2).
 - Host: ubu002 (the second node, to test whether the recipe transfers unchanged).
 
+## T-003 inputs
+- Code, pinned at git 53b1bc2b3989a0c6942e594b8d43f5f244e05076:
+  * roles/Nestor/campaigns/z80atlas-verify-2026-09-22/ (NPE Cycle-9 engine + MANIFEST_FROZEN.json; read-only);
+  * archaeon/causal_lens/tools_npe/npe_b6_replay.py (the probe: an observation-only transform of NPE's own z8taint.run_tainted,
+    applied at runtime).
+- Run selection: archaeon/causal_lens/out/npe/NPE_LENS_SUMMARY.json (PORTABILITY-01) = the 11 H2 RESERVOIR runs with pair-tape births.
+- Command: `python3 npe_b6_replay.py --npe <dir> --summary NPE_LENS_SUMMARY.json --out out.json --workers 3`
+  (pre-flight: `--limit 1 --smoke 60`).
+- Expected: per-run lineage_sha256 equal to the un-patched replays preserved on M2 (C:/Prometheus-data/evidence/portability01_2026-09-26/npe/),
+  proving the observation did not perturb; the check runs on M2.
+- Resources: 3 workers, < 1 GB, estimated 10-20 min on ubu001.
+
 ## Attempts
 | Attempt | Task | Host | Result |
 |---|---|---|---|
@@ -39,3 +51,4 @@
 | A-001 | T-001 | ubu001 (192.168.1.218; 4 threads, 7 GB, Ubuntu 26.04, Python 3.14.4) | FAILED (claimed 2026-09-27T11:27:01Z): SyntaxError in the probe -- my portability edit turned "\r\n" into literal newlines and was pushed without a compile check. Host and inputs fine (tool sha fcb280d0, config sha aaca26e1 verified on ubu001). Not a science or host failure |
 | A-002 | T-001 | ubu001 | DONE, claimed 2026-09-27T11:27:36Z. result_sha256 cd9547c2... == M2 reference; 74,800/74,800 rows identical to the preserved BEE log (checked on M2); harness hashes == 16fc6c2a (world 5b985241, vm 2536b1ac, grammar 3767d73d); 50.9 s wall, 141 MB RSS. Output copied to C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-001_A-002/out.json (sha256 b1fef410070c2997). Cleanup: ubu001 task dir removed, no process left (verified) |
 | A-001 | T-002 | ubu002 (192.168.1.219; 4 threads, 7 GB, Python 3.14.4) | RUNNING; claimed 2026-09-27T13:03:33Z |
+| A-001 | T-003 | ubu001 | RUNNING; claimed 2026-09-27T13:05:11Z |
