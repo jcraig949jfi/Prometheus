@@ -6,7 +6,7 @@
 | T-002 | contrasting BEE replay with genuine foreign material (r016299) | DONE (A-001) | Archaeon[m2-1034e815] | ubu002 |
 | T-003 | NPE provenance mapping (NPE's own terms) | DONE (A-001) | Archaeon[m2-1034e815] | ubu001 |
 | T-004 | cross-engine comparison | DONE (A-003 measurement + analysis; T-004_RESULT.md) | Archaeon[m2-1034e815] | ubu002 (measurement), M2 (analysis over fetched outputs + M2-local verification) |
-| T-005 | semantic adjudication | READY | -- | any |
+| T-005 | semantic adjudication | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 (test run) |
 | T-006 | report | BLOCKED on T-005 | -- | any |
 
 ## T-001 inputs (everything reachable from git; no M2 disk needed)
