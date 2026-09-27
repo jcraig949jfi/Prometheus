@@ -323,7 +323,12 @@ def classify(s):
     return "DIRECT_ONLY"
 
 
-def assay(variant, n, warmup, ticks, origins, seed_index, null=False):
+def assay(variant, n, warmup, ticks, origins, seed_index, null=False,
+          origin_slice=None, arms=("perturbation_off", "perturbation_on")):
+    """Run the twin assay. `origin_slice=(start, stop)` runs only that slice
+    of the SAME origin list the full run would draw (the list is always
+    drawn for `origins` origins, then sliced), so a slice is a faithful
+    sub-unit of the full run. `arms` restricts which perturbation arms run."""
     seed, rng_seed = S.SEED0 + seed_index, S.RNG0 + seed_index
     rng = np.random.default_rng(0xB0A7 + seed_index)
     t0 = time.time()
@@ -339,11 +344,15 @@ def assay(variant, n, warmup, ticks, origins, seed_index, null=False):
     pick = cand[rng.choice(len(cand), min(origins, len(cand)), replace=False)]
     specs = [(tuple(int(x) for x in p), int(rng.integers(5)), int(rng.integers(8)))
              for p in pick]
+    if origin_slice is not None:
+        specs = specs[origin_slice[0]:origin_slice[1]]
     out = {"variant": variant, "semantics_id": V.SEMANTICS_ID[variant],
            "n": n, "warmup": warmup, "ticks": ticks, "seed_index": seed_index,
            "seed": seed, "rng_seed": rng_seed, "null_selftest": null,
            "arms": {}}
     for arm, mut in (("perturbation_off", 0), ("perturbation_on", S.MUT_ON)):
+        if arm not in arms:
+            continue
         par = S.params(seed, mut)
         runs = []
         for origin, field, bit in specs:
