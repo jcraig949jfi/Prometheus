@@ -1,6 +1,6 @@
 # Artemis -- about this seat and its host
 
-Currency: 2026-09-27T15:04Z (from date -u; every figure below measured
+Currency: 2026-09-27T15:58Z (s3 re-measured; rest 15:04Z) (from date -u; every figure below measured
 on the host at that time unless dated otherwise). Written at the
 operator's request ("Write a note about yourself. Machine specs, etc").
 Pure ASCII.
@@ -42,20 +42,30 @@ database), M2 (SPECTREX5), M3, M4, two laptops, and ubu002.
 
 ## 3. Software on the host
 
-Present: git 2.53.0; python3 3.14.4 with the standard library plus
-python3-psycopg2 and python3-pytest (apt, installed 2026-09-25 by this
-seat -- the only change made to the host); Claude Code; passwordless
-sudo.
+Re-measured 2026-09-27; supersedes the 2026-09-25 list.
 
-Absent (checked with command -v / import, 2026-09-25): pip and venv
-seeding (python3 -m venv fails: no ensurepip), numpy, gcc, make, docker,
-node/npm, cargo, go, java, julia, lean, sage, gp (PARI), R, psql, nvcc,
-Windows Task Scheduler. The base-role self-test therefore reports
-10 passed, 1 skipped (the scheduler check).
+Present: git 2.53.0; python3 3.14.4 with, from apt, psycopg2 and pytest
+(installed 2026-09-25 by this seat) and numpy 2.3.5, scipy, CPU-only
+torch 2.9.1, numba, pip 25.1.1, requests, hypothesis, psutil, yaml,
+cryptography (installed 2026-09-27 14:20Z: `apt-get install
+python3-numpy python3-torch`, 235 packages incl. gcc and make; plus
+`apt-get install gh` -- by a different session on this host, see
+journal 2026-09-27); Claude Code; passwordless sudo.
 
-Policy: nothing is installed ahead of the charter. When a lane needs a
-tool it is resolved by required capability (base role rule 2) and the
-install is journaled with the command.
+Absent (2026-09-27): fastapi, uvicorn, pydantic, redis, cupy, sklearn,
+falkordb, pytest-timeout; docker, node, cargo, go, java, julia, lean,
+sage, gp, R, psql client; any GPU runtime; Windows Task Scheduler. No
+local Postgres or Redis (only ports 22 and 53 listen). The base-role
+self-test reports 10 passed, 1 skipped (the scheduler check).
+
+What runs here unchanged (P_portability s4, 2026-09-27): SFE core and
+canary, BEE z80atlas, toolbox, Archaeon z80atlas, ensorain/wtp,
+Aphrodite, Aether's tests on CPU; anything needing fastapi, Redis or a
+local Postgres does not.
+
+Policy: install only what a lane needs, resolved by required capability
+(base role rule 2), journaled with the command. Host facts here are
+dated and re-measured at boot, not trusted (calibration 2026-09-27).
 
 ## 4. Reachability
 
