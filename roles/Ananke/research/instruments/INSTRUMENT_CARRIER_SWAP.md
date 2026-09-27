@@ -1,7 +1,7 @@
 # PTE instrument: mirror-pair carrier swap
 
 Status: PTE instrument, tested (prometheus/ananke/tests/
-test_lens_instruments.py, 9 known-answer tests). NOT a fleet rule and
+test_lens_instruments.py, 10 known-answer tests). NOT a fleet rule and
 NOT a mandatory assay. Code: prometheus/ananke/lens.py (carriers,
 carrier_table, swap, swap_verdict, roll_slots, roll_recipients).
 

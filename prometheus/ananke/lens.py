@@ -171,7 +171,10 @@ def carrier_table(ph: Physics, genome: np.ndarray, env: envs.EnvSpec, seeds, tic
     that tick). Returns {'normal': ci, name: {'kind', 'acc': ci, 'verdict'}}.
     Verdict rule (swap_verdict): FLIP hi99 < .40; NO-EFFECT lo99 >= normal
     lo99 - .05; CHANCE otherwise. A 'perturb' FLIP is impossible by design;
-    CHANCE there means 'sensitive'."""
+    CHANCE there means 'sensitive'. arm_identical=True means the readout trace
+    is bit-identical to normal in every world: the intervention never took
+    effect (e.g. X is identical in both partners), so NO-EFFECT is trivial,
+    not informative (W-D T-D3)."""
     base = run(ph, genome, env, seeds, device=device)
     nrm = trial_acc(base, range(env.trials))
     out = {"normal": ci(nrm)}
@@ -180,7 +183,9 @@ def carrier_table(ph: Physics, genome: np.ndarray, env: envs.EnvSpec, seeds, tic
         kind, fn = cs[n]
         tr = run(ph, genome, env, seeds, hooks={t: fn for t in ticks}, device=device)
         p = trial_acc(tr, range(env.trials))
-        out[n] = {"kind": kind, "acc": ci(p), "verdict": swap_verdict(nrm, p)}
+        identical = bool(np.array_equal(tr.trace, base.trace))
+        out[n] = {"kind": kind, "acc": ci(p), "verdict": swap_verdict(nrm, p),
+                  "arm_identical": identical}
     return out
 
 

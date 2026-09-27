@@ -107,3 +107,10 @@ def test_reach_is_undefined_without_arrivals():
     ph = plants.c1b_echo_physics().replace(prog_len=12, payload_width=1)
     prof = lens.cue_arrival_profile(ph, plants.plant("hold_latch", ph), HOLD, M=16)
     assert lens.reach(prof, range(-20, 1)) is None          # a latch sends nothing: reach undefined, not 0
+
+
+def test_arm_identical_flags_trivial_no_effect(echo):
+    """w is identical in both partners (no plastic routing): its swap is a
+    no-op, and the flag must say so. A real carrier's swap is never identical."""
+    assert echo["w"]["arm_identical"] is True
+    assert echo["pay0"]["arm_identical"] is False and echo["site_all"]["arm_identical"] is False
