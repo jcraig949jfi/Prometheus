@@ -59,8 +59,16 @@ Each engine claim below cites the lens file that reconstructs it; those files ci
      23-24 and 52-53. Margin thin (17 vs 16.2); one cell (7ae3). The founder share is a lower bound.
    - BEE: under endogenous reproduction, seeded task code decays because selection sees only the copy routine (EXTERNAL reaches
      task solutions 178 vs 2 discordant pairs); only an explicit copy-resource coupling (v3) maintained competence (W2).
-   - Archaeon: copiers are short input-gated loops, and establishment is gated by the environment, not by cargo (A0).
-   - Two engines show cargo erosion directly and the third is consistent. This is the digital analogue of the classic "replicator
+   - Archaeon (MEASURED this block, block13_probe_out.json): after 14,800 epochs the dominant block-13 lineage (127 members) retains
+     founder MATERIAL at 0.0 of positions, machinery (the 16 addresses the founder executes) and cargo alike. Yet 82% of its 52,757
+     births were exact 32-byte self-copies. So byte-level identity-by-descent turns over completely over long runs even where function
+     must persist. Plausible cause: neutral bits within executed bytes (the opcode uses 5 of 8 bits). NOT measured: whether the
+     members' byte STATE at the machinery positions is conserved (IBS); the probe did not record final genomes.
+   - This DIFFERS from NPE: there the founder's fully specified world-op instructions (ED 32 / ED B0) ARE conserved as material.
+     "Machinery conserved as material" is granularity- and encoding-dependent, not a law. The surviving cross-engine statement is
+     narrower: machinery FUNCTION is conserved while cargo erodes (BEE, NPE); material identity of the machinery persists only where
+     its encoding has no neutral sites (NPE yes; Archaeon no).
+   - Two engines show cargo erosion directly; the third shows complete turnover of material identity (see above). This is the digital analogue of the classic "replicator
      shrinks to its replication core" result (Spiegelman; Block G). Its recurrence across three independent Z80 designs suggests it
      is a property of copy-selected byte worlds, not of one physics.
 
@@ -91,7 +99,23 @@ Each engine claim below cites the lens file that reconstructs it; those files ci
    - The "three independent sightings of host-conditioned reproduction" therefore reduce to TWO (Archaeon by material; BEE
      foreign-material governance, 8,166 births in r016299, M2-local evidence) plus NPE's pair-tape scaffolding (point 4).
 
+## 3b. Capacity transmission (TH-009, measured this block, Archaeon block 13; 4,079 sampled births)
+The fraction of children that are copiers on their own (frozen copier ruler), by birth mechanism:
+
+| mechanism | children that are copiers | sample |
+|---|---|---|
+| SELF_COPY | 86.7% | 1,827 / 2,107 |
+| HOST_EXECUTION | 47.0% | 78 / 166 |
+| NEIGHBOUR_COPY | 35.3% | 133 / 377 |
+| ORIGINATION | 0% | 0 / 1,429 |
+
+- Weighting by the native births per mechanism (SELF_COPY was sampled 1/25, the others fully), about 16% of ALL births in this world
+  (8763 of 54616) transmit material but NOT the capacity to reproduce. Most of those are imperfect self-copies (13.3% of SELF_COPY) and
+  all 1,429 originations.
+- In Griesemer's sense they are copying, not reproduction.
+- The lens has no field for this. The native birth predicate (window coverage) counts them all as births.
+
 ## 4. What this does NOT establish
-- Point 2 in Archaeon is inferred from the architecture of short loops, not measured as cargo decay.
+- Point 2 in Archaeon: function conservation at the machinery positions was not measured (state not recorded).
 - The cross-engine points are recurrences across three designs, not a controlled comparison.
 - Some BEE numbers (T-004) are verifiable only on M2 (W2 item 1).
