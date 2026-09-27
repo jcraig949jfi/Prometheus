@@ -1,15 +1,13 @@
 # Odysseus status
 
-Currency: 2026-09-27T15:02Z (from date -u).
+Currency: 2026-09-27T16:10Z (from date -u).
 
-seat state: PARKED (lane frozen by the operator 2026-09-27 for more design;
-  prompts/2026-09-27_freeze/). Charter stands; no autonomous work on it.
-what it asserts: brain v0 exists and passes 73 tests on Linux (ubu001);
-  rehearsed 3-node run on one host verified 300/300 ticks. NOT asserted:
-  Windows, cross-host.
-frozen at: main 119b3e139 (code), fleet test prepared, not run.
-  ubu001: ~/odysseus-node installed at 119b3e139, runs/fleet1 initialised,
-  no process running. ubu002 / Windows: nothing installed.
-open delegation: comms #679 to Cyclops (Windows test) -- hold notice sent.
+seat state: ACTIVE on the TH-006 slice (operator directive 2026-09-27,
+  prompts/2026-09-27_th006/). Brain lane stays PARKED (frozen).
+what it asserts: node-side verification of E-001 T-001 (BEE r038751)
+  without M2 -- PASS on ubu001 with no network; 3 cheat controls fail as
+  designed (roles/Odysseus/th006/REPORT.md). NOT asserted: the pack's
+  content hash equals the preserved log's until M2 attests it.
+blockers: M2 attestation (Archaeon, comms delegation).
 monitors owned or fed: none.
-next executable action: wait for the operator's design; nothing else.
+next executable action: wait for the attestation; N2-N5 recorded, not started.

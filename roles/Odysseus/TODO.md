@@ -1,9 +1,9 @@
 # Odysseus TODO
 
-Currency: 2026-09-27T15:02Z (from date -u). Lane PARKED by the operator.
+Currency: 2026-09-27T16:10Z (from date -u).
 
-- [ ] (frozen) ODYSSEUS-01 Windows test -- hold sent to Cyclops
-- [ ] (frozen) ODYSSEUS-02 3-machine run -- needs Windows host + IP
-- [ ] On unfreeze: re-read the operator's design and re-plan the backlog
-      before resuming anything below it
+- [ ] TH-006: receive Archaeon's M2 attestation; record MATCH/MISMATCH in
+      th006/REPORT.md and TH-006.md
+- [ ] TH-006 next threads N2-N5 (REPORT s6) -- only on the operator's go
+- [ ] (frozen) brain lane: ODYSSEUS-01/02
 - [ ] Read aporia/doctrine/critical_memories.md and MONITORS.md in full
