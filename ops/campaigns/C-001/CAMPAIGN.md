@@ -17,8 +17,8 @@ changing the science, and record what the Task needed in order to move.
 
 | Experiment | Question | Tasks |
 |---|---|---|
-| E-001 | B6: who / where / what | E-001/TASKS.md |
-| E-002 | B1: hereditary continuity under recombination | E-002/TASKS.md |
+| E-001 | B6: who / where / what | CLOSED 2026-09-27 (E-001/RESULT.md) |
+| E-002 | B1: hereditary continuity under recombination | READY, not urgent (E-002/TASKS.md); may be handed to a fresh worker as a pickup-from-Git test |
 
 ## Pilot finding 1 (2026-09-27): the first real Task moved off M2 -- T-001, A-002 on ubu001, science unchanged
 Result: ubu001 reproduced T-001 bit-for-bit.

@@ -1,4 +1,4 @@
-# E-001 tasks
+# E-001 tasks  -- EXPERIMENT CLOSED 2026-09-27 (RESULT.md)
 
 | Task | Work | Status | Executor | Host |
 |---|---|---|---|---|
@@ -6,8 +6,8 @@
 | T-002 | contrasting BEE replay with genuine foreign material (r016299) | DONE (A-001) | Archaeon[m2-1034e815] | ubu002 |
 | T-003 | NPE provenance mapping (NPE's own terms) | DONE (A-001) | Archaeon[m2-1034e815] | ubu001 |
 | T-004 | cross-engine comparison | DONE (A-003 measurement + analysis; T-004_RESULT.md) | Archaeon[m2-1034e815] | ubu002 (measurement), M2 (analysis over fetched outputs + M2-local verification) |
-| T-005 | semantic adjudication | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 (test run) |
-| T-006 | report | BLOCKED on T-005 | -- | any |
+| T-005 | semantic adjudication | DONE (T-005_DECISION.md; contract v0.3) | Archaeon[m2-1034e815] | M2 (writing) + ubu001 (test run) |
+| T-006 | report | DONE (RESULT.md) | Archaeon[m2-1034e815] | M2 |
 
 ## T-001 inputs (everything reachable from git; no M2 disk needed)
 - Code:
@@ -55,4 +55,4 @@
 | A-001 | T-004 (Archaeon-side measurement) | ubu002 | FAILED (claimed 2026-09-27T13:07:09Z; pin 742060b38): my script assumed HITS.json "hits" is a list; it is a dict keyed by representation (vmcopy32 176, vmcopy64 21, z80_32 0). A script defect, not host or science. The fix also restricts to vmcopy32, the only representation this 32-byte VM runs |
 | A-002 | T-004 (Archaeon-side measurement) | ubu002 | DONE (claimed 2026-09-27T13:07:41Z; pin 2a0470fed): 90,112 executions, 19,615 copier births, no location/material divergence detected; block-15 host panel: 3,598 hosting births, 1,024 with host material running in the neighbour region. 15.5 s, 22 MB. Superseded by A-003 for the child identity (the same measurement plus the child class) |
 | A-003 | T-004 (Archaeon-side measurement + child identity) | ubu002 | DONE (claimed 2026-09-27T13:08:33Z; pin d911d43bc). Hosting births emitting the resident exactly: 3,594. Of these, 2,570 execute mostly resident material with location == material; 1,024 execute host material from the neighbour region (512 host-material majority, 512 mixed). result_sha256 b367ebe0...; 15.6 s, 22 MB. Output C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-004_A-003/out.json. Cleanup verified on ubu002 |
-| A-001 | T-005 (v0.3 test suite, portability check) | ubu001 | RUNNING; claimed 2026-09-27T13:57:15Z; pin 194c51193 |
+| A-001 | T-005 (v0.3 test suite, portability check) | ubu001 | DONE (claimed 2026-09-27T13:57:15Z; pin 194c51193): 79/79 passed from committed fixtures only (no M2 evidence needed); cleanup verified |

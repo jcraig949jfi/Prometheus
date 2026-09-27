@@ -1,4 +1,4 @@
-# E-001 -- B6: Who / Where / What
+# E-001 -- B6: Who / Where / What  [CLOSED 2026-09-27 -- see RESULT.md]
 
 Campaign C-001, Thread TH-001.
 
