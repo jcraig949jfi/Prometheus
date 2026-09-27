@@ -82,3 +82,8 @@ Limits:
 - BEE needs a single-interaction harness on its traced VM (code material) before its arm is interpretable.
 - NPE continuity is NOT_IDENTIFIABLE for most events, so its endpoint must be stated on donor-material share, not on HU continuity.
 - The operator decides whether and when to preregister.
+
+## Addendum 2026-09-27 (deep research block; the text above is unchanged)
+Recommended status: **NOT_READY**. The NPE arm was specified on predecessor-admitted births, and only 6/34 are P-11 causal.
+The necessity leg used a diagnostic field NPE does not certify (worker W1). Restate the NPE arm on P-11-causal events, or explicitly on
+"overwrite events", before any preregistration. The Archaeon arm is unaffected; the BEE arm needs TH-010 first.
