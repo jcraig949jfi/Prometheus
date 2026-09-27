@@ -87,6 +87,27 @@ def main():
     running = {}
     record = []
     width = max(1, min(ncpu, len(units)))
+    last_beat = time.monotonic()
+    last_state = None
+    done_ok = 0
+
+    def unit_progress():
+        """Each running unit's own last progress line ('tick X/Y' for
+        long-horizon units, 'origin i/n' for assay units), as a sum of
+        completed steps -- a domain signal read from the work itself."""
+        total = 0
+        for tid, (_p, _t0, _out, logf) in running.items():
+            try:
+                with open(logf.name, encoding="utf-8", errors="replace") as fh:
+                    lines = [ln for ln in fh.read().splitlines()
+                             if " tick " in ln or " origin " in ln]
+                if lines:
+                    key = " tick " if " tick " in lines[-1] else " origin "
+                    total += int(lines[-1].split(key)[1].split("/")[0])
+            except (OSError, ValueError, IndexError):
+                pass
+        return total
+
     while pending or running:
         while pending and len(running) < width:
             u = pending.pop(0)
@@ -100,6 +121,16 @@ def main():
             running[u["task_id"]] = (p, time.monotonic(), out, logf)
             emit(tel, "progress", stage="unit_start", task_id=u["task_id"])
         time.sleep(2)
+        if time.monotonic() - last_beat >= 30:
+            # Progress, not liveness: written ONLY when the work advanced
+            # (a unit finished, or a running unit reported a new step), so a
+            # genuinely hung unit still trips the platform's stall detector.
+            state = (len(record), unit_progress())
+            if state != last_state:
+                emit(tel, "progress", stage="units", done=state[0], done_ok=done_ok,
+                     running=len(running), pending=len(pending), steps=state[1])
+                last_state = state
+            last_beat = time.monotonic()
         for tid, (p, t0, out, logf) in list(running.items()):
             rc = p.poll()
             if rc is None:
@@ -109,6 +140,7 @@ def main():
             if os.path.exists(out):
                 with open(out, "rb") as fh:
                     sha = hashlib.sha256(fh.read()).hexdigest()
+            done_ok += int(rc == 0 and sha is not None)
             record.append({"task_id": tid, "exit_code": rc, "wall_s": round(time.monotonic() - t0, 1),
                            "artifact": os.path.basename(out), "artifact_sha256": sha})
             emit(tel, "progress", stage="unit_end", task_id=tid, exit_code=rc,
