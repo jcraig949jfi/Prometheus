@@ -28,6 +28,9 @@ spike uses forensic seeds and labels ("K1".."K7"), never campaign seeds.
    (c) the RULER. The novelty key raises false positives and gives zero credit to real
        compounding.
    A better sampler fixes none of these three.
+   (K8, run last: one treatment-blind COMPOSITION move makes 77 G1-composing schemas
+   derivable under inheritance, all absent without it. The access block in (b) is
+   removable.)
 2. E1's NO is valid, but it answers a narrower question than "is recursion possible?".
    Under this DSL, mechanism and ruler, a G1-DEPENDENT, semantically NEW G2 is
    structurally near-unreachable. The NO is close to a theorem about the setup. It is weak
@@ -305,6 +308,16 @@ A clean, independent test of F-ii that needs no E2/E3 chain:
   expanded the GRAMMAR to depth 3 for every arm; this adds a COMPOSITION MOVE to the
   improver.
   (RB-3 in research_blocks/.)
+  RB-3 Q1 WAS RUN TODAY AS SPIKE K8 (analytic, 11 s). Coverage = L1 + in-space
+  instantiations of every wrap(G1, op, atom) (199 new bodies). The single-hole LGG universe
+  gains 134 schemas that are absent from the L1 universe. 77 of them COMPOSE G1, e.g.
+  ((acc + {H}) * last), gcd((acc + {H}), last), (acc * ({H} + acc)), pow(v, ({H} + acc)),
+  and 63 of those are NEW by the current ruler. Some are degenerate (pow(0, ...),
+  (0 % ...)), and 24 acc-free junk schemas are also flagged NEW (defect R-b again).
+  VERDICT: F-ii is an ACCESS ceiling and a single composition move removes it at the
+  level of derivability. Whether those schemas get SOLVED, SELECTED and PAY is RB-3
+  Q2/Q3. They are mostly multiplicative/modular, so they also need RB-2's widened task
+  world. This is the most promising territory the program found.
 A G5 (depth-3) grammar test is now LOW value: K3/K6 show the depth-2 grammar is not what
 binds.
 
@@ -441,6 +454,9 @@ Research-ready blocks, each written for a fresh worker with no oral briefing:
                          2,792 in-space instantiations.                   -> A2/F
   K7 domain novelty      24/31 "non-G1" qualified families are extensionally G1 on
                          the task domain.                                 -> A4 R-b / D
+  K8 composition universe  (= RB-3 Q1) with wrap(G1, op, atom) coverage, 77
+                         G1-composing schemas become derivable (134 fresh; 11 s).
+                                                                          -> F / W3
 Caveats: K2/K4 solvability counts dev-consistent hits without a tribunal (an upper bound).
 K5 is forensic: not preregistered, 6 draws per regime, no transfer arms (R2-R4). Its
 compounding signal is a HYPOTHESIS for RB-4, not a disposition.
@@ -528,8 +544,9 @@ WHAT PRIOR ART CHANGED
 WORTH PURSUING (small number)
   W1 A domain-grounded novelty ruler plus separate V1-V5 verdicts (RB-1).
   W2 A widened task world via tribunal redesign, and imported ladders (RB-2, RB-5).
-  W3 Composition access for the improver (RB-3): the one experiment that could turn A3
-     into a positive.
+  W3 Composition access for the improver (RB-3). K8 already shows it opens 77
+     G1-composing derivable schemas. RB-3 Q2/Q3 plus RB-2's task world is the single
+     most promising path to a genuine V3 + V4 positive.
   W4 Later: an editable-improver (V5) variant with the imp@k transplant protocol (RB-6).
 PROBABLY STOP
   - Pursuing BOUNDED_RSI = YES under G4 + the current tribunal + the fixed improver.

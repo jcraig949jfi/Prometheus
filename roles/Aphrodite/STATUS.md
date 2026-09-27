@@ -90,3 +90,25 @@ is an operator design choice. Engineering now available: a17.py exact-fast
 Q2 (gated) + checkpointing; fasteval admitted by a 288k-pair gate.
 Comms: experiments are no longer managed via Aporia or Cyclops; ignore them.
 Branch aphrodite/a16-campaign-2026-09-26 (pushed; not yet merged to main).
+
+--------------------------------------------------------------------------
+UPDATE 2026-09-27 -- RECURSIVE-IMPROVEMENT FRONTIER PROGRAM (no campaign run)
+--------------------------------------------------------------------------
+Read science/frontier/APHRODITE_FRONTIER_SYNTHESIS_2026-09-27.md first.
+Key results (spikes K1-K8, all forensic, reproducible, M4):
+  - The catalog collapse is explained. The tribunal (permutation invariance + stress 200)
+    certifies commutative bounded folds = G1's span; only 7/10,500 draws are genuinely
+    non-additive qualified tasks.
+  - Inheriting G1 adds 0 derivable novel schemas (467 = 467). G1-composing schemas are
+    representable, but inaccessible without a composition move. With one (K8), 77
+    become derivable.
+  - G1 = an efficiency prior (PRISTINE finds the same solutions at a median ~300x more
+    charges). G1 donors COMPOUND efficiency (11/18 rich supplies) inside G1's span.
+  - Novelty ruler defects: R-a conjugate false positive; R-b abs()/junk false
+    positives; no compounding verdict. Use V1-V5 separate verdicts from now on.
+Next autonomous work: RB-1 ruler -> RB-2 task-world audit -> RB-4 compounding assay ->
+RB-3 Q2/Q3 (research_blocks/). Backlog: BACKLOG_RSI_FRONTIER.md (T01-T22).
+Operator choices open: (1) keep the "RSI" name vs rename the line to "abstraction
+compounding" and treat V5 separately; (2) whether Aphrodite may replace the inherited
+Tier-3 tribunal for the next task world.
+Branch aphrodite/frontier-2026-09-27 (pushed; not merged to main).

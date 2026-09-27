@@ -11,6 +11,9 @@ WHY
   INACCESSIBLE. This is Crius's existence-vs-accessibility split (CROSS_ENGINE s1), and
   NPE E-8's encoding-length lever.
 
+STATUS: Q1 DONE 2026-09-27 as spike K8 (spikes/k8_composition_universe.py,
+  K8_COMPOSITION_UNIVERSE.json): YES. 77 G1-composing schemas become derivable. Start at Q2.
+
 QUESTIONS, in order
   Q1 (existence, analytic)  With a composition move that adds wrap(S, op, atom) entries
      for every library schema S, does the derivable NEW universe under inheritance grow
