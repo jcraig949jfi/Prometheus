@@ -1,4 +1,4 @@
-# PROPAGATION ASSAY AUDIT — does the exact causal-generation argument survive?
+# PROPAGATION ASSAY AUDIT — does the exact causal-generation argument hold?
 
 Date: 2026-09-27. Directive: research block, Block A
 (`roles/Aether/prompts/2026-09-27_research_block/DIRECTIVE.md`). Campaign
@@ -11,11 +11,11 @@ Evidence: `Aether/AETH-03/evidence/2026-09-27_assay_audit/`. Cost $0.00.
 **Exact after repair; prior verdicts unchanged; one claim withdrawn and
 restated.**
 
-- **The locality premise survives every attack** (no difference can
+- **The locality premise holds under every attack** (no difference can
   appear without a differing site within the law's declared radius, and
   the twin predicate covers all carried state).
 - **The claim that the assay's generation is "the exact shortest causal
-  chain" does NOT survive.** A differing neighbour need not be a cause.
+  chain" does NOT hold.** A differing neighbour need not be a cause.
   The assay's generation is a **lower bound** on causal depth. It equals
   the counterfactual causal generation in 100% of v1 events, 99% of `add`,
   96.5% of `mov` and `rcv` with perturbation off, and **84% of `rcv` with
