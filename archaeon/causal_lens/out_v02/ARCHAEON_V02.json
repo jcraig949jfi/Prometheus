@@ -1,0 +1,106 @@
+{
+ "upgraded_v01_graphs": {
+  "A1": {
+   "violations": [],
+   "report": {
+    "entities_split": 2,
+    "executed_material_unassigned": 1,
+    "fields_marked_ni": 2
+   },
+   "contributors_preserved": true
+  },
+  "A2": {
+   "violations": [],
+   "report": {
+    "entities_split": 3,
+    "executed_material_unassigned": 1,
+    "fields_marked_ni": 2
+   },
+   "contributors_preserved": true
+  },
+  "A3": {
+   "violations": [],
+   "report": {
+    "entities_split": 69,
+    "executed_material_unassigned": 23,
+    "fields_marked_ni": 46
+   },
+   "contributors_preserved": true
+  },
+  "A4_block13": {
+   "violations": [],
+   "report": {
+    "entities_split": 89425,
+    "executed_material_unassigned": 53185,
+    "fields_marked_ni": 106370
+   },
+   "upgrade_s": 2.25,
+   "nodes": 385390,
+   "establishments": {
+    "glin:1071": "HU"
+   }
+  }
+ },
+ "block13_v02_roles": {
+  "YES | YES | YES | cont=decided": 47284,
+  "YES | NOT_IDENTIFIABLE | YES | cont=decided": 3795,
+  "YES | NOT_IDENTIFIABLE | NO | cont=decided": 1346,
+  "NOT_IDENTIFIABLE | YES | YES | cont=NONE": 343,
+  "NO | YES | YES | cont=decided": 195,
+  "NO | NOT_IDENTIFIABLE | NO | cont=decided": 102,
+  "NO | NOT_IDENTIFIABLE | YES | cont=decided": 63,
+  "NOT_IDENTIFIABLE | NOT_IDENTIFIABLE | YES | cont=NONE": 55,
+  "NOT_IDENTIFIABLE | NOT_IDENTIFIABLE | NO | cont=NONE": 2
+ },
+ "block13_ill_posed_vs_native_tiebreak": {},
+ "block13_light_us_per_event": 2.95,
+ "envgate02_cf": {
+  "violations": [],
+  "tests": {
+   "cf_block": {
+    "cf_kind": "NECESSITY",
+    "intervention": {
+     "name": "block input window 120..135 (arm BAND0 vs U)",
+     "blocks": 24
+    },
+    "outcome": {
+     "predicate": "genetic establishments per block U > BAND0 (exact sign test, Holm)"
+    },
+    "result": "YES",
+    "totals": {
+     "U": 24,
+     "BAND0": 5
+    }
+   },
+   "cf_rescue_128_131": {
+    "cf_kind": "SUFFICIENCY",
+    "intervention": {
+     "name": "restore only 128..131 (RRIGHT) vs only 128 (R128)"
+    },
+    "outcome": {
+     "predicate": "RRIGHT > R128 per block (Holm)"
+    },
+    "result": "NO",
+    "totals": {
+     "RRIGHT": 3,
+     "R128": 5
+    }
+   },
+   "cf_rescue_weak": {
+    "cf_kind": "SUFFICIENCY",
+    "intervention": {
+     "name": "restore 128..131 (RRIGHT) vs 125..128 (RWEAK)"
+    },
+    "outcome": {
+     "predicate": "RRIGHT > RWEAK per block (Holm)"
+    },
+    "result": "NO",
+    "totals": {
+     "RRIGHT": 3,
+     "RWEAK": 2
+    }
+   }
+  }
+ },
+ "wall_s": 7.2
+}

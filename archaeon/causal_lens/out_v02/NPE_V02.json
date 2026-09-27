@@ -1,0 +1,825 @@
+{
+ "runs": 36,
+ "pair_births": 34,
+ "graph_violations": {},
+ "classes": {
+  "cont=NOT_IDENTIFIABLE | N_real=YES | S_rebuild=NO | S_author=NO | N_random=YES": 9,
+  "cont=NOT_IDENTIFIABLE | N_real=NO | S_rebuild=NO | S_author=NO | N_random=YES": 8,
+  "cont=NOT_IDENTIFIABLE | N_real=YES | S_rebuild=NO | S_author=YES | N_random=YES": 7,
+  "cont=decided | N_real=YES | S_rebuild=YES | S_author=YES | N_random=YES": 6,
+  "cont=decided | N_real=NO | S_rebuild=YES | S_author=YES | N_random=YES": 2,
+  "cont=decided | N_real=YES | S_rebuild=YES | S_author=NO | N_random=YES": 1,
+  "cont=NOT_IDENTIFIABLE | N_real=NO | S_rebuild=NO | S_author=YES | N_random=YES": 1
+ },
+ "host_conditioned_signature": {
+  "factual_donor_material=True | N_real=YES | S_rebuild=NO": 16,
+  "factual_donor_material=True | N_real=NO | S_rebuild=NO": 9,
+  "factual_donor_material=True | N_real=YES | S_rebuild=YES": 7,
+  "factual_donor_material=True | N_real=NO | S_rebuild=YES": 2
+ },
+ "body_continuity": {
+  "SAME_BODY": 34
+ },
+ "donor_material_share": {
+  "n": 34,
+  "min": 0.125,
+  "median": 0.3125,
+  "max": 0.9375,
+  "gt_half": 9
+ },
+ "fid_init": {
+  "median": 0.625,
+  "max": 0.8438
+ },
+ "spontaneous_by_arm": {
+  "B_reimplant_actual|NO": 9,
+  "B_reimplant_actual|NOT_IDENTIFIABLE": 15,
+  "A_in_situ|NOT_IDENTIFIABLE": 5,
+  "C_reimplant_random|NOT_IDENTIFIABLE": 5
+ },
+ "events": [
+  {
+   "child": 256,
+   "victim_body": "slot:26112",
+   "old_identity": 5,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 0.0333,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:9984",
+   "old_identity": 83,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": true,
+    "p11_pass": true
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:16832",
+   "old_identity": 62,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.90625,
+   "fid_init": 0.0312,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": true,
+    "p11_pass": true
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:11584",
+   "old_identity": 181,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": true,
+    "p11_pass": true
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 258,
+   "victim_body": "slot:21248",
+   "old_identity": 193,
+   "new_identity": 258,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 0.9667,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": true,
+    "p11_pass": true
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:23232",
+   "old_identity": 102,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.28125,
+   "fid_init": 0.6562,
+   "donor_write_share": 0.8889,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:24640",
+   "old_identity": 175,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.1875,
+   "fid_init": 0.7812,
+   "donor_write_share": 0.5,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 258,
+   "victim_body": "slot:30976",
+   "old_identity": 153,
+   "new_identity": 258,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.25,
+   "fid_init": 0.6562,
+   "donor_write_share": 0.375,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 259,
+   "victim_body": "slot:9216",
+   "old_identity": 249,
+   "new_identity": 259,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.46875,
+   "fid_init": 0.4375,
+   "donor_write_share": 0.3333,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 260,
+   "victim_body": "slot:12928",
+   "old_identity": 36,
+   "new_identity": 260,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.1875,
+   "fid_init": 0.7188,
+   "donor_write_share": 0.1667,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 261,
+   "victim_body": "slot:4160",
+   "old_identity": 56,
+   "new_identity": 261,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.5,
+   "fid_init": 0.4375,
+   "donor_write_share": 0.9375,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:15360",
+   "old_identity": 136,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.125,
+   "fid_init": 0.7812,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "A_in_situ"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:14912",
+   "old_identity": 210,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.125,
+   "fid_init": 0.7812,
+   "donor_write_share": 0.0,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "A_in_situ"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:15360",
+   "old_identity": 136,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.125,
+   "fid_init": 0.7812,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "C_reimplant_random"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:14912",
+   "old_identity": 210,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.125,
+   "fid_init": 0.7812,
+   "donor_write_share": 0.0,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "C_reimplant_random"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:10560",
+   "old_identity": 55,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 0.0667,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:2304",
+   "old_identity": 249,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": true,
+    "p11_pass": true
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:5120",
+   "old_identity": 232,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.3125,
+   "fid_init": 0.625,
+   "donor_write_share": 0.6,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "A_in_situ"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:26752",
+   "old_identity": 211,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.1875,
+   "fid_init": 0.7812,
+   "donor_write_share": 0.8333,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "A_in_situ"
+  },
+  {
+   "child": 258,
+   "victim_body": "slot:26752",
+   "old_identity": 257,
+   "new_identity": 258,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.5,
+   "fid_init": 0.4688,
+   "donor_write_share": 0.6875,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "A_in_situ"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:17600",
+   "old_identity": 218,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.375,
+   "fid_init": 0.625,
+   "donor_write_share": 0.0,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:18560",
+   "old_identity": 235,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.125,
+   "fid_init": 0.8438,
+   "donor_write_share": 0.25,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 258,
+   "victim_body": "slot:1984",
+   "old_identity": 118,
+   "new_identity": 258,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.28125,
+   "fid_init": 0.6562,
+   "donor_write_share": 0.1111,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 259,
+   "victim_body": "slot:14592",
+   "old_identity": 29,
+   "new_identity": 259,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.3125,
+   "fid_init": 0.625,
+   "donor_write_share": 0.2,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 260,
+   "victim_body": "slot:31232",
+   "old_identity": 249,
+   "new_identity": 260,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.3125,
+   "fid_init": 0.625,
+   "donor_write_share": 0.8,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 261,
+   "victim_body": "slot:4416",
+   "old_identity": 112,
+   "new_identity": 261,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.25,
+   "fid_init": 0.7188,
+   "donor_write_share": 0.875,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 262,
+   "victim_body": "slot:28864",
+   "old_identity": 136,
+   "new_identity": 262,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.125,
+   "fid_init": 0.7812,
+   "donor_write_share": 1.0,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 263,
+   "victim_body": "slot:24064",
+   "old_identity": 125,
+   "new_identity": 263,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.1875,
+   "fid_init": 0.75,
+   "donor_write_share": 0.5,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:5120",
+   "old_identity": 232,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.3125,
+   "fid_init": 0.625,
+   "donor_write_share": 0.6,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "C_reimplant_random"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:26752",
+   "old_identity": 211,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.1875,
+   "fid_init": 0.7812,
+   "donor_write_share": 0.8333,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "C_reimplant_random"
+  },
+  {
+   "child": 258,
+   "victim_body": "slot:26752",
+   "old_identity": 257,
+   "new_identity": 258,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.5,
+   "fid_init": 0.4688,
+   "donor_write_share": 0.6875,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "NO",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "C_reimplant_random"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:16064",
+   "old_identity": 171,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "NOT_IDENTIFIABLE",
+   "donor_material_share": 0.28125,
+   "fid_init": 0.625,
+   "donor_write_share": 0.8889,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "NO",
+    "S_author": "NO",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NOT_IDENTIFIABLE",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 256,
+   "victim_body": "slot:15744",
+   "old_identity": 219,
+   "new_identity": 256,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 0.0667,
+   "cf": {
+    "N_real": "NO",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": true,
+    "p11_pass": true
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  },
+  {
+   "child": 257,
+   "victim_body": "slot:13504",
+   "old_identity": 131,
+   "new_identity": 257,
+   "body_continuity": "SAME_BODY",
+   "hu_continuity": "anc0",
+   "donor_material_share": 0.9375,
+   "fid_init": 0.0,
+   "donor_write_share": 0.3333,
+   "cf": {
+    "N_real": "YES",
+    "S_rebuild": "YES",
+    "S_author": "YES",
+    "N_random": "YES"
+   },
+   "native": {
+    "causal": false,
+    "p11_pass": false
+   },
+   "spontaneous": "NO",
+   "arm": "B_reimplant_actual"
+  }
+ ],
+ "wall_s": 0.4
+}
