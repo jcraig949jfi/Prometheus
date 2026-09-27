@@ -1,0 +1,376 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.8959,
+        "n": 1,
+        "p50": 0.8959,
+        "p95": 0.8959,
+        "p99": 0.8959
+      }
+    },
+    "fetch": {
+      "calls": 113,
+      "failures": 28,
+      "first_half_failures": 19,
+      "first_half_p50_s": 0.1852,
+      "latency_s": {
+        "max": 0.3407,
+        "n": 113,
+        "p50": 0.198,
+        "p95": 0.2899,
+        "p99": 0.3016
+      },
+      "second_half_failures": 9,
+      "second_half_p50_s": 0.2015
+    },
+    "get_pod": {
+      "calls": 10,
+      "failures": 0,
+      "first_half_failures": 0,
+      "first_half_p50_s": 0.2885,
+      "latency_s": {
+        "max": 0.6153,
+        "n": 10,
+        "p50": 0.2872,
+        "p95": 0.6153,
+        "p99": 0.6153
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.2713
+    },
+    "list_pods": {
+      "calls": 3,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.2228,
+        "n": 3,
+        "p50": 0.2086,
+        "p95": 0.2228,
+        "p99": 0.2228
+      }
+    },
+    "terminate_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.6971,
+        "n": 1,
+        "p50": 0.6971,
+        "p95": 0.6971,
+        "p99": 0.6971
+      }
+    }
+  },
+  "args": [],
+  "artifact_bytes_total": 8990,
+  "artifact_dir_listing": "<!DOCTYPE HTML>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Directory listing for /</title>\n</head>\n<body>\n<h1>Directory listing for /</h1>\n<hr>\n<ul>\n<li><a href=\"platform.jsonl\">platform.jsonl</a></li>\n<li><a href=\"stages.jsonl\">stages.jsonl</a></li>\n<li><a href=\"T-015.log\">T-015.log</a></li>\n<li><a href=\"T-016.log\">T-016.log</a></li>\n<li><a href=\"T-017.log\">T-017.log</a></li>\n<li><a href=\"T-018.log\">T-018.log</a></li>\n<li><a href=\"T-019.log\">T-019.log</a></li>\n<li><a href=\"T-020.log\">T-020.log</a></li>\n<li><a href=\"T-021.log\">T-021.log</a></li>\n<li><a href=\"T-022.log\">T-022.log</a></li>\n<li><a href=\"T-023.log\">T-023.log</a></li>\n<li><a href=\"T-024.log\">T-024.log</a></li>\n<li><a href=\"T-025.log\">T-025.log</a></li>\n<li><a href=\"T-026.log\">T-026.log</a></li>\n<li><a href=\"T-027.log\">T-027.log</a></li>\n<li><a href=\"T-028.log\">T-028.log</a></li>\n<li><a href=\"T-029.log\">T-029.log</a></li>\n<li><a href=\"T-030.log\">T-030.log</a></li>\n<li><a href=\"T-031.log\">T-031.log</a></li>\n<li><a href=\"T-032.log\">T-032.log</a></li>\n<li><a href=\"T-033.log\">T-033.log</a></li>\n<li><a href=\"T-034.log\">T-034.log</a></li>\n<li><a href=\"T-035.log\">T-035.log</a></li>\n<li><a href=\"T-036.log\">T-036.log</a></li>\n<li><a href=\"T-037.log\">T-037.log</a></li>\n<li><a href=\"T-038.log\">T-038.log</a></li>\n<li><a href=\"T-039.log\">T-039.log</a></li>\n<li><a href=\"T-040.log\">T-040.log</a></li>\n<li><a href=\"T-041.log\">T-041.log</a></li>\n<li><a href=\"T-042.log\">T-042.log</a></li>\n<li><a href=\"T-043.log\">T-043.log</a></li>\n<li><a href=\"T-044.log\">T-044.log</a></li>\n<li><a href=\"T-045.log\">T-045.log</a></li>\n<li><a href=\"T-046.log\">T-046.log</a></li>\n<li><a href=\"T-047.log\">T-047.log</a></li>\n<li><a href=\"T-048.log\">T-048.log</a></li>\n<li><a href=\"T-049.log\">T-049.log</a></li>\n<li><a href=\"T-050.log\">T-050.log</a></li>\n<li><a href=\"T-051.log\">T-051.log</a></li>\n<li><a href=\"T-052.log\">T-052.log</a></li>\n<li><a href=\"T-053.log\">T-053.log</a></li>\n<li><a href=\"T-054.log\">T-054.log</a></li>\n<li><a href=\"T-055.log\">T-055.log</a></li>\n<li><a href=\"T-056.log\">T-056.log</a></li>\n<li><a href=\"T-057.log\">T-057.log</a></li>\n<li><a href=\"T-058.log\">T-058.log</a></li>\n<li><a href=\"T-059.log\">T-059.log</a></li>\n<li><a href=\"T-060.log\">T-060.log</a></li>\n<li><a href=\"T-061.log\">T-061.log</a></li>\n<li><a href=\"T-062.log\">T-062.log</a></li>\n<li><a href=\"T-063.log\">T-063.log</a></li>\n<li><a href=\"T-064.log\">T-064.log</a></li>\n<li><a href=\"T-065.log\">T-065.log</a></li>\n<li><a href=\"T-066.log\">T-066.log</a></li>\n<li><a href=\"T-067.log\">T-067.log</a></li>\n<li><a href=\"T-068.log\">T-068.log</a></li>\n<li><a href=\"T-069.log\">T-069.log</a></li>\n<li><a href=\"T-070.log\">T-070.log</a></li>\n<li><a href=\"T-071.log\">T-071.log</a></li>\n<li><a href=\"T-072.log\">T-072.log</a></li>\n<li><a href=\"T-073.log\">T-073.log</a></li>\n<li><a href=\"T-074.log\">T-074.log</a></li>\n<li><a href=\"T-075.log\">T-075.log</a></li>\n<li><a href=\"T-076.log\">T-076.log</a></li>\n<li><a href=\"T-077.log\">T-077.log</a></li>\n<li><a href=\"T-078.log\">T-078.log</a></li>\n<li><a href=\"T-079.log\">T-079.log</a></li>\n<li><a href=\"T-080.log\">T-080.log</a></li>\n<li><a href=\"T-081.log\">T-081.log</a></li>\n<li><a href=\"T-082.log\">T-082.log</a></li>\n<li><a href=\"T-083.log\">T-083.log</a></li>\n<li><a href=\"T-084.log\">T-084.log</a></li>\n<li><a href=\"T-085.log\">T-085.log</a></li>\n<li><a href=\"T-086.log\">T-086.log</a></li>\n<li><a href=\"telemetry.jsonl\">telemetry.jsonl</a></li>\n</ul>\n<hr>\n</body>\n</html>\n",
+  "artifact_integrity": {
+    "manifest_available": true,
+    "mismatch": [],
+    "unverified": [],
+    "verified": [
+      "telemetry.jsonl"
+    ]
+  },
+  "artifact_transfer": {
+    "bytes": 8990,
+    "bytes_per_s": 51283.5,
+    "largest": {
+      "attempts": 1,
+      "bytes": 8990,
+      "fetch_s": 0.1753,
+      "integrity": "verified",
+      "path": "telemetry.jsonl",
+      "sha256": "1ae4f01ef918768506db098676abb2ef600843063d185afbbf638779535fadbb"
+    },
+    "largest_bytes_per_s": 51283.5,
+    "seconds": 0.1753
+  },
+  "artifacts": [
+    {
+      "attempts": 1,
+      "bytes": 8990,
+      "fetch_s": 0.1753,
+      "integrity": "verified",
+      "path": "telemetry.jsonl",
+      "sha256": "1ae4f01ef918768506db098676abb2ef600843063d185afbbf638779535fadbb"
+    }
+  ],
+  "artifacts_expected": [
+    "result.json",
+    "units_manifest.json",
+    "telemetry.jsonl",
+    "units.tar"
+  ],
+  "artifacts_missing": [
+    "result.json",
+    "units_manifest.json",
+    "units.tar"
+  ],
+  "bundle_sha256": "65c8836b69a5449408a0ae75d6059537c8547864dc461e5ef9fd7ef508f6cef6",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0636,
+      "rtt_min_s": 0.1327,
+      "samples": 5,
+      "uncertainty_s": 0.0664
+    },
+    "start": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0582,
+      "rtt_min_s": 0.1266,
+      "samples": 5,
+      "uncertainty_s": 0.0633
+    }
+  },
+  "controller_health": {
+    "loop_s": {
+      "max": 0.9996,
+      "n": 29,
+      "p50": 0.4282,
+      "p95": 0.9979,
+      "p99": 0.9996
+    },
+    "poll_gap_s": {
+      "max": 11.0017,
+      "n": 28,
+      "p50": 10.4303,
+      "p95": 11.0004,
+      "p99": 11.0017
+    },
+    "polls": 29,
+    "spend_usd_last": 0.043859,
+    "telemetry_bytes_last": 8990
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 337.0,
+    "hourly_usd": 0.49,
+    "quote_source": "provider securePrice read 2026-09-27T15:50:15Z",
+    "reconcile_with": "python -m prometheus_gpu.cli billing --receipts <dir>",
+    "usd_estimated": 0.04587
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA L4",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-27T15:50:15Z",
+  "disposition": {
+    "cause": "TELEMETRY_STALLED",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": "zd0tbwmlp99lno",
+      "result": "ABORTED",
+      "terminate_acknowledged": true
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [
+        "result.json",
+        "units_manifest.json",
+        "units.tar"
+      ],
+      "artifacts_unverified": [],
+      "artifacts_verified": [
+        "telemetry.jsonl"
+      ],
+      "ledger": true,
+      "platform_samples": 12,
+      "telemetry_complete": false,
+      "telemetry_records": 74
+    },
+    "pod_state": "ABSENT: LIST omits it and GET returns nothing",
+    "provider_believes": {
+      "get_returns_pod": false,
+      "list_contains_pod": false,
+      "reads": 1,
+      "terminate_response": "ACK_204"
+    },
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-09-27T15:55:52Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/aether-units-20260927T155015Z",
+  "evidence_kept": [
+    "platform.jsonl",
+    "telemetry.jsonl",
+    "controller_health.jsonl",
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "7c1724109af153f324d5463fe6535b775e353e98",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA L4",
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 5400,
+    "telemetry_interval_s": 30
+  },
+  "last_stage": "module_start",
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 1.179,
+      "accepted_to_first_contact_s": 21.617,
+      "accepted_to_first_telemetry_s": 25.511,
+      "artifact_transfer_s": 2.797,
+      "create_call_s": 1.254,
+      "teardown_total_s": 5.094,
+      "terminate_ack_s": 0.697,
+      "total_wall_s": 338.162
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 1.325
+    },
+    "module_reported_elapsed_s": 1.988,
+    "pod_clock": {
+      "bootstrap_total_s": 0.551,
+      "fetch_s": 0.279,
+      "unpack_s": 0.008,
+      "verify_s": 0.006
+    },
+    "synchronised": {
+      "accepted_to_module_start_s": 1.818,
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0582,
+      "provision_s": 1.266,
+      "uncertainty_s": 0.0633
+    }
+  },
+  "module": "aether-units@2",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 5400.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.25,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.005,
+    "overhead_s": 27.0,
+    "total_s": 5427.0,
+    "usd_compute": 0.375,
+    "usd_overhead": 0.0019,
+    "usd_per_pod_minute": 0.004167,
+    "usd_total": 0.3769,
+    "work_units": {
+      "estimate": 10000.0,
+      "name": "long-horizon ticks per unit",
+      "units_per_usd": 26533.996683250414,
+      "usd_per_1e9_units": 37687.5,
+      "usd_per_unit": 3.76875e-05
+    }
+  },
+  "platform_summary": {
+    "artifact_dir_b_peak": 14293.0,
+    "disk_free_b_min": 21457948672.0,
+    "gpu_errors": [],
+    "gpu_mem_total_mib": 23034.0,
+    "gpu_mem_used_mib_peak": 0.0,
+    "gpu_names": [
+      "NVIDIA L4"
+    ],
+    "gpu_power_w_mean": 16.3692,
+    "gpu_power_w_peak": 16.42,
+    "gpu_temp_c_peak": 23.0,
+    "gpu_util_pct_mean": 0.0,
+    "gpu_util_pct_peak": 0.0,
+    "host_load1_peak": 56.865234375,
+    "host_mem_used_b_peak": 68552855552.0,
+    "sample_cost_s_mean": 0.2001,
+    "sample_cost_s_peak": 0.2599,
+    "samples": 12,
+    "span_s": 330.047
+  },
+  "pod_stages": {
+    "boot": 1790524218.381417,
+    "canary": 1790524218.9195702,
+    "fetched": 1790524218.6605177,
+    "module_start": 1790524218.932769,
+    "server_up": 1790524218.386489,
+    "unpacked": 1790524218.6751702,
+    "verified": 1790524218.6667101
+  },
+  "pods": [
+    {
+      "absence_evidence": {
+        "agree": true,
+        "get_absent": true,
+        "list_omits": true,
+        "reads": 1
+      },
+      "created_utc": "2026-09-27T15:55:53Z",
+      "creation_outcome": "confirmed",
+      "id": "zd0tbwmlp99lno",
+      "observed_absent": true,
+      "terminate_acknowledged": true,
+      "terminate_response": "ACK_204"
+    }
+  ],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "ABORTED",
+  "run_id": "aether-units-20260927T155015Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "0f916f239380b917bc379edcca6fa9d84ca3230514f1b039e9a4b3bf2f7a2ee1",
+  "started_utc": "2026-09-27T15:50:15Z",
+  "stock_at_launch": {
+    "NVIDIA A40": null,
+    "NVIDIA GeForce RTX 3090": null,
+    "NVIDIA L4": "Low",
+    "NVIDIA RTX 2000 Ada Generation": null,
+    "NVIDIA RTX 4000 Ada Generation": null,
+    "NVIDIA RTX A4000": null,
+    "NVIDIA RTX A5000": null,
+    "NVIDIA RTX A6000": null
+  },
+  "telemetry_summary": {
+    "complete": false,
+    "elapsed_s": 1.988,
+    "errors": 0,
+    "first_utc": "2026-09-27T15:50:18Z",
+    "kinds": {
+      "progress": 73,
+      "start": 1
+    },
+    "last_utc": "2026-09-27T15:50:20Z",
+    "max_gap_s": 0.988,
+    "module_status": null,
+    "records": 74,
+    "units_final": null,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

@@ -1,0 +1,40 @@
+[flight 12:42:20] REAL LAUNCH aether-units@3, budget ceiling $0.35
+[flight 12:42:20] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 12:42:20] credential source: host default key file
+[flight 12:42:20] bundle 0225b7b68528 reachable at the pinned commit fd7ca4fdeda7
+[flight 12:42:21] advertised stock {'NVIDIA A40': None, 'NVIDIA GeForce RTX 3090': None, 'NVIDIA L4': None, 'NVIDIA RTX 2000 Ada Generation': 'Low', 'NVIDIA RTX 4000 Ada Generation': None, 'NVIDIA RTX A4000': None, 'NVIDIA RTX A5000': None, 'NVIDIA RTX A6000': 'Low'} -> trying NVIDIA RTX 2000 Ada Generation first
+[flight 12:42:21] create attempt on NVIDIA RTX 2000 Ada Generation (1 of 8)
+[flight 12:42:23] create attempt 1 -> accepted pod=zyqd9wc7f6bc4r
+[flight 12:42:23] create CREATED -> confirmed pod=zyqd9wc7f6bc4r gpu=NVIDIA RTX 2000 Ada Generation
+[flight 12:42:23] artifact server not answering yet (status=404)
+[flight 12:42:50] pod clock offset +0.094 s (+/- 0.152 s)
+[flight 12:42:50] stage boot
+[flight 12:42:50] stage fetched
+[flight 12:42:50] stage verified
+[flight 12:42:50] stage unpacked
+[flight 12:42:50] stage canary
+[flight 12:42:50] stage module_start
+[flight 12:48:13] telemetry unchanged for 304 s and no module exit: HUNG
+[flight 12:48:21] pod clock offset +0.094 s (+/- 0.148 s)
+[flight 12:48:21] artifact dir listing retrieved (2408 bytes)
+[flight 12:48:21] artifacts NOT retrieved: result.json, units_manifest.json, units.tar
+[flight 12:48:22] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-20260927T164221Z.json
+
+RECEIPT  aether-units-20260927T164221Z
+  module        aether-units@3   result ABORTED
+  bundle        0225b7b6852803f305e5806d185074206e790e9276bf461ae98d4a5ae53652cf
+  window        2026-09-27T16:42:21Z -> 2026-09-27T16:48:21Z
+  cost          $0.0240 estimated over 360.0 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     51 records, units=None, complete=False
+  artifacts     1 retrieved
+  MISSING       result.json
+  MISSING       units_manifest.json
+  MISSING       units.tar
+  lifecycle   {"pod_clock": {"fetch_s": 0.398, "verify_s": 0.006, "unpack_s": 0.011, "bootstrap_total_s": 0.72}, "controller_clock": {"create_call_s": 1.722, "accepted_to_first_telemetry_s": 34.833, "accepted_to_first_contact_s": 25.036, "artifact_transfer_s": 5.905, "terminate_ack_s": 0.81, "absence_confirm_s": 1.276, "teardown_total_s": 9.382, "total_wall_s": 361.233}, "cross_clock": {"provision_s": 6.359, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.0943, "uncertainty_s": 0.1522, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 6.265, "accepted_to_module_start_s": 6.984}, "module_reported_elapsed_s": 33.339}
+  transfer    {"bytes": 6296, "seconds": 0.4007, "bytes_per_s": 15712.5, "largest": {"path": "telemetry.jsonl", "bytes": 6296, "sha256": "8f5a38acbb2356857d583ec52bd349270d827669833e96b60b56fba9a17acae3", "fetch_s": 0.4007, "attempts": 1, "integrity": "verified"}, "largest_bytes_per_s": 15712.5}
+  platform    {"samples": 12, "span_s": 330.182, "gpu_names": ["NVIDIA RTX 2000 Ada Generation"], "gpu_mem_used_mib_peak": 2.0, "gpu_mem_total_mib": 16380.0, "gpu_util_pct_mean": 0.0, "gpu_util_pct_peak": 0.0, "gpu_temp_c_peak": 33.0, "gpu_power_w_peak": 6.48, "gpu_power_w_mean": 6.4267, "host_load1_peak": 28.46533203125, "host_mem_used_b_peak": 42663165952.0, "disk_free_b_min": 21457952768.0, "artifact_dir_b_peak": 11799.0, "sample_cost_s_mean": 0.8063, "sample_cost_s_peak": 1.1025, "gpu_errors": []}
+  disposition {"cause": "TELEMETRY_STALLED", "controller_believes": {"result": "ABORTED", "pod_id": "zyqd9wc7f6bc4r", "terminate_acknowledged": true}, "provider_believes": {"list_contains_pod": false, "get_returns_pod": false, "terminate_response": "ACK_204", "reads": 1}, "evidence_retained": {"telemetry_records": 51, "telemetry_complete": false, "platform_samples": 12, "artifacts_verified": ["telemetry.jsonl"], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": ["result.json", "units_manifest.json", "units.tar"], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "ABSENT: LIST omits it and GET returns nothing", "resumed": null}
+  api         {"create_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 1.3201, "p95": 1.3201, "p99": 1.3201, "max": 1.3201}}, "fetch": {"calls": 108, "failures": 24, "latency_s": {"n": 108, "p50": 0.4061, "p95": 0.6077, "p99": 0.6654, "max": 0.6897}, "first_half_p50_s": 0.4047, "second_half_p50_s": 0.4055, "first_half_failures": 15, "second_half_failures": 9}, "get_pod": {"calls": 11, "failures": 0, "latency_s": {"n": 11, "p50": 0.4765, "p95": 1.4992, "p99": 1.4992, "max": 1.4992}, "first_half_p50_s": 0.4765, "second_half_p50_s": 0.4754, "first_half_failures": 0, "second_half_failures": 0}, "list_pods": {"calls": 3, "failures": 0, "latency_s": {"n": 3, "p50": 0.1959, "p95": 0.2859, "p99": 0.2859, "max": 0.2859}}, "terminate_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.8099, "p95": 0.8099, "p99": 0.8099, "max": 0.8099}}}
+[flight 12:48:22] FLIGHT_FAIL
+combinations exit=1

@@ -1,0 +1,39 @@
+{
+  "built_with": "git show <commit>:<path> | sha256, on BUCKKEEP 2026-09-27",
+  "commit": "ee81c047464d28eb4b5e26df64b5e40bd06bc5e4",
+  "files": {
+    "prometheus/__init__.py": "07d6ce6e81ff883d3a9f247bd8be53a3a624a64bf7bbe588369be9e7ddce3d28",
+    "prometheus/ananke/__init__.py": "e91087fabf321de3336262b52c2039d3f570f4ccb3778a7fe0323b8caebd1048",
+    "prometheus/ananke/analysis_a0.py": "7431733d64d4d5ac08040d87f82e2a01520abd665a444dc795f537a654ab96b3",
+    "prometheus/ananke/assays.py": "b63b19c7dbb79bdeccbae568aa35e3e9aa5a663381f47aa374fe33a525ce0e94",
+    "prometheus/ananke/c1b.py": "fd3abc8acc37e2202ecca208a56b5c3e9392d689aff161f86201f7de93fb1e07",
+    "prometheus/ananke/c1b_run.py": "19a79b0c63788bddf1b87cc406adea3900515a094666b82ca90000d75f472906",
+    "prometheus/ananke/campaign.py": "8d67b65a40fc3d6f789125bd14737ec868c8f3e3c8eb314665b7ae45922cd160",
+    "prometheus/ananke/engine.py": "2a36d4062368d6f72f0ce5626bd34810fa980b5e24174660d96c380152c3131a",
+    "prometheus/ananke/envs.py": "76f73f42a432980543c10e3174787428c72f52db45b41207f3926c314815736a",
+    "prometheus/ananke/launch.py": "f200a57b5e9429cc17dc688f8bd63012c6336814b31cb44bc31633dfcc762079",
+    "prometheus/ananke/oracle.py": "99965341642356ea4192cfa2ebedbd342a7837629d441f2da9e0c4334bfae271",
+    "prometheus/ananke/physics.py": "f0651325603aff250caec9215bf8247839de529e0d42b0acf72bbff56917f6c0",
+    "prometheus/ananke/plants.py": "79cbc4b735c421cea9a129a522b9938a5ec5d624c1857da42bcae8011b615414",
+    "prometheus/ananke/report.py": "9fa79bd0f321c8c3d83f8ef88af68683c979e786416006c8520f1f2e9a632f12",
+    "prometheus/ananke/rng.py": "d6e7bb7452b75bb24b920a28a35b87953ef56b5c656463e6161787db7182afba",
+    "prometheus/ananke/search.py": "f3e628f7be1e77b4a86986dbd13a248b91b6a395a3ef394db2ebb523d8e56f9f",
+    "prometheus/ananke/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prometheus/ananke/tests/golden_c1_controls.json": "e2a24a1b860bb05245f9225c52c990c2ab39e6f42f522e96b868c4d0be768c98",
+    "prometheus/ananke/tests/golden_controls.py": "aed75c8ffa5e59d610b65a5f33b2d831a3789036d7431f0108d719a6fcbfcd9c",
+    "prometheus/ananke/tests/test_c1b.py": "1dc7d7fac58db112d78327054684b0827d9c95b851179036d53f25b7c34a13b6",
+    "prometheus/ananke/tests/test_c1b_run.py": "5d429b6730deee11d05fd245dff678f22ed386f55d394e7e8a356344a0ed1310",
+    "prometheus/ananke/tests/test_c1b_switches.py": "5fb51ffcb239544dd1d66acb9a5142269f0aaacb8498ff083ecf6b6a832f6bcc",
+    "prometheus/ananke/tests/test_campaign_logic.py": "44488962223798ae2a33b0d3543e397b253df3f0d875fe64c6808620073be188",
+    "prometheus/ananke/tests/test_conformance.py": "85b2fa9f6f836cc4d8c5e590ef2dc7ccb1288ed2df41d69a24048df97f9a6b2d",
+    "prometheus/ananke/tests/test_envs_assays.py": "b6c1f21fce5887678358d3aed1c005be4e186ebc2382e1e438cb0e6fc5c4deba",
+    "prometheus/ananke/tests/test_oracle_selfcheck.py": "a25270e0e735659b3e0464176c0e5e214e29852d526fb332bcdfad3ca940e0e7",
+    "prometheus/ananke/topology.py": "3270692e43b9e3e7f6f2e231103afdaa980eabf666451a53a983004b746265dc"
+  },
+  "owner_seat": "Ananke",
+  "run_tests": [
+    "prometheus/ananke/tests/test_conformance.py",
+    "prometheus/ananke/tests/test_oracle_selfcheck.py",
+    "prometheus/ananke/tests/test_envs_assays.py"
+  ]
+}

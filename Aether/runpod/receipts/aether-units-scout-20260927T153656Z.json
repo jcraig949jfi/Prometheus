@@ -1,0 +1,731 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 1.2261,
+        "n": 1,
+        "p50": 1.2261,
+        "p95": 1.2261,
+        "p99": 1.2261
+      }
+    },
+    "fetch": {
+      "calls": 126,
+      "failures": 50,
+      "first_half_failures": 50,
+      "first_half_p50_s": 0.2653,
+      "latency_s": {
+        "max": 0.7028,
+        "n": 126,
+        "p50": 0.3636,
+        "p95": 0.664,
+        "p99": 0.6754
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.4256
+    },
+    "get_pod": {
+      "calls": 24,
+      "failures": 0,
+      "first_half_failures": 0,
+      "first_half_p50_s": 0.5019,
+      "latency_s": {
+        "max": 0.6043,
+        "n": 24,
+        "p50": 0.4933,
+        "p95": 0.5664,
+        "p99": 0.6043
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.4933
+    },
+    "list_pods": {
+      "calls": 3,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.2424,
+        "n": 3,
+        "p50": 0.2306,
+        "p95": 0.2424,
+        "p99": 0.2424
+      }
+    },
+    "terminate_pod": {
+      "calls": 1,
+      "failures": 0,
+      "latency_s": {
+        "max": 0.7154,
+        "n": 1,
+        "p50": 0.7154,
+        "p95": 0.7154,
+        "p99": 0.7154
+      }
+    }
+  },
+  "args": [],
+  "artifact_bytes_total": 242988,
+  "artifact_integrity": {
+    "manifest_available": true,
+    "mismatch": [],
+    "unverified": [],
+    "verified": [
+      "result.json",
+      "units_manifest.json",
+      "telemetry.jsonl",
+      "T-001.json",
+      "T-001.log",
+      "T-002.json",
+      "T-002.log",
+      "T-003.json",
+      "T-003.log",
+      "T-004.json",
+      "T-004.log",
+      "T-005.json",
+      "T-005.log",
+      "T-006.json",
+      "T-006.log",
+      "T-007.json",
+      "T-007.log",
+      "T-008.json",
+      "T-008.log",
+      "T-009.json",
+      "T-009.log",
+      "T-010.json",
+      "T-010.log",
+      "T-011.json",
+      "T-011.log",
+      "T-012.json",
+      "T-012.log",
+      "T-013.json",
+      "T-013.log",
+      "T-014.json",
+      "T-014.log"
+    ]
+  },
+  "artifact_transfer": {
+    "bytes": 242988,
+    "bytes_per_s": 19604.8,
+    "largest": {
+      "attempts": 1,
+      "bytes": 17096,
+      "fetch_s": 0.4256,
+      "integrity": "verified",
+      "path": "T-006.json",
+      "sha256": "dda996297021f1fbb9e9bad9d00999d35a71d691195266abfccadecfdebf244e"
+    },
+    "largest_bytes_per_s": 40169.2,
+    "seconds": 12.3943
+  },
+  "artifacts": [
+    {
+      "attempts": 1,
+      "bytes": 25,
+      "fetch_s": 0.3324,
+      "integrity": "verified",
+      "path": "result.json",
+      "sha256": "ff58fbbc36847debb2577a4c80afff4dcb63cabee9b01e8b6c4aa7ffc24966dc"
+    },
+    {
+      "attempts": 1,
+      "bytes": 2744,
+      "fetch_s": 0.575,
+      "integrity": "verified",
+      "path": "units_manifest.json",
+      "sha256": "398a5920af32d52f87418d9cf3c52810e227e51e501b4c169435e60c32ff95e2"
+    },
+    {
+      "attempts": 1,
+      "bytes": 4306,
+      "fetch_s": 0.3246,
+      "integrity": "verified",
+      "path": "telemetry.jsonl",
+      "sha256": "f6f6578f2ea1a28b588767a69a566d14d7ecc41634b3c670f41b42231c24d1db"
+    },
+    {
+      "attempts": 1,
+      "bytes": 17011,
+      "fetch_s": 0.4419,
+      "integrity": "verified",
+      "path": "T-001.json",
+      "sha256": "c02fb3cc64d02e936e08ced538ffa4402abb6a29d73f73461b0ced1e471ba953"
+    },
+    {
+      "attempts": 1,
+      "bytes": 314,
+      "fetch_s": 0.324,
+      "integrity": "verified",
+      "path": "T-001.log",
+      "sha256": "966924113738ba66aa821862d548b2b82f5b6c2d383cd9657fbc12eb356b623c"
+    },
+    {
+      "attempts": 1,
+      "bytes": 17055,
+      "fetch_s": 0.4285,
+      "integrity": "verified",
+      "path": "T-002.json",
+      "sha256": "90ce78e8c46fb170bf31c1f03a9e0840628c158cc50e090e12d93e9661cbf6d8"
+    },
+    {
+      "attempts": 1,
+      "bytes": 315,
+      "fetch_s": 0.5619,
+      "integrity": "verified",
+      "path": "T-002.log",
+      "sha256": "d5a807431062ebc941a31c6aa81e7a729feb1c03fd4a9f1b7167e8b24729b1ea"
+    },
+    {
+      "attempts": 1,
+      "bytes": 17066,
+      "fetch_s": 0.4255,
+      "integrity": "verified",
+      "path": "T-003.json",
+      "sha256": "f0a47d46cc6e24a3b4ed91c65ca25b6e2c408fc2f1d0d965a1a37916d3fc24a0"
+    },
+    {
+      "attempts": 1,
+      "bytes": 313,
+      "fetch_s": 0.3535,
+      "integrity": "verified",
+      "path": "T-003.log",
+      "sha256": "ebaf65c82ceb44ea60a10a2cfdc38d5968f633e029019e47307ec17c5f735373"
+    },
+    {
+      "attempts": 1,
+      "bytes": 17057,
+      "fetch_s": 0.4397,
+      "integrity": "verified",
+      "path": "T-004.json",
+      "sha256": "c272cd4fc4deeea3e9ce24ae95aa0e38816ea80acc4c93e4988fc0b07b5f0153"
+    },
+    {
+      "attempts": 1,
+      "bytes": 314,
+      "fetch_s": 0.3141,
+      "integrity": "verified",
+      "path": "T-004.log",
+      "sha256": "5792a0a7647733c51670bfbac36413110dd4961c87f782b6b6aee571acfb59c2"
+    },
+    {
+      "attempts": 1,
+      "bytes": 17047,
+      "fetch_s": 0.6751,
+      "integrity": "verified",
+      "path": "T-005.json",
+      "sha256": "ef3f47b17f3b7fd52cc52ff5d59d60d883ef9547c3511bcdb0389b9a72374f2d"
+    },
+    {
+      "attempts": 1,
+      "bytes": 315,
+      "fetch_s": 0.3212,
+      "integrity": "verified",
+      "path": "T-005.log",
+      "sha256": "a17fbc1c78e68713efd62d57a8f848363b9af6a0f5c1b5cac862100c6e22a7f6"
+    },
+    {
+      "attempts": 1,
+      "bytes": 17096,
+      "fetch_s": 0.4256,
+      "integrity": "verified",
+      "path": "T-006.json",
+      "sha256": "dda996297021f1fbb9e9bad9d00999d35a71d691195266abfccadecfdebf244e"
+    },
+    {
+      "attempts": 1,
+      "bytes": 316,
+      "fetch_s": 0.324,
+      "integrity": "verified",
+      "path": "T-006.log",
+      "sha256": "bc1273e596a641ebaab3143207089dedcf6922e399e691660ff0ee1076c18aaa"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16132,
+      "fetch_s": 0.429,
+      "integrity": "verified",
+      "path": "T-007.json",
+      "sha256": "4c4d40aa2728bf9555934c1485c2cdb923fa5fbdd1b289afad80b2a0c7b7ae6b"
+    },
+    {
+      "attempts": 1,
+      "bytes": 295,
+      "fetch_s": 0.3466,
+      "integrity": "verified",
+      "path": "T-007.log",
+      "sha256": "68499b4cef010bd4fe1099e84a22e1bb700978af2b135f254a487794d7c047f6"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16142,
+      "fetch_s": 0.4311,
+      "integrity": "verified",
+      "path": "T-008.json",
+      "sha256": "fcb577bde3d8943e4153f0891ebb932e8de8f918af0802fc7e07db1214639e48"
+    },
+    {
+      "attempts": 1,
+      "bytes": 298,
+      "fetch_s": 0.3242,
+      "integrity": "verified",
+      "path": "T-008.log",
+      "sha256": "a1ed104803863b7c03497ab23f313fa828ddfe863a5e266390d9a2c4e78773d3"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16156,
+      "fetch_s": 0.4512,
+      "integrity": "verified",
+      "path": "T-009.json",
+      "sha256": "baa86f8eda8cffa967d9d18971cc9616e45998aa72e82abb13cfd3306e2a0962"
+    },
+    {
+      "attempts": 1,
+      "bytes": 300,
+      "fetch_s": 0.3306,
+      "integrity": "verified",
+      "path": "T-009.log",
+      "sha256": "54e0f0fce74a8b9baf589fcef16ae832bc8b166c62a3e9c9e53e09f08977b2d7"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16155,
+      "fetch_s": 0.4272,
+      "integrity": "verified",
+      "path": "T-010.json",
+      "sha256": "f9103bfdeb6ae7eea2802e586d222b28417e5114ce880c555c9098dfcbdda737"
+    },
+    {
+      "attempts": 1,
+      "bytes": 297,
+      "fetch_s": 0.328,
+      "integrity": "verified",
+      "path": "T-010.log",
+      "sha256": "8a651c2562b6c265270a6372eac77434adf75435d9da1c35a1e4c1f145e2d8a4"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16158,
+      "fetch_s": 0.4533,
+      "integrity": "verified",
+      "path": "T-011.json",
+      "sha256": "e709c17ea87bf863b57838d22ea88e9d5d704ae14c98a843dd794a4b107e1a4c"
+    },
+    {
+      "attempts": 1,
+      "bytes": 293,
+      "fetch_s": 0.3168,
+      "integrity": "verified",
+      "path": "T-011.log",
+      "sha256": "29ccf07431e8fca5cb95cde8aeb65333e7f7ca0e8aaa1206ad5d5e360b07711a"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16173,
+      "fetch_s": 0.4317,
+      "integrity": "verified",
+      "path": "T-012.json",
+      "sha256": "1946af31f9adf7eca32cdf00c36dadc6798c66bb197b9680c2ff764ae4cd77ec"
+    },
+    {
+      "attempts": 1,
+      "bytes": 300,
+      "fetch_s": 0.2998,
+      "integrity": "verified",
+      "path": "T-012.log",
+      "sha256": "68f203264d556ee22a64e69cbbcf408174861db03dd06d34591e34f35fd069ff"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16200,
+      "fetch_s": 0.4432,
+      "integrity": "verified",
+      "path": "T-013.json",
+      "sha256": "a0aa74f0c13a533c0bb6dc17f429582c7910d86941dd3a4806e4d99e13251e8a"
+    },
+    {
+      "attempts": 1,
+      "bytes": 298,
+      "fetch_s": 0.3344,
+      "integrity": "verified",
+      "path": "T-013.log",
+      "sha256": "2ab361e6340ca4a1574e11479fd4dc64f952541cb7d6155d5eff1cb8e51f1901"
+    },
+    {
+      "attempts": 1,
+      "bytes": 16201,
+      "fetch_s": 0.4515,
+      "integrity": "verified",
+      "path": "T-014.json",
+      "sha256": "cbe3224824d91c9423854a4373a4860f3c89e92f64b3ab7cd4e3558823fb2002"
+    },
+    {
+      "attempts": 1,
+      "bytes": 296,
+      "fetch_s": 0.3287,
+      "integrity": "verified",
+      "path": "T-014.log",
+      "sha256": "47636255bc7cc14933d9f9d54c82bef0b6a06b2fab3e125c7ba36ba43b1e02c8"
+    }
+  ],
+  "artifacts_expected": [
+    "result.json",
+    "units_manifest.json",
+    "telemetry.jsonl",
+    "T-001.json",
+    "T-001.log",
+    "T-002.json",
+    "T-002.log",
+    "T-003.json",
+    "T-003.log",
+    "T-004.json",
+    "T-004.log",
+    "T-005.json",
+    "T-005.log",
+    "T-006.json",
+    "T-006.log",
+    "T-007.json",
+    "T-007.log",
+    "T-008.json",
+    "T-008.log",
+    "T-009.json",
+    "T-009.log",
+    "T-010.json",
+    "T-010.log",
+    "T-011.json",
+    "T-011.log",
+    "T-012.json",
+    "T-012.log",
+    "T-013.json",
+    "T-013.log",
+    "T-014.json",
+    "T-014.log"
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "26899856079b7a06b5ae7b2d4b9c60f1fbc49fa30f4fd017b9312f500aa65172",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 1,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.0996,
+      "rtt_min_s": 0.2909,
+      "samples": 5,
+      "uncertainty_s": 0.1454
+    },
+    "start": {
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.1513,
+      "rtt_min_s": 0.412,
+      "samples": 5,
+      "uncertainty_s": 0.206
+    }
+  },
+  "controller_health": {
+    "loop_s": {
+      "max": 3.5314,
+      "n": 14,
+      "p50": 1.2587,
+      "p95": 2.095,
+      "p99": 3.5314
+    },
+    "poll_gap_s": {
+      "max": 13.5371,
+      "n": 13,
+      "p50": 11.2703,
+      "p95": 12.1006,
+      "p99": 13.5371
+    },
+    "polls": 14,
+    "spend_usd_last": 0.033155,
+    "telemetry_bytes_last": 4306
+  },
+  "cost": {
+    "basis": "measured wall time at a quoted rate; no provider billing data was obtained",
+    "billing_reconciled": false,
+    "elapsed_s": 259.6,
+    "hourly_usd": 0.49,
+    "quote_source": "provider securePrice read 2026-09-27T15:36:56Z",
+    "reconcile_with": "python -m prometheus_gpu.cli billing --receipts <dir>",
+    "usd_estimated": 0.03534,
+    "work_units": {
+      "actual": 1000.0,
+      "name": "long-horizon ticks per unit",
+      "usd_per_1e9_units": 35340.559998485776,
+      "usd_per_unit": 3.534055999848578e-05
+    }
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA L4",
+      "outcome": "CREATED"
+    }
+  ],
+  "created_utc": "2026-09-27T15:36:57Z",
+  "disposition": {
+    "cause": "OK",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": "lt1t7ofxvgrwoq",
+      "result": "OK",
+      "terminate_acknowledged": true
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [],
+      "artifacts_unverified": [],
+      "artifacts_verified": [
+        "result.json",
+        "units_manifest.json",
+        "telemetry.jsonl",
+        "T-001.json",
+        "T-001.log",
+        "T-002.json",
+        "T-002.log",
+        "T-003.json",
+        "T-003.log",
+        "T-004.json",
+        "T-004.log",
+        "T-005.json",
+        "T-005.log",
+        "T-006.json",
+        "T-006.log",
+        "T-007.json",
+        "T-007.log",
+        "T-008.json",
+        "T-008.log",
+        "T-009.json",
+        "T-009.log",
+        "T-010.json",
+        "T-010.log",
+        "T-011.json",
+        "T-011.log",
+        "T-012.json",
+        "T-012.log",
+        "T-013.json",
+        "T-013.log",
+        "T-014.json",
+        "T-014.log"
+      ],
+      "ledger": true,
+      "platform_samples": 6,
+      "telemetry_complete": true,
+      "telemetry_records": 31
+    },
+    "pod_state": "ABSENT: LIST omits it and GET returns nothing",
+    "provider_believes": {
+      "get_returns_pod": false,
+      "list_contains_pod": false,
+      "reads": 1,
+      "terminate_response": "ACK_204"
+    },
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-09-27T15:41:16Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/aether-units-scout-20260927T153656Z",
+  "evidence_kept": [
+    "platform.jsonl",
+    "T-001.json",
+    "T-001.log",
+    "T-002.json",
+    "T-002.log",
+    "T-003.json",
+    "T-003.log",
+    "T-004.json",
+    "T-004.log",
+    "T-005.json",
+    "T-005.log",
+    "T-006.json",
+    "T-006.log",
+    "T-007.json",
+    "T-007.log",
+    "T-008.json",
+    "T-008.log",
+    "T-009.json",
+    "T-009.log",
+    "T-010.json",
+    "T-010.log",
+    "T-011.json",
+    "T-011.log",
+    "T-012.json",
+    "T-012.log",
+    "T-013.json",
+    "T-013.log",
+    "T-014.json",
+    "T-014.log",
+    "result.json",
+    "telemetry.jsonl",
+    "units_manifest.json",
+    "controller_health.jsonl",
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "04ddbeb12dee7155baef75353aa649808f3d3f87",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": "NVIDIA L4",
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 600,
+    "telemetry_interval_s": 30
+  },
+  "last_stage": "module_end",
+  "lifecycle": {
+    "controller_clock": {
+      "absence_confirm_s": 1.173,
+      "accepted_to_first_contact_s": 91.293,
+      "accepted_to_first_telemetry_s": 91.293,
+      "artifact_transfer_s": 13.944,
+      "create_call_s": 1.903,
+      "teardown_total_s": 16.676,
+      "terminate_ack_s": 0.715,
+      "total_wall_s": 260.811
+    },
+    "cross_clock": {
+      "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here",
+      "provision_s": 85.757
+    },
+    "module_reported_elapsed_s": 150.613,
+    "pod_clock": {
+      "bootstrap_total_s": 0.64,
+      "execution_s": 150.661,
+      "fetch_s": 0.345,
+      "unpack_s": 0.005,
+      "verify_s": 0.003
+    },
+    "synchronised": {
+      "accepted_to_module_start_s": 86.246,
+      "method": "min-RTT midpoint against the pod's /_clock",
+      "offset_s": 0.1513,
+      "provision_s": 85.606,
+      "uncertainty_s": 0.206
+    }
+  },
+  "module": "aether-units-scout@1",
+  "notes": [],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 600.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.25,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.0431,
+    "overhead_s": 27.0,
+    "total_s": 627.0,
+    "usd_compute": 0.0417,
+    "usd_overhead": 0.0019,
+    "usd_per_pod_minute": 0.004167,
+    "usd_total": 0.0436,
+    "work_units": {
+      "estimate": 1000.0,
+      "name": "long-horizon ticks per unit",
+      "units_per_usd": 22966.507177033494,
+      "usd_per_1e9_units": 43541.666666666664,
+      "usd_per_unit": 4.3541666666666663e-05
+    }
+  },
+  "platform_summary": {
+    "artifact_dir_b_peak": 242545.0,
+    "disk_free_b_min": 21457666048.0,
+    "gpu_errors": [],
+    "gpu_mem_total_mib": 23034.0,
+    "gpu_mem_used_mib_peak": 0.0,
+    "gpu_names": [
+      "NVIDIA L4"
+    ],
+    "gpu_power_w_mean": 16.7083,
+    "gpu_power_w_peak": 16.84,
+    "gpu_temp_c_peak": 43.0,
+    "gpu_util_pct_mean": 0.0,
+    "gpu_util_pct_peak": 0.0,
+    "host_load1_peak": 59.66748046875,
+    "host_mem_used_b_peak": 96883666944.0,
+    "sample_cost_s_mean": 0.0404,
+    "sample_cost_s_peak": 0.0675,
+    "samples": 6,
+    "span_s": 150.032
+  },
+  "pod_stages": {
+    "boot": 1790523504.8193247,
+    "canary": 1790523505.4548557,
+    "fetched": 1790523505.163901,
+    "module_end": 1790523656.1207788,
+    "module_rc": 0.0,
+    "module_start": 1790523505.459514,
+    "server_up": 1790523504.8219345,
+    "unpacked": 1790523505.1718233,
+    "verified": 1790523505.1665123
+  },
+  "pods": [
+    {
+      "absence_evidence": {
+        "agree": true,
+        "get_absent": true,
+        "list_omits": true,
+        "reads": 1
+      },
+      "created_utc": "2026-09-27T15:41:17Z",
+      "creation_outcome": "confirmed",
+      "id": "lt1t7ofxvgrwoq",
+      "observed_absent": true,
+      "terminate_acknowledged": true,
+      "terminate_response": "ACK_204"
+    }
+  ],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "OK",
+  "run_id": "aether-units-scout-20260927T153656Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "3a26fe2020257a40a699e62e93fd2e5dde1dd7e8dd504c5fcc69b9632bdac181",
+  "started_utc": "2026-09-27T15:36:57Z",
+  "stock_at_launch": {
+    "NVIDIA L4": "Low",
+    "NVIDIA RTX 4000 Ada Generation": null,
+    "NVIDIA RTX A4000": null,
+    "NVIDIA RTX A5000": null
+  },
+  "telemetry_summary": {
+    "complete": true,
+    "elapsed_s": 150.613,
+    "errors": 0,
+    "first_utc": "2026-09-27T15:38:25Z",
+    "kinds": {
+      "end": 1,
+      "progress": 29,
+      "start": 1
+    },
+    "last_utc": "2026-09-27T15:40:56Z",
+    "max_gap_s": 82.036,
+    "module_status": null,
+    "records": 31,
+    "units_final": 1000,
+    "units_per_s": 6.6395,
+    "warnings": 0
+  },
+  "transport": "repo-pinned"
+}

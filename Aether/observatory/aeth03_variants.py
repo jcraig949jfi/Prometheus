@@ -70,7 +70,12 @@ if _REF not in sys.path:
 
 import gpu_aeth01 as K                                   # noqa: E402
 
-VARIANTS = ("v1", "add", "hys", "chg", "cnd", "str", "mov", "rcv", "m4")
+VARIANTS = ("v1", "add", "hys", "chg", "cnd", "str", "mov", "rcv", "m4",
+            "fwd", "rcv_add", "rcv_cnd", "rcv_str")
+# Laws that carry rcv's received flag (one bit per site, across ticks).
+RCV_FAMILY = ("rcv", "fwd", "rcv_add", "rcv_cnd", "rcv_str")
+# Laws that use cnd's conditional opcode 0x02.
+CND_FAMILY = ("cnd", "rcv_cnd")
 # `v1g` is v1 routed through this module's shared code path rather than
 # delegated to gpu_step. It exists only so the differential test can
 # prove the shared path IS v1 before any variant's single change is
@@ -86,6 +91,10 @@ SEMANTICS_ID = {
     "mov": "aeth03.mov.scout0",
     "rcv": "aeth03.rcv.scout0",
     "m4": "aeth03.m4.scout0",
+    "fwd": "aeth03.fwd.scout0",
+    "rcv_add": "aeth03.rcv_add.scout0",
+    "rcv_cnd": "aeth03.rcv_cnd.scout0",
+    "rcv_str": "aeth03.rcv_str.scout0",
     "v1g": "aeth01.v1",
 }
 COND_OPCODE = 0x02
@@ -109,13 +118,18 @@ def _target_value(field_arrays, direction, target_field):
 
 def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
          replenish_numer, replenish_amount, mut_numer, opcode, arg0, arg1,
-         payload, energy, observer=None, received=None):
+         payload, energy, observer=None, received=None, received_value=None):
     """One tick of the named variant. Same signature/returns as gpu_step.
 
-    `received` is used only by `rcv`: a bool (H, W) array, True where the
-    site received a winning template write on the PREVIOUS tick. The next
-    tick's array is returned as counters["received"]. It is the one bit of
-    per-site state `rcv` needs (see the module docstring).
+    `received` is used only by the RCV_FAMILY: a bool (H, W) array, True
+    where the site received a winning template write on the PREVIOUS tick.
+    The next tick's array is returned as counters["received"]. It is the one
+    bit of per-site state `rcv` needs (see the module docstring).
+
+    `received_value` is used only by `fwd`: the byte the site received on
+    the previous tick (the committed value of its winning template write;
+    if several fields were written, payload > arg1 > arg0 > opcode). The
+    next tick's array is returned as counters["received_value"].
     """
     if variant not in _ALL:
         raise ValueError("unknown variant %r" % (variant,))
@@ -132,12 +146,12 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
     energy_i = energy.astype(np.int64)
     starved = energy_i < write_cost
     is_emitter = opcode == K.WRITE_OPCODE
-    if variant == "cnd":
+    if variant in CND_FAMILY:
         is_emitter = is_emitter | (opcode == COND_OPCODE)
-    if variant == "rcv" and received is not None:
+    if variant in RCV_FAMILY and received is not None:
         is_emitter = is_emitter | received
     active = is_emitter & (~starved)
-    if variant == "str":
+    if variant in ("str", "rcv_str"):
         direction = ((arg0.astype(np.int64) + (energy_i >> 6)) % 4).astype(np.uint8)
     else:
         direction = (arg0 % 4).astype(np.uint8)
@@ -145,10 +159,14 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
         target_field = ((arg1 >> 3) % 5).astype(np.uint8)
     else:
         target_field = (arg1 % 5).astype(np.uint8)
-    transfer_amt = np.minimum(payload.astype(np.int16),
-                              (energy_i - write_cost).astype(np.int16))
-    value = np.where(target_field == ENERGY, transfer_amt,
-                     payload.astype(np.int16))
+    src_byte = payload.astype(np.int16)
+    if variant == "fwd" and received is not None and received_value is not None:
+        # A receipt-activated site (not itself a WRITE site) emits the byte it
+        # received instead of its own payload.
+        relay = received & (opcode != K.WRITE_OPCODE)
+        src_byte = np.where(relay, received_value.astype(np.int16), src_byte)
+    transfer_amt = np.minimum(src_byte, (energy_i - write_cost).astype(np.int16))
+    value = np.where(target_field == ENERGY, transfer_amt, src_byte)
     cond_key = ((arg0 >> 2) & 3).astype(np.int16)
     is_cond = opcode == COND_OPCODE
 
@@ -158,6 +176,7 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
     winner4_has, winner4_val = None, None
     won_src = np.zeros((H, W), dtype=bool)        # mov: a source's template proposal won
     received_next = np.zeros((H, W), dtype=bool)  # rcv: site got a winning template write
+    received_value_next = np.zeros((H, W), dtype=np.int16)   # fwd
 
     for f in range(5):
         best_has = np.zeros((H, W), dtype=bool)
@@ -175,7 +194,7 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
             n_field = np.roll(target_field, shift, axis=(0, 1))
             n_value = np.roll(value, shift, axis=(0, 1))
             slot_valid = n_active & (n_dir == required_dir) & (n_field == f)
-            if variant == "cnd":
+            if variant in CND_FAMILY:
                 n_cond = np.roll(is_cond, shift, axis=(0, 1))
                 n_key = np.roll(cond_key, shift, axis=(0, 1))
                 slot_valid = slot_valid & (~n_cond | ((here & 3) == n_key))
@@ -210,11 +229,13 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
                     # target (r, c) won from the source at (r + dr, c + dc)
                     won_src |= np.roll(win_slot == slot, (dr, dc), axis=(0, 1))
             commit = best_value
-            if variant == "add":
+            if variant in ("add", "rcv_add"):
                 commit = (template[f] + best_value) & 0xFF
             trig, bit_idx = K.mu_vec(seed, tick, packed, f, mut_numer)
             stored = np.where(trig, commit ^ (np.int16(1) << bit_idx), commit)
             template[f] = np.where(best_has, stored, template[f])
+            if variant == "fwd":
+                received_value_next = np.where(best_has, stored, received_value_next)
 
     next_opcode, next_arg0, next_arg1, next_payload = template
     if variant == "mov":
@@ -247,8 +268,10 @@ def step(variant, H, W, seed, tick, write_cost, maintenance_cost,
         "activity_density": float(np.count_nonzero(active)) / (H * W),
         "total_energy": int(e.sum()),
     }
-    if variant == "rcv":
+    if variant in RCV_FAMILY:
         counters["received"] = received_next
+    if variant == "fwd":
+        counters["received_value"] = (received_value_next & 0xFF).astype(np.uint8)
     return (
         next_opcode.astype(np.uint8), next_arg0.astype(np.uint8),
         next_arg1.astype(np.uint8), next_payload.astype(np.uint8),

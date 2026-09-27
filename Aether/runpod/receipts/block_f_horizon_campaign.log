@@ -1,0 +1,36 @@
+[flight 11:41:52] REAL LAUNCH aether-units@2, budget ceiling $0.30
+[flight 11:41:52] credential: {"available": true, "length": 50, "prefix": "rpa_", "source": "host default key file"}
+[flight 11:41:52] credential source: host default key file
+[flight 11:41:52] bundle 01b65bbc5b49 reachable at the pinned commit 5d0e83757fc4
+[flight 11:41:54] create attempt on NVIDIA RTX A4000 (1 of 4)
+[flight 11:41:54] create attempt 1 failed status=400; reconciling inventory
+[flight 11:41:59] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:41:59] create attempt on NVIDIA RTX A5000 (2 of 4)
+[flight 11:42:00] create attempt 1 failed status=400; reconciling inventory
+[flight 11:42:05] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:42:05] create attempt on NVIDIA RTX 4000 Ada Generation (3 of 4)
+[flight 11:42:05] create attempt 1 failed status=400; reconciling inventory
+[flight 11:42:11] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:42:11] create attempt on NVIDIA L4 (4 of 4)
+[flight 11:42:11] create attempt 1 failed status=400; reconciling inventory
+[flight 11:42:16] reconcile: two reads 5 s apart show none of ours, so that failure created nothing we can see
+[flight 11:42:16] create NO_CAPACITY -> None pod=None gpu=None
+[flight 11:42:16] receipt written to C:\Prometheus-worktrees\aether-block\Aether\runpod\receipts\aether-units-20260927T154153Z.json
+
+RECEIPT  aether-units-20260927T154153Z
+  module        aether-units@2   result NOT_RUN
+  bundle        01b65bbc5b495c21aa3ff440ec815fb5416ecdcd3b91d1d2169a6f6db2c2ea20
+  window        2026-09-27T15:41:53Z -> 2026-09-27T15:42:16Z
+  cost          $0.0000 estimated over 0.0 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     0 records, units=None, complete=False
+  note          no capacity for any declared GPU (NVIDIA RTX A4000, NVIDIA RTX A5000, NVIDIA RTX 4000 Ada Generation, NVIDIA L4); provider confirms nothing exists. Declare more gpu.alternatives or try again later.
+  note          capacity is INFERRED from every create failing cleanly with a 4xx; the response bodies were not read, so a request the provider rejects as invalid would look identical. Confirm with a direct probe of the same body before changing the request.
+  note          absence of a created pod rests on two LIST reads that showed none named aether-units-20260927T154153Z; a pod omitted from every LIST cannot be excluded without its id
+  lifecycle   {"pod_clock": {}, "controller_clock": {"create_call_s": 23.236}, "cross_clock": {}}
+  transfer    null
+  platform    null
+  disposition {"cause": "NO_CAPACITY", "controller_believes": {"result": "NOT_RUN", "pod_id": null, "terminate_acknowledged": false}, "provider_believes": {}, "evidence_retained": {"telemetry_records": 0, "telemetry_complete": false, "platform_samples": 0, "artifacts_verified": [], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": [], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "never created (provider confirmed by LIST)", "resumed": null}
+  api         {"create_pod": {"calls": 4, "failures": 4, "latency_s": {"n": 4, "p50": 0.2702, "p95": 0.3071, "p99": 0.3071, "max": 0.3071}}, "list_pods": {"calls": 10, "failures": 0, "latency_s": {"n": 10, "p50": 0.1837, "p95": 0.4293, "p99": 0.4293, "max": 0.4293}, "first_half_p50_s": 0.2458, "second_half_p50_s": 0.1753, "first_half_failures": 0, "second_half_failures": 0}}
+[flight 11:42:16] FLIGHT_FAIL
+horizon exit=1

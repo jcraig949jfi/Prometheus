@@ -1,0 +1,213 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 8,
+      "failures": 8,
+      "latency_s": {
+        "max": 0.2788,
+        "n": 8,
+        "p50": 0.2684,
+        "p95": 0.2788,
+        "p99": 0.2788
+      }
+    },
+    "list_pods": {
+      "calls": 18,
+      "failures": 0,
+      "first_half_failures": 0,
+      "first_half_p50_s": 0.2164,
+      "latency_s": {
+        "max": 0.2714,
+        "n": 18,
+        "p50": 0.2109,
+        "p95": 0.2556,
+        "p99": 0.2714
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.2063
+    }
+  },
+  "args": [],
+  "artifacts": [],
+  "artifacts_expected": [
+    "result.json",
+    "units_manifest.json",
+    "telemetry.jsonl",
+    "units.tar"
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "1387724818e4bb510afba0475570b3a974f986a1c03e58134c5800d96fd161be",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 0,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": null,
+    "start": null
+  },
+  "controller_health": {
+    "polls": 0
+  },
+  "cost": {
+    "basis": "no pod existed (provider confirmed); nothing to bill",
+    "billing_reconciled": false,
+    "elapsed_s": 0.0,
+    "hourly_usd": 0.25,
+    "quote_source": "provider securePrice read 2026-09-27T16:49:19Z",
+    "reconcile_with": "python -m prometheus_gpu.cli billing --receipts <dir>",
+    "usd_estimated": 0.0
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA L4",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A5000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX 4000 Ada Generation",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX 2000 Ada Generation",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA GeForce RTX 3090",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA A40",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A6000",
+      "outcome": "FAILED_CLEAN"
+    }
+  ],
+  "created_utc": "2026-09-27T16:49:20Z",
+  "disposition": {
+    "cause": "NO_CAPACITY",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": null,
+      "result": "NOT_RUN",
+      "terminate_acknowledged": false
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [],
+      "artifacts_unverified": [],
+      "artifacts_verified": [],
+      "ledger": true,
+      "platform_samples": 0,
+      "telemetry_complete": false,
+      "telemetry_records": 0
+    },
+    "pod_state": "never created (provider confirmed by LIST)",
+    "provider_believes": {},
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-09-27T16:50:06Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/aether-units-20260927T164919Z",
+  "evidence_kept": [
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "76e226c90623b4b610f59318b1f35a42b710f8bd",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": null,
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 5400,
+    "telemetry_interval_s": 30
+  },
+  "last_stage": null,
+  "lifecycle": {
+    "controller_clock": {
+      "create_call_s": 45.85
+    },
+    "cross_clock": {},
+    "pod_clock": {}
+  },
+  "module": "aether-units@4",
+  "notes": [
+    "no capacity for any declared GPU (NVIDIA L4, NVIDIA RTX A4000, NVIDIA RTX A5000, NVIDIA RTX 4000 Ada Generation, NVIDIA RTX 2000 Ada Generation, NVIDIA GeForce RTX 3090, NVIDIA A40, NVIDIA RTX A6000); provider confirms nothing exists. Declare more gpu.alternatives or try again later.",
+    "capacity is INFERRED from every create failing cleanly with a 4xx; the response bodies were not read, so a request the provider rejects as invalid would look identical. Confirm with a direct probe of the same body before changing the request.",
+    "absence of a created pod rests on two LIST reads that showed none named aether-units-20260927T164919Z; a pod omitted from every LIST cannot be excluded without its id"
+  ],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 5400.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.25,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.005,
+    "overhead_s": 27.0,
+    "total_s": 5427.0,
+    "usd_compute": 0.375,
+    "usd_overhead": 0.0019,
+    "usd_per_pod_minute": 0.004167,
+    "usd_total": 0.3769,
+    "work_units": {
+      "estimate": 10000.0,
+      "name": "long-horizon ticks per unit",
+      "units_per_usd": 26533.996683250414,
+      "usd_per_1e9_units": 37687.5,
+      "usd_per_unit": 3.76875e-05
+    }
+  },
+  "pods": [],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "NOT_RUN",
+  "run_id": "aether-units-20260927T164919Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "9156063f889cd1f6cfad4d047f2a60e81c08191877f0a90c7df5bc43b288f9a8",
+  "started_utc": "2026-09-27T16:49:20Z",
+  "stock_at_launch": {
+    "NVIDIA A40": null,
+    "NVIDIA GeForce RTX 3090": null,
+    "NVIDIA L4": "Low",
+    "NVIDIA RTX 2000 Ada Generation": null,
+    "NVIDIA RTX 4000 Ada Generation": null,
+    "NVIDIA RTX A4000": null,
+    "NVIDIA RTX A5000": null,
+    "NVIDIA RTX A6000": null
+  },
+  "telemetry_summary": {
+    "complete": false,
+    "note": "no telemetry; the workload may never have started",
+    "records": 0
+  },
+  "transport": "repo-pinned"
+}

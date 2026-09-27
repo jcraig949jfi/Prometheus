@@ -98,3 +98,38 @@ def _winner_is_east(f, tick):
     out = V.step("mov", H=16, W=16, tick=tick, opcode=f[0], arg0=f[1],
                  arg1=f[2], payload=f[3], energy=f[4], **QUIET)
     return out[3][5, 6] == 0 and out[3][5, 4] == 40
+
+
+def test_relay_chain_content_arrives_unchanged_each_hop():
+    # Same 21-emitter payload relay as above: the flipped payload bit is
+    # CONTENT, and it must be recognised as preserved (same XOR signature)
+    # at every hop, with no altered content.
+    n, length = 64, 21
+    f = blank(n)
+    r = 10
+    for c in range(2, 2 + length):
+        f[0][r, c] = K.WRITE_OPCODE
+        f[1][r, c] = K.EAST
+        f[2][r, c] = K.PAYLOAD
+        f[3][r, c] = 50
+    w = P.World("v1", f)
+    _rows, s = P.pair_run(w, (r, 2), 3, 4, QUIET, 0, 40, P.manhattan_from(n, r, 2))
+    c = s["content"]
+    assert c["preserved"] == length and c["altered"] == 0
+    assert c["preserved_max_generation"] == length
+    assert c["preserved_max_radius"] == length
+
+
+def test_world_predicate_includes_every_carried_state():
+    # fwd carries a received byte; a twin differing ONLY in that byte must
+    # register as differing.
+    n = 8
+    f = blank(n)
+    a = P.World("fwd", f)
+    b = a.copy()
+    b.extra["received_value"][3, 3] = 9
+    site, per_field = P.diff_masks(a, b)
+    assert site[3, 3] and not any(m.any() for m in per_field)
+    b2 = a.copy()
+    b2.received[4, 4] = True
+    assert P.diff_masks(a, b2)[0][4, 4]
