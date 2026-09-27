@@ -131,3 +131,103 @@ def swap_verdict(normal_pairs, pairs) -> str:
     if lo >= nlo - 0.05:
         return "NO-EFFECT"
     return "CHANCE"
+
+
+# ------------------------------------------------------------------ instruments
+# INSTRUMENT 1: mirror-pair carrier swap (roles/Ananke/research/instruments/
+# INSTRUMENT_CARRIER_SWAP.md). Swaps answer "does X CARRY the bit at t?";
+# perturbations (delay, recipient roll) answer "is the mechanism sensitive
+# to X?" and can never FLIP.
+
+def _swap_fn(names, sub=None):
+    return lambda w: swap(w, names, sub=sub)
+
+
+def carriers(ph: Physics) -> dict:
+    """name -> (kind, between-tick fn). kind 'swap' or 'perturb'."""
+    c = {
+        "site_all": ("swap", _swap_fn(SITE_ARRAYS)),
+        "S": ("swap", _swap_fn(["S"])),
+        "Kp": ("swap", _swap_fn(["Kp"])),
+        "inbox": ("swap", _swap_fn(["Acc_sum", "Acc_cnt"])),
+        "E": ("swap", _swap_fn(["E"])),
+        "r": ("swap", _swap_fn(["r"])),
+        "w": ("swap", _swap_fn(["w"])),
+        "channel_all": ("swap", _swap_fn(FLIGHT_ARRAYS)),
+        "channel_content": ("swap", _swap_fn(["Msum"])),
+        "channel_count": ("swap", _swap_fn(["Mcnt"])),
+        "delay+1": ("perturb", lambda w: roll_slots(w, 1)),
+        "delay+2": ("perturb", lambda w: roll_slots(w, 2)),
+        "recipient_roll": ("perturb", lambda w: roll_recipients(w, 1)),
+    }
+    for k in range(ph.payload_width):
+        c[f"pay{k}"] = ("swap", _swap_fn(["Msum"], k))
+    return c
+
+
+def carrier_table(ph: Physics, genome: np.ndarray, env: envs.EnvSpec, seeds, ticks,
+                  names=None, device="cpu") -> dict:
+    """Run each named carrier intervention at every tick in `ticks` (after
+    that tick). Returns {'normal': ci, name: {'kind', 'acc': ci, 'verdict'}}.
+    Verdict rule (swap_verdict): FLIP hi99 < .40; NO-EFFECT lo99 >= normal
+    lo99 - .05; CHANCE otherwise. A 'perturb' FLIP is impossible by design;
+    CHANCE there means 'sensitive'."""
+    base = run(ph, genome, env, seeds, device=device)
+    nrm = trial_acc(base, range(env.trials))
+    out = {"normal": ci(nrm)}
+    cs = carriers(ph)
+    for n in (names or cs):
+        kind, fn = cs[n]
+        tr = run(ph, genome, env, seeds, hooks={t: fn for t in ticks}, device=device)
+        p = trial_acc(tr, range(env.trials))
+        out[n] = {"kind": kind, "acc": ci(p), "verdict": swap_verdict(nrm, p)}
+    return out
+
+
+# INSTRUMENT 2: temporal reach (INSTRUMENT_TEMPORAL_REACH.md). Single-cue
+# twins: pairs of worlds identical except for ONE trial's cue sign. The
+# profile records, per tick, whether the delivery about to reach the
+# actuator differs between twins (cue-bearing arrivals).
+
+def cue_arrival_profile(ph: Physics, genome: np.ndarray, env: envs.EnvSpec, trial: int = 5,
+                        M: int = 64, ns: int = 0x5E1F, device="cpu") -> dict:
+    seeds = assays.world_seeds(ns, M)
+    ep = envs.build(ph, env, seeds)
+    sv = ep.schedule.sense_val.clone()
+    tk0 = trial * env.period()
+    for b in range(1, M, 2):
+        sv[:, b] = sv[:, b - 1]
+        sv[tk0:tk0 + env.cue_len, b] = -sv[tk0:tk0 + env.cue_len, b - 1]
+    sidx, ridx = ep.schedule.sense_idx.clone(), ep.schedule.read_idx.clone()
+    for b in range(1, M, 2):
+        sidx[b], ridx[b] = sidx[b - 1], ridx[b - 1]
+    ws = [seeds[m - (m % 2)] for m in range(M)]
+    w = World(ph, np.repeat(genome[None], M, 0), ws, device=device,
+              schedule=Schedule(sidx, sv, ridx))
+    a = w.read_idx[:, 0]
+    bi = torch.arange(M, device=w.dev)
+    ro = int(ep.ro_tick[0, trial])
+    lags = {}
+    for t in range(env.T()):
+        slot = t % w.LM
+        d, c = w.Msum[slot][bi, a], w.Mcnt[slot][bi, a]
+        diff = (d[0::2] != d[1::2]).flatten(1).any(1) | (c[0::2] != c[1::2]).flatten(1).any(1)
+        n = int(diff.sum())
+        if n:
+            lags[t - ro] = lags.get(t - ro, 0) + n
+        w.step()
+    return {"trial": trial, "cue_onset_lag": tk0 - ro, "lags": lags, "pairs": M // 2}
+
+
+def reach(profile: dict, window_lags) -> float | None:
+    """Fraction of the cue-bearing actuator arrivals (cue onset .. readout,
+    inclusive) that fall inside window_lags (lags relative to the readout
+    tick; 0 = the readout tick). None when there are no arrivals at all
+    (reach is undefined, NOT zero)."""
+    lo = profile["cue_onset_lag"]
+    tot = {l: n for l, n in profile["lags"].items() if lo <= l <= 0}
+    s = sum(tot.values())
+    if s == 0:
+        return None
+    win = set(window_lags)
+    return sum(n for l, n in tot.items() if l in win) / s
