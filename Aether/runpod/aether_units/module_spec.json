@@ -1,0 +1,62 @@
+{
+  "name": "aether-units",
+  "version": "1",
+  "entrypoint": "run.py",
+  "description": "Aether portable work units (research block Blocks F/G): known-answer assay slices with expected hashes from committed evidence, and long-horizon propagation units (open science). Code fetched from a pinned commit with per-file sha256 verification; NumPy on CPU only, the GPU pod is used as a disposable Linux executor.",
+  "dependencies": {
+    "pip": []
+  },
+  "canary": "python3 -c \"import numpy, os; print(numpy.__version__, os.cpu_count())\"",
+  "gpu": {
+    "class": "NVIDIA RTX A4000",
+    "alternatives": [
+      "NVIDIA RTX A5000",
+      "NVIDIA RTX 4000 Ada Generation",
+      "NVIDIA L4"
+    ],
+    "cloud": "SECURE",
+    "count": 1
+  },
+  "disk_gb": 20,
+  "max_runtime_s": 5400,
+  "work_units": {
+    "name": "long-horizon ticks per unit",
+    "estimate": 10000
+  },
+  "artifacts": [
+    "result.json",
+    "units_manifest.json",
+    "telemetry.jsonl",
+    "T-001.json",
+    "T-001.log",
+    "T-002.json",
+    "T-002.log",
+    "T-003.json",
+    "T-003.log",
+    "T-004.json",
+    "T-004.log",
+    "T-005.json",
+    "T-005.log",
+    "T-006.json",
+    "T-006.log",
+    "T-007.json",
+    "T-007.log",
+    "T-008.json",
+    "T-008.log",
+    "T-009.json",
+    "T-009.log",
+    "T-010.json",
+    "T-010.log",
+    "T-011.json",
+    "T-011.log",
+    "T-012.json",
+    "T-012.log",
+    "T-013.json",
+    "T-013.log",
+    "T-014.json",
+    "T-014.log"
+  ],
+  "telemetry": {
+    "interval_s": 30
+  }
+}
