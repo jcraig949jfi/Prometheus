@@ -77,7 +77,7 @@ def main():
     ncpu = os.cpu_count() or 1
     emit(tel, "start", run_id=os.environ.get("PROMETHEUS_RUN_ID"), commit=manifest["commit"],
          cpus=ncpu, python=platform.python_version(), lh_ticks=lh_ticks,
-         units=len(units))
+         n_tasks=len(units))
     src = os.path.join(HERE, "src")
     fetch_pinned(manifest, src, tel)
     unit_py = os.path.join(src, "Aether", "observatory", "aeth03_unit.py")
@@ -118,7 +118,11 @@ def main():
     ok = all(r["exit_code"] == 0 and r["artifact_sha256"] for r in record)
     with open(os.path.join(art, "result.json"), "w", encoding="utf-8") as fh:
         json.dump({"ok": ok, "units": len(record)}, fh)
-    emit(tel, "end", ok=ok)
+    # The platform calibrates a scout from the END record: `elapsed_s` is the
+    # module's own loop time and `units` the work done, in the module's
+    # declared work units (long-horizon ticks per unit), not the task count.
+    emit(tel, "end", ok=ok, elapsed_s=round(time.monotonic() - ORIGIN, 3),
+         units=lh_ticks)
     return 0 if ok else 1
 
 
