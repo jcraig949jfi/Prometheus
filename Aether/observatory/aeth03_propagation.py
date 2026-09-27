@@ -360,6 +360,10 @@ def assay(variant, n, warmup, ticks, origins, seed_index, null=False,
             rows, summ = pair_run(w, origin, field, bit, par, warmup, ticks,
                                   dist, null=null)
             runs.append({"summary": summ, "horizons": rows})
+            # Progress line (stderr only; results are unaffected). A remote
+            # executor reads it as the unit's domain-level progress.
+            print("  origin %d/%d %s" % (len(runs), len(specs), arm),
+                  file=sys.stderr, flush=True)
         out["arms"][arm] = runs
     out["wall_seconds"] = time.time() - t0
     return out
