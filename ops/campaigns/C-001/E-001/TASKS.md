@@ -3,7 +3,7 @@
 | Task | Work | Status | Executor | Host |
 |---|---|---|---|---|
 | T-001 | BEE r038751 replay (code-material provenance) | DONE (A-002) | Archaeon[m2-1034e815] | ubu001 |
-| T-002 | contrasting BEE replay with genuine foreign material (r016299) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu002 |
+| T-002 | contrasting BEE replay with genuine foreign material (r016299) | DONE (A-001) | Archaeon[m2-1034e815] | ubu002 |
 | T-003 | NPE provenance mapping (NPE's own terms) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 |
 | T-004 | cross-engine comparison | BLOCKED on T-001..T-003 | -- | any |
 | T-005 | semantic adjudication | BLOCKED on T-004 | -- | any |
@@ -50,5 +50,5 @@
 | (pre-pilot) | T-001 | M2 SPECTREX5 | ran 2026-09-27 during Contract v0.2 (58-60 s); gives the reference result_sha256 above |
 | A-001 | T-001 | ubu001 (192.168.1.218; 4 threads, 7 GB, Ubuntu 26.04, Python 3.14.4) | FAILED (claimed 2026-09-27T11:27:01Z): SyntaxError in the probe -- my portability edit turned "\r\n" into literal newlines and was pushed without a compile check. Host and inputs fine (tool sha fcb280d0, config sha aaca26e1 verified on ubu001). Not a science or host failure |
 | A-002 | T-001 | ubu001 | DONE, claimed 2026-09-27T11:27:36Z. result_sha256 cd9547c2... == M2 reference; 74,800/74,800 rows identical to the preserved BEE log (checked on M2); harness hashes == 16fc6c2a (world 5b985241, vm 2536b1ac, grammar 3767d73d); 50.9 s wall, 141 MB RSS. Output copied to C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-001_A-002/out.json (sha256 b1fef410070c2997). Cleanup: ubu001 task dir removed, no process left (verified) |
-| A-001 | T-002 | ubu002 (192.168.1.219; 4 threads, 7 GB, Python 3.14.4) | RUNNING; claimed 2026-09-27T13:03:33Z |
+| A-001 | T-002 | ubu002 (192.168.1.219; 4 threads, 7 GB, Python 3.14.4) | DONE, claimed 2026-09-27T13:03:33Z. First try: the T-001 recipe transferred UNCHANGED (only the run id differs). result_sha256 fb10f7e4... == M2 reference; 83,384/83,384 rows identical to the preserved BEE log (checked on M2); harness hashes == 16fc6c2a; 108.3 s wall (M2 pre-pilot 122 s under load), 150 MB RSS. Output C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-002_A-001/out.json (sha256 83a24a85ba12ae84). Cleanup verified (dir absent, no process) |
 | A-001 | T-003 | ubu001 | RUNNING; claimed 2026-09-27T13:05:11Z |
