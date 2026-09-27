@@ -143,8 +143,8 @@ def stage_foundry(workers=8, draws_per_source=48):
 def assign_roles(rows, supply, rep):
     rng = random.Random(I._seed("APHRODITE/A18/ROLES/%s/%d" % (supply, rep)))
     q = sorted([r for r in rows if r.get("T4_qualified")], key=lambda r: r["name"])
-    head = [r for r in q if r.get("p_PRISTINE", 0) <= 0.5]
-    floor = [r for r in q if r.get("p_PRISTINE", 0) > 0 or r.get("p_L1", 0) > 0]
+    head = [r for r in q if r.get("p_PRISTINE", 0) <= 0.75]        # window ceiling (RB-2)
+    floor = [r for r in head if r.get("p_PRISTINE", 0) > 0]         # OBSERVE floor: PRISTINE only
     used, fams = set(), []
 
     def take(pool_, k, role):
@@ -264,10 +264,86 @@ def stage_transfer(workers=8):
             fh.flush()
 
 
+# ---------------------------------------------------------------- report (verdict rules, frozen)
+def _sign_p(a, b):
+    import math
+    n = a + b
+    return sum(math.comb(n, k) for k in range(a, n + 1)) / 2 ** n if n else 1.0
+
+
+def ladder_for(d, trows, panel):
+    """Per (replicate, arm) ladder. SOLVED/REUSABLE/CAPABILITY use the transfer
+    rows of this donor; REACHABLE/SELECTED/NOVELTY/COMPOUNDING the donor trace."""
+    held = HELD[d["arm"]]
+    grp = "CON:" + held if held in ON_PATH else None
+    own = [t for t in trows if (grp is None or t.get("source") == grp)]
+    sel_q_fams = sorted({t["family"] for t in own for c in t["cells"]
+                         if c["SELECTED"]["qualified"] and c["SELECTED"]["coord"] == "g2_new"})
+    cap_fams = sorted({t["family"] for t in own for c in t["cells"]
+                       if c["SELECTED"]["qualified"] and c["SELECTED"]["charge"] <= a17.ESCROW
+                       and not c["START"].get("ladder_qualified", c["START"]["qualified"])
+                       and not c["PRISTINE"].get("ladder_qualified", c["PRISTINE"]["qualified"])
+                       and "ladder_charge" in c["START"] and "ladder_charge" in c["PRISTINE"]})
+    return {"REACHABLE": d["n_composed_candidates"] > 0,
+            "SELECTED": bool(d["COMPOSES_held"]),
+            "SOLVED": any(c["SELECTED"]["qualified"] and not c["START"]["qualified"]
+                          for t in own for c in t["cells"]),
+            "REUSABLE": d["COMPOSES_held"] and len(sel_q_fams) >= 2,
+            "CAPABILITY_EXPANDING": d["COMPOSES_held"] and len(cap_fams) >= 2,
+            "NOVELTY": bool(d["NOVELTY_vs_G1"]), "COMPOUNDING": bool(d["COMPOSES_held"] or d["REFINES_held"]),
+            "reuse_families": sel_q_fams, "capability_families": cap_fams}
+
+
+def stage_report(_w=0):
+    panel = rd("A18_PANEL_%s.json" % DATE)["panel"]
+    roles = rd("A18_ROLES_%s.json" % DATE)
+    donors = rd_jsonl("A18_DONORS_%s.jsonl" % DATE)
+    trans = rd_jsonl("A18_TRANSFER_%s.jsonl" % DATE)
+    src = {f["name"]: f["source"] for v in roles.values() for f in v["families"]}
+    for t in trans:
+        t["source"] = src.get(t["family"])
+    out = {"panel": panel, "per_supply": {}}
+    for supply in NREP:
+        lad = {}
+        for d in donors:
+            if not d["catalog"].startswith(supply):
+                continue
+            tr = [t for t in trans if t["catalog"] == d["catalog"] and t["arm"] == d["arm"]]
+            lad.setdefault(d["arm"], {})[d["catalog"]] = ladder_for(d, tr, panel)
+        counts = {a: {k: sum(1 for v in lad.get(a, {}).values() if v[k]) for k in
+                      ("REACHABLE", "SELECTED", "SOLVED", "REUSABLE", "CAPABILITY_EXPANDING", "NOVELTY", "COMPOUNDING")}
+                  for a in ARMS}
+        n = {a: len(lad.get(a, {})) for a in ARMS}
+
+        def stepping(arm, controls):
+            sel = counts[arm]["SELECTED"]
+            ps = {c: _sign_p(sum(1 for r in lad.get(arm, {}) if lad[arm][r]["SELECTED"]
+                                 and not lad.get(c, {}).get(r, {}).get("SELECTED")),
+                             sum(1 for r in lad.get(c, {}) if lad[c][r]["SELECTED"]
+                                 and not lad.get(arm, {}).get(r, {}).get("SELECTED"))) for c in controls}
+            yes = (all(p < 0.05 for p in ps.values()) and counts[arm]["REUSABLE"] >= 5
+                   and counts[arm]["CAPABILITY_EXPANDING"] >= 5)
+            return {"sign_p_vs": ps, "YES": yes, "n": n.get(arm, 0), "selected": sel}
+        res = {"n": n, "ladder_counts": counts, "ladders": lad}
+        if supply == "CON":
+            h1 = stepping("G1", ["G1_NC", "P", "OFF_0"])
+            res["G1_STEPPING_STONE"] = ("UNTESTABLE" if n.get("G1", 0) < 8 else ("YES" if h1["YES"] else "NO"))
+            res["H1"] = h1
+            res["GENERIC_STEPPING_STONE"] = sum(stepping(s, ["P", "OFF_0"])["YES"] for s in ("SHAM_0", "SHAM_1"))
+        out["per_supply"][supply] = res
+    wr("A18_C1_RESULT_%s.json" % DATE, out)
+    for supply, res in out["per_supply"].items():
+        log("%s counts %s" % (supply, json.dumps(res["ladder_counts"])))
+        if supply == "CON":
+            log("G1_STEPPING_STONE=%s GENERIC=%s/2 H1=%s" % (res["G1_STEPPING_STONE"],
+                                                           res["GENERIC_STEPPING_STONE"], res["H1"]))
+
+
 if __name__ == "__main__":
     st = sys.argv[1]
     w = int(sys.argv[2]) if len(sys.argv) > 2 else 8
     log("stage %s workers %d fasteval=%s fastcost=%s" % (st, w, os.environ.get("A17_FASTEVAL"),
                                                          os.environ.get("A18_FASTCOST")))
-    {"foundry": stage_foundry, "donors": stage_donors, "transfer": stage_transfer}[st](w)
+    {"foundry": stage_foundry, "donors": stage_donors, "transfer": stage_transfer,
+     "report": stage_report}[st](w)
     log("stage %s done" % st)
