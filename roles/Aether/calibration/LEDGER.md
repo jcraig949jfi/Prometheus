@@ -175,3 +175,15 @@ zero visibly wrong. | Comparing the same unit's resource line across two
 hosts. | A resource figure of exactly zero is a probe failure until shown
 otherwise; check each new measurement against a second host or a known
 value before recording it.
+
+2026-09-27 | Resumed an orphaned flight (its controller was killed with
+its shell under host memory pressure) with `flight.py --resume <ledger>`
+and no module argument. | Resume fell back to the default module
+(examples/gpu_load), fetched that module's artifact list, never requested
+the real units.tar, and terminated the pod: the pod was recovered with no
+leak, but four 10,000-tick falsifier results were lost. The platform
+should have refused (fixed in 3bd6f82b4: it now does). | The receipt's
+"MISSING state.bin" -- an artifact my module never declared. | When a
+recovery command has a default that could silently apply to the wrong
+object, name the object explicitly; a tool that re-adopts a paid resource
+must take its identity from the ledger, never from a default.

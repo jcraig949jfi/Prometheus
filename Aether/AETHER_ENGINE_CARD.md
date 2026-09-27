@@ -122,12 +122,53 @@ Ambiguous or open:
 
 ## 7. KNOWN PHYSICS (established, with evidence)
 
-*Completed after the research block's C/D/E results; see the end of this
-file.*
+For B-balanced `aeth01.v1` (write cost 1, maintenance 1, replenishment 8
+at 1/8, perturbation 0.1), each item intervened on or preregistered:
+
+- **The bulk goes stationary by ~2,500 ticks** and is ~92% frozen over any
+  64-tick window (AETH-02 H1b; stationarity control at 10,000 ticks).
+- **Without injected perturbation the substrate almost stops:** ~42% of
+  template change vanishes at once, ~94% by +500 (H4, 3 seeds); ~93% of
+  template bytes never change again (rcv path probe).
+- **Edges end mostly because their source runs out of energy (89%).** Long
+  edges exist only where a neighbour keeps feeding energy; cut the supply
+  every tick and they end (H2-X2: 0.39x sham).
+- **Cycles are 0.37x a matched random graph**, the deficit carried by two
+  field mechanisms: opcode overwrite (deterministic) and arg1 perturbation
+  re-picking the field (the K2 mod-5 property; tested).
+- **A one-bit difference stays within ~1 site**, with or without injected
+  perturbation, for 500 ticks and for 10,000 (E-005).
+
+Of the single-change laws (PHYSICS_DESIGN_01-02): `hys`, `chg`, `cnd`,
+`str`, `mov`, `m4` do not propagate and several freeze further; `add`
+turns redundant writes into counting (83% constant-step) and stays local;
+`rcv` ("a written site fires once") propagates ACTIVATION TIMING along its
+own relay through inert matter, weakly without noise, on a frozen map --
+a calibration law (RCV_REINTERPRETATION). Pairwise combinations and the
+content-forwarding control are in PHYSICS_DESIGN_03 s5.
 
 ## 8. SEARCH FRONTIER
 
-*Completed after the research block; see the end of this file.*
+Explored: the neighbourhood of one baseline law (B-balanced `aeth01.v1`)
+by single rule changes to each tick phase (decode, emit, arbitrate,
+commit, settle), three pairwise combinations around the one propagating
+rule, one content-forwarding control; one parameter regime; 128^2-512^2;
+horizons to 10,000 ticks.
+
+Untouched, and large:
+- **Parameter space.** Every result is one energy regime. Write cost,
+  maintenance, replenishment and perturbation rate were never varied as
+  experiments; the frozen-medium result may be a property of B-balanced
+  energy, not of the law.
+- **Initial conditions.** Only unstructured sparse soups. No seeded
+  structures, no gradients, no boundaries.
+- **Rules that change the medium.** Every law so far leaves ~93% of the
+  template frozen without noise; the frontier question (TH-009) is a law
+  whose own dynamics keep rewriting the medium without being noise or
+  counting.
+- **Asynchronous or multi-site rules**, and the candidate families rejected
+  at AETH-01 design (reaction automata, mobile particles), which were
+  never built.
 
 ## 9. RUNTIME
 

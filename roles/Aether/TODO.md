@@ -1,12 +1,45 @@
 # Aether TODO
 
-Currency: **2026-09-26.** Written for the instance that boots after a
+Currency: **2026-09-27.** Written for the instance that boots after a
 context reset, a reboot, or a Claude Code upgrade. Read this AFTER the
 base-role chain and BEFORE starting anything.
 
 Check `git log --oneline origin/main -1` before assuming where main is.
-Cut a fresh task branch from origin/main; every 09-26 branch is
-integrated.
+Cut a fresh task branch from origin/main; the 09-27 research-block branch
+is integrated.
+
+---
+
+## CURRENT STATE (2026-09-27 research block) -- read first
+
+    roles/Aether/prompts/2026-09-27_research_block/DIRECTIVE.md
+    Aether/AETH-03/RESEARCH_BLOCK_SYNTHESIS_2026-09-27.md   <- start here
+    ops/threads/TH-007..TH-012.md, ops/campaigns/C-002/
+
+Done: assay audit (exact after repair; generation is a lower bound);
+rcv reinterpreted as a calibration law (frozen map); horizon robustness to
+10,000 ticks; combinations rcv_add / rcv_str NEW_BEHAVIOUR but not content
+transport; RunPod billing reconciliation (+-8% on settled flights) and
+Iteration 5 (Ananke's suite flown unmodified); 114 unit results off-host;
+known-answer lane COMPLETE (19 attempts, 4 hosts).
+
+**Open, needs the operator:** the 10,000-tick falsifier for rcv_add /
+rcv_str was lost (controller killed by host memory pressure; resume
+defect, fixed 3bd6f82b4) and, per the instruction attached to that stop,
+was not re-run. Command:
+`cd Aether/runpod && python flight.py aether_units --env AETHER_UNIT_SET=d_horizon --budget 0.25 --seat Aether --keep-large C:/Prometheus-data/runpod_artifacts --go`
+
+Next science (if continued): TH-009 (a law whose dynamics rewrite the
+medium) before anything else; a second energy regime is the cheapest
+untested axis. Keep the search small.
+
+Hard-won operational rules from this block (all in C-002 findings/ledger):
+never edit a module while its flight is in the air; a wrapper must write
+progress only when work advances; size concurrency from the container's
+cgroup quota; pass the module directory to `--resume`; artifacts > 1 MiB
+land in C:/Prometheus-data/runpod_artifacts (pass --keep-large there);
+reconcile billing only after the flight has settled (>= 1 hour);
+.gitignore ignores every **/results/ directory (use attempts/).
 
 ---
 

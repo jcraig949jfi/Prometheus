@@ -144,4 +144,105 @@ score or selection on propagation.
 
 ## 5. RESULTS
 
-*Appended after the runs.*
+*Appended after the runs.* All units ran through the portable unit runner,
+most on RunPod pods used as disposable Linux CPU executors (records:
+`ops/campaigns/C-002/E-005/`, `E-006/`; unit files for E-006 are kept
+outside the repository at `C:/Prometheus-data/aether/C-002/E-006/attempts/`,
+their sha256 in the committed units manifest). 0 locality violations in
+every unit.
+
+### 5.1 Block C — horizon (E-005)
+
+**Locality is horizon-robust to 10,000 ticks.** No clause of the §1 rule
+fires for v1, `add` or `rcv` OFF: max radius at +500 / +2,000 / +10,000 is
+2/2/2 (v1), 3/3/5 (`add`, one origin), 7/7/7 (`rcv`); no breach; late new
+generations 0% / 9.4% / 3.1%. `rcv` ON keeps growing (17 / 22 / 39; 7 of
+32 regions reach 28 sites). The one slow OFF process seen is `add`'s
+(below every bar). Full table: `ops/campaigns/C-002/E-005/RESULT.md`.
+
+### 5.2 Block D — combinations, preregistered verdicts (OFF, 128 origins each)
+
+| law | P_sust | P_content | verdict (N1 / N2) |
+|:--|--:|--:|:--|
+| rcv (component) | 0.047 | 0.031 | — |
+| add (component) | 0.008 | 0.008 | — |
+| str (component) | 0.000 | 0.000 | — |
+| cnd (component) | 0.000 | 0.000 | — |
+| **rcv_add** | **0.172** | **0.188** | **NEW_BEHAVIOUR** (both) |
+| **rcv_str** | **0.109** | **0.094** | **NEW_BEHAVIOUR** (both) |
+| rcv_cnd | 0.016 | 0.016 | ADDITIVE_OR_LESS |
+
+Both positives replicate in every seed (P_sust per seed: `rcv_add` 0.156 /
+0.219 / 0.188 / 0.125; `rcv_str` 0.125 / 0.125 / 0.125 / 0.062), where
+`rcv` alone had a seed with none. Cross-host determinism holds for the new
+laws: four units (fwd, rcv_add, rcv_cnd, rcv_str, seed 0 OFF) run on
+BUCKKEEP and on the pod give identical result hashes.
+
+### 5.3 Block E — fwd as a content control
+
+**E-P1 FAILED.** `fwd`, which forwards received bytes by construction,
+reaches generation ≥ 5 with PRESERVED content in only 3.1% of origins
+(bar: ≥ 0.05 and ≥ 2 × rcv's 0.0). **E-P2 fired** (92% of fwd's deep
+content differences "altered"), which triggered the preregistered cause
+probe (§5.4). The relay-chain fixture still shows the metric recognises
+clean transport (21/21 preserved); in a rich soup it does not.
+
+### 5.4 The cause probe (E-P2, and the falsifier for §5.2's positives)
+
+`Aether/observatory/aeth03_content_probe.py`, seeds 0-1, OFF, the assay's
+origins. For each new template difference: did a write land in BOTH worlds
+(content differs on arrival), or in ONE (the difference is that a write
+happened at all)?
+
+| law | content diffs | written in one world only | gen ≥ 2: written in both | gen ≥ 2: both, not the origin's bit |
+|:--|--:|--:|--:|--:|
+| v1 | 122 | 25% | (2 events) | — |
+| rcv | 332 | 26% | 61% | 59% |
+| fwd | 1,102 | 69% | 31% | 27% |
+| rcv_add | 1,180 | **76%** | **7.6%** | 7.3% |
+| rcv_str | 535 | 52% | 36% | 29% |
+| rcv_cnd | 274 | 52% | 67% | 64% |
+
+Reading:
+- **`rcv_add`'s "content" is activity leaving marks.** 92% of its deep
+  content differences are writes that happened in one world only: a relay
+  fired in one twin and permanently added its byte to a target. `add`
+  turns every timing difference into a lasting byte difference; `rcv`
+  supplies the timing differences. A genuine interaction — **persistence of
+  activity traces** — and not transport or transformation of content.
+- **`rcv_str` lets activity re-route activity without injected noise.** A
+  relay that fires pays energy; under `str`, energy sets aim; an extra
+  firing can move a later relay's aim across a quartile boundary. That is
+  the timing-to-topology conversion perturbation performed for `rcv`
+  (`rcv` ON 0.227; `rcv_str` OFF 0.109; `rcv` OFF 0.047), done by the
+  substrate's own resource dynamics. Its deep content differences are
+  mostly different writers winning, not the origin's content.
+- **When both worlds write, the value mostly differs by something other
+  than the origin's bit** (every law): a different source won the contest.
+  The XOR signature is not a transport detector in a rich soup; a detector
+  that follows value provenance (which byte a value was copied from) would
+  be. Recorded as an instrument limit, not repaired here.
+- The "delayed causation" share (new differences whose youngest differing
+  parent is ≥ 20 ticks old) does not discriminate: v1 0.69, rcv 0.51,
+  rcv_add 0.60, rcv_str 0.52. It supports nothing.
+
+### 5.5 What Blocks C-E establish
+
+1. The substrate's own propagation does not depend on observation horizon
+   up to 10,000 ticks.
+2. **Interactions are real.** Two pairwise combinations produce
+   super-additive propagation that neither component shows, replicated in
+   every seed and deterministic across hosts. The one-change rule was
+   hiding something.
+3. **What the interactions produce is not content transport.** `rcv_add`
+   stores traces of activity; `rcv_str` lets activity re-route activity.
+   Both are "history matters" primitives. Neither carries the origin's
+   content or transforms it.
+4. **The 10,000-tick falsifier for `rcv_add` / `rcv_str` was not
+   completed:** its flight's controller was killed under host memory
+   pressure, the pod was recovered and terminated, and a platform resume
+   defect (now fixed, `3bd6f82b4`) lost the results. Per the instruction
+   attached to that stop, it was not re-run without the operator. Command
+   to re-run: `python flight.py aether_units --env AETHER_UNIT_SET=d_horizon
+   --budget 0.25 --seat Aether --keep-large C:/Prometheus-data/runpod_artifacts --go`.
+5. No law earns GPU scale-up.
