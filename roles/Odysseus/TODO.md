@@ -1,12 +1,9 @@
 # Odysseus TODO
 
-Currency: 2026-09-26T03:50Z (from date -u). Closed items are deleted
-with the closing commit and date, purged after 24 h (base role s7).
+Currency: 2026-09-27T15:02Z (from date -u). Lane PARKED by the operator.
 
-- [ ] ODYSSEUS-01 Windows test run (delegated through comms; await receipt)
-- [ ] ODYSSEUS-02 two-host run with ubu002 (ask Artemis / operator)
-- [ ] ODYSSEUS-03 commit substrate measurements
-- [ ] ODYSSEUS-04 odysseus/INSTALL.md
+- [ ] (frozen) ODYSSEUS-01 Windows test -- hold sent to Cyclops
+- [ ] (frozen) ODYSSEUS-02 3-machine run -- needs Windows host + IP
+- [ ] On unfreeze: re-read the operator's design and re-plan the backlog
+      before resuming anything below it
 - [ ] Read aporia/doctrine/critical_memories.md and MONITORS.md in full
-Closed 2026-09-26: charter committed with MANIFEST; RESPONSIBILITIES
-rewritten; backlog filed (23 rows).

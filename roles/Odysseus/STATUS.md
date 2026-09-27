@@ -1,20 +1,15 @@
 # Odysseus status
 
-Currency: 2026-09-26T03:50Z (from date -u).
+Currency: 2026-09-27T15:02Z (from date -u).
 
-seat state: ACTIVE. Charter ADOPTED 2026-09-26 (distributed brain
-  substrate; prompts/2026-09-26_charter/).
-what it asserts: PRESENT, ACTIVE, PRODUCTIVE (brain v0 built and
-  tested on ubu001). VALID: Linux only so far; Windows PENDING
-  (ODYSSEUS-01); cross-host PENDING (ODYSSEUS-02).
-brain v0: odysseus/brain/ + odysseus/tests/ -- 71 tests pass on ubu001
-  (3 consecutive runs). Stress: 6 processes, 4000 neurons, 200 ticks,
-  40% datagram loss -> 18,462 dropped, all repaired, 200/200 tick roots
-  equal the in-process reference, full replay verifies; 57.6 s wall
-  (2.9 s with no loss).
-host: ubu001 (Ubuntu 26.04.1, 192.168.1.218, 4 cores, 7 GB, no GPU).
-monitors owned or fed: none (no resident process launched).
-blockers: Windows run needs a Windows seat (delegated); cross-host run
-  needs a node on ubu002; Windows inbound UDP needs an operator firewall
-  decision (ODYSSEUS-22).
-next executable action: ODYSSEUS-03 measurements, ODYSSEUS-04 install note.
+seat state: PARKED (lane frozen by the operator 2026-09-27 for more design;
+  prompts/2026-09-27_freeze/). Charter stands; no autonomous work on it.
+what it asserts: brain v0 exists and passes 73 tests on Linux (ubu001);
+  rehearsed 3-node run on one host verified 300/300 ticks. NOT asserted:
+  Windows, cross-host.
+frozen at: main 119b3e139 (code), fleet test prepared, not run.
+  ubu001: ~/odysseus-node installed at 119b3e139, runs/fleet1 initialised,
+  no process running. ubu002 / Windows: nothing installed.
+open delegation: comms #679 to Cyclops (Windows test) -- hold notice sent.
+monitors owned or fed: none.
+next executable action: wait for the operator's design; nothing else.
