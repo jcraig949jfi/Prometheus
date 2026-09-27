@@ -36,7 +36,12 @@ Channel: the in-flight ring (content per payload component, count, arrival
 slot, recipient). Shown so far (12 D-wave cells + M2): channel CONTENT
 (M2, M3, 3 RELAY), SITE state (HOLD latches, 1 RELAY, 1 MAJ), and a
 JOINT channel+site carrier (MAJ 4781b0a1). Never counts, never routing.
-Configuration: r as a one-time bootstrap (M3). Routing: infrastructure
+Configuration (corrected 2026-09-27 by W-B): r is a bootstrap into the
+zero-default rule variant in ~64% of the 42 qualifying C1 cells (incl. M3;
+a physics artifact: registers are 0 at tick 0). In ~29% it is a
+readout-local, per-tick CONDITIONAL BRANCH (sign-conditioned excursions
+in RELAY; sample/hold alternation in HOLD). r was never the memory
+carrier in 18/18 swap tests. Routing: infrastructure
 only. No environmental memory is possible (write-free env).
 
 BEST EXPERIMENT TYPES
@@ -66,6 +71,15 @@ mechanism labels, "configuration" vs "memory", codes (from swaps and
 decoders).
 
 KNOWN FAILURE MODES (established)
+- ZERO-DEFAULT RULE PRIVILEGE: registers start at 0, so SETRULE sends every
+  site to rule 0 at tick 0. Random initial r acts as a site-deletion mask.
+  Initialize r = 0 when asking whether rules are used (W-B).
+- PRESENT-BUT-UNUSED carriers: a component can decode the cue without
+  carrying it (4781b0a1 pay0: decoder 0.85, swap no effect). Decoders
+  alone never identify a carrier.
+- WRITTEN-BUT-NEVER-READ SCARS: non-decaying plastic stores (w, Kp)
+  keep cue-signed traces forever with no effect (W-E). Retention is not
+  use.
 - TEMPORAL-WINDOW BLINDNESS: an ablation window missing the causal tick
   (C1 D-A). Fix: cue_arrival_profile reach checks.
 - CHANNEL INERT BY PHYSICS: frozen routing under dest_mode "all".

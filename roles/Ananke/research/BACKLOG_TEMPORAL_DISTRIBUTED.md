@@ -46,7 +46,7 @@ T-CT-1 OPEN: Carrier heterogeneity inside C1 families. At mid-transit,
 
 ## B. Configuration vs memory
 
-T-M3-1 READY (threads/T-M3-1_setrule_bootstrap.md): Is SETRULE's
+T-M3-1 DONE (W-B): bootstrap-only holds for M3 (a zero-default artifact; a one-rule law is bit-identical) and for 64% of 42 cells; 29% are a readout-local per-tick conditional branch; r is never the carrier (0/18 FLIP). Split into T-BR-1 (decompile the branch; b59e6c3a, 63d17a90), T-BR-2 (HOLD sample/hold alternation; the 311c465f distractor dependence), T-BR-3 (a lineage-aware recount), T-INS-6 (r := 0 as the default in any prereg that asks whether rules are used). Was: Is SETRULE's
   evolutionary role in PTE mostly ESCAPING random initial rules? WHY: if
   so, the "rule switching" dial measures an init artefact, which changes
   how C2 should treat it. CHEAPEST: re-run the M3 champions with r
