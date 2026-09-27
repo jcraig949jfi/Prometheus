@@ -1,5 +1,8 @@
 # E-002 tasks
 
+Dispatched 2026-09-27 by the operator to a fresh Claude worker on ubu002 (instruction: HANDOFF_INSTRUCTION_verbatim.md).
+Archaeon relays Git transitions only and does not brief the worker.
+
 | Task | Work | Status | Executor | Host |
 |---|---|---|---|---|
 | T-007 | state the candidate continuity criterion | READY | -- | any |
