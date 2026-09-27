@@ -109,7 +109,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-057 | Cross-engine failure catalogue and reversal rate (ruler defects vs substrate facts) | MATURE | H-D1-64 H-D1-54 H-D5-51 H-D5-53 | umbrella of FR-058..065; SFE T5; related: Odysseus physics-of-intelligence frontier I6 (80 reversals, 13 shapes; comms #751) -- UNLOCATED, not on any origin ref; asked #752 | L |
+| FR-057 | Cross-engine failure catalogue and reversal rate (ruler defects vs substrate facts) | MATURE | H-D1-64 H-D1-54 H-D5-51 H-D5-53 | umbrella of FR-058..065; SFE T5; related: Odysseus physics-of-intelligence frontier I6 (80 reversals, 13 shapes; comms #751) -- UNLOCATED, not on any origin ref; asked #752; extends Harmonia Failure-Primitive Atlas FP-001..004 (stalled 2026-06-15, acad16c47) | L |
 | FR-058 | Threshold provenance: verdicts decided by the bar, not the physics | SHARPENED | H-D3-67 H-D3-08 H-D3-43 | narrower-than FR-057 | L |
 | FR-059 | Every gate ships a positive control: census of gates that have ever fired | SHARPENED | H-D5-43 H-D5-42 H-D5-46 H-D4-11 H-D4-29 H-D1-26 | narrower-than FR-057 | L |
 | FR-060 | Emergent phenomenon or rule restated? | RAW | H-D3-04 H-D3-23 | related FR-067 | L |
