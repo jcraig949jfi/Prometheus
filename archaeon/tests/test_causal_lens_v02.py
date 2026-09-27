@@ -27,7 +27,9 @@ def test_continuity_rule_semantics():
     assert continuity({"a": 0.5, "b": 0.5}, M)["hu_continuity"] == ILL                 # symmetric
     assert continuity({"a": 0.6, "b": 0.4}, M)["hu_continuity"] == "a"                 # declared majority
     assert continuity({"a": 0.34, "b": 0.33, "c": 0.33}, M)["hu_continuity"] == ILL    # many-to-many, no majority
-    assert continuity({"a": NI, "b": 0.9}, M)["hu_continuity"] == NI                   # incomplete evidence is never ILL_POSED
+    assert continuity({"a": NI, "b": 0.4}, M)["hu_continuity"] == NI                   # incomplete evidence that could matter: never ILL_POSED
+    assert continuity({"a": NI, "b": 0.6}, M)["hu_continuity"] == "b"                  # v0.2.1: a strict known majority is decided
+    assert continuity({"a": NI, "b": 0.5}, M)["hu_continuity"] == NI                   # 0.5 known + 0.5 unknown could be a tie
     assert continuity({"a": 0.3, "b": 0.3}, dict(M, no_majority="ORIGINATE"))["hu_continuity"] == NONE
     assert continuity({}, M)["hu_continuity"] == NONE
 

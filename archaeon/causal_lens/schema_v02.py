@@ -61,9 +61,13 @@ def continuity(shares: Dict[str, object], rule: dict) -> dict:
     Returns {"hu_continuity": ref|NONE|NI|ILL_POSED, "ill_posed": justification?}. The engine-neutral heart of B1."""
     if rule.get("kind") != "MAJORITY": raise ContractViolation("unknown hu_rule %r" % rule)
     if not shares: return {"hu_continuity": NONE}
-    if any(v == NI for v in shares.values()):
+    thr = rule.get("threshold", 0.5)
+    known = {h: v for h, v in shares.items() if v != NI}
+    if len(known) < len(shares):                                                 # v0.2.1: unknown shares matter only if they could change the answer
+        if known and max(known.values()) > thr and sum(1 for v in known.values() if v == max(known.values())) == 1:
+            return {"hu_continuity": max(known, key=known.get)}                   # a strict known majority cannot be overturned
         return {"hu_continuity": NI}                                             # J6: incomplete evidence is never ILL_POSED
-    thr = rule.get("threshold", 0.5); best = max(shares.values()); top = [h for h, v in shares.items() if v == best]
+    best = max(shares.values()); top = [h for h, v in shares.items() if v == best]
     if best > thr and len(top) == 1: return {"hu_continuity": top[0]}
     if len(top) > 1 and best >= thr:
         return {"hu_continuity": ILL, "ill_posed": {"rule": rule, "evidence": shares, "why": "tie between %s" % sorted(top)}}

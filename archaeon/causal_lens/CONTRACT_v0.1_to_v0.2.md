@@ -22,3 +22,9 @@ Guarantees tested (archaeon/tests/test_causal_lens_v02.py):
 - the heredity edges and establishments are unchanged;
 - each v0.1 claim is kept verbatim under `v01`;
 - every v0.1 cheat, once upgraded, is still rejected.
+
+## v0.2.1 amendment (2026-09-27, BEFORE any adapter was ported or any regression result existed)
+`continuity()` returned NOT_IDENTIFIABLE whenever any contributor share was unknown, even when a known contributor held a STRICT majority
+that the unknown mass could not overturn (for example, 0.6 known own + 0.4 unknown). The contract text requires NOT_IDENTIFIABLE only when
+incomplete evidence could change the answer. Fix: a strict known majority (> threshold, unique) decides; otherwise any unknown mass
+-> NOT_IDENTIFIABLE, and still never ILL_POSED. Tests added. Contract text unchanged.
