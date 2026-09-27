@@ -64,7 +64,7 @@ T-CF-1 OPEN: A general configuration detector. For any champion, measure
 
 ## C. Timing
 
-T-TM-1 OPEN: Does ANY evolved PTE law carry information in timing alone?
+T-TM-1 PARTLY ANSWERED (W-C): 7/13 specimens carry the cue as WHO FIRES (presence). Timing of arrival alone is still untested. Original: Does ANY evolved PTE law carry information in timing alone?
   WHY: Aether says timing-not-content; PTE so far says content. CHEAPEST:
   lag and count decoders + the delay swap over all C1 SIGNAL comm cells.
   If none: the lens question becomes "which physics makes timing codes
@@ -94,8 +94,7 @@ T-INS-5 OPEN: Information-dynamics screening with channel variables
 
 ## E. Cross-engine and external
 
-T-X-1 READY (threads/T-X-1_content_vs_timing_aether.md): Content vs
-  timing carriers across PTE and Aether. LENS: cross-engine.
+T-X-1 DONE (W-C): the contrast as framed DOES NOT HOLD. The real axis is the receiver operator (add vs arbitrate-replace) + code/data separation. Split into T-WC-1 (two-axis carrier reporting: physical class x reader verdict), T-WC-2 (emission cost -> presence codes; QUEUED Q2), T-WC-3..5 (Aether proposals: fwd vs fwd_add; freeze flags vs bytes; erase-on-collision; Aether owns them).
 T-X-2 OPEN: Cosmos P1/P2 vs PTE carrier swap cross-validation (gated on
   Cosmos's sealed work). LENS: cross-engine.
 T-X-4 READY (threads/T-X-4_intervention_reach.md; W-D mined 8 cases in 5 seats: no single pattern; 3 checks + an identical-arms alarm cover all). Research question, NOT a fleet rule.

@@ -1,0 +1,254 @@
+{
+ "arm": "A1",
+ "k": 0,
+ "reduced": false,
+ "physics": {
+  "topology": "ring",
+  "n_sites": 144,
+  "radius": 3,
+  "k_random": 6,
+  "rewire": 50,
+  "state_dim": 2,
+  "payload_width": 2,
+  "channels": 1,
+  "fanout": 8,
+  "dest_mode": "sample",
+  "loss": 0.1,
+  "loss_per_hop": 0,
+  "lat_base": 1,
+  "lat_hop": 1,
+  "lat_jitter": 1,
+  "dup": 0.0,
+  "noise": 0,
+  "cap": 2,
+  "collision": "saturate",
+  "decay_shift": 0,
+  "update_mode": "sync",
+  "update_period": 2,
+  "update_p": 0.5,
+  "rules": 1,
+  "prog_len": 16,
+  "plastic_route": 1,
+  "adapt_shift": 5,
+  "wimm": 1,
+  "setrule": 0,
+  "mut_site": 0.0,
+  "e_income": 2,
+  "e_max": 64,
+  "c_emit": 1,
+  "c_op": 0,
+  "c_mem": 0,
+  "topo_seed": 1939803888
+ },
+ "spec": {
+  "pop": 96,
+  "M": 8,
+  "gens": 36,
+  "elite": 4,
+  "trunc": 0.25,
+  "p_field": 0.04,
+  "p_instr": 0.15,
+  "p_swap": 0.1,
+  "p_cross": 0.3,
+  "M_final": 16,
+  "M_held": 64,
+  "w_contrast": 0.1,
+  "w_any": 0.02
+ },
+ "held": {
+  "acc": 0.7434895833333333,
+  "lo99": 0.73828125,
+  "hi99": 0.748046875,
+  "zero_comm": 0.5,
+  "comm_delta": 0.24348958333333331,
+  "comm_delta_lo99": 0.23828125,
+  "comm_delta_hi99": 0.248046875
+ },
+ "champion": [
+  [
+   [
+    37,
+    133,
+    56,
+    112,
+    -74
+   ],
+   [
+    207,
+    196,
+    52,
+    114,
+    -77
+   ],
+   [
+    66,
+    16,
+    49,
+    19,
+    -111
+   ],
+   [
+    52,
+    134,
+    44,
+    5,
+    -75
+   ],
+   [
+    5,
+    179,
+    1,
+    76,
+    -96
+   ],
+   [
+    159,
+    46,
+    185,
+    121,
+    121
+   ],
+   [
+    160,
+    199,
+    217,
+    254,
+    61
+   ],
+   [
+    106,
+    187,
+    249,
+    56,
+    -106
+   ],
+   [
+    55,
+    0,
+    34,
+    190,
+    84
+   ],
+   [
+    57,
+    119,
+    33,
+    141,
+    -35
+   ],
+   [
+    153,
+    182,
+    247,
+    56,
+    39
+   ],
+   [
+    104,
+    70,
+    27,
+    48,
+    50
+   ],
+   [
+    144,
+    107,
+    202,
+    194,
+    -46
+   ],
+   [
+    145,
+    64,
+    94,
+    191,
+    81
+   ],
+   [
+    153,
+    222,
+    115,
+    184,
+    96
+   ],
+   [
+    88,
+    168,
+    194,
+    77,
+    -9
+   ]
+  ]
+ ],
+ "evolve_wall_s": 1582.4768476486206,
+ "x1": {
+  "presence": 5277,
+  "content_only": 0,
+  "fire": 350,
+  "payload_only": 0,
+  "chan_only": 0,
+  "w_diff_ticks": 0,
+  "r_diff": 0,
+  "S_diff": 1478,
+  "presence_share": 1.0,
+  "fire_share": 1.0,
+  "chan_share": 0.0,
+  "presence_without_fire_chan_or_w_at_lag": null,
+  "window": [
+   65,
+   75
+  ]
+ },
+ "x1b": {
+  "fire_diffs": 350,
+  "nonsensor_share": 0.9085714285714286,
+  "receipt_triggered_share_of_nonsensor": 0.5534591194968553,
+  "distinct_fire_diff_sites_per_pair": 5.53125
+ },
+ "x5": {
+  "normal": [
+   0.7395833333333333,
+   0.7343717447916667,
+   0.7447916666666667
+  ],
+  "content_null": [
+   0.7395833333333333,
+   0.7343717447916667,
+   0.7447916666666667
+  ],
+  "verdict": "NO-EFFECT",
+  "ticks": "S-CT swap ticks"
+ },
+ "inflight": {
+  "acc": [
+   0.310546875,
+   0.29491861979166667,
+   0.3255208333333333
+  ],
+  "verdict": "FLIP"
+ },
+ "sitestate": {
+  "acc": [
+   0.689453125,
+   0.6744791666666667,
+   0.7050813802083332
+  ],
+  "verdict": "CHANCE"
+ },
+ "payload": {
+  "acc": [
+   0.7395833333333333,
+   0.7343717447916667,
+   0.7447916666666667
+  ],
+  "verdict": "NO-EFFECT"
+ },
+ "counts": {
+  "acc": [
+   0.310546875,
+   0.29491861979166667,
+   0.3255208333333333
+  ],
+  "verdict": "FLIP"
+ }
+}

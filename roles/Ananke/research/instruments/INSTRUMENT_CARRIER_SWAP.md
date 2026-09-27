@@ -60,6 +60,18 @@ KNOWN FAILURE MODES
      history (earlier trials' residue). Control with a swap before the
      cue (t0-1): it must not flip the upcoming trial.
 
+  F7 PRESENCE READS AS CONTENT UNDER SUPERPOSITION (W-C, 2026-09-27). A
+     packet present in one twin and absent in the other is ALSO a payload
+     difference once summed. The same presence code gets "content" FLIP if
+     the reader reads the IN sum and "counts" FLIP if it reads CNT (plants
+     P-FIRE / P-FIRE-SUM, workers/W-C). A swap verdict names the READER'S
+     register, not the physical code. Report carriers on TWO axes: the
+     physical difference class (presence / firing / payload value, from
+     single-cue twins) and the reader-side swap verdict.
+  F8 COUNTS NO-EFFECT CAN BE UNREACHABLE: in 5 of 13 C1 specimens the
+     mirror partners have identical counts, so a counts swap is
+     near-identity (use arm_identical and a reach check).
+
 INTERPRETATION BOUNDARIES
   A FLIP shows sufficiency of X to transfer the bit under the physics as
   run. It does not show how the bit is coded (use decoders), where it

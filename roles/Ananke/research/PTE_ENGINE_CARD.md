@@ -5,6 +5,9 @@ envs.py, assays.py, search.py, c1b.py, lens.py). Spec: roles/Ananke/pte/
 DESIGN.md. Evidence: PTE-C1, PTE-C1b, the 2026-09-27 spikes.
 
 SCIENTIFIC LENS
+(W-C) PTE's distinctive physics is the RECEIVER OPERATOR: arrivals ADD
+(superposition), and messages can never rewrite the program. Contrast
+Aether: arbitrate-and-replace, with message-writable code.
 Where does information live, and how does it move, when computation is
 forced through lossy, delayed, SUPERPOSING messages among identical
 programs? PTE is the fleet's lens on CHANNEL STATE: information that exists
@@ -35,7 +38,13 @@ Process: S, inbox (Acc), Kp, energy E, routing w, rule pointer r.
 Channel: the in-flight ring (content per payload component, count, arrival
 slot, recipient). Shown so far (12 D-wave cells + M2): channel CONTENT
 (M2, M3, 3 RELAY), SITE state (HOLD latches, 1 RELAY, 1 MAJ), and a
-JOINT channel+site carrier (MAJ 4781b0a1). Never counts, never routing.
+JOINT channel+site carrier (MAJ 4781b0a1). Routing never carried the bit.
+CORRECTION (W-C): "channel content" is a READER-side verdict. Physically,
+7/13 specimens carry the cue as WHO FIRES (source presence or
+receipt-triggered relay firing); superposition turns presence into
+content for free. "Never counts" is NOT_VERIFIED where the counts swap
+was near-identity (5/13), and an emission-cost pilot evolved a counts
+code that FLIPs under a counts swap (n = 1).
 Configuration (corrected 2026-09-27 by W-B): r is a bootstrap into the
 zero-default rule variant in ~64% of the 42 qualifying C1 cells (incl. M3;
 a physics artifact: registers are 0 at tick 0). In ~29% it is a
