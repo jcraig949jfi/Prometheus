@@ -2,7 +2,7 @@
 
 | Task | Work | Status | Executor | Host |
 |---|---|---|---|---|
-| T-001 | BEE r038751 replay (code-material provenance) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 |
+| T-001 | BEE r038751 replay (code-material provenance) | RUNNING (A-002) | Archaeon[m2-1034e815] | ubu001 |
 | T-002 | contrasting BEE replay with genuine foreign material (r016299) | READY | -- | portable |
 | T-003 | NPE provenance mapping (NPE's own terms) | READY | -- | portable |
 | T-004 | cross-engine comparison | BLOCKED on T-001..T-003 | -- | any |
@@ -29,4 +29,5 @@
 | Attempt | Task | Host | Result |
 |---|---|---|---|
 | (pre-pilot) | T-001 | M2 SPECTREX5 | ran 2026-09-27 during Contract v0.2 (58-60 s); gives the reference result_sha256 above |
-| A-001 | T-001 | ubu001 (192.168.1.218; 4 threads, 7 GB, Ubuntu 26.04, Python 3.14.4) | RUNNING; claimed 2026-09-27T11:27:01Z |
+| A-001 | T-001 | ubu001 (192.168.1.218; 4 threads, 7 GB, Ubuntu 26.04, Python 3.14.4) | FAILED (claimed 2026-09-27T11:27:01Z): SyntaxError in the probe -- my portability edit turned "\r\n" into literal newlines and was pushed without a compile check. Host and inputs fine (tool sha fcb280d0, config sha aaca26e1 verified on ubu001). Not a science or host failure |
+| A-002 | T-001 | ubu001 | RUNNING; claimed 2026-09-27T11:27:36Z (probe fixed, py_compile checked) |

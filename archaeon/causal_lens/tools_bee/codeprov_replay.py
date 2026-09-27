@@ -37,9 +37,7 @@ def main(rid, out):
             return super()._register_offspring(j, child, parent, mechanism, fidelity, tr, replaced)
     t0 = time.time(); w = P(cfg, cfg_j["seed"]); w.run()
     import prometheus.z80atlas as PZ
-    mods = {m: hashlib.sha256(open(os.path.join(os.path.dirname(PZ.__file__), m), "rb").read().replace(b"
-", b"
-")).hexdigest()[:16]
+    mods = {m: hashlib.sha256(open(os.path.join(os.path.dirname(PZ.__file__), m), "rb").read().replace(b"\r\n", b"\n")).hexdigest()[:16]
             for m in ("world.py", "vm.py", "grammar.py", "tasks.py")}
     result_sha = hashlib.sha256(json.dumps({"births_rows": w.births, "codeprov": extra}, sort_keys=True).encode()).hexdigest()
     json.dump({"rid": rid, "births": len(w.births), "wall_s": round(time.time() - t0, 1), "harness_dir": os.path.dirname(PZ.__file__),
