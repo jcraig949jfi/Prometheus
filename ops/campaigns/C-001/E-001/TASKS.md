@@ -4,9 +4,9 @@
 |---|---|---|---|---|
 | T-001 | BEE r038751 replay (code-material provenance) | DONE (A-002) | Archaeon[m2-1034e815] | ubu001 |
 | T-002 | contrasting BEE replay with genuine foreign material (r016299) | DONE (A-001) | Archaeon[m2-1034e815] | ubu002 |
-| T-003 | NPE provenance mapping (NPE's own terms) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 |
-| T-004 | cross-engine comparison | BLOCKED on T-001..T-003 | -- | any |
-| T-005 | semantic adjudication | BLOCKED on T-004 | -- | any |
+| T-003 | NPE provenance mapping (NPE's own terms) | DONE (A-001) | Archaeon[m2-1034e815] | ubu001 |
+| T-004 | cross-engine comparison | DONE (A-003 measurement + analysis; T-004_RESULT.md) | Archaeon[m2-1034e815] | ubu002 (measurement), M2 (analysis over fetched outputs + M2-local verification) |
+| T-005 | semantic adjudication | READY | -- | any |
 | T-006 | report | BLOCKED on T-005 | -- | any |
 
 ## T-001 inputs (everything reachable from git; no M2 disk needed)
@@ -51,7 +51,7 @@
 | A-001 | T-001 | ubu001 (192.168.1.218; 4 threads, 7 GB, Ubuntu 26.04, Python 3.14.4) | FAILED (claimed 2026-09-27T11:27:01Z): SyntaxError in the probe -- my portability edit turned "\r\n" into literal newlines and was pushed without a compile check. Host and inputs fine (tool sha fcb280d0, config sha aaca26e1 verified on ubu001). Not a science or host failure |
 | A-002 | T-001 | ubu001 | DONE, claimed 2026-09-27T11:27:36Z. result_sha256 cd9547c2... == M2 reference; 74,800/74,800 rows identical to the preserved BEE log (checked on M2); harness hashes == 16fc6c2a (world 5b985241, vm 2536b1ac, grammar 3767d73d); 50.9 s wall, 141 MB RSS. Output copied to C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-001_A-002/out.json (sha256 b1fef410070c2997). Cleanup: ubu001 task dir removed, no process left (verified) |
 | A-001 | T-002 | ubu002 (192.168.1.219; 4 threads, 7 GB, Python 3.14.4) | DONE, claimed 2026-09-27T13:03:33Z. First try: the T-001 recipe transferred UNCHANGED (only the run id differs). result_sha256 fb10f7e4... == M2 reference; 83,384/83,384 rows identical to the preserved BEE log (checked on M2); harness hashes == 16fc6c2a; 108.3 s wall (M2 pre-pilot 122 s under load), 150 MB RSS. Output C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-002_A-001/out.json (sha256 83a24a85ba12ae84). Cleanup verified (dir absent, no process) |
-| A-001 | T-003 | ubu001 | RUNNING; claimed 2026-09-27T13:05:11Z |
+| A-001 | T-003 | ubu001 | DONE, claimed 2026-09-27T13:05:11Z. Pre-flight smoke (1 run, 60 epochs) OK; full: 11 runs, 34 pair births, 932 s with 3 workers, 25 MB peak. Verification on M2: 11/11 run lineages identical to the un-patched replays preserved from PORTABILITY-01 (observation non-perturbing); instrument check: WHO share == NPE native donor_last_wrote_share (prov_lit) in 34/34. result_sha256 efba5535...; output C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-003_A-001/out.json (sha256 003f50616ef34805). Cleanup verified |
 | A-001 | T-004 (Archaeon-side measurement) | ubu002 | FAILED (claimed 2026-09-27T13:07:09Z; pin 742060b38): my script assumed HITS.json "hits" is a list; it is a dict keyed by representation (vmcopy32 176, vmcopy64 21, z80_32 0). A script defect, not host or science. The fix also restricts to vmcopy32, the only representation this 32-byte VM runs |
 | A-002 | T-004 (Archaeon-side measurement) | ubu002 | DONE (claimed 2026-09-27T13:07:41Z; pin 2a0470fed): 90,112 executions, 19,615 copier births, no location/material divergence detected; block-15 host panel: 3,598 hosting births, 1,024 with host material running in the neighbour region. 15.5 s, 22 MB. Superseded by A-003 for the child identity (the same measurement plus the child class) |
 | A-003 | T-004 (Archaeon-side measurement + child identity) | ubu002 | DONE (claimed 2026-09-27T13:08:33Z; pin d911d43bc). Hosting births emitting the resident exactly: 3,594. Of these, 2,570 execute mostly resident material with location == material; 1,024 execute host material from the neighbour region (512 host-material majority, 512 mixed). result_sha256 b367ebe0...; 15.6 s, 22 MB. Output C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-004_A-003/out.json. Cleanup verified on ubu002 |

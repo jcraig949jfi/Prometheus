@@ -52,3 +52,28 @@ What the Task actually needed in order to move (observed, not designed):
 Minimum portable-Task record, as used by T-001: code refs (commits + file sha256); input artifacts (path in git + sha256); a
 host-independent command; resources (CPU/RAM/wall); expected result hash; where verification must run; output destination; cleanup
 rule. See E-001/TASKS.md "T-001 inputs".
+
+## Pilot finding 2 (2026-09-27): the recipe fanned out to a second node
+Outcomes:
+- T-002 ran on ubu002 on the first attempt, with the T-001 recipe unchanged (only the run id and its committed config differ). It was
+  bit-identical to M2 (fb10f7e4...; 83,384/83,384 rows).
+- T-003 (NPE, different engine and different code) ran on ubu001 on the first attempt using the same recipe, with 3 workers on a 4-thread
+  laptop.
+- The T-004 measurement ran on ubu002. Two attempts failed on my script defects (a wrong assumption about the HITS.json format); the
+  third succeeded.
+
+Friction that actually occurred (and only that):
+1. Script defects, not host defects. T-004 A-001 assumed a list where HITS.json has a dict keyed by representation. That assumption
+   also hid a science trap (64-byte tapes cannot run on the 32-byte VM). Recorded as FAILED and retried.
+2. Instrument timing hazard. NPE's VM advances pc before ED-prefixed writes, so the probe had to capture the instruction address at
+   fetch. This is a correctness requirement of the observation, found by reading the engine before running it.
+3. Runtime difference. Python 3.14 on Linux starts multiprocessing workers with forkserver, not fork, so runtime patches must be applied
+   per worker (the probe did). Nothing else about the Linux nodes mattered: stdlib only, Python 3.14.4 on both, no installs.
+4. Verification stayed on M2 in every task. BEE's preserved traced logs (282 MB) and the PORTABILITY-01 NPE replays exist only on M2's
+   disk, so every "science unchanged" check ran there on outputs copied back (13-15 MB each).
+5. The Git relay stayed on M2. The nodes cannot push, so every claim, failure and receipt was committed from M2.
+6. Resources were not a problem. The largest was T-003: 932 s wall and 25 MB peak with 3 workers. BEE replays ran in 51-108 s and
+   141-150 MB. Nothing came near the 8 GB nodes' limits.
+7. Cleanup worked. Task dirs were removed on both nodes, and absence of the directory and of any process was verified.
+
+What still ties work to M2: (a) M2-only preserved evidence used for verification; (b) the push relay. Compute does not.
