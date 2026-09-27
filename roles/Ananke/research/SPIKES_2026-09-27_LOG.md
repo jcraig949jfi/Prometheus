@@ -81,3 +81,17 @@ NO-EFFECT. No cell carries the bit in counts (timing-only codes absent:
 T-TM-1 prior = none).
 
 ADDENDUM 3 (before running): joint swap on MAJ 4781b0a1 (inflight CHANCE and sitestate CHANCE, S-CT). Prediction: swapping inflight+sitestate together FLIPS -> the bit is JOINTLY carried (T-DM-2 candidate). Also the same at t0+1 and t0+3 to see where the split moves.
+A6 S-CT ran (out/s_ct.json). Carrier at mid-interval, per D-wave cell:
+  HOLD x4        site state (FLIP 0.00); channel NO-EFFECT   pred HELD 4/4
+  RELAY 31cd, 62a7, c16d  channel content (FLIP 0.11-0.26)   pred HELD 3/4
+  RELAY bbef66a1 SITE state (FLIP 0.11), channel NO-EFFECT   pred LOST (a site-latched relay)
+  MAJ 0a23, f6b6 (M3)  channel content (FLIP 0.31/0.34); delay +1 -> CHANCE
+  MAJ 613162a3   site state (FLIP 0.32)                      pred LOST
+  MAJ 4781b0a1   channel CHANCE and site CHANCE              pred LOST -> addendum 3
+  counts, w: NO-EFFECT in 12/12                              pred HELD
+A7 joint swap on 4781b0a1 (out/s_joint_4781.json):
+  joint (channel+site) FLIP 0.227 at t0+1, t0+8 and t0+15    pred HELD
+  channel alone 0.695 / 0.521 / 0.630; site alone 0.302 / 0.483 / 0.375.
+  At mid-interval the bit is split about evenly between process and
+  channel state: a DISTRIBUTED carrier. This is the one C1 MAJ cell with
+  CAUSAL_SUPPORT for integration beyond one sensor.
