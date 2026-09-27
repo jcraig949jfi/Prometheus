@@ -55,6 +55,11 @@ from prometheus_gpu import spec as spec_mod        # noqa: E402
 
 DIST_DIR = os.path.join(HERE, "examples", "dist")
 REPO_DIST = "Aether/runpod/examples/dist"
+# The seat that OWNS the workload, recorded in every plan and receipt.
+# Defaulted to "Aether" through Iteration 4, when every module was
+# Aether's; Iteration 5 flew another seat's suite and would have been
+# receipted as Aether's. Set with --seat.
+SEAT = "Aether"
 RECEIPT_DIR = os.path.join(HERE, "receipts")
 # Controller ledgers hold the artifact token, so they live OUTSIDE the
 # repository's tracked tree (gitignored). A receipt never carries one.
@@ -199,7 +204,7 @@ def rehearse(module_dir, spec, budget_usd, plan=None):
         served.setdefault(path, '{"rehearsal": true}')
     fake = prov.FakeProvider(served=served)
     ctl = launch.Controller(
-        fake, spec, module_dir, budget_usd=budget_usd, poll_s=10.0,
+        fake, spec, module_dir, budget_usd=budget_usd, seat=SEAT, poll_s=10.0,
         ready_poll_s=3.0, now=lambda: clock[0],
         sleep=lambda s: clock.__setitem__(0, clock[0] + s), log=log)
     receipt_obj = ctl.run()
@@ -330,7 +335,7 @@ def make_controller(module_dir, spec, budget_usd, poll_s, ready_poll_s,
         kwargs["expected_module_s"] = (est["per_pod_expected_seconds"]
                                        - est["overhead_seconds_per_pod"])
     return launch.Controller(provider or prov.RunPodProvider(), spec,
-                             module_dir, budget_usd=budget_usd,
+                             module_dir, budget_usd=budget_usd, seat=SEAT,
                              poll_s=poll_s, ready_poll_s=ready_poll_s,
                              ready_timeout_s=900.0,
                              transport_factory=transport_factory(spec, commit),
@@ -604,6 +609,8 @@ def main(argv=None):
     ap.add_argument("--go", action="store_true",
                     help="THE REAL LAUNCH; creates a pod and spends money")
     ap.add_argument("--budget", type=float, default=DEFAULT_BUDGET_USD)
+    ap.add_argument("--seat", default="Aether",
+                    help="the seat that owns the workload (receipt attribution)")
     ap.add_argument("--scout-budget", type=float, default=0.05)
     ap.add_argument("--poll", type=float, default=10.0)
     ap.add_argument("--ready-poll", type=float, default=3.0)
@@ -637,6 +644,8 @@ def main(argv=None):
                     help="shard file: several pods at once")
     ap.add_argument("--fail-fast", action="store_true")
     args = ap.parse_args(argv)
+    global SEAT
+    SEAT = args.seat
 
     module_dir = module_path(args.module)
     env = parse_env(args.env)
