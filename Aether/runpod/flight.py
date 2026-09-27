@@ -25,9 +25,14 @@ pinned commit, and `ensure_bundle_committed` refuses otherwise.
 
 EVIDENCE. A real flight writes `receipts/<run_id>.json` plus a directory
 `receipts/<run_id>/` holding the platform samples, the module's telemetry
-and every retrieved artifact up to `KEEP_ARTIFACT_BYTES`; larger artifacts
-are recorded by size and digest only, which is what the receipt already
-proves about them.
+and every retrieved artifact up to `KEEP_ARTIFACT_BYTES`. Larger artifacts
+are NOT dropped: they are written OUTSIDE the repository, to
+`LARGE_ARTIFACT_DIR/<run_id>/` (default `<checkout parent>/Prometheus-data/
+runpod_artifacts`, override with `--keep-large DIR`), and the receipt's
+`large_artifacts` lists each one's path, size and sha256. Until 2026-09-27
+they were recorded by size and digest only and the bytes were discarded
+without a log line; a science module whose result was one 9 MB file lost it
+that way (RUNPOD_ENGINEERING / C-002 pilot finding).
 """
 
 import argparse
@@ -65,6 +70,11 @@ RECEIPT_DIR = os.path.join(HERE, "receipts")
 # repository's tracked tree (gitignored). A receipt never carries one.
 LEDGER_DIR = os.path.join(HERE, ".ledger")
 KEEP_ARTIFACT_BYTES = 1 << 20
+# Where artifacts above KEEP_ARTIFACT_BYTES go: next to the checkout, never
+# inside it (the repository stays lean; the bytes are kept).
+LARGE_ARTIFACT_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))))), "Prometheus-data", "runpod_artifacts")
 DEFAULT_BUDGET_USD = 0.25
 
 
@@ -229,11 +239,26 @@ def save_evidence(ctl, receipt_obj):
                   encoding="utf-8", newline="\n") as fh:
             fh.write(ctl.platform_text)
         kept.append("platform.jsonl")
+    large = []
     for path, blob in sorted(ctl.artifact_blobs.items()):
         if len(blob) <= KEEP_ARTIFACT_BYTES:
             with open(os.path.join(run_dir, path), "wb") as fh:
                 fh.write(blob)
             kept.append(path)
+        else:
+            big_dir = os.path.join(LARGE_ARTIFACT_DIR, receipt_obj["run_id"])
+            os.makedirs(big_dir, exist_ok=True)
+            dest = os.path.join(big_dir, path)
+            with open(dest, "wb") as fh:
+                fh.write(blob)
+            import hashlib
+            large.append({"path": path, "bytes": len(blob),
+                          "sha256": hashlib.sha256(blob).hexdigest(),
+                          "stored_at": dest.replace(os.sep, "/")})
+            log("artifact %s is %d bytes (> %d): kept OUTSIDE the repository at %s"
+                % (path, len(blob), KEEP_ARTIFACT_BYTES, dest))
+    if large:
+        receipt_obj["large_artifacts"] = large
     for name, rows in (("controller_health.jsonl", ctl.health),
                        ("api_calls.jsonl", ctl.api_calls)):
         if rows:
@@ -592,6 +617,7 @@ def rehearsal_fake(shards, campaign_id):
 
 
 def main(argv=None):
+    global LARGE_ARTIFACT_DIR
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("module", nargs="?", default="examples/gpu_load")
     ap.add_argument("--scout", type=float, default=None,
@@ -609,6 +635,9 @@ def main(argv=None):
     ap.add_argument("--go", action="store_true",
                     help="THE REAL LAUNCH; creates a pod and spends money")
     ap.add_argument("--budget", type=float, default=DEFAULT_BUDGET_USD)
+    ap.add_argument("--keep-large", default=None,
+                    help="directory OUTSIDE the repository for artifacts larger "
+                         "than KEEP_ARTIFACT_BYTES (default: %s)" % LARGE_ARTIFACT_DIR)
     ap.add_argument("--seat", default="Aether",
                     help="the seat that owns the workload (receipt attribution)")
     ap.add_argument("--scout-budget", type=float, default=0.05)
@@ -644,6 +673,8 @@ def main(argv=None):
                     help="shard file: several pods at once")
     ap.add_argument("--fail-fast", action="store_true")
     args = ap.parse_args(argv)
+    if args.keep_large:
+        LARGE_ARTIFACT_DIR = os.path.abspath(args.keep_large)
     global SEAT
     SEAT = args.seat
 
