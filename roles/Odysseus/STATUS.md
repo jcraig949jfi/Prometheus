@@ -12,4 +12,4 @@ frozen at: main 119b3e139 (code), fleet test prepared, not run.
   no process running. ubu002 / Windows: nothing installed.
 open delegation: comms #679 to Cyclops (Windows test) -- hold notice sent.
 monitors owned or fed: none.
-next executable action: wait for the operator's design; nothing else.
+next executable action: await a Thread (ABOUT.md written for that); brain lane stays frozen.
