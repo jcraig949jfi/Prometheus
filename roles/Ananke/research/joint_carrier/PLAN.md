@@ -56,3 +56,18 @@ Decision rules (at t0+8, "erase hurts" = drop >= 0.10 with lo99(diff) <
   H-ART if the J4 swap at t0-1 FLIPs.
   Otherwise: UNRESOLVED, with the pattern reported.
 Budget: 30 min CPU. Every Attempt is logged in LOG.md.
+
+## ADDENDUM J5 (committed before running; after J1-J4 were read)
+J1-J4 read: by the preset rules the verdict is UNRESOLVED (the pattern
+looks like a channel -> site handoff with an overlap window; pay0 decodes
+0.85 but its swap has no effect). J5 localizes the necessary site state
+and maps the handoff curve. CPU, ns 0x5E8.
+  J5a erase S at t0+8 restricted to (i) the actuator only, (ii) the 5
+      sensors only, (iii) all other sites.
+  J5b erase-S curve and flush curve at every tick t0+1 .. t0+15.
+Predictions: J5a the actuator erasure carries most of the kill
+(integration at the readout site); J5b a crossing: the flush kill falls
+and the S kill rises with time, crossing near mid-interval.
+Rule: "handoff" if the curves cross with both > 0.10 drop inside a window
+of <= 6 ticks; "integration at the actuator" if J5a(i) >= 0.8 of the
+full-S drop.
