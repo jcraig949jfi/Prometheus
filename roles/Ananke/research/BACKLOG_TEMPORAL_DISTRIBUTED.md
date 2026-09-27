@@ -75,11 +75,11 @@ T-TM-2 OPEN: Deadline vs code vs tolerance as a routine timing
 
 ## D. Instruments
 
-T-INS-1 READY (threads/T-INS-1_carrier_swap_instrument.md): Promote the
+T-INS-1 DONE 2026-09-27 (instruments/INSTRUMENT_CARRIER_SWAP.md; 10 known-answer tests; arm_identical flag). Step 4 (a C1-wide carrier table) is still OPEN as T-CT-1. Was: Promote the
   mirror-pair carrier swap to a first-class PTE assay (lens.py -> tested
   module + fixtures: echo plant FLIPs on channel content, latch plant
   FLIPs on S). WHY: it is stronger than every C1b label. LENS: PTE.
-T-TA-1 READY (threads/T-TA-1_temporal_reach.md): cue_arrival_profile
+T-TA-1 DONE 2026-09-27 (instruments/INSTRUMENT_TEMPORAL_REACH.md; lens.cue_arrival_profile + reach; known-answer tests). The per-site profile is OPEN (F1). Was: cue_arrival_profile
   as a reach check for every windowed ablation; the WINDOW_UNREACHABLE
   label. LENS: PTE; fleet (T-X-4).
 T-INS-2 OPEN: Per-component and per-edge census (replace the fixed pay0
@@ -98,7 +98,10 @@ T-X-1 READY (threads/T-X-1_content_vs_timing_aether.md): Content vs
   timing carriers across PTE and Aether. LENS: cross-engine.
 T-X-2 OPEN: Cosmos P1/P2 vs PTE carrier swap cross-validation (gated on
   Cosmos's sealed work). LENS: cross-engine.
-T-X-4 OPEN: Fleet "intervention reach" check. LENS: fleet methodology.
+T-X-4 READY (threads/T-X-4_intervention_reach.md; W-D mined 8 cases in 5 seats: no single pattern; 3 checks + an identical-arms alarm cover all). Research question, NOT a fleet rule.
+T-D1 OPEN: reach counter beside every lens verdict (generalizes cue_arrival_profile). LENS: PTE.
+T-D2 OPEN: plant library per lens intervention (must-flip + must-not-flip). Partly done by the test fixtures. LENS: PTE.
+T-D3 DONE: arm_identical flag in carrier_table.
 T-X-5 OPEN: CA carrier model (Herakles EvCA rules, domain/particle
   filter). LENS: other engine + theory.
 T-EXT-1 READY (threads/T-EXT-1_prior_art_followups.md): Turn the prior-
@@ -118,6 +121,7 @@ T-DC-1 OPEN: Distributed causality maps: which sites' channel content is
   necessary (per-site flush) for M2/M3. MERGED with T-M2-4 for M2.
 
 ## Consumption log
+2026-09-27 (continuation): instruments hardened (T-INS-1, T-TA-1 DONE). Workers dispatched: W-A (echo interval = T-M2-2), W-B (SETRULE = T-M3-1), W-C (PTE vs Aether = T-X-1), W-D (intervention reach = T-X-4, DONE). T-JC-1 (joint carrier) opened with a committed PLAN. The lease helper was added (the bus lease is unreachable, so the fallback is used).
 2026-09-27 (late): the S-CT carrier table opened T-CT-1 and gave T-DM-2 a
   real specimen (4781b0a1 joint). C2 and SI01 reviewed (C2_SI01_REVIEW.md):
   both are deferred behind T-INS-1.
