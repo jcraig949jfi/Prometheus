@@ -111,6 +111,21 @@ T-EXT-1 READY (threads/T-EXT-1_prior_art_followups.md): Turn the prior-
 T-EXT-2 OPEN: Fossilize a reservoir / echo-state reference system (the
   vault has none). LENS: Techne.
 
+## G. Retention (SI01 successor)
+T-RET-1 DONE (W-E): preregistered verdict NO (no recoverable retention at
+  j >= 2 by the single-world decoder). Found: frozen cue-signed SCARS in
+  non-decaying plastic stores (w, Kp, S), never read; one exploratory
+  integrator (f7e62fe3 w_sum, 0.88-0.97 with a history-aware decoder).
+  Retention follows the physics (decay 0 + plastic stores), not the
+  carrier class.
+T-RET-2 OPEN: preregistered confirmation with the history-aware decoder
+  as primary (f7e62fe3 / fresh3 / 0ad7dc00 / 6a47bd68; k in {2,3,5}).
+  READY in substance; package = W-E REPORT.
+T-SI-SCAR OPEN: the SI successor around the actual carrier. Is the
+  f7e62fe3 w-scar irreversible (can later input erase it = twins merge)?
+  Can it ever become effective? Gate: T-RET-2 confirms first.
+T-RET-3 OPEN: where the scars sit (per site).
+
 ## F. Environment and distributed causality
 
 T-ENV-1 OPEN: PTE has a write-free environment, so environmental memory
@@ -121,6 +136,7 @@ T-DC-1 OPEN: Distributed causality maps: which sites' channel content is
   necessary (per-site flush) for M2/M3. MERGED with T-M2-4 for M2.
 
 ## Consumption log
+2026-09-27 (cont.): T-RET-1 closed by W-E; it split into T-RET-2, T-SI-SCAR and T-RET-3. The joint carrier T-DM-2/T-JC-1 was reframed: 4781b0a1 is source-latched regeneration (a sensor latch -> channel handoff at the transmission deadline), not synergy. New: T-JC-2..4. T-CT-1 dequeued to W-F.
 2026-09-27 (continuation): instruments hardened (T-INS-1, T-TA-1 DONE). Workers dispatched: W-A (echo interval = T-M2-2), W-B (SETRULE = T-M3-1), W-C (PTE vs Aether = T-X-1), W-D (intervention reach = T-X-4, DONE). T-JC-1 (joint carrier) opened with a committed PLAN. The lease helper was added (the bus lease is unreachable, so the fallback is used).
 2026-09-27 (late): the S-CT carrier table opened T-CT-1 and gave T-DM-2 a
   real specimen (4781b0a1 joint). C2 and SI01 reviewed (C2_SI01_REVIEW.md):
