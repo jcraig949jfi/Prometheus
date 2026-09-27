@@ -2,7 +2,7 @@
 
 | Task | Work | Status | Executor | Host |
 |---|---|---|---|---|
-| T-001 | BEE r038751 replay (code-material provenance) | READY | -- | portable |
+| T-001 | BEE r038751 replay (code-material provenance) | RUNNING (A-001) | Archaeon[m2-1034e815] | ubu001 |
 | T-002 | contrasting BEE replay with genuine foreign material (r016299) | READY | -- | portable |
 | T-003 | NPE provenance mapping (NPE's own terms) | READY | -- | portable |
 | T-004 | cross-engine comparison | BLOCKED on T-001..T-003 | -- | any |
@@ -29,3 +29,4 @@
 | Attempt | Task | Host | Result |
 |---|---|---|---|
 | (pre-pilot) | T-001 | M2 SPECTREX5 | ran 2026-09-27 during Contract v0.2 (58-60 s); gives the reference result_sha256 above |
+| A-001 | T-001 | ubu001 (192.168.1.218; 4 threads, 7 GB, Ubuntu 26.04, Python 3.14.4) | RUNNING; claimed 2026-09-27T11:27:01Z |
