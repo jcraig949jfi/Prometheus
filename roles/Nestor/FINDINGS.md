@@ -616,3 +616,23 @@ internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
   exactly 2 of 3 draws.
 
 Status: OPEN, read-only verification queued behind the ancestry-replay gates.
+- **Verification of the received claims (2026-09-28, read-only):**
+  - **R-11: PARTLY TRUE.**
+    - X-PAIR-NORECOMB had no positive arm, and both arms sat at the floor (P-11 events 0/0). Its CLEAN_NULL is DOWNGRADED
+      to INVALID as a test of splice suppression; graph updated.
+    - The predecessor-criterion readout (57 -> 8) stands.
+    - The claim "P-11 fires only at tier L" is FALSE: it fires at tier M (all H2 implant runs, including T-003's births),
+      and 4 of the 57 spontaneous survivors are tier M.
+    - ERRATUM: the graph note "the 57 P-11 survivors arose at tier L" is wrong; it is 53 L + 4 M.
+  - **R-08: PARTLY TRUE.**
+    - primordial board_eligible accepts any non-empty cheat string (contract.py:108-112).
+    - The bus git guard checks the rows only.
+    - The code is legacy R4-R8 (board scoring is off by default), so no current verdict changes. The historical swarm
+      error-metabolism credit is weakened.
+  - **R-05: TRUE.**
+    - The P-11 reassay per-draw files are gitignored (replays/p11/).
+    - 26 of the 57 survivors rest on a single event passing exactly 2 of 3 draws.
+    - 18 of the 57 first events have fid_other < 0.92, with a minimum of 0.906.
+    - Two survivors show low ordinary authorship (0.0 and 0.48): check which authorship measure C4 uses.
+    - The "57" must be reported as "57, of which 26 rest on one 2-of-3 event". It cannot be re-audited unless the
+      per-draw files are committed or regenerated (queued, low priority).
