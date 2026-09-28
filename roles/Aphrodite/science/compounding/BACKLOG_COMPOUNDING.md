@@ -482,3 +482,38 @@ T46 DSL EXTENSION MAP  [SHARPENED; W5 Part 1]
   - Every extension re-bases PRISTINE.
   - The lag register is a new SCIENCE question (order-2 compounding).
   Trigger: only after an order-1 mechanism positive.   PARKED.
+
+------------------------------------------------------------------------------
+ARC3 STATUS UPDATE (2026-09-28 ~10:15Z)
+------------------------------------------------------------------------------
+ASSAYS: C3 (A20) UNTESTABLE (supply); C3R (A21) INVALID (inert motifs); C3R2 (A22)
+UNTESTABLE (supply, n = 5; forensic: generic reuse and capability 2-4/5 for G1 and all 3
+shams, controls 0/5); C3R2-CONFIRM (A23) RUNNING (n = 12).
+T17 ACTIVE -> A23.   T23 ACTIVE -> A23.   T24 (natural vs constructed) -> PKG-3.
+T32 ANSWERED (CON1).   T33 SHARPENED: W6 R2 shows the unit problem is validation
+  breadth. A22 gave validation 2 instances per motif, and selection then found the
+  recurring composition 4-5/5.
+T34 PARTLY ANSWERED (W6): selection misses reusable compositions mainly for lack of
+  validation signal; the ranking rule is secondary.
+T35 CLOSED (W6 R1: horizon not supported; depth wall instead -> T39).
+T36 OPEN (filler mixture; not run).
+T37 CLOSED (W6 R3: not non-specific; credit = G1's extensional class, shared with its
+  sign re-expression).
+T38 QUEUED behind A23 (PKG-8).
+T39 SHARPENED (PKG-5: promotion restores G3 extent and novelty; next rung = solve/select).
+T41 READY (T4 enriches G1 compositions 6-15x; W1).
+T44 READY: ruler v2.1 draft (W7); errors 14 -> 8.
+T45 SHARPENED (W2: capability ratios are generic cliff ratios).
+NEW:
+T47 INSTRUMENT VERSIONING: T4 v1a (query 3..97, W7 fix a) and ruler v2.1 are drafts.
+    Freeze them together in the next assay after A23, with a bridge re-score of A22/A23.
+    [READY]
+T48 KEYED ROLE ASSIGNMENT: replace shuffle-based role pools with a keyed order, so an
+    instrument repair moves single roles instead of re-drawing every replicate
+    (W7 E2). [READY, S]
+T49 DESIGN-DEFECT RATE OF THE SEAT: 3 of the last 4 assays failed on design or supply,
+    not biology (C1, C3, C3R). Countermeasure adopted: a pre-freeze supply feasibility
+    screen (c3r2_feasibility). Keep it mandatory. [PROCESS]
+T50 GENERIC STEPPING STONE: if A23 confirms generic reuse, the scientific claim is about
+    inheritance + composition in general, not about G1. Next: does a CHAIN occur (G2
+    promoted -> G3; PKG-5 + PKG-8)? [RAW until A23]
