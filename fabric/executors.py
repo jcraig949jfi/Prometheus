@@ -27,7 +27,11 @@ DEFAULT_MODEL = "claude-opus-5-5"
 # Read-only repository access. Deliberately NO path-free shell readers (head, ls, wc, cat, sha256sum) and no
 # `git grep` / `git diff` (both accept --no-index paths outside the repo): P7 showed an unscoped allow-list lets a
 # worker see ~/.claude and ~/.config (the node's token file). Read/Grep/Glob are scoped per attempt in run_claude.
-READONLY_BASH = ["Bash(git log:*)", "Bash(git show:*)"]
+# D12 (S2): `Bash(git log:*)`-style string rules were brittle (git -C and compound forms were denied). Workers now get
+# ONE command, `rogit` (fabric/tools/rogit.py): read-only git that parses argv, confines -C to the worktree and
+# disables hooks, textconv, external diff and pager. It is on PATH only inside the attempt.
+READONLY_BASH = ["Bash(rogit:*)"]
+ROGIT = Path(__file__).resolve().parent / "tools" / "rogit.py"
 DENY = ["Read(//{home}/.claude/**)", "Read(//{home}/.config/**)", "Read(//{home}/.ssh/**)", "Read(//{home}/.git-credentials)",
         "Glob(//{home}/.claude/**)", "Glob(//{home}/.config/**)", "Grep(//{home}/.claude/**)", "Grep(//{home}/.config/**)"]
 # No "python" option: Bash(python3:*) is arbitrary code as the node account and would undo every Read deny above.
@@ -109,7 +113,10 @@ def run_claude(task: Dict[str, Any], attempt_id: str, worktree: str, attempt_dir
     system = ("You are a disposable research worker of the Prometheus Agent Fabric. Task {tid}, attempt {aid}. "
               "Your working copy is a read-only checkout of the Prometheus repository at commit {sha}. "
               "You have no seat identity and no memory of earlier sessions. Do not modify the repository. "
-              "Write any files you want to deliver ONLY under {out}. Your final message is captured verbatim as your report."
+              "Write any files you want to deliver ONLY under {out}. Your final message is captured verbatim as your report. "
+              "For git, use the read-only command `rogit` exactly like git (e.g. `rogit log --all --oneline -- <path>`, "
+              "`rogit show <rev>:<path>`, `rogit branch -a --contains <rev>`, `rogit grep -n <pattern> <rev>`); run it as a single "
+              "command with no cd, pipes, redirection or &&. Plain `git` is not available."
               ).format(tid=task["task_id"], aid=attempt_id, sha=task.get("base_sha") or "HEAD", out=out_dir)
     cmd = ["claude", "-p", task["instruction"], "--model", model, "--output-format", "json", "--no-session-persistence",
            "--permission-mode", "dontAsk", "--add-dir", str(out_dir), "--append-system-prompt", system,
@@ -117,6 +124,12 @@ def run_claude(task: Dict[str, Any], attempt_id: str, worktree: str, attempt_dir
     env = {k: v for k, v in os.environ.items() if k not in ("CLAUDECODE", "CLAUDE_CODE_SESSION_ID", "CLAUDE_CODE_ENTRYPOINT",
                                                             "CLAUDE_CODE_CHILD_SESSION", "CLAUDE_CONFIG_DIR", "ANTHROPIC_API_KEY")}
     env.update(_token_env())
+    bindir = attempt_dir / "bin"; bindir.mkdir(exist_ok=True)
+    link = bindir / "rogit"
+    if not link.exists():
+        link.symlink_to(ROGIT)
+    env["PATH"] = str(bindir) + os.pathsep + env.get("PATH", "/usr/bin:/bin")
+    env["FABRIC_WORKTREE"] = worktree
     env["CLAUDE_CONFIG_DIR"] = str(cfg)
     env["HOME"] = str(attempt_dir)            # "~" resolves inside the attempt, not to the seat's home
     r = _run(cmd, cwd=worktree, env=env, wall_s=wall_s, should_stop=should_stop)
