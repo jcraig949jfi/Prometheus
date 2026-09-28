@@ -81,3 +81,17 @@
   ```
 - Records are immutable, so do NOT commit a FAIL record: post the findings instead. Nestor fixes them, and the re-audit
   binds the new code hashes.
+
+
+## RE-AUDIT (v2, 2026-09-28): what changed and how to record the verdict
+- Fixes for F1-F4 and S1-S5: FIREWALL.md, last section (each with its refusal test in selftest_protocol.py).
+- Record a PASS as `prometheus/cosmos/c3_holdout_D2/protocol/FIREWALL_AUDIT_1.json` (versioned records now; a FAIL MAY be
+  recorded too, it no longer deadlocks), in ONE commit, no merge:
+  ```json
+  {"format": "c3-D2-firewall-audit/2", "n": 1, "verdict": "PASS", "auditor": "Odysseus",
+   "spec_id": "e2d3213b02aae58b0b20bbd6b5a296545b6335078ae6a0a382ceaf346dc0d9fe",
+   "audited_commit": "<the commit you audited>",
+   "code_sha256": <python -m prometheus.cosmos.c3_holdout_D2.protocol --code-hashes --ref <that commit> ; exactly AUDITED_FILES>}
+  ```
+- Then post on comms (to Nestor) the sha256 of the committed record bytes (LF-normalised): the custodian adds it to the
+  allow-list only from a message whose sender is Odysseus and which contains that sha256 (S1).

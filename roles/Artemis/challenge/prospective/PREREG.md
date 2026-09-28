@@ -163,3 +163,66 @@ Rules added:
   and FR-057 are deliberately NOT run by Artemis, to keep their pairs
   (with FR-117 and FR-061) available for paired execution by fresh
   workers.
+
+## AMENDMENT 2 (2026-09-28, procedural; written before any worker is recruited or any cohort run is dispatched)
+
+Cause: operator instruction to run this test autonomously
+(roles/Artemis/prompts/2026-09-28_selftest_autonomy/). Cohorts,
+categories, predictions and decision rules are UNCHANGED.
+
+A2.0 Correction. Amendment 1 said "15 pairs remain eligible"; the right
+  count is 17 (19 minus the two A-RUN S threads FR-011 and FR-101). Their
+  B partners (FR-018, FR-104) are executed as UNPAIRED B runs (they count
+  toward the B rate and Artemis's Brier on B, not the paired metric).
+  Total executions: 36 (17 pairs + 2 unpaired B).
+A2.1 Packages (built by selftest/build_packages.py from the FROZEN commit
+  a9d5f5f23, never from later files): S = the thread file (+ chop file if
+  one existed at a9d5f5f23); B = the INDEX row (title, relations, host)
+  + the verbatim harvest blocks of its source ids. In both: FR/thread ids
+  replaced by a neutral run id R-xx; the words SHARPENED, MATURE, RAW,
+  the INDEX state column, and "State:/Last reviewed:" lines removed. No
+  prediction, rationale, cohort label or effect size appears anywhere a
+  worker or scorer can see.
+A2.2 One worker instruction template (selftest/WORKER_TEMPLATE.md),
+  identical for every run except the package and run id; committed
+  before dispatch. Budget: about 4 agent-hours, <= 1 CPU-hour, Linux
+  node, committed inputs only, no GPU, no hidden holdout, foreign code
+  only on `git archive` copies with GIT_* unset. Fixed report template.
+A2.3 Workers. Primary: fresh disposable worker sessions (new context, no
+  conversation history), one per run, launched by the Artemis session
+  from the template. Recruited seats (comms request) may take runs only in
+  balanced blocks: equal numbers of S and B runs, never both members of a
+  pair; assignment of runs to a recruited worker is by the seeded order
+  below, not by choice. Unavoidable contamination, recorded now: the
+  disposable workers share the Artemis session's HOME (the persistent
+  memory directory is readable though not loaded), and all workers share
+  the host filesystem and the comms store, where Artemis's own files and
+  posts exist. Mitigation: workers are told not to read roles/Artemis/**,
+  the memory directory, or Artemis's comms posts; a post-run audit greps
+  each worker transcript/report for those paths and for "COHORTS",
+  "PREREG", "prospective"; any hit flags the run CONTAMINATED. The primary
+  analysis includes flagged runs; a sensitivity analysis excludes them.
+A2.4 Order. Runs are dispatched in a seeded shuffle of the 36 run ids
+  (seed = sha256 of this file at a9d5f5f23), at most 3 concurrent on
+  ubu002 under a posted lease; runs recruited seats take are removed from
+  the head of the same order. A run that cannot start because a resource
+  is busy is queued, not skipped or replaced.
+A2.5 Missing / unscorable (existing rules applied, no repair): executed
+  but unresolved or impossible under the frozen package -> UR (prereg);
+  never started by day 30 -> NOT_EXECUTED; no report -> UNSCORABLE, pair
+  excluded from the paired metric and listed. No package is edited after
+  its partner's outcome is known.
+A2.6 Scoring. Two independent scorers score every run, blind: each gets
+  only the sanitized report (run id, ids and Artemis mentions redacted)
+  and the frozen rubric (Outcome categories + CONSEQUENTIAL definition
+  of this file). Scorer 1: a recruited seat if one volunteers before
+  scoring starts, else a fresh disposable scorer; scorer 2: a different
+  fresh disposable scorer. Neither sees cohorts, predictions, or this
+  amendment. CONSEQUENTIAL disagreement -> a third fresh scorer decides;
+  category disagreement -> majority of the three; still unresolved ->
+  AMBIGUOUS, counted NOT consequential in both cohorts (symmetric), with
+  the other coding reported as a sensitivity. Artemis never scores and
+  never resolves a score. Scoring happens in one shuffled batch after
+  executions (or at the >= 10-pair decision point).
+A2.7 Decision. The frozen rules apply to scored pairs. ED codes that need
+  an owner decision are re-checked at day 30 and reported as an update.

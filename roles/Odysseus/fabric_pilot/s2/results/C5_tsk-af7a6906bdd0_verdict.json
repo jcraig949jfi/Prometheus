@@ -1,0 +1,18 @@
+{"claim_id": "C5",
+ "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "The Aphrodite A17 engine caps admissions per stratum at K = 4",
+   "status": "true",
+   "evidence": ["373d7ef28:roles/Aphrodite/engine/a17.py:44 (DRAWS, K, ... = 32, 4, ...)",
+                "373d7ef28:roles/Aphrodite/engine/a17.py:303-304 (docstring: acceptance = first 4 qualifying draws per stratum)",
+                "373d7ef28:roles/Aphrodite/engine/a17.py:319 and :337 (append only while len(accepted) < K)"]},
+  {"part": "The report's per-stratum 'accepted' figure is the capped admission count, not the number of qualifying candidates",
+   "status": "true",
+   "evidence": ["373d7ef28:roles/Aphrodite/engine/a17.py:354 (per_stratum accepted = len(accepted[c][op]), the capped list)",
+                "4f937e88f:roles/Aphrodite/pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-26.md:18 (catalog B add '4/22')",
+                "ac2a935db:roles/Aphrodite/engine/A17_FOUNDRY_EVALS_2026-09-26.jsonl (hB_add_*: 22 evaluated, 5 with ACCEPTED_CANDIDATE=true; counted by grep)"]},
+  {"part": "The claim comes from Artemis R-13 (#889 routing)",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:131-133", "roles/Artemis/selftest/runs/R-13/REPORT.md:205", "roles/Odysseus/fabric_pilot/s2/PREREG.md:50"]}
+ ],
+ "notes": "Terminology caveat: in a17.py the per-candidate flag ACCEPTED_CANDIDATE (a17.py:269) marks a qualifying draw. The per_stratum 'accepted' count, which is what the report prints, is the capped admission count. The claim is about the report's 'accepted/evaluated' figure and holds. Catalog B add has 5 qualifying of 22 evaluated but reports 4/22. The evidence lives on Aphrodite seat-branch commits (373d7ef28, ac2a935db, 4f937e88f), not on main. I read it with git show. I could not run Python, so I counted with grep on the evals JSONL."}

@@ -1,19 +1,20 @@
 # Artemis status
 
-Currency: 2026-09-28T10:02Z (from date -u).
+Currency: 2026-09-28T19:30Z (from date -u).
 
-seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology
-  (prompts/2026-09-27_charter_research_backlog_ecology/).
-what it asserts: PRESENT, ACTIVE, PRODUCTIVE -- pass 1 of the research
-  frontier: backlog/FRONTIER.md (operator view), INDEX.md (128 threads),
-  19 sharpened, 7 chopped, 4 prior-art studies. VALID: read-only; every
-  thread cites path@sha; harvest quotes spot-checked 16/16.
+seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
+what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
+  shown to add yield; Artemis's priority forecasts worse than constant on
+  raw questions. Method changed accordingly (RESPONSIBILITIES s4): no full
+  sharpening, no priority labels; effort moves to bounded execution and
+  routing. Challenge packet: challenge/CHALLENGE_PACKET.md.
 host: ubu002 (see ABOUT.md). worktree
   /home/jcraig/Prometheus-worktrees/artemis-base-role, branch
-  artemis/backlog-ecology-2026-09-27, base d7ec26d37.
-monitors owned or fed: none.
-blockers: none. Operator decisions the frontier touches: FRONTIER s8.
-next executable action: dispatch the first paired executions of the prospective test (fresh workers, S/B pairs, equal budget) and arrange an independent scorer; follow up #789 #793 #798.
-  d7ec26d37, re-check the 19 sharpened threads' evidence, sharpen the
-  next cluster (D memory or E compression), and record which chops were
-  picked up (from commits only).
+  artemis/selftest-2026-09-28.
+monitors owned or fed: none. Fabric pilot worker on ubu002 (Odysseus #854),
+  exits after 6 h idle.
+blockers: none. Operator ruling wanted: may Artemis make dispatching
+  bounded executions of raw threads to fresh workers its standing work?
+next executable action: day-30 (2026-10-28) owner-action re-check of
+  the 36 routed findings (selftest/ROUTING.md, comms #869-#890); answer
+  any Nestor follow-up on CVT-R (#891); await operator ruling above.

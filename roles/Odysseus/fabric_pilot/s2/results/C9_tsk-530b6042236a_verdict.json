@@ -1,0 +1,21 @@
+{"claim_id": "C9", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "The Atlas archaeon harvester does not index archaeon/envgate or archaeon/envgate2",
+   "status": "true",
+   "evidence": ["atlas/harvest/archaeon_campaigns.py:47 (ls_tree 'archaeon')",
+                "atlas/harvest/archaeon_campaigns.py:59 (only paths matching archaeon/(campaign\\d+)/ are grouped; others are dropped)",
+                "atlas/harvest/frontier.py:39 (reads only archaeon/frontier)",
+                "archaeon/envgate/PREREG.json and archaeon/envgate2/PREREG.json exist but match neither prefix"]},
+  {"part": "No Atlas harvester indexes z80atlas (roles/Nestor/campaigns/z80atlas-*)",
+   "status": "true",
+   "evidence": ["atlas/harvest/npe.py:31 (CWDIR = roles/Nestor/campaigns/cw01-2026-09-17 only)",
+                "atlas/harvest/npe.py:110-111 (primordial/ledger, graphworld epochs only)",
+                "atlas/registry.json:319-324 (only local run_logs root is the cw01 experiments dir)",
+                "roles/Nestor/campaigns/z80atlas-2026-09-19/PREREGISTRATION.md exists but is outside every harvester path",
+                "Grep 'envgate|z80atlas' (case-insensitive) over atlas/ returns no matches"]},
+  {"part": "No lens field exists in atlas/",
+   "status": "true",
+   "evidence": ["Grep 'lens' (case-insensitive) over atlas/ (all .py, .sql, registry.json, README.md) returns no matches",
+                "Grep 'varied|held' over atlas/ finds only atlas/sql/010_m1-1c645957_research_policy.sql:71 (primitive_use.state value VARIED, a primitive-presence state, not a varied/held/observed lens field) and two unrelated comments"]}
+ ],
+ "notes": "Checked at HEAD 59b94b4e. The claim restates roles/Artemis/selftest/runs/R-34/REPORT.md:36-38 and :114-115. One caveat: atlas/harvest/commits.py:28-43 records every commit on every ref (subject, classes, n_paths), so commits that touch envgate/z80atlas paths do end up in atlas.git_commit as commit metadata. It stores no per-path campaign, experiment or file rows, so these campaigns are still not indexed as campaigns or experiments. That caveat does not break the claim."}

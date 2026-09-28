@@ -1,0 +1,21 @@
+{"claim_id": "C7",
+ "verdict": "PARTIAL",
+ "parts": [
+  {"part": "R-34 reports that the (varied1, observed1) pair has recall 23-34% on the known Z80 cross-seat convergence (62 pairs)",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:54", "roles/Artemis/selftest/runs/R-34/REPORT.md:82", "roles/Artemis/selftest/runs/R-34/REPORT.md:32-33"],
+   "note": "Consistent with the report's own table: TP 21/62=0.339, 14/62=0.226. This is only self-consistency; the underlying annotations are not in the repo."},
+  {"part": "R-34 reports precision 56-84% for that pair",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:54"],
+   "note": "Consistent with the report's table: 21/25=0.84, 14/25=0.56. This is only self-consistency."},
+  {"part": "R-34 reports per-field kappa of 0.73-0.76 (varied 0.73, observed 0.74, held 0.76)",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:43-44", "roles/Artemis/selftest/runs/R-34/REPORT.md:88"],
+   "note": "Stated in the report only. The pair-level kappa is lower (0.57, l.45), which the claim leaves out."},
+  {"part": "The numbers are reproducible from R-34's committed coding files (annot_A.json, annot_B.json, analyze.py, analysis_out.txt, CODEBOOK.md, corpus_index.tsv, corpus/X01..X33.txt)",
+   "status": "false",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/ (Glob: only REPORT.md exists)", "Glob **/annot_A.json -> no files", "Glob **/CODEBOOK.md -> no files", "Grep 'annot_A|analysis_out.txt|corpus_index.tsv' -> only R-34/REPORT.md", "roles/Artemis/selftest/runs/R-34/REPORT.md:30-31,34,116"],
+   "note": "At commit 59b94b4 the report names these artefacts, but none of them is committed anywhere in the tree. Bash/git was denied in this sandbox, so other branches could not be searched."}
+ ],
+ "notes": "The headline figures are an accurate quote of R-34 REPORT.md and are arithmetically consistent with its detection table. The load-bearing reproducibility condition fails at this commit: only REPORT.md is committed for R-34, and there are no annotation files, analysis script or codebook, so recall, precision and kappa cannot be recomputed from primary data. If the files exist on a non-main branch or only on the worker host, a `git log --all -- '**/annot_A.json'` would show it (I could not run git here). Also the R-34 run on LEDGER.md:93 is flagged EXPOSED-NAMES, and the claim omits the lower pair-level kappa of 0.57 (REPORT.md:45)."}

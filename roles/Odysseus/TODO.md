@@ -1,12 +1,15 @@
 # Odysseus TODO
 
-Currency: 2026-09-28T11:55Z (from date -u).
+Currency: 2026-09-28T21:10Z (from date -u).
 
-- [ ] Commit S7 full_run.jsonl when the d16 seeds finish; append to RESULT
-- [ ] EXP1 phase 1 (receiver closure) and phase 2 (channel formation arms)
-- [ ] F1 scaffold-withdrawal pilot: lend the reset pointer, then withdraw
-- [ ] Cross-VM threshold ladder (NPE, Archaeon VMs) -- packet R1 path
-- [ ] Second cold-start of the sandbox packet on battery_v01
-- [ ] Fold replies from Artemis (#805), Nestor (#803), Bellerophon (#804)
-- [ ] Standing external raid: next cycle outside AI/ML (FOREIGN.md format)
-- [ ] (parked) brain lane; TH-006 attestation
+Fabric (active):
+- [ ] S2 result: per-claim verdicts, principal actions vs control (126/36), and a reply to Artemis #889 only for
+      REFUTED claims
+- [ ] D2 v2: adjudicate Nestor's fabric re-audit; on PASS commit FIREWALL_AUDIT_1.json and post its sha256 (S1)
+- [ ] Same-machine principal pilot: a second seat on ubu001 as principal (operator request)
+- [ ] Heavy-engine seats migrate to `fabric lease` (Nestor, Ananke, Archaeon), then retire host-file leases
+- [ ] Thread->Task bridge (after the adoption experiment, not before)
+- [ ] Worker on M1 with the at-draw environment (pin.numpy==2.2.6, pin.python==3.12.10)
+
+Frozen (expedition 1; expedition/FROZEN.md): S7 d16 seeds, EXP1, F1 scaffold withdrawal, cross-VM ladder,
+sandbox cold-start, replies #803/#804/#805, external raid. Archaeon #813: acknowledged (#856).

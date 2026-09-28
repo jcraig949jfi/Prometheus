@@ -13,6 +13,14 @@
 >>> FR-135 (P-11 soundness) are ANSWERED by preregistered A-RUNs; FR-011
 >>> and FR-035 are SPLIT; FR-139 (supertransients) added as the alien
 >>> question. Read roles/Artemis/challenge/CHALLENGE_PACKET.md first.
+>>>
+>>> 2026-09-28 SELF-TEST UPDATE: every ranking in this file ("most
+>>> consequential", "cheap high-information", sections 2-3 orderings) is
+>>> WITHDRAWN as a ranking. The frozen self-test found Artemis's forecasts
+>>> on raw questions worse than a constant, and sharpening not shown to
+>>> add yield (roles/Artemis/selftest/RESULT.md). Treat the threads as an
+>>> unranked list. Raw harvested questions executed by fresh workers were
+>>> consequential ~9 times in 10: executing is worth more than choosing.
 
 ------------------------------------------------------------------------------
 0. WHAT THIS IS

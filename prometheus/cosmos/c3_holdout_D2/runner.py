@@ -100,6 +100,14 @@ FORBIDDEN_MODULES = {
 ALLOWED_PROMETHEUS = ("prometheus.cosmos.c3", "prometheus.cosmos.c3.")
 FORBIDDEN_CALLS = {"open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars",
                    "breakpoint", "input", "getattr", "setattr", "delattr", "memoryview"}
+# v2 (Odysseus F2): file/process access through attributes (np.fromfile, Path.read_text, ...) and ANY reference to a
+# forbidden builtin name (aliasing such as f = [open][0]) are flagged. The audit remains a heuristic: the gate that
+# matters is the child isolation probe (the child must be unable to open the key and secret paths).
+FORBIDDEN_ATTRS = {"fromfile", "load", "loads", "loadtxt", "genfromtxt", "memmap", "save", "savez",
+                   "savez_compressed", "savetxt", "tofile", "fromregex", "DataSource", "open", "read_text",
+                   "read_bytes", "write_text", "write_bytes", "system", "popen", "spawn", "fork", "ctypeslib",
+                   "f2py", "lib", "testing", "load_library", "dlopen"}
+ALLOWED_MEMBER_SUFFIXES = (".py", ".json", ".txt")
 
 
 class RunnerRefusal(Exception):
@@ -128,6 +136,15 @@ class ChainBroken(RunnerRefusal):
 
 class HiddenSetMismatch(RunnerRefusal):
     pass
+
+
+class ChildNotIsolated(RunnerRefusal):
+    pass
+
+
+SECRET_PATHS = ("C:/Users/jcrai/nestor_secrets/holdout_D2/hidden_D2.key.hex",
+                "C:/Users/jcrai/nestor_secrets/holdout_D2/hidden_D2.salt.hex",
+                "C:/Users/jcrai/nestor_secrets/holdout_D2/hidden_D2.plain.json")
 
 
 def _utc() -> str:
@@ -220,7 +237,31 @@ class _HiddenWorldStub(System):
         return self.__call("full_state", state)
 
 
+def _probe_paths(paths):
+    """Try to open each path for reading; report 'opened' / 'denied' / 'missing' / 'error:<type>'."""
+    out = []
+    for pth in paths:
+        try:
+            with open(pth, "rb") as fh:
+                fh.read(1)
+            out.append([pth, "opened"])
+        except PermissionError:
+            out.append([pth, "denied"])
+        except (FileNotFoundError, NotADirectoryError):
+            out.append([pth, "missing"])
+        except OSError as e:
+            out.append([pth, "error:%s" % type(e).__name__])
+    return out
+
+
 def _worker_main(conn, pkg_dir: str, entry: str) -> None:
+    # v2 (F2): before ANY package code is imported, the runner makes this process try the secret paths.
+    msg = _recv(conn)
+    if msg[0] != "probe":
+        return
+    _send(conn, ["probe_result", _probe_paths(msg[1])])
+    if _recv(conn)[0] != "go":
+        return
     sys.path.insert(0, pkg_dir)
     spec = importlib.util.spec_from_file_location("c3_d2_predictor", os.path.join(pkg_dir, entry))
     mod = importlib.util.module_from_spec(spec)
@@ -326,6 +367,10 @@ def audit_source(src: str, fname: str) -> List[str]:
                 flags.append("%s:%d import %s (only prometheus.cosmos.c3.* allowed)" % (fname, node.lineno, m))
         if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in FORBIDDEN_CALLS:
             flags.append("%s:%d call %s()" % (fname, node.lineno, node.func.id))
+        elif isinstance(node, ast.Name) and node.id in FORBIDDEN_CALLS:
+            flags.append("%s:%d reference to %s" % (fname, node.lineno, node.id))
+        if isinstance(node, ast.Attribute) and node.attr in FORBIDDEN_ATTRS:
+            flags.append("%s:%d attribute .%s" % (fname, node.lineno, node.attr))
         if isinstance(node, ast.Attribute) and node.attr.startswith("__") and node.attr.endswith("__") \
                 and node.attr not in ("__init__", "__name__"):
             flags.append("%s:%d attribute %s" % (fname, node.lineno, node.attr))
@@ -348,6 +393,8 @@ def load_package(zip_path, expected_sha256: str, extract_to: Path, allow_flagged
             continue
         if n.startswith(("/", "\\")) or ".." in Path(n).parts or ":" in n:
             raise PackageInvalid("unsafe member path")
+        if not n.endswith(ALLOWED_MEMBER_SUFFIXES):          # v2 (F2): no .pyc / binaries: unaudited code
+            raise PackageInvalid("member %r is not .py/.json/.txt" % n)
         files[n] = zf.read(info)
     if "package.json" not in files:
         raise PackageInvalid("package.json missing")
@@ -419,7 +466,10 @@ class FirewallRun:
                  allow_flagged: bool = False, certify_kwargs: Optional[dict] = None,
                  predict_timeout: float = 1800.0, max_episode_steps: Optional[int] = None,
                  resume: bool = False, require_out_outside_git: bool = True, runner_id: Optional[str] = None,
-                 gate_repo=None, gate_ref: Optional[str] = None):
+                 gate_repo=None, gate_ref: Optional[str] = None, account: Optional[str] = None,
+                 allowlist=None, gate_pins: Optional[dict] = None, delete_key: bool = False,
+                 extra_probe_paths=(), verify_loaded: bool = True, secret_paths=SECRET_PATHS,
+                 enforce_run_dir: bool = True):
         self.manifest_path, self.ciphertext_path = Path(manifest_path), Path(ciphertext_path)
         self.key_path, self.package_zip = Path(key_path), Path(package_zip)
         self.package_sha256 = str(package_sha256).lower()
@@ -428,6 +478,11 @@ class FirewallRun:
         self.predict_timeout, self.max_episode_steps = predict_timeout, max_episode_steps
         self.resume, self.require_out_outside_git = resume, require_out_outside_git
         self.runner_id = runner_id
+        self.account = account
+        self.allowlist = protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist
+        self.gate_pins, self.delete_key, self.verify_loaded = gate_pins, delete_key, verify_loaded
+        self.probe_paths = [str(self.key_path)] + [str(x) for x in secret_paths] + [str(x) for x in extra_probe_paths]
+        self.enforce_run_dir = enforce_run_dir
         self.gate_repo = Path(gate_repo) if gate_repo is not None else DEFAULT_GATE_REPO
         self.gate_ref = gate_ref or DEFAULT_GATE_REF
         self.phase = "INIT"
@@ -439,8 +494,16 @@ class FirewallRun:
         # package hash < designation of THIS runner on THIS host. Checked before the key file is touched.
         if not self.runner_id:
             raise protocol.RunnerNotDesignated("a runner id is required")
+        if self.resume:
+            raise RunnerRefusal("v2: resume is refused; a run is ONE invocation (predict -> seal -> certify -> close)")
+        run_params = {"predict_timeout": self.predict_timeout, "max_episode_steps": self.max_episode_steps,
+                      "certify_kwargs": self.certify_kwargs}
         self.gates = protocol.check_gates(self.gate_repo, "DESIGNATION", ref=self.gate_ref,
-                                          package_sha256=self.package_sha256, runner_id=self.runner_id)
+                                          package_sha256=self.package_sha256, runner_id=self.runner_id,
+                                          account=self.account, run_params=run_params, allowlist=self.allowlist,
+                                          verify_loaded=self.verify_loaded, pins=self.gate_pins)
+        if self.enforce_run_dir and self.out.name != "run_" + str(self.gates.get("run_nonce")):
+            raise protocol.RunParamsMismatch("the run directory must be run_<designation nonce> (one run per designation)")
         if inside_git_repo(self.key_path):
             raise RunnerRefusal("key file is inside a git repository: refusing")
         if self.require_out_outside_git and inside_git_repo(self.out if self.out.exists() else self.out.parent):
@@ -457,6 +520,8 @@ class FirewallRun:
         if fam != manifest["family_src_sha256"]:
             raise HiddenSetMismatch("holdout-D medium.py changed since the draw")
         key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
+        if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
+            self.key_path.unlink()
         plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
         hidden = json.loads(plain.decode("utf-8"))
         if hidden["family_src_sha256"] != fam or hidden["n_worlds"] != manifest["n_worlds"] \
@@ -494,7 +559,8 @@ class FirewallRun:
             "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
             "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
             "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
-            "n_worlds": self.N, "runner_id": self.runner_id,
+            "n_worlds": self.N, "runner_id": self.runner_id, "run_nonce": self.gates.get("run_nonce"),
+            "account": self.account,
             "protocol_gates": {k: v for k, v in self.gates.items() if k.endswith("_commit") or k in ("ref", "auditor")},
             "package": {k: self.pkg[k] for k in ("sha256", "meta", "entry", "audit_flags", "allow_flagged", "files")},
             "runner_src_sha256": sealbox.src_sha_lf(Path(__file__)),
@@ -512,6 +578,15 @@ class FirewallRun:
         self._proc = ctx.Process(target=_worker_main, args=(child, self.pkg["dir"], self.pkg["entry"]), daemon=True)
         self._proc.start()
         child.close()
+        # v2 (F2): isolation probe. The child must be unable to open the released key path, every secret path and
+        # this run's receipts; otherwise the package could read them. Fail closed.
+        _send(self._conn, ["probe", list(self.probe_paths)])
+        tag, res = _recv(self._conn)
+        opened = [p for p, r in res if r not in ("denied", "missing")]
+        if tag != "probe_result" or opened:
+            self._stop_worker(kill=True)
+            raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
+        _send(self._conn, ["go"])
 
     def _stop_worker(self, kill: bool = False):
         if self._proc is None:
@@ -692,7 +767,7 @@ class FirewallRun:
         self.receipts.append("close", {"n_certified": self.N, "utc": _utc()})
         self.phase = "CLOSED"
         seal = next(r for r in self.receipts.records if r["kind"] == "predictions_sealed")
-        result = {"format": RECEIPT_FORMAT, "spec_id": self.manifest["spec_id"],
+        result = {"format": RECEIPT_FORMAT, "spec_id": self.manifest["spec_id"], "run_nonce": self.gates.get("run_nonce"),
                   "package_sha256": self.package_sha256, "predictions_seal_hash": seal["hash"],
                   "chain_head": self.receipts.head, "n_records": len(self.receipts.records),
                   "per_world": per_world}
@@ -702,16 +777,18 @@ class FirewallRun:
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="holdout D2 across-the-firewall runner")
+    """v2 CLI. Only through entry.py (which verifies the audited code BEFORE importing it). ONE invocation per
+    designation: predict -> seal predictions -> certify -> close. The run parameters are READ FROM the designation
+    record (no command-line knobs to cherry-pick, S4); the run directory is <out-root>/run_<designation nonce>; the
+    released key file is deleted as soon as it has been read (S5)."""
+    import getpass
+    ap = argparse.ArgumentParser(description="holdout D2 across-the-firewall runner (v2)")
     ap.add_argument("--package")
     ap.add_argument("--package-sha256")
     ap.add_argument("--key")
-    ap.add_argument("--out")
+    ap.add_argument("--out-root", default=str(DEFAULT_OUT_ROOT))
     ap.add_argument("--manifest", default=str(HERE / "MANIFEST_D2.json"))
     ap.add_argument("--ciphertext", default=str(HERE / "hidden_D2.enc"))
-    ap.add_argument("--phase", choices=("all", "predict", "certify"), default="all")
-    ap.add_argument("--predict-timeout", type=float, default=1800.0)
-    ap.add_argument("--max-episode-steps", type=int, default=None)
     ap.add_argument("--allow-flagged", action="store_true")
     ap.add_argument("--runner-id", help="must equal protocol/RUNNER_DESIGNATION.json runner_id")
     ap.add_argument("--gate-ref", default=DEFAULT_GATE_REF)
@@ -722,24 +799,26 @@ def main(argv=None) -> int:
         print(json.dumps({"ok": ok, "reason": why, "n_records": len(recs),
                           "head": recs[-1]["hash"] if recs else None}))
         return 0 if ok else 1
+    if os.environ.get("C3D2_ENTRY") != "verified":
+        raise RunnerRefusal("start the runner through entry.py (pre-import code verification)")
     if not (a.package and a.package_sha256 and a.key and a.runner_id):
         ap.error("--package, --package-sha256, --key and --runner-id are required")
-    if a.phase == "certify" and not a.out:
-        ap.error("--phase certify resumes an existing run: give its --out")
-    out = Path(a.out) if a.out else DEFAULT_OUT_ROOT / ("run_" + _dt.datetime.now(_dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
+    account = getpass.getuser()
+    g = protocol.check_gates(DEFAULT_GATE_REPO, "DESIGNATION", ref=a.gate_ref, package_sha256=a.package_sha256,
+                             runner_id=a.runner_id, account=account, verify_loaded=True)
+    rp = g["run_params"]
+    out = Path(a.out_root) / ("run_" + g["run_nonce"])
+    if out.exists():
+        raise RunnerRefusal("run directory for this designation already exists: one run per designation")
     run = FirewallRun(a.manifest, a.ciphertext, a.key, a.package, a.package_sha256, out,
-                      allow_flagged=a.allow_flagged, predict_timeout=a.predict_timeout,
-                      max_episode_steps=a.max_episode_steps, resume=(a.phase == "certify"),
-                      runner_id=a.runner_id, gate_ref=a.gate_ref)
+                      allow_flagged=a.allow_flagged, certify_kwargs=rp.get("certify_kwargs") or {},
+                      predict_timeout=rp["predict_timeout"], max_episode_steps=rp["max_episode_steps"],
+                      runner_id=a.runner_id, gate_ref=a.gate_ref, account=account, delete_key=True,
+                      extra_probe_paths=[str(out / "receipts.jsonl")])
     run.open()
-    if a.phase in ("all", "predict"):
-        run.predict_all()
-        head = run.seal_predictions()
-        print(json.dumps({"predictions_sealed": True, "chain_head": head, "out": str(out)}))
-        if a.phase == "predict":
-            return 0
-    if run.phase != "SEALED":
-        raise OrderViolation("certify phase requires sealed predictions (phase %s)" % run.phase)
+    run.predict_all()
+    head = run.seal_predictions()
+    print(json.dumps({"predictions_sealed": True, "chain_head": head, "out": str(out)}))
     run.certify_all()
     res = run.close()
     print(json.dumps({"closed": True, "chain_head": res["chain_head"], "out": str(out)}))

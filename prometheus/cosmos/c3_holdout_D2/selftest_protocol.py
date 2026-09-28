@@ -1,28 +1,35 @@
-"""Protocol-order selftest for holdout D2 (operator directive "COSMOS C3 SUCCESSOR-SEAL", 2026-09-28, s3).
+"""Protocol-order selftest for holdout D2, v2 (after Odysseus's firewall audit FAIL: F1-F4, S1-S5).
 
   COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_protocol [--write]
 
-NEVER touches the hidden set, its key or the real custody log. Everything runs in a temp directory outside
-every repository. The material is a THROWAWAY hidden set drawn from a public nonce, with throwaway keys. The
-protocol records live in THROWAWAY git repositories that carry byte-exact copies of the audited code files.
-Real code runs throughout: protocol.check_gates, runner.FirewallRun, custody.Custody, evidence.build.
+NEVER touches the hidden set, its key, the real allow-list or the real custody log.
+- Everything runs in a temp directory outside every repository, on a THROWAWAY hidden set (public nonce, throwaway
+  keys).
+- The protocol records live in THROWAWAY git repositories that carry byte-exact copies of the audited code files.
+- Real code runs throughout: protocol.check_gates, runner.FirewallRun (its isolation probe included), custody,
+  evidence, allowlist, and entry.py (by path, in a subprocess).
 
-POSITIVE: seal -> audit PASS -> Cosmos commitment -> designation -> key released to the designated runner ->
-predict -> seal predictions -> certify -> close -> public result seal -> reveal -> evidence bundle with
-verify_reveal all true (including the redraw from the nonce).
+POSITIVE: seal -> audit 1 PASS (allow-listed) -> Cosmos commitment (allow-listed) -> designation (account, run
+parameters, nonce; allow-listed) -> key released -> ONE run in run_<nonce> (key deleted before the child starts; the
+child's isolation probe finds nothing readable) -> close -> result seal -> reveal (re-verifies the chain) -> evidence
+bundle.
 
-NEGATIVE (each must be REFUSED, and with no side effect):
-- runner refusals (the key path given does not exist, so a refusal proves the gate ran BEFORE the key was touched):
-  missing audit, failing audit, code changed after the audit (committed or in the working tree), commitment
-  before the audit or in the same commit, audit before the seal, missing commitment, a record only in the
-  working tree, a record rewritten after it was recorded, wrong package, missing designation, wrong runner id,
-  wrong host, M2 designated, running on M2, a manifest other than the sealed one;
-- custody: key release before the audit, twice, or into a git repository; result seal of an unclosed run;
-  reveal before the result seal, or with a tampered RESULT.json;
-- evidence: bundle before the result seal, or with tampered receipts.
+NEGATIVE: every v1 refusal, plus v2 (each must be REFUSED):
+- F1: a protocol/__init__.py (committed, or only in the working tree); loaded prometheus code not bound by the audit;
+  AUDITED_FILES must be the COMPLETE import closure of runner + custody + evidence (checked in a fresh process);
+- F2: a package with a .pyc member; np.fromfile / [open][0] flagged; a child that CAN open a secret path;
+- F3: a short ref name; a tag named origin/main;
+- F4: a record replaced through a merge;
+- S1: a record missing from the allow-list; allowlist.add refusing a wrong sender or a message without the sha256;
+- S2: a later FAIL audit supersedes an earlier PASS; a commitment made before the GOVERNING audit; the positive re-audit
+  path (audit 2 PASS on changed code);
+- S3: reveal of a run whose receipt chain was truncated;
+- S4: a designated account equal to the custodian's; run parameters differing from the designation; a run directory
+  that is not run_<nonce>;
+- entry: entry.py refuses on the real repo (no governing audit yet); runner.main refuses without entry.py.
 
-DEFECT CONTROLS (must make the matching test FAIL, i.e. the refusal disappears): ordering check removed;
-stale-code check removed; M2 host block removed.
+DEFECT CONTROLS (must make the matching test FAIL): ordering check removed; stale-code check removed; M2 block
+removed; --full-history removed (F4).
 
 --write saves SELFTEST_PROTOCOL.json (booleans only) beside this file.
 """
@@ -41,36 +48,39 @@ import sys
 import tempfile
 from pathlib import Path
 
-from prometheus.cosmos.c3_holdout_D2 import custody, draw, evidence, protocol, runner, sealbox, verify_reveal
+from prometheus.cosmos.c3_holdout_D2 import allowlist, custody, draw, evidence, protocol, runner, sealbox
 from prometheus.cosmos.c3_holdout_D2.selftest_D2 import DUMMY_PREDICTOR, SMALL, make_package
 
 HERE = Path(__file__).resolve().parent
 REAL_REPO = HERE.parents[2]
 RID = "selftest-runner"
+ACCT = "c3runner"
 HOST = socket.gethostname()
-NONCE = "c0ffee00" * 8                                                # throwaway, public
+REF = "refs/heads/main"
+NONCE = "c0ffee00" * 8
+RUN_NONCE = "n0001"
+PARAMS = {"predict_timeout": 300, "max_episode_steps": None, "certify_kwargs": SMALL}
 
 
-# ------------------------------------------------------------------ throwaway material
 def throwaway_set(tmp: Path, tag: str, n: int = 4) -> dict:
     fam = sealbox.src_sha_lf(draw.D_DIR / "medium.py")
-    w, s, rej = draw.draw_hidden(NONCE if tag == "main" else ("%02x" % len(tag)) * 32, n, draw.exposed_d_worlds())
-    plain = draw.build_plaintext(w, s, NONCE if tag == "main" else ("%02x" % len(tag)) * 32, "selftest", rej, fam)
+    nonce = NONCE if tag == "main" else ("%02x" % len(tag)) * 32
+    w, s, rej = draw.draw_hidden(nonce, n, draw.exposed_d_worlds())
+    plain = draw.build_plaintext(w, s, nonce, "selftest", rej, fam)
     sd, pd = tmp / ("secrets_" + tag), tmp / ("public_" + tag)
     pd.mkdir(parents=True)
     m = draw.seal(plain, sd, pd, "selftest", n, fam)
     return {"manifest": pd / draw.MANIFEST_NAME, "enc": pd / draw.ENC_NAME, "secrets": sd, "m": m}
 
 
-def _git(repo: Path, *a: str) -> None:
-    subprocess.run(["git", "-C", str(repo), *a], check=True, capture_output=True)
+def _git(repo: Path, *a: str) -> str:
+    return subprocess.run(["git", "-C", str(repo), *a], check=True, capture_output=True, text=True).stdout.strip()
 
 
 class GateRepo:
-    """A throwaway git repository holding copies of the audited code, the seal and protocol records."""
-
     def __init__(self, path: Path, ts: dict):
         self.p, self.ts = path, ts
+        self.al = path.parent / (path.name + "_ALLOWLIST.json")
         path.mkdir(parents=True)
         _git(path, "init", "-q", "-b", "main")
         _git(path, "config", "user.name", "selftest")
@@ -81,40 +91,59 @@ class GateRepo:
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(REAL_REPO / rel, dst)
         self.commit("code")
+        self.seal_commit = None
 
-    def commit(self, msg: str) -> None:
+    def commit(self, msg):
         _git(self.p, "add", "-A")
         _git(self.p, "commit", "-q", "--allow-empty", "-m", msg)
+        return _git(self.p, "rev-parse", "HEAD")
 
-    def seal(self, commit=True):
+    def pins(self):
+        return {"seal_commit": self.seal_commit, "spec_id": self.ts["m"]["spec_id"]}
+
+    def seal(self):
         d = self.p / protocol.PKG_REL
         shutil.copyfile(self.ts["manifest"], d / "MANIFEST_D2.json")
         shutil.copyfile(self.ts["enc"], d / "hidden_D2.enc")
-        if commit:
-            self.commit("seal")
+        self.seal_commit = self.commit("seal")
 
-    def put(self, name: str, obj: dict, commit=True):
+    def put(self, name, obj, commit=True):
         d = self.p / protocol.PROTO_REL
         d.mkdir(parents=True, exist_ok=True)
         (d / name).write_text(json.dumps(obj, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
         if commit:
             self.commit(name)
 
-    def audit(self, verdict="PASS", commit=True):
-        self.put(protocol.AUDIT_FILE, {"format": protocol.AUDIT_FORMAT, "verdict": verdict, "auditor": "selftest",
-                                       "spec_id": self.ts["m"]["spec_id"],
-                                       "code_sha256": protocol.worktree_code_hashes(self.p)}, commit)
+    def allow(self, role, name):
+        b = subprocess.run(["git", "-C", str(self.p), "show", "%s:%s/%s" % (REF, protocol.PROTO_REL, name)],
+                           capture_output=True, check=True).stdout
+        data = json.loads(self.al.read_text()) if self.al.exists() else {"entries": []}
+        data["entries"].append({"role": role, "record": name, "sha256": protocol.record_sha(b)})
+        self.al.write_text(json.dumps(data))
 
-    def commitment(self, sha: str, commit=True):
+    def audit(self, n=1, verdict="PASS", commit=True, allow=True):
+        name = "FIREWALL_AUDIT_%d.json" % n
+        self.put(name, {"format": protocol.AUDIT_FORMAT, "n": n, "verdict": verdict, "auditor": "selftest",
+                        "spec_id": self.ts["m"]["spec_id"], "code_sha256": protocol.worktree_code_hashes(self.p)},
+                 commit)
+        if commit and allow:
+            self.allow("AUDIT", name)
+
+    def commitment(self, sha, commit=True, allow=True):
         self.put(protocol.COMMITMENT_FILE, {"format": protocol.COMMITMENT_FORMAT, "committer": "selftest",
                                             "spec_id": self.ts["m"]["spec_id"], "package_sha256": sha}, commit)
+        if commit and allow:
+            self.allow("COMMITMENT", protocol.COMMITMENT_FILE)
 
-    def designate(self, runner_id=RID, host=HOST, commit=True):
+    def designate(self, runner_id=RID, host=HOST, account=ACCT, params=None, nonce=RUN_NONCE, allow=True):
         self.put(protocol.DESIGNATION_FILE, {"format": protocol.DESIGNATION_FORMAT, "runner_id": runner_id,
-                                             "host": host, "designated_by": "selftest",
-                                             "spec_id": self.ts["m"]["spec_id"]}, commit)
+                                             "host": host, "account": account, "run_params": params or PARAMS,
+                                             "run_nonce": nonce, "designated_by": "selftest",
+                                             "spec_id": self.ts["m"]["spec_id"]})
+        if allow:
+            self.allow("DESIGNATION", protocol.DESIGNATION_FILE)
 
-    def full(self, sha: str):
+    def full(self, sha):
         self.seal()
         self.audit()
         self.commitment(sha)
@@ -122,196 +151,322 @@ class GateRepo:
         return self
 
 
-def try_open(tmp: Path, repo: GateRepo, pkg: Path, sha: str, tag: str, runner_id=RID, manifest=None) -> str:
-    """Name of the exception runner.open raised. The key path does not exist: a GateRefusal proves the gate ran
-    before the key was touched; FileNotFoundError/OSError means every gate passed."""
-    out = tmp / "runs" / ("open_" + tag)
-    r = runner.FirewallRun(manifest or repo.ts["manifest"], repo.ts["enc"], tmp / "no_such_key.hex", pkg, sha, out,
-                           runner_id=runner_id, gate_repo=repo.p, gate_ref="main", certify_kwargs=SMALL)
+def gates(r, through="DESIGNATION", **kw):
+    kw.setdefault("ref", REF)
+    kw.setdefault("allowlist", r.al)
+    kw.setdefault("pins", r.pins())
+    kw.setdefault("host", HOST)
     try:
-        r.open()
+        protocol.check_gates(r.p, through, **kw)
+        return "PASSED"
+    except protocol.GateRefusal as e:
+        return type(e).__name__
+
+
+def try_open(tmp, r, pkg, sha, tag, runner_id=RID, account=ACCT, manifest=None, run_dir=None, timeout=None):
+    """runner.open() with a key path that does not exist: a GateRefusal proves the gate ran before the key."""
+    out = (tmp / "runs" / tag / (run_dir or ("run_" + RUN_NONCE)))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    rr = runner.FirewallRun(manifest or r.ts["manifest"], r.ts["enc"], tmp / "no_such_key.hex", pkg, sha, out,
+                            runner_id=runner_id, gate_repo=r.p, gate_ref=REF, certify_kwargs=SMALL,
+                            predict_timeout=timeout or PARAMS["predict_timeout"], account=account,
+                            allowlist=r.al, gate_pins=r.pins(), verify_loaded=False, secret_paths=())
+    try:
+        rr.open()
         return "OPENED"
     except Exception as e:                                                   # noqa: BLE001
         return type(e).__name__ + ("" if not (out / "receipts.jsonl").exists() else "+RECEIPTS_WRITTEN")
 
 
-# ------------------------------------------------------------------ runner-gate negatives
-def runner_gate_cases(tmp: Path, ts: dict, pkg: Path, sha: str) -> dict:
+def runner_gate_cases(tmp, ts, pkg, sha):
     k = [0]
 
-    def R() -> GateRepo:
+    def R():
         k[0] += 1
         return GateRepo(tmp / "repos" / ("r%02d" % k[0]), ts)
 
-    cases = {}
+    c = {}
     r = R().full(sha)
-    cases["control_all_gates_pass"] = (try_open(tmp, r, pkg, sha, "ctl"), ("FileNotFoundError", "OSError"))
+    c["control_all_gates_pass"] = (try_open(tmp, r, pkg, sha, "ctl"), ("FileNotFoundError", "OSError"))
     r = R(); r.seal(); r.commitment(sha); r.designate()
-    cases["no_audit"] = (try_open(tmp, r, pkg, sha, "noaudit"), ("AuditMissing",))
-    r = R(); r.seal(); r.audit("FAIL"); r.commitment(sha); r.designate()
-    cases["audit_fail"] = (try_open(tmp, r, pkg, sha, "afail"), ("AuditNotPass",))
+    c["no_audit"] = (try_open(tmp, r, pkg, sha, "noaudit"), ("AuditMissing",))
+    r = R(); r.seal(); r.audit(verdict="FAIL"); r.commitment(sha); r.designate()
+    c["audit_fail"] = (try_open(tmp, r, pkg, sha, "afail"), ("AuditNotPass",))
     r = R().full(sha)
     with open(r.p / protocol.PKG_REL / "runner.py", "a", encoding="utf-8") as f:
         f.write("\n# edited after the audit\n")
-    cases["code_changed_after_audit_worktree"] = (try_open(tmp, r, pkg, sha, "stale_wt"), ("AuditStale",))
+    c["code_changed_after_audit_worktree"] = (try_open(tmp, r, pkg, sha, "stale_wt"), ("AuditStale",))
     r.commit("edit runner after audit")
-    cases["code_changed_after_audit_committed"] = (try_open(tmp, r, pkg, sha, "stale_c"), ("AuditStale",))
+    c["code_changed_after_audit_committed"] = (try_open(tmp, r, pkg, sha, "stale_c"), ("AuditStale",))
+    r = R().full(sha)
+    with open(r.p / "prometheus/cosmos/c3/probe.py", "a", encoding="utf-8") as f:     # F1: probe.py now bound
+        f.write("\n# edited after the audit\n")
+    c["F1_probe_py_changed_after_audit"] = (try_open(tmp, r, pkg, sha, "stale_probe"), ("AuditStale",))
     r = R(); r.seal(); r.commitment(sha); r.audit(); r.designate()
-    cases["commitment_before_audit"] = (try_open(tmp, r, pkg, sha, "cm_first"), ("RecordOrderViolation",))
-    r = R(); r.seal(); r.audit(commit=False); r.commitment(sha, commit=False); r.commit("both"); r.designate()
-    cases["commitment_same_commit_as_audit"] = (try_open(tmp, r, pkg, sha, "cm_same"), ("RecordOrderViolation",))
+    c["commitment_before_audit"] = (try_open(tmp, r, pkg, sha, "cm_first"), ("RecordOrderViolation",))
+    r = R(); r.seal(); r.audit(commit=False); r.commitment(sha, commit=False); r.commit("both")
+    r.allow("AUDIT", "FIREWALL_AUDIT_1.json"); r.allow("COMMITMENT", protocol.COMMITMENT_FILE); r.designate()
+    c["commitment_same_commit_as_audit"] = (try_open(tmp, r, pkg, sha, "cm_same"), ("RecordOrderViolation",))
     r = R(); r.audit(); r.seal(); r.commitment(sha); r.designate()
-    cases["audit_before_seal"] = (try_open(tmp, r, pkg, sha, "au_first"), ("RecordOrderViolation",))
+    c["audit_before_seal"] = (try_open(tmp, r, pkg, sha, "au_first"), ("RecordOrderViolation",))
     r = R(); r.seal(); r.audit(); r.designate()
-    cases["no_commitment"] = (try_open(tmp, r, pkg, sha, "nocm"), ("CommitmentMissing",))
+    c["no_commitment"] = (try_open(tmp, r, pkg, sha, "nocm"), ("CommitmentMissing",))
     r = R(); r.seal(); r.audit(); r.commitment(sha, commit=False)
-    cases["commitment_only_in_worktree"] = (try_open(tmp, r, pkg, sha, "cm_wt"), ("CommitmentMissing",))
-    r = R().full(sha); r.commitment("0" * 64)
-    cases["commitment_rewritten"] = (try_open(tmp, r, pkg, sha, "cm_rw"), ("RecordRewritten",))
+    c["commitment_only_in_worktree"] = (try_open(tmp, r, pkg, sha, "cm_wt"), ("CommitmentMissing",))
+    r = R().full(sha); r.commitment("0" * 64, allow=False)
+    c["commitment_rewritten"] = (try_open(tmp, r, pkg, sha, "cm_rw"), ("RecordRewritten",))
     other = ("0" if sha[0] != "0" else "1") + sha[1:]
     r = R(); r.seal(); r.audit(); r.commitment(other); r.designate()
-    cases["package_not_the_committed_one"] = (try_open(tmp, r, pkg, sha, "wrongpkg"), ("PackageNotCommitted",))
+    c["package_not_the_committed_one"] = (try_open(tmp, r, pkg, sha, "wrongpkg"), ("PackageNotCommitted",))
     r = R(); r.seal(); r.audit(); r.commitment(sha)
-    cases["no_designation"] = (try_open(tmp, r, pkg, sha, "nods"), ("DesignationMissing",))
+    c["no_designation"] = (try_open(tmp, r, pkg, sha, "nods"), ("DesignationMissing",))
     r = R().full(sha)
-    cases["wrong_runner_id"] = (try_open(tmp, r, pkg, sha, "wrongrid", runner_id="someone-else"),
-                                ("RunnerNotDesignated",))
+    c["wrong_runner_id"] = (try_open(tmp, r, pkg, sha, "wrid", runner_id="x"), ("RunnerNotDesignated",))
     r = R(); r.seal(); r.audit(); r.commitment(sha); r.designate(host="OTHERHOST")
-    cases["wrong_host"] = (try_open(tmp, r, pkg, sha, "wronghost"), ("RunnerNotDesignated",))
+    c["wrong_host"] = (try_open(tmp, r, pkg, sha, "whost"), ("RunnerNotDesignated",))
     r = R(); r.seal(); r.audit(); r.commitment(sha); r.designate(host="SPECTREX5")
-    cases["m2_designated"] = (try_open(tmp, r, pkg, sha, "m2des"), ("ForbiddenHost",))
+    c["m2_designated"] = (try_open(tmp, r, pkg, sha, "m2"), ("ForbiddenHost",))
     r = R().full(sha)
-    try:
-        protocol.check_gates(r.p, "DESIGNATION", ref="main", package_sha256=sha, runner_id=RID, host="SPECTREX5")
-        got = "PASSED"
-    except protocol.GateRefusal as e:
-        got = type(e).__name__
-    cases["running_on_m2"] = (got, ("ForbiddenHost",))
+    c["running_on_m2"] = (gates(r, host="SPECTREX5"), ("ForbiddenHost",))
     other_ts = throwaway_set(tmp, "other", 2)
     r = R().full(sha)
-    cases["manifest_not_the_sealed_one"] = (try_open(tmp, r, pkg, sha, "swap", manifest=other_ts["manifest"]),
-                                            ("HiddenSetMismatch",))
-    return {name: {"got": got, "ok": got in want} for name, (got, want) in cases.items()}
+    c["manifest_not_the_sealed_one"] = (try_open(tmp, r, pkg, sha, "swap", manifest=other_ts["manifest"]),
+                                        ("HiddenSetMismatch",))
+    # ---- v2
+    r = R().full(sha)
+    (r.p / protocol.PROTO_REL / "__init__.py").write_text("# shadow\n")
+    c["F1_protocol_init_py_worktree"] = (gates(r), ("RecordDirPolluted",))
+    r.commit("shadow")
+    c["F1_protocol_init_py_committed"] = (gates(r), ("RecordDirPolluted",))
+    r = R().full(sha)
+    c["F1_unbound_loaded_code"] = (gates(r, verify_loaded=True), ("UnboundCodeLoaded",))
+    r = R().full(sha)
+    c["F3_short_ref"] = (gates(r, ref="main"), ("AmbiguousRef",))
+    _git(r.p, "tag", "origin/main")
+    c["F3_tag_shadows_origin_main"] = (gates(r), ("AmbiguousRef",))
+    r = R(); r.seal(); r.audit()
+    _git(r.p, "branch", "side")
+    r.commitment(sha)
+    _git(r.p, "checkout", "-q", "side")
+    r.put(protocol.COMMITMENT_FILE, {"format": protocol.COMMITMENT_FORMAT, "committer": "forger",
+                                     "spec_id": ts["m"]["spec_id"], "package_sha256": other})
+    _git(r.p, "checkout", "-q", "main")
+    subprocess.run(["git", "-C", str(r.p), "merge", "-q", "-X", "theirs", "--no-edit", "side"], capture_output=True)
+    r.allow("COMMITMENT", protocol.COMMITMENT_FILE); r.designate()
+    c["F4_record_replaced_through_merge"] = (gates(r), ("RecordRewritten",))
+    f4_repo = r
+    r = R(); r.seal(); r.audit(); r.commitment(sha, allow=False); r.designate()
+    c["S1_commitment_not_allowlisted"] = (gates(r), ("NotAllowListed",))
+    r = R(); r.seal(); r.audit(allow=False); r.commitment(sha); r.designate()
+    c["S1_audit_not_allowlisted"] = (gates(r), ("NotAllowListed",))
+    r = R(); r.seal(); r.audit(1)
+    with open(r.p / protocol.PKG_REL / "runner.py", "a", encoding="utf-8") as f:
+        f.write("\n# a later, re-audited change\n")
+    r.commit("change")
+    r.audit(2)
+    r.commitment(sha); r.designate()
+    c["S2_reaudit_path_positive"] = (gates(r), ("PASSED",))
+    r = R(); r.seal(); r.audit(1); r.audit(2, verdict="FAIL"); r.commitment(sha); r.designate()
+    c["S2_later_FAIL_supersedes_PASS"] = (gates(r), ("AuditNotPass",))
+    r = R(); r.seal(); r.audit(1); r.commitment(sha); r.audit(2); r.designate()
+    c["S2_commitment_before_governing_audit"] = (gates(r), ("RecordOrderViolation",))
+    r = R(); r.seal(); r.audit(); r.commitment(sha); r.designate(account=protocol.CUSTODIAN_ACCOUNT)
+    c["S4_account_is_custodian"] = (gates(r), ("RunnerNotDesignated",))
+    r = R().full(sha)
+    c["S4_run_params_differ"] = (try_open(tmp, r, pkg, sha, "params", timeout=299), ("RunParamsMismatch",))
+    c["S4_run_dir_not_nonce"] = (try_open(tmp, r, pkg, sha, "rundir", run_dir="run_other"), ("RunParamsMismatch",))
+    c["S4_wrong_account"] = (try_open(tmp, r, pkg, sha, "acct", account="someone"), ("RunnerNotDesignated",))
+    return {name: {"got": got, "ok": got in want} for name, (got, want) in c.items()}, f4_repo
 
 
-# ------------------------------------------------------------------ positive end to end + custody/evidence negatives
-def end_to_end(tmp: Path, ts: dict, pkg: Path, sha: str) -> dict:
+def closure_checks():
+    """F1: AUDITED_FILES must be the complete prometheus import closure of runner + custody + evidence, measured in a
+    FRESH process; a negative control imports one extra (unaudited) module and must be detected."""
+    code = ("import os,sys,json;os.environ['COSMOS_BROKER']='1';sys.path.insert(0,%r);"
+            "import prometheus.cosmos.c3_holdout_D2.runner, prometheus.cosmos.c3_holdout_D2.custody, "
+            "prometheus.cosmos.c3_holdout_D2.evidence%s;"
+            "from prometheus.cosmos.c3_holdout_D2 import protocol as P;"
+            "print(json.dumps(sorted(set(P.loaded_closure(%r))-set(P.AUDITED_FILES))))")
+    res = {}
+    for tag, extra in (("complete", ""), ("neg_extra_module", ", prometheus.cosmos.c3_holdout_D2.selftest_D2")):
+        p = subprocess.run([sys.executable, "-c", code % (str(REAL_REPO), extra, str(REAL_REPO))],
+                           capture_output=True, text=True)
+        res[tag] = json.loads(p.stdout.strip().splitlines()[-1]) if p.returncode == 0 else ["<error>"]
+    return {"F1_audited_files_cover_import_closure": res["complete"] == [],
+            "F1_closure_detects_extra_module": len(res["neg_extra_module"]) > 0}, res
+
+
+def package_checks(tmp):
+    import io
+    import zipfile
+    res = {}
+    buf = io.BytesIO()
+    meta = {"format": runner.PACKAGE_FORMAT, "entry": "predictor.py", "adjudication": {},
+            "intervention": {"knob": "p_decay", "to": 1.0}}
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("package.json", json.dumps(meta))
+        z.writestr("predictor.py", DUMMY_PREDICTOR)
+        z.writestr("helper.pyc", b"\x00" * 16)
+    pkg = tmp / "pyc.zip"
+    pkg.write_bytes(buf.getvalue())
+    try:
+        runner.load_package(pkg, sealbox.sha256_file(pkg), tmp / "pyc_out")
+        res["F2_pyc_member_refused"] = False
+    except runner.PackageInvalid:
+        res["F2_pyc_member_refused"] = True
+    for tag, src in (("fromfile", "import numpy as np\ndef predict(s,t,seed):\n    return np.fromfile('x')\n"),
+                     ("open_alias", "def predict(s,t,seed):\n    f=[open][0]\n    return f('x')\n")):
+        res["F2_audit_flags_" + tag] = bool(runner.audit_source(src, tag + ".py"))
+    return res
+
+
+def entry_checks():
+    env = dict(os.environ, C3D2_NO_FETCH="1")
+    env.pop("C3D2_ENTRY", None)
+    p = subprocess.run([sys.executable, str(HERE / "entry.py"), "runner", "--help"], capture_output=True, text=True,
+                       env=env)
+    refused_real = p.returncode != 0 and "REFUSED" in (p.stdout + p.stderr)
+    saved = os.environ.pop("C3D2_ENTRY", None)
+    try:
+        runner.main(["--package", "x", "--package-sha256", "0" * 64, "--key", "x", "--runner-id", RID])
+        main_guard = False
+    except runner.RunnerRefusal:
+        main_guard = True
+    finally:
+        if saved is not None:
+            os.environ["C3D2_ENTRY"] = saved
+    return {"entry_refuses_real_repo_without_audit": refused_real, "runner_main_refuses_without_entry": main_guard}
+
+
+def end_to_end(tmp, ts, pkg, sha):
     out = {}
     repo = GateRepo(tmp / "repos" / "e2e", ts).full(sha)
     log = tmp / "custody.jsonl"
-    cu = custody.Custody(repo=repo.p, ref="main", secrets_dir=ts["secrets"], log=log, host=HOST)
+    cu = custody.Custody(repo=repo.p, ref=REF, secrets_dir=ts["secrets"], log=log, host=HOST, allowlist=repo.al,
+                         pins=repo.pins(), verify_loaded=False)
 
-    def refused(fn, *a) -> str:
+    def refused(fn, *a):
         try:
             fn(*a)
             return "NOT_REFUSED"
         except (protocol.GateRefusal, custody.CustodyRefusal, evidence.EvidenceRefusal) as e:
             return type(e).__name__
 
-    # custody negatives BEFORE the audit (separate repo, same secrets)
     pre = GateRepo(tmp / "repos" / "pre", ts)
     pre.seal()
-    cu_pre = custody.Custody(repo=pre.p, ref="main", secrets_dir=ts["secrets"], log=tmp / "custody_pre.jsonl", host=HOST)
-    d0 = tmp / "released_pre"
-    out["release_before_audit_refused"] = (refused(cu_pre.release_key, RID, d0) == "AuditMissing"
-                                           and not (d0 / custody.KEY_NAME).exists())
+    cu_pre = custody.Custody(repo=pre.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "cpre.jsonl", host=HOST,
+                             allowlist=pre.al, pins=pre.pins(), verify_loaded=False)
+    out["release_before_audit_refused"] = refused(cu_pre.release_key, RID, tmp / "rel_pre") == "AuditMissing"
     out["release_into_git_refused"] = refused(cu.release_key, RID, repo.p / "k") == "CustodyRefusal"
-    out["release_wrong_runner_refused"] = refused(cu.release_key, "someone-else", tmp / "rel_x") == "RunnerNotDesignated"
     rel = tmp / "released"
-    ev = cu.release_key(RID, rel)
-    out["release_key_ok"] = ev["event"] == "KEY_RELEASED" and (rel / custody.KEY_NAME).exists()
-    out["release_twice_refused"] = refused(cu.release_key, RID, tmp / "released2") == "CustodyRefusal"
-
-    # a predict-only run cannot be result-sealed
-    po = tmp / "runs" / "predict_only"
-    r0 = runner.FirewallRun(ts["manifest"], ts["enc"], rel / custody.KEY_NAME, pkg, sha, po, runner_id=RID,
-                            gate_repo=repo.p, gate_ref="main", certify_kwargs=SMALL, predict_timeout=300)
-    r0.open(); r0.predict_all(); r0.seal_predictions()
-    out["result_seal_unclosed_refused"] = refused(cu.result_seal_record, po, tmp / "rs_x.json") == "CustodyRefusal"
-
-    # the real path
-    run_dir = tmp / "runs" / "e2e"
+    out["release_key_ok"] = cu.release_key(RID, rel)["event"] == "KEY_RELEASED"
+    out["release_twice_refused"] = refused(cu.release_key, RID, tmp / "rel2") == "CustodyRefusal"
+    # F2: a child that CAN open a secret path is refused before any world is served
+    fake = tmp / "fake_secret.hex"
+    fake.write_text("00")
+    keyc = tmp / "keyc"
+    keyc.mkdir()
+    shutil.copyfile(rel / custody.KEY_NAME, keyc / custody.KEY_NAME)
+    iso = tmp / "runs" / "iso" / ("run_" + RUN_NONCE)
+    iso.parent.mkdir(parents=True)
+    r0 = runner.FirewallRun(ts["manifest"], ts["enc"], keyc / custody.KEY_NAME, pkg, sha, iso, runner_id=RID,
+                            gate_repo=repo.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT,
+                            allowlist=repo.al, gate_pins=repo.pins(), verify_loaded=False, delete_key=True,
+                            secret_paths=(fake,))
+    r0.open()
+    try:
+        r0.predict_all()
+        out["F2_child_that_can_read_a_secret_refused"] = False
+    except runner.ChildNotIsolated:
+        out["F2_child_that_can_read_a_secret_refused"] = True
+    fake.unlink()
+    # the real, single run
+    run_dir = tmp / "runs" / "e2e" / ("run_" + RUN_NONCE)
+    run_dir.parent.mkdir(parents=True)
     r = runner.FirewallRun(ts["manifest"], ts["enc"], rel / custody.KEY_NAME, pkg, sha, run_dir, runner_id=RID,
-                           gate_repo=repo.p, gate_ref="main", certify_kwargs=SMALL, predict_timeout=300)
-    r.open(); r.predict_all(); r.seal_predictions(); r.certify_all(); res = r.close()
-    opened = r.receipts.records[0]["body"]
-    out["run_closed"] = res["chain_head"] == r.receipts.head and opened["runner_id"] == RID \
-        and set(opened["protocol_gates"]) >= {"seal_commit", "audit_commit", "commitment_commit", "designation_commit"}
-
+                           gate_repo=repo.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT,
+                           allowlist=repo.al, gate_pins=repo.pins(), verify_loaded=False, delete_key=True,
+                           secret_paths=(fake,), extra_probe_paths=[str(ts["secrets"] / "nonexistent")])
+    r.open()
+    out["key_deleted_after_read"] = not (rel / custody.KEY_NAME).exists()
+    r.predict_all(); r.seal_predictions(); r.certify_all(); res = r.close()
+    out["run_closed"] = res["chain_head"] == r.receipts.head and r.receipts.records[0]["body"]["run_nonce"] == RUN_NONCE
     rev0 = tmp / "revealed_early"
-    out["reveal_before_result_seal_refused"] = (refused(cu.reveal, run_dir, rev0) == "ResultNotSealed"
-                                                and not rev0.exists())
-    out["evidence_before_result_seal_refused"] = refused(evidence.build, run_dir, tmp / "bundle_early", None,
-                                                         repo.p, "main", HOST) == "ResultNotSealed"
+    out["reveal_before_result_seal_refused"] = refused(cu.reveal, run_dir, rev0) == "ResultNotSealed" and not rev0.exists()
     rec_path = repo.p / protocol.PROTO_REL / protocol.RESULT_SEAL_FILE
     cu.result_seal_record(run_dir, rec_path)
     repo.commit("result seal")
-    out["result_seal_public_fields_only"] = set(json.loads(rec_path.read_text(encoding="utf-8"))) == {
-        "format", "spec_id", "package_sha256", "chain_head", "result_sha256", "n_receipts", "sealed_by", "utc"}
-
-    # tampered copies must be refused
-    tam = tmp / "runs" / "tampered"
+    out["result_seal_carries_nonce"] = json.loads(rec_path.read_text())["run_nonce"] == RUN_NONCE
+    tam = tmp / "runs" / "tam" / ("run_" + RUN_NONCE)
     shutil.copytree(run_dir, tam)
-    (tam / "RESULT.json").write_text((tam / "RESULT.json").read_text(encoding="utf-8").replace('"NONE"', '"PASSIVE"', 1),
-                                     encoding="utf-8", newline="\n")
-    out["reveal_tampered_result_refused"] = refused(cu.reveal, tam, tmp / "revealed_tam") == "CustodyRefusal"
-    tam2 = tmp / "runs" / "tampered_receipts"
-    shutil.copytree(run_dir, tam2)
-    lines = (tam2 / "receipts.jsonl").read_text(encoding="utf-8").splitlines()
-    (tam2 / "receipts.jsonl").write_text("\n".join(lines[:-1]) + "\n", encoding="utf-8", newline="\n")
-    out["evidence_tampered_receipts_refused"] = refused(evidence.build, tam2, tmp / "bundle_tam", None,
-                                                        repo.p, "main", HOST) == "EvidenceRefusal"
-
+    lines = (tam / "receipts.jsonl").read_text(encoding="utf-8").splitlines()
+    (tam / "receipts.jsonl").write_text("\n".join(lines[:-2] + lines[-1:]) + "\n", encoding="utf-8", newline="\n")
+    out["S3_reveal_truncated_chain_refused"] = refused(cu.reveal, tam, tmp / "rev_tam") == "CustodyRefusal"
     revd = tmp / "revealed"
-    rv = cu.reveal(run_dir, revd)
-    out["reveal_ok"] = rv["verify_reveal"]["all_ok"]
-    out["reveal_twice_refused"] = refused(cu.reveal, run_dir, tmp / "revealed2") == "CustodyRefusal"
-    b = evidence.build(run_dir, tmp / "bundle", revd, repo.p, "main", HOST)
-    rvj = json.loads((tmp / "bundle" / "REVEAL_VERIFY.json").read_text(encoding="utf-8"))
-    idx = json.loads((tmp / "bundle" / "INDEX.json").read_text(encoding="utf-8"))
-    out["evidence_bundle_ok"] = bool(rvj["all_ok"] and rvj.get("redraw_from_nonce_ok")
-                                     and all(sealbox.sha256_file(tmp / "bundle" / k) == v for k, v in idx.items())
-                                     and b["chain_head"] == res["chain_head"])
-    events = [json.loads(x)["event"] for x in log.read_text(encoding="utf-8").splitlines()]
-    out["custody_log_records_refusals"] = events.count("REFUSED") >= 4 and "KEY_RELEASED" in events \
-        and "REVEALED" in events
+    out["reveal_ok"] = cu.reveal(run_dir, revd)["verify_reveal"]["all_ok"]
+    b = evidence.build(run_dir, tmp / "bundle", revd, repo.p, REF, HOST, allowlist=repo.al, pins=repo.pins(),
+                       verify_loaded=False)
+    rv = json.loads((tmp / "bundle" / "REVEAL_VERIFY.json").read_text())
+    out["evidence_bundle_ok"] = bool(rv["all_ok"] and rv.get("redraw_from_nonce_ok") and b["chain_head"] == res["chain_head"])
     return out
 
 
-# ------------------------------------------------------------------ defect controls
-def defect_controls(tmp: Path, ts: dict, pkg: Path, sha: str) -> dict:
-    """Each injected defect must make the matching negative test stop refusing (True = the test can fail)."""
+def allowlist_checks(tmp, ts, sha):
+    r = GateRepo(tmp / "repos" / "al", ts)
+    r.seal(); r.audit(allow=False)
+    name = "FIREWALL_AUDIT_1.json"
+    b = subprocess.run(["git", "-C", str(r.p), "show", "%s:%s/%s" % (REF, protocol.PROTO_REL, name)],
+                       capture_output=True, check=True).stdout
+    h = protocol.record_sha(b)
+    al = tmp / "al.json"
+    allowlist.REPO = r.p
     res = {}
-    saved = (protocol._strict_ancestor, protocol.worktree_code_hashes, protocol.code_hashes, set(protocol.FORBIDDEN_HOSTS))
+    for tag, msg, want_ok in (("good", {"sender": "Odysseus", "subject": "PASS " + h, "body": ""}, True),
+                              ("wrong_sender", {"sender": "Cosmos", "subject": h, "body": ""}, False),
+                              ("no_sha", {"sender": "Odysseus", "subject": "PASS", "body": "looks fine"}, False)):
+        try:
+            allowlist.add("AUDIT", name, 1, REF, path=al, message=msg)
+            ok = True
+        except SystemExit:
+            ok = False
+        res["S1_allowlist_" + tag] = ok == want_ok
+    allowlist.REPO = REAL_REPO
+    return res
+
+
+def defect_controls(tmp, ts, pkg, sha, f4_repo):
+    res = {}
+    saved = (protocol._strict_ancestor, protocol.worktree_code_hashes, protocol.code_hashes,
+             set(protocol.FORBIDDEN_HOSTS), protocol._commits_touching)
     try:
         protocol._strict_ancestor = lambda repo, a, b: True
         r = GateRepo(tmp / "repos" / "dc1", ts); r.seal(); r.commitment(sha); r.audit(); r.designate()
-        res["DefectNoOrderCheck[commitment_before_audit]"] = try_open(tmp, r, pkg, sha, "dc1") \
-            not in ("RecordOrderViolation",)
+        res["DefectNoOrderCheck[commitment_before_audit]"] = gates(r) != "RecordOrderViolation"
         protocol._strict_ancestor = saved[0]
-
         r = GateRepo(tmp / "repos" / "dc2", ts).full(sha)
-        bound = json.loads((r.p / protocol.PROTO_REL / protocol.AUDIT_FILE).read_text(encoding="utf-8"))["code_sha256"]
+        bound = json.loads((r.p / protocol.PROTO_REL / "FIREWALL_AUDIT_1.json").read_text())["code_sha256"]
         with open(r.p / protocol.PKG_REL / "runner.py", "a", encoding="utf-8") as f:
-            f.write("\n# edited after the audit\n")
+            f.write("\n# edited\n")
         r.commit("edit")
         protocol.worktree_code_hashes = lambda repo: dict(bound)
         protocol.code_hashes = lambda repo, ref: dict(bound)
-        res["DefectNoStaleCheck[code_changed_after_audit]"] = try_open(tmp, r, pkg, sha, "dc2") != "AuditStale"
+        res["DefectNoStaleCheck[code_changed_after_audit]"] = gates(r) != "AuditStale"
         protocol.worktree_code_hashes, protocol.code_hashes = saved[1], saved[2]
-
         protocol.FORBIDDEN_HOSTS.clear()
         r = GateRepo(tmp / "repos" / "dc3", ts); r.seal(); r.audit(); r.commitment(sha); r.designate(host="SPECTREX5")
-        try:
-            protocol.check_gates(r.p, "DESIGNATION", ref="main", package_sha256=sha, runner_id=RID, host="SPECTREX5")
-            got = "PASSED"
-        except protocol.GateRefusal as e:
-            got = type(e).__name__
-        res["DefectNoM2Block[m2_designated_and_running_on_m2]"] = got == "PASSED"
+        res["DefectNoM2Block[m2_designated_and_running_on_m2]"] = gates(r, host="SPECTREX5") == "PASSED"
+        protocol.FORBIDDEN_HOSTS.update(saved[3])
+
+        def plain_log(repo, ref, rel):                                    # the v1 behaviour Odysseus broke
+            p = protocol._git(repo, "log", "--format=%H", ref, "--", rel)
+            return [(c, 1) for c in p.stdout.split() if c]
+        protocol._commits_touching = plain_log
+        res["DefectNoFullHistory[F4_record_replaced_through_merge]"] = gates(f4_repo) != "RecordRewritten"
     finally:
         protocol._strict_ancestor, protocol.worktree_code_hashes, protocol.code_hashes = saved[0], saved[1], saved[2]
         protocol.FORBIDDEN_HOSTS.clear()
         protocol.FORBIDDEN_HOSTS.update(saved[3])
+        protocol._commits_touching = saved[4]
     return res
 
 
@@ -323,14 +478,21 @@ def run() -> dict:
         ts = throwaway_set(tmp, "main")
         pkg = tmp / "dummy.zip"
         sha = make_package(pkg, DUMMY_PREDICTOR)
-        gates = runner_gate_cases(tmp, ts, pkg, sha)
+        gate_cases, f4_repo = runner_gate_cases(tmp, ts, pkg, sha)
+        closure, closure_raw = closure_checks()
+        pk = package_checks(tmp)
+        en = entry_checks()
+        al = allowlist_checks(tmp, ts, sha)
         e2e = end_to_end(tmp, ts, pkg, sha)
-        dcs = defect_controls(tmp, ts, pkg, sha)
-    checks = {"runner_gate[%s]" % k: v["ok"] for k, v in gates.items()}
+        dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
+    checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
+    for grp in (closure, pk, en, al):
+        checks.update(grp)
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
-    res = {"checks": checks, "runner_gate_outcomes": {k: v["got"] for k, v in gates.items()},
-           "defect_controls_must_be_true": dcs, "hidden_set_or_key_touched": False,
-           "all_checks_true": all(checks.values()), "all_defect_controls_true": all(dcs.values())}
+    res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
+           "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
+           "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
+           "all_defect_controls_true": all(dcs.values())}
     res["selftest_pass"] = bool(res["all_checks_true"] and res["all_defect_controls_true"])
     return res
 

@@ -1,0 +1,18 @@
+{"claim_id": "C2", "verdict": "PARTIAL",
+ "parts": [
+  {"part": "The B6 count W_by_location=NO & W_by_material=YES = 27,083 is in archaeon/causal_lens/out_v02/B6_PROBE_r038751.json at the checked-out commit",
+   "status": "true",
+   "evidence": ["archaeon/causal_lens/out_v02/B6_PROBE_r038751.json:6", "roles/Odysseus/th006/pack/r038751.pack.json:116", "roles/Odysseus/th006/REPORT.md:17-19"]},
+  {"part": "The committed recipe and pack both carry result_sha256 cd9547c24811f52b...",
+   "status": "true",
+   "evidence": ["roles/Odysseus/th006/pack/r038751.recipe.json:9", "roles/Odysseus/th006/pack/r038751.pack.json:188", "roles/Odysseus/th006/pack/r038751.pack.json:195", "ops/campaigns/C-001/E-001/TASKS.md:23", "ops/campaigns/C-001/E-001/TASKS.md:52"]},
+  {"part": "R-13's own ubu002 replay produced result_sha256 cd9547c2 (so it equals the recipe/pack)",
+   "status": "unverifiable",
+   "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:4", "roles/Artemis/selftest/runs/R-13/REPORT.md:73"],
+   "note": "The replay output sits in the host scratch dir /home/jcraig/artemis-selftest/work/R-13 and is not committed; only the report asserts the match. Earlier independent runs (ubu001, M2 reference) are recorded with the same hash: roles/Odysseus/th006/REPORT.md:68, ops/campaigns/C-001/E-001/TASKS.md:52."},
+  {"part": "An M2 attestation 'of it' is on main",
+   "status": "true",
+   "evidence": ["roles/Odysseus/th006/attest/M2_r038751_2026-09-28.txt:1-23", "roles/Odysseus/th006/REPORT.md:5-6", "roles/Odysseus/th006/pack/r038751.pack.json:199-201"],
+   "note": "True only with a caveat. The committed M2 attestation (status MATCH) attests the preserved log's content hash 95a12c29... (8,118,119 bytes, 74,800 rows). It does not attest result_sha256 cd9547c2 or the 27,083 count directly. The two are connected only through the pack's chain: replay rows -> content hash -> preserved log. The pack's own derivation.attestation field still says PENDING (pack.json:152-156). The file exists at the checked-out commit 59b94b4, which I take to be main; I could not run git to confirm branch membership."}
+ ],
+ "notes": "The count and the committed hashes check out, and a committed M2 MATCH attestation exists. Two gaps stop this from being CONFIRMED. (1) The claimed replay result_sha256 comes from an R-13 run whose output was never committed, so the repository cannot show that the replay produced it. (2) The M2 attestation covers the source-log content hash 95a12c29, not cd9547c2 or the count itself. Read literally, 'an M2 attestation of it' overstates what M2 attested. Git commands were denied in this session, so the claim that this commit is on main rests on the task framing and the gitStatus snapshot."}

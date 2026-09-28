@@ -85,7 +85,10 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--secrets", default=str(DEFAULT_SECRETS))
     ap.add_argument("--scan", nargs="*", default=[str(Path(__file__).resolve().parents[3])])
-    ap.add_argument("--git-ref", nargs="*", default=["HEAD", "origin/main"])
+    ap.add_argument("--git-ref", nargs="*", default=["HEAD", "refs/remotes/origin/main"])
+    ap.add_argument("--all-history", action="store_true",
+                    help="v2 (Odysseus S5): search EVERY commit on every ref (git log --all -S) for the key, salt and "
+                         "nonce hex and each hidden world's canonical JSON; counts only")
     a = ap.parse_args(argv)
     sd = Path(a.secrets)
     sec = load(sd)
@@ -101,7 +104,21 @@ def main(argv=None) -> int:
             out["git"].append(git_grep(Path(a.scan[0]), ref, pf))
     finally:
         pf.unlink()
-    out["all_clean"] = bool(out["secrets_dir_outside_git"] and out["secrets_dir_files_expected"]
+    if a.all_history:
+        repo = Path(a.scan[0])
+        needles = [(k, v.decode()) for k, v in sec["strings"].items()] + [("world_json", w.decode()) for w in sec["worlds"]]
+        n_hit = {}
+        for kind, needle in needles:
+            p = subprocess.run(["git", "-C", str(repo), "log", "--all", "--no-textconv", "--format=%H", "-S", needle],
+                               capture_output=True, text=True)
+            hits = [x for x in p.stdout.split() if x]
+            n_hit[kind] = n_hit.get(kind, 0) + (len(hits) if p.returncode == 0 else 1_000_000)   # error != clean
+        out["all_history"] = {"commits_containing": n_hit, "clean": all(v == 0 for v in n_hit.values()),
+                              "n_commits_searched": int(subprocess.run(
+                                  ["git", "-C", str(repo), "rev-list", "--all", "--count"],
+                                  capture_output=True, text=True).stdout.strip() or 0)}
+    out["all_clean"] = bool(out.get("all_history", {"clean": True})["clean"]
+                            and out["secrets_dir_outside_git"] and out["secrets_dir_files_expected"]
                             and all(s["clean"] for s in out["scans"].values())
                             and all(g["clean"] for g in out["git"]))
     print(json.dumps(out, indent=1, sort_keys=True))
