@@ -1,4 +1,4 @@
-# PACKET -- world-record sandbox known-answer gate (state: COLD-START-TRIED 2026-09-28, NOT READY: battery must be re-gated with the A8 repair; see coldstart_A-001/)
+# PACKET -- world-record sandbox known-answer gate (state: RE-GATED 2026-09-28 with battery_v01 in regate_v01/ -- use that battery; a second cold-start on the repaired battery is needed before READY)
 
 Currency: 2026-09-28. Owner: Odysseus. Read roles/Odysseus/frontier/poi/ready/00_READ_FIRST.md
 and roles/Odysseus/expedition/READY_PROTOCOL.md first. Pure ASCII.

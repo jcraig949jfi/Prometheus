@@ -25,6 +25,10 @@ R-1 (channel formation) with a re-gated battery.
 - Pass condition: every known-answer arm scored as specified at n = 20
   independent worlds (A6 salted seeds); the fixture is never overwritten.
 
+Phase 0 RESULT (2026-09-28, sandbox/regate_v01/RESULT.md): PASS -- 13/13
+criteria, 11 arms incl. three cheats (T nest tag, CAL calendar tag, DECOY
+decoy cell), originals preserved; unplanted still reaches no rung.
+
 ## Phase 1 -- receiver closure precheck (A5)
 
 Before asking an ecology to invent a code, show the reader class CAN hold

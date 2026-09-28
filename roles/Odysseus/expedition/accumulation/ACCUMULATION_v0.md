@@ -231,3 +231,20 @@ A8 (2026-09-28, from the sandbox cold-start, sandbox/coldstart_A-001/).
    and must be DECISIONAL for R0 and R3. Candidate repair checked post hoc
    on the same seeds (keeps every original gate verdict); EXPLORATORY until
    re-gated.
+
+A8 STATUS (2026-09-28): re-gated by a worker independent of the battery's
+author (sandbox/regate_v01/): 13/13 preregistered criteria, 11 arms, n=20;
+original verdicts preserved exactly (5040 values). Both A8 clauses are
+necessary: CAL (calendar tag) passes D_episode and is caught only by
+H_hist; DECOY passes H_hist and is caught only by D_episode; T caught by
+both. At R0 (no reader) the episode clause is applied as E0 (the R0
+decoder on the record from an earlier episode).
+
+OPEN FOR v0.2 (not a rule yet): unplanted seed 1016 passes every consumer
+test (D1 .094, D2 .217, Dp .219, D_episode .122) but fails R0 because its
+record depends more on the organisms' own random draws than on the
+environment's event stream. Should "history" in s1(h) include the
+ecology's OWN stochastic events? If yes, H_hist must vary organism draws as
+well as environment events; if no, s1(h) is correct and 1016 is a
+private-noise tag. A cheat beating both A8 clauses is conceivable and not
+yet built.
