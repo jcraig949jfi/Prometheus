@@ -171,5 +171,45 @@
     "exec": "{a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b10,b11,b2,b8,b9}"
    }
   }
+ },
+ {
+  "case": "D6_in_guard_in_storing_slice",
+  "pre": {
+   "ga": "7eb728007600000018191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "gb": "db001128003e6612760000000000000000000000000000000000000000000000",
+   "regs_a": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "regs_b": null,
+   "flags_a": [
+    0,
+    0
+   ],
+   "flags_b": [
+    0,
+    0
+   ],
+   "budget": 300,
+   "ops_mask": 12
+  },
+  "reference_reading": {
+   "b[8]": {
+    "value": 102,
+    "written": true,
+    "label": "b6",
+    "performer": "b7",
+    "ctrl": "{PREG(a.H),PREG(a.L),a20}",
+    "ctrl_slice": "{PREG(a.H),PREG(a.L),a20}",
+    "addr": "{b3,b4}",
+    "exec": "{a0,a1,a2,a3,a4,b0,b2,b3,b4,b5,b6,b7}"
+   }
+  }
  }
 ]

@@ -425,3 +425,75 @@ reference's reading only):
   5. The result artefact is hashed.
   6. Only receipts (hashes, counts, per-class agreement) enter git.
 - The sample is fixed by Nestor's hash before transfer. It is not reduced after anything is seen.
+
+## Amendment C10 (2026-09-28; after the FRESH-set exchange; post-agreement-test repair, flagged)
+**1. Fresh-set G2 result.**
+- Seed d33421a07; 400 pre-states, sha256 e37bdd48; declaration committed before either output was opened (30e39ced5).
+- Reference 3757111de vs Nestor v2 fb1c322cb.
+- Two INDEPENDENT raw comparisons (Archaeon: npe_fresh_compare.py, committed before opening -> gate_close/fresh_result/;
+  Nestor: compare_fresh.py at 33a4ab5a1) give the SAME numbers.
+- **Set A: PASS.** label, addr, ctrl and exec are 1.0000 in every class:
+
+  | class | loci |
+  |---|---|
+  | unwritten | 17,790 |
+  | written_self | 812 |
+  | written_other | 558 |
+  | written_perf_none | 40 |
+
+  written, store_by and performer are also 1.0000.
+- **Set M: FAIL.**
+
+  | class | label | addr |
+  |---|---|---|
+  | unwritten | 0.9650 | -- |
+  | written_self | 0.9641 | 0.9681 |
+  | written_other | 0.9579 | 0.9579 |
+
+  * Every failure is on a MUTATION locus. Non-mutated M loci: 1.0000.
+  * Declared diagnostic d2 (MUTATION flag, side, pos, old_label): 225/225.
+- **G2 remains FAIL. Production remains FORBIDDEN.**
+
+**2. Classification of the set-M disagreements** (all category (1), specification ambiguity):
+- **(a) MUTATION draw index (225 loci; declared before the exchange).**
+  * The reference's SPEC_ISSUES E3 defines it: (side, k, pos), where k = the RNG calls since the start of this interaction's
+    write-back, a's half first, counted at the position's random() draw.
+  * Archaeon's C6 E summary omitted E3.
+- **(b) MUTATION addr set (16 loci, all written and then mutated; found by Nestor AFTER the exchange, flagged by him).**
+  * The reference carried the pre-mutation store's addr set; Nestor gives the empty set.
+  * No text defined it.
+
+**3. Rulings (normative from here on):**
+- **(a) The draw index = SPEC_ISSUES E3,** consistent with C6's rule that the reference's readings are normative. Nestor revises
+  (v3).
+- **(b) The MUTATION addr set = EMPTY.**
+  * Grounds: the mutated byte is a uniform draw at a fixed position, so no pointer selects it. Its decode-dependence is
+    exported separately in the mutation event (E4).
+  * This ruling goes AGAINST the reference's behaviour. The reference is therefore repaired: one line after the write-back
+    relabel, plus SPEC_ISSUES E6.
+  * Its selftest passes, and the fixture pack still gives 451/451.
+  * New reference sha256 (LF): 157374444597750fe114602cd83fa02faa36048161889b06f15e40d4ec7d7368.
+  * **Flagged for the independent final reviewer:** the reference owner changed the reference after seeing the owner's
+    reading. The change is confined to MUTATION addr sets.
+
+**4. S3 (ctrl_deps_slice, secondary, non-gating): DIAGNOSED. Category (1).**
+- Per-step condition logs for set-1 k=4:
+  * Nestor #864, posted blind;
+  * Archaeon, from a runtime-instrumented COPY of the reference (the frozen file was not touched).
+- Both agree on every branch condition: b's pc-5 {b25, PREG(b.H), PREG(b.L)} and pc-33 {b14, PREG(b.H/L/A)}.
+- **The whole difference is the IN instruction at pc 62.**
+  * The reference treats IN's input-cursor guard as a condition. Its label is the IN counter label, which C6 B7 / reference C2
+    set to the interaction-wide PC label at the IN. The guard therefore carries a's conditions into b's slice scope.
+  * Nestor's tracer does not count that guard as a slice-scope condition.
+  * In the primary scope this is a no-op. That is why the primary ctrl agrees 100% while ctrl_slice equals the primary on the
+    19 set-1 loci.
+- **Minimal counterexample D6:** a branches; b's slice executes only IN, then stores. The reference's slice set = a's deps;
+  under Nestor's reading it would be empty.
+- This touches the IN/OUT class. It stays an OPEN, recorded, non-gating disagreement. Neither tracer is changed for it.
+
+**5. Repair procedure:**
+1. Nestor re-freezes v3 for (a); for (b), if his v2 already gives the empty set, no change.
+2. A new seed record holds both new freeze hashes.
+3. A FRESH set 2 (A 300 + M 100): the same generator, the new seed, the same declaration.
+   - The raw gate applies to BOTH sets, because both tracers changed.
+   - Commit-reveal as before.

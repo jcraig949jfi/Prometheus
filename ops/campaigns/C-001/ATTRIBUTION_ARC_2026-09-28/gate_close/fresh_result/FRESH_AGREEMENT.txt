@@ -1,0 +1,27 @@
+G2 FRESH SET (seed d33421a07): reference 3757111de vs Nestor v2 fb1c322cb; RAW, as declared before opening
+
+A
+  unwritten          addr 17790/17790; ctrl 17790/17790; exec 17790/17790; label 17790/17790; written 17790/17790
+  written_other      addr 558/558; ctrl 558/558; d3:ctrl_slice 516/558; d4:performer 558/558; d4:store_by 558/558; exec 558/558; label 558/558; written 558/558
+  written_perf_none  addr 40/40; ctrl 40/40; d3:ctrl_slice 38/40; d4:performer 40/40; d4:store_by 40/40; exec 40/40; label 40/40; written 40/40
+  written_self       addr 812/812; ctrl 812/812; d3:ctrl_slice 775/812; d4:performer 812/812; d4:store_by 812/812; exec 812/812; label 812/812; written 812/812
+A:d1_nonmutated
+  unwritten          addr 17790/17790; ctrl 17790/17790; exec 17790/17790; label 17790/17790; written 17790/17790
+  written_other      addr 558/558; ctrl 558/558; d3:ctrl_slice 516/558; d4:performer 558/558; d4:store_by 558/558; exec 558/558; label 558/558; written 558/558
+  written_perf_none  addr 40/40; ctrl 40/40; d3:ctrl_slice 38/40; d4:performer 40/40; d4:store_by 40/40; exec 40/40; label 40/40; written 40/40
+  written_self       addr 812/812; ctrl 812/812; d3:ctrl_slice 775/812; d4:performer 812/812; d4:store_by 812/812; exec 812/812; label 812/812; written 812/812
+M
+  unwritten          addr 5944/5944; ctrl 5944/5944; exec 5944/5944; label 5736/5944 FAIL; written 5944/5944
+  written_other      addr 182/190 FAIL; ctrl 190/190; d3:ctrl_slice 187/190; d4:performer 190/190; d4:store_by 190/190; exec 190/190; label 182/190 FAIL; written 190/190
+  written_perf_none  addr 15/15; ctrl 15/15; d3:ctrl_slice 14/15; d4:performer 15/15; d4:store_by 15/15; exec 15/15; label 15/15; written 15/15
+  written_self       addr 243/251 FAIL; ctrl 251/251; d3:ctrl_slice 246/251; d4:performer 251/251; d4:store_by 251/251; exec 251/251; label 242/251 FAIL; written 251/251
+M:d1_nonmutated
+  unwritten          addr 5736/5736; ctrl 5736/5736; exec 5736/5736; label 5736/5736; written 5736/5736
+  written_other      addr 182/182; ctrl 182/182; d3:ctrl_slice 179/182; d4:performer 182/182; d4:store_by 182/182; exec 182/182; label 182/182; written 182/182
+  written_perf_none  addr 15/15; ctrl 15/15; d3:ctrl_slice 14/15; d4:performer 15/15; d4:store_by 15/15; exec 15/15; label 15/15; written 15/15
+  written_self       addr 242/242; ctrl 242/242; d3:ctrl_slice 237/242; d4:performer 242/242; d4:store_by 242/242; exec 242/242; label 242/242; written 242/242
+M:d2_MUTATION_content
+  mutated            flag+side+pos+old_label 225/225
+
+discrepant loci: 315 (FRESH_DISCREPANCIES.jsonl)
+G2 FRESH (gate, raw, per class, sets A and M): FAIL on M/unwritten/label 0.9650, M/written_other/addr 0.9579, M/written_other/label 0.9579, M/written_self/addr 0.9681, M/written_self/label 0.9641

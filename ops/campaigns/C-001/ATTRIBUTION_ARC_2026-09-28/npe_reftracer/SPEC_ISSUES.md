@@ -282,3 +282,8 @@ The tracer returns the per-locus fields those need.
 
 Performance: about 25 ms per traced interaction in CPython, about 60 MB RSS. The full 2.8M-interaction scale (C5 N6) would need
 a label-free fast path for flips.
+
+**E6 [RULING, Amendment C10(b), 2026-09-28; post-agreement-test repair, flagged] The addr set of a MUTATION locus is EMPTY.**
+- This supersedes the earlier implicit carry-over of the pre-mutation store's addr set.
+- The mutated byte is a uniform draw at a fixed position, so no pointer selects it.
+- Its decode-dependence is exported separately, in the mutation event (E4).

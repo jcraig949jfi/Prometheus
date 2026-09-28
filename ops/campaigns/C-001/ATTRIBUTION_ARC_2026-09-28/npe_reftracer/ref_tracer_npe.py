@@ -774,6 +774,8 @@ def trace_interaction(ga, gb, st_a, st_b, *, n=N, budget=BUDGET, ops_mask=OPS_MA
                     rec["mutated"] = True
                     rec["mutation"] = e
                     rec["label"] = nl[e["pos"]]
+                    rec["addr_deps"] = EMPTY          # Amendment C10(b), 2026-09-28 post-agreement-test repair: a MUTATION value is a
+                                                      # fresh draw at a fixed position; no pointer selects it (decode-dependence is in the event)
             for i in range(n):
                 loci[h * n + i]["final"] = new[i]
             halves[side] = (new, ev)

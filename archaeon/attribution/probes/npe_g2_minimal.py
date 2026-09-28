@@ -71,13 +71,28 @@ CASES = [
     """) + bytes(range(0x18, 0x18 + 24)), NF.half(NF.asm("""
         JP 1
     """), {8: 0x11, 9: 20, 10: 0, 11: 0x12, 12: HALT, 16: 0x5A}), None, [0, 0, 0, 0, 0, 48, 0, 0], [20]),
+    # D6 (S3 diagnosed after Nestor #864): a's slice branches on a byte it loads through its PERSISTED HL; b's slice then executes
+    # IN (0xDB) and stores. The IN input-cursor guard is the only condition evaluated in b's slice.
+    ("D6_in_guard_in_storing_slice", NF.half(NF.asm("""
+        LD A, (HL)
+        OR A, A
+        JRZ next
+    next:
+        HALT
+    """), {k: 0x10 + k for k in range(8, 32)}), NF.half(NF.asm("""
+        IN
+        LD DE, 40
+        LD A, 0x66
+        LD (DE), A
+        HALT
+    """)), [0, 0, 0, 0, 0, 20, 0, 0], None, [8]),
 ]
 
 
 def main(outp):
     res = []
     for name, ga, gb, regs_a, regs_b, loci in CASES:
-        vs = 1 if name.startswith("D4") else 0
+        vs = 1 if name.startswith(("D4", "D6")) else 0
         r = R.trace_interaction(ga, gb, (regs_a, 0, 0), (regs_b, 0, 0), budget=300, ops_mask=NF.MASK)
         rows = {}
         for j in loci:
