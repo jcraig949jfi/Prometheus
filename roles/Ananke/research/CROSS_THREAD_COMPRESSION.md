@@ -65,3 +65,22 @@ available at that physics. That count can be ESTIMATED with the echo
 model and hand-plant costs (instruction counts). HOLD at M2 physics: latch
 (4 instr) vs echo (4 instr); the latch dominates, so something beyond
 instruction count (robustness to distractors?) must also enter.
+
+## ARC3 update (after W-G..W-L)
+H6 (NEW, the strongest compression of ARC3) SEARCH REACHABILITY, NOT PHYSICS,
+   BOUNDS WHAT PTE SHOWS. Evidence from four independent lines:
+   - W-H: dynamic rule switching only COMPRESSES; 4-7 instruction fixed-rule
+     latches beat switching champions (.999 vs .755).
+   - W-L: selective lag-2 retention is never evolved (0/4), though a 16-line
+     plant solves it perfectly; search finds integrators instead.
+   - W-A / T-DE-1: the echo model designs 7/7 working (and deliberately
+     failing) mechanisms, including combs and pipelines never seen in
+     evolution.
+   - W-G: the substrate can retain (plants); champions don't.
+   Falsification attempt: is anything search-reachable that we cannot
+   design? Not yet observed. Every evolved mechanism has been
+   hand-reproducible (M2 canon, M3 one-rule law, SETRULE latches).
+   Status: SURVIVES; it reframes PTE results as statements about
+   physics x search, not physics alone.
+The earlier "contingent choice among equal-cost designs" proposal
+(T-CT-6) is a special case of H6.

@@ -13,7 +13,7 @@ T-RET-2 RETENTION CONFIRMATION | Does any champion keep a cue past its
   Decides SI01 and whether PTE has any persistent-memory lens | W-E NO
   (preregistered), scars, the f7e62fe3 integrator (exploratory) |
   scars inert? integrator real? | an adversarial prereg with a
-  confirmation namespace | PTE CPU | ANSWERED (W-G): NO retention regime (L3/L4 all adj p = 1.0 in both namespaces; 5 controls valid, incl. a latent Kp store the L4 probes detect). f7e62fe3 = an ACCUMULATION trace (L2, replicated), inert. fresh2/3 w-scar READ but sign-scrambled (interference). The substrate CAN retain (plants C-EFF, C-AVL); the NO is about what evolved. SI01 CLOSED for current champions. Successor: T-RET-EVO (evolve under an n-back task that rewards the old cue; reachability controls C-AVL/C-EFF): sharpened, GPU
+  confirmation namespace | PTE CPU | ANSWERED (W-G): NO retention regime (L3/L4 all adj p = 1.0 in both namespaces; 5 controls valid, incl. a latent Kp store the L4 probes detect). f7e62fe3 = an ACCUMULATION trace (L2, replicated), inert. fresh2/3 w-scar READ but sign-scrambled (interference). The substrate CAN retain (plants C-EFF, C-AVL); the NO is about what evolved. SI01 CLOSED for current champions. Successor T-RET-EVO ANSWERED (W-L): retention IS reachable when rewarded (4/8 searches, carrier S, local); what evolves is INTEGRATION (a sum of the cue history), not selective lag-n storage (0/4 at n=2 though a 16-line plant solves it). Even the HOLD control evolved an integrator. -> T-RET-SEL (a preregistered selectivity criterion + an anti-integrator distractor variant + budget scaling; GPU, research-ready)
 T-BR-1 SETRULE ROLES | Which computational roles does dynamic rule
   switching provide; does it expand capability or compress a fixed
   program? | Decides whether "rules" is a capability dial or an artefact |
@@ -70,6 +70,10 @@ T-CF-1 a general configuration detector (r / w / Kp partner-identity
   + early-only change) | CPU | sharpened (partly done by W-B)
 T-WC-3..5 Aether proposals (fwd vs fwd_add; freeze flags vs bytes;
   erase-on-collision) | X, owner-run only | sharpened
+
+## Tier 1b: next frontier (from ARC3)
+T-REACH-GAP SEARCH REACHABILITY vs EXPRESSIBILITY | a cross-thread question: W-H (switching compresses; fixed latches beat champions), W-L (selective retention unreached, plant exists), W-A/T-DE-1 (the model designs what search never found). How large is the gap between physics-expressible and search-reachable mechanisms, and what search changes (budget, diversity archive ANANKE-14, curriculum) close it? | GPU | sharpened
+T-SWAP-LOWACC the FLIP rule cannot fire below ~.8 normal accuracy (W-L, W-F ELSEWHERE): a relative verdict (swap acc <= 1 - normal with a CI) | CPU | research-ready
 
 ## Tier 4: deep backlog (raw or deliberately parked)
 T-DM-2 a genuinely joint (synergistic) code | reopen only with a trajectory
