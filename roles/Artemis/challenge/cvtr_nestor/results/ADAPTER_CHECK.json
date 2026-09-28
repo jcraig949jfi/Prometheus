@@ -1,0 +1,88 @@
+{
+ "cases": [
+  {
+   "case": "NATURAL 7ae3f9c1 side 1 (plain z8, n 64, slice 360, mask 0x2a)",
+   "expected_CVTR_accept": true,
+   "got_CVTR": {
+    "TB": 7.3837,
+    "accept": true,
+    "classes": 166,
+    "h": 0.8646,
+    "n": 166
+   },
+   "identical_to_record": true,
+   "seconds": 0.7
+  },
+  {
+   "case": "NATURAL 12ad3d5f side 0 (plain z8, n 32, slice 360, mask 0x8)",
+   "expected_CVTR_accept": false,
+   "got_CVTR": {
+    "TB": 0.0,
+    "accept": false,
+    "classes": 0,
+    "h": 0.0,
+    "n": 0
+   },
+   "identical_to_record": true,
+   "seconds": 0.13
+  },
+  {
+   "case": "PANEL Z1 on PLAIN VM",
+   "expected_CVTR_accept": false,
+   "got_CVTR": {
+    "TB": 0.0,
+    "accept": false,
+    "classes": 0,
+    "h": 0.0,
+    "n": 0
+   },
+   "identical_to_record": true,
+   "seconds": 0.4
+  },
+  {
+   "case": "PANEL Z1 on DENSE VM",
+   "expected_CVTR_accept": false,
+   "got_CVTR": {
+    "TB": 0.0,
+    "accept": false,
+    "classes": 0,
+    "h": 0.0,
+    "n": 0
+   },
+   "identical_to_record": true,
+   "seconds": 0.4
+  },
+  {
+   "case": "PANEL Z3 on DENSE VM",
+   "expected_CVTR_accept": true,
+   "got_CVTR": {
+    "TB": 6.2479,
+    "accept": true,
+    "classes": 75,
+    "h": 0.7812,
+    "n": 75
+   },
+   "identical_to_record": true,
+   "seconds": 0.08
+  }
+ ],
+ "dense_selftest": {
+  "dense": true,
+  "plain": false
+ },
+ "files": {
+  "adapter.py": "9d096e5cdaf1e68a9d6c1c780e61b4a6800291f1800408ef15e4d104e8757b44",
+  "artemis_p11/certs.py": "5b22111cdd5e7ce0a78846ef6344f9672a0f13470e207daa501f8fadb9dcd522",
+  "artemis_p11/common.py": "cb020b3cc87278f9e021acd90f41b9e86aa56fad125d2a6313365ffddffbec41",
+  "foreign/roles/Nestor/campaigns/c9x-explore-2026-09-24/x_donor_swap/run_ds.py": "b19bf10240f3acf7fe26c82cc7084d8a45bf4bb40646421e16e656f88b68418e",
+  "foreign/roles/Nestor/campaigns/npe-w1-donor-discovery-2026-09-26/x_dd_dense_copy/run_dc.py": "29326ca426c450fae61f5ac13f65d6a636de7ba3352c7ad95215a8ad03442919",
+  "foreign/roles/Nestor/campaigns/npe-w1-donor-discovery-2026-09-26/x_donor_discovery/run_dd.py": "cbee2e82f48e0cf7b573b1b762e74b256afa7b8dcdcea2df04ce4183042e7181",
+  "foreign/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/MANIFEST_FROZEN.json": "86122e1a2f05074892ec9d49d846ef46432c7d18b6ddc970d609d00dfe56c9dc",
+  "foreign/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/constants.py": "16c1302f966a69efba8c9070566a67a33f5931f6ac4df2d89378e51b94e4774a",
+  "foreign/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/grammar.py": "0289633d83224ff79ca07e350ce7c0e7d9c37e1a5bbd5aa623eef131af075c30",
+  "foreign/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/p11.py": "7a47c25dcf08ea7b923e19f06ac87f325aa926048518942e9e317a740a05e6dd",
+  "foreign/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/world.py": "93bd90c04671b06a623f8225602f785b23a3f7b6a969087bf54dc09249ffbcb3",
+  "foreign/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/z8.py": "8382574ba5db28d51209c99c79fc7ffe9c14684ea5dbf46d540486cd2c2d25dc"
+ },
+ "pass": true
+}
