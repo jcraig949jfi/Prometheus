@@ -24,7 +24,7 @@ T-CT-2 CARRIER TRAJECTORIES | How causal information moves through
   carriers over time; do trajectory motifs predict robustness? | the C2
   successor needs it | W-F: RELAY/MAJ carrier is phase- and
   program-dependent; JOINT = mixtures | motifs? robustness link? | a
-  two-axis per-tick carrier map | PTE GPU | ACTIVE (W-I)
+  two-axis per-tick carrier map | PTE GPU | ANSWERED (W-I, 33 specimens): the mid-tick class is a PHASE reading; census-SITE RELAY cells are channel-then-latch; recurring motifs: site-only retention (HOLD), channel->latch, channel-only delay (delta 4), travelling wave, source-presence, payload-value. The reader and physical axes dissociate (F7 on 6 champions). Present-but-unused traffic and w are common. INSTRUMENT IDENTITY: sum ~ 1 is forced -> use phi. Robustness test INCONCLUSIVE (the panel had no site-only specimens); exploratory: SLACK (ticks from the last channel phase to the readout) predicts latency tolerance (rho .52). Split: T-CT-3' (preregistered slack vs latency dose-response; research-ready), T-INS-6 (phi-based mixture test + single-trial swap + promote traj.py; research-ready), T-CT-4' (a present-but-unused census across 166 cells), T-CT-5' (panel distractor fragility)
 T-RS-1 RECEIVER SEMANTICS | Does sum vs arbitrate(+rewritable code)
   shape which mechanisms emerge? | the one surviving cross-engine idea |
   W-C: receiver operator axis | artefact of observability? | literature +

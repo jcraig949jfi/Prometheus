@@ -43,3 +43,13 @@ search rediscover pipeline-depth or routing-filter solutions when the
 task demands gaps outside the native kernel (e.g. gap 14, which needs
 pipeline >= 2 at base physics)? This is a GPU search; queue it behind the
 current leases.
+
+## CORRECTION (2026-09-28, after W-I)
+The paragraph above claiming that CHANCE/CHANCE at the handoff tick
+"reproduces W-F's phase-mixture signature" overstates it. Under mirror-pair
+swaps, site_acc + chan_acc ~ 1 is forced by construction (W-I identity), so
+CHANCE/CHANCE with sum ~ 1 is expected whenever the bit is partly in each
+place at the swap tick. It does not by itself show a per-trial mixture.
+What the designed specimen does show is that the READER-side carrier moves
+channel -> site at a known time. The mixture-vs-conflict question needs phi
+(W-I), which was not computed for E2 (backlog T-INS-6).

@@ -21,7 +21,11 @@ H2 CARRIER != LOCATION (information moves between carriers over time).
    Attempted falsification: HOLD latches keep one carrier (site) for the
      whole interval, with no handoff after the cue lands. So H2 is a
      property of TRANSPORT-type mechanisms, not of all PTE computation.
-   Status: SURVIVES, scoped to transport.
+   Status: SURVIVES, scoped to transport. W-I (33 specimens) STRENGTHENS it:
+     every census-"SITE" RELAY cell in its panel carries the bit in the
+     channel first (C at offsets 1-4, then S). Only HOLD cells are site-only
+     (8/8). Caveat: the mixture evidence used for H2 earlier (sum ~ 1) is an
+     instrument identity. By phi only 3/7 JOINT cells are mixtures.
 H3 DECODABLE != USED.
    For: 4781b0a1 pay0 decodes at .85 but its swap has no effect; W-E scars
      are decodable (paired 1.00) yet never change an answer.
