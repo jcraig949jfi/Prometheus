@@ -95,3 +95,24 @@ identifiability denominator.
   * per-byte precision over the dependence sets is REPORTED (it measures how over-approximate they are);
   * the gating precision test applies to the DATA label only, and is already the flip test (s4.1);
   * per-byte completeness (<= 5% leak) remains gating.
+
+## Amendment C2 (2026-09-28): readings adopted from the independent reference tracer's SPEC_ISSUES
+The reference tracer (reftracer/ref_tracer_bee.py; reftracer/SPEC_ISSUES.md) was written by an isolated worker from the prereg text
+alone. Archaeon's tracer initially disagreed with it on addr_deps (0.25% of loci) and ctrl_deps (0.9%). Both disagreements were
+genuine text ambiguities. The reference's readings are adopted and are now normative:
+- **CHOICE 5:** every value carries an addr set. Pointer dependence is TRANSITIVE through memory and computation. A condition's
+  and a fetched byte's dependence includes the value's addr set.
+- **CHOICE 3:** CONSTANT labels are not members of dependence sets.
+- **CHOICE 9:** input-region bytes beyond the supplied inputs are CONSTANT scratch; IN reads the byte's CURRENT label.
+- **IN/OUT counters:** the counter's label is the PC label at that point; it acts as the load pointer (IN) or store pointer (OUT).
+- **CHOICE 1/2 (scope):** both are reported. Agreement is measured on the at-store sets and the whole-interaction sets.
+After the change the two tracers agree on 100.0% of loci on EVERY field (data, addr, ctrl at store, exec at store, performer,
+written) over 33,792 loci: the 29 fixtures, 300 fuzz interactions and 200 mutated replicators (TRACER_AGREEMENT.txt). The
+fixture pack still passes.
+
+Limits recorded from the same list:
+- **FLIP-8:** the flip test cannot certify control-only recreation (K31). Only the fixture expectation rejects a tracer that
+  MOVE-labels it.
+- The mutation-testing items "ctrl omits the OUT guard / region-exit" are semantic no-ops in BEE SHARED (the counter's label IS
+  the PC label), so they are undetectable there by construction.
+- Pins are sha256 prefixes of file contents (git blob of vm.py is 91d8516c).

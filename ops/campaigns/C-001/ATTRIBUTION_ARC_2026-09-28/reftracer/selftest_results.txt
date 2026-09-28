@@ -1,0 +1,88 @@
+== T1 COPYALL replicator  S,T from operands; COPYALL performer
+   steps=12 halted=True budget_end=False n_written=64 birth=True outputs=[] structural=[]
+   ctrl={} exec={w0,w1,w2,w3,w4,w5}
+   locus 0   label=w0           written=True  perf=w4   addr={w1,w3}      ident=True   (expectation for 64 loci: OK)
+   flip locus 10 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+   flip locus 4 strict=False -> INAPPLICABLE bits=IIIIIIII  expected INAPPLICABLE OK
+   flip locus 3 strict=False -> INAPPLICABLE bits=IIIIIIII  expected INAPPLICABLE OK
+   flip locus 1 strict=False -> FAILED bits=FFFFFFFF  expected FAILED OK
+   flip locus 1 strict=True -> INAPPLICABLE bits=IIIIIIII  expected INAPPLICABLE OK
+== T2 LDIR replicator  C==0 exit -> ctrl {w5}
+   steps=69 halted=True budget_end=False n_written=64 birth=True outputs=[] structural=[]
+   ctrl={w5} exec={w0,w1,w2,w3,w4,w5,w6,w7}
+   locus 0   label=w0           written=True  perf=w6   addr={w1,w3}      ident=True   (expectation for 64 loci: OK)
+   flip locus 20 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+   flip locus 5 strict=False -> INAPPLICABLE bits=IIIIIIII  expected INAPPLICABLE OK
+== T3 K32 RESET-pointer LDIR overlap  S=C=RESET (CONSTANT, structural); runs to budget; loci 32..63 <- w0..31 via the overlap chain
+   steps=256 halted=False budget_end=True n_written=64 birth=True outputs=[] structural=['computed', 'reset']
+   ctrl={} exec={w0,w1,w2}
+   locus 0   label=w0           written=True  perf=w2   addr={w1}         ident=True   (expectation for 64 loci: OK)
+   flip locus 40 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+   flip locus 8 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+   flip locus 1 strict=False -> INAPPLICABLE bits=IIIIIIII  expected INAPPLICABLE OK
+== T4 LD A,(S)/LD (T),A loop  moves through A; DJNZ on B (operand w5)
+   steps=44 halted=True budget_end=False n_written=8 birth=False outputs=[] structural=[]
+   ctrl={w5} exec={w0,w1,w10,w11,w12,w2,w3,w4,w5,w6,w7,w8,w9}
+   locus 0   label=w32          written=True  perf=w7   addr={w1,w3}      ident=True   (expectation for 8 loci: OK)
+   locus 8   label=o8           written=False perf=-    addr={}           ident=False   (expectation for 56 loci: OK)
+   flip locus 0 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+   flip locus 7 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+== T5 copy guarded by input  JC evaluated (not taken) on CP(in0, w2) -> INPUT in ctrl -> not identified
+   steps=15 halted=True budget_end=False n_written=64 birth=True outputs=[] structural=[]
+   ctrl={in0,w2} exec={w0,w1,w10,w2,w3,w4,w5,w6,w7,w8,w9}
+   locus 0   label=w0           written=True  perf=w9   addr={w6,w8}      ident=False   (expectation for 64 loci: OK)
+== T6 K35 OR A,B with B=RESET 0  value unchanged, label COMPUTED
+   steps=6 halted=True budget_end=False n_written=1 birth=False outputs=[] structural=[]
+   ctrl={} exec={w0,w1,w2,w3,w4,w5,w6,w7}
+   locus 0   label=COMP{w32}    written=True  perf=w6   addr={w1,w3}      ident=False   (expectation for 1 loci: OK)
+== T7 LD B,A ; XOR A,B idiom  XOR of two registers holding the same MOVE label -> CONSTANT; load pointer S dropped (value independent)
+   steps=7 halted=True budget_end=False n_written=1 birth=False outputs=[] structural=[]
+   ctrl={} exec={w0,w1,w2,w3,w4,w5,w6,w7,w8}
+   locus 0   label=K:idiom      written=True  perf=w7   addr={w3}         ident=False   (expectation for 1 loci: OK)
+== T8 occupant performs COPYALL of w  PC enters the window; after COPYALL the byte at 69 is w5 (HALT)
+   steps=13 halted=True budget_end=False n_written=64 birth=True outputs=[] structural=[]
+   ctrl={} exec={o0,o1,o2,o3,o4,w0,w1,w5}
+   locus 0   label=w0           written=True  perf=o4   addr={o1,o3}      ident=True   (expectation for 64 loci: OK)
+   flip locus 30 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+== T9 K34 IN x20 stored to window  IN counter label = PC label at the IN (first IN: {}); input bytes beyond len(inputs) are scratch
+   steps=83 halted=True budget_end=False n_written=20 birth=False outputs=[] structural=[]
+   ctrl={w3} exec={w0,w1,w2,w3,w4,w5,w6,w7,w8,w9}
+   locus 0   label=in0          written=True  perf=w5   addr={w1}         ident=False   (expectation for 1 loci: OK)
+   locus 1   label=in1          written=True  perf=w5   addr={w1,w3}      ident=False   (expectation for 1 loci: OK)
+   locus 2   label=K:scratch    written=True  perf=w5   addr={w1,w3}      ident=False   (expectation for 14 loci: OK)
+   locus 16  label=K:in_exhausted written=True  perf=w5   addr={w1}         ident=False   (expectation for 4 loci: OK)
+   locus 20  label=o20          written=False perf=-    addr={}           ident=False   (expectation for 44 loci: OK)
+== T10 K34 OUT x20 + COPYALL from 0xF0  16 outputs kept; OUT counter label = PC label; INC of a RESET register stays structural
+   steps=73 halted=True budget_end=False n_written=64 birth=True outputs=[1, 2, 3, 4] structural=[]
+   ctrl={w1} exec={w0,w1,w10,w11,w2,w3,w4,w5,w6,w7,w8,w9}
+   locus 0   label=K:computed   written=True  perf=w10  addr={w7,w9}      ident=False   (expectation for 1 loci: OK)
+   locus 1   label=K:computed   written=True  perf=w10  addr={w1,w7,w9}   ident=False   (expectation for 15 loci: OK)
+   locus 16  label=w0           written=True  perf=w10  addr={w7,w9}      ident=True   (expectation for 48 loci: OK)
+== T11 self-modified code from input  input byte (NOP) executed at 6 -> INPUT in exec_deps (incl. its store pointer w2)
+   steps=18 halted=True budget_end=False n_written=64 birth=True outputs=[] structural=[]
+   ctrl={} exec={in0,w0,w1,w10,w11,w12,w2,w3,w4,w5,w7,w8,w9}
+   locus 6   label=in0          written=True  perf=w11  addr={w10,w2,w8}  ident=False   (expectation for 1 loci: OK)
+   locus 0   label=w0           written=True  perf=w11  addr={w10,w8}     ident=False   (expectation for 1 loci: OK)
+== T12 store pointer from input  
+   steps=13 halted=True budget_end=False n_written=64 birth=True outputs=[] structural=[]
+   ctrl={} exec={w0,w1,w2,w3,w4,w5}
+   locus 0   label=w0           written=True  perf=w4   addr={in0,w3}     ident=False   (expectation for 64 loci: OK)
+== T13 EMPTY partner, 10 bytes  
+   steps=15 halted=True budget_end=False n_written=10 birth=False outputs=[] structural=[]
+   ctrl={w5} exec={w0,w1,w2,w3,w4,w5,w6,w7}
+   locus 0   label=w0           written=True  perf=w6   addr={w1,w3}      ident=True   (expectation for 10 loci: OK)
+   locus 10  label=K:empty      written=False perf=-    addr={}           ident=False   (expectation for 54 loci: OK)
+== T14 COPYALL S=64,T=65 (overlap chain)  sequential per-byte copy: every locus <- o0 (a memmove would give o(j-1))
+   steps=12 halted=True budget_end=False n_written=63 birth=False outputs=[] structural=[]
+   ctrl={} exec={w0,w1,w2,w3,w4,w5}
+   locus 0   label=o0           written=False perf=-    addr={}           ident=False   (expectation for 1 loci: OK)
+   locus 1   label=o0           written=True  perf=w4   addr={w1,w3}      ident=True   (expectation for 63 loci: OK)
+   flip locus 33 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+== T15 value re-created by control flow  stored byte = operand w13 chosen because w40==0x93: label w13 (operand), source w40 only in ctrl
+   steps=8 halted=True budget_end=False n_written=1 birth=False outputs=[] structural=[]
+   ctrl={w1,w4,w40} exec={w0,w1,w12,w13,w14,w15,w16,w17,w2,w3,w4,w5,w6}
+   locus 0   label=w13          written=True  perf=w16  addr={w15}        ident=True   (expectation for 1 loci: OK)
+   flip locus 0 strict=False -> CONFIRMED bits=CCCCCCCC  expected CONFIRMED OK
+== FUZZ: 300 random interactions value-checked against frozen vm.execute; 114 flip-tested loci, 0 FAILED
+
+RESULT: 0 expectation failures
