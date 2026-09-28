@@ -24,9 +24,12 @@ Repairs relative to RULER v2 (W3 F1, F4, F5-partial; PKG-7):
       instances (v2 counted the two sets separately; they can be disjoint).
   R3  NONE TOLERANCE + DECLARED LENGTH DOMAIN on the trajectory battery (the
       frozen 80-input battery, lengths 2..40). For each (instance, init):
-        L_dom = the largest rung r in RUNGS such that at most NONE_TOL (25%) of
+        L_dom = the largest rung r in RUNGS such that at most NONE_TOL of the
                 battery inputs of length <= r give None (T4's L_max idea with a
-                tolerance). L_dom undefined (even r = 20 fails) -> the
+                tolerance). DEFAULT NONE_TOL = 0.0 (strict totality inside the
+                declared domain): 0.25 was tested and fixes no additional
+                adversarial case while raising the W5 random-schema base rate
+                from 24.5% to 29% (it admits division-by-zero junk). L_dom undefined (even r = 20 fails) -> the
                 (instance, init) trajectory is DEGENERATE (T4: DOMAIN_TOO_SHORT).
         Inputs longer than L_dom are OUT OF DOMAIN (masked, never compared).
         Non-degenerate: >= 5 distinct defined values in domain.
@@ -55,7 +58,7 @@ import tier3d as T3D           # noqa: E402
 
 VERSION = "RULER_v2.1_DRAFT_W7"
 RUNGS = (20, 25, 30, 35, 40)
-NONE_TOL = float(__import__("os").environ.get("W7_NONE_TOL", "0.25"))   # ablation hook only
+NONE_TOL = float(__import__("os").environ.get("W7_NONE_TOL", "0.0"))   # recommended 0.0; 0.25 tested (ablation hook)
 MIN_COMMON = 10
 DISTINCT = 5
 FLOOR, MINCOUNT = 0.10, 2

@@ -11,11 +11,11 @@
    ]
   },
   "v21": {
-   "NEW": 49,
-   "rate": 0.245,
+   "NEW": 58,
+   "rate": 0.29,
    "wilson95": [
-    0.1906,
-    0.309
+    0.2315,
+    0.3564
    ]
   },
   "abl_rel_only": {
@@ -27,19 +27,19 @@
    ]
   },
   "abl_traj_only": {
-   "NEW": 49,
-   "rate": 0.245,
+   "NEW": 58,
+   "rate": 0.29,
    "wilson95": [
-    0.1906,
-    0.309
+    0.2315,
+    0.3564
    ]
   },
   "abl_same_witness_only": {
-   "NEW": 49,
-   "rate": 0.245,
+   "NEW": 58,
+   "rate": 0.29,
    "wilson95": [
-    0.1906,
-    0.309
+    0.2315,
+    0.3564
    ]
   },
   "flips_v2_to_v21": [
@@ -54,7 +54,52 @@
     "v21": true
    },
    {
+    "schema": "(acc % {H})",
+    "v2": false,
+    "v21": true
+   },
+   {
     "schema": "(acc * (math.gcd(abs({H}), abs(first)) + v))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(acc * pow(first, {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(acc * pow(last, {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(first - (1 // {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "(v // (last + (acc - {H})))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "math.gcd(abs(0), abs(({H} - (v // acc))))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "pow(first, (v % {H}))",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "pow(last, {H})",
+    "v2": false,
+    "v21": true
+   },
+   {
+    "schema": "pow(v, ({H} + v))",
     "v2": false,
     "v21": true
    }
@@ -464,10 +509,10 @@
   {
    "schema": "(acc % {H})",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 38,
    "COMPOSES_v21": false
   },
@@ -514,20 +559,20 @@
   {
    "schema": "(acc * pow(first, {H}))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 41,
    "COMPOSES_v21": false
   },
   {
    "schema": "(acc * pow(last, {H}))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 41,
    "COMPOSES_v21": false
   },
@@ -724,10 +769,10 @@
   {
    "schema": "(first - (1 // {H}))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 7,
    "COMPOSES_v21": false
   },
@@ -1064,10 +1109,10 @@
   {
    "schema": "(v // (last + (acc - {H})))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 5,
    "COMPOSES_v21": true
   },
@@ -1494,10 +1539,10 @@
   {
    "schema": "math.gcd(abs(0), abs(({H} - (v // acc))))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 6,
    "COMPOSES_v21": false
   },
@@ -1904,10 +1949,10 @@
   {
    "schema": "pow(first, (v % {H}))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 42,
    "COMPOSES_v21": false
   },
@@ -1954,10 +1999,10 @@
   {
    "schema": "pow(last, {H})",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 11,
    "COMPOSES_v21": false
   },
@@ -1974,10 +2019,10 @@
   {
    "schema": "pow(v, ({H} + v))",
    "v2": false,
-   "v21": false,
+   "v21": true,
    "abl_rel_only": false,
-   "abl_traj_only": false,
-   "abl_same_witness_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
    "accumulating": 51,
    "COMPOSES_v21": false
   },

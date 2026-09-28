@@ -115,7 +115,7 @@ def adv(w):
         out["selections"].append(row)
         print("SEL %-44s %s v2 NEW=%s v21 NEW=%s CO=%s" % (s, where[0], a["NEW_FINAL"], b["NEW_FINAL"],
                                                             b["COMPOSES_ANY"]), flush=True)
-    (HERE / ("W7_RULER_ADV_%s.json" % w)).write_text(json.dumps(out, indent=1, default=str))
+    (HERE / ("W7_RULER_ADV_%s%s.json" % (w, "" if R21.NONE_TOL == 0.0 else "_tol%s" % R21.NONE_TOL))).write_text(json.dumps(out, indent=1, default=str))
 
 
 def base(w, n):
@@ -148,7 +148,7 @@ def base(w, n):
         summ[k] = {"NEW": c, "rate": round(c / N, 4), "wilson95": wilson(c, N)}
     summ["flips_v2_to_v21"] = [{"schema": r["schema"], "v2": r["v2"], "v21": r["v21"]} for r in rows
                                if r["v2"] != r["v21"]]
-    (HERE / ("W7_RULER_BASE_%s_%d%s.json" % (w, n, "" if R21.NONE_TOL == 0.25 else "_tol%s" % R21.NONE_TOL))).write_text(json.dumps({"summary": summ, "rows": rows},
+    (HERE / ("W7_RULER_BASE_%s_%d%s.json" % (w, n, "" if R21.NONE_TOL == 0.0 else "_tol%s" % R21.NONE_TOL))).write_text(json.dumps({"summary": summ, "rows": rows},
                                                                           indent=1))
     print(json.dumps({k: v for k, v in summ.items() if k != "flips_v2_to_v21"}), flush=True)
 
