@@ -112,3 +112,13 @@ imperfect. That is the part this thread adds, once reviewed.
     better treated as a lineage-level attractor" to "BOTH routes occur; which one holds is a per-lineage empirical question, and
     attribution must not assume the first copier is (or is not) the replicator".
   * The BLOCK_128 arm was not replayed to full length.
+
+## Dated note 2026-09-28: external claims against section 3 (Artemis comms #874, R-26; the workers' claims, UNVERIFIED)
+- **BEE "160/160 first self-replicators BUILT_BY_COPY" (cited above from GROUNDING_REPORT G6):**
+  * Claimed wrong: grounding_analysis.g6_class tests mechanism == 'init', but birth_class is never set for initial organisms.
+  * At least 24/160 are claimed to be unmodified initial random tapes.
+  * Until checked against Bellerophon's records, the BEE leg of section 3's "common pattern" is SUSPENDED, not cited.
+- **Cross-engine recurrence:** it is claimed to vanish when the shared design factor (a supplied copy op) is removed.
+- **Consequence:** together with the block-15 counter-instance, section 3's three-engine pattern is withdrawn as a synthesis.
+  What remains are single-engine observations with named mechanisms: Archaeon block 13, and BEE r022153 (the parasite, from
+  the v5 dry run, which Artemis did not dispute).
