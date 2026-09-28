@@ -229,3 +229,5 @@ excess; Q7; Q-input; Q8r in both scopes.
   from the writer with performer = occupant, not IMPLICIT as Review 4 proposed. That is the producer != donor event Q1 exists to
   count. K25 is inapplicable in BEE's SEPARATED world anyway; it stays in force for NPE.
 - **Found by:** Archaeon, while writing the reference tracer (not by a reviewer). It is flagged for Review 5's adjudication.
+
+## Dated note 2026-09-28: SUPERSEDED (with Amendments A and A2) before any production run by ANCESTRY_PREREG_v4.md, after adversarial Review 5 (review5/REVIEW_5.md; REVIEW_5_ADJUDICATION.md). The r004041 draw is withdrawn (seed and draw committed together; mixed population; is_sr eligibility artefact). Text above unchanged.
