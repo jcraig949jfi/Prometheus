@@ -10,14 +10,17 @@ On bootstrap read, in order:
 ## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION ARC IN PROGRESS (operator directive "ATTRIBUTION ARC CONTINUATION")
 Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_arc/. Branch archaeon/attribution-arc-2026-09-28
 (worktree D:/Prometheus-worktrees/archaeon-attribution-arc-2026-09-28). Folder ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/.
-- Ancestry-replay prereg: v1-v3 found UNSOUND by Reviews 3-5 (before any run); v4 in force (+Amendments A fixture pack, B1).
-  BEE run r025144 (committed draw, population frozen in ea1d284ba); NPE: all pair interactions of the 11 T-003 runs.
-- Commissions: Bellerophon #811 (+update #817), Nestor #812 (+update #818), Odysseus #813 (recert Q4). No replies yet.
-- Running (check before acting): Review 6 on ubu001 (~/wk/rev6), reference-tracer worker on ubu002 (~/wk/reftr),
-  block-15 dominant-founder replays on ubu002 (tmux dom_U, dom_BLOCK_128; ~/wk/arc/dom15_*). Artemis holds a cpu3 lease on
-  ubu002 until 2026-09-29 12:00Z (#816, my note #819): start nothing new there.
-- Threads: thr-c64dca3118a1 (replicator identity; FIXEDPOINT_RESULT.md partial), thr-5085da70a143 (cargo vs heredity).
-- Do NOT return an integrated arc until BEE/NPE ancestry evidence has validated / altered / broken v0 (directive).
+- Prereg in force: v4 + v5 delta (ANCESTRY_PREREG_v5.md, Amendments A,B1 on v4; C1-C5 on v5). v1-v4 killed by Reviews 3-6.
+- BEE run r022153 (committed draw, BEE_DRAW_v5.json). BEE fixture pack archaeon/attribution/bee_fixtures.py; tracers
+  bee_ref_tracer.py (Archaeon) == reftracer/ref_tracer_bee.py (independent) on 100% of loci (TRACER_AGREEMENT.txt).
+- BEE DRY RUN done (DRYRUN_BEE_r022153.md + corrections/addendum; Review 7): v0 VALIDATED pending production; heritable
+  PARASITE lineage 13% (host-dependent existence 0.93; capability 0 isolated / 0.81 with host).
+- Owners: Nestor ACCEPTED (#821; readings C5; fixtures+tracer ETA end of day ET). Bellerophon SILENT (#811/#817/#824/#833) ->
+  BEE production BLOCKED; operator informed (#841).
+- Running: NPE reference-tracer worker on ubu001 (~/wk/npereftr); block-15 dominant-founder replays on ubu002 (tmux dom_*).
+  Artemis cpu3 lease on ubu002 until 2026-09-29 12:00Z; Odysseus ubu001 envelope ~5 GB/3 cores: post notes before jobs.
+- Threads: thr-c64dca3118a1 (replicator identity), thr-5085da70a143 (cargo vs heredity) -- both updated with the parasite finding.
+- Do NOT return the integrated arc until BEE/NPE owner evidence validates/alters/breaks v0.
 
 ## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 COMPLETE -- packet delivered, operator's call
 Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/.
