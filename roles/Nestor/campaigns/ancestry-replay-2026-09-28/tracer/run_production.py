@@ -35,7 +35,11 @@ def main():
                          "births_sha256": d["births_sha256"]}
     first = {}
     for run, v in idx.items():
-        v["duplicate_of"] = first.setdefault(v["lineage_sha256"], run) if first.get(v["lineage_sha256"]) != run else None
+        # REPAIRED 2026-09-28 (production run 1 defect): the first record of each simulation is NOT a duplicate
+        # (v1 set duplicate_of = itself for every first occurrence, which made every record look duplicated)
+        lin = v["lineage_sha256"]
+        v["duplicate_of"] = first[lin] if lin in first else None
+        first.setdefault(lin, run)
     (ROOT / "exports" / "PRODUCTION_INDEX.json").write_text(json.dumps(idx, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print("distinct simulations:", len(first))
 
