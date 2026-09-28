@@ -32,7 +32,10 @@ DEFAULT_MODEL = "claude-opus-5-5"
 # disables hooks, textconv, external diff and pager. It is on PATH only inside the attempt.
 READONLY_BASH = ["Bash(rogit:*)"]
 ROGIT = Path(__file__).resolve().parent / "tools" / "rogit.py"
-DENY = ["Read(//{home}/.claude/**)", "Read(//{home}/.config/**)", "Read(//{home}/.ssh/**)", "Read(//{home}/.git-credentials)",
+# Plain git is DENIED explicitly: Claude Code auto-approves some git reads (P7d: `git log`, `git show`, `git status`
+# ran without an allow rule), and plain git honours repo-configured textconv, external diff and fsmonitor
+# programs, which rogit disables.
+DENY = ["Bash(git:*)", "Read(//{home}/.claude/**)", "Read(//{home}/.config/**)", "Read(//{home}/.ssh/**)", "Read(//{home}/.git-credentials)",
         "Glob(//{home}/.claude/**)", "Glob(//{home}/.config/**)", "Grep(//{home}/.claude/**)", "Grep(//{home}/.config/**)"]
 # No "python" option: Bash(python3:*) is arbitrary code as the node account and would undo every Read deny above.
 # Code runs through the `script` executor instead (pinned file or module, no shell, allow-listed env).
