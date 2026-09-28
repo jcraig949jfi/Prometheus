@@ -290,7 +290,27 @@ v0 still cannot represent cleanly:
 -----------------------------------------------------------------------------------------------------------------------
 11. ITEM 8: THE 16% "MATERIAL WITHOUT CAPACITY" (PRESERVED ESTIMATE: 8,763 / 54,616, SAMPLING-WEIGHTED)
 -----------------------------------------------------------------------------------------------------------------------
-[filled below from probes/item8_block13.py]
+Block 13, epochs 13,900-20,000:
+- 2,028 of 16,348 sampled births (12.4%) are non-copier children.
+- 300 non-copier children and 300 copier children were tracked by descent to epoch 20,000.
+
+| | non-copier children | copier children (contrast) |
+|---|---|---|
+| dead on arrival (never a template) | 72% | 34% |
+| transient (descendants, none alive) | 28% | 65% |
+| alive at 20,000 | 0 | 2 (0.7%) |
+| descendant births, among those with any | 11.7 | 6,532 |
+| birth-created ids alive anywhere | 0 | 0 |
+
+Answer:
+- Over about 5,000 epochs the material-without-capacity births are dead-on-arrival or transient CARGO.
+- Nothing persisted, activated later, or moved by recombination (recombinant births are 0.07% of all births here).
+- Their few descendants exist because OTHER cells copied them.
+- They carry 6x more birth-created material than copier children, consistent with copy errors breaking the capability.
+- The GP-introns caveat is answered only for this horizon and this near-zero-recombination world.
+- An earlier tracking inside the TH-013 replay was defective (it followed shared lineage material and used wrong class names).
+  Its fates are void.
+- Not adversarially reviewed.
 
 -----------------------------------------------------------------------------------------------------------------------
 12. THREAD IDENTITY, AND THE ADVERSARIAL-REVIEWER PROTOCOL (items 11, 12)
