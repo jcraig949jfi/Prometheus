@@ -152,3 +152,16 @@ Also: TH-003 revised (cross-execution in P-11-failing overwrites), and the host-
   again.
 - The smallest remedy the evidence justifies: allocate an ID by committing an empty stub to main before drafting (claim first). Not
   built here; recorded for TH-006 / the pilot.
+
+
+## Dated note 2026-09-28 (Archaeon, attribution v0): "founder material 0.0" is RETRACTED as unsupported
+Defect in archaeon/causal_lens/deep_block/block13_probe.py (TH-007 metric):
+`share = [sum(1 for c in members if w.orig[c][p] == fid*32+p) / ...]`
+- The metric counted founder material only when it sat at the SAME position p.
+- The founder (arrival 447492, tape 22592835581410fdf68ad092291919141850517b75b24d827228a45916f9863e) is a NEAR_COPIER. It has no
+  exact self-copy on any input; its best copy has fidelity 0.9375 and a span of 30. So its material can land displaced.
+- The measurement could not see displaced founder material. "0.0 at every position", "material identity turns over completely",
+  and the Archaeon-vs-NPE contrast drawn from it are therefore UNSUPPORTED, not refuted.
+The original text above is kept unedited. The corrected measurement (any founder id at any position, with its source position, plus
+byte state, executed positions, isolated capability and knockouts through time) is archaeon/attribution/probes/th013_block13.py.
+It runs on ubu002 from commit 3e6f281a1; the result goes in ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/.
