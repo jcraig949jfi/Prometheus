@@ -44,14 +44,16 @@ def _inside_git(p: Path) -> bool:
     return any((q / ".git").exists() for q in [p] + list(p.parents))
 
 
-def build(run_dir, out_dir, revealed_dir=None, repo=DEFAULT_REPO, ref=protocol.DEFAULT_REF, host=None) -> dict:
+def build(run_dir, out_dir, revealed_dir=None, repo=DEFAULT_REPO, ref=protocol.DEFAULT_REF, host=None,
+          allowlist=None, pins=None, verify_loaded=True) -> dict:
     from prometheus.cosmos.c3_holdout_D2 import runner, verify_reveal
     run_dir, out = Path(run_dir), Path(out_dir)
     if _inside_git(out):
         raise EvidenceRefusal("bundle directory is inside a git repository")
     if out.exists() and any(out.iterdir()):
         raise EvidenceRefusal("bundle directory is not empty")
-    g = protocol.check_gates(repo, "RESULT_SEAL", ref=ref, host=host)
+    g = protocol.check_gates(repo, "RESULT_SEAL", ref=ref, host=host, pins=pins, verify_loaded=verify_loaded,
+                             allowlist=protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist)
     ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
     if not ok or not recs or recs[-1]["kind"] != "close" or recs[-1]["hash"] != g["chain_head"]:
         raise EvidenceRefusal("receipts do not verify or do not end at the sealed chain head (%s)" % why)
@@ -59,7 +61,7 @@ def build(run_dir, out_dir, revealed_dir=None, repo=DEFAULT_REPO, ref=protocol.D
         raise EvidenceRefusal("RESULT.json does not match the sealed result hash")
     out.mkdir(parents=True, exist_ok=True)
     (out / "protocol").mkdir()
-    for name in (protocol.AUDIT_FILE, protocol.COMMITMENT_FILE, protocol.DESIGNATION_FILE, protocol.RESULT_SEAL_FILE):
+    for name in [n for n in protocol._proto_tree(repo, ref)]:            # every record, incl. every audit version
         (out / "protocol" / name).write_bytes(protocol._show(repo, ref, protocol.PROTO_REL + "/" + name))
     for name in ("MANIFEST_D2.json", "hidden_D2.enc"):
         (out / name).write_bytes(protocol._show(repo, ref, protocol.PKG_REL + "/" + name))

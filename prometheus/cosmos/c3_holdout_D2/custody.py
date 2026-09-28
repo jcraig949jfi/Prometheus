@@ -65,10 +65,16 @@ def _inside(p: Path, root: Path) -> bool:
 
 class Custody:
     def __init__(self, repo=DEFAULT_REPO, ref=protocol.DEFAULT_REF, secrets_dir=SECRETS_DIR, log=CUSTODY_LOG,
-                 host=None):
+                 host=None, allowlist=None, pins=None, verify_loaded=True):
         self.repo, self.ref = Path(repo), ref
         self.secrets_dir, self.log = Path(secrets_dir), Path(log)
         self.host = host or socket.gethostname()
+        self.allowlist = protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist
+        self.pins, self.verify_loaded = pins, verify_loaded
+
+    def _gates(self, through, **kw):
+        return protocol.check_gates(self.repo, through, ref=self.ref, host=self.host, allowlist=self.allowlist,
+                                    pins=self.pins, verify_loaded=self.verify_loaded, **kw)
 
     # ------------------------------------------------------------ log
     def _events(self) -> list:
@@ -103,7 +109,7 @@ class Custody:
         dest = Path(dest)
         try:
             self._dest_ok(dest)
-            g = protocol.check_gates(self.repo, "DESIGNATION", ref=self.ref, runner_id=runner_id, host=self.host)
+            g = self._gates("DESIGNATION", runner_id=runner_id)
             if any(e.get("event") == "KEY_RELEASED" and e.get("spec_id") == g["spec_id"] for e in self._events()):
                 raise CustodyRefusal("the key for this spec_id was already released once")
             key = sealbox.read_hex_file(self.secrets_dir / KEY_NAME, sealbox.KEY_BYTES)
@@ -122,7 +128,7 @@ class Custody:
         from prometheus.cosmos.c3_holdout_D2 import runner       # broker-only import
         run_dir = Path(run_dir)
         try:
-            g = protocol.check_gates(self.repo, "DESIGNATION", ref=self.ref, host=self.host)
+            g = self._gates("DESIGNATION")
             ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
             if not ok:
                 raise CustodyRefusal("receipt chain does not verify: %s" % why)
@@ -132,12 +138,15 @@ class Custody:
                 raise CustodyRefusal("run used a package other than the committed one")
             if recs[0]["body"]["spec_id"] != g["spec_id"]:
                 raise CustodyRefusal("run is not on the sealed hidden set")
+            if recs[0]["body"].get("run_nonce") != g["run_nonce"]:
+                raise CustodyRefusal("run was not made under this designation (run nonce)")
             res_b = (run_dir / "RESULT.json").read_bytes()
             if json.loads(res_b.decode("utf-8")).get("chain_head") != recs[-1]["hash"]:
                 raise CustodyRefusal("RESULT.json does not match the receipt chain head")
         except (protocol.GateRefusal, CustodyRefusal, OSError, ValueError, KeyError) as e:
             self._refuse("result-seal", e)
         rec = {"format": protocol.RESULT_SEAL_FORMAT, "spec_id": g["spec_id"], "package_sha256": g["package_sha256"],
+               "run_nonce": g["run_nonce"],
                "chain_head": recs[-1]["hash"], "result_sha256": sealbox.sha256_hex(res_b),
                "n_receipts": len(recs), "sealed_by": "Nestor (custodian)", "utc": _utc()}
         Path(record_out).write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
@@ -146,14 +155,20 @@ class Custody:
 
     # ------------------------------------------------------------ controlled reveal
     def reveal(self, run_dir, dest) -> dict:
-        from prometheus.cosmos.c3_holdout_D2 import verify_reveal
+        from prometheus.cosmos.c3_holdout_D2 import runner, verify_reveal
         run_dir, dest = Path(run_dir), Path(dest)
         try:
             self._dest_ok(dest)
-            g = protocol.check_gates(self.repo, "RESULT_SEAL", ref=self.ref, host=self.host)
-            recs = [json.loads(x) for x in (run_dir / "receipts.jsonl").read_text(encoding="utf-8").splitlines() if x.strip()]
-            if not recs or recs[-1]["hash"] != g["chain_head"]:
-                raise CustodyRefusal("run on disk does not match the sealed chain head")
+            g = self._gates("RESULT_SEAL")
+            # v2 (Odysseus S3): re-verify the whole run, not only the result seal
+            ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
+            if not ok:
+                raise CustodyRefusal("receipt chain does not verify: %s" % why)
+            if not recs or recs[-1]["kind"] != "close" or recs[-1]["hash"] != g["chain_head"]:
+                raise CustodyRefusal("run on disk is not closed at the sealed chain head")
+            if recs[0]["body"]["package"]["sha256"] != g["package_sha256"] or recs[0]["body"]["spec_id"] != g["spec_id"] \
+                    or recs[0]["body"].get("run_nonce") != g["run_nonce"]:
+                raise CustodyRefusal("run package / hidden set / designation nonce does not match the protocol")
             if sealbox.sha256_file(run_dir / "RESULT.json") != g["result_sha256"]:
                 raise CustodyRefusal("RESULT.json does not match the sealed result hash")
             if any(e.get("event") == "REVEALED" and e.get("spec_id") == g["spec_id"] for e in self._events()):
@@ -184,6 +199,9 @@ def main(argv=None) -> int:
     ap.add_argument("--record-out")
     ap.add_argument("--ref", default=protocol.DEFAULT_REF)
     a = ap.parse_args(argv)
+    if a.cmd in ("release-key", "reveal") and os.environ.get("C3D2_ENTRY") != "verified":
+        print(json.dumps({"refused": True, "reason": "start custody through entry.py (pre-import code verification)"}))
+        return 3
     c = Custody(ref=a.ref)
     try:
         if a.cmd == "release-key":
