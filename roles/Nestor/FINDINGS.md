@@ -514,3 +514,12 @@ counted S1-C / S1C-P11-REASSAY 'certified donors' as replicators is QUALIFIED to
 founder underlying C9-H2, C-RUNAWAY, C-CRITICAL-MASS, C-ATOMIC and C-CORE is one of the genuine copiers (Artemis/Odysseus), so
 those claims keep their evidential basis; the W1/P2/ARC3 dense-VM corpora are separately screened (DOM, transplants). Evidence:
 roles/Odysseus/expedition/recert/ (RESULT.md s5), roles/Artemis/challenge/p11/.
+
+**E-A3-1 C-A3-INTERNALIZE CONFIRMED (frozen 86f929241, 144 fresh runs):** in the default CARRIED NPE world, reproductive lineages
+founded only by donors that depend on environment-supplied register values RECURRENTLY come to carry descendants that are
+competent from arbitrary (random) entry registers -- endogenous internalization of register initialization: 8 independent runs
+(bar 4; ffa6 7, 7ae3 1); at first donor appearance state-freedom is essentially absent (93/94 donor runs). Alternative route
+seen in 18 runs: replacement by another lineage. Path: X-A3-ENDOSTATE-R (0.32 -> 0.65) -> X-A3-SFLINEAGE (3/5 lineages) ->
+X-A3-FORENSIC-16000006 (distributed change; the copier fixes its own destination) -> C-A3-INTERNALIZE. Scope and limits: dense VM;
+'competent' is P-11 construction-competence (painter screen negative; CVT-R pending); self-location (tape placement) is NOT
+internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
