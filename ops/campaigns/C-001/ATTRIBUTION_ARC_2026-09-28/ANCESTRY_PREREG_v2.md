@@ -186,3 +186,5 @@ loci / L, reported over ALL loci and over WRITTEN loci.
 - "Descent" results are conditional on the tracer's move set.
 - One BEE run and one NPE specimen family: not engine-wide.
 - In-situ capability is confounded with survival; the isolated test is the primary.
+
+## Dated note 2026-09-28: SUPERSEDED before any execution by ANCESTRY_PREREG_v3.md, after adversarial Review 4 (review4/REVIEW_4.md; REVIEW_4_ADJUDICATION.md). The text above is unchanged.
