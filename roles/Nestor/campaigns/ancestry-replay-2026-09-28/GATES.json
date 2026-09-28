@@ -1,14 +1,14 @@
 {
- "updated": "2026-09-28T16:02:03Z",
+ "updated": "2026-09-28T16:17:03Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
-   "status": "OPEN",
-   "evidence": "C7.5: 23-fixture pack + 11 Archaeon additions VALIDATED 391/391 vs the reference; PENDING: Nestor's post-validation fixtures K16b, K16c (performer_by_location) and K37 (painting) need Archaeon's validation; all 10 mutants caught >= 3 times (FIXTURES_RESULT.json)"
+   "status": "CLEAR",
+   "evidence": "Amendment C8 / VALIDATION_v2.txt: 451/451 expectations of the 26-fixture pack (incl. K16b, K16c, K37 and Archaeon's additions) agree with the INDEPENDENT reference tracer. Nestor verified that the validated copies (nestor_v2_npe_fixtures.py, FUZZ set, TRACER_FREEZE) are byte-identical to his frozen files. Mutants caught 3-22 times each."
   },
   "G2_independent_tracer_agreement": {
-   "status": "OPEN",
-   "evidence": "C6 implemented from text (reference code NOT read); C7.1 pdom implemented from the verbatim text (selftest_pdom.py); tracer FROZEN (TRACER_FREEZE.json); PENDING: reference run on FUZZ_AGREEMENT_nestor.jsonl (300 non-production interactions) >= 99.5% per class; production 1% sample agreement follows after production"
+   "status": "PENDING_NESTOR_VERIFICATION",
+   "evidence": "C8: Archaeon's comparison (frozen e5af0cae1 vs reference, 300 non-production fuzz interactions): addr, ctrl, exec, store_by, written 100% raw; label raw 549/587 self, 296/320 other; performer raw 31/33 perf-none; 100% under arbitration A1 (CF(COMPUTED S) == COMPUTED S) and A2 (idiom names; CF(base-less) == CONST). A1/A2 were ruled AFTER the disagreements were seen: canonicalization only, flagged, to be reviewed by the independent final reviewer. Nestor's own check on his frozen output: forms covered by A1/A2 number 40 (self), 25 (other), 2 (perf-none) >= the reported 38/24/2 -- consistent but not proof. Requested: the reference's per-locus OUTPUT data for the 300 interactions (not code), to recompute agreement with Nestor's own canonicalizer before production. Reported, not gated: ctrl_slice differs on 19 loci (the reference includes the other half's pointer-carried bases)."
   },
   "G3_flip_rule": {
    "status": "CLEAR",
@@ -22,5 +22,14 @@
  "outcome_adjacent_exposure": [
   "120-epoch smoke of s9200001 B: 15 P4-eligible halves, 13 not accepted; 2 births with source diversity 2 (smoke only; no rule was changed in response)",
   "20-epoch smoke of s9200001 B: structure check only; no quantity inspected"
- ]
+ ],
+ "post_exposure_rule_changes": [
+  {
+   "when": "2026-09-28 C8",
+   "rule": "A1/A2 label canonicalization for the G2 agreement gate",
+   "seen_before_ruling": "the raw label/performer disagreements of the fuzz comparison (non-production data)",
+   "effect": "canonical equivalence of semantically identical non-MOVE labels; no threshold, fixture, clustering or eligibility changed"
+  }
+ ],
+ "sample_transfer": "orphan branch nestor/ancestry-sample-2026-09-28, gzip parts <= 45 MB + manifest of per-part and whole-file sha256 (Archaeon #848)"
 }
