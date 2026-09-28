@@ -180,3 +180,63 @@ def test_event_history_is_complete(conn):
     S.finish_attempt(conn, g["attempt_id"], "succeeded", "w")
     kinds = [e["kind"] for e in S.events(conn, t)]
     assert kinds == ["submitted", "claimed", "attempt_started", "heartbeat", "artifact_added", "completed"]
+
+
+# ---------------------------------------------------------------- legacy host-file leases (migration surface)
+@pytest.fixture
+def legacy(conn, monkeypatch, tmp_path):
+    """A throwaway stand-in for comms.messages (never the live comms table) and a throwaway lease directory."""
+    t = "{}.legacy_msgs".format(S.schema())
+    cur = conn.cursor()
+    cur.execute("CREATE TABLE {} (id BIGSERIAL PRIMARY KEY, subject TEXT NOT NULL, body TEXT NOT NULL DEFAULT '')".format(t))
+    conn.commit()
+    monkeypatch.setenv("FABRIC_LEGACY_LEASE_TABLE", t)
+    monkeypatch.setenv("FABRIC_LEGACY_LEASE_DIR", str(tmp_path))
+
+    def post(subject, body=""):
+        c = conn.cursor(); c.execute("INSERT INTO {} (subject, body) VALUES (%s,%s)".format(t), (subject, body)); conn.commit()
+    return post, tmp_path
+
+
+def test_legacy_comms_lease_blocks_fabric_lease_until_released(conn, legacy):
+    post, _ = legacy
+    post("LEASE ACQUIRE SKULLPORT cpu8: Nestor X-A3 until 2999-01-01 00:00Z")
+    r = S.lease_acquire(conn, "skullport:cpu8", "Tester", "h1", purpose="t")
+    assert r["result"] == "BUSY" and "comms #" in r["held_by"]["legacy"]
+    tid = _sub(conn, resources=["skullport:cpu8"])["task_id"]
+    assert _claim(conn) is None
+    assert "legacy lease" in S.get_task(conn, tid)["waiting_reason"]
+    post("LEASE RELEASE SKULLPORT cpu8: Nestor X-A3")
+    got = _claim(conn)
+    assert got is not None and got["task"]["task_id"] == tid
+
+
+def test_legacy_expired_or_other_resource_does_not_block(conn, legacy):
+    post, _ = legacy
+    post("LEASE ACQUIRE SKULLPORT cpu8: old until 2001-01-01 00:00Z")
+    post("LEASE ACQUIRE ubu002 cpu3: Artemis until 2999-01-01 00:00Z")
+    assert S.lease_acquire(conn, "skullport:cpu8", "Tester", "h1")["result"] == "ACQUIRED"
+    assert S.lease_acquire(conn, "skullport:gpu", "Tester", "h1")["result"] == "ACQUIRED"
+    assert S.lease_acquire(conn, "ubu002:cpu3", "Tester", "h1")["result"] == "BUSY"
+
+
+def test_legacy_unparsable_expiry_is_held(conn, legacy):
+    post, _ = legacy
+    post("LEASE ACQUIRE SKULLPORT ram16: someone (no expiry given)")
+    assert S.lease_acquire(conn, "skullport:ram16", "Tester", "h1")["result"] == "BUSY"
+
+
+def test_legacy_host_file_seen_only_on_its_host(conn, legacy):
+    import json as _json
+    _, d = legacy
+    (d / "gpu.json").write_text(_json.dumps({"resource": "gpu", "host": "h1", "owner": "W-A", "until": time.time() + 600}))
+    assert S.lease_acquire(conn, "h1:gpu", "Tester", "h1")["result"] == "BUSY"
+    assert S.lease_acquire(conn, "h1:gpu", "Tester", "h2")["result"] == "ACQUIRED"   # h2 cannot see h1's file
+
+
+def test_legacy_view_unreadable_fails_closed(conn, monkeypatch):
+    monkeypatch.setenv("FABRIC_LEGACY_LEASE_TABLE", "{}.does_not_exist".format(S.schema()))
+    with pytest.raises(Exception):
+        S.lease_acquire(conn, "skullport:cpu8", "Tester", "h1")
+    conn.rollback()
+    assert S.leases(conn) == [] or all(l["resource"] != "skullport:cpu8" for l in S.leases(conn))

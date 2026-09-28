@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import os
 import sys
 import time
@@ -59,6 +60,9 @@ def main(argv=None) -> int:
     s.add_argument("--priority", type=int, default=0); s.add_argument("--max-attempts", type=int, default=3)
     s.add_argument("--key"); s.add_argument("--title", default=""); s.add_argument("--context")
     s.add_argument("--wait", type=int, default=0, help="poll up to N seconds for a terminal state")
+    s.add_argument("--skill", help="a fabric skill (fabric/skills/<name>.md): its brief is prepended and <name> is required")
+    s.add_argument("--replicas", type=int, default=1,
+                   help="N independent Tasks (each a fresh, disposable Attempt with no access to the others' outputs)")
     t = sub.add_parser("tasks"); t.add_argument("--state"); t.add_argument("--as", dest="as_"); t.add_argument("--thread")
     t.add_argument("--limit", type=int, default=50)
     for name in ("show", "events", "artifacts"):
@@ -69,7 +73,9 @@ def main(argv=None) -> int:
     le.add_argument("resource", nargs="?"); le.add_argument("--as", dest="as_"); le.add_argument("--purpose", default="")
     le.add_argument("--ttl-s", type=int, default=3600); le.add_argument("--lease"); le.add_argument("--token")
     le.add_argument("--all", action="store_true")
-    w = sub.add_parser("worker"); w.add_argument("--agent", required=True); w.add_argument("--caps", nargs="+", required=True)
+    w = sub.add_parser("worker"); w.add_argument("--agent", help="generic executor name worker.<host>[.<env>]; default worker.<host>")
+    w.add_argument("--caps", nargs="*", default=[], help="non-environment capabilities; python.*/pin.* are probed")
+    w.add_argument("--probe", action="store_true", help="print the environment probe and exit")
     w.add_argument("--executors", nargs="+", default=["claude", "script", "synthetic"])
     w.add_argument("--work-root", default=os.path.expanduser("~/fabric-work")); w.add_argument("--poll-s", type=float, default=5.0)
     w.add_argument("--ttl-s", type=int, default=90); w.add_argument("--model"); w.add_argument("--once", action="store_true")
@@ -80,7 +86,9 @@ def main(argv=None) -> int:
     if a.cmd == "init":
         c = S.connect(require_schema=False); S.init_schema(c); print("fabric schema ready:", S.schema()); return 0
     if a.cmd == "worker":
-        from .worker import Worker
+        from .worker import Worker, probe_environment
+        if a.probe:
+            _j(probe_environment()); return 0
         Worker(a.agent, a.caps, a.executors, work_root=Path(a.work_root), poll_s=a.poll_s, ttl_s=a.ttl_s, model=a.model,
                description=a.description).loop(once=a.once, max_tasks=a.max_tasks, idle_exit_s=a.idle_exit_s)
         return 0
@@ -107,21 +115,37 @@ def main(argv=None) -> int:
                 params[k] = json.loads(v)
             except ValueError:
                 params[k] = v
-        r = S.submit(conn, _principal(a), instr, a.executor, title=a.title, required_caps=a.cap, resources=a.resource,
-                     host_affinity=a.host, target_agent=a.target, thread_id=a.thread, campaign_id=a.campaign,
-                     experiment_id=a.experiment, base_sha=a.base, params=params, priority=a.priority, max_attempts=a.max_attempts,
-                     idempotency_key=a.key, context_id=a.context)
-        _j(r)
+        caps = list(a.cap)
+        if a.skill:
+            if not re.fullmatch(r"[a-z0-9]+(\.[a-z0-9_-]+)+", a.skill):
+                raise SystemExit("bad skill name")
+            sk = Path(__file__).parent / "skills" / (a.skill + ".md")
+            if not sk.is_file():
+                raise SystemExit("unknown skill {} (no {})".format(a.skill, sk))
+            instr = sk.read_text() + "\n\n---------------- THE BRIEF ----------------\n\n" + instr
+            caps.append(a.skill)
+        n = max(1, a.replicas)
+        group = S.new_id("grp") if n > 1 else None
+        made = []
+        for i in range(n):
+            p = dict(params, replica={"group": group, "index": i + 1, "of": n}) if group else params
+            made.append(S.submit(conn, _principal(a), instr, a.executor, title=a.title + (" [replica {}/{}]".format(i + 1, n) if group else ""),
+                                 required_caps=caps, resources=a.resource, host_affinity=a.host, target_agent=a.target,
+                                 thread_id=a.thread, campaign_id=a.campaign, experiment_id=a.experiment, base_sha=a.base,
+                                 params=p, priority=a.priority, max_attempts=a.max_attempts,
+                                 idempotency_key=(a.key + ("-r{}".format(i + 1) if group else "")) if a.key else None,
+                                 context_id=a.context))
+        _j(made if group else made[0])
         if a.wait:
             t0 = time.time()
             while time.time() - t0 < a.wait:
-                task = S.get_task(conn, r["task_id"])
-                if task["state"] in S.TERMINAL:
+                if all(S.get_task(conn, r["task_id"])["state"] in S.TERMINAL for r in made):
                     break
                 time.sleep(5)
-            task = S.get_task(conn, r["task_id"])
-            _j({"task_id": task["task_id"], "state": task["state"], "attempts": len(task["attempts"]),
-                "artifacts": [(x["artifact_id"], x["name"], x["sha256"][:12], x["size_bytes"]) for x in task["artifacts"]]})
+            for r in made:
+                task = S.get_task(conn, r["task_id"])
+                _j({"task_id": task["task_id"], "state": task["state"], "attempts": len(task["attempts"]),
+                    "artifacts": [(x["artifact_id"], x["name"], x["sha256"][:12], x["size_bytes"]) for x in task["artifacts"]]})
         return 0
     if a.cmd == "tasks":
         _j(S.list_tasks(conn, state=a.state, principal=a.as_, thread_id=a.thread, limit=a.limit)); return 0

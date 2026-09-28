@@ -39,6 +39,45 @@ def host_label() -> str:
     return socket.gethostname().lower()
 
 
+#: packages whose presence and exact version a worker advertises (probed, never just declared)
+PROBED_PACKAGES = ("numpy", "scipy", "cryptography", "pandas", "sympy", "torch", "networkx", "psycopg2")
+AGENT_NAME = __import__("re").compile(r"^worker\.[a-z0-9-]+(\.[a-z0-9-]+)*$")
+
+
+def probe_environment() -> Dict[str, Any]:
+    """What THIS interpreter (the one the script executor runs) actually provides.
+
+    Capabilities: python.stdlib, python.<pkg> for every importable probed package, and exact pins
+    pin.python==X.Y.Z / pin.<pkg>==V. A task that needs an exact environment requires the pin
+    (e.g. pin.numpy==2.2.6), so a worker with another version never claims it; the task waits."""
+    import importlib.metadata as md
+    import importlib.util
+    pkgs = {}
+    for name in PROBED_PACKAGES:
+        if importlib.util.find_spec(name) is None:
+            continue
+        try:
+            pkgs[name] = md.version(name)
+        except md.PackageNotFoundError:
+            pkgs[name] = "unknown"
+    py = platform.python_version()
+    caps = ["python.stdlib", "pin.python==" + py] + ["python." + n for n in pkgs] + \
+        ["pin.{}=={}".format(n, v) for n, v in pkgs.items() if v != "unknown"]
+    manifest = {"interpreter": sys.executable, "prefix": sys.prefix, "python": py, "packages": pkgs,
+                "platform": platform.platform()}
+    manifest["sha256"] = __import__("hashlib").sha256(json.dumps(manifest, sort_keys=True).encode()).hexdigest()
+    return {"capabilities": caps, "manifest": manifest}
+
+
+def effective_capabilities(declared: List[str], probe: Dict[str, Any]) -> Dict[str, Any]:
+    """Declared python.*/pin.* capabilities are replaced by what the probe found (report D7: a declared
+    capability the interpreter lacks produced failed Attempts). Other capabilities pass through."""
+    env = probe["capabilities"]
+    dropped = [c for c in declared if c.startswith(("python.", "pin.")) and c not in env]
+    kept = [c for c in declared if not c.startswith(("python.", "pin."))]
+    return {"capabilities": sorted(set(kept + env)), "dropped": dropped}
+
+
 def _git(*args, cwd: Path, timeout: int = 900) -> subprocess.CompletedProcess:
     return subprocess.run(["git", "-C", str(cwd)] + list(args), capture_output=True, text=True, timeout=timeout)
 
@@ -46,15 +85,23 @@ def _git(*args, cwd: Path, timeout: int = 900) -> subprocess.CompletedProcess:
 class Worker:
     def __init__(self, agent: str, capabilities: List[str], executors: List[str], *, work_root: Path,
                  poll_s: float = 5.0, ttl_s: int = 90, model: Optional[str] = None, description: str = ""):
-        self.agent, self.caps, self.executors = agent, capabilities, executors
         self.host = host_label()
+        agent = agent or "worker." + self.host
+        if not AGENT_NAME.match(agent):
+            raise S.FabricError("worker agent must be a generic executor name worker.<host>[.<env>], not a seat: %r" % agent)
+        self.env = probe_environment()
+        eff = effective_capabilities(capabilities, self.env)
+        if eff["dropped"]:
+            print(json.dumps({"worker": agent, "capabilities_dropped_not_in_environment": eff["dropped"]}), flush=True)
+        capabilities = eff["capabilities"]
+        self.agent, self.caps, self.executors = agent, capabilities, executors
         self.instance = "{}-{}".format(self.host, secrets.token_hex(4))
         self.actor = "{}[{}]".format(agent, self.instance)
         self.root = work_root / agent
         self.poll_s, self.ttl_s, self.model, self.description = poll_s, ttl_s, model, description
         self.conn = S.connect()
         S.register_instance(self.conn, agent, "worker", self.instance, self.host, capabilities=capabilities, executors=executors,
-                            model=model, capacity=1, description=description)
+                            model=model, capacity=1, description=description or "env " + self.env["manifest"]["sha256"][:12])
 
     # ---------------------------------------------------------------- worktrees
     def worktree(self, sha: Optional[str]) -> Path:
@@ -118,7 +165,8 @@ class Worker:
 
         receipt = {"host": self.host, "agent": self.agent, "instance": self.instance, "python": sys.version.split()[0],
                    "platform": platform.platform(), "pid": os.getpid(), "attempt_dir": str(adir), "base_sha": task.get("base_sha"),
-                   "executor": task["executor"], "token_env_present": TOKEN_ENV_FILE.exists(), "started_utc": time.strftime("%FT%TZ", time.gmtime())}
+                   "executor": task["executor"], "token_env_present": TOKEN_ENV_FILE.exists(), "started_utc": time.strftime("%FT%TZ", time.gmtime()),
+                   "environment": self.env["manifest"]}
         wt = None
         try:
             if task["executor"] != "synthetic":            # synthetic work needs no checkout

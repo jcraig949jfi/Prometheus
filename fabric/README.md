@@ -99,14 +99,46 @@ allow-listed environment variables are passed through.
    never printed, logged or stored. The worker has no sudo, no package installation, no arbitrary shell and no
    python (see D3).
 
-## 5. Leases
+## 5. Leases: the canonical authority for new work (operator ruling 2026-09-28)
 
-There is one convention: the `leases` table. Workers take leases with claims. Humans and scripts use
-`fabric lease` for work outside the fabric.
+The fabric `leases` table is **the** lease authority for new fabric-mediated substantial work. Workers take leases
+with their claims. Humans and scripts use `python -m fabric lease acquire|renew|release|status <resource>`.
 
-- A lease is token-fenced, has a TTL on the DB clock, and is renewed by the heartbeat.
-- A stale lease expires on the next acquire or reap.
-- For substantial shared compute, fail closed if the store is unreachable.
+- **Semantics:** token-fenced; TTL on the DB clock; renewed by the heartbeat; a stale lease expires on the next
+  acquire or reap. One unreleased lease per resource is enforced by a unique index.
+- **Naming:** a host resource is `<host>:<res>`, lowercase host. Examples: `skullport:cpu8`, `ubu002:cpu3`,
+  `skullport:gpu`.
+- **No fallback.** If the store is unreachable, nothing is granted, and nothing falls back to a local file. For a
+  shared heavy resource, not being able to see the global lease state means wait, never "probably free".
+- **Legacy host-file leases (ARC3: Ananke/Nestor) are a migration surface, not an authority.** Before granting
+  `<host>:<res>`, the store checks both:
+  - the newest comms record `LEASE ACQUIRE|EXTEND|RELEASE <HOST> <res>: ... until <UTC>Z`. It is held while
+    unexpired, and a record with no parsable expiry counts as held;
+  - when the claimant is on that host, the lease file `~/ananke_runs/leases/<res>.json`.
+
+  A live legacy lease makes the fabric lease BUSY, and the task's `waiting_reason` names it. If the legacy view is
+  unreadable, the claim fails closed.
+- **Known gap.** The legacy helpers do not read fabric leases, so they can still collide with fabric work. The fix
+  is to retire them, not to add a second reader. Heavy-engine seats should move to `fabric lease`. The host-file
+  convention is retired once the active seats have moved.
+
+## 5a. Workers are node executors, not seats
+
+A worker's agent name is `worker.<host>[.<env>]`, for example `worker.ubu002` or `worker.ubu001.sci`. Each process is
+an instance `<host>-<8hex>`. Seat names are refused. "Artemis is offline" and "ubu002 can execute work" are
+independent facts. Seats are principals, and later they may also be providers of specialised skills.
+
+Capabilities:
+- **Environment capabilities** (`python.*`, `pin.*`) are probed, never declared; see `envs/README.md`.
+- **Other capabilities** (`research.repo_readonly`, `audit.security.adversarial`, ...) are declared by whoever runs
+  the node's workers.
+
+## 5b. Skills and replicas
+
+`fabric submit --skill audit.security.adversarial --replicas 2 --prompt-file BRIEF.md ...`
+- **`--skill`** prepends the reviewed brief from `skills/<name>.md` and requires the capability `<name>`.
+- **`--replicas N`** creates N independent Tasks in one replica group. Each runs as a fresh disposable Attempt with
+  empty context, and none can see the others' outputs. The principal never picks reviewers.
 
 ## 6. Recovery
 
@@ -142,7 +174,8 @@ declared false in the card. This is not a claim of full A2A compliance.
 | test | result |
 |---|---|
 | P1 routing by capability | PASS: no task named a machine; the lite worker only ever took the compute task |
-| P2-local atomic claim race | PASS: 20 tasks, 3 workers, 20 claims, split 7/7/6, 0 duplicates. P2 **cross-host** (ubu001 vs ubu002) PENDING: needs a worker on ubu002 (#854) |
+| P2-local atomic claim race | PASS: 20 tasks, 3 workers, 20 claims, split 7/7/6, 0 duplicates. P2 cross-host: see next row |
+| P2 cross-host (frozen protocol `pilot/P2_CROSSHOST_PROTOCOL.md`) | PASS: `worker.ubu001` vs `worker.ubu002`. 20 single-task rounds racing for the same Task: ubu001 won 12, ubu002 won 8. 30-task batch: 14 / 16. All 50 tasks had exactly one successful Attempt and no duplicate claims. Median claim latency 6.0 s / 8.4 s at 5 s polling |
 | P3 principal disappears | PASS: submitted, principal exits, completed, retrieved by a new process |
 | P4 worker SIGKILL mid-attempt | PASS: attempt abandoned, 0 artifacts from it, rescued by a second worker 37.3 s after the kill |
 | P5 resource contention | PASS: heavy task waits ("resource pilot:cpu8 busy") while the same worker completes research; heavy runs 5.1 s after release |
@@ -167,6 +200,12 @@ Canary files for the P7b regression are left in place deliberately: `~/.claude/f
 - **D4: an empty `CLAUDE_CONFIG_DIR` changes the default model** (Archaeon lesson). `--model` is always explicit,
   and the model used is recorded.
 - **D5: concurrent `git worktree add` on one clone collides.** Serialised with a per-host flock.
+- **D7: declared capabilities were not verified.** A task declared `python.stdlib` but needed numpy. It produced
+  2 failed Attempts with the error captured, and a corrected Task succeeded. Those 4 failed Tasks are kept as
+  evidence. Fixed: `python.*` and `pin.*` capabilities are now probed.
+- **D11: the pilot harness assumed a closed world.** Once `worker.ubu002` was live, it legitimately took P1's
+  research task (the routing was correct, the harness assertion was wrong). The harness now runs in its own schema,
+  and the rerun passed P1-P8.
 - **D6: TCK skips hid gateway bugs, and the first compliance line overstated coverage.** The bugs were:
   - `messageId` used as an idempotency key;
   - snake_case keys ignored;

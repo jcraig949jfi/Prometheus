@@ -1,0 +1,675 @@
+{
+ "test": "P2-crosshost",
+ "run": "20260928T204546",
+ "pass": true,
+ "criterion_1_exactly_one_successful_attempt_violations": [],
+ "criterion_2_duplicate_claim_events": [],
+ "r1_single_task_wins": {
+  "ubu002": 8,
+  "ubu001": 12
+ },
+ "r2_batch_wins": {
+  "ubu002": 16,
+  "ubu001": 14
+ },
+ "claim_latency_s_median": {
+  "ubu002": 8.42,
+  "ubu001": 6.02
+ },
+ "tasks_total": 50,
+ "r1": [
+  {
+   "task": "tsk-ec0a4ca743bc",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-3264b7514ea1",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 9.12
+  },
+  {
+   "task": "tsk-4bcdb34c9619",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-8760ebe544a5",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 1.97
+  },
+  {
+   "task": "tsk-4e16708810d0",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-c7253a2d669c",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 2.38
+  },
+  {
+   "task": "tsk-a5e0b47a8e71",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-e3ccfdaa3b57",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 1.85
+  },
+  {
+   "task": "tsk-257c818c7d74",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-a250e546c363",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 2.73
+  },
+  {
+   "task": "tsk-cc0a6e18ebf2",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-94486660bbb9",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.05
+  },
+  {
+   "task": "tsk-36a3beddcfe5",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-2f333c873419",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 2.26
+  },
+  {
+   "task": "tsk-6e91ea13aeba",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-7cfa264f45fd",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 1.09
+  },
+  {
+   "task": "tsk-204c334e6aa4",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-6ef91acfc17c",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 1.31
+  },
+  {
+   "task": "tsk-75af59af22eb",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-91ebe79b8867",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.18
+  },
+  {
+   "task": "tsk-bde738ffb741",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-1219d9e1d84b",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 1.48
+  },
+  {
+   "task": "tsk-80de2ddf532f",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-78ef8cd13cc6",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.16
+  },
+  {
+   "task": "tsk-be54635540ea",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-ca71af283d68",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.14
+  },
+  {
+   "task": "tsk-ae638ea88fc0",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-8f03184a0409",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.22
+  },
+  {
+   "task": "tsk-f8b580ed28f2",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-f36c987a7ecf",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 1.29
+  },
+  {
+   "task": "tsk-bdecf692cd97",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-ce695b2e9efd",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.78
+  },
+  {
+   "task": "tsk-afc95018bf13",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-4a17fe7f1fe1",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 2.18
+  },
+  {
+   "task": "tsk-4ea27fc9ebc2",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-92c588be7e1f",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 2.08
+  },
+  {
+   "task": "tsk-5949671eb877",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-3444aa8a5f5d",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.94
+  },
+  {
+   "task": "tsk-45a5682a29df",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-698960345378",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 0.22
+  }
+ ],
+ "r2": [
+  {
+   "task": "tsk-7cd864042d57",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-20d9575330f6",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 2.94
+  },
+  {
+   "task": "tsk-360e83e1fde4",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-5eaba9008201",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 4.04
+  },
+  {
+   "task": "tsk-68cfadbf1bc9",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-278638dc9743",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 4.92
+  },
+  {
+   "task": "tsk-cf664290a3e4",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-5ee8179dc6bb",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 5.14
+  },
+  {
+   "task": "tsk-5eec73ccf333",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-cce20df1c7c8",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 6.02
+  },
+  {
+   "task": "tsk-a857195da811",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-3b42e02b4435",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 6.23
+  },
+  {
+   "task": "tsk-99ae1e47448e",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-721e7fe6149c",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 7.11
+  },
+  {
+   "task": "tsk-b998c70e0a44",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-347a49b6efad",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 7.32
+  },
+  {
+   "task": "tsk-dcbdb2668998",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-ad5cd9ba4be2",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 8.2
+  },
+  {
+   "task": "tsk-8efd17496321",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-f5260b0e75a9",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 8.42
+  },
+  {
+   "task": "tsk-7c11f6c64862",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-bca335a79d04",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 9.28
+  },
+  {
+   "task": "tsk-315c562082ae",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-56d8ae3e2ccf",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 9.5
+  },
+  {
+   "task": "tsk-50c5d092b07a",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-488963d01eff",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 10.37
+  },
+  {
+   "task": "tsk-b6852b7c0ba0",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-c8dea4680590",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 10.6
+  },
+  {
+   "task": "tsk-c59c4bc95f27",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-6e450135f47d",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 11.45
+  },
+  {
+   "task": "tsk-93f7725c3b03",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-4c9b0aaa9129",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 11.69
+  },
+  {
+   "task": "tsk-707e53f78082",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-8f1cffb224bc",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 12.54
+  },
+  {
+   "task": "tsk-3fe8a17fac68",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-d959ca4fe44f",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 12.79
+  },
+  {
+   "task": "tsk-c41ec85199c9",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-4e050b0afe5f",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 13.63
+  },
+  {
+   "task": "tsk-840d85eb4ef9",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-463c03246723",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 13.89
+  },
+  {
+   "task": "tsk-f6aedfa87349",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-c3f7f94d0c66",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 14.72
+  },
+  {
+   "task": "tsk-4860b988ce2a",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-44a6ed7a9c95",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 14.98
+  },
+  {
+   "task": "tsk-ee210386c6f9",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-88d203ef6af3",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 15.81
+  },
+  {
+   "task": "tsk-9e42d5207adf",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-d509ecdb8828",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 16.1
+  },
+  {
+   "task": "tsk-55f3033f0635",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-5bfae823b8af",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 16.94
+  },
+  {
+   "task": "tsk-d2cf4674ac7e",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-7b4aee965701",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 17.2
+  },
+  {
+   "task": "tsk-a58790400318",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-1b4dedcd702a",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 18.03
+  },
+  {
+   "task": "tsk-1e606aa47de9",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-f09a80bcbba4",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 18.31
+  },
+  {
+   "task": "tsk-f2705ab03ee1",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-9b7bdf92a9c7",
+     "ubu001",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 19.11
+  },
+  {
+   "task": "tsk-16d8ded3c320",
+   "state": "completed",
+   "attempts": [
+    [
+     "att-402b7341a631",
+     "ubu002",
+     "succeeded"
+    ]
+   ],
+   "claimed_events": 1,
+   "claim_latency_s": 19.41
+  }
+ ],
+ "finished": "2026-09-28T20:48:12Z"
+}

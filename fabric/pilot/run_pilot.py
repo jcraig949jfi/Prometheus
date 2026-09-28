@@ -82,16 +82,16 @@ def save(name, obj):
 # ---------------------------------------------------------------------------- tests
 def p1(conn):
     """capability routing: research tasks must go only to the worker that has the capability."""
-    full = worker("pilot.full", RESEARCH); lite = worker("pilot.lite", ["compute.cpu.light"])
+    full = worker("worker.pilot.full", RESEARCH); lite = worker("worker.pilot.lite", ["compute.cpu.light"])
     ids = {"r1": submit(conn, "p1-r1", ["research.repo_readonly"]), "r2": submit(conn, "p1-r2", ["research.repo_readonly"]),
            "s1": submit(conn, "p1-s1", ["research.synthesis"]), "c1": submit(conn, "p1-c1", ["compute.cpu.light"])}
     wait(lambda: all(state(conn, t) == "completed" for t in ids.values()), 120)
     who = {k: completer(conn, t) for k, t in ids.items()}
-    lite_attempts = [a for t in ids.values() for a in S.get_task(conn, t)["attempts"] if a["agent"] == "pilot.lite"]
+    lite_attempts = [a for t in ids.values() for a in S.get_task(conn, t)["attempts"] if a["agent"] == "worker.pilot.lite"]
     stop(full); stop(lite)
     c1_attempts = {x["attempt_id"] for x in S.get_task(conn, ids["c1"])["attempts"]}
     ok = (all(state(conn, t) == "completed" for t in ids.values())                 # everything done
-          and all(who[k] == "pilot.full" for k in ("r1", "r2", "s1"))              # research only by the capable worker
+          and all(who[k] == "worker.pilot.full" for k in ("r1", "r2", "s1"))              # research only by the capable worker
           and all(a["attempt_id"] in c1_attempts for a in lite_attempts))          # lite touched nothing but compute
     return save("P1", {"pass": ok, "tasks": ids, "completed_by": who,
                        "lite_attempts": [(a["attempt_id"], a["status"]) for a in lite_attempts],
@@ -101,7 +101,7 @@ def p1(conn):
 def p2_local(conn):
     """atomic claim under contention: 20 tasks, 3 worker processes started together; every task exactly one attempt."""
     ids = [submit(conn, "p2-%02d" % i, ["research.repo_readonly"], seconds=0.5) for i in range(20)]
-    ws = [worker("pilot.race%d" % i, RESEARCH) for i in range(3)]
+    ws = [worker("worker.pilot.race%d" % i, RESEARCH) for i in range(3)]
     wait(lambda: all(state(conn, t) == "completed" for t in ids), 180)
     for w in ws:
         stop(w)
@@ -123,7 +123,7 @@ def p3(conn):
     tid = json.loads(r.stdout)["task_id"]
     principal_pid_alive = False                      # subprocess.run returned: the principal process is gone
     before = state(conn, tid)
-    w = worker("pilot.full", RESEARCH)
+    w = worker("worker.pilot.full", RESEARCH)
     wait(lambda: state(conn, tid) == "completed", 60)
     stop(w)
     got = subprocess.run([PY, "-m", "fabric", "show", tid], cwd=str(REPO), capture_output=True, text=True)   # a NEW process
@@ -138,12 +138,12 @@ def p3(conn):
 def p4(conn):
     """kill a worker mid-attempt; the attempt is abandoned, nothing falsely completes, a second worker finishes."""
     tid = submit(conn, "p4", ["research.synthesis"], seconds=20, max_attempts=3)
-    a = worker("pilot.victim", RESEARCH, ttl=15)
+    a = worker("worker.pilot.victim", RESEARCH, ttl=15)
     wait(lambda: state(conn, tid) == "working", 60, 0.5)
     first = S.get_task(conn, tid)["attempts"][-1]["attempt_id"]
     time.sleep(3)
     os.killpg(a.pid, signal.SIGKILL); a.wait(); killed_at = now()
-    b = worker("pilot.rescuer", RESEARCH, ttl=15)
+    b = worker("worker.pilot.rescuer", RESEARCH, ttl=15)
     t_rescue = time.time()
     wait(lambda: state(conn, tid) == "completed", 120)
     stop(b)
@@ -152,7 +152,7 @@ def p4(conn):
     first_arts = [x for x in t["artifacts"] if x["attempt_id"] == first]
     ev = [(e["kind"], e["attempt_id"]) for e in S.events(conn, tid)]
     ok = att[first]["status"] == "abandoned" and not first_arts and t["state"] == "completed" and len(t["attempts"]) == 2 \
-        and t["attempts"][1]["agent"] == "pilot.rescuer" and t["attempts"][1]["status"] == "succeeded"
+        and t["attempts"][1]["agent"] == "worker.pilot.rescuer" and t["attempts"][1]["status"] == "succeeded"
     return save("P4", {"pass": ok, "task": tid, "killed_attempt": first, "killed_at": killed_at,
                        "attempts": [(x["attempt_id"], x["agent"], x["status"], x["error"]) for x in t["attempts"]],
                        "artifacts_from_killed_attempt": len(first_arts), "seconds_kill_to_completion": round(time.time() - t_rescue, 1),
@@ -164,7 +164,7 @@ def p5(conn):
     hold = S.lease_acquire(conn, "pilot:cpu8", "PilotHolder", "ubu001", purpose="P5: someone else's campaign", ttl_s=900)
     heavy = submit(conn, "p5-heavy", ["compute.cpu.light"], seconds=3, resources=["pilot:cpu8"], priority=10)
     light = submit(conn, "p5-research", ["research.repo_readonly"], seconds=3)
-    w = worker("pilot.full", RESEARCH)
+    w = worker("worker.pilot.full", RESEARCH)
     t0 = time.time()
     wait(lambda: state(conn, light) == "completed", 60)
     research_done = time.time() - t0
@@ -216,6 +216,12 @@ def p8(conn, task_id):
 
 RUN = time.strftime("%Y%m%dT%H%M%S", time.gmtime())
 if __name__ == "__main__":
+    # A closed world: the fleet's real workers (e.g. worker.ubu002) share the canonical "fabric" schema and would
+    # legitimately claim pilot tasks whose capabilities they have (seen 2026-09-28: ubu002 took P1's r2). The pilot
+    # therefore runs in its own schema; its worker subprocesses inherit FABRIC_SCHEMA.
+    os.environ.setdefault("FABRIC_SCHEMA", "fabric_pilot_" + RUN.lower())
+    S.init_schema(S.connect(require_schema=False))
+    print(json.dumps({"pilot_schema": S.schema()}), flush=True)
     conn = S.connect()
     out = {}
     for name in sys.argv[1:] or ["P1", "P2L", "P3", "P4", "P5", "P8"]:

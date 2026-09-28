@@ -24,7 +24,9 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import secrets
+import time
 import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence
@@ -241,10 +243,77 @@ def _expire_stale_lease(cur, resource: str, actor: str) -> None:
         _event(cur, actor, "lease_expired", attempt_id=aid, lease_id=lid, resource=resource, holder=holder)
 
 
+# ---------------------------------------------------------------- legacy host-file leases (migration surface)
+# Operator ruling 2026-09-28: the fabric lease is the ONE authority for new work. The ARC3 convention (Ananke/Nestor:
+# ~/ananke_runs/leases/<res>.json on the host + a comms record "LEASE ACQUIRE|EXTEND|RELEASE <HOST> <res>: ...")
+# is a compatibility surface only: before granting a fabric lease on "<host>:<res>" the store checks it, so legacy
+# holders are never invisible. It is read-only and fails closed (an unreadable legacy view raises -> no lease).
+LEGACY_SUBJECT = re.compile(r"^LEASE (ACQUIRE|EXTEND|RELEASE) (\S+) (\S+?):", re.I)
+LEGACY_UNTIL = re.compile(r"until (\d{4}-\d\d-\d\d)[ T](\d\d:\d\d)(?::\d\d)?Z")
+HOST_RESOURCE = re.compile(r"^([A-Za-z0-9_.-]+):([A-Za-z0-9_.-]+)$")
+
+
+def _legacy_table() -> str:
+    t = os.environ.get("FABRIC_LEGACY_LEASE_TABLE", os.environ.get("COMMS_SCHEMA", "comms") + ".messages")
+    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*", t):
+        raise FabricError("bad FABRIC_LEGACY_LEASE_TABLE")
+    return t
+
+
+def _epoch(v) -> Optional[float]:
+    if isinstance(v, (int, float)):
+        return float(v)
+    if isinstance(v, str):
+        m = re.match(r"(\d{4}-\d\d-\d\d)[ T](\d\d:\d\d)(?::(\d\d))?", v)
+        if m:
+            return datetime.datetime.strptime(m.group(1) + " " + m.group(2) + ":" + (m.group(3) or "00"),
+                                              "%Y-%m-%d %H:%M:%S").replace(tzinfo=datetime.timezone.utc).timestamp()
+    return None
+
+
+def legacy_holder(cur, resource: str, claimant_host: str) -> Optional[str]:
+    """A description of a live legacy lease on `resource` ("<host>:<res>"), else None."""
+    m = HOST_RESOURCE.match(resource)
+    if not m:
+        return None
+    lhost, lres = m.group(1), m.group(2)
+    cur.execute("SELECT extract(epoch FROM now())")
+    now = float(cur.fetchone()[0])
+    cur.execute("SELECT id, subject, body FROM {} WHERE subject ~* %s ORDER BY id DESC LIMIT 1".format(_legacy_table()),
+                ("^LEASE (ACQUIRE|EXTEND|RELEASE) " + re.escape(lhost) + " " + re.escape(lres) + ":",))
+    row = cur.fetchone()
+    if row and row[1].split()[1].upper() in ("ACQUIRE", "EXTEND"):
+        u = LEGACY_UNTIL.search(row[1])
+        until = _epoch(u.group(1) + " " + u.group(2)) if u else None
+        if until is None:
+            try:
+                until = _epoch(json.loads(row[2]).get("until"))
+            except (ValueError, AttributeError):
+                until = None
+        if until is None or until > now:                          # unparsable expiry: held (fail closed)
+            return "legacy lease (comms #{}): {}".format(row[0], row[1][:160])
+    if claimant_host.lower() == lhost.lower():
+        f = Path(os.environ.get("FABRIC_LEGACY_LEASE_DIR", os.path.expanduser("~/ananke_runs/leases"))) / (lres + ".json")
+        if f.exists():
+            try:
+                rec = json.loads(f.read_text())
+                until = _epoch(rec.get("until"))
+            except (OSError, ValueError, AttributeError):
+                rec, until = {}, None
+            if until is None or until > time.time():
+                return "legacy lease file {} (owner {!r})".format(f, rec.get("owner"))
+    return None
+
+
 def _try_lease(cur, resource: str, holder: str, host: str, purpose: str, ttl_s: int, actor: str,
                attempt_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
-    """Inside the caller's transaction: expire a stale holder, then insert. A
-    unique violation means BUSY; the savepoint keeps the transaction usable."""
+    """Inside the caller's transaction: refuse if a legacy lease holds it,
+    expire a stale holder, then insert. A unique violation means BUSY; the
+    savepoint keeps the transaction usable."""
+    legacy = legacy_holder(cur, resource, host)
+    if legacy:
+        _event(cur, actor, "legacy_lease_busy", attempt_id=attempt_id, resource=resource, legacy=legacy)
+        return None
     _expire_stale_lease(cur, resource, actor)
     lid, token = new_id("lse"), secrets.token_hex(8)
     cur.execute("SAVEPOINT lease_try")
@@ -276,7 +345,7 @@ def lease_acquire(conn, resource: str, holder: str, host: str, *, purpose: str =
     cur = conn.cursor()
     got = _try_lease(cur, resource, holder, host, purpose, ttl_s, holder)
     if got is None:
-        h = lease_holder(cur, resource); conn.commit()
+        h = lease_holder(cur, resource) or {"legacy": legacy_holder(cur, resource, host)}; conn.commit()
         return {"result": "BUSY", "resource": resource, "held_by": h}
     conn.commit()
     return dict(got, result="ACQUIRED")
@@ -348,11 +417,12 @@ def claim(conn, agent: str, instance: str, host: str, capabilities: Sequence[str
             got.append(lease)
         if busy is not None:
             cur.execute("ROLLBACK TO SAVEPOINT claim_try")
-            reason = "resource {} busy".format(busy)
+            h = lease_holder(cur, busy)
+            legacy = None if h else legacy_holder(cur, busy, host)
+            reason = "resource {} busy".format(busy) + (" ({})".format(legacy[:120]) if legacy else "")
             if waiting != reason:
-                h = lease_holder(cur, busy)
                 cur.execute("UPDATE {} SET waiting_reason = %s, updated_at = now() WHERE task_id = %s".format(_t("tasks")), (reason, task_id))
-                _event(cur, actor, "resource_busy", task_id=task_id, resource=busy, held_by=(h or {}).get("holder"))
+                _event(cur, actor, "resource_busy", task_id=task_id, resource=busy, held_by=(h or {}).get("holder") or legacy)
             continue
         cur.execute("RELEASE SAVEPOINT claim_try")
         cur.execute("UPDATE {} SET lease_ids = %s WHERE attempt_id = %s".format(_t("attempts")), ([g["lease_id"] for g in got], aid))
