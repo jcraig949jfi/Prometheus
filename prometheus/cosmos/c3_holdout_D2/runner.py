@@ -1,13 +1,16 @@
-"""Across-the-firewall runner for holdout D2 (M1 only; Nestor holds the key).
+"""Across-the-firewall runner for holdout D2 (M1 only; custody.py releases the key to the designated runner).
 
   COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.runner \
-      --package PKG.zip --package-sha256 HEX \
-      --key C:/Users/jcrai/nestor_secrets/holdout_D2/hidden_D2.key.hex \
+      --package PKG.zip --package-sha256 HEX --runner-id ID \
+      --key <key file released by custody.py release-key> \
       [--out DIR] [--phase all|predict|certify] [--predict-timeout SEC] [--max-episode-steps N]
-      [--allow-flagged]
+      [--allow-flagged] [--gate-ref origin/main]
   COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.runner --verify-receipts DIR/receipts.jsonl
 
 Protocol (enforced in code, in this order):
+ 0. GATES    protocol.check_gates(..., "DESIGNATION") runs before the key file is touched: the sealed set is on
+             the reference branch, a PASSING firewall audit is bound to this exact code, Cosmos's committed
+             package hash equals --package-sha256, and this runner id + host are designated (never M2).
  1. OPEN     the manifest's spec_id and the ciphertext's sha256 are checked, the ciphertext is decrypted in
              memory only (never written), the plaintext's family_src_sha256 must equal the CURRENT
              holdout-D medium.py; the external FROZEN prediction package (one .zip file) is hashed and the
@@ -70,7 +73,7 @@ from prometheus.cosmos.c3.certify import certify
 from prometheus.cosmos.c3.system import System
 from prometheus.cosmos.c3.task import Task
 from prometheus.cosmos.c3_holdout_D import medium
-from prometheus.cosmos.c3_holdout_D2 import sealbox
+from prometheus.cosmos.c3_holdout_D2 import protocol, sealbox
 
 HERE = Path(__file__).resolve().parent
 D_DIR = HERE.parent / "c3_holdout_D"
@@ -78,6 +81,10 @@ RECEIPT_FORMAT = "c3-holdout-D2-receipts/1"
 PACKAGE_FORMAT = "c3-D2-prediction-package/1"
 CLASSES = ("NONE", "PASSIVE", "FUNCTIONAL", "INCOHERENT", "INDETERMINATE")
 DEFAULT_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2")
+# Protocol gates are read from the COMMITTED tree of this repository's reference branch (protocol.py). The
+# selftest points these at a throwaway git repository it builds; the gates themselves are never skipped.
+DEFAULT_GATE_REPO = HERE.parents[2]
+DEFAULT_GATE_REF = protocol.DEFAULT_REF
 MAX_E_PER_CALL = 200_000
 MAX_PRED_BYTES = 65_536
 BIT_GENERATORS = ("PCG64", "PCG64DXSM", "MT19937", "Philox", "SFC64")
@@ -411,7 +418,8 @@ class FirewallRun:
     def __init__(self, manifest_path, ciphertext_path, key_path, package_zip, package_sha256, out_dir,
                  allow_flagged: bool = False, certify_kwargs: Optional[dict] = None,
                  predict_timeout: float = 1800.0, max_episode_steps: Optional[int] = None,
-                 resume: bool = False, require_out_outside_git: bool = True):
+                 resume: bool = False, require_out_outside_git: bool = True, runner_id: Optional[str] = None,
+                 gate_repo=None, gate_ref: Optional[str] = None):
         self.manifest_path, self.ciphertext_path = Path(manifest_path), Path(ciphertext_path)
         self.key_path, self.package_zip = Path(key_path), Path(package_zip)
         self.package_sha256 = str(package_sha256).lower()
@@ -419,11 +427,20 @@ class FirewallRun:
         self.allow_flagged, self.certify_kwargs = allow_flagged, dict(certify_kwargs or {})
         self.predict_timeout, self.max_episode_steps = predict_timeout, max_episode_steps
         self.resume, self.require_out_outside_git = resume, require_out_outside_git
+        self.runner_id = runner_id
+        self.gate_repo = Path(gate_repo) if gate_repo is not None else DEFAULT_GATE_REPO
+        self.gate_ref = gate_ref or DEFAULT_GATE_REF
         self.phase = "INIT"
         self._proc = self._conn = None
 
     # ------------------------------------------------------------ open
     def open(self) -> dict:
+        # Protocol order (protocol.py): seal < PASSING firewall audit of this exact code < Cosmos's committed
+        # package hash < designation of THIS runner on THIS host. Checked before the key file is touched.
+        if not self.runner_id:
+            raise protocol.RunnerNotDesignated("a runner id is required")
+        self.gates = protocol.check_gates(self.gate_repo, "DESIGNATION", ref=self.gate_ref,
+                                          package_sha256=self.package_sha256, runner_id=self.runner_id)
         if inside_git_repo(self.key_path):
             raise RunnerRefusal("key file is inside a git repository: refusing")
         if self.require_out_outside_git and inside_git_repo(self.out if self.out.exists() else self.out.parent):
@@ -431,6 +448,8 @@ class FirewallRun:
         manifest = json.loads(self.manifest_path.read_text(encoding="utf-8"))
         if sealbox.manifest_spec_id(manifest) != manifest.get("spec_id"):
             raise HiddenSetMismatch("manifest spec_id does not match its contents")
+        if manifest["spec_id"] != self.gates["spec_id"]:
+            raise HiddenSetMismatch("manifest is not the sealed one the protocol gates refer to")
         ct = self.ciphertext_path.read_bytes()
         if sealbox.sha256_hex(ct) != manifest["ciphertext_sha256"]:
             raise HiddenSetMismatch("ciphertext sha256 != manifest")
@@ -475,7 +494,8 @@ class FirewallRun:
             "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
             "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
             "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
-            "n_worlds": self.N,
+            "n_worlds": self.N, "runner_id": self.runner_id,
+            "protocol_gates": {k: v for k, v in self.gates.items() if k.endswith("_commit") or k in ("ref", "auditor")},
             "package": {k: self.pkg[k] for k in ("sha256", "meta", "entry", "audit_flags", "allow_flagged", "files")},
             "runner_src_sha256": sealbox.src_sha_lf(Path(__file__)),
             "certify_src_sha256": sealbox.src_sha_lf(HERE.parent / "c3" / "certify.py"),
@@ -693,6 +713,8 @@ def main(argv=None) -> int:
     ap.add_argument("--predict-timeout", type=float, default=1800.0)
     ap.add_argument("--max-episode-steps", type=int, default=None)
     ap.add_argument("--allow-flagged", action="store_true")
+    ap.add_argument("--runner-id", help="must equal protocol/RUNNER_DESIGNATION.json runner_id")
+    ap.add_argument("--gate-ref", default=DEFAULT_GATE_REF)
     ap.add_argument("--verify-receipts")
     a = ap.parse_args(argv)
     if a.verify_receipts:
@@ -700,14 +722,15 @@ def main(argv=None) -> int:
         print(json.dumps({"ok": ok, "reason": why, "n_records": len(recs),
                           "head": recs[-1]["hash"] if recs else None}))
         return 0 if ok else 1
-    if not (a.package and a.package_sha256 and a.key):
-        ap.error("--package, --package-sha256 and --key are required")
+    if not (a.package and a.package_sha256 and a.key and a.runner_id):
+        ap.error("--package, --package-sha256, --key and --runner-id are required")
     if a.phase == "certify" and not a.out:
         ap.error("--phase certify resumes an existing run: give its --out")
     out = Path(a.out) if a.out else DEFAULT_OUT_ROOT / ("run_" + _dt.datetime.now(_dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
     run = FirewallRun(a.manifest, a.ciphertext, a.key, a.package, a.package_sha256, out,
                       allow_flagged=a.allow_flagged, predict_timeout=a.predict_timeout,
-                      max_episode_steps=a.max_episode_steps, resume=(a.phase == "certify"))
+                      max_episode_steps=a.max_episode_steps, resume=(a.phase == "certify"),
+                      runner_id=a.runner_id, gate_ref=a.gate_ref)
     run.open()
     if a.phase in ("all", "predict"):
         run.predict_all()

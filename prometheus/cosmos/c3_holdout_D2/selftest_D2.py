@@ -28,7 +28,7 @@ from pathlib import Path
 import numpy as np
 
 from prometheus.cosmos.c3_holdout_D import medium
-from prometheus.cosmos.c3_holdout_D2 import draw, runner, sealbox, verify_reveal
+from prometheus.cosmos.c3_holdout_D2 import draw, protocol, runner, sealbox, verify_reveal
 
 HERE = Path(__file__).resolve().parent
 PUBLIC_WORLDS = [
@@ -107,7 +107,7 @@ def make_throwaway_set(tmp: Path) -> dict:
 
 def new_run(ts, pkg, sha, out, **kw):
     return runner.FirewallRun(ts["manifest"], ts["enc"], ts["key"], pkg, sha, out,
-                              certify_kwargs=SMALL, predict_timeout=300, **kw)
+                              certify_kwargs=SMALL, predict_timeout=300, runner_id="selftest", **kw)
 
 
 # ------------------------------------------------------------------ check A: end to end
@@ -235,7 +235,8 @@ def refuses_early_certify(tmp: Path, ts: dict, cls, tag: str) -> bool:
     sha = make_package(pkg, DUMMY_PREDICTOR)
     refused = []
     # C1: certify right after open (no predictions at all)
-    r = cls(ts["manifest"], ts["enc"], ts["key"], pkg, sha, tmp / ("ord1_" + tag), certify_kwargs=SMALL)
+    r = cls(ts["manifest"], ts["enc"], ts["key"], pkg, sha, tmp / ("ord1_" + tag), certify_kwargs=SMALL,
+            runner_id="selftest")
     r.open()
     try:
         r.certify_world(0)
@@ -243,7 +244,8 @@ def refuses_early_certify(tmp: Path, ts: dict, cls, tag: str) -> bool:
     except runner.OrderViolation:
         refused.append(True)
     # C2: predictions for all but the last world -> seal and certify both refused
-    r = cls(ts["manifest"], ts["enc"], ts["key"], pkg, sha, tmp / ("ord2_" + tag), certify_kwargs=SMALL)
+    r = cls(ts["manifest"], ts["enc"], ts["key"], pkg, sha, tmp / ("ord2_" + tag), certify_kwargs=SMALL,
+            runner_id="selftest")
     r.open()
     try:
         for i in range(r.N - 1):
@@ -264,7 +266,8 @@ def refuses_early_certify(tmp: Path, ts: dict, cls, tag: str) -> bool:
         pass
     refused.append(ok2)
     # C3: full predictions + seal, then one prediction line is deleted ON DISK -> certify refused
-    r = cls(ts["manifest"], ts["enc"], ts["key"], pkg, sha, tmp / ("ord3_" + tag), certify_kwargs=SMALL)
+    r = cls(ts["manifest"], ts["enc"], ts["key"], pkg, sha, tmp / ("ord3_" + tag), certify_kwargs=SMALL,
+            runner_id="selftest")
     r.open()
     r.predict_all()
     r.seal_predictions()
@@ -362,17 +365,35 @@ def public_artifacts() -> dict:
             "real_n_worlds_ge_128": m["n_worlds"] >= 128}
 
 
+class GateStandIn:
+    """TEST CODE ONLY. These checks exercise the runner machinery AFTER the protocol gates, with many throwaway
+    packages (a real prediction commitment binds exactly one). The real gates -- seal < audit < commitment <
+    designation < result seal, stale-audit, host and runner checks -- are exercised end to end, runner included,
+    in selftest_protocol.py. The runner CLI has no way to install this stand-in."""
+    RunnerNotDesignated = protocol.RunnerNotDesignated
+
+    def __init__(self, spec_id: str):
+        self.spec_id = spec_id
+
+    def check_gates(self, *a, **k):
+        return {"spec_id": self.spec_id, "ref": "selftest-gate-stand-in"}
+
+
 def run() -> dict:
     with tempfile.TemporaryDirectory(prefix="c3D2_selftest_") as t:
         tmp = Path(t)
         assert not runner.inside_git_repo(tmp)
         ts = make_throwaway_set(tmp)
-        a = check_end_to_end(tmp, ts)
-        b = check_hash_mismatch(tmp, ts)
-        c = check_order(tmp, ts)
-        d = check_commitment(tmp, ts)
-        e = check_isolation(tmp, ts)
-        f = check_audit(tmp, ts)
+        real_protocol, runner.protocol = runner.protocol, GateStandIn(ts["m"]["spec_id"])
+        try:
+            a = check_end_to_end(tmp, ts)
+            b = check_hash_mismatch(tmp, ts)
+            c = check_order(tmp, ts)
+            d = check_commitment(tmp, ts)
+            e = check_isolation(tmp, ts)
+            f = check_audit(tmp, ts)
+        finally:
+            runner.protocol = real_protocol
     checks = {"runner_end_to_end": a["pass"], "hash_mismatch_refused": b["pass"],
               "certify_before_predictions_refused": c["pass"], "commitment_round_trip": d["pass"],
               "predictor_sees_no_knobs": e["pass"], "audit_refuses_forbidden_import": f["pass"]}
