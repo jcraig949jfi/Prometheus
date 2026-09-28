@@ -41,6 +41,7 @@ sys.path.insert(0, str(HERE))
 os.environ.setdefault("A18_TAG", "A20")
 import a18                       # noqa: E402
 import a18_c1 as C               # noqa: E402
+import a19_c2 as C2              # noqa: E402  (imported FIRST: its module-level path settings are overridden below)
 from a18 import G, T3D, I, a17, FR, log   # noqa: E402
 
 C.DATE = "2026-09-28"
@@ -74,7 +75,6 @@ def clean(s, sp, tsp):
 
 def stage_panel(_w=0):
     import ruler_v2 as R
-    import a19_c2 as C2
     a18.use_world("W5")
     sp, tsp = R.span_of_schema(a18.G1), R.traj_span(R.reexpression_bodies(a18.G1))
     rng = random.Random(I._seed("APHRODITE/A20/PANEL/v1"))
