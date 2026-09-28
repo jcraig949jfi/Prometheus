@@ -507,3 +507,10 @@ so a program writing a fixed pattern that matches itself ('painter') passes like
 0.03-0.08; together with the transplant study (offset-64 LDIR/LDDR copiers moving their own bytes), painter contamination of the
 Nestor donor corpora appears negligible. Formal CVT-R heredity certification requested from Artemis on three named donor sets.
 Standing rule from here: 'competent' = P-11 construction-competent; heredity claims need CVT-R or a byte-provenance ruler.
+**QUALIFICATION OF CYCLE-9-ERA COUNTS (Odysseus #803, converging with Artemis #793):** functional + causal recertification of the
+57 S1-C P-11-certified donors (first certified donor per run): 2 copy themselves, 1 context-dependent, 17 paint (mostly 0x36
+near-homopolymers), 37 do nothing from any reachable register state (16 copy only when handed registers). Any Nestor statement that
+counted S1-C / S1C-P11-REASSAY 'certified donors' as replicators is QUALIFIED to 'P-11-certified construction events'. The 7ae3
+founder underlying C9-H2, C-RUNAWAY, C-CRITICAL-MASS, C-ATOMIC and C-CORE is one of the genuine copiers (Artemis/Odysseus), so
+those claims keep their evidential basis; the W1/P2/ARC3 dense-VM corpora are separately screened (DOM, transplants). Evidence:
+roles/Odysseus/expedition/recert/ (RESULT.md s5), roles/Artemis/challenge/p11/.
