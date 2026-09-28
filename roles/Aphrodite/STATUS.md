@@ -1,6 +1,6 @@
 # Aphrodite status
 
-Currency: 2026-09-25 (seat reset requested; S1-S4 done, A15/A16 recursion attempts untestable -- see NEXT_SESSION.md).
+Currency: 2026-09-28 (ARC3 close; see the UPDATE blocks at the end, newest last).
 
 seat state: ACTIVE on its charter (APHRODITE-08 APPROVED 2026-09-18).
 workspace: worktree aphrodite-base-role, branch aphrodite/engine-2026-09-21
@@ -132,3 +132,32 @@ Read science/compounding/COMPOUNDING_SYNTHESIS_2026-09-28.md first.
   Backlog: science/compounding/BACKLOG_COMPOUNDING.md (T01-T31). Blocks RB-7..RB-10 are
   ready.
   Branch aphrodite/compounding-2026-09-27 (pushed, not merged).
+
+--------------------------------------------------------------------------
+UPDATE 2026-09-28 (close) -- ARC3 ABSTRACTION-COMPOUNDING PORTFOLIO
+--------------------------------------------------------------------------
+Read science/arc3/ARC3_SYNTHESIS_2026-09-28.md first (18 sections).
+
+  A23 C3R2-CONFIRM (AMENDMENT 23)
+    Verdict: G1_RECURRENT_STEPPING_STONE = YES; GENERIC = 3/3.
+    n = 10 of 12 fillable; k = 6; sign p = 0.0078 vs G1_NC / P / OFF_0.
+    Scope: MECHANISM UNDER CONSTRUCTED RECURRENCE. Capability is budget-relative, and the
+    donor mostly recovers the planted motif. It is NOT retroactive RSI evidence, and no
+    historical label changed.
+    Predecessors: C3 (A20) UNTESTABLE, C3R (A21) INVALID, C3R2 (A22) UNTESTABLE
+    (forensic support).
+
+  Workers W1-W8 (science/arc3/w*/REPORT.md; manifest WORKER_MANIFEST.md).
+    - The composition-horizon and non-specificity rivals were killed.
+    - The C2 failure was a selection/validation valley.
+    - Bimodality comes from the instrument (escrow x walk cliff).
+    - CON1 survived in reduced form: generalising, route-sufficient, not G1-specific.
+
+  Backlog: T01-T54. The next autonomous arc is prepared in synthesis s16:
+    T53 -> T52 -> T47 (PKG-6 + 7) -> T51 (natural recurrence on the W8 supply).
+
+  HITL (non-blocking): the operator's DSL trigger is met for SECOND order
+  (PKG-5 promotion). Default if no ruling: keep the DSL parked, run T51 first.
+
+  Leases: all released (ledger ends empty). Campaign 1 frozen.
+  Branch aphrodite/arc3-2026-09-28 (pushed, not merged).

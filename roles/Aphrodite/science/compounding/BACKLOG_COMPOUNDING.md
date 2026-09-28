@@ -517,3 +517,28 @@ T49 DESIGN-DEFECT RATE OF THE SEAT: 3 of the last 4 assays failed on design or s
 T50 GENERIC STEPPING STONE: if A23 confirms generic reuse, the scientific claim is about
     inheritance + composition in general, not about G1. Next: does a CHAIN occur (G2
     promoted -> G3; PKG-5 + PKG-8)? [RAW until A23]
+
+ARC3 CLOSE UPDATE (2026-09-28, after A23)
+T17 ANSWERED under recurrence: A23 YES. The efficiency/capability rung is reached when
+    validation shows the recurring structure. Budget-relative (T45).
+T23 ANSWERED: the depth-3 world supports first-order compounding under recurrence (A23).
+    It does NOT support second order without promotion (T39/PKG-5).
+T50 ANSWERED: GENERIC 3/3. The claim is about inheritance + composition + recurrence,
+    not about G1. NEXT = the chain (PKG-5 -> PKG-8), gated on the DSL/promotion HITL item.
+T49 Four assays (C3, C3R, C3R2, C3R2C). The last one was clean after the supply screen,
+    so the countermeasure worked. Keep it mandatory.
+NEW:
+T51 NATURAL-RECURRENCE DONOR STAGE (PKG-3 WP-2). Replace constructed recurrence with
+    LIN-generated supply (W8 task-side result). Same arms and ladder as A23.
+    DISCRIMINATES "mechanism" from "natural compounding". [READY once W8 is disposed; M]
+T52 VALIDATION-MULTIPLICITY DOSE RESPONSE. Give VALIDATE 1 vs 2 vs 3 motif instances
+    (the A22/A23 design with 2 is the fixed point). This measures how much of A23's
+    selection accuracy comes from validation SEEING the recurrence (W6 R2 predicts a
+    steep drop at 1). Cheap re-run of the A23 panel. [READY; S/M]
+T53 BUDGET-FREE CAPABILITY ENDPOINT. Report A23-style capability as a D-stratified
+    (equivalence-class multiplicity, W2) solve-probability shift, not as a 10M-ladder
+    ratio. Re-score A23 without new donors. [READY; S]
+T54 MOTIF-RECOVERY vs ABSTRACTION. The A23 selections equal the planted motif literally
+    in 5-7 of the composing replicates per arm. Test for the donor selecting a STRICT
+    generalisation (a class wrap) when validation instances differ in filler (T33
+    tie-in). [RAW]
