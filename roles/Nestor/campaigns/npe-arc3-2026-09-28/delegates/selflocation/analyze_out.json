@@ -1,0 +1,512 @@
+{
+ "n_results": 355,
+ "n_eligible": 332,
+ "n_ineligible_by_selfdep": {
+  "true": 3,
+  "false": 20
+ },
+ "n_elig_self_dep": 52,
+ "n_elig_self_indep": 280,
+ "home": {
+  "False": {
+   "0": 249,
+   "64": 31
+  },
+  "True": {
+   "0": 28,
+   "64": 24
+  }
+ },
+ "per_condition_pass": {
+  "REF": {
+   "all": 332,
+   "self_dep": 52,
+   "self_indep": 280,
+   "mean_rate": 0.923
+  },
+  "STD_OTHER": {
+   "all": 6,
+   "self_dep": 6,
+   "self_indep": 0,
+   "mean_rate": 0.017
+  },
+  "T1_d1": {
+   "all": 176,
+   "self_dep": 3,
+   "self_indep": 173,
+   "mean_rate": 0.506
+  },
+  "T1_d4": {
+   "all": 149,
+   "self_dep": 4,
+   "self_indep": 145,
+   "mean_rate": 0.437
+  },
+  "T1_d8": {
+   "all": 15,
+   "self_dep": 2,
+   "self_indep": 13,
+   "mean_rate": 0.041
+  },
+  "T1_d16": {
+   "all": 2,
+   "self_dep": 2,
+   "self_indep": 0,
+   "mean_rate": 0.006
+  },
+  "T1_d32": {
+   "all": 1,
+   "self_dep": 1,
+   "self_indep": 0,
+   "mean_rate": 0.004
+  },
+  "T1_d48": {
+   "all": 2,
+   "self_dep": 2,
+   "self_indep": 0,
+   "mean_rate": 0.006
+  },
+  "T1_d64": {
+   "all": 9,
+   "self_dep": 9,
+   "self_indep": 0,
+   "mean_rate": 0.027
+  },
+  "G256_ADJ": {
+   "all": 122,
+   "self_dep": 23,
+   "self_indep": 99,
+   "mean_rate": 0.362
+  },
+  "G256_HALF": {
+   "all": 96,
+   "self_dep": 10,
+   "self_indep": 86,
+   "mean_rate": 0.287
+  },
+  "G256_HI": {
+   "all": 50,
+   "self_dep": 31,
+   "self_indep": 19,
+   "mean_rate": 0.141
+  },
+  "G192_ADJ": {
+   "all": 40,
+   "self_dep": 10,
+   "self_indep": 30,
+   "mean_rate": 0.122
+  },
+  "I_CONST55": {
+   "all": 190,
+   "self_dep": 27,
+   "self_indep": 163,
+   "mean_rate": 0.549
+  },
+  "I_CONSTFF": {
+   "all": 194,
+   "self_dep": 29,
+   "self_indep": 165,
+   "mean_rate": 0.563
+  },
+  "I_RAND": {
+   "all": 190,
+   "self_dep": 27,
+   "self_indep": 163,
+   "mean_rate": 0.541
+  },
+  "I_HL_PARTNER": {
+   "all": 314,
+   "self_dep": 52,
+   "self_indep": 262,
+   "mean_rate": 0.871
+  },
+  "I_SELFPTRS": {
+   "all": 311,
+   "self_dep": 52,
+   "self_indep": 259,
+   "mean_rate": 0.874
+  },
+  "D32_HL_SELF": {
+   "all": 1,
+   "self_dep": 1,
+   "self_indep": 0,
+   "mean_rate": 0.003
+  },
+  "D32_DE_PARTNER": {
+   "all": 17,
+   "self_dep": 17,
+   "self_indep": 0,
+   "mean_rate": 0.043
+  },
+  "D32_HLDE": {
+   "all": 18,
+   "self_dep": 18,
+   "self_indep": 0,
+   "mean_rate": 0.043
+  },
+  "D32_PTRSHIFT": {
+   "all": 17,
+   "self_dep": 17,
+   "self_indep": 0,
+   "mean_rate": 0.043
+  },
+  "P_BLANK": {
+   "all": 276,
+   "self_dep": 51,
+   "self_indep": 225,
+   "mean_rate": 0.825
+  },
+  "P_NOEXEC": {
+   "all": 332,
+   "self_dep": 52,
+   "self_indep": 280,
+   "mean_rate": 0.995
+  },
+  "ORDER_FLIP": {
+   "all": 119,
+   "self_dep": 33,
+   "self_indep": 86,
+   "mean_rate": 0.422
+  },
+  "SENSE_FLIP": {
+   "all": 332,
+   "self_dep": 52,
+   "self_indep": 280,
+   "mean_rate": 0.923
+  },
+  "P_SELF": {
+   "all": 317,
+   "self_dep": 52,
+   "self_indep": 265,
+   "mean_rate": 0.926
+  },
+  "ROT+1_BASE": {
+   "all": 212,
+   "self_dep": 48,
+   "self_indep": 164,
+   "mean_rate": 0.595
+  },
+  "ROT+1_FOLLOW": {
+   "all": 227,
+   "self_dep": 49,
+   "self_indep": 178,
+   "mean_rate": 0.637
+  },
+  "ROT+4_BASE": {
+   "all": 171,
+   "self_dep": 41,
+   "self_indep": 130,
+   "mean_rate": 0.481
+  },
+  "ROT+4_FOLLOW": {
+   "all": 197,
+   "self_dep": 43,
+   "self_indep": 154,
+   "mean_rate": 0.558
+  },
+  "ROT+16_BASE": {
+   "all": 82,
+   "self_dep": 37,
+   "self_indep": 45,
+   "mean_rate": 0.235
+  },
+  "ROT+16_FOLLOW": {
+   "all": 119,
+   "self_dep": 41,
+   "self_indep": 78,
+   "mean_rate": 0.345
+  },
+  "ROT-4_BASE": {
+   "all": 152,
+   "self_dep": 27,
+   "self_indep": 125,
+   "mean_rate": 0.439
+  },
+  "ROT-4_FOLLOW": {
+   "all": 3,
+   "self_dep": 0,
+   "self_indep": 3,
+   "mean_rate": 0.076
+  }
+ },
+ "offsets_passed_hist": {
+  "0": {
+   "true": 48,
+   "false": 94
+  },
+  "1": {
+   "true": 1,
+   "false": 53
+  },
+  "2": {
+   "true": 1,
+   "false": 121
+  },
+  "3": {
+   "false": 12
+  },
+  "5": {
+   "true": 1
+  },
+  "6": {
+   "true": 1
+  }
+ },
+ "class_counts": {
+  "LOCATOR": {
+   "self_dep": 2
+  },
+  "STATE_ANCHORED": {
+   "self_dep": 17
+  },
+  "TAPE_ANCHORED": {
+   "self_dep": 33,
+   "self_indep": 280
+  }
+ },
+ "class_by_cell": {
+  "LOCATOR": {
+   "7ae3": 2
+  },
+  "STATE_ANCHORED": {
+   "7ae3": 17
+  },
+  "TAPE_ANCHORED": {
+   "7ae3": 170,
+   "ffa6": 143
+  }
+ },
+ "class_lineages": {
+  "LOCATOR": 2,
+  "STATE_ANCHORED": 1,
+  "TAPE_ANCHORED": 75
+ },
+ "flag_counts": {
+  "STATE_FREE": {
+   "true": 182,
+   "true_by_class": {
+    "TAPE_ANCHORED": 180,
+    "LOCATOR": 2
+   }
+  },
+  "WRAP_DEPENDENT": {
+   "true": 210,
+   "true_by_class": {
+    "TAPE_ANCHORED": 193,
+    "STATE_ANCHORED": 17
+   }
+  },
+  "PARTNER_REL": {
+   "true": 56,
+   "true_by_class": {
+    "TAPE_ANCHORED": 56
+   }
+  },
+  "SENSE_READ": {
+   "true": 0,
+   "true_by_class": {}
+  },
+  "ORDER_DEP": {
+   "true": 213,
+   "true_by_class": {
+    "LOCATOR": 2,
+    "TAPE_ANCHORED": 202,
+    "STATE_ANCHORED": 9
+   }
+  },
+  "POS_INDEP_CODE": {
+   "true": 113,
+   "true_by_class": {
+    "TAPE_ANCHORED": 95,
+    "LOCATOR": 2,
+    "STATE_ANCHORED": 16
+   }
+  }
+ },
+ "a_class_x_poison": {
+  "LOCATOR": {
+   "SELF_OK": 2
+  },
+  "STATE_ANCHORED": {
+   "SELF_POISON": 17
+  },
+  "TAPE_ANCHORED": {
+   "SELF_OK": 243,
+   "SELF_POISON": 60,
+   "UNMEASURABLE": 10
+  }
+ },
+ "a_statefree_x_poison": {
+  "False": {
+   "SELF_POISON": 74,
+   "SELF_OK": 69,
+   "UNMEASURABLE": 7
+  },
+  "True": {
+   "SELF_OK": 176,
+   "SELF_POISON": 3,
+   "UNMEASURABLE": 3
+  }
+ },
+ "a_class_statefree_x_poison": {
+  "('LOCATOR', True)": {
+   "SELF_OK": 2
+  },
+  "('STATE_ANCHORED', False)": {
+   "SELF_POISON": 17
+  },
+  "('TAPE_ANCHORED', False)": {
+   "SELF_POISON": 57,
+   "SELF_OK": 69,
+   "UNMEASURABLE": 7
+  },
+  "('TAPE_ANCHORED', True)": {
+   "SELF_OK": 174,
+   "SELF_POISON": 3,
+   "UNMEASURABLE": 3
+  }
+ },
+ "b_class_x_reset_competent": {
+  "LOCATOR": {
+   "true": 2
+  },
+  "STATE_ANCHORED": {
+   "false": 16,
+   "true": 1
+  },
+  "TAPE_ANCHORED": {
+   "false": 135,
+   "true": 178
+  }
+ },
+ "b_statefree_x_reset_competent": {
+  "False": {
+   "false": 86,
+   "true": 64
+  },
+  "True": {
+   "false": 65,
+   "true": 117
+  }
+ },
+ "c_class_x_selfdep": {
+  "LOCATOR": {
+   "true": 2
+  },
+  "STATE_ANCHORED": {
+   "true": 17
+  },
+  "TAPE_ANCHORED": {
+   "true": 33,
+   "false": 280
+  }
+ },
+ "c_statefree_x_selfdep": {
+  "False": {
+   "true": 25,
+   "false": 125
+  },
+  "True": {
+   "true": 27,
+   "false": 155
+  }
+ },
+ "a_selfdep_x_poison": {
+  "False": {
+   "SELF_POISON": 53,
+   "SELF_OK": 217,
+   "UNMEASURABLE": 10
+  },
+  "True": {
+   "SELF_OK": 28,
+   "SELF_POISON": 24
+  }
+ },
+ "fisher": {
+  "statefree_vs_poison": {
+   "table[[pred&out,pred&~out],[~pred&out,~pred&~out]]": [
+    [
+     3,
+     176
+    ],
+    [
+     74,
+     69
+    ]
+   ],
+   "p": 1.4871671618512622e-28
+  },
+  "tape_vs_state_anchor_poison": {
+   "table[[pred&out,pred&~out],[~pred&out,~pred&~out]]": [
+    [
+     17,
+     0
+    ],
+    [
+     60,
+     243
+    ]
+   ],
+   "p": 6.9506181295867406e-12
+  },
+  "tape_vs_state_anchor_poison_selfindep": {
+   "table[[pred&out,pred&~out],[~pred&out,~pred&~out]]": [
+    [
+     0,
+     0
+    ],
+    [
+     53,
+     217
+    ]
+   ],
+   "p": 1.0
+  },
+  "class_given_statefree_false": {
+   "table[[pred&out,pred&~out],[~pred&out,~pred&~out]]": [
+    [
+     17,
+     0
+    ],
+    [
+     57,
+     69
+    ]
+   ],
+   "p": 6.3291478372069554e-06
+  },
+  "selfdep_vs_poison": {
+   "table[[pred&out,pred&~out],[~pred&out,~pred&~out]]": [
+    [
+     24,
+     28
+    ],
+    [
+     53,
+     217
+    ]
+   ],
+   "p": 0.00012968507686327273
+  },
+  "statefree_vs_reset_competent": {
+   "table[[pred&out,pred&~out],[~pred&out,~pred&~out]]": [
+    [
+     117,
+     65
+    ],
+    [
+     64,
+     86
+    ]
+   ],
+   "p": 0.0001024065969950779
+  }
+ },
+ "lineage_statefree_x_poison": {
+  "n_lineages": 74,
+  "sf_poison": 1,
+  "sf_ok": 27,
+  "nsf_poison": 28,
+  "nsf_ok": 18
+ }
+}

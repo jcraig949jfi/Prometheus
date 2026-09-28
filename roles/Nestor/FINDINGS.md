@@ -472,3 +472,23 @@ the plain two-byte copy planted once in every initial genome gives 32/96 (vs 0 p
 the AVAILABILITY of copy-capable material; the alias acts mainly by making it common. E-W1-1 stands as measured; its
 'encoding accessibility' reading narrows to 'frequency/availability'.
 Synthesis: campaigns/npe-p2-endogenous-heredity-2026-09-27/SYNTHESIS.md.
+
+## ARC3 (2026-09-28; theory-aware by date) -- corrections and delegate findings so far
+
+**CORRECTION (mutation operator):** P2 described the 7ae3 cell (Z8_64) as 'per-byte mutation with frame shifts'. That is WRONG
+for these cells: both use the OPERAND operator with no insertions/deletions; in 7ae3 opcode bytes never mutate (a lineage's
+program skeleton is fixed; only copying changes it; ~34 mutations per lineage in 2000 epochs), in ffa6 slot offsets 1-3
+mutate (~239). Nothing dies in these cells: the only selection is being overwritten by a copy. (ARC3 accessibility delegate,
+campaigns/npe-arc3-2026-09-28/delegates/accessibility/ACCESSIBILITY.md.) P2's X-P2-BRIDGE axis reading ('mutation topology')
+is affected; its numbers are not.
+**Self-location (transplant, delegate):** all 280/280 SELF-free copiers fail when moved >= 16 bytes (absolute addresses; correct
+registers at the new position rescue none); 210/332 need the 128-byte wrap; 33 of 52 SELF users still copy to a fixed
+destination; only 2 genomes (one motif, seed 16000026) are true locators (any offset, other tape sizes, random registers, never
+self-poison). 182/332 copiers set every register they use ('state-free'), and state-freedom predicts state robustness (3/179
+self-poison vs 74/143; p = 1.5e-28). Register initialization is commonly internalized; self-location almost never.
+**Acquisition landscape (delegate):** no random genome or its 1-2-step mutants is competent (0/6,400); competent copiers sit on
+broad neutral networks (72-80% of 1-step mutants stay competent); losing the copy instruction is a trap (0/144 recovered).
+Acquisition across arms is predicted by CARRIER EXPOSURE (copy-carrier genomes screened, = frequency x persistence): one hazard
+fitted on DENSE predicts PLANT 28.6 (obs 32), fitted on PLANT predicts DENSE 54.8 (obs 49); starting frequency mis-orders them.
+Suggestive (one parameter, two informative arms). A neutral mutation walk reaches competence at about the soup's rate (pilot:
+ratio 1.75, p = 0.20): no evidence yet that the soup helps FIRST APPEARANCE; its advantage is spread.
