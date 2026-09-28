@@ -119,3 +119,14 @@ Resource classes:
 
 ## Change log
 - 2026-09-28: opened. 11 new Threads. 3 P2 Threads answered or closed, 1 split, 1 merged.
+- 2026-09-28 T-STATE-1 ANSWERED: within-lineage internalization of register initialization CONFIRMED (C-A3-INTERNALIZE 8/144).
+  Follow-ups: T-STATE-2 (route: which byte changes, how many steps; the lineages from C-A3-INTERNALIZE are now a corpus), T-STATE-3
+  (why ffa6 7 vs 7ae3 1: operand mutation of slot offsets 1-3 in ffa6 vs fixed opcodes in 7ae3 -- a mutation-topology hypothesis).
+- 2026-09-28 T-END-1 KILLED in single-change form (X-A3-FORENSIC-16000006); superseded by T-STATE-1.
+- 2026-09-28 NEW T-DC-5 Copy fidelity: only 6-11% of certified copies are exact and child material is the dominant post-copy loss
+  (X-A3-AUTOPSY); do lineages evolve more exact copying (e.g. BC count matched to genome length)? D: exact-copy share over time in
+  C-A3-INTERNALIZE / X-DD-DENSE-COPY lineages. R: LIGHT. M: DESIGNED.
+- 2026-09-28 NEW T-RULER-1 Heredity certification: P-11 certifies construction (Artemis #793, Odysseus #803); CVT-R on Nestor corpora
+  requested (#802). Every future heredity claim needs CVT-R or byte provenance. M: RUNNING (external).
+- 2026-09-28 NEW T-RULER-2 Cycle-aware self-state ruler: single-k ruler snapshots cycling state (forensic); X-P2 conclusions survive
+  repair (X-A3-ENDOSTATE-R 326/341 agreement). M: ANSWERED.
