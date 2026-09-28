@@ -1,0 +1,301 @@
+[
+ {
+  "key": "a:x_p2_bridge:0",
+  "set": "a",
+  "subset": "x_p2_bridge",
+  "vm": "DENSE",
+  "cell": "7ae3",
+  "hex": "4101a9bd4c7aaad53b1e3f77432efffed43bdffbff33ed580af656873a725691f9afb4e774d0712d65df887d2e32d10000da8f5d7a490afad8c5c4a245190f01",
+  "src": {
+   "origin": "7ae3",
+   "run_seed": 16000000
+  },
+  "params": {
+   "n": 64,
+   "tape_len": 128,
+   "budget": 300,
+   "mask": 42,
+   "cmr": 0.002,
+   "vm_name": "z8_dense_copy"
+  },
+  "P11": {
+   "rate_either": 0.35,
+   "rate_side0": 0.0,
+   "rate_side1": 0.35,
+   "certified": false,
+   "certified_sides": []
+  },
+  "CVT": {
+   "0": {
+    "n_variants": 192,
+    "CVT1": {
+     "accept": true,
+     "n": 5,
+     "classes": 4,
+     "TB": 2.3219,
+     "h": 0.026
+    },
+    "CVT2": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "CVTR": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "LOCAL": {
+     "accept": false,
+     "sites": 5,
+     "n_sites": 64
+    }
+   },
+   "1": {
+    "n_variants": 192,
+    "CVT1": {
+     "accept": true,
+     "n": 169,
+     "classes": 169,
+     "TB": 7.4094,
+     "h": 0.8802
+    },
+    "CVT2": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "CVTR": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "LOCAL": {
+     "accept": true,
+     "sites": 58,
+     "n_sites": 64
+    }
+   }
+  },
+  "CVTR_accept": false,
+  "CVTR_sides": [],
+  "CVTR_TB_max": 0.0,
+  "CVT2_accept": false,
+  "CVTR_on_P11_side": null,
+  "status": "SCORED",
+  "seconds": 0.85
+ },
+ {
+  "key": "b:q1_competent:0",
+  "set": "b",
+  "subset": "q1_competent",
+  "vm": "DENSE",
+  "cell": "7ae3",
+  "hex": "1021397c04009764a8b60f26301ec42e04c02f44b5a99eee6ee531bc3121119d20c5314a95c2fd96da4a9ab89a2e316e0531870cfdd3847a04324fc21e4c4be2",
+  "src": {
+   "rate_full": 1.0,
+   "rate_noself": 1.0,
+   "origin_run": "x_dd_dense_copy/DENSE_COPY/16000021",
+   "nocopy_donor": null,
+   "n_pool": 1278
+  },
+  "params": {
+   "n": 64,
+   "tape_len": 128,
+   "budget": 300,
+   "mask": 42,
+   "cmr": 0.002,
+   "vm_name": "z8_dense_copy"
+  },
+  "P11": {
+   "rate_either": 0.95,
+   "rate_side0": 0.95,
+   "rate_side1": 0.0,
+   "certified": true,
+   "certified_sides": [
+    0
+   ]
+  },
+  "q1_reproduced": 1.0,
+  "q1_match": true,
+  "CVT": {
+   "0": {
+    "n_variants": 192,
+    "CVT1": {
+     "accept": true,
+     "n": 158,
+     "classes": 158,
+     "TB": 7.3129,
+     "h": 0.8229
+    },
+    "CVT2": {
+     "accept": true,
+     "n": 157,
+     "classes": 157,
+     "TB": 7.3038,
+     "h": 0.8177
+    },
+    "CVTR": {
+     "accept": true,
+     "n": 156,
+     "classes": 156,
+     "TB": 7.2946,
+     "h": 0.8125
+    },
+    "LOCAL": {
+     "accept": true,
+     "sites": 56,
+     "n_sites": 64
+    }
+   },
+   "1": {
+    "n_variants": 192,
+    "CVT1": {
+     "accept": true,
+     "n": 12,
+     "classes": 12,
+     "TB": 3.7004,
+     "h": 0.0625
+    },
+    "CVT2": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "CVTR": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "LOCAL": {
+     "accept": false,
+     "sites": 5,
+     "n_sites": 64
+    }
+   }
+  },
+  "CVTR_accept": true,
+  "CVTR_sides": [
+   0
+  ],
+  "CVTR_TB_max": 7.2946,
+  "CVT2_accept": true,
+  "CVTR_on_P11_side": true,
+  "status": "SCORED",
+  "seconds": 1.05
+ },
+ {
+  "key": "c:epoch700_modal:0",
+  "set": "c",
+  "subset": "epoch700_modal",
+  "vm": "DENSE",
+  "cell": "7ae3",
+  "hex": "7aff19312c02e900d6089f6fcd0d21bf4b235c8811003232e77fc1dff595d6ec2d259b6f3ffc4c5a521e9ff091166f15ff51f3184f16004600a6a0f51df6b37a",
+  "src": {
+   "vid": 27070,
+   "count700": 2,
+   "root_vid": 211,
+   "forensic_FRESH": 0.5,
+   "forensic_FR": true,
+   "forensic_competent": true
+  },
+  "params": {
+   "n": 64,
+   "tape_len": 128,
+   "budget": 300,
+   "mask": 42,
+   "cmr": 0.002,
+   "vm_name": "z8_dense_copy"
+  },
+  "P11": {
+   "rate_either": 1.0,
+   "rate_side0": 1.0,
+   "rate_side1": 0.0,
+   "certified": true,
+   "certified_sides": [
+    0
+   ]
+  },
+  "CVT": {
+   "0": {
+    "n_variants": 192,
+    "CVT1": {
+     "accept": true,
+     "n": 171,
+     "classes": 171,
+     "TB": 7.4263,
+     "h": 0.8906
+    },
+    "CVT2": {
+     "accept": true,
+     "n": 171,
+     "classes": 171,
+     "TB": 7.4263,
+     "h": 0.8906
+    },
+    "CVTR": {
+     "accept": true,
+     "n": 164,
+     "classes": 164,
+     "TB": 7.3663,
+     "h": 0.8542
+    },
+    "LOCAL": {
+     "accept": true,
+     "sites": 48,
+     "n_sites": 64
+    }
+   },
+   "1": {
+    "n_variants": 192,
+    "CVT1": {
+     "accept": true,
+     "n": 4,
+     "classes": 3,
+     "TB": 2.0,
+     "h": 0.0208
+    },
+    "CVT2": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "CVTR": {
+     "accept": false,
+     "n": 0,
+     "classes": 0,
+     "TB": 0.0,
+     "h": 0.0
+    },
+    "LOCAL": {
+     "accept": false,
+     "sites": 2,
+     "n_sites": 64
+    }
+   }
+  },
+  "CVTR_accept": true,
+  "CVTR_sides": [
+   0
+  ],
+  "CVTR_TB_max": 7.3663,
+  "CVT2_accept": true,
+  "CVTR_on_P11_side": true,
+  "status": "SCORED",
+  "seconds": 1.0
+ }
+]

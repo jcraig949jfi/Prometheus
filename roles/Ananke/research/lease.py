@@ -1,65 +1,38 @@
-"""Ananke resource lease helper (collision avoidance, not permission).
+"""Ananke resource lease helper -- now a thin frontend onto the fabric lease (collision avoidance, not permission).
 
-PRIMARY: the existing Prometheus GPU lease, primordial.bus.bus.gpu_lease
-(Redis key pm:gpu:lease). It is used whenever that bus is reachable.
-FALLBACK (the bus unreachable, as measured 2026-09-27: Redis 6390 down,
-python redis not installed): a host-local exclusive lease file under
-~/ananke_runs/leases/<resource>.json (O_EXCL create, with expiry), PLUS a
-durable comms record (kind report, to "*") on acquire and on release, so
-other seats can see it. A lease file past its expiry counts as free and
-is taken over.
+MIGRATED 2026-09-28 (operator ruling: the fabric lease is the one authority; ARC3 host files are retired). The
+command line is unchanged, so existing experiments keep working. Underneath, the lease is the fabric's atomic
+Postgres row for "<this host>:<resource>" (for example skullport:gpu), the same row that fabric Attempts take.
+No host lease file is written and no comms LEASE record is posted. The primordial.bus Redis lease is no longer
+used, since a third authority is not allowed. `python -m fabric lease status` shows every holder.
 
     python roles/Ananke/research/lease.py acquire gpu  --owner "W-A echo interval" --ttl-min 60 --envelope "1 GPU, <=4 GB VRAM"
     python roles/Ananke/research/lease.py release gpu  --token <token>
     python roles/Ananke/research/lease.py status
 
-Resources: gpu, cpu8 (a multi-core burst, >= 8 cores), ram16 (>= 16 GB).
-Use the smallest useful lease, and release on completion, abandonment or
-a crash without immediate restart. Before acquiring gpu, the helper
-refuses if GPU memory in use exceeds the desktop baseline by > 1500 MiB
-(someone else is computing). It then prints BUSY: queue the experiment and do other work.
+Resources: gpu, cpu8 (a multi-core burst, >= 8 cores), ram16 (>= 16 GB). Use the smallest useful lease, and
+release on completion, abandonment or a crash without immediate restart.
+- Before acquiring gpu, the helper still refuses if GPU memory in use exceeds the desktop baseline by > 1500 MiB
+  (someone else is computing).
+- BUSY: queue the experiment and do other work.
+- UNAVAILABLE (the lease store cannot be reached): nothing was granted. Wait; never assume the resource is free.
 """
 from __future__ import annotations
 
 import argparse
+import datetime
 import json
-import os
 import pathlib
-import socket
 import subprocess
 import sys
 import time
-import uuid
 
 REPO = pathlib.Path(__file__).resolve().parents[3]
-DIR = pathlib.Path(os.path.expanduser("~/ananke_runs/leases"))
-HOST = socket.gethostname()
+sys.path.insert(0, str(REPO))
+from fabric import lease_compat as L  # noqa: E402
+
 RESOURCES = ("gpu", "cpu8", "ram16")
 DESKTOP_BASELINE_MIB = 1100
-
-
-def _bus():
-    try:
-        sys.path.insert(0, str(REPO))
-        from primordial.bus import bus               # noqa: F401 (needs redis + PM_LANE)
-        r = bus.conn()
-        r.ping()
-        return bus, r
-    except Exception:
-        return None, None
-
-
-def _comms(subject: str, body: str) -> str:
-    try:
-        f = DIR / f"_msg_{uuid.uuid4().hex[:8]}.txt"
-        f.write_text(body)
-        out = subprocess.run([sys.executable, "-m", "comms", "post", "--from", "Ananke", "--to", "*",
-                              "--kind", "report", "--subject", subject, "--body-file", str(f)],
-                             cwd=REPO, capture_output=True, text=True, timeout=60)
-        f.unlink(missing_ok=True)
-        return out.stdout.strip() or out.stderr.strip()[-200:]
-    except Exception as e:                               # noqa: BLE001
-        return f"comms record failed: {e}"
 
 
 def _foreign_gpu_mib() -> int:
@@ -73,58 +46,41 @@ def _foreign_gpu_mib() -> int:
         return 0
 
 
+def _epoch(ts) -> float:
+    return ts.timestamp() if isinstance(ts, datetime.datetime) else float(ts)
+
+
 def acquire(res: str, owner: str, ttl_min: float, envelope: str) -> dict:
     assert res in RESOURCES, res
-    DIR.mkdir(parents=True, exist_ok=True)
-    bus, r = _bus()
-    if bus is not None and res == "gpu":
-        rec = bus.lease_acquire(f"Ananke {owner} | {envelope}", ttl_s=ttl_min * 60, r=r)
-        rec["mechanism"] = "primordial.bus pm:gpu:lease"
-        return rec
     if res == "gpu" and _foreign_gpu_mib() > 1500:
         raise SystemExit(f"BUSY: another compute process holds {_foreign_gpu_mib()} MiB on the GPU")
-    p = DIR / f"{res}.json"
-    now = time.time()
-    if p.exists():
-        cur = json.loads(p.read_text())
-        if cur["until"] > now:
-            raise SystemExit(f"BUSY: {res} leased by {cur['owner']} until "
-                             f"{time.strftime('%H:%MZ', time.gmtime(cur['until']))}")
-        p.unlink()                                       # expired: take over
-    rec = {"resource": res, "host": HOST, "owner": owner, "envelope": envelope,
-           "since": now, "until": now + ttl_min * 60, "token": uuid.uuid4().hex[:12],
-           "mechanism": "fallback: host lease file + comms record (bus unreachable)"}
-    fd = os.open(p, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-    with os.fdopen(fd, "w") as f:
-        json.dump(rec, f)
-    rec["comms"] = _comms(f"LEASE ACQUIRE {HOST} {res}: {owner} until "
-                          f"{time.strftime('%Y-%m-%d %H:%MZ', time.gmtime(rec['until']))}",
-                          json.dumps(rec, indent=1))
-    return rec
+    try:
+        r = L.acquire(res, f"Ananke {owner}", purpose=envelope, ttl_s=int(ttl_min * 60))
+    except L.StoreUnavailable as e:
+        raise SystemExit(f"UNAVAILABLE: lease store unreachable, nothing granted -- wait, do not assume free ({e})")
+    if r["result"] != "ACQUIRED":
+        h = r.get("held_by") or {}
+        raise SystemExit(f"BUSY: {L.resource(res)} held by {h.get('holder') or h.get('legacy')} until {h.get('expires_at')}")
+    return {"resource": res, "fabric_resource": r["resource"], "host": L.host(), "owner": owner, "envelope": envelope,
+            "since": time.time(), "until": _epoch(r["expires_at"]), "token": r["token"], "lease_id": r["lease_id"],
+            "mechanism": "fabric lease (canonical authority)"}
 
 
 def release(res: str, token: str) -> str:
-    p = DIR / f"{res}.json"
-    if not p.exists():
-        return "no lease file"
-    cur = json.loads(p.read_text())
-    if cur["token"] != token:
-        return f"token mismatch: held by {cur['owner']}"
-    p.unlink()
-    return _comms(f"LEASE RELEASE {HOST} {res}: {cur['owner']}", json.dumps(cur, indent=1))
+    try:
+        return L.release(res, token, "Ananke")
+    except L.StoreUnavailable as e:
+        return f"UNAVAILABLE: lease store unreachable; lease NOT released ({e})"
 
 
 def status() -> dict:
-    out = {}
-    for res in RESOURCES:
-        p = DIR / f"{res}.json"
-        if p.exists():
-            cur = json.loads(p.read_text())
-            cur["expired"] = cur["until"] <= time.time()
-            out[res] = cur
-    bus, r = _bus()
-    out["_bus"] = "reachable" if bus else "unreachable (fallback in use)"
-    out["_gpu_compute_mib"] = _foreign_gpu_mib()
+    out = {"_authority": "fabric lease", "_gpu_compute_mib": _foreign_gpu_mib()}
+    try:
+        for l in L.status():
+            out[l["resource"]] = {"holder": l["holder"], "purpose": l["purpose"], "expires_at": str(l["expires_at"]),
+                                  "stale": l["stale"]}
+    except L.StoreUnavailable as e:
+        out["_error"] = f"UNAVAILABLE: {e}"
     return out
 
 
@@ -142,4 +98,4 @@ if __name__ == "__main__":
     elif a.cmd == "release":
         print(release(a.resource, a.token))
     else:
-        print(json.dumps(status(), indent=1))
+        print(json.dumps(status(), indent=1, default=str))

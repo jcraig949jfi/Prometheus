@@ -77,6 +77,25 @@ relationship call are Artemis's own and are spot-checked against the
 cited source. Prior-art checks use web search and cite URLs; they inform,
 never dictate.
 
+Method change 2026-09-28, forced by the frozen self-test rule
+(selftest/RESULT.md; PREREG a9d5f5f23), not argued away:
+- NO full sharpening. A thread is: harvest entry (verbatim quote,
+  path@sha) + prior art where it exists + ONE line naming the cheapest
+  discriminator. The sharpening step did not raise the yield of bounded
+  executions over raw indexed questions (primary +0.118, "between";
+  both sensitivities <= +0.10).
+- NO Artemis priority labels or forecasts of consequence. Artemis's
+  Brier on raw questions (0.470) was worse than a constant (0.391).
+  Threads are listed unranked, or ordered by an external signal (owner
+  request, number of dependents), never by Artemis's judgement.
+- Saved effort goes to execution: bounded experiments under the
+  operator's six conditions (prompts/2026-09-28_operator_challenge/),
+  and -- pending an operator ruling -- dispatching bounded executions of
+  raw threads to fresh workers, auditing them, and routing findings to
+  owning seats (the selftest/ machinery).
+Reopen only with a new preregistered test on a non-saturated outcome
+(owner action by day 30, not "consequential").
+
 Host discipline (ubu002, ABOUT.md): git archaeology, read-only queries,
 report generation, bounded CPU. Nothing on ubu002 is a sole copy: every
 backlog artifact is committed and pushed at the end of a pass.

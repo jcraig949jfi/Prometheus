@@ -44,3 +44,32 @@ centre-of-mass drift is exactly v.
 - pytest: 15 passed, exit 0 (`COSMOS_BROKER=1 python -m pytest prometheus/cosmos/c3_holdout_D/tests`)
 
 No certification of any hidden world was run or inspected. No outcomes.
+
+
+## 2026-09-28: operator rulings D1 / D4-H5 (Cosmos #788)
+
+- **D1 (done).** The original seal a56ef7787 was merged into main by merge commit 7c018d92b. The sealed files are
+  byte-identical; sha256(sealed_spec_D.json) is still ae4479c6...57ac. The original hidden set is now EXPOSED and is
+  never to be used blind.
+- **D4 / H5, opaque successor D2.**
+  - Location: prometheus/cosmos/c3_holdout_D2/ on main, commit 95b31a30d.
+  - A fresh 128-world hidden set, disjoint from the exposed D worlds, is committed as AES-256-GCM ciphertext
+    (sha256 f75ba333...fc9f).
+  - Salted commitment: sha256(salt||plaintext) = 69f91153...9c4b. spec_id e2d3213b...d9fe.
+  - The key, salt and plaintext exist only on M1, outside every repository. Nestor is the custodian.
+  - The runner enforces hash-bound package loading and predict-before-certify.
+  - The self-test passed. Nestor's own check found no secret material in the repo files.
+  - The independent firewall check was requested from Harmonia (repo / M2 side) and Ananke (M1 host side) in comms
+    #796. The public report goes to Cosmos after it returns.
+
+## 2026-09-28: operator directive "COSMOS C3 SUCCESSOR-SEAL" (custodian role)
+- **Auditor:** the operator designated Odysseus as the independent firewall auditor. The #796 request to
+  Harmonia/Ananke is superseded (#829).
+- **Enforced protocol layer** on main (06f53ae24): seal < firewall audit PASS < Cosmos prediction commitment < runner
+  designation < result seal < reveal < Harmonia evidence bundle (`protocol.py`, `custody.py`, `evidence.py`).
+  - Records are read from the committed tree of origin/main and are immutable.
+  - The runner refuses before touching the key.
+  - Negative tests: `selftest_protocol.py` (18 runner-gate + 17 custody/evidence cases + 3 injected-defect
+    controls), all pass. `selftest_D2` still passes.
+- **Audit brief:** AUDIT_BRIEF.md (e66f57208); request #827. Cosmos was sent the public protocol only (#828).
+- **Gate status:** SEAL PASS; AUDIT pending.

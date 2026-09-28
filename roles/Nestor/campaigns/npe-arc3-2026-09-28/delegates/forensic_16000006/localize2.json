@@ -1,0 +1,680 @@
+{
+ "positions": [
+  0,
+  2
+ ],
+ "rows": [
+  {
+   "applied": [],
+   "hex": "ff0094332c22c183c6d22d67cd0c213f5523ccbee21ae270e7c0d19ffc95f6a62d25936f39d04353521ea3d051566f14f759b3184f16375616b2b2b515f2f672",
+   "competent": true,
+   "rates": {
+    "FRESH": 0.5,
+    "CONST": 0.0,
+    "RANDOM": 0.0,
+    "k": [
+     0.5,
+     0.475,
+     0.475,
+     0.475,
+     0.475,
+     0.475,
+     0.475
+    ]
+   }
+  },
+  {
+   "applied": [
+    0
+   ],
+   "hex": "010094332c22c183c6d22d67cd0c213f5523ccbee21ae270e7c0d19ffc95f6a62d25936f39d04353521ea3d051566f14f759b3184f16375616b2b2b515f2f672",
+   "competent": true,
+   "rates": {
+    "FRESH": 0.5,
+    "CONST": 0.0,
+    "RANDOM": 0.0,
+    "k": [
+     0.475,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "applied": [
+    2
+   ],
+   "hex": "ff0000332c22c183c6d22d67cd0c213f5523ccbee21ae270e7c0d19ffc95f6a62d25936f39d04353521ea3d051566f14f759b3184f16375616b2b2b515f2f672",
+   "competent": true,
+   "rates": {
+    "FRESH": 0.5,
+    "CONST": 0.0,
+    "RANDOM": 0.0,
+    "k": [
+     0.5,
+     0.475,
+     0.475,
+     0.475,
+     0.475,
+     0.475,
+     0.475
+    ]
+   }
+  },
+  {
+   "applied": [
+    0,
+    2
+   ],
+   "hex": "010000332c22c183c6d22d67cd0c213f5523ccbee21ae270e7c0d19ffc95f6a62d25936f39d04353521ea3d051566f14f759b3184f16375616b2b2b515f2f672",
+   "competent": true,
+   "rates": {
+    "FRESH": 0.5,
+    "CONST": 0.475,
+    "RANDOM": 0.5,
+    "k": [
+     0.5,
+     0.475,
+     0.425,
+     0.475,
+     0.475,
+     0.475,
+     0.45
+    ]
+   }
+  }
+ ],
+ "traces": {
+  "211/side0/FRESH": {
+   "start": [
+    null,
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 32,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 0,
+     "BC": 0,
+     "A": 0
+    }
+   ]
+  },
+  "211/side0/CONST": {
+   "start": [
+    [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 45,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 23130,
+     "BC": 23130,
+     "A": 165
+    }
+   ]
+  },
+  "211/side0/SELF1": {
+   "start": [
+    [
+     0,
+     0,
+     254,
+     245,
+     84,
+     53,
+     0,
+     0
+    ],
+    1,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 32,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 21504,
+     "BC": 0,
+     "A": 0
+    }
+   ]
+  },
+  "211/side0/SELF2": {
+   "start": [
+    [
+     0,
+     0,
+     84,
+     0,
+     84,
+     216,
+     0,
+     216
+    ],
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 19,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 21504,
+     "BC": 0,
+     "A": 0
+    }
+   ]
+  },
+  "211/side1/FRESH": {
+   "start": [
+    null,
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "211/side1/CONST": {
+   "start": [
+    [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 48,
+     "pc": 88,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 23130,
+     "BC": 23130,
+     "A": 213
+    }
+   ]
+  },
+  "211/side1/SELF1": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     11,
+     0,
+     0
+    ],
+    1,
+    0
+   ],
+   "blockcopies": []
+  },
+  "211/side1/SELF2": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     22,
+     0,
+     0
+    ],
+    1,
+    0
+   ],
+   "blockcopies": []
+  },
+  "736/side0/FRESH": {
+   "start": [
+    null,
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 21,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 0,
+     "BC": 1,
+     "A": 255
+    },
+    {
+     "step": 65,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 42496,
+     "BC": 65281,
+     "A": 0
+    }
+   ]
+  },
+  "736/side0/CONST": {
+   "start": [
+    [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 21,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 23130,
+     "BC": 23131,
+     "A": 165
+    }
+   ]
+  },
+  "736/side0/SELF1": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     22,
+     84,
+     86,
+     0,
+     0
+    ],
+    1,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 21,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 22,
+     "BC": 1,
+     "A": 226
+    },
+    {
+     "step": 65,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 42496,
+     "BC": 5377,
+     "A": 255
+    }
+   ]
+  },
+  "736/side0/SELF2": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     22,
+     84,
+     86,
+     0,
+     255
+    ],
+    1,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 21,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 22,
+     "BC": 1,
+     "A": 226
+    },
+    {
+     "step": 65,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 42496,
+     "BC": 5377,
+     "A": 255
+    }
+   ]
+  },
+  "736/side1/FRESH": {
+   "start": [
+    null,
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "736/side1/CONST": {
+   "start": [
+    [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "736/side1/SELF1": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "736/side1/SELF2": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "1005/side0/FRESH": {
+   "start": [
+    null,
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 19,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 0,
+     "BC": 1,
+     "A": 1
+    },
+    {
+     "step": 63,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 42496,
+     "BC": 65281,
+     "A": 0
+    }
+   ]
+  },
+  "1005/side0/CONST": {
+   "start": [
+    [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    0,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 19,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 23130,
+     "BC": 1,
+     "A": 165
+    },
+    {
+     "step": 63,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 3328,
+     "BC": 22785,
+     "A": 1
+    }
+   ]
+  },
+  "1005/side0/SELF1": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     20,
+     84,
+     84,
+     0,
+     0
+    ],
+    1,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 19,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 20,
+     "BC": 1,
+     "A": 226
+    },
+    {
+     "step": 63,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 42496,
+     "BC": 4865,
+     "A": 1
+    }
+   ]
+  },
+  "1005/side0/SELF2": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     20,
+     84,
+     84,
+     0,
+     1
+    ],
+    1,
+    0
+   ],
+   "blockcopies": [
+    {
+     "step": 19,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 20,
+     "BC": 1,
+     "A": 226
+    },
+    {
+     "step": 63,
+     "pc": 24,
+     "pc_rel_own": 24,
+     "kind": "LDDR",
+     "enc": "alias",
+     "HL": 21824,
+     "DE": 42496,
+     "BC": 4865,
+     "A": 1
+    }
+   ]
+  },
+  "1005/side1/FRESH": {
+   "start": [
+    null,
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "1005/side1/CONST": {
+   "start": [
+    [
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90,
+     90
+    ],
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "1005/side1/SELF1": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    0,
+    0
+   ],
+   "blockcopies": []
+  },
+  "1005/side1/SELF2": {
+   "start": [
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    0,
+    0
+   ],
+   "blockcopies": []
+  }
+ }
+}

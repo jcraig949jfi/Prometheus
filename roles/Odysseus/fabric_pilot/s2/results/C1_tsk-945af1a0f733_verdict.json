@@ -1,0 +1,40 @@
+{
+  "claim_id": "C1",
+  "verdict": "PARTIAL",
+  "parts": [
+    {
+      "part": "The census covers 12 engine headlines (source is R-13; R-34 is an unrelated lens-field study)",
+      "status": "true",
+      "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:12", "roles/Artemis/selftest/runs/R-13/REPORT.md:57-70", "roles/Artemis/selftest/runs/R-34/REPORT.md:1-12"]
+    },
+    {
+      "part": "Gap 1: BEE multi-day outcomes are not in Git; only prereg/code/pilots exist, on a seat branch, and all outcomes are on M2",
+      "status": "true",
+      "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:34", "roles/Artemis/selftest/runs/R-13/REPORT.md:59", "HEAD tree: Glob for MULTIDAY_PREREG.md / md_analysis.py finds nothing on main (the seat-branch content could not be read because git/Bash was denied)"]
+    },
+    {
+      "part": "Gap 2: Z80xAtlas RUNS.jsonl is not in Git (M2 only)",
+      "status": "true",
+      "evidence": ["archaeon/z80atlas/.gitignore:2 (campaign/RUNS.jsonl ignored)", "archaeon/z80atlas/postcampaign/AUDIT_RECEIPT_2026-09-23.json:12 (only its sha256 3afa36b7... is committed)", "roles/Artemis/selftest/runs/R-13/REPORT.md:61", "roles/Artemis/selftest/runs/R-13/REPORT.md:97-101"]
+    },
+    {
+      "part": "Gap 3: the BEE coupling denominators are not recomputable from Git; results.jsonl is not committed and the numerators are recomputable",
+      "status": "true",
+      "evidence": ["roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md:164-165 (runtime evidence not committed; only the results.jsonl sha256)", "roles/Bellerophon/coupling_2026-09-24/COUPLING_ORIGIN_LEDGER.jsonl (per-run positive rows on main)", "roles/Artemis/selftest/runs/R-13/REPORT.md:60", "roles/Artemis/selftest/runs/R-13/REPORT.md:102-103"]
+    },
+    {
+      "part": "'Exactly' these three; all other headline inputs are in Git",
+      "status": "false",
+      "evidence": [
+        "roles/Artemis/selftest/runs/R-13/REPORT.md:174-177 (R-13's own limit: for ENVGATE-02 as well as the BEE numerators, whether the positive lists are complete 'still rests on host files')",
+        "archaeon/envgate2/.gitignore:1 (runs/ ignored: the ENVGATE-02 block files are host-only)",
+        "roles/Artemis/selftest/runs/R-13/REPORT.md:63 (block files on M2)",
+        "roles/Artemis/selftest/runs/R-13/REPORT.md:61 (Z80xAtlas also has a 14.1 GB tree on M2, beyond RUNS.jsonl)",
+        "roles/Artemis/selftest/runs/R-13/REPORT.md:103 (for BEE coupling, comp_final p and P1-P6 also exist only as aggregates, not just the denominators)",
+        "roles/Artemis/selftest/runs/R-13/REPORT.md:44,69 (the Cosmos C3 science headline is withheld/sealed and was not scored; a public gate was substituted)",
+        "roles/Artemis/selftest/runs/R-13/REPORT.md:168-173 (the headline choice is the verifier's own; a different pick for the deep block/Cosmos would rest on M2)"
+      ]
+    }
+  ],
+  "notes": "The three named gaps are real and match R-13's summary sentence (REPORT.md:137-138). But the claim hardens that sentence into 'exactly' and 'all other headline inputs are in Git', and R-13's own limits section contradicts this. Completeness of ENVGATE-02's positive list depends on gitignored M2 block files, and the Cosmos row substitutes a public gate for the sealed C3 headline. Smaller points: the Aether E-006 unit files are on M2 (REPORT.md:66), though the number was re-executed from Git. The Aphrodite A17 inputs are in Git only on seat branches, not on main (REPORT.md:67). The BEE multi-day seat-branch contents could not be inspected directly because git commands were unavailable."
+}

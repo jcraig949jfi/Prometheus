@@ -1,0 +1,21 @@
+{"claim_id": "C5", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "The Aphrodite A16/A17 campaign report uses an 'accepted/evaluated' per-stratum label (e.g. B add '4/22')",
+   "status": "true",
+   "evidence": ["4f937e88f:roles/Aphrodite/pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-26.md:16",
+                "4f937e88f:roles/Aphrodite/pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-26.md:18"]},
+  {"part": "The engine caps admissions at K = 4 per stratum",
+   "status": "true",
+   "evidence": ["4f937e88f:roles/Aphrodite/engine/a17.py:44 (DRAWS, K, ... = 32, 4, ...)",
+                "4f937e88f:roles/Aphrodite/engine/a17.py:319 (stratum open only while len(accepted) < K)",
+                "4f937e88f:roles/Aphrodite/engine/a17.py:337-338 (append only if len(accepted) < K and ACCEPTED_CANDIDATE)",
+                "4f937e88f:roles/Aphrodite/engine/a17.py:354 ('accepted': len(accepted[c][op]))",
+                "4f937e88f:roles/Aphrodite/engine/a17.py:301-302 (docstring: acceptance = first 4 qualifying draws per stratum)"]},
+  {"part": "So 'accepted' counts capped admissions, not all qualifying candidates (B add: 5 qualifying vs reported 4)",
+   "status": "true",
+   "evidence": ["ac2a935db:roles/Aphrodite/engine/A17_FOUNDRY_EVALS_2026-09-26.jsonl (ACCEPTED_CANDIDATE true for B add: hB_add_ac, ai, ak, av, au = 5; 20 true in total vs 19 admitted summed across A (11) and B (8))",
+                "ac2a935db:roles/Aphrodite/engine/A17_FOUNDRY_2026-09-26.log:10-12 (B add frozen at 4/22 once the cap is reached)",
+                "roles/Artemis/selftest/runs/R-13/REPORT.md:131-132",
+                "roles/Artemis/selftest/runs/R-13/REPORT.md:205"]}
+ ],
+ "notes": "Source is R-13 REPORT.md lines 131-132 and 205. The '#889' in the task is Odysseus's comms number (roles/Artemis/selftest/ROUTING.md:12), not an Artemis report line. The same K=4 cap logic is in a16.py:34,215,245. In the evaluations file, 'ACCEPTED_CANDIDATE' marks a qualifying candidate. The report's 'accepted' is len(accepted[c][op]), which is capped at K=4. Label reading confirmed."}

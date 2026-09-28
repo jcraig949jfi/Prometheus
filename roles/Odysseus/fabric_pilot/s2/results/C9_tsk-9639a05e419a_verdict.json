@@ -1,0 +1,23 @@
+{"claim_id": "C9", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "The claim appears in R-34 REPORT.md at l.37 and l.114-115",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:36-38", "roles/Artemis/selftest/runs/R-34/REPORT.md:114-115"]},
+  {"part": "The Atlas Archaeon harvester matches only archaeon/campaignN/, so archaeon/envgate, archaeon/envgate2 and archaeon/z80atlas are not harvested",
+   "status": "true",
+   "evidence": ["atlas/harvest/archaeon_campaigns.py:1-2", "atlas/harvest/archaeon_campaigns.py:47", "atlas/harvest/archaeon_campaigns.py:58-62",
+                "archaeon/envgate/PREREG.json (exists)", "archaeon/envgate2/PREREG.json (exists)", "archaeon/z80atlas/census/PREREG.json (exists)", "archaeon/z80atlas/denovo/PREREG.json (exists)"]},
+  {"part": "No other Atlas harvester or registry root indexes envgate, envgate2 or z80atlas (including Nestor's roles/Nestor/campaigns/z80atlas-*)",
+   "status": "true",
+   "evidence": ["Grep 'envgate|z80atlas' (case-insensitive) over atlas/ returns 0 matches, including atlas/registry.json",
+                "atlas/harvest/__init__.py:6-11 (harvester list)",
+                "atlas/harvest/npe.py:28-31 (Nestor harvester is scoped to graphworld and cw01-2026-09-17 only)",
+                "atlas/registry.json:273-408 (local_roots: none point at envgate/z80atlas)",
+                "atlas/harvest/commits.py:37 (only counts paths per commit, does not map them to experiments)",
+                "Grep 'envgate|z80atlas' over roles/Atlas/ (catalog/proposals/theory inputs) returns 0 matches; roles/Atlas/catalog/ECOSYSTEMS.jsonl:78 is an external Z80 soup paper, not Prometheus z80atlas"]},
+  {"part": "No lens (varied/observed/held) field exists in atlas/",
+   "status": "true",
+   "evidence": ["Grep 'lens' (case-insensitive) over atlas/ returns 0 matches",
+                "Grep 'varied|held_substrate' over atlas/ returns 0 matches; 'OBSERVED' occurrences are fact epistemic statuses, e.g. atlas/harvest/archaeon_campaigns.py:206,214, not a lens field"]}
+ ],
+ "notes": "Checked at commit 59b94b4ed. R-34 states it checked origin/main @ 6ff2b2f8a; the harvester logic and the absence of any matching strings hold at this commit too. 'Not indexed' is judged from the harvester code and registry. The live Atlas DB could not be inspected, but no code path could put these directories into it except the generic commit counter, which records only per-commit path counts."}

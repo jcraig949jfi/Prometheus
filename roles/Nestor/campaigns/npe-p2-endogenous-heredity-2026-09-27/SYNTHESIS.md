@@ -246,3 +246,7 @@ cheapest discriminator, lens and resource class. The change log is at its foot.
    question is the North Star.
 
 Nothing else needs the operator.
+
+---
+**ERRATUM (added 2026-09-28, ARC3):** s2 describes representation as 'Z8_64 per-byte mutation with frame shifts'. For
+these cells (OPERAND operator) there are no indels; 7ae3 opcode bytes never mutate. See FINDINGS 'ARC3 -- corrections'.

@@ -1,0 +1,12 @@
+{"claim_id": "C4", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "The BEE coupling origin ledger has 47 ECHO K40 rows (unique runs)", "status": "true",
+   "evidence": ["roles/Bellerophon/coupling_2026-09-24/COUPLING_ORIGIN_LEDGER.jsonl:20-66 (cell B-cop_ECHO_K40_*; lines 1-19 are E2/ECHO_K16, 67-68 are CONST_K40)", "run ids on lines 20-66 are all distinct (c009432..c009947)"]},
+  {"part": "6 of these rows are YOKED", "status": "true",
+   "evidence": ["COUPLING_ORIGIN_LEDGER.jsonl:34,36,42,45,47,48 (cell B-cop_ECHO_K40_YOKED)"]},
+  {"part": "13 of the 47 ECHO K40 rows have arch.self_copy = false", "status": "true",
+   "evidence": ["COUPLING_ORIGIN_LEDGER.jsonl lines with self_copy false: 6,7,9-14 (K16, excluded), and 33,34,40,42,43,44,45,46,47,48,50,55,58 (13 ECHO K40 rows)", "COUPLING_ORIGIN_LEDGER.jsonl:33-34 show self_copy nested inside the arch object", "one self_copy key per line (68 occurrences in 68 lines)"]},
+  {"part": "5 of the 6 YOKED rows have arch.self_copy = false", "status": "true",
+   "evidence": ["COUPLING_ORIGIN_LEDGER.jsonl:34,42,45,47,48 self_copy false", "COUPLING_ORIGIN_LEDGER.jsonl:36 (YOKED, run c009538) self_copy true"]}
+ ],
+ "notes": "The 13 ECHO K40 false rows split by arm: OFF 3 (lines 33,43,55), YOKED 5, SHUFFLED 3 (44,46,50), ON 2 (40,58). Arm totals for lines 20-66: ON 29, OFF 6, YOKED 6, SHUFFLED 6, which matches R-13 REPORT.md:102. The claim appears at roles/Artemis/selftest/runs/R-13/REPORT.md:104 and :203-204. The '9 with no copy op' sub-statement at l.204 is not part of this claim and was not checked."}

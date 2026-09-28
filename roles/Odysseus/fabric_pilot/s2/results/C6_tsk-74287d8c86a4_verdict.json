@@ -1,0 +1,26 @@
+{"claim_id": "C6",
+ "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "Aphrodite A17 per-draw and per-replicate evidence exists on aphrodite/* seat branches",
+   "status": "true",
+   "evidence": [
+     "origin/aphrodite/a16-campaign-2026-09-26:roles/Aphrodite/engine/A17_DRAWS_2026-09-26.json",
+     "origin/aphrodite/a16-campaign-2026-09-26:roles/Aphrodite/engine/A17_E1_RESULT_2026-09-26.json (R1.altered_replicates 0..7, shams k=0..7)",
+     "origin/aphrodite/a16-campaign-2026-09-26:roles/Aphrodite/engine/A17_FOUNDRY_EVALS_2026-09-26.jsonl",
+     "origin/aphrodite/a16-campaign-2026-09-26:roles/Aphrodite/engine/A17_A_DONORS_2026-09-26.json",
+     "git branch -a --contains 4f937e88f -> only origin/aphrodite/{a16-campaign-2026-09-26,arc3-2026-09-28,compounding-2026-09-27,frontier-2026-09-27} (4 branches, matching R-13 l.67)"]},
+  {"part": "That A17 evidence is not on main",
+   "status": "true",
+   "evidence": [
+     "Glob **/*A17* on worktree at 59b94b4ed (= origin/main) finds no roles/Aphrodite/engine/A17_* files",
+     "git log --all -- roles/Aphrodite/engine/A17_E1_RESULT_2026-09-26.json roles/Aphrodite/engine/A17_DRAWS_2026-09-26.json -> commits 4f937e88f, ac2a935db, neither contained in main/origin/main",
+     "git diff --diff-filter=A HEAD...origin/aphrodite/* lists all A17_* files as added on the branch side"]},
+  {"part": "BEE multi-day evidence is branch-only",
+   "status": "true",
+   "evidence": [
+     "git log --all -- roles/Bellerophon/multiday_2026-09-26/MULTIDAY_PREREG.md prometheus/z80atlas/multiday_campaign.py -> 12ce26e23, a3086cece, 8252930a2, 35de9b083",
+     "git branch -a --contains 12ce26e23 -> only remotes/origin/bellerophon/multiday-campaign-2026-09-26",
+     "Glob roles/Bellerophon/multiday*/** and prometheus/z80atlas/**/*multiday* on 59b94b4ed -> no files",
+     "roles/Artemis/selftest/runs/R-13/REPORT.md:34 and :59 (branch has prereg/code/pilot receipts only; outcomes on M2)"]}
+ ],
+ "notes": "Checked against HEAD 59b94b4ed (= origin/main). Local branch 'main' ref (ca189b020) differs, but git grep of it for A17 in roles/Aphrodite only hit hash-like strings in unrelated JSON files; no A17_* files. Nuance: for BEE multi-day, what is on the branch is prereg, code and pilot receipts; no campaign outcomes are committed anywhere (R-13 grades it HOST-ONLY). So 'branch-only' holds for the committed material, and the outcome evidence is on M2 only. The claim as worded still holds."}
