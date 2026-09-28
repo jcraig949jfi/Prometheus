@@ -33,3 +33,12 @@ R-06 | disposable worker 6 | ubu002 | 2026-09-28T14:18Z | | running |
 R-05 | disposable worker 5 | ubu002 | 2026-09-28T14:10Z | 2026-09-28T14:19Z | REPORT | EXPOSED-NAMES: a repository path listing included roles/Artemis/prompts/2026-09-28_p11_report_to_nestor/* names; no Artemis content read (0 hits for phrases unique to that file)
 R-06 | disposable worker 6 | ubu002 | 2026-09-28T14:18Z | 2026-09-28T14:28Z | REPORT (returned in the worker's final message because its Write to REPORT.md was blocked; saved verbatim by the orchestrator, no edits except HTML entity &lt; -> <) | clean (no forbidden names, 0 unique-phrase hits)
 R-08 | disposable worker 8 | ubu002 | 2026-09-28T14:28Z | | running | (template adds: if REPORT.md write fails, return the report in the final reply -- procedural, identical for every later run)
+R-08 | disposable worker 8 | ubu002 | 2026-09-28T14:28Z | 2026-09-28T14:36Z | REPORT (written via shell heredoc; Write tool blocked) | see audit line
+R-09 | disposable worker 9 | ubu002 | 2026-09-28T14:35Z | | running |
+R-09 | disposable worker 9 | ubu002 | 2026-09-28T14:35Z | 2026-09-28T14:47Z | REPORT | see audit line
+- 2026-09-28T14:48Z note for scoring (A2.6 sanitizer, cohort-blind): reports can carry package-format cues (e.g. 'the harvest's claim' from a raw package, 'work sketch'/'curator' from a sharpened one); the sanitizer will redact these words as well as ids before scorers see reports.
+R-10 | disposable worker 10 | ubu002 | 2026-09-28T14:43Z | | running |
+R-07 | disposable worker 7 | ubu002 | 2026-09-28T14:20Z | 2026-09-28T14:54Z | REPORT | see audit line
+R-11 | disposable worker 11 | ubu002 | 2026-09-28T14:55Z | | running |
+R-11 | disposable worker 11 (used 4 parallel reading sub-agents within its budget -- effort asymmetry recorded) | ubu002 | 2026-09-28T14:55Z | 2026-09-28T15:12Z | REPORT (returned in final reply; Write blocked; saved verbatim) | see audit line
+R-12 | disposable worker 12 | ubu002 | 2026-09-28T15:12Z | | running |

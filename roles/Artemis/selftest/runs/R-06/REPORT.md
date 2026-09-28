@@ -109,3 +109,13 @@ The question is also partly badly posed:
   - No ablation of evolution or of the forge ontology beyond this substrate.
   - No second substrate.
   - No generic enumeration over problem_text, meaning a generic parser grammar. This is the part that would actually test the parser-gap frontier, and it is the natural next step.
+
+## ADDENDUM (sent by the same worker after a late background search; appended verbatim by the orchestrator)
+
+**Addendum to section 5 (CONSEQUENCES):**
+- **This reproduces work already on record.** Lexis (`roles/Lexis/notes/STEP1_CEILING_CLOSED_2026-08-25.md` @ origin/main) had already shown that 0.8333 is the exact ceiling of the operators already in the blackboard. It found that all 20 frontier tasks lie outside anything those operators can reach, and that the only composition scoring higher wins by unconditional guessing. My constant-`True` counterfeit (+8/120) is the same effect found independently. The one real gain either arm finds, the subtraction, needs a new operator, and a size-3 generic enumeration finds it as easily as the inherited library does.
+- **Aporia's objection to this experiment applies here.** Aporia (`roles/Aporia/resume_aporia.md` @ origin/main, around line 273) warned that a "generic" enumerator still inherits the blackboard type system, the guard grammar, the task families and the scoring harness. Aporia asked for that boundary to be fixed in advance. My PREREG.md did fix it before any run. Both arms share the type system, the guards, the adapter, the battery and `parse_numbers`. Only the operator-proposal layer was removed, meaning the library, the ranking by failure category and the already-adapted operators. So the null holds for the operator layer only. It is not a verdict on the whole stack.
+
+**Addendum to section 4:** "Partly" stands. What I ran is Aporia's preregistered-boundary version, limited to the operator layer.
+
+The five-line summary is unchanged, except that line 1 should add: "this matches Lexis's earlier proof that the 0.8333 ceiling is closed."
