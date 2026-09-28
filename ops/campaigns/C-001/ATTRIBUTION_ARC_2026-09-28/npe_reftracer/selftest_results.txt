@@ -1,0 +1,81 @@
+NPE reference tracer selftest  (54 checks, 0 FAIL, 21.9s)
+NOTE: 6 checks failed on the first run because MY hand-written expectations were wrong (F1 exec_deps
+omitted the C2 transitive addr set of fetched bytes; F1 loc0 mutant is uncatchable by flips because a0
+is an opcode; F2 a's NOP sled wraps into b's code; F3 wrong byte offsets and pdom scope ends at the join;
+F6 my store address overwrote my own code; F8 flag addr set). In every case the tracer was right; the
+expectations were corrected (cf. v4 Amendment A's correction on record).
+PASS  F1 victim half b: data label (ENTITY a, i) MOVE at every locus
+PASS  F1 half a unwritten, own labels
+PASS  F1 last store by b's slice, performer = material of opcode byte = (a,8)
+      a8
+PASS  F1 addr_deps = {GETPC, a3, a4} (transitive through the copied pointer operands)
+      {CTX(GETPC),a3,a4}
+PASS  F1 ctrl_deps (interaction PC label) at b's first store = a's loop condition {a6}
+      {a6}
+PASS  F1 ctrl_deps_slice / pdom at b's first store are empty (no branch yet in b's slice)
+PASS  F1 later loci carry b's loop condition incl. its transitive addr set
+      {CTX(GETPC),a3,a4,a6}
+PASS  F1 exec_deps at store = a's 15 code bytes + b's fetched bytes (labels a0..a14)
+      {CTX(GETPC),a0,a1,a10,a11,a12,a13,a14,a2,a3,a4,a5,a6,a7,a8,a9}  (b's fetched bytes carry a's store-pointer addr set, C2 CHOICE 5)
+PASS  F1 birth: victim b accepted (donor a); a not accepted
+PASS  F1 flip test: 0 FAILED; code-byte loci INAPPLICABLE, data loci CONFIRMED
+      {'INAPPLICABLE': 12, 'CONFIRMED': 20}
+PASS  F1 flip: masked high bits of the DE operand stay path-preserving (a3 bits 6,7)
+      ['INAPPLICABLE', 'INAPPLICABLE', 'INAPPLICABLE', 'INAPPLICABLE', 'INAPPLICABLE', 'INAPPLICABLE', 'CONFIRMED', 'CONFIRMED']
+PASS  F1 R1 identification: every non-mutated victim locus identified (0 outside changes)
+PASS  F1 mutant tracer 'loc0' NOT caught by the flip test (a0 is an opcode byte: every flip changes the path -> INAPPLICABLE; only the label expectation rejects it)
+PASS  F1 mutant tracer 'loc20' caught by the flip test
+PASS  F1 mutant tracer 'reverse' caught by the flip test
+PASS  F2 half a <- (ENTITY b, i), store_by b, performer b8
+PASS  F2 a's NOP sled wraps into b's code at 32 and runs b's copier itself: both halt; a's own stores used b-material opcodes
+PASS  F2 birth: victim a accepted, donor b
+PASS  F2 GETPC returns b's base (context) -> addr_deps hold CONTEXT(GETPC)
+PASS  F3 bit decoder b8=1: label COMPUTED{a11,a7}
+      COMPUTED{a11,a7}
+PASS  F3 bit decoder b8=1: whole-execution ctrl_deps = {b8, a5 (AND operand), a1, a2 (HL pointer: flag addr set)}; pdom-scoped ctrl is EMPTY (store is after the join)
+      {a1,a2,a5,b8}
+PASS  F3 bit decoder b8=1: source NOT in addr_deps / data label
+PASS  F3 bit decoder b8=0: label a7
+      a7
+PASS  F3 bit decoder b8=0: whole-execution ctrl_deps = {b8, a5 (AND operand), a1, a2 (HL pointer: flag addr set)}; pdom-scoped ctrl is EMPTY (store is after the join)
+      {a1,a2,a5,b8}
+PASS  F3 bit decoder b8=0: source NOT in addr_deps / data label
+PASS  F3 implicit copy: MOVE of a7 whose value depends on b -> NOT identified by R1.3
+      flip CONFIRMED, changes 6/8
+PASS  F4 OR A,B with reset B=0: value unchanged but label COMPUTED{b8} (CONST base dropped)
+      COMPUTED{b8}
+PASS  F4 same with persisted B=0: COMPUTED{b8, PREG(a.B)}
+      COMPUTED{PREG(a.B),b8}
+PASS  F5 persisted register C stored: label PREG(b.C), value 0x99
+      PREG(b.C)
+PASS  F5 addr_deps = {CONTEXT(GETPC)}; performer = b3 (self)
+PASS  F5 dependence arm: randomising regs_b changes the value
+PASS  F5 regs after the interaction persist unchanged except H,L
+PASS  F6 GETPC value stored: label CONTEXT(GETPC), value 32
+      CTX(GETPC)
+PASS  F6 SENSE stored: CONTEXT(SENSE_side), value 1 (side b)
+PASS  F6 IN with no inputs: CONST(in_exhausted), value 0
+PASS  F6 XOR A,A idiom: CONST
+PASS  F6 SUB A,A idiom: CONST (load of b10 is not a base)
+PASS  F6 INC A of a loaded byte: COMPUTED_FROM(b11)
+      CF(b11)
+PASS  F6 INC (HL) (memory operand): COMPUTED{b12}
+PASS  F6 CONST labels are never members of dependence sets
+PASS  F7 overlapping ascending bytewise copy: locus 8+k <- (b, k mod 8) (overlap chain)
+      b0 b1 b2 b3 b4 b5 b6 b7 b0 b1 b2 b3 b4 b5 b6 b7 b0 b1 b2 b3 b4 b5 b6 b7
+PASS  F7 values follow the chain
+PASS  F7 flip test confirms the chain labels (0 FAILED, >=1 CONFIRMED)
+PASS  F7 positional-label mutant FAILS the flip test
+PASS  F8 whole-execution ctrl = {b8} + its load pointer {a1,a2}; pdom-scoped ctrl empty after the join
+      {a1,a2,b8} / {}
+PASS  F8 data label = (a,12) MOVE (the byte at a12, i.e. LD HL's opcode)
+PASS  F9 residue acceptance: victim b accepted (fid_other 1.000, fid_self 0.875, donor_wrote 8)
+PASS  F9 the written victim loci are CONST (no donor material moved): copy-descent donor is b itself
+PASS  F9 last stores by b (self), performer entity b
+PASS  F10 write-back mutation (rate 0.05, 400 seeds, 1044 events): MUTATION(draw, old_label), value == world.Runner._mutate
+PASS  F10 rate 1.0: only linear-decode boundaries mutate (OPCODE operator)
+PASS  F10 decode-dependence of position 5 = labels of boundaries 0,2 (GETPC's ED, LD DE)
+      {a0,a2}
+PASS  F11 60 interactions through the REAL world.Runner._pair_interact (z8taint path): final halves, RNG state, regs/flags and acceptance count reproduced
+PASS  F12 300 fuzz interactions (random + mutated copiers): every slice == z8.run, every interaction == p11.interact, every write-back == Runner._mutate (2.4s)
+      written label kinds: {'COMPUTED': 561, 'ENTITY': 2072, 'PREG': 250, 'CONST': 129, 'MUTATION': 46, 'COMPUTED_FROM': 112}

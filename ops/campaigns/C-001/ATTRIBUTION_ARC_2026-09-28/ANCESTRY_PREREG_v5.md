@@ -177,3 +177,52 @@ Adopted:
 
 **Pin data:** the full T-003 hashes are committed in NPE_T003_HASHES.txt (result_sha256 efba5535...18bc; per-run lineage_sha256).
 Observation for Nestor: in two runs (s9200006, s9200008) the C_reimplant_random arm has the SAME lineage_sha256 as A_in_situ.
+
+## Amendment C6 (2026-09-28): NPE readings, adopted from the independent NPE reference tracer BEFORE Nestor's tracer exists
+- **Source:** the reference tracer npe_reftracer/ref_tracer_npe.py was written by an isolated worker from the prereg text + C5
+  alone. It reproduces world.Runner._pair_interact exactly (60 real interactions: halves, RNG state, registers, acceptance; plus
+  300 fuzz interactions).
+- **Why now:** its SPEC_ISSUES.md lists where conforming tracers could legitimately differ. To keep the three-way agreement gate
+  (v4 s4.3) from failing on ambiguity rather than error, these readings are NORMATIVE for NPE.
+- **Independence:** Nestor implements from THIS TEXT. Nestor should not read the reference code before the first agreement run.
+
+**Entities, performer and class:**
+- **A4:** entities are the two organisms, ('ENTITY', 'a'|'b', j, orig_id).
+  * Every pre-state byte is re-based to ENTITY(side, j, orig) at interaction start (single-interaction scope).
+  * orig_id comes from the persisted per-locus vector (default: the side name).
+- **A5:** both are exported: store_by (the slice's organism) and performer (the material data label of the store's opcode byte,
+  captured at fetch). The NPE class key = the performer's ENTITY (or none).
+- **A6:** persisted registers and flags carry their own base-label kind ('PREG', side, reg).
+  * PREG is FOREIGN-INFORMATIVE for identification: it is the "persisted registers" source group of R1.
+  * A first interaction after placement gives CONST('reset').
+
+**Label algebra:**
+- **B1:** the logic ops' carry flag is CONST('logic_nc').
+- **B2:** idioms = XOR A,A; SUB A,A; CP A,A (flags constant).
+- **B3:**
+  * INC/DEC r -> COMPUTED_FROM;
+  * INC/DEC (HL) -> COMPUTED;
+  * 16-bit INC/DEC: low byte COMPUTED_FROM, high byte COMPUTED{hi, lo};
+  * nested labels are flattened.
+- **B4:** COMPUTED with no non-constant base stays ('COMPUTED', {}) (new material, not CONST).
+- **B7:** IN -> CONST('in_exhausted'), with addr = the PC label at the IN.
+- **B8:** OUT has no locus. OUT events enter the flip test's store sequence as ('OUT', who, k).
+
+**Dependence sets:**
+- **C1:** PRIMARY ctrl_deps = the PC label accumulated from INTERACTION start (b's stores inherit a's conditions). Also exported:
+  ctrl_deps_slice, ctrl_deps_pdom, ctrl_deps_whole.
+- **C2:** exec_deps from interaction start up to the store (inclusive), plus exec_deps_whole.
+- **C3:** the post-dominator scope (secondary) as defined in npe_reftracer/SPEC_ISSUES.md C3:
+  * CFG decoded at branch time; HALT -> EXIT; no budget edges;
+  * a Xin-Zhang-style stack, reset at slice entry.
+- **C4:** addr sets are transitive (as C2 CHOICE 5).
+- **C5:** pointer labels include both pointer bytes, ignoring the address mask (a declared over-approximation).
+- **C6:** CONTEXT IS a member of dependence sets (only CONSTANT is excluded).
+- **C7:** fetched bytes = bytes the engine actually reads (the IN/OUT operand is not read; the LD SP,nn operand and a disabled ED
+  second byte are read).
+- **C8:** written = any store in the interaction; the per-locus record describes the LAST store.
+
+**Performer and mutation:**
+- **D1:** the performer is the full data label of the store opcode at fetch. performer_entity = None if it is not ENTITY.
+- **E:** write-back mutation per world.py:484-550, labelled MUTATION(draw, old_label) at the draw, with the decode-dependence set
+  = the labels of the linear-decode boundaries of the PRE-mutation half.
