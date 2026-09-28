@@ -271,3 +271,5 @@ Files (on M2 and copied here): config r025144.config.json; preserved births r025
 - **Change:** "applicable" requires that the fetched-instruction trace, the store-address sequence AND the load-address sequence
   (every data read: LD A,(r), LDI/LDIR/COPYALL sources, IN reads) are all unchanged. Otherwise the bit is INAPPLICABLE.
 - **Found by:** Archaeon while building the pack, not by a reviewer.
+
+## Dated note 2026-09-28: v5 (ANCESTRY_PREREG_v5.md) replaces sections s2.1, Q8c, s2.4, s4.2 and s5 (BEE) of this document and amends s3, s4.1 and s6, after adversarial Review 6 (review6/REVIEW_6.md; REVIEW_6_ADJUDICATION.md). The r025144 draw is withdrawn. Text above unchanged.

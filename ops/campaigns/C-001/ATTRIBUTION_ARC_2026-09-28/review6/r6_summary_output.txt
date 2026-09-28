@@ -1,0 +1,55 @@
+births 92 Counter({'EMPTY/writer': 60, 'OCCUPIED/target': 24, 'OCCUPIED/writer': 8})
+birth class (majority performer): Counter({('self-performed', 'EMPTY/writer'): 60, ('self-performed', 'OCCUPIED/target'): 16, ('occupant-performed', 'OCCUPIED/target'): 8, ('occupant-performed', 'OCCUPIED/writer'): 5, ('self-performed', 'OCCUPIED/writer'): 3})
+written loci 5888
+data-label kinds: Counter({'M-empty': 3835, 'M-O': 1781, 'M-W': 192, 'M-scratch': 80})
+data-label kinds by group:
+   EMPTY/writer Counter({'M-empty': 3835, 'M-scratch': 5})
+   OCCUPIED/target Counter({'M-O': 1448, 'M-W': 64, 'M-scratch': 24})
+   OCCUPIED/writer Counter({'M-O': 333, 'M-W': 128, 'M-scratch': 51})
+not-identified reasons (lenient): [('data:empty', 3835), ('exec:foreign_entity', 768), ('ctrl:foreign_entity', 384), ('data:scratch', 80)]
+rid_len: rule-identified loci 1219/5888 (20.7%); births with >=90% identified: 19/92 (20.7%)
+rid_str: rule-identified loci 1219/5888 (20.7%); births with >=90% identified: 19/92 (20.7%)
+flip (lenient-identified loci): {'CONFIRMED': 1105, 'INAPPLICABLE': 114} coverage 0.906
+    EMPTY/writer {} coverage 0.000
+    OCCUPIED/target {'INAPPLICABLE': 57, 'CONFIRMED': 1015} coverage 0.947
+    OCCUPIED/writer {'CONFIRMED': 90, 'INAPPLICABLE': 57} coverage 0.612
+identified births (lenient) detail:
+   birth 2 OCCUPIED/writer identified 20 flip {'CONFIRMED': 20} src==own index 0
+   birth 18 OCCUPIED/target identified 64 flip {'INAPPLICABLE': 57, 'CONFIRMED': 7} src==own index 0
+   birth 21 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 36 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 39 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 52 OCCUPIED/writer identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 53 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 57 OCCUPIED/writer identified 64 flip {'INAPPLICABLE': 57, 'CONFIRMED': 7} src==own index 0
+   birth 64 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 73 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 75 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 78 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 81 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 82 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 83 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 85 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 86 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 87 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 88 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+   birth 90 OCCUPIED/target identified 63 flip {'CONFIRMED': 63} src==own index 0
+Q8c (all written loci): mean 0.906, birth-clustered bootstrap 95% [0.884, 0.927]
+  Q8c by data kind: {'M-O': 0.985, 'M-W': 0.917, 'M-empty': 0.875, 'M-scratch': 0.56}
+  Q8c loci with zero arms (q8c_n==0): 0
+   Q8c EMPTY/writer n=60 mean 0.875
+   Q8c OCCUPIED/target n=24 mean 0.977
+   Q8c OCCUPIED/writer n=8 mean 0.916
+  Q8c over ENTITY-data loci only: 0.978 (n=1973)
+Q8c-whether (birth suppression rate by arm): {'W': 0.88, 'O': 0.406}
+Q4 capable children (>=50% of 320): 0 ; any success: 2 ; max rate 0.125
+budget-ended interactions: 92 halted: 0
+whole-interaction ctrl contains INPUT: 0 ; exec contains O: 14 ; exec contains INPUT: 0
+Q-homology (identified): n=1219, source index == own index: 0
+Q-homology (entity-data): n=1973, source index == own index: 1
+P2 (all written): native 'target' births 24, copy-descent majority != target: 1; majority donors {'writer': 1, 'target': 23}
+   all births majority donor vs native: {('writer', 'NONE'): 60, ('writer', 'target'): 6, ('target', 'writer'): 1, ('target', 'target'): 23, ('writer', 'writer'): 2}
+P2 (identified): native 'target' births 24, copy-descent majority != target: 8; majority donors {'writer': 1, 'target': 16, 'NONE': 7}
+   all births majority donor vs native: {('writer', 'NONE'): 65, ('writer', 'target'): 2, ('target', 'writer'): 1, ('target', 'target'): 16, ('target', 'NONE'): 7, ('writer', 'writer'): 1}
+W births 79 Q8c 0.897 [0.874, 0.921]
+O births 13 Q8c 0.956 [0.921, 0.988]
