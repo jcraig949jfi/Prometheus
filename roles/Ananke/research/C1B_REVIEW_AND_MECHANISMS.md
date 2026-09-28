@@ -126,3 +126,20 @@ C-4 To the C1b mechanical labels: absolute thresholds, a fixed payload
     science. The carrier-swap test (FLIP / NO-EFFECT / CHANCE) is
     stronger than every C1b label and should replace kill/drop readings
     as the primary mechanism instrument (T-INS-1).
+
+## Addendum 2026-09-27 (after W-A, W-B, W-C; these corrections supersede the text above where they differ)
+- M2: CONFIRMED and PREDICTED. A strict two-hop echo (W-A); a zero-parameter
+  model predicts 46/46 unseen gap curves. Corrections:
+  - the specimen's routing write SHAPES the round-trip kernel; it is not
+    mere disruption (s1 R2 is too weak);
+  - the best gap is 7, not the trained 8 (readout parity);
+  - "peak 6-8" came from even-only sweeps.
+- M3: bootstrap-only CONFIRMED and sharpened. The zero-register default
+  sends every SETRULE to rule 0, and a one-rule law is bit-identical
+  (W-B). The "general PTE" SETRULE claim was WRONG: in 29% of 42 cells
+  SETRULE is a readout-local per-tick conditional branch (never a memory
+  carrier).
+- "Channel CONTENT" is a reader-side verdict. Under superposition,
+  presence reads as content (W-C). M2 and M3 are genuine content codes
+  (twins show no firing difference); several relays are SOURCE-PRESENCE
+  codes.
