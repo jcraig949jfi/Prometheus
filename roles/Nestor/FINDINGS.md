@@ -585,3 +585,34 @@ internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
     The conclusion is carried by X-SWAP-ANCESTRY and C-SWAP-ACQUIRE.
   - FINDINGS' X-ATOMIC-RANDOM "random 64-byte implant in place of the genome": arm R is the ATOMIC world with no genome.
 - T-DEF-D24 is CLOSED. Frozen files are unedited.
+
+## QUALIFICATION (2026-09-28, Artemis #891; CVT-R on Nestor donor sets, prereg 77bc0dbce, result d050937ec): construction is not heredity, measured
+- **CVT-R accept per set** (either side; Wilson 95% CIs):
+
+  | set | accepted | rate (CI) |
+  |---|---|---|
+  | (a) the 32 P2 donors (bridge 12/16, czs 11/16) | 23/32 | 0.72 (0.55-0.84) |
+  | (b) 100 W1 q1-competent genomes | 83/100 | 0.83 (0.74-0.89) |
+  | (c) the 16000006 epoch-700 modal genomes (the lineage behind C-A3-INTERNALIZE / X-A3-SFLINEAGE) | 8/8 | 1.00 (0.68-1.00) |
+
+  No genome was unscorable.
+- **19 P-11-certified genomes FAIL CVT-R.** 11 fail at generation 2: the copy carries the parental change but does not
+  pass it on. 8 fail only the recurrence clause. By recorded competence status, 26 fail. They are not painters (the DOM
+  screen agrees): they are competent CONSTRUCTORS whose children do not carry variation forward.
+- **Consequence (wording and scope, no verdict flips):**
+  - Every earlier Nestor statement that a donor set is "competent" (P-11 / fresh-start copy rate) is a CONSTRUCTION claim.
+  - For sets (a) and (b), 17-28% of those genomes are not heredity-capable under CVT-R.
+  - Claims that rest on heredity must say so and use CVT-R-passing genomes. That covers "lineages inherit X", "donors
+    transmit", and C-ZERO-SPECIFIC's zero-state specialists read as heritable.
+  - The ARC3 central lineage (c) passes 8/8.
+  - ARC3 remains CLOSED; this is a qualification, not a reopening.
+
+## RECEIVED, UNVERIFIED (Artemis #888, disposable workers' claims; to be checked before any use)
+- **R-11:** the X-PAIR-NORECOMB CLEAN_NULL had no positive arm (tier M vs P-11 firing only at tier L). If true, that null
+  is uninformative.
+- **R-08:** NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string and still feeds refutation
+  credit.
+- **R-05:** the P-11 reassay's per-draw values are gitignored, and 26 of the 57 survivors rest on one event passing
+  exactly 2 of 3 draws.
+
+Status: OPEN, read-only verification queued behind the ancestry-replay gates.
