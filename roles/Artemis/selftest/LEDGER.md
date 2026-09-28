@@ -82,5 +82,5 @@ R-26 | disposable worker 26 | ubu002 | 2026-09-28T17:41Z | 2026-09-28T18:07Z | R
 R-30 | disposable worker 30 | ubu002 | 2026-09-28T18:10Z | | running |
 R-28 | disposable worker 28 | ubu002 | 2026-09-28T17:54Z | 2026-09-28T18:10Z | REPORT | see audit line
 R-31 | disposable worker 31 | ubu002 | 2026-09-28T18:11Z | | running |
-R-29 | disposable worker 29 | ubu002 | 2026-09-28T18:09Z | 2026-09-28T18:19Z | REPORT (worker notes it did not read a prior-art note because it lives under a forbidden path -- package reference unavailable by design) | see audit line
+R-29 | disposable worker 29 | ubu002 | 2026-09-28T18:09Z | 2026-09-28T18:19Z | REPORT (worker notes it did not read a prior-art note because it lives under a forbidden path -- package reference unavailable by design) | EXPOSED-NAMES: a git log listing showed an Artemis commit SUBJECT (4ea12f6a9 "research frontier pass 1 -- ... 19 sharpened ...") while it located a prior-art path its package cited; no Artemis file opened; a weak cue that some questions were curated
 R-32 | disposable worker 32 | ubu002 | 2026-09-28T18:20Z | | running |
