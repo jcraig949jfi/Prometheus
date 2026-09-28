@@ -118,9 +118,14 @@ with their claims. Humans and scripts use `python -m fabric lease acquire|renew|
 
   A live legacy lease makes the fabric lease BUSY, and the task's `waiting_reason` names it. If the legacy view is
   unreadable, the claim fails closed.
-- **Known gap.** The legacy helpers do not read fabric leases, so they can still collide with fabric work. The fix
-  is to retire them, not to add a second reader. Heavy-engine seats should move to `fabric lease`. The host-file
-  convention is retired once the active seats have moved.
+- **Cut over (2026-09-28).** `roles/Ananke/research/lease.py` and `roles/Nestor/tools/nestor_lease.py` keep their
+  CLIs, but they are now thin frontends onto `fabric/lease_compat.py`, so they use the SAME resource row as fabric
+  Attempts. They no longer write host files, post comms LEASE records, or use the primordial.bus Redis lease.
+  Tests: a legacy CLI and a fabric Attempt racing for one resource, exactly one wins in every round, with wins on
+  both sides. An unreachable store grants nothing.
+- **Remaining transition.** Old copies of the helpers on unmerged branches (for example archaeon/*) still create
+  host files. The detection above covers them until their users merge main. After that, the detection is removed
+  and the host-file convention is gone.
 
 ## 5a. Workers are node executors, not seats
 
