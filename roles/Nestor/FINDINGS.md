@@ -568,3 +568,20 @@ internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
   - Audit of the affected experiments' analyses for paired reasoning: OPEN (T-DEF-D24).
   - Future implant arms must consume the RNG identically across arms: draw the background first, or burn L draws in the
     ACTUAL arm.
+- **T-DEF-D24 audit (2026-09-28, read-only):** NO verdict changes. Every contrast of a genome implant arm with a random or
+  in-situ arm used marginal counts or an unpaired Fisher test:
+  - Cycle-9 H2 rule (B >= 8/16, C <= 2/16);
+  - C-SWAP-ACQUIRE 9/240 vs 0/240;
+  - X-ATOMIC-RANDOM 0/80 vs 46/80.
+- **Corrections to the D24 text:**
+  - RANDOM_MATCHED equals in situ for ANY implant_len <= L, because `_pad` fills with RNG draws.
+  - The identity A == C was ALREADY logged as C9-D17 (CAMPAIGN_REPORT.md:101). D24 adds the B stream shift and the audit.
+- **Wording errata** (reasoning, not verdicts):
+  - The H2 prose counts "random 0/16 and in situ 0/16" as two nulls (C9_OUTCOME_AND_ADDENDUM:35-41, the H2 line above,
+    x_h2_7ae3/run_h.py:5). It is ONE null of 16 runs.
+  - The H2 design claims "background_population / rng_seed held fixed" (manifest.py:109, PREREGISTRATION:277, world.py
+    comments). These are FALSE for B vs C.
+  - X-SWAP-ORIGIN Part B is framed as the "background, same 8 seeds". Unpaired, it is 1/8 vs 0/8, which is uninformative.
+    The conclusion is carried by X-SWAP-ANCESTRY and C-SWAP-ACQUIRE.
+  - FINDINGS' X-ATOMIC-RANDOM "random 64-byte implant in place of the genome": arm R is the ATOMIC world with no genome.
+- T-DEF-D24 is CLOSED. Frozen files are unedited.
