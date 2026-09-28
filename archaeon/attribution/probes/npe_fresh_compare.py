@@ -22,6 +22,11 @@ SEALED = {"ref": "9fd3bc4486ba8dc5445da7d1d1db2f26eae9765365cbaee3db4ff5a6fb90ee
           "nestor": "c6aa5569a43321526e761904a158871f300b616500e3fedfbc8c9cad084f8e75"}
 
 
+def set_sealed(path):
+    """Set 2 onward: the sealed hashes come from a committed JSON {"ref": sha, "nestor": sha, "label": str}."""
+    d = json.load(open(path)); SEALED.update({"ref": d["ref"], "nestor": d["nestor"]}); return d.get("label", "")
+
+
 def load(path, who):
     raw = (gzip.open if path.endswith(".gz") else open)(path, "rb").read()
     h = hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest()
@@ -78,7 +83,7 @@ def main(refp, nesp, outdir):
                                  "fields": sorted(f for f, v in chk.items() if not v),
                                  "nestor": {f: x.get(f) for f in ("label", "performer", "ctrl_slice")},
                                  "reference": {f: y.get(f) for f in ("label", "performer", "ctrl_slice")}})
-    lines = ["G2 FRESH SET (seed d33421a07): reference 3757111de vs Nestor v2 fb1c322cb; RAW, as declared before opening", ""]
+    lines = ["G2 FRESH SET: reference sha %s vs Nestor sha %s (sealed output hashes); RAW, as declared before opening" % (SEALED["ref"][:12], SEALED["nestor"][:12]), ""]
     fails = []
     for grp in sorted({g for g, _, _ in tot}):
         lines.append(grp)
@@ -101,4 +106,5 @@ def main(refp, nesp, outdir):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 4: set_sealed(sys.argv[4])                       # set 2+: SEALED_HASHES.json
     sys.exit(main(*sys.argv[1:4]))
