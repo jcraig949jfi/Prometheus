@@ -472,3 +472,76 @@ the plain two-byte copy planted once in every initial genome gives 32/96 (vs 0 p
 the AVAILABILITY of copy-capable material; the alias acts mainly by making it common. E-W1-1 stands as measured; its
 'encoding accessibility' reading narrows to 'frequency/availability'.
 Synthesis: campaigns/npe-p2-endogenous-heredity-2026-09-27/SYNTHESIS.md.
+
+## ARC3 (2026-09-28; theory-aware by date) -- corrections and delegate findings so far
+
+**CORRECTION (mutation operator):** P2 described the 7ae3 cell (Z8_64) as 'per-byte mutation with frame shifts'. That is WRONG
+for these cells: both use the OPERAND operator with no insertions/deletions; in 7ae3 opcode bytes never mutate (a lineage's
+program skeleton is fixed; only copying changes it; ~34 mutations per lineage in 2000 epochs), in ffa6 slot offsets 1-3
+mutate (~239). Nothing dies in these cells: the only selection is being overwritten by a copy. (ARC3 accessibility delegate,
+campaigns/npe-arc3-2026-09-28/delegates/accessibility/ACCESSIBILITY.md.) P2's X-P2-BRIDGE axis reading ('mutation topology')
+is affected; its numbers are not.
+**Self-location (transplant, delegate):** all 280/280 SELF-free copiers fail when moved >= 16 bytes (absolute addresses; correct
+registers at the new position rescue none); 210/332 need the 128-byte wrap; 33 of 52 SELF users still copy to a fixed
+destination; only 2 genomes (one motif, seed 16000026) are true locators (any offset, other tape sizes, random registers, never
+self-poison). 182/332 copiers set every register they use ('state-free'), and state-freedom predicts state robustness (3/179
+self-poison vs 74/143; p = 1.5e-28). Register initialization is commonly internalized; self-location almost never.
+**Acquisition landscape (delegate):** no random genome or its 1-2-step mutants is competent (0/6,400); competent copiers sit on
+broad neutral networks (72-80% of 1-step mutants stay competent); losing the copy instruction is a trap (0/144 recovered).
+Acquisition across arms is predicted by CARRIER EXPOSURE (copy-carrier genomes screened, = frequency x persistence): one hazard
+fitted on DENSE predicts PLANT 28.6 (obs 32), fitted on PLANT predicts DENSE 54.8 (obs 49); starting frequency mis-orders them.
+Suggestive (one parameter, two informative arms). A neutral mutation walk reaches competence at about the soup's rate (pilot:
+ratio 1.75, p = 0.20): no evidence yet that the soup helps FIRST APPEARANCE; its advantage is spread.
+**RULER DEFECT (X-A3-FORENSIC-16000006):** the self-state robustness ruler used since W1 X-DD-SELFSTATE ('copies after ONE own
+execution', rate_1 >= 0.25 rate_0) is a one-point snapshot of carried register state that can CYCLE (7ae3 16000006 founders copy
+after 0, 2 and 5 own executions and fail after 1, 3, 4). 'Poisoned / robust' labels in X-DD-SELFSTATE, X-P2-ENDOSTATE and
+X-P2-D0CHECK are therefore unreliable; their CLAIMS about establishment sorting and the single candidate are superseded by the
+forensic result below. New work uses a cycle-aware rule (k = 1..6). The candidate endogenous transition (7ae3 16000006) is KILLED
+as a single-change transition (knock-in 0/5, revert 0/8, cross-graft 0/12), but robustness DID arise within D0's lineage by
+distributed change (118-126 replications, 49-54/64 bytes, lost and regained on 6/8 paths), via the copier fixing its own
+destination (LD DE,3200 before LDDR) -- i.e. internalized register initialization; partial knock-in effect (random-start
+robustness 0 -> ~0.33). n = 1 lineage.
+**RULER DEFECT (external, Artemis #793, 2026-09-28):** P-11 certifies CONSTRUCTION, not heredity -- it never perturbs the donor,
+so a program writing a fixed pattern that matches itself ('painter') passes like a copier (Artemis panel: painters certified
+0.90-1.00). Nestor's check: DOM (dominant-byte share) of the 1,278 competent P2-corpus genomes -- 0 >= 0.5 (max 0.28), panel donors
+0.03-0.08; together with the transplant study (offset-64 LDIR/LDDR copiers moving their own bytes), painter contamination of the
+Nestor donor corpora appears negligible. Formal CVT-R heredity certification requested from Artemis on three named donor sets.
+Standing rule from here: 'competent' = P-11 construction-competent; heredity claims need CVT-R or a byte-provenance ruler.
+**QUALIFICATION OF CYCLE-9-ERA COUNTS (Odysseus #803, converging with Artemis #793):** functional + causal recertification of the
+57 S1-C P-11-certified donors (first certified donor per run): 2 copy themselves, 1 context-dependent, 17 paint (mostly 0x36
+near-homopolymers), 37 do nothing from any reachable register state (16 copy only when handed registers). Any Nestor statement that
+counted S1-C / S1C-P11-REASSAY 'certified donors' as replicators is QUALIFIED to 'P-11-certified construction events'. The 7ae3
+founder underlying C9-H2, C-RUNAWAY, C-CRITICAL-MASS, C-ATOMIC and C-CORE is one of the genuine copiers (Artemis/Odysseus), so
+those claims keep their evidential basis; the W1/P2/ARC3 dense-VM corpora are separately screened (DOM, transplants). Evidence:
+roles/Odysseus/expedition/recert/ (RESULT.md s5), roles/Artemis/challenge/p11/.
+
+**E-A3-1 C-A3-INTERNALIZE CONFIRMED (frozen 86f929241, 144 fresh runs):** in the default CARRIED NPE world, reproductive lineages
+founded only by donors that depend on environment-supplied register values RECURRENTLY come to carry descendants that are
+competent from arbitrary (random) entry registers -- endogenous internalization of register initialization: 8 independent runs
+(bar 4; ffa6 7, 7ae3 1); at first donor appearance state-freedom is essentially absent (93/94 donor runs). Alternative route
+seen in 18 runs: replacement by another lineage. Path: X-A3-ENDOSTATE-R (0.32 -> 0.65) -> X-A3-SFLINEAGE (3/5 lineages) ->
+X-A3-FORENSIC-16000006 (distributed change; the copier fixes its own destination) -> C-A3-INTERNALIZE. Scope and limits: dense VM;
+'competent' is P-11 construction-competence (painter screen negative; CVT-R pending); self-location (tape placement) is NOT
+internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
+
+## ARC3: X-A3-WITHDRAW (2026-09-28, closed 10:12): withdrawal SPEED does not matter; withdrawal itself is followed by a robustness rise inside the lineage
+- **Preregistered question** (Bourrat 2022: internalization needs GRADUAL scaffold withdrawal): CLEAN_NULL.
+  - PERSISTS(GRADUAL) − PERSISTS(ABRUPT) = 0.00.
+  - In each arm (paired seeds, identical until epoch 300), 12 of 32 runs established and 12 of 12 persisted.
+  - The zero-specialist lineages did not collapse when the scaffold was removed, abruptly or gradually.
+- **Reported readout (not the classification):** the cycle-aware robust share of the founder lineage's competent
+  genomes.
+
+  | arm | epoch 300 | end |
+  |---|---|---|
+  | ABRUPT | 0.22 | 0.94 |
+  | GRADUAL | 0.24 | 0.93 |
+  | CONTROL_ZERO (scaffold kept) | 0.15 | 0.10 |
+
+  The founder lineage still holds the population at the end and was mostly NOT robust at withdrawal, so the rise is
+  change within the lineage, not sorting.
+- **Reading:** removing the register-reset scaffold is followed, within ~1700 epochs, by the lineage coming to cope with
+  carried state itself. This is register-initialization internalization under scaffold REMOVAL, the counterpart of
+  C-A3-INTERNALIZE, which was in the default world.
+- EXPLORE only. The frozen CONFIRM C-A3-WITHDRAW-ROBUST is declared (PLANNED).
+- Theory-aware; not offered as SI evidence.

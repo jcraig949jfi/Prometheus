@@ -55,7 +55,7 @@ anywhere else. Reveal (after the evaluation is closed) = publishing plaintext + 
     (calls, episode-steps) is recorded per world; `--max-episode-steps` caps it if the adjudication rules want that.
   - Anyone with the operator account on M1 can read the secrets.
 
-## Execution across the firewall
+## Execution across the firewall (original flow; the enforced order in the last section governs)
 1. Cosmos posts `sha256(package.zip)` and hands over `package.zip` (format in `runner.py` docstring).
 2. Nestor on M1: `COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.runner --package package.zip
    --package-sha256 <sha> --key <secrets>/hidden_D2.key.hex --phase predict` -> prints the chain head after all
@@ -81,3 +81,72 @@ Key holder on M1 (prints booleans/counts only; never prints secrets):
 - [ ] The secrets directory is not synced (OneDrive/Dropbox) and holds exactly the three files.
 After reveal: `python -m prometheus.cosmos.c3_holdout_D2.verify_reveal --plaintext .. --salt .. --key ..` -> all true
 (with `COSMOS_BROKER=1` it also re-derives every world and seed from the nonce).
+
+## Enforced protocol order (added 2026-09-28, operator directive "COSMOS C3 SUCCESSOR-SEAL")
+Code: `protocol.py` (gates), `custody.py` (key release, result seal, reveal), `evidence.py` (Harmonia bundle),
+`selftest_protocol.py` (negative tests). Every record is a JSON file under `protocol/`, read from the COMMITTED tree
+of `origin/main` (never the working tree), added in exactly one commit and never modified.
+
+| step | record / action | who | refused unless |
+|---|---|---|---|
+| 1 seal | `MANIFEST_D2.json` + `hidden_D2.enc` (commit 95b31a30d) | Nestor | both verify (spec_id, ciphertext sha256), sealed in one commit |
+| 2 firewall audit | `protocol/FIREWALL_AUDIT.json` `{format c3-D2-firewall-audit/1, verdict, auditor, spec_id, code_sha256}` | Odysseus | verdict PASS; commit strictly after the seal; `code_sha256` equals the committed AND the executing bytes of every file in `protocol.AUDITED_FILES` (any later code change = stale audit) |
+| 3 Cosmos commits predictions | `protocol/PREDICTION_COMMITMENT.json` `{format c3-D2-prediction-commitment/1, committer, spec_id, package_sha256}` | Cosmos | commit strictly after the audit; the package run later must hash to exactly this value |
+| 4 designation | `protocol/RUNNER_DESIGNATION.json` `{format c3-D2-runner-designation/1, runner_id, host, designated_by, spec_id}` | custodian | commit strictly after the audit; host is not M2 (SPECTREX5) |
+| 5 key release | `custody.py release-key --runner-id ID --dest DIR` | Nestor | gates 1-4 pass for ID on this host; DIR outside git and outside the secrets dir; once per spec_id |
+| 6 run | `runner.py ... --runner-id ID` | designated runner | gates 1-4 re-checked BEFORE the key file is read; manifest = the sealed one; then PREDICT -> SEAL predictions -> CERTIFY -> CLOSE (existing receipt chain) |
+| 7 result seal | `custody.py result-seal` writes `protocol/RESULT_SEAL.json` `{spec_id, package_sha256, chain_head, result_sha256, ...}`; committed | Nestor | the run closed, its chain verifies, it used the committed package on the sealed set. Only hashes become public; RESULT.json and receipts stay on M1 outside git |
+| 8 reveal | `custody.py reveal --run RUN --dest DIR` | Nestor | gate 5 (RESULT_SEAL) passes and the run on disk matches the sealed chain head and result hash; once; `verify_reveal` runs on the copies |
+| 9 adjudication | `evidence.py --run RUN --out DIR [--revealed DIR]` | for Harmonia | as 8; bundle = protocol records, manifest, ciphertext, receipts, RESULT.json, gate status with every record's commit, receipt verification, reveal verification incl. redraw from the nonce, INDEX of sha256 |
+
+Custody log: `C:/Users/<operator>/nestor_receipts/holdout_D2/custody.jsonl` (M1, outside git), every release,
+seal, reveal and REFUSAL, public fields only.
+
+What the gates are and are not: they make the ORDER mechanical and auditable for everyone who runs this code, and they
+leave a public record of every step. They are not a security boundary against the key holder, since anyone with the
+operator account on M1 can read the key file and decrypt with `sealbox` directly. The boundary against Cosmos is still
+custody: the key, salt and plaintext exist only on M1, outside git, and nothing derived from them except hashes leaves
+M1 before step 8.
+
+Negative tests (`selftest_protocol.py`, `SELFTEST_PROTOCOL.json`): each must be refused with no side effect.
+- Runner refusals, with a non-existent key path, so each refusal proves the gate fired before the key was touched:
+  missing audit, failing audit, code changed after the audit (committed / working tree), commitment before the audit,
+  commitment in the same commit as the audit, audit before the seal, missing commitment, commitment only in the
+  working tree, commitment rewritten, wrong package, missing designation, wrong runner id, wrong host, M2 designated,
+  running on M2, manifest swapped.
+- Custody: key release before the audit, twice, into a git repo, or to the wrong runner; result seal of an unclosed
+  run; reveal before the result seal, twice, or with RESULT.json tampered.
+- Evidence: bundle before the result seal or with truncated receipts.
+- A positive end-to-end path (release -> run -> result seal -> reveal -> bundle, verify_reveal incl. redraw all
+  true).
+- Injected-defect controls (ordering check removed, stale-code check removed, M2 block removed) each make the
+  matching test fail.
+
+## v2 (2026-09-28): repairs after Odysseus's firewall audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/VERDICT.md)
+
+Every blocking finding and every should-fix is repaired in code and has a refusal test in `selftest_protocol.py` (56
+checks + 4 injected-defect controls, SELFTEST_PROTOCOL.json).
+
+| finding | repair | tests |
+|---|---|---|
+| F1 audit binding misses code that runs with the key | `AUDITED_FILES` = the complete import closure of runner + custody + evidence (+ `entry.py`, `allowlist.py`), incl. `c3/probe.py` and the package `__init__` files; verified complete in a fresh process. The key-holding CLIs start ONLY through `entry.py`, run by file path (stdlib only), which verifies every bound file against the governing audit BEFORE importing any prometheus module; the gates re-check the loaded-module closure (`UnboundCodeLoaded`). `protocol/` may hold only the named record files. | closure complete / extra module detected; probe.py edit -> AuditStale; protocol/__init__.py (committed and working tree) -> RecordDirPolluted; unbound loaded code -> UnboundCodeLoaded; entry.py refuses the real repo (no audit); runner.main refuses without entry.py |
+| F2 the predictor can read secrets; AST audit bypassable | package members only `.py/.json/.txt`; the AST audit flags forbidden attributes (np.fromfile, read_text, ...) and ANY reference to a forbidden builtin (aliasing); the runner deletes the released key right after reading it; before any package code is imported the child must FAIL to open the key path, every secret path and the run's receipts (isolation probe, fail closed). The designated runner account must not be the custodian's account (checked), so on M1 the secrets directory is unreadable to it. | .pyc member refused; fromfile / [open][0] flagged; a child that can read a secret path -> ChildNotIsolated; key deleted after read |
+| F3 `origin/main` shadowed by a tag | only fully qualified refs (`refs/remotes/origin/main`); refuses if `refs/tags/origin/main`, `refs/heads/origin/main` or `refs/tags/main` exists; entry fetches with `--no-tags` | short ref -> AmbiguousRef; tag origin/main -> AmbiguousRef |
+| F4 record replaced through a merge | `git log --full-history`; any merge commit touching a record path is refused | forged record merged from a side branch -> RecordRewritten; defect control (plain log) accepts it |
+| S1 unauthenticated records | custodian allow-list on M1 (`allowlist.py`): a governing audit / commitment / designation counts only if its sha256 is listed, which requires a comms message from the record's author (Odysseus / Cosmos / operator or Nestor) containing that sha256 | missing from allow-list -> NotAllowListed; allowlist.add refuses a wrong sender or a message without the sha256 |
+| S2 no re-audit path | versioned `FIREWALL_AUDIT_<n>.json`; the highest n governs; each added once, in increasing commit order; a later FAIL supersedes a PASS; the commitment must follow the GOVERNING audit | re-audit positive; later FAIL -> AuditNotPass; commitment before governing audit -> RecordOrderViolation |
+| S3 thin reveal re-verification | reveal re-verifies the receipt chain, the close record, the package hash, the spec_id and the run nonce | truncated chain -> refused |
+| S4 cherry-picked runs | the designation binds the runner OS account, the exact run parameters and a run nonce; the runner reads the parameters FROM the designation, writes only to `run_<nonce>`, refuses an existing run dir and refuses resume; the result seal carries the nonce | params differ / run dir not run_<nonce> / wrong account -> refused |
+| S5 freshness and hygiene | seal commit and spec_id pinned in code; entry fetches before verifying; released key deleted after read; `firewall_check --all-history` searches every commit (`git log --all -S`) | key deleted after read |
+
+Declared residuals (v2):
+- A process running as the designated runner account can read that process's own memory; the child runs as the same
+  account as the runner (the isolation probe proves it cannot read the key FILE, the secrets or the receipts, not that it
+  cannot read the runner's memory). Mitigation: the runner holds the plaintext only in memory for the run; a stronger
+  option is a low-integrity child token (not implemented).
+- Branch protection on main is OFF (GitHub API 404). Its effect on D2 is contained by S1 (a rewritten history cannot
+  produce allow-listed records) and the pinned seal; enabling it is the operator's decision.
+- `ciphertext_bytes` in the manifest reveals the plaintext length (Odysseus claim 1 note); the current seal cannot change,
+  a future seal should pad.
+- Anyone with the custodian account on M1 can read the secrets (unchanged; "key holder" includes any repo code run by
+  that account, which is why the key-holding CLIs verify code before importing it).

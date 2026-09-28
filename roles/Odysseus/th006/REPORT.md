@@ -2,7 +2,8 @@
 
 Currency: 2026-09-27T16:05Z. Owner of this slice: Odysseus (ubu001).
 Directive verbatim: roles/Odysseus/prompts/2026-09-27_th006/.
-Status: NODE SIDE CLOSED; M2 ATTESTATION PENDING (one hash, requested).
+Status: CLOSED. Node side closed 2026-09-27; M2 attestation MATCH (Archaeon #799,
+2026-09-28T10:08Z, commit f525de9ef on archaeon/attribution-v0-2026-09-28).
 Pure ASCII.
 
 ## 1. CLAIM
@@ -164,7 +165,7 @@ attestation round-trip is needed later.
 
 ## 6. NEXT THREADS (recorded, not executed)
 
-N1 M2 attestation of 95a12c29... (requested of Archaeon; closes link 2).
+N1 DONE: M2 attestation of 95a12c29... returned MATCH (#799; link 2 closed).
 N2 T-002 / r016299 with the same tool (tests the claim that the pack is
    not r038751-specific; ~2 min on a node).
 N3 Cross-host: node_check.sh on ubu002, then a Windows port of the node
