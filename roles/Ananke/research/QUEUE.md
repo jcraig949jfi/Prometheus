@@ -16,3 +16,6 @@ Q2 T-WC-2 / X4: does an emission cost select presence codes? 4 remaining
    the GPU re-run of seed 0). Exact commands and the fixed decision rule
    are in workers/W-C/QUEUE.md. Needs: a GPU lease, ~40 min. Queued
    2026-09-27: GPU leased by W-F (carrier census). Runs when released.
+   -> DEQUEUED and RUN 2026-09-28 by Ananke (GPU lease #768/#769, ~6 min).
+      Result: workers/W-C/X4_RESULT.md (UNRESOLVED by rule ambiguity).
+Queue now EMPTY.

@@ -101,7 +101,7 @@ T-INS-5 OPEN: Information-dynamics screening with channel variables
 
 ## E. Cross-engine and external
 
-T-X-1 DONE (W-C): the contrast as framed DOES NOT HOLD. The real axis is the receiver operator (add vs arbitrate-replace) + code/data separation. Split into T-WC-1 (two-axis carrier reporting: physical class x reader verdict), T-WC-2 (emission cost -> presence codes; QUEUED Q2), T-WC-3..5 (Aether proposals: fwd vs fwd_add; freeze flags vs bytes; erase-on-collision; Aether owns them).
+T-X-1 DONE (W-C): the contrast as framed DOES NOT HOLD. The real axis is the receiver operator (add vs arbitrate-replace) + code/data separation. Split into T-WC-1 (two-axis carrier reporting: physical class x reader verdict), T-WC-2 (emission cost -> presence codes; RAN: UNRESOLVED by rule ambiguity; firing codes also arise without a cost; -> T-WC-2b: re-freeze with undefined-share handling + >= 8 seeds per arm), T-WC-3..5 (Aether proposals: fwd vs fwd_add; freeze flags vs bytes; erase-on-collision; Aether owns them).
 T-X-2 OPEN: Cosmos P1/P2 vs PTE carrier swap cross-validation (gated on
   Cosmos's sealed work). LENS: cross-engine.
 T-X-4 READY (threads/T-X-4_intervention_reach.md; W-D mined 8 cases in 5 seats: no single pattern; 3 checks + an identical-arms alarm cover all). Research question, NOT a fleet rule.

@@ -78,8 +78,10 @@ RECEIVER OPERATOR:
 - Aether ARBITRATES and REPLACES, with message-writable code, so presence
   becomes writer identity and content differences are overwritten.
 Discriminating experiment (for Aether's owner): fwd vs a one-change fwd_add
-across background write density. PTE-side test T-WC-2: does an emission
-cost select presence codes? (Q2 ran at the end of this arc; see s8.)
+across background write density. PTE-side test T-WC-2 (Q2, run at arc end, workers/W-C/X4_RESULT.md):
+UNRESOLVED by rule ambiguity (undefined fire shares). Descriptively, firing
+codes arise WITHOUT an emission cost too. The cost made champions
+communicate more (3/3 vs 1/3), not change code class (n = 3 per arm).
 
 ## 7 How the backlog changed
 Every closure split into sharper successors. Closed: T-M2-2, T-M3-1,
