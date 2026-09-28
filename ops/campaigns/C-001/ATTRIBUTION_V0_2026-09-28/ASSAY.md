@@ -1,57 +1,57 @@
-# Cross-engine attribution assay (directive item 13) -- Archaeon, 2026-09-28
+# Cross-engine attribution assay, v2 after Review 1 (directive item 13) -- Archaeon, 2026-09-28
 
-The same attribution-v0 schema was run over bounded preserved samples. Nothing was re-simulated.
+v1 (ASSAY_v1_SUPERSEDED.md) is kept unedited. Review 1 (review1/REVIEW_1.md, R1-5) showed that its BEE and NPE "material" columns
+were not descent:
+- BEE: copies whose SOURCE ADDRESS lay in the writer's region, stamped as taint (counter-example CX-5a, run on Bellerophon's own
+  traced VM);
+- NPE: positions whose final byte EQUALS the donor's, split by the executing code's location and provenance (CX-5e).
 
-- Adapters: archaeon/attribution/assay.py.
-- Output: assay/ASSAY.json, result_sha256 0ff534181c3db4f2fcb6fea4da70ca13d36d2101e78424e5f47a3194adefbf2c.
-- Input sha256 (M2 evidence):
+The validator certified both ("0 invalid"), because an adapter could write any `via` and count resolution switched off the tiling
+check.
 
-| input | sha256 |
-|---|---|
-| BEE r038751 | b1fef410070c... |
-| BEE r016299 | 83a24a85ba12... |
-| NPE T-003 | 003f50616ef3... |
-| Archaeon block 13 | e95abcc6cb33... |
+Fixes:
+- A5 forbids source_address / value_match;
+- A4 tiles count-resolution records;
+- A16 ties infrastructure logs to infrastructure processes;
+- the adapters now record what the preserved rows actually support.
 
-Full hashes are in ASSAY.json.
+Adapters: archaeon/attribution/assay.py. Output: assay/ASSAY.json (result_sha256 4b29dcc6ccb180f6...). Inputs are the same four
+files as v1, fingerprinted in ASSAY.json.
 
-Every record validated (0 invalid of 211,403). Each engine kept its own mechanisms: the production classes differ per engine, and
-nothing was mapped onto another engine's vocabulary.
+## Result: descent is identifiable in ONE of the three engines' preserved records
 
-| question | BEE r038751 (ENDOGENOUS_COPY) | BEE r016299 (PAIR_EXECUTION) | NPE T-003 (34 births) | Archaeon block 13 (53,185) |
+| question | BEE r038751 | BEE r016299 | NPE T-003 (34) | Archaeon block 13 (53,185) |
 |---|---|---|---|---|
-| producer != some material donor | 0.0% | 0.85% | 8.8% | 3.9% |
-| majority donor != producer | 0.0% | 0.51% | 8.8% | 0.71% |
-| two or more identified donors | 0.0% | 0.66% | 50% | 3.3% |
-| singular parent loses IDENTIFIED structure (other donor >= 10%, new >= 10%, or producer != donor) | 0.0% | 0.85% | 23.5% | 4.9% |
-| material NOT IDENTIFIABLE (>= 10% of loci untraced) | 3.6% | 98.0% | 73.5% | 0% |
-| resemblance mistaken for descent (native label vs IBD majority) | 1.1% (845: label "target", IBD majority writer) | 23% (19,126 "target" vs writer; 7 the reverse) | executor-identity vs material: 15/34 disagree on majority (WHO vs WHAT) | parent chain = executor: 0.71% name a non-majority donor |
-| material without demonstrated later capability (writer-majority children seen writing, never is_sr) | 40% | 99.96% | n/a (capability not recorded; P-11 tests the event) | block-13 probe: about 16% of births (sampling-weighted) are non-copier children; TH-013 item-8 tracking follows them |
-| scaffold dependence | all births need the world (ENDOGENOUS_COPY); capability only in situ | 100% need a partner (PAIR_EXECUTION) | pair-tape co-execution; 25/34 births have victim-context writes | isolated-VM capability of children: SELF_COPY 86.7%, HOST_EXECUTION 47%, NEIGHBOUR_COPY 35% (deep block) |
+| child material identified by descent | NO: written bytes carry no descent record (0% identified) | NO (99.5% of loci unidentified; only unwritten occupant bytes, by construction) | NO (T-003 records the executing code, and value equality at D positions) | YES (native per-byte taint) |
+| producer != some material donor | not identifiable | not identifiable | not identifiable | 3.9% |
+| majority donor != producer | not identifiable | not identifiable | not identifiable | 0.71% (375; host-written) |
+| two or more donors | not identifiable | not identifiable | not identifiable | 3.3% |
+| singular parent loses identified structure | not identifiable | not identifiable | not identifiable | 4.9% |
+| someone other than the writer/donor EXECUTED (carrier, which IS recorded) | 176 births: partner-material code ran (codeprov foreign) | 10,454 births (12.5%) | victim code performed in 25/34; both contexts in 22/34 | neighbour code co-executed in 5,363 (10.1%) |
+| resemblance label vs another reading | label "target" while the ADDRESS reading says writer-majority: 792; the reverse 2,114. **Not a descent test**: both are non-descent readings, and CX-5a shows the address reading can be the wrong one | 18,703 / 2,524 (same caveat) | -- | the parent chain names the executor; the executor is not the majority donor in 375 (0.71%) |
+| capability shown later, in situ (among ADDRESS-writer-majority children seen writing) | is_sr later: 60% | 0.04% (18) | not recorded | not per event (block-13 probes) |
 
-## Reading, engine by engine (what the schema preserved)
-- **BEE.** Descent is almost always one writer (ENDOGENOUS_COPY), so a singular parent loses nothing IDENTIFIED.
-  * But BEE's own `material` field is assigned by resemblance (traced_replay.py: "target" when the child resembles the replaced
-    occupant more than the writer).
-  * It contradicts the traced descent majority in 1.1% (r038751) and 23% (r016299) of births. That is IBS read as IBD, now
-    measured.
-  * In r016299, 98% of births leave >= 10% of loci untraced. The schema carries that as NOT_IDENTIFIABLE instead of inventing a
-    parent.
-  * r016299's writers pass material to children that almost never self-replicate (18 of about 47,770 children seen writing).
-    That is material transmission with ~no capacity transmission, in a PAIR_EXECUTION world.
-- **NPE.** Half of the 34 births have two identified material donors.
-  * The executing context (WHO) and the code material (WHAT) disagree about the majority in 15/34.
-  * A singular parent loses identified structure in 23.5%.
-  * 6/34 are P-11 causal (unchanged).
-  * This is the engine where "parent" is least adequate.
-- **Archaeon.** Production is almost always by the majority donor.
-  * 0.71% are host-written: the executor is not the majority donor. The parent chain names the wrong entity there.
-  * 3.3% have two donors.
-  * Material is fully identified (native taint).
+## What survives from v1
+- Archaeon's column is unchanged: it reads native taint, and the reviewer confirmed it as a descent reading. New in v2: the
+  co-executing neighbour is recorded (5,363 births), where v1 had omitted it.
+- The carrier row (who executed) is recorded natively in all three engines. It shows substantial co-execution everywhere:
+  * BEE r016299: 12.5% of births;
+  * NPE: 22/34 births;
+  * Archaeon: 10.1% of births.
 
-## Limits
-- One or two runs per engine. NPE is 34 events.
-- BEE and NPE material is at count resolution (not per locus), so segments are pseudo-ordered.
-- "Material without capability" uses different rulers per engine (BEE: later is_sr in situ, which confounds with death; Archaeon:
-  isolated VM). These rows are not comparable across engines; they are placed side by side, not pooled.
-- The Archaeon adapter infers host_organism from the material majority (ATTRIBUTION_V0.md F9).
+## What v1 got wrong
+- BEE "the resemblance label contradicts descent in 1.1% / 23%" is UNTESTABLE from the preserved rows. The reviewer's CX-5a is
+  a real traced-VM case where the label is right and the address reading is wrong.
+- NPE "50% two donors, 8.8% producer != donor, 23.5% lossy" measured code location and provenance, not material.
+- The BEE producer was hard-coded to the writer; 10,454 r016299 births ran partner-material code.
+
+## The finding that matters for the program
+The directive's quantitative questions (producer != donor, resemblance mistaken for descent, singular-parent information loss) can
+be answered from the preserved record of only one engine: Archaeon, whose VM carries per-byte material taint.
+
+For BEE and NPE the answer requires a FULL replay with byte-level material provenance. Bellerophon's traced VM keeps a last-writer
+map for the window only (traced_replay.py:83-84). NPE's z8taint tracks the executing code.
+
+This is an instrumentation gap in the other engines' preserved records, not a property of BEE or NPE.
+Recommendation: a material-taint replay (the Archaeon taint-VM pattern) for one BEE run and the T-003 NPE births. That is TH-016's
+replay, extended to per-byte descent. Not launched: other seats' harnesses.

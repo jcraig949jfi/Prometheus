@@ -36,7 +36,31 @@ def mat(*segs, n=G):
     return {"unit": "byte", "n_units": n, "resolution": "per_locus", "segments": list(segs)}
 
 
+def knockouts(loci, subject=None):
+    """knockout dependence entries backing a machinery claim (A17). In fixtures these are AUTHORED, not executed (Review 1 R1-3);
+    real adapters must produce them by execution (th015_archaeon.machinery)."""
+    out = []
+    for p in loci:
+        d = {"target": "machinery", "locus": p, "intervention": "knockout: locus %d set to 0x00" % p, "outcome": "the copy capability",
+             "result": "ceases", "contrast": "unmodified child", "n": 1}
+        if subject: d["subject"] = subject
+        out.append(d)
+    return out
+
+
 def base(eid, subject, performers, process, material, **kw):
+    """donor capability moves from native['donor_capabilities'] (a free field, Review 1 CX-3c) into executed capability claims
+    ABOUT the donor; machinery claims get knockout dependence entries."""
+    nat = dict(kw.pop("native", None) or {}); dcaps = nat.pop("donor_capabilities", {})
+    caps = list(kw.pop("capability", None) or []); dep = list(kw.pop("dependence", None) or [])
+    ents = {s_["entity"] for s_ in material["segments"] if s_.get("source_kind") == "entity"}
+    for ent, ok in dcaps.items():
+        if ent in ents:
+            caps.append({"capability": "exact_self_copy", "result": bool(ok), "subject": ent, "conditions": {"neighbour": "zero"},
+                         "method": "executed", "ruler": "isolated_vm_copy_v0"})
+    for c in caps:
+        if c.get("machinery_loci") and "subject" not in c: dep += knockouts(c["machinery_loci"])
+    kw["native"] = nat; kw["capability"] = caps; kw["dependence"] = dep
     kw.setdefault("contrast", {"baseline": "shares of the child's %d byte loci" % G, "kind": "reference_entity"})
     kw.setdefault("state", {"resemblance": [{"reference": "P", "ibs": 1.0, "units": "byte"}]})
     return S.record(eid, "synthetic", subject, carrier={"performers": performers, "exec_where": S.NI, "exec_what": S.NI},
@@ -68,15 +92,24 @@ def th014_leaky_variants():
         r2 = S.record(**{kk: vv for kk, vv in TH014_LEAK[k].items() if kk not in ("schema",)})
         r2["carrier"] = {"performers": [perf("organism_code", "P")], "exec_where": S.NI, "exec_what": S.NI}
         out[k + "+ORGANISM_CARRIER"] = r2
+        # Review 1 CX-2a/2b: the realistic leak -- process AND carrier both mis-logged as the organism's executed write, while the
+        # material provenance still comes from the infrastructure log. A16 must catch it.
+        r3 = S.record(**{kk: vv for kk, vv in TH014_LEAK[k].items() if kk not in ("schema",)})
+        r3["carrier"] = {"performers": [perf("organism_code", "P")], "exec_where": S.NI, "exec_what": S.NI}
+        r3["production"] = {"process": "executed_write", "evidence": "engine log (mis-logged)"}
+        r3["aggregation"] = [{"label": "SELF_COPY", "rule": "native_flag", "convention": False}]
+        out[k + "+MISLOGGED_CHANNEL"] = r3
     return out
 
 
 # ------------------------------------------------------------------ adversarial reproduction cases (directive item 3 + ours)
-def _adv(eid, performers, process, material, caps, intended, why, resemblance=None, dependence=None, native=None):
+def _adv(eid, performers, process, material, caps, intended, why, resemblance=None, dependence=None, native=None, origin="directive"):
+    """origin: 'directive' (the operator's item-3 list), 'archaeon' (added by the author), 'artemis', 'review1' (added from Review 1's
+    counter-examples). The verdicts are AUTHORED; Review 1 showed that which definition 'wins' depends on which cases are included."""
     r = base(eid, "C", performers, process, material, capability=caps, dependence=dependence or [],
              state={"resemblance": resemblance if resemblance is not None else [{"reference": "P", "ibs": 1.0, "units": "byte"}]},
              native=dict({"donor_capabilities": {"P": True, "N": True, "A": True, "B": True}}, **(native or {})))
-    return {"record": r, "intended": intended, "why": why}
+    return {"record": r, "intended": intended, "why": why, "origin": origin}
 
 
 VARIANT_OK = {"target": "material", "intervention": "variant: flip a non-machinery byte in the donor before copying",
@@ -92,7 +125,7 @@ ADVERSARIAL = {
         "Artemis FR-011's NPE BYTEWISE case: a 0x36 homopolymer paints memory with its own operand byte; every child locus is IBD "
         "from ONE parent locus. It reproduces (the capability and its machinery descend), but transmits about one byte and no "
         "heritable variant survives. P-11 cannot tell it from copying; source_diversity (1/32 vs 1.0) can",
-        dependence=[VARIANT_DEAD]),
+        dependence=[VARIANT_DEAD], origin="artemis"),
     "homopolymer_painter": _adv(
         "adv.painter", [perf("organism_code", "P")], "executed_write", mat(seg(0, 32, "new_constant", via="taint")),
         [cap("none_demonstrated", True), cap("exact_self_copy", False)], {"reproduction": False, "hereditary": False},
@@ -122,9 +155,11 @@ ADVERSARIAL = {
         "copies only when the environment supplies input 128; reproduction, qualified by the scaffold", dependence=[VARIANT_OK]),
     "host_executed_copier": _adv(
         "adv.host", [perf("host_organism", "H")], "executed_write", mat(seg(0, 32, entity="N", src_lo=0)),
-        [cap("exact_self_copy", False), cap("host_assisted_copy", True, {"neighbour": "host:H-class"}, machinery=[])],
+        [cap("exact_self_copy", False), cap("host_assisted_copy", True, {"neighbour": "host:H-class"})],
         {"reproduction": True, "hereditary": True, "qualifier": "HOST_ASSISTED"},
-        "Tierra parasite: H's code copies N's material; N reproduces through H, not by itself",
+        "Tierra parasite: H's code copies N's material; N reproduces through H, not by itself. N HAS local machinery (its template "
+        "/ jump loci: knocking them out removes host-assisted copying) -- corrected after Review 1, which showed machinery=[] is "
+        "wrong about Tierra",
         resemblance=[{"reference": "N", "ibs": 1.0, "units": "byte"}], dependence=[VARIANT_OK]),
     "recombined_offspring": _adv(
         "adv.recomb", [perf("organism_code", "A")], "executed_write", mat(seg(0, 16, entity="A", src_lo=0), seg(16, 32, entity="B", src_lo=16)),
@@ -159,6 +194,25 @@ ADVERSARIAL = {
         "an unrelated writer produces bytes identical to P from its inputs; the child copies, but nothing descends from P",
         native={"donor_capabilities": {}}),
 }
+
+
+for _k in ("trace_material_constructed_copier", "machinery_synonymous_mutation", "harness_copy", "ibs_without_ibd"):
+    ADVERSARIAL[_k]["origin"] = "archaeon"
+
+VARIANT_DESC = dict(VARIANT_OK, intervention="variant: flip a description byte in the donor before copying")
+# Review 1 counter-examples, adopted as cases (their verdicts are the reviewer's, argued in REVIEW_1.md)
+ADVERSARIAL["universal_copier_junk"] = _adv(
+    "adv.junk", [perf("host_organism", "H")], "executed_write", mat(seg(0, 32, entity="J", src_lo=0)),
+    [cap("host_assisted_copy", True, {"neighbour": "host:H-class"}, machinery=[])], {"reproduction": False, "hereditary": False},
+    "Review 1 CX-3a: a host with a universal copier copies inert junk J (J cannot copy, no locus of J matters). Pure cargo moved "
+    "under a host; not reproduction of J", resemblance=[{"reference": "J", "ibs": 1.0, "units": "byte"}],
+    native={"donor_capabilities": {"J": False}}, origin="review1")
+ADVERSARIAL["von_neumann_constructor_description"] = _adv(
+    "adv.vn", [perf("organism_code", "P")], "executed_write", mat(seg(0, 16, "new_computed"), seg(16, 32, entity="P", src_lo=16)),
+    [cap("exact_self_copy", True)], {"reproduction": True, "hereditary": True},
+    "Review 1 CX-3b: von Neumann's architecture. The description [16,32) is copied from P; the constructor [0,16), where the copy "
+    "machinery sits, is BUILT from the description. The canonical self-reproducing automaton; machinery transmits as information, "
+    "not as material", resemblance=[{"reference": "P", "ibs": 1.0, "units": "byte"}], dependence=[VARIANT_DESC], origin="review1")
 
 
 # ------------------------------------------------------------------ directive item 2: structures the record must hold

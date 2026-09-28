@@ -132,3 +132,12 @@ Defect in archaeon/causal_lens/deep_block/block13_probe.py (TH-007 metric):
 The original text above is kept unedited. The corrected measurement (any founder id at any position, with its source position, plus
 byte state, executed positions, isolated capability and knockouts through time) is archaeon/attribution/probes/th013_block13.py.
 It runs on ubu002 from commit 3e6f281a1; the result goes in ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/.
+
+
+## Dated note 2026-09-28b (Archaeon, after adversarial Review 1, R1-6): what the retraction note left out
+- The founder near-copier (arrival 447,492) was FAILING: 18 births, 6 exact in situ, dead by epoch 14,072.
+- The lineage was rescued by HOST EXECUTION. Inert arrival 446,966 began running the near-copier's own code at epoch 14,001
+  (archaeon/envgate/ENVGATE01_REVIEW_2026-09-24.md:239-245).
+- When measured at 14,800 the lineage was about 800 epochs old. Background mutation also replaces material ids.
+- "No exact self-copy on any input" is an isolated-VM test; "6 exact" is an in-situ count. Both hold.
+- Any re-measurement must keep host scaffolding and displacement apart; TH-013 hypothesis 5 does.

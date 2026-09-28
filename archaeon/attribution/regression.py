@@ -53,10 +53,9 @@ CASES = {
     "npe_p11_failing_overwrite": _c(
         base("reg.npe.p11fail", "victim_slot", [perf("organism_code", "donor"), perf("neighbour_organism", "partner", role="co_performer")],
              "executed_write", mat(seg(0, 40, entity="donor", src_lo=0), seg(40, 64, "new_computed"), n=64),
-             capability=[cap("exact_self_copy", False, {"neighbour": "random_victim", "p11": "C2"}, method="replayed", ruler="NPE P-11 C2")],
              dependence=[{"target": "carrier", "intervention": "P-11 C2: re-implant donor against a random victim", "outcome": "overwrite recurs",
                           "result": "ceases", "contrast": "actual victim", "n": 1}]),
-        {"class": "SELF_CONSTRUCTED_WITH_HELP", "reproduction": False},
+        {"class": "SELF_CONSTRUCTED_WITH_HELP", "capability": None},
         [L("causal_reproduction"), L("reproduction")],
         "NPE predecessor-admitted births: only 6/34 are P-11 causal (W1; DEEP_BLOCK REPORT s4 item 5)", "NPE"),
     "low_entropy_painter": _c(
@@ -66,13 +65,14 @@ CASES = {
         {"class": "ORGANISM_WRITTEN_NEW_MATERIAL", "reproduction": False},
         [L("descends_from", "painter"), L("SELF_COPY"), L("reproduction")],
         "block-copy-free low-entropy writers passing fidelity-by-resemblance (BEE first_replication on junk; FF-4/FF-27)", "BEE"),
-    "archaeon_self_cross": _c(
-        base("reg.arch.selfcross", "child", [perf("organism_code", "A")], "executed_write",
-             mat(seg(0, 20, entity="A", src_lo=0), seg(20, 32, entity="A", src_lo=20)), capability=[cap("exact_self_copy", True)],
-             native={"donor_capabilities": {"A": True}}),
-        {"class": "SELF_CONSTRUCTED", "donors": 1, "reproduction": True},
+    "pte_ga_self_cross": _c(
+        base("reg.pte.selfcross", "child", [perf("recombination_operator", "search.py crossover")], "recombination_operator",
+             mat(seg(0, 32, entity="A", src_lo=0, via="operator_log"), seg(32, 64, entity="A", src_lo=32, via="operator_log"), n=64)),
+        {"class": "OPERATOR_RECOMBINATION", "donors": 1, "reproduction": False},
         [L("recombinant"), L("mixed_parent")],
-        "E-002: the 1/16 tie is a self-cross (DEEP_BLOCK REPORT s1)", "Archaeon"),
+        "E-002: the 1/16 tie is a self-cross of a PTE genetic-algorithm crossover (a == b; A_E002_REVIEW.md:13; "
+        "E-002/T-008_T-011_RESULTS.md:32-36). Corrected after Review 1 (R1-4), which found it had been encoded as an Archaeon "
+        "organism's executed write", "PTE"),
     "bee_external_crossover_true_mixed": _c(
         base("reg.bee.xover", "child", [perf("recombination_operator", "EXTERNAL")], "recombination_operator",
              mat(seg(0, 30, entity="A", src_lo=0, via="operator_log"), seg(30, 64, entity="B", src_lo=30, via="operator_log"), n=64)),
@@ -89,7 +89,7 @@ CASES = {
     "archaeon_parent_chain_is_executor": _c(
         base("reg.arch.hostexec", "child", [perf("host_organism", "H")], "executed_write", mat(seg(0, 32, entity="N", src_lo=0)),
              state={"resemblance": [{"reference": "N", "ibs": 1.0, "units": "byte"}]},
-             capability=[cap("host_assisted_copy", True, {"neighbour": "host:H-class"}, machinery=[])],
+             capability=[cap("host_assisted_copy", True, {"neighbour": "host:H-class"})],
              native={"donor_capabilities": {"N": True}}),
         {"class": "HOST_WRITTEN", "reproduction": True},
         [L("parent_id", "H", rule="SINGULAR_MATERIAL_PARENT", convention=True), L("SELF_COPY"), L("descends_from", "H")],

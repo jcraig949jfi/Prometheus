@@ -21,7 +21,10 @@ def production_class(rec) -> str:
     if ch == "physics": return "PHYSICS_" + proc.upper()
     if ch != "organism": return "UNKNOWN_PRODUCTION"
     d = S.donors(rec); prod = S.producer_ids(rec); kinds = {p["kind"] for p in S.performers(rec)}
-    if not d: return "ORGANISM_WRITTEN_NEW_MATERIAL"                       # painter / originator: no material descends
+    if not d:
+        m = rec["material"]; n = m.get("n_units") or 1
+        unk = sum(x["loci"][1] - x["loci"][0] for x in m["segments"] if x["source_kind"] == "unknown") / n
+        return "MATERIAL_NOT_IDENTIFIED" if unk >= 0.5 else "ORGANISM_WRITTEN_NEW_MATERIAL"   # else painter / originator
     if len(d) > 1:
         return "ORGANISM_RECOMBINATION" + ("_SELF_INCLUDED" if set(d) & prod else "_BY_THIRD_PARTY")
     (donor, _), = d.items()
@@ -34,9 +37,8 @@ def production_class(rec) -> str:
 def transmission(rec, theta=0.5) -> dict:
     d = S.donors(rec); top = max(d.values()) if d else 0.0
     material = top > 0.0
-    donor_caps = rec["native"].get("donor_capabilities", {})           # capability claims about the donor(s), executed, if recorded
-    child_cap = S.reproduces(rec)
-    capacity = None if child_cap is None else bool(child_cap and material and any(donor_caps.get(k) for k in d))
+    child_cap = S.reproduces(rec)                                        # donor capability = executed claims ABOUT the donor
+    capacity = None if child_cap is None else bool(child_cap and material and any(S.donor_capable(rec, k) for k in d))
     her = [x for x in rec["dependence"] if x.get("target") == "material" and "variant" in x.get("intervention", "")]
     hereditary = None if not her or all(x["result"] == "not_tested" for x in her) else any(x["result"] == "persists" for x in her)
     return {"material": material, "material_top_share": round(top, 6), "capacity": capacity, "hereditary": hereditary}
@@ -87,20 +89,28 @@ def D5_CAPACITY(rec):
     return S.channel(rec) == "organism" and bool(transmission(rec)["capacity"])
 
 
+def D5T_CAPABLE_MATERIAL(rec, theta=0.5):
+    """(added after Review 1) organism-channel production AND the child demonstrably copies AND capable donors supplied >= theta of
+    the child's material (any loci, not only machinery)."""
+    if S.channel(rec) != "organism" or not S.reproduces(rec): return False
+    return sum(v for k, v in S.donors(rec).items() if S.donor_capable(rec, k)) >= theta
+
+
 def D6_HEREDITARY(rec):
-    """D5 AND a named variant introduced in the donor is transmitted to a child that is still capable (heritable variation)."""
-    return D5_CAPACITY(rec) and transmission(rec)["hereditary"] is True
+    """(not a reproduction predicate; kept in the table for contrast) organism channel AND the child copies AND a named variant
+    introduced in the donor reaches a still-capable child. Built on no other definition (Review 1 CX-3b found it built on D5)."""
+    return S.channel(rec) == "organism" and bool(S.reproduces(rec)) and transmission(rec)["hereditary"] is True
 
 
 def machinery_ibd(rec):
     """share of the child's machinery loci (from its positive executed capability claims) whose material descends from a donor that
-    could copy. None when no positive claim lists machinery; 'RELATIONAL' when the only positive claims have no local machinery
-    (host-assisted: what is transmitted is a relation to the host, not a local object)."""
-    caps = [c for c in rec["capability"] if c.get("method") in S.CAP_METHODS_OK and c["result"] and "machinery_loci" in c]
+    could copy. None when no positive claim lists machinery or the machinery is empty. (Review 1 CX-3a: the former 'RELATIONAL'
+    pass for empty machinery let a universal copier make inert junk 'reproduce'; a Tierra parasite HAS local machinery.)"""
+    caps = [c for c in rec["capability"] if c.get("method") in S.CAP_METHODS_OK and c["result"] and c.get("machinery_loci")
+            and S.about(rec, c) == rec["subject"]]
     if not caps: return None
     loci = sorted({p for c in caps for p in c["machinery_loci"]})
-    if not loci: return "RELATIONAL"
-    ok = rec["native"].get("donor_capabilities", {}); src = {}
+    ok = {k: S.donor_capable(rec, k) for k in S.donors(rec)}; src = {}
     for s_ in rec["material"]["segments"]:
         for p in range(*s_["loci"]): src[p] = s_.get("entity") if s_["source_kind"] == "entity" else None
     return sum(1 for p in loci if src.get(p) is not None and ok.get(src[p])) / len(loci)
@@ -108,10 +118,10 @@ def machinery_ibd(rec):
 
 def D7_MACHINERY_IBD(rec, theta=0.5):
     """organism-channel production AND the child demonstrably copies AND >= theta of the loci its copying depends on (knockout-
-    defined machinery) descend from a capable donor. Host-assisted children pass as RELATIONAL (the capacity is not local)."""
+    defined machinery) descend from a capable donor."""
     if S.channel(rec) != "organism" or not S.reproduces(rec): return False
     m = machinery_ibd(rec)
-    return m == "RELATIONAL" and bool(S.donors(rec)) or (isinstance(m, float) and m >= theta)
+    return m is not None and m >= theta
 
 
 def D7_STRICT(rec):
@@ -121,12 +131,13 @@ def D7_STRICT(rec):
 
 DEFINITIONS = {"D1_RESEMBLANCE": D1_RESEMBLANCE, "D2_MATERIAL": D2_MATERIAL, "D3_BYTE_IDENTITY": D3_BYTE_IDENTITY,
                "D3F_FOUNDER_MATERIAL": D3F_FOUNDER_MATERIAL, "D4_ORGANISM_MATERIAL": D4_ORGANISM_MATERIAL, "D5_CAPACITY": D5_CAPACITY,
+               "D5T_CAPABLE_MATERIAL": D5T_CAPABLE_MATERIAL,
                "D6_HEREDITARY": D6_HEREDITARY, "D7_MACHINERY_IBD": D7_MACHINERY_IBD, "D7_STRICT": D7_STRICT}
 
 
 def qualifier(rec) -> str:
     """how the child's demonstrated capability is conditioned: AUTONOMOUS / SCAFFOLDED / HOST_ASSISTED / NONE / UNTESTED."""
-    caps = [c for c in rec["capability"] if c.get("method") in S.CAP_METHODS_OK and c["result"]
+    caps = [c for c in rec["capability"] if c.get("method") in S.CAP_METHODS_OK and c["result"] and S.about(rec, c) == rec["subject"]
             and c["capability"] not in ("none_demonstrated", "transmits_capability")]
     if not caps: return "UNTESTED" if S.reproduces(rec) is None else "NONE"
     if any(c.get("conditions", {}).get("neighbour") in (None, "zero") and not c.get("conditions", {}).get("scaffold") for c in caps):

@@ -21,7 +21,7 @@ Why this is not the four-axis (CARRIER / RELATION / CONTRAST / AGGREGATION) mode
 to split into material (IBD), state (IBS), production and dependence, which have different chaining behaviour; and capability is a
 property of an entity under conditions, not a relation between events, so it is a fifth axis.
 
-`check(rec)` returns a list of violations (empty = valid). Rule ids are A1..A15; each is documented at its test.
+`check(rec)` returns a list of violations (empty = valid). Rule ids are A1..A17; each is documented at its test.
 """
 from __future__ import annotations
 
@@ -48,7 +48,11 @@ PROCESSES = {
 SOURCE_KINDS = {"entity", "new_mutation", "new_input", "new_constant", "new_computed", "new_unspecified", "unknown"}
 # how a material source was established; a location / executor / context reading is NOT material evidence (J21 carried over)
 MATERIAL_VIA = {"taint", "provenance_log", "harness_log", "replay_taint", "operator_log", "by_construction"}
-FORBIDDEN_VIA = {"location", "pc", "executor", "context", "label", "resemblance", "ibs"}
+FORBIDDEN_VIA = {"location", "pc", "executor", "context", "label", "resemblance", "ibs",
+                 "source_address", "value_match"}      # Review 1 CX-5a / CX-5e: an address or an equal byte is not descent
+INFRA_VIA = {"harness_log", "operator_log"}            # material established by an infrastructure log (A16)
+# A1: key tokens that smuggle a singular parent back in (Review 1 CX-1a); matched on whole "_"-separated tokens (CX-1b)
+PARENT_TOKENS = {"parent", "parents", "ancestor", "ancestors", "template", "progenitor"}
 CAPABILITIES = {"exact_self_copy", "approximate_self_copy", "conditional_copy", "host_assisted_copy", "scaffold_dependent_copy",
                 "transmits_capability", "none_demonstrated"}
 CAP_METHODS_OK = {"executed", "replayed"}
@@ -150,10 +154,35 @@ def capability_of(rec, cap, **cond) -> object:
     return None
 
 
-def reproduces(rec, autonomous=None) -> object:
-    """any executed positive copy capability (optionally restricted to autonomous = zero neighbour / no scaffold)."""
+def about(rec, c) -> str:
+    """the entity a capability claim is about: the record's subject unless the claim names another (e.g. a donor)."""
+    return c.get("subject") or rec["subject"]
+
+
+def donor_capable(rec, ent) -> object:
+    """True/False from an executed positive/negative copy claim ABOUT `ent` (Review 1 CX-3c: donor capability is evidence, not a
+    free native field); None when untested."""
     seen = False
     for c in rec["capability"]:
+        if about(rec, c) != ent or c.get("method") not in CAP_METHODS_OK or c["capability"] in ("none_demonstrated", "transmits_capability"):
+            continue
+        seen = True
+        if c["result"]: return True
+    return False if seen else None
+
+
+def knockout_backed(rec, c) -> bool:
+    """every listed machinery locus has a knockout dependence entry (target machinery, result ceases) for the same subject (A17)."""
+    ko = {d.get("locus") for d in rec["dependence"] if d.get("target") == "machinery" and d.get("result") == "ceases"
+          and (d.get("subject") or rec["subject"]) == about(rec, c)}
+    return all(p in ko for p in c.get("machinery_loci", []))
+
+
+def reproduces(rec, autonomous=None) -> object:
+    """any executed positive copy capability OF THE SUBJECT (optionally restricted to autonomous = zero neighbour / no scaffold)."""
+    seen = False
+    for c in rec["capability"]:
+        if about(rec, c) != rec["subject"]: continue
         if c.get("method") not in CAP_METHODS_OK or c["capability"] in ("none_demonstrated", "transmits_capability"): continue
         seen = True
         auto = c.get("conditions", {}).get("neighbour") in (None, "zero") and not c.get("conditions", {}).get("scaffold")
@@ -170,9 +199,16 @@ def check(rec) -> List[str]:
     extra = set(rec) - TOP_KEYS
     if extra: v.append("A1 unknown top-level keys %s (no universal parent field)" % sorted(extra))
     if miss: return v
-    for part in ("carrier", "production", "material", "state"):
-        for k in rec[part]:
-            if "parent" in k.lower(): v.append("A1 %s.%s: parent fields are allowed only as an aggregation convention" % (part, k))
+    def keys(x, path):
+        if isinstance(x, dict):
+            for k, y in x.items():
+                yield path + "." + str(k), str(k); yield from keys(y, path + "." + str(k))
+        elif isinstance(x, list):
+            for i, y in enumerate(x): yield from keys(y, "%s[%d]" % (path, i))
+    for part in ("carrier", "production", "material", "state", "dependence", "capability"):
+        for path, k in keys(rec[part], part):
+            if set(k.lower().split("_")) & PARENT_TOKENS:
+                v.append("A1 %s: parent/template/ancestor fields are allowed only as an aggregation convention" % path)
     # A2 production / carrier consistency: the process must be carried by a performer of a matching kind (harness-leak guard)
     proc = rec["production"].get("process")
     if proc not in PROCESSES: v.append("A2 unknown process %r" % proc)
@@ -191,7 +227,9 @@ def check(rec) -> List[str]:
         v.append("A3 carrier.exec_what sourced from %s (a WHO/WHERE reading, not material)" % ew.get("via"))
     # A4 material: per-locus segments tile the child; sources established by material evidence
     m = rec["material"]; n = m.get("n_units") or 0
-    if m.get("resolution") == "per_locus":
+    if m.get("resolution") == NI and any(s["source_kind"] == "entity" for s in m["segments"]):
+        v.append("A4 NOT_IDENTIFIABLE material cannot name donors")
+    if m.get("resolution") in ("per_locus", "counts"):             # counts are pseudo-ordered but must still tile (Review 1 CX-5c/5d)
         cov = [0] * n
         for s in m["segments"]:
             lo, hi = s["loci"]
@@ -203,6 +241,9 @@ def check(rec) -> List[str]:
         if s["source_kind"] == "entity" and not s.get("entity"): v.append("A4 entity segment without an entity")
         if s.get("via") in FORBIDDEN_VIA: v.append("A5 material at %s sourced from %s (not material evidence)" % (s["loci"], s["via"]))
         elif s["source_kind"] == "entity" and s.get("via") not in MATERIAL_VIA: v.append("A5 material via %r is not a recognised material channel" % s.get("via"))
+        if s.get("via") in INFRA_VIA and channel(rec) != "infrastructure":
+            v.append("A16 material at %s comes from an infrastructure log (%s) but the process is %s (mis-logged channel)"
+                     % (s["loci"], s["via"], rec["production"].get("process")))
     # A6 dependence names the intervention AND the outcome
     for i, d in enumerate(rec["dependence"]):
         if not d.get("intervention"): v.append("A6 dependence[%d] names no intervention" % i)
@@ -217,6 +258,8 @@ def check(rec) -> List[str]:
             v.append("A7 capability[%d] positive claim by %r (must be executed/replayed, not inferred from a label)" % (i, c.get("method")))
         if c.get("method") in CAP_METHODS_OK and (not c.get("ruler") or "conditions" not in c):
             v.append("A7 capability[%d] executed claim without ruler/conditions" % i)
+        if c.get("machinery_loci") and not knockout_backed(rec, c):
+            v.append("A17 capability[%d] lists machinery loci without a knockout dependence entry for each" % i)
     # A8 descent labels need material descent; resemblance alone is IBS, not IBD
     labels = {a.get("label") for a in rec["aggregation"]}
     if labels & DESCENT_LABELS and not donors(rec):
@@ -228,6 +271,8 @@ def check(rec) -> List[str]:
     for a in rec["aggregation"]:
         if a.get("label") in REPRO_LABELS and not a.get("convention") and not reproduces(rec):
             v.append("A14 %s asserted without an executed copy capability (labels are not capability)" % a["label"])
+        if a.get("label") in REPRO_LABELS and channel(rec) != "organism":      # a convention cannot override the channel (CX-2c)
+            v.append("A14 %s on a %s-channel event" % (a["label"], channel(rec)))
     # A15 recombinant labels need two or more distinct material donors (a self-cross is one donor)
     if labels & RECOMB_LABELS and len(donors(rec)) < 2:
         v.append("A15 %s with %d distinct material donor(s)" % (sorted(labels & RECOMB_LABELS), len(donors(rec))))

@@ -53,8 +53,10 @@ def bee_records(d, L=64):
         w, child, nw, own = "bee:%d" % r[1], "bee:%d" % r[2], r[7], r[8]
         retained = 0 if r[19] else L - nw
         occ = "bee:occupant_of_slot_before_%d" % r[2]
+        # Review 1 CX-5a: field 8 counts copies whose SOURCE ADDRESS is < L. The writer's region can hold the partner's bytes
+        # copied there earlier in the same execution, so it is a location reading, not descent. Written bytes are therefore
+        # NOT identified; only the unwritten (retained) bytes are the occupant's material by construction.
         segs = []; p = 0
-        if own: segs.append(seg(p, p + own, entity=w, via="replay_taint")); p += own
         if retained: segs.append(seg(p, p + retained, entity=occ, via="by_construction")); p += retained
         if L - p: segs.append(seg(p, L, "unknown"))
         n_code = sum(c.values())
@@ -66,8 +68,10 @@ def bee_records(d, L=64):
                          "conditions": {"neighbour": "in_situ_partner", "scaffold": "BEE world (%s)" % r[3]}})
         rec = S.record("bee:%s:%d" % (d["rid"], r[2]), "BEE", child, source="%s births_rows" % d["rid"],
                        native={"mechanism": r[3], "material_label": r[6], "is_sr": r[11], "fid_writer": r[4], "fid_target": r[5],
-                               "later_writer": r[2] in any_writers, "later_sr": r[2] in sr_writers, "donor_capabilities": {w: bool(r[11])}},
-                       carrier={"performers": [{"kind": "organism_code", "id": w, "role": "performer"}],
+                               "later_writer": r[2] in any_writers, "later_sr": r[2] in sr_writers,
+                               "copied_from_own_region_ADDRESS": own, "written": nw, "row_consistent": own <= nw},
+                       carrier={"performers": [{"kind": "organism_code", "id": w, "role": "performer"}] +
+                                ([{"kind": "neighbour_organism", "id": occ, "role": "performer"}] if c["foreign"] else []),
                                 "exec_where": {"own": r[13], "window": r[14], "other": r[15]}, "exec_what": what},
                        production={"process": "executed_write", "evidence": "traced VM write log"},
                        material={"unit": "byte", "n_units": L, "resolution": "counts", "segments": segs},
@@ -88,20 +92,23 @@ def npe_records(d):
             don = s(lambda w_, l, m: (l == "donor_half" and m == "original") or m == "changed_by_donor")
             vic = s(lambda w_, l, m: (l == "victim_half" and m == "original") or m == "changed_by_victim")
             vctx = s(lambda w_, l, m: w_ == "victim_ctx")
-            segs = []; p = 0
-            for ent, k in (("npe:donor", don), ("npe:victim", vic)):
-                if k: segs.append(seg(p, p + k, entity=ent, via="replay_taint")); p += k
-            if n - p: segs.append(seg(p, n, "unknown"))
-            perf = [{"kind": "organism_code", "id": "npe:donor", "role": "performer"}]
-            if vctx: perf.append({"kind": "neighbour_organism", "id": "npe:victim", "role": "performer"})
+            # Review 1 CX-5e: T-003's D positions are where the final byte EQUALS the donor's byte (identity by state), and
+            # WHO|WHERE|WHAT describes the EXECUTING code (carrier). Neither is descent of the child's bytes: material is
+            # NOT_IDENTIFIABLE from T-003; the value match goes to state.resemblance.
+            segs = [seg(0, n, "unknown")]
+            dctx = s(lambda w_, l, m: w_ == "donor_ctx")
+            perf = ([{"kind": "organism_code", "id": "npe:donor", "role": "performer"}] if dctx else []) + \
+                   ([{"kind": "neighbour_organism", "id": "npe:victim", "role": "performer"}] if vctx else [])
+            perf = perf or [{"kind": "unknown", "id": "npe:?", "role": "performer"}]
             dep = [{"target": "carrier", "intervention": "P-11 %s" % k, "outcome": "the overwrite recurs", "contrast": "native P-11 arm",
                     "result": "persists" if b.get("native_" + k) else "ceases"} for k in ("C2", "C4", "C5") if ("native_" + k) in b]
             out.append(S.record("npe:%s:%s" % (run["name"], b["child"]), "NPE", "npe:child", source="T-003 %s" % run["name"],
                                 native={"causal": b.get("native_causal"), "donor_authored_share": b.get("native_donor_authored_share"),
-                                        "D": b["D"], "vctx_share": vctx / D, "donor_capabilities": {}},
+                                        "D": b["D"], "vctx_share": vctx / D},
                                 carrier={"performers": perf, "exec_where": S.NI, "exec_what": {"via": "replay_taint", "donor": don / D, "victim": vic / D}},
                                 production={"process": "executed_write", "evidence": "z8taint write log"},
                                 material={"unit": "byte", "n_units": n, "resolution": "counts", "segments": segs},
+                                state={"resemblance": [{"reference": "npe:donor", "ibs": round(b["D"] / n, 4), "units": "byte (lower bound: D only)"}]},
                                 dependence=dep, contrast=_contrast(n)))
     return out
 
@@ -116,11 +123,12 @@ def arch_records(d, G=32):
             if k: segs.append(seg(p, p + k, entity=ent, via="taint")); p += k
         if e["computed"]: segs.append(seg(p, p + e["computed"], "new_computed")); p += e["computed"]
         if G - p: segs.append(seg(p, G, "new_unspecified"))
-        kind = "organism_code" if nE >= nN else "host_organism"
+        kind = "organism_code" if nE >= nN else "host_organism"      # F9: kind derived from the material majority (circular)
+        co = [{"kind": "neighbour_organism", "id": nb, "role": "co_performer"}] if (e.get("exec_counts") or {}).get("nbr") else []
         out.append(S.record("arch:b13:%d" % len(out), "Archaeon", "arch:child@cell%d" % e["child_cell"], source="A4 block 13 watched",
                             native={"mechanism": e.get("mechanism"), "template": e["template"], "executed_material": e["executed_material"],
-                                    "executor_glin": e["executor_glin"], "donor_capabilities": {}},
-                            carrier={"performers": [{"kind": kind, "id": ex, "role": "performer"}], "exec_where": S.NI,
+                                    "executor_glin": e["executor_glin"]},
+                            carrier={"performers": [{"kind": kind, "id": ex, "role": "performer"}] + co, "exec_where": S.NI,
                                      "exec_what": {"via": "taint", "executed_material": e["executed_material"], "counts": e["exec_counts"]}},
                             production={"process": "executed_write", "evidence": "taint VM"},
                             material={"unit": "byte", "n_units": G, "resolution": "counts", "segments": segs}, contrast=_contrast(G)))
@@ -159,15 +167,14 @@ def main(out_dir):
     for key in ("BEE_r038751", "BEE_r016299"):
         d = json.load(open(INPUTS[key])); recs = bee_records(d)
         q = questions(recs, key)
-        lab_wrong = [r for r in recs if S.donors(r) and r["native"]["material_label"] == "writer"
-                     and max(S.donors(r), key=S.donors(r).get) != r["carrier"]["performers"][0]["id"]]
-        lab_t_wrong = [r for r in recs if S.donors(r) and r["native"]["material_label"] == "target"
-                       and max(S.donors(r), key=S.donors(r).get) == r["carrier"]["performers"][0]["id"]]
-        q["native_material_label_contradicts_IBD_majority"] = round((len(lab_wrong) + len(lab_t_wrong)) / len(recs), 4)
-        q["native_label_writer_but_IBD_majority_not_writer"] = len(lab_wrong)
-        q["native_label_target_but_IBD_majority_writer"] = len(lab_t_wrong)
-        maj_w = [r for r in recs if S.donors(r).get(r["carrier"]["performers"][0]["id"], 0) >= 0.5]
-        q["writer_majority_children"] = len(maj_w)
+        # NOT a descent test (Review 1 CX-5a): the resemblance label vs the source-ADDRESS reading; both are non-descent readings
+        addr_w = lambda r: r["native"]["copied_from_own_region_ADDRESS"] >= 32
+        q["label_target_vs_address_majority_writer"] = sum(1 for r in recs if r["native"]["material_label"] == "target" and addr_w(r))
+        q["label_writer_vs_address_minority"] = sum(1 for r in recs if r["native"]["material_label"] == "writer" and not addr_w(r))
+        q["rows_inconsistent_own_gt_written"] = sum(1 for r in recs if not r["native"]["row_consistent"])
+        q["partner_code_executed_births"] = sum(1 for r in recs if len(r["carrier"]["performers"]) > 1)
+        maj_w = [r for r in recs if addr_w(r)]
+        q["address_writer_majority_children"] = len(maj_w)
         q["of_which_later_sr"] = sum(1 for r in maj_w if r["native"]["later_sr"])
         q["of_which_never_seen_writing"] = sum(1 for r in maj_w if not r["native"]["later_writer"])
         seen = [r for r in maj_w if r["native"]["later_writer"]]
@@ -180,11 +187,14 @@ def main(out_dir):
         res["engines"][key] = q
     d = json.load(open(INPUTS["NPE_T003"])); recs = npe_records(d); q = questions(recs, "NPE_T003")
     q["p11_causal"] = sum(1 for r in recs if r["native"]["causal"])
+    q["victim_code_performed"] = sum(1 for r in recs if any(p["id"] == "npe:victim" for p in r["carrier"]["performers"]))
+    q["both_contexts_performed"] = sum(1 for r in recs if len(r["carrier"]["performers"]) == 2)
     q["victim_context_wrote_some"] = sum(1 for r in recs if r["native"]["vctx_share"] > 0)
     q["native_donor_authored_vs_replay_donor_material"] = [(r["native"]["donor_authored_share"], r["carrier"]["exec_what"]["donor"]) for r in recs][:34]
     res["engines"]["NPE_T003"] = q
     d = json.load(open(INPUTS["ARCH_block13"])); recs = arch_records(d); q = questions(recs, "ARCH_block13")
     q["executor_is_not_majority_donor"] = sum(1 for r in recs if r["carrier"]["performers"][0]["kind"] == "host_organism")
+    q["neighbour_code_co_executed"] = sum(1 for r in recs if len(r["carrier"]["performers"]) > 1)
     q["mechanisms"] = dict(Counter(r["native"]["mechanism"] for r in recs))
     q["executed_material"] = dict(Counter(r["native"]["executed_material"] for r in recs))
     res["engines"]["ARCH_block13"] = q
