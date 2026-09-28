@@ -97,3 +97,18 @@ Max 2 concurrent processes. Wall 10:30-10:43 UTC for the probes.
 - The seed-2 reader's d4/d8 pass/fail depends on the episode set (0.85/0.875 vs 0.96/0.96); 48 episodes.
 - Population probe: 3 of 12 seeds, chosen by cost (shortest hold), not at random.
 - EXPLORATORY throughout; no engine/ledger records written.
+
+## ADDENDUM 2026-09-28 (Odysseus) -- full matched run: VERDICT DECIDED
+
+full_run.py (3 processes, G=200, N=200, E=16, seeds 1001-1012; rule and
+reader criterion as frozen in PREREG.md). At 10 of 24 runs complete, W1_d8
+pristine readers = 5 of the 10 seeds finished (1001, 1004, 1005, 1010,
+1011; held-out 1.0), first footholds at generations 64, 91, 165, 176, 183.
+The rule is ">= 3/12 pristine d8 readers => H8 FAILS(Q8)". The count can
+only rise with the remaining seeds, so the verdict is DECIDED:
+H8 FAILS(Q8) -- the delay ladder bought SPEED, not reach; a pristine search
+at matched compute reaches a delay-8 reader. Four of the five pristine
+readers appeared after generation 100, i.e. beyond the original baseline's
+horizon (the census's compute-gap concern was correct). d16 and the last
+d8 seeds are supplementary and will be appended to full_run.jsonl.
+Status: EXPLORATORY (spike), rule preregistered before the run.

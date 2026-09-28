@@ -344,3 +344,10 @@ frontier sits at R1~ for acquisition and R3~-speed for transfer; R4-R6 are unobs
   they check the records' arithmetic and add the DERIVED == POSITIVE_CONTROL identity and the PRISTINE
   cap-edge timing, nothing else.
 - No verdict of any seat is changed; this file classifies evidence against a stated test.
+
+
+## ADDENDUM 2026-09-28 (Odysseus): H8 decided by S7's matched run
+H8 FAILS(Q8): at G=200 (matched compute), pristine direct search reaches a
+W1_d8 reader in >= 5 of 12 seeds (rule: >= 3/12 => FAILS). The ladder was
+speed. Part B now has NO surviving acquisition case (SURVIVES 0,
+UNDECIDABLE 3, FAILS 33). See S7_h8_matched/RESULT.md addendum.

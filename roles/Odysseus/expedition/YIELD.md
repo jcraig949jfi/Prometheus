@@ -48,7 +48,7 @@ until something executes them.
     id    idea                                           method  fate
     Y20   accumulation measured by intervention (v0)     own     NEW-INSTRUMENT (sandbox battery passes P/N/C gate; 3 defects fixed in v0.1)
     Y21   functional recertification of labels           IH->TY  NEW-INSTRUMENT + FALSIFIED-CLAIM (NPE P-11 true of 3/57; BEE grounding label holds 1414/1425)
-    Y22   competence-acquisition census                  IH      FALSIFIED-CLAIM ("no acquisition anywhere" -> 3 R1~ survivors + 1 provisional); OPEN (H8 matched run)
+    Y22   competence-acquisition census                  IH      FALSIFIED-CLAIM ("no acquisition anywhere" -> 3 R1~ Z80 survivors, all internalisation); H8 (WSE reader) FAILED at matched compute (S7: speed, not reach)
     Y23   Z80 affordance threshold (strip the gifts)     ER+SP   NEW-WORLD design + pilot (block copy ~3.7 decades; L3 impossible in budget) ; KNOWN-INTERNALLY in part (Nestor npe-p2, Artemis FR-011)
     Y24   behavioural accessibility (genotype vs behaviour) SP->TY NEW-INSTRUMENT + NEW-MECHANISM? (poverty in program substrates only; silent neutrality)
     Y25   natural induction as a learning rule           ER->TY  KILLED (kill test failed; transfer negative; = attractor reshaping)

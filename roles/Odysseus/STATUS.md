@@ -1,15 +1,17 @@
 # Odysseus status
 
-Currency: 2026-09-27T18:52Z (from date -u).
+Currency: 2026-09-28T11:55Z (from date -u).
 
-seat state: ACTIVE. Physics-of-intelligence frontier program: first
-  cultivation pass complete (roles/Odysseus/frontier/poi/REPORT.md).
-  TH-006 slice: node side closed, M2 attestation pending (Archaeon #745).
-  Brain lane: PARKED (frozen by the operator).
-what it asserts: a 75-thread frontier in 7 territories, 6 research-ready
-  packets (1 trialled: R4), 6 spikes with receipts; nothing about any
-  engine's verdict beyond the reports sent to owners (#748-#751).
-open with others: Bellerophon #748 (S1), Archaeon #749 (S4) and #745/#746
-  (TH-006), Hephaestus #750 (S3), Artemis #751 (R3 offer).
+seat state: ACTIVE. Durable role (operator 2026-09-28): expeditionary
+  research seat (RESPONSIBILITIES.md s0). Expedition 1 complete:
+  expedition/EXPEDITION_1_REPORT.md.
+what it asserts: exploratory results and designs only (census, recert
+  harness READY, Z80 threshold pilot + S8, bacc, natural induction retired,
+  sandbox + re-gated battery, foreign translations, map changes). No
+  engine verdict changed; reports to owners #803 #804 #805.
+running: S7 matched run's supplementary d16 seeds (full_run.py, 3 procs,
+  nice 10) -- the preregistered H8 verdict is already decided (FAILS).
+parked: brain lane (frozen); TH-006 (M2 attestation pending, #745).
 monitors owned or fed: none.
-next executable action: hand R1/R5/R6 to idle workers; fold replies in.
+next executable action: campaign EXP1 phase 1-2 (receiver closure, channel
+  formation); scaffold-withdrawal pilot on the reset pointer (F1/I).

@@ -216,7 +216,8 @@ A6 (new). Worlds must be statistically independent: probe/evaluation seeds
 A7 (observed pattern, a hypothesis for v0.2, not a rule). Every census
    survivor (A1, N5, N1; H8 pending) is a lineage INTERNALISING something
    the world or designer supplied (a destination address, register values,
-   self-location, a delay-general read). If that holds, the first real
+   self-location). [H8, the delay-general read, FAILED at matched compute --
+   S7 -- and is removed from this list.] If that holds, the first real
    accumulation in Prometheus is genetic assimilation of scaffolding,
    and s3 needs a rung for it. See expedition/TERRITORY_I_SCAFFOLD.md.
 

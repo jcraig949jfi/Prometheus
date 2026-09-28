@@ -14,8 +14,9 @@ Evidence that forced it (not a metaphor search):
   reading their destination from the input), NPE N5 (copiers that relied on
   world-zeroed registers come to set their own), NPE N1 (descendants drop a
   self-location opcode the founder needed).
-- Census B's one candidate (H8 delay-invariant reader) is a lineage turning
-  a trained, delay-specific read into a delay-general one (pending S7).
+- [REMOVED 2026-09-28] Census B's one candidate (H8 delay-invariant reader)
+  FAILED at matched compute (S7): a pristine search reaches it; it was speed,
+  not internalisation. The Z80 cases stand alone as evidence for I.
 - Natural induction (natural_induction/RESULT.md) retired as a "learning
   rule" but survives as a system internalising the minima it visited.
 - Z80 threshold (z80_threshold/): Darwinian dynamics needs authored gifts
