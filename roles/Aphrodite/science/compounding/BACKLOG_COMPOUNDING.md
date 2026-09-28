@@ -409,3 +409,76 @@ T31 BIMODAL LEARNABILITY OF THE NATURAL T4 WORLD
   CD Budget curves (RB-8 Q1) for the 107 never-solved families at 1x-64x escrow.
   ME Experiment.   NL Possibly (the library/fallback cliff is an instrument property).
   LK T14, T24, RB-8.
+
+------------------------------------------------------------------------------
+CLUSTER VIII -- ARC3 (2026-09-28). Maturity: ANSWERED / SHARPENED / READY / QUEUED / RAW
+------------------------------------------------------------------------------
+Resource class: S = static/analysis (<= 1 core); M = <= 2 cores, hours; L = lease >= 4
+cores.
+
+T32 CON1 FORENSIC STATUS  [ANSWERED 2026-09-28; science/arc3/con1/]
+  The capability of G2 = (v - (acc + {H})) is real and generalises:
+    - 27/32 fresh cells;
+    - 42/48 cells on 12 fresh G2-instance families, vs L1/PRISTINE 8/48;
+    - L1/PRISTINE at 10M: 3/38.
+  G1 is NOT a necessary component (G2_ONLY == SELECTED). CON1's own payoff families are
+  solved equally by SHAM_0's library (confound confirmed; W3 agrees).
+  => G1 + composition was a SUFFICIENT ROUTE to a capability-bearing abstraction, not a
+  G1-specific stepping stone.
+
+T33 SELECTION UNIT: single wrap vs class wrap(S, *, *)  [SHARPENED; READY as W1 WP-4]
+  The world repeats the CLASS of G1 compositions (14-41% at K = 8); the same specific
+  composition recurs <= 6%. Is the selector's unit the bottleneck?   Class M.
+
+T34 SELECTION OBJECTIVE: efficiency vs capability  [SHARPENED; READY]
+  W1: C2's selections paid by saving charges on cells START already solved. The first
+  broken rung is SOLVED, not REUSABLE. Crius test (W5): price the best-transfer
+  composition on the frozen validation cells.   Class S.
+
+T35 COMPOSITION HORIZON (Nestor)  [READY]  Static wrap-distance census of A19
+  transfer/validation families from G1 and each sham.   Class S.
+
+T36 FILLER MIXTURE (Ananke)  [READY]  Log CON1's fillers; restrict the entry to the
+  modal filler. Does the capability survive?   Class S/M.
+
+T37 NON-SPECIFICITY (Archaeon)  [READY]  Apply the same wrap to size-matched schemas.
+  How many cover CON1's families?   Class S.
+
+T38 PROPAGATION ACROSS GENERATIONS (Aether)  [QUEUED behind C3]  Twin
+  G1-present/absent lineages, 2-3 donor generations.   Class L.
+
+T39 DEPTH CONSUMPTION / PRIMITIVE PROMOTION  [SHARPENED; Block G]
+  Each composition consumes one grammar depth. G3 = wrap(G2) has only atom-filler
+  instances (<= 6) in W5 (science/arc3/second_gen/G3_REACH.json), so G1 -> G2 -> G3
+  breaks at REPRESENTATION. The minimal change is to promote a selected schema to a
+  one-node primitive (DreamCoder). That is a DSL-level change (parked).
+  CHEAPEST DISCRIMINATOR: a synthetic promoted-primitive fixture measuring G3 extent
+  under a node-count budget.   Class S.
+
+T40 NATURAL RECURRENCE VIA LINEAGE GENERATOR (W1 CG-1 LIN-NX)  [READY: W1 WP-1/WP-2]
+  P_reuse 0.45 vs twin 0.029 vs uniform 0.013, with emergent identity.   Class M then L.
+
+T41 T4 ENRICHES G1 COMPOSITIONS 6-15x  [READY: W1 WP-5]
+  Frequency-match panels post-screen.   Class S.
+
+T42 TRANSFER BREADTH 32-64 on the natural supply  [READY: W1 WP-3]   Class L.
+
+T43 IMPROVER P2 FIRST PROBE (W4 genome transfer-correlation probe)  [QUEUED; needs a
+  data-driven donor interpreter + a chain runner]
+  It supersedes RB-10's GO rule.   Class L.
+
+T44 RULER REPAIRS (W3)  [READY; merges into RB-7]
+  - close relations() over re-expressions;
+  - require the same witness instances for grid and trajectory;
+  - product None tolerance (<= 25%);
+  - use the W5 base rate (23%), not 16%.   Class S.
+
+T45 ESCROW-STRUCTURE DEPENDENCE OF CAPABILITY RATIOS (W5)  [SHARPENED]
+  ">= 190x" is a property of the library/fallback cliff (PRISTINE fills 61% of the
+  escrow). Report ratios as budget-relative, and re-base them under any grammar change.
+
+T46 DSL EXTENSION MAP  [SHARPENED; W5 Part 1]
+  - Literals alone are inert for EC; symmetric + literals are super-additive.
+  - Every extension re-bases PRISTINE.
+  - The lag register is a new SCIENCE question (order-2 compounding).
+  Trigger: only after an order-1 mechanism positive.   PARKED.

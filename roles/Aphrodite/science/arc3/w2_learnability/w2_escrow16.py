@@ -28,8 +28,11 @@ if __name__ == "__main__":
     rs = rows("NAT")
     shard, nsh = (int(sys.argv[2]), int(sys.argv[3])) if len(sys.argv) > 3 else (0, 1)
     rs = rs[shard::nsh]
+    rev = len(sys.argv) > 4 and sys.argv[4] == "rev"
+    if rev:
+        rs = rs[::-1]      # second worker on the same shard from the other end (deterministic; deduplicated by name)
     done = set()
-    outp = HERE / ("w2_escrow16_NAT_s%d.jsonl" % shard)
+    outp = HERE / ("w2_escrow16_NAT_s%d%s.jsonl" % (shard, "r" if rev else ""))
     if outp.exists():
         done = {json.loads(l)["name"] for l in open(outp)}
     todo = [r for r in rs if r["name"] not in done]
