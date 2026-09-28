@@ -309,3 +309,119 @@ Observation for Nestor: in two runs (s9200006, s9200008) the C_reimplant_random 
   slice-scope work.
 - **Review:** A1 and A2 are to be reviewed by the independent final reviewer before synthesis, with both raw readings in the
   record. Nestor does not change his frozen tracer.
+
+## Amendment C9 (2026-09-28; operator directive "CLOSE THE INDEPENDENCE GATES"; made AFTER seeing the G2 discrepancies; flagged)
+**1. C8's G2 "CLEARED" is WITHDRAWN.**
+- A1 and A2 were canonical equivalences adopted AFTER the discrepancies were seen. Under the prereg rule (v4 s4.3: data label +
+  the three dependence sets, >= 99.5% of loci per class) they are a POST-AGREEMENT-TEST REPAIR, not an arbitration.
+- They are not applied to any gate. C8's G1 text stands; G1 is re-run below as required.
+- My production GO (comms #845) and C8 clearance (#848) are withdrawn with it. Nestor's production hold was correct.
+
+**2. G1 (re-run, fixture by fixture; frozen reference 3757111de; gate_close/G1_FIXTURES_K16b_K16c_K37.json):**
+- **K16b: PASS.** The locus a[10] = 0x42 has label ENTITY a2. It was stored in slice b (store_by = b), at pc 56, which is in b's
+  half. The opcode byte there was copied from a[1], so performer = a1 and performer_entity = a. The fixture separates performer by
+  material (a) from store location (b) and from store_by (b), and the reference follows the material.
+- **K16c: PASS.** The locus a[12] = 0x55 has label ENTITY b25. It was stored by slice a, at pc 24, which is in a's half. The
+  opcode byte came from b[24], so performer = b24 and performer_entity = b. Material b is separated from store location a and
+  store_by a.
+- **K37: PASS.** 8 written loci a[8..15], each 0xA0, each with label ENTITY b16. There is one store instruction (pc 41 = b[9]), one
+  performer (b9) and one value.
+  * Diagnostics only: distinct sources 1/8, instructions 1, values 1, performers 1, Hill effective sources 1.
+  * The causal machinery is one source painting a region, not 8 inherited sources.
+- **Coverage note:** neither K16b nor K16c separates store LOCATION from store_by (the two coincide in both). No fixture
+  asserts on that axis. This is not a defect.
+- **G1 PASS.**
+
+**3. G2 RAW (gate_close/G2_RAW_AGREEMENT.txt, G2_DISCREPANCIES_RAW.jsonl; archaeon/attribution/probes/npe_gate_close.py).**
+
+Prereg fields, per class (class key = the reference's performer class; the Nestor-classed table is identical):
+
+| class | label | addr | ctrl | exec | written | store_by | performer | ctrl_slice (secondary) |
+|---|---|---|---|---|---|---|---|---|
+| unwritten (18,260) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | -- | -- | -- |
+| written_self (587) | **0.9353** | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.9710 |
+| written_other (320) | **0.9250** | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 |
+| written_perf_none (33) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.9394 | 0.9394 |
+
+Directive categories (descriptive; they neither rescue nor replace the gate):
+- source locus and identification input (ENTITY side, src): 1.0000 in every class;
+- class key: 1.0000;
+- carry/flag-involving loci: 0.9310 (self) / 0.9524 (other) / 1.0 (none). The failures are the label shapes below.
+- Not exercised by this set, so INCONCLUSIVE:
+  * MUTATION (no write-back in the export);
+  * IN (0 loci; the op mask 0x0C set produced none);
+  * OUT (no locus by C6 B8);
+  * pdom scope (Nestor's export has no ctrl_pdom; non-gating, C7.1);
+  * existence dependence (interventional, Q8c-whether; engine-measured, not a tracer field).
+
+**G2 FAIL** (written_self label 0.9353 and written_other label 0.9250, below 0.995). 83 discrepant loci.
+
+**4. Disagreement classification** (every disagreement; minimal synthetic reductions in gate_close/G2_MINIMAL_CASES.json, with the
+reference's reading only):
+
+| shape | loci | Nestor | reference | category | reduction |
+|---|---|---|---|---|---|
+| S1 | 24 (23 labels + 1 performer) | CF(COMPUTED S) | COMPUTED S | (1) spec ambiguity | D1 |
+| S2 | 40 (28 CONST labels + 11 CF(CONST) labels + 1 performer) | CONST('idiom'), CF(CONST('idiom')) | CONST(XOR_AA / SUB_AA), CF(CONST(...)) | (1) spec ambiguity | D2, D3 |
+| S3 | 19 (ctrl_slice, secondary) | a STRICT SUBSET of the reference's set in 19/19 | superset (adds bases carried transitively by branch-condition values) | (1) spec ambiguity; (5) if it persists after s5 | D4 (hypothesised) |
+
+- **S1:** C6 B3 says only "nested labels are flattened". The reference's SPEC_ISSUES B3 says CF(COMPUTED S) = COMPUTED S. The
+  ambiguity is in Archaeon's C6 summary.
+- **S2:** C6 B2 lists the idioms but never names the CONST kinds.
+- **S3:**
+  * C6 C1 names ctrl_deps_slice without defining whether a branch condition's transitive addr set, built in the other slice,
+    enters it. D4 is a hypothesised reduction.
+  * If Nestor's frozen tracer agrees with the reference on D4, S3 is unreduced, and the fuzz records (k = 4, 32, 111, 118, 139,
+    195) remain its counterexamples.
+- **No disagreement is classified (2) Nestor implementation error, (3) reference error or (4) malformed interaction.**
+  Total 24 + 40 + 19 = 83 discrepant loci (no locus in two shapes). Source locus, identification input and class key agree 100%. That is a DESCRIPTIVE finding, not a gate.
+
+**5. Repair: post-agreement-test, recorded as such.**
+- **(a) Normative spec clarifications**, chosen per C6's rule that the reference's readings are normative:
+  * CF(COMPUTED S) := COMPUTED S;
+  * CF over a CONST is kept as CF(CONST k);
+  * idiom CONST kinds are exactly 'XOR_AA', 'SUB_AA', 'CP_AA';
+  * ctrl_deps_slice := the same accumulation as the primary ctrl_deps (each branch condition's label bases plus its transitive
+    addr set), over branches executed in the storing slice, reset at slice entry.
+- **(b)** The comparison rule is unchanged: RAW equality under v4 s4.3. There is no canonical equivalence and no threshold
+  change.
+- **(c) Re-freeze.**
+  * Nestor revises his tracer to (a), then re-freezes it (new TRACER_FREEZE hashes).
+  * The reference is not modified. Its sha256 is re-attested:
+    2851bcdb6cc9a074db3b0338b663c1dec6b533a22b2e34c0cb522ac69de2a4e2 (LF-normalized).
+- **(d) Fresh set.**
+  * archaeon/attribution/probes/npe_fresh_set.py is committed with THIS amendment, before its seed exists.
+  * Seed = the full SHA of the commit recording both re-freeze hashes.
+  * Set A: 300 interactions, compared before write-back. Set M: 100 interactions with write-back, which adds the MUTATION class.
+  * The pre-state file's sha256 is posted first.
+  * Each side posts the sha256 of its output before the outputs are exchanged.
+  * Same bar, per class, raw. The D1-D4 cases are traced by both sides alongside, as counterexample checks (not gated).
+- **(e)** If the fresh set fails, production stays forbidden and s4's procedure repeats.
+
+**6. Production: HOLD.**
+- **Reason:** G2 FAIL under the preregistered rule; the repair and the fresh-set rerun are pending.
+- ANCESTRY_REPLAY_PRODUCTION_GO_FINAL is written only after:
+  * G1 PASS (done);
+  * a fresh-set G2 PASS;
+  * matching freeze hashes;
+  * G3 and G4 still clear.
+- **It binds:**
+  * Nestor's tracer freeze hash;
+  * the reference hash;
+  * the fixture-pack hash (npe_fixtures.py 25c8507e51acbf6b2c02690ccfb889c54af4477a31a34ac3fe6f2b9cfe18c644, plus
+    ARCHAEON_ADDITIONS.json 1753023ca4f5f168860c2610f1ef3dc183f4f3d170f9e2715c7394d76297b012);
+  * the spec hash (this file, at the commit that carries C9);
+  * the experimental unit (9 simulations / 29 births, C7.4);
+  * the flip rule (C7.2);
+  * the agreement result;
+  * the production code hash (run_production.py).
+
+**7. The 1% production agreement sample (~28k interactions, ~115 MB) is NOT in git.**
+- This replaces my orphan-branch suggestion (#848). The transfer:
+  1. Nestor writes it outside any repository and posts its sha256.
+  2. It is copied (scp) to M2 C:/Prometheus-data/evidence/attribution_arc_2026-09-28/npe_sample/.
+  3. Archaeon verifies the sha256 BEFORE opening it.
+  4. The frozen reference runs on it.
+  5. The result artefact is hashed.
+  6. Only receipts (hashes, counts, per-class agreement) enter git.
+- The sample is fixed by Nestor's hash before transfer. It is not reduced after anything is seen.

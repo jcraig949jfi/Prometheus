@@ -1,0 +1,135 @@
+[
+ {
+  "case": "D1_inc_over_computed",
+  "pre": {
+   "ga": "761112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "gb": "2130007e23863c110800127600000000a0a1a2a3a4a5a6a70000000000000000",
+   "regs_a": null,
+   "regs_b": null,
+   "flags_a": [
+    0,
+    0
+   ],
+   "flags_b": [
+    0,
+    0
+   ],
+   "budget": 300,
+   "ops_mask": 12
+  },
+  "reference_reading": {
+   "a[8]": {
+    "value": 66,
+    "written": true,
+    "label": "COMPUTED{b16,b17}",
+    "performer": "b10",
+    "ctrl": "{}",
+    "ctrl_slice": "{}",
+    "addr": "{b1,b2,b8,b9}",
+    "exec": "{a0,b0,b1,b10,b2,b3,b4,b5,b6,b7,b8,b9}"
+   }
+  }
+ },
+ {
+  "case": "D2_xor_idiom_store",
+  "pre": {
+   "ga": "761112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "gb": "af11080012760000000000000000000000000000000000000000000000000000",
+   "regs_a": null,
+   "regs_b": null,
+   "flags_a": [
+    0,
+    0
+   ],
+   "flags_b": [
+    0,
+    0
+   ],
+   "budget": 300,
+   "ops_mask": 12
+  },
+  "reference_reading": {
+   "a[8]": {
+    "value": 0,
+    "written": true,
+    "label": "CONST(XOR_AA)",
+    "performer": "b4",
+    "ctrl": "{}",
+    "ctrl_slice": "{}",
+    "addr": "{b2,b3}",
+    "exec": "{a0,b0,b1,b2,b3,b4}"
+   }
+  }
+ },
+ {
+  "case": "D3_inc_over_idiom",
+  "pre": {
+   "ga": "761112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "gb": "973c110800127600000000000000000000000000000000000000000000000000",
+   "regs_a": null,
+   "regs_b": null,
+   "flags_a": [
+    0,
+    0
+   ],
+   "flags_b": [
+    0,
+    0
+   ],
+   "budget": 300,
+   "ops_mask": 12
+  },
+  "reference_reading": {
+   "a[8]": {
+    "value": 1,
+    "written": true,
+    "label": "CF(CONST(SUB_AA))",
+    "performer": "b5",
+    "ctrl": "{}",
+    "ctrl_slice": "{}",
+    "addr": "{b3,b4}",
+    "exec": "{a0,b0,b1,b2,b3,b4,b5}"
+   }
+  }
+ },
+ {
+  "case": "D4_slice_ctrl_crosshalf",
+  "pre": {
+   "ga": "7e1138001276000018191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "gb": "2138007eb728061128003e771276000000000000000000000000000000000000",
+   "regs_a": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    20,
+    0,
+    0
+   ],
+   "regs_b": null,
+   "flags_a": [
+    0,
+    0
+   ],
+   "flags_b": [
+    0,
+    0
+   ],
+   "budget": 300,
+   "ops_mask": 12
+  },
+  "reference_reading": {
+   "b[8]": {
+    "value": 119,
+    "written": true,
+    "label": "b11",
+    "performer": "b12",
+    "ctrl": "{PREG(a.H),PREG(a.L),a2,a20,a3,b1,b2}",
+    "ctrl_slice": "{PREG(a.H),PREG(a.L),a2,a20,a3,b1,b2}",
+    "addr": "{b8,b9}",
+    "exec": "{a0,a1,a2,a3,a4,a5,b0,b1,b10,b11,b12,b2,b3,b4,b5,b6,b7,b8,b9}"
+   }
+  }
+ }
+]

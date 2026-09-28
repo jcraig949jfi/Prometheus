@@ -1,0 +1,76 @@
+G2 RAW (v4 s4.3 as preregistered; no A1/A2), frozen reference 3757111de vs Nestor e5af0cae1 export, 300 interactions
+class = reference's performer class (C6 A5); agreement = loci agreeing / loci in class
+
+unwritten
+  addr                                              18260/18260  1.0000  PREREG GATE PASS
+  cat:class_key                                     18260/18260  1.0000
+  cat:identification_input(ENTITY-MOVE side,src)    18260/18260  1.0000
+  cat:source_locus                                  18260/18260  1.0000
+  ctrl                                              18260/18260  1.0000  PREREG GATE PASS
+  exec                                              18260/18260  1.0000  PREREG GATE PASS
+  label                                             18260/18260  1.0000  PREREG GATE PASS
+  written                                           18260/18260  1.0000
+written_other
+  addr                                                320/320    1.0000  PREREG GATE PASS
+  cat:carry/flag                                       80/84     0.9524
+  cat:class_key                                       320/320    1.0000
+  cat:identification_input(ENTITY-MOVE side,src)      320/320    1.0000
+  cat:source_locus                                    320/320    1.0000
+  ctrl                                                320/320    1.0000  PREREG GATE PASS
+  ctrl_slice(secondary)                               320/320    1.0000
+  exec                                                320/320    1.0000  PREREG GATE PASS
+  label                                               296/320    0.9250  PREREG GATE FAIL
+  performer                                           320/320    1.0000
+  performer_entity                                    320/320    1.0000
+  store_by                                            320/320    1.0000
+  written                                             320/320    1.0000
+written_perf_none
+  addr                                                 33/33     1.0000  PREREG GATE PASS
+  cat:carry/flag                                        1/1      1.0000
+  cat:class_key                                        33/33     1.0000
+  cat:identification_input(ENTITY-MOVE side,src)       33/33     1.0000
+  cat:source_locus                                     33/33     1.0000
+  ctrl                                                 33/33     1.0000  PREREG GATE PASS
+  ctrl_slice(secondary)                                31/33     0.9394
+  exec                                                 33/33     1.0000  PREREG GATE PASS
+  label                                                33/33     1.0000  PREREG GATE PASS
+  performer                                            31/33     0.9394
+  performer_entity                                     33/33     1.0000
+  store_by                                             33/33     1.0000
+  written                                              33/33     1.0000
+written_self
+  addr                                                587/587    1.0000  PREREG GATE PASS
+  cat:carry/flag                                       81/87     0.9310
+  cat:class_key                                       587/587    1.0000
+  cat:identification_input(ENTITY-MOVE side,src)      587/587    1.0000
+  cat:source_locus                                    587/587    1.0000
+  ctrl                                                587/587    1.0000  PREREG GATE PASS
+  ctrl_slice(secondary)                               570/587    0.9710
+  exec                                                587/587    1.0000  PREREG GATE PASS
+  label                                               549/587    0.9353  PREREG GATE FAIL
+  performer                                           587/587    1.0000
+  performer_entity                                    587/587    1.0000
+  store_by                                            587/587    1.0000
+  written                                             587/587    1.0000
+
+robustness: prereg fields with the class taken from NESTOR's export (same verdict required):
+  unwritten          addr    18260/18260  1.0000
+  unwritten          ctrl    18260/18260  1.0000
+  unwritten          exec    18260/18260  1.0000
+  unwritten          label   18260/18260  1.0000
+  written_other      addr      320/320    1.0000
+  written_other      ctrl      320/320    1.0000
+  written_other      exec      320/320    1.0000
+  written_other      label     296/320    0.9250
+  written_perf_none  addr       33/33     1.0000
+  written_perf_none  ctrl       33/33     1.0000
+  written_perf_none  exec       33/33     1.0000
+  written_perf_none  label      33/33     1.0000
+  written_self       addr      587/587    1.0000
+  written_self       ctrl      587/587    1.0000
+  written_self       exec      587/587    1.0000
+  written_self       label     549/587    0.9353
+
+not exercised by this set: MUTATION (no write-back RNG in the fuzz export), OUT (no locus; C6 B8), pdom scope (Nestor's export has no ctrl_pdom; non-gating per C7.1) -> INCONCLUSIVE for those categories
+discrepancy records: 83 loci (G2_DISCREPANCIES_RAW.jsonl)
+G2 (prereg rule): FAIL on written_other/label 0.9250, written_self/label 0.9353
