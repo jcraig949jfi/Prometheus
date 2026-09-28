@@ -91,6 +91,19 @@ def donors(rec) -> Dict[str, float]:
     return {k: round(v, 6) for k, v in out.items()}
 
 
+def source_diversity(rec) -> float:
+    """distinct (donor, source locus) pairs per child locus, over IBD loci. A copier reads n distinct source loci (1.0); a painter
+    that writes one operand byte everywhere reads 1 (1/n). This separates painting from copying when both are IBD at every locus
+    (Artemis FR-011: NPE BYTEWISE P-11 donors are 0x36 painters). None when source loci are not recorded."""
+    src = set(); n_ibd = 0
+    for s_ in rec["material"]["segments"]:
+        if s_["source_kind"] != "entity": continue
+        if s_.get("src_loci") is None: return None
+        k = s_["loci"][1] - s_["loci"][0]; n_ibd += k
+        src.update((s_["entity"], s_["src_loci"][0] + i) for i in range(k)) if s_["src_loci"][1] - s_["src_loci"][0] == k else src.add((s_["entity"], s_["src_loci"][0]))
+    return round(len(src) / n_ibd, 6) if n_ibd else None
+
+
 def new_share(rec) -> float:
     m = rec["material"]; n = m.get("n_units") or 0
     return round(sum(s["loci"][1] - s["loci"][0] for s in m["segments"] if s["source_kind"].startswith("new_")) / n, 6) if n else 0.0

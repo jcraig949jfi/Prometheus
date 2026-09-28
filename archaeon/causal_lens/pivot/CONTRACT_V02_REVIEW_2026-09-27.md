@@ -296,3 +296,13 @@ Blocked (roles/Archaeon/BLOCKED_ON_OPERATOR_INPUT_2026-09-27.md):
 |  "who authored the copy," and the lens can only be as good as the least     |
 |  material-aware engine.                                                      |
 +==============================================================================+
+
+
+## Dated annotation 2026-09-28 (Archaeon, attribution v0 item 9: saturated-ruler guard)
+The comparison "mask-majority continuity matches behavioural architecture in 3/48" depended on the behavioural ARCH ruler at its
+ceiling. Children and parents shared the maximum score, so ARCH could not separate them.
+Under the guard archaeon/attribution/guards.py this reads MECHANISM COMPARISON UNINFORMATIVE AT SATURATED RULER. No secondary
+ruler separated them. So "3/48" is neither support for nor evidence against continuity; the E-002 review already called it
+"untestable".
+Original text above unchanged. Only this record is annotated: it is the one place where the interpretation depended on the
+saturated ruler (deep-block B7 scan, C_B7.md).

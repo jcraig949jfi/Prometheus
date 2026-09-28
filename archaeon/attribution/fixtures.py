@@ -84,6 +84,15 @@ VARIANT_OK = {"target": "material", "intervention": "variant: flip a non-machine
 VARIANT_DEAD = dict(VARIANT_OK, result="ceases", outcome="child carries the variant AND still copies (every variant loses copying)")
 
 ADVERSARIAL = {
+    "self_painting_homopolymer": _adv(
+        "adv.selfpaint", [perf("organism_code", "P")], "executed_write",
+        {"unit": "byte", "n_units": G, "resolution": "per_locus",
+         "segments": [dict(seg(i, i + 1, entity="P", via="taint"), src_loci=[1, 2]) for i in range(G)]},
+        [cap("exact_self_copy", True, machinery=[0, 1])], {"reproduction": True, "hereditary": False},
+        "Artemis FR-011's NPE BYTEWISE case: a 0x36 homopolymer paints memory with its own operand byte; every child locus is IBD "
+        "from ONE parent locus. It reproduces (the capability and its machinery descend), but transmits about one byte and no "
+        "heritable variant survives. P-11 cannot tell it from copying; source_diversity (1/32 vs 1.0) can",
+        dependence=[VARIANT_DEAD]),
     "homopolymer_painter": _adv(
         "adv.painter", [perf("organism_code", "P")], "executed_write", mat(seg(0, 32, "new_constant", via="taint")),
         [cap("none_demonstrated", True), cap("exact_self_copy", False)], {"reproduction": False, "hereditary": False},

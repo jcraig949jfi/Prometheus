@@ -63,6 +63,12 @@ def test_threshold_is_bounded_not_pinned():
     assert min(ok) == 0.01 and max(ok) == 0.8
 
 
+def test_source_diversity_separates_painting_from_copying():
+    paint = F.ADVERSARIAL["self_painting_homopolymer"]["record"]; copy = F.ADVERSARIAL["exact_copier_no_heritable_variation"]["record"]
+    assert S.source_diversity(paint) == 1 / 32 and S.source_diversity(copy) == 1.0
+    assert S.donors(paint) == S.donors(copy) == {"P": 1.0}               # identical by every donor-share measure
+
+
 def test_heredity_separate_from_reproduction():
     c = F.ADVERSARIAL["exact_copier_no_heritable_variation"]["record"]
     assert K.D7_MACHINERY_IBD(c) and not K.D6_HEREDITARY(c)
