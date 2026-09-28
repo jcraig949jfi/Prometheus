@@ -1,0 +1,29 @@
+LAUNCH Sun 09/27/2026 18:57:52.90 
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "H:\Python312\Lib\multiprocessing\pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+                    ^^^^^^^^^^^^^^^^^^^
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\npe-p2-endogenous-heredity-2026-09-27\x_p2_sham\run_sh.py", line 113, in job
+    out = r.run()
+          ^^^^^^^
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\z80atlas-verify-2026-09-22\world.py", line 1210, in run
+    self.step()
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\npe-p2-endogenous-heredity-2026-09-27\x_p2_sham\run_sh.py", line 110, in step
+    cps.append({k: c[k] for k in ("epoch", "distinct", "stage1", "L2", "best_fid_final", "competent_genomes")})
+                   ~^^^
+KeyError: 'epoch'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\npe-p2-endogenous-heredity-2026-09-27\x_p2_sham\run_sh.py", line 155, in <module>
+    main()
+  File "F:\Prometheus-worktrees\nestor-s1-forensics\roles\Nestor\campaigns\npe-p2-endogenous-heredity-2026-09-27\x_p2_sham\run_sh.py", line 132, in main
+    list(pool.imap_unordered(job, [t for t in jobs() if "%s_%d" % t not in done]))
+  File "H:\Python312\Lib\multiprocessing\pool.py", line 873, in next
+    raise value
+KeyError: 'epoch'
+EXIT 1 Sun 09/27/2026 18:58:08.17 
