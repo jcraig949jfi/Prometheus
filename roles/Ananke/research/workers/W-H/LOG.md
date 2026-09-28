@@ -61,3 +61,20 @@
 - H4b Kp latch via WIMM (rules=1, 6 live instr): 1.000 on all 64 worlds.
 ## Attempt 7 (S5 ed884172, ADDENDUM C; out/hand_s5.json)
 - champion .654 [.592,.717]; H4a latch .735 [.724,.744] (pos .984, neg .488).
+
+## Attempt 8 (Part 2 search arms, search_arms.py, GPU lease 2ce85284abe2
+## acquired 01:11, released 02:14; out/search_*.json, out/search_summary.txt)
+Analysis-world mean acc of each search champion (reach = >= A*):
+- S1 b59e (A* .707): A_orig .562 .531 .564 .544 (0/4); B_fixed_L .542 .656
+  .536 .542 (0/4); C_fixed_RL .568 .535 .525 .540 (0/4).
+- S2 311c (A* .715): A_orig .518 .498 .949 .520 (1/4); B_fixed_L .686 .963
+  .963 .500 (2/4); C_fixed_RL .533 .929 .857 .686 (2/4).
+- S3 9564 (A* .648): A_orig .500 .641 .533 .596 (0/4); B_fixed_L .634 .639
+  .576 .500 (0/4); C_fixed_RL .518 .762 .639 .531 (1/4).
+Note: the champion's own search budget does NOT reliably reproduce the
+champion (A_orig 0/4 on S1 and S3): these champions are lucky tails of the
+search, so search-only comparisons are weak for S1/S3. Verdicts rest on H.
+- DIAG (not pre-registered, flagged as such): S2 A_orig/2 champion (.949);
+  freezing its rules after boot leaves later trials at .948 vs .971 normal
+  (overlapping CIs): the only switching-arm success does not need ongoing
+  switching.

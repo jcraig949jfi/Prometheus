@@ -50,7 +50,10 @@ zero-default rule variant in ~64% of the 42 qualifying C1 cells (incl. M3;
 a physics artifact: registers are 0 at tick 0). In ~29% it is a
 readout-local, per-tick CONDITIONAL BRANCH (sign-conditioned excursions
 in RELAY; sample/hold alternation in HOLD). r was never the memory
-carrier in 18/18 swap tests. Routing: infrastructure
+carrier in 18/18 swap tests. W-H (ARC3): in the ongoing cells, switching
+COMPRESSES and does not EXPAND (5/5). Fixed-rule latches of 4-7 instructions
+match or beat every switching champion; the free decay-free rule register
+goes unused. The limit is search reachability, not expressivity. Routing: infrastructure
 only. No environmental memory is possible (write-free env).
 
 BEST EXPERIMENT TYPES

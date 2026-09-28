@@ -19,7 +19,7 @@ T-BR-1 SETRULE ROLES | Which computational roles does dynamic rule
   program? | Decides whether "rules" is a capability dial or an artefact |
   W-B: 29% ongoing, readout-local, sign-conditioned branch; sample/hold |
   expansion vs compression | a decompile + counterfactual + a bounded
-  fixed-rule search | PTE CPU | ACTIVE (W-H)
+  fixed-rule search | PTE CPU | ANSWERED (W-H): COMPRESSION 5/5. Roles: an event-triggered leaky-timer branch, a phase write-enable clock, a one-tick relay specialization; every switch 1-2 ticks, never the carrier; fixed-rule latches match or beat every champion (.999 vs .755). The binding limit is search reachability. Split: T-H1 an expressivity task where rules=1 provably cannot solve it (sharpened), T-H2 evolvability rules on/off 16+ seeds (GPU, sharpened), T-H3 a flattening compiler (CPU, research-ready), T-H4 a faithful S3 relay (CPU)
 T-CT-2 CARRIER TRAJECTORIES | How causal information moves through
   carriers over time; do trajectory motifs predict robustness? | the C2
   successor needs it | W-F: RELAY/MAJ carrier is phase- and
