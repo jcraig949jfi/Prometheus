@@ -45,3 +45,25 @@ B-5 COMPUTATIONAL-MECHANICS READING OF PTE TRACES (T-INS-5 variant).
 B-6 ROUTING-AWARE ECHO MODEL (T-WA-1). Extend echo_model with the measured
     per-site routing weights of the fresh2/3 champions. Prediction: residual
     MAE < .02. Also tests whether routing carries the cue sign. CPU ~2 h.
+
+## ARC3 additions (2026-09-28; research-ready)
+B-7 T-RET-SEL SELECTIVE RETENTION. A preregistered selectivity criterion
+    (lag-n agreement minus the maximum at other lags, lo99 > 0) + an
+    anti-integrator distractor variant + budget scaling. Evidence:
+    workers/W-L (nback.py, plants P1S/P1K/P2S). GPU for searches; the CPU
+    parts first.
+B-8 T-INS-6 MIXTURE TEST. Replace the sum test with phi; add a single-trial
+    swap; promote workers/W-I/traj.py (batched arms + two-axis profile)
+    into lens with known-answer tests (designed_echoes/ E2 as a fixture).
+    CPU.
+B-9 T-CT-3' SLACK -> LATENCY TOLERANCE. A preregistered dose-response
+    (+1/+2/+3 latency) on W-I's 20-cell panel; 78f3b0ec is the named
+    exception. CPU/GPU.
+B-10 T-SWAP-LOWACC. A relative swap verdict for champions below ~.8 normal
+    (W-L, W-F ELSEWHERE cells). Validate on the lens test plants. CPU.
+B-11 T-WJ-2 4-OPERATOR FINGERPRINT. Evaluate any champion under sum /
+    saturate / aloha / arb (workers/W-J/arb.py). A reader-invariance class
+    per champion. CPU.
+B-12 T-H3 FLATTENING COMPILER. R rule variants -> one select-dispatched
+    program; measure the instruction overhead per switching champion
+    (workers/W-H). CPU.
