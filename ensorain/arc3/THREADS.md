@@ -25,6 +25,11 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - WHY: this may be the real LM01 phenomenon (directive E); "lossless storage" is not "no compression".
 - EV: L-K (exact + simple) ~0; L-R (exact + refit) ~2.8; S (bounded + simple readout) ~2.0; BufferALS (bounded +
   refit) climbs with B.
+- EXT: the theory separates three compression loci: storage (IB, sufficient statistics), HYPOTHESIS (MDL, PAC-Bayes,
+  MI/CMI bounds; the only one with a clean link to generalization), and readout (V-information, decodable IB).
+  Attributing generalization to STORAGE compression repeats the error Saxe et al. 2018 refuted. LM01 measures storage
+  (HR2, bytes) and readout (L-K vs L-R) but NOT hypothesis compression. Add a hypothesis-description-length meter (the
+  fitted model's bits, e.g. rank x (rows + cols) x precision, and the information the weights hold about the sample).
 - UNC: readout expressiveness is confounded with optimizer quality.
 - DISC: a 2x2 on LM01 rows plus a 4th cell, "bounded state + refit" at matched state bytes: BufferALS at B -> 0 with
   factors only vs S-lowrank at the same cap.
@@ -37,7 +42,13 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - WHY: directive J; possibly the core result.
 - EV: none measured yet. The reservoir ladder is monotone on planted low-rank (dev). F3 recency-blind mixing hurts
   L-K/L-R.
-- UNC: no Bayes-optimal reference exists in LM01 worlds.
+- EXT (lit/LIT_THEORY.md): free information can never hurt a correctly specified unbounded Bayesian (Good 1967,
+  Blackwell 1953). "Accessible" information is formalized as V-information (Xu et al. 2020; the DPI fails, so
+  computation can create usable information) and by epiplexity (Finzi et al. 2026, preprint), memory-sample bounds
+  (Raz 2016) and computationally bounded prediction (Sharan et al. 2018). No framework unifies memory, compute and
+  samples; a synthetic study sits in that gap. "More data hurts" is a LEARNER property (Nakkiran 2019; monotonization,
+  Bousquet et al. 2022) or a sign of misspecification (Grunwald and van Ommen 2017).
+- UNC: no Bayes-optimal reference exists in LM01 worlds. That is why T17 exists.
 - DISC: worlds with a computable posterior predictive (Gaussian low-rank with known prior -> closed-form Bayes; switch
   worlds with known hazard -> Bayesian changepoint predictor). Compare Bayes vs bounded readouts as history grows.
 - METHOD: new small engine on WTP generators; numpy.
@@ -148,3 +159,55 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - DISC: bandit over eviction policies per stratum on dev.
 - RES: moderate.
 - MAT: idea (after T04/T05).
+
+## T17 Sufficiency-class ladder with exact oracles (NEW from lit/LIT_THEORY.md D1/D2/D8/D10)
+- Q: does each memory strategy retain what is PROVABLY sufficient and nothing more, in worlds where the answer key is
+  exact?
+- WHY: LM01 has no Bayes reference. This ladder gives (loss - Bayes loss) and (retained bits - minimal sufficient bits)
+  for every learner, which is a published answer key (doctrine: "measurement carries its answer").
+- EXT: the worlds:
+  - W0 iid;
+  - W1 exchangeable with an unknown parameter (counts are sufficient);
+  - W2 order-k Markov (window);
+  - W3 Even process (finite causal state, no finite window);
+  - W4 nonunifilar HMM (belief state);
+  - W5 key-value long tail (exact history necessary).
+  Crutchfield-Feldman truncation curves; crypticity pairs (equal E, different C_mu).
+- DISC: the three locus-of-compression arms (storage statistic / verbatim + query-time summary / verbatim + restricted
+  readout) across W0-W5. Predicted: equal on W1-W3 at the sufficient rate; storage loses on W5; the restricted readout
+  exposes V-information limits.
+- METHOD: a NEW small sequence engine (numpy; not WTP), with epsilon-machines constructed by hand.
+- RES: light CPU, OFF M2 (any node).
+- MAT: designed in lit; package PKG-S1 to write.
+
+## T18 Available vs accessible: nuisance geometry dial (NEW; lit D3/D4)
+- Q: with equal Shannon content, does ROTATED nuisance hurt more than axis-aligned nuisance (Ng 2004: rotation-invariant
+  learners pay linearly, L1 learners pay log)? Does a PRG world behave like noise for bounded learners?
+- WHY: a direct test of the availability/accessibility distinction (directive J); nuisance as a controlled axis (T06).
+- DISC: k appended iid dims, axis-aligned vs randomly rotated into the signal; learners: ridge (rotation-invariant) vs
+  L1 vs k-NN vs a reservoir. PRG vs true-random twin; same content, permuted order.
+- RES: light, off M2.
+- MAT: idea+.
+
+## T19 Memory-capped streaming parity (NEW; lit D5)
+- Q: is there a sharp memory threshold below which a learner needs vastly more samples (Raz 2016, ~n^2/25 bits)?
+- WHY: the cleanest "retention is NECESSARY for efficiency" demonstration; a positive control for the claim that
+  discarding HURTS.
+- DISC: n = 10-20, a bounded-memory learner at budgets above/below the threshold; samples-to-solve.
+- RES: light, off M2.
+- MAT: idea+.
+
+## T20 Long-tail memorization (NEW; lit D7)
+- Q: does aggressive compression lose exactly on rare subpopulations, and does the required retention decay with n
+  (Feldman 2020; Brown et al. 2021)?
+- DISC: Zipfian subpopulations with singleton labels; accuracy on the tail vs bits retained per item.
+- RES: light.
+- MAT: idea.
+
+## T21 Is "excess history hurts" a learner property? (NEW; lit D6/D9)
+- Q: when a learner's loss rises with history, does a monotone wrapper remove it (then it is a learner property), and
+  does misspecification explain it (then it is a model property)?
+- DISC: a sample-wise sweep at fixed capacity plus a holdout-accept monotonized wrapper; misspecified Bayes (order-k fit
+  to the Even process) with a tempered posterior.
+- RES: light.
+- MAT: idea. Pairs with T03.
