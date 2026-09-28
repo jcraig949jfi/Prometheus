@@ -39,7 +39,18 @@ near-copier founders in ENVGATE-01.
 lineages are parent-chain (executor-label) records, so the 363 non-copier "founders" with huge lineages (mean 52k births) are
 hosts credited with residents' reproduction. That is the attribution error this arc exists to avoid.
 
-## 2. Pending
+## 2. Takeover-world replays
+**Attempt 1 (UNINFORMATIVE, kept):** block 15, arms U and BLOCK_128, replayed to epoch 30,000 (probes/dominant_founders.py,
+ubu002, about 7,100-7,300 s each; dom15_U.json, dom15_BLOCK_128.json).
+- No takeover lineage exists by 30,000. The top material lineage is a singleton, or at most 25 cells (BLOCK_128 glin 919 at
+  20,000, an EXACT_GATED arrival founder, fp_depth 0).
+- The reason, found afterwards: ENVGATE-01's takeover genomes first reproduce at epochs 64,768-65,472, at the end of the inflow
+  period (E_in = 65,536; LINEAGES.json dominant-descendant records).
+- The 30,000 horizon was chosen without checking that. It is a process error: I should have read the takeover dates first.
+**Attempt 2:** arm U to the full block length (about 65,716), queued on ubu001 (1 core, about 4.5 h).
+Pending (original section 2 text follows).
+
+## 2b. Pending
 - Block 15, arms U and BLOCK_128, replayed with material-descent lineages to epoch 30,000
   (probes/dominant_founders.py, ubu002). Question: is the takeover genome's MATERIAL founder a self-copier, a near-copier with a
   fixed point, or something else?
