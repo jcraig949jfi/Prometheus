@@ -1,0 +1,31 @@
+=== CX1: r004041 dominant tape (TRACED_spontaneous.json top_tape), BYTECODE32 / SEPARATED / L=32 ===
+ disassembly of each half: ['00: LD_A_pS', '01: LD_T_A', '02: DB d9', '03: LD_T_A', '04: DB b1', '05: DB 4e', '06: DB f7', '07: DB bd', '08: ADD_A_B', '09: DB 50', '0a: DB 37', '0b: DB 6a', '0c: OR_A_B', '0d: DB 98', '0e: DB fc', '0f: LDIR']
+ child == writer tape: True  steps per half: (128, 128)
+ child locus -> pre-execution source address: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+ loci whose MOVE source byte was ALSO EXECUTED (excluded from the s4.2 core flip test): 32 / 32
+ RESET register values the copy depends on: ['C (LDIR count / C==0 exit)', 'S (LDIR source pointer)', 'S (load pointer)']
+ => every locus has RESET in addr_deps and ctrl_deps -> not RULE-IDENTIFIED (s2.1) -> birth not identifiable;
+    and the core flip test has an EMPTY denominator for this birth.
+ frozen vm.execute child == traced child: True
+ flip writer byte 20 -> child changes? False (child is 2 copies of bytes 0..15; byte 20 is overwritten before use)
+
+=== CX2: canonical replicator (vm.replicator), SHARED layout: share of loci eligible for the core flip test ===
+ L=32: executed source bytes 8; flip-eligible loci 24/32 = 75.0% (s2.1 needs >= 90% IDENTIFIED)
+ L=64: executed source bytes 8; flip-eligible loci 56/64 = 87.5% (s2.1 needs >= 90% IDENTIFIED)
+
+=== CX3: bit-decoder implicit copy passes the single-bit flip test for a WRONG MOVE label ===
+ program length 28 bytes, frozen VM, L=64, budget 256
+ baseline child locus == occupant byte 5: True ; bit flips reproduced by the "move prediction": 8/8
+ => the flip test cannot distinguish a MOVE label from a pure implicit (control-flow) copy; it validates
+    counterfactual dependence, not the rule label. Only the fixture pack can catch this mislabel.
+
+=== CX4: OPCODE mutation (r004041 config) consumes a tape-DEPENDENT number of RNG draws ===
+ draws for r004041 top tape: 32; after one byte change (0xb1 -> LD S,n): 31
+ => world.py _mutate (16fc6c2a) calls rng.random() once per opcode position; a flipped byte shifts every later
+    draw of the shared World.rng (partners, inputs, other tapes mutations). "Holding the RNG fixed" is only
+    meaningful inside one vm.execute; across ticks it requires per-purpose RNG streams, which the frozen harness lacks.
+
+=== CX5: r004041 dominant self-copier is NOT is_sr under traced_replay.py criterion (b) ===
+ window bytes written 32/32; last-write source inside own tape: 16/32 (criterion b needs >= 28.8)
+ child is an exact copy of the writer, yet is_sr = 0: the eligibility filter (>=1 is_sr) and the "76 SR births"
+ count the criterion artifact, not self-copying (TRACED_spontaneous.json: hifi_births_tail_not_selfrep = 3334 of 3349).
