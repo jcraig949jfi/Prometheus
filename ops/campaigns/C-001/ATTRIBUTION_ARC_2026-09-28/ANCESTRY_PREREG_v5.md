@@ -145,3 +145,35 @@ Limits recorded from the same list:
    - Q8c-whether computed;
    - the verdict computed in code, from the stated rules;
    - every number in a report traceable to a committed output file.
+
+## Amendment C5 (2026-09-28): NPE cell readings N1-N7 (Nestor comms #832), ACCEPTED before any NPE production
+The 11 T-003 runs share one cell: Z8_32 (L = 32), PAIR_TAPE x PAIR_EXECUTION, RESERVOIR, BYTEWISE copy primitive, PC_RELATIVE
+self-location, OPCODE/LOCAL mutation, ops mask 0x0C (GETPC and SENSE only). Several v4 NPE clauses assumed a different NPE world.
+Adopted:
+- **N1 unit:** ONE pair interaction = slice of a + slice of b on the 64-byte tape + the harness write-back of each half (with
+  mutation).
+  * A "birth" = a P-11 predecessor acceptance of a half.
+  * victim = that half's organism (it keeps its slot and its persisted registers); donor/writer = the other organism.
+  * This replaces "victim = the slot displaced by ALLOC" (no ALLOC exists in this cell).
+- **N2:** SENSE returns the side (0/1), a harness constant -> (CONTEXT, "SENSE_side"), FOREIGN-STRUCTURAL.
+- **N3:** no task inputs; IN -> (CONSTANT, "in_exhausted"); the INPUT group is empty; Q-input is INAPPLICABLE.
+- **N4:** inapplicable in this cell:
+  * K20 (in-VM noise; LDIR/LDDR disabled);
+  * mate / recombination labels (no recombination);
+  * the OTHER group (the tape holds only the two halves).
+  Slot-tail clearing is labelled but never changes a byte.
+- **N5:** applicable: persisted registers/flags across interactions; GETPC CONTEXT (K29); write-back mutation with a
+  decode-dependence set (K28); residue-only acceptance (K30); performer can be either entity (K21/K25).
+- **N6 scale:** the tracer runs on all ~2.8M interactions; full s3 exports go to birth-producing interactions plus the
+  P4-eligible non-accepted ones; the intervention arms run on the s4 sample.
+- **N7:** Q4 via Odysseus recert; Q5 not built (NPE reports it as omitted).
+
+**NPE fixtures:**
+- Nestor drafts the semantics AND the Z8 images (expectations as data).
+- Archaeon validates them with the flip test and interventions on NPE's world code, and ADDS adversarial fixtures of its own
+  before production.
+- An NPE reference tracer is written by an isolated worker from the prereg text (with this amendment) alone. The three-way
+  agreement rule (v4 s4.3) applies to NPE as to BEE.
+
+**Pin data:** the full T-003 hashes are committed in NPE_T003_HASHES.txt (result_sha256 efba5535...18bc; per-run lineage_sha256).
+Observation for Nestor: in two runs (s9200006, s9200008) the C_reimplant_random arm has the SAME lineage_sha256 as A_in_situ.
