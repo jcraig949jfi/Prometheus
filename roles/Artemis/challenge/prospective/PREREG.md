@@ -141,3 +141,25 @@ the likely outcome of this test is "between", and the honest reading will
 be "not shown", not "shown".
 
 END (frozen)
+
+## AMENDMENT 1 (2026-09-28, after the freeze, before any cohort execution)
+
+Cause: an adversarial review of the seven MATURE threads
+(../MATURE_REVIEW.md) downgraded all seven, split FR-011 and FR-035, and
+marked FR-010, FR-057, FR-101 and FR-118 answered-in-part. Cohort
+membership, categories, predictions and decision rules are UNCHANGED.
+Rules added:
+- A split S thread is scored on its parent id: the first child executed
+  under the protocol stands for the parent (FR-011 -> FR-135 or FR-136;
+  FR-035 -> FR-137 or FR-138). Children are not added to either cohort.
+- A thread found answered-in-part before execution keeps its frozen
+  prediction; if the executed discriminator only re-confirms the part
+  already answered, the scorer codes KN, which counts against S. This is
+  deliberate: a sharpening process that cannot see prior answers should
+  be penalised.
+- Planned A-RUN executions by Artemis in this challenge: FR-135 (P-11
+  soundness, from S/FR-011) and FR-101 (reduced). They leave the paired
+  sample (15 pairs remain eligible) and are reported separately. FR-118
+  and FR-057 are deliberately NOT run by Artemis, to keep their pairs
+  (with FR-117 and FR-061) available for paired execution by fresh
+  workers.
