@@ -1,0 +1,47 @@
+# Research blocks for any idle machine (no oral history needed)
+
+Each block is multi-hour, scientifically consequential and self-contained.
+None needs the M1 GPU. PTE runs on CPU. Read this setup once, then open
+the block's file.
+
+## Setup (Linux or Windows)
+    git clone <prometheus repo>; cd Prometheus
+    python3.12 -m venv .venv && . .venv/bin/activate
+    pip install numpy==2.2.6 torch  # a CPU wheel is fine; CUDA is optional
+    python -m pytest -q prometheus/ananke/tests          # expect all pass on CPU
+PTE dependencies: numpy + torch only (plus scipy if a block says so).
+Specimens live in git (roles/Ananke/pte/c1_rows/cells.jsonl.gz). Run state
+goes outside git. Rules: roles/Ananke/research/handoffs/COMMON_RULES.md +
+COMMON_RULES_ARC3.md (plan before running; log every attempt; no
+commits; report in the final message or hand the report file to the
+seat principal). Leases: roles/Ananke/research/lease.py covers M1 only.
+On another host, record the host in the owner string and post the lease
+record to comms if the machine is shared.
+
+## Blocks (maturity: research-ready)
+B-1 DESIGN, DON'T EVOLVE (T-WA-2). Use the zero-parameter echo model
+    (workers/W-A/echo_model.py) to choose physics and pipeline depth that
+    cover a TARGET gap set (e.g. {4, 12}, two lags at once through S1/S2),
+    then verify in the engine. Question: can the model design what search
+    never found? CPU ~2-3 h. Evidence: designed_echoes/ (calibration),
+    workers/W-A/.
+B-2 SCAR ANATOMY (T-RET-3). Where do the permanent cue-signed traces sit
+    (which sites, which stores), and what writes them? Specimens and
+    raw data: workers/W-E/out/, and W-G's outputs once deposited. CPU ~3 h.
+B-3 MIXTURE vs JOINT (T-CT-3). In "JOINT" cells site_acc + chan_acc ~ 1.
+    Does the per-trial split follow latency jitter, duplication or wake
+    parity? Raw data: workers/W-F/out/census_table.csv; instrument:
+    prometheus/ananke/lens.py carrier_table. CPU ~3 h.
+B-4 CA CARRIER MODEL (T-X-5). Herakles EvCA density-classification rules
+    (herakles/evca/, on origin/main): run a domain/particle filter
+    (Crutchfield-Hanson) and compare "particle carries the bit" with PTE's
+    carrier-swap logic. A cross-engine lens, no PTE compute. CPU ~4 h.
+B-5 COMPUTATIONAL-MECHANICS READING OF PTE TRACES (T-INS-5 variant).
+    Reconstruct causal states (CSSR, or a local-causal-state filter) from
+    single-cue-twin difference fields of 3 specimens (echo, latch,
+    source-presence) and ask whether causal-state structure separates the
+    carrier classes the swap assay finds. CPU ~4 h. Prior art:
+    PRIOR_ART_temporal_distributed_computation.md s7-8.
+B-6 ROUTING-AWARE ECHO MODEL (T-WA-1). Extend echo_model with the measured
+    per-site routing weights of the fresh2/3 champions. Prediction: residual
+    MAE < .02. Also tests whether routing carries the cue sign. CPU ~2 h.
