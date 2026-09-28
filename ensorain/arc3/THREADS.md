@@ -94,6 +94,15 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - RES: light.
 - MAT: designed (cheap probe).
 
+- EXT (lit/LIT_FORGETTING_ABSTRACTION.md): successful systems mostly SEGREGATE rather than erase: latent-cause
+  inference (Gershman 2010/2017; LCNet 2024), COIN (Heald et al. 2021), CLS.
+- Discriminators:
+  - abrupt vs gradual change with equal evidence (Gershman et al. 2013: gradual -> overwrite, abrupt -> new cause);
+  - EVOKED/SPONTANEOUS RECOVERY after a few old-regime cues (preserved-and-suppressed vs destroyed);
+  - A-B-A vs A-B-C regimes;
+  - forgetting-rate x switch-rate sweep (the optimal rate should track the switch rate).
+- Baselines: best constant, oracle-regime, GDumb (bounded buffer refit from scratch). F3 uses A-B-C only; A-B-A is new.
+
 ## T08 Transfer: examples vs latent structure vs reusable abstraction
 - Q: which retained information survives a field change?
 - WHY: directive I; the North Star (symbolic compression).
@@ -148,6 +157,11 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - DISC: cold vs warm refit on the same store.
 - RES: light.
 - MAT: idea.
+
+- EXT: warm-starting generalizes WORSE than retraining on unchanged data (Ash and Adams 2020), and resets help
+  (Nikishin 2022; Dohare 2024: plasticity loss). Our observation (warm reservoir MORE stable than cold L-R) is the
+  opposite direction on stability, which makes it worth checking whether warm fits are also biased (stable but worse
+  at convergence?).
 
 ## T14 WTP-04 review (Block T)
 - Former plan: N6 rung, cross-field transfer, class-agnostic admission, learning-time/lifetime search.
@@ -212,6 +226,11 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - DISC: Zipfian subpopulations with singleton labels; accuracy on the tail vs bits retained per item.
 - RES: light.
 - MAT: idea.
+
+- T20 EXT: memorization is REQUIRED on long tails (Feldman 2020; Brown 2021) but HARMFUL under spurious correlations
+  with minority exceptions (Sagawa et al. 2020: memorizing the exceptions protects the shortcut). Run both conditions
+  with the same memory limit. Score any capacity-limit benefit with bias-free metrics (the "starting small" results are
+  fragile: Rohde and Plaut 1999; Juslin and Olsson 2005).
 
 ## T21 Is "excess history hurts" a learner property? (NEW; lit D6/D9)
 - Q: when a learner's loss rises with history, does a monotone wrapper remove it (then it is a learner property), and
