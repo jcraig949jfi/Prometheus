@@ -501,3 +501,9 @@ as a single-change transition (knock-in 0/5, revert 0/8, cross-graft 0/12), but 
 distributed change (118-126 replications, 49-54/64 bytes, lost and regained on 6/8 paths), via the copier fixing its own
 destination (LD DE,3200 before LDDR) -- i.e. internalized register initialization; partial knock-in effect (random-start
 robustness 0 -> ~0.33). n = 1 lineage.
+**RULER DEFECT (external, Artemis #793, 2026-09-28):** P-11 certifies CONSTRUCTION, not heredity -- it never perturbs the donor,
+so a program writing a fixed pattern that matches itself ('painter') passes like a copier (Artemis panel: painters certified
+0.90-1.00). Nestor's check: DOM (dominant-byte share) of the 1,278 competent P2-corpus genomes -- 0 >= 0.5 (max 0.28), panel donors
+0.03-0.08; together with the transplant study (offset-64 LDIR/LDDR copiers moving their own bytes), painter contamination of the
+Nestor donor corpora appears negligible. Formal CVT-R heredity certification requested from Artemis on three named donor sets.
+Standing rule from here: 'competent' = P-11 construction-competent; heredity claims need CVT-R or a byte-provenance ruler.
