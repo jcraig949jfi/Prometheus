@@ -1,0 +1,17 @@
+n 39 {np.str_('JOINT'): 14, np.str_('SITE'): 11, np.str_('CHANNEL'): 12, np.str_('OTHER'): 2} strat False
+tree_phys 0.398
+tree_phys_fam 0.396
+logit6 0.403
+family_only 0.384
+majority 0.285
+gain 0.014 [-0.088  0.095]
+|--- lat_base <= 3.00
+|   |--- lat_base <= 1.50
+|   |   |--- class: JOINT
+|   |--- lat_base >  1.50
+|   |   |--- class: JOINT
+|--- lat_base >  3.00
+|   |--- class: CHANNEL
+
+JOINT site_acc+chan_acc [1.   1.   1.01 0.99 0.99 1.   1.01 1.   0.99 1.   1.   0.98 1.   1.01] mean 0.999
+distinct physics points (non-HOLD readable): 11

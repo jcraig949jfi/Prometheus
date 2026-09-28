@@ -35,7 +35,9 @@ CONTROLS (known answers, all passing)
   route_relay  w FLIP; channel_all NO-EFFECT
   verdict rule shown able to return all three outcomes.
 
-REAL SPECIMENS (2026-09-27 spikes)
+REAL SPECIMENS (2026-09-27 spikes; full census of 166 C1 SIGNAL cells in
+  workers/W-F: SITE 92 / JOINT(mixture) 14 / CHANNEL 13 / ELSEWHERE 5 /
+  UNREADABLE 42)
   M2 4ab2ba01 + 3 fresh: channel content FLIP on ONE payload component
     (pay1 x3, pay0 x1); site, counts, w NO-EFFECT.
   M3 0a23398f / f6b623cd: channel FLIP at mid-delta; r NO-EFFECT.
@@ -53,6 +55,9 @@ KNOWN FAILURE MODES
   F4 SYMMETRIC CARRIERS SWAP TO NOTHING. If X is identical in both
      partners (e.g. configuration), the swap is a no-op; NO-EFFECT is then
      trivially true. Check that X differs between partners before reading.
+  F5' (W-F census) a JOINT reading where site_acc + chan_acc ~= 1 is a PER-TRIAL
+     MIXTURE (a handoff caught mid-transit with variable latency), not a joint
+     code. Always report site_acc + chan_acc.
   F5 CHANCE IS AMBIGUOUS: split coding, redundancy (conflict) or
      disruption. Disambiguate with erasures (see
      roles/Ananke/research/joint_carrier/).

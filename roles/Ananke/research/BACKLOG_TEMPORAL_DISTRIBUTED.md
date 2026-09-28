@@ -25,7 +25,7 @@ T-M2-3 OPEN: Why does the code relabel across payload components (pay1 in
 T-M2-4 OPEN: Spatial extent. Which sites carry the echo? CHEAPEST:
   flush in-flight packets addressed to sites beyond distance d from the
   actuator, d = 1..3 (a between-tick hook). LENS: PTE.
-T-DM-2 OPEN (specimen FOUND 2026-09-27: MAJ 4781b0a1, joint swap FLIPs,
+T-DM-2 REFRAMED: no genuine joint CODE found. All 14 JOINT cells in the census are per-trial phase mixtures (site+chan acc = 1.00; W-F), and 4781b0a1 is source-latched regeneration (joint_carrier/RESULT.md). A genuinely synergistic carrier remains unobserved in PTE. Was: (specimen FOUND 2026-09-27: MAJ 4781b0a1, joint swap FLIPs,
   channel or site alone ~0.5 at mid-interval): Is any PTE mechanism genuinely JOINT (the bit only in a
   combination of carriers)? NEXT: map the split over ticks and sites
   (per-site flush + per-tick joint swaps), and test for synergy (dit). WHY: joint or synergistic carriers are what
@@ -36,13 +36,20 @@ T-DM-4 OPEN: Regeneration. After a full channel flush, can site state
   rebuild the bit? (None expected for M2.) The instrument is the
   flush-then-watch test. LENS: PTE.
 
-T-CT-1 OPEN: Carrier heterogeneity inside C1 families. At mid-transit,
-  RELAY champions carry the bit in the channel (3/4) or in site state
-  (bbef66a1: a site-latched bucket brigade). MAJ: channel (2), site (1),
-  joint (1). WHY: family labels hide carrier diversity; the North-Star
-  question is which physics favours which carrier. CHEAPEST: the full C1
-  SIGNAL carrier table (T-INS-1 step 4) plus a regression of carrier class
-  on physics dials (decay, loss, update mode, caps). LENS: PTE.
+T-CT-1 DONE 2026-09-28 (workers/W-F/REPORT.md, out/census_table.csv): all 166
+  C1 SIGNAL cells, carrier_table at the c1b mid tick. 124 readable: SITE 92,
+  JOINT 14, CHANNEL 13, ELSEWHERE 5 (42 UNREADABLE). HOLD is site-carried
+  (81/85; the one CHANNEL is M2 4ab2ba01). Decision: FAMILY SELECTS (depth-2
+  physics tree 0.730 vs family-only 0.797 CV; gain -0.07). Inside RELAY/MAJ
+  nothing predicts the class (~0.40, 11 physics points), and one RELAY
+  physics+env point holds SITE 4 / CHANNEL 4 / JOINT 4. Every JOINT cell has
+  site_acc + chan_acc = 1.00: a per-trial mixture caught mid-handoff
+  (channel -> site latch), not a joint code. Consequence for C2: the RELAY
+  carrier is a TRAJECTORY; a single-tick class is a phase reading.
+  Split into T-CT-2 (carrier trajectory over all ticks, RELAY/MAJ) and T-CT-3
+  (per-trial mixture test for JOINT), T-CT-4 (why the MAJ pw4/dest-all point is
+  always channel-carried).
+  T-CT-5 OPEN: relative FLIP threshold for weak champions (instrument change; needs a written rule first).
 
 ## B. Configuration vs memory
 

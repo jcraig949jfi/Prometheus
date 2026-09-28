@@ -1,0 +1,247 @@
+{
+ "n_rows": 166,
+ "n_errors": 0,
+ "n_readable": 124,
+ "class_counts_raw": {
+  "SITE": 92,
+  "ELSEWHERE": 5,
+  "JOINT": 14,
+  "CHANNEL": 13
+ },
+ "class_counts_model": {
+  "SITE": 92,
+  "ELSEWHERE": 5,
+  "JOINT": 14,
+  "CHANNEL": 13
+ },
+ "family_x_class": {
+  "HOLD|CHANNEL": 1,
+  "HOLD|ELSEWHERE": 3,
+  "HOLD|SITE": 81,
+  "HOLD|UNREADABLE": 12,
+  "MAJ|CHANNEL": 6,
+  "MAJ|JOINT": 2,
+  "MAJ|SITE": 1,
+  "MAJ|UNREADABLE": 10,
+  "RELAY|CHANNEL": 6,
+  "RELAY|ELSEWHERE": 2,
+  "RELAY|JOINT": 12,
+  "RELAY|SITE": 10,
+  "RELAY|UNREADABLE": 20
+ },
+ "tags": {
+  "HANDOFF": 23,
+  "pay=pay1": 7,
+  "TRIVIAL": 66,
+  "pay=pay3": 2,
+  "pay=pay0": 3,
+  "JOINT-SPLIT": 13,
+  "JOINT-ASYM": 1,
+  "pay=none": 1,
+  "COUNT-FLIP": 1
+ },
+ "top_class_share": 0.7419354838709677,
+ "cv": {
+  "tree_phys": {
+   "mean": 0.7303666666666666,
+   "p2.5": 0.6726833333333334,
+   "p97.5": 0.762375
+  },
+  "tree_phys_fam": {
+   "mean": 0.80695,
+   "p2.5": 0.7817916666666667,
+   "p97.5": 0.8150000000000001
+  },
+  "logit6": {
+   "mean": 0.6944166666666666,
+   "p2.5": 0.6771583333333333,
+   "p97.5": 0.710175
+  },
+  "family_only": {
+   "mean": 0.7973000000000001,
+   "p2.5": 0.7854,
+   "p97.5": 0.799
+  },
+  "majority": {
+   "mean": 0.7420000000000002,
+   "p2.5": 0.742,
+   "p97.5": 0.742
+  }
+ },
+ "stratified": true,
+ "gain_tree_minus_family": {
+  "mean": -0.06693333333333337,
+  "p2.5": -0.12580833333333336,
+  "p97.5": -0.027799999999999978
+ },
+ "decision": "family selects",
+ "tree_full": "|--- fanout <= 1.50\n|   |--- decay <= 0.31\n|   |   |--- class: SITE\n|   |--- decay >  0.31\n|   |   |--- class: SITE\n|--- fanout >  1.50\n|   |--- capinv <= 0.75\n|   |   |--- class: SITE\n|   |--- capinv >  0.75\n|   |   |--- class: SITE\n",
+ "tree_phys_fam_full": "|--- is_HOLD <= 0.50\n|   |--- pw <= 3.00\n|   |   |--- class: JOINT\n|   |--- pw >  3.00\n|   |   |--- class: CHANNEL\n|--- is_HOLD >  0.50\n|   |--- loss <= 0.05\n|   |   |--- class: SITE\n|   |--- loss >  0.05\n|   |   |--- class: SITE\n",
+ "class_by_dial": {
+  "decay": {
+   "0.0": {
+    "SITE": 25,
+    "JOINT": 14,
+    "CHANNEL": 7,
+    "ELSEWHERE": 1
+   },
+   "0.015625": {
+    "SITE": 11
+   },
+   "0.125": {
+    "ELSEWHERE": 3,
+    "SITE": 51,
+    "CHANNEL": 6
+   },
+   "0.5": {
+    "SITE": 5,
+    "ELSEWHERE": 1
+   }
+  },
+  "loss": {
+   "0.0": {
+    "ELSEWHERE": 1,
+    "SITE": 4
+   },
+   "0.1": {
+    "SITE": 74,
+    "JOINT": 8,
+    "CHANNEL": 7,
+    "ELSEWHERE": 4
+   },
+   "0.3": {
+    "SITE": 4,
+    "CHANNEL": 6
+   },
+   "0.6": {
+    "SITE": 10,
+    "JOINT": 6
+   }
+  },
+  "async": {
+   "0.0": {
+    "SITE": 62,
+    "ELSEWHERE": 5,
+    "JOINT": 8,
+    "CHANNEL": 7
+   },
+   "1.0": {
+    "SITE": 30,
+    "JOINT": 6,
+    "CHANNEL": 6
+   }
+  },
+  "lat_base": {
+   "1": {
+    "SITE": 61,
+    "ELSEWHERE": 5,
+    "JOINT": 8,
+    "CHANNEL": 7
+   },
+   "2": {
+    "SITE": 21,
+    "JOINT": 6
+   },
+   "4": {
+    "SITE": 10,
+    "CHANNEL": 6
+   }
+  },
+  "capinv": {
+   "0.0": {
+    "SITE": 1
+   },
+   "0.25": {
+    "SITE": 56,
+    "JOINT": 6,
+    "ELSEWHERE": 3
+   },
+   "0.5": {
+    "SITE": 16,
+    "JOINT": 8,
+    "CHANNEL": 13,
+    "ELSEWHERE": 1
+   },
+   "1.0": {
+    "ELSEWHERE": 1,
+    "SITE": 19
+   }
+  },
+  "fanout": {
+   "1": {
+    "SITE": 50,
+    "ELSEWHERE": 2
+   },
+   "2": {
+    "SITE": 6,
+    "JOINT": 5
+   },
+   "4": {
+    "SITE": 8,
+    "ELSEWHERE": 2
+   },
+   "8": {
+    "SITE": 28,
+    "JOINT": 9,
+    "CHANNEL": 13,
+    "ELSEWHERE": 1
+   }
+  },
+  "pw": {
+   "1": {
+    "SITE": 56,
+    "JOINT": 6,
+    "ELSEWHERE": 3
+   },
+   "2": {
+    "SITE": 30,
+    "ELSEWHERE": 2,
+    "JOINT": 8,
+    "CHANNEL": 7
+   },
+   "4": {
+    "SITE": 6,
+    "CHANNEL": 6
+   }
+  },
+  "wimm": {
+   "0": {
+    "SITE": 25,
+    "CHANNEL": 6
+   },
+   "1": {
+    "SITE": 67,
+    "ELSEWHERE": 5,
+    "JOINT": 14,
+    "CHANNEL": 7
+   }
+  }
+ },
+ "class_by_family_destmode": {
+  "HOLD|all": {
+   "SITE": 10
+  },
+  "HOLD|sample": {
+   "SITE": 71,
+   "ELSEWHERE": 3,
+   "CHANNEL": 1
+  },
+  "RELAY|all": {
+   "JOINT": 6,
+   "SITE": 3
+  },
+  "RELAY|sample": {
+   "JOINT": 6,
+   "SITE": 7,
+   "CHANNEL": 6,
+   "ELSEWHERE": 2
+  },
+  "MAJ|all": {
+   "CHANNEL": 6
+  },
+  "MAJ|sample": {
+   "SITE": 1,
+   "JOINT": 2
+  }
+ }
+}
