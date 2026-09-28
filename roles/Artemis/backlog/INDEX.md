@@ -195,6 +195,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-113 | Explicit memory changed retrieval, not behaviour, at one model tier | RAW | H-D4-37 | deep (LLM line) | L |
 | FR-115 | A term-rewriting substrate: rewrite-strategy pressures are unhostable today | RAW | H-D4-42 | new-lens signal (strong) | L |
 | FR-123 | Homoiconic worlds: reusable transformations of the system's own machinery (meta-grammar census passed, never built) | RAW | H-D4-50 | new-lens signal (strong); related FR-090 | L |
+| FR-139 | ALIEN: are living regimes supertransients? (escape rate vs world size, window-free) | RAW-ALIEN | (outside field; challenge/ALIEN_QUESTION.md) | none (no thread shares its vocabulary) | L |
 
 ## N. Program infrastructure (unlocks several scientific threads)
 

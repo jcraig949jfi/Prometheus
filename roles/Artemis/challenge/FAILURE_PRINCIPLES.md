@@ -718,6 +718,354 @@ engines are cut (see section 7).
 file was opened.]
 
 =======================================================================
+## 2. Mapping of the Harmonia fossil FP-001..FP-004 onto section 1
+=======================================================================
+Read after section 1 was saved. Sources:
+
+- harmonia/memory/architecture/failure_primitive_atlas.md (last commit
+  2026-06-15);
+- harmonia/primitives/failure_primitives.py;
+- harmonia/proposals/2026-06-09/D_cross_agent_failure_primitive_atlas.md;
+- for section 5 only, the atlas's own candidate shelf,
+  fp_candidate_shelf_20260610.md.
+
+A mapping is made only where the MECHANISM matches. Codes: MATCH, PARTIAL
+(overlapping mechanism, different scope), NONE.
+
+| FP | Harmonia signature (abridged) | Maps to | Justification |
+|---|---|---|---|
+| FP-001 baseline_costume | A structure claim on rows R ties (>= 90%) a cheap baseline computed from R's marginals or counts | PARTIAL -> P04; PARTIAL -> P11 | P04: a cheap explanation reproduces the reported signal. FP-001 is scoped to descriptive structure claims whose statistic equals a volume or marginal counter; P04 is scoped to scores and selection. P11: its September analogue is "selective vs lossless = the number of exact records kept" (H-D1-40), i.e. structure that is a count wearing a hat. |
+| FP-002 opaque_kill_black_hole | One kill label absorbs >= 30% of a >= 1000-record ledger with no varying payload; the gradient is destroyed | PARTIAL -> P15 | Same mechanism as the P15 instance "kill vectors 0% populated, only aggregates stored, so the learner is lookup" (H-D5-11, FR-051). FP-002 is narrower (label pooling); P15 also covers fields never logged and evidence stranded on one host. |
+| FP-003 bounded_menu_wall (coordinate_invariant) | A fixed generation menu gives a >= 30-batch zero-promotion tail. Subclasses: region_empty (STOP), source_saturated (STOP), expressiveness_ceiling (GROW the menu) | PARTIAL -> P13 (+ P01 for source_saturated) | Same observable as P13: nothing is found under a fixed generator. FP-003 is a SYMPTOM detector with post-hoc causes; P13 is one CAUSE, "expressible but intermediates unreachable", which FP-003's taxonomy does not contain. region_empty is a truthful null (no failure). source_saturated is the world side of P01. expressiveness_ceiling is nearest to the P12/P06 finding that "only human widening moved the ceiling" (H-D5-13). |
+| FP-004 degenerate_field_flatline | A field declared varying is degenerate (pinned, never populated), so downstream metrics are algebraically forced and read as findings | PARTIAL -> P01; PARTIAL -> P15 | P01 detector side: a guard or metric reading a dead field cannot fire (CW01-D091, "guard read keys never written", in FR-059). P15: the field was not really recorded. Section 1 has instances but NO principle named for "declared-varying input is dead, so the arms are identical". This is a real gap in (a); see section 5. |
+
+Net: none of the four FP classes maps one-to-one onto a section-1
+principle. Two are narrower special cases (FP-002 inside P15; FP-004
+straddling P01 and P15). FP-001 is a sibling of P04. FP-003 names a symptom
+whose causes section 1 splits apart.
+
+=======================================================================
+## 3. Mapping of Odysseus's 13 shapes onto section 1
+=======================================================================
+Source: roles/Odysseus/frontier/poi/raw/I6_failures_reversals.md (80
+reversals R01..R80, 13 shapes; the classification is the delegate's own,
+marked INFERRED there), with MAP.md and CROSSWALK.md for context.
+
+Independence of the evidence (per the coordinator's caveat). I6 lists
+among its sources Artemis's ENGINE_LENS_CARDS.md and notes/C_engines.md.
+Each shape is therefore scored on how Odysseus's cited evidence reaches
+the claim:
+
+- IND: the cited rows go to seat primaries, not through Artemis files,
+  and at least some instances do not appear in Artemis's material.
+- SP (same primary): the cited rows go to seat primaries (not Artemis
+  files), but they are the SAME primary files Artemis's harvest read.
+  This is an independent reading of the same evidence.
+- SS (shared source): the cited evidence for the shape routes through
+  Artemis files.
+
+Rows whose citation includes an Artemis file: R10, R13, R20 (C_engines),
+R24 (C_engines + lens cards), R59 (lens cards), R60 (C_engines). CROSSWALK.md
+is built "from ENGINE_LENS_CARDS.md ... and the harvest", so it is SS
+throughout. raw/I3 and raw/I4 cite C_engines.md 14 times each, and I4
+"builds on the Artemis retrospective".
+
+| Odysseus shape | rows / engines | Maps to | Justification | Independence |
+|---|---|---|---|---|
+| SC stale/wrong comparator | 9 / NPE AGE CWE WTP | MATCH -> P08 | The comparator differs from the treatment in more than the named factor; the Aether 250-tick-old comparison is in both. | IND (R03 R07 R28 R35 cite seat primaries and are not in (a)) |
+| LP label mistaken for property | 21 / NPE BEE CWE PTE ARC Ares Crius | PARTIAL -> P03 | The core (lineage id, "founder-descended", P-11 certificate, "own code") is P03 referent slippage. Rows like R58 (receipt existence read as verdict) and R62 (keyword match read as R1) are wider than P03. | SP (FALSE_FRIENDS, Nestor FINDINGS) + IND (Crius R55/R58, Ares R51) |
+| LM location mistaken for material | 4 / NPE BEE ARC Crius | MATCH -> P03 | Exactly the WHERE-vs-WHAT slippage (B6, FF-30). | SP |
+| HG host credited for its guest | 6 / NPE BEE AGE ARC | PARTIAL -> P03 (+P06, +P14) | Crediting the executor or host instead of the author is P03. Crediting the world's operators (perturbation 42%/95%, splice 88% of "replicators") is P06's "exogenous driver". Write-back erosion is P14. | Mixed: R10/R20 SS, R01/R06/R45/R46 SP |
+| AS author smuggles the answer | 12 / CWE WTP PTE Ares (+Apollo, Techne, SFE, Aphrodite, Ergon) | MATCH -> P06 (sub-form e -> P07) | The generator class IS the law; the expected mechanism is written into the pass rule. Sub-forms (c) "probes drawn from the construction's own distribution" and (e) "self-authored adversary" are P07's co-adapted-battery form. | SP (CWE packet, WTP-03 report) + IND (R42 R53 R68 R69 R75) |
+| WR window misses the readout | 4 / NPE AGE PTE | PARTIAL -> P08 | Section 1 folded the PTE window error into P08 (the ablation did not contain the cause). Odysseus's phase-of-tick generalisation (T05) is sharper than section 1. | IND (C1_ERRATA, Nestor, Aether primaries) |
+| VC vacuous control / outcome forced | 21 / NPE BEE AGE CWE WTP PTE Ares | PARTIAL -> P01 ("cannot fire") + P08 ("arms not isolated") | I6 s6 itself predicts a second classifier would split VC into "cannot fire" vs "forced outcome". Section 1 made exactly that split, blind to I6. | IND |
+| TB trivial or tuned baseline never run | 10 / AGE CWE WTP PTE Ares Crius | MATCH -> P04 | A constant, running mean, copy-last, reflex or random walker reaches the claim's scale. | IND (instances mostly disjoint from (a): R23 R25 R41 R52 R57) |
+| PS pooled statistics hide per-group failure | 4 / CWE ARC | PARTIAL -> P10 | P10 includes "cross-context signals must be re-tested within context" (H-D5-47). PS is the inverse direction: pooling manufactures an effect no group has. Section 1 has no separate pooling principle. | Mixed: R24 SS, R45/R65/R66 IND |
+| SO selection on the outcome | 6 / BEE WTP Ares | MATCH -> P05 | Best-of-N and trigger-conditioned rates read as base rates. R32 (admission pre-selects) is P06 in section 1. | SP (Ares report) + IND (R11 BEE 90% vs 39.4%) |
+| PR pseudo-replication | 12 / NPE BEE CWE WTP Ares SFE | PARTIAL -> P07 | The agreeing-sources rows (R73 same-model reviewers, R79 one premise read twice, Metis) are P07 common cause. The n_eff rows (seeds reproducing lineages byte for byte, events vs lineages, 13 founders for 181 worlds) are a unit-of-replication mechanism section 1 does NOT have. | IND (R60 SS) |
+| DM degenerate metric | 12 / NPE WTP PTE Crius | PARTIAL -> P04 (+P03, +P02) | A metric that rewards abstention or a zeroed world is P04. Saturation at the ceiling (B7) is P03's architecture instance. Depth capped by certification breaks is P03/P14. R44 (criterion fires on categorical dials) is P02. | IND |
+| SA silence read as a null | 3 / SFE | MATCH -> P01 (+P15) | Silence read as absence. SFE "silent exactly when the engine broke" is also P15. | SS for the only engine row (R59 cites Artemis's lens card); seat rows (Nous, Atlas) IND |
+
+Net: 5 MATCH (SC, LM, AS, TB, SO); 7 PARTIAL (LP, HG, WR, VC, PS, PR, DM);
+1 MATCH through a shared source (SA). No Odysseus shape is left without a
+section-1 home. Two section-1 principles have no Odysseus shape: P09
+(encoding carries the signal) and P12 (leverage read as construction). P11,
+P13 and P14 appear in Odysseus's MAP, CROSSWALK and threads, not among the
+13 reversal shapes; see section 4.
+
+=======================================================================
+## 4. Independently rediscovered structures (ranked)
+=======================================================================
+A structure is counted as rediscovered when at least two catalogues reach
+the same mechanism from different evidence. Evidence independence is
+coded as follows:
+
+- Harmonia (b): June 2026 agents (Theseus/Techne, Erebos, Polyhymnia,
+  Apollo, Noesis, Charon, Forge, Arcanum, Ergon, Nemesis). Independent of
+  the September engines BY DATE.
+- Odysseus (c): IND / SP / SS as in section 3.
+
+One same-event overlap between (a) and (b) must be declared. Artemis's D5
+harvest reaches older-line events that the Harmonia shelf also uses:
+
+- Apollo shape-keyed novelty (H-D5-31);
+- Nemesis's constant string (FR-070).
+
+Where those events are the whole overlap, the (a)-(b) agreement is not
+independent.
+
+"Union engines" means distinct September engine codes (section-1 table)
+plus distinct June lineages from (b), rounded. It is breadth, not proof.
+
+| rank | principle | (a) | (b) Harmonia | (c) Odysseus | union engines | evidence independence |
+|---|---|---|---|---|---|---|
+| 1 | P01 NULL WITHOUT POWER (the test could not say yes) | 16 eng | FP-004 partial; shelf null_satisfiable_gate (charon, erebos) | VC "cannot fire" half, SA | ~21 (17 Sept + 4 June) | HIGH. Also restated independently INSIDE September: Nestor lesson 1, Aether ledger "ask whether the law alone forces the outcome", base rule 3, the Harmonia Aug audit (12/22 never fired), Nemesis L-03. |
+| 2 | P04 CHEAP OPTIMUM IN THE SCORE (a dumb system reaches the claim's scale) | 9 eng | FP-001 partial; shelf uncalibrated_instrument_floor (4 lineages), surface_space_novelty_inflation (5) | TB (6 eng), DM (4) | ~18 (14 Sept + 4 June) | HIGH for (c): TB rows are disjoint primary-ledger instances. MEDIUM for (b): Apollo novelty and Nemesis appear in both (a) and (b). |
+| 3 | P07 COMMON-CAUSE PSEUDO-REPLICATION | 8 eng | Admission rule 3 plus the FP-003 Stage-2 ruling: "two anchors sharing scaffolding code are ONE observation -- the same shadow cast twice"; the diagnosis language is contaminated because authors knew the predicted shape. Shelf pseudo_independent_consensus. | PR (agreeing-sources half) | ~14 | HIGHEST by evidence. Harmonia derived it in June on agent code lineages; Artemis derived it in September on three Z80 builds from one directive and one paper (FR-010). Different objects, same rule. It also governs this comparison (I6 routes through Artemis files). |
+| 4 | P13 INACCESSIBLE INTERMEDIATES (expressible != reachable) | 11 eng | FP-003 partial (same observable, missing this cause) | MAP X8 REACHABILITY; CROSSWALK "existence is not accessibility -- found three times without citation"; T06/T07; spike S3 | ~13 | HIGH. Spike S3 is NEW Odysseus evidence (the C4 "cliff" re-tabulated as a 62%-neutral plateau with no uphill neighbour). CROSSWALK is SS; X8's engine rows are SP. |
+| 5 | P08 CONTRAST NOT ISOLATED | 12 eng | shelf mismatched_null_reference (charon, ergon, noesis) | SC, WR, VC "forced" half | ~15 | HIGH (SC/WR rows are IND; the shelf is June). |
+| 6 | P15 UNRECORDED GRAIN | 10 eng | FP-002; shelf unpersisted_evidence_record (4), unwitnessed_flatline (3) | SA (SS), T13 recall of planted events | ~14 | MEDIUM. (b) is independent; (c) is mostly SS. |
+| 7 | P06 AUTHORED RESULT | 11 eng | none in FP-001..004 (proposal D names "reward-signal capture" and "prime atmosphere", other mechanisms); shelf graderside_leak_into_generator partial | AS (4 eng + 6 seats), X7 DETECTABILITY | ~12 | MEDIUM. (a) and (c) only; CWE and WTP are SP; PTE R42, Ares R53, Techne, stackvm and Aphrodite E3 are IND. |
+| 8 | P05 ANALYST SELECTION | 8 eng | shelf posthoc_gate_thaw (arcanum, charon, forge), partial | SO | ~9 (+3 June) | MEDIUM. |
+| 9 | P03 REFERENT SLIPPAGE | 6 eng | shelf measurement_referent_unbinding / asserted_state_referent_gap, partial (record-object binding, a different mechanism) | LP, LM, HG; spike S1 | ~9 | MEDIUM. Mostly SP (FALSE_FRIENDS, Nestor FINDINGS). Spike S1 is a NEW instance in a LIVE endpoint: 15 of 68 BEE "competent self-replicators" have no copy op, and 14 of those write nothing under any input. The label is the WRITER's birth event, not the tape's capacity. This bears directly on the running BEE multi-day endpoint (I6 E1). |
+| 10 | P10 CONTEXT-BOUND | 10 eng | shelf pooled_mixture_scalar, partial | PS, partial | ~11 | LOW-MEDIUM (PS is the inverse direction). |
+| 11 | P11 CONTENT-FREE CARRIER | 8 eng | none | raw/I3 T12 "function without content" (Crius fossils, CWE PASSIVE, SI RETAINED_UNUSED, PTE SETRULE carrying no cue) | ~10 | MEDIUM. T12 cites primaries (SP); its BEE point routes through C_engines (SS). |
+| 12 | P02 VERDICT SET BY THE RULE | 9 eng | shelf statically_infeasible_objective, posthoc_gate_thaw, partial | only rows R44, R54, R77 inside DM/VC | ~10 | LOW (no catalogue besides (a) names it). |
+| 13 | P14 TRANSMISSION WITHOUT HEREDITY | 3 eng | none | MAP H2/H3, T02, T18 | 3 | LOW (SP: Nestor FINDINGS in both; same engines). |
+| 14 | P09 ENCODING CARRIES THE SIGNAL | 6 eng | none | none (CROSSWALK's "CWE declared coordinates" is filed under AS) | 6 | (a) only. |
+| 15 | P12 LEVERAGE READ AS CONSTRUCTION | 4 eng | none | adjacent: MAP X7 "discovery vs takeover", O6 "ratchet with inheritance ablated" | 4 | (a) only. |
+
+Reading:
+
+- Five structures are found by all three catalogues on evidence that is at
+  least partly independent: P01, P04, P07, P13, P08. P15 is found by all
+  three, but its Odysseus leg is mostly a shared source.
+- The best-evidenced rediscovery is P07. Harmonia (June, agents) and Artemis
+  (September, Z80 builds) derived the same independence rule for different
+  objects, and Odysseus's own evidence then turned out to route partly
+  through Artemis's files. The principle is live in the very comparison
+  that detects it.
+- The broadest are P01 and P04: together at least 17 September engines plus
+  June lineages. Several September seats restated P01 without citing each
+  other.
+
+Does the Harmonia fossil recur in September, uncited? A git grep for
+baseline_costume, costume_check, opaque_kill, bounded_menu_wall,
+degenerate_field_flatline, failure_primitive, "FP-00[1-4]" and
+"Failure-Primitive" outside harmonia/ found them only in:
+
+- roles/Harmonia (June-August);
+- engine/necropolis (a tool registry, 2026-09-13);
+- roles/Arachne/ARCHAEOLOGY_2026-09-11.md:187 (notes that the suite
+  exists);
+- pivot/COMPONENT_DOSSIERS_2026-06-24.md;
+- Artemis's FR-057 and INDEX.
+
+No file of Nestor, Bellerophon, Ananke, Cosmos, Ensorain, Crius, Ares,
+Aphrodite, Aether or the causal lens cites them.
+
+- FP-001 RECURS, UNCITED. WTP-02: a one-float running mean passed the whole
+  chain (R31). CWE G6: a constant scores 10/12 (R23). PTE: copy-last
+  (R41). Ares: reward reflex (R52). Crius: random stride walkers (R57).
+  SFE D8: random programs reproduce the edge (H-D4-07). Odysseus proposes
+  "I1 DUMB-BASELINE PREFLIGHT". A frozen costume_check has existed since
+  2026-06-10.
+- FP-002 DOES NOT RECUR in its original form. The September engines write
+  typed abstentions with named causes (NOT_IDENTIFIABLE, _UNRESOLVED,
+  INDETERMINATE). The label-pooling form survives only in the legacy kill
+  ledger (H-D5-11, SFE-era). Its sibling, missing grain, recurs as P15.
+- FP-003 RECURS, UNCITED, AND ITS THEORY FAILS A TEST. Recurrences: WSE
+  W2_K2 (0 summits; 0 of 5,472 edits); Crius 0/36; PROTEUS-46 0/4,267 and
+  0/4,881; Aphrodite A17 "derived nothing new" 8/8. C5's closure "alter
+  generative/search structure" is FP-003's GROW remedy restated. But the
+  September data add a cause the atlas lacks, "expressible but
+  unreachable": W2_K2 has a 12-instruction witness. They also falsify
+  FP-003's predicted escape for that cause: growing the menu to a graph
+  grammar with a native keyed-memory witness still gave 0/4,881 useful
+  children (FR-132).
+- FP-004 RECURS, UNCITED. NPE C9 H1: four arms identical to the last
+  decimal, because output_gate was never passed (R05). BEE: five of six
+  task cells run-for-run identical (R12). PTE: w never read under dest_mode
+  "all" (R39). WTP: the factorial level was already 0 in both arms (R36).
+  NPE CW01-D091: a guard read keys never written. Nestor's lesson
+  "Identical arms are a defect signature, not a null"
+  (roles/Nestor/FINDINGS.md:424) restates FP-004's detector tell (a metric
+  bit-identical under an intervention) without citing it.
+
+So three of four fossil classes recurred in September engines, and every
+recurrence was rediscovered without citation. This is itself an instance of
+the P15 family at program level: the fossil's detectors were committed but
+never reached the seats that needed them.
+
+=======================================================================
+## 5. What each catalogue has that the others miss
+=======================================================================
+
+(a) Artemis, bottom-up, has but (b) and (c) lack:
+
+- P09 ENCODING CARRIES THE SIGNAL: the Glover CA confound, the H5 decoder
+  at the permutation bound, hand-built axes. No shape in (b) or (c).
+- P12 LEVERAGE READ AS CONSTRUCTION: speed under a censored budget read as
+  reach (Ares, Aphrodite S4, Apollo). The key North-Star fork (FR-044) has
+  no failure shape elsewhere.
+- P11 CONTENT-FREE CARRIER as a failure principle with a pre-launch arm
+  set. (c) has the phenomenon (T12), not the failure mechanism.
+- P02 THRESHOLD PROVENANCE: verdicts within about 0.3 SE of an authored
+  bar. Neither (b) nor (c) isolates the authored bar.
+- P13 as a mechanism of wrong conclusions ("not found" read as "cannot"),
+  not only as a map dimension.
+- Search-failure principles in general. (b) and (c) catalogue reversals
+  and agent-process failures; (a) also catalogues why search comes back
+  empty.
+
+(b) Harmonia has but (a) and (c) lack:
+
+- A DETECTOR PER PRIMITIVE and a tier ladder with an independence audit
+  (shadow, surviving_candidate, coordinate_invariant). Neither (a) nor (c)
+  has executable detectors or an admission rule.
+- Remedy-routing CAUSE SUBCLASSES on one observable: FP-003 region_empty
+  means STOP, expressiveness_ceiling means GROW. Section 1 and Odysseus
+  never separate a truthful null from an artefact null that shares a
+  symptom.
+- FP-004 as a named mechanism (declared-varying input dead, so identical
+  arms). Section 1 has the instances but no principle.
+- LIFECYCLE and PROCESS failures (shelf):
+  - declared_check_never_executed;
+  - narrative_ledger_divergence;
+  - production_into_vacuum;
+  - hollow_artifact_discharge;
+  - unwitnessed_flatline.
+
+  These are not inference mechanisms, which is why section 1 excluded
+  them. Yet declared_check_never_executed alone describes about a third of
+  Artemis's harvest: 101 of 316 candidates record a named check as never
+  run, never built or PARKED (regex over harvest text; an estimate), and
+  170 of 316 have "later evidence: none".
+- narrative_ledger_divergence describes section-1 facts that section 1 did
+  not classify. Examples: TH-003 "READY" on main vs "NOT_READY" on the
+  branch (FR-025); the INDEX corrections table, where harvested claims
+  were contradicted by committed runs (H-D4-41, H-D5-49).
+- The META guard: "the atlas must not become the menu that causes the
+  bounded-menu wall at the meta level". Neither (a) nor (c) states the
+  risk that a failure catalogue narrows what seats look for.
+
+(c) Odysseus has but (a) and (b) lack:
+
+- PR's n_eff mechanism: seeds reproducing lineages byte for byte (Ares 10
+  -> 7), events counted as lineages (911/1,031 depth 1), 181 worlds from 13
+  founders. Section 1 has no unit-of-replication principle.
+- WR as a phase-of-tick principle with a phase-sweep harness (T05, I9).
+  Section 1 buried it inside P08.
+- PS pooling that manufactures an effect (leave-one-group-out gate, I7).
+- HG's operator-supplied-change share table (T18): how much change the
+  experimenter's own operators (perturbation, splice, write-back,
+  migration) supply.
+- "Would have caught" counts per instrument (I1-I9).
+- A forward list of STANDING claims exposed to known shapes (E1-E8). The
+  most urgent: E1, the BEE multi-day endpoint reads sr_depth, built on the
+  LOCATION and resemblance false friends.
+- New evidence from spikes S1 and S3, where (a) and (b) have only
+  archival evidence.
+- DISCOVERY vs TAKEOVER (MAP X7): a signal can track spread rather than
+  appearance.
+
+Blind spots shared by all three:
+
+- No base rate of any failure class per launch.
+- No measured recurrence after documentation. Artemis PA P12: no evidence
+  that cataloguing reduces recurrence. The uncited FP recurrences in
+  section 4 are the program's own negative datum.
+- No catalogue attaches a cost (compute or calendar) to a failure class.
+
+=======================================================================
+## 6. Compression of the frontier (thread -> principle)
+=======================================================================
+The full table is the 6-DRAFT block reproduced at the end of this section.
+It was written with section 1, before (b) or (c) was read. Reading (b) and
+(c) changed no assignment. Two threads would ALSO fit Harmonia's lifecycle
+shapes if those were admitted:
+
+- FR-025 -> narrative_ledger_divergence;
+- FR-092/FR-094 -> unwitnessed_flatline / production_into_vacuum.
+
+Counts (120 open threads = 128 INDEX rows minus 8 Z-rows):
+
+| category | threads |
+|---|---:|
+| failure-shaped (primary principle P01..P15) | 87 |
+| failure as secondary only (FR-019 S+P15) | 1 |
+| science questions, not failure-shaped (S) | 21 |
+| infrastructure/meta/instrument build (I) | 10 |
+| operator/governance (O) | 2 |
+
+| primary principle | P13 | P01 | P11 | P03 | P07 | P06 | P10 | P04 | P08 | P12 | P14 | P15 | P09 | P02 | P05 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| threads | 12 | 12 | 9 | 9 | 7 | 7 | 5 | 4 | 4 | 4 | 3 | 3 | 3 | 3 | 2 |
+
+Compression ratio: 88 failure-bearing threads, all instances of 15
+principles.
+
+Coverage by primary assignment:
+
+- top 5 (P13, P01, P11, P03, P07): 49 of 88;
+- top 8: 65;
+- all 15: 88.
+
+Coverage by any assignment (greedy set cover; a thread is covered if any
+of its principles is chosen):
+
+- P01 + P13 + P03 + P07 + P06: 60 of 88 (68%);
+- adding P11, P10, P15: 76 (86%);
+- all 15: 88.
+
+In words: about 73% of the frontier (88 of 120) is failure-shaped, and five
+principles account for about two thirds of that.
+
+Primary counts differ from the engine ranking in section 1. P01 and P13
+lead both, but P08 (12 engines) is primary for only 4 threads. It is
+pervasive as a defect and rarely the question a thread asks.
+
+GENUINELY NOT FAILURE-SHAPED (the 21 S threads): science questions whose
+answer is a fact about substrates, not a repair of an inference.
+
+- FR-012 which origin barrier dominates;
+- FR-018 RIE-01 random inflow;
+- FR-019 the BAND0 residue (science; its re-audit half is P03/P15);
+- FR-040 PTE-SI01;
+- FR-041 endogenous relevance key;
+- FR-050 portable organs;
+- FR-052 close the failure loop;
+- FR-053 fitness-free heredity signal;
+- FR-076 which weird physics stays learnable;
+- FR-079 Aether residuals;
+- FR-080 Cosmos missing coordinate / dials;
+- FR-081 Ensorain structure discovery;
+- FR-090 mutable interpreter;
+- FR-091 implicit replication;
+- FR-109 what a world should pay for;
+- FR-110 oracle worlds without certificates;
+- FR-111 active vs passive information;
+- FR-115 rewriting substrate;
+- FR-118 W16 latch architecture;
+- FR-123 homoiconic worlds;
+- FR-134 evolvable variation.
+
+Infrastructure, meta or governance (12): FR-039 FR-054 FR-055 FR-057
+FR-078 FR-084 FR-092 FR-093 FR-095 FR-098 FR-099 FR-121.
+
+Several S threads are the POSITIVE programme that the failure principles
+guard. Examples:
+
+- FR-052 is P11's repair, run as an experiment.
+- FR-090/FR-091 are P06's remedy (stop authoring the unit of inheritance).
+- FR-134 and FR-123 target the variation operator that P13 blames.
+
+The frontier is thus a failure core (88) plus a science shell (21) that
+mostly exists to escape the core's top principles.
+
+The table (verbatim from the pre-(b)/(c) draft):
+
+=======================================================================
 ## 6-DRAFT. Thread -> principle table (drafted with section 1, before (b)/(c))
 =======================================================================
 (Final form and counts in section 6 below; this is the pre-(b)/(c) draft,
@@ -749,3 +1097,92 @@ L: 080 S | 081 S(+P08) | 082 P10+P07+P15 | 083 P10 | 084 O | 085 P05 |
 M: 088 P01 | 101 P09 | 102 P01 | 103 P09 | 104 P12+P04 | 105 P03+P08 |
    107 P11 | 109 S | 110 S | 111 S | 112 P05 | 113 P11 | 115 S | 123 S
 N: 092 I | 093 I | 094 P15 | 095 I | 096 P07 | 098 I | 099 I | 100 P07
+
+=======================================================================
+## 7. Method caveats
+=======================================================================
+1. Label contamination before step 1. INDEX.md (FR-057 row) and
+   FR-057.md name the four FP labels, with no definitions. They were seen
+   before section 1 was written. The principles most exposed are:
+
+   - P15 (the name "opaque_kill" suggests pooled kill records);
+   - P13 (the name "bounded_menu_wall" suggests a search wall).
+
+   Both are anchored on (a)-only evidence: H-D5-11 for P15, and FR-001/
+   FR-132 for P13. Section 2 nonetheless maps both FP classes as PARTIAL,
+   not MATCH, which is weak evidence that the labels did not steer the
+   definitions.
+
+2. Prompt contamination. The task listed nine example principles. Seven of
+   the 15 in section 1 are NOT among them:
+
+   - P01 null without power;
+   - P02 verdict by rule;
+   - P05 analyst selection;
+   - P07 common cause;
+   - P08 contrast not isolated;
+   - P12 leverage as construction;
+   - P15 unrecorded grain.
+
+   Two examples were folded rather than kept as separate principles:
+
+   - "arrival probability not payoff" went into P13, because Artemis's
+     FR-002 shows arrival was supplied (c3) and did not suffice;
+   - "memory benefit is readout selection" went into P11, because the
+     evidence says capacity and compute at readout, not selection.
+
+   The other seven examples correspond to P03, P04, P06, P09, P10, P13 and
+   P14. Some forcing toward the example vocabulary cannot be excluded.
+
+3. Engine granularity drives the engine counts. Archaeon appears as three
+   codes (ARCZ, WSE, H05); SFE and APO are families. Collapsing Archaeon to
+   one code lowers P01 from 16 to 14, P08 from 12 to 11 and P13 from 11 to
+   10. The ranking order is unchanged at the top.
+
+4. One classifier, no agreement statistic. Instances were read from the
+   harvest's quotes and the sharpened threads, not re-verified in the
+   primary files, except where a sharpened thread had already verified
+   them. Items marked (s) were not counted. A second coder would likely:
+
+   - merge P09 into P06 (declared coordinates are authored);
+   - merge P02 into P01 (an unattainable bar is a test that cannot say
+     yes).
+
+   That would leave 13 principles.
+
+5. Section 6 is a primary-principle assignment. Secondary assignments are
+   looser and inflate the "any mention" coverage. The 21 S / 12 I-O
+   judgement is also one reader's.
+
+6. Independence. Odysseus's I6 cites Artemis's lens cards and C_engines
+   notes (rows R10 R13 R20 R24 R59 R60). raw/I3 and raw/I4 cite C_engines
+   14 times each. CROSSWALK is built from the lens cards. Where Odysseus
+   cites seat primaries, they are largely the SAME primaries Artemis read:
+   FALSE_FRIENDS, Nestor FINDINGS, calibration ledgers, the CWE packet, the
+   WTP-03 report. So "IND" in section 3 means independent reading, rarely
+   independent evidence. The exceptions are the spikes S1 and S3.
+
+   Harmonia is independent by date. Its shelf and Artemis's D5 older-lines
+   harvest share some events (Apollo novelty, Nemesis constant string).
+   The shelf is not independence-audited, and its hunt was truncated by a
+   spend limit (atlas s "The candidate shelf").
+
+7. Units differ across catalogues:
+
+   - Odysseus catalogues REVERSALS (a claim later cut down).
+   - Harmonia catalogues agent-level failure SHAPES with detectors.
+   - Section 1 catalogues MECHANISMS of wrong or empty conclusions,
+     including search failure.
+
+   A "match" across these units means the mechanism is shared, not that
+   the same events are counted.
+
+8. Survivorship. All three catalogues see only failures someone recorded.
+   Substrate facts that reversed a claim tend to be written as "new
+   result", not "error". Any ruler-vs-substrate split drawn from these
+   catalogues is biased toward rulers.
+
+9. Nothing here was run. The two numerical estimates in section 5 (101 of
+   316, 170 of 316) come from a regex over harvest text; the regex is shown
+   in no file and should be re-derived before quoting. The engine-union
+   counts in section 4 are rounded hand counts.
