@@ -18,4 +18,5 @@ program's interpretations. Each was instructed to attack those interpretations.
 | W3 | w3_novelty_reuse | Break ruler v2; what counts as reuse; independent view of CON1 | 2026-09-28 05:15 | <= 1 core | DONE; REPORT deposited verbatim by the principal; reviewed; E2/E8 adopted in A20 |
 | W4 | w4_improver_transplant | What must become mutable for improver evolution; a clean transplant assay | 2026-09-28 05:15 | <= 1 core | DONE; REPORT written by the worker via Bash; reviewed |
 | W5 | w5_dsl_crossengine | DSL-extension cost/benefit; discriminating cross-engine hypotheses | 2026-09-28 05:15 | <= 1 core | DONE; REPORT deposited verbatim by the principal; reviewed; rivals dispatched to W6 |
-| W6 | w6_c2_rivals | Static tests of three rivals to 'reuse is the bottleneck' on frozen C2 data | 2026-09-28 06:05 | <= 1 core | pending |
+| W6 | w6_c2_rivals | Static tests of three rivals to 'reuse is the bottleneck' on frozen C2 data | 2026-09-28 06:05 | <= 1 core (lease QUEUEd; ran serially) | DONE; REPORT deposited verbatim by the principal; reviewed; drove A22 C3 (2 validation instances per motif) |
+| W7 | w7_instrument_hygiene | T4/dev query mismatch, spurious fallback hits, ruler v2.1 draft | 2026-09-28 07:50 | lease <= 2 cores | pending |
