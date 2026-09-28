@@ -1,6 +1,6 @@
 # Odysseus status
 
-Currency: 2026-09-28T21:10Z (from date -u).
+Currency: 2026-09-28T21:45Z (from date -u).
 
 seat state: ACTIVE, principal on the AGENT FABRIC (operator rulings 2026-09-28: prompts/2026-09-28_fabric/04_*).
   Expedition 1 FROZEN.
@@ -12,10 +12,14 @@ what it asserts:
     Attempt).
   - D2 audit FAIL (#855) stands. Re-audit loop handed to Nestor (#895): skill audit.security.adversarial with
     replicas 2.
+done since last update: D12 repaired (rogit, plain git denied, P7c/P7d); lease cutover (legacy CLIs on the fabric
+  row, 8370083ae); Fabric v0.2 FROZEN (tag fabric-v0.2 = 54e42c695); S2 RESULT 0.28 actions/exec; S3 protocol
+  drafted (fabric_pilot/s3/).
 running:
-  - node workers on ubu001 from ~/fabric-runtime @3ba6fcc0c: 2 x worker.ubu001 (claude, script;
+  - node workers on ubu001 from ~/fabric-runtime @fabric-v0.2 (54e42c695): 2 x worker.ubu001 (claude, script;
     audit.security.adversarial) and 1 x worker.ubu001.sci (script). Logs in ~/fabric-work/logs.
-  - S2 adoption pilot: 18 verifier Tasks (thr-fabric-s2), prereg 59b94b4ed.
-blocked on others: Nestor submits the D2 v2 re-audit; ubu002 stops its disposable worker (#897).
+blocked on others: Nestor submits the D2 v2 re-audit (not chased, per ruling); operator picks the S3 principal and
+  decides the code-execution sandbox (S3 s2 option A); Nestor/Ananke/Archaeon merge the lease cutover (#901).
 monitors owned or fed: none (S2 uses one blocking wait, by design).
-next executable action: when S2 is terminal, synthesise per PREREG and write the S2 result.
+next executable action: none of mine on infrastructure (frozen). Next: break the fabric under S3; adjudicate D2 when
+  artifacts arrive.
