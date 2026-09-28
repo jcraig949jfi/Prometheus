@@ -1,7 +1,7 @@
 """E2 (PLAN.md addendum): evolve under 4 receiver operators, then probe.
 usage: python e2_evolve.py <device> [arms] [tasks] [seeds]
 Writes out/e2_<arm>_<task>_<k>.json (one per search, resumable)."""
-import dataclasses, json, pathlib, sys, time
+import dataclasses, json, os, pathlib, sys, time
 import numpy as np, torch
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import arb
@@ -61,17 +61,21 @@ def probes(base, arm, env, g, dev):
 
 def main(dev, arms, tasks, ks):
     base, env0, _, row = c1b_run.load("f6b623cdb23afd2c")
+    lossless = bool(os.environ.get("WJ_LOSSLESS"))
+    if lossless:   # E6 (PLAN.md): the E5b physics
+        base = base.replace(loss=0.0, dup=0.0, noise=0, update_mode="sync", update_period=1)
+    pre = "e6" if lossless else "e2"
     sp = search.SearchSpec(**{k: v for k, v in row["search"].items()
                               if k in {f.name for f in dataclasses.fields(search.SearchSpec)}})
     for task in tasks:
         env = dataclasses.replace(env0, family=task)
         for arm in arms:
             for k in ks:
-                f = OUT / f"e2_{arm}_{task}_{k}.json"
+                f = OUT / f"{pre}_{arm}_{task}_{k}.json"
                 if f.exists():
                     continue
                 t0 = time.time()
-                ss = H_int(NS, ARMS.index(arm), TASKS.index(task), k)
+                ss = H_int(NS, ARMS.index(arm), TASKS.index(task), k) if not lossless else H_int(NS, 6, ARMS.index(arm), TASKS.index(task), k)
                 with_op(arm)
                 ev = search.evolve(phys(base, arm), env, ss, sp, device=dev)
                 with_op("SUM")

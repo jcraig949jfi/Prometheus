@@ -5,9 +5,14 @@ envs.py, assays.py, search.py, c1b.py, lens.py). Spec: roles/Ananke/pte/
 DESIGN.md. Evidence: PTE-C1, PTE-C1b, the 2026-09-27 spikes.
 
 SCIENTIFIC LENS
-(W-C) PTE's distinctive physics is the RECEIVER OPERATOR: arrivals ADD
-(superposition), and messages can never rewrite the program. Contrast
-Aether: arbitrate-and-replace, with message-writable code.
+(W-C, corrected by W-J) PTE's receiver operator is a DIAL: sum (collision
+none), saturate (divisive normalization) or aloha (erasure). Code change is
+RECEIVER-GATED: SETRULE/WIMM can take arrival operands, but only if the
+receiver's own code chooses them. Aether instead has content-blind
+winner-take-all replacement and SENDER-addressed code writes. The operator
+shapes what evolves only when AGGREGATION PAYS (W-J: aggregation gain ~.02
+at C1 physics -> presence codes indifferent to the operator; ~.13 lossless
+-> a SUM count-threshold majority code emerged).
 Where does information live, and how does it move, when computation is
 forced through lossy, delayed, SUPERPOSING messages among identical
 programs? PTE is the fleet's lens on CHANNEL STATE: information that exists

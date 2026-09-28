@@ -28,7 +28,7 @@ T-CT-2 CARRIER TRAJECTORIES | How causal information moves through
 T-RS-1 RECEIVER SEMANTICS | Does sum vs arbitrate(+rewritable code)
   shape which mechanisms emerge? | the one surviving cross-engine idea |
   W-C: receiver operator axis | artefact of observability? | literature +
-  formal + a PTE discriminator; Aether proposals | LIT + PTE | ACTIVE (W-J)
+  formal + a PTE discriminator; Aether proposals | LIT + PTE | ANSWERED (W-J): the axis is operator x AGGREGATION GAIN, filtered by reader invariance. Formal one-tick table (sum = nomographic functions; sat = normalized mean; aloha = erasure; arb = one sample, a voter process). At C1 physics the operator is behaviourally irrelevant (29/32 presence codes); lossless physics -> a SUM count-threshold majority code (the first pure superposition vote in PTE). Split: T-WJ-1 aggregation-gain sweep (GPU ~25 min, research-ready), T-WJ-2 a 4-operator fingerprint lens function (CPU, research-ready), T-WJ-3 Aether A-J1..4 (owner-run proposals), T-WJ-4 engine-card fix (DONE)
 T-X-4 INTERVENTION REACH | the minimum evidence that an intervention
   reached the mechanism | makes nulls trustworthy everywhere | W-D: 8
   cases, 3 checks + alarm | which check for which class | adversarial

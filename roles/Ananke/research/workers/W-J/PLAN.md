@@ -115,3 +115,43 @@ collide_frac. Class by operator as E1 (SUM/SAT/ALOHA).
        CI excluding 0 in at least one of the two families.
  E4-P2 ALOHA < SUM on the same statistic in MAJ (erasure removes signal).
 Descriptive only (gen-0 != selection), reported with CIs.
+
+## E5 (06:55Z, before running): capability separation by designed plants
+Base physics f6b6 (ring radius 3: sensors at d=3 reach the actuator in ONE
+hop, so up to 5 sensor packets arrive in the same tick). Env MAJ (f6b6).
+Plant AGG: every site: EMIT := SENSE != 0 (256 if so), PAY0 := SENSE,
+S0 := IN0_0 (the actuator reads the raw delivered value). Plant AGG-RELAY:
+same program on RELAY (one sensor). Evaluate on 64 held worlds under the 4
+operators (CPU, 2 threads). Predictions from NOTES s2 (frozen now):
+ E5-P1 MAJ: |SUM - SAT2| < .01 (sign reader, positive rescaling).
+ E5-P2 MAJ: SUM - ARB >= .05 and ARB <= .74 (one random sample per tick).
+ E5-P3 MAJ: ALOHA2 <= SUM - .05 (K > 2 erases).
+ E5-P4 RELAY: all four within .03 of each other (K <= 1 except dups).
+ E5-P5 MAJ SUM plant beats the best evolved MAJ champion of E2 (.615) by >= .05.
+
+## E5b (07:00Z, after E5, before running): the same plant, lossless physics
+f6b6 physics with loss 0, dup 0, noise 0, update sync period 1 (every site
+wakes every tick): all 5 sensor packets arrive at the actuator in one tick.
+Theory (NOTES s2): SUM/SAT = majority of 5 at q=.7 = .837; ARB = one random
+sample = .700; ALOHA2 = erased whenever K>2 (always, 5 arrivals) -> ~.5.
+ E5b-P1 SUM within .03 of .837; ARB within .03 of .700; SUM - ARB >= .10.
+ E5b-P2 ALOHA2 <= .55.
+
+## E6 (07:04Z, before running): does the operator shape EMERGENCE where
+## aggregation pays? Lossless physics of E5b, env MAJ (f6b6), arms SUM, ARB,
+## ALOHA2, 4 search seeds each, C1 SearchSpec (GPU lease, ~15 min).
+ E6-P1 median held SUM - ARB >= .05.
+ E6-P2 at least one SUM champion > .74 (above ARB's one-sample ceiling).
+ E6-P3 SUM champions > .74 lose >= .05 when evaluated under ARB.
+ E6-P4 median held ALOHA2 <= SUM - .05.
+If no SUM champion exceeds .74, search did not find aggregation and E6 is
+reported as "aggregation not reached", not as "operator irrelevant".
+
+## E6b (07:25Z, mechanism check of the E6 SUM seed-0 champion, before running)
+Decompiled (rule 0): EMIT := CNT2 + SENSE (only POSITIVE-cue sensors emit),
+PAY1 := 52 (constant), S0 := IN0_1 - 118 (+Kp): the actuator is positive
+iff >= 3 packets of 52 arrived: a presence vote with a COUNT threshold at
+superposition (majority of 5 = at least 3). Plant VOTE reproduces only that
+logic. Predictions: VOTE under SUM within .03 of .837 (lossless physics);
+under SAT2, ARB, ALOHA2 at .50 +- .02 (the threshold is unreachable when
+the count is capped at 2, sampled to 1, or erased).

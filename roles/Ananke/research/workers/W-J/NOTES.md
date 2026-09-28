@@ -246,3 +246,29 @@ all arms converge on the same sparse sensor-presence code that is
 operator-invariant (as 13/18 C1 champions of this physics are), the
 answer at this physics is NO: the task's easiest code lives in the
 operator's null space.
+
+## 8. Results summary (details in LOG.md A2-A21, raw in out/)
+E1 C1 evolved cells by operator: MAJ CC share SUM .041, SAT .217, ALOHA 0;
+   SAT leads everywhere but only in targeted waves (wave A: 0 CC anywhere).
+E3 18 matched C1 champions x 4 operators: operator-specificity small
+   (own-adv SUM +.020, SAT +.049, ALOHA -.007). SAT champions do not need
+   SAT (sign reader). ALOHA erases dense codes (-.18).
+E4 randomized census gen-0: no SAT/ALOHA head start (floor).
+E2 32 fresh searches, f6b6 physics: 29/32 sparse sensor-presence champions,
+   accuracy identical under SUM/SAT2/ARB; all frozen operator predictions
+   fail except P5 (+.014). Codes sit in the operators' null space.
+E5/E5b designed aggregation plant: lossy physics SUM .695 vs ARB .674 vs
+   ALOHA .562; lossless SUM .823 vs ARB .727 vs ALOHA .500 (theory: .837 /
+   .700 / erased).
+E6 lossless physics, 12 searches: one SUM champion .801 (above ARB's
+   ceiling) with a COUNT-threshold presence vote that is exactly .500 under
+   every other operator; own-adv SUM +.104. Median effects still small.
+E6b the decompiled vote alone: SUM .878, SAT2/ALOHA2/ARB .500.
+
+Law suggested by E2-E6 (post hoc, stated as a hypothesis): the receiver
+operator shapes the evolved mechanism only in proportion to the task's
+AGGREGATION GAIN under the physics (value of combining k > 1 arrivals
+over one sample): loss .3 + async wake -> gain ~.02 -> operator-neutral
+codes; lossless -> gain ~.13 -> an operator-specific count code appears.
+And operators are distinguishable only through the reader's invariances
+(sign readers cannot tell SUM from SAT; count readers can).

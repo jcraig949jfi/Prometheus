@@ -80,3 +80,57 @@ A12 E4 (e4_census.py -> out/e4.json), wave A0 randomized census, ~490 cells
  Caveat: gen-0 signal is at floor (~0.1% of random genomes contrast-positive),
  so E4 has little power; it rules out only a large head start.
 A13 GPU retry 05:40Z: BUSY (W-H until 06:50Z). Waiting for it; drafting.
+A14 06:20Z GPU acquired token 3fb8b35c068e (W-H released early). Launching E2 on cuda, MAJ first.
+A15 E2 done 06:51Z, GPU released (token 3fb8b35c068e, comms 781). 32 searches,
+ ~60 s each. out/e2_*.json, e2_console.log, e2_summary.json, e2_reduce.py.
+ MAJ median held: SUM .556, SAT2 .570, ALOHA2 .531, ARB .573.
+ RELAY median held: SUM .610, SAT2 .604, ALOHA2 .629, ARB .661.
+ Frozen verdicts: P1 FAILS narrowly (RELAY |SUM-ARB| .051; ARB higher);
+ P2 FAILS (MAJ SUM-ARB -.017); P3 vacuous (no ARB champion > .72);
+ P4 FAILS (ALOHA2 emits no less); P5 HOLDS (+.014, tiny); P6 FAILS (0/4
+ arms with own-operator advantage > .03); P7 "HOLDS" only mechanically
+ (both drops ~0: -.002 vs -.005), reported as NULL; P8 FAILS (SAT2 emit
+ median .005 = SUM's; 0/4 dense); P9 NOT_TESTABLE (no dense SAT2 champion).
+ Descriptive: 29/32 champions are sparse (emit <= .03: only sensors emit),
+ and their accuracy is identical under SUM, SAT2 and ARB to 3 decimals;
+ ALOHA2 costs MAJ champions ~.03. The only dense MAJ champion arose under
+ ARB (seed 2, emit .79, acc .615; .631 under SUM, .525 under ALOHA2); one
+ dense RELAY champion under SAT2 (seed 2, .718; .719 SUM, .554 ARB, .518
+ ALOHA2). E1/E3's SAT<->dense association did NOT replicate (0/4).
+ MAJ competence stays far below the single-sensor ceiling (.70) and the
+ 5-sensor majority ceiling (.837): no champion entered the aggregation
+ regime where the operators differ. E2 therefore cannot say the operator
+ does not matter for aggregation; it says that at this physics, search
+ finds codes in the operator's null space (arrival multiplicity ~<= 1).
+A16 E5 plant AGG (e5_plants.py -> out/e5.json), f6b6 physics, 64 held worlds:
+ MAJ SUM .695 = SAT2 .695 | ARB .674 | ALOHA2 .562. RELAY: .711 under all 4.
+ E5-P1 HOLDS (identical), E5-P2 FAILS (SUM-ARB .021 < .05; ARB <= .74
+ holds), E5-P3 HOLDS (-.133), E5-P4 HOLDS (identical), E5-P5 HOLDS (.695 vs
+ best evolved .615). At this physics loss .3 + async wake leave ~2-3
+ packets per trial, so summing them beats one random sample by only .02.
+A17 E5b lossless variant (out/e5b.json): MAJ SUM .823 = SAT2 | ARB .727 |
+ ALOHA2 .500; RELAY 1.0 under all. E5b-P1: SUM within .03 of .837 HOLDS,
+ ARB within .03 of .700 HOLDS (.727), gap >= .10 FAILS narrowly (.096).
+ E5b-P2 HOLDS (.500). Theory's one-shot table is quantitatively right.
+A18 GPU acquired 07:05Z token 4db299a7987b; e2_evolve.py gained WJ_LOSSLESS switch (E6 physics, e6_ prefix, distinct seeds); E2 code path unchanged.
+A19 E6 done 07:20Z, GPU released (token 4db299a7987b, comms 783). out/e6_*.json,
+ e6_console.log, e6_summary.json, e6_reduce.py (= e2_reduce on e6 files;
+ its RELAY/P-lines are for E2 and were ignored).
+ MAJ held per seed: SUM .801/.576/.583/.553 (med .579); ARB .541/.563/.508/
+ .569 (.552); ALOHA2 .494/.560/.551/.614 (.555).
+ E6-P1 FAILS (median SUM-ARB .027). E6-P2 HOLDS (SUM seed 0 .801 > .74).
+ E6-P3 HOLDS (that champion: .801 SUM -> .500 under SAT2, ALOHA2 and ARB).
+ E6-P4 FAILS (ALOHA2 median .555 vs SUM .579).
+ Own-operator advantage (mean): SUM +.104, ALOHA2 +.030, ARB +.017, versus
+ <= +.014 in the lossy E2 physics. Other operator-specific champions: ARB
+ seed 0 (.541 -> .503 under SUM), ALOHA2 seed 3 (.614 -> .467 under SUM, i.e.
+ BELOW chance without erasure: its code needs collisions to be erased).
+A20 Decompiled E6 SUM seed-0 champion (rule 0): EMIT := CNT2 + SENSE (only
+ positive-cue sensors fire), PAY1 := 52, S0 := IN0_1 - 118: a presence vote
+ counted by superposition with threshold 3 of 5. E6b plant VOTE with only
+ that logic (e6b_vote.py -> out/e6b.json): SUM .878 [.833,.917], SAT2/ALOHA2/
+ ARB exactly .500. Prediction: SUM within .03 of .837 FAILS on the point
+ estimate (+.041) though the CI contains .837; the three .50s HOLD.
+ Note on the first E6 arm: SUM seed 0 is the ONLY evolved champion (of 44 in
+ E2+E6) above the ARB one-sample ceiling, n = 1.
+A21 CORRECTION: clock times written by hand in PLAN (E5b 07:00Z, E6 07:04Z, E6b 07:25Z) and LOG (A18 07:05Z, A19 07:20Z) were my estimates, not date -u. Actual: E2 reduce at 06:52:15Z, date -u after A20 = 07:05:52Z. The plan-before-run ORDER is intact (each PLAN block was appended before its run command, visible in file order); only the wall-clock labels are wrong.
