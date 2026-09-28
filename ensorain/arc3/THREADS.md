@@ -261,3 +261,34 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
   LM01 reservoir rows give a partial version (HR2 vs never-seen AC per rung).
 - RES: light.
 - MAT: idea; partial data from T01.
+
+## T24 LM02: the LM01 successor designed from the adversarial review (NEW)
+- Q: the LM01 question, with a headline that CAN fire both ways.
+- Changes:
+  - a headline positive control (a world whose useful complexity grows with usable data);
+  - rungs as fractions of history <= c;
+  - a data-adaptive lossless readout (CV rank / kernel on the full store);
+  - an end-of-life refit for the reservoir and a cold-refit-on-rung control;
+  - a recency-reservoir reference;
+  - a declared query count with per-query compute charged;
+  - a common read convention;
+  - headroom and headline-pair learnability gates built into the analysis.
+- WHY: the review (reviews/LM01_ADVERSARIAL_REVIEW.md) shows LM01's frozen 6.1 WIN rule has ~0 power and several 6.3
+  labels can fire for heuristic reasons.
+- EV: the LM01 dev rows + review probes. LM01 campaign rows will calibrate LM02's power analysis.
+- RES: M2 cpu8, ~similar to LM01.
+- MAT: idea+ (after LM01 rows).
+
+## T25 Learned compression discovers the causal state (from the PKG-S1 HMM pilot)
+- EV (suff/results/hmm_pilot.json, 8 seeds):
+  - a 2-state EM-HMM reaches Bayes on the Even process in the 2nd half (excess 0.000), even from a 256-symbol window
+    (0.001);
+  - the best window statistic (STAT k=6, ~1,500 bits) stays at .04;
+  - on SNS the HMM reaches Bayes;
+  - on order-2 Markov it needs >= 4 states (2 states: .096; 4 states: .004).
+- Reading: when the learner's class can represent the causal-state compression, a LEARNED bounded state beats retaining
+  more raw distinctions, and discovery needs little exact history. "Discovering what can be discarded" is the winning
+  mechanism; model-class mismatch dominates otherwise.
+- NEXT: a CSSR-style causal-state learner (no fixed S); a learning-curve of history needed vs world crypticity.
+- RES: light, off M2.
+- MAT: pilot done.

@@ -59,3 +59,17 @@ Status: PILOT (answer-keyed calibration of concepts; not a preregistered campaig
 - T03 (availability vs accessibility): in these worlds, excess history hurt only by estimation variance (over-order
   statistics, short windows), never at fixed statistic with more data. The accessibility case needs a world where
   computation, not data, limits (lit T18 PRG / rotated nuisance; T19 streaming parity).
+
+## Addendum: learned compression (hmm_learner.py; results/hmm_pilot.json; 8 seeds, T = 4000)
+
+Excess vs Bayes (whole stream / 2nd half):
+
+| world | HMM2 full | HMM3 | HMM4 | HMM2 W256 | HMM2 W1024 | STAT_k6 |
+|---|---|---|---|---|---|---|
+| W3 Even process | .025 / .000 | .027 / .001 | .028 / .001 | .026 / .001 | .025 / .001 | .060 / .040 |
+| W4 SNS | .021 / .000 | .021 / .001 | .021 / .001 | .023 / .003 | .021 / .001 | .020 / .005 |
+| W2 order-2 Markov | .171 / .096 | .055 / .016 | .044 / .004 | .200 / .190 | .228 / .206 | .016 / .008 |
+
+- A learned bounded state that CAN represent the causal-state compression reaches Bayes. It needs only a short window
+  of exact history (256 symbols) to discover it, and it beats the best window statistic, which retains ~1,500 bits.
+- With too few states it fails (order-2 Markov with 2 states): model-class mismatch, not retention.
