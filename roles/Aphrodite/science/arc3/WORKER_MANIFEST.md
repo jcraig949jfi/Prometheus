@@ -14,7 +14,7 @@ program's interpretations. Each was instructed to attack those interpretations.
 | id | directory | question (not conclusion) | launched (UTC) | compute | review status |
 |----|-----------|---------------------------|----------------|---------|---------------|
 | W1 | w1_natural_curricula | Can recurring structure emerge without writing the abstraction into the generator? | 2026-09-28 05:15 | <= 1 core | DONE; REPORT deposited verbatim by the principal (harness blocked worker write); reviewed |
-| W2 | w2_learnability | Why is the natural T4 world bimodal; is there a controllable difficulty variable? | 2026-09-28 05:15 | lease <= 2 cores | pending |
+| W2 | w2_learnability | Why is the natural T4 world bimodal; is there a controllable difficulty variable? | 2026-09-28 05:15 | lease f7c07443 (2 cores), released | DONE; REPORT deposited verbatim by the principal; reviewed; caused AMENDMENT 21 |
 | W3 | w3_novelty_reuse | Break ruler v2; what counts as reuse; independent view of CON1 | 2026-09-28 05:15 | <= 1 core | DONE; REPORT deposited verbatim by the principal; reviewed; E2/E8 adopted in A20 |
 | W4 | w4_improver_transplant | What must become mutable for improver evolution; a clean transplant assay | 2026-09-28 05:15 | <= 1 core | DONE; REPORT written by the worker via Bash; reviewed |
 | W5 | w5_dsl_crossengine | DSL-extension cost/benefit; discriminating cross-engine hypotheses | 2026-09-28 05:15 | <= 1 core | DONE; REPORT deposited verbatim by the principal; reviewed; rivals dispatched to W6 |
