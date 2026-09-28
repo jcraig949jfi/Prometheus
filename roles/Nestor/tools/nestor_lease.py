@@ -101,9 +101,31 @@ def release(res, log) -> str:
     return "RELEASED"
 
 
+def extend(res, ttl_min, log) -> str:
+    """Move `until` of a lease this Nestor holds (token-checked) to now + ttl_min; announced like acquire/release."""
+    toks = json.loads(TOKENS.read_text()) if TOKENS.exists() else {}
+    mine = toks.get(res)
+    cur = _read(res)
+    if not mine or not cur or cur.get("token") != mine.get("token"):
+        return "NOT HELD"
+    old = cur["until"]
+    cur["until"] = time.time() + 60 * ttl_min
+    tmp = DIR / (res + ".json.tmp")
+    tmp.write_text(json.dumps(cur))
+    os.replace(tmp, DIR / (res + ".json"))
+    toks[res] = cur
+    TOKENS.write_text(json.dumps(toks))
+    _comms("LEASE EXTEND %s %s: %s until %s (was %s)" % (cur["host"], res, cur["owner"],
+                                                        time.strftime("%Y-%m-%d %H:%MZ", time.gmtime(cur["until"])),
+                                                        time.strftime("%H:%MZ", time.gmtime(old))), json.dumps(cur, indent=1))
+    _log(log, {"event": "EXTENDED", "resource": res, "token": cur["token"], "owner": cur["owner"], "old_until": old,
+               "until": cur["until"], "ts": time.strftime("%Y-%m-%dT%H:%M:%S")})
+    return "EXTENDED"
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=("status", "acquire", "wait-acquire", "release"))
+    ap.add_argument("cmd", choices=("status", "acquire", "wait-acquire", "release", "extend"))
     ap.add_argument("resource", nargs="?")
     ap.add_argument("--ttl-min", type=float, default=60)
     ap.add_argument("--envelope", default="")
@@ -121,6 +143,10 @@ def main():
         r = acquire(a.resource, a.ttl_min, a.envelope, a.work, log)
         print("ACQUIRED %s" % r["token"] if r else "BUSY")
         sys.exit(0 if r else 3)
+    elif a.cmd == "extend":
+        r = extend(a.resource, a.ttl_min, log)
+        print(r)
+        sys.exit(0 if r == "EXTENDED" else 3)
     elif a.cmd == "wait-acquire":
         while True:
             r = acquire(a.resource, a.ttl_min, a.envelope, a.work, log)
