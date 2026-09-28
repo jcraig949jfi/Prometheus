@@ -1,5 +1,5 @@
 """Frozen reference on the G2 FRESH set (C9 s5(d)). Writes per-locus output in Nestor's export shape. Set M loci are taken AFTER
-write-back (rng = random.Random(wb_seed), mut_rate from the record); a MUTATION label is exported as ["M", side, draw, pos, old].
+write-back (rng = random.Random(wb_seed), mut_rate from the record); a MUTATION label is exported as ["M", [side, k, pos], old_label] (C10 s3(a), SPEC_ISSUES E3).
     python -m archaeon.attribution.probes.npe_fresh_ref PRE.jsonl OUT.jsonl.gz
 """
 import gzip
@@ -30,7 +30,7 @@ def lab(l):
     if k == "PREG": return ["P", l[1], RI.get(l[2], l[2])]
     if k == "COMPUTED": return ["C", sorted(b(x) for x in l[1])]
     if k == "COMPUTED_FROM": return ["F", lab(l[1])]
-    if k == "MUTATION": return ["M", l[1][0], l[1][1], l[1][2], lab(l[2])]
+    if k == "MUTATION": return ["M", [l[1][0], l[1][1], l[1][2]], lab(l[2])]      # C10: ["M", [side, k, pos], old_label]
     return [k, repr(l[1:])]
 
 

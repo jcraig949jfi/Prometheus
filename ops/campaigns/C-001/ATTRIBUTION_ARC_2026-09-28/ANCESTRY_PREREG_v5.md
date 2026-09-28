@@ -497,3 +497,5 @@ reference's reading only):
 3. A FRESH set 2 (A 300 + M 100): the same generator, the new seed, the same declaration.
    - The raw gate applies to BOTH sets, because both tracers changed.
    - Commit-reveal as before.
+- **Exchange serialization for (a), fixed now so the raw comparison is defined:** MUTATION label = ["M", [side, k, pos],
+  old_label], where side is "a" or "b", k follows E3 and pos is 0..31. Archaeon's exporter (npe_fresh_ref.py) is updated to it.
