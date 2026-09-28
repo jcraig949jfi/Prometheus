@@ -1113,6 +1113,12 @@ N: 092 I | 093 I | 094 P15 | 095 I | 096 P07 | 098 I | 099 I | 100 P07
    not MATCH, which is weak evidence that the labels did not steer the
    definitions.
 
+   Order proof. This worker made no commit. A concurrent session's commit,
+   591209b9e (2026-09-28 09:04:38Z), captured this file when it held ONLY
+   section 1 and the 6-DRAFT table (751 lines, no sections 2-5). That
+   commit is third-party evidence that section 1 was fixed before (b) and
+   (c) were mapped.
+
 2. Prompt contamination. The task listed nine example principles. Seven of
    the 15 in section 1 are NOT among them:
 
