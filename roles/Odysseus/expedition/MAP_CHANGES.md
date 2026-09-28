@@ -93,3 +93,11 @@ Status: NOT ADOPTED; flagged.
   (transfer negative; kill test failed on both conditions).
 - A gains an instrument: functional recertification (recert/), which found
   NPE's P-11 certificate true of 3 of 57 certified genomes.
+
+## Addendum (2026-09-28, spike S8)
+The world-reset destination pointer is worth ~4.1 decades of copier
+density on BEE (z80_threshold/S8_stack_route/RESULT.md): it is the single
+largest measured gift and the natural first scaffold for territory I's
+withdrawal experiment (lend the reset pointer, then withdraw it; do
+lineages internalise self-location?). Census A's NPE N5 (copiers coming to
+set their own registers) is a natural instance of exactly this.

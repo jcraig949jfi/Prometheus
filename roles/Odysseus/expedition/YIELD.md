@@ -63,6 +63,7 @@ until something executes them.
     Y34   Tasmania ratchet / conformity / naming games / gossip / negative selection    ER  KILLED-ANALOGY
     Y35   genetic assimilation of world-supplied scaffolding  XR(census)+ER  OPENED-TERRITORY? (I, proposed; KNOWN-INTERNALLY in part: Nestor EXTERNAL_SCAFFOLDING, dossier 89)
     Y36   channel formation below R0                     TY      CHANGED the measurement (R-1); the sandbox's first wall
+    Y38   stack route vs copy instruction (S8)          SP      FALSIFIED-CLAIM of our own hypothesis ("fast write path is enough": NO); NEW-MECHANISM? (~2.4 decades per essential copy-loop byte; world-reset pointer worth ~4.1 decades)
     Y37   cryptic vs silent variation                    TY->ER  NEW-MECHANISM? (explains bacc; substrate-design lever)
 
 Pass-2 method tally (17 ideas): stdlib toys of foreign mechanisms (ER->TY)

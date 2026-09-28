@@ -120,6 +120,12 @@ matched single-byte perturbation (influence); tabulate the four cells.
 ## C -- Accessibility geometry: what makes a capability reachable?
 
 ### POI-020 -- Is replicator accessibility a law of copy-primitive encoding length?
+UPDATE 2026-09-28 (expedition/z80_threshold/ pilot + S8, EXPLORATORY, BEE VM only):
+L0 2.68e-5, L2 (no block copy) 5.1e-9, L3 (byte moves only) impossible in 256
+steps, L3s (+ generic PUSH-like write) 2.1e-10, L3t (no world-reset pointer)
+1.7e-14 -> roughly 2.4 decades of copier density per essential copy-loop
+byte; the world-reset destination pointer alone ~4.1 decades. First
+quantitative support on one VM; the cross-VM law (R1 packet) is still open.
 State READY (ready/R1_copier_encoding_law.md) | origin raw/I1 T1, raw/E1 Q1, raw/E2 Q1 | BEE, NPE, ARC census
 Why: if accessibility is set by encoding length, substrate design (not
 selection) decides what can emerge -- a law usable across engines.
