@@ -84,3 +84,11 @@ R-28 | disposable worker 28 | ubu002 | 2026-09-28T17:54Z | 2026-09-28T18:10Z | R
 R-31 | disposable worker 31 | ubu002 | 2026-09-28T18:11Z | | running |
 R-29 | disposable worker 29 | ubu002 | 2026-09-28T18:09Z | 2026-09-28T18:19Z | REPORT (worker notes it did not read a prior-art note because it lives under a forbidden path -- package reference unavailable by design) | EXPOSED-NAMES: a git log listing showed an Artemis commit SUBJECT (4ea12f6a9 "research frontier pass 1 -- ... 19 sharpened ...") while it located a prior-art path its package cited; no Artemis file opened; a weak cue that some questions were curated
 R-32 | disposable worker 32 | ubu002 | 2026-09-28T18:20Z | | running |
+R-30 | disposable worker 30 | ubu002 | 2026-09-28T18:10Z | 2026-09-28T18:28Z | REPORT | see audit line
+R-33 | disposable worker 33 | ubu002 | 2026-09-28T18:29Z | | running |
+R-31 | disposable worker 31 | ubu002 | 2026-09-28T18:11Z | 2026-09-28T18:24Z | REPORT (a harness-persisted oversized tool output landed under ~/.claude/projects; worker states it did not open it) | clean (no command accessed ~/.claude/projects; no forbidden names or phrases)
+R-34 | disposable worker 34 | ubu002 | 2026-09-28T18:30Z | | running |
+R-32 | disposable worker 32 | ubu002 | 2026-09-28T18:20Z | 2026-09-28T18:40Z | REPORT | see audit line
+R-35 | disposable worker 35 | ubu002 | 2026-09-28T18:41Z | | running |
+R-34 | disposable worker 34 | ubu002 | 2026-09-28T18:30Z | 2026-09-28T18:43Z | REPORT (worker notes the lens-card prototype was unavailable because it lives under the excluded path) | see audit line
+R-36 | disposable worker 36 | ubu002 | 2026-09-28T18:44Z | | running |
