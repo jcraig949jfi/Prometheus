@@ -1,0 +1,2712 @@
+{
+ "WIN-B": {
+  "truth": "BROKEN",
+  "shape": "mistimed window",
+  "twin": "WIN-V",
+  "claim": "drop over [t0,ro) null -> packets not needed",
+  "harness": "reference",
+  "arm": "drop_window_c1",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 14.22
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "FLAG",
+    "reach": 0.0,
+    "lags": {
+     "0": 32,
+     "8": 32,
+     "55": 32,
+     "63": 32
+    },
+    "runs": 1,
+    "wall": 6.72
+   },
+   "K1g": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 1,
+    "wall": 6.81
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 13.4
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 13.45
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 48,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "FLAG",
+    "applied_tick_worlds": 0,
+    "worlds_touched": 0,
+    "runs": 2,
+    "wall": 15.09
+   },
+   "K5": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.01
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "NA",
+    "why": "no must-not-flip plant for this env",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 6.89
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 6.89
+   }
+  }
+ },
+ "WIN-V": {
+  "truth": "VALID",
+  "shape": "mistimed window",
+  "twin": "WIN-B",
+  "claim": "drop over [t0,ro] kills -> packets carry",
+  "harness": "reference",
+  "arm": "drop_window_corrected",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 13.4
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "PASS",
+    "reach": 1.0,
+    "lags": {
+     "0": 32,
+     "8": 32,
+     "55": 32,
+     "63": 32
+    },
+    "runs": 1,
+    "wall": 7.48
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 7.12
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 14.06
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 13.71
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 60,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 418,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 13.57
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "NA",
+    "why": "no must-not-flip plant for this env",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 7.67
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 5.89
+   }
+  }
+ },
+ "INERT-B": {
+  "truth": "BROKEN",
+  "shape": "inert channel",
+  "twin": "INERT-V",
+  "claim": "freeze_routing null -> routing not used",
+  "harness": "reference",
+  "arm": "freeze_routing",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 14.69
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 7.0
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "route_relay",
+    "competent_lo99": 0.5,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 25.42
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "route_relay",
+    "competent_lo99": 0.5,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 26.98
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 6970,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 17.01
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 13.19
+   },
+   "K8s": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 7.62
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 7.15
+   }
+  }
+ },
+ "INERT-V": {
+  "truth": "VALID",
+  "shape": "inert channel",
+  "twin": "INERT-B",
+  "claim": "freeze_routing kills -> routing carries",
+  "harness": "reference",
+  "arm": "freeze_routing",
+  "reading": {
+   "normal": [
+    0.9973958333333333,
+    0.9921875,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.4973958333333333,
+    -0.5,
+    -0.4921875
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 10.23
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 5.21
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "route_relay",
+    "competent_lo99": 0.9921875,
+    "diff_hi99": -0.4921875,
+    "runs": 2,
+    "wall": 9.28
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "route_relay",
+    "competent_lo99": 0.9921875,
+    "diff_hi99": -0.4921875,
+    "runs": 2,
+    "wall": 10.54
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 3072,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 10.84
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 7.87
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 5.43
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 5.68
+   }
+  }
+ },
+ "UNWIRED-B": {
+  "truth": "BROKEN",
+  "shape": "unwired switch",
+  "twin": "UNWIRED-V",
+  "claim": "freeze_rule null -> rule not used",
+  "harness": "unwired",
+  "arm": "freeze_rule",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 2.6
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 1.38
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "rule_switch_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 2.49
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "rule_switch_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.53
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "FLAG",
+    "applied_tick_worlds": 0,
+    "worlds_touched": 0,
+    "runs": 2,
+    "wall": 2.56
+   },
+   "K5": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "FLAG",
+    "declared_absent": [
+     "ctrl.freeze_rule"
+    ],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 2.75
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.3
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.28
+   }
+  }
+ },
+ "UNWIRED-V": {
+  "truth": "VALID",
+  "shape": "unwired switch",
+  "twin": "UNWIRED-B",
+  "claim": "freeze_rule kills -> rule carries",
+  "harness": "reference",
+  "arm": "freeze_rule",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 2.49
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 1.41
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "rule_switch_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.36
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "rule_switch_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.47
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 2.37
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 2.67
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.18
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.35
+   }
+  }
+ },
+ "TARGET-B": {
+  "truth": "BROKEN",
+  "shape": "wrong target",
+  "twin": "TARGET-V",
+  "claim": "reset_S kills -> S carries",
+  "harness": "keyed_targets",
+  "arm": "reset_S_mid",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.4166666666666667,
+    0.4166666666666667,
+    0.4166666666666667
+   ],
+   "diff": [
+    -0.5833333333333333,
+    -0.5833333333333333,
+    -0.5833333333333333
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 7.19
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 2.97
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.28
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.1
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 12,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 5.82
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "FLAG",
+    "undeclared_diffs": [
+     "y"
+    ],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "FLAG",
+    "plant": "echo_hold",
+    "diff_lo99": -0.5833333333333333,
+    "runs": 2,
+    "wall": 6.56
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.1
+   },
+   "K9": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 4.17
+   }
+  }
+ },
+ "TARGET-V": {
+  "truth": "VALID",
+  "shape": "wrong target",
+  "twin": "TARGET-B",
+  "claim": "reset_S null -> S not needed (true null)",
+  "harness": "reference",
+  "arm": "reset_S_mid",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 6.5
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 3.29
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.75
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.93
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 12,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 6.51
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 6.41
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 2.98
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.68
+   }
+  }
+ },
+ "DEAD-B": {
+  "truth": "BROKEN",
+  "shape": "dead branch",
+  "twin": "COND-V",
+  "claim": "conditional flush null -> in-flight not needed",
+  "harness": "reference",
+  "arm": "cond_flush_never",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 7.47
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 1,
+    "wall": 3.47
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 7.64
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 8.99
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "FLAG",
+    "self_hits": 0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "FLAG",
+    "applied_tick_worlds": 0,
+    "worlds_touched": 0,
+    "runs": 2,
+    "wall": 6.78
+   },
+   "K5": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.01
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 3.51
+   },
+   "K8s": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 3.67
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.63
+   }
+  }
+ },
+ "SEED-B": {
+  "truth": "BROKEN",
+  "shape": "condition never met + label seeds",
+  "twin": "COND-V",
+  "claim": "conditional flush reading",
+  "harness": "label_seeds",
+  "arm": "cond_flush_never",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 8.25
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 1,
+    "wall": 3.51
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 6.88
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 7.21
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "FLAG",
+    "self_hits": 0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "FLAG",
+    "applied_tick_worlds": 0,
+    "worlds_touched": 0,
+    "runs": 2,
+    "wall": 7.45
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "FLAG",
+    "undeclared_diffs": [
+     "ws",
+     "sense_idx",
+     "sense_val",
+     "read_idx",
+     "y"
+    ],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 3.25
+   },
+   "K8s": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 3.05
+   },
+   "K9": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 3.51
+   }
+  }
+ },
+ "PROBE-B": {
+  "truth": "BROKEN",
+  "shape": "probe side effect",
+  "twin": "COND-V",
+  "claim": "conditional flush kills -> in-flight carries",
+  "harness": "reference",
+  "arm": "cond_flush_probe",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 6.64
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 1,
+    "wall": 3.68
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 6.09
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 8.82
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "FLAG",
+    "self_hits": 0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 6.67
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 3.21
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 4.13
+   },
+   "K9": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 3.02
+   }
+  }
+ },
+ "COND-V": {
+  "truth": "VALID",
+  "shape": "conditional arm",
+  "twin": "DEAD-B",
+  "claim": "conditional flush kills -> in-flight carries",
+  "harness": "reference",
+  "arm": "cond_flush_fires",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 6.08
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 2.75
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 5.14
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 5.94
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1536,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 1536,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 6.79
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 3.2
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.26
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.57
+   }
+  }
+ },
+ "MASK-B": {
+  "truth": "BROKEN",
+  "shape": "mis-targeted site",
+  "twin": "MASK-V",
+  "claim": "reset of the sensor's S null -> latch not in S",
+  "harness": "reference",
+  "arm": "reset_S_sensor",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.9375,
+    0.859375,
+    1.0
+   ],
+   "diff": [
+    -0.0625,
+    -0.140625,
+    0.0
+   ],
+   "reading": "AMBIG"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 3.22
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "FLAG",
+    "frac_pairs": 0.125,
+    "runs": 1,
+    "wall": 1.48
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 2.66
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 3.06
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.125,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 13,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 96,
+    "worlds_touched": 8,
+    "runs": 2,
+    "wall": 2.97
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 6.59
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.74
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.53
+   }
+  }
+ },
+ "MASK-V": {
+  "truth": "VALID",
+  "shape": "mis-targeted site",
+  "twin": "MASK-B",
+  "claim": "reset of the sensor's S kills -> latch in S",
+  "harness": "reference",
+  "arm": "reset_S_sensor",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 3.2
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 1.78
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.16
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.12
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 13,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 3.6
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 7.81
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.57
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.65
+   }
+  }
+ },
+ "FORCED-B": {
+  "truth": "BROKEN",
+  "shape": "forced by readout",
+  "twin": "FORCED-V",
+  "claim": "reset_S kills -> S carries",
+  "harness": "reference",
+  "arm": "reset_S_readout",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 9.01
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 3.45
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.17
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.97
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 12,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 6.39
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "FLAG",
+    "plant": "echo_hold",
+    "diff_lo99": -0.5,
+    "runs": 2,
+    "wall": 5.88
+   },
+   "K8s": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 2.96
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.0
+   }
+  }
+ },
+ "FORCED-V": {
+  "truth": "VALID",
+  "shape": "forced by readout",
+  "twin": "FORCED-B",
+  "claim": "reset_S kills -> S carries",
+  "harness": "reference",
+  "arm": "reset_S_mid",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.5,
+    -0.5,
+    -0.5
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 2.89
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 1.66
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.32
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 3.16
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 12,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 768,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 3.07
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 6.36
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.47
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.46
+   }
+  }
+ },
+ "SAT-B": {
+  "truth": "BROKEN",
+  "shape": "saturated gate",
+  "twin": "SAT-V",
+  "claim": "income cut null -> energy not limiting",
+  "harness": "reference",
+  "arm": "income_cut_11",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 14.57
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 7.17
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 14.82
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": 0.0,
+    "runs": 2,
+    "wall": 14.47
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 42240,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 15.73
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "NA",
+    "why": "no must-not-flip plant for this env",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 7.64
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 7.32
+   }
+  }
+ },
+ "SAT-V": {
+  "truth": "VALID",
+  "shape": "saturated gate",
+  "twin": "SAT-B",
+  "claim": "income cut kills -> energy gates relaying",
+  "harness": "reference",
+  "arm": "income_cut_0",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    0.5885416666666666,
+    0.5234375,
+    0.6510546874999997
+   ],
+   "diff": [
+    -0.41145833333333337,
+    -0.4765625,
+    -0.34894531250000027
+   ],
+   "reading": "EFFECT"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 13.93
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 7.07
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.34894531250000027,
+    "runs": 2,
+    "wall": 14.09
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.34894531250000027,
+    "runs": 2,
+    "wall": 14.86
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 5312,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 15.12
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "NA",
+    "why": "no must-not-flip plant for this env",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 7.51
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 7.21
+   }
+  }
+ },
+ "V0-WIN": {
+  "truth": "VALID",
+  "shape": "true null (arrivals unused)",
+  "twin": "-",
+  "claim": "drop null -> arrivals not used",
+  "harness": "reference",
+  "arm": "drop_window_corrected",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 6.96
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "PASS",
+    "reach": 1.0,
+    "lags": {
+     "0": 32,
+     "1": 32
+    },
+    "runs": 1,
+    "wall": 3.94
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 3.52
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 6.62
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "echo_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 5.09
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 132,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 1536,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 6.46
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 3.09
+   },
+   "K8s": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 3.24
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 3.02
+   }
+  }
+ },
+ "V0-ROUTE": {
+  "truth": "VALID",
+  "shape": "true null (w read, unused)",
+  "twin": "-",
+  "claim": "freeze_routing null -> routing not used",
+  "harness": "reference",
+  "arm": "freeze_routing",
+  "reading": {
+   "normal": [
+    0.9921875,
+    0.9739583333333334,
+    1.0
+   ],
+   "arm": [
+    0.9739583333333333,
+    0.9270833333333333,
+    1.0
+   ],
+   "diff": [
+    -0.018229166666666668,
+    -0.06510416666666667,
+    0.015638020833333027
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 10.15
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "NA",
+    "why": "declared variable never differs between cue twins",
+    "runs": 1,
+    "wall": 4.79
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "route_relay",
+    "competent_lo99": 0.9921875,
+    "diff_hi99": -0.4921875,
+    "runs": 2,
+    "wall": 8.75
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "route_relay",
+    "competent_lo99": 0.9921875,
+    "diff_hi99": -0.4921875,
+    "runs": 2,
+    "wall": 11.62
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 0.75,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 8448,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 9.52
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 7.45
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 4.5
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 4.93
+   }
+  }
+ },
+ "V0-RULE": {
+  "truth": "VALID",
+  "shape": "true null (r read, indifferent)",
+  "twin": "-",
+  "claim": "freeze_rule null -> rule not used",
+  "harness": "reference",
+  "arm": "freeze_rule",
+  "reading": {
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reading": "NULL"
+  },
+  "reading_cost": {
+   "runs": 2,
+   "wall": 3.3
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "NA",
+    "why": "not a windowed packet-drop arm",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1g": {
+    "status": "NA",
+    "why": "declared variable never differs between cue twins",
+    "runs": 1,
+    "wall": 1.65
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "rule_switch_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.76
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "rule_switch_hold",
+    "competent_lo99": 1.0,
+    "diff_hi99": -0.5,
+    "runs": 2,
+    "wall": 2.58
+   },
+   "K3": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "FLAG",
+    "frac_pairs": 0.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 1,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 9984,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 3.7
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "PASS",
+    "plant": "hold_latch",
+    "diff_lo99": 0.0,
+    "runs": 2,
+    "wall": 2.93
+   },
+   "K8s": {
+    "status": "FLAG",
+    "runs": 1,
+    "wall": 1.77
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 1.74
+   }
+  }
+ }
+}
