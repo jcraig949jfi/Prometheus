@@ -1,0 +1,1039 @@
+{
+  "summary": {
+    "timestamp": "2026-09-28T17:29:45.653790+00:00",
+    "sut_url": "http://127.0.0.1:8711",
+    "spec_version": "",
+    "overall_compatibility": "3.2%",
+    "must_compatibility": "0.0%",
+    "should_compatibility": "50.0%",
+    "may_compatibility": "0.0%"
+  },
+  "per_requirement": {
+    "CARD-CACHE-001": {
+      "level": "SHOULD",
+      "status": "PASS",
+      "transports": {
+        "agent_card": "PASS"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/agent_card/test_agent_card_caching.py::TestAgentCardCacheControl::test_cache_control_has_max_age",
+        "tests/compatibility/agent_card/test_agent_card_caching.py::TestAgentCardCacheControl::test_cache_control_present"
+      ]
+    },
+    "CARD-CACHE-002": {
+      "level": "SHOULD",
+      "status": "PASS",
+      "transports": {
+        "agent_card": "PASS"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/agent_card/test_agent_card_caching.py::TestAgentCardETag::test_etag_present"
+      ]
+    },
+    "DM-SERIAL-005": {
+      "level": "SHOULD",
+      "status": "PASS",
+      "transports": {
+        "jsonrpc": "PASS",
+        "http_json": "SKIPPED"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/core_operations/test_data_model.py::TestIgnoreUnrecognizedFields::test_extra_fields_ignored_jsonrpc",
+        "tests/compatibility/core_operations/test_data_model.py::TestIgnoreUnrecognizedFields::test_extra_fields_ignored_rest"
+      ]
+    },
+    "CORE-HIST-001": {
+      "level": "SHOULD",
+      "status": "SKIPPED",
+      "transports": {
+        "grpc": "SKIPPED",
+        "http_json": "SKIPPED"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroGetTask::test_get_task_history_length_zero[grpc]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroGetTask::test_get_task_history_length_zero[http_json]"
+      ]
+    },
+    "CORE-HIST-003": {
+      "level": "SHOULD",
+      "status": "PASS",
+      "transports": {
+        "grpc": "SKIPPED",
+        "jsonrpc": "PASS",
+        "http_json": "SKIPPED"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroSendMessage::test_send_message_history_length_zero[grpc]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroSendMessage::test_send_message_history_length_zero[http_json]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroSendMessage::test_send_message_history_length_zero[jsonrpc]"
+      ]
+    },
+    "CORE-HIST-005": {
+      "level": "SHOULD",
+      "status": "SKIPPED",
+      "transports": {
+        "grpc": "SKIPPED",
+        "http_json": "SKIPPED"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryOrdering::test_history_messages_in_chronological_order[grpc]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryOrdering::test_history_messages_in_chronological_order[http_json]"
+      ]
+    },
+    "CORE-HIST-006": {
+      "level": "SHOULD",
+      "status": "SKIPPED",
+      "transports": {
+        "grpc": "SKIPPED",
+        "http_json": "SKIPPED"
+      },
+      "errors": [],
+      "test_ids": [
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryContent::test_history_content_matches_sent_messages[grpc]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryContent::test_history_content_matches_sent_messages[http_json]"
+      ]
+    },
+    "CORE-SEND-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-SEND-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-SEND-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-STREAM-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-STREAM-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-STREAM-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-GET-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-GET-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-LIST-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-LIST-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-LIST-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-LIST-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-LIST-005": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CANCEL-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CANCEL-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CANCEL-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-EXECUTION-MODE-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-EXECUTION-MODE-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-ERR-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-ERR-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CAP-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CAP-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CAP-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-CAP-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-001": {
+      "level": "MAY",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-001a": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-002": {
+      "level": "MAY",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-002a": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-005": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-MULTI-006": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-HIST-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CORE-HIST-004": {
+      "level": "MAY",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-TASK-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-TASK-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-MSG-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-MSG-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-PART-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-ART-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-STATUS-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-SERIAL-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-SERIAL-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-SERIAL-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "DM-SERIAL-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-ORDER-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-ORDER-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-ORDER-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-ORDER-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-SUB-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-SUB-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-SUB-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "STREAM-SUB-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-CREATE-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-CREATE-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-GET-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-GET-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-LIST-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-DEL-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-DEL-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-DELIVER-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-DELIVER-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "PUSH-DELIVER-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-DISC-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-PROTO-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-PROTO-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-STRUCT-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-EXT-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-EXT-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-SIGN-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-SIGN-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-SIGN-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-SIGN-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "CARD-CACHE-003": {
+      "level": "MAY",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-TLS-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-TLS-002": {
+      "level": "SHOULD",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-SERVER-001": {
+      "level": "SHOULD",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-SERVER-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-INTASK-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-INTASK-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-INTASK-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-INTASK-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-INTASK-005": {
+      "level": "SHOULD",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-INTASK-006": {
+      "level": "SHOULD",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-SCOPE-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-SCOPE-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "AUTH-SCOPE-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "VER-CLIENT-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "VER-SERVER-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "VER-SERVER-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "VER-SERVER-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "VER-CLIENT-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "BIND-EQUIV-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "BIND-EQUIV-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "BIND-EQUIV-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "BIND-EQUIV-004": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "BIND-FIELD-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-FMT-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-FMT-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-SVC-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-SVC-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-ERR-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-ERR-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-ERR-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-SSE-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "JSONRPC-SSE-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-SVC-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-SVC-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-SVC-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-META-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-ERR-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-ERR-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "GRPC-ERR-003": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-URL-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-URL-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-SVC-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-SVC-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-QP-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-ERR-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-ERR-002": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-STATUS-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    },
+    "HTTP_JSON-SSE-001": {
+      "level": "MUST",
+      "status": "NOT TESTED",
+      "transports": {},
+      "errors": [],
+      "test_ids": []
+    }
+  },
+  "per_transport": {
+    "agent_card": {
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "jsonrpc": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "http_json": {
+      "total": 5,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 5
+    },
+    "grpc": {
+      "total": 4,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 4
+    }
+  },
+  "agent_card": {
+    "name": "Prometheus Agent Fabric",
+    "description": "Durable task fabric for the Prometheus research program (pilot).",
+    "supportedInterfaces": [
+      {
+        "url": "http://127.0.0.1:8711/a2a/jsonrpc",
+        "protocolBinding": "JSONRPC",
+        "protocolVersion": "1.0"
+      }
+    ],
+    "version": "0.1.0",
+    "capabilities": {
+      "streaming": false,
+      "pushNotifications": false,
+      "extendedAgentCard": false,
+      "extensions": [
+        {
+          "uri": "https://prometheus.local/ext/fabric/v1",
+          "description": "Prometheus fabric routing and provenance metadata",
+          "required": false
+        }
+      ]
+    },
+    "defaultInputModes": [
+      "text/plain",
+      "application/json"
+    ],
+    "defaultOutputModes": [
+      "text/plain",
+      "application/json"
+    ],
+    "skills": [
+      {
+        "id": "fabric.submit",
+        "name": "Submit a durable research task",
+        "description": "Create a durable Task routed by capability to Prometheus pull workers; poll GetTask.",
+        "tags": [
+          "prometheus",
+          "durable",
+          "async"
+        ],
+        "examples": [
+          "metadata[\"https://prometheus.local/ext/fabric/v1\"] = {\"capabilities\":[\"research.repo_readonly\"],\"threadId\":\"thr-...\",\"baseSha\":\"<sha>\"}"
+        ]
+      },
+      {
+        "id": "a2a.conformance",
+        "name": "a2a.conformance",
+        "description": "Prometheus fabric capability a2a.conformance (served by live pull workers).",
+        "tags": [
+          "prometheus",
+          "a2a"
+        ]
+      }
+    ]
+  }
+}
