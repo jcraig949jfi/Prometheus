@@ -76,7 +76,7 @@ class Obs(LC.World):
                 else: mat = "other"; q = None
                 pos.append({"mat": mat, "ibs_same": tape[p] == ftape[p], "ibs_src": (q is not None and tape[p] == ftape[q])})
             ok, bok, x, exe = exact_self_copy(tape)
-            m = {"cell": c, "oid": self.oid[c], "ggen": self.ggen[c], "pos": pos, "ruler": R.measure(tape)["class"], "self_copy_allowed": ok,
+            m = {"cell": c, "oid": self.oid[c], "ggen": self.ggen[c], "tape": tape.hex(), "pos": pos, "ruler": R.measure(tape)["class"], "self_copy_allowed": ok,
                  "birth_allowed": bok, "input": x, "executed": [p for p in range(G) if exe and exe[p]]}
             if n < 2 and bok:                                                  # knockout: (position, exact kept, birth kept)
                 ko = []

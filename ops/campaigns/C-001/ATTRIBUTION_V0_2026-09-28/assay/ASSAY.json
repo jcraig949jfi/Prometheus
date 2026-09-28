@@ -1,0 +1,274 @@
+{
+ "inputs": {
+  "BEE_r038751": "C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-001_A-002/out.json",
+  "BEE_r016299": "C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-002_A-001/out.json",
+  "NPE_T003": "C:/Prometheus-data/evidence/ops_pilot_2026-09-27/T-003_A-001/out.json",
+  "ARCH_block13": "C:/Prometheus-data/evidence/portability01_2026-09-26/archaeon/A4_block13_events.json"
+ },
+ "input_sha256": {
+  "BEE_r038751": "b1fef410070c2997c2e33b928847df7720c4d0a22e69bbf80b3f438d6f694da6",
+  "BEE_r016299": "83a24a85ba12ae84a976d37b5f7216451103dd4b31b620294318d8be9de83413",
+  "NPE_T003": "003f50616ef34805970b58bdf0814ba400d39729032f365493ba84ecd537c7da",
+  "ARCH_block13": "e95abcc6cb33f711a0671e96fd5b2932f8376722ba0ce205a23f255486ef40bd"
+ },
+ "engines": {
+  "BEE_r038751": {
+   "engine": "BEE_r038751",
+   "n": 74800,
+   "invalid_records": 0,
+   "producer_ne_any_donor": 0.0,
+   "majority_donor_not_producer": 0.0,
+   "no_material_donor": 0.0235,
+   "singular_parent_lossy": 0.0531,
+   "unidentified_material_ge_0.1": 0.0359,
+   "singular_lossy_by_identified_structure": 0.0,
+   "mean_unidentified_share": 0.0311,
+   "no_singular_material_parent": 0.0332,
+   "two_plus_donors": 0.0,
+   "classes": {
+    "SELF_CONSTRUCTED": 73041,
+    "ORGANISM_WRITTEN_NEW_MATERIAL": 1759
+   },
+   "native_material_label_contradicts_IBD_majority": 0.0113,
+   "native_label_writer_but_IBD_majority_not_writer": 0,
+   "native_label_target_but_IBD_majority_writer": 845,
+   "writer_majority_children": 72486,
+   "of_which_later_sr": 25682,
+   "of_which_never_seen_writing": 29682,
+   "later_sr_among_those_seen_writing": 0.6,
+   "is_sr_births": 42915,
+   "mechanisms": {
+    "ENDOGENOUS_COPY": 74800
+   },
+   "births_with_code_provenance": 73041,
+   "code_run_mostly_occupant_material": 168
+  },
+  "BEE_r016299": {
+   "engine": "BEE_r016299",
+   "n": 83384,
+   "invalid_records": 0,
+   "producer_ne_any_donor": 0.0085,
+   "majority_donor_not_producer": 0.0051,
+   "no_material_donor": 0.0319,
+   "singular_parent_lossy": 0.9924,
+   "unidentified_material_ge_0.1": 0.9802,
+   "singular_lossy_by_identified_structure": 0.0085,
+   "mean_unidentified_share": 0.4561,
+   "no_singular_material_parent": 0.9728,
+   "two_plus_donors": 0.0066,
+   "classes": {
+    "SELF_CONSTRUCTED": 80018,
+    "ORGANISM_WRITTEN_NEW_MATERIAL": 2656,
+    "ORGANISM_RECOMBINATION_SELF_INCLUDED": 553,
+    "ORGANISM_WRITTEN_OTHERS_MATERIAL": 157
+   },
+   "native_material_label_contradicts_IBD_majority": 0.2295,
+   "native_label_writer_but_IBD_majority_not_writer": 7,
+   "native_label_target_but_IBD_majority_writer": 19126,
+   "writer_majority_children": 79092,
+   "of_which_later_sr": 18,
+   "of_which_never_seen_writing": 31322,
+   "later_sr_among_those_seen_writing": 0.0004,
+   "is_sr_births": 18,
+   "mechanisms": {
+    "PAIR_EXECUTION": 83384
+   },
+   "births_with_code_provenance": 80571,
+   "code_run_mostly_occupant_material": 10398
+  },
+  "NPE_T003": {
+   "engine": "NPE_T003",
+   "n": 34,
+   "invalid_records": 0,
+   "producer_ne_any_donor": 0.0882,
+   "majority_donor_not_producer": 0.0882,
+   "no_material_donor": 0.0,
+   "singular_parent_lossy": 1.0,
+   "unidentified_material_ge_0.1": 0.7353,
+   "singular_lossy_by_identified_structure": 0.2353,
+   "mean_unidentified_share": 0.5579,
+   "no_singular_material_parent": 0.7353,
+   "two_plus_donors": 0.5,
+   "classes": {
+    "ORGANISM_RECOMBINATION_SELF_INCLUDED": 17,
+    "SELF_CONSTRUCTED_WITH_HELP": 9,
+    "SELF_CONSTRUCTED": 6,
+    "ORGANISM_WRITTEN_OTHERS_MATERIAL": 2
+   },
+   "p11_causal": 6,
+   "victim_context_wrote_some": 25,
+   "native_donor_authored_vs_replay_donor_material": [
+    [
+     0.0333,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     0.9667,
+     1.0
+    ],
+    [
+     0.8889,
+     0.4444444444444444
+    ],
+    [
+     0.5,
+     0.5
+    ],
+    [
+     0.375,
+     0.0
+    ],
+    [
+     0.3333,
+     0.6
+    ],
+    [
+     0.1667,
+     0.3333333333333333
+    ],
+    [
+     0.9375,
+     1.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0667,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     0.6,
+     0.3
+    ],
+    [
+     0.8333,
+     0.8333333333333334
+    ],
+    [
+     0.6875,
+     0.5625
+    ],
+    [
+     0.0,
+     0.5
+    ],
+    [
+     0.25,
+     0.25
+    ],
+    [
+     0.1111,
+     0.2222222222222222
+    ],
+    [
+     0.2,
+     0.9
+    ],
+    [
+     0.8,
+     0.9
+    ],
+    [
+     0.875,
+     0.875
+    ],
+    [
+     1.0,
+     0.25
+    ],
+    [
+     0.5,
+     0.0
+    ],
+    [
+     0.6,
+     0.3
+    ],
+    [
+     0.8333,
+     0.8333333333333334
+    ],
+    [
+     0.6875,
+     0.5625
+    ],
+    [
+     0.8889,
+     0.0
+    ],
+    [
+     0.0667,
+     1.0
+    ],
+    [
+     0.3333,
+     1.0
+    ]
+   ]
+  },
+  "ARCH_block13": {
+   "engine": "ARCH_block13",
+   "n": 53185,
+   "invalid_records": 0,
+   "producer_ne_any_donor": 0.0391,
+   "majority_donor_not_producer": 0.0071,
+   "no_material_donor": 0.0029,
+   "singular_parent_lossy": 0.1858,
+   "unidentified_material_ge_0.1": 0.0,
+   "singular_lossy_by_identified_structure": 0.0489,
+   "mean_unidentified_share": 0.0,
+   "no_singular_material_parent": 0.0101,
+   "two_plus_donors": 0.0329,
+   "classes": {
+    "SELF_CONSTRUCTED": 50951,
+    "ORGANISM_RECOMBINATION_SELF_INCLUDED": 1752,
+    "HOST_WRITTEN": 328,
+    "ORGANISM_WRITTEN_NEW_MATERIAL": 154
+   },
+   "executor_is_not_majority_donor": 375,
+   "mechanisms": {
+    "SELF_COPY": 52387,
+    "HOST_EXECUTION": 130,
+    "ORIGINATION": 397,
+    "SELF_COPY+RECOMBINATION": 41,
+    "HOST_EXECUTION+RECOMBINATION": 35,
+    "NEIGHBOUR_COPY": 195
+   },
+   "executed_material": {
+    "mixed": 5363,
+    "self": 47822
+   }
+  }
+ },
+ "result_sha256": "0ff534181c3db4f2fcb6fea4da70ca13d36d2101e78424e5f47a3194adefbf2c"
+}
