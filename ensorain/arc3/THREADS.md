@@ -132,6 +132,17 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - RES: light.
 - MAT: idea.
 
+- EV (NEW, from the LM01 pre-freeze review, 2026-09-28): for LM01's lossless endpoint (count-weighted ridge rank-3 ALS),
+  the per-cell (sum, count) table is an EXACT sufficient statistic.
+  - L-R's objective equals the count-weighted objective on cell means, up to a constant.
+  - Review probe: AC within .007 at ~1/3 of the bytes. Campaign-code smoke (F5-L2-spectral dev): SUFFSTAT 2.839 vs L-R
+    2.834, with 0 stored records.
+  - So, FOR THAT READOUT, the minimal sufficient retained state is bounded by the CELL COUNT, not the life length.
+    Exact records are never necessary; order and repeat detail are pure nuisance to it.
+  - This is the WTP analogue of PKG-S1 W1 (counts are sufficient). It becomes LM02's sufficient-statistic arm.
+  - Consequence: any "exact retention pays" reading in LM01 can only be about the RANDOM-RECORD reservoir being a poor
+    bounded state.
+
 ## T11 Readout interference (irrelevant stored items)
 - EXT (lit/LIT_MEMORY_SYSTEMS.md):
   - in exact stores, interference is mostly a READOUT property: harm scales with distractor SIMILARITY and position, not
