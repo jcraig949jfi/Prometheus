@@ -17,7 +17,7 @@ Cheat fixtures (must be FLAGGED by the meter, else the meter is blind):
   LRSubsample L-R that refits on a random half of the store (R1d) -> full_read_violations > 0"""
 import numpy as np
 
-from .accounting import Metered, nbytes
+from .accounting import Metered, nbytes, record_bytes
 
 
 class ExactStore:
@@ -70,6 +70,9 @@ class _StoreArm(Metered):
     def _reconstruct(self, idx, A):
         return self.store.y[idx].copy()          # exact: the record itself
 
+    def loci(self):
+        return dict(stored_record_bytes=int(self.store.nbytes()), hypothesis_bytes=0, transient_hypothesis_bytes=0)
+
     half_life = None                             # P3/H-rec (#644): fraction of the store size; None = time unused
 
     def _age_w(self):
@@ -97,6 +100,7 @@ class LosslessK(_StoreArm):
             out[i:i + 128] = (W * V[None]).sum(1) / W.sum(1)
         self.meter.bytes_read += S.nbytes + V.nbytes
         self.meter.store_read += S.nbytes + V.nbytes
+        self.meter.record_reads += len(V) * record_bytes(len(self.dims))
         self.meter.ops += len(Q) * len(V) * len(self.dims)
         return out
 
@@ -151,7 +155,16 @@ class LosslessR(_StoreArm):
         A, y, w = self._fit_data()
         self.meter.bytes_read += A.nbytes + y.nbytes
         self.meter.store_read += A.nbytes + y.nbytes
-        return als_lowrank(self.dims, A, y, self.rank, self.lam, np.random.default_rng(self.seed), self.iters, self.meter, w)
+        fit = als_lowrank(self.dims, A, y, self.rank, self.lam, np.random.default_rng(self.seed), self.iters, self.meter, w)
+        used = self.meter.als_iters[-1] if getattr(self.meter, "als_iters", None) else self.iters
+        self.meter.record_reads += len(y) * record_bytes(len(self.dims)) * 2 * used
+        self._last_fit_bytes = int(fit[0].nbytes + fit[1].nbytes)
+        return fit
+
+    def loci(self):
+        d = super().loci()
+        d["transient_hypothesis_bytes"] = int(getattr(self, "_last_fit_bytes", 0))
+        return d
 
     def _apply(self, fit, Q):
         U, V, s = fit
@@ -220,7 +233,8 @@ class Selective(Metered):
             if not np.all(np.isfinite(a)):
                 a[~np.isfinite(a)] = 0.0
         self.meter.bytes_written += nbytes(self.persistent()) * self.passes   # dense-update upper bound
-        self.meter.bytes_read += nbytes(self.persistent()) * self.passes
+        self.meter.bytes_read += nbytes(self.persistent()) * self.passes      # state reads (not used to compare arms)
+        self.meter.record_reads += len(y) * record_bytes(len(self.dims)) * self.passes
 
     def _predict(self, Q):
         self.meter.bytes_read += nbytes(self.persistent())
@@ -254,6 +268,7 @@ class RandomMerge(Metered):
         np.add.at(self.sum, b, y)
         np.add.at(self.cnt, b, 1)
         self.meter.bytes_written += 16 * len(y)
+        self.meter.record_reads += len(y) * record_bytes(len(self.dims))
         self.meter.ops += 2 * len(y)
 
     def _predict(self, Q):
@@ -283,6 +298,7 @@ class Hybrid(_StoreArm):
         super()._observe(A, y)
         self.meter.ops += int(self.key.learn(A.astype(int), y, "sgd", 0.1))
         self.meter.bytes_written += nbytes(self.key.params())
+        self.meter.record_reads += len(y) * record_bytes(len(self.dims))
 
     def _embed(self, A):
         i, j = self.key._ij(A.astype(int))
@@ -303,8 +319,13 @@ class Hybrid(_StoreArm):
             out[i:i + 128] = (V[nn] * ww).sum(1) / ww.sum(1)
         self.meter.bytes_read += S.nbytes + V.nbytes + nbytes(self.key.params())
         self.meter.store_read += S.nbytes + V.nbytes
+        self.meter.record_reads += len(V) * record_bytes(len(self.dims))
         self.meter.ops += len(Q) * len(V) * ES.shape[1]
         return out
+
+    def loci(self):
+        return dict(stored_record_bytes=int(self.store.nbytes()), hypothesis_bytes=int(nbytes(self.key.params())),
+                    transient_hypothesis_bytes=0)
 
     def ablate_index(self, seed=0):
         """R1e: scramble the learned key (row permutation of both factors), keep the exact store."""
@@ -397,7 +418,9 @@ class BufferALS(Metered):
     optimizer confound. With B >= history it degenerates to L-R with a kept fit (then the category is HYBRID)."""
     category = "SELECTIVE"
 
-    EVICT = ("random", "keep_worst", "residual_reservoir", "oracle")   # R-c(b): 2 declared system candidates + fixture oracle
+    EVICT = ("random", "keep_worst", "residual_reservoir", "fifo", "oracle")
+    # R-c(b): 2 declared surprise-driven candidates; "fifo" = the v0.3.2 RECENCY reference (keeps the most recent B
+    # records; review F7); "oracle" = fixture only
 
     def __init__(self, dims, rank, B, every=64, iters=80, lam=0.1, seed=0, evict="random", oracle_keep=None, tol=1e-4):
         super().__init__()
@@ -447,6 +470,9 @@ class BufferALS(Metered):
                 j = self._rr.integers(self._seen)
                 if j < self.B:
                     self.bA[j], self.by[j] = a, v
+            elif self.evict == "fifo":
+                j = (self._seen - 1) % self.B               # ring buffer: overwrite the oldest record
+                self.bA[j], self.by[j] = a, v
             else:
                 k = self._key(a, v, rs)
                 j = int(np.argmin(self.bkey))
@@ -484,9 +510,39 @@ class BufferALS(Metered):
             prev = loss
         self.als_iters.append(used)
         self.meter.bytes_read += self.bA.nbytes + self.by.nbytes
+        self.meter.record_reads += len(self.by) * record_bytes(len(self.dims)) * 2 * used
 
     def _predict(self, Q):
         i = np.ravel_multi_index(Q[:, :self.s].T.astype(int), self.dims[:self.s])
         j = np.ravel_multi_index(Q[:, self.s:].T.astype(int), self.dims[self.s:])
         self.meter.bytes_read += self.U.nbytes + self.V.nbytes
+        self.meter.ops += len(Q) * self.r
         return (self.U[i] * self.V[j]).sum(1)
+
+    def finalize(self):
+        """v0.3.2 (review F1): end-of-life refit, so records admitted after the last periodic refit are fitted before
+        any prediction. It is called once, at the end of the stream, by campaign.job."""
+        if self._since > 0 and len(self.by):
+            self._since = 0
+            self._refit()
+        return self
+
+    def _reconstruct(self, idx, A):
+        """v0.3.2 (review F10): memory-based reconstruction map: the buffered exact record at that cell where one is
+        retained (the most recent buffered value), else the factor readout."""
+        base = self._predict(A)
+        if len(self.by) == 0:
+            return base
+        buf = {}
+        for a, v in zip(self.bA, self.by):
+            buf[tuple(int(u) for u in a)] = float(v)
+        out = base.copy()
+        for n, a in enumerate(A):
+            v = buf.get(tuple(int(u) for u in a))
+            if v is not None:
+                out[n] = v
+        return out
+
+    def loci(self):
+        return dict(stored_record_bytes=int(self.bA.nbytes + self.by.nbytes),
+                    hypothesis_bytes=int(self.U.nbytes + self.V.nbytes), transient_hypothesis_bytes=0)

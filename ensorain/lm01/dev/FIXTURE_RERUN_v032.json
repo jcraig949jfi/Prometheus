@@ -1,0 +1,28 @@
+{
+ "t": "2026-09-28T09:10:06Z",
+ "pytest": "56 passed (ensorain/lm01/tests, incl. R1c/R1d cheat fixtures on L-R, L-R-rec, H-rec; gate and label known-answer tests)",
+ "reservoir_curve_PASS": true,
+ "reservoir_curve_median": {
+  "c/8": 0.23214729287276026,
+  "c/4": 0.38817866776647436,
+  "c/2": 1.1539076625967857,
+  "c": 1.8864136208096256,
+  "2c": 2.32030426575138,
+  "full": 2.652719966741432,
+  "L-R": 2.624406715451349
+ },
+ "eviction_pc_PASS": true,
+ "eviction_pc_gap": 0.6325663399916153,
+ "instrument_trio_relative": {
+  "400": true,
+  "800": true,
+  "1500": true
+ },
+ "headline_pc": {
+  "L1": false,
+  "L2": true,
+  "L3": true
+ },
+ "ablation_pc": true,
+ "ablation_pc_gap": 1.2272938593487814
+}
