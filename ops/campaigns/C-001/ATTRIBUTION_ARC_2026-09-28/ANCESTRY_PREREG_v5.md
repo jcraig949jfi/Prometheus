@@ -279,3 +279,33 @@ Observation for Nestor: in two runs (s9200006, s9200008) the C_reimplant_random 
    - Archaeon added 11 adversarial expectations for the thinly covered mutants exec_all, noexec and performer_by_location
      (npe_fixture_validation/ARCHAEON_ADDITIONS.json).
    - **Result: 391/391 agree.** The pack is VALIDATED, and the additions become part of it.
+
+## Amendment C8 (2026-09-28): NPE gates G1 and G2 (Nestor #847); arbitrations A1 and A2
+**G1 (fixtures): CLEARED.**
+- Nestor's v2 pack (646166c9f; 26 fixtures including the new K16b, K16c and K37 painting, plus Archaeon's additions) agrees with
+  the INDEPENDENT reference tracer on 451/451 expectations (npe_fixture_validation/VALIDATION_v2.txt).
+- Nestor reports his mutants are caught 3-22 times each.
+
+**G2 (tracer agreement, pre-production).**
+- Setup: Nestor's tracer, FROZEN at e5af0cae1, vs the reference, on 300 non-production fuzz interactions (seed 20260929;
+  archaeon/attribution/probes/npe_fuzz_agreement.py; npe_fixture_validation/G2_AGREEMENT.txt).
+- **Raw agreement:**
+  * addr, ctrl (primary), exec, store_by, written: 100% in every class;
+  * data labels: 549/587 written-self and 296/320 written-other;
+  * performer: 31/33 performer-none;
+  * ctrl_slice (secondary): 570/587 and 31/33.
+- **A1 (arbitration):** the label disagreements are COMPUTED_FROM(COMPUTED{S}) (Nestor) vs COMPUTED{S} (reference).
+  * The reference's SPEC_ISSUES B3 states the flattening "CF(COMPUTED S) = COMPUTED S". Archaeon's C6 summary said only "nested
+    labels are flattened": the ambiguity is Archaeon's, not Nestor's error.
+  * The two readings are semantically identical: non-MOVE new material with the same base set. Both give the same
+    identification, class and every Q.
+  * Ruling: canonical equivalence for the gate. The C6 text is clarified: CF(COMPUTED S) = COMPUTED S.
+- **A2 (arbitration):** the performer disagreements are the name of a constant idiom ('idiom' vs 'XOR_AA') and COMPUTED_FROM over
+  a constant.
+  * C6 never named idiom kinds. CONST kinds are not compared, and CF(base-less) = CONST.
+- **Gated fields** (data label, written, store_by, performer, addr, ctrl, exec) under A1/A2: **100% in every class. G2 CLEARED.**
+- **Reported, not gated:** ctrl_deps_slice (secondary) differs on 19 loci. The reference includes pointer-carried PREG/entity
+  bases of the other half in the slice-scoped label. v5 gates only the primary ctrl. The difference is recorded for the pdom and
+  slice-scope work.
+- **Review:** A1 and A2 are to be reviewed by the independent final reviewer before synthesis, with both raw readings in the
+  record. Nestor does not change his frozen tracer.

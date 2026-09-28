@@ -1,0 +1,11 @@
+per class x field agreement (loci):
+  unwritten          label 18260/18260; label_raw 18260/18260; written 18260/18260
+  written_other      addr 320/320; ctrl 320/320; ctrl_slice(secondary) 320/320; exec 320/320; label 320/320; label_raw 296/320; performer 320/320; performer_raw 320/320; store_by 320/320; written 320/320
+  written_perf_none  addr 33/33; ctrl 33/33; ctrl_slice(secondary) 31/33; exec 33/33; label 33/33; label_raw 33/33; performer 33/33; performer_raw 31/33; store_by 33/33; written 33/33
+  written_self       addr 587/587; ctrl 587/587; ctrl_slice(secondary) 570/587; exec 587/587; label 587/587; label_raw 549/587; performer 587/587; performer_raw 587/587; store_by 587/587; written 587/587
+minimum agreement over class x GATED field (canonical labels): 1.0000  (gate >= 0.995); raw and secondary fields reported
+  DISAGREE ('written_self', 'ctrl_slice(secondary)') {"k": 4, "half": "b", "j": 14, "nestor": "True", "reference": "None"}
+  DISAGREE ('written_self', 'label_raw') {"k": 5, "half": "a", "j": 1, "nestor": "True", "reference": "None"}
+  DISAGREE ('written_other', 'label_raw') {"k": 5, "half": "b", "j": 20, "nestor": "True", "reference": "None"}
+  DISAGREE ('written_perf_none', 'performer_raw') {"k": 93, "half": "a", "j": 19, "nestor": "True", "reference": "None"}
+  DISAGREE ('written_perf_none', 'ctrl_slice(secondary)') {"k": 118, "half": "a", "j": 17, "nestor": "True", "reference": "None"}
