@@ -317,6 +317,218 @@
    ],
    "start_failed_cells": 12,
    "start_solved_cells": 4
+  },
+  {
+   "arm": "SHAM_1",
+   "capability_cells_newly_solved": 0,
+   "catalog": "CON1",
+   "frozen_mean": 7751.25,
+   "n_cells": 16,
+   "origin": null,
+   "repro_mean": 7751.25,
+   "repro_ok": true,
+   "saving_capability": 0,
+   "saving_efficiency": 124020,
+   "saving_total": 124020,
+   "schema": null,
+   "selected": "MEMORISE",
+   "selected_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    229,
+    544,
+    367,
+    733,
+    14402,
+    29129,
+    27888,
+    21437,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    18229,
+    41764,
+    27907,
+    42313,
+    13322,
+    28049,
+    26808,
+    20357,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_failed_cells": 8,
+   "start_solved_cells": 8
+  },
+  {
+   "arm": "G1",
+   "capability_cells_newly_solved": 4,
+   "catalog": "CON2",
+   "frozen_mean": 56430.56,
+   "n_cells": 16,
+   "origin": "COMPOSITION",
+   "repro_mean": 56430.56,
+   "repro_ok": true,
+   "saving_capability": 902889,
+   "saving_efficiency": 0,
+   "saving_total": 902889,
+   "schema": "(first + (acc + {H}))",
+   "selected": "SCHEMA_1",
+   "selected_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    7984,
+    26874,
+    45294,
+    16959
+   ],
+   "start_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_failed_cells": 16,
+   "start_solved_cells": 0
+  },
+  {
+   "arm": "SHAM_0",
+   "capability_cells_newly_solved": 4,
+   "catalog": "CON2",
+   "frozen_mean": 61569.25,
+   "n_cells": 16,
+   "origin": "COMPOSITION",
+   "repro_mean": 61569.25,
+   "repro_ok": true,
+   "saving_capability": 993748,
+   "saving_efficiency": -8640,
+   "saving_total": 985108,
+   "schema": "(first * (v - (acc - {H})))",
+   "selected": "SCHEMA_4",
+   "selected_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    34013,
+    28297,
+    10641,
+    24636,
+    848,
+    2140,
+    1280,
+    1984,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    31853,
+    26137,
+    8481,
+    22476,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_failed_cells": 12,
+   "start_solved_cells": 4
+  },
+  {
+   "arm": "SHAM_1",
+   "capability_cells_newly_solved": 4,
+   "catalog": "CON2",
+   "frozen_mean": 53266.75,
+   "n_cells": 16,
+   "origin": "COMPOSITION",
+   "repro_mean": 53266.75,
+   "repro_ok": true,
+   "saving_capability": 852268,
+   "saving_efficiency": 0,
+   "saving_total": 852268,
+   "schema": "(({H} + v) * first)",
+   "selected": "SCHEMA_1",
+   "selected_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    5168,
+    43000,
+    50420,
+    49144,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_costs": [
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000,
+    250000
+   ],
+   "start_failed_cells": 16,
+   "start_solved_cells": 0
   }
  ],
  "R2": [
@@ -4796,6 +5008,2951 @@
    "selected": "SCHEMA_4",
    "selected_cover": [],
    "selected_schema": "(v - (acc - ({H} // first)))"
+  },
+  {
+   "arm": "SHAM_1",
+   "best": [
+    {
+     "beats_chosen": false,
+     "composition": "(({H} + v) + acc)",
+     "covers": [
+      "quba",
+      "quaa",
+      "qwha"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "quba",
+      "qwha"
+     ],
+     "transfer": {
+      "quaa": [
+       {
+        "SELECTED_frozen": {
+         "charge": 49349,
+         "coord": null,
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 48269,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 29549,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % last)))",
+          "(acc - last)"
+         ],
+         "qualified": false
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 4791,
+         "coord": null,
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 3711,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 2271,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % first)))",
+          "(acc - last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 42791,
+         "coord": null,
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 41711,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 30191,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + math.gcd(abs(1), abs(1))))",
+          "(acc - last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 18921,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 17841,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 201,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 - last)))",
+          "(acc % last)"
+         ],
+         "qualified": false
+        }
+       }
+      ],
+      "quba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 27070,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 32490,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 9243,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 32270,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qwha": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 35724,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 46702,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 16900,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 3923,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 8,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      76189,
+      99724,
+      85867,
+      100273,
+      71282,
+      86009,
+      84768,
+      78317,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": -41288.88,
+     "val_mean_saving": -28980,
+     "was_candidate_after_screen": false
+    },
+    {
+     "beats_chosen": false,
+     "composition": "(acc + ({H} + v))",
+     "covers": [
+      "quba",
+      "quaa",
+      "qwha"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "quba",
+      "qwha"
+     ],
+     "transfer": {
+      "quaa": [
+       {
+        "SELECTED_frozen": {
+         "charge": 49349,
+         "coord": null,
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 48269,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 29549,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % last)))",
+          "(acc - last)"
+         ],
+         "qualified": false
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 4791,
+         "coord": null,
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 3711,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 2271,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % first)))",
+          "(acc - last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 42791,
+         "coord": null,
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 41711,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 30191,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + math.gcd(abs(1), abs(1))))",
+          "(acc - last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 18921,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 17841,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 201,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 - last)))",
+          "(acc % last)"
+         ],
+         "qualified": false
+        }
+       }
+      ],
+      "quba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 27070,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 32490,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 9243,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 32270,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (last * last)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qwha": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 35724,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 46702,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 16900,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 3923,
+         "program": [
+          "fold",
+          "0",
+          "(acc + (v + (acc * last)))",
+          "(0 - acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 8,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      76189,
+      99724,
+      85867,
+      100273,
+      71282,
+      86009,
+      84768,
+      78317,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": -41288.88,
+     "val_mean_saving": -28980,
+     "was_candidate_after_screen": false
+    }
+   ],
+   "catalog": "CON1",
+   "chosen_mean": 7751.25,
+   "cover_by_composition": {
+    "(({H} + v) * 1)": [
+     "quaa"
+    ],
+    "(({H} + v) * first)": [
+     "quha"
+    ],
+    "(({H} + v) + 0)": [
+     "quaa"
+    ],
+    "(({H} + v) + 1)": [
+     "quaa"
+    ],
+    "(({H} + v) + acc)": [
+     "quba",
+     "quaa",
+     "qwha"
+    ],
+    "(({H} + v) - 0)": [
+     "quaa"
+    ],
+    "(({H} + v) // 1)": [
+     "quaa"
+    ],
+    "(0 + ({H} + v))": [
+     "quaa"
+    ],
+    "(1 * ({H} + v))": [
+     "quaa"
+    ],
+    "(1 + ({H} + v))": [
+     "quaa"
+    ],
+    "(1 - ({H} + v))": [
+     "qmea"
+    ],
+    "(acc + ({H} + v))": [
+     "quba",
+     "quaa",
+     "qwha"
+    ],
+    "(acc - ({H} + v))": [
+     "quba"
+    ],
+    "(first * ({H} + v))": [
+     "quha"
+    ],
+    "(last - ({H} + v))": [
+     "qyba"
+    ],
+    "math.gcd(abs(({H} + v)), abs(0))": [
+     "quaa",
+     "qdea"
+    ],
+    "math.gcd(abs(0), abs(({H} + v)))": [
+     "quaa",
+     "qdea"
+    ],
+    "pow(({H} + v), 1)": [
+     "quaa"
+    ]
+   },
+   "cover_hist": {
+    "0": 45,
+    "1": 14,
+    "2": 2,
+    "3": 2,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+   },
+   "held": "({H} + v)",
+   "held_cover": [
+    "quaa"
+   ],
+   "max_cover": 3,
+   "max_marginal_cover": 2,
+   "n_at_max": 2,
+   "n_at_max_marginal": 2,
+   "n_compositions": 63,
+   "selected": "MEMORISE",
+   "selected_cover": null,
+   "selected_schema": null
+  },
+  {
+   "arm": "G1",
+   "best": [
+    {
+     "beats_chosen": false,
+     "composition": "((acc + {H}) + v)",
+     "covers": [
+      "qbaa",
+      "qvba",
+      "qnea",
+      "qrga"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "qbaa",
+      "qnea",
+      "qrga"
+     ],
+     "transfer": {
+      "qbaa": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 54051,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 33563,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 20567,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 54547,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qnea": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 26625,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 17032,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 12517,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 23657,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qrga": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 15861,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 35740,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 3364,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 57468,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qvba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 87075,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 29115,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 22815,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 105649,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 47689,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 14389,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 103732,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 45772,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 16612,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 87696,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 29736,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 15336,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 12,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": 0.0,
+     "val_mean_saving": 0,
+     "was_candidate_after_screen": false
+    },
+    {
+     "beats_chosen": false,
+     "composition": "(v + (acc + {H}))",
+     "covers": [
+      "qbaa",
+      "qvba",
+      "qnea",
+      "qrga"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "qbaa",
+      "qnea",
+      "qrga"
+     ],
+     "transfer": {
+      "qbaa": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 54051,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 33563,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 20567,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 54547,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qnea": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 26625,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 17032,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 12517,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 23657,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qrga": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 15861,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 35740,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 3364,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 57468,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qvba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 87075,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 29115,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 22815,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 105649,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 47689,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 14389,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 103732,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 45772,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 16612,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 87696,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 29736,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 15336,
+         "program": [
+          "fold",
+          "1",
+          "(v + (acc + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 12,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": 0.0,
+     "val_mean_saving": 0,
+     "was_candidate_after_screen": false
+    }
+   ],
+   "catalog": "CON2",
+   "chosen_mean": 56430.56,
+   "cover_by_composition": {
+    "((acc + {H}) * 1)": [
+     "qvba"
+    ],
+    "((acc + {H}) + 0)": [
+     "qvba"
+    ],
+    "((acc + {H}) + 1)": [
+     "qvba"
+    ],
+    "((acc + {H}) + last)": [
+     "qnea"
+    ],
+    "((acc + {H}) + v)": [
+     "qbaa",
+     "qvba",
+     "qnea",
+     "qrga"
+    ],
+    "((acc + {H}) - 0)": [
+     "qvba"
+    ],
+    "((acc + {H}) // 1)": [
+     "qvba"
+    ],
+    "(0 + (acc + {H}))": [
+     "qvba"
+    ],
+    "(0 - (acc + {H}))": [
+     "qrda",
+     "qlca"
+    ],
+    "(1 * (acc + {H}))": [
+     "qvba"
+    ],
+    "(1 + (acc + {H}))": [
+     "qvba"
+    ],
+    "(1 - (acc + {H}))": [
+     "qrda",
+     "qlca"
+    ],
+    "(last + (acc + {H}))": [
+     "qnea"
+    ],
+    "(v + (acc + {H}))": [
+     "qbaa",
+     "qvba",
+     "qnea",
+     "qrga"
+    ],
+    "(v - (acc + {H}))": [
+     "qrda",
+     "qlca"
+    ],
+    "math.gcd(abs((acc + {H})), abs(0))": [
+     "qvba"
+    ],
+    "math.gcd(abs(0), abs((acc + {H})))": [
+     "qvba"
+    ],
+    "pow((acc + {H}), 1)": [
+     "qvba"
+    ]
+   },
+   "cover_hist": {
+    "0": 45,
+    "1": 13,
+    "2": 3,
+    "3": 0,
+    "4": 2,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+   },
+   "held": "(acc + {H})",
+   "held_cover": [
+    "qvba"
+   ],
+   "max_cover": 4,
+   "max_marginal_cover": 3,
+   "n_at_max": 2,
+   "n_at_max_marginal": 2,
+   "n_compositions": 63,
+   "selected": "SCHEMA_1",
+   "selected_cover": [],
+   "selected_schema": "(first + (acc + {H}))"
+  },
+  {
+   "arm": "OFF_0",
+   "best": [],
+   "catalog": "CON2",
+   "chosen_mean": 0.0,
+   "cover_by_composition": {
+    "((1 + (v - {H})) * 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "((1 + (v - {H})) + 0)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "((1 + (v - {H})) + acc)": [
+     "qvba"
+    ],
+    "((1 + (v - {H})) - 0)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "((1 + (v - {H})) // 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(0 + (1 + (v - {H})))": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(0 - (1 + (v - {H})))": [
+     "qvba"
+    ],
+    "(1 * (1 + (v - {H})))": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(acc + (1 + (v - {H})))": [
+     "qvba"
+    ],
+    "(acc - (1 + (v - {H})))": [
+     "qvba"
+    ],
+    "pow((1 + (v - {H})), 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ]
+   },
+   "cover_hist": {
+    "0": 50,
+    "1": 4,
+    "2": 0,
+    "3": 7,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+   },
+   "held": "(1 + (v - {H}))",
+   "held_cover": [
+    "qvba",
+    "qrda",
+    "qlca"
+   ],
+   "max_cover": 3,
+   "max_marginal_cover": 0,
+   "n_at_max": 7,
+   "n_at_max_marginal": 0,
+   "n_compositions": 61,
+   "selected": "INHERITED",
+   "selected_cover": null,
+   "selected_schema": null
+  },
+  {
+   "arm": "SHAM_0",
+   "best": [
+    {
+     "beats_chosen": false,
+     "composition": "(0 - (v - (acc - {H})))",
+     "covers": [
+      "qvba"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "qvba"
+     ],
+     "transfer": {
+      "qvba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 1935,
+         "program": [
+          "fold",
+          "0",
+          "(0 - (v - (acc - 1)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 1429,
+         "program": [
+          "fold",
+          "0",
+          "(0 - (v - (acc - 1)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 1132,
+         "program": [
+          "fold",
+          "0",
+          "(0 - (v - (acc - 1)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 1656,
+         "program": [
+          "fold",
+          "0",
+          "(0 - (v - (acc - 1)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 4,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      34013,
+      28297,
+      10641,
+      24636,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": -937.26,
+     "val_mean_saving": -540,
+     "was_candidate_after_screen": false
+    },
+    {
+     "beats_chosen": false,
+     "composition": "(1 - (v - (acc - {H})))",
+     "covers": [
+      "qnea"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "qnea"
+     ],
+     "transfer": {
+      "qnea": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 824,
+         "program": [
+          "fold",
+          "1",
+          "(1 - (v - (acc - last)))",
+          "(acc - 1)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 224,
+         "program": [
+          "fold",
+          "1",
+          "(1 - (v - (acc - last)))",
+          "(acc - 1)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 441,
+         "program": [
+          "fold",
+          "1",
+          "(1 - (v - (acc - last)))",
+          "(acc - 1)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 985,
+         "program": [
+          "fold",
+          "1",
+          "(1 - (v - (acc - last)))",
+          "(acc - 1)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 4,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      34013,
+      28297,
+      10641,
+      24636,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": -937.26,
+     "val_mean_saving": -540,
+     "was_candidate_after_screen": false
+    }
+   ],
+   "catalog": "CON2",
+   "chosen_mean": 61569.25,
+   "cover_by_composition": {
+    "((v - (acc - {H})) * 1)": [
+     "qrda",
+     "qlca"
+    ],
+    "((v - (acc - {H})) + 0)": [
+     "qrda",
+     "qlca"
+    ],
+    "((v - (acc - {H})) + 1)": [
+     "qrda",
+     "qlca"
+    ],
+    "((v - (acc - {H})) - 0)": [
+     "qrda",
+     "qlca"
+    ],
+    "((v - (acc - {H})) // 1)": [
+     "qrda",
+     "qlca"
+    ],
+    "(0 + (v - (acc - {H})))": [
+     "qrda",
+     "qlca"
+    ],
+    "(0 - (v - (acc - {H})))": [
+     "qvba"
+    ],
+    "(1 * (v - (acc - {H})))": [
+     "qrda",
+     "qlca"
+    ],
+    "(1 + (v - (acc - {H})))": [
+     "qrda",
+     "qlca"
+    ],
+    "(1 - (v - (acc - {H})))": [
+     "qnea"
+    ],
+    "pow((v - (acc - {H})), 1)": [
+     "qrda",
+     "qlca"
+    ]
+   },
+   "cover_hist": {
+    "0": 50,
+    "1": 2,
+    "2": 9,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+   },
+   "held": "(v - (acc - {H}))",
+   "held_cover": [
+    "qrda",
+    "qlca"
+   ],
+   "max_cover": 2,
+   "max_marginal_cover": 1,
+   "n_at_max": 9,
+   "n_at_max_marginal": 2,
+   "n_compositions": 61,
+   "selected": "SCHEMA_4",
+   "selected_cover": [],
+   "selected_schema": "(first * (v - (acc - {H})))"
+  },
+  {
+   "arm": "SHAM_1",
+   "best": [
+    {
+     "beats_chosen": false,
+     "composition": "(({H} + v) + acc)",
+     "covers": [
+      "qbaa",
+      "qvba",
+      "qnea",
+      "qrga"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "qbaa",
+      "qnea",
+      "qrga"
+     ],
+     "transfer": {
+      "qbaa": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 34431,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 29783,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 25247,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 54907,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qnea": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 24645,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 5692,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 21517,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 10877,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qrga": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 1101,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 37000,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 24064,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 30108,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qvba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 109395,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 51435,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 18855,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 97009,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 39049,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 18529,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 97072,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 39112,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 7252,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 88596,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 30636,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 15696,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 12,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": 0.0,
+     "val_mean_saving": 0,
+     "was_candidate_after_screen": false
+    },
+    {
+     "beats_chosen": false,
+     "composition": "(acc + ({H} + v))",
+     "covers": [
+      "qbaa",
+      "qvba",
+      "qnea",
+      "qrga"
+     ],
+     "eligible": false,
+     "in_table": false,
+     "marginal_covers": [
+      "qbaa",
+      "qnea",
+      "qrga"
+     ],
+     "transfer": {
+      "qbaa": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 34431,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 29783,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 25247,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(acc + first)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 54907,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v - last)))",
+          "(first + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qnea": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 24645,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 5692,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 21517,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 10877,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (last - 1)))",
+          "(1 - acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qrga": [
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 1101,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 37000,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(acc + last)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 24064,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "START_frozen": {
+         "charge": 250000,
+         "coord": null,
+         "qualified": false
+        },
+        "best": {
+         "charge": 30108,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (v * v)))",
+          "(last + acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ],
+      "qvba": [
+       {
+        "SELECTED_frozen": {
+         "charge": 109395,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 51435,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 18855,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 97009,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 39049,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 18529,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 97072,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 39112,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 7252,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       },
+       {
+        "SELECTED_frozen": {
+         "charge": 88596,
+         "coord": "other",
+         "qualified": true
+        },
+        "START_frozen": {
+         "charge": 30636,
+         "coord": null,
+         "qualified": true
+        },
+        "best": {
+         "charge": 15696,
+         "program": [
+          "fold",
+          "1",
+          "(acc + (v + (1 % acc)))",
+          "(acc * acc)"
+         ],
+         "qualified": true
+        }
+       }
+      ]
+     },
+     "transfer_cells_qualified_where_START_failed": 12,
+     "val_costs": [
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000,
+      250000
+     ],
+     "val_lower95": 0.0,
+     "val_mean_saving": 0,
+     "was_candidate_after_screen": false
+    }
+   ],
+   "catalog": "CON2",
+   "chosen_mean": 53266.75,
+   "cover_by_composition": {
+    "(({H} + v) * 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(({H} + v) * acc)": [
+     "qefa"
+    ],
+    "(({H} + v) + 0)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(({H} + v) + 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(({H} + v) + acc)": [
+     "qbaa",
+     "qvba",
+     "qnea",
+     "qrga"
+    ],
+    "(({H} + v) + last)": [
+     "qnea"
+    ],
+    "(({H} + v) + v)": [
+     "qbaa"
+    ],
+    "(({H} + v) - 0)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(({H} + v) // 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(0 + ({H} + v))": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(0 - ({H} + v))": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(1 * ({H} + v))": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(1 + ({H} + v))": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ],
+    "(1 - ({H} + v))": [
+     "qrda",
+     "qnea"
+    ],
+    "(acc * ({H} + v))": [
+     "qefa"
+    ],
+    "(acc + ({H} + v))": [
+     "qbaa",
+     "qvba",
+     "qnea",
+     "qrga"
+    ],
+    "(acc - ({H} + v))": [
+     "qvba",
+     "qnea",
+     "qhka"
+    ],
+    "(last + ({H} + v))": [
+     "qnea"
+    ],
+    "(v + ({H} + v))": [
+     "qbaa"
+    ],
+    "math.gcd(abs(({H} + v)), abs(0))": [
+     "qvba"
+    ],
+    "math.gcd(abs(0), abs(({H} + v)))": [
+     "qvba"
+    ],
+    "pow(({H} + v), 1)": [
+     "qvba",
+     "qrda",
+     "qlca"
+    ]
+   },
+   "cover_hist": {
+    "0": 41,
+    "1": 8,
+    "2": 1,
+    "3": 11,
+    "4": 2,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+   },
+   "held": "({H} + v)",
+   "held_cover": [
+    "qvba",
+    "qrda",
+    "qlca"
+   ],
+   "max_cover": 4,
+   "max_marginal_cover": 3,
+   "n_at_max": 2,
+   "n_at_max_marginal": 2,
+   "n_compositions": 63,
+   "selected": "SCHEMA_1",
+   "selected_cover": [],
+   "selected_schema": "(({H} + v) * first)"
   }
  ]
 }
