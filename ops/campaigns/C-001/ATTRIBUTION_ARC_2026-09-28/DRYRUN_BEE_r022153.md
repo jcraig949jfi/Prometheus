@@ -66,3 +66,25 @@
    byte-level). This confirms Review 1's untestable-v1 finding, now tested properly.
 4. 85% of transmission children are isolated self-copiers. In this run, material transmission and capacity transmission mostly
    coincide.
+
+## Dated correction 2026-09-28 (after adversarial Review 7; REVIEW_7_ADJUDICATION.md). The text above is kept as the original claim.
+All numbers above were reproduced exactly by an independent reviewer with the independent reference tracer. These READINGS are
+corrected:
+- **(b)** "14% occupant-performed copy of the writer (K3-type)" -> a heritable PARASITE lineage.
+  * 4,313 births; 83% of the parasite writers have no copy opcode; they fall through into the host's absolute-addressed copy loop.
+  * Their children are 0/120 capable in isolation.
+  * Randomising the host suppresses 88% of these births.
+  * 18 of the 4,331 have performer "none" (INPUT/CONSTANT store opcode), not the occupant.
+- **(a)** "singular-donor record adequate for 99.97% of the dependence" -> "0.03% of transmission loci change value when entities
+  other than the donor and the performer are randomised". Existence dependence on the performer (0.88 in the parasite class) is
+  not measured by Q8c. Q8c-whether was not computed; that is now required (C4).
+- **(c)** "57%: IBS read as IBD" -> 57% [52, 63] (46% without the identifiability filter). Mechanism: 183/191 are frame-shifted
+  copies, and positional fidelity is shift-blind; only 18/191 are IBS-as-IBD.
+- **(d)** "material and capacity mostly coincide" -> they coincide for self-performed births (117/120 capable). They diverge
+  totally for the parasite class (0/120).
+- **Verdict:** "ALTERED via P2" -> v0 VALIDATED on this run (pending production, round-trip and tracer agreement). P2 holds as a
+  BEE-native-label finding. The parasite class is represented by existing v0 fields (performer, donor, dependence, capability):
+  v0's host_executed_copier fixture, found in a real run.
+- **Pipeline deviations acknowledged:** flip test on the sample only; Q8c-whether missing; pooled flip coverage (the "other" class
+  is 0.537, MARGINAL); the verdict was set by hand; the Q2 numbers came from an uncommitted births file (now committed:
+  dry_r022153.births.json.gz).

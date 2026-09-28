@@ -123,3 +123,25 @@ Limits recorded from the same list:
 - **Change:** P2 is evaluated on ALL identifiable births whose native label is "target" (v4's original wording).
 - **This amendment follows the data** (DRYRUN_BEE_r022153.md). It is admissible only because the outcome is the same under both
   readings (HOLDS: 57% vs 100%). It is recorded so that no reader mistakes it for a pre-data choice.
+
+## Amendment C4 (2026-09-28; after Archaeon's BEE dry run and Review 7, BEFORE any production data; flagged)
+1. **Q8c-whether is REQUIRED per birth and per class.** It is the share of draws in which randomising a source group, the
+   PERFORMER INCLUDED, suppresses the write or the birth. It is exported as a v0 DEPENDENCE entry: intervention "randomise <group>",
+   outcome "birth/write occurs", result ceases / persists, with the rate.
+   - It does not gate. v0 represents it; a verdict would only change if v0 could NOT represent it.
+   - Reports say "Q8c measures value dependence outside {donor, performer}; existence dependence is Q8c-whether".
+2. **ALTERED routes must name an attribution-v0 field** (R3). A prediction whose consequence concerns an engine's NATIVE label
+   (P2) is reported as an engine-native finding, not as a verdict route.
+3. **Label-vs-descent comparisons are never evaluated inside the TRANSMISSION class** (generalising C3). They use all
+   identifiable births, and also all births with a W or P copy-descent majority. The transmission class remains for P1 and P5.
+4. **Per-class gates** (flip coverage, completeness) use the POINT estimate against the floor, with the 95% CI reported. A class
+   whose CI straddles the floor is marked MARGINAL in the report.
+5. **Q4 adds a HOST-ASSISTED test:** the child as a writer against 8 random occupants taken from the run's own self-performed
+   children (real hosts) x 40 inputs. This separates "incapable" from "capable only with a host". The isolated test stays primary.
+6. **Painting guard:** per-birth source diversity is exported. P1 and Q8c are also reported excluding births with source
+   diversity < 0.5 (fills and paints).
+7. **Pipeline obligations** (production and any dry run):
+   - the flip test on every sampled birth's identified loci, with per-class coverage;
+   - Q8c-whether computed;
+   - the verdict computed in code, from the stated rules;
+   - every number in a report traceable to a committed output file.
