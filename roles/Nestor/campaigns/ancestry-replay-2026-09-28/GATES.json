@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-28T20:17:50Z",
+ "updated": "2026-09-28T22:16:52Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -7,8 +7,8 @@
    "evidence": "Amendment C8 / VALIDATION_v2.txt: 451/451 expectations of the 26-fixture pack (incl. K16b, K16c, K37 and Archaeon's additions) agree with the INDEPENDENT reference tracer. Nestor verified that the validated copies (nestor_v2_npe_fixtures.py, FUZZ set, TRACER_FREEZE) are byte-identical to his frozen files. Mutants caught 3-22 times each."
   },
   "G2_independent_tracer_agreement": {
-   "status": "OPEN",
-   "evidence": "Fresh set (seed d33421a07; pre e37bdd48; outputs sealed then exchanged: Nestor c6aa5569, reference 9fd3bc44). Nestor's independent raw comparison (g2_fresh/NESTOR_COMPARISON.json): set A PASS (every gated field 1.0000 in every class); set M FAIL: MUTATION label 0/225 (draw-index encoding; declared by Archaeon BEFORE the exchange, cat 1), MUTATION addr 209/225 (addr set of a mutated, previously written locus: reference carries the old store addr, Nestor EMPTY; NOT declared, found AFTER exchange, flagged post-exposure, cat 1); MUTATION content (flag, side, pos, old_label) 225/225; all non-mutated M loci 1.0. Needs: amendment defining MUTATION draw index + addr set, re-freeze if different, fresh M set. ctrl_slice (secondary) 0.92-0.98: S3 open (per-step k=4 readings posted #864). | C10: set-1 results agreed (A PASS, M FAIL); rulings (a) draw index -> Nestor v3 re-freeze; (b) MUTATION addr EMPTY (Nestor's reading; reference repaired after seeing it, flagged). Fresh set 2 (A+M, raw gate on both) pending seed record 2."
+   "status": "PASS_NESTOR_PENDING_ARCHAEON_MATCH",
+   "evidence": "Fresh set 2 (seed 49220fae2; pre c1589c6f; sealed hashes committed BEFORE opening: SEALED_HASHES_SET2.json ref e638eeb1 / nestor 4f542a70; both verified). Nestor's independent RAW comparison (g2_fresh/NESTOR_COMPARISON_SET2.json, frozen compare_fresh.py): set A PASS and set M PASS -- every gated field (label, addr, ctrl, exec, written, store_by, performer) 1.0000 in every class incl. MUTATION (212/212 label/addr/written). Secondary ctrl_slice 0.92-0.99 (S3 IN-guard, open, non-gating). NOTE: the frozen script's 'MUTATION_content' diagnostic reads the set-1 label layout and prints 0/212 -- a stale DIAGNOSTIC parser (script frozen, not edited); the raw label equality 212/212 supersedes it. Production still requires Archaeon's matching comparison and ANCESTRY_REPLAY_PRODUCTION_GO_FINAL (C9 s6) binding all hashes."
   },
   "G3_flip_rule": {
    "status": "CLEAR",
