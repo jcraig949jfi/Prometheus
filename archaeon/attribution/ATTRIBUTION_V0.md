@@ -12,6 +12,31 @@ Code:
 
 Tests: archaeon/tests/test_attribution_v0.py.
 
+
+## 0. Status after adversarial Review 1 (2026-09-28): read this first
+The review, adjudication and counter-examples are in ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/REVIEW_1_ADJUDICATION.md and
+review1/.
+
+1. **s2's "four axes cannot represent it" was argued, not tested.** The field split is the directive's own list. What survives:
+   - STATE (IBS) is kept apart from MATERIAL (IBD);
+   - the rules stop one field standing in for another (A3, A5, A8, A16, A17).
+2. **s4's "only D7 matches" is WITHDRAWN.**
+   - D7's lead came from two author-added cases.
+   - The reviewer's von Neumann case (constructor BUILT from a copied description) breaks D7.
+   - The winner changes with the case set. The case x definition matrix below (15 cases, each tagged with its origin) is the
+     result; no definition is frozen.
+3. **The validator was hardened:**
+   - A1 is token-based and recursive;
+   - A4 tiles count-resolution records;
+   - A5 forbids source_address / value_match;
+   - A14 bars reproduction labels on infrastructure channels, even as conventions;
+   - A16 ties infrastructure logs to infrastructure processes (catches the mis-logged channel);
+   - A17 requires knockout entries for every machinery locus;
+   - donor capability must be an executed claim about the donor.
+4. **TH-014 restated.** The classifier maps RECORDED channels to classes. It detects a mis-logged channel only when the
+   infrastructure log survives in the material provenance (A16). An instrument that loses the log cannot be rescued by v0.
+5. **The assay's BEE/NPE material was not descent (ASSAY.md v2).** Descent is identifiable only in Archaeon's preserved record.
+
 ## 1. The record (one per reproduction-like event)
 
 | field | holds | never filled from |
@@ -66,11 +91,11 @@ it is the thing attribution must not be confused with.
   This is the first thing Review 1 was asked to attack.
 
 ## 3. Validator rules
-- **A1:** shape; no parent fields.
+- **A1:** shape; no parent / template / ancestor keys (whole-token, recursive) outside aggregation and native.
 - **A2:** the process must be carried by a matching performer kind. An infrastructure process credited only to organisms is
   rejected (harness leak).
 - **A3:** WHAT is not from WHO/WHERE.
-- **A4:** per-locus tiling and known source kinds.
+- **A4:** per-locus AND count-resolution segments tile the child; NOT_IDENTIFIABLE material names no donor; known source kinds.
 - **A5:** material sources come through material channels (taint, provenance_log, harness_log, replay_taint, operator_log,
   by_construction), never location / pc / executor / context / label / resemblance.
 - **A6:** dependence names target, intervention, outcome and result.
@@ -83,6 +108,11 @@ it is the thing attribution must not be confused with.
 - **A13:** resemblance entries name a reference.
 - **A14:** a non-convention reproduction label needs an executed copy capability.
 - **A15:** a recombinant label needs >= 2 distinct donors (a self-cross is one donor).
+- **A16 (after Review 1):** material whose provenance is an infrastructure log (harness_log, operator_log) requires an
+  infrastructure process. This catches the channel mis-logged as an organism write.
+- **A17 (after Review 1):** every machinery locus in a positive capability claim needs a knockout dependence entry (target
+  machinery, result ceases) for the same subject.
+- Donor capability is read only from executed capability claims whose `subject` is the donor.
 
 ## 4. Copying vs heredity
 - **MATERIAL transmission:** some child loci are identical by descent to a donor (`S.donors`).
@@ -92,21 +122,25 @@ it is the thing attribution must not be confused with.
   material, result persists) (D6).
 - **REPRODUCTION:** NOT frozen. The candidates D1-D7_STRICT are scored on 12 adversarial cases:
 
-| case | intended | D1 resemblance | D2 material | D3 byte-identity | D3F founder material | D4 organism+material | D5 capacity(any material) | D7 machinery IBD | D7 strict |
-|---|---|---|---|---|---|---|---|---|---|
-| self-painting homopolymer (Artemis FR-011, NPE BYTEWISE 0x36) | yes (not hereditary; ~1 byte) | Y | Y | Y | . (wrong) | Y | Y | Y | Y |
-| homopolymer painter (constant from computation) | no | Y (wrong) | . | . | . | . | . | . | . |
-| exact copier, no heritable variation | yes (not hereditary) | Y | Y | Y | . (wrong) | Y | Y | Y | Y |
-| cargo without capacity | no | . | Y (wrong) | . | . | Y (wrong) | . | . | . |
-| machinery without founder bytes | yes | Y | Y | Y | . (wrong) | Y | Y | Y | Y |
-| scaffolded copier | yes (SCAFFOLDED) | Y | Y | Y | . (wrong) | Y | Y | Y | Y |
-| host-executed copier | yes (HOST_ASSISTED) | Y | Y | Y | . (wrong) | Y | Y | Y (RELATIONAL) | Y |
-| recombined offspring | yes | . (wrong) | Y | . (wrong) | . (wrong) | Y | Y | Y | Y |
-| changed encoding, conserved function | yes | . (wrong) | Y | . (wrong) | . (wrong) | Y | Y | Y | Y |
-| trace-material constructed copier | no | . | . | . | . | . | Y (wrong) | . | . |
-| synonymous mutation in machinery | yes | Y | Y | . (wrong) | . (wrong) | Y | Y | Y | . (wrong) |
-| harness copy | no | Y (wrong) | Y (wrong) | Y (wrong) | . | . | . | . | . |
-| IBS without IBD | no | Y (wrong) | . | . | . | . | . | . | . |
+(Superseded matrix removed; the current 15-case matrix follows. The 12-case version is in git history at 29f06c41a.)
+
+| case (origin) | intended | D1_RESEMBLANCE | D2_MATERIAL | D3_BYTE_IDENTITY | D3F_FOUNDER_MATERIAL | D4_ORGANISM_MATERIAL | D5_CAPACITY | D5T_CAPABLE_MATERIAL | D7_MACHINERY_IBD | D7_STRICT | D6 heredity (intended) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| self painting homopolymer (artemis) | yes | Y | Y | Y | . (wrong) | Y | Y | Y | Y | Y | . (no) |
+| homopolymer painter (directive) | no | Y (wrong) | . | . | . | . | . | . | . | . | . (no) |
+| exact copier no heritable variation (directive) | yes | Y | Y | Y | . (wrong) | Y | Y | Y | Y | Y | . (no) |
+| cargo without capacity (directive) | no | . | Y (wrong) | . | . | Y (wrong) | . | . | . | . | . (no) |
+| machinery without founder bytes (directive) | yes | Y | Y | Y | . (wrong) | Y | Y | Y | Y | Y | Y (yes) |
+| scaffolded copier (directive) | yes | Y | Y | Y | . (wrong) | Y | Y | Y | Y | Y | Y (yes) |
+| host executed copier (directive) | yes | Y | Y | Y | . (wrong) | Y | Y | Y | Y | Y | Y (yes) |
+| recombined offspring (directive) | yes | . (wrong) | Y | . (wrong) | . (wrong) | Y | Y | Y | Y | Y | Y (yes) |
+| changed encoding conserved function (directive) | yes | . (wrong) | Y | . (wrong) | . (wrong) | Y | Y | Y | Y | Y | Y (yes) |
+| trace material constructed copier (archaeon) | no | . | . | . | . | . | Y (wrong) | . | . | . | . (no) |
+| machinery synonymous mutation (archaeon) | yes | Y | Y | . (wrong) | . (wrong) | Y | Y | Y | Y | . (wrong) | Y (yes) |
+| harness copy (archaeon) | no | Y (wrong) | Y (wrong) | Y (wrong) | . | . | . | . | . | . | . (no) |
+| ibs without ibd (archaeon) | no | Y (wrong) | . | . | . | . | . | . | . | . | . (no) |
+| universal copier junk (review1) | no | Y (wrong) | Y (wrong) | Y (wrong) | . | Y (wrong) | . | . | . | . | . (no) |
+| von neumann constructor description (review1) | yes | Y | Y | . (wrong) | . (wrong) | Y | Y | Y | . (wrong) | . (wrong) | Y (yes) |
 
 Coordination with Artemis's P-11 attack (FR-011):
 - Artemis found that every BYTEWISE NPE event P-11 certifies is a near-homopolymer painter. Its byte is 0x36 = LD (HL),n, whose
@@ -118,14 +152,23 @@ Coordination with Artemis's P-11 attack (FR-011):
     provides this (test_source_diversity_separates_painting_from_copying).
 - Recommendation to NPE and Artemis: report source diversity next to every P-11 certificate.
 
-The boundary:
-- "all copying is heredity" (D1/D2/D4) is too weak;
-- "byte identity" (D3/D3F/D7_STRICT) is too narrow;
-- "material plus a capable child" (D5) is too weak at the trace-material edge.
+The boundary, as it stands after Review 1. The original text claimed "only D7 survives"; that claim is WITHDRAWN (see git
+29f06c41a).
+- **"All copying is heredity"** (D1 resemblance, D2 material, D4 organism + material) is too weak: painter, cargo, harness copy,
+  junk under a universal copier.
+- **"Byte or founder identity"** (D3, D3F, D7_STRICT) is too narrow: changed encoding, synonymous machinery mutation, von Neumann.
+- **"Material > 0 plus a capable child"** (D5) is too weak at the trace-material edge.
+- **"Machinery descends as material"** (D7) is too narrow for von Neumann's architecture. There the machinery is BUILT from an
+  inherited description, so it transmits as information, not as material.
+- **D5T** (capable donors supply >= theta of the material, plus a capable child) survives all 15 cases, with theta in (1/32, 0.5].
+  But that is again a statement about this case set. A von Neumann automaton with a SHORT description (< theta of the tape) breaks
+  it.
 
-What survives: **organism-channel production, plus a demonstrated copy capability, plus inheritance of the machinery the capability
-depends on, at a non-strict threshold theta** in (0, 0.8] on these cases. Heredity is a further, separate test. The host-assisted
-case passes by a RELATIONAL rule that v0 does not justify (F7).
+**Open boundary: the unresolved question is whether capacity is transmitted as material (D7) or as information that the child
+re-expresses (von Neumann).** No local, per-event predicate in v0 separates "a constructor built from an inherited description"
+from "a copier computed by the parent from trace material". The difference is counterfactual: does changing the inherited part
+change the child's machinery? That is a DEPENDENCE test on the donor's material (knock out description loci in the DONOR; does the
+child's machinery change?). This makes it a candidate for v1, not a v0 predicate. Heredity (D6) is a separate test.
 
 ## 5. TH-014 known-answer fixture (required for future reproduction instruments)
 Six histories end in the same 32 child bytes. Their production classes must come out as:
