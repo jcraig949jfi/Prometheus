@@ -61,8 +61,11 @@ def deps(cell) -> frozenset:
 
 
 def cfrom(dl):
-    """COMPUTED_FROM, flattened (C6 B3): COMPUTED_FROM(COMPUTED_FROM(x)) = COMPUTED_FROM(x)."""
-    return dl if dl[0] == "F" else ("F", dl)
+    """COMPUTED_FROM, flattened (C6 B3 as clarified by C9 s5(a), post-agreement-test):
+    CF(CF(x)) = CF(x); CF(COMPUTED S) = COMPUTED S; CF over a CONST is KEPT as CF(CONST k)."""
+    if dl[0] in ("F", "C"):
+        return dl
+    return ("F", dl)
 
 
 def computed(*cells):
@@ -318,8 +321,8 @@ class Shadow:
                 else:
                     t = a - v
                 idiom = src == A and kind in (2, 5, 7)       # SUB A,A / XOR A,A / CP A,A: result-independent
-                if idiom:
-                    res = (("K", "idiom"), EMPTY)
+                if idiom:                                    # idiom CONST kinds named per C9 s5(a)
+                    res = (("K", {2: "SUB_AA", 5: "XOR_AA", 7: "CP_AA"}[kind]), EMPTY)
                 elif kind in (1, 3):
                     res = computed(rl[A], cell, fcl)
                 else:

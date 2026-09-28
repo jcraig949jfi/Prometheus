@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-28T16:17:03Z",
+ "updated": "2026-09-28T17:17:41Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -7,8 +7,8 @@
    "evidence": "Amendment C8 / VALIDATION_v2.txt: 451/451 expectations of the 26-fixture pack (incl. K16b, K16c, K37 and Archaeon's additions) agree with the INDEPENDENT reference tracer. Nestor verified that the validated copies (nestor_v2_npe_fixtures.py, FUZZ set, TRACER_FREEZE) are byte-identical to his frozen files. Mutants caught 3-22 times each."
   },
   "G2_independent_tracer_agreement": {
-   "status": "PENDING_NESTOR_VERIFICATION",
-   "evidence": "C8: Archaeon's comparison (frozen e5af0cae1 vs reference, 300 non-production fuzz interactions): addr, ctrl, exec, store_by, written 100% raw; label raw 549/587 self, 296/320 other; performer raw 31/33 perf-none; 100% under arbitration A1 (CF(COMPUTED S) == COMPUTED S) and A2 (idiom names; CF(base-less) == CONST). A1/A2 were ruled AFTER the disagreements were seen: canonicalization only, flagged, to be reviewed by the independent final reviewer. Nestor's own check on his frozen output: forms covered by A1/A2 number 40 (self), 25 (other), 2 (perf-none) >= the reported 38/24/2 -- consistent but not proof. Requested: the reference's per-locus OUTPUT data for the 300 interactions (not code), to recompute agreement with Nestor's own canonicalizer before production. Reported, not gated: ctrl_slice differs on 19 loci (the reference includes the other half's pointer-carried bases)."
+   "status": "OPEN",
+   "evidence": "C9: raw G2 on set 1 FAILED (labels 0.9353 self / 0.9250 other); A1/A2 WITHDRAWN (post-exposure). Nestor revised to C9 s5(a) and RE-FROZE (TRACER_FREEZE v2). Awaiting the fresh sets A (300) and M (100, with write-back) seeded by the SHA of the commit recording both freeze hashes; raw per class >= 0.995. S3 (ctrl_slice, secondary): reference == Nestor PRIMARY on 19/19, i.e. the reference does not reset at slice entry, contrary to C9 s5(a); reported as a suspected REFERENCE error, Nestor's tracer not changed."
   },
   "G3_flip_rule": {
    "status": "CLEAR",
@@ -29,6 +29,12 @@
    "rule": "A1/A2 label canonicalization for the G2 agreement gate",
    "seen_before_ruling": "the raw label/performer disagreements of the fuzz comparison (non-production data)",
    "effect": "canonical equivalence of semantically identical non-MOVE labels; no threshold, fixture, clustering or eligibility changed"
+  },
+  {
+   "when": "2026-09-28 C9",
+   "rule": "C9 s5(a) label clarifications (CF over COMPUTED, idiom kind names); A1/A2 withdrawn",
+   "seen_before_ruling": "the raw set-1 discrepancies (non-production)",
+   "effect": "tracer revised + re-frozen (v2); comparison rule unchanged (raw, >= 0.995 per class); fresh set required"
   }
  ],
  "sample_transfer": "orphan branch nestor/ancestry-sample-2026-09-28, gzip parts <= 45 MB + manifest of per-part and whole-file sha256 (Archaeon #848)"
