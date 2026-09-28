@@ -24,8 +24,12 @@ from typing import Any, Callable, Dict, List, Optional
 
 TOKEN_ENV_FILE = Path(os.path.expanduser("~/.config/prometheus/claude.env"))
 DEFAULT_MODEL = "claude-opus-5-5"
-READONLY_TOOLS = ["Read", "Grep", "Glob", "Bash(git log:*)", "Bash(git show:*)", "Bash(git grep:*)", "Bash(git diff:*)",
-                  "Bash(ls:*)", "Bash(wc:*)", "Bash(head:*)", "Bash(sha256sum:*)"]
+# Read-only repository access. Deliberately NO path-free shell readers (head, ls, wc, cat, sha256sum) and no
+# `git grep` / `git diff` (both accept --no-index paths outside the repo): P7 showed an unscoped allow-list lets a
+# worker see ~/.claude and ~/.config (the node's token file). Read/Grep/Glob are scoped per attempt in run_claude.
+READONLY_BASH = ["Bash(git log:*)", "Bash(git show:*)"]
+DENY = ["Read(//{home}/.claude/**)", "Read(//{home}/.config/**)", "Read(//{home}/.ssh/**)", "Read(//{home}/.git-credentials)",
+        "Glob(//{home}/.claude/**)", "Glob(//{home}/.config/**)", "Grep(//{home}/.claude/**)", "Grep(//{home}/.config/**)"]
 OPTIONAL_TOOLS = {"web": ["WebSearch", "WebFetch"], "python": ["Bash(python3:*)"]}
 
 
@@ -94,7 +98,10 @@ def run_claude(task: Dict[str, Any], attempt_id: str, worktree: str, attempt_dir
     out_dir = attempt_dir / "out"; out_dir.mkdir(parents=True, exist_ok=True)
     cfg = attempt_dir / "claude_config"; cfg.mkdir(parents=True, exist_ok=True)      # EMPTY: no seat memory, no settings
     # "//abs/path" = an ABSOLUTE path in Claude Code permission rules ("/x" would be relative to the project)
-    tools = list(READONLY_TOOLS) + ["Write(/{}/**)".format(out_dir), "Edit(/{}/**)".format(out_dir)]
+    home = os.path.expanduser("~").lstrip("/")
+    tools = list(READONLY_BASH) + ["{}(/{}/**)".format(t, d) for t in ("Read", "Grep", "Glob") for d in (worktree, str(out_dir))] \
+        + ["Write(/{}/**)".format(out_dir), "Edit(/{}/**)".format(out_dir)]
+    deny = [d.format(home=home) for d in DENY]
     for opt in params.get("tools") or []:
         tools += OPTIONAL_TOOLS.get(opt, [])
     system = ("You are a disposable research worker of the Prometheus Agent Fabric. Task {tid}, attempt {aid}. "
@@ -104,11 +111,12 @@ def run_claude(task: Dict[str, Any], attempt_id: str, worktree: str, attempt_dir
               ).format(tid=task["task_id"], aid=attempt_id, sha=task.get("base_sha") or "HEAD", out=out_dir)
     cmd = ["claude", "-p", task["instruction"], "--model", model, "--output-format", "json", "--no-session-persistence",
            "--permission-mode", "dontAsk", "--add-dir", str(out_dir), "--append-system-prompt", system,
-           "--allowedTools"] + tools
+           "--disallowedTools"] + deny + ["--allowedTools"] + tools
     env = {k: v for k, v in os.environ.items() if k not in ("CLAUDECODE", "CLAUDE_CODE_SESSION_ID", "CLAUDE_CODE_ENTRYPOINT",
                                                             "CLAUDE_CODE_CHILD_SESSION", "CLAUDE_CONFIG_DIR", "ANTHROPIC_API_KEY")}
     env.update(_token_env())
     env["CLAUDE_CONFIG_DIR"] = str(cfg)
+    env["HOME"] = str(attempt_dir)            # "~" resolves inside the attempt, not to the seat's home
     r = _run(cmd, cwd=worktree, env=env, wall_s=wall_s, should_stop=should_stop)
     try:
         j = json.loads(r.stdout.decode("utf-8", "replace") or "{}")
@@ -124,19 +132,37 @@ def run_claude(task: Dict[str, Any], attempt_id: str, worktree: str, attempt_dir
     return r
 
 
+#: the only environment variables a Task may set for a script (names, not values from the caller's shell)
+SCRIPT_ENV_ALLOW = {"COSMOS_BROKER": "1"}
+
+
 def run_script(task: Dict[str, Any], attempt_id: str, worktree: str, attempt_dir: Path, should_stop) -> Result:
+    """python3 <repo file at the pinned SHA> [args], or python3 -m <module under the pinned worktree> [args].
+    No shell. Only allow-listed environment variables. Output directory in FABRIC_OUT_DIR."""
     params = task.get("params") or {}
-    rel = params.get("script") or ""
+    rel, module = params.get("script") or "", params.get("module") or ""
     wt = Path(worktree).resolve()
-    path = (wt / rel).resolve()
-    if not rel or wt not in path.parents or not path.is_file():
-        return Result(None, "", b"", b"", error="script {!r} is not a file inside the pinned worktree".format(rel))
     out_dir = attempt_dir / "out"; out_dir.mkdir(parents=True, exist_ok=True)
     env = {"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8", "HOME": str(attempt_dir), "FABRIC_OUT_DIR": str(out_dir),
            "PYTHONDONTWRITEBYTECODE": "1"}
+    for k in params.get("env") or []:
+        if k not in SCRIPT_ENV_ALLOW:
+            return Result(None, "", b"", b"", error="environment variable {!r} is not allow-listed".format(k))
+        env[k] = SCRIPT_ENV_ALLOW[k]
     args = [str(a) for a in params.get("args") or []]
-    r = _run([sys.executable, "-I", str(path)] + args, cwd=str(wt), env=env, wall_s=int(params.get("wall_s") or 600),
-             should_stop=should_stop)
+    if module:
+        import re
+        if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(\.[A-Za-z_][A-Za-z0-9_]*)*", module) or \
+                not ((wt / module.replace(".", "/")).with_suffix(".py").is_file() or (wt / module.replace(".", "/") / "__main__.py").is_file()):
+            return Result(None, "", b"", b"", error="module {!r} is not inside the pinned worktree".format(module))
+        env["PYTHONPATH"] = str(wt)
+        cmd = [sys.executable, "-E", "-s", "-m", module] + args
+    else:
+        path = (wt / rel).resolve()
+        if not rel or wt not in path.parents or not path.is_file():
+            return Result(None, "", b"", b"", error="script {!r} is not a file inside the pinned worktree".format(rel))
+        cmd = [sys.executable, "-I", str(path)] + args
+    r = _run(cmd, cwd=str(wt), env=env, wall_s=int(params.get("wall_s") or 600), should_stop=should_stop)
     r.final_text = r.stdout.decode("utf-8", "replace")[-20000:]
     return r
 
