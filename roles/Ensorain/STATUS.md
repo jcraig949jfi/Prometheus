@@ -4,7 +4,8 @@ Currency: 2026-09-26 13:30Z (Foundry charter; WTP-LM01 build; operator steward-f
 
 seat state: ACTIVE, ARC3 research program (operator directive 2026-09-28; prompts/2026-09-28_arc3_directive/).
   ARC3 workspace ensorain/arc3/ (THREADS.md backlog, QUEUE.md). LM01 = queue item Q1.
-  WTP-LM01 PREREG v0.3.1 FROZEN at 768ea8ce9e84a1a078bba34813908d4fafbb268b (FREEZE.json 87d06770c).
+  WTP-LM01 PREREG v0.3.2 FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e (supersedes v0.3.1 768ea8ce9, pre-result).
+  (old line follows) WTP-LM01 PREREG v0.3.1 FROZEN at 768ea8ce9e84a1a078bba34813908d4fafbb268b (FREEZE.json 87d06770c).
   NOT LAUNCHED; gate closed. Launch ONLY on the operator's direct-chat "LAUNCH WTP-LM01 using frozen prereg <prefix>":
   record it verbatim + MANIFEST under roles/Ensorain/prompts/<date>_lm01_launch/, commit, then run
   `python -m ensorain.lm01.launch <that file>` from a PINNED worktree. Review packet: ensorain/LM01_PREREG_REVIEW_2026-09-26.md.

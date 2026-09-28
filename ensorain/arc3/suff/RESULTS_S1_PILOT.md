@@ -73,3 +73,29 @@ Excess vs Bayes (whole stream / 2nd half):
 - A learned bounded state that CAN represent the causal-state compression reaches Bayes. It needs only a short window
   of exact history (256 symbols) to discover it, and it beats the best window statistic, which retains ~1,500 bits.
 - With too few states it fails (order-2 Markov with 2 states): model-class mismatch, not retention.
+
+## Three-loci decomposition (loci.py; results/loci.json; analytic resource profiles x measured excess)
+
+Per world, the best learner of each compression locus: excess (bits/symbol) | stored raw bits | persistent hypothesis
+bits | transient readout-state bits | readout ops per query.
+- W2 order 3:
+  - storage-statistic STAT_k3: .000 | 3 | 191 | 0 | 3
+  - verbatim + readout-summary VERB_SUM_B4096_k3: .000 | 4096 | 0 | 192 | 12288
+  - verbatim + nonparametric NEAREST: .075 | 4096 | 0 | 0 | 49152
+- W3 Even process:
+  - learned hypothesis HMM2_EM: .025 (2nd half .000) | 4000 | 320 | 0 | 4
+  - storage-statistic STAT_k6: .060 | 6 | 1532 | 0 | 6
+  - verbatim + summary: .060 | 4096 | 0 | 1536 | 24576
+- W4 SNS: storage-statistic STAT_k2 .006 = verbatim + summary .006. HMM2 .021 over the whole stream (2nd half ~.000).
+
+Readings (answer-keyed; calibration of concepts):
+1. When the SAME statistic is computed, compression at STORAGE and compression at READOUT give IDENTICAL accuracy. The
+   locus decides only the resource profile: storage costs ~100 hypothesis bits and O(k) ops; readout costs a 4096-bit
+   store and ~10^4 ops per query. Here "where compression happens" is a memory-for-compute trade, not an accuracy
+   question.
+2. Removing compression from the readout (nonparametric suffix readout over the same verbatim store) COSTS accuracy
+   (.04-.17 excess): a readout must contract to generalize. "Lossless storage is not absence of compression"
+   (directive baseline), with numbers.
+3. The HYPOTHESIS locus pays only where fixed statistics cannot represent the needed compression (Even process): a
+   320-bit learned state beats a 1,532-bit window statistic. This is the answer-keyed version of "discovering what can
+   be discarded".

@@ -18,3 +18,7 @@ Block B adversarial review is read; the freeze verifies.
   scheduled for 2026-09-28 20:07Z and 2026-09-29 05:07Z (session-only). Each launches ONLY if Bellerophon has finished
   AND the operator's gate phrase is recorded. Pre-launch additions (no frozen change): the adversarial review and the
   pre-data adjudication addendum G1-G9 are committed; the freeze still verifies.
+- 2026-09-28 LM01 re-frozen as v0.3.2 (operator amendment): freeze ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e. v0.3.1
+  (768ea8ce9) is superseded and its hash is rejected by the gate. Q1 now = v0.3.2 (~10 h at 8 workers). Still waiting on
+  (a) the operator's "LAUNCH WTP-LM01 using frozen prereg <prefix of ee8cbe0c8...>" and (b) Bellerophon's campaign
+  ending. No lease is held. The launch checks were cancelled; a new one is scheduled only after the gate phrase arrives.
