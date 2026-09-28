@@ -16,3 +16,14 @@ Evidence so far: REVIEW_2.md R2-3 (the fixed point, executed on the VM); ENVGATE
 Next: census the copy-map orbits of the substrate's imperfect copiers (how many reach an exact self-copier, in how many steps);
 check established lineages across ENVGATE blocks; cross-engine analogues (BEE first self-replicators built by others' copying;
 NPE painters, Artemis FR-011).
+
+
+## Update 2026-09-28: a second kind of non-self replicator identity (BEE r022153)
+- BEE r022153's parasite lineage has no member that self-replicates in isolation (0/120), yet the lineage persists for >= 10
+  generations through hosts.
+- **Together with the fixed-point result:** in Archaeon block 13 the founder is not the replicator (its first child, a fixed point
+  of its imperfect copy map, is). In BEE r022153 no member of the parasite lineage is a replicator by itself; the host-parasite
+  relation replicates the parasite.
+- **Both support treating replicator identity as a property of a lineage-level dynamical system** (a copy map's attractor; a
+  host-parasite relation), not of the first apparent copier.
+Sources: FIXEDPOINT_RESULT.md, DRYRUN_BEE_r022153.md (+ correction), REVIEW_7_ADJUDICATION.md.
