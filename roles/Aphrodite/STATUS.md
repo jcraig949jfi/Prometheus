@@ -112,3 +112,23 @@ Operator choices open: (1) keep the "RSI" name vs rename the line to "abstractio
 compounding" and treat V5 separately; (2) whether Aphrodite may replace the inherited
 Tier-3 tribunal for the next task world.
 Branch aphrodite/frontier-2026-09-27 (pushed; not merged to main).
+
+--------------------------------------------------------------------------
+UPDATE 2026-09-28 -- ABSTRACTION COMPOUNDING PROGRAM (operator rename 2026-09-27)
+--------------------------------------------------------------------------
+Read science/compounding/COMPOUNDING_SYNTHESIS_2026-09-28.md first.
+  - New instruments: ruler v2 (rb1), TRIBUNAL T4 (engine/tribunal_t4.py, RB-2), world W5
+    (depth-3), exact fast cost (a18.fast_cost, gate 400/0).
+  - AMENDMENT 18 / C1 = UNTESTABLE (supply; the seat's screening flaw).
+  - AMENDMENT 19 / C2 (engine/A19_C2/): G1_STEPPING_STONE = NO, GENERIC 0/2,
+    S-NAT UNTESTABLE (bimodal learnability).
+  - Forensic existence proof: C2 replicate CON1. The G1 composition (v - (acc + {H}))
+    solved 2 families at <= 52k charges, where L1 and PRISTINE failed at 10M. The
+    binding constraint is now REUSE (compositions do not recur).
+  - RB-5: the fold DSL cannot express independent worlds (EC/OEIS). It needs integer
+    literals, a lag register, a position atom.
+  - P2 (improver evolution) is designed (rb6/); its tested levers are inert.
+  - Open operator choice: reuse-controlled supply vs natural curricula vs DSL extension.
+  Backlog: science/compounding/BACKLOG_COMPOUNDING.md (T01-T31). Blocks RB-7..RB-10 are
+  ready.
+  Branch aphrodite/compounding-2026-09-27 (pushed, not merged).
