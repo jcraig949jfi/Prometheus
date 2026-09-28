@@ -152,5 +152,15 @@ CREATE TABLE IF NOT EXISTS {schema}.messages (
     role        TEXT NOT NULL CHECK (role IN ('user', 'agent')),
     parts       JSONB NOT NULL,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
-    PRIMARY KEY (task_id, message_id)
+    seq         BIGSERIAL PRIMARY KEY
 );
+-- v0.1 migration (idempotent): A2A does not make messageId unique across requests (the TCK reuses one for successive
+-- follow-ups), so history is keyed by arrival order, not by (task_id, message_id).
+ALTER TABLE {schema}.messages ADD COLUMN IF NOT EXISTS seq BIGSERIAL;
+ALTER TABLE {schema}.messages DROP CONSTRAINT IF EXISTS messages_pkey;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conrelid = '{schema}.messages'::regclass AND contype = 'p') THEN
+    ALTER TABLE {schema}.messages ADD PRIMARY KEY (seq);
+  END IF;
+END $$;
+CREATE INDEX IF NOT EXISTS messages_task ON {schema}.messages(task_id, seq);

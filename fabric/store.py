@@ -523,13 +523,14 @@ def add_message(conn, task_id: str, message_id: str, role: str, parts: List[Dict
 
 def messages(conn, task_id: str) -> List[Dict[str, Any]]:
     cur = conn.cursor()
-    cur.execute("SELECT message_id, role, parts, created_at FROM {} WHERE task_id = %s ORDER BY created_at, message_id".format(_t("messages")),
+    cur.execute("SELECT message_id, role, parts, created_at FROM {} WHERE task_id = %s ORDER BY seq".format(_t("messages")),
                 (task_id,))
     rows = _rows(cur); conn.commit()
     return rows
 
 
-def continue_task(conn, task_id: str, message_id: str, text: str, actor: str) -> Dict[str, Any]:
+def continue_task(conn, task_id: str, message_id: str, text: str, actor: str,
+                  params_patch: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """A2A multi-turn: a new user Message on an input-required Task appends
     to its instruction and returns it to the queue. Terminal Tasks refuse."""
     cur = conn.cursor()
@@ -539,11 +540,12 @@ def continue_task(conn, task_id: str, message_id: str, text: str, actor: str) ->
         conn.rollback(); raise NotFound(task_id)
     if row[0] in TERMINAL:
         conn.rollback(); raise FabricError("task {} is {} (terminal)".format(task_id, row[0]))
-    cur.execute("INSERT INTO {} (task_id, message_id, role, parts) VALUES (%s,%s,'user',%s) ON CONFLICT DO NOTHING".format(_t("messages")),
+    cur.execute("INSERT INTO {} (task_id, message_id, role, parts) VALUES (%s,%s,'user',%s)".format(_t("messages")),
                 (task_id, message_id, json.dumps([{"text": text}])))
     if row[0] == "input-required":
         cur.execute("UPDATE {} SET instruction = instruction || %s, state = 'submitted', max_attempts = max_attempts + 1, "
-                    "updated_at = now() WHERE task_id = %s".format(_t("tasks")), ("\n\n[continued] " + text, task_id))
+                    "params = params || %s::jsonb, updated_at = now() WHERE task_id = %s".format(_t("tasks")),
+                    ("\n\n[continued] " + text, json.dumps(params_patch or {}), task_id))
         _event(cur, actor, "continued", task_id=task_id, message_id=message_id)
     conn.commit()
     return {"task_id": task_id, "state": "submitted" if row[0] == "input-required" else row[0]}

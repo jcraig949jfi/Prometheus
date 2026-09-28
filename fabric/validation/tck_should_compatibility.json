@@ -1,11 +1,11 @@
 {
   "summary": {
-    "timestamp": "2026-09-28T17:29:45.653790+00:00",
+    "timestamp": "2026-09-28T17:49:52.323177+00:00",
     "sut_url": "http://127.0.0.1:8711",
     "spec_version": "",
-    "overall_compatibility": "3.2%",
+    "overall_compatibility": "5.4%",
     "must_compatibility": "0.0%",
-    "should_compatibility": "50.0%",
+    "should_compatibility": "63.6%",
     "may_compatibility": "0.0%"
   },
   "per_requirement": {
@@ -47,15 +47,17 @@
     },
     "CORE-HIST-001": {
       "level": "SHOULD",
-      "status": "SKIPPED",
+      "status": "PASS",
       "transports": {
         "grpc": "SKIPPED",
+        "jsonrpc": "PASS",
         "http_json": "SKIPPED"
       },
       "errors": [],
       "test_ids": [
         "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroGetTask::test_get_task_history_length_zero[grpc]",
-        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroGetTask::test_get_task_history_length_zero[http_json]"
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroGetTask::test_get_task_history_length_zero[http_json]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthZeroGetTask::test_get_task_history_length_zero[jsonrpc]"
       ]
     },
     "CORE-HIST-003": {
@@ -75,28 +77,32 @@
     },
     "CORE-HIST-005": {
       "level": "SHOULD",
-      "status": "SKIPPED",
+      "status": "PASS",
       "transports": {
         "grpc": "SKIPPED",
+        "jsonrpc": "PASS",
         "http_json": "SKIPPED"
       },
       "errors": [],
       "test_ids": [
         "tests/compatibility/core_operations/test_task_history.py::TestHistoryOrdering::test_history_messages_in_chronological_order[grpc]",
-        "tests/compatibility/core_operations/test_task_history.py::TestHistoryOrdering::test_history_messages_in_chronological_order[http_json]"
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryOrdering::test_history_messages_in_chronological_order[http_json]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryOrdering::test_history_messages_in_chronological_order[jsonrpc]"
       ]
     },
     "CORE-HIST-006": {
       "level": "SHOULD",
-      "status": "SKIPPED",
+      "status": "PASS",
       "transports": {
         "grpc": "SKIPPED",
+        "jsonrpc": "PASS",
         "http_json": "SKIPPED"
       },
       "errors": [],
       "test_ids": [
         "tests/compatibility/core_operations/test_task_history.py::TestHistoryContent::test_history_content_matches_sent_messages[grpc]",
-        "tests/compatibility/core_operations/test_task_history.py::TestHistoryContent::test_history_content_matches_sent_messages[http_json]"
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryContent::test_history_content_matches_sent_messages[http_json]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryContent::test_history_content_matches_sent_messages[jsonrpc]"
       ]
     },
     "CORE-SEND-001": {
@@ -962,8 +968,8 @@
       "skipped": 0
     },
     "jsonrpc": {
-      "total": 2,
-      "passed": 2,
+      "total": 5,
+      "passed": 5,
       "failed": 0,
       "skipped": 0
     },

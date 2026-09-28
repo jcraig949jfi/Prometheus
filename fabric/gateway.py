@@ -152,6 +152,23 @@ def task_wire(conn, task_id: str, base: str, *, history_length: Optional[int] = 
 
 
 # ------------------------------------------------------------------ methods
+def _camel(k: str) -> str:
+    head, *rest = k.split("_")
+    return head + "".join(w[:1].upper() + w[1:] for w in rest)
+
+
+def _camel_params(params):
+    """ProtoJSON: parsers accept the proto field name (history_length) as well as lowerCamel (historyLength).
+    Normalise the request envelope; message parts and metadata are left untouched."""
+    if not isinstance(params, dict):
+        return params
+    out = {_camel(k): v for k, v in params.items()}
+    for sub in ("configuration", "message"):
+        if isinstance(out.get(sub), dict):
+            out[sub] = {(_camel(k) if k not in ("metadata", "parts") else k): v for k, v in out[sub].items()}
+    return out
+
+
 def _text_of(message: Dict[str, Any]) -> str:
     return "\n".join(p.get("text", "") for p in message.get("parts") or [] if isinstance(p, dict) and "text" in p).strip()
 
@@ -167,7 +184,14 @@ def m_send(conn, params: Dict[str, Any], base: str) -> Dict[str, Any]:
     ext = ((msg.get("metadata") or {}).get(EXT)) or ((params.get("metadata") or {}).get(EXT)) or {}
     if msg.get("taskId"):
         try:
-            S.continue_task(conn, msg["taskId"], mid, text or json.dumps(msg["parts"]), ext.get("principal") or "a2a-client")
+            patch = None
+            if not ext:                                  # conformance task: the follow-up's messageId picks the next behaviour
+                patch = {"final_state": None, "text": "Hello from TCK"}
+                for prefix, extra in TCK:
+                    if mid.startswith(prefix):
+                        patch.update(extra); break
+            S.continue_task(conn, msg["taskId"], mid, text or json.dumps(msg["parts"]), ext.get("principal") or "a2a-client",
+                            params_patch=patch)
         except S.NotFound:
             raise RpcError(-32001, "task not found", "TASK_NOT_FOUND")
         except S.FabricError as e:
@@ -192,7 +216,10 @@ def m_send(conn, params: Dict[str, Any], base: str) -> Dict[str, Any]:
                 p["deliver"] = {f[0]: f[2] for f in p["files"]}
             kw = dict(executor="synthetic", required_caps=["a2a.conformance"], params=p, max_attempts=1, title="a2a conformance")
             principal = "a2a-client"
-        r = S.submit(conn, principal, text or json.dumps(msg["parts"]), idempotency_key=mid, context_id=msg.get("contextId"), **kw)
+        # Idempotency only on an explicit key: A2A does not make messageId an idempotency key, and clients (the TCK)
+        # legitimately reuse a messageId for separate requests.
+        r = S.submit(conn, principal, text or json.dumps(msg["parts"]), idempotency_key=ext.get("idempotencyKey"),
+                     context_id=msg.get("contextId"), **kw)
         tid = r["task_id"]
     if not cfg.get("returnImmediately"):
         t0 = time.time()
@@ -307,6 +334,15 @@ class Handler(BaseHTTPRequestHandler):
         if self.path.split("?")[0].rstrip("/") not in ("/a2a/jsonrpc", ""):
             return self._send(404, b'{"error":"not found"}')
         raw = self.rfile.read(int(self.headers.get("Content-Length") or 0))
+        ctype = (self.headers.get("Content-Type") or "").split(";")[0].strip().lower()
+        if ctype not in ("application/json", "application/a2a+json"):
+            rid = None
+            try:
+                rid = json.loads(raw.decode()).get("id")
+            except Exception:
+                pass
+            return self._send(200, json.dumps(_err(rid, -32005, "Content-Type {!r} not supported; use application/json".format(ctype),
+                                                   "CONTENT_TYPE_NOT_SUPPORTED")).encode())
         try:
             req = json.loads(raw.decode() or "null")
         except ValueError:
@@ -314,7 +350,7 @@ class Handler(BaseHTTPRequestHandler):
         if not isinstance(req, dict) or req.get("jsonrpc") != "2.0" or not isinstance(req.get("method"), str):
             return self._send(200, json.dumps(_err(req.get("id") if isinstance(req, dict) else None, -32600, "invalid request",
                                                    "INVALID_REQUEST")).encode())
-        rid, method, params = req.get("id"), req["method"], req.get("params") or {}
+        rid, method, params = req.get("id"), req["method"], _camel_params(req.get("params") or {})
         ver = (self.headers.get("A2A-Version") or "").strip()
         if ver not in ("1.0", "1"):
             return self._send(200, json.dumps(_err(rid, -32009, "A2A version {!r} not supported; send A2A-Version: 1.0".format(

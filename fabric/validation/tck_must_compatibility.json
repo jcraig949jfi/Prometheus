@@ -1,10 +1,10 @@
 {
   "summary": {
-    "timestamp": "2026-09-28T17:29:28.971537+00:00",
+    "timestamp": "2026-09-28T17:49:30.572831+00:00",
     "sut_url": "http://127.0.0.1:8711",
     "spec_version": "",
-    "overall_compatibility": "59.3%",
-    "must_compatibility": "71.1%",
+    "overall_compatibility": "60.2%",
+    "must_compatibility": "71.8%",
     "should_compatibility": "0.0%",
     "may_compatibility": "0.0%"
   },
@@ -364,6 +364,7 @@
       "errors": [],
       "test_ids": [
         "tests/compatibility/core_operations/test_error_handling.py::TestJsonRpcErrorStructure::test_a2a_error_type_mappings",
+        "tests/compatibility/jsonrpc/test_error_codes.py::TestJsonRpcErrorCodeMappings::test_content_type_not_supported_error",
         "tests/compatibility/jsonrpc/test_error_codes.py::TestJsonRpcErrorCodeMappings::test_push_notification_not_supported_error",
         "tests/compatibility/jsonrpc/test_error_codes.py::TestJsonRpcErrorCodeMappings::test_task_not_cancelable_error",
         "tests/compatibility/jsonrpc/test_error_codes.py::TestJsonRpcErrorCodeMappings::test_task_not_found_error",
@@ -929,15 +930,17 @@
     },
     "CORE-HIST-002": {
       "level": "MUST",
-      "status": "SKIPPED",
+      "status": "PASS",
       "transports": {
         "grpc": "SKIPPED",
+        "jsonrpc": "PASS",
         "http_json": "SKIPPED"
       },
       "errors": [],
       "test_ids": [
         "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthLimit::test_get_task_history_does_not_exceed_limit[grpc]",
-        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthLimit::test_get_task_history_does_not_exceed_limit[http_json]"
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthLimit::test_get_task_history_does_not_exceed_limit[http_json]",
+        "tests/compatibility/core_operations/test_task_history.py::TestHistoryLengthLimit::test_get_task_history_does_not_exceed_limit[jsonrpc]"
       ]
     },
     "CORE-GET-001": {
@@ -1002,15 +1005,17 @@
     },
     "CORE-MULTI-005": {
       "level": "MUST",
-      "status": "SKIPPED",
+      "status": "PASS",
       "transports": {
         "grpc": "SKIPPED",
+        "jsonrpc": "PASS",
         "http_json": "SKIPPED"
       },
       "errors": [],
       "test_ids": [
         "tests/compatibility/core_operations/test_task_lifecycle.py::TestMultiTurn::test_infer_context_from_task[grpc]",
-        "tests/compatibility/core_operations/test_task_lifecycle.py::TestMultiTurn::test_infer_context_from_task[http_json]"
+        "tests/compatibility/core_operations/test_task_lifecycle.py::TestMultiTurn::test_infer_context_from_task[http_json]",
+        "tests/compatibility/core_operations/test_task_lifecycle.py::TestMultiTurn::test_infer_context_from_task[jsonrpc]"
       ]
     },
     "CORE-MULTI-006": {
@@ -1535,8 +1540,8 @@
       "skipped": 65
     },
     "jsonrpc": {
-      "total": 90,
-      "passed": 63,
+      "total": 93,
+      "passed": 66,
       "failed": 0,
       "skipped": 27
     },
