@@ -182,7 +182,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
 | FR-088 | H0-H5 were never tested with power: what corpus could answer them? | RAW | H-D1-29 | umbrella of FR-101..103, FR-107 | L |
-| FR-101 | H2: does the CA compute, or the encoding? cheap reset-lattice falsification (never run) [2026-09-28: answered-in-part (C2 probe artefact confirmed; arm A = C2 input-shuffle); live discriminator = particle2 8-seed mean vs >= 64 random rules] | SHARPENED | H-D4-18 H-D4-19 H-D4-67 H-D1-31 | narrower-than FR-088 | L |
+| FR-101 | H2: does the CA compute, or the encoding? cheap reset-lattice falsification (never run) [2026-09-28: answered-in-part (C2 probe artefact confirmed; arm A = C2 input-shuffle); live discriminator = particle2 8-seed mean vs >= 64 random rules] [2026-09-28 A-RUN: CLOSE-with-note; random rules at chance (no encoding confound); reset-only at chance on random split; generic density rules beat random; transport = 1.000; challenge/experiments/FR-101/RESULT.md] | ANSWERED | H-D4-18 H-D4-19 H-D4-67 H-D1-31 | narrower-than FR-088 | L |
 | FR-102 | H3: does any archive/QD policy beat top-K on a real stream? | RAW | H-D4-20 | narrower-than FR-088 | L |
 | FR-103 | H5: can a learned decoder beat the permutation bound? (learned decoder = random balanced so far) | RAW | H-D4-21 H-D1-30 | narrower-than FR-088; related FR-134 | L |
 | FR-104 | The delay-invariant reader: dissect it; does the curriculum construct or select? half-credit shelf | RAW | H-D4-13 H-D4-14 H-D4-17 H-D4-30 | related FR-132 | L |
