@@ -33,7 +33,7 @@ T-X-4 INTERVENTION REACH | the minimum evidence that an intervention
   reached the mechanism | makes nulls trustworthy everywhere | W-D: 8
   cases, 3 checks + alarm | which check for which class | adversarial
   fixtures with valid twins | PTE CPU | ACTIVE (W-K)
-T-DE-1 DESIGNED ECHOES | Does the echo model design working (and
+T-DE-1 DESIGNED ECHOES [ANSWERED 2026-09-28: model 7/7 FIT incl. a designed failure and combs; instruments 2/3 (handoff reads CHANCE/CHANCE); designed_echoes/RESULT.md] | Does the echo model design working (and
   deliberately failing) mechanisms; do the instruments read designed
   trajectories correctly? | calibration of the model and instruments |
   W-A 46/46 | model limits under pipelines and combs | 7 designs, frozen
@@ -51,7 +51,13 @@ B-6/T-WA-1 routing-aware echo model | research-ready
 T-REDISCOVER (Block E second question) | Under altered demands (e.g.
   gap drawn from {4, 12}), does search REDISCOVER model-predicted designs
   (pipeline depth, routing filter)? | the emergence test the calibration
-  cannot give | needs T-DE-1 first; GPU search ~1-2 h | sharpened
+  cannot give | T-DE-1 DONE (7/7 FIT) | NOT QUEUED (2026-09-28): the
+  design is not ready. HOLD at M2 physics is solvable by a trivial site
+  latch, so "not rediscovered" would be uninformative; and handicapping
+  latches with decay also kills pipeline registers (they are site state).
+  Needs a task that penalizes site storage but not channel storage (e.g.
+  site resets between cue and readout that spare the ring buffer, or a
+  multi-lag demand beyond the latch's single slot) | sharpened
 T-M3-2 the M3 in-flight swap reaches only .33 (dup / async inbox?) | CPU | sharpened
 T-SI-SCAR SI successor around an actual carrier | GATED on T-RET-2 | sharpened
 T-CT-4 why the MAJ pw4/dest-all/lat4 point is always channel | GPU | sharpened
