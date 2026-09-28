@@ -131,7 +131,7 @@ class Machine:
         """D_end[i] = minimal D such that the image of all states under x_{i-D+1..i} is a singleton;
         a very large number if none within x_1..x_i. Uses e(j) monotonicity."""
         T = len(xs) - 1
-        INF = 10 ** 9
+        INF = 10 ** 12  # "never synchronised" sentinel; larger than any W (learners use 10**9 for W=inf)
         e = np.full(T + 2, INF, dtype=np.int64)
         allm = np.ones(self.nS, dtype=bool)
         dead = False

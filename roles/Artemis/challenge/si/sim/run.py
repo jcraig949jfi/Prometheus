@@ -55,8 +55,10 @@ def make_ih(m, seed, T):
 
 
 def oracle_loss(m, xs, S):
+    """mean realised oracle log-loss and 16 batch means (for a batch-means SE; A5)."""
     T = len(xs) - 1
-    return float(np.mean([-math.log2(m.T[int(S[t]), int(xs[t + 1])]) for t in range(1, T)]))
+    l = np.array([-math.log2(m.T[int(S[t]), int(xs[t + 1])]) for t in range(1, T)])
+    return float(l.mean()), [float(b.mean()) for b in np.array_split(l, 16)]
 
 
 def run_specs(m, xs, S, Dend, specs, seed, meta):
@@ -122,14 +124,14 @@ def job(spec):
         seed = src.seed_for("F1", "RP%g" % spec["q"], spec["i"])
         xs, S = m.sample(spec["T"], seed)
         Dend = m.sync_depth_end(xs)
-        meta = dict(fam="F1", source=m.name, q=spec["q"], seed_i=spec["i"], T=spec["T"], oracle_loss=oracle_loss(m, xs, S))
+        meta = dict(fam="F1", source=m.name, q=spec["q"], seed_i=spec["i"], T=spec["T"], oracle_loss=oracle_loss(m, xs, S)[0], oracle_batches=oracle_loss(m, xs, S)[1])
         rows = run_specs(m, xs, S, Dend, specs_F1(spec["q"]), seed, meta)
     elif fam == "F2":
         m = src.golden_mean() if spec["name"] == "GM" else src.even()
         seed = src.seed_for("F2", spec["name"], spec["i"])
         xs, S = m.sample(spec["T"], seed)
         Dend = m.sync_depth_end(xs)
-        meta = dict(fam="F2", source=m.name, seed_i=spec["i"], T=spec["T"], oracle_loss=oracle_loss(m, xs, S))
+        meta = dict(fam="F2", source=m.name, seed_i=spec["i"], T=spec["T"], oracle_loss=oracle_loss(m, xs, S)[0], oracle_batches=oracle_loss(m, xs, S)[1])
         rows = run_specs(m, xs, S, Dend, specs_F2(spec["name"]), seed, meta)
     elif fam in ("F3", "LMT"):
         m = machine_F3(spec["k"], spec["X"], spec["j"])
@@ -137,7 +139,7 @@ def job(spec):
         xs, S = m.sample(spec["T"], seed)
         Dend = m.sync_depth_end(xs)
         meta = dict(fam=fam, source=m.name, k=spec["k"], X=spec["X"], j=spec["j"], seed_i=spec["i"], T=spec["T"],
-                    oracle_loss=oracle_loss(m, xs, S), rejects=m.rejects, co_unifilar=m.co_unifilar())
+                    oracle_loss=oracle_loss(m, xs, S)[0], oracle_batches=oracle_loss(m, xs, S)[1], rejects=m.rejects, co_unifilar=m.co_unifilar())
         if fam == "F3":
             rows = run_specs(m, xs, S, Dend, specs_F3(), seed, meta)
         else:
