@@ -226,3 +226,56 @@ Observation for Nestor: in two runs (s9200006, s9200008) the C_reimplant_random 
 - **D1:** the performer is the full data label of the store opcode at fetch. performer_entity = None if it is not ENTITY.
 - **E:** write-back mutation per world.py:484-550, labelled MUTATION(draw, old_label) at the draw, with the decode-dependence set
   = the labels of the linear-decode boundaries of the PRE-mutation half.
+
+## Amendment C7 (2026-09-28): NPE rulings (Nestor comms #839, #840, #844), the pdom text, and fixture validation
+1. **C3 post-dominator scope (secondary, non-gating).** The definition, verbatim from npe_reftracer/SPEC_ISSUES.md, so the owner
+   need not read the reference directory:
+
+   > **C3 [DIVERGE, big] Post-dominator scope for self-modifying code on a wrapping tape.** "Standard dynamic control-dependence
+   > scope" is not defined for this setting. My definition:
+   > - **CFG:** the 64 tape addresses, decoded from the tape contents AT THE MOMENT the branch executes. HALT goes to EXIT. Jump
+   >   targets are masked to 6 bits.
+   > - **Budget:** the step budget is NOT an edge, because it is CONSTANT (v4 s1.3).
+   > - **Unreachable EXIT:** a node that cannot reach EXIT gets ipdom None, so its scope lasts to the end of the slice. Typical
+   >   evolved code never HALTs, so for it pdom scope == slice scope.
+   > - **Stack:** Xin-Zhang style. A new entry with the same ipdom as the top is merged into it. Entries are popped only from the
+   >   top, when pc == ipdom. The stack is reset at slice entry. Branches with empty condition deps are not pushed.
+   > 
+   > Alternatives, each giving different `ctrl_deps_pdom`:
+   > - budget edges from every node to EXIT (then pdom scope always equals slice scope);
+   > - a CFG snapshot taken at slice start;
+   > - popping deeper entries;
+   > - a static CFG over the half only.
+   > 
+   > F3/F8 show the standard implicit-flow miss: after the join the pdom scope is empty.
+
+   Nestor may build ctrl_deps_pdom after production starts. It is non-gating.
+
+2. **The prefix-preserving flip test (BOTH engines; replaces the strict applicability rule of s4.1/B1/R4 as the GATING rule).**
+   - **The rule:** a bit flip is APPLICABLE iff (a) the fetch trace, store-address sequence and load-address sequence are
+     unchanged UP TO the last store to that locus in the baseline, AND (b) the counterfactual makes no later store to that locus.
+   - **Why it is sound:** the locus's final value is its last store's value, so divergence after that store cannot reach it.
+   - **Why it is needed:** in NPE, a 32-byte replicator on the wrapped 64-byte tape keeps executing into the bytes it copied. Under
+     the strict rule every copied locus is INAPPLICABLE (Nestor #839: 0/64 coverage on the smoke births), so NPE would be
+     INCONCLUSIVE by construction.
+   - The strict rule is still reported alongside.
+   - The BEE dry run used the strict rule. The prefix rule can only raise coverage, so BEE's coverage passes a fortiori.
+   - The residue, where copied bytes are executed BEFORE they are stored (data = code), stays INAPPLICABLE. It is irreducible for a
+     flip test.
+3. **Reconciliation items:** all accepted as consistent with C6.
+   - N-a: interaction-start accumulation.
+   - N-b: INC/DEC rr split.
+   - PREG_a and PREG_b are two source groups.
+   - Q8c is pooled over (group, draw), with per-group counts exported.
+   - The arms compare the victim half BEFORE the write-back mutation (MUTATION loci are never MOVE, and the RNG cannot be held
+     across a changed decode).
+4. **DEFECT C9-D24 (#840):** in T-003's 11 runs, s9200006 C and s9200008 C duplicate their A arms. So there are 9 distinct
+   simulations, and 29 distinct births out of 34.
+   - Decision statistics use a run-clustered bootstrap over the 9 distinct simulations, with duplicates removed.
+   - The duplicates are reported.
+5. **Fixture validation:**
+   - Nestor's 23-fixture NPE pack (nestor/s1-forensics-2026-09-23, 279beb9c8) was checked expectation by expectation against the
+     INDEPENDENT reference tracer (archaeon/attribution/probes/npe_fixture_validate.py; npe_fixture_validation/VALIDATION.txt).
+   - Archaeon added 11 adversarial expectations for the thinly covered mutants exec_all, noexec and performer_by_location
+     (npe_fixture_validation/ARCHAEON_ADDITIONS.json).
+   - **Result: 391/391 agree.** The pack is VALIDATED, and the additions become part of it.
