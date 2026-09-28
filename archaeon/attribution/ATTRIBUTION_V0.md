@@ -207,3 +207,10 @@ return six distinct classes and the six rejections.
 - Capability is not per-event in any engine's record. The assay reports in-situ proxies (BEE: later is_sr) and the block-13
   probes.
 - theta is bounded, not pinned.
+- (after Review 2) A knockout to one fixed byte cannot detect an essential locus whose value IS that byte (0x00 is NOP in the
+  Archaeon VM). A17 knockout entries should record the replacement value; machinery should be estimated with random-value
+  replacement.
+- (after Review 2) Per-locus STATE comparisons must declare their alignment. Material segments already carry src_loci.
+- (after Review 2) Open: "the founder is not the replicator". A donor may have birth capability without exact self-copy, while
+  its first child is an exact self-copier (a fixed point of the donor's imperfect copying map). D5T/D7 read donor capability
+  generically; the record must name WHICH capability the donor holds.

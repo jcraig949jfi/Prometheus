@@ -98,3 +98,30 @@ See TH015_RESULT.md.
 See ITEM8_RESULT.md. The item-8 tracking inside this replay was defective (it followed all of a child's material, mostly lineage
 material shared with its parent, and matched copier classes by wrong names). It was re-run with probes/item8_block13.py; this
 replay's fates are not used.
+
+
+## Dated correction 2026-09-28 (after adversarial Review 2; REVIEW_2_ADJUDICATION.md). The text above is kept as the original claim.
+1. The deep block's same-position 0.0 is REPRODUCED at its own epoch (14,800). What is refuted is the reading "complete
+   turnover".
+   - Aligned at 14,800: founder material is 0.32 of the tape, and about 0.67 of the essential loci (one member).
+   - At 14,300, across all 11 capable members: 0.85 of essential loci, not 1.00.
+   - All essential-locus shares use 0x00 knockout, which cannot detect essential NOP loci, so they are upper bounds. With
+     random-value knockout the essential sets are larger (for example 6 -> 10 loci at 17,900; founder share 0.50 -> 0.30).
+2. The WHOLE founder-derived genome shifted (terminal NOP insertion plus tail loss), not the machinery "as a unit".
+   - The early offsets are standing variation.
+   - Aligned byte state equals material exactly (0.85/0.85 ... 0.33/0.33). "Fixed-position state is the wrong unit" is WITHDRAWN:
+     the fault is the missing alignment.
+3. WITHDRAWN: "capability IMPROVED on conserved founder material". NEAR -> EXACT_GATED is the founder's own first birth
+   (00 00 + F[2:], input 142), a fixed point of its imperfect copying map; no executed byte changed. The founder was not the
+   replicator; its first child was.
+   - Gating also recurs after 14,500 (8/20 inputs at 17,300; 6/12 gated at 17,900).
+   - What survives: exact isolated self-copy stayed at >= 0.5 of sampled members (median 0.83), while aligned founder material in
+     the essential loci fell 0.85 -> 0.33.
+4. Hypothesis corrections:
+   - H1: exact copying persisted while founder material fell; there was no "improvement".
+   - H2: CONSISTENT WITH inheritance (specific mutation ids were not stored).
+   - H3: UNTESTABLE with the committed data (genotypes move between inert, gated and ungated).
+   - H4: only "unaligned comparison".
+   - H5: the origin PASSED THROUGH host execution, necessity untested; an exact self-copying child existed before the host
+     (13,955 < 14,001).
+   - "Maintenance at 0.75-1.00" is false: 12 of the 57 snapshots from 14,300 on are below 0.75.

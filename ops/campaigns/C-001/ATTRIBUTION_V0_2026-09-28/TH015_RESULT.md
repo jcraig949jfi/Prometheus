@@ -59,3 +59,19 @@ never suffices, and the single-locus-necessary set almost never does.
 - Isolated VM only.
 - "Random background" means uniform random bytes. A background drawn from the world's own inflow could differ.
 - BEE and NPE legs: design only (TH015_DESIGN.md). Both need their owners' harnesses.
+
+
+## Dated correction 2026-09-28 (after adversarial Review 2; REVIEW_2_ADJUDICATION.md). The text above is kept as the original claim.
+- The executed set X is 66% of the tape on average (50-94%), not "about half".
+- EXECUTED_ONLY exact is 0.83 (not 0.85); MACHINERY_ONLY exact is 0.002.
+- The 0.89 survives a size-matched control (|X| random loci: 0.057) and local minimisation (1-minimal in 7/7 tapes). About 1/3
+  of it is NOP padding needed only because the background is random (without 0x00 loci: 0.63).
+- "Input gating was LOST by 14,500" FAILS for the lineage.
+  * It held only for the 22 stride-sampled tapes, and counts births, not self-copies (the 18,400 tape has no exact self-copy).
+  * Gated genotypes recur (17,300: 8 exact / 20 birth inputs).
+- WITHDRAWN: "likely reason BLOCK_128 did not stop this lineage". The founder already reproduced on 15 allowed inputs, and its
+  first birth was on input 142.
+- Start-pc dependence is rise-then-fall (0.00 at 14,000; 0.75-0.88 at 14,500-15,900; low later), not monotone growth.
+- MATERIAL_ONLY near 0 is true by construction (M is the set whose knockout abolishes births); it does not test "material".
+- M (0x00 knockout) undercounts essential loci (0x00 is NOP). The necessity/sufficiency gap survives random-value knockout
+  (graft rates 0.05-0.28).
