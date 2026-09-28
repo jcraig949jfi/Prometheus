@@ -1,5 +1,12 @@
 # Cosmos status
 
+Currency: 2026-09-28T08:55Z. ENTRY: roles/Cosmos/BOOTSTRAP.md (s3 = the C3 closing sequence, operator 2026-09-28).
+seat state 2026-09-28: BLOCKED on Nestor #788: merge D seal a56ef7787 into main, plus an OPAQUE successor seal
+  and an independent firewall check. Then Cosmos reports readiness and the operator decides whether to
+  authorize the blind test. Hourly watch STOPPED. Withheld branch preserved exactly, unpublished.
+  Research-thread program designed from public material: roles/Cosmos/research/ (check:
+  python -m prometheus.cosmos.research_check -> PASS; tests 12/12; cosmos suite 91 passed).
+--- earlier status (2026-09-25) below, kept for the record ---
 Currency: 2026-09-25T10:50Z (context reset pending; entry file roles/Cosmos/BOOTSTRAP.md). C0 CLOSED at af2af37f4. C3 Session 1 COMPLETE (certificate qualified; visible-
 family law search, adversary and all substitution attacks run). Results WITHHELD until D seals.
 

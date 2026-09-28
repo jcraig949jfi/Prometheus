@@ -114,3 +114,31 @@ def test_arm_identical_flags_trivial_no_effect(echo):
     no-op, and the flag must say so. A real carrier's swap is never identical."""
     assert echo["w"]["arm_identical"] is True
     assert echo["pay0"]["arm_identical"] is False and echo["site_all"]["arm_identical"] is False
+
+
+# ------------------------------------------------------------ reach verification
+def test_reach_verification_three_verdicts():
+    import dataclasses
+    from prometheus.ananke.engine import Controls
+    seeds = assays.world_seeds(0x7E58, 16)
+    # REACHED: flushing in-flight state mid-gap on the echo plant (echo is its own plant)
+    ph = plants.c1b_echo_physics()
+    g = plants.echo_hold(ph)[None]
+    mid = _mid(HOLD)
+    flush = lambda w: (w.Msum.zero_(), w.Mcnt.zero_())            # noqa: E731
+    r = lens.verify_reach((ph, g, HOLD), (ph, g, HOLD), seeds, hooks={t: flush for t in mid})
+    assert r["reach"] == "REACHED", r
+    # UNREACHED: C1's drop window on the delay == delta relay (iti 50: nothing arrives in the window)
+    ph2 = plants.c1b_da_physics()
+    env2 = envs.EnvSpec(family="RELAY", d=1, delta=4, cue_len=2, trials=12, iti=50)
+    win = c1b.drop_windows(env2)["drop_window_c1"]
+    g2 = plants.plant("relay_flood", ph2)
+    r2 = lens.verify_reach((ph2, g2, env2), None, seeds, ctrl=Controls(drop_packets_at=win))
+    assert r2["reach"] == "UNREACHED", r2
+    # NOT_VERIFIED: freeze_routing under dest_mode "all" (routing written, never read); no plant
+    # can use routing at this physics, so a null is unverifiable
+    ph3 = plants.c1b_route_physics().replace(dest_mode="all")
+    env3 = envs.EnvSpec(family="RELAY", d=2, delta=8, cue_len=4, trials=12)
+    g3 = plants.route_relay(ph3)[None]
+    r3 = lens.verify_reach((ph3, g3, env3), (ph3, g3, env3), seeds, ctrl=Controls(freeze_routing=True))
+    assert r3["reach"] == "NOT_VERIFIED", r3

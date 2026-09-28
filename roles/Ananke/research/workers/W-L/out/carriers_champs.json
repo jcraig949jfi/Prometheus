@@ -1,0 +1,919 @@
+{
+ "n1_s0": {
+  "SUCCESS": true,
+  "back0": {
+   "normal": [
+    0.5833333333333333,
+    0.484375,
+    0.6822916666666666
+   ],
+   "n": 1,
+   "back": 0,
+   "S": {
+    "acc": [
+     0.32291666666666663,
+     0.22395833333333331,
+     0.43229166666666663
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "inbox": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "channel_all": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay0": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay1": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.32291666666666663,
+     0.22395833333333331,
+     0.43229166666666663
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "reset_S": {
+    "acc": [
+     0.44270833333333326,
+     0.3177083333333333,
+     0.5677343749999995
+    ]
+   },
+   "reset_Kp": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ]
+   },
+   "reset_w": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ]
+   },
+   "reset_inbox": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ]
+   },
+   "reset_flush": {
+    "acc": [
+     0.5833333333333333,
+     0.484375,
+     0.6822916666666666
+    ]
+   }
+  },
+  "per_trial": [
+   NaN,
+   0.59375,
+   0.609375,
+   0.625,
+   0.578125,
+   0.71875,
+   0.578125,
+   0.6875,
+   0.59375,
+   0.59375,
+   0.640625,
+   0.46875
+  ],
+  "program": [
+   " 0 ADD     S0 <- S1, S0 (bf=72) imm=1",
+   " 1 SHR     S1 <- S0, RPORT (bf=170) imm=-92",
+   " 2 NOP     T0 <- SENSE, SENSE (bf=195) imm=53",
+   " 3 WIMM    S0 <- S0, IN0_1 (bf=67) imm=-96",
+   " 4 SUB     T1 <- ENERGY, S1 (bf=145) imm=-60",
+   " 5 ADD     EMIT <- IN0_0, PAY1 (bf=47) imm=51",
+   " 6 GT      T2 <- T0, EMIT (bf=132) imm=-16",
+   " 7 SETRULE RVAL <- S0, T1 (bf=57) imm=-120",
+   " 8 SUB     PAY0 <- ZERO, RPORT (bf=116) imm=6",
+   " 9 MOD     T1 <- IN0_0, S1 (bf=19) imm=108",
+   "10 NOP     T2 <- ZERO, CNT0 (bf=104) imm=-115",
+   "11 WIMM    T3 <- EMIT, RVAL (bf=99) imm=53",
+   "12 RAND    PAY0 <- S1, EMIT (bf=78) imm=68",
+   "13 GT      PAY1 <- ZERO, EMIT (bf=222) imm=118",
+   "14 ADD     S1 <- PAY1, SENSE (bf=231) imm=49",
+   "15 SEL     T2 <- T3, S1 (bf=19) imm=-57"
+  ]
+ },
+ "n1_s3": {
+  "SUCCESS": true,
+  "back0": {
+   "normal": [
+    0.59375,
+    0.4843489583333333,
+    0.7031510416666661
+   ],
+   "n": 1,
+   "back": 0,
+   "S": {
+    "acc": [
+     0.34375,
+     0.22916666666666669,
+     0.4583333333333333
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "inbox": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "channel_all": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay0": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay1": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.34375,
+     0.22916666666666669,
+     0.4583333333333333
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "reset_S": {
+    "acc": [
+     0.4583333333333333,
+     0.3333333333333333,
+     0.59375
+    ]
+   },
+   "reset_Kp": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ]
+   },
+   "reset_w": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ]
+   },
+   "reset_inbox": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ]
+   },
+   "reset_flush": {
+    "acc": [
+     0.59375,
+     0.4843489583333333,
+     0.7031510416666661
+    ]
+   }
+  },
+  "per_trial": [
+   NaN,
+   0.921875,
+   0.765625,
+   0.75,
+   0.640625,
+   0.734375,
+   0.515625,
+   0.71875,
+   0.625,
+   0.6875,
+   0.625,
+   0.703125
+  ],
+  "program": [
+   " 0 RAND    T2 <- S0, CHAN (bf=97) imm=-39",
+   " 1 SUB     RVAL <- S1, S0 (bf=180) imm=93",
+   " 2 MOD     EMIT <- RVAL, SENSE (bf=15) imm=67",
+   " 3 MULQ    PAY1 <- ENERGY, IN0_1 (bf=103) imm=-83",
+   " 4 ADD     T2 <- CNT0, RVAL (bf=99) imm=70",
+   " 5 RAND    T0 <- ZERO, CHAN (bf=97) imm=58",
+   " 6 ADD     S1 <- SENSE, S1 (bf=235) imm=-111",
+   " 7 RAND    S0 <- EMIT, T0 (bf=218) imm=69",
+   " 8 XOR     PAY1 <- PAY1, IN0_1 (bf=229) imm=-61",
+   " 9 MOD     RPORT <- PAY0, IN0_1 (bf=229) imm=-82",
+   "10 CONST   RPORT <- RVAL, SENSE (bf=69) imm=-96",
+   "11 MOV     S0 <- T2, T1 (bf=255) imm=-78",
+   "12 SUB     T2 <- S1, S1 (bf=109) imm=-4",
+   "13 WIMM    RVAL <- PAY1, S1 (bf=127) imm=95",
+   "14 MAX     RVAL <- ZERO, S0 (bf=54) imm=50",
+   "15 SHR     CHAN <- EMIT, ZERO (bf=53) imm=108"
+  ]
+ },
+ "n2_s1": {
+  "SUCCESS": true,
+  "back0": {
+   "normal": [
+    0.609375,
+    0.4843619791666666,
+    0.7291796874999996
+   ],
+   "n": 2,
+   "back": 0,
+   "S": {
+    "acc": [
+     0.38541666666666663,
+     0.265625,
+     0.5104166666666666
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "inbox": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "channel_all": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "pay0": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay1": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.38541666666666663,
+     0.265625,
+     0.5104166666666666
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "reset_S": {
+    "acc": [
+     0.53125,
+     0.40104166666666663,
+     0.656263020833333
+    ]
+   },
+   "reset_Kp": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ]
+   },
+   "reset_w": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ]
+   },
+   "reset_inbox": {
+    "acc": [
+     0.5989583333333333,
+     0.4661197916666666,
+     0.7213671874999997
+    ]
+   },
+   "reset_flush": {
+    "acc": [
+     0.5989583333333333,
+     0.4661458333333333,
+     0.7239583333333333
+    ]
+   }
+  },
+  "back1": {
+   "normal": [
+    0.609375,
+    0.4843619791666666,
+    0.7291796874999996
+   ],
+   "n": 2,
+   "back": 1,
+   "S": {
+    "acc": [
+     0.37239583333333337,
+     0.25,
+     0.49221354166666603
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "inbox": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "channel_all": {
+    "acc": [
+     0.6015625,
+     0.4765364583333333,
+     0.7239713541666662
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "pay0": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay1": {
+    "acc": [
+     0.609375,
+     0.4843619791666666,
+     0.7291796874999996
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.37239583333333337,
+     0.25,
+     0.49221354166666603
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   }
+  },
+  "per_trial": [
+   NaN,
+   NaN,
+   0.6953125,
+   0.71875,
+   0.5859375,
+   0.65625,
+   0.640625,
+   0.59375,
+   0.6015625,
+   0.6875,
+   0.6015625,
+   0.59375
+  ],
+  "program": [
+   " 0 WIMM    T1 <- S0, ENERGY (bf=52) imm=17",
+   " 1 MULQ    T0 <- CNT0, EMIT (bf=6) imm=14",
+   " 2 GT      CHAN <- ZERO, T2 (bf=184) imm=21",
+   " 3 ADD     T3 <- CNT0, IN0_0 (bf=48) imm=-96",
+   " 4 NOP     T1 <- CHAN, ENERGY (bf=124) imm=72",
+   " 5 MAX     RPORT <- S0, CNT0 (bf=104) imm=71",
+   " 6 SEL     PAY0 <- ZERO, PAY0 (bf=154) imm=4",
+   " 7 SEL     S0 <- S0, S0 (bf=72) imm=107",
+   " 8 MOD     RPORT <- CHAN, T1 (bf=165) imm=-59",
+   " 9 XOR     T0 <- ZERO, CNT0 (bf=122) imm=-88",
+   "10 SHR     EMIT <- IN0_0, PAY0 (bf=136) imm=-23",
+   "11 XOR     S0 <- S1, T0 (bf=20) imm=47",
+   "12 MAX     T1 <- T1, ENERGY (bf=16) imm=-125",
+   "13 MOD     PAY0 <- RVAL, PAY1 (bf=47) imm=55",
+   "14 ADD     EMIT <- S0, IN0_0 (bf=192) imm=-119",
+   "15 ADD     S1 <- S0, SENSE (bf=195) imm=40"
+  ]
+ },
+ "n2_s2": {
+  "SUCCESS": true,
+  "back0": {
+   "normal": [
+    0.6041666666666666,
+    0.4791145833333334,
+    0.7291666666666666
+   ],
+   "n": 2,
+   "back": 0,
+   "S": {
+    "acc": [
+     0.38541666666666663,
+     0.265625,
+     0.5104166666666666
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "inbox": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "channel_all": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay0": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay1": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.38541666666666663,
+     0.265625,
+     0.5104166666666666
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "reset_S": {
+    "acc": [
+     0.5260416666666666,
+     0.3958333333333333,
+     0.6510677083333328
+    ]
+   },
+   "reset_Kp": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ]
+   },
+   "reset_w": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ]
+   },
+   "reset_inbox": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ]
+   },
+   "reset_flush": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ]
+   }
+  },
+  "back1": {
+   "normal": [
+    0.6041666666666666,
+    0.4791145833333334,
+    0.7291666666666666
+   ],
+   "n": 2,
+   "back": 1,
+   "S": {
+    "acc": [
+     0.36979166666666663,
+     0.25,
+     0.484375
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "inbox": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "channel_all": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay0": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "pay1": {
+    "acc": [
+     0.6041666666666666,
+     0.4791145833333334,
+     0.7291666666666666
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.36979166666666663,
+     0.25,
+     0.484375
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   }
+  },
+  "per_trial": [
+   NaN,
+   NaN,
+   0.65625,
+   0.71875,
+   0.578125,
+   0.65625,
+   0.640625,
+   0.546875,
+   0.59375,
+   0.640625,
+   0.609375,
+   0.59375
+  ],
+  "program": [
+   " 0 XOR     PAY1 <- CHAN, S1 (bf=199) imm=12",
+   " 1 XOR     EMIT <- ENERGY, ZERO (bf=197) imm=53",
+   " 2 ADD     S1 <- IN0_0, IN0_0 (bf=30) imm=-36",
+   " 3 SHR     PAY0 <- T1, SENSE (bf=51) imm=-30",
+   " 4 MAX     CHAN <- RPORT, S1 (bf=91) imm=-44",
+   " 5 SUB     PAY0 <- IN0_1, ZERO (bf=107) imm=-76",
+   " 6 ADD     S0 <- S0, SENSE (bf=195) imm=44",
+   " 7 CONST   T2 <- S1, T0 (bf=254) imm=-24",
+   " 8 MOV     RVAL <- CHAN, PAY1 (bf=137) imm=-72",
+   " 9 WIMM    S0 <- T1, RVAL (bf=207) imm=99",
+   "10 ADD     S0 <- S0, SENSE (bf=195) imm=44",
+   "11 ADD     S0 <- S0, T0 (bf=218) imm=88",
+   "12 SUB     PAY0 <- S1, S0 (bf=72) imm=18",
+   "13 SUB     T1 <- SENSE, S1 (bf=235) imm=-29",
+   "14 GT      PAY1 <- PAY0, RPORT (bf=206) imm=17",
+   "15 NOP     PAY0 <- T3, IN0_1 (bf=13) imm=84"
+  ]
+ },
+ "n1_s2": {
+  "SUCCESS": false,
+  "back0": {
+   "normal": [
+    0.5729166666666666,
+    0.46869791666666666,
+    0.6770833333333333
+   ],
+   "n": 1,
+   "back": 0,
+   "S": {
+    "acc": [
+     0.40625,
+     0.29166666666666663,
+     0.5416666666666666
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "Kp": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "w": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "inbox": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "channel_all": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "pay0": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": false
+   },
+   "pay1": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ],
+    "verdict": "NO-EFFECT",
+    "arm_identical": true
+   },
+   "site_all": {
+    "acc": [
+     0.40885416666666663,
+     0.296875,
+     0.5416666666666666
+    ],
+    "verdict": "CHANCE",
+    "arm_identical": false
+   },
+   "reset_S": {
+    "acc": [
+     0.45052083333333326,
+     0.3255078125,
+     0.578138020833333
+    ]
+   },
+   "reset_Kp": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ]
+   },
+   "reset_w": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ]
+   },
+   "reset_inbox": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ]
+   },
+   "reset_flush": {
+    "acc": [
+     0.5729166666666666,
+     0.46869791666666666,
+     0.6770833333333333
+    ]
+   }
+  },
+  "per_trial": [
+   NaN,
+   0.90625,
+   0.71875,
+   0.6875,
+   0.53125,
+   0.65625,
+   0.625,
+   0.59375,
+   0.5625,
+   0.59375,
+   0.6484375,
+   0.8125
+  ],
+  "program": [
+   " 0 SEL     S1 <- PAY0, PAY0 (bf=82) imm=78",
+   " 1 XOR     S1 <- RVAL, IN0_0 (bf=120) imm=90",
+   " 2 WIMM    T3 <- CHAN, T1 (bf=201) imm=-64",
+   " 3 WIMM    EMIT <- RVAL, SENSE (bf=69) imm=12",
+   " 4 CONST   T1 <- PAY1, T1 (bf=201) imm=101",
+   " 5 ADD     T0 <- S0, SENSE (bf=249) imm=-11",
+   " 6 MOD     PAY0 <- T1, T1 (bf=183) imm=-127",
+   " 7 CONST   CHAN <- T2, CNT0 (bf=212) imm=-57",
+   " 8 XOR     PAY0 <- T1, CNT0 (bf=50) imm=43",
+   " 9 MAX     RVAL <- S1, PAY0 (bf=28) imm=31",
+   "10 SUB     PAY1 <- RPORT, T0 (bf=128) imm=1",
+   "11 MULQ    EMIT <- T0, ENERGY (bf=214) imm=42",
+   "12 MAX     PAY1 <- S0, T0 (bf=38) imm=28",
+   "13 SUB     S0 <- CNT0, T0 (bf=56) imm=51",
+   "14 NOP     RPORT <- ZERO, CNT0 (bf=230) imm=37",
+   "15 MAX     T0 <- EMIT, T3 (bf=185) imm=56"
+  ]
+ }
+}

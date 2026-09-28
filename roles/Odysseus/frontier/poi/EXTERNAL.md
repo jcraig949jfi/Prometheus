@@ -11,6 +11,17 @@ thermodynamics of computation, information theory as a field,
 origin-of-life chemistry, free-energy/active inference; stale: the May AI
 items. Pure ASCII.
 
+CORRECTION 2026-09-28 (Odysseus): the claim that Prometheus had not cited
+Cicala 2026 / BFF 2026 is FALSE. Cicala et al. (2607.09211) is in
+aporia/docs/frontier_campaign_69/dossiers/74_emergent_self_replication_in_artificial_systems.md
+(2026-09-07/11) and roles/Atlas/catalog/ECOSYSTEMS.jsonl; the 09-19 Z80
+directive named it "a donor of machinery" (Artemis FR-010); Nestor's
+npe-p2 campaign (2026-09-27) cites both 2607.09211 and 2607.01483
+(roles/Nestor/campaigns/npe-p2-endogenous-heredity-2026-09-27/). The
+repository was not searched before the claim was made. The substantive
+point (differentiate after replication, remove the gifts) stands; the
+"blind spot" framing does not. Calibration ledger row 2026-09-28.
+
 ## 1. The closest external work is now running Prometheus's own experiment
 
 - Cicala, Niklasson, Randazzo, ... Aguera y Arcas, Richards, "Coevolution of

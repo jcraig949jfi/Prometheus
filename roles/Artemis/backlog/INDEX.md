@@ -36,8 +36,8 @@ science | N program infrastructure | Z answered or superseded at harvest
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-010 | Are the three Z80 builds independent evidence? (convergence audit) (common-cause half ANSWERED: shared published ancestor arXiv 2607.09211 via the 09-19 directive) | MATURE | H-D2-01 H-D1-66 H-D1-20 H-D2-51 | related FR-011 FR-100; SFE T6 | L |
-| FR-011 | Must the program author its unit of inheritance? (heredity without a supplied copy primitive) | MATURE | H-D2-02 H-D1-35 H-D2-33 | umbrella of FR-090 FR-091; related FR-013 | L |
+| FR-010 | Are the three Z80 builds independent evidence? (convergence audit) (common-cause half ANSWERED: shared published ancestor arXiv 2607.09211 via the 09-19 directive) [2026-09-28 review: common-cause half ANSWERED; residual law-vs-design needs a substrate not written from our directive (zff/cubff); ops TH-013/TH-014] | SHARPENED | H-D2-01 H-D1-66 H-D1-20 H-D2-51 | related FR-011 FR-100; SFE T6 | L |
+| FR-011 | Must the program author its unit of inheritance? (heredity without a supplied copy primitive) [2026-09-28: split-into FR-135 (is P-11 sound for heredity?) and FR-136 (heredity without a copy op); NPE part of FR-136 answered by CALIBRATION.json seeded BYTEWISE PASS, 806 births, fidelity 1.0] | SPLIT | H-D2-02 H-D1-35 H-D2-33 | umbrella of FR-090 FR-091; related FR-013 | L |
 | FR-012 | Which barrier dominates origin: acquisition or establishment; lottery or construction? | RAW | H-D2-06 H-D2-07 H-D2-28 H-D1-17 H-D2-42 H-D2-43 H-D4-24 | contradicts-internal (Archaeon vs BEE vs NPE W1) | L/M2 |
 | FR-013 | Encoding accessibility as a substrate-neutral coordinate of replication origin | RAW | H-D2-08 | narrower-than FR-011 | L |
 | FR-014 | Hidden effective-mutation channels and error thresholds; heredity lost in carried state | RAW | H-D2-09 H-D2-10 | related FR-015 | L |
@@ -51,6 +51,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-022 | Implicit-pressure citation sweep (claims with no task causation) | RAW | H-D2-50 H-D2-41 | related FR-061 | L |
 | FR-090 | Fixed vs mutable interpreter (AL-1, commissioned, never run) | RAW | H-D1-47 | narrower-than FR-011 | L |
 | FR-091 | Implicit replication with no scalar objective (AL-5 / XE-07) | RAW | H-D1-50 | narrower-than FR-011 | L |
+| FR-136 | Heredity without a supplied copy op: BEE and Archaeon (NPE answered: seeded BYTEWISE replicates) | SHARPENED | (split, no harvest ids) | split-from FR-011 | L |
 
 ## C. Identity, heredity, authorship (the causal lens; ops pilot TH-001 family)
 
@@ -68,18 +69,21 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-032 | Reproduction vs copying: which births transmit reproductive capacity (proposed TH-009) | RAW | H-D2-05 H-D1-13 | narrower-than FR-023 | M2 |
 | FR-033 | Pair-free population-level transmission detectors | RAW | H-D1-49 | new-lens signal (weak) | L |
 | FR-034 | Reuse hereditary stratigraphy / phylotrack for per-birth ancestry | RAW | H-D2-18 H-D1-56 | instrument for FR-023 FR-017 | L |
+| FR-135 | Is P-11 sound for heredity? (certifies self-painting homopolymers as copying) [2026-09-28 A-RUN: P-11 UNSOUND for heredity (certifies z8 painters Z1/Z2 at 0.90-1.00) and OVER-STRICT; weakest adequate certificate CVT-2 (mechanical) / CVT-R (robust); challenge/p11/RESULT.md] | ANSWERED | (split, no harvest ids) | split-from FR-011 | L |
 
 ## D. Memory that matters (Selective Irreversibility and its neighbours)
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-035 | Three memory certificates, no common instrument (Cosmos P1/P2, Ensorain LM01, Ananke SI01) | MATURE | H-D3-66 H-D3-26 H-D3-28 H-D3-41 H-D3-42 | umbrella of FR-036..041 | L |
+| FR-035 | Three memory certificates, no common instrument (Cosmos P1/P2, Ensorain LM01, Ananke SI01) [2026-09-28: split-into FR-137 (rulers compared on each seat planted systems) and FR-138 (does the Cosmos verdict just follow the declared boundary?); only one of three certificates exists as code] | SPLIT | H-D3-66 H-D3-26 H-D3-28 H-D3-41 H-D3-42 | umbrella of FR-036..041 | L |
 | FR-036 | SI law freeze: is query-time contraction the required contraction? generator dependence; blind lanes (prior art: bounded-space computation is reversible in the same space at exponential time -- the law needs priced compute; PA_memory_and_sagacity) | BLOCKED-R | H-D1-38 H-D1-39 H-D1-67 | blocked-by operator Q1/Q4 (programs/selective_irreversibility/RULINGS.md) | O |
 | FR-037 | LM01: exact vs coarse retention; is selectivity causally required? | BLOCKED-R | H-D3-31 H-D3-32 H-D3-39 H-D1-40 | blocked-by operator LAUNCH | O |
 | FR-038 | Surprise-driven eviction loses to random; capacity vs order; recency confounds relevance | SHARPENED | H-D3-33 H-D1-68 H-D5-23 H-D4-32 H-D4-33 | related FR-035 | L |
 | FR-039 | Reversible-core experiment and the Distinction-Survival Assay; common replay-and-perturb hook | RAW | H-D1-41 H-D1-42 H-D1-43 | instrument for FR-035 | L |
 | FR-040 | PTE-SI01: do distinctions stop being recoverable when they stop mattering? | RAW | H-D3-45 | narrower-than FR-035 | S |
 | FR-041 | Endogenous relevance key / memory index scored without labels | RAW | H-D5-24 H-D1-37 H-D4-08 H-D4-69 H-D4-38 H-D4-51 | related FR-043 | L |
+| FR-137 | Memory certificates compared on each seat's planted test systems | SHARPENED | (split, no harvest ids) | split-from FR-035 | L |
+| FR-138 | Does a memory certificate's verdict just follow the author-declared state boundary? | SHARPENED | (split, no harvest ids) | split-from FR-035 | L |
 
 ## E. Compression, abstraction, sagacity
 
@@ -109,7 +113,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
-| FR-057 | Cross-engine failure catalogue and reversal rate (ruler defects vs substrate facts) | MATURE | H-D1-64 H-D1-54 H-D5-51 H-D5-53 | umbrella of FR-058..065; SFE T5; related: Odysseus physics-of-intelligence frontier I6 (80 reversals, 13 shapes; comms #751) -- UNLOCATED, not on any origin ref; asked #752; extends Harmonia Failure-Primitive Atlas FP-001..004 (stalled 2026-06-15, acad16c47) | L |
+| FR-057 | Cross-engine failure catalogue and reversal rate (ruler defects vs substrate facts) [2026-09-28: answered-in-part by Odysseus I6 (80 reversals, 13 shapes); ruler-vs-substrate share killed as posed (the unit forces the answer); reduced test = blind kappa on 30 I6 rows] | SHARPENED | H-D1-64 H-D1-54 H-D5-51 H-D5-53 | umbrella of FR-058..065; SFE T5; related: Odysseus physics-of-intelligence frontier I6 (80 reversals, 13 shapes; comms #751) -- UNLOCATED, not on any origin ref; asked #752; extends Harmonia Failure-Primitive Atlas FP-001..004 (stalled 2026-06-15, acad16c47) | L |
 | FR-058 | Threshold provenance: verdicts decided by the bar, not the physics | SHARPENED | H-D3-67 H-D3-08 H-D3-43 | narrower-than FR-057 | L |
 | FR-059 | Every gate ships a positive control: census of gates that have ever fired | SHARPENED | H-D5-43 H-D5-42 H-D5-46 H-D4-11 H-D4-29 H-D1-26 | narrower-than FR-057 | L |
 | FR-060 | Emergent phenomenon or rule restated? | RAW | H-D3-04 H-D3-23 | related FR-067 | L |
@@ -167,7 +171,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-085 | Deep Frontier P-boom: population capture inverts spiking on shared streams | RAW | H-D1-25 H-D4-28 | deep | M2 |
 | FR-087 | Three campaigns, zero supported positives: gates or substrate? | RAW | H-D1-21 | related FR-132 | L |
 | FR-117 | Ludus: circuit value -- world, circuit or partner? audited rules; adversary interfaces | RAW | H-D4-52 H-D4-53 H-D4-54 | deep | L |
-| FR-118 | W16: which re-armable latch does evolution build? (Ares data exists, unread) | MATURE | H-D4-56 | cheap; related FR-038 | L |
+| FR-118 | W16: which re-armable latch does evolution build? (Ares data exists, unread) [2026-09-28: A-or-B framing retired; descriptive answer in data (several carriers); corrected probe clamps |v16| < 1e-6] | SHARPENED | H-D4-56 | cheap; related FR-038 | L |
 | FR-119 | Density-CA lines: exp one-class collapse; does the signed-margin curve transport? | RAW | H-D4-63 H-D4-64 | deep | L |
 | FR-120 | Metis channel composition; Hypatia grounding gate abstains on half the corpus | RAW | H-D4-65 H-D4-66 | deep | L |
 | FR-121 | program_ecology: 20 untested mechanism x substrate cells (ew.hypotheses) | RAW | H-D4-36 | deep | L |
@@ -178,7 +182,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR | title | state | sources | relations | host |
 |---|---|---|---|---|---|
 | FR-088 | H0-H5 were never tested with power: what corpus could answer them? | RAW | H-D1-29 | umbrella of FR-101..103, FR-107 | L |
-| FR-101 | H2: does the CA compute, or the encoding? cheap reset-lattice falsification (never run) | MATURE | H-D4-18 H-D4-19 H-D4-67 H-D1-31 | narrower-than FR-088 | L |
+| FR-101 | H2: does the CA compute, or the encoding? cheap reset-lattice falsification (never run) [2026-09-28: answered-in-part (C2 probe artefact confirmed; arm A = C2 input-shuffle); live discriminator = particle2 8-seed mean vs >= 64 random rules] [2026-09-28 A-RUN: CLOSE-with-note; random rules at chance (no encoding confound); reset-only at chance on random split; generic density rules beat random; transport = 1.000; challenge/experiments/FR-101/RESULT.md] | ANSWERED | H-D4-18 H-D4-19 H-D4-67 H-D1-31 | narrower-than FR-088 | L |
 | FR-102 | H3: does any archive/QD policy beat top-K on a real stream? | RAW | H-D4-20 | narrower-than FR-088 | L |
 | FR-103 | H5: can a learned decoder beat the permutation bound? (learned decoder = random balanced so far) | RAW | H-D4-21 H-D1-30 | narrower-than FR-088; related FR-134 | L |
 | FR-104 | The delay-invariant reader: dissect it; does the curriculum construct or select? half-credit shelf | RAW | H-D4-13 H-D4-14 H-D4-17 H-D4-30 | related FR-132 | L |
@@ -191,6 +195,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-113 | Explicit memory changed retrieval, not behaviour, at one model tier | RAW | H-D4-37 | deep (LLM line) | L |
 | FR-115 | A term-rewriting substrate: rewrite-strategy pressures are unhostable today | RAW | H-D4-42 | new-lens signal (strong) | L |
 | FR-123 | Homoiconic worlds: reusable transformations of the system's own machinery (meta-grammar census passed, never built) | RAW | H-D4-50 | new-lens signal (strong); related FR-090 | L |
+| FR-139 | ALIEN: are living regimes supertransients? (escape rate vs world size, window-free) | RAW-ALIEN | (outside field; challenge/ALIEN_QUESTION.md) | none (no thread shares its vocabulary) | L |
 
 ## N. Program infrastructure (unlocks several scientific threads)
 
@@ -198,7 +203,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 |---|---|---|---|---|---|
 | FR-092 | SFE disposition and ledger custody (89,939 + 2,070 experiments off-repo) | BLOCKED-R | H-D1-61 | SFE T1; blocked-by host access M1/M2 + operator | O |
 | FR-093 | Provenance as an embeddable receipt contract, not a service | RAW | H-D1-62 | SFE T2 | L |
-| FR-094 | Where the ecology's evidence lives; portable verification; observer fields missing from the BEE multi-day campaign | MATURE | H-D1-63 H-D1-06 H-D2-20 H-D1-43 | SFE T3; ops: TH-006; unlocks FR-016 FR-019 FR-024..027 | L |
+| FR-094 | Where the ecology's evidence lives; portable verification; observer fields missing from the BEE multi-day campaign [2026-09-28: an audit, not a discriminator; belongs under ops TH-006] | SHARPENED | H-D1-63 H-D1-06 H-D2-20 H-D1-43 | SFE T3; ops: TH-006; unlocks FR-016 FR-019 FR-024..027 | L |
 | FR-095 | Host coupling and placement | RAW | H-D1-65 | SFE T4 | L |
 | FR-096 | Interpretive degrees of freedom across independent workers; one maturity ladder or two | RAW | H-D1-10 H-D1-59 | related FR-057 | L |
 | FR-098 | Corpus hygiene: 360 of 423 deep-research items never sent; off-target Moros reports | RAW | D5 cross-domain pointers | related FR-099 | L |

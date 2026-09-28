@@ -1,0 +1,23 @@
+# step 1
+95a12c29e62f130e3fdae2d2656454853a627ca9beb5a45567e1de3924591a71 8118119
+c1e7ad5f9bcc5bbf626204007339f4b91d212cda261bc4c82cd861772a6f84db *C:/Users/James/z80atlas_forensics_2026-09-23_local/births/r038751.jsonl.gz
+834195
+293504933	total
+# step 2
+{
+ "content_bytes": 8118119,
+ "content_sha256": "95a12c29e62f130e3fdae2d2656454853a627ca9beb5a45567e1de3924591a71",
+ "expected_content_sha256": "95a12c29e62f130e3fdae2d2656454853a627ca9beb5a45567e1de3924591a71",
+ "expected_row_count": 74800,
+ "fields_changed": [],
+ "first_bad_chunk": null,
+ "reserialises_identically": true,
+ "row_count": 74800,
+ "source_gz_sha256": "c1e7ad5f9bcc5bbf626204007339f4b91d212cda261bc4c82cd861772a6f84db",
+ "source_log": "C:/Users/James/z80atlas_forensics_2026-09-23_local/births/r038751.jsonl.gz",
+ "status": "MATCH"
+}
+# notes (Archaeon[m2-1034e815], 2026-09-28)
+# run from Git Bash on M2, not PowerShell. Step 1 equivalents: sha256sum = Get-FileHash; stat -c %s = (Get-Item).Length;
+# du -cb over births/* = the Measure-Object Length sum. Pack extracted by git archive at 1faf69a04 into a session scratch dir,
+# deleted after the run. Result: MATCH.

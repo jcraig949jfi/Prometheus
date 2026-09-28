@@ -1,0 +1,118 @@
+{
+ "passed": 16,
+ "total": 16,
+ "checks": [
+  {
+   "check": "L4 true: ungated replicator (census ruler control)",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.75 k=0 bits=184"
+  },
+  {
+   "check": "L4 true: ungated replicator (census ruler control) [frozen ruler class]",
+   "want": "EXACT_UNGATED",
+   "got": "EXACT_UNGATED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 true: input-gated copier (IN C; exact at 128 only)",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.7812 k=0 bits=192"
+  },
+  {
+   "check": "L4 true: input-gated copier (IN C; exact at 128 only) [frozen ruler class]",
+   "want": "EXACT_GATED",
+   "got": "EXACT_GATED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 true: shifted copier (k=1, NEAR by span)",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.7188 k=1 bits=176"
+  },
+  {
+   "check": "L4 true: shifted copier (k=1, NEAR by span) [frozen ruler class]",
+   "want": "NEAR_COPIER",
+   "got": "NEAR_COPIER",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 impostor: blank tape carrying the label",
+   "want": "LABEL_PROVENANCE_ONLY",
+   "got": "LABEL_PROVENANCE_ONLY",
+   "pass": true,
+   "detail": "rate=0.00 T=None k=None bits=None"
+  },
+  {
+   "check": "L4 impostor: blank tape carrying the label [frozen ruler class]",
+   "want": "INERT",
+   "got": "INERT",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 impostor: copy routine behind HALT",
+   "want": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "got": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "pass": true,
+   "detail": "rate=0.00 T=None k=None bits=None"
+  },
+  {
+   "check": "L4 impostor: copy routine behind HALT [frozen ruler class]",
+   "want": "INERT",
+   "got": "INERT",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 impostor: zero painter (ruler says NEAR_COPIER)",
+   "want": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "got": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "pass": true,
+   "detail": "rate=1.00 T=0.0 k=0 bits=0"
+  },
+  {
+   "check": "L4 impostor: zero painter (ruler says NEAR_COPIER) [frozen ruler class]",
+   "want": "NEAR_COPIER",
+   "got": "NEAR_COPIER",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 impostor: copies only into an empty neighbour",
+   "want": "LABEL_CONTEXT_DEPENDENT",
+   "got": "LABEL_CONTEXT_DEPENDENT",
+   "pass": true,
+   "detail": "rate=0.08 T=0.6719 k=0 bits=168"
+  },
+  {
+   "check": "L4 impostor: copies only into an empty neighbour [frozen ruler class]",
+   "want": "EXACT_UNGATED",
+   "got": "EXACT_UNGATED",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L4 control: unlabelled replicator",
+   "want": "UNLABELLED_LABEL_OK",
+   "got": "UNLABELLED_LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.75 k=0 bits=176"
+  },
+  {
+   "check": "L4 control: unlabelled replicator [frozen ruler class]",
+   "want": "EXACT_UNGATED",
+   "got": "EXACT_UNGATED",
+   "pass": true,
+   "detail": ""
+  }
+ ]
+}

@@ -5,9 +5,14 @@ envs.py, assays.py, search.py, c1b.py, lens.py). Spec: roles/Ananke/pte/
 DESIGN.md. Evidence: PTE-C1, PTE-C1b, the 2026-09-27 spikes.
 
 SCIENTIFIC LENS
-(W-C) PTE's distinctive physics is the RECEIVER OPERATOR: arrivals ADD
-(superposition), and messages can never rewrite the program. Contrast
-Aether: arbitrate-and-replace, with message-writable code.
+(W-C, corrected by W-J) PTE's receiver operator is a DIAL: sum (collision
+none), saturate (divisive normalization) or aloha (erasure). Code change is
+RECEIVER-GATED: SETRULE/WIMM can take arrival operands, but only if the
+receiver's own code chooses them. Aether instead has content-blind
+winner-take-all replacement and SENDER-addressed code writes. The operator
+shapes what evolves only when AGGREGATION PAYS (W-J: aggregation gain ~.02
+at C1 physics -> presence codes indifferent to the operator; ~.13 lossless
+-> a SUM count-threshold majority code emerged).
 Where does information live, and how does it move, when computation is
 forced through lossy, delayed, SUPERPOSING messages among identical
 programs? PTE is the fleet's lens on CHANNEL STATE: information that exists
@@ -50,7 +55,10 @@ zero-default rule variant in ~64% of the 42 qualifying C1 cells (incl. M3;
 a physics artifact: registers are 0 at tick 0). In ~29% it is a
 readout-local, per-tick CONDITIONAL BRANCH (sign-conditioned excursions
 in RELAY; sample/hold alternation in HOLD). r was never the memory
-carrier in 18/18 swap tests. Routing: infrastructure
+carrier in 18/18 swap tests. W-H (ARC3): in the ongoing cells, switching
+COMPRESSES and does not EXPAND (5/5). Fixed-rule latches of 4-7 instructions
+match or beat every switching champion; the free decay-free rule register
+goes unused. The limit is search reachability, not expressivity. Routing: infrastructure
 only. No environmental memory is possible (write-free env).
 
 BEST EXPERIMENT TYPES
@@ -86,9 +94,11 @@ KNOWN FAILURE MODES (established)
 - PRESENT-BUT-UNUSED carriers: a component can decode the cue without
   carrying it (4781b0a1 pay0: decoder 0.85, swap no effect). Decoders
   alone never identify a carrier.
-- WRITTEN-BUT-NEVER-READ SCARS: non-decaying plastic stores (w, Kp)
-  keep cue-signed traces forever with no effect (W-E). Retention is not
-  use.
+- PERSISTENT TRACES ARE NOT MEMORY (W-E, W-G): non-decaying stores keep
+  cue-signed or accumulated traces. Most are inert; some (fresh2/3 w) are
+  READ but sign-scrambled (interference). No champion expresses
+  trial-specific retention (preregistered, replicated). The SUBSTRATE can
+  retain (hand plants C-EFF, C-AVL); evolution was never rewarded for it.
 - TEMPORAL-WINDOW BLINDNESS: an ablation window missing the causal tick
   (C1 D-A). Fix: cue_arrival_profile reach checks.
 - CHANNEL INERT BY PHYSICS: frozen routing under dest_mode "all".

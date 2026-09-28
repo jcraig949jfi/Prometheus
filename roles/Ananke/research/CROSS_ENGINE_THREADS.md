@@ -6,7 +6,7 @@ conceptual links are kept. The rest are listed as terminology matches.
 
 ## Genuine
 
-X-1 [CORRECTED 2026-09-27 by W-C, workers/W-C/REPORT.md: the content-vs-timing contrast DOES NOT HOLD; it paired two mechanisms that had each shut the other channel. The real distinction is the RECEIVER OPERATOR (PTE adds; Aether arbitrates and replaces) plus code/data separation. 7/13 PTE specimens carry the cue as who-fires, like rcv. The discriminating test is Aether fwd vs fwd_add across background density (a proposal for Aether).] Original text: CONTENT vs TIMING carriers: Aether AETH-03 (07d9a18a9;
+X-1 [CORRECTED 2026-09-27 by W-C, workers/W-C/REPORT.md: the content-vs-timing contrast DOES NOT HOLD; it paired two mechanisms that had each shut the other channel. The real distinction is the RECEIVER OPERATOR (PTE adds; Aether arbitrates and replaces) plus code/data separation. [FURTHER CORRECTED by W-J 2026-09-28: operator x AGGREGATION GAIN, filtered by the reader's invariances; PTE's operator is a dial; PTE code change is receiver-gated vs Aether's sender-addressed. Aether proposals A-J1..4 in workers/W-J/.] 7/13 PTE specimens carry the cue as who-fires, like rcv. The discriminating test is Aether fwd vs fwd_add across background density (a proposal for Aether).] Original text: CONTENT vs TIMING carriers: Aether AETH-03 (07d9a18a9;
     Aether/AETH-03/PHYSICS_DESIGN_02_2026-09-26.md). Only the `rcv` law
     carries a one-bit difference, and weakly. 92% of the secondary
     differences are "who fired" (timing and identity), not template

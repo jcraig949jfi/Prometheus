@@ -55,9 +55,15 @@ KNOWN FAILURE MODES
   F4 SYMMETRIC CARRIERS SWAP TO NOTHING. If X is identical in both
      partners (e.g. configuration), the swap is a no-op; NO-EFFECT is then
      trivially true. Check that X differs between partners before reading.
-  F5' (W-F census) a JOINT reading where site_acc + chan_acc ~= 1 is a PER-TRIAL
-     MIXTURE (a handoff caught mid-transit with variable latency), not a joint
-     code. Always report site_acc + chan_acc.
+  F5' [CORRECTED by W-I, 2026-09-28] site_acc + chan_acc = 1 is FORCED by the
+     mirror-pair design whenever no input arrives before the readout (after
+     a swap, world B's (site_A, chan_B) state is world A's channel-swapped
+     state; identity holds in 98-100% of trials in 4/5 cells checked). The
+     sum is NOT evidence of a mixture. Use phi = the correlation between
+     "site-swap wrong" and "channel-swap wrong" over correct trials: phi
+     <= -.3 indicates a per-trial mixture. By phi, 3 of 7 census-JOINT cells
+     are mixtures. Better still, use a single-trial swap so that history does
+     not break the identity (T-INS-6).
   F5 CHANCE IS AMBIGUOUS: split coding, redundancy (conflict) or
      disruption. Disambiguate with erasures (see
      roles/Ananke/research/joint_carrier/).

@@ -1,0 +1,3463 @@
+{
+ "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+ "claimed_property": "the certified donor genome rebuilds a randomized partner half as itself (P-11 assay passes) from register states it can reach (fresh; after 1-8 ordinary interactions), on either tape side",
+ "expected_mechanism": "copying: do(genome[p]=b) -> victim[p]=b for >= 50% of edits",
+ "min_rate": 0.5,
+ "notes": {
+  "sides": [
+   0,
+   1
+  ],
+  "warm": [
+   0,
+   1,
+   2,
+   4,
+   8
+  ],
+  "warm_seeds": [
+   0,
+   1
+  ],
+  "T_min": 0.5,
+  "substrate": "roles/Nestor/campaigns/z80atlas-forensics-2026-09-23/substrate/z8.py",
+  "assay": "roles/Nestor/campaigns/z80atlas-verify-2026-09-22/p11.py (unmodified)"
+ },
+ "summary": {
+  "n": 57,
+  "verdicts": {
+   "STRUCTURE_WITHOUT_BEHAVIOUR": 28,
+   "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM": 17,
+   "LABEL_PROVENANCE_ONLY": 9,
+   "LABEL_OK": 2,
+   "LABEL_CONTEXT_DEPENDENT": 1
+  }
+ },
+ "summary_by_copy_primitive": {
+  "n": 57,
+  "verdicts": {
+   "STRUCTURE_WITHOUT_BEHAVIOUR": 28,
+   "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM": 17,
+   "LABEL_PROVENANCE_ONLY": 9,
+   "LABEL_OK": 2,
+   "LABEL_CONTEXT_DEPENDENT": 1
+  },
+  "by": {
+   "BLOCK": {
+    "STRUCTURE_WITHOUT_BEHAVIOUR": 28,
+    "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM": 13,
+    "LABEL_PROVENANCE_ONLY": 3,
+    "LABEL_OK": 2,
+    "LABEL_CONTEXT_DEPENDENT": 1
+   },
+   "BYTEWISE": {
+    "LABEL_PROVENANCE_ONLY": 6,
+    "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM": 4
+   }
+  }
+ },
+ "wall_s": 32.4,
+ "rows": [
+  {
+   "id": "N:03650e1ad792eefa-s9040-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "03650e1ad792eefa-s9040-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9792,
+    "donor_wrote_then": 255,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 1,
+    "cell": {
+     "representation": "Z8_SHARED",
+     "copy_primitive": "BLOCK",
+     "self_location": "PC_RELATIVE",
+     "atlas_axis": "DAMAGE_CLIFF",
+     "structure": "WELL_MIXED",
+     "pressure": "COMPETITION",
+     "mutation_rate": "MID"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.2604,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 5.014,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.036
+  },
+  {
+   "id": "N:08b4c94e2ea65998-s76929-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "08b4c94e2ea65998-s76929-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 1.0,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 2,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1094,
+    "dominant_byte": "ca",
+    "entropy_bits_per_byte": 3.693,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.494
+  },
+  {
+   "id": "N:0e6c36f044262537-s23100-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "0e6c36f044262537-s23100-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 223,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 18,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9375,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.4,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 4,
+    "pass_rate": 0.2222,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 8,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.635,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 2,
+     "ws": 1
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 3.175
+  },
+  {
+   "id": "N:12ad3d5f4a8b5bb1-s97555-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "12ad3d5f4a8b5bb1-s97555-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 96,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 5,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.597,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 1,
+    "pass_rate": 0.0556,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 0,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.0312,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.247
+  },
+  {
+   "id": "N:164fced841ec95e0-s47993-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "164fced841ec95e0-s47993-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 48,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 16,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.535,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 3,
+    "pass_rate": 0.1667,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 1,
+     "ws": 1
+    },
+    "transmission": 0.0,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.598
+  },
+  {
+   "id": "N:193576337017c94a-s74845-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "193576337017c94a-s74845-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9688,
+    "donor_wrote_then": 263,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 2,
+    "cell": {
+     "representation": "Z8_SEPARATED",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "WELL_MIXED",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0521,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 6.072,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.336
+  },
+  {
+   "id": "N:1b4ac9027259a1b0-s79492-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "1b4ac9027259a1b0-s79492-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 11,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "WELL_MIXED",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.125,
+    "dominant_byte": "86",
+    "entropy_bits_per_byte": 3.068,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.543
+  },
+  {
+   "id": "N:201424f5fcaf65fa-s3860-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "201424f5fcaf65fa-s3860-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 1.0,
+    "donor_wrote_then": 32,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 3,
+    "n_pred_events_then": 34,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "TRANSITION_DETECTOR",
+     "structure": "ENV_MIG",
+     "pressure": "PREDATION",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.4062,
+    "dominant_byte": "ed",
+    "entropy_bits_per_byte": 3.184,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 2,
+    "pass_rate": 0.1111,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 1
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 1.0,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 2,
+     "ws": 1
+    },
+    "transmission": 0.4688,
+    "bits_transmitted": 88,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.596
+  },
+  {
+   "id": "N:2448d8964ae5f800-s83460-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "2448d8964ae5f800-s83460-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 230,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 18,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.535,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 1,
+    "pass_rate": 0.0556,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.615,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 4,
+     "ws": 0
+    },
+    "transmission": 0.0312,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 4.462
+  },
+  {
+   "id": "N:2448d8964ae5f800-s94150-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "2448d8964ae5f800-s94150-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 96,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 19,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.597,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.244
+  },
+  {
+   "id": "N:2a6c0335a04ba62f-s55262-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "2a6c0335a04ba62f-s55262-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 96,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 15,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.597,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 5,
+    "pass_rate": 0.2778,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 0,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 1
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.604,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.0469,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.114
+  },
+  {
+   "id": "N:2c45891544a22e46-s8700-tM-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "2c45891544a22e46-s8700-tM-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 157,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 1,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "TRANSITION_DETECTOR",
+     "structure": "NICHES_ISOLATED",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "MID"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.3438,
+    "dominant_byte": "b8",
+    "entropy_bits_per_byte": 2.686,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.416
+  },
+  {
+   "id": "N:2cb50bf028fcf0c5-s51326-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "2cb50bf028fcf0c5-s51326-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 48,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 32,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.535,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.277
+  },
+  {
+   "id": "N:3d51b4fa95c4cc60-s13785-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "3d51b4fa95c4cc60-s13785-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 176,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 9,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1406,
+    "dominant_byte": "1f",
+    "entropy_bits_per_byte": 4.75,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.371
+  },
+  {
+   "id": "N:3dac31ff4aa0b620-s67526-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "3dac31ff4aa0b620-s67526-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 177,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 9,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1562,
+    "dominant_byte": "3e",
+    "entropy_bits_per_byte": 4.72,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.441
+  },
+  {
+   "id": "N:40aac009c6b5f1fb-s59369-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "40aac009c6b5f1fb-s59369-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 188,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 12,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1094,
+    "dominant_byte": "54",
+    "entropy_bits_per_byte": 4.951,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.347
+  },
+  {
+   "id": "N:40aac009c6b5f1fb-s86857-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "40aac009c6b5f1fb-s86857-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 129,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 12,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.2031,
+    "dominant_byte": "df",
+    "entropy_bits_per_byte": 4.762,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.301
+  },
+  {
+   "id": "N:4552294865a7dd66-s55823-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "4552294865a7dd66-s55823-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 176,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 8,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0625,
+    "dominant_byte": "f4",
+    "entropy_bits_per_byte": 5.359,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.529
+  },
+  {
+   "id": "N:4552294865a7dd66-s89366-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "4552294865a7dd66-s89366-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 8,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.25,
+    "dominant_byte": "6a",
+    "entropy_bits_per_byte": 2.818,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.12
+  },
+  {
+   "id": "N:473d8734a24e3066-s63574-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "473d8734a24e3066-s63574-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 124,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 15,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "ENV_MIG",
+     "pressure": "EXEC_TIME_COST",
+     "mutation_rate": "MID"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9375,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.4,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 5,
+    "pass_rate": 0.2778,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 4,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.646,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 1,
+     "ws": 0
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.696
+  },
+  {
+   "id": "N:48c75e149fc7d62d-s12269-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "48c75e149fc7d62d-s12269-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9583,
+    "donor_wrote_then": 108,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 4,
+    "cell": {
+     "representation": "Z8_SEPARATED",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9583,
+    "dominant_byte": "fc",
+    "entropy_bits_per_byte": 0.333,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.541
+  },
+  {
+   "id": "N:4931614d912c52b2-s1190-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "4931614d912c52b2-s1190-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 230,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 10,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "PC_RELATIVE",
+     "atlas_axis": "DELETERIOUS_LOAD",
+     "structure": "RESERVOIR",
+     "pressure": "EXEC_TIME_COST",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9375,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.4,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.41
+  },
+  {
+   "id": "N:4931614d912c52b2-s9368-tM-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "4931614d912c52b2-s9368-tM-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 32,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 7,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "PC_RELATIVE",
+     "atlas_axis": "DELETERIOUS_LOAD",
+     "structure": "RESERVOIR",
+     "pressure": "EXEC_TIME_COST",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "39",
+    "entropy_bits_per_byte": 0.597,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 4,
+    "pass_rate": 0.2222,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 2,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 4,
+     "ws": 0
+    },
+    "transmission": 0.0312,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 3.72
+  },
+  {
+   "id": "N:4c2237a165b0c3a6-s81346-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "4c2237a165b0c3a6-s81346-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 259,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 4,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9375,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.4,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.563
+  },
+  {
+   "id": "N:4e3b001ae4b7147b-s97336-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "4e3b001ae4b7147b-s97336-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 233,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 64,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9375,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.4,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 3,
+    "pass_rate": 0.1667,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 2,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.635,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 1,
+     "ws": 0
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.789
+  },
+  {
+   "id": "N:5c0e7b9ce7acde3a-s91487-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "5c0e7b9ce7acde3a-s91487-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9531,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 6,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0938,
+    "dominant_byte": "01",
+    "entropy_bits_per_byte": 4.218,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 1,
+    "pass_rate": 0.0556,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 1
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.917,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 8,
+     "ws": 1
+    },
+    "transmission": 0.0078,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 11.43
+  },
+  {
+   "id": "N:5e20dc8a5cf24970-s4912-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "5e20dc8a5cf24970-s4912-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 227,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 1,
+    "cell": {
+     "representation": "Z8_SHARED",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "DAMAGE_CLIFF",
+     "structure": "ENV_MIG",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9479,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 0.374,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.593
+  },
+  {
+   "id": "N:5e26e88362c0c12a-s90492-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "5e26e88362c0c12a-s90492-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9219,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 13,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1875,
+    "dominant_byte": "ff",
+    "entropy_bits_per_byte": 4.362,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.705
+  },
+  {
+   "id": "N:607a2b5ec1ef7287-s14176-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "607a2b5ec1ef7287-s14176-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 185,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 10,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1562,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 4.734,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.221
+  },
+  {
+   "id": "N:62b53cfa007460c7-s57844-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "62b53cfa007460c7-s57844-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 64,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 15,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "01",
+    "entropy_bits_per_byte": 0.691,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 4,
+    "pass_rate": 0.2222,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 1,
+     "ws": 0
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 3.446
+  },
+  {
+   "id": "N:69fe5ba878847b8c-s55679-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "69fe5ba878847b8c-s55679-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9219,
+    "donor_wrote_then": 64,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 13,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9219,
+    "dominant_byte": "2a",
+    "entropy_bits_per_byte": 0.546,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 3,
+    "pass_rate": 0.1667,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 0,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.917,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.941
+  },
+  {
+   "id": "N:6da4c0b9a40141f8-s5058-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "6da4c0b9a40141f8-s5058-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9688,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 10,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PC_RELATIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_PERIODIC_MIG",
+     "pressure": "EXEC_TIME_COST",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0938,
+    "dominant_byte": "28",
+    "entropy_bits_per_byte": 5.433,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.475
+  },
+  {
+   "id": "N:7ae3f9c1437c8000-s54765-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "7ae3f9c1437c8000-s54765-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 188,
+    "max_p11_depth_then": 2,
+    "n_p11_events_then": 4,
+    "n_pred_events_then": 14,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "WELL_MIXED",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0781,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 5.631,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 9,
+    "pass_rate": 0.5,
+    "passing_envs": [
+     {
+      "side": 1,
+      "warm": 0,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 4,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 4,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 8,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.984,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": true,
+    "intervention_env": {
+     "side": 1,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.8125,
+    "bits_transmitted": 392,
+    "info_above_homopolymer": true
+   },
+   "now": "LABEL_OK",
+   "wall_s": 2.707
+  },
+  {
+   "id": "N:92ab440ee852580f-s963-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "92ab440ee852580f-s963-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 2,
+    "n_pred_events_then": 3,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "PC_RELATIVE",
+     "atlas_axis": "LENGTH_ROBUSTNESS",
+     "structure": "ENV_MIG",
+     "pressure": "COMPETITION",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.2188,
+    "dominant_byte": "ff",
+    "entropy_bits_per_byte": 4.089,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.63
+  },
+  {
+   "id": "N:96073ced6f628140-s70009-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "96073ced6f628140-s70009-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 193,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 2,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0781,
+    "dominant_byte": "f7",
+    "entropy_bits_per_byte": 5.389,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.439
+  },
+  {
+   "id": "N:9a372fb74fc3561f-s40929-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "9a372fb74fc3561f-s40929-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 63,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 10,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9375,
+    "dominant_byte": "c0",
+    "entropy_bits_per_byte": 0.462,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.617
+  },
+  {
+   "id": "N:9cba7113df39009e-s3882-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "9cba7113df39009e-s3882-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 1.0,
+    "donor_wrote_then": 183,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 2,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PC_RELATIVE",
+     "atlas_axis": "STASIS_ESCAPE",
+     "structure": "COMPETENCE_MIG",
+     "pressure": "NONE_IMPLICIT",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.5625,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 2.873,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.371
+  },
+  {
+   "id": "N:a4b90ad58b77d546-s28822-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "a4b90ad58b77d546-s28822-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9219,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 6,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1719,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 3.94,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.362
+  },
+  {
+   "id": "N:a62116831aa6d956-s7926-tM-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "a62116831aa6d956-s7926-tM-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9531,
+    "donor_wrote_then": 64,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 1,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BYTEWISE",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "STASIS_ESCAPE",
+     "structure": "RESERVOIR",
+     "pressure": "NOVELTY",
+     "mutation_rate": "MID"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BYTEWISE",
+    "dominant_byte_share": 0.9531,
+    "dominant_byte": "fc",
+    "entropy_bits_per_byte": 0.347,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.453
+  },
+  {
+   "id": "N:aaa8c7857c2e5f02-s7313-tM-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "aaa8c7857c2e5f02-s7313-tM-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 142,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 2,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1875,
+    "dominant_byte": "ed",
+    "entropy_bits_per_byte": 3.608,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.285
+  },
+  {
+   "id": "N:ad36397262958c55-s1535-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "ad36397262958c55-s1535-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9688,
+    "donor_wrote_then": 187,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 11,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "WELL_MIXED",
+     "pressure": "NONE_IMPLICIT",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0781,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 5.588,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.471
+  },
+  {
+   "id": "N:b156b49a96d8a483-s49419-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "b156b49a96d8a483-s49419-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 189,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 8,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1094,
+    "dominant_byte": "01",
+    "entropy_bits_per_byte": 4.925,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.692
+  },
+  {
+   "id": "N:b156b49a96d8a483-s49766-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "b156b49a96d8a483-s49766-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 64,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 8,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "fb",
+    "entropy_bits_per_byte": 0.66,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.75
+  },
+  {
+   "id": "N:b8c942fed26ba4f4-s29204-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "b8c942fed26ba4f4-s29204-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9219,
+    "donor_wrote_then": 61,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 8,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9219,
+    "dominant_byte": "c3",
+    "entropy_bits_per_byte": 0.577,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "LABEL_PROVENANCE_ONLY",
+   "wall_s": 1.406
+  },
+  {
+   "id": "N:b9760c8fb47ee221-s59136-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "b9760c8fb47ee221-s59136-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 32,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 28,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "3a",
+    "entropy_bits_per_byte": 0.597,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 6,
+    "pass_rate": 0.3333,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 1
+     },
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 4,
+      "ws": 1
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 2,
+     "ws": 0
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 3.434
+  },
+  {
+   "id": "N:c144e174ccfd994f-s48614-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "c144e174ccfd994f-s48614-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 64,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 12,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "21",
+    "entropy_bits_per_byte": 0.691,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 8,
+    "pass_rate": 0.4444,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 0,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 1
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.0156,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.925
+  },
+  {
+   "id": "N:c2a87e5970ad345d-s80949-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "c2a87e5970ad345d-s80949-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9688,
+    "donor_wrote_then": 202,
+    "max_p11_depth_then": 2,
+    "n_p11_events_then": 5,
+    "n_pred_events_then": 19,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1875,
+    "dominant_byte": "de",
+    "entropy_bits_per_byte": 4.174,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.734
+  },
+  {
+   "id": "N:cb7f5ca16e697938-s53657-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "cb7f5ca16e697938-s53657-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9219,
+    "donor_wrote_then": 171,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 2,
+    "n_pred_events_then": 10,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1719,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 4.976,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.588
+  },
+  {
+   "id": "N:cb7f5ca16e697938-s60768-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "cb7f5ca16e697938-s60768-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 189,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 2,
+    "n_pred_events_then": 17,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0781,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 5.512,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 2,
+    "pass_rate": 0.1111,
+    "passing_envs": [
+     {
+      "side": 1,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 1,
+      "warm": 2,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.932,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": true,
+    "intervention_env": {
+     "side": 1,
+     "warm": 1,
+     "ws": 0
+    },
+    "transmission": 0.8125,
+    "bits_transmitted": 392,
+    "info_above_homopolymer": true
+   },
+   "now": "LABEL_CONTEXT_DEPENDENT",
+   "wall_s": 4.224
+  },
+  {
+   "id": "N:d5a4a6295475b51b-s51100-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "d5a4a6295475b51b-s51100-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9219,
+    "donor_wrote_then": 64,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 11,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9219,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 0.577,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 2,
+    "pass_rate": 0.1111,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.922,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 1,
+     "ws": 0
+    },
+    "transmission": 0.0,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 3.844
+  },
+  {
+   "id": "N:dab251eb114fcaa4-s78618-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "dab251eb114fcaa4-s78618-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9062,
+    "donor_wrote_then": 96,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 12,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "ENV_MIG",
+     "pressure": "EXEC_TIME_COST",
+     "mutation_rate": "MID"
+    }
+   },
+   "structural": {
+    "ok": false,
+    "has_ED_B0_B8": false,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.9062,
+    "dominant_byte": "36",
+    "entropy_bits_per_byte": 0.597,
+    "near_homopolymer": true
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 1,
+    "pass_rate": 0.0556,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 0,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.906,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.0312,
+    "bits_transmitted": 8,
+    "info_above_homopolymer": true
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.313
+  },
+  {
+   "id": "N:dd30f47fda54b9d0-s46022-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "dd30f47fda54b9d0-s46022-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 1.0,
+    "donor_wrote_then": 178,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 11,
+    "cell": {
+     "representation": "Z8_32",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RESIDUE_TRANSPORT",
+     "structure": "WELL_MIXED",
+     "pressure": "METABOLIC",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.5,
+    "dominant_byte": "b8",
+    "entropy_bits_per_byte": 1.5,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.605
+  },
+  {
+   "id": "N:e141105526c59efe-s92071-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "e141105526c59efe-s92071-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9375,
+    "donor_wrote_then": 188,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 9,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0938,
+    "dominant_byte": "00",
+    "entropy_bits_per_byte": 5.414,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 9,
+    "pass_rate": 0.5,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 0,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 2,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 4,
+      "ws": 1
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 3,
+     "fid_final_mean": 0.979,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.5,
+    "ok": true,
+    "intervention_env": {
+     "side": 0,
+     "warm": 0,
+     "ws": 0
+    },
+    "transmission": 0.7812,
+    "bits_transmitted": 384,
+    "info_above_homopolymer": true
+   },
+   "now": "LABEL_OK",
+   "wall_s": 3.129
+  },
+  {
+   "id": "N:e16055dd06cff594-s37315-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "e16055dd06cff594-s37315-tL-a0",
+    "draws_passed_then": 3,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 10,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.0938,
+    "dominant_byte": "85",
+    "entropy_bits_per_byte": 5.358,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.213
+  },
+  {
+   "id": "N:ed1fd5dd1fd35508-s88863-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "ed1fd5dd1fd35508-s88863-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9688,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 14,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.1875,
+    "dominant_byte": "9e",
+    "entropy_bits_per_byte": 4.203,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.609
+  },
+  {
+   "id": "N:f290db4e1c07947d-s36039-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "f290db4e1c07947d-s36039-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 177,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 7,
+    "cell": {
+     "representation": "Z8_64",
+     "copy_primitive": "BLOCK",
+     "self_location": "NONE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.125,
+    "dominant_byte": "20",
+    "entropy_bits_per_byte": 5.426,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 2,
+    "pass_rate": 0.1111,
+    "passing_envs": [
+     {
+      "side": 0,
+      "warm": 1,
+      "ws": 0
+     },
+     {
+      "side": 0,
+      "warm": 8,
+      "ws": 0
+     }
+    ],
+    "first_pass_detail": {
+     "pass": true,
+     "draws_passed": 2,
+     "fid_final_mean": 0.651,
+     "C2": true,
+     "C4": true,
+     "C5": true
+    }
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": false,
+    "intervention_env": {
+     "side": 0,
+     "warm": 1,
+     "ws": 0
+    },
+    "transmission": 0.0078,
+    "bits_transmitted": 0,
+    "info_above_homopolymer": false
+   },
+   "now": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "wall_s": 2.88
+  },
+  {
+   "id": "N:ffa6b3fb06df72a7-s55806-tL-a0",
+   "label": "NPE P-11 causal copy (PAIR_EXECUTION donor)",
+   "labelled": true,
+   "then": {
+    "label_then": "P-11 causal pair event (first certified event of the run)",
+    "run_id": "ffa6b3fb06df72a7-s55806-tL-a0",
+    "draws_passed_then": 2,
+    "fid_other_then": 0.9844,
+    "donor_wrote_then": 192,
+    "max_p11_depth_then": 1,
+    "n_p11_events_then": 1,
+    "n_pred_events_then": 9,
+    "cell": {
+     "representation": "Z8_SLOTTED",
+     "copy_primitive": "BLOCK",
+     "self_location": "PRIMITIVE",
+     "atlas_axis": "RECOMBINATION",
+     "structure": "NICHES_HIGH_MIG",
+     "pressure": "QUALITY_DIVERSITY",
+     "mutation_rate": "LOW"
+    }
+   },
+   "structural": {
+    "ok": true,
+    "has_ED_B0_B8": true,
+    "has_7E_and_12": false,
+    "copy_primitive": "BLOCK",
+    "dominant_byte_share": 0.5,
+    "dominant_byte": "ed",
+    "entropy_bits_per_byte": 1.5,
+    "near_homopolymer": false
+   },
+   "behavioural": {
+    "n_env": 18,
+    "n_pass": 0,
+    "pass_rate": 0.0,
+    "passing_envs": [],
+    "first_pass_detail": null
+   },
+   "causal": {
+    "fresh_state_pass_rate": 0.0,
+    "ok": null,
+    "why": "no behaviour to intervene on"
+   },
+   "now": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "wall_s": 1.712
+  }
+ ]
+}

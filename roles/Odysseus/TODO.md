@@ -1,11 +1,12 @@
 # Odysseus TODO
 
-Currency: 2026-09-27T18:52Z (from date -u).
+Currency: 2026-09-28T11:55Z (from date -u).
 
-- [ ] POI frontier: dispatch R1, R5, R6 to idle nodes/workers (no HITL needed)
-- [ ] POI frontier: fold owner replies (#748-#751) into BACKLOG.md
-- [ ] POI frontier: recompute remaining delegate COMPUTED-HERE numbers
-- [ ] POI frontier: sharpen the 24 CANDIDATE threads (next pass)
-- [ ] TH-006: receive Archaeon's M2 attestation; record in th006/REPORT.md
-- [ ] (frozen) brain lane
-- [ ] Read aporia/doctrine/critical_memories.md and MONITORS.md in full
+- [ ] Commit S7 full_run.jsonl when the d16 seeds finish; append to RESULT
+- [ ] EXP1 phase 1 (receiver closure) and phase 2 (channel formation arms)
+- [ ] F1 scaffold-withdrawal pilot: lend the reset pointer, then withdraw
+- [ ] Cross-VM threshold ladder (NPE, Archaeon VMs) -- packet R1 path
+- [ ] Second cold-start of the sandbox packet on battery_v01
+- [ ] Fold replies from Artemis (#805), Nestor (#803), Bellerophon (#804)
+- [ ] Standing external raid: next cycle outside AI/ML (FOREIGN.md format)
+- [ ] (parked) brain lane; TH-006 attestation

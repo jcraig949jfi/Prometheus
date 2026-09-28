@@ -69,6 +69,8 @@ def negative_control_texts(freeze_commit):
     rulings = os.path.join(REPO, "roles", "Ensorain", "prompts", "2026-09-26_lm01_operator_rulings",
                            "01_OPERATOR_LM01_RULINGS_verbatim.md")
     wrong = "0" * 40 if not freeze_commit.startswith("0") else "f" * 40
+    amend = os.path.join(REPO, "roles", "Ensorain", "prompts", "2026-09-28_lm01_v032_amend",
+                         "01_OPERATOR_V032_AMEND_verbatim.md")
     return {
         "operator_rulings_2026-09-26": open(rulings, encoding="utf-8").read() if os.path.exists(rulings) else "",
         "no_hash": "LAUNCH WTP-LM01 using frozen prereg",
@@ -78,4 +80,6 @@ def negative_control_texts(freeze_commit):
         "too_short_hash": f"LAUNCH WTP-LM01 using frozen prereg {freeze_commit[:6]}",
         "mixed_hashes": f"LAUNCH WTP-LM01 using frozen prereg {freeze_commit[:12]} / LAUNCH WTP-LM01 using frozen prereg {wrong[:12]}",
         "old_comms_token": f"WTP-LM01 LAUNCH: go {freeze_commit}",
+        "v031_hash": "LAUNCH WTP-LM01 using frozen prereg 768ea8ce9e84a1a078bba34813908d4fafbb268b",
+        "operator_amendment_2026-09-28": open(amend, encoding="utf-8").read() if os.path.exists(amend) else "",
     }

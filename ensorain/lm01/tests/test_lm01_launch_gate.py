@@ -17,6 +17,7 @@ def test_positive_full_and_prefix():
 def test_negative_controls_all_rejected():
     neg = negative_control_texts(SHA)
     assert neg["operator_rulings_2026-09-26"], "the operator's ruling text must be present as a control"
+    assert neg["operator_amendment_2026-09-28"], "the amendment text (placeholder hash) must be present as a control"
     for name, text in neg.items():
         assert not is_operator_launch(text, SHA), name
 

@@ -54,6 +54,13 @@ your best reading.
 - Update nothing in roles/Odysseus/ yourself; Odysseus folds results into
   BACKLOG.md.
 
+## Status (2026-09-28): see roles/Odysseus/expedition/READY_PROTOCOL.md
+
+READY is now an empirical status. R4 was cold-start-tried and was NOT
+ready; R1, R2, R3, R5, R6 are DRAFT until a worker who did not draft them
+runs them. Run expedition/prior_work_search.sh for your packet's key terms
+before designing.
+
 ## Packets
 
     R1 copier encoding law            territory C   stdlib, laptop, 3-6 h

@@ -1,0 +1,324 @@
+{
+ "WIN-B-iti2": {
+  "reading": {
+   "normal": [
+    0.9609375,
+    0.9427083333333333,
+    0.9791666666666666
+   ],
+   "arm": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "diff": [
+    0.039062500000000014,
+    0.020833333333333343,
+    0.05729166666666669
+   ],
+   "reading": "NULL"
+  },
+  "checks": {
+   "K0": {
+    "status": "FLAG",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "FLAG",
+    "reach": 0.0,
+    "lags": {
+     "0": 32,
+     "1": 15,
+     "2": 6,
+     "3": 3,
+     "4": 4,
+     "7": 4,
+     "8": 32,
+     "9": 15,
+     "10": 6,
+     "11": 3,
+     "12": 4,
+     "14": 3,
+     "15": 4,
+     "16": 13,
+     "17": 7,
+     "18": 2,
+     "19": 2,
+     "20": 1,
+     "21": 4,
+     "22": 3,
+     "23": 2,
+     "24": 8,
+     "25": 5,
+     "26": 1,
+     "27": 1,
+     "28": 5,
+     "29": 4,
+     "30": 2,
+     "31": 2,
+     "32": 5,
+     "33": 4,
+     "34": 1,
+     "35": 5,
+     "36": 5,
+     "37": 2,
+     "38": 1,
+     "39": 2,
+     "40": 5,
+     "41": 4,
+     "42": 5,
+     "43": 6,
+     "44": 2
+    },
+    "runs": 1,
+    "wall": 0.85
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 0.95
+   },
+   "K2": {
+    "status": "FLAG",
+    "plant": "relay_flood",
+    "competent_lo99": 0.9427083333333333,
+    "diff_hi99": 0.05729166666666669,
+    "runs": 2,
+    "wall": 1.71
+   },
+   "K2iso": {
+    "status": "FLAG",
+    "plant": "relay_flood",
+    "competent_lo99": 0.9427083333333333,
+    "diff_hi99": 0.05729166666666669,
+    "runs": 2,
+    "wall": 1.7
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 0.9375,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 48,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 390,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 1.97
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "NA",
+    "why": "no must-not-flip plant for this env",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 0.9
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 0.84
+   }
+  }
+ },
+ "WIN-V-iti2": {
+  "reading": {
+   "normal": [
+    0.9609375,
+    0.9427083333333333,
+    0.9791666666666666
+   ],
+   "arm": [
+    0.5,
+    0.5,
+    0.5
+   ],
+   "diff": [
+    -0.4609375,
+    -0.47916666666666663,
+    -0.44270833333333326
+   ],
+   "reading": "EFFECT"
+  },
+  "checks": {
+   "K0": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K1": {
+    "status": "PASS",
+    "reach": 1.0,
+    "lags": {
+     "0": 32,
+     "1": 15,
+     "2": 6,
+     "3": 3,
+     "4": 4,
+     "7": 4,
+     "8": 32,
+     "9": 15,
+     "10": 6,
+     "11": 3,
+     "12": 4,
+     "14": 3,
+     "15": 4,
+     "16": 13,
+     "17": 7,
+     "18": 2,
+     "19": 2,
+     "20": 1,
+     "21": 4,
+     "22": 3,
+     "23": 2,
+     "24": 8,
+     "25": 5,
+     "26": 1,
+     "27": 1,
+     "28": 5,
+     "29": 4,
+     "30": 2,
+     "31": 2,
+     "32": 5,
+     "33": 4,
+     "34": 1,
+     "35": 5,
+     "36": 5,
+     "37": 2,
+     "38": 1,
+     "39": 2,
+     "40": 5,
+     "41": 4,
+     "42": 5,
+     "43": 6,
+     "44": 2
+    },
+    "runs": 1,
+    "wall": 0.96
+   },
+   "K1g": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 1,
+    "wall": 0.88
+   },
+   "K2": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "competent_lo99": 0.9427083333333333,
+    "diff_hi99": -0.44270833333333326,
+    "runs": 2,
+    "wall": 1.6
+   },
+   "K2iso": {
+    "status": "PASS",
+    "plant": "relay_flood",
+    "competent_lo99": 0.9427083333333333,
+    "diff_hi99": -0.44270833333333326,
+    "runs": 2,
+    "wall": 1.65
+   },
+   "K3": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3b": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K3c": {
+    "status": "PASS",
+    "frac_pairs": 1.0,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4d": {
+    "status": "PASS",
+    "self_hits": 60,
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K4c": {
+    "status": "PASS",
+    "applied_tick_worlds": 418,
+    "worlds_touched": 64,
+    "runs": 2,
+    "wall": 1.74
+   },
+   "K5": {
+    "status": "PASS",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6a": {
+    "status": "PASS",
+    "undeclared_diffs": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K6b": {
+    "status": "PASS",
+    "declared_absent": [],
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K7": {
+    "status": "NA",
+    "why": "no must-not-flip plant for this env",
+    "runs": 0,
+    "wall": 0.0
+   },
+   "K8s": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 0.78
+   },
+   "K9": {
+    "status": "PASS",
+    "runs": 1,
+    "wall": 0.79
+   }
+  }
+ }
+}

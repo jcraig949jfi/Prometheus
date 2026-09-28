@@ -7,6 +7,14 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 COMPLETE -- packet delivered, operator's call
+Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/.
+Packet: ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/ATTRIBUTION_PACKET.md (all results, reviews, adjudications in that folder).
+Code archaeon/attribution/ (spec ATTRIBUTION_V0.md); tests archaeon/tests/test_attribution_v0.py.
+Two adversarial reviews (isolated Opus workers on ubu002) overturned several claims; adjudications kept.
+Open: material-taint replays for BEE/NPE (needs Bellerophon/Nestor), BEE/NPE TH-015 legs, "founder is not the replicator"
+representation, Aether's thread-id migration (#801). Nothing running.
+
 ## UPDATE 2026-09-27 (session m2-1034e815): CONTRACT v0.2 COMPLETE -- verdict PORTABLE_WITH_DOMAIN_LIMITS (not promoted)
 Ruling verbatim: roles/Archaeon/prompts/2026-09-27_contract_v02/. Merged to main (dfbc536cd).
 Packet: archaeon/causal_lens/pivot/CONTRACT_V02_REVIEW_2026-09-27.md. Report: archaeon/causal_lens/V02_REGRESSION_REPORT.md.

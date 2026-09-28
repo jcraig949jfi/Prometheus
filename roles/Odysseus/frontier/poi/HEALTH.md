@@ -52,9 +52,8 @@ raw files also contain nested sub-delegate claims marked "per sub-report".
    memory learner with eviction policies; its law's elimination half is a
    theorem (POI-053). LLM-in-the-loop and benchmark gravity are listed as
    traps (TERRITORIES III), not threads.
-5. STALE ASSUMPTIONS: the program's AI review dates from May 2026; the Z80
-   program has not cited Cicala 2026 or BFF 2026 (both July-September
-   2026); "0/5,472 mutational cliff" is cited as a cliff (it is a plateau,
+5. STALE ASSUMPTIONS: the program's AI review dates from May 2026; [CORRECTED 2026-09-28: the Z80 program HAD cited Cicala 2026 and
+   Nestor's npe-p2 cites BFF 2026 -- see REPORT.md correction]; "0/5,472 mutational cliff" is cited as a cliff (it is a plateau,
    S3); critical_memories' tensor-first rules predate the September north
    star (raw/I5 s4).
 6. EVIDENCE LOSS AND LOCALITY: positives that exist only in commit messages

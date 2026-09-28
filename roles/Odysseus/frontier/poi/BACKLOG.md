@@ -46,8 +46,11 @@ State SHARP, partly ANSWERED by spike S1 | origin raw/I1 T14, raw/I6 LP shape | 
 Known: S1 -- 20 of 68 BEE coupling "competent self-replicators" do not copy
 themselves under any of 256 inputs x 3 windows (ON 3/42, non-ON 17/26);
 "competent SR" = sr_depth > 0 = how the WRITER's birth was classified.
-Unknown: the same audit on BEE grounding runs (12,130 rows), on NPE P-11
-labels, on the running multi-day campaign's endpoint.
+UPDATE 2026-09-28 (expedition/recert/): the BEE label HOLDS in the grounding
+round (1,414/1,425 LABEL_OK, >= 168 bits per certified copy); S1's failure is
+specific to the coupling campaign's control arms. NPE P-11: 3/57 certified
+donor genomes copy themselves (17 paint, 37 inert; 16 copy only with
+hand-set registers). Still unknown: the multi-day campaign's endpoint.
 Cheapest: rerun spikes/S1_copyless_sr/probe.py on the grounding dominant tapes.
 Rel: TH-002 (BEE SR recount), POI-005.
 
@@ -117,6 +120,12 @@ matched single-byte perturbation (influence); tabulate the four cells.
 ## C -- Accessibility geometry: what makes a capability reachable?
 
 ### POI-020 -- Is replicator accessibility a law of copy-primitive encoding length?
+UPDATE 2026-09-28 (expedition/z80_threshold/ pilot + S8, EXPLORATORY, BEE VM only):
+L0 2.68e-5, L2 (no block copy) 5.1e-9, L3 (byte moves only) impossible in 256
+steps, L3s (+ generic PUSH-like write) 2.1e-10, L3t (no world-reset pointer)
+1.7e-14 -> roughly 2.4 decades of copier density per essential copy-loop
+byte; the world-reset destination pointer alone ~4.1 decades. First
+quantitative support on one VM; the cross-VM law (R1 packet) is still open.
 State READY (ready/R1_copier_encoding_law.md) | origin raw/I1 T1, raw/E1 Q1, raw/E2 Q1 | BEE, NPE, ARC census
 Why: if accessibility is set by encoding length, substrate design (not
 selection) decides what can emerge -- a law usable across engines.

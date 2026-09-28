@@ -236,3 +236,62 @@ def reach(profile: dict, window_lags) -> float | None:
         return None
     win = set(window_lags)
     return sum(n for l, n in tot.items() if l in win) / s
+
+
+# INSTRUMENT 3: reach verification (W-K T-K1; roles/Ananke/research/workers/W-K).
+# Before a NULL from an intervention is read, show that (a) the intervention
+# changed state at all in the specimen (a counterfactual applied count, lockstep
+# against normal), and (b) a must-flip PLANT, run through the SAME intervention
+# code at a physics where the plant works, is decisively affected (C1b A3.1:
+# competent lo99 > .55 AND hi99(diff) < -.10, or a FLIP).
+#   REACHED       applied > 0 and the plant fired
+#   UNREACHED     applied == 0 (the intervention never changed the specimen's state)
+#   NOT_VERIFIED  applied > 0 but no plant fired (or no plant exists): a null here
+#                 cannot be told apart from an inert or unreachable intervention
+
+def applied_ticks(ph: Physics, genome: np.ndarray, env: envs.EnvSpec, seeds, ctrl=None, hooks=None,
+                  device="cpu") -> int:
+    """Number of ticks after which the intervened world's full state differs from
+    the normal world's (lockstep, same seeds). 0 = the intervention never took."""
+    M = len(seeds)
+    ws = [seeds[m - (m % 2)] for m in range(M)]
+    ep = envs.build(ph, env, seeds)
+    g = np.repeat(genome[None], M, axis=0)
+    a = World(ph, g, ws, device=device, ctrl=Controls(), schedule=ep.schedule)
+    b = World(ph, g, ws, device=device, ctrl=ctrl or Controls(), schedule=ep.schedule)
+    hooks = hooks or {}
+    n = 0
+    for t in range(env.T()):
+        a.step()
+        b.step()
+        if t in hooks:
+            for fn in (hooks[t] if isinstance(hooks[t], list) else [hooks[t]]):
+                fn(b)
+        if a.digest() != b.digest():
+            n += 1
+    return n
+
+
+def plant_fired(ph, genome, env, seeds, ctrl=None, hooks=None, device="cpu") -> dict:
+    base = run(ph, genome, env, seeds, device=device)
+    arm = run(ph, genome, env, seeds, hooks=hooks, ctrl=ctrl, device=device)
+    n, a = trial_acc(base, range(env.trials)), trial_acc(arm, range(env.trials))
+    lo_n = ci(n)[1]
+    hi_d = ci(a - n)[2]
+    return {"competent_lo99": lo_n, "diff_hi99": hi_d, "flip": swap_verdict(n, a) == "FLIP",
+            "fired": bool(lo_n > 0.55 and (hi_d < -0.10 or swap_verdict(n, a) == "FLIP"))}
+
+
+def verify_reach(specimen: tuple, plant: tuple | None, seeds, ctrl=None, hooks=None, device="cpu") -> dict:
+    """specimen / plant = (physics, genome, env). The SAME ctrl/hooks are applied
+    to both. Returns {'applied': int, 'plant': {...} | None, 'reach': verdict}."""
+    ph, g, env = specimen
+    applied = applied_ticks(ph, g, env, seeds, ctrl=ctrl, hooks=hooks, device=device)
+    pf = plant_fired(*plant, seeds, ctrl=ctrl, hooks=hooks, device=device) if plant else None
+    if applied == 0:
+        verdict = "UNREACHED"
+    elif pf and pf["fired"]:
+        verdict = "REACHED"
+    else:
+        verdict = "NOT_VERIFIED"
+    return {"applied": applied, "plant": pf, "reach": verdict}

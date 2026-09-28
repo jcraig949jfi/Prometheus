@@ -1,6 +1,6 @@
 # C3 information ledger for foreign holdouts (directive 2026-09-24 s17)
 
-Currency: 2026-09-26T23:54Z. Every fact about a foreign holdout that reaches Cosmos is entered here
+Currency: 2026-09-28T08:55Z. Every fact about a foreign holdout that reaches Cosmos is entered here
 with a date, the channel, and the class. Accidental leakage declares the holdout COMPROMISED; it is
 not rationalised away.
 
@@ -22,7 +22,7 @@ worktree files are readable on disk. For a seat off M2 the barrier is real (noth
 an M2 seat it is HONOR + ATTESTATION (D_CONTRACT s7 forbids reading it and requires an attestation).
 Resolved for D by moving its author off M2 (see below): for an M1 author the barrier is technical.
 
-## D (development holdout) -- SEALED 2026-09-25 by Nestor (M1); seal commit NOT yet an ancestor of origin/main
+## D (development holdout) -- SEALED 2026-09-25 by Nestor (M1); original seal NOT yet on main; opaque successor REQUESTED 2026-09-28
 Operator decision 2026-09-24: honor + attestation is not acceptable when avoidable; D authorship moves
 OFF M2. Request to Bellerophon (comms #550) WITHDRAWN -- Bellerophon's last sync (03:34Z) preceded the
 request (07:51Z), so it never received it. New author: Nestor, all of whose instances run on SKULLPORT
@@ -38,6 +38,8 @@ work from M4 only.
 | 2026-09-26 | this repo (Cosmos M2 check) | commitment VERIFIED: git blob a56ef7787:prometheus/cosmos/c3_holdout_D/sealed_spec_D.json hashes to ae4479c6...57ac (hashed only, contents not opened by Cosmos). Branch head 5e05307b2 adds only roles/Nestor/C3_HOLDOUT_D_REPORT.md. Seal commit IS pushed; it is NOT an ancestor of origin/main (main 51638e216). Cosmos has read no D source, world list or outcome | -- |
 | 2026-09-26 | operator (to Nestor, direct) | operator elevates #561 to Nestor's immediate priority; Nestor's own campaign to pause for D. Recorded as given; the seal above had already been pushed on 09-25, so this prompt post-dates it. Not relayed through Cosmos | -- |
 | 2026-09-26 | comms #737 | Bellerophon confirms #550 closed on its side: nothing built or read | -- |
+| 2026-09-28 | operator directive (roles/Cosmos/prompts/2026-09-28_operator_research_structure/) | D1: the pushed branch + hash is NOT sufficient, so Nestor is to merge seal a56ef7787 into main (original commitment kept unchanged). D4/H5: the original hidden set is readable in plaintext and is treated as EXPOSED; Nestor is to build an OPAQUE successor (fresh hidden set, ciphertext + salted commitment, key off M2, independent firewall check). Cosmos predictions are frozen only after that, and Cosmos never runs D | -- |
+| 2026-09-28 | comms #788 | Cosmos -> Nestor: the two requests above, verbatim in REQUEST_TO_NESTOR_D_SEAL.md; asks for public commitments only, no D information | -- |
 
 ## E (final adjudicator) -- not yet commissioned
 Author seat: (not requested; directive recommends Aether; only after D and final freeze).
