@@ -42,3 +42,9 @@ R-07 | disposable worker 7 | ubu002 | 2026-09-28T14:20Z | 2026-09-28T14:54Z | RE
 R-11 | disposable worker 11 | ubu002 | 2026-09-28T14:55Z | | running |
 R-11 | disposable worker 11 (used 4 parallel reading sub-agents within its budget -- effort asymmetry recorded) | ubu002 | 2026-09-28T14:55Z | 2026-09-28T15:12Z | REPORT (returned in final reply; Write blocked; saved verbatim) | see audit line
 R-12 | disposable worker 12 | ubu002 | 2026-09-28T15:12Z | | running |
+R-12 | disposable worker 12 | ubu002 | 2026-09-28T15:12Z | 2026-09-28T15:32Z | REPORT (returned in final reply; saved verbatim) | see audit line
+R-10 | disposable worker 10 | ubu002 | 2026-09-28T14:43Z | 2026-09-28T15:40Z | REPORT (returned in final reply; saved verbatim) | see audit line
+R-13 | disposable worker 13 | ubu002 | 2026-09-28T15:40Z | | running |
+R-14 | disposable worker 14 | ubu002 | 2026-09-28T15:40Z | | running |
+- 2026-09-28T15:42Z plan (cohort-blind): 'who should know' notifications from ALL run reports are sent to owning seats in one batch after executions end (identical treatment for every run); this is what lets owner decisions (ED) happen before the day-30 re-check.
+R-15 | disposable worker 15 | ubu002 | 2026-09-28T15:43Z | | running |
