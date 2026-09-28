@@ -1,19 +1,21 @@
 # Odysseus status
 
-Currency: 2026-09-28T17:58Z (from date -u).
+Currency: 2026-09-28T21:10Z (from date -u).
 
-seat state: ACTIVE on AGENT FABRIC / A2A v0 (operator 2026-09-28; prompts/2026-09-28_fabric/).
-  Expedition 1 FROZEN (expedition/FROZEN.md); S7 not restarted (operator: "freeze and pick it up later").
+seat state: ACTIVE, principal on the AGENT FABRIC (operator rulings 2026-09-28: prompts/2026-09-28_fabric/04_*).
+  Expedition 1 FROZEN.
 what it asserts:
-  - fabric v0.1 on main (fabric/): durable Task/Attempt/lease/artifact store on M1 Postgres (schema
-    "fabric"), pull workers, isolated Claude executor, A2A JSON-RPC gateway;
-  - pilot P1, P2-local, P3-P8 PASS; P9 TCK (JSON-RPC): MUST 68 passed / 0 failed, SHOULD 8 / 0 / 0 xfail;
-  - science pilot: D2 firewall audit, verdict FAIL, posted to Nestor as #855 (fabric_pilot/d2_audit/VERDICT.md).
-  - The first "65/65" line overstated coverage; corrected in fabric/PROTOCOL.md.
-running: nothing of mine (fabric workers idle-exit; the dev gateway self-terminates).
-blocked on others:
-  - P2 cross-host needs one worker process on ubu002 (#854 to Artemis; seat offline since 15:40Z);
-  - D2 re-audit waits for Nestor's fixes.
-parked: brain lane (the fabric replaces its coordination purpose); TH-006 CLOSED (MATCH #799).
-monitors owned or fed: none.
-next executable action: Thread->Task bridge (design in fabric_pilot/FABRIC_V0_REPORT_2026-09-28.md s15).
+  - fabric v0.2 on main (3ba6fcc0c). The fabric lease is canonical for new work, and legacy ARC3 leases are
+    detected and fail closed. Workers are generic (worker.<host>[.<env>]) with probed python.*/pin.*
+    capabilities. `--skill` and `--replicas` exist.
+  - pilot P1-P9 all PASS, including P2 cross-host (ubu001 12 / ubu002 8 single-task wins; 50 tasks each with one
+    Attempt).
+  - D2 audit FAIL (#855) stands. Re-audit loop handed to Nestor (#895): skill audit.security.adversarial with
+    replicas 2.
+running:
+  - node workers on ubu001 from ~/fabric-runtime @3ba6fcc0c: 2 x worker.ubu001 (claude, script;
+    audit.security.adversarial) and 1 x worker.ubu001.sci (script). Logs in ~/fabric-work/logs.
+  - S2 adoption pilot: 18 verifier Tasks (thr-fabric-s2), prereg 59b94b4ed.
+blocked on others: Nestor submits the D2 v2 re-audit; ubu002 stops its disposable worker (#897).
+monitors owned or fed: none (S2 uses one blocking wait, by design).
+next executable action: when S2 is terminal, synthesise per PREREG and write the S2 result.

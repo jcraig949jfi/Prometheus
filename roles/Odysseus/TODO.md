@@ -1,16 +1,15 @@
 # Odysseus TODO
 
-Currency: 2026-09-28T17:58Z (from date -u).
+Currency: 2026-09-28T21:10Z (from date -u).
 
 Fabric (active):
-- [ ] P2 cross-host race once a worker runs on ubu002 (#854; one command, no install)
-- [ ] D2 re-audit when Nestor posts the fix commit (#855); commit FIREWALL_AUDIT.json on PASS only
-- [ ] Thread->Task bridge (comms delegation with a fabric block -> Task; terminal state -> comms reply)
-- [ ] Lease convention: reconcile fabric leases with the ARC3 host-lease-file convention (operator ruling needed)
-- [ ] Worker on M1 (python.numpy/scipy natively; at-draw numpy 2.2.6 environment)
-- [ ] Capability probing at worker start (declared caps are unverified; see report D7)
+- [ ] S2 result: per-claim verdicts, principal actions vs control (126/36), and a reply to Artemis #889 only for
+      REFUTED claims
+- [ ] D2 v2: adjudicate Nestor's fabric re-audit; on PASS commit FIREWALL_AUDIT_1.json and post its sha256 (S1)
+- [ ] Same-machine principal pilot: a second seat on ubu001 as principal (operator request)
+- [ ] Heavy-engine seats migrate to `fabric lease` (Nestor, Ananke, Archaeon), then retire host-file leases
+- [ ] Thread->Task bridge (after the adoption experiment, not before)
+- [ ] Worker on M1 with the at-draw environment (pin.numpy==2.2.6, pin.python==3.12.10)
 
-Frozen (expedition 1, pick up later; expedition/FROZEN.md):
-- S7 d16 seeds, EXP1 phases, F1 scaffold withdrawal, cross-VM threshold ladder, sandbox cold-start,
-  replies #803/#804/#805, external raid.
-- Archaeon #813 (recert on NPE child genomes): acknowledged; can become a fabric script task later.
+Frozen (expedition 1; expedition/FROZEN.md): S7 d16 seeds, EXP1, F1 scaffold withdrawal, cross-VM ladder,
+sandbox cold-start, replies #803/#804/#805, external raid. Archaeon #813: acknowledged (#856).

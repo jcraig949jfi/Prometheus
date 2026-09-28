@@ -1,0 +1,17 @@
+{"claim_id": "C8",
+ "verdict": "CANNOT-VERIFY",
+ "parts": [
+  {"part": "The claim faithfully restates R-34 REPORT.md l.74-75 and l.109-110",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:73-75", "roles/Artemis/selftest/runs/R-34/REPORT.md:108-111", "roles/Odysseus/fabric_pilot/s2/PREREG.md:53"]},
+  {"part": "Archaeon SFE-driven campaign records code as improver x improvement-rate (under both annotators)",
+   "status": "unverifiable",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:29-31 (says codings are in annot_A.json / annot_B.json)", "Glob **/annot_[AB].json -> no files; roles/Artemis/selftest/runs/R-34/ contains only REPORT.md"]},
+  {"part": "Aphrodite codes as improver x improvement-rate (under both annotators)",
+   "status": "unverifiable",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:73-75", "no annot_A.json / annot_B.json / corpus_index.tsv / CODEBOOK.md / analysis_out.txt committed anywhere in the checkout"]},
+  {"part": "SFE D8, Aphrodite and Odysseus natural-induction code as improver x task-skill",
+   "status": "unverifiable",
+   "evidence": ["roles/Artemis/selftest/runs/R-34/REPORT.md:75", "roles/Artemis/selftest/runs/R-34/REPORT.md:109-110"]}
+ ],
+ "notes": "The claim is a statement about how two model sub-agent annotators coded 33 prereg records. R-34 REPORT.md says the codings are in annot_A.json and annot_B.json, the corpus is in corpus_index.tsv plus corpus/X01..X33.txt, and the analysis is analyze.py/analysis_out.txt (REPORT.md:16-34). None of these is committed at 59b94b4ed: roles/Artemis/selftest/runs/R-34/ holds only REPORT.md, and a repo-wide search for 'improvement-rate' matches only the report, ROUTING_DRAFT.tsv and the S2 PREREG, all of which just repeat the claim. The only evidence is the report itself, which is the source of the claim and not independent evidence. Blind recoding would not settle it either, because the claim is about what these specific annotators produced. Internal-consistency note: under a primary-code (varied1, observed1) key each record has one observed1 value, so Aphrodite cannot be both improver x improvement-rate and improver x task-skill for a single annotator's primary code. The two statements must mix primary and secondary codes, or mix annotators ('under both annotators' is stated only for the first pair). The report itself calls this 'a candidate lead, not verified' (REPORT.md:108). Limitation: Bash/git was unavailable in this session, so other branches could not be searched. To settle the claim, commit R-34's annot_A.json, annot_B.json, corpus_index.tsv and CODEBOOK.md from the Artemis run directory on ubu002, or find them on another branch."}

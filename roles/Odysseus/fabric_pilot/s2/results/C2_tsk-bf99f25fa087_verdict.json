@@ -1,0 +1,16 @@
+{"claim_id": "C2", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "B6 count W_by_location=NO | W_by_material=YES = 27,083 in archaeon/causal_lens/out_v02/B6_PROBE_r038751.json",
+   "status": "true",
+   "evidence": ["archaeon/causal_lens/out_v02/B6_PROBE_r038751.json:6", "archaeon/causal_lens/out_v02/B6_PROBE_r038751.json:3"]},
+  {"part": "that file is on main",
+   "status": "true",
+   "evidence": ["commit 949b9ba4d added it and is contained in origin/main (git branch -a --contains 949b9ba4d)", "git rev-parse origin/main:archaeon/causal_lens/out_v02/B6_PROBE_r038751.json = 69070e12 = HEAD blob"]},
+  {"part": "replay result_sha256 cd9547c2... equals the committed recipe/pack",
+   "status": "true",
+   "evidence": ["roles/Odysseus/th006/pack/r038751.recipe.json:9", "roles/Odysseus/th006/pack/r038751.pack.json:188", "roles/Odysseus/th006/pack/r038751.pack.json:195", "ops/campaigns/C-001/E-001/TASKS.md:23", "ops/campaigns/C-001/E-001/TASKS.md:52", "roles/Artemis/selftest/runs/R-13/REPORT.md:73", "recipe/pack blobs identical on origin/main and HEAD (bf5c8fa2, dec5b4b8)"]},
+  {"part": "an M2 attestation of it is on main",
+   "status": "true",
+   "evidence": ["origin/main:roles/Odysseus/th006/attest/M2_r038751_2026-09-28.txt (added in f525de9ef, on origin/main): status MATCH, content_sha256 95a12c29... = expected, 74800 rows", "roles/Odysseus/th006/REPORT.md:5", "roles/Odysseus/th006/REPORT.md:168"]}
+ ],
+ "notes": "I could not re-run the replay, so the equality of the replay output with cd9547c2 depends on the recorded receipts: E-001 A-002 on ubu001, TH-006, and R-13 on ubu002. They all agree with each other and with the recipe's expected_result_sha256. The M2 attestation checks the preserved source log's content hash (95a12c29...), which the pack predicts from that replay. It does not re-hash cd9547c2 on M2 directly. The committed pack.json still shows derivation.attestation.status=PENDING (pack.json:152-156) because the MATCH was recorded in a separate attest file and was not written back into the pack. Neither point changes the claim."}

@@ -1,0 +1,22 @@
+{"claim_id": "C1",
+ "verdict": "PARTIAL",
+ "parts": [
+  {"part": "Source R-13 grades 12 engine headlines",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:57-70", "roles/Artemis/selftest/runs/R-13/REPORT.md:12"]},
+  {"part": "BEE multi-day outcomes are not in Git (prereg/code/pilots on seat branch only, outcomes on M2)",
+   "status": "true",
+   "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:34", "roles/Artemis/selftest/runs/R-13/REPORT.md:59", "no *multiday*/ directory on main at 59b94b4 (Glob **/*multiday*/** = none)"],
+   "notes": "Wording nuance: the seat branch holds prereg/code/pilot receipts, not outcomes; outcomes are M2-only (and the campaign was still running, so no headline outcome existed yet). Branch contents not directly inspected (git unavailable to this verifier)."},
+  {"part": "Z80xAtlas RUNS.jsonl is not in Git (only its hash is)",
+   "status": "true",
+   "evidence": ["archaeon/z80atlas/campaign/ (contains only CAMPAIGN_DONE.json, PACKET.json, GRAMMAR_FROZEN.json, STATUS.json, CAMPAIGN_PACKET.md)", "archaeon/z80atlas/postcampaign/Z80ATLAS_POSTCAMPAIGN_ADJUDICATION_2026-09-23.md:12", "roles/Artemis/selftest/runs/R-13/REPORT.md:61", "roles/Artemis/selftest/runs/R-13/REPORT.md:100-101"]},
+  {"part": "BEE coupling denominators (150/arm, P1-P6, comp_final p) exist only as aggregates; per-run results.jsonl not in Git",
+   "status": "true",
+   "evidence": ["roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md:51", "roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md:165", "roles/Bellerophon/coupling_2026-09-24/receipts/COUPLING_RESULTS.json (aggregate)", "no Bellerophon results.jsonl anywhere in tree (Glob)", "roles/Artemis/selftest/runs/R-13/REPORT.md:60", "roles/Artemis/selftest/runs/R-13/REPORT.md:103"]},
+  {"part": "The gap is EXACTLY these three; all other headline inputs are in Git",
+   "status": "false",
+   "evidence": ["roles/Artemis/selftest/runs/R-13/REPORT.md:174-177", "roles/Artemis/selftest/runs/R-13/REPORT.md:63", "archaeon/envgate2/.gitignore:1", "roles/Artemis/selftest/runs/R-13/REPORT.md:66", "roles/Artemis/selftest/runs/R-13/REPORT.md:67"],
+   "notes": "The source report itself caveats that for ENVGATE-02 (row 5) the committed RESULTS.json lists positives only, and completeness (no other positive establishment) rests on block files on M2 (envgate2 runs/ is gitignored). Same completeness caveat applies to the BEE numerators. Aether E-006 72 unit files are on M2 (headline re-executed from Git, so recomputable). Aphrodite A17 inputs are in Git but only on 4 unmerged seat branches, not main. So 'all other headline inputs are in Git' holds at R-13's headline-grading level but is overstated as 'exactly'."}
+ ],
+ "notes": "The three named gaps are correct and match R-13 lines 59-61 and 137-138 (Bash/git was denied, so branch-only files could not be inspected; main-tree checks via Glob/Grep). The exclusivity/'all other inputs in Git' part is contradicted by R-13's own limit 2 (ENVGATE-02 positive-list completeness depends on M2 block files), and Aphrodite evidence is branch-only. R-34 REPORT.md is unrelated (lens-field study)."}
