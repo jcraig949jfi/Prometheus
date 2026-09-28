@@ -15,8 +15,11 @@ interaction (lib/reset_axis.with_schedule; per-run RNG):
   GRADUAL       p = 1 for epochs < 300, then linear to 0 at epoch 1300, then 0.
 Seeds 26_000_000 + 2 d + k, k < 2 per donor per arm: 96 runs.
 Readouts every 100 epochs: founder-lineage share (live organisms with anc == 0), P-11 causal events in the last 100 epochs, and
-for up to 6 sampled distinct COMPETENT genomes (zero-state screen, cached) whether they are STATE_ROBUST (X-DD-SELFSTATE method:
-rate after one own execution >= 0.25 x fresh rate).
+for up to 6 sampled distinct COMPETENT genomes (zero-state screen, cached) whether they are STATE_ROBUST: CYCLE-AWARE -- the
+X-DD-SELFSTATE copy rate after k = 1..6 own executions is >= 0.25 x the fresh rate at >= 5 of the 6 k.
+AMENDMENT A1 (pre-launch, 2026-09-28 ~02:25, no outcome existed): the original single-k ruler (rate_1 >= 0.25 rate_0) was shown
+by the 16000006 forensic delegate to be a one-point snapshot of a CYCLING carried state (founders copy after 0, 2, 5 own
+executions, fail after 1, 3, 4); replaced by the cycle-aware rule above before launch.
 Per run: ESTABLISHED_300 = anc0 share >= 0.5 at epoch 300; PERSISTS = anc0 share >= 0.5 at the end AND >= 1 causal event in the
 last 200 epochs; robust share at epoch 300 and at the end (among sampled competent founder-population genomes).
 Classification (among runs ESTABLISHED_300):
@@ -95,8 +98,9 @@ def job(args):
                 rob = []
                 for g in pick:
                     if g not in rcache:
+                        run_ss.KMAX = 6                   # A1 (pre-launch): cycle-aware self-state ruler
                         k = run_ss.job(("ANY", "ffa6", seed, g.hex()))["rates_by_k"]
-                        rcache[g] = k[0] > 0 and k[1] >= 0.25 * k[0]
+                        rcache[g] = k[0] > 0 and sum(x >= 0.25 * k[0] for x in k[1:7]) >= 5
                     rob.append(rcache[g])
                 ev = self.ct["p11_events"]
                 cps.append({"epoch": self.epoch, "anc0": round(anc0, 4), "events": ev - st["ev_prev"],

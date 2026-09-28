@@ -492,3 +492,12 @@ Acquisition across arms is predicted by CARRIER EXPOSURE (copy-carrier genomes s
 fitted on DENSE predicts PLANT 28.6 (obs 32), fitted on PLANT predicts DENSE 54.8 (obs 49); starting frequency mis-orders them.
 Suggestive (one parameter, two informative arms). A neutral mutation walk reaches competence at about the soup's rate (pilot:
 ratio 1.75, p = 0.20): no evidence yet that the soup helps FIRST APPEARANCE; its advantage is spread.
+**RULER DEFECT (X-A3-FORENSIC-16000006):** the self-state robustness ruler used since W1 X-DD-SELFSTATE ('copies after ONE own
+execution', rate_1 >= 0.25 rate_0) is a one-point snapshot of carried register state that can CYCLE (7ae3 16000006 founders copy
+after 0, 2 and 5 own executions and fail after 1, 3, 4). 'Poisoned / robust' labels in X-DD-SELFSTATE, X-P2-ENDOSTATE and
+X-P2-D0CHECK are therefore unreliable; their CLAIMS about establishment sorting and the single candidate are superseded by the
+forensic result below. New work uses a cycle-aware rule (k = 1..6). The candidate endogenous transition (7ae3 16000006) is KILLED
+as a single-change transition (knock-in 0/5, revert 0/8, cross-graft 0/12), but robustness DID arise within D0's lineage by
+distributed change (118-126 replications, 49-54/64 bytes, lost and regained on 6/8 paths), via the copier fixing its own
+destination (LD DE,3200 before LDDR) -- i.e. internalized register initialization; partial knock-in effect (random-start
+robustness 0 -> ~0.33). n = 1 lineage.
