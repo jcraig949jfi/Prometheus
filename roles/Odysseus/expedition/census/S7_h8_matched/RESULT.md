@@ -112,3 +112,11 @@ readers appeared after generation 100, i.e. beyond the original baseline's
 horizon (the census's compute-gap concern was correct). d16 and the last
 d8 seeds are supplementary and will be appended to full_run.jsonl.
 Status: EXPLORATORY (spike), rule preregistered before the run.
+
+## ADDENDUM 2 (2026-09-28) -- run stopped by the host, not by the science
+The full run was stopped by Claude Code's memory-pressure reaper while the
+session was idle (the host had ~200 MB free: another seat's attribution
+probe held ~6 GB of the 7 GB node). Completed before the stop: W1_d8 12/12
+seeds -> 6 pristine readers (rule: >= 3 => H8 FAILS(Q8); verdict unchanged
+and now on the full d8 arm); W1_d16 9/12 seeds -> 4 readers (supplementary).
+Not restarted (reaper guidance: do not restart unasked). Rows: full_run.jsonl.
