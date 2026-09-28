@@ -248,3 +248,26 @@ Files (on M2 and copied here): config r025144.config.json; preserved births r025
 - The pair-execution birth-rule confound (PAIR_EXECUTION) is untested.
 - Harness birth-existence flows are recorded but not intervened on.
 - In-situ capability is confounded with survival (the isolated test is primary).
+
+## Amendment A (2026-09-28): the BEE fixture pack for r025144's world
+- **Content:** archaeon/attribution/bee_fixtures.py (VM_COPY, L = 64, SHARED; frozen VM 16fc6c2a), 29 fixtures:
+  * K1/K1b, K2, K3 (= K25: partner-performed copy), K4-K8, K10 and K10c (COPYALL overlap), K11-K17;
+  * K22-K24, K26, K27;
+  * K31 (bit decoder), K32 (RESET-pointer self-overlap fill), K34, K35, K36 (count from the occupant).
+- **Validation** (BEE_FIXTURE_PACK_v4_VALIDATION.txt), on Archaeon's tracer (value-checked on the frozen VM): every expectation met,
+  0 FAILED flips, completeness complete. Every one of the 10 mutant tracers is caught by >= 1 fixture:
+  * loc0, reverse, memmove, ptrlabel;
+  * noexec, noctrl_untaken, noctrl_stops;
+  * positional, implicit_move, exec_all.
+- **Correction on record:** two hand-written expectations were corrected after the first validation run: K26 (the input region)
+  and K36 (the first write precedes the count test). In both cases the tracer was right and the expectation wrong.
+- **The owner's and the reference tracer must meet the same expectations.** The images are deterministic; expectations are data in
+  bee_fixtures.fixtures().
+
+## Amendment B1 (2026-09-28): the flip test also requires the load-address sequence unchanged (s4.1)
+- **Defect found** while validating Amendment A. In the textbook COPYALL replicator (LD S,0; LD T,64; COPYALL), locus 1's source
+  byte is ALSO the operand of LD S. Flipping it moves every load while the fetch path and store addresses stay the same. So s4.1 as
+  written marks a correctly labelled locus FAILED.
+- **Change:** "applicable" requires that the fetched-instruction trace, the store-address sequence AND the load-address sequence
+  (every data read: LD A,(r), LDI/LDIR/COPYALL sources, IN reads) are all unchanged. Otherwise the bit is INAPPLICABLE.
+- **Found by:** Archaeon while building the pack, not by a reviewer.
