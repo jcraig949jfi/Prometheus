@@ -545,3 +545,26 @@ internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
   C-A3-INTERNALIZE, which was in the default world.
 - EXPLORE only. The frozen CONFIRM C-A3-WITHDRAW-ROBUST is declared (PLANNED).
 - Theory-aware; not offered as SI evidence.
+
+## DEFECT C9-D24 (found 2026-09-28 during the ancestry-replay pin, prompted by Archaeon #834): implant arms are not paired; RANDOM_MATCHED == in situ
+- **Mechanism** (frozen world.py `run`, `_implant_genome`, `_seed_genome`; RANDOM seeding):
+  - A_in_situ draws organism 0 as L random bytes from the runner RNG.
+  - C RANDOM_MATCHED with implant_len == L draws organism 0 as the SAME L bytes from the SAME RNG state. So C is the same
+    simulation as A, for every seed. It was verified on s9200006 and s9200008, where the lineage_sha256 values are
+    identical (NPE_T003_HASHES.txt; my PIN_REPRODUCE.json).
+  - B ACTUAL_GENOME consumes no RNG draws for organism 0. So B's whole RNG stream is shifted by L draws: B's organism k is
+    A's organism k−1, and every later draw differs.
+  - The code comment "B and C share the same background population and differ only in these bytes" is FALSE.
+- **Impact:**
+  - Cycle-9 H2 "implanted 4/16, random bytes 0/16, in situ 0/16": the random and in-situ counts are the SAME 16 runs, so
+    the random null is not independent of in situ.
+  - GENOME-vs-RANDOM contrasts in C-SWAP-ACQUIRE, X-ATOMIC-RANDOM and X-SWAP-ORIGIN (RANDOM_MATCHED, implant_len = L)
+    compare DIFFERENT backgrounds per seed.
+  - All of these remain valid as UNPAIRED contrasts across seeds, because every background is random in both arms. Any
+    per-seed pairing or "same background, only the bytes differ" reasoning is invalid. That includes paired tests,
+    matched-seed differences, and "the implant alone caused X in seed s".
+- **Status:**
+  - The frozen harness is NOT edited.
+  - Audit of the affected experiments' analyses for paired reasoning: OPEN (T-DEF-D24).
+  - Future implant arms must consume the RNG identically across arms: draw the background first, or burn L draws in the
+    ACTUAL arm.
