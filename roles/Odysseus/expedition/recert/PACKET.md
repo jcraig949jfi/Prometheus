@@ -1,4 +1,4 @@
-# PACKET -- functional label recertification (state: DRAFT until cold-start tried)
+# PACKET -- functional label recertification (state: READY 2026-09-28 after cold-start coldstart_A-001; pin: origin/main 281eeed50 or later)
 
 Currency: 2026-09-28. Owner: Odysseus. Read roles/Odysseus/frontier/poi/ready/00_READ_FIRST.md
 and roles/Odysseus/expedition/READY_PROTOCOL.md first. Pure ASCII.
@@ -20,3 +20,8 @@ not yet recertified (e.g. BEE SUSTAINED_LINEAGE, an Archaeon "copier" in
 ENVGATE-01, or an NPE "runaway"), with its own planted true instance and
 impostor, and run it on committed data. Artifacts: RESULT_COLDSTART.md,
 the new spec + rows, PACKET_GAPS.md.
+
+Related concurrent work (cite, do not duplicate): Artemis's challenge
+branch p11/ (origin/artemis/challenge-2026-09-28:roles/Artemis/challenge/p11/)
+recertifies the same 57 NPE P-11 donors with its own certificates (FR-011).
+Cold-start trial 1: coldstart_A-001/ (new label: ENVGATE-01 founder copier).

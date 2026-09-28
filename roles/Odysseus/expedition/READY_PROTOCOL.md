@@ -35,7 +35,17 @@ output is written down) so (d) is checkable.
                                                      re-runs write known_answer_rerun.json)  10 minor
                                                      fixture reproduced bit-exact (5040 values); NEW cheat
                                                      "nest tag" defeated the battery -> ACCUMULATION A8
+    recert  2026-09-28  fresh subagent  READY      0 now (G1 files not in git at trial start -- fixed
+                                                     mid-trial by d3941cb07)  11 minor
+                                                     fixture 24/24 byte-identical, also unpatched from a clean
+                                                     origin/main snapshot; new label (ENVGATE-01 founder
+                                                     "copier") written and run by the worker: 81/81 hold
     (rows added per trial)
+
+Failure rate so far: 3 trials, 3 hit a blocking gap on first contact
+(R4: prior work uncited; sandbox and recert: packet not in git). The
+dominant failure is the AUTHOR'S PUBLISHING HYGIENE, not the science.
+Rule added: a packet is not offered until its directory is on origin/main.
 
 Current states: R4 COLD-START-TRIED (not READY); R1, R2, R3, R5, R6 DRAFT.
 The pass-1 label "READY" on them is withdrawn.
