@@ -95,13 +95,15 @@ def analyse_birth(p, rng):
         for _ in range(K):
             mm = bytearray(m)
             for a in addrs: mm[a] = rng.randrange(256)
+            occ_new = bytes(mm[L:2 * L])
             ii = list(mm[v.IN_BASE:v.IN_BASE + len(inp)]) if g == "INPUT" else list(inp)
-            v.execute(mm, L, 0, BUDGET, ii, allow_copyall=True)
+            tr = v.execute(mm, L, 0, BUDGET, ii, allow_copyall=True)
             nd[g] += 1
+            nw = len({a for a in tr.writes if L <= a < 2 * L})
+            if nw < L or (occupied and bytes(mm[L:2 * L]) == occ_new): supp[g] += 1      # ENDOGENOUS_COPY birth test fails
             for i in range(L):
-                wr = recs[i]["written"]
                 if mm[L + i] != base_mem[L + i]: change[g][i] += 1
-    out = {"loci": {}}
+    out = {"loci": {}, "q8c_whether": {g: supp[g] / nd[g] for g in groups}}
     for i, r in recs.items():
         if not r["written"]: continue
         d = r["data"]; perf = {b[1] for b in r["performer"]}
@@ -195,6 +197,17 @@ def capable(child, rng, n_occ=8, n_in=40):
     return ok / (n_occ * n_in)
 
 
+def capable_host(child, hosts, rng, n_host=8, n_in=40):
+    """C4.5: the child as WRITER against real hosts (self-performed transmission children of the same run) as occupants."""
+    V = T.vm16(); ok = n = 0
+    for h in rng.sample(hosts, min(n_host, len(hosts))):
+        for _ in range(n_in):
+            m = bytearray(256); m[:L] = child; m[L:2 * L] = h; x = rng.randrange(256); m[V.IN_BASE] = x
+            V.execute(m, L, 0, BUDGET, [x], allow_copyall=True); n += 1
+            ok += bytes(m[L:2 * L]) == bytes(child)
+    return ok / n if n else None
+
+
 def boot(vals, clusters=None, B=1000, seed=0):
     rng = random.Random(seed)
     if not vals: return None
@@ -211,10 +224,14 @@ def main(a):
     PRE, equal, ng, nw = replay(cfgp, birthp, scratch)
     print("replay", ng, nw, "ALL EQUAL" if equal else "DIFFER", round(time.time() - t0, 1)); sys.stdout.flush()
     rng = random.Random(1)
-    births = []; bcache = []
+    births = []
     for p in PRE:
         o, recs, info, m = analyse_birth(p, rng)
-        births.append(o); bcache.append((p, recs, info, m))
+        qs = [x["q8c"] for x in o["loci"].values() if x["q8c"] is not None]
+        o["q8c_mean"] = sum(qs) / len(qs) if qs else None
+        o["ident_loci"] = sorted(k for k, x in o["loci"].items() if x["ident"])
+        del o["loci"]                                      # memory (Odysseus #826): per-locus dicts are not kept
+        births.append(o)
     print("analysed", len(births), round(time.time() - t0, 1)); sys.stdout.flush()
     nm = [b for b in births if not b["no_material"]]
     tx = [b for b in births if b["transmission"]]
@@ -226,8 +243,8 @@ def main(a):
            "q2_disagree_target_labelled_tx": boot([float(b["q2_disagree"]) for b in tx if b["native_label"] == "target"]),
            "homology_shift_share_tx": boot([b["homology_shift"] / b["n_ident"] for b in tx if b["n_ident"]]),
            "source_diversity_tx": boot([b["source_diversity"] for b in tx if b["source_diversity"] is not None]),
-           "q8c_tx": boot([sum(x["q8c"] for x in b["loci"].values() if x["q8c"] is not None) / max(1, sum(1 for x in b["loci"].values() if x["q8c"] is not None)) for b in tx]),
-           "q8c_all_entity": boot([sum(x["q8c"] for x in b["loci"].values() if x["q8c"] is not None) / max(1, sum(1 for x in b["loci"].values() if x["q8c"] is not None)) for b in nm if any(x["q8c"] is not None for x in b["loci"].values())]),
+           "q8c_tx": boot([b["q8c_mean"] for b in tx if b["q8c_mean"] is not None]),
+           "q8c_all_entity": boot([b["q8c_mean"] for b in nm if b["q8c_mean"] is not None]),
            "native_label_counts": dict(Counter(b["native_label"] for b in births))}
     # stratified sample for flip / arms / Q4
     strata = defaultdict(list)
@@ -237,20 +254,37 @@ def main(a):
         take = max(1, round(200 * len(ks) / len(births))); sample += rng.sample(ks, min(take, len(ks)))
     sample = sample[:220]
     flips = Counter(); fl_cls = defaultdict(Counter); arms_out = []; caps = []
+    hosts = [PRE[k]["child"] for k, b in enumerate(births) if b["transmission"] and b["class"] == "self"]
+    hosts = rng.sample(hosts, min(200, len(hosts))) if hosts else []
+    caps_host = []
     for n, k in enumerate(sample):
-        p, recs, info, m = bcache[k]; b = births[k]
+        p = PRE[k]; b = births[k]; m = memimg(p)
+        _, recs, info = T.trace(m, L, BUDGET, p["inputs"], occupied=p["o"] is not None)
         st = flip_r4(m, p["inputs"], recs, info, p["o"] is not None)
         # only loci identified under R1 are gated by the flip
         for i, s in st.items():
-            if b["loci"].get(i, {}).get("ident"): flips[s] += 1; fl_cls[b["class"]][s] += 1
+            if i in b["ident_loci"]: flips[s] += 1; fl_cls[b["class"]][s] += 1
         if n % 5 == 0: arms_out.append(byte_arms(m, p["inputs"], recs, rng))
-        if b["transmission"]: caps.append(capable(p["child"], rng))
+        if b["transmission"]:
+            caps.append(capable(p["child"], rng)); caps_host.append((b["class"], capable_host(p["child"], hosts, rng)))
     res["sample"] = len(sample)
     res["flip"] = dict(flips); res["flip_by_class"] = {c: dict(v) for c, v in fl_cls.items()}
     res["byte_arms"] = {"precision_mean": round(sum(x["precision"] for x in arms_out if x["precision"] is not None) / max(1, len(arms_out)), 4),
                         "completeness_leak_mean": round(sum(x["completeness_leak"] for x in arms_out if x["completeness_leak"] is not None) / max(1, len(arms_out)), 4),
                         "n": len(arms_out)}
     res["q4_capable_share_tx_sample"] = boot([float(c >= 0.5) for c in caps]); res["q4_trials_mean"] = round(sum(caps) / len(caps), 4) if caps else None
+    res["q4_host_assisted_by_class"] = {c: boot([float(v >= 0.5) for cc, v in caps_host if cc == c and v is not None]) for c in ("self", "other", "none")}
+    res["q8c_whether_by_class"] = {c: {g: boot([b["q8c_whether"][g] for b in tx if b["class"] == c and g in b["q8c_whether"]]) for g in ("W", "P", "INPUT")}
+                                   for c in ("self", "other", "none")}
+    res["flip_coverage_by_class"] = {c: round((v.get("CONFIRMED", 0) + v.get("FAILED", 0)) / max(1, sum(v.values())), 4) for c, v in fl_cls.items()}
+    nonpaint = [b for b in tx if (b["source_diversity"] or 0) >= 0.5]
+    res["painting_guard"] = {"tx_births_diversity_ge_0.5": len(nonpaint),
+                             "q8c_tx_nonpaint": boot([b["q8c_mean"] for b in nonpaint if b["q8c_mean"] is not None]),
+                             "homology_shift_tx_nonpaint": boot([b["homology_shift"] / b["n_ident"] for b in nonpaint if b["n_ident"]])}
+    ida = [b for b in births if b["identifiable"]]
+    tgt = [b for b in ida if b["native_label"] == "target" and b["majority_donor"] in ("W", "P")]
+    res["P2_native_target_disagree_identifiable"] = boot([float(b["majority_donor"] == "W") for b in tgt])
+    res["q1_class_counts_tx"] = {"%s|%s" % k: v for k, v in Counter((b["class"], b["q1"]) for b in tx).items()}
     # the verdict v5 would return
     q8 = res["q8c_tx"]
     if res["transmission"] < 30 or (res["identifiable_share_non_no_material"] or 0) < 0.80: verdict = "INCONCLUSIVE"
@@ -262,9 +296,14 @@ def main(a):
     res["flip_coverage"] = round(cov, 4); res["flip_failed_share"] = round(fl.get("FAILED", 0) / max(1, fl.get("CONFIRMED", 0) + fl.get("FAILED", 0)), 4)
     if res["flip_failed_share"] > 0.01: verdict = "INSTRUMENT/SPEC check: flip FAILED > 1% (" + verdict + ")"
     if cov < 0.5: verdict = "INCONCLUSIVE (flip coverage floor) / " + verdict
+    # C4: per-class gates with MARGINAL marks; native-label findings are not verdict routes
+    marg = [c for c, v in res["flip_coverage_by_class"].items() if v < 0.6]
+    if any(v < 0.5 for v in res["flip_coverage_by_class"].values() if v is not None): verdict = "INCONCLUSIVE (per-class flip coverage) / " + verdict
+    res["marginal_classes"] = marg
+    res["engine_native_findings"] = {"P2_holds": bool(res["P2_native_target_disagree_identifiable"] and res["P2_native_target_disagree_identifiable"][1] >= 0.10)}
     res["verdict_v5_would_return"] = verdict; res["wall_s"] = round(time.time() - t0, 1)
     json.dump(res, open(outp, "w"), indent=1)
-    json.dump([{k: v for k, v in b.items() if k != "loci"} for b in births], gzip.open(outp + ".births.json.gz", "wt"))
+    json.dump(births, gzip.open(outp + ".births.json.gz", "wt"))
     print(json.dumps(res, indent=1))
 
 
