@@ -109,7 +109,7 @@ def main(argv=None) -> int:
         needles = [(k, v.decode()) for k, v in sec["strings"].items()] + [("world_json", w.decode()) for w in sec["worlds"]]
         n_hit = {}
         for kind, needle in needles:
-            p = subprocess.run(["git", "-C", str(repo), "log", "--all", "--format=%H", "-S", needle],
+            p = subprocess.run(["git", "-C", str(repo), "log", "--all", "--no-textconv", "--format=%H", "-S", needle],
                                capture_output=True, text=True)
             hits = [x for x in p.stdout.split() if x]
             n_hit[kind] = n_hit.get(kind, 0) + (len(hits) if p.returncode == 0 else 1_000_000)   # error != clean
