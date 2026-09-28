@@ -10,7 +10,7 @@ the spike that closed it), SPLIT or MERGED. Consumption log at the end.
 T-M2-1 CLOSED 2026-09-27 (S-M2): What encodes M2's in-flight bit?
   -> the sign of one payload component's in-flight sum (swap FLIPs). See
   C1B_REVIEW_AND_MECHANISMS s2.
-T-M2-2 READY (threads/T-M2-2_interval_tuning.md): Is the echo interval
+T-M2-2 DONE (W-A): a strict two-hop echo; the interval = support of the round-trip kernel RT = ceil_P(d1)+ceil_P(d2) x readout wake parity. A parameter-free particle model predicted 46/46 unseen curves (median MAE .02). One-dial physics and a 2-field program edit move the interval as predicted. The routing write SHAPES the kernel (it deletes hop-1 round trips). Split into T-WA-1 (a routing-aware model), T-WA-2 (design, not evolve: the model picks physics for a target gap set), T-WA-3 (a recirculating control genome for any retention/SI design), T-WA-4 (always sweep odd gaps). Was: Is the echo interval
   set by the program or by the physics? Can one law hold several gaps?
   WHY: separates "delay line tuned by evolution" from "memory"; it
   decides whether PTE can ever produce interval-general memory.
@@ -135,6 +135,7 @@ T-DC-1 OPEN: Distributed causality maps: which sites' channel content is
   necessary (per-site flush) for M2/M3. MERGED with T-M2-4 for M2.
 
 ## Consumption log
+2026-09-27 (late): W-A closed T-M2-2 (M2 fully predicted by a zero-parameter model); W-C closed T-X-1 (contrast refuted; receiver-operator axis); W-B closed T-M3-1 (bootstrap = zero-default artifact in 64%; readout-local branch in 29%); W-E closed T-RET-1 (NO under the prereg; scars). Every closure split into sharper successors.
 2026-09-27 (cont.): T-RET-1 closed by W-E; it split into T-RET-2, T-SI-SCAR and T-RET-3. The joint carrier T-DM-2/T-JC-1 was reframed: 4781b0a1 is source-latched regeneration (a sensor latch -> channel handoff at the transmission deadline), not synergy. New: T-JC-2..4. T-CT-1 dequeued to W-F.
 2026-09-27 (continuation): instruments hardened (T-INS-1, T-TA-1 DONE). Workers dispatched: W-A (echo interval = T-M2-2), W-B (SETRULE = T-M3-1), W-C (PTE vs Aether = T-X-1), W-D (intervention reach = T-X-4, DONE). T-JC-1 (joint carrier) opened with a committed PLAN. The lease helper was added (the bus lease is unreachable, so the fallback is used).
 2026-09-27 (late): the S-CT carrier table opened T-CT-1 and gave T-DM-2 a
