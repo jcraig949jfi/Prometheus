@@ -61,7 +61,8 @@ def probe_environment() -> Dict[str, Any]:
         except md.PackageNotFoundError:
             pkgs[name] = "unknown"
     py = platform.python_version()
-    caps = ["python.stdlib", "pin.python==" + py] + ["python." + n for n in pkgs] + \
+    from . import VERSION
+    caps = ["python.stdlib", "pin.python==" + py, "fabric.runtime==" + VERSION] + ["python." + n for n in pkgs] + \
         ["pin.{}=={}".format(n, v) for n, v in pkgs.items() if v != "unknown"]
     manifest = {"interpreter": sys.executable, "prefix": sys.prefix, "python": py, "packages": pkgs,
                 "platform": platform.platform()}
@@ -73,8 +74,9 @@ def effective_capabilities(declared: List[str], probe: Dict[str, Any]) -> Dict[s
     """Declared python.*/pin.* capabilities are replaced by what the probe found (report D7: a declared
     capability the interpreter lacks produced failed Attempts). Other capabilities pass through."""
     env = probe["capabilities"]
-    dropped = [c for c in declared if c.startswith(("python.", "pin.")) and c not in env]
-    kept = [c for c in declared if not c.startswith(("python.", "pin."))]
+    probed = ("python.", "pin.", "fabric.runtime")
+    dropped = [c for c in declared if c.startswith(probed) and c not in env]
+    kept = [c for c in declared if not c.startswith(probed)]
     return {"capabilities": sorted(set(kept + env)), "dropped": dropped}
 
 
