@@ -25,7 +25,7 @@ Design: TH015_DESIGN.md.
 | NEIGHBOUR_CONTEXT: the whole member | the neighbour window randomised | 0.974 (1.00 from epoch 14,200) | -- |
 | CONTROL_STATE: the whole member | the start pc randomised | 0.399 (0.80-0.88 at 14,500-15,600 -> 0.00-0.20 at 17,700-19,300) | -- |
 
-- INPUT_SCAFFOLD: from epoch 14,500 onward, 23/24 tapes give births on 254-255 of 255 allowed inputs.
+- INPUT_SCAFFOLD: from epoch 14,500 onward, all 22 tapes give births on 254-255 of 255 allowed inputs.
 - The earliest two tapes were input-GATED: births on 15 and 47 inputs (both including 128, the input this arm blocks).
 - Two tapes are exceptions where EXECUTED_ONLY failed (0.07 at 14,500; 0.00 at 15,900). There the executed set misses loci that
   are read as data but never executed, so the transplant needs them too.
