@@ -54,3 +54,12 @@ R-13 | disposable worker 13 | ubu002 | 2026-09-28T15:40Z | 2026-09-28T16:10Z | R
 R-17 | disposable worker 17 | ubu002 | 2026-09-28T16:11Z | | running |
 R-15 | disposable worker 15 | ubu002 | 2026-09-28T15:43Z | 2026-09-28T16:19Z | REPORT | see audit line
 R-18 | disposable worker 18 | ubu002 | 2026-09-28T16:17Z | | running |
+R-16 | disposable worker 16 | ubu002 | 2026-09-28T15:50Z | 2026-09-28T16:19Z | REPORT | see audit line
+- 2026-09-28T16:20Z blind-lane note: R-16's report concerns memory-retention rules adjacent to the Selective Irreversibility program (SI blind lanes, programs/selective_irreversibility/BLIND_LANES.md). It ran on dev fixtures in a scratch copy (no LM01 campaign rows). Containment: its report lives only on the Artemis selftest branch; the end-of-run owner notifications route SI-adjacent findings only to Ensorain / Aporia / Cyclops, never to blind-lane seats (Bellerophon, Nyx, Techne, Aether). The frozen cohort was not changed.
+R-19 | disposable worker 19 | ubu002 | 2026-09-28T16:21Z | | running |
+R-17 | disposable worker 17 | ubu002 | 2026-09-28T16:11Z | 2026-09-28T16:33Z | REPORT | see audit line
+R-20 | disposable worker 20 | ubu002 | 2026-09-28T16:34Z | | running |
+R-20 | disposable worker 20 | ubu002 | 2026-09-28T16:34Z | 2026-09-28T16:39Z | REPORT | see audit line
+R-21 | disposable worker 21 | ubu002 | 2026-09-28T16:40Z | | running |
+R-19 | disposable worker 19 | ubu002 | 2026-09-28T16:21Z | 2026-09-28T17:03Z | REPORT (SI-adjacent: owner notification routed to stewards only) | see audit line
+R-22 | disposable worker 22 | ubu002 | 2026-09-28T17:01Z | | running |
