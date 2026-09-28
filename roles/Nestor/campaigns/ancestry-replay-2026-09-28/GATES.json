@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-28T22:16:52Z",
+ "updated": "2026-09-28T23:17:33Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -7,8 +7,8 @@
    "evidence": "Amendment C8 / VALIDATION_v2.txt: 451/451 expectations of the 26-fixture pack (incl. K16b, K16c, K37 and Archaeon's additions) agree with the INDEPENDENT reference tracer. Nestor verified that the validated copies (nestor_v2_npe_fixtures.py, FUZZ set, TRACER_FREEZE) are byte-identical to his frozen files. Mutants caught 3-22 times each."
   },
   "G2_independent_tracer_agreement": {
-   "status": "PASS_NESTOR_PENDING_ARCHAEON_MATCH",
-   "evidence": "Fresh set 2 (seed 49220fae2; pre c1589c6f; sealed hashes committed BEFORE opening: SEALED_HASHES_SET2.json ref e638eeb1 / nestor 4f542a70; both verified). Nestor's independent RAW comparison (g2_fresh/NESTOR_COMPARISON_SET2.json, frozen compare_fresh.py): set A PASS and set M PASS -- every gated field (label, addr, ctrl, exec, written, store_by, performer) 1.0000 in every class incl. MUTATION (212/212 label/addr/written). Secondary ctrl_slice 0.92-0.99 (S3 IN-guard, open, non-gating). NOTE: the frozen script's 'MUTATION_content' diagnostic reads the set-1 label layout and prints 0/212 -- a stale DIAGNOSTIC parser (script frozen, not edited); the raw label equality 212/212 supersedes it. Production still requires Archaeon's matching comparison and ANCESTRY_REPLAY_PRODUCTION_GO_FINAL (C9 s6) binding all hashes."
+   "status": "CLEAR",
+   "evidence": "Fresh set 2 (seed 49220fae2; pre c1589c6f; sealed hashes committed BEFORE opening: SEALED_HASHES_SET2.json ref e638eeb1 / nestor 4f542a70; both verified). Nestor's independent RAW comparison (g2_fresh/NESTOR_COMPARISON_SET2.json, frozen compare_fresh.py): set A PASS and set M PASS -- every gated field (label, addr, ctrl, exec, written, store_by, performer) 1.0000 in every class incl. MUTATION (212/212 label/addr/written). Secondary ctrl_slice 0.92-0.99 (S3 IN-guard, open, non-gating). NOTE: the frozen script's 'MUTATION_content' diagnostic reads the set-1 label layout and prints 0/212 -- a stale DIAGNOSTIC parser (script frozen, not edited); the raw label equality 212/212 supersedes it. Production still requires Archaeon's matching comparison and ANCESTRY_REPLAY_PRODUCTION_GO_FINAL (C9 s6) binding all hashes. | Archaeon's pre-committed comparison MATCHES (#905); ANCESTRY_REPLAY_PRODUCTION_GO_FINAL.md @ 13fae4b7b (record sha256 fefef4b0..., verified by Nestor) binds freeze 77a822ac, run_production c31cca76 (both verified), reference 15737444, fixtures, spec, unit, flip rule, agreement set 2. The 70 vs 69 ctrl_slice count differs only by class key (written-then-mutated loci), all ctrl_slice (non-gating)."
   },
   "G3_flip_rule": {
    "status": "CLEAR",
@@ -43,5 +43,7 @@
    "effect": "set M fails; amendment + fresh M set required"
   }
  ],
- "sample_transfer": "orphan branch nestor/ancestry-sample-2026-09-28, gzip parts <= 45 MB + manifest of per-part and whole-file sha256 (Archaeon #848)"
+ "sample_transfer": "NOT in git in any form: hash posted -> scp to M2 C:/Prometheus-data/evidence/attribution_arc_2026-09-28/npe_sample/ -> Archaeon verifies before reading -> frozen reference runs -> result hashed -> receipts only in git (GO_FINAL; corrects the withdrawn orphan-branch route)",
+ "production_scope_limits": "ctrl_deps_slice (S3 open) and pdom NOT validated by G2 and may not feed any production quantity; Q8c-whether interventional (not covered by G2); L1-L5 kept separate; source diversity diagnostic only",
+ "operator_gates_POST_ARC3": "all four satisfied: fixture validation (+ mutants caught), independent tracer agreement (frozen v3 vs frozen reference, fresh set 2 raw PASS, pdom text obtained), flip-rule ruling (C7.2), experimental-unit ruling (C7.4)"
 }
