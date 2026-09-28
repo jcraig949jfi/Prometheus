@@ -74,3 +74,13 @@ R-24 | disposable worker 24 | ubu002 | 2026-09-28T17:29Z | 2026-09-28T17:40Z | R
 R-26 | disposable worker 26 | ubu002 | 2026-09-28T17:41Z | | running |
 R-25 | disposable worker 25 | ubu002 | 2026-09-28T17:37Z | 2026-09-28T17:51Z | REPORT | see audit line
 R-27 | disposable worker 27 | ubu002 | 2026-09-28T17:52Z | | running |
+R-22 | disposable worker 22 | ubu002 | 2026-09-28T17:01Z | 2026-09-28T17:53Z | REPORT (CPU ~63 min, slightly over the 1 CPU-h cap -- recorded) | see audit line
+R-28 | disposable worker 28 | ubu002 | 2026-09-28T17:54Z | | running |
+R-27 | disposable worker 27 | ubu002 | 2026-09-28T17:52Z | 2026-09-28T18:08Z | REPORT (used a blind second-coder sub-agent within budget) | EXPOSED-NAMES: its package mentioned a curator file, and it ran `git ls-tree | grep sfe_retro`, listing roles/Artemis/threads/sfe_retrospective and prompts file NAMES; no Artemis file opened (no git show/cat of an Artemis path); its CVT-R hit is from a Nestor commit message, not an Artemis file
+R-29 | disposable worker 29 | ubu002 | 2026-09-28T18:09Z | | running |
+R-26 | disposable worker 26 | ubu002 | 2026-09-28T17:41Z | 2026-09-28T18:07Z | REPORT | clean (1 phrase hit is from its own package)
+R-30 | disposable worker 30 | ubu002 | 2026-09-28T18:10Z | | running |
+R-28 | disposable worker 28 | ubu002 | 2026-09-28T17:54Z | 2026-09-28T18:10Z | REPORT | see audit line
+R-31 | disposable worker 31 | ubu002 | 2026-09-28T18:11Z | | running |
+R-29 | disposable worker 29 | ubu002 | 2026-09-28T18:09Z | 2026-09-28T18:19Z | REPORT (worker notes it did not read a prior-art note because it lives under a forbidden path -- package reference unavailable by design) | see audit line
+R-32 | disposable worker 32 | ubu002 | 2026-09-28T18:20Z | | running |
