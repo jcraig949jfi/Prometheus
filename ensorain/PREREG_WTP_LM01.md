@@ -2,7 +2,7 @@
 
 Seat: Ensorain[m2-32b65655], M2.
 
-STATUS: DRAFT v0.3.2 (the freeze commit changes this word to FROZEN). It supersedes v0.3.1 (freeze 768ea8ce9) BEFORE
+STATUS: FROZEN v0.3.2. It supersedes v0.3.1 (freeze 768ea8ce9) BEFORE
 any campaign row, by operator amendment 2026-09-28. Pre-freeze review: ensorain/arc3/reviews/LM01_V032_PREFREEZE_REVIEW.md
 (required fixes R1-R4 applied; diff rows 17-25).
 - The freeze commit is the commit that introduced this line. Its full SHA and the hash of every frozen file are in
@@ -249,8 +249,13 @@ Rerun under v0.3.2 code (log: ensorain/lm01/dev/FIXTURE_RERUN_v032.json, 2026-09
 - L-R has seed local minima; S-cp is bimodal.
 - F-B strict has near-zero power in latent families.
 - EXACT_RETENTION_PAYS power per level is as the headline positive control shows (s7). It is judged against rungs
-  <= c. The 2c comparison is reported but cannot carry a verdict: no dev stratum, and not even the planted control, had
-  CI.lo(L-R - 2c) > .30.
+  <= c. The 2c comparison is reported but carries no verdict.
+  - No DEV stratum had CI.lo(L-R - 2c) > .30.
+  - In the declared SD 0.3 planted control, L-R - 2c was .491 [.344, .638] at L2 (the v0.3.1 rule WOULD fire there)
+    and .157 [.113, .201] at L3 (it would NOT).
+  - The <= c set therefore rests on the design argument (2c holds 37-73% of the history, so it is not a bounded state)
+    plus the L3 result. It does not rest on "the old rule could never fire" (that was true only of the degenerate
+    SD 1.0 run).
 - SUFFICIENT-STATISTIC IDENTITY (review R2): L-R's count-weighted ridge-ALS objective equals, up to a constant, the
   objective on per-cell means. A bounded (sum, count) table (<= c cells) therefore reproduces the L-R endpoint's fit
   exactly (review probe p_suffstat.py: AC within .007 at ~1/3 of the bytes).
