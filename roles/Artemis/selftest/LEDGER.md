@@ -48,3 +48,9 @@ R-13 | disposable worker 13 | ubu002 | 2026-09-28T15:40Z | | running |
 R-14 | disposable worker 14 | ubu002 | 2026-09-28T15:40Z | | running |
 - 2026-09-28T15:42Z plan (cohort-blind): 'who should know' notifications from ALL run reports are sent to owning seats in one batch after executions end (identical treatment for every run); this is what lets owner decisions (ED) happen before the day-30 re-check.
 R-15 | disposable worker 15 | ubu002 | 2026-09-28T15:43Z | | running |
+R-14 | disposable worker 14 | ubu002 | 2026-09-28T15:40Z | 2026-09-28T15:49Z | REPORT | see audit line (used only already-spent sealed universes D/E/F)
+R-16 | disposable worker 16 | ubu002 | 2026-09-28T15:50Z | | running |
+R-13 | disposable worker 13 | ubu002 | 2026-09-28T15:40Z | 2026-09-28T16:10Z | REPORT | clean (3 phrase hits were Archaeon F_FRONTIER.md in a diffstat, not an Artemis file)
+R-17 | disposable worker 17 | ubu002 | 2026-09-28T16:11Z | | running |
+R-15 | disposable worker 15 | ubu002 | 2026-09-28T15:43Z | 2026-09-28T16:19Z | REPORT | see audit line
+R-18 | disposable worker 18 | ubu002 | 2026-09-28T16:17Z | | running |
