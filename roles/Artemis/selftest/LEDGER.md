@@ -63,3 +63,8 @@ R-20 | disposable worker 20 | ubu002 | 2026-09-28T16:34Z | 2026-09-28T16:39Z | R
 R-21 | disposable worker 21 | ubu002 | 2026-09-28T16:40Z | | running |
 R-19 | disposable worker 19 | ubu002 | 2026-09-28T16:21Z | 2026-09-28T17:03Z | REPORT (SI-adjacent: owner notification routed to stewards only) | see audit line
 R-22 | disposable worker 22 | ubu002 | 2026-09-28T17:01Z | | running |
+R-18 | disposable worker 18 | ubu002 | 2026-09-28T16:17Z | 2026-09-28T17:02Z | REPORT | see audit line
+R-23 | disposable worker 23 | ubu002 | 2026-09-28T17:05Z | | running |
+R-21 | disposable worker 21 | ubu002 | 2026-09-28T16:40Z | 2026-09-28T17:30Z | REPORT (compiled Avida 2.2 locally with gcc; ~53 CPU-min) | EXPOSED-NAMES: `git grep -l` output listed roles/Artemis/backlog and challenge file NAMES (incl. a thread file name matching its topic -- a weak cue); no Artemis file was opened (no git show of an Artemis path); its 2 phrase hits come from its own package
+R-24 | disposable worker 24 | ubu002 | 2026-09-28T17:29Z | | running |
+- 2026-09-28T17:32Z template: from R-25 on workers are told to add ':!roles/Artemis' to repository-wide searches (after R-21's grep -l listed Artemis file names). Procedural; identical for all later runs.

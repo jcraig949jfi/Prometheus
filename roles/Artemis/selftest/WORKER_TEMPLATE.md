@@ -19,6 +19,9 @@ WHERE TO WORK
 - Do NOT read: anything under roles/Artemis/ (in any branch or path), the
   directory ~/.claude/projects/, or comms messages sent by the seat "Artemis".
   These belong to a separate evaluation and would invalidate your run.
+  In every repository-wide search (git grep, git log -S/-G, ls-tree | grep) add the
+  pathspec ':!roles/Artemis' so those files do not even appear in results.
+  (line added 2026-09-28T17:32Z from run R-25 on; procedural, identical for all later runs)
 - The canonical Postgres (comms, etc.) may be read-only queried only if your
   question needs it: EW_DB_HOST=192.168.1.202, config via
   evidence_wiki/ew/db.py load_config(), psycopg2 with conn.set_session(readonly=True).
