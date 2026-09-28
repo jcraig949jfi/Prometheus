@@ -183,13 +183,14 @@ def world_fixtures():
     res = {}
     ok_draw = True
     n_ev = 0
+    offsets = {0: 0, 1: got["muts"][0][3]}                  # v3 (C10 s3(a)): write-back-wide index at random()
     for side in (0, 1):
         final, new, events = got["post"][side]
         pre_mut = got["muts"][side][0]
         for ev in events:
             n_ev += 1
             dl = final[ev["pos"]][0]
-            ok_draw &= dl[0] == "M" and dl[1][1] == side and dl[1][2] == ev["call"]
+            ok_draw &= dl[0] == "M" and dl[1] == ("ab"[side], offsets[side] + ev["rnd"], ev["pos"])                 and final[ev["pos"]][1] == frozenset()
         for j in range(len(new)):
             if new[j] != pre_mut[j]:
                 ok_draw &= final[j][0][0] == "M"                 # every changed byte is a labelled mutation

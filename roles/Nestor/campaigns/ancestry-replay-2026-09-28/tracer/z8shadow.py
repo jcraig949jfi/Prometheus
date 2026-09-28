@@ -13,7 +13,9 @@ Labels (v4 s1.2, readings N1-N7 posted to Archaeon as #832, CHOICE numbering of 
   ("P", ent, reg)      persisted register / flag of entity ent at interaction start (its own source group, v5 R1)
   ("C", bases)         COMPUTED over a frozenset of base labels (CONSTANT bases dropped, CHOICE 3)
   ("F", inner)         COMPUTED_FROM: register-only, no-operand bijective ops (INC r, DEC r)
-  ("M", draw, old)     MUTATION at the harness write-back: draw = (interaction id, side, rng call index), old = old label
+  ("M", draw, old)     MUTATION at the harness write-back (v3, Amendment C10 s3(a)): draw = (side 'a'|'b', k, pos),
+                       k = RNG calls since the start of THIS interaction's write-back (a's half first), counted at the
+                       position's random() draw; addr set EMPTY (C10 s3(b)); old = the pre-mutation data label
 Base labels (members of dependence sets): ("E", ent, i), ("X", op), ("P", ent, reg), ("M", draw).
 Every value carries an addr set: pointer dependence is transitive through memory and computation (CHOICE 5).
 deps(cell) = base(data label) | addr set.

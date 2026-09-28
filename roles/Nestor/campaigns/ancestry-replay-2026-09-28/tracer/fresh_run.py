@@ -10,8 +10,8 @@ Set M: the same, then the write-back exactly as the frozen world does it for the
   - VALUES come from the FROZEN world.Runner._mutate (called on a minimal stand-in carrying the cell, rate, rng, slot size);
   - LABELS come from the frozen observe.Observed._my_mutate on an identical RNG copy; bytes and the final RNG state are
     asserted equal to the frozen routine.
-  - MUTATION encoding (Nestor): label ["M", [k, side, call], old_label]. call = the 0-based index of the RNG call
-    (random() and randrange() both counted) WITHIN that half's _mutate, at the randrange that drew the new byte.
+  - MUTATION encoding (v3, Amendment C10 s3(a)): label ["M", [side, k, pos], old_label]; k = RNG calls since the
+    start of THIS interaction's write-back (a's half first), counted at the position's random() draw.
     Also exported explicitly: "mutation": {"side", "call", "pos", "old_label"}.
 
     python fresh_run.py <FRESH_SET_PRE.jsonl> <out.jsonl>
@@ -51,7 +51,7 @@ def locus_rows(r, side, labels_override=None, mutated=None):
             row["mutated"] = j in mutated
             if j in mutated:
                 ev = mutated[j]
-                row["mutation"] = {"side": "ab"[side], "call": ev["call"], "pos": j,
+                row["mutation"] = {"side": "ab"[side], "k": ev["k"], "pos": j,
                                    "old_label": O.enc_label(r.sh.lab[off + j][0])}
         rows.append(row)
     return rows
@@ -76,19 +76,23 @@ def main():
         else:
             rng_frozen = random.Random(d["wb_seed"])
             rng_mine = random.Random(d["wb_seed"])
+            offset = 0
             for side in (0, 1):
                 off = 0 if side == 0 else 32
                 half = bytes(r.sh.mem[off:off + 32])
                 new_frozen = W.Runner._mutate(Stand(d["mut_rate"], rng_frozen), half)
-                new_mine, events = O.Observed._my_mutate(Stand(d["mut_rate"], rng_mine), half)
+                stand = Stand(d["mut_rate"], rng_mine)
+                new_mine, events = O.Observed._my_mutate(stand, half)
                 if new_frozen != new_mine or rng_frozen.getstate() != rng_mine.getstate():
                     raise AssertionError("write-back replication differs from the frozen _mutate at k=%d" % d["k"])
                 labels = [r.sh.lab[off + j] for j in range(32)]
                 mutated = {}
                 for ev in events:
-                    labels[ev["pos"]] = (("M", (d["k"], side, ev["call"]), labels[ev["pos"]][0]), S.EMPTY)
-                    mutated[ev["pos"]] = ev
+                    labels[ev["pos"]] = (("M", ("ab"[side], offset + ev["rnd"], ev["pos"]), labels[ev["pos"]][0]),
+                                         S.EMPTY)
+                    mutated[ev["pos"]] = dict(ev, k=offset + ev["rnd"])
                 rec["loci"]["ab"[side]] = locus_rows(r, side, labels, mutated)
+                offset += stand._mutate_calls
                 rec.setdefault("child_tape", {})["ab"[side]] = new_frozen.hex()
         out.write(json.dumps(rec, sort_keys=True) + "\n")
     out.close()

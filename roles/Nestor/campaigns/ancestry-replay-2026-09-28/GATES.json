@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-28T19:17:41Z",
+ "updated": "2026-09-28T20:17:50Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -8,7 +8,7 @@
   },
   "G2_independent_tracer_agreement": {
    "status": "OPEN",
-   "evidence": "Fresh set (seed d33421a07; pre e37bdd48; outputs sealed then exchanged: Nestor c6aa5569, reference 9fd3bc44). Nestor's independent raw comparison (g2_fresh/NESTOR_COMPARISON.json): set A PASS (every gated field 1.0000 in every class); set M FAIL: MUTATION label 0/225 (draw-index encoding; declared by Archaeon BEFORE the exchange, cat 1), MUTATION addr 209/225 (addr set of a mutated, previously written locus: reference carries the old store addr, Nestor EMPTY; NOT declared, found AFTER exchange, flagged post-exposure, cat 1); MUTATION content (flag, side, pos, old_label) 225/225; all non-mutated M loci 1.0. Needs: amendment defining MUTATION draw index + addr set, re-freeze if different, fresh M set. ctrl_slice (secondary) 0.92-0.98: S3 open (per-step k=4 readings posted #864)."
+   "evidence": "Fresh set (seed d33421a07; pre e37bdd48; outputs sealed then exchanged: Nestor c6aa5569, reference 9fd3bc44). Nestor's independent raw comparison (g2_fresh/NESTOR_COMPARISON.json): set A PASS (every gated field 1.0000 in every class); set M FAIL: MUTATION label 0/225 (draw-index encoding; declared by Archaeon BEFORE the exchange, cat 1), MUTATION addr 209/225 (addr set of a mutated, previously written locus: reference carries the old store addr, Nestor EMPTY; NOT declared, found AFTER exchange, flagged post-exposure, cat 1); MUTATION content (flag, side, pos, old_label) 225/225; all non-mutated M loci 1.0. Needs: amendment defining MUTATION draw index + addr set, re-freeze if different, fresh M set. ctrl_slice (secondary) 0.92-0.98: S3 open (per-step k=4 readings posted #864). | C10: set-1 results agreed (A PASS, M FAIL); rulings (a) draw index -> Nestor v3 re-freeze; (b) MUTATION addr EMPTY (Nestor's reading; reference repaired after seeing it, flagged). Fresh set 2 (A+M, raw gate on both) pending seed record 2."
   },
   "G3_flip_rule": {
    "status": "CLEAR",

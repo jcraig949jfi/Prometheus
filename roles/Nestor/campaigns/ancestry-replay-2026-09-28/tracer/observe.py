@@ -55,7 +55,7 @@ def enc_label(dl):
 
 def enc_base(b):
     if b[0] == "M":
-        return "M|%d|%d|%d" % b[1]
+        return "M|%s|%d|%d" % b[1]
     return "|".join(str(x) for x in b)
 
 
@@ -100,6 +100,7 @@ class Observed(W.Runner):
             if i >= len(g):
                 break
             calls += 1
+            rnd_at = calls - 1                                   # index of THIS position's random() call (C10 s3(a))
             if rng.random() >= rate:
                 continue
             is_op = i in opset
@@ -109,8 +110,9 @@ class Observed(W.Runner):
                 old = g[i]
                 calls += 1
                 g[i] = rng.randrange(256)
-                events.append({"pos": i, "call": calls - 1, "old": old, "new": g[i],
+                events.append({"pos": i, "call": calls - 1, "rnd": rnd_at, "old": old, "new": g[i],
                                "decode_dep_positions": list(opcodes)})       # C6 E: all PRE-mutation boundaries
+        self._mutate_calls = calls                               # total RNG calls this half consumed
         return bytes(g[:self.slot_size]), events
 
     def _mutate(self, g):
@@ -123,7 +125,7 @@ class Observed(W.Runner):
         theirs = super()._mutate(g)
         if theirs != mine or self.rng.getstate() != st_after:
             raise ShadowMismatch("replicated _mutate differs from the frozen one")
-        self._muts.append((bytes(g), theirs, events))
+        self._muts.append((bytes(g), theirs, events, self._mutate_calls))
         return theirs
 
     # ---------------------------------------------------------------- the interaction
@@ -164,13 +166,14 @@ class Observed(W.Runner):
         for st in sh.stores:
             last_store[st.addr] = st
         post = {}
+        offsets = {0: 0, 1: self._muts[0][3]}                    # C10 s3(a): write-back-wide RNG call index
         for side, org in ((0, a), (1, b)):
             off = 0 if side == 0 else n
-            pre_mut, new, events = self._muts[side]
+            pre_mut, new, events, _ncalls = self._muts[side]
             hl = [sh.lab[off + j] for j in range(n)]
             for ev in events:
                 old = hl[ev["pos"]]
-                hl[ev["pos"]] = (("M", (iid[2], side, ev["call"]), old[0]), S.EMPTY)
+                hl[ev["pos"]] = (("M", ("ab"[side], offsets[side] + ev["rnd"], ev["pos"]), old[0]), S.EMPTY)
             final = []
             for j in range(self.slot_size):
                 final.append(hl[j] if j < len(new) else (("K", "clear"), S.EMPTY))
