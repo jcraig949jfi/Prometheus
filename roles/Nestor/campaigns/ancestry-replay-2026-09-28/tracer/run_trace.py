@@ -29,6 +29,41 @@ import z8shadow as S                                          # noqa: E402
 
 OUT = HERE.parent / "exports"
 ROWS = HERE.parent / "_scratch" / "rows"
+SAMPLE_SEED = 20260928                      # the 1% agreement sample (Amendment C7.7): stated before any production run
+SAMPLE_PERMILLE = 10
+
+
+def in_sample(run_name: str, serial: int) -> bool:
+    h = hashlib.sha256(("%d|%s|%d" % (SAMPLE_SEED, run_name, serial)).encode()).digest()
+    return int.from_bytes(h[:4], "big") % 1000 < SAMPLE_PERMILLE
+
+
+def diversity(final_labels, last_store, voff, n, donor_ent):
+    """Painting / source-diversity guard (operator directive s6; C4.6). Written loci vs distinct causal sources,
+    performers and instructions. Diagnostic only; never a decision rule."""
+    import math
+    from collections import Counter
+    written = [j for j in range(n) if (voff + j) in last_store]
+    src = Counter()
+    perf, pcs, vals = set(), set(), set()
+    for j in written:
+        dl = final_labels[j][0]
+        if dl[0] == "E":
+            src[(dl[1], dl[2])] += 1
+        st = last_store[voff + j]
+        p_ = st.performer
+        perf.add((p_[0], p_[1], p_[2]) if p_[0] == "E" else (p_[0],))
+        pcs.add(st.pc)
+        vals.add(st.val)
+    tot = sum(src.values())
+    hill = math.exp(-sum((c / tot) * math.log(c / tot) for c in src.values())) if tot else 0.0
+    donor_src = Counter({k: v for k, v in src.items() if k[0] == donor_ent})
+    return {"n_written": len(written), "n_entity_move": tot, "n_donor_move": sum(donor_src.values()),
+            "n_distinct_sources": len(src), "n_distinct_donor_sources": len(donor_src),
+            "top_source_share": round(max(src.values()) / tot, 4) if tot else None,
+            "effective_sources_hill1": round(hill, 3), "n_distinct_performers": len(perf),
+            "n_distinct_store_pcs": len(pcs), "n_distinct_values": len(vals),
+            "source_multiplicity": sorted(src.values(), reverse=True)}
 
 
 def lab_json(cell):
@@ -75,7 +110,14 @@ def export_birth(runner, iid, pre_oid, orgs, gs, regs, flags, sh, last_store, po
         off = 0 if side == 0 else n
         exist |= {("E", ent[side], i) for i in range(len(gs[side]))}
     return {
-        "run": runner._run_name, "iid": list(iid), "child": child, "victim_old_oid": pre_oid[vside],
+        "run": runner._run_name, "seed": runner.seed, "arm": runner._run_name.split("__")[-1],
+        "iid": list(iid), "child": child, "victim_old_oid": pre_oid[vside],
+        "diversity": diversity(final, last_store, voff, n, ent[dside]),
+        "layers": {"L1_written": sum(1 for x in loci if x["written"]),
+                   "L2_causally_by_donor": "interventions.py (R1 identified, donor-labelled loci)",
+                   "L3_viable_offspring": "summary.children (child later a parent in the native lineage)",
+                   "L4_survives_generations": "summary.children (descendant births, native lineage)",
+                   "L5_inherited_machinery": "Q4 recert (Odysseus); construction is NOT heredity"},
         "donor_oid": pre_oid[dside], "victim_side": ent[vside], "donor_side": ent[dside], "n": n,
         "pre": {"ga": gs[0].hex(), "gb": gs[1].hex(), "regs_a": regs[0], "regs_b": regs[1],
                 "flags_a": list(flags[0]), "flags_b": list(flags[1]), "budget": runner.t["slice"],
@@ -102,13 +144,31 @@ def main():
         kw["implant_bytes"] = bytes.fromhex(hx)
     if ep:
         kw["max_epochs"] = ep
+    global OUT
+    if ep is not None:                                        # smoke / validation runs never write into exports/
+        OUT = HERE.parent / "_scratch" / "smoke"
     OUT.mkdir(parents=True, exist_ok=True)
     ROWS.mkdir(parents=True, exist_ok=True)
     tag = job["name"] + ("" if ep is None else "__ep%d" % ep)
     rows_f = gzip.open(ROWS / (tag + ".jsonl.gz"), "wt", encoding="utf-8")
     births_f = open(OUT / (tag + ".births.jsonl"), "w", encoding="utf-8", newline="\n")
     tally = {"interactions": 0, "births": 0, "p4_eligible_halves": 0, "p4_eligible_not_accepted": 0,
-             "p4_eligible_accepted": 0, "accepted_halves": 0}
+             "p4_eligible_accepted": 0, "accepted_halves": 0, "sampled": 0}
+    sample_f = gzip.open(OUT / (tag + ".sample1pct.jsonl.gz"), "wt", encoding="utf-8")
+    child_genomes = []
+
+    def locus_rec(sh_last, post, side, j, n):
+        a = (0 if side == 0 else n) + j
+        cell = post[side][0][j]
+        out = {"j": j, "label": O.enc_label(cell[0]), "addr": O.enc_set(cell[1])}
+        st = sh_last.get(a)
+        if st is None:
+            out["written"] = False
+        else:
+            out.update({"written": True, "store_by": "ab"[st.side], "performer": O.enc_label(st.performer),
+                        "ctrl": O.enc_set(st.ctrl), "ctrl_slice": O.enc_set(st.ctrl_slice),
+                        "exec": O.enc_set(st.exec_)})
+        return out
 
     def sink(runner, iid, pre_oid, orgs, gs, regs, flags, sh, last_store, post, births, n):
         a, b = orgs
@@ -131,11 +191,24 @@ def main():
             halves.append([n_other, n_self, n_wr, len(post[side][2]), side in acc])
         tally["interactions"] += 1
         tally["accepted_halves"] += len(acc)
+        if in_sample(runner._run_name, iid[2]):
+            tally["sampled"] += 1
+            st = runner._wb_state
+            sample_f.write(json.dumps({
+                "run": runner._run_name, "iid": list(iid), "oids": list(pre_oid),
+                "pre": {"ga": gs[0].hex(), "gb": gs[1].hex(), "regs_a": regs[0], "regs_b": regs[1],
+                        "flags_a": list(flags[0]), "flags_b": list(flags[1]), "budget": runner.t["slice"],
+                        "ops_mask": runner._ops_mask(), "tape_len": len(sh.mem)},
+                "rng_state_at_writeback": [st[0], list(st[1]), st[2]],
+                "accepted_sides": sorted("ab"[k] for k in acc),
+                "loci": {"ab"[side]: [locus_rec(last_store, post, side, j, n) for j in range(n)] for side in (0, 1)},
+            }) + "\n")
         rows_f.write(json.dumps([list(iid), list(pre_oid), halves]) + "\n")
         for side, e in acc.items():
             tally["births"] += 1
-            births_f.write(json.dumps(export_birth(runner, iid, pre_oid, orgs, gs, regs, flags, sh, last_store,
-                                                   post, e, n), sort_keys=True) + "\n")
+            rec = export_birth(runner, iid, pre_oid, orgs, gs, regs, flags, sh, last_store, post, e, n)
+            child_genomes.append({"child": rec["child"], "hex": rec["child_tape"]})
+            births_f.write(json.dumps(rec, sort_keys=True) + "\n")
 
     t0 = time.time()
     r = O.Observed(job["cell"], job["seed"], tier=job["tier"], sink=sink, **kw)
@@ -143,8 +216,29 @@ def main():
     r.run()
     rows_f.close()
     births_f.close()
+    sample_f.close()
+    # heredity layers L3/L4 from the native lineage (P-11 construction is NOT heredity; these are separate readings)
+    kids = {}
+    for e in r.lineage:
+        if e.get("kind") == "birth":
+            kids.setdefault(e["parent"], []).append(e["child"])
+    children = {}
+    for cg in child_genomes:
+        c = cg["child"]
+        direct = kids.get(c, [])
+        seen, stack = set(), list(direct)
+        while stack:
+            x = stack.pop()
+            if x in seen:
+                continue
+            seen.add(x)
+            stack.extend(kids.get(x, []))
+        children[str(c)] = {"L3_child_later_a_parent": bool(direct), "direct_offspring": len(direct),
+                            "L4_descendant_births": len(seen)}
     lin = hashlib.sha256(json.dumps(r.lineage, sort_keys=True, default=str).encode()).hexdigest()
-    summ = {"run": job["name"], "epochs": ep, "lineage_sha256": lin, "shadow_checked": r.shadow_checked,
+    summ = {"run": job["name"], "seed": job["seed"], "sim_id": lin[:16], "epochs": ep, "lineage_sha256": lin,
+            "shadow_checked": r.shadow_checked, "sample_seed": SAMPLE_SEED, "sample_permille": SAMPLE_PERMILLE,
+            "child_genomes_for_Q4": child_genomes, "children": children,
             "tally": tally, "wall_s": round(time.time() - t0, 1),
             "births_sha256": hashlib.sha256((OUT / (tag + ".births.jsonl")).read_bytes()).hexdigest()}
     (OUT / (tag + ".summary.json")).write_text(json.dumps(summ, indent=1, sort_keys=True) + "\n", encoding="utf-8")

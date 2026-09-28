@@ -124,17 +124,41 @@ def ent_side(ent):
     return 0 if ent == "a" else 1
 
 
+class NotPaired(AssertionError):
+    pass
+
+
+def assert_paired(pre: Pre, c: Pre, changed: set):
+    """C9-D24 lesson (operator directive 2026-09-28 s4): a counterfactual is PAIRED only if every component outside the
+    intervened set is shown identical. Components: ('G', side) genome, ('R', side) registers, ('F', side) flags,
+    budget, op mask, sides, sizes. The single-interaction replay consumes no RNG (Shadow has none; LDIR, the only
+    in-VM RNG user, is disabled under mask 0x0C) -- asserted here too."""
+    if (c.n, c.size, c.budget, c.mask, c.vside) != (pre.n, pre.size, pre.budget, pre.mask, pre.vside):
+        raise NotPaired("interaction parameters differ")
+    if c.mask & 0x20:
+        raise NotPaired("LDIR enabled: in-VM copy noise would consume RNG; pairing not established")
+    for s in (0, 1):
+        if ("G", s) not in changed and c.g[s] != pre.g[s]:
+            raise NotPaired("genome %d changed outside the intervention" % s)
+        if ("R", s) not in changed and c.regs[s] != pre.regs[s]:
+            raise NotPaired("registers %d changed outside the intervention" % s)
+        if ("F", s) not in changed and c.flags[s] != pre.flags[s]:
+            raise NotPaired("flags %d changed outside the intervention" % s)
+
+
 def randomise_group(pre: Pre, group: str, rng: random.Random):
     c = pre.copy()
     if group.startswith("ENT_"):
         s = ent_side(group[-1])
         c.g[s] = bytearray(rng.randrange(256) for _ in range(len(c.g[s])))
+        assert_paired(pre, c, {("G", s)})
     else:
         s = 0 if group.endswith("_a") else 1
         if c.regs[s] is None:
             return None                                      # fresh organism: no persisted registers to randomise
         c.regs[s] = [rng.randrange(256) for _ in range(8)]
         c.flags[s] = (rng.randrange(2), rng.randrange(2))
+        assert_paired(pre, c, {("R", s), ("F", s)})
     return c
 
 
@@ -175,6 +199,7 @@ def analyse_birth(rec, seed: int, K_dep: int = 8, K_byte: int = 4, per_byte: boo
             for bit in range(8):
                 c = pre.copy()
                 c.g[xs][sj] ^= (1 << bit)
+                assert_paired(pre, c, {("G", xs)})
                 r = Run(c)
                 if r.path != base.path or r.loads != base.loads:
                     inap += 1

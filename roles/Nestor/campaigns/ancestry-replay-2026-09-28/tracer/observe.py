@@ -115,6 +115,8 @@ class Observed(W.Runner):
 
     def _mutate(self, g):
         st = self.rng.getstate()
+        if not self._muts:
+            self._wb_state = st                                 # world RNG state at the interaction's write-back
         mine, events = self._my_mutate(g)
         st_after = self.rng.getstate()
         self.rng.setstate(st)

@@ -241,6 +241,50 @@ def fixtures():
     F.append(fx("K16_self_code_in_window", A_HALT, half(code, data), {
         9: {"value": 0x42, "kind": "E", "ent": "b", "src": 25, "written": True, "performer_ent": "b",
             "note": "the storing opcode sits in a's half but its material is b's (copied from b[24])"}}))
+    # K16b (added after Archaeon's validation, for the performer_by_location mutant): the WRITER b copies the
+    # OCCUPANT's store routine a[1..3] into its own half (56..58) and executes it there: material a, location b
+    ga = half(bytes([HALT, 0x36, 0x42, HALT]), {k: 0x10 + k for k in range(4, N)})
+    code = asm("""
+        LD HL, 1
+        LD DE, 56
+        LD B, 3
+    loop:
+        LD A, (HL)
+        LD (DE), A
+        INC HL
+        INC DE
+        DEC B
+        JRNZ loop
+        LD HL, 10
+        JP 56
+    """)
+    F.append(fx("K16b_occupant_code_run_in_writer_half", ga, half(code), {
+        10: {"value": 0x42, "kind": "E", "ent": "a", "src": 2, "written": True, "performer_ent": "a",
+             "note": "performer by MATERIAL (a) although the storing pc is in b's half"}}))
+    # K16c: the OCCUPANT a, in its own slice, copies the writer's routine b[24..26] into a[24..26] and runs it there to
+    # store into a[12]: stored BY a (store_by), performer by material = b, location a
+    routine = asm("""
+        LD (HL), 0x55
+        HALT
+    """)
+    ga = half(bytes([0x00]) + asm("""
+        LD HL, 56
+        LD DE, 24
+        LD B, 3
+    loop:
+        LD A, (HL)
+        LD (DE), A
+        INC HL
+        INC DE
+        DEC B
+        JRNZ loop
+        LD HL, 12
+        JP 24
+    """), {k: 0x10 + k for k in range(27, N)})
+    gb = half(bytes([HALT]), {24 + k: routine[k] for k in range(len(routine))})
+    F.append(fx("K16c_writer_code_run_by_occupant", ga, gb, {
+        12: {"value": 0x55, "kind": "E", "ent": "b", "src": 25, "written": True, "performer_ent": "b",
+             "store_by": "a", "note": "store_by = a (the slice), performer = b (the material of the storing opcode)"}}))
     # K17 address wrap: HL = 63 -> INC HL wraps to 0 on the 64-byte tape
     code = asm("""
         LD HL, 63
@@ -389,6 +433,23 @@ def fixtures():
     ga = half(bytes([HALT, 0x03]), {k: 0x10 + k for k in range(2, N)})
     F.append(fx("K36_count_from_occupant", ga, half(code), {
         26: {"value": 0x44, "kind": "E", "ent": "b", "written": True, "ctrl_has": ["E|a|1"]}}))
+    # K37 painting (operator directive s6): ONE source byte written to 8 loci by a loop. Every locus is a clean donor
+    # MOVE label of the SAME source: 8 attributed loci are ONE cause (see the diversity diagnostic)
+    code = asm("""
+        LD HL, 48
+        LD A, (HL)
+        LD DE, 8
+        LD B, 8
+    loop:
+        LD (DE), A
+        INC DE
+        DEC B
+        JRNZ loop
+        HALT
+    """)
+    F.append(fx("K37_painting_one_source", A_HALT, half(code, DATA_B),
+                {8 + k: {"value": 0xA0, "kind": "E", "ent": "b", "src": 16, "written": True, "performer_ent": "b"}
+                 for k in range(8)}))
     return F
 
 

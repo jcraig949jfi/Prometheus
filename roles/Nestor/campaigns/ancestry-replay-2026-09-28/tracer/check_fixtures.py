@@ -69,6 +69,10 @@ def check_one(f, mutant=None):
             bad("context %r" % (dl,))
         if "performer_ent" in e and (perf is None or perf[0] != "E" or perf[1] != e["performer_ent"]):
             bad("performer %r" % (perf,))
+        if "store_by" in e:
+            st_ = run.last.get(run.voff + j)
+            if st_ is None or ("a" if st_.side == 0 else "b") != e["store_by"]:
+                bad("store_by %r" % (None if st_ is None else st_.side,))
         for key, got in (("ctrl_has", ctrl), ("addr_has", addr), ("exec_has", exe)):
             for want in e.get(key, []):
                 if want not in {s_base(b) for b in got}:
@@ -195,15 +199,39 @@ def world_fixtures():
     return res
 
 
-def main():
+def merged_fixtures():
+    """Nestor's pack + Archaeon's adversarial expectations (Amendment C7.5; vendored copy ARCHAEON_ADDITIONS.json with
+    its provenance). Lists are unioned, scalars must not conflict with Nestor's own expectation."""
     fx = NF.fixtures()
+    add = json.loads((HERE / "ARCHAEON_ADDITIONS.json").read_text(encoding="utf-8"))
+    by = {f["name"]: f for f in fx}
+    n = 0
+    for name, loci in add.items():
+        if name == "note":
+            continue
+        f = by[name]
+        for j, e in loci.items():
+            cur = f["expect"].setdefault(int(j), {})
+            for k, v in e.items():
+                n += 1
+                if isinstance(v, list):
+                    cur[k] = sorted(set(cur.get(k, [])) | set(v))
+                elif k in cur and cur[k] != v:
+                    raise ValueError("Archaeon addition conflicts with Nestor's expectation: %s[%s].%s" % (name, j, k))
+                else:
+                    cur[k] = v
+    return fx, n
+
+
+def main():
+    fx, n_add = merged_fixtures()
     real = {f["name"]: check_one(f) for f in fx}
     mutants = {}
     for name, m in MUTANTS.items():
         caught = [f["name"] for f in fx if check_one(f, m)]
         mutants[name] = caught
     world = world_fixtures()
-    res = {"fixtures": len(fx), "real_tracer_failures": {k: v for k, v in real.items() if v},
+    res = {"fixtures": len(fx), "archaeon_additions_merged": n_add, "real_tracer_failures": {k: v for k, v in real.items() if v},
            "real_tracer_pass": all(not v for v in real.values()),
            "mutants_caught_by": mutants, "all_mutants_caught": all(mutants.values()),
            "world": world, "world_pass": all(world.values()),

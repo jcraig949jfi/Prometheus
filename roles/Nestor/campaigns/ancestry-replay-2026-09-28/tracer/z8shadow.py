@@ -74,16 +74,102 @@ def computed(*cells):
     return (("C", frozenset(bs)), frozenset(ad))
 
 
+# ---------------------------------------------------------------- post-dominator scope (Amendment C7.1, verbatim rules)
+def _ilen(op):
+    if 0x40 <= op < 0xC0:
+        return 1
+    lo = op & 7
+    if op < 0x40 and lo in (4, 5):
+        return 1
+    if op < 0x40 and lo == 6:
+        return 2
+    if op in (0x01, 0x11, 0x21, 0x31, 0xC3, 0xC2, 0xCA, 0xD2, 0xDA):
+        return 3
+    if op in (0x18, 0x20, 0x28, 0x30, 0x38, 0xC6, 0xD6, 0xE6, 0xEE, 0xF6, 0xFE, 0xDB, 0xD3, 0xED):
+        return 2
+    return 1
+
+
+def cfg_succ(mem, size):
+    """CFG over all tape addresses, decoded from the tape AT THIS MOMENT. HALT -> EXIT (-1). Jump targets masked.
+    No budget edges (the budget is CONSTANT)."""
+    mask = size - 1
+    succ = []
+    for pc in range(size):
+        op = mem[pc]
+        if op == 0x76:
+            succ.append((-1,))
+            continue
+        if op in (0x18, 0x20, 0x28, 0x30, 0x38):
+            e = mem[(pc + 1) & mask]
+            e = e - 256 if e > 127 else e
+            t = (pc + 2 + e) & mask
+            succ.append((t,) if op == 0x18 else ((pc + 2) & mask, t))
+            continue
+        if op in (0xC3, 0xC2, 0xCA, 0xD2, 0xDA):
+            t = (mem[(pc + 1) & mask] | (mem[(pc + 2) & mask] << 8)) & mask
+            succ.append((t,) if op == 0xC3 else ((pc + 3) & mask, t))
+            continue
+        succ.append(((pc + _ilen(op)) & mask,))
+    return succ
+
+
+def ipdom_of(mem, size, node):
+    """Immediate post-dominator of `node` on the current CFG; None if node cannot reach EXIT."""
+    succ = cfg_succ(mem, size)
+    EXIT = size
+    preds = [[] for _ in range(size + 1)]
+    for n, ss in enumerate(succ):
+        for t in ss:
+            preds[EXIT if t == -1 else t].append(n)
+    reach = {EXIT}
+    stack = [EXIT]
+    while stack:
+        x = stack.pop()
+        for p in preds[x]:
+            if p not in reach:
+                reach.add(p)
+                stack.append(p)
+    if node not in reach:
+        return None
+    full = (1 << (size + 1)) - 1
+    pd = [full] * (size + 1)
+    pd[EXIT] = 1 << EXIT
+    changed = True
+    nodes = [n for n in range(size) if n in reach]
+    while changed:
+        changed = False
+        for n in nodes:
+            acc = full
+            for t in succ[n]:
+                t = EXIT if t == -1 else t
+                if t in reach:
+                    acc &= pd[t]
+            new = acc | (1 << n)
+            if new != pd[n]:
+                pd[n] = new
+                changed = True
+    strict = pd[node] & ~(1 << node)
+    best, best_size = None, -1
+    for d in range(size + 1):
+        if strict >> d & 1:
+            sz = bin(pd[d]).count("1")
+            if sz > best_size:                               # the closest strict post-dominator has the largest set
+                best, best_size = d, sz
+    return None if best is None or best == EXIT else best
+
+
 class Store:
     __slots__ = ("addr", "val", "cell", "side", "step", "pc", "performer", "ctrl", "exec_", "tix", "six", "lix",
-                 "ctrl_slice")
+                 "ctrl_slice", "ctrl_pdom")
 
     def __init__(self, addr, val, cell, side, step, pc, performer, ctrl, exec_, tix=-1, six=-1, lix=-1,
-                 ctrl_slice=EMPTY):
+                 ctrl_slice=EMPTY, ctrl_pdom=EMPTY):
         self.addr, self.val, self.cell, self.side, self.step = addr, val, cell, side, step
         self.pc, self.performer, self.ctrl, self.exec_ = pc, performer, ctrl, exec_
         self.tix, self.six, self.lix = tix, six, lix          # trace / store / load positions (record_trace only)
         self.ctrl_slice = ctrl_slice                          # C6 C1: PC label from THIS slice's start
+        self.ctrl_pdom = ctrl_pdom                            # C7.1: post-dominator-scoped PC label
 
 
 class Shadow:
@@ -92,7 +178,7 @@ class Shadow:
 
     def __init__(self, tape: bytes, tape_labels: List[tuple], regs: Dict[int, Optional[list]],
                  reg_labels: Dict[int, list], flags: Dict[int, Tuple[int, int]], flag_labels: Dict[int, list],
-                 budget: int, ops_mask: int, record_trace: bool = False):
+                 budget: int, ops_mask: int, record_trace: bool = False, pdom: bool = False):
         self.mem = bytearray(tape)
         self.lab = list(tape_labels)                       # per address: (data label, addr set)
         self.size = len(self.mem)
@@ -104,21 +190,38 @@ class Shadow:
         self.exec_all = EMPTY
         self.stores: List[Store] = []
         self.record_trace = record_trace
+        self.pdom = pdom
+        self.pstack = []                                   # [ipdom, deps] entries, Xin-Zhang style
         self.trace: List[tuple] = []                       # (pc, opcode[, ED second byte]) per fetched instruction
         self.store_addrs: List[int] = []
         self.load_addrs: List[int] = []
         self.out = {}
         self.budget_ended = {}
 
-    def _cond(self, d):
-        """A conditional was EVALUATED: its inputs join both PC labels."""
+    def _cond(self, d, at_pc=None):
+        """A conditional was EVALUATED: its inputs join both PC labels (and the pdom stack if enabled)."""
         self.ctrl = self.ctrl | d
         self.ctrl_sl = self.ctrl_sl | d
+        if self.pdom and at_pc is not None and d:            # branches with empty condition deps are not pushed
+            ip = ipdom_of(self.mem, self.size, at_pc)
+            if self.pstack and self.pstack[-1][0] == ip:
+                self.pstack[-1][1] = self.pstack[-1][1] | d  # same ipdom as the top: merged
+            else:
+                self.pstack.append([ip, d])
+
+    def _pdom_label(self):
+        if not self.pdom:
+            return EMPTY
+        out = EMPTY
+        for _ip, d in self.pstack:
+            out = out | d
+        return out
 
     # ---------------------------------------------------------------- one slice
     def run_slice(self, side: int, start: int):
         mem, lab, size = self.mem, self.lab, self.size
         self.ctrl_sl = EMPTY
+        self.pstack = []                                     # reset at slice entry
         mask = size - 1
         pow2 = (size & mask) == 0
         r0 = self.regs0[side]
@@ -160,11 +263,14 @@ class Shadow:
             lab[a] = new
             self.stores.append(Store(a, val & 0xFF, new, side, steps, at_pc, op_cell[0], self.ctrl, self.exec_all,
                                      len(self.trace), len(self.store_addrs) - 1, len(self.load_addrs),
-                                     self.ctrl_sl))
+                                     self.ctrl_sl, self._pdom_label()))
 
         while steps < budget:
             steps += 1
             pc = ad(pc)
+            if self.pdom:
+                while self.pstack and self.pstack[-1][0] == pc:   # popped only from the top, when pc == ipdom
+                    self.pstack.pop()
             op, opl = fetch(pc)
             if rec:
                 self.trace.append((pc, op))
@@ -308,9 +414,9 @@ class Shadow:
                 if e > 127:
                     e -= 256
                 if op == 0x20 or op == 0x28:
-                    self._cond(deps(fzl))
+                    self._cond(deps(fzl), at_pc)
                 elif op == 0x30 or op == 0x38:
-                    self._cond(deps(fcl))
+                    self._cond(deps(fcl), at_pc)
                 take = (op == 0x18 or (op == 0x20 and not fz) or (op == 0x28 and fz)
                         or (op == 0x30 and not fc) or (op == 0x38 and fc))
                 pc = pc + 2 + e if take else pc + 2
@@ -321,9 +427,9 @@ class Shadow:
                 n2, _c2 = fetch(pc + 2)
                 n = n1 | (n2 << 8)
                 if op == 0xC2 or op == 0xCA:
-                    self._cond(deps(fzl))
+                    self._cond(deps(fzl), at_pc)
                 elif op == 0xD2 or op == 0xDA:
-                    self._cond(deps(fcl))
+                    self._cond(deps(fcl), at_pc)
                 take = (op == 0xC3 or (op == 0xC2 and not fz) or (op == 0xCA and fz)
                         or (op == 0xD2 and not fc) or (op == 0xDA and fc))
                 pc = n if take else pc + 3

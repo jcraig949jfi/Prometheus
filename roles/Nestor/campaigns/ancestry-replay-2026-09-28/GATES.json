@@ -1,0 +1,26 @@
+{
+ "updated": "2026-09-28T16:02:03Z",
+ "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
+ "gates": {
+  "G1_fixture_validation": {
+   "status": "OPEN",
+   "evidence": "C7.5: 23-fixture pack + 11 Archaeon additions VALIDATED 391/391 vs the reference; PENDING: Nestor's post-validation fixtures K16b, K16c (performer_by_location) and K37 (painting) need Archaeon's validation; all 10 mutants caught >= 3 times (FIXTURES_RESULT.json)"
+  },
+  "G2_independent_tracer_agreement": {
+   "status": "OPEN",
+   "evidence": "C6 implemented from text (reference code NOT read); C7.1 pdom implemented from the verbatim text (selftest_pdom.py); tracer FROZEN (TRACER_FREEZE.json); PENDING: reference run on FUZZ_AGREEMENT_nestor.jsonl (300 non-production interactions) >= 99.5% per class; production 1% sample agreement follows after production"
+  },
+  "G3_flip_rule": {
+   "status": "CLEAR",
+   "evidence": "C7.2: prefix rule is the gating rule for both engines, strict rule reported; data-before-store residue INAPPLICABLE. Preserved evidence: strict 0/64 on smoke births; prefix 31/32 on birth 257, 0/32 on birth 256 (copied bytes executed before their final store)"
+  },
+  "G4_experimental_unit": {
+   "status": "CLEAR",
+   "evidence": "C7.4: 9 distinct simulations / 29 distinct births; run-clustered bootstrap over 9; duplicates (s9200006 C, s9200008 C) reported. Ruled by Archaeon before any production statistic"
+  }
+ },
+ "outcome_adjacent_exposure": [
+  "120-epoch smoke of s9200001 B: 15 P4-eligible halves, 13 not accepted; 2 births with source diversity 2 (smoke only; no rule was changed in response)",
+  "20-epoch smoke of s9200001 B: structure check only; no quantity inspected"
+ ]
+}
