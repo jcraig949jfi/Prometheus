@@ -68,5 +68,47 @@
   "target_type": "none",
   "title": "MetaRSI / RSI2: A Meta-Recursive Self-Improving System for Recursive Self-Improving Systems Themselves",
   "url": "https://arxiv.org/abs/2609.06396"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted: relevant in kind to T6 (out-of-support probes) and D6, but only the abstract was read and no numbers were obtained to say whether out-of-distribution counterfactual probes reduced false admissions; worth a full-text read next pass.",
+  "date": "2026-09-16",
+  "dedupe_key": "2609.18366",
+  "first_seen": "2026-09-28",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Zhu, Huang, Yin, Xie, Zhang and Zhou propose CHASE, in which a Challenger searches, after each harness update, for semantics-preserving protocol transformations that destroy the claimed gain, building a finite counterfactual archive linked in theory to an ideal shortcut-neutralised benchmark. Evaluated on Syn-Ledger and OfficeQA; v3 2026-09-24; abstract only read, numbers unknown.",
+  "target_id": "none",
+  "target_type": "none",
+  "title": "Bad Genius: Counterfactual-Guided Harness Evolution Beyond Task-Specific Shortcuts (CHASE)",
+  "url": "https://arxiv.org/abs/2609.18366"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted: measures per-agent adoption after injection, not onward transmission, so no R0 or threshold is estimated and T5/F1 are not changed.",
+  "date": "2026-09-16",
+  "dedupe_key": "2609.18460",
+  "first_seen": "2026-09-28",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Wu, Ying, Wu, Zheng, Cheng, Shi and Guo frame multi-agent loss of control as mutation, contagion and recovery and test it on RogueHandoff-20 (20 executable scenarios) with a modified Qwen-27B route. Harm rates rose from 0-5% on normal tasks to 40-95% after unsafe-trajectory injection, 5-45 points above direct malicious requests, and the authors state they do not establish natural rare-event rates or an autonomous cascade.",
+  "target_id": "none",
+  "target_type": "none",
+  "title": "Collective Loss of Control in LLM Agent Systems: An Epidemic Account of Mutation, Contagion, and Recovery",
+  "url": "https://arxiv.org/abs/2609.18460"
+ },
+ {
+  "admit": false,
+  "change": "Not admitted because it is two months outside the window, but flagged to the seat: offspring = degree x constant adoption (2 x 0.333, 5 x 0.333) crossing 1 is a real-model reading of T5's R0 = d tau (1 - v) being linear in d, from one model on 36 tasks.",
+  "date": "2026-07-24",
+  "dedupe_key": "2607.21912",
+  "first_seen": "2026-09-28",
+  "not_admitted_because": "not proposed for admission",
+  "primary_source_read": true,
+  "summary": "Niu, Shu and Zhao build a correction-aware SEICS network model and test it with 21,000 simulated trajectories and grok-4.3 on 36 tasks. Raising node degree from 2 to 5 took first-generation error offspring from 0.667 to 1.667 while adoption among exposed neighbours stayed at 0.333 (abstract read).",
+  "target_id": "T5",
+  "target_type": "theory",
+  "title": "Reliability-Contagion Feasibility in LLM Multi-Agent Networks",
+  "url": "https://arxiv.org/abs/2607.21912"
  }
 ]
