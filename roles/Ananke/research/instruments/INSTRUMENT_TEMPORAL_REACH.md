@@ -41,6 +41,14 @@ KNOWN FAILURE MODES
   F4 SITE-STATE PATHWAYS: reach says nothing about ablations of site state
      (memory_ablation). Those need the state-difference analogue.
 
+SCOPE CORRECTION (W-K, 2026-09-28): reach is necessary for WINDOWED arms
+only (it caught 1/10 broken fixtures overall, but it is one of only two
+checks catching a realistic window miss). It does NOT address inert,
+unwired, saturated, forced or wrong-target interventions. The broad remedy
+is a must-flip PLANT run through the arm's OWN code (K2, J .70, 0 false
+alarms). The min zero-false-alarm cover is {K2, an applied count, a
+could-fail counter-plant} (workers/W-K/).
+
 INTERPRETATION BOUNDARIES
   High reach is necessary, not sufficient, for an informative windowed
   null. Carrier swaps at a mid-interval tick move every future arrival at

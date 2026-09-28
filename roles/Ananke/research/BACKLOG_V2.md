@@ -32,7 +32,7 @@ T-RS-1 RECEIVER SEMANTICS | Does sum vs arbitrate(+rewritable code)
 T-X-4 INTERVENTION REACH | the minimum evidence that an intervention
   reached the mechanism | makes nulls trustworthy everywhere | W-D: 8
   cases, 3 checks + alarm | which check for which class | adversarial
-  fixtures with valid twins | PTE CPU | ACTIVE (W-K)
+  fixtures with valid twins | PTE CPU | ANSWERED (W-K): no universal check; K2 (plant through own code) best; min cover {K2, applied count, counter-plant}; identical-arms = prompt only. Split: T-K1 reach bundle in lens (REACHED/UNREACHED/NOT_VERIFIED) research-ready; T-K2 NOT_APPLICABLE -> NOT_VERIFIED in future preregs (C1b frozen, not patched); T-K3 plant-library gaps; T-K4 bundle on the real M3 cells; T-K5 blind fixtures by a different worker
 T-DE-1 DESIGNED ECHOES [ANSWERED 2026-09-28: model 7/7 FIT incl. a designed failure and combs; instruments 2/3 (handoff reads CHANCE/CHANCE); designed_echoes/RESULT.md] | Does the echo model design working (and
   deliberately failing) mechanisms; do the instruments read designed
   trajectories correctly? | calibration of the model and instruments |

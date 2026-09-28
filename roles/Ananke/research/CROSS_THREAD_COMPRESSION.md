@@ -34,8 +34,12 @@ H3 DECODABLE != USED.
 H4 INTERVENTION != CAUSAL TEST.
    For: 8 fleet cases (W-D); C1 D-A; routing under dest_mode all;
      arm_identical no-ops.
-   Falsification attempt: pending W-K (fixtures with valid twins).
-   Status: SURVIVES pending W-K.
+   Falsification attempt (W-K: 21 fixtures, 16 checks, valid twins): no
+     single check separates reached from unreached. Identical outputs
+     describe both an inert intervention and a true null. Only a plant
+     through the arm's own code separates them.
+   Status: SURVIVES, sharpened: intervention != causal test, AND
+     no-output-change != no-reach.
 H5 FAMILY LABEL != MECHANISM.
    For: RELAY champions split site / channel / joint at ONE physics point
      (W-F); C1 "routed relay" x4 hid 2 carrier classes; W-C: 7/13
