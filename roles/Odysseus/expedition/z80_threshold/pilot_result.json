@@ -1,0 +1,945 @@
+{
+ "label": "EXPLORATORY",
+ "commit": "02800d2b59fa7e27bf8bd84bb79ae1523bd6f10f",
+ "prereg": "PREREG.md",
+ "vm_sha256": "c15528137df4b36986c8d5e5a2d2d52a69328d6853a3371136f0f559736a274c",
+ "vmx_sha256": "ea87d9c3ecf6e0de84976eeb110151573110e0bcd2c7cef322d91fc40cb2ceaf",
+ "arms": {
+  "A0": {
+   "ldir": "on",
+   "disabled": [],
+   "budget": 256
+  },
+  "A1": {
+   "ldir": "cost4",
+   "disabled": [],
+   "budget": 256
+  },
+  "A2": {
+   "ldir": "off",
+   "disabled": [],
+   "budget": 256
+  },
+  "A3": {
+   "ldir": "off",
+   "disabled": [
+    20
+   ],
+   "budget": 256
+  },
+  "A3b": {
+   "ldir": "off",
+   "disabled": [
+    20
+   ],
+   "budget": 512
+  },
+  "A4": {
+   "ldir": "off",
+   "disabled": [
+    17,
+    19,
+    20
+   ],
+   "budget": 256
+  }
+ },
+ "truncated": [],
+ "E0": {
+  "on": {
+   "n": 1500,
+   "mismatches": 0
+  },
+  "off": {
+   "n": 1500,
+   "mismatches": 0
+  },
+  "cost4": {
+   "n": 1500,
+   "mismatches": 0
+  }
+ },
+ "E0_pass": true,
+ "wall_s": 534.6,
+ "P0_controls": [
+  {
+   "arm": "A0",
+   "control": "PC_REP8",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "07000840034015ff4aebe859c9b3dd383e29e9861868ab759e685b4860b1bdd16bceec8dc0523f5c02ca4b5362550d79e5c6401a7e94adafb9f7cd1f3399de81"
+  },
+  {
+   "arm": "A0",
+   "control": "PC_LDIR3",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "0840157a5c546bcc51d03ca9b2e91041bfde2253dfc5d8d40351d95d48f7e2c67658af39280b166baabed185a79dc0a97d4bbc03899216eba70684e214dc5e19"
+  },
+  {
+   "arm": "A0",
+   "control": "PC_LDI5",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "08401433fdf765400df838c672fb7fe90f34938d9b2286c3b785b748c89399a81821c9727d46325a31b67787a3d866814e05c95c60be2b25542537ce715d6855"
+  },
+  {
+   "arm": "A0",
+   "control": "PC_MOV8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A0",
+   "control": "PAINTER",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 0,
+   "first_pass_tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040"
+  },
+  {
+   "arm": "A1",
+   "control": "PC_REP8",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "07000840034015ff394d4f98f8f3cd58007b87df0d6ac38587f55ec3b1433f5f5f16cef3b41941762fe4bec7945454d6aa6ffd1ad982f59e1f318c0b85875e5e"
+  },
+  {
+   "arm": "A1",
+   "control": "PC_LDIR3",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "084015c5f0d16564cb1cdbe2e712a66779fd62cda7f341d9ee127f82e4f1fc8a175a3313c285055a6d673fb7417065df799db3629895aceb7cb21d63c4c8b1b2"
+  },
+  {
+   "arm": "A1",
+   "control": "PC_LDI5",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "08401433fdae14a83492dfad93f214441ce0ba454c431489a8cba12432faa4bcbca60b1a063f9fd6063a16b7b9d52d1428e7bfb353ad3ecac0e0090772349505"
+  },
+  {
+   "arm": "A1",
+   "control": "PC_MOV8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A1",
+   "control": "PAINTER",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 0,
+   "first_pass_tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040"
+  },
+  {
+   "arm": "A2",
+   "control": "PC_REP8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A2",
+   "control": "PC_LDIR3",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A2",
+   "control": "PC_LDI5",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 200,
+   "first_pass_tape": "08401433fd446adae71c779c7d75191a94872c99c7475fc3eabf6a9eeaa4335489a2cbe230b46a955a85c2222c0196ee18cababe78625da9528def390a736e10"
+  },
+  {
+   "arm": "A2",
+   "control": "PC_MOV8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A2",
+   "control": "PAINTER",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 0,
+   "first_pass_tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040"
+  },
+  {
+   "arm": "A3",
+   "control": "PC_REP8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3",
+   "control": "PC_LDIR3",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3",
+   "control": "PC_LDI5",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3",
+   "control": "PC_MOV8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3",
+   "control": "PAINTER",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 0,
+   "first_pass_tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040"
+  },
+  {
+   "arm": "A3b",
+   "control": "PC_REP8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3b",
+   "control": "PC_LDIR3",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3b",
+   "control": "PC_LDI5",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A3b",
+   "control": "PC_MOV8",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 0,
+   "first_pass_tape": "08401011242533fafdcaf1ab51db7ce673bff323b2c9feba23fc4c6d038b816b69ab019179feac80bd10d3360172cf741b47a3dec7cab07b1ae56b571ceecac5"
+  },
+  {
+   "arm": "A3b",
+   "control": "PAINTER",
+   "n": 200,
+   "F_pass": 200,
+   "O_pass_among_F": 0,
+   "first_pass_tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040"
+  },
+  {
+   "arm": "A4",
+   "control": "PC_REP8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A4",
+   "control": "PC_LDIR3",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A4",
+   "control": "PC_LDI5",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A4",
+   "control": "PC_MOV8",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  },
+  {
+   "arm": "A4",
+   "control": "PAINTER",
+   "n": 200,
+   "F_pass": 0,
+   "O_pass_among_F": 0,
+   "first_pass_tape": null
+  }
+ ],
+ "P0_cvt2": [
+  {
+   "sid": "PC_REP8_A0",
+   "arm": "A0",
+   "tape": "07000840034015ff4aebe859c9b3dd383e29e9861868ab759e685b4860b1bdd16bceec8dc0523f5c02ca4b5362550d79e5c6401a7e94adafb9f7cd1f3399de81",
+   "n_variants": 192,
+   "accepted": 180,
+   "h2": 0.9375,
+   "classes": 180,
+   "TB2": 7.4998,
+   "dominant_share": 0.0469,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "PC_LDIR3_A0",
+   "arm": "A0",
+   "tape": "0840157a5c546bcc51d03ca9b2e91041bfde2253dfc5d8d40351d95d48f7e2c67658af39280b166baabed185a79dc0a97d4bbc03899216eba70684e214dc5e19",
+   "n_variants": 192,
+   "accepted": 183,
+   "h2": 0.9531,
+   "classes": 183,
+   "TB2": 7.5236,
+   "dominant_share": 0.0312,
+   "dominant_byte": "6b"
+  },
+  {
+   "sid": "PC_LDI5_A0",
+   "arm": "A0",
+   "tape": "08401433fdf765400df838c672fb7fe90f34938d9b2286c3b785b748c89399a81821c9727d46325a31b67787a3d866814e05c95c60be2b25542537ce715d6855",
+   "n_variants": 192,
+   "accepted": 179,
+   "h2": 0.9323,
+   "classes": 179,
+   "TB2": 7.4919,
+   "dominant_share": 0.0312,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "PAINTER_A0",
+   "arm": "A0",
+   "tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040",
+   "n_variants": 192,
+   "accepted": 1,
+   "h2": 0.0052,
+   "classes": 1,
+   "TB2": 1.0,
+   "dominant_share": 0.9062,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "PC_REP8_A1",
+   "arm": "A1",
+   "tape": "07000840034015ff394d4f98f8f3cd58007b87df0d6ac38587f55ec3b1433f5f5f16cef3b41941762fe4bec7945454d6aa6ffd1ad982f59e1f318c0b85875e5e",
+   "n_variants": 192,
+   "accepted": 176,
+   "h2": 0.9167,
+   "classes": 176,
+   "TB2": 7.4676,
+   "dominant_share": 0.0469,
+   "dominant_byte": "87"
+  },
+  {
+   "sid": "PC_LDIR3_A1",
+   "arm": "A1",
+   "tape": "084015c5f0d16564cb1cdbe2e712a66779fd62cda7f341d9ee127f82e4f1fc8a175a3313c285055a6d673fb7417065df799db3629895aceb7cb21d63c4c8b1b2",
+   "n_variants": 192,
+   "accepted": 183,
+   "h2": 0.9531,
+   "classes": 183,
+   "TB2": 7.5236,
+   "dominant_share": 0.0312,
+   "dominant_byte": "65"
+  },
+  {
+   "sid": "PC_LDI5_A1",
+   "arm": "A1",
+   "tape": "08401433fdae14a83492dfad93f214441ce0ba454c431489a8cba12432faa4bcbca60b1a063f9fd6063a16b7b9d52d1428e7bfb353ad3ecac0e0090772349505",
+   "n_variants": 192,
+   "accepted": 179,
+   "h2": 0.9323,
+   "classes": 179,
+   "TB2": 7.4919,
+   "dominant_share": 0.0781,
+   "dominant_byte": "14"
+  },
+  {
+   "sid": "PAINTER_A1",
+   "arm": "A1",
+   "tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040",
+   "n_variants": 192,
+   "accepted": 0,
+   "h2": 0.0,
+   "classes": 0,
+   "TB2": 0.0,
+   "dominant_share": 0.9062,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "PC_LDI5_A2",
+   "arm": "A2",
+   "tape": "08401433fd446adae71c779c7d75191a94872c99c7475fc3eabf6a9eeaa4335489a2cbe230b46a955a85c2222c0196ee18cababe78625da9528def390a736e10",
+   "n_variants": 192,
+   "accepted": 178,
+   "h2": 0.9271,
+   "classes": 178,
+   "TB2": 7.4838,
+   "dominant_share": 0.0469,
+   "dominant_byte": "6a"
+  },
+  {
+   "sid": "PAINTER_A2",
+   "arm": "A2",
+   "tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040",
+   "n_variants": 192,
+   "accepted": 0,
+   "h2": 0.0,
+   "classes": 0,
+   "TB2": 0.0,
+   "dominant_share": 0.9062,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "PAINTER_A3",
+   "arm": "A3",
+   "tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040",
+   "n_variants": 192,
+   "accepted": 0,
+   "h2": 0.0,
+   "classes": 0,
+   "TB2": 0.0,
+   "dominant_share": 0.9062,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "PC_MOV8_A3b",
+   "arm": "A3b",
+   "tape": "08401011242533fafdcaf1ab51db7ce673bff323b2c9feba23fc4c6d038b816b69ab019179feac80bd10d3360172cf741b47a3dec7cab07b1ae56b571ceecac5",
+   "n_variants": 192,
+   "accepted": 168,
+   "h2": 0.875,
+   "classes": 168,
+   "TB2": 7.4009,
+   "dominant_share": 0.0469,
+   "dominant_byte": "ca"
+  },
+  {
+   "sid": "PAINTER_A3b",
+   "arm": "A3b",
+   "tape": "01400840112533fc4040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040404040",
+   "n_variants": 192,
+   "accepted": 0,
+   "h2": 0.0,
+   "classes": 0,
+   "TB2": 0.0,
+   "dominant_share": 0.9062,
+   "dominant_byte": "40"
+  }
+ ],
+ "P1_basin": [
+  {
+   "i": 0,
+   "tape": "64c4abfd7e316020b43d450a451d13e89f555ffa44fb7ddb083f8e9d8575f86df20a842587e3a3226515419330578a97d49fa48944afb454146607367c8f9a29",
+   "A0": {
+    "F": true,
+    "fids": [
+     0.9844,
+     0.9844,
+     0.9844
+    ],
+    "rule_O_w1": true
+   },
+   "A1": {
+    "F": false,
+    "fids": [
+     0.8281
+    ],
+    "rule_O_w1": false
+   },
+   "A2": {
+    "F": false,
+    "fids": [
+     0.0
+    ],
+    "rule_O_w1": false
+   }
+  },
+  {
+   "i": 1,
+   "tape": "4d4c08405e20e1b144b90d5d73f5de1911c662b6ece3629c054a790d379715c2da8e3672d60070b62231b92090a89c016b4b14a1910662301be7f12b8eac606f",
+   "A0": {
+    "F": true,
+    "fids": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "rule_O_w1": true
+   },
+   "A1": {
+    "F": false,
+    "fids": [
+     0.8906
+    ],
+    "rule_O_w1": false
+   },
+   "A2": {
+    "F": false,
+    "fids": [
+     0.125
+    ],
+    "rule_O_w1": false
+   }
+  },
+  {
+   "i": 2,
+   "tape": "f4108d5980fdc0a899a154807e916145f17692be9e0840a36b5ff9460994152b8308a4712134c48a631b047a67007c1919995e9c82d366bb209dcd6786492730",
+   "A0": {
+    "F": true,
+    "fids": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "rule_O_w1": true
+   },
+   "A1": {
+    "F": false,
+    "fids": [
+     0.8906
+    ],
+    "rule_O_w1": false
+   },
+   "A2": {
+    "F": false,
+    "fids": [
+     0.0
+    ],
+    "rule_O_w1": false
+   }
+  },
+  {
+   "i": 3,
+   "tape": "d221283c637d7542e01826e408407a6cbaebc8671b54c84346c5718adda58b9687f8b2329f495fcb02da153e362bd6619794cb354218e37eef07eae0476eb2ec",
+   "A0": {
+    "F": true,
+    "fids": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "rule_O_w1": true
+   },
+   "A1": {
+    "F": false,
+    "fids": [
+     0.8438
+    ],
+    "rule_O_w1": false
+   },
+   "A2": {
+    "F": false,
+    "fids": [
+     0.0
+    ],
+    "rule_O_w1": false
+   }
+  },
+  {
+   "i": 4,
+   "tape": "890840b1ef1535f9fa0054a64ea00e0b29e49fd5412114db7cc83a57035071af9894e8d78ebadf65a8abd25bf586bad65d0c4057dfca4212012d666e1fbe5e91",
+   "A0": {
+    "F": true,
+    "fids": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "rule_O_w1": true
+   },
+   "A1": {
+    "F": true,
+    "fids": [
+     0.9844,
+     0.9844,
+     0.9844
+    ],
+    "rule_O_w1": true
+   },
+   "A2": {
+    "F": false,
+    "fids": [
+     0.0156
+    ],
+    "rule_O_w1": false
+   }
+  },
+  {
+   "i": 5,
+   "tape": "87279d6acbfe9295cfbc12490436c97f82508d3d83b42f8108401915d3960f9898a553cc825bee1c999bc03e9363dade2e7b8a86977f0acca291a98ba33cf287",
+   "A0": {
+    "F": true,
+    "fids": [
+     1.0,
+     1.0,
+     1.0
+    ],
+    "rule_O_w1": true
+   },
+   "A1": {
+    "F": true,
+    "fids": [
+     0.9062,
+     0.9062,
+     0.9062
+    ],
+    "rule_O_w1": true
+   },
+   "A2": {
+    "F": false,
+    "fids": [
+     0.0
+    ],
+    "rule_O_w1": false
+   }
+  }
+ ],
+ "P1_cvt2": [
+  {
+   "sid": "BASIN0_A0",
+   "arm": "A0",
+   "tape": "64c4abfd7e316020b43d450a451d13e89f555ffa44fb7ddb083f8e9d8575f86df20a842587e3a3226515419330578a97d49fa48944afb454146607367c8f9a29",
+   "n_variants": 192,
+   "accepted": 176,
+   "h2": 0.9167,
+   "classes": 176,
+   "TB2": 7.4676,
+   "dominant_share": 0.0312,
+   "dominant_byte": "b4"
+  },
+  {
+   "sid": "BASIN1_A0",
+   "arm": "A0",
+   "tape": "4d4c08405e20e1b144b90d5d73f5de1911c662b6ece3629c054a790d379715c2da8e3672d60070b62231b92090a89c016b4b14a1910662301be7f12b8eac606f",
+   "n_variants": 192,
+   "accepted": 181,
+   "h2": 0.9427,
+   "classes": 181,
+   "TB2": 7.5078,
+   "dominant_share": 0.0469,
+   "dominant_byte": "62"
+  },
+  {
+   "sid": "BASIN2_A0",
+   "arm": "A0",
+   "tape": "f4108d5980fdc0a899a154807e916145f17692be9e0840a36b5ff9460994152b8308a4712134c48a631b047a67007c1919995e9c82d366bb209dcd6786492730",
+   "n_variants": 192,
+   "accepted": 179,
+   "h2": 0.9323,
+   "classes": 179,
+   "TB2": 7.4919,
+   "dominant_share": 0.0312,
+   "dominant_byte": "80"
+  },
+  {
+   "sid": "BASIN3_A0",
+   "arm": "A0",
+   "tape": "d221283c637d7542e01826e408407a6cbaebc8671b54c84346c5718adda58b9687f8b2329f495fcb02da153e362bd6619794cb354218e37eef07eae0476eb2ec",
+   "n_variants": 192,
+   "accepted": 175,
+   "h2": 0.9115,
+   "classes": 175,
+   "TB2": 7.4594,
+   "dominant_share": 0.0312,
+   "dominant_byte": "42"
+  },
+  {
+   "sid": "BASIN4_A0",
+   "arm": "A0",
+   "tape": "890840b1ef1535f9fa0054a64ea00e0b29e49fd5412114db7cc83a57035071af9894e8d78ebadf65a8abd25bf586bad65d0c4057dfca4212012d666e1fbe5e91",
+   "n_variants": 192,
+   "accepted": 183,
+   "h2": 0.9531,
+   "classes": 183,
+   "TB2": 7.5236,
+   "dominant_share": 0.0312,
+   "dominant_byte": "40"
+  },
+  {
+   "sid": "BASIN5_A0",
+   "arm": "A0",
+   "tape": "87279d6acbfe9295cfbc12490436c97f82508d3d83b42f8108401915d3960f9898a553cc825bee1c999bc03e9363dade2e7b8a86977f0acca291a98ba33cf287",
+   "n_variants": 192,
+   "accepted": 175,
+   "h2": 0.9115,
+   "classes": 175,
+   "TB2": 7.4594,
+   "dominant_share": 0.0312,
+   "dominant_byte": "87"
+  }
+ ],
+ "P2_importance": {
+  "A0|R_LDIR": {
+   "arm": "A0",
+   "route": "R_LDIR",
+   "n": 2000,
+   "passes": 481,
+   "nC": 1953,
+   "k_bytes": 3,
+   "examples": [
+    "7e02fca41e91f084fa0840fbb4f59aebfa4a49491edf758715e9e16c98edc0e33b640ac3abae359da3f78798abb1254ac1829d92ed072801f7f15f16828cff80",
+    "1f6802effbc59f8641c6268b5af0a1cafd516de35bfd95b785252ec3ca6a3d5b830840bc8f924f66a98db2dba72d519f8fd4158c13d0e4e23233e7ec77ac5864",
+    "d347de8bca2ba7009ab0bf46737245a10840c45acc446d78dac4d0752d67f2557c43159d13a690483e026d3d9fcedbe65aa8ae5941f12df144f5fb3ba9bc9bb1"
+   ],
+   "r": 0.2405,
+   "density_est": 2.799609303474426e-05,
+   "density_ci95": [
+    2.5874882878251098e-05,
+    3.0233127164637015e-05
+   ],
+   "log10_density_est": -4.553
+  },
+  "A1|R_LDIR": {
+   "arm": "A1",
+   "route": "R_LDIR",
+   "n": 2000,
+   "passes": 237,
+   "nC": 1953,
+   "k_bytes": 3,
+   "examples": [
+    "0840c4c7b6f920d676f7351596ce00bff3bc634a54cf15cfc9721b7ed122ac32b01d1be88de83d33a96292c93091551d3bbc8fbf9ea7e589f93f0eb7140a252f",
+    "0840728015e4b1d40879a5fc243847557ebc19f3a6fa2e18f625435014ff21e58255e686f3b601a4c7229ca18e9fc1f3c7ac34c943ff92d863440bdc5202fd58",
+    "31157006db8291d7fc0840cea79997293e15d890b6db7f19baf4d7bdbce33d5fc5736e902ba4d18cc5496904db88151e2bcd763bd6b8f23179379e64f5094def"
+   ],
+   "r": 0.1185,
+   "density_est": 1.379433274269104e-05,
+   "density_ci95": [
+    1.222995599586091e-05,
+    1.5528986352149077e-05
+   ],
+   "log10_density_est": -4.86
+  },
+  "A2|R_LDI": {
+   "arm": "A2",
+   "route": "R_LDI",
+   "n": 3000,
+   "passes": 557,
+   "nC": 31335,
+   "k_bytes": 5,
+   "examples": [
+    "08405edfd9689786168793e6942811dd76eae02f1c7daf06e68881e31433fd4f6f17fd4c1280aedee08cbb3d34b919e3688632c9f18078bae67d4d667b86b842",
+    "9bdd08a7943b237c08406360be2f5da581eb97805d140934fb720609fde89512ec62e0d1f142b7c314fe5c6d481fb1ba8c35693cf229e3c9057cf0a8feb7739c",
+    "7231e48cc35a08400ea1dfb15eef58b363cf926d86ab4eb74cad59418af1bf58470566f93eaed11434fdad59a7065145ceb7585d1a84d4cd31fc01da854befc6"
+   ],
+   "r": 0.18567,
+   "density_est": 5.291317393130158e-09,
+   "density_ci95": [
+    4.906316233676069e-09,
+    5.699231735461427e-09
+   ],
+   "log10_density_est": -8.276
+  },
+  "A3|R_MOV": {
+   "arm": "A3",
+   "route": "R_MOV",
+   "n": 2000,
+   "passes": 0,
+   "nC": 4959,
+   "k_bytes": 8,
+   "examples": [],
+   "r": 0.0,
+   "density_est": 0.0,
+   "density_ci95": [
+    0.0,
+    4.958369113772916e-19
+   ],
+   "log10_density_est": null
+  },
+  "A3b|R_MOV": {
+   "arm": "A3b",
+   "route": "R_MOV",
+   "n": 2000,
+   "passes": 645,
+   "nC": 4959,
+   "k_bytes": 8,
+   "examples": [
+    "a80840e61024112533fab1e343421620bca74c5304b5c0d87328ecf9a63a803deda0f620bccbdbe73f28f30d6e2e07162e2b036873ad5436b9d3c770b914a8a0",
+    "bc55f62a370840148a95d173737d1740053673b5e26f5c0e95991011242533fa983a751586e71f9e4d8216084118d8b1497250b0a12d3af40b2a9dd757a166da",
+    "888ac85364084071c2a3623eebb515b9c618d33ece2e811024112533fa8266e3abf81cdbc0c0cba5db448d135b39c568d4da11654f66f37005df9ec02e619185"
+   ],
+   "r": 0.3225,
+   "density_est": 8.669700699535932e-17,
+   "density_ci95": [
+    8.12857548879216e-17,
+    9.229121714031029e-17
+   ],
+   "log10_density_est": -16.062
+  },
+  "A1|R_LDI": {
+   "arm": "A1",
+   "route": "R_LDI",
+   "n": 1000,
+   "passes": 169,
+   "nC": 31335,
+   "k_bytes": 5,
+   "examples": [
+    "76676b834be9cab9fa20863728fe0840591433fc24c7b38ab7caf173c1b18153e5abd427426aa1abecb26c61e2ab2037f5e80c91e35591128e99f0d432c1fce6",
+    "5baf520b40e3221d62931a27f84fb22ca74b37e6359a665fe4dbfaba98c0ee88f536257a18c7bd3894490840c214302c3c9105b8c39dc26a3ff3d7daa9ce4ce1",
+    "69a9460840d1993c41febb0e036bca06edbdbf5e7875817d65143017b64616ca1b25aa699068cef805caf8a67960e682bbcb1cd4f57a3c61610e6f0d813c515e"
+   ],
+   "r": 0.169,
+   "density_est": 4.816333785129246e-09,
+   "density_ci95": [
+    4.190758873750056e-09,
+    5.514108300481686e-09
+   ],
+   "log10_density_est": -8.317
+  },
+  "A0|R_LDI": {
+   "arm": "A0",
+   "route": "R_LDI",
+   "n": 1000,
+   "passes": 173,
+   "nC": 31335,
+   "k_bytes": 5,
+   "examples": [
+    "3e86d3e5214ef12a084095521433fde59cf086727df897644eab050e4a4107b88303eba7ded109eb13feca18171b6a0162f89ecd1092d34b21c0942893658b2f",
+    "7ed1a79ed3b80840e6f42d3e5b14300da111e2a72e9c9aa85e5103c2a02e0c87882ab84ad02b46ae80b24fb6ee5a2d83f3e99beb22c9e768e1c7de7a54fa322c",
+    "0ec57dc8ea4ad5928eabd640c61290ee3ddc236a1ea5c2000840bc9f146433fce5f5f8c49a30408567701da81e9a304e97bb8a2b7b764541a496640701e9cb77"
+   ],
+   "r": 0.173,
+   "density_est": 4.930329851049464e-09,
+   "density_ci95": [
+    4.2981888948406145e-09,
+    5.6337979084645155e-09
+   ],
+   "log10_density_est": -8.307
+  }
+ },
+ "P3_sampling": {
+  "A0": {
+   "n": 30000,
+   "screen": 0,
+   "hits": [],
+   "any_window_write": 5850,
+   "k": 0,
+   "density": 0.0,
+   "ci95": [
+    0.0,
+    0.0001229626484704645
+   ]
+  },
+  "A1": {
+   "n": 50000,
+   "screen": 0,
+   "hits": [],
+   "any_window_write": 1786,
+   "k": 0,
+   "density": 0.0,
+   "ci95": [
+    0.0,
+    7.37775890822787e-05
+   ]
+  },
+  "A2": {
+   "n": 50000,
+   "screen": 0,
+   "hits": [],
+   "any_window_write": 1565,
+   "k": 0,
+   "density": 0.0,
+   "ci95": [
+    0.0,
+    7.37775890822787e-05
+   ]
+  },
+  "A3": {
+   "n": 10000,
+   "screen": 0,
+   "hits": [],
+   "any_window_write": 206,
+   "k": 0,
+   "density": 0.0,
+   "ci95": [
+    0.0,
+    0.0003688879454113935
+   ]
+  },
+  "A4": {
+   "n": 3000,
+   "screen": 0,
+   "hits": [],
+   "any_window_write": 0,
+   "k": 0,
+   "density": 0.0,
+   "ci95": [
+    0.0,
+    0.001229626484704645
+   ]
+  }
+ },
+ "P3_cvt2": [],
+ "P4_walks": {
+  "A0": {
+   "walks": 10,
+   "hits": 0,
+   "total_steps": 30000,
+   "hit_steps": [],
+   "hit_tapes": [],
+   "hazard_per_step": 0.0,
+   "hazard_ci95": [
+    0.0,
+    0.0001229626484704645
+   ]
+  },
+  "A1": {
+   "walks": 10,
+   "hits": 0,
+   "total_steps": 30000,
+   "hit_steps": [],
+   "hit_tapes": [],
+   "hazard_per_step": 0.0,
+   "hazard_ci95": [
+    0.0,
+    0.0001229626484704645
+   ]
+  },
+  "A2": {
+   "walks": 10,
+   "hits": 0,
+   "total_steps": 30000,
+   "hit_steps": [],
+   "hit_tapes": [],
+   "hazard_per_step": 0.0,
+   "hazard_ci95": [
+    0.0,
+    0.0001229626484704645
+   ]
+  }
+ }
+}

@@ -131,3 +131,16 @@ Known-answer tests (must pass before substrate runs)
   constant score: all 8 phenotypes one neutral component.
 
 Budget: <= 60 min compute total. All results EXPLORATORY.
+
+Amendments (appended after the full run started, BEFORE any full-run
+result was read)
+-------------------------------------------------------------------
+A1  Smoke runs (tiny configs, 2 parents) showed: RBN attractor-set
+    behaviour is fine-grained (smoke B/G 0.56). Added a POST-HOC,
+    NOT-PREREGISTERED sensitivity arm: same RBN walks (identical seeds;
+    neutrality depends only on score, so identical probe genotypes)
+    with behaviour coarsened to the multiset of attractor lengths
+    (sub_rbn.py --coarse). It does not enter the verdict.
+A2  Smoke of part A showed R4's "91 distinct answer vectors pooled"
+    equals the SUM of per-parent distinct counts; the truly pooled
+    distinct count over the 19 parents is 59. Both are reported.

@@ -30,6 +30,11 @@ output is written down) so (d) is checkable.
     packet  date        worker          outcome   blocking gaps  notes
     R4      2026-09-27  fresh subagent  NOT READY  2 (prior runs C4-05 / C3-SFE-02 uncited;
                                                      "known summit" did not exist)  12 gaps total
+    sandbox 2026-09-28  fresh subagent  NOT READY  2 (G1 files not in git -- fixed by commit;
+                                                     G2 documented command overwrote the fixture -- fixed:
+                                                     re-runs write known_answer_rerun.json)  10 minor
+                                                     fixture reproduced bit-exact (5040 values); NEW cheat
+                                                     "nest tag" defeated the battery -> ACCUMULATION A8
     (rows added per trial)
 
 Current states: R4 COLD-START-TRIED (not READY); R1, R2, R3, R5, R6 DRAFT.

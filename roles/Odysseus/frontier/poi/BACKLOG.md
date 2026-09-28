@@ -46,8 +46,11 @@ State SHARP, partly ANSWERED by spike S1 | origin raw/I1 T14, raw/I6 LP shape | 
 Known: S1 -- 20 of 68 BEE coupling "competent self-replicators" do not copy
 themselves under any of 256 inputs x 3 windows (ON 3/42, non-ON 17/26);
 "competent SR" = sr_depth > 0 = how the WRITER's birth was classified.
-Unknown: the same audit on BEE grounding runs (12,130 rows), on NPE P-11
-labels, on the running multi-day campaign's endpoint.
+UPDATE 2026-09-28 (expedition/recert/): the BEE label HOLDS in the grounding
+round (1,414/1,425 LABEL_OK, >= 168 bits per certified copy); S1's failure is
+specific to the coupling campaign's control arms. NPE P-11: 3/57 certified
+donor genomes copy themselves (17 paint, 37 inert; 16 copy only with
+hand-set registers). Still unknown: the multi-day campaign's endpoint.
 Cheapest: rerun spikes/S1_copyless_sr/probe.py on the grounding dominant tapes.
 Rel: TH-002 (BEE SR recount), POI-005.
 

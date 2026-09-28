@@ -1,0 +1,169 @@
+=== L1 BEE self-replicator ===  wall_s 346.1
+L1a grounding dominant_sr_tape (distinct tape x chemistry), by origin
+  group                                            n    OK   CTX  BWEM   SWB  PROV  not-OK
+  HIST (historical origin transplanted)          389   384     0     1     3     1    1.3%
+  random-start (de novo candidates)               67    62     0     1     4     0    7.5%
+  seeded replicator populations                  969   968     0     0     1     0    0.1%
+  TOTAL                                         1425  1414     0     2     8     1    0.8%
+
+L1b grounding, by lane
+  group                                            n    OK   CTX  BWEM   SWB  PROV  not-OK
+  G1                                              13    12     0     0     1     0    7.7%
+  G1T                                              9     8     0     0     1     0   11.1%
+  G3                                             198   197     0     0     1     0    0.5%
+  G5                                              98    98     0     0     0     0    0.0%
+  G7                                             417   416     0     1     0     0    0.2%
+  G7P1                                            12    10     0     0     2     0   16.7%
+  G8                                              40    40     0     0     0     0    0.0%
+  HIST                                           389   384     0     1     3     1    1.3%
+  P8                                             249   249     0     0     0     0    0.0%
+  TOTAL                                         1425  1414     0     2     8     1    0.8%
+
+L1c random-start cells
+  group                                            n    OK   CTX  BWEM   SWB  PROV  not-OK
+  COND_MULTI                                       3     3     0     0     0     0    0.0%
+  CONSTRUCTIVE/Z80_64                              3     2     0     0     1     0   33.3%
+  ENDOGENOUS_COPY/BYTECODE32                       2     2     0     0     0     0    0.0%
+  ENDOGENOUS_COPY/Z80_64                           1     1     0     0     0     0    0.0%
+  ENDOGENOUS_PARTIAL/Z80_64                        2     2     0     0     0     0    0.0%
+  NICHES_POLLINATION                              11     9     0     0     2     0   18.2%
+  PAIR_EXECUTION/Z80_64                            5     5     0     0     0     0    0.0%
+  RANDOM/COPY/base                                 3     3     0     0     0     0    0.0%
+  RANDOM/COPY/mut_low                              2     2     0     0     0     0    0.0%
+  RANDOM/COPY/mut_vlow                             1     1     0     0     0     0    0.0%
+  RANDOM/GRAPH/LOCAL                               2     2     0     0     0     0    0.0%
+  RANDOM/GRID/LOCAL                                1     1     0     0     0     0    0.0%
+  RANDOM/GRID/WELL_MIXED                           7     7     0     0     0     0    0.0%
+  RANDOM/NICHES/NICHES_ENV_MIG                     2     1     0     1     0     0   50.0%
+  RANDOM/NICHES/NICHES_HIGH_MIG                    3     3     0     0     0     0    0.0%
+  RANDOM/NICHES/NICHES_LOW_MIG                     2     2     0     0     0     0    0.0%
+  RANDOM/NICHES/NICHES_PERIODIC                    1     1     0     0     0     0    0.0%
+  RANDOM/NICHES/NICHES_POLLINATION                 2     2     0     0     0     0    0.0%
+  RANDOM/PARTIAL/base                              3     3     0     0     0     0    0.0%
+  RANDOM/PARTIAL/target_zero                       4     4     0     0     0     0    0.0%
+  RESERVOIR                                        1     1     0     0     0     0    0.0%
+  SUM2                                             6     5     0     0     1     0   16.7%
+  TOTAL                                           67    62     0     1     4     0    7.5%
+
+L1d coupling origin ledger (S1's 68), by arm x ledger n_copy_ops
+  group                                            n    OK   CTX  BWEM   SWB  PROV  not-OK
+  OFF copy-bearing                                 6     3     0     0     3     0   50.0%
+  OFF copyless                                     3     0     1     0     2     0  100.0%
+  ON copy-bearing                                 39    39     0     0     0     0    0.0%
+  ON copyless                                      3     0     0     0     1     2  100.0%
+  SHUFFLED copy-bearing                            6     4     0     0     2     0   33.3%
+  SHUFFLED copyless                                3     0     1     0     1     1  100.0%
+  YOKED copy-bearing                               2     1     0     0     1     0   50.0%
+  YOKED copyless                                   6     0     1     0     3     2  100.0%
+  TOTAL                                           68    47     3     0    13     5   30.9%
+
+L1e grounding: descriptor self_copy THEN (repro_descriptor, input 42, zero window) x verdict NOW
+  then=False        now=OK        2
+  then=False        now=PROV      1
+  then=False        now=SWB       8
+  then=True         now=BWEM      2
+  then=True         now=OK     1412
+
+L1f information and mechanism among LABEL_OK (n=1461):
+  bits_transmitted min/median/max: 168 / 480 / 496  (homopolymer painter: 0)
+  tape content near-homopolymer (dominant byte >= 0.8): 1
+  executed copy-op knockout: behaviour gone (rate 0) in 1115 of 1461; retained >= 0.5 in 112
+  world copy-op self_copy rule rate among OK: min 0.75
+  BWEM rows: 2; their transmission: [0.2422, 0.4219]
+  CTX rows: 3; windows in which they pass (first 8 passing envs): {('self',): 3}
+
+=== L2 NPE P-11 causal copy ===  wall_s 32.4
+L2a the 57 P-11-certified donors, by copy primitive x genome content
+  group                                            n    OK   CTX  BWEM   SWB  PROV  not-OK
+  BLOCK high-entropy                              33     2     1     3    27     0   93.9%
+  BLOCK near-homopolymer                          14     0     0    10     1     3  100.0%
+  BYTEWISE near-homopolymer                       10     0     0     4     0     6  100.0%
+  TOTAL                                           57     2     1    17    28     9   96.5%
+
+L2b per donor: THEN (P-11 record) | NOW (this harness)
+  run                            prim     depth draws dom  | now    rate fresh      T  bits  orac domb  
+  0e6c36f044262537-s23100-tL-a0  BLOCK    1     2     0.94 | BWEM   0.22  0.00  0.016     0     n 36    
+  12ad3d5f4a8b5bb1-s97555-tL-a0  BYTEWISE 1     3     0.91 | BWEM   0.06  0.50  0.031     8     Y 36    
+  164fced841ec95e0-s47993-tL-a0  BLOCK    1     3     0.91 | BWEM   0.17  0.00  0.000     0     Y 36    
+  201424f5fcaf65fa-s3860-tL-a0   BLOCK    1     3     0.41 | BWEM   0.11  0.00  0.469    88     n ed    
+  2448d8964ae5f800-s83460-tL-a0  BLOCK    1     2     0.91 | BWEM   0.06  0.00  0.031     0     Y 36    
+  2a6c0335a04ba62f-s55262-tL-a0  BLOCK    1     3     0.91 | BWEM   0.28  0.50  0.047     8     Y 36    
+  473d8734a24e3066-s63574-tL-a0  BLOCK    1     2     0.94 | BWEM   0.28  0.00  0.016     0     Y 36    
+  4931614d912c52b2-s9368-tM-a0   BYTEWISE 1     3     0.91 | BWEM   0.22  0.00  0.031     8     Y 39    
+  4e3b001ae4b7147b-s97336-tL-a0  BYTEWISE 1     2     0.94 | BWEM   0.17  0.00  0.016     0     n 36    
+  5c0e7b9ce7acde3a-s91487-tL-a0  BLOCK    1     3     0.09 | BWEM   0.06  0.00  0.008     0     Y 01    
+  62b53cfa007460c7-s57844-tL-a0  BYTEWISE 1     3     0.91 | BWEM   0.22  0.00  0.016     8     Y 01    
+  69fe5ba878847b8c-s55679-tL-a0  BLOCK    1     3     0.92 | BWEM   0.17  0.50  0.016     8     Y 2a    
+  b9760c8fb47ee221-s59136-tL-a0  BLOCK    1     3     0.91 | BWEM   0.33  0.00  0.016     0     Y 3a    
+  c144e174ccfd994f-s48614-tL-a0  BLOCK    1     2     0.91 | BWEM   0.44  0.50  0.016     8     Y 21    
+  d5a4a6295475b51b-s51100-tL-a0  BLOCK    1     3     0.92 | BWEM   0.11  0.00  0.000     0     Y 00    
+  dab251eb114fcaa4-s78618-tL-a0  BLOCK    1     3     0.91 | BWEM   0.06  0.50  0.031     8     Y 36    
+  f290db4e1c07947d-s36039-tL-a0  BLOCK    1     2     0.12 | BWEM   0.11  0.00  0.008     0     n 20    
+  cb7f5ca16e697938-s60768-tL-a0  BLOCK    1     2     0.08 | CTX    0.11  0.00  0.812   392     n 00    
+  7ae3f9c1437c8000-s54765-tL-a0  BLOCK    2     3     0.08 | OK     0.50  0.50  0.812   392     Y 00    
+  e141105526c59efe-s92071-tL-a0  BLOCK    1     2     0.09 | OK     0.50  0.50  0.781   384     Y 00    
+  2448d8964ae5f800-s94150-tL-a0  BLOCK    1     2     0.91 | PROV   0.00  0.00      -     -     n 36    
+  2cb50bf028fcf0c5-s51326-tL-a0  BYTEWISE 1     3     0.91 | PROV   0.00  0.00      -     -     n 36    
+  48c75e149fc7d62d-s12269-tL-a0  BYTEWISE 1     3     0.96 | PROV   0.00  0.00      -     -     n fc    
+  4931614d912c52b2-s1190-tL-a0   BYTEWISE 1     3     0.94 | PROV   0.00  0.00      -     -     Y 36    
+  4c2237a165b0c3a6-s81346-tL-a0  BYTEWISE 1     2     0.94 | PROV   0.00  0.00      -     -     n 36    
+  9a372fb74fc3561f-s40929-tL-a0  BYTEWISE 1     2     0.94 | PROV   0.00  0.00      -     -     n c0    
+  a62116831aa6d956-s7926-tM-a0   BYTEWISE 1     3     0.95 | PROV   0.00  0.00      -     -     n fc    
+  b156b49a96d8a483-s49766-tL-a0  BLOCK    1     3     0.91 | PROV   0.00  0.00      -     -     n fb    
+  b8c942fed26ba4f4-s29204-tL-a0  BLOCK    1     2     0.92 | PROV   0.00  0.00      -     -     n c3    
+  03650e1ad792eefa-s9040-tL-a0   BLOCK    1     2     0.26 | SWB    0.00  0.00      -     -     Y 00    
+  08b4c94e2ea65998-s76929-tL-a0  BLOCK    1     2     0.11 | SWB    0.00  0.00      -     -     Y ca    
+  193576337017c94a-s74845-tL-a0  BLOCK    1     3     0.05 | SWB    0.00  0.00      -     -     n 00    
+  1b4ac9027259a1b0-s79492-tL-a0  BLOCK    1     2     0.12 | SWB    0.00  0.00      -     -     Y 86    
+  2c45891544a22e46-s8700-tM-a0   BLOCK    1     2     0.34 | SWB    0.00  0.00      -     -     Y b8    
+  3d51b4fa95c4cc60-s13785-tL-a0  BLOCK    1     3     0.14 | SWB    0.00  0.00      -     -     n 1f    
+  3dac31ff4aa0b620-s67526-tL-a0  BLOCK    1     2     0.16 | SWB    0.00  0.00      -     -     Y 3e    
+  40aac009c6b5f1fb-s59369-tL-a0  BLOCK    1     2     0.11 | SWB    0.00  0.00      -     -     n 54    
+  40aac009c6b5f1fb-s86857-tL-a0  BLOCK    1     2     0.20 | SWB    0.00  0.00      -     -     n df    
+  4552294865a7dd66-s55823-tL-a0  BLOCK    1     3     0.06 | SWB    0.00  0.00      -     -     Y f4    
+  4552294865a7dd66-s89366-tL-a0  BLOCK    1     2     0.25 | SWB    0.00  0.00      -     -     n 6a    
+  5e20dc8a5cf24970-s4912-tL-a0   BLOCK    1     3     0.95 | SWB    0.00  0.00      -     -     Y 00    
+  5e26e88362c0c12a-s90492-tL-a0  BLOCK    1     3     0.19 | SWB    0.00  0.00      -     -     Y ff    
+  607a2b5ec1ef7287-s14176-tL-a0  BLOCK    1     3     0.16 | SWB    0.00  0.00      -     -     n 00    
+  6da4c0b9a40141f8-s5058-tL-a0   BLOCK    1     3     0.09 | SWB    0.00  0.00      -     -     n 28    
+  92ab440ee852580f-s963-tL-a0    BLOCK    1     3     0.22 | SWB    0.00  0.00      -     -     Y ff    
+  96073ced6f628140-s70009-tL-a0  BLOCK    1     2     0.08 | SWB    0.00  0.00      -     -     n f7    
+  9cba7113df39009e-s3882-tL-a0   BLOCK    1     2     0.56 | SWB    0.00  0.00      -     -     Y 00    
+  a4b90ad58b77d546-s28822-tL-a0  BLOCK    1     2     0.17 | SWB    0.00  0.00      -     -     n 00    
+  aaa8c7857c2e5f02-s7313-tM-a0   BLOCK    1     2     0.19 | SWB    0.00  0.00      -     -     Y ed    
+  ad36397262958c55-s1535-tL-a0   BLOCK    1     3     0.08 | SWB    0.00  0.00      -     -     n 00    
+  b156b49a96d8a483-s49419-tL-a0  BLOCK    1     3     0.11 | SWB    0.00  0.00      -     -     Y 01    
+  c2a87e5970ad345d-s80949-tL-a0  BLOCK    2     2     0.19 | SWB    0.00  0.00      -     -     n de    
+  cb7f5ca16e697938-s53657-tL-a0  BLOCK    1     3     0.17 | SWB    0.00  0.00      -     -     n 00    
+  dd30f47fda54b9d0-s46022-tL-a0  BLOCK    1     2     0.50 | SWB    0.00  0.00      -     -     Y b8    
+  e16055dd06cff594-s37315-tL-a0  BLOCK    1     3     0.09 | SWB    0.00  0.00      -     -     Y 85    
+  ed1fd5dd1fd35508-s88863-tL-a0  BLOCK    1     2     0.19 | SWB    0.00  0.00      -     -     Y 9e    
+  ffa6b3fb06df72a7-s55806-tL-a0  BLOCK    1     2     0.50 | SWB    0.00  0.00      -     -     Y ed    
+
+L2c SWB donors that DO copy when handed the ideal register file (oracle): 16 of 28
+L2d depth-2 P-11 lineages: [('7ae3f9c1437c', 'OK'), ('c2a87e5970ad', 'SWB')]
+
+=== L3 BEE competent / verified exact solver ===  wall_s 607.6
+L3a by source x task
+  group                                            n    OK   CTX  BWEM   SWB  PROV  not-OK
+  coupling ledger | CONST                          2     2     0     0     0     0    0.0%
+  coupling ledger | ECHO                          61    61     0     0     0     0    0.0%
+  coupling ledger | INC                            5     5     0     0     0     0    0.0%
+  grounding G3 | COND_ONE                        166   166     0     0     0     0    0.0%
+  grounding G3 | INC                             543   543     0     0     0     0    0.0%
+  grounding G5 | ECHO                             26    26     0     0     0     0    0.0%
+  grounding G7 | INC                              10    10     0     0     0     0    0.0%
+  grounding G7P1 | INC                             2     2     0     0     0     0    0.0%
+  grounding G8 | INC                              82    82     0     0     0     0    0.0%
+  grounding HIST | INC                             2     2     0     0     0     0    0.0%
+  grounding P8 | INC                               4     0     0     0     4     0  100.0%
+  TOTAL                                          903   899     0     0     4     0    0.4%
+
+L3b accuracy by window (mean over objects): rand1 0.996, rand2 0.996, self 0.996, zero 0.996
+L3c right on the 16 panel inputs but not on all 256 (zero window): 0 of 903
+  G:1f498792144f   SWB   task=INC       rate=0.000 acc={'zero': 0.0, 'rand1': 0.0, 'rand2': 0.0, 'self': 0.0} ko=None mech=None then=-
+  G:a4cf2ccfc792   SWB   task=INC       rate=0.000 acc={'zero': 0.0, 'rand1': 0.0, 'rand2': 0.0, 'self': 0.0} ko=None mech=None then=-
+  G:e6ae02773835   SWB   task=INC       rate=0.000 acc={'zero': 0.0, 'rand1': 0.0, 'rand2': 0.0, 'self': 0.0} ko=None mech=None then=-
+  G:ff68ff8f7a04   SWB   task=INC       rate=0.000 acc={'zero': 0.0, 'rand1': 0.0, 'rand2': 0.0, 'self': 0.0} ko=None mech=None then=-
+L3d coupling rows with ledger task_accuracy 0.0 THEN: [('C:c010927', 'OK'), ('C:c010929', 'OK')]
+

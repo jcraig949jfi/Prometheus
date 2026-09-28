@@ -45,7 +45,31 @@ until something executes them.
 
 ## Pass 2 (expedition 1, 2026-09-28) -- filled as workers report
 
-(entries added below with the same columns)
+    id    idea                                           method  fate
+    Y20   accumulation measured by intervention (v0)     own     NEW-INSTRUMENT (sandbox battery passes P/N/C gate; 3 defects fixed in v0.1)
+    Y21   functional recertification of labels           IH->TY  NEW-INSTRUMENT + FALSIFIED-CLAIM (NPE P-11 true of 3/57; BEE grounding label holds 1414/1425)
+    Y22   competence-acquisition census                  IH      FALSIFIED-CLAIM ("no acquisition anywhere" -> 3 R1~ survivors + 1 provisional); OPEN (H8 matched run)
+    Y23   Z80 affordance threshold (strip the gifts)     ER+SP   NEW-WORLD design + pilot (block copy ~3.7 decades; L3 impossible in budget) ; KNOWN-INTERNALLY in part (Nestor npe-p2, Artemis FR-011)
+    Y24   behavioural accessibility (genotype vs behaviour) SP->TY NEW-INSTRUMENT + NEW-MECHANISM? (poverty in program substrates only; silent neutrality)
+    Y25   natural induction as a learning rule           ER->TY  KILLED (kill test failed; transfer negative; = attractor reshaping)
+    Y26   iterated learning / compositional ratchet      ER->TY  KILLED as preregistered; post-hoc receiver-closure condition -> NEW-CONTROL (ACCUMULATION A5)
+    Y27   invasion-dependency map (facilitation)         ER      NEW-INSTRUMENT candidate (not run)
+    Y28   self-stabilisation (arbitrary-start re-formation) ER    NEW-CONTROL (contested with Artemis FR-133)
+    Y29   population-protocol / anonymity theorems       ER      OPENED-TERRITORY? (H, conditional on an identity-supply audit)
+    Y30   multiple transient memories (materials)        ER->TY  KILLED in toy (single max-drive register only); J not adopted
+    Y31   stochastic corrector in compartments           ER      NEW-WORLD candidate (not run)
+    Y32   passive-payload fraction                       ER      NEW-INSTRUMENT candidate (not run)
+    Y33   reflective towers / Futamura / amorphous computing / code error-minimisation  ER  KILLED-ANALOGY
+    Y34   Tasmania ratchet / conformity / naming games / gossip / negative selection    ER  KILLED-ANALOGY
+    Y35   genetic assimilation of world-supplied scaffolding  XR(census)+ER  OPENED-TERRITORY? (I, proposed; KNOWN-INTERNALLY in part: Nestor EXTERNAL_SCAFFOLDING, dossier 89)
+    Y36   channel formation below R0                     TY      CHANGED the measurement (R-1); the sandbox's first wall
+    Y37   cryptic vs silent variation                    TY->ER  NEW-MECHANISM? (explains bacc; substrate-design lever)
+
+Pass-2 method tally (17 ideas): stdlib toys of foreign mechanisms (ER->TY)
+killed 4 of 5 of their own ideas and turned the fifth into a control -- the
+kill tests work, and they mostly kill; instruments built on internal data
+(recert, census, bacc) changed claims in 3 of 3; raid ideas not yet run
+remain candidates (5).
 
 ## Notes on method (to revisit when n is larger)
 

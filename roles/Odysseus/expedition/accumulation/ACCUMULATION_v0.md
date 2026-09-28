@@ -160,3 +160,74 @@ rung (inheritance across a destroyed producer). R3 content-dependence with
 convention invariance is where "invented meaning" would first be shown,
 and where I expect toy ecologies to stall. R4 is unobserved anywhere in the
 program. Prediction: the first unplanted boundary sits at R2 or R3.
+
+## 8. REVISION v0.1 (2026-09-28, after the sandbox gate, raid A and census A/B)
+
+Nothing above is silently rewritten; these amendments supersede the
+sections they name. Evidence: expedition/sandbox/RESULT.md s4 (three
+defects found by the first implementation), expedition/foreign/raid_A/
+toy_iterated_learning/RESULT.md (closure), census/CENSUS_A_z80.md and
+CENSUS_B_other.md (what the record can and cannot support).
+
+A1 (supersedes s2 "recompute arm", s3 R5b). TWO recompute arms, both
+   reported. RC-consumer: an X-free consumer given the consumer's own
+   per-decision budget for the same number of decisions -- does X give the
+   consumer reach it could not buy itself? RC-ecology: an X-free ecology
+   given the full production budget of X -- does accumulation beat
+   re-derivation from scratch? R5 is awarded at consumer level when
+   RC-consumer fails; "R5-strong" only when RC-ecology also fails. (The
+   literal production budget made the recompute arm always succeed in small
+   worlds, so R5 was unreachable by construction.)
+
+A2 (supersedes s2 "convention invariance", s3 R3 invariance clause).
+   Three outcomes, not two: INVARIANT (benefit survives relabeling),
+   INSTALLED (benefit breaks under relabeling), NO-BENEFIT (nothing to
+   test). And invariance can hold VACUOUSLY by symmetry when starting
+   genomes are uniform over symbols; so every claim of invented meaning also
+   needs a SEMANTICS AUDIT of the world's primitives: list each action and
+   input and show none maps record symbols to environment features.
+
+A3 (supersedes s3 R0 and "each rung requires every lower rung").
+   R0 is defined by intervention: history-specific content is decodable by
+   a decoder declared in the prereg and fit on held-out worlds. Rungs are
+   awarded INDEPENDENTLY; ladder monotonicity is an empirical claim to
+   test, not an assumption (the sandbox's seed 1016 showed per-world R1-R3
+   while failing R0).
+
+A4 (new, below s3). R-1 CHANNEL FORMATION. Before any content rung:
+   writers and readers co-exist and a reader's action depends on record
+   state at all (mutual information between record cells and reader
+   actions above the no-record twin). The first unplanted sandbox run
+   stalled HERE: readers were selected out (median reader fraction
+   0.01-0.02). The boundary predicted in s7 (R2/R3) was wrong; it is below
+   R0.
+
+A5 (new, a precheck before any ladder run). RECEIVER CLOSURE: verify the
+   receiver class can HOLD a structured code -- a planted structured code
+   must survive one transmission through the receiver's rebuilding rule.
+   If it cannot, the ladder is capped by construction and a null is
+   uninformative (raid A: an associative learner could not keep even a
+   perfect compositional code; a one-feature-per-position learner could,
+   and then ratcheted).
+
+A6 (new). Worlds must be statistically independent: probe/evaluation seeds
+   salted per world (the sandbox's first gate failed on shared probe seeds).
+
+A7 (observed pattern, a hypothesis for v0.2, not a rule). Every census
+   survivor (A1, N5, N1; H8 pending) is a lineage INTERNALISING something
+   the world or designer supplied (a destination address, register values,
+   self-location, a delay-general read). If that holds, the first real
+   accumulation in Prometheus is genetic assimilation of scaffolding,
+   and s3 needs a rung for it. See expedition/TERRITORY_I_SCAFFOLD.md.
+
+A8 (2026-09-28, from the sandbox cold-start, sandbox/coldstart_A-001/).
+   The HISTORY-ABLATED TWIN of s1(n) must be a DIFFERENT-HISTORY twin
+   (same world, different earlier event stream), never a NO-WRITE twin. A
+   no-write twin measures UPKEEP, not history: the fresh worker's "nest tag"
+   cheat (each colony writes the same constant symbol every generation)
+   passed R0 and was awarded R3 by the frozen battery. The episode test
+   (the producer's own record from an earlier episode) and the
+   different-history twin score it 0.000-0.003 vs 0.475 for a genuine code
+   and must be DECISIONAL for R0 and R3. Candidate repair checked post hoc
+   on the same seeds (keeps every original gate verdict); EXPLORATORY until
+   re-gated.
