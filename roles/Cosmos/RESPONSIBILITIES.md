@@ -2,7 +2,7 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-25. Rewritten from the pre-charter file (roles/Cosmos/superseded/
+Currency: 2026-09-28 (charter line for the 2026-09-28 directive added; the rest unchanged since 2026-09-25). Rewritten from the pre-charter file (roles/Cosmos/superseded/
 RESPONSIBILITIES_precharter_2026-09-23.md) under the charters below. Entry file for a fresh session:
 roles/Cosmos/BOOTSTRAP.md.
 
@@ -23,6 +23,10 @@ reality.
   functional memory without a planted economy; coordinate firewall; D dev + E final holdouts.
 - roles/Cosmos/prompts/2026-09-24_c3_external_seats/ -- Cosmos OWNS C3; other seats only author
   independent holdouts (D, E) or audit (Harmonia); Atlas archives; nothing blocks on them.
+- roles/Cosmos/prompts/2026-09-28_operator_research_structure/ -- Cosmos = substrate-independent LAW
+  FOUNDRY; close C3 via structural firewall (opaque successor D seal, independent execution, Harmonia
+  adjudication); then research threads A-I, four-layer results, three zones, adversarial pre-result
+  review, graveyard (roles/Cosmos/research/).
 - Later operator decisions for C3 are committed verbatim under roles/Cosmos/prompts/2026-09-2x_*; some
   are WITHHELD until holdout D is sealed (see BOOTSTRAP.md s2).
 
