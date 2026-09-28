@@ -9,6 +9,24 @@ SEPARATE future program (P2, "IMPROVER EVOLUTION"; RB-6). Historical BOUNDED_RSI
 are unchanged.
 
 STATUS LEGEND: OPEN | ACTIVE | PARTIAL | CLOSED | MOVED (to P2) | MERGED (into Tnn).
+STATUS TABLE (updated 2026-09-28 early; supersedes the 2026-09-27 evening table below)
+  T01 PARTIAL->mostly CLOSED  ruler v2 frozen in A18 (grid + trajectory + structure).
+               Panel-ablation variant still open; domain alignment -> T29 (RB-7).
+  T04 CLOSED   RB-2 done. T4 successor tribunal frozen in A18. The T4 world yields
+               ~29 non-additive Q2-passing solvable families per 1000 draws (vs 0.76).
+  T07 ACTIVE   RB-8 (ladders in the T4 world).
+  T09 CLOSED   into T4's window (A18/A19).
+  T10 CLOSED   composition needs depth-3 (K8/K9/K9b); tested in A18/A19.
+  T17 ACTIVE   A19/C2 donors running.
+  T20 MOVED    P2; RB-6 lever check: tested levers inert (<= 4% spread); stage 1 = RB-10.
+  T23 ACTIVE   A18/C1 = UNTESTABLE (supply; the seat's screening flaw) -> A19/C2
+               (screened, matched).
+  T24 PARTIAL  C2: the natural T4 world is BIMODAL for PRISTINE (2/141 inside
+               0 < p <= 0.75), so S-NAT is UNTESTABLE by the floor. The natural
+               learnability window is nearly empty -> RB-8.
+  T26 -> RB-7. T27 built into A18/A19 (junk base rate 16%).
+  T29-T31 NEW (below).
+
 STATUS TABLE (2026-09-27, evening):
   T01 PARTIAL  ruler v2 built and validated (rb1/RULER_V2.md). Panel-ablation variant
                still open.
@@ -363,3 +381,31 @@ T28 CANDIDATE-LEVEL vs COVERAGE-LEVEL COMPOSITION
      experience cannot produce them. AMENDMENT 18 uses candidate level.
   CD After AMENDMENT 18: one arm with composed search entries, budget-matched.
   ME Experiment.   NL No.   LK T14, T23.
+
+------------------------------------------------------------------------------
+CLUSTER VII -- OPENED 2026-09-28
+------------------------------------------------------------------------------
+
+T29 RULER / TRIBUNAL DOMAIN ALIGNMENT  (RB-7)
+  Q  The ruler's trajectory battery (lengths <= 40) and T4's declared domain (L_max, e.g.
+     25 for products) disagree on length-limited families. What is the aligned novelty
+     verdict?
+  EV K9b vs K11: ((acc + {H}) * first) is trajectory-degenerate under v2 but
+     T4-admissible 0.83.
+  CD Ruler v2.1 with a domain-respecting battery; list the flips.   ME Replay.   LK T01, T26.
+
+T30 E1 UNDER THE SUCCESSOR INSTRUMENTS  (RB-9; forensic, labels unchanged)
+  Q  How much of A17/E1's negative came from junk families?
+  EV RB-2 bridge panel: T4 calls both non-G1 OBSERVE families of E1, and hA_sub_az,
+     junk.
+  CD Re-score catalog A under T4; replay the donors without the junk families.
+  ME Replay.   LK T09, T23.
+
+T31 BIMODAL LEARNABILITY OF THE NATURAL T4 WORLD
+  Q  Why does PRISTINE either almost always or never solve natural T4 families
+     (32 / 107 / only 2 in between)? Is it the escrow cliff (library coverage ends at
+     ~151,920 candidates, then a vast fallback)?
+  EV A19 foundry: NAT p_PRISTINE distribution.
+  CD Budget curves (RB-8 Q1) for the 107 never-solved families at 1x-64x escrow.
+  ME Experiment.   NL Possibly (the library/fallback cliff is an instrument property).
+  LK T14, T24, RB-8.

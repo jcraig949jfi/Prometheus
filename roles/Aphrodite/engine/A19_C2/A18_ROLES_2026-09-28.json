@@ -1,0 +1,1718 @@
+{
+ "CON/0": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(last), abs(last))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "qdfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (1 - first)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qxaa",
+    "role": "OBSERVE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (last // last)))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "qwba",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(first), abs(1))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "qjfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (acc * v)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qqba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc * v)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qica",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (acc % first))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qhea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v - (last * acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qwha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (v - last)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "qiaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (acc + math.gcd(abs(v), abs(last))))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "qcaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (v * last)))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "quca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (v // v)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qlca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (1 % acc))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qaea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc // last)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qxda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (first + (v * 1)))",
+    "final": "(1 % acc)",
+    "init": "0",
+    "name": "qtja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/1": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - math.gcd(abs(first), abs(1))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "qfca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc - math.gcd(abs(last), abs(1))))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qnga",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((v + (0 - acc))))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "qifa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (0 % v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qaca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last * (acc + (v - first)))",
+    "final": "(acc // last)",
+    "init": "0",
+    "name": "qlaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc - pow(1, v)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "qrda",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 6,
+    "body": "math.gcd(abs(0), abs((v + (last % acc))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qkea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((1 - v))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "qyja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (last * last)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "quba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v // v)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "quaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (v - last)))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "qyba",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (last - acc)))",
+    "final": "(acc + 0)",
+    "init": "0",
+    "name": "qoda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - (v + math.gcd(abs(acc), abs(last))))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qmea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (first - acc))))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qdea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v - (last * acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qwha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (first * v))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "quha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/2": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(last), abs(last))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "qdfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (0 % v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qaca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (acc % first))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qhea",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + (1 - v)))",
+    "final": "(acc // first)",
+    "init": "0",
+    "name": "qhba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (v * v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qqda",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (first - acc)))",
+    "final": "(acc + acc)",
+    "init": "0",
+    "name": "qwea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (first % v)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qzha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v - last)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "qbaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first // first)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "qvba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc - pow(1, v)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "qrda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (v // v)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qlca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (last - acc)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "qnea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + math.gcd(abs(v), abs(last))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "qefa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v + (first * v)))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qhka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (v + 1)))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "qrga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/3": {
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(first)))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qffa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc + math.gcd(abs(0), abs(1))))",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "qtba",
+    "role": "OBSERVE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (1 - first)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qxaa",
+    "role": "OBSERVE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - math.gcd(abs(first), abs(1))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "qfca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (last - v)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "qiba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (v * v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qqda",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(0), abs(1))))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "qgfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (1 - (acc + 0)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "qiha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc + (v % acc)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qkaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v - last)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "qbaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v - (acc - last)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qxca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - math.gcd(abs(last), abs(last))))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "qfda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (last - acc)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "qnea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (v + (acc * last)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "qlea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "qcka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v - (last * acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qwha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/4": {
+  "families": [
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((v + (0 - acc))))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "qifa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(first), abs(1))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "qjfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (acc % first))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qhea",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (last // last)))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "qwba",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (last % first)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qpba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (first * last)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qxba",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc - first)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qkfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(v), abs((0 + last))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "qtfa",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + math.gcd(abs(first), abs(0))))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "qjaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc + (first - 1)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "qsba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc - math.gcd(abs(0), abs(1))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "qjca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v - (acc - (1 // last)))",
+    "final": "acc",
+    "init": "1",
+    "name": "qbda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (1 % acc))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qaea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc + acc)))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "qqea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (1 + (v * acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qala",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v - (last * acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "qwha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/5": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc - math.gcd(abs(last), abs(1))))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qnga",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - math.gcd(abs(first), abs(1))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "qfca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(first), abs(1))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "qjfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (last % v))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "qpaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc // first)))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "qbca",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v + math.gcd(abs(acc), abs(0))))",
+    "final": "(acc + 0)",
+    "init": "0",
+    "name": "qbfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc + (v * first)))",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "qdha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (first // v)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qhaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(first - (acc + (0 - v)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qgaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc - pow(1, v)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "qrda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (first - last)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "qada",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(first)))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qffa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(0), abs(1))))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "qgfa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + math.gcd(abs(first), abs(first))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "qpga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first // v)))",
+    "final": "acc",
+    "init": "0",
+    "name": "qnha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/6": {
+  "families": [
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((v + (0 - acc))))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "qifa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc + math.gcd(abs(0), abs(1))))",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "qtba",
+    "role": "OBSERVE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (acc % first))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qhea",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (0 % v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "qaca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (first - v))",
+    "final": "(acc // first)",
+    "init": "0",
+    "name": "qsaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc * first)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qpca",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((v + (1 % acc))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qaea",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs(0), abs((acc - 1))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qwia",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (acc + (acc % v)))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "qkba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (acc + (v % first)))",
+    "final": "acc",
+    "init": "0",
+    "name": "qraa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc - (last - 1)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "qsca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 24,
+    "body": "(v - (acc - (v % first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qmda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 6,
+    "body": "math.gcd(abs(0), abs((v + (last % acc))))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qkea",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (first - acc)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qwda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (0 + (last % v)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "qeha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 * (acc + (v + 1)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "qtia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "CON/7": {
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(first)))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "qffa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(last), abs(last))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "qdfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(first), abs(1))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "qjfa",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - math.gcd(abs(first), abs(1))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "qfca",
+    "role": "OBSERVE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc + (v + first)))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "qvaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc - (acc * first)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qpca",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc - first)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qkfa",
+    "role": "VALIDATE",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (first % (acc - v)))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "qkha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (v - last)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "qbaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // (acc + math.gcd(abs(v), abs(first))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "qeba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc - (first - last)))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qtca",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v - (acc - first)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qpda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_0"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + (last % first)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "qhfa",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + math.gcd(abs(acc), abs(v))))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "qtda",
+    "role": "TRANSFER",
+    "source": "CON:SHAM_1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (v + acc)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "qtga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // (1 + pow(acc, 1)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "qhia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": true
+ },
+ "NAT/0": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc - math.gcd(abs(last), abs(1))))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qnga",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc - (v % last)))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "qpfa",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (v - last)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qgha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + (1 % math.gcd(abs(last), abs(acc))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "qaia",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs(0), abs((acc - 1))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qwia",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v % math.gcd(abs(acc), abs((last * last))))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qhga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc - (1 - math.gcd(abs(last), abs(v))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "qcka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - math.gcd(abs(last), abs(math.gcd(abs(acc), abs(last)))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qmia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (first % v)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qzha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 16,
+    "body": "(v * (first + (acc - 0)))",
+    "final": "math.gcd(abs(last), abs(acc))",
+    "init": "1",
+    "name": "qfga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (1 + math.gcd(abs(v), abs(0))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "qaka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 * (v + (acc % first)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qlga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/1": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc - math.gcd(abs(last), abs(1))))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qnga",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "qcka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (first // (v // 1)))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "qxka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc % (1 - v)))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "qmha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (v - last)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qgha",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * (acc - 0)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "qjja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + (acc // last)))",
+    "final": "pow(acc, 1)",
+    "init": "0",
+    "name": "quka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (first * (acc % last)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "qrja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (first // 1)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qsja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v % math.gcd(abs(acc), abs(pow(last, first))))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "qpka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (acc * (1 + v)))",
+    "final": "acc",
+    "init": "1",
+    "name": "qhha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc - math.gcd(abs(1), abs(last))))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "qvha",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc * (first + 0)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qwja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/2": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc - math.gcd(abs(last), abs(1))))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qnga",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 * (v + (1 + acc)))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "quia",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v + math.gcd(abs(acc), abs(last))))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "qgja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v % math.gcd(abs(acc), abs((last * last))))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "qhga",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v - (first - acc)))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qkja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (acc + acc)))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "qrfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v % (first - acc))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "qdga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (1 + (acc + 0)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qija",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 * (v + (acc % first)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "qlga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - math.gcd(abs(last), abs(math.gcd(abs(acc), abs(last)))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qmia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v % (v * last)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "qoja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (acc + (last + v)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "qmga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "qcka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/3": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc - math.gcd(abs(last), abs(1))))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qnga",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (0 - acc)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "qsha",
+    "role": "OBSERVE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc - (v * first)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "qjka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc * (v // (0 - 1)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "qkga",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (first * (acc % last)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "qrja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(first + math.gcd(abs(first), abs((v - acc))))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qqia",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - math.gcd(abs(last), abs(math.gcd(abs(acc), abs(last)))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "qmia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + math.gcd(abs(last), abs((acc % v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qcga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (1 * first)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "qdia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(last), abs(pow(v, first))))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "qjia",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc - (first // 1)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "qsja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last + (v - (acc % last)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "quja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + math.gcd(abs(first), abs(first))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "qpga",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last + math.gcd(abs(v), abs(acc))))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "qqfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ }
+}
