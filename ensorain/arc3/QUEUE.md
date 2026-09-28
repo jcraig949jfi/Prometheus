@@ -14,3 +14,7 @@ Block B adversarial review is read; the freeze verifies.
 ## Log
 - 2026-09-28T06:25Z Q1 queued. Host census: Bellerophon supervisor pid 11852 with 12 workers at 100% CPU, total 47%,
   15.2 GB free. There is no lease file on M2; its notice #738 serves as its declaration. Not contending.
+- 2026-09-28T06:55Z Q1 still queued. Bellerophon: 38.2 h active of its 60 h cap (done 3,647). One-shot queue checks are
+  scheduled for 2026-09-28 20:07Z and 2026-09-29 05:07Z (session-only). Each launches ONLY if Bellerophon has finished
+  AND the operator's gate phrase is recorded. Pre-launch additions (no frozen change): the adversarial review and the
+  pre-data adjudication addendum G1-G9 are committed; the freeze still verifies.
