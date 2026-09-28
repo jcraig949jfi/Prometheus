@@ -108,7 +108,17 @@ ASSAYS
   4. The improver's tested levers (hole count, lookahead and median selection) are nearly
      inert (RB-6: <= 4% spread). Composition is the lever that matters, and it belongs to
      the compounding program, not to P2.
-  5. The learnability window of the natural T4 world is nearly empty (bimodal). This is
+  5. RB-5 (imported worlds): neither the EC polynomial ladder nor an OEIS subset is a
+     usable, non-smuggled supply in G4 or G5.
+       - EC quadratics: 0 expressible under any mapping. EC 2013's own failure point,
+         here for a mechanical reason: no integer literals above 1.
+       - OEIS next-term: 70/574 expressible in G4. T4 rightly rejects most as
+         last-element maps.
+     NEW-LENS SIGNAL: the fold DSL itself is too narrow for independently designed task
+     worlds. It needs, in order: integer literal atoms 2..9 (or a constant hole); a lag
+     register / second accumulator (order-2 recurrences, Fibonacci); a position atom plus
+     symmetric depth-3 templates.
+  6. The learnability window of the natural T4 world is nearly empty (bimodal). This is
      probably a library/fallback budget cliff (T31). Endogenous curricula (RB-8) are the
      principled next lever.
 
@@ -150,7 +160,9 @@ ASSAYS
     RB-8   learnability bottleneck and stepping-stone ladders in the T4 world
     RB-9   E1 under the successor instruments (forensic, labels unchanged)
     RB-10  P2 stage 1: the untested improver levers (entry shape, escrow split)
-    RB-5   imported task worlds (running at the time of writing; see rb5/)
+    RB-5   imported task worlds: DONE (rb5/IMPORTED_WORLDS.md). The new-lens signal is
+           above. The donor comparison was skipped, because the qualified EC supply is
+           entirely additive/G1-covered in G4.
   P2 (improvement of the improver): rb6/IMPROVER_EVOLUTION_PROGRAM.md (operational L2
     definition, frozen-transplant imp@k assay with a variance-matched sham, 8
     anti-smuggling controls, dependencies, stop rules).
@@ -183,6 +195,13 @@ ASSAYS
     present such structure.
     The alternative is to pursue the natural-world route first (RB-8 endogenous
     curricula / ladders). That is slower and more surprising if positive.
-    Both are defensible. My recommendation: reuse-controlled first (fast and decisive for
-    the mechanism), with RB-8 in parallel by another worker.
+    A third option, raised by RB-5, is to EXTEND THE DSL (integer literals, a lag
+    register, a position atom). That is a representation change. It opens independently
+    designed task worlds (EC, OEIS), which is the cleanest non-smuggled route, but it
+    breaks comparability with every result so far.
+    All three are defensible. My recommendation, in order:
+      1. reuse-controlled assay (fast; decisive for the mechanism; ~2-3 h);
+      2. RB-8 endogenous curricula in parallel by another worker;
+      3. decide on the DSL extension after (1), since a mechanism NO in (1) would make the
+         extension moot for this program.
   Everything else is resolved or delegated.
