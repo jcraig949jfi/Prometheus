@@ -1,5 +1,5 @@
 # Prometheus Portfolio Brief
-*Generated: 2026-09-27 08:14:52 PM UTC*
+*Generated: 2026-09-28 04:14:57 AM UTC*
 *Author: Metis (multi-machine reporter mode)*
 
 ---
@@ -7,8 +7,16 @@
 ## Act on this
 
 **Hephaestus @ M3, forge — substrate generator with falsification battery — DEAD, daemon stopped**
-No heartbeat for 173029min (10381784s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
+No heartbeat for 173509min (10410584s). Was last ALIVE at 2026-05-28T01:38:15.244017-04:00.
 Investigate the process on M3 and restart, or kill watchdog if intentional.
+
+**Pronoia @ M4, reporting orchestrator (intelligence_loop) — DEAD, daemon stopped**
+No heartbeat for 26min (1562s). Was last ALIVE at 2026-09-27T23:48:33.944252-04:00.
+Investigate the process on M4 and restart, or kill watchdog if intentional.
+
+**MachineProbe-M4 @ M4, M4 host resource time-series (60s) — DEAD, daemon stopped**
+No heartbeat for 24min (1440s). Was last ALIVE at 2026-09-27T23:50:36.522970-04:00.
+Investigate the process on M4 and restart, or kill watchdog if intentional.
 
 ## Watch this
 
@@ -50,12 +58,12 @@ https://github.com/jcraig949jfi/Prometheus/blob/main/engine/shadow/REVIEWS.jsonl
 
 ## For the record
 
-Session-model activity (the live operating model): 475 non-cron commits in 72h. Ground truth: engine/PULSE.md.
+Session-model activity (the live operating model): 488 non-cron commits in 72h. Ground truth: engine/PULSE.md.
 
 
-**2 agents ALIVE** (Pronoia, MachineProbe-M4).
+**0 agents ALIVE** ().
 
-**Anomalies tracked:** 28 (Apollo, Hephaestus, Clio, Pythia, Hypatia).
+**Anomalies tracked:** 30 (Apollo, Hephaestus, Pronoia, Clio, Pythia).
 
 ---
 *Deterministic brief (primary mode) — every line computed from state; no LLM in the loop.*
