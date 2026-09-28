@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-28T17:17:41Z",
+ "updated": "2026-09-28T19:17:41Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -8,7 +8,7 @@
   },
   "G2_independent_tracer_agreement": {
    "status": "OPEN",
-   "evidence": "C9: raw G2 on set 1 FAILED (labels 0.9353 self / 0.9250 other); A1/A2 WITHDRAWN (post-exposure). Nestor revised to C9 s5(a) and RE-FROZE (TRACER_FREEZE v2). Awaiting the fresh sets A (300) and M (100, with write-back) seeded by the SHA of the commit recording both freeze hashes; raw per class >= 0.995. S3 (ctrl_slice, secondary): reference == Nestor PRIMARY on 19/19, i.e. the reference does not reset at slice entry, contrary to C9 s5(a); reported as a suspected REFERENCE error, Nestor's tracer not changed."
+   "evidence": "Fresh set (seed d33421a07; pre e37bdd48; outputs sealed then exchanged: Nestor c6aa5569, reference 9fd3bc44). Nestor's independent raw comparison (g2_fresh/NESTOR_COMPARISON.json): set A PASS (every gated field 1.0000 in every class); set M FAIL: MUTATION label 0/225 (draw-index encoding; declared by Archaeon BEFORE the exchange, cat 1), MUTATION addr 209/225 (addr set of a mutated, previously written locus: reference carries the old store addr, Nestor EMPTY; NOT declared, found AFTER exchange, flagged post-exposure, cat 1); MUTATION content (flag, side, pos, old_label) 225/225; all non-mutated M loci 1.0. Needs: amendment defining MUTATION draw index + addr set, re-freeze if different, fresh M set. ctrl_slice (secondary) 0.92-0.98: S3 open (per-step k=4 readings posted #864)."
   },
   "G3_flip_rule": {
    "status": "CLEAR",
@@ -35,6 +35,12 @@
    "rule": "C9 s5(a) label clarifications (CF over COMPUTED, idiom kind names); A1/A2 withdrawn",
    "seen_before_ruling": "the raw set-1 discrepancies (non-production)",
    "effect": "tracer revised + re-frozen (v2); comparison rule unchanged (raw, >= 0.995 per class); fresh set required"
+  },
+  {
+   "when": "2026-09-28 fresh-set exchange",
+   "rule": "none changed; MUTATION addr ambiguity FOUND after exposure (reported, not canonicalized)",
+   "seen_before_ruling": "fresh-set outputs (non-production)",
+   "effect": "set M fails; amendment + fresh M set required"
   }
  ],
  "sample_transfer": "orphan branch nestor/ancestry-sample-2026-09-28, gzip parts <= 45 MB + manifest of per-part and whole-file sha256 (Archaeon #848)"
