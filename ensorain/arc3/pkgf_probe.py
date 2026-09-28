@@ -25,7 +25,7 @@ from ensorain.lm01.select_arms import HEADLINE_SEL, SELECTIVE_GRID
 from ensorain.lm01.arms import Selective
 
 HERE = os.path.dirname(__file__)
-OUT = os.path.join(HERE, "results", "pkgf_probe.json")
+OUT = os.path.join(HERE, "results", "pkgf_probe_v2.json")
 
 
 def _feed(arm, segs):
@@ -72,6 +72,12 @@ def one(family, gen, seed):
     gho = g_smooth(A[tr], r[tr], A[ho])
     alphas = (0.0, 0.25, 0.5, 1.0)
     a_best = min(alphas, key=lambda a: np.mean((base_ho + a * gho - y[ho]) ** 2))
+    # recency holdout: the weight chosen on the MOST RECENT 20% of records (fit g on the older 80%)
+    k20 = len(y) // 5
+    rc, old = np.arange(len(y) - k20, len(y)), np.arange(0, len(y) - k20)
+    grc = g_smooth(A[old], r[old], A[rc])
+    base_rc = S.predict(A[rc])
+    a_recent = min(alphas, key=lambda a: np.mean((base_rc + a * grc - y[rc]) ** 2))
     gho2 = g_smooth(A2, r2, A[ho])
     a_sham = min(alphas, key=lambda a: np.mean((base_ho + a * gho2 - y[ho]) ** 2))
     res = {}
@@ -81,8 +87,9 @@ def one(family, gen, seed):
         s0 = S.predict(Q)
         gD, gS = g_smooth(A, r, Q), g_smooth(A2, r2, Q)
         res[name] = dict(S=AC(s0, tt, 1.0), SD_learned=AC(s0 + a_best * gD, tt, 1.0), SD_forced=AC(s0 + gD, tt, 1.0),
+                         SD_learned_recent=AC(s0 + a_recent * gD, tt, 1.0),
                          SHAM_learned=AC(s0 + a_sham * gS, tt, 1.0), SHAM_forced=AC(s0 + gS, tt, 1.0))
-    return dict(family=family, gen=gen, seed=seed, selective=lab, lossless_maxerr=lossless, a_learned=a_best,
+    return dict(family=family, gen=gen, seed=seed, selective=lab, lossless_maxerr=lossless, a_learned=a_best, a_recent=a_recent,
                 a_sham=a_sham, AC=res)
 
 
@@ -94,7 +101,8 @@ def main():
         pass
     t0 = time.time()
     rows = []
-    for fam, gens in (("F2_latent", ("lowrank", "spectral")), ("F3_switch", ("cp", "tt")), ("F5_nuisance", ("cp", "spectral"))):
+    for fam, gens in (("F2_latent", ("lowrank", "spectral", "cp", "tt")), ("F3_switch", ("cp", "tt")),
+                      ("F5_nuisance", ("cp", "spectral"))):
         for g in gens:
             for sd in range(9_800_000, 9_800_004):
                 rows.append(one(fam, g, sd))

@@ -48,3 +48,28 @@ Status: prerequisite probe allowed by directive Block F. Not preregistered; not 
 
 PKG-F moves from "design" to "instrument validated on dev". The next step is the recency-holdout arm and stationary
 twins (cheap), then the preregistration after LM01 integration.
+
+## v2: recency-holdout discriminator + stationary twins (results/pkgf_probe_v2.json; 32 dev worlds, 72 s)
+
+Mean delta AC vs S on the headline test:
+
+| stratum | S+D learned (holdout = all history) | S+D learned-recent (holdout = last 20%) | learned-recent weights |
+|---|---|---|---|
+| F3 cp (obsolete) | -0.90 | -0.01 | 0, .25, 0, 0 |
+| F3 tt (obsolete) | -1.32 | 0.00 | 0, 0, 0, 0 |
+| F2 cp (stationary twin) | +0.03 | +0.03 | .5, .5, 1, .5 |
+| F2 tt (stationary twin) | 0.00 | 0.00 | 1, 1, .25, .25 |
+| F2 lowrank / spectral | +0.01 / +0.09 | +0.01 / +0.09 | - |
+| F5 cp / spectral | 0.00 / +0.04 | +0.03 / +0.04 | - |
+
+DEV FINDING (provisional; 4 worlds per stratum; one readout family):
+- The F3 harm from restoring obsolete distinctions VANISHES when the readout chooses its use of the channel on recent
+  records. The obsolete information can stay stored and be IGNORED; it hurt only because the readout's selection
+  signal was dominated by the old regime.
+- In these worlds, discarding was NOT causally necessary. What mattered was the SELECTION SIGNAL (which records the
+  readout trusts), not the storage.
+- This bears directly on the ARC3 central question ("can irrelevant distinctions remain stored but simply be ignored?"):
+  here, YES, given a regime-appropriate selection signal.
+- Scope: an additive residual readout with a 4-value weight grid. The PKG-F campaign must add richer readouts, more
+  worlds, the decaying-reliability nuisance (N5), and a regime-change detector that must DISCOVER recency rather than
+  being handed "last 20%".

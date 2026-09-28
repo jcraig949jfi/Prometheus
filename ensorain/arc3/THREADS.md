@@ -63,7 +63,10 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - METHOD: WTP arms plus a restore operator.
 - RES: M2 or off-M2 (numpy).
 - MAT: instrument validated on dev (RESULTS_PKGF_PROBE.md). Noise/spurious channel nearly INERT; obsolete channel HURTS
-  (-0.9..-1.6) under the learned readout while the sham is ignored. Next: the recency-holdout arm + stationary twins.
+  (-0.9..-1.6) under the learned readout while the sham is ignored. v2: with a RECENCY holdout, the F3 harm vanishes
+  (-0.90 -> -0.01; -1.32 -> 0.00). Obsolete info can be stored and ignored given a regime-appropriate selection signal.
+  Next: a readout that must DISCOVER the regime (changepoint gate) instead of being handed recency; the N5 decaying
+  reliability world.
 
 ## T05 Capacity vs selection (reservoir as bridge)
 - Q: at matched capacity, does semantic selection beat random retention, at matched bytes AND matched HR2?
