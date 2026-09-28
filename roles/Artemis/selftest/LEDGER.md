@@ -90,5 +90,11 @@ R-31 | disposable worker 31 | ubu002 | 2026-09-28T18:11Z | 2026-09-28T18:24Z | R
 R-34 | disposable worker 34 | ubu002 | 2026-09-28T18:30Z | | running |
 R-32 | disposable worker 32 | ubu002 | 2026-09-28T18:20Z | 2026-09-28T18:40Z | REPORT | see audit line
 R-35 | disposable worker 35 | ubu002 | 2026-09-28T18:41Z | | running |
-R-34 | disposable worker 34 | ubu002 | 2026-09-28T18:30Z | 2026-09-28T18:43Z | REPORT (worker notes the lens-card prototype was unavailable because it lives under the excluded path) | see audit line
+R-34 | disposable worker 34 | ubu002 | 2026-09-28T18:30Z | 2026-09-28T18:43Z | REPORT (worker notes the lens-card prototype was unavailable because it lives under the excluded path) | EXPOSED-NAMES: other seats' files it read (Odysseus frontier notes, Aphrodite CROSS_ENGINE_MECHANISMS) cite roles/Artemis/threads/sfe_retrospective/ENGINE_LENS_CARDS.md by path; no Artemis file opened
 R-36 | disposable worker 36 | ubu002 | 2026-09-28T18:44Z | | running |
+R-35 | disposable worker 35 | ubu002 | 2026-09-28T18:41Z | 2026-09-28T19:10Z | REPORT | see audit line
+R-33 | disposable worker 33 | ubu002 | 2026-09-28T18:29Z | 2026-09-28T19:14Z | REPORT | see audit line
+R-36 | disposable worker 36 | ubu002 | 2026-09-28T18:44Z | 2026-09-28T19:36Z | REPORT | see audit line
+- 2026-09-28T19:40Z executions COMPLETE: 36/36 reports, 0 UNSCORABLE, 0 NOT_EXECUTED. Lease released (comms #866). No comms volunteer for execution or scoring (0 replies to #814/#815) -> all executors were disposable workers; scoring uses fresh disposable scorers (A2.6 fallback).
+- 2026-09-28T19:40Z scoring bundles built (build_scoring.py): 36 reports redacted (127 redactions) and relabelled X###; key sha256 d4e7a38273f26ee2 (key held outside the repo; commit-reveal). Residual-cue scan: only two innocuous uses of "prospective". Known limitation: report length/structure and redaction density may still differ by cohort; not correctable.
+- 2026-09-28T19:40Z scorer roles: role 1 = labels in sorted order split 18/18; role 2 = seeded (20260928) shuffle split 18/18; 4 fresh disposable scorer sessions; overlap of role1_a and role2_a = 6 labels.
