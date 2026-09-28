@@ -30,7 +30,9 @@ DEFAULT_MODEL = "claude-opus-5-5"
 READONLY_BASH = ["Bash(git log:*)", "Bash(git show:*)"]
 DENY = ["Read(//{home}/.claude/**)", "Read(//{home}/.config/**)", "Read(//{home}/.ssh/**)", "Read(//{home}/.git-credentials)",
         "Glob(//{home}/.claude/**)", "Glob(//{home}/.config/**)", "Grep(//{home}/.claude/**)", "Grep(//{home}/.config/**)"]
-OPTIONAL_TOOLS = {"web": ["WebSearch", "WebFetch"], "python": ["Bash(python3:*)"]}
+# No "python" option: Bash(python3:*) is arbitrary code as the node account and would undo every Read deny above.
+# Code runs through the `script` executor instead (pinned file or module, no shell, allow-listed env).
+OPTIONAL_TOOLS = {"web": ["WebSearch", "WebFetch"]}
 
 
 @dataclasses.dataclass
