@@ -10,3 +10,7 @@ with the closing commit and date, purged after 24 h (base role s7).
       19 sharpened threads; sharpen cluster D or E; record chop pickups
 - [ ] Tell Nestor (comms, on operator OK): P-11 certifies homopolymer
       painting as copying (FR-011 finding)
+- [ ] Prospective test: dispatch paired S/B executions (fresh workers,
+      equal budget) and name an independent scorer; 30-day window from
+      2026-09-28
+- [ ] Follow up comms #789 (Archaeon, ids), #793 (Nestor, P-11), #798 (SI)

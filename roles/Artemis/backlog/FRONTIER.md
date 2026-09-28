@@ -8,6 +8,12 @@
 | chops/, prior_art/, harvest/ in roles/Artemis/backlog/.                      |
 +==============================================================================+
 
+>>> 2026-09-28 CHALLENGE UPDATE (supersedes counts below where they
+>>> differ): no thread is MATURE any more (adversarial review); FR-101 and
+>>> FR-135 (P-11 soundness) are ANSWERED by preregistered A-RUNs; FR-011
+>>> and FR-035 are SPLIT; FR-139 (supertransients) added as the alien
+>>> question. Read roles/Artemis/challenge/CHALLENGE_PACKET.md first.
+
 ------------------------------------------------------------------------------
 0. WHAT THIS IS
 ------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 # Artemis status
 
-Currency: 2026-09-27T18:24Z (from date -u).
+Currency: 2026-09-28T10:02Z (from date -u).
 
 seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology
   (prompts/2026-09-27_charter_research_backlog_ecology/).
@@ -13,7 +13,7 @@ host: ubu002 (see ABOUT.md). worktree
   artemis/backlog-ecology-2026-09-27, base d7ec26d37.
 monitors owned or fed: none.
 blockers: none. Operator decisions the frontier touches: FRONTIER s8.
-next executable action: pass 2 -- incremental harvest of commits since
+next executable action: dispatch the first paired executions of the prospective test (fresh workers, S/B pairs, equal budget) and arrange an independent scorer; follow up #789 #793 #798.
   d7ec26d37, re-check the 19 sharpened threads' evidence, sharpen the
   next cluster (D memory or E compression), and record which chops were
   picked up (from commits only).
