@@ -39,4 +39,6 @@ sections, and do not mention the package's internal labels or identifiers:
      premise, something an engine or seat should change, a new positive result,
      a clean null, or a reproduction of something already known? Who should know?
   6. COST -- your approximate time, CPU time used, anything you could not do.
+If writing REPORT.md fails, put the complete report in your final reply instead.
+(line added 2026-09-28T14:28Z from run R-08 on; procedural, identical for all later runs)
 Then stop. Your final reply: 5 lines summarising sections 3-5.
