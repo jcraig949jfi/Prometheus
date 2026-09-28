@@ -530,7 +530,16 @@ T49 Four assays (C3, C3R, C3R2, C3R2C). The last one was clean after the supply 
 NEW:
 T51 NATURAL-RECURRENCE DONOR STAGE (PKG-3 WP-2). Replace constructed recurrence with
     LIN-generated supply (W8 task-side result). Same arms and ladder as A23.
-    DISCRIMINATES "mechanism" from "natural compounding". [READY once W8 is disposed; M]
+    DISCRIMINATES "mechanism" from "natural compounding". W8 DISPOSED: the task side
+    is freezable per w8_lin_generator/REPORT.md s6:
+      - pooled X_S slope over G1 + 4 panel schemas;
+      - no 250k scoring;
+      - stop rules F6;
+      - ~16 core-hours.
+    [READY; M]
+T55 RECURRENCE x VISIBILITY (W8 A2): under lineage, carriers of recurring structure are
+    more often PRISTINE-unreachable. Does a per-stratum escrow (PKG-1) recover a
+    window for carriers? [READY; S]
 T52 VALIDATION-MULTIPLICITY DOSE RESPONSE. Give VALIDATE 1 vs 2 vs 3 motif instances
     (the A22/A23 design with 2 is the fixed point). This measures how much of A23's
     selection accuracy comes from validation SEEING the recurrence (W6 R2 predicts a

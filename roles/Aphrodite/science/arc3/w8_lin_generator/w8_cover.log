@@ -1,0 +1,51 @@
+[W8 10:57:05] cover: 7776 families, 324 chunks
+[W8 10:57:58] cover 1/324
+[W8 10:58:24] cover 6/324
+[W8 10:58:56] cover 11/324
+[W8 10:59:22] cover 16/324
+[W8 10:59:46] cover 21/324
+[W8 11:00:28] cover 26/324
+[W8 11:00:53] cover 31/324
+[W8 11:01:17] cover 36/324
+[W8 11:01:50] cover 41/324
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 264, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 213, in _process_chunk
+    return [fn(*args) for args in chunk]
+            ^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\science\arc3\w8_lin_generator\w8_lin.py", line 343, in _cover_job
+    wout = [FE._final(ffn, a, vl, fst, lst) for a, (vals, fst, lst, vl) in zip(wacc, W.PINFO)]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\engine\accel\fasteval.py", line 90, in _final
+    if out is None or abs(out) > CEIL:
+                      ^^^^^^^^
+TypeError: bad operand type for abs(): 'object'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\science\arc3\w8_lin_generator\w8_lin.py", line 478, in <module>
+    cmd_cover()
+  File "C:\Prometheus-worktrees\aphrodite-base-role\roles\Aphrodite\science\arc3\w8_lin_generator\w8_lin.py", line 462, in cmd_cover
+    for k, r in enumerate(ex.map(_cover_job, chunks)):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\process.py", line 636, in _chain_from_iterable_of_lists
+    for element in iterable:
+                   ^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jcrai\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+TypeError: bad operand type for abs(): 'object'

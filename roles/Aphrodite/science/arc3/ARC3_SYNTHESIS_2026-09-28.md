@@ -1,5 +1,5 @@
 # ARC3 SYNTHESIS -- ABSTRACTION ACQUISITION, COMPOUNDING, REUSE AND IMPROVER EVOLUTION
-# Aphrodite (M4), research principal. 2026-09-28, 05:08Z -> [[END]]. Plain ASCII.
+# Aphrodite (M4), research principal. 2026-09-28, 05:08Z -> 14:50Z. Plain ASCII.
 # Branch aphrodite/arc3-2026-09-28. Baseline: the compounding synthesis at f6d60364a.
 # Historical labels unchanged. No BOUNDED_RSI label written. Campaign 1 frozen.
 
@@ -105,7 +105,25 @@
   with emergent identity (cross-seed Jaccard 0), and without writing any abstraction into
   the generator. G1-specific recurrence is a lottery across seeds, which gives a natural
   dose-response experiment. T4 itself enriches G1 compositions 6-15x (a smuggling channel
-  to report). [[W8 task-side freeze result]]
+  to report).
+  W8 (independent re-implementation, 24 LIN / 24 STAR / 6 U seeds, N = 144):
+    - LIN yields GENUINE recurrence: P_reuse .135, which is 14x U and 16x STAR.
+    - It FAILS W1's own "natural recurrence exists" criteria:
+      - dup .43 > .35;
+      - the genuine X_G1 spread is 3/24 seeds >= .10.
+      - The dup-guarded LIND fixes dup (0) but breaks Jaccard (.167). The criteria
+        trade off against each other.
+    - Two findings matter most:
+      (i) Recurrence lands where the instrument cannot see it. Families carrying
+          recurring structure are MORE often unreachable by PRISTINE than non-carriers
+          (p0 .77 vs .61 at 250k). The 250k window holds ~2% of families in EVERY
+          generator.
+      (ii) G1 is not privileged by natural lineage. The frequency-matched sham
+           ({H} + v) recurs 3x more than G1 (genuine X .152 vs .051).
+    - Task-side freeze: FEASIBLE, with conditions. Use a pooled dose-response slope over
+      a 5-schema panel. Scoring at 250k is FORBIDDEN (30k/1M or a per-stratum escrow
+      instead), and there are stop rules for dose range and window fraction. A
+      G1-specific natural hypothesis is not supportable.
 
 5. CON1 -- survived attack in reduced form (see s2).
 
@@ -176,7 +194,17 @@
       - W7 vs A22/A23 instruments. T4's query window (1-2) differs from dev for ~1.7%
         of families. A23 was run on the frozen, unrepaired T4. The bridge re-score is
         T47.
-      - W8: [[W8]]
+      - W8 vs the principal. The principal's model said natural worlds RARELY present
+        recurrence. W8: lineage generators produce plenty of it; what is rare is
+        recurrence that is ALSO learnable in the assay window (A1/A2). ADOPTED: the
+        bottleneck for natural compounding is recurrence x visibility, not recurrence
+        alone.
+      - W8 vs W1. Non-root edits (CG-1 text) give P_reuse .21, against .45 in W1's
+        probe, which allowed root edits. Syntactic counting inflates G1 reuse 1.7x.
+        W8 also contradicts W1's C4 pass under the genuine reading.
+      - W8 made a stale claim: that the A23 foundry (PID 7948) was running at its
+        close. The principal verified 0 python processes. It is recorded in the
+        REPORT provenance.
 
 14. BACKLOG CHANGES (science/compounding/BACKLOG_COMPOUNDING.md)
     ANSWERED: T17 and T23 (A23), T32 (CON1), T50 (generic 3/3).
@@ -184,6 +212,7 @@
     SHARPENED: T33, T34, T39, T45.
     NEW this arc:
       - T47 instrument versioning;
+      - T55 recurrence x visibility (W8);
       - T48 keyed role assignment;
       - T49 seat design-defect rate (countermeasure worked in A23);
       - T51 natural-recurrence donor stage;
@@ -216,15 +245,22 @@
       (1) T53 re-score of A23, followed by T52 validation dose response;
       (2) PKG-6 + PKG-7 frozen together, with a bridge re-score (T47);
       (3) T51 natural-recurrence donor stage on the W8 supply (the decisive
-          "natural vs constructed" test);
+          "natural vs constructed" test), frozen per W8 s6:
+            - a pooled 5-schema dose-response;
+            - the 250k escrow is not allowed;
+            - stop rules F6;
+            - ~16 core-hours under a lease;
       (4) PKG-2.
 
 17. SHOULD THIS LINE CONTINUE?
     YES, narrowed. The mechanism question is answered: under recurrence that validation
     can see, inheritance + composition is a reliable, generic, structure-specific
     stepping stone. The open questions are the two the positive does NOT answer:
-      (a) does recurrence occur NATURALLY at a rate that lets the mechanism fire (T51);
+      (a) does recurrence occur NATURALLY, visibly enough for the mechanism to fire (T51);
       (b) does it CHAIN (second order), which needs a representation change.
+    W8 sharpens (a): lineage worlds DO recur. The open question is whether recurrence
+    and learnability co-occur (A2), and the donor stage must be scored at an escrow
+    where they can.
     Stop condition for (a): if a fair T51 with LIN supply yields no selection of
     recurring compositions, the compounding line reduces to "works only when recurrence
     is supplied", and the North-Star value then rests on curriculum construction.

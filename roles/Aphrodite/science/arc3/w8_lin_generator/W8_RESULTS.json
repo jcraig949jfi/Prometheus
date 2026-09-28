@@ -1,0 +1,7138 @@
+{
+ "panel": {
+  "PA": {
+   "schema": "({H} + v)",
+   "U_genuine": {
+    "share": 0.0579,
+    "COND": 0.0043,
+    "members": 50
+   },
+   "ratio_share": 1.0,
+   "ratio_COND": 0.977,
+   "matched": true,
+   "U_member_jaccard_with_G1": 0.094
+  },
+  "PB": {
+   "schema": "math.gcd(abs(acc), abs({H}))",
+   "U_genuine": {
+    "share": 0.0648,
+    "COND": 0.0062,
+    "members": 56
+   },
+   "ratio_share": 1.119,
+   "ratio_COND": 1.409,
+   "matched": true,
+   "U_member_jaccard_with_G1": 0.0
+  },
+  "PC": {
+   "schema": "(v // {H})",
+   "U_genuine": {
+    "share": 0.0648,
+    "COND": 0.0144,
+    "members": 56
+   },
+   "ratio_share": 1.119,
+   "ratio_COND": 3.273,
+   "matched": false,
+   "U_member_jaccard_with_G1": 0.0
+  },
+  "PD": {
+   "schema": "math.gcd(abs({H}), abs(v))",
+   "U_genuine": {
+    "share": 0.0764,
+    "COND": 0.0158,
+    "members": 66
+   },
+   "ratio_share": 1.32,
+   "ratio_COND": 3.591,
+   "matched": false,
+   "U_member_jaccard_with_G1": 0.0
+  }
+ },
+ "G1_U_genuine": {
+  "share": 0.0579,
+  "COND": 0.0044,
+  "members": 50
+ },
+ "per_seed": {
+  "LIN:0": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1071,
+    "accumulating": 404,
+    "admitted": 144,
+    "seconds": 18.2
+   },
+   "syntactic": {
+    "dup": 0.4514,
+    "R3u": 0.7975,
+    "P_reuse": 0.3255,
+    "n_recurring": 15
+   },
+   "genuine": {
+    "dup": 0.4514,
+    "R3u": 0.6329,
+    "P_reuse": 0.324,
+    "n_recurring": 10
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PA": {
+     "share": 0.2639,
+     "COND": 0.6613,
+     "members": 38
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0242,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.1875,
+     "COND": 0.1658,
+     "members": 27
+    },
+    "PD": {
+     "share": 0.1319,
+     "COND": 0.0485,
+     "members": 19
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1111,
+     "COND": 0.0414,
+     "members": 16
+    },
+    "PA": {
+     "share": 0.3264,
+     "COND": 0.5432,
+     "members": 47
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0242,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.1875,
+     "COND": 0.1658,
+     "members": 27
+    },
+    "PD": {
+     "share": 0.1319,
+     "COND": 0.0485,
+     "members": 19
+    }
+   },
+   "covered": 0.3542,
+   "window": {
+    "30000": {
+     "window": 0.2361,
+     "p1": 0.0625,
+     "p0": 0.7014
+    },
+    "100000": {
+     "window": 0.125,
+     "p1": 0.2222,
+     "p0": 0.6528
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3542,
+     "p0": 0.6181
+    },
+    "1000000": {
+     "window": 0.1458,
+     "p1": 0.3542,
+     "p0": 0.5
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(hole,var:v))",
+     22
+    ],
+    [
+     "sub(var:acc,mul(hole,var:v))",
+     18
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     12
+    ]
+   ]
+  },
+  "LIN:1": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1776,
+    "accumulating": 599,
+    "admitted": 144,
+    "seconds": 23.3
+   },
+   "syntactic": {
+    "dup": 0.4167,
+    "R3u": 0.4048,
+    "P_reuse": 0.068,
+    "n_recurring": 9
+   },
+   "genuine": {
+    "dup": 0.4167,
+    "R3u": 0.1667,
+    "P_reuse": 0.037,
+    "n_recurring": 4
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.045,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.1181,
+     "COND": 0.1042,
+     "members": 17
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0145,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.0585,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.1181,
+     "COND": 0.0363,
+     "members": 17
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1736,
+     "COND": 0.034,
+     "members": 25
+    },
+    "PA": {
+     "share": 0.1875,
+     "COND": 0.0688,
+     "members": 27
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0145,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.0585,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.1181,
+     "COND": 0.0363,
+     "members": 17
+    }
+   },
+   "covered": 0.1944,
+   "window": {
+    "30000": {
+     "window": 0.1319,
+     "p1": 0.0417,
+     "p0": 0.8264
+    },
+    "100000": {
+     "window": 0.0972,
+     "p1": 0.0972,
+     "p0": 0.8056
+    },
+    "250000": {
+     "window": 0.0347,
+     "p1": 0.1944,
+     "p0": 0.7708
+    },
+    "1000000": {
+     "window": 0.1667,
+     "p1": 0.1944,
+     "p0": 0.6389
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.077,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     9
+    ],
+    [
+     "sub(var:v,add(hole,var:acc))",
+     8
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     6
+    ]
+   ]
+  },
+  "LIN:2": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1586,
+    "accumulating": 549,
+    "admitted": 144,
+    "seconds": 20.7
+   },
+   "syntactic": {
+    "dup": 0.2639,
+    "R3u": 0.6226,
+    "P_reuse": 0.203,
+    "n_recurring": 19
+   },
+   "genuine": {
+    "dup": 0.2639,
+    "R3u": 0.4057,
+    "P_reuse": 0.1805,
+    "n_recurring": 11
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0347,
+     "COND": 0.0,
+     "members": 5
+    },
+    "PA": {
+     "share": 0.0764,
+     "COND": 0.0138,
+     "members": 11
+    },
+    "PB": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PC": {
+     "share": 0.1042,
+     "COND": 0.0294,
+     "members": 15
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0108,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1458,
+     "COND": 0.0113,
+     "members": 21
+    },
+    "PA": {
+     "share": 0.1597,
+     "COND": 0.0244,
+     "members": 23
+    },
+    "PB": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PC": {
+     "share": 0.1042,
+     "COND": 0.0294,
+     "members": 15
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0108,
+     "members": 8
+    }
+   },
+   "covered": 0.2847,
+   "window": {
+    "30000": {
+     "window": 0.1875,
+     "p1": 0.0625,
+     "p0": 0.75
+    },
+    "100000": {
+     "window": 0.0903,
+     "p1": 0.1944,
+     "p0": 0.7153
+    },
+    "250000": {
+     "window": 0.0,
+     "p1": 0.2847,
+     "p0": 0.7153
+    },
+    "1000000": {
+     "window": 0.1319,
+     "p1": 0.2847,
+     "p0": 0.5833
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(sub(var:v,hole),var:acc)",
+     22
+    ],
+    [
+     "add(sub(var:v,fdiv(hole,var:v)),var:acc)",
+     9
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     9
+    ]
+   ]
+  },
+  "LIN:3": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1361,
+    "accumulating": 502,
+    "admitted": 144,
+    "seconds": 17.1
+   },
+   "syntactic": {
+    "dup": 0.5139,
+    "R3u": 0.5143,
+    "P_reuse": 0.2035,
+    "n_recurring": 8
+   },
+   "genuine": {
+    "dup": 0.5139,
+    "R3u": 0.4143,
+    "P_reuse": 0.191,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PA": {
+     "share": 0.0486,
+     "COND": 0.0369,
+     "members": 7
+    },
+    "PB": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    },
+    "PC": {
+     "share": 0.0903,
+     "COND": 0.0474,
+     "members": 13
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0323,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    },
+    "PA": {
+     "share": 0.125,
+     "COND": 0.0745,
+     "members": 18
+    },
+    "PB": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    },
+    "PC": {
+     "share": 0.0903,
+     "COND": 0.0474,
+     "members": 13
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0323,
+     "members": 8
+    }
+   },
+   "covered": 0.2569,
+   "window": {
+    "30000": {
+     "window": 0.1458,
+     "p1": 0.0625,
+     "p0": 0.7917
+    },
+    "100000": {
+     "window": 0.0694,
+     "p1": 0.1875,
+     "p0": 0.7431
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2569,
+     "p0": 0.7153
+    },
+    "1000000": {
+     "window": 0.1319,
+     "p1": 0.2569,
+     "p0": 0.6111
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(mul(hole,var:v),var:acc)",
+     17
+    ],
+    [
+     "sub(var:last,sub(var:acc,hole))",
+     13
+    ],
+    [
+     "add(fdiv(var:last,hole),var:acc)",
+     11
+    ]
+   ]
+  },
+  "LIN:4": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1223,
+    "accumulating": 555,
+    "admitted": 144,
+    "seconds": 17.4
+   },
+   "syntactic": {
+    "dup": 0.4583,
+    "R3u": 0.4487,
+    "P_reuse": 0.114,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.4583,
+    "R3u": 0.3077,
+    "P_reuse": 0.096,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1319,
+     "COND": 0.0936,
+     "members": 19
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.0922,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.1111,
+     "COND": 0.012,
+     "members": 16
+    },
+    "PC": {
+     "share": 0.1042,
+     "COND": 0.0369,
+     "members": 15
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0045,
+     "members": 9
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2083,
+     "COND": 0.0615,
+     "members": 30
+    },
+    "PA": {
+     "share": 0.2708,
+     "COND": 0.0703,
+     "members": 39
+    },
+    "PB": {
+     "share": 0.1111,
+     "COND": 0.012,
+     "members": 16
+    },
+    "PC": {
+     "share": 0.1042,
+     "COND": 0.0369,
+     "members": 15
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0045,
+     "members": 9
+    }
+   },
+   "covered": 0.2986,
+   "window": {
+    "30000": {
+     "window": 0.1736,
+     "p1": 0.0417,
+     "p0": 0.7847
+    },
+    "100000": {
+     "window": 0.1319,
+     "p1": 0.1667,
+     "p0": 0.7014
+    },
+    "250000": {
+     "window": 0.0556,
+     "p1": 0.2986,
+     "p0": 0.6458
+    },
+    "1000000": {
+     "window": 0.1736,
+     "p1": 0.2986,
+     "p0": 0.5278
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.105,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(const:1,add(hole,var:acc))",
+     13
+    ],
+    [
+     "sub(const:1,add(hole,var:v))",
+     10
+    ],
+    [
+     "sub(const:1,mul(hole,var:acc))",
+     9
+    ]
+   ]
+  },
+  "LIN:5": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1882,
+    "accumulating": 550,
+    "admitted": 144,
+    "seconds": 18.0
+   },
+   "syntactic": {
+    "dup": 0.4722,
+    "R3u": 0.5789,
+    "P_reuse": 0.204,
+    "n_recurring": 14
+   },
+   "genuine": {
+    "dup": 0.4722,
+    "R3u": 0.4079,
+    "P_reuse": 0.21,
+    "n_recurring": 10
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0486,
+     "COND": 0.0,
+     "members": 7
+    },
+    "PA": {
+     "share": 0.1806,
+     "COND": 0.2216,
+     "members": 26
+    },
+    "PB": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PC": {
+     "share": 0.1667,
+     "COND": 0.1215,
+     "members": 24
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.0456,
+     "members": 13
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1042,
+     "COND": 0.0006,
+     "members": 15
+    },
+    "PA": {
+     "share": 0.25,
+     "COND": 0.1611,
+     "members": 36
+    },
+    "PB": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PC": {
+     "share": 0.1667,
+     "COND": 0.1215,
+     "members": 24
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.0456,
+     "members": 13
+    }
+   },
+   "covered": 0.2153,
+   "window": {
+    "30000": {
+     "window": 0.1597,
+     "p1": 0.0347,
+     "p0": 0.8056
+    },
+    "100000": {
+     "window": 0.0972,
+     "p1": 0.1181,
+     "p0": 0.7847
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.2153,
+     "p0": 0.7639
+    },
+    "1000000": {
+     "window": 0.1528,
+     "p1": 0.2153,
+     "p0": 0.6319
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.143,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(hole,var:v))",
+     14
+    ],
+    [
+     "sub(var:acc,mul(hole,var:v))",
+     13
+    ],
+    [
+     "sub(var:acc,add(hole,var:first))",
+     13
+    ]
+   ]
+  },
+  "LIN:6": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1514,
+    "accumulating": 592,
+    "admitted": 144,
+    "seconds": 18.0
+   },
+   "syntactic": {
+    "dup": 0.4722,
+    "R3u": 0.4868,
+    "P_reuse": 0.1595,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.4722,
+    "R3u": 0.4342,
+    "P_reuse": 0.1605,
+    "n_recurring": 9
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0486,
+     "COND": 0.0112,
+     "members": 7
+    },
+    "PA": {
+     "share": 0.1181,
+     "COND": 0.2204,
+     "members": 17
+    },
+    "PB": {
+     "share": 0.2153,
+     "COND": 0.1377,
+     "members": 31
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.0539,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0045,
+     "members": 9
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1111,
+     "COND": 0.0118,
+     "members": 16
+    },
+    "PA": {
+     "share": 0.2014,
+     "COND": 0.1408,
+     "members": 29
+    },
+    "PB": {
+     "share": 0.2153,
+     "COND": 0.1377,
+     "members": 31
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.0539,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0045,
+     "members": 9
+    }
+   },
+   "covered": 0.3819,
+   "window": {
+    "30000": {
+     "window": 0.2639,
+     "p1": 0.0694,
+     "p0": 0.6667
+    },
+    "100000": {
+     "window": 0.1806,
+     "p1": 0.2014,
+     "p0": 0.6181
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.3819,
+     "p0": 0.5972
+    },
+    "1000000": {
+     "window": 0.1944,
+     "p1": 0.3819,
+     "p0": 0.4236
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.143,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     16
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     11
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     9
+    ]
+   ]
+  },
+  "LIN:7": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1191,
+    "accumulating": 555,
+    "admitted": 144,
+    "seconds": 15.5
+   },
+   "syntactic": {
+    "dup": 0.4792,
+    "R3u": 0.6,
+    "P_reuse": 0.165,
+    "n_recurring": 13
+   },
+   "genuine": {
+    "dup": 0.4792,
+    "R3u": 0.2533,
+    "P_reuse": 0.073,
+    "n_recurring": 5
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0417,
+     "COND": 0.0,
+     "members": 6
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.1813,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    },
+    "PC": {
+     "share": 0.2014,
+     "COND": 0.0901,
+     "members": 29
+    },
+    "PD": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1736,
+     "COND": 0.0467,
+     "members": 25
+    },
+    "PA": {
+     "share": 0.3264,
+     "COND": 0.1227,
+     "members": 47
+    },
+    "PB": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    },
+    "PC": {
+     "share": 0.2014,
+     "COND": 0.0901,
+     "members": 29
+    },
+    "PD": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    }
+   },
+   "covered": 0.3819,
+   "window": {
+    "30000": {
+     "window": 0.2639,
+     "p1": 0.0556,
+     "p0": 0.6806
+    },
+    "100000": {
+     "window": 0.1806,
+     "p1": 0.2014,
+     "p0": 0.6181
+    },
+    "250000": {
+     "window": 0.0417,
+     "p1": 0.3819,
+     "p0": 0.5764
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.3819,
+     "p0": 0.4792
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(const:1,hole))",
+     12
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     11
+    ],
+    [
+     "add(mul(hole,var:acc),var:last)",
+     8
+    ]
+   ]
+  },
+  "LIN:8": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1863,
+    "accumulating": 584,
+    "admitted": 144,
+    "seconds": 17.5
+   },
+   "syntactic": {
+    "dup": 0.3681,
+    "R3u": 0.6484,
+    "P_reuse": 0.076,
+    "n_recurring": 16
+   },
+   "genuine": {
+    "dup": 0.3681,
+    "R3u": 0.3077,
+    "P_reuse": 0.035,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PA": {
+     "share": 0.1111,
+     "COND": 0.0877,
+     "members": 16
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0167,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.1015,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0764,
+     "COND": 0.0242,
+     "members": 11
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1806,
+     "COND": 0.0573,
+     "members": 26
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.0543,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0167,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.1015,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0764,
+     "COND": 0.0242,
+     "members": 11
+    }
+   },
+   "covered": 0.4236,
+   "window": {
+    "30000": {
+     "window": 0.2917,
+     "p1": 0.0417,
+     "p0": 0.6667
+    },
+    "100000": {
+     "window": 0.1944,
+     "p1": 0.2292,
+     "p0": 0.5764
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.4236,
+     "p0": 0.5625
+    },
+    "1000000": {
+     "window": 0.1319,
+     "p1": 0.4236,
+     "p0": 0.4444
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.667,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(mul(hole,var:acc),var:v)",
+     7
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     7
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     6
+    ]
+   ]
+  },
+  "LIN:9": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1033,
+    "accumulating": 471,
+    "admitted": 144,
+    "seconds": 14.3
+   },
+   "syntactic": {
+    "dup": 0.4653,
+    "R3u": 0.4935,
+    "P_reuse": 0.1095,
+    "n_recurring": 11
+   },
+   "genuine": {
+    "dup": 0.4653,
+    "R3u": 0.3506,
+    "P_reuse": 0.094,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0417,
+     "COND": 0.0028,
+     "members": 6
+    },
+    "PA": {
+     "share": 0.0764,
+     "COND": 0.0985,
+     "members": 11
+    },
+    "PB": {
+     "share": 0.0208,
+     "COND": 0.0028,
+     "members": 3
+    },
+    "PC": {
+     "share": 0.1597,
+     "COND": 0.1126,
+     "members": 23
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.045,
+     "members": 13
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1389,
+     "COND": 0.043,
+     "members": 20
+    },
+    "PA": {
+     "share": 0.1458,
+     "COND": 0.0603,
+     "members": 21
+    },
+    "PB": {
+     "share": 0.0208,
+     "COND": 0.0028,
+     "members": 3
+    },
+    "PC": {
+     "share": 0.1597,
+     "COND": 0.1126,
+     "members": 23
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.045,
+     "members": 13
+    }
+   },
+   "covered": 0.2292,
+   "window": {
+    "30000": {
+     "window": 0.125,
+     "p1": 0.0556,
+     "p0": 0.8194
+    },
+    "100000": {
+     "window": 0.0833,
+     "p1": 0.1458,
+     "p0": 0.7708
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.2292,
+     "p0": 0.75
+    },
+    "1000000": {
+     "window": 0.1667,
+     "p1": 0.2292,
+     "p0": 0.6042
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "mul(add(const:1,hole),var:v)",
+     12
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     9
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     7
+    ]
+   ]
+  },
+  "LIN:10": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1931,
+    "accumulating": 605,
+    "admitted": 144,
+    "seconds": 18.8
+   },
+   "syntactic": {
+    "dup": 0.625,
+    "R3u": 0.463,
+    "P_reuse": 0.202,
+    "n_recurring": 7
+   },
+   "genuine": {
+    "dup": 0.625,
+    "R3u": 0.3519,
+    "P_reuse": 0.1935,
+    "n_recurring": 5
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0486,
+     "COND": 0.0369,
+     "members": 7
+    },
+    "PA": {
+     "share": 0.125,
+     "COND": 0.2426,
+     "members": 18
+    },
+    "PB": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    },
+    "PC": {
+     "share": 0.1667,
+     "COND": 0.1174,
+     "members": 24
+    },
+    "PD": {
+     "share": 0.1458,
+     "COND": 0.2079,
+     "members": 21
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.0972,
+     "COND": 0.0213,
+     "members": 14
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.1577,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    },
+    "PC": {
+     "share": 0.1667,
+     "COND": 0.1174,
+     "members": 24
+    },
+    "PD": {
+     "share": 0.1458,
+     "COND": 0.2079,
+     "members": 21
+    }
+   },
+   "covered": 0.2292,
+   "window": {
+    "30000": {
+     "window": 0.1319,
+     "p1": 0.0625,
+     "p0": 0.8056
+    },
+    "100000": {
+     "window": 0.1111,
+     "p1": 0.1181,
+     "p0": 0.7708
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.2292,
+     "p0": 0.75
+    },
+    "1000000": {
+     "window": 0.1667,
+     "p1": 0.2292,
+     "p0": 0.6042
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.286,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     18
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     12
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     12
+    ]
+   ]
+  },
+  "LIN:11": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1477,
+    "accumulating": 523,
+    "admitted": 144,
+    "seconds": 16.4
+   },
+   "syntactic": {
+    "dup": 0.3056,
+    "R3u": 0.54,
+    "P_reuse": 0.1705,
+    "n_recurring": 13
+   },
+   "genuine": {
+    "dup": 0.3056,
+    "R3u": 0.33,
+    "P_reuse": 0.059,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1389,
+     "COND": 0.0606,
+     "members": 20
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.0086,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0972,
+     "COND": 0.0286,
+     "members": 14
+    },
+    "PC": {
+     "share": 0.0278,
+     "COND": 0.0021,
+     "members": 4
+    },
+    "PD": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1944,
+     "COND": 0.0436,
+     "members": 28
+    },
+    "PA": {
+     "share": 0.1319,
+     "COND": 0.0181,
+     "members": 19
+    },
+    "PB": {
+     "share": 0.0972,
+     "COND": 0.0286,
+     "members": 14
+    },
+    "PC": {
+     "share": 0.0278,
+     "COND": 0.0021,
+     "members": 4
+    },
+    "PD": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    }
+   },
+   "covered": 0.0556,
+   "window": {
+    "30000": {
+     "window": 0.0347,
+     "p1": 0.0139,
+     "p0": 0.9514
+    },
+    "100000": {
+     "window": 0.0208,
+     "p1": 0.0347,
+     "p0": 0.9444
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.0556,
+     "p0": 0.9236
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.0556,
+     "p0": 0.8194
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.05,
+    "250000": 0.05
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,add(hole,var:acc))",
+     9
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     8
+    ],
+    [
+     "sub(var:first,add(hole,var:acc))",
+     8
+    ]
+   ]
+  },
+  "LIN:12": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1288,
+    "accumulating": 514,
+    "admitted": 144,
+    "seconds": 14.8
+   },
+   "syntactic": {
+    "dup": 0.3403,
+    "R3u": 0.6842,
+    "P_reuse": 0.336,
+    "n_recurring": 14
+   },
+   "genuine": {
+    "dup": 0.3403,
+    "R3u": 0.5474,
+    "P_reuse": 0.294,
+    "n_recurring": 11
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.4028,
+     "COND": 0.3056,
+     "members": 58
+    },
+    "PA": {
+     "share": 0.0625,
+     "COND": 0.0036,
+     "members": 9
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.0903,
+     "COND": 0.0223,
+     "members": 13
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0178,
+     "members": 9
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.5556,
+     "COND": 0.2552,
+     "members": 80
+    },
+    "PA": {
+     "share": 0.0903,
+     "COND": 0.0025,
+     "members": 13
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.0903,
+     "COND": 0.0223,
+     "members": 13
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0178,
+     "members": 9
+    }
+   },
+   "covered": 0.3194,
+   "window": {
+    "30000": {
+     "window": 0.2153,
+     "p1": 0.0347,
+     "p0": 0.75
+    },
+    "100000": {
+     "window": 0.1736,
+     "p1": 0.1389,
+     "p0": 0.6875
+    },
+    "250000": {
+     "window": 0.0,
+     "p1": 0.3194,
+     "p0": 0.6806
+    },
+    "1000000": {
+     "window": 0.1111,
+     "p1": 0.3194,
+     "p0": 0.5694
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.103,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,add(hole,var:acc))",
+     25
+    ],
+    [
+     "sub(var:first,add(hole,var:acc))",
+     14
+    ],
+    [
+     "sub(var:v,mod(var:acc,hole))",
+     7
+    ]
+   ]
+  },
+  "LIN:13": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1441,
+    "accumulating": 568,
+    "admitted": 144,
+    "seconds": 13.8
+   },
+   "syntactic": {
+    "dup": 0.3264,
+    "R3u": 0.5773,
+    "P_reuse": 0.169,
+    "n_recurring": 14
+   },
+   "genuine": {
+    "dup": 0.3264,
+    "R3u": 0.3402,
+    "P_reuse": 0.135,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.125,
+     "COND": 0.2426,
+     "members": 18
+    },
+    "PA": {
+     "share": 0.0278,
+     "COND": 0.008,
+     "members": 4
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0064,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PD": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2361,
+     "COND": 0.1612,
+     "members": 34
+    },
+    "PA": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0064,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PD": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    }
+   },
+   "covered": 0.25,
+   "window": {
+    "30000": {
+     "window": 0.1875,
+     "p1": 0.0208,
+     "p0": 0.7917
+    },
+    "100000": {
+     "window": 0.1667,
+     "p1": 0.0833,
+     "p0": 0.75
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.25,
+     "p0": 0.7361
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.25,
+     "p0": 0.625
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.222,
+    "250000": 0.056
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,add(hole,var:acc))",
+     16
+    ],
+    [
+     "add(mul(hole,var:acc),var:v)",
+     13
+    ],
+    [
+     "sub(var:v,sub(var:last,hole))",
+     6
+    ]
+   ]
+  },
+  "LIN:14": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1565,
+    "accumulating": 524,
+    "admitted": 144,
+    "seconds": 14.6
+   },
+   "syntactic": {
+    "dup": 0.4583,
+    "R3u": 0.5513,
+    "P_reuse": 0.445,
+    "n_recurring": 8
+   },
+   "genuine": {
+    "dup": 0.4583,
+    "R3u": 0.1923,
+    "P_reuse": 0.059,
+    "n_recurring": 4
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0625,
+     "COND": 0.0446,
+     "members": 9
+    },
+    "PA": {
+     "share": 0.1597,
+     "COND": 0.1695,
+     "members": 23
+    },
+    "PB": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.0945,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.4306,
+     "COND": 0.3642,
+     "members": 62
+    },
+    "PA": {
+     "share": 0.1875,
+     "COND": 0.1447,
+     "members": 27
+    },
+    "PB": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.0945,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0,
+     "COND": 0.0,
+     "members": 0
+    }
+   },
+   "covered": 0.625,
+   "window": {
+    "30000": {
+     "window": 0.4722,
+     "p1": 0.0625,
+     "p0": 0.4653
+    },
+    "100000": {
+     "window": 0.2708,
+     "p1": 0.3542,
+     "p0": 0.375
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.625,
+     "p0": 0.3611
+    },
+    "1000000": {
+     "window": 0.0972,
+     "p1": 0.625,
+     "p0": 0.2778
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(mul(hole,var:acc),var:v)",
+     10
+    ],
+    [
+     "add(mul(hole,var:v),var:v)",
+     10
+    ],
+    [
+     "add(mod(var:acc,hole),var:v)",
+     9
+    ]
+   ]
+  },
+  "LIN:15": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1176,
+    "accumulating": 504,
+    "admitted": 144,
+    "seconds": 16.2
+   },
+   "syntactic": {
+    "dup": 0.3542,
+    "R3u": 0.5269,
+    "P_reuse": 0.1195,
+    "n_recurring": 15
+   },
+   "genuine": {
+    "dup": 0.3542,
+    "R3u": 0.4516,
+    "P_reuse": 0.104,
+    "n_recurring": 11
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1319,
+     "COND": 0.0404,
+     "members": 19
+    },
+    "PA": {
+     "share": 0.0278,
+     "COND": 0.008,
+     "members": 4
+    },
+    "PB": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PC": {
+     "share": 0.0833,
+     "COND": 0.0242,
+     "members": 12
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0287,
+     "members": 9
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1528,
+     "COND": 0.0353,
+     "members": 22
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.011,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PC": {
+     "share": 0.0833,
+     "COND": 0.0242,
+     "members": 12
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0287,
+     "members": 9
+    }
+   },
+   "covered": 0.1389,
+   "window": {
+    "30000": {
+     "window": 0.0972,
+     "p1": 0.0139,
+     "p0": 0.8889
+    },
+    "100000": {
+     "window": 0.0417,
+     "p1": 0.0972,
+     "p0": 0.8611
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.1389,
+     "p0": 0.8333
+    },
+    "1000000": {
+     "window": 0.1042,
+     "p1": 0.1389,
+     "p0": 0.7569
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(sub(var:v,hole),var:acc)",
+     14
+    ],
+    [
+     "sub(const:0,add(hole,var:acc))",
+     9
+    ],
+    [
+     "add(gcd(hole,var:last),var:acc)",
+     7
+    ]
+   ]
+  },
+  "LIN:16": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1056,
+    "accumulating": 480,
+    "admitted": 144,
+    "seconds": 15.5
+   },
+   "syntactic": {
+    "dup": 0.3403,
+    "R3u": 0.7368,
+    "P_reuse": 0.3695,
+    "n_recurring": 17
+   },
+   "genuine": {
+    "dup": 0.3403,
+    "R3u": 0.4737,
+    "P_reuse": 0.078,
+    "n_recurring": 12
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0764,
+     "COND": 0.0365,
+     "members": 11
+    },
+    "PA": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.0694,
+     "COND": 0.016,
+     "members": 10
+    },
+    "PD": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.3472,
+     "COND": 0.2748,
+     "members": 50
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.0008,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.0694,
+     "COND": 0.016,
+     "members": 10
+    },
+    "PD": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    }
+   },
+   "covered": 0.2292,
+   "window": {
+    "30000": {
+     "window": 0.1042,
+     "p1": 0.0417,
+     "p0": 0.8542
+    },
+    "100000": {
+     "window": 0.0903,
+     "p1": 0.1319,
+     "p0": 0.7778
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.2292,
+     "p0": 0.75
+    },
+    "1000000": {
+     "window": 0.0833,
+     "p1": 0.2292,
+     "p0": 0.6875
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.182,
+    "250000": 0.091
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,gcd(hole,var:last))",
+     14
+    ],
+    [
+     "sub(var:v,gcd(add(hole,var:acc),var:last))",
+     8
+    ],
+    [
+     "sub(var:v,gcd(add(var:acc,var:first),hole))",
+     7
+    ]
+   ]
+  },
+  "LIN:17": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1174,
+    "accumulating": 525,
+    "admitted": 144,
+    "seconds": 15.5
+   },
+   "syntactic": {
+    "dup": 0.4583,
+    "R3u": 0.7179,
+    "P_reuse": 0.34,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.4583,
+    "R3u": 0.4744,
+    "P_reuse": 0.274,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0347,
+     "COND": 0.0156,
+     "members": 5
+    },
+    "PA": {
+     "share": 0.2569,
+     "COND": 0.6441,
+     "members": 37
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.0315,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.1166,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.1362,
+     "members": 13
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1597,
+     "COND": 0.1193,
+     "members": 23
+    },
+    "PA": {
+     "share": 0.375,
+     "COND": 0.4549,
+     "members": 54
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.0315,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.1166,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.1362,
+     "members": 13
+    }
+   },
+   "covered": 0.4167,
+   "window": {
+    "30000": {
+     "window": 0.3403,
+     "p1": 0.0278,
+     "p0": 0.6319
+    },
+    "100000": {
+     "window": 0.1667,
+     "p1": 0.25,
+     "p0": 0.5833
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.4167,
+     "p0": 0.5556
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.4167,
+     "p0": 0.4444
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.4,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(hole,var:v))",
+     24
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     13
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     11
+    ]
+   ]
+  },
+  "LIN:18": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1531,
+    "accumulating": 575,
+    "admitted": 144,
+    "seconds": 17.8
+   },
+   "syntactic": {
+    "dup": 0.3958,
+    "R3u": 0.5517,
+    "P_reuse": 0.131,
+    "n_recurring": 11
+   },
+   "genuine": {
+    "dup": 0.3958,
+    "R3u": 0.4368,
+    "P_reuse": 0.0885,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0208,
+     "COND": 0.0,
+     "members": 3
+    },
+    "PA": {
+     "share": 0.1806,
+     "COND": 0.2212,
+     "members": 26
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.0878,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.1181,
+     "COND": 0.1047,
+     "members": 17
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1319,
+     "COND": 0.0062,
+     "members": 19
+    },
+    "PA": {
+     "share": 0.3333,
+     "COND": 0.1371,
+     "members": 48
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.0878,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.1181,
+     "COND": 0.1047,
+     "members": 17
+    }
+   },
+   "covered": 0.3125,
+   "window": {
+    "30000": {
+     "window": 0.2292,
+     "p1": 0.0556,
+     "p0": 0.7153
+    },
+    "100000": {
+     "window": 0.1042,
+     "p1": 0.2083,
+     "p0": 0.6875
+    },
+    "250000": {
+     "window": 0.0069,
+     "p1": 0.3125,
+     "p0": 0.6806
+    },
+    "1000000": {
+     "window": 0.1181,
+     "p1": 0.3125,
+     "p0": 0.5694
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.333,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     13
+    ],
+    [
+     "add(gcd(hole,var:first),var:v)",
+     9
+    ],
+    [
+     "sub(var:acc,mul(hole,var:v))",
+     9
+    ]
+   ]
+  },
+  "LIN:19": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 2027,
+    "accumulating": 693,
+    "admitted": 144,
+    "seconds": 17.0
+   },
+   "syntactic": {
+    "dup": 0.4722,
+    "R3u": 0.5132,
+    "P_reuse": 0.0725,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.4722,
+    "R3u": 0.4211,
+    "P_reuse": 0.077,
+    "n_recurring": 10
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1667,
+     "COND": 0.2716,
+     "members": 24
+    },
+    "PA": {
+     "share": 0.0833,
+     "COND": 0.1169,
+     "members": 12
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.016,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.2431,
+     "COND": 0.1193,
+     "members": 35
+    },
+    "PD": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2708,
+     "COND": 0.2353,
+     "members": 39
+    },
+    "PA": {
+     "share": 0.1806,
+     "COND": 0.0959,
+     "members": 26
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.016,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.2431,
+     "COND": 0.1193,
+     "members": 35
+    },
+    "PD": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    }
+   },
+   "covered": 0.3819,
+   "window": {
+    "30000": {
+     "window": 0.2708,
+     "p1": 0.0417,
+     "p0": 0.6875
+    },
+    "100000": {
+     "window": 0.1389,
+     "p1": 0.2361,
+     "p0": 0.625
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3819,
+     "p0": 0.5903
+    },
+    "1000000": {
+     "window": 0.0903,
+     "p1": 0.3819,
+     "p0": 0.5278
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.208,
+    "250000": 0.083
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,add(const:1,hole))",
+     11
+    ],
+    [
+     "sub(var:v,add(hole,var:acc))",
+     10
+    ],
+    [
+     "sub(var:v,add(hole,var:last))",
+     9
+    ]
+   ]
+  },
+  "LIN:20": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1294,
+    "accumulating": 503,
+    "admitted": 144,
+    "seconds": 15.3
+   },
+   "syntactic": {
+    "dup": 0.3403,
+    "R3u": 0.6316,
+    "P_reuse": 0.394,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.3403,
+    "R3u": 0.5158,
+    "P_reuse": 0.1915,
+    "n_recurring": 9
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PA": {
+     "share": 0.0972,
+     "COND": 0.1265,
+     "members": 14
+    },
+    "PB": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PC": {
+     "share": 0.0486,
+     "COND": 0.0058,
+     "members": 7
+    },
+    "PD": {
+     "share": 0.0347,
+     "COND": 0.0156,
+     "members": 5
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    },
+    "PA": {
+     "share": 0.2708,
+     "COND": 0.3024,
+     "members": 39
+    },
+    "PB": {
+     "share": 0.0139,
+     "COND": 0.0,
+     "members": 2
+    },
+    "PC": {
+     "share": 0.0486,
+     "COND": 0.0058,
+     "members": 7
+    },
+    "PD": {
+     "share": 0.0347,
+     "COND": 0.0156,
+     "members": 5
+    }
+   },
+   "covered": 0.2431,
+   "window": {
+    "30000": {
+     "window": 0.1667,
+     "p1": 0.0417,
+     "p0": 0.7917
+    },
+    "100000": {
+     "window": 0.1042,
+     "p1": 0.1389,
+     "p0": 0.7569
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2431,
+     "p0": 0.7292
+    },
+    "1000000": {
+     "window": 0.1111,
+     "p1": 0.2431,
+     "p0": 0.6458
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.5,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(sub(var:v,hole),var:acc)",
+     17
+    ],
+    [
+     "sub(var:v,mul(hole,var:acc))",
+     15
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     9
+    ]
+   ]
+  },
+  "LIN:21": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1230,
+    "accumulating": 461,
+    "admitted": 144,
+    "seconds": 11.5
+   },
+   "syntactic": {
+    "dup": 0.5625,
+    "R3u": 0.5079,
+    "P_reuse": 0.2375,
+    "n_recurring": 7
+   },
+   "genuine": {
+    "dup": 0.5625,
+    "R3u": 0.2063,
+    "P_reuse": 0.0745,
+    "n_recurring": 4
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0208,
+     "COND": 0.0028,
+     "members": 3
+    },
+    "PA": {
+     "share": 0.0625,
+     "COND": 0.0649,
+     "members": 9
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0737,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.2361,
+     "COND": 0.1887,
+     "members": 34
+    },
+    "PD": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2569,
+     "COND": 0.2242,
+     "members": 37
+    },
+    "PA": {
+     "share": 0.1111,
+     "COND": 0.0414,
+     "members": 16
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0737,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.2361,
+     "COND": 0.1887,
+     "members": 34
+    },
+    "PD": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    }
+   },
+   "covered": 0.3125,
+   "window": {
+    "30000": {
+     "window": 0.2014,
+     "p1": 0.0625,
+     "p0": 0.7361
+    },
+    "100000": {
+     "window": 0.1181,
+     "p1": 0.1944,
+     "p0": 0.6875
+    },
+    "250000": {
+     "window": 0.0069,
+     "p1": 0.3125,
+     "p0": 0.6806
+    },
+    "1000000": {
+     "window": 0.1806,
+     "p1": 0.3125,
+     "p0": 0.5069
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.333,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(sub(var:acc,hole),var:v)",
+     12
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     10
+    ],
+    [
+     "add(mul(hole,var:last),var:acc)",
+     7
+    ]
+   ]
+  },
+  "LIN:22": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1815,
+    "accumulating": 649,
+    "admitted": 144,
+    "seconds": 16.8
+   },
+   "syntactic": {
+    "dup": 0.5556,
+    "R3u": 0.3906,
+    "P_reuse": 0.1645,
+    "n_recurring": 6
+   },
+   "genuine": {
+    "dup": 0.5556,
+    "R3u": 0.3906,
+    "P_reuse": 0.155,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0347,
+     "COND": 0.0064,
+     "members": 5
+    },
+    "PA": {
+     "share": 0.1389,
+     "COND": 0.2876,
+     "members": 20
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.0323,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.2708,
+     "COND": 0.184,
+     "members": 39
+    },
+    "PD": {
+     "share": 0.1944,
+     "COND": 0.1651,
+     "members": 28
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.125,
+     "COND": 0.0343,
+     "members": 18
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.2109,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.0323,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.2708,
+     "COND": 0.184,
+     "members": 39
+    },
+    "PD": {
+     "share": 0.1944,
+     "COND": 0.1651,
+     "members": 28
+    }
+   },
+   "covered": 0.5278,
+   "window": {
+    "30000": {
+     "window": 0.3472,
+     "p1": 0.1042,
+     "p0": 0.5486
+    },
+    "100000": {
+     "window": 0.1944,
+     "p1": 0.3333,
+     "p0": 0.4722
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.5278,
+     "p0": 0.4583
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.5278,
+     "p0": 0.3472
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.2,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     18
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     10
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     7
+    ]
+   ]
+  },
+  "LIN:23": {
+   "kind": "LIN",
+   "stats": {
+    "proposals": 1463,
+    "accumulating": 567,
+    "admitted": 144,
+    "seconds": 15.9
+   },
+   "syntactic": {
+    "dup": 0.4028,
+    "R3u": 0.5698,
+    "P_reuse": 0.345,
+    "n_recurring": 11
+   },
+   "genuine": {
+    "dup": 0.4028,
+    "R3u": 0.3488,
+    "P_reuse": 0.0505,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1389,
+     "COND": 0.0086,
+     "members": 20
+    },
+    "PA": {
+     "share": 0.25,
+     "COND": 0.03,
+     "members": 36
+    },
+    "PB": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.1707,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.0584,
+     "members": 10
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.25,
+     "COND": 0.0351,
+     "members": 36
+    },
+    "PA": {
+     "share": 0.5,
+     "COND": 0.2276,
+     "members": 72
+    },
+    "PB": {
+     "share": 0.0069,
+     "COND": 0.0,
+     "members": 1
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.1707,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.0584,
+     "members": 10
+    }
+   },
+   "covered": 0.3611,
+   "window": {
+    "30000": {
+     "window": 0.2014,
+     "p1": 0.0972,
+     "p0": 0.7014
+    },
+    "100000": {
+     "window": 0.125,
+     "p1": 0.2361,
+     "p0": 0.6389
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.3611,
+     "p0": 0.625
+    },
+    "1000000": {
+     "window": 0.0972,
+     "p1": 0.3611,
+     "p0": 0.5417
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.1,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(add(gcd(hole,var:v),var:v),var:acc)",
+     9
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     9
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     7
+    ]
+   ]
+  },
+  "STAR:0": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12958,
+    "accumulating": 1167,
+    "admitted": 144,
+    "seconds": 45.2
+   },
+   "syntactic": {
+    "dup": 0.2014,
+    "R3u": 0.3217,
+    "P_reuse": 0.0205,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.2014,
+    "R3u": 0.2,
+    "P_reuse": 0.009,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.0152,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.0843,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0051,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2014,
+     "COND": 0.0539,
+     "members": 29
+    },
+    "PA": {
+     "share": 0.1389,
+     "COND": 0.0276,
+     "members": 20
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.1806,
+     "COND": 0.081,
+     "members": 26
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0051,
+     "members": 8
+    }
+   },
+   "covered": 0.3889,
+   "window": {
+    "30000": {
+     "window": 0.2778,
+     "p1": 0.0347,
+     "p0": 0.6875
+    },
+    "100000": {
+     "window": 0.1667,
+     "p1": 0.2153,
+     "p0": 0.6181
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3889,
+     "p0": 0.5833
+    },
+    "1000000": {
+     "window": 0.0903,
+     "p1": 0.3889,
+     "p0": 0.5208
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.125,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(mul(hole,var:v),var:acc)",
+     6
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     5
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     4
+    ]
+   ]
+  },
+  "STAR:1": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12453,
+    "accumulating": 1094,
+    "admitted": 144,
+    "seconds": 42.4
+   },
+   "syntactic": {
+    "dup": 0.2569,
+    "R3u": 0.1963,
+    "P_reuse": 0.017,
+    "n_recurring": 6
+   },
+   "genuine": {
+    "dup": 0.2569,
+    "R3u": 0.1028,
+    "P_reuse": 0.013,
+    "n_recurring": 3
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1111,
+     "COND": 0.0677,
+     "members": 16
+    },
+    "PA": {
+     "share": 0.1597,
+     "COND": 0.1381,
+     "members": 23
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0404,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1944,
+     "COND": 0.0426,
+     "members": 28
+    },
+    "PA": {
+     "share": 0.2361,
+     "COND": 0.0967,
+     "members": 34
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0404,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    }
+   },
+   "covered": 0.3472,
+   "window": {
+    "30000": {
+     "window": 0.25,
+     "p1": 0.0417,
+     "p0": 0.7083
+    },
+    "100000": {
+     "window": 0.1875,
+     "p1": 0.1528,
+     "p0": 0.6597
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3472,
+     "p0": 0.625
+    },
+    "1000000": {
+     "window": 0.1528,
+     "p1": 0.3472,
+     "p0": 0.5
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.312,
+    "250000": 0.062
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(hole,var:v))",
+     7
+    ],
+    [
+     "sub(var:acc,mul(hole,var:v))",
+     5
+    ],
+    [
+     "sub(var:acc,mul(hole,var:first))",
+     3
+    ]
+   ]
+  },
+  "STAR:2": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13109,
+    "accumulating": 1168,
+    "admitted": 144,
+    "seconds": 42.5
+   },
+   "syntactic": {
+    "dup": 0.1667,
+    "R3u": 0.3083,
+    "P_reuse": 0.009,
+    "n_recurring": 13
+   },
+   "genuine": {
+    "dup": 0.1667,
+    "R3u": 0.2083,
+    "P_reuse": 0.003,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    },
+    "PA": {
+     "share": 0.1181,
+     "COND": 0.0523,
+     "members": 17
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.0,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.125,
+     "COND": 0.0371,
+     "members": 18
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0051,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1528,
+     "COND": 0.0201,
+     "members": 22
+    },
+    "PA": {
+     "share": 0.1736,
+     "COND": 0.0372,
+     "members": 25
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.0,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.125,
+     "COND": 0.0371,
+     "members": 18
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0051,
+     "members": 8
+    }
+   },
+   "covered": 0.3611,
+   "window": {
+    "30000": {
+     "window": 0.2569,
+     "p1": 0.0556,
+     "p0": 0.6875
+    },
+    "100000": {
+     "window": 0.1875,
+     "p1": 0.1736,
+     "p0": 0.6389
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.3611,
+     "p0": 0.6181
+    },
+    "1000000": {
+     "window": 0.1458,
+     "p1": 0.3611,
+     "p0": 0.4931
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.3,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:first,add(hole,var:v))",
+     5
+    ],
+    [
+     "sub(var:first,add(hole,var:acc))",
+     4
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:3": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12925,
+    "accumulating": 1144,
+    "admitted": 144,
+    "seconds": 41.8
+   },
+   "syntactic": {
+    "dup": 0.2222,
+    "R3u": 0.2768,
+    "P_reuse": 0.042,
+    "n_recurring": 8
+   },
+   "genuine": {
+    "dup": 0.2222,
+    "R3u": 0.2321,
+    "P_reuse": 0.0305,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0972,
+     "COND": 0.0108,
+     "members": 14
+    },
+    "PA": {
+     "share": 0.1806,
+     "COND": 0.0684,
+     "members": 26
+    },
+    "PB": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    },
+    "PC": {
+     "share": 0.1042,
+     "COND": 0.023,
+     "members": 15
+    },
+    "PD": {
+     "share": 0.1111,
+     "COND": 0.0385,
+     "members": 16
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1875,
+     "COND": 0.0181,
+     "members": 27
+    },
+    "PA": {
+     "share": 0.2569,
+     "COND": 0.0553,
+     "members": 37
+    },
+    "PB": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    },
+    "PC": {
+     "share": 0.1042,
+     "COND": 0.023,
+     "members": 15
+    },
+    "PD": {
+     "share": 0.1111,
+     "COND": 0.0385,
+     "members": 16
+    }
+   },
+   "covered": 0.3403,
+   "window": {
+    "30000": {
+     "window": 0.2431,
+     "p1": 0.0278,
+     "p0": 0.7292
+    },
+    "100000": {
+     "window": 0.1806,
+     "p1": 0.1597,
+     "p0": 0.6597
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.3403,
+     "p0": 0.6458
+    },
+    "1000000": {
+     "window": 0.1806,
+     "p1": 0.3403,
+     "p0": 0.4792
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.286,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(hole,var:v))",
+     9
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     9
+    ],
+    [
+     "sub(var:acc,add(const:1,hole))",
+     5
+    ]
+   ]
+  },
+  "STAR:4": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14359,
+    "accumulating": 1306,
+    "admitted": 144,
+    "seconds": 46.0
+   },
+   "syntactic": {
+    "dup": 0.2014,
+    "R3u": 0.2696,
+    "P_reuse": 0.0055,
+    "n_recurring": 9
+   },
+   "genuine": {
+    "dup": 0.2014,
+    "R3u": 0.1826,
+    "P_reuse": 0.0045,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0625,
+     "COND": 0.0,
+     "members": 9
+    },
+    "PA": {
+     "share": 0.1181,
+     "COND": 0.0344,
+     "members": 17
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.006,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.0874,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.0017,
+     "members": 10
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1528,
+     "COND": 0.0043,
+     "members": 22
+    },
+    "PA": {
+     "share": 0.1806,
+     "COND": 0.0237,
+     "members": 26
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.006,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.0874,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.0017,
+     "members": 10
+    }
+   },
+   "covered": 0.2847,
+   "window": {
+    "30000": {
+     "window": 0.2083,
+     "p1": 0.0278,
+     "p0": 0.7639
+    },
+    "100000": {
+     "window": 0.1042,
+     "p1": 0.1806,
+     "p0": 0.7153
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2847,
+     "p0": 0.6875
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.2847,
+     "p0": 0.5764
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.111,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:v,mul(hole,var:acc))",
+     5
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     5
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:5": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14414,
+    "accumulating": 1268,
+    "admitted": 144,
+    "seconds": 44.8
+   },
+   "syntactic": {
+    "dup": 0.1597,
+    "R3u": 0.3554,
+    "P_reuse": 0.01,
+    "n_recurring": 14
+   },
+   "genuine": {
+    "dup": 0.1597,
+    "R3u": 0.1901,
+    "P_reuse": 0.0115,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.125,
+     "COND": 0.0143,
+     "members": 18
+    },
+    "PA": {
+     "share": 0.1389,
+     "COND": 0.0292,
+     "members": 20
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.0021,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.017,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.0126,
+     "members": 12
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2014,
+     "COND": 0.0178,
+     "members": 29
+    },
+    "PA": {
+     "share": 0.2014,
+     "COND": 0.0215,
+     "members": 29
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.0021,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.017,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.0126,
+     "members": 12
+    }
+   },
+   "covered": 0.3611,
+   "window": {
+    "30000": {
+     "window": 0.2361,
+     "p1": 0.0347,
+     "p0": 0.7292
+    },
+    "100000": {
+     "window": 0.1597,
+     "p1": 0.2014,
+     "p0": 0.6389
+    },
+    "250000": {
+     "window": 0.0069,
+     "p1": 0.3611,
+     "p0": 0.6319
+    },
+    "1000000": {
+     "window": 0.1528,
+     "p1": 0.3611,
+     "p0": 0.4861
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.222,
+    "250000": 0.056
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     6
+    ],
+    [
+     "add(mul(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:6": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12700,
+    "accumulating": 1130,
+    "admitted": 144,
+    "seconds": 38.6
+   },
+   "syntactic": {
+    "dup": 0.1528,
+    "R3u": 0.3115,
+    "P_reuse": 0.014,
+    "n_recurring": 11
+   },
+   "genuine": {
+    "dup": 0.1528,
+    "R3u": 0.1721,
+    "P_reuse": 0.0045,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1389,
+     "COND": 0.0308,
+     "members": 20
+    },
+    "PA": {
+     "share": 0.0486,
+     "COND": 0.0012,
+     "members": 7
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0009,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.0213,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2708,
+     "COND": 0.0283,
+     "members": 39
+    },
+    "PA": {
+     "share": 0.1458,
+     "COND": 0.0056,
+     "members": 21
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0009,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.0213,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.004,
+     "members": 8
+    }
+   },
+   "covered": 0.3264,
+   "window": {
+    "30000": {
+     "window": 0.2569,
+     "p1": 0.0417,
+     "p0": 0.7014
+    },
+    "100000": {
+     "window": 0.1458,
+     "p1": 0.1736,
+     "p0": 0.6806
+    },
+    "250000": {
+     "window": 0.0347,
+     "p1": 0.3264,
+     "p0": 0.6389
+    },
+    "1000000": {
+     "window": 0.1319,
+     "p1": 0.3264,
+     "p0": 0.5417
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.35,
+    "250000": 0.05
+   },
+   "top_genuine_schemas": [
+    [
+     "fdiv(var:v,add(hole,var:acc))",
+     4
+    ],
+    [
+     "add(mul(hole,var:v),var:acc)",
+     4
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:7": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12431,
+    "accumulating": 1162,
+    "admitted": 144,
+    "seconds": 39.7
+   },
+   "syntactic": {
+    "dup": 0.2222,
+    "R3u": 0.3214,
+    "P_reuse": 0.0135,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.2222,
+    "R3u": 0.1607,
+    "P_reuse": 0.0065,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.0315,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.0903,
+     "COND": 0.0205,
+     "members": 13
+    },
+    "PB": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.0855,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0096,
+     "members": 9
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2153,
+     "COND": 0.0264,
+     "members": 31
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.019,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PC": {
+     "share": 0.1528,
+     "COND": 0.0855,
+     "members": 22
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0096,
+     "members": 9
+    }
+   },
+   "covered": 0.375,
+   "window": {
+    "30000": {
+     "window": 0.2361,
+     "p1": 0.0903,
+     "p0": 0.6736
+    },
+    "100000": {
+     "window": 0.1528,
+     "p1": 0.2222,
+     "p0": 0.625
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.375,
+     "p0": 0.6111
+    },
+    "1000000": {
+     "window": 0.1736,
+     "p1": 0.375,
+     "p0": 0.4514
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.385,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     5
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     4
+    ],
+    [
+     "sub(const:1,mul(hole,var:acc))",
+     4
+    ]
+   ]
+  },
+  "STAR:8": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13117,
+    "accumulating": 1189,
+    "admitted": 144,
+    "seconds": 40.8
+   },
+   "syntactic": {
+    "dup": 0.2222,
+    "R3u": 0.2946,
+    "P_reuse": 0.015,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.2222,
+    "R3u": 0.2143,
+    "P_reuse": 0.008,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.0205,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.0903,
+     "COND": 0.0205,
+     "members": 13
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0023,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0949,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.0148,
+     "members": 13
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1181,
+     "COND": 0.0162,
+     "members": 17
+    },
+    "PA": {
+     "share": 0.1597,
+     "COND": 0.0133,
+     "members": 23
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0023,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0949,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.0148,
+     "members": 13
+    }
+   },
+   "covered": 0.3889,
+   "window": {
+    "30000": {
+     "window": 0.2847,
+     "p1": 0.0347,
+     "p0": 0.6806
+    },
+    "100000": {
+     "window": 0.1597,
+     "p1": 0.2292,
+     "p0": 0.6111
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3889,
+     "p0": 0.5833
+    },
+    "1000000": {
+     "window": 0.1528,
+     "p1": 0.3889,
+     "p0": 0.4583
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.154,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     6
+    ],
+    [
+     "add(sub(hole,var:acc),var:v)",
+     5
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     4
+    ]
+   ]
+  },
+  "STAR:9": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13636,
+    "accumulating": 1219,
+    "admitted": 144,
+    "seconds": 40.1
+   },
+   "syntactic": {
+    "dup": 0.1806,
+    "R3u": 0.3475,
+    "P_reuse": 0.01,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.1806,
+    "R3u": 0.1949,
+    "P_reuse": 0.008,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0972,
+     "COND": 0.0184,
+     "members": 14
+    },
+    "PA": {
+     "share": 0.1458,
+     "COND": 0.0847,
+     "members": 21
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0034,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0293,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0486,
+     "COND": 0.0046,
+     "members": 7
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1875,
+     "COND": 0.0315,
+     "members": 27
+    },
+    "PA": {
+     "share": 0.2361,
+     "COND": 0.0569,
+     "members": 34
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0034,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0293,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0486,
+     "COND": 0.0046,
+     "members": 7
+    }
+   },
+   "covered": 0.3542,
+   "window": {
+    "30000": {
+     "window": 0.25,
+     "p1": 0.0347,
+     "p0": 0.7153
+    },
+    "100000": {
+     "window": 0.1806,
+     "p1": 0.1736,
+     "p0": 0.6458
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3542,
+     "p0": 0.6181
+    },
+    "1000000": {
+     "window": 0.1181,
+     "p1": 0.3542,
+     "p0": 0.5278
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.214,
+    "250000": 0.071
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:first))",
+     5
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     5
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:10": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13169,
+    "accumulating": 1135,
+    "admitted": 144,
+    "seconds": 39.3
+   },
+   "syntactic": {
+    "dup": 0.2014,
+    "R3u": 0.3304,
+    "P_reuse": 0.0215,
+    "n_recurring": 11
+   },
+   "genuine": {
+    "dup": 0.2014,
+    "R3u": 0.2087,
+    "P_reuse": 0.017,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1319,
+     "COND": 0.0431,
+     "members": 19
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.0152,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0133,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.1111,
+     "COND": 0.0291,
+     "members": 16
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.019,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2153,
+     "COND": 0.0394,
+     "members": 31
+    },
+    "PA": {
+     "share": 0.1597,
+     "COND": 0.0192,
+     "members": 23
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0133,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.1111,
+     "COND": 0.0291,
+     "members": 16
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.019,
+     "members": 8
+    }
+   },
+   "covered": 0.3264,
+   "window": {
+    "30000": {
+     "window": 0.2222,
+     "p1": 0.0625,
+     "p0": 0.7153
+    },
+    "100000": {
+     "window": 0.125,
+     "p1": 0.2014,
+     "p0": 0.6736
+    },
+    "250000": {
+     "window": 0.0486,
+     "p1": 0.3264,
+     "p0": 0.625
+    },
+    "1000000": {
+     "window": 0.1458,
+     "p1": 0.3264,
+     "p0": 0.5278
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.211,
+    "250000": 0.053
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     6
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     6
+    ],
+    [
+     "sub(var:v,add(hole,var:acc))",
+     5
+    ]
+   ]
+  },
+  "STAR:11": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13157,
+    "accumulating": 1197,
+    "admitted": 144,
+    "seconds": 40.8
+   },
+   "syntactic": {
+    "dup": 0.1875,
+    "R3u": 0.2393,
+    "P_reuse": 0.0155,
+    "n_recurring": 8
+   },
+   "genuine": {
+    "dup": 0.1875,
+    "R3u": 0.1197,
+    "P_reuse": 0.006,
+    "n_recurring": 3
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.0198,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.0833,
+     "COND": 0.0126,
+     "members": 12
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.1458,
+     "COND": 0.0851,
+     "members": 21
+    },
+    "PD": {
+     "share": 0.0764,
+     "COND": 0.0071,
+     "members": 11
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1806,
+     "COND": 0.0159,
+     "members": 26
+    },
+    "PA": {
+     "share": 0.1389,
+     "COND": 0.0084,
+     "members": 20
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.1458,
+     "COND": 0.0851,
+     "members": 21
+    },
+    "PD": {
+     "share": 0.0764,
+     "COND": 0.0071,
+     "members": 11
+    }
+   },
+   "covered": 0.3611,
+   "window": {
+    "30000": {
+     "window": 0.2431,
+     "p1": 0.0625,
+     "p0": 0.6944
+    },
+    "100000": {
+     "window": 0.1667,
+     "p1": 0.1944,
+     "p0": 0.6389
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3611,
+     "p0": 0.6111
+    },
+    "1000000": {
+     "window": 0.1181,
+     "p1": 0.3611,
+     "p0": 0.5208
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.231,
+    "250000": 0.077
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "add(mul(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     4
+    ]
+   ]
+  },
+  "STAR:12": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13356,
+    "accumulating": 1272,
+    "admitted": 144,
+    "seconds": 41.4
+   },
+   "syntactic": {
+    "dup": 0.2361,
+    "R3u": 0.2727,
+    "P_reuse": 0.0095,
+    "n_recurring": 8
+   },
+   "genuine": {
+    "dup": 0.2361,
+    "R3u": 0.1364,
+    "P_reuse": 0.0035,
+    "n_recurring": 4
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0833,
+     "COND": 0.0334,
+     "members": 12
+    },
+    "PA": {
+     "share": 0.0764,
+     "COND": 0.0138,
+     "members": 11
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0034,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.1806,
+     "COND": 0.1293,
+     "members": 26
+    },
+    "PD": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2083,
+     "COND": 0.0414,
+     "members": 30
+    },
+    "PA": {
+     "share": 0.1528,
+     "COND": 0.0153,
+     "members": 22
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0034,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.1875,
+     "COND": 0.1245,
+     "members": 27
+    },
+    "PD": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    }
+   },
+   "covered": 0.3264,
+   "window": {
+    "30000": {
+     "window": 0.25,
+     "p1": 0.0347,
+     "p0": 0.7153
+    },
+    "100000": {
+     "window": 0.1181,
+     "p1": 0.2083,
+     "p0": 0.6736
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.3264,
+     "p0": 0.6597
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.3264,
+     "p0": 0.5486
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.417,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(sub(var:acc,hole),var:v)",
+     4
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     4
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     4
+    ]
+   ]
+  },
+  "STAR:13": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13721,
+    "accumulating": 1226,
+    "admitted": 144,
+    "seconds": 41.3
+   },
+   "syntactic": {
+    "dup": 0.2083,
+    "R3u": 0.2895,
+    "P_reuse": 0.0085,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.2083,
+    "R3u": 0.1842,
+    "P_reuse": 0.005,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1181,
+     "COND": 0.0162,
+     "members": 17
+    },
+    "PA": {
+     "share": 0.0764,
+     "COND": 0.0015,
+     "members": 11
+    },
+    "PB": {
+     "share": 0.1111,
+     "COND": 0.0069,
+     "members": 16
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.0925,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0098,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2014,
+     "COND": 0.0186,
+     "members": 29
+    },
+    "PA": {
+     "share": 0.1597,
+     "COND": 0.0087,
+     "members": 23
+    },
+    "PB": {
+     "share": 0.1111,
+     "COND": 0.0069,
+     "members": 16
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.0925,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0098,
+     "members": 8
+    }
+   },
+   "covered": 0.3472,
+   "window": {
+    "30000": {
+     "window": 0.2778,
+     "p1": 0.0417,
+     "p0": 0.6806
+    },
+    "100000": {
+     "window": 0.1319,
+     "p1": 0.2153,
+     "p0": 0.6528
+    },
+    "250000": {
+     "window": 0.0417,
+     "p1": 0.3472,
+     "p0": 0.6111
+    },
+    "1000000": {
+     "window": 0.1597,
+     "p1": 0.3472,
+     "p0": 0.4931
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.471,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     5
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     4
+    ]
+   ]
+  },
+  "STAR:14": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12141,
+    "accumulating": 1090,
+    "admitted": 144,
+    "seconds": 34.8
+   },
+   "syntactic": {
+    "dup": 0.2639,
+    "R3u": 0.217,
+    "P_reuse": 0.008,
+    "n_recurring": 7
+   },
+   "genuine": {
+    "dup": 0.2639,
+    "R3u": 0.1132,
+    "P_reuse": 0.0055,
+    "n_recurring": 4
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1111,
+     "COND": 0.004,
+     "members": 16
+    },
+    "PA": {
+     "share": 0.1458,
+     "COND": 0.1046,
+     "members": 21
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.1875,
+     "COND": 0.0959,
+     "members": 27
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2222,
+     "COND": 0.0125,
+     "members": 32
+    },
+    "PA": {
+     "share": 0.2014,
+     "COND": 0.0761,
+     "members": 29
+    },
+    "PB": {
+     "share": 0.0347,
+     "COND": 0.0,
+     "members": 5
+    },
+    "PC": {
+     "share": 0.1875,
+     "COND": 0.0959,
+     "members": 27
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    }
+   },
+   "covered": 0.4028,
+   "window": {
+    "30000": {
+     "window": 0.2639,
+     "p1": 0.1042,
+     "p0": 0.6319
+    },
+    "100000": {
+     "window": 0.1667,
+     "p1": 0.2361,
+     "p0": 0.5972
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.4028,
+     "p0": 0.5694
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.4028,
+     "p0": 0.4583
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.125,
+    "250000": 0.062
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,add(hole,var:v))",
+     5
+    ],
+    [
+     "sub(var:acc,add(const:1,hole))",
+     4
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     4
+    ]
+   ]
+  },
+  "STAR:15": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14932,
+    "accumulating": 1377,
+    "admitted": 144,
+    "seconds": 46.6
+   },
+   "syntactic": {
+    "dup": 0.1736,
+    "R3u": 0.2437,
+    "P_reuse": 0.01,
+    "n_recurring": 9
+   },
+   "genuine": {
+    "dup": 0.1736,
+    "R3u": 0.1176,
+    "P_reuse": 0.0055,
+    "n_recurring": 4
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.0117,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.1042,
+     "COND": 0.0172,
+     "members": 15
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0024,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.1181,
+     "COND": 0.0301,
+     "members": 17
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.014,
+     "members": 12
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1944,
+     "COND": 0.02,
+     "members": 28
+    },
+    "PA": {
+     "share": 0.1875,
+     "COND": 0.0153,
+     "members": 27
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0024,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.1181,
+     "COND": 0.0301,
+     "members": 17
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.014,
+     "members": 12
+    }
+   },
+   "covered": 0.2778,
+   "window": {
+    "30000": {
+     "window": 0.2222,
+     "p1": 0.0208,
+     "p0": 0.7569
+    },
+    "100000": {
+     "window": 0.1528,
+     "p1": 0.125,
+     "p0": 0.7222
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2778,
+     "p0": 0.6944
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.2778,
+     "p0": 0.5833
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.231,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     6
+    ],
+    [
+     "add(gcd(hole,var:last),var:acc)",
+     3
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     3
+    ]
+   ]
+  },
+  "STAR:16": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 12464,
+    "accumulating": 1166,
+    "admitted": 144,
+    "seconds": 37.6
+   },
+   "syntactic": {
+    "dup": 0.1597,
+    "R3u": 0.2893,
+    "P_reuse": 0.022,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.1597,
+    "R3u": 0.157,
+    "P_reuse": 0.0105,
+    "n_recurring": 5
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0694,
+     "COND": 0.0152,
+     "members": 10
+    },
+    "PA": {
+     "share": 0.0833,
+     "COND": 0.0126,
+     "members": 12
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0008,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0448,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0098,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1667,
+     "COND": 0.0174,
+     "members": 24
+    },
+    "PA": {
+     "share": 0.1667,
+     "COND": 0.0074,
+     "members": 24
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0008,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.1319,
+     "COND": 0.0448,
+     "members": 19
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0098,
+     "members": 8
+    }
+   },
+   "covered": 0.3056,
+   "window": {
+    "30000": {
+     "window": 0.2222,
+     "p1": 0.0486,
+     "p0": 0.7292
+    },
+    "100000": {
+     "window": 0.1181,
+     "p1": 0.1875,
+     "p0": 0.6944
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.3056,
+     "p0": 0.6806
+    },
+    "1000000": {
+     "window": 0.1319,
+     "p1": 0.3056,
+     "p0": 0.5625
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.3,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,mul(hole,var:v))",
+     6
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "sub(var:v,sub(var:acc,hole))",
+     4
+    ]
+   ]
+  },
+  "STAR:17": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14714,
+    "accumulating": 1317,
+    "admitted": 144,
+    "seconds": 42.2
+   },
+   "syntactic": {
+    "dup": 0.2014,
+    "R3u": 0.3565,
+    "P_reuse": 0.0095,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.2014,
+    "R3u": 0.1826,
+    "P_reuse": 0.002,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0694,
+     "COND": 0.0078,
+     "members": 10
+    },
+    "PA": {
+     "share": 0.0903,
+     "COND": 0.006,
+     "members": 13
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0018,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.1597,
+     "COND": 0.0659,
+     "members": 23
+    },
+    "PD": {
+     "share": 0.0972,
+     "COND": 0.0046,
+     "members": 14
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2361,
+     "COND": 0.0546,
+     "members": 34
+    },
+    "PA": {
+     "share": 0.2014,
+     "COND": 0.0176,
+     "members": 29
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0018,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.1597,
+     "COND": 0.0659,
+     "members": 23
+    },
+    "PD": {
+     "share": 0.0972,
+     "COND": 0.0046,
+     "members": 14
+    }
+   },
+   "covered": 0.3333,
+   "window": {
+    "30000": {
+     "window": 0.25,
+     "p1": 0.0208,
+     "p0": 0.7292
+    },
+    "100000": {
+     "window": 0.1181,
+     "p1": 0.2153,
+     "p0": 0.6667
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.3333,
+     "p0": 0.6528
+    },
+    "1000000": {
+     "window": 0.1042,
+     "p1": 0.3333,
+     "p0": 0.5625
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.2,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:first))",
+     4
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     4
+    ],
+    [
+     "add(sub(var:v,hole),var:acc)",
+     4
+    ]
+   ]
+  },
+  "STAR:18": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13108,
+    "accumulating": 1208,
+    "admitted": 144,
+    "seconds": 39.8
+   },
+   "syntactic": {
+    "dup": 0.2292,
+    "R3u": 0.3694,
+    "P_reuse": 0.019,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.2292,
+    "R3u": 0.2072,
+    "P_reuse": 0.018,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.0308,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.1111,
+     "COND": 0.0365,
+     "members": 16
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0096,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.1667,
+     "COND": 0.0622,
+     "members": 24
+    },
+    "PD": {
+     "share": 0.0764,
+     "COND": 0.0264,
+     "members": 11
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1667,
+     "COND": 0.0234,
+     "members": 24
+    },
+    "PA": {
+     "share": 0.1806,
+     "COND": 0.0267,
+     "members": 26
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0096,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.1667,
+     "COND": 0.0622,
+     "members": 24
+    },
+    "PD": {
+     "share": 0.0764,
+     "COND": 0.0264,
+     "members": 11
+    }
+   },
+   "covered": 0.4167,
+   "window": {
+    "30000": {
+     "window": 0.2778,
+     "p1": 0.0486,
+     "p0": 0.6736
+    },
+    "100000": {
+     "window": 0.1806,
+     "p1": 0.2361,
+     "p0": 0.5833
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.4167,
+     "p0": 0.5625
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.4167,
+     "p0": 0.4583
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.231,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     7
+    ],
+    [
+     "add(gcd(const:0,hole),var:acc)",
+     5
+    ],
+    [
+     "add(mul(hole,var:v),var:acc)",
+     5
+    ]
+   ]
+  },
+  "STAR:19": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14428,
+    "accumulating": 1233,
+    "admitted": 144,
+    "seconds": 40.2
+   },
+   "syntactic": {
+    "dup": 0.2569,
+    "R3u": 0.243,
+    "P_reuse": 0.006,
+    "n_recurring": 8
+   },
+   "genuine": {
+    "dup": 0.2569,
+    "R3u": 0.1495,
+    "P_reuse": 0.005,
+    "n_recurring": 5
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0903,
+     "COND": 0.0308,
+     "members": 13
+    },
+    "PA": {
+     "share": 0.1111,
+     "COND": 0.0365,
+     "members": 16
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.2083,
+     "COND": 0.1219,
+     "members": 30
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2153,
+     "COND": 0.0284,
+     "members": 31
+    },
+    "PA": {
+     "share": 0.1736,
+     "COND": 0.0294,
+     "members": 25
+    },
+    "PB": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    },
+    "PC": {
+     "share": 0.2083,
+     "COND": 0.1219,
+     "members": 30
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    }
+   },
+   "covered": 0.375,
+   "window": {
+    "30000": {
+     "window": 0.2708,
+     "p1": 0.0694,
+     "p0": 0.6597
+    },
+    "100000": {
+     "window": 0.1597,
+     "p1": 0.2153,
+     "p0": 0.625
+    },
+    "250000": {
+     "window": 0.0139,
+     "p1": 0.375,
+     "p0": 0.6111
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.375,
+     "p0": 0.4861
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.308,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     4
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     4
+    ],
+    [
+     "sub(var:v,add(hole,var:acc))",
+     4
+    ]
+   ]
+  },
+  "STAR:20": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14611,
+    "accumulating": 1263,
+    "admitted": 144,
+    "seconds": 42.2
+   },
+   "syntactic": {
+    "dup": 0.1597,
+    "R3u": 0.3471,
+    "P_reuse": 0.011,
+    "n_recurring": 13
+   },
+   "genuine": {
+    "dup": 0.1597,
+    "R3u": 0.1983,
+    "P_reuse": 0.0055,
+    "n_recurring": 7
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0833,
+     "COND": 0.0334,
+     "members": 12
+    },
+    "PA": {
+     "share": 0.0833,
+     "COND": 0.0215,
+     "members": 12
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.0013,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.125,
+     "COND": 0.0271,
+     "members": 18
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.0092,
+     "members": 12
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2153,
+     "COND": 0.0248,
+     "members": 31
+    },
+    "PA": {
+     "share": 0.2083,
+     "COND": 0.0556,
+     "members": 30
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.0013,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.125,
+     "COND": 0.0271,
+     "members": 18
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.0092,
+     "members": 12
+    }
+   },
+   "covered": 0.3056,
+   "window": {
+    "30000": {
+     "window": 0.2014,
+     "p1": 0.0625,
+     "p0": 0.7361
+    },
+    "100000": {
+     "window": 0.125,
+     "p1": 0.1806,
+     "p0": 0.6944
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.3056,
+     "p0": 0.6667
+    },
+    "1000000": {
+     "window": 0.1389,
+     "p1": 0.3056,
+     "p0": 0.5556
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.417,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     4
+    ],
+    [
+     "sub(var:v,sub(var:acc,hole))",
+     4
+    ]
+   ]
+  },
+  "STAR:21": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 13159,
+    "accumulating": 1172,
+    "admitted": 144,
+    "seconds": 36.8
+   },
+   "syntactic": {
+    "dup": 0.1736,
+    "R3u": 0.3529,
+    "P_reuse": 0.016,
+    "n_recurring": 12
+   },
+   "genuine": {
+    "dup": 0.1736,
+    "R3u": 0.2185,
+    "P_reuse": 0.006,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1111,
+     "COND": 0.01,
+     "members": 16
+    },
+    "PA": {
+     "share": 0.0972,
+     "COND": 0.0184,
+     "members": 14
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0017,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.0117,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0051,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1944,
+     "COND": 0.0097,
+     "members": 28
+    },
+    "PA": {
+     "share": 0.1875,
+     "COND": 0.0181,
+     "members": 27
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0017,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.0972,
+     "COND": 0.0117,
+     "members": 14
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.0051,
+     "members": 8
+    }
+   },
+   "covered": 0.2569,
+   "window": {
+    "30000": {
+     "window": 0.1736,
+     "p1": 0.0278,
+     "p0": 0.7986
+    },
+    "100000": {
+     "window": 0.125,
+     "p1": 0.1319,
+     "p0": 0.7431
+    },
+    "250000": {
+     "window": 0.0556,
+     "p1": 0.2569,
+     "p0": 0.6875
+    },
+    "1000000": {
+     "window": 0.1806,
+     "p1": 0.2569,
+     "p0": 0.5625
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.125,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     5
+    ],
+    [
+     "sub(var:v,mul(hole,var:acc))",
+     4
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:22": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14099,
+    "accumulating": 1295,
+    "admitted": 144,
+    "seconds": 39.3
+   },
+   "syntactic": {
+    "dup": 0.2917,
+    "R3u": 0.2157,
+    "P_reuse": 0.018,
+    "n_recurring": 7
+   },
+   "genuine": {
+    "dup": 0.2917,
+    "R3u": 0.098,
+    "P_reuse": 0.0035,
+    "n_recurring": 3
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.125,
+     "COND": 0.0048,
+     "members": 18
+    },
+    "PA": {
+     "share": 0.1458,
+     "COND": 0.0282,
+     "members": 21
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.0037,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.0682,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0486,
+     "COND": 0.0012,
+     "members": 7
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2014,
+     "COND": 0.0168,
+     "members": 29
+    },
+    "PA": {
+     "share": 0.2361,
+     "COND": 0.0242,
+     "members": 34
+    },
+    "PB": {
+     "share": 0.0903,
+     "COND": 0.0037,
+     "members": 13
+    },
+    "PC": {
+     "share": 0.1736,
+     "COND": 0.0682,
+     "members": 25
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    }
+   },
+   "covered": 0.4236,
+   "window": {
+    "30000": {
+     "window": 0.2708,
+     "p1": 0.0972,
+     "p0": 0.6319
+    },
+    "100000": {
+     "window": 0.1319,
+     "p1": 0.2917,
+     "p0": 0.5764
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.4236,
+     "p0": 0.5556
+    },
+    "1000000": {
+     "window": 0.1111,
+     "p1": 0.4236,
+     "p0": 0.4653
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.222,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:first,mul(hole,var:v))",
+     5
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     4
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     4
+    ]
+   ]
+  },
+  "STAR:23": {
+   "kind": "STAR",
+   "stats": {
+    "proposals": 14458,
+    "accumulating": 1326,
+    "admitted": 144,
+    "seconds": 42.3
+   },
+   "syntactic": {
+    "dup": 0.2222,
+    "R3u": 0.2768,
+    "P_reuse": 0.0135,
+    "n_recurring": 9
+   },
+   "genuine": {
+    "dup": 0.2222,
+    "R3u": 0.1518,
+    "P_reuse": 0.0075,
+    "n_recurring": 5
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.1389,
+     "COND": 0.0096,
+     "members": 20
+    },
+    "PA": {
+     "share": 0.1528,
+     "COND": 0.0387,
+     "members": 22
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0046,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.0191,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0486,
+     "COND": 0.0012,
+     "members": 7
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.2569,
+     "COND": 0.021,
+     "members": 37
+    },
+    "PA": {
+     "share": 0.25,
+     "COND": 0.0288,
+     "members": 36
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0046,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.1389,
+     "COND": 0.0191,
+     "members": 20
+    },
+    "PD": {
+     "share": 0.0486,
+     "COND": 0.0012,
+     "members": 7
+    }
+   },
+   "covered": 0.2847,
+   "window": {
+    "30000": {
+     "window": 0.2222,
+     "p1": 0.0486,
+     "p0": 0.7292
+    },
+    "100000": {
+     "window": 0.0972,
+     "p1": 0.1806,
+     "p0": 0.7222
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2847,
+     "p0": 0.6875
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.2847,
+     "p0": 0.5903
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.15,
+    "250000": 0.05
+   },
+   "top_genuine_schemas": [
+    [
+     "add(mul(hole,var:acc),var:v)",
+     5
+    ],
+    [
+     "sub(var:acc,add(hole,var:v))",
+     4
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     4
+    ]
+   ]
+  },
+  "U:0": {
+   "kind": "U",
+   "stats": {
+    "proposals": 10686,
+    "accumulating": 1631,
+    "admitted": 144,
+    "seconds": 57.2
+   },
+   "syntactic": {
+    "dup": 0.0903,
+    "R3u": 0.374,
+    "P_reuse": 0.0225,
+    "n_recurring": 13
+   },
+   "genuine": {
+    "dup": 0.0903,
+    "R3u": 0.3206,
+    "P_reuse": 0.0155,
+    "n_recurring": 11
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0556,
+     "COND": 0.019,
+     "members": 8
+    },
+    "PA": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0087,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.0903,
+     "COND": 0.0315,
+     "members": 13
+    },
+    "PD": {
+     "share": 0.0972,
+     "COND": 0.0217,
+     "members": 14
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1042,
+     "COND": 0.0101,
+     "members": 15
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0625,
+     "COND": 0.0087,
+     "members": 9
+    },
+    "PC": {
+     "share": 0.0903,
+     "COND": 0.0315,
+     "members": 13
+    },
+    "PD": {
+     "share": 0.0972,
+     "COND": 0.0217,
+     "members": 14
+    }
+   },
+   "covered": 0.2431,
+   "window": {
+    "30000": {
+     "window": 0.1389,
+     "p1": 0.0486,
+     "p0": 0.8125
+    },
+    "100000": {
+     "window": 0.0833,
+     "p1": 0.1528,
+     "p0": 0.7639
+    },
+    "250000": {
+     "window": 0.0208,
+     "p1": 0.2431,
+     "p0": 0.7361
+    },
+    "1000000": {
+     "window": 0.0694,
+     "p1": 0.2431,
+     "p0": 0.6875
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.25,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     6
+    ],
+    [
+     "add(gcd(hole,var:v),var:acc)",
+     6
+    ],
+    [
+     "sub(var:v,add(hole,var:acc))",
+     5
+    ]
+   ]
+  },
+  "U:1": {
+   "kind": "U",
+   "stats": {
+    "proposals": 10465,
+    "accumulating": 1607,
+    "admitted": 144,
+    "seconds": 55.1
+   },
+   "syntactic": {
+    "dup": 0.0903,
+    "R3u": 0.2595,
+    "P_reuse": 0.016,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.0903,
+    "R3u": 0.1603,
+    "P_reuse": 0.0085,
+    "n_recurring": 6
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0833,
+     "COND": 0.0072,
+     "members": 12
+    },
+    "PA": {
+     "share": 0.1111,
+     "COND": 0.0095,
+     "members": 16
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0034,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.0133,
+     "members": 12
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1597,
+     "COND": 0.0045,
+     "members": 23
+    },
+    "PA": {
+     "share": 0.1944,
+     "COND": 0.0146,
+     "members": 28
+    },
+    "PB": {
+     "share": 0.0833,
+     "COND": 0.0034,
+     "members": 12
+    },
+    "PC": {
+     "share": 0.0347,
+     "COND": 0.0017,
+     "members": 5
+    },
+    "PD": {
+     "share": 0.0833,
+     "COND": 0.0133,
+     "members": 12
+    }
+   },
+   "covered": 0.2569,
+   "window": {
+    "30000": {
+     "window": 0.1667,
+     "p1": 0.0347,
+     "p0": 0.7986
+    },
+    "100000": {
+     "window": 0.1111,
+     "p1": 0.1458,
+     "p0": 0.7431
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2569,
+     "p0": 0.7153
+    },
+    "1000000": {
+     "window": 0.1181,
+     "p1": 0.2569,
+     "p0": 0.625
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.083,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     6
+    ],
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     4
+    ],
+    [
+     "sub(var:v,sub(var:acc,hole))",
+     4
+    ]
+   ]
+  },
+  "U:2": {
+   "kind": "U",
+   "stats": {
+    "proposals": 10056,
+    "accumulating": 1525,
+    "admitted": 144,
+    "seconds": 53.0
+   },
+   "syntactic": {
+    "dup": 0.0417,
+    "R3u": 0.1159,
+    "P_reuse": 0.003,
+    "n_recurring": 5
+   },
+   "genuine": {
+    "dup": 0.0417,
+    "R3u": 0.0725,
+    "P_reuse": 0.0035,
+    "n_recurring": 3
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0486,
+     "COND": 0.0012,
+     "members": 7
+    },
+    "PA": {
+     "share": 0.0625,
+     "COND": 0.0009,
+     "members": 9
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0046,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.125,
+     "COND": 0.0009,
+     "members": 18
+    },
+    "PA": {
+     "share": 0.1111,
+     "COND": 0.001,
+     "members": 16
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0046,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.0764,
+     "COND": 0.0037,
+     "members": 11
+    },
+    "PD": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    }
+   },
+   "covered": 0.2292,
+   "window": {
+    "30000": {
+     "window": 0.1667,
+     "p1": 0.0417,
+     "p0": 0.7917
+    },
+    "100000": {
+     "window": 0.1111,
+     "p1": 0.1181,
+     "p0": 0.7708
+    },
+    "250000": {
+     "window": 0.0069,
+     "p1": 0.2292,
+     "p0": 0.7639
+    },
+    "1000000": {
+     "window": 0.0556,
+     "p1": 0.2292,
+     "p0": 0.7153
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.143,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(gcd(hole,var:acc),var:v)",
+     4
+    ],
+    [
+     "sub(var:acc,sub(var:v,hole))",
+     3
+    ],
+    [
+     "mod(var:v,sub(var:acc,hole))",
+     3
+    ]
+   ]
+  },
+  "U:3": {
+   "kind": "U",
+   "stats": {
+    "proposals": 9057,
+    "accumulating": 1405,
+    "admitted": 144,
+    "seconds": 47.3
+   },
+   "syntactic": {
+    "dup": 0.0833,
+    "R3u": 0.25,
+    "P_reuse": 0.01,
+    "n_recurring": 9
+   },
+   "genuine": {
+    "dup": 0.0833,
+    "R3u": 0.1439,
+    "P_reuse": 0.004,
+    "n_recurring": 5
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0556,
+     "COND": 0.001,
+     "members": 8
+    },
+    "PA": {
+     "share": 0.0764,
+     "COND": 0.0071,
+     "members": 11
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.0833,
+     "COND": 0.0334,
+     "members": 12
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0169,
+     "members": 9
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1181,
+     "COND": 0.0015,
+     "members": 17
+    },
+    "PA": {
+     "share": 0.0972,
+     "COND": 0.0056,
+     "members": 14
+    },
+    "PB": {
+     "share": 0.0486,
+     "COND": 0.0,
+     "members": 7
+    },
+    "PC": {
+     "share": 0.0833,
+     "COND": 0.0334,
+     "members": 12
+    },
+    "PD": {
+     "share": 0.0625,
+     "COND": 0.0169,
+     "members": 9
+    }
+   },
+   "covered": 0.2639,
+   "window": {
+    "30000": {
+     "window": 0.1736,
+     "p1": 0.0625,
+     "p0": 0.7639
+    },
+    "100000": {
+     "window": 0.1042,
+     "p1": 0.1597,
+     "p0": 0.7361
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2639,
+     "p0": 0.7083
+    },
+    "1000000": {
+     "window": 0.1319,
+     "p1": 0.2639,
+     "p0": 0.6042
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.125,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     6
+    ],
+    [
+     "add(mul(hole,var:v),var:acc)",
+     5
+    ],
+    [
+     "fdiv(var:v,add(const:1,hole))",
+     4
+    ]
+   ]
+  },
+  "U:4": {
+   "kind": "U",
+   "stats": {
+    "proposals": 8947,
+    "accumulating": 1421,
+    "admitted": 144,
+    "seconds": 47.2
+   },
+   "syntactic": {
+    "dup": 0.0625,
+    "R3u": 0.2741,
+    "P_reuse": 0.012,
+    "n_recurring": 11
+   },
+   "genuine": {
+    "dup": 0.0625,
+    "R3u": 0.2444,
+    "P_reuse": 0.012,
+    "n_recurring": 10
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0556,
+     "COND": 0.0,
+     "members": 8
+    },
+    "PA": {
+     "share": 0.0347,
+     "COND": 0.0,
+     "members": 5
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0079,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.0694,
+     "COND": 0.0078,
+     "members": 10
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1181,
+     "COND": 0.0005,
+     "members": 17
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.0,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0764,
+     "COND": 0.0079,
+     "members": 11
+    },
+    "PC": {
+     "share": 0.0694,
+     "COND": 0.0078,
+     "members": 10
+    },
+    "PD": {
+     "share": 0.0694,
+     "COND": 0.004,
+     "members": 10
+    }
+   },
+   "covered": 0.2778,
+   "window": {
+    "30000": {
+     "window": 0.2153,
+     "p1": 0.0208,
+     "p0": 0.7639
+    },
+    "100000": {
+     "window": 0.1181,
+     "p1": 0.1597,
+     "p0": 0.7222
+    },
+    "250000": {
+     "window": 0.0069,
+     "p1": 0.2778,
+     "p0": 0.7153
+    },
+    "1000000": {
+     "window": 0.1111,
+     "p1": 0.2778,
+     "p0": 0.6111
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.0,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(mul(hole,var:v),var:acc)",
+     7
+    ],
+    [
+     "sub(var:v,gcd(hole,var:acc))",
+     5
+    ],
+    [
+     "sub(var:v,gcd(hole,var:first))",
+     4
+    ]
+   ]
+  },
+  "U:5": {
+   "kind": "U",
+   "stats": {
+    "proposals": 9124,
+    "accumulating": 1397,
+    "admitted": 144,
+    "seconds": 46.0
+   },
+   "syntactic": {
+    "dup": 0.0417,
+    "R3u": 0.2826,
+    "P_reuse": 0.016,
+    "n_recurring": 10
+   },
+   "genuine": {
+    "dup": 0.0417,
+    "R3u": 0.2319,
+    "P_reuse": 0.016,
+    "n_recurring": 8
+   },
+   "X_genuine": {
+    "G1": {
+     "share": 0.0486,
+     "COND": 0.0,
+     "members": 7
+    },
+    "PA": {
+     "share": 0.0278,
+     "COND": 0.0,
+     "members": 4
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.0085,
+     "members": 13
+    }
+   },
+   "X_nontrivial": {
+    "G1": {
+     "share": 0.1528,
+     "COND": 0.0071,
+     "members": 22
+    },
+    "PA": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PB": {
+     "share": 0.0694,
+     "COND": 0.0032,
+     "members": 10
+    },
+    "PC": {
+     "share": 0.0417,
+     "COND": 0.0014,
+     "members": 6
+    },
+    "PD": {
+     "share": 0.0903,
+     "COND": 0.0085,
+     "members": 13
+    }
+   },
+   "covered": 0.2222,
+   "window": {
+    "30000": {
+     "window": 0.1667,
+     "p1": 0.0208,
+     "p0": 0.8125
+    },
+    "100000": {
+     "window": 0.0833,
+     "p1": 0.1389,
+     "p0": 0.7778
+    },
+    "250000": {
+     "window": 0.0278,
+     "p1": 0.2222,
+     "p0": 0.75
+    },
+    "1000000": {
+     "window": 0.125,
+     "p1": 0.2222,
+     "p0": 0.6528
+    }
+   },
+   "G1_member_window": {
+    "30000": 0.286,
+    "250000": 0.0
+   },
+   "top_genuine_schemas": [
+    [
+     "add(sub(var:v,hole),var:acc)",
+     7
+    ],
+    [
+     "sub(var:v,mul(hole,var:acc))",
+     5
+    ],
+    [
+     "sub(var:acc,gcd(hole,var:v))",
+     5
+    ]
+   ]
+  }
+ },
+ "per_generator": {
+  "LIN": {
+   "n_seeds": 24,
+   "admit_per_proposal": {
+    "mean": 0.1028,
+    "median": 0.0992,
+    "min": 0.071,
+    "max": 0.1394
+   },
+   "jaccard_syntactic": 0.0998,
+   "jaccard_genuine": 0.0997,
+   "covered": {
+    "mean": 0.3093,
+    "median": 0.3055,
+    "min": 0.0556,
+    "max": 0.625
+   },
+   "syntactic_dup": {
+    "mean": 0.4291,
+    "median": 0.4548,
+    "min": 0.2639,
+    "max": 0.625
+   },
+   "syntactic_R3u": {
+    "mean": 0.5649,
+    "median": 0.5515,
+    "min": 0.3906,
+    "max": 0.7975
+   },
+   "syntactic_P_reuse": {
+    "mean": 0.2135,
+    "median": 0.1863,
+    "min": 0.068,
+    "max": 0.445
+   },
+   "syntactic_n_recurring": {
+    "mean": 11.8333,
+    "median": 12.0,
+    "min": 6,
+    "max": 19
+   },
+   "genuine_dup": {
+    "mean": 0.4291,
+    "median": 0.4548,
+    "min": 0.2639,
+    "max": 0.625
+   },
+   "genuine_R3u": {
+    "mean": 0.3817,
+    "median": 0.3982,
+    "min": 0.1667,
+    "max": 0.6329
+   },
+   "genuine_P_reuse": {
+    "mean": 0.1348,
+    "median": 0.1,
+    "min": 0.035,
+    "max": 0.324
+   },
+   "genuine_n_recurring": {
+    "mean": 7.8333,
+    "median": 8.0,
+    "min": 4,
+    "max": 12
+   },
+   "X_genuine_G1_COND": {
+    "mean": 0.051,
+    "median": 0.0099,
+    "min": 0.0,
+    "max": 0.3056
+   },
+   "X_genuine_G1_share": {
+    "mean": 0.0796,
+    "median": 0.0486,
+    "min": 0.0139,
+    "max": 0.4028
+   },
+   "X_genuine_PA_COND": {
+    "mean": 0.1521,
+    "median": 0.1013,
+    "min": 0.0014,
+    "max": 0.6613
+   },
+   "X_genuine_PA_share": {
+    "mean": 0.1236,
+    "median": 0.1146,
+    "min": 0.0278,
+    "max": 0.2639
+   },
+   "X_genuine_PB_COND": {
+    "mean": 0.0169,
+    "median": 0.004,
+    "min": 0.0,
+    "max": 0.1377
+   },
+   "X_genuine_PB_share": {
+    "mean": 0.0518,
+    "median": 0.0451,
+    "min": 0.0,
+    "max": 0.2153
+   },
+   "X_genuine_PC_COND": {
+    "mean": 0.082,
+    "median": 0.089,
+    "min": 0.0014,
+    "max": 0.1887
+   },
+   "X_genuine_PC_share": {
+    "mean": 0.1383,
+    "median": 0.1458,
+    "min": 0.0278,
+    "max": 0.2708
+   },
+   "X_genuine_PD_COND": {
+    "mean": 0.0412,
+    "median": 0.021,
+    "min": 0.0,
+    "max": 0.2079
+   },
+   "X_genuine_PD_share": {
+    "mean": 0.0657,
+    "median": 0.0625,
+    "min": 0.0,
+    "max": 0.1944
+   },
+   "X_genuine_G1_frac_ge_.10": 0.125,
+   "X_genuine_G1_frac_le_.02": 0.5833,
+   "X_nontrivial_G1_COND": {
+    "mean": 0.0882,
+    "median": 0.0422,
+    "min": 0.0,
+    "max": 0.3642
+   },
+   "X_nontrivial_G1_share": {
+    "mean": 0.1921,
+    "median": 0.1667,
+    "min": 0.0278,
+    "max": 0.5556
+   },
+   "X_nontrivial_PA_COND": {
+    "mean": 0.1304,
+    "median": 0.0852,
+    "min": 0.0008,
+    "max": 0.5432
+   },
+   "X_nontrivial_PA_share": {
+    "mean": 0.2063,
+    "median": 0.191,
+    "min": 0.0556,
+    "max": 0.5
+   },
+   "X_nontrivial_PB_COND": {
+    "mean": 0.0169,
+    "median": 0.004,
+    "min": 0.0,
+    "max": 0.1377
+   },
+   "X_nontrivial_PB_share": {
+    "mean": 0.0518,
+    "median": 0.0451,
+    "min": 0.0,
+    "max": 0.2153
+   },
+   "X_nontrivial_PC_COND": {
+    "mean": 0.082,
+    "median": 0.089,
+    "min": 0.0014,
+    "max": 0.1887
+   },
+   "X_nontrivial_PC_share": {
+    "mean": 0.1383,
+    "median": 0.1458,
+    "min": 0.0278,
+    "max": 0.2708
+   },
+   "X_nontrivial_PD_COND": {
+    "mean": 0.0412,
+    "median": 0.021,
+    "min": 0.0,
+    "max": 0.2079
+   },
+   "X_nontrivial_PD_share": {
+    "mean": 0.0657,
+    "median": 0.0625,
+    "min": 0.0,
+    "max": 0.1944
+   },
+   "X_nontrivial_G1_frac_ge_.10": 0.2917,
+   "X_nontrivial_G1_frac_le_.02": 0.25,
+   "window_30000": {
+    "mean": 0.2075,
+    "median": 0.1945,
+    "min": 0.0347,
+    "max": 0.4722
+   },
+   "p1_30000": {
+    "mean": 0.0504,
+    "median": 0.0486,
+    "min": 0.0139,
+    "max": 0.1042
+   },
+   "p0_30000": {
+    "mean": 0.7422,
+    "median": 0.75,
+    "min": 0.4653,
+    "max": 0.9514
+   },
+   "window_100000": {
+    "mean": 0.1282,
+    "median": 0.1215,
+    "min": 0.0208,
+    "max": 0.2708
+   },
+   "p1_100000": {
+    "mean": 0.18,
+    "median": 0.191,
+    "min": 0.0347,
+    "max": 0.3542
+   },
+   "p0_100000": {
+    "mean": 0.6918,
+    "median": 0.6945,
+    "min": 0.375,
+    "max": 0.9444
+   },
+   "window_250000": {
+    "mean": 0.0211,
+    "median": 0.0208,
+    "min": 0.0,
+    "max": 0.0556
+   },
+   "p1_250000": {
+    "mean": 0.3093,
+    "median": 0.3055,
+    "min": 0.0556,
+    "max": 0.625
+   },
+   "p0_250000": {
+    "mean": 0.6696,
+    "median": 0.6806,
+    "min": 0.3611,
+    "max": 0.9236
+   },
+   "window_1000000": {
+    "mean": 0.1337,
+    "median": 0.1319,
+    "min": 0.0833,
+    "max": 0.1944
+   },
+   "p1_1000000": {
+    "mean": 0.3093,
+    "median": 0.3055,
+    "min": 0.0556,
+    "max": 0.625
+   },
+   "p0_1000000": {
+    "mean": 0.557,
+    "median": 0.5694,
+    "min": 0.2778,
+    "max": 0.8194
+   }
+  },
+  "STAR": {
+   "n_seeds": 24,
+   "admit_per_proposal": {
+    "mean": 0.0107,
+    "median": 0.0109,
+    "min": 0.0096,
+    "max": 0.0119
+   },
+   "jaccard_syntactic": 0.2111,
+   "jaccard_genuine": 0.1852,
+   "covered": {
+    "mean": 0.3446,
+    "median": 0.3472,
+    "min": 0.2569,
+    "max": 0.4236
+   },
+   "syntactic_dup": {
+    "mean": 0.2063,
+    "median": 0.2014,
+    "min": 0.1528,
+    "max": 0.2917
+   },
+   "syntactic_R3u": {
+    "mean": 0.2936,
+    "median": 0.292,
+    "min": 0.1963,
+    "max": 0.3694
+   },
+   "syntactic_P_reuse": {
+    "mean": 0.0144,
+    "median": 0.0135,
+    "min": 0.0055,
+    "max": 0.042
+   },
+   "syntactic_n_recurring": {
+    "mean": 10.0417,
+    "median": 10.0,
+    "min": 6,
+    "max": 14
+   },
+   "genuine_dup": {
+    "mean": 0.2063,
+    "median": 0.2014,
+    "min": 0.1528,
+    "max": 0.2917
+   },
+   "genuine_R3u": {
+    "mean": 0.1709,
+    "median": 0.1826,
+    "min": 0.098,
+    "max": 0.2321
+   },
+   "genuine_P_reuse": {
+    "mean": 0.0083,
+    "median": 0.006,
+    "min": 0.002,
+    "max": 0.0305
+   },
+   "genuine_n_recurring": {
+    "mean": 5.6667,
+    "median": 6.0,
+    "min": 3,
+    "max": 8
+   },
+   "X_genuine_G1_COND": {
+    "mean": 0.0196,
+    "median": 0.0157,
+    "min": 0.0,
+    "max": 0.0677
+   },
+   "X_genuine_G1_share": {
+    "mean": 0.0975,
+    "median": 0.0903,
+    "min": 0.0556,
+    "max": 0.1389
+   },
+   "X_genuine_PA_COND": {
+    "mean": 0.0345,
+    "median": 0.021,
+    "min": 0.0012,
+    "max": 0.1381
+   },
+   "X_genuine_PA_share": {
+    "mean": 0.1079,
+    "median": 0.1007,
+    "min": 0.0486,
+    "max": 0.1806
+   },
+   "X_genuine_PB_COND": {
+    "mean": 0.0031,
+    "median": 0.0022,
+    "min": 0.0,
+    "max": 0.0133
+   },
+   "X_genuine_PB_share": {
+    "mean": 0.0657,
+    "median": 0.066,
+    "min": 0.0278,
+    "max": 0.1111
+   },
+   "X_genuine_PC_COND": {
+    "mean": 0.0585,
+    "median": 0.0535,
+    "min": 0.0117,
+    "max": 0.1293
+   },
+   "X_genuine_PC_share": {
+    "mean": 0.1409,
+    "median": 0.1354,
+    "min": 0.0972,
+    "max": 0.2083
+   },
+   "X_genuine_PD_COND": {
+    "mean": 0.0088,
+    "median": 0.0051,
+    "min": 0.0,
+    "max": 0.0385
+   },
+   "X_genuine_PD_share": {
+    "mean": 0.0651,
+    "median": 0.059,
+    "min": 0.0278,
+    "max": 0.1111
+   },
+   "X_genuine_G1_frac_ge_.10": 0.0,
+   "X_genuine_G1_frac_le_.02": 0.625,
+   "X_nontrivial_G1_COND": {
+    "mean": 0.0251,
+    "median": 0.0205,
+    "min": 0.0043,
+    "max": 0.0546
+   },
+   "X_nontrivial_G1_share": {
+    "mean": 0.1982,
+    "median": 0.2014,
+    "min": 0.1181,
+    "max": 0.2708
+   },
+   "X_nontrivial_PA_COND": {
+    "mean": 0.0295,
+    "median": 0.0226,
+    "min": 0.0056,
+    "max": 0.0967
+   },
+   "X_nontrivial_PA_share": {
+    "mean": 0.1887,
+    "median": 0.184,
+    "min": 0.1389,
+    "max": 0.2569
+   },
+   "X_nontrivial_PB_COND": {
+    "mean": 0.0031,
+    "median": 0.0022,
+    "min": 0.0,
+    "max": 0.0133
+   },
+   "X_nontrivial_PB_share": {
+    "mean": 0.0657,
+    "median": 0.066,
+    "min": 0.0278,
+    "max": 0.1111
+   },
+   "X_nontrivial_PC_COND": {
+    "mean": 0.0581,
+    "median": 0.0535,
+    "min": 0.0117,
+    "max": 0.1245
+   },
+   "X_nontrivial_PC_share": {
+    "mean": 0.1415,
+    "median": 0.1354,
+    "min": 0.0972,
+    "max": 0.2083
+   },
+   "X_nontrivial_PD_COND": {
+    "mean": 0.0088,
+    "median": 0.0051,
+    "min": 0.0,
+    "max": 0.0385
+   },
+   "X_nontrivial_PD_share": {
+    "mean": 0.0654,
+    "median": 0.059,
+    "min": 0.0278,
+    "max": 0.1111
+   },
+   "X_nontrivial_G1_frac_ge_.10": 0.0,
+   "X_nontrivial_G1_frac_le_.02": 0.4583,
+   "window_30000": {
+    "mean": 0.2445,
+    "median": 0.25,
+    "min": 0.1736,
+    "max": 0.2847
+   },
+   "p1_30000": {
+    "mean": 0.0489,
+    "median": 0.0417,
+    "min": 0.0208,
+    "max": 0.1042
+   },
+   "p0_30000": {
+    "mean": 0.7066,
+    "median": 0.7118,
+    "min": 0.6319,
+    "max": 0.7986
+   },
+   "window_100000": {
+    "mean": 0.1476,
+    "median": 0.1528,
+    "min": 0.0972,
+    "max": 0.1875
+   },
+   "p1_100000": {
+    "mean": 0.1959,
+    "median": 0.1979,
+    "min": 0.125,
+    "max": 0.2917
+   },
+   "p0_100000": {
+    "mean": 0.6565,
+    "median": 0.6562,
+    "min": 0.5764,
+    "max": 0.7431
+   },
+   "window_250000": {
+    "mean": 0.0255,
+    "median": 0.0278,
+    "min": 0.0069,
+    "max": 0.0556
+   },
+   "p1_250000": {
+    "mean": 0.3446,
+    "median": 0.3472,
+    "min": 0.2569,
+    "max": 0.4236
+   },
+   "p0_250000": {
+    "mean": 0.6299,
+    "median": 0.625,
+    "min": 0.5556,
+    "max": 0.6944
+   },
+   "window_1000000": {
+    "mean": 0.1383,
+    "median": 0.1389,
+    "min": 0.0903,
+    "max": 0.1806
+   },
+   "p1_1000000": {
+    "mean": 0.3446,
+    "median": 0.3472,
+    "min": 0.2569,
+    "max": 0.4236
+   },
+   "p0_1000000": {
+    "mean": 0.5171,
+    "median": 0.5208,
+    "min": 0.4514,
+    "max": 0.5903
+   }
+  },
+  "U": {
+   "n_seeds": 6,
+   "admit_per_proposal": {
+    "mean": 0.0149,
+    "median": 0.0151,
+    "min": 0.0135,
+    "max": 0.0161
+   },
+   "jaccard_syntactic": 0.1762,
+   "jaccard_genuine": 0.1663,
+   "covered": {
+    "mean": 0.2489,
+    "median": 0.25,
+    "min": 0.2222,
+    "max": 0.2778
+   },
+   "syntactic_dup": {
+    "mean": 0.0683,
+    "median": 0.0729,
+    "min": 0.0417,
+    "max": 0.0903
+   },
+   "syntactic_R3u": {
+    "mean": 0.2594,
+    "median": 0.2668,
+    "min": 0.1159,
+    "max": 0.374
+   },
+   "syntactic_P_reuse": {
+    "mean": 0.0132,
+    "median": 0.014,
+    "min": 0.003,
+    "max": 0.0225
+   },
+   "syntactic_n_recurring": {
+    "mean": 9.6667,
+    "median": 10.0,
+    "min": 5,
+    "max": 13
+   },
+   "genuine_dup": {
+    "mean": 0.0683,
+    "median": 0.0729,
+    "min": 0.0417,
+    "max": 0.0903
+   },
+   "genuine_R3u": {
+    "mean": 0.1956,
+    "median": 0.1961,
+    "min": 0.0725,
+    "max": 0.3206
+   },
+   "genuine_P_reuse": {
+    "mean": 0.0099,
+    "median": 0.0103,
+    "min": 0.0035,
+    "max": 0.016
+   },
+   "genuine_n_recurring": {
+    "mean": 7.1667,
+    "median": 7.0,
+    "min": 3,
+    "max": 11
+   },
+   "X_genuine_G1_COND": {
+    "mean": 0.0047,
+    "median": 0.0011,
+    "min": 0.0,
+    "max": 0.019
+   },
+   "X_genuine_G1_share": {
+    "mean": 0.0579,
+    "median": 0.0556,
+    "min": 0.0486,
+    "max": 0.0833
+   },
+   "X_genuine_PA_COND": {
+    "mean": 0.0032,
+    "median": 0.0013,
+    "min": 0.0,
+    "max": 0.0095
+   },
+   "X_genuine_PA_share": {
+    "mean": 0.0579,
+    "median": 0.0486,
+    "min": 0.0278,
+    "max": 0.1111
+   },
+   "X_genuine_PB_COND": {
+    "mean": 0.0046,
+    "median": 0.004,
+    "min": 0.0,
+    "max": 0.0087
+   },
+   "X_genuine_PB_share": {
+    "mean": 0.0648,
+    "median": 0.066,
+    "min": 0.0486,
+    "max": 0.0833
+   },
+   "X_genuine_PC_COND": {
+    "mean": 0.0133,
+    "median": 0.0059,
+    "min": 0.0014,
+    "max": 0.0334
+   },
+   "X_genuine_PC_share": {
+    "mean": 0.0648,
+    "median": 0.0694,
+    "min": 0.0347,
+    "max": 0.0903
+   },
+   "X_genuine_PD_COND": {
+    "mean": 0.0109,
+    "median": 0.0109,
+    "min": 0.001,
+    "max": 0.0217
+   },
+   "X_genuine_PD_share": {
+    "mean": 0.0764,
+    "median": 0.0764,
+    "min": 0.0556,
+    "max": 0.0972
+   },
+   "X_genuine_G1_frac_ge_.10": 0.0,
+   "X_genuine_G1_frac_le_.02": 1.0,
+   "X_nontrivial_G1_COND": {
+    "mean": 0.0041,
+    "median": 0.003,
+    "min": 0.0005,
+    "max": 0.0101
+   },
+   "X_nontrivial_G1_share": {
+    "mean": 0.1296,
+    "median": 0.1215,
+    "min": 0.1042,
+    "max": 0.1597
+   },
+   "X_nontrivial_PA_COND": {
+    "mean": 0.0047,
+    "median": 0.0036,
+    "min": 0.0,
+    "max": 0.0146
+   },
+   "X_nontrivial_PA_share": {
+    "mean": 0.1018,
+    "median": 0.0833,
+    "min": 0.0694,
+    "max": 0.1944
+   },
+   "X_nontrivial_PB_COND": {
+    "mean": 0.0046,
+    "median": 0.004,
+    "min": 0.0,
+    "max": 0.0087
+   },
+   "X_nontrivial_PB_share": {
+    "mean": 0.0648,
+    "median": 0.066,
+    "min": 0.0486,
+    "max": 0.0833
+   },
+   "X_nontrivial_PC_COND": {
+    "mean": 0.0132,
+    "median": 0.0057,
+    "min": 0.0014,
+    "max": 0.0334
+   },
+   "X_nontrivial_PC_share": {
+    "mean": 0.066,
+    "median": 0.0729,
+    "min": 0.0347,
+    "max": 0.0903
+   },
+   "X_nontrivial_PD_COND": {
+    "mean": 0.0109,
+    "median": 0.0109,
+    "min": 0.001,
+    "max": 0.0217
+   },
+   "X_nontrivial_PD_share": {
+    "mean": 0.0764,
+    "median": 0.0764,
+    "min": 0.0556,
+    "max": 0.0972
+   },
+   "X_nontrivial_G1_frac_ge_.10": 0.0,
+   "X_nontrivial_G1_frac_le_.02": 1.0,
+   "window_30000": {
+    "mean": 0.1713,
+    "median": 0.1667,
+    "min": 0.1389,
+    "max": 0.2153
+   },
+   "p1_30000": {
+    "mean": 0.0382,
+    "median": 0.0382,
+    "min": 0.0208,
+    "max": 0.0625
+   },
+   "p0_30000": {
+    "mean": 0.7905,
+    "median": 0.7952,
+    "min": 0.7639,
+    "max": 0.8125
+   },
+   "window_100000": {
+    "mean": 0.1018,
+    "median": 0.1076,
+    "min": 0.0833,
+    "max": 0.1181
+   },
+   "p1_100000": {
+    "mean": 0.1458,
+    "median": 0.1493,
+    "min": 0.1181,
+    "max": 0.1597
+   },
+   "p0_100000": {
+    "mean": 0.7523,
+    "median": 0.7535,
+    "min": 0.7222,
+    "max": 0.7778
+   },
+   "window_250000": {
+    "mean": 0.0197,
+    "median": 0.0243,
+    "min": 0.0069,
+    "max": 0.0278
+   },
+   "p1_250000": {
+    "mean": 0.2489,
+    "median": 0.25,
+    "min": 0.2222,
+    "max": 0.2778
+   },
+   "p0_250000": {
+    "mean": 0.7315,
+    "median": 0.7257,
+    "min": 0.7083,
+    "max": 0.7639
+   },
+   "window_1000000": {
+    "mean": 0.1018,
+    "median": 0.1146,
+    "min": 0.0556,
+    "max": 0.1319
+   },
+   "p1_1000000": {
+    "mean": 0.2489,
+    "median": 0.25,
+    "min": 0.2222,
+    "max": 0.2778
+   },
+   "p0_1000000": {
+    "mean": 0.6493,
+    "median": 0.6389,
+    "min": 0.6042,
+    "max": 0.7153
+   }
+  }
+ },
+ "criteria": {
+  "W1_syntactic+X_nontrivial": {
+   "C1_frac_seeds_LIN_Preuse_ge_5x_STAR": 0.9167,
+   "C1_pass(>=.80)": true,
+   "C2_LIN_jaccard": 0.0998,
+   "C2_pass(<=.10)": true,
+   "C3_LIN_dup_mean": 0.4291,
+   "C3_frac_seeds_dup_le_.35": 0.25,
+   "C3_pass(mean<=.35)": false,
+   "C4_frac_XG1_ge_.10": 0.2917,
+   "C4_frac_XG1_le_.02": 0.25,
+   "C4_pass": true,
+   "paired_Preuse_ratio_median": 13.533,
+   "ALL_PASS": false
+  },
+  "genuine+X_genuine": {
+   "C1_frac_seeds_LIN_Preuse_ge_5x_STAR": 0.875,
+   "C1_pass(>=.80)": true,
+   "C2_LIN_jaccard": 0.0997,
+   "C2_pass(<=.10)": true,
+   "C3_LIN_dup_mean": 0.4291,
+   "C3_frac_seeds_dup_le_.35": 0.25,
+   "C3_pass(mean<=.35)": false,
+   "C4_frac_XG1_ge_.10": 0.125,
+   "C4_frac_XG1_le_.02": 0.5833,
+   "C4_pass": false,
+   "paired_Preuse_ratio_median": 13.908,
+   "ALL_PASS": false
+  }
+ }
+}
