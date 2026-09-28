@@ -7,6 +7,18 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION ARC IN PROGRESS (operator directive "ATTRIBUTION ARC CONTINUATION")
+Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_arc/. Branch archaeon/attribution-arc-2026-09-28
+(worktree D:/Prometheus-worktrees/archaeon-attribution-arc-2026-09-28). Folder ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/.
+- Ancestry-replay prereg: v1-v3 found UNSOUND by Reviews 3-5 (before any run); v4 in force (+Amendments A fixture pack, B1).
+  BEE run r025144 (committed draw, population frozen in ea1d284ba); NPE: all pair interactions of the 11 T-003 runs.
+- Commissions: Bellerophon #811 (+update #817), Nestor #812 (+update #818), Odysseus #813 (recert Q4). No replies yet.
+- Running (check before acting): Review 6 on ubu001 (~/wk/rev6), reference-tracer worker on ubu002 (~/wk/reftr),
+  block-15 dominant-founder replays on ubu002 (tmux dom_U, dom_BLOCK_128; ~/wk/arc/dom15_*). Artemis holds a cpu3 lease on
+  ubu002 until 2026-09-29 12:00Z (#816, my note #819): start nothing new there.
+- Threads: thr-c64dca3118a1 (replicator identity; FIXEDPOINT_RESULT.md partial), thr-5085da70a143 (cargo vs heredity).
+- Do NOT return an integrated arc until BEE/NPE ancestry evidence has validated / altered / broken v0 (directive).
+
 ## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 COMPLETE -- packet delivered, operator's call
 Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/.
 Packet: ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/ATTRIBUTION_PACKET.md (all results, reviews, adjudications in that folder).
