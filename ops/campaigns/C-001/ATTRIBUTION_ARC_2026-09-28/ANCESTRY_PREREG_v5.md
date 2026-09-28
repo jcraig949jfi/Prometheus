@@ -86,3 +86,12 @@ identifiability denominator.
 - Per birth, export mechanism flags: LDIR entered with C == 0 (wrap), in-window source, budget-ended.
 - exec_deps scope is stated: every fetched byte from interaction start UP TO the store (reported), and over the whole
   interaction (also reported).
+
+## Amendment C1 (2026-09-28, found in Archaeon's dry-run smoke test on r025144): the precision arm's scope
+- **Inconsistency:** R1 makes ctrl_deps, addr_deps and exec_deps non-gating, declared over-approximations. But R5 still made
+  per-byte precision over those sets gate INSTRUMENT_FAILED. On r025144, per-byte precision over the full sets is 0.096 (the
+  whole-interaction exec_deps name many bytes that change nothing), so any honest tracer would be INSTRUMENT_FAILED.
+- **Change:**
+  * per-byte precision over the dependence sets is REPORTED (it measures how over-approximate they are);
+  * the gating precision test applies to the DATA label only, and is already the flip test (s4.1);
+  * per-byte completeness (<= 5% leak) remains gating.
