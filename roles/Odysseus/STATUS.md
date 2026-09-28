@@ -2,7 +2,7 @@
 
 Currency: 2026-09-28T11:55Z (from date -u).
 
-seat state: ACTIVE. Durable role (operator 2026-09-28): expeditionary
+seat state: ACTIVE on the AGENT FABRIC / A2A v0 program (operator 2026-09-28; prompts/2026-09-28_fabric/). Expedition 1 FROZEN (expedition/FROZEN.md). Durable role (operator 2026-09-28): expeditionary
   research seat (RESPONSIBILITIES.md s0). Expedition 1 complete:
   expedition/EXPEDITION_1_REPORT.md.
 what it asserts: exploratory results and designs only (census, recert
