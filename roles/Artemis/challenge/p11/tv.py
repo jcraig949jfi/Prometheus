@@ -36,8 +36,10 @@ def _stream(data, n):
     return bytes(out[:n])
 
 
-def make(alphabet=frozenset()):
+def make(alphabet=frozenset(), ops=None):
+    """ops: active non-painter decoded opcodes (AMENDMENT 2026-09-28b B2); None = all (pre-repair shared ISA)."""
     alphabet = frozenset(alphabet)
+    ops = None if ops is None else frozenset(ops)
 
     def run(ctx, pc, budget, ops_enabled=0xFF):
         mem, T, base, n = ctx.mem, ctx.size, ctx.base, ctx.length
@@ -71,6 +73,8 @@ def make(alphabet=frozenset()):
             pc %= T
             d = _dec(mem[pc])
             steps += 1
+            if ops is not None and d not in ops and not (0x10 <= d <= 0x1F):
+                d = 0x00
             if d == 0x01:
                 R, W, K = base, (base + n) % T, 0
             elif d in (0x02, 0x03):
@@ -119,4 +123,4 @@ def make(alphabet=frozenset()):
         ctx.ops += steps
         return pc % T
 
-    return SimpleNamespace(Ctx=Ctx, run=run, OWN=OWN, ARENA=ARENA, alphabet=alphabet)
+    return SimpleNamespace(Ctx=Ctx, run=run, OWN=OWN, ARENA=ARENA, alphabet=alphabet, ops=ops)

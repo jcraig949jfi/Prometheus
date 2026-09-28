@@ -1,0 +1,211 @@
+{
+ "E0": {
+  "substrate_vs_verify": {
+   "Z1": true,
+   "Z2": true,
+   "Z3": true,
+   "Z3b": true,
+   "Z3n": true,
+   "Z3u96": true,
+   "Z5a": true,
+   "Z6h": true
+  },
+  "vs_aa5833488": {
+   "Z1": true,
+   "Z2": true,
+   "Z3": true,
+   "Z3b": true,
+   "Z3n": true,
+   "Z3u96": true,
+   "Z5a": true,
+   "Z6h": true
+  }
+ },
+ "E0_pass": true,
+ "E1": {
+  "TV-1": true,
+  "TV-2": true,
+  "TV-3": true,
+  "TV-4": true,
+  "TV-5b": true,
+  "TV-6": true,
+  "TV-6k": true,
+  "TV-7": true,
+  "TV-8": true,
+  "Z1": true,
+  "Z2": true,
+  "Z3": true,
+  "Z3b": true,
+  "Z3n": true,
+  "Z3u96": true,
+  "Z5a": true,
+  "Z6h": true
+ },
+ "E1_pass": true,
+ "G": {
+  "TV-1": {
+   "checks": {
+    "all_single_site_variants_same_child": true,
+    "closed": true
+   },
+   "pass": true
+  },
+  "TV-2": {
+   "checks": {
+    "all_single_site_variants_same_child": true,
+    "closed": true
+   },
+   "pass": true
+  },
+  "TV-3": {
+   "checks": {
+    "child_equals_parent": true,
+    "grandchild_equals_parent": true
+   },
+   "pass": true
+  },
+  "TV-4": {
+   "checks": {
+    "child_is_complement": true,
+    "grandchild_is_parent": true
+   },
+   "pass": true
+  },
+  "TV-5b": {
+   "checks": {
+    "child_equals_parent": true,
+    "grandchild_equals_parent": true,
+    "lone_member_does_not_copy_itself": true
+   },
+   "pass": true
+  },
+  "TV-6": {
+   "checks": {
+    "A_to_A": true,
+    "B_to_B": true
+   },
+   "pass": true
+  },
+  "TV-6k": {
+   "checks": {
+    "child_equals_parent": true,
+    "grandchild_equals_parent": true
+   },
+   "pass": true
+  },
+  "TV-7": {
+   "checks": {
+    "child_is_hash": true,
+    "form_changes": true
+   },
+   "pass": true
+  },
+  "TV-8": {
+   "checks": {
+    "child_is_parent_plus_counter": true
+   },
+   "pass": true
+  },
+  "Z1": {
+   "checks": {
+    "child_is_36x96": true,
+    "child_sterile": true,
+    "dominant_90_of_96": true,
+    "fid_0.9375": true
+   },
+   "pass": true
+  },
+  "Z2": {
+   "checks": {
+    "child_is_(36 23)x48": true,
+    "child_sterile": false,
+    "dominant_below_0.5": true,
+    "fid_89_of_96": true
+   },
+   "pass": false
+  },
+  "Z3": {
+   "checks": {
+    "child_equals_parent": true,
+    "grandchild_equals_parent": true
+   },
+   "pass": true
+  },
+  "Z3b": {
+   "checks": {
+    "child_equals_parent": true,
+    "grandchild_equals_parent": true
+   },
+   "pass": true
+  },
+  "Z3n": {
+   "checks": {
+    "_slices": 3,
+    "_writes_blocked": 0,
+    "asm_equals_hex": true,
+    "birth_within_10_slices": true,
+    "child_equals_parent": true,
+    "repl_rule_passes": true
+   },
+   "pass": true
+  },
+  "Z3u96": {
+   "checks": {
+    "_copied_prefix": 72,
+    "child_copies_again_prefix_ge_65": true,
+    "copied_prefix_65_to_75": true,
+    "fid_below_0.9": true
+   },
+   "pass": true
+  },
+  "Z5a": {
+   "checks": {
+    "child_equals_parent": true,
+    "grandchild_equals_parent": true,
+    "guest_writes_nothing": true
+   },
+   "pass": true
+  },
+  "Z6h": {
+   "checks": {
+    "B_to_B": true,
+    "child_equals_parent": true,
+    "dominant_88_of_96": true
+   },
+   "pass": true
+  }
+ },
+ "files": {
+  "aa58/roles/Nestor/campaigns/z80atlas-2026-09-19/grammar.py": "c8992d7bac325d496c4deb962b44ccb2be436d135410254b46583a7427e9a61a",
+  "aa58/roles/Nestor/campaigns/z80atlas-2026-09-19/z8.py": "79ee46fb342506d4fb400aa1c3e1102b12eab5a34e1f3ed70f4c585695787f35",
+  "d764/roles/Nestor/campaigns/z80atlas-forensics-2026-09-23/P11_REASSAY.jsonl": "632e7d299ab2c2b0f5ad85a13d4015726f827dc4f6c98978680fbe0c57f2a1cd",
+  "d764/roles/Nestor/campaigns/z80atlas-forensics-2026-09-23/substrate/z8.py": "c8f2823e2471f6073ad6ef112badf1a688795fed9c9a7e669c31c690bdf672a9",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/anticheat.py": "5132192bef681fe1c9ab5a9517bc0f4790990b90ac4cd712867a6a822a5f6c05",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/constants.py": "7f60389039f49aba337374adcce23e87599e090989890d38367e07d0ca6309d1",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/grammar.py": "0289633d83224ff79ca07e350ce7c0e7d9c37e1a5bbd5aa623eef131af075c30",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/p11.py": "7a47c25dcf08ea7b923e19f06ac87f325aa926048518942e9e317a740a05e6dd",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/tasks.py": "eb93ffc67ceca0549bd35d19b9245f8118e2cc43f66d7f41ef55f5199d234c09",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/world.py": "b53057030a64f0b95c743c48ee67f04c8d2b43a9c85610901a44297a262ff7a1",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/z8.py": "8382574ba5db28d51209c99c79fc7ffe9c14684ea5dbf46d540486cd2c2d25dc"
+ },
+ "seconds_per_specimen": {
+  "TV-1": 1.34,
+  "TV-2": 1.42,
+  "TV-3": 6.66,
+  "TV-4": 7.1,
+  "TV-5b": 10.32,
+  "TV-6": 1.42,
+  "TV-6k": 1.44,
+  "TV-7": 6.62,
+  "TV-8": 7.48,
+  "Z1": 0.48,
+  "Z2": 0.49,
+  "Z3": 0.25,
+  "Z3b": 0.47,
+  "Z3n": 0.79,
+  "Z3u96": 1.09,
+  "Z5a": 0.11,
+  "Z6h": 0.57
+ },
+ "wall_seconds": 55.5
+}

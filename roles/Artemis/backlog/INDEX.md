@@ -69,7 +69,7 @@ science | N program infrastructure | Z answered or superseded at harvest
 | FR-032 | Reproduction vs copying: which births transmit reproductive capacity (proposed TH-009) | RAW | H-D2-05 H-D1-13 | narrower-than FR-023 | M2 |
 | FR-033 | Pair-free population-level transmission detectors | RAW | H-D1-49 | new-lens signal (weak) | L |
 | FR-034 | Reuse hereditary stratigraphy / phylotrack for per-birth ancestry | RAW | H-D2-18 H-D1-56 | instrument for FR-023 FR-017 | L |
-| FR-135 | Is P-11 sound for heredity? (certifies self-painting homopolymers as copying) | SHARPENED | (split, no harvest ids) | split-from FR-011 | L |
+| FR-135 | Is P-11 sound for heredity? (certifies self-painting homopolymers as copying) [2026-09-28 A-RUN: P-11 UNSOUND for heredity (certifies z8 painters Z1/Z2 at 0.90-1.00) and OVER-STRICT; weakest adequate certificate CVT-2 (mechanical) / CVT-R (robust); challenge/p11/RESULT.md] | ANSWERED | (split, no harvest ids) | split-from FR-011 | L |
 
 ## D. Memory that matters (Selective Irreversibility and its neighbours)
 

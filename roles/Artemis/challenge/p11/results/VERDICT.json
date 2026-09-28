@@ -1,0 +1,193 @@
+{
+ "A0": {
+  "Z1_C2_rate": 1.0,
+  "Z3u96_C2_rate": 0.0,
+  "Z3u96_copied_prefix": 72,
+  "same_cell_and_tier": true,
+  "verdict": "SUPPORTED"
+ },
+ "D1": {
+  "NEG_certified": [
+   "Z1",
+   "Z2",
+   "TV-1",
+   "TV-2"
+  ],
+  "OVER_STRICT": true,
+  "POS_P11_certified": [
+   "Z3",
+   "Z3b",
+   "TV-3",
+   "TV-6",
+   "TV-6k",
+   "Z6h"
+  ],
+  "over_strict_rejections": [
+   "TV-4",
+   "Z5a",
+   "TV-5b",
+   "Z3u96"
+  ],
+  "verdict": "UNSOUND FOR HEREDITY"
+ },
+ "D2": {
+  "adequate": [
+   "CVT2",
+   "CVTR"
+  ],
+  "per_certificate": {
+   "CVT1": {
+    "acceptance_set_size": 21,
+    "accepts_TV7": true,
+    "accepts_TV8": true,
+    "accepts_required_neg": [
+     "Z1",
+     "Z2"
+    ],
+    "adequate": false,
+    "calibration": {
+     "TV-1": 0.0,
+     "TV-2": 0.0,
+     "TV-6": 1.0,
+     "TV-6k": 4.0
+    },
+    "calibration_ok": true,
+    "rejects_required_pos": []
+   },
+   "CVT2": {
+    "acceptance_set_size": 15,
+    "accepts_TV7": true,
+    "accepts_TV8": true,
+    "accepts_required_neg": [],
+    "adequate": true,
+    "calibration": {
+     "TV-1": 0.0,
+     "TV-2": 0.0,
+     "TV-6": 1.0,
+     "TV-6k": 4.0
+    },
+    "calibration_ok": true,
+    "rejects_required_pos": []
+   },
+   "CVTR": {
+    "acceptance_set_size": 14,
+    "accepts_TV7": false,
+    "accepts_TV8": true,
+    "accepts_required_neg": [],
+    "adequate": true,
+    "calibration": {
+     "TV-1": 0.0,
+     "TV-2": 0.0,
+     "TV-6": 1.0,
+     "TV-6k": 4.0
+    },
+    "calibration_ok": true,
+    "rejects_required_pos": []
+   },
+   "FERT": {
+    "acceptance_set_size": 12,
+    "accepts_TV7": false,
+    "accepts_TV8": true,
+    "accepts_required_neg": [
+     "TV-1",
+     "TV-2"
+    ],
+    "adequate": false,
+    "calibration": null,
+    "calibration_ok": true,
+    "rejects_required_pos": [
+     "Z3u96",
+     "TV-4",
+     "Z5a",
+     "TV-5b"
+    ]
+   },
+   "LOCAL": {
+    "acceptance_set_size": 12,
+    "accepts_TV7": false,
+    "accepts_TV8": true,
+    "accepts_required_neg": [],
+    "adequate": false,
+    "calibration": null,
+    "calibration_ok": true,
+    "rejects_required_pos": [
+     "TV-6",
+     "TV-6k"
+    ]
+   }
+  },
+  "selected_weakest_adequate": "CVT2",
+  "stress_note": "CVT2 is the weakest adequate certificate for the required panel; CVT-R is required if information-preserving but non-resembling reproduction (TV-7) must count as non-hereditary."
+ },
+ "D2_sensitivity_prerepair_shared_ISA": {
+  "corrected_truth_bits": {
+   "TV-1": 1.0,
+   "TV-2": 0.0,
+   "TV-6": 1.585,
+   "TV-6k": 4.0875
+  },
+  "per_certificate": {
+   "CVT1": {
+    "TB": {
+     "TV-1": 2.0,
+     "TV-2": 1.585,
+     "TV-6": 2.3219,
+     "TV-6k": 4.2479
+    },
+    "matches_corrected_truth": false
+   },
+   "CVT2": {
+    "TB": {
+     "TV-1": 2.0,
+     "TV-2": 1.585,
+     "TV-6": 2.3219,
+     "TV-6k": 4.2479
+    },
+    "matches_corrected_truth": false
+   },
+   "CVTR": {
+    "TB": {
+     "TV-1": 1.0,
+     "TV-2": 0.0,
+     "TV-6": 1.585,
+     "TV-6k": 4.0875
+    },
+    "matches_corrected_truth": true
+   }
+  }
+ },
+ "D3": {
+  "N1_BYTEWISE_construction_without_heredity": "INCONCLUSIVE (1 BYTEWISE recertified < 5)",
+  "N2_BLOCK_heredity_exists": "HOLDS",
+  "N2_BLOCK_with_TB_ge_1": [
+   "7ae3f9c1437c8000-s54765-tL-a0",
+   "e141105526c59efe-s92071-tL-a0"
+  ],
+  "N3": {
+   "CI95": [
+    0.2228,
+    0.9567
+   ],
+   "k": 4,
+   "n": 6,
+   "share": 0.6667
+  },
+  "certificate": "CVT2",
+  "of": 57,
+  "prediction_BLOCK_EDB0_lowdom_majority_TB2_ge_1": {
+   "ge1": 2,
+   "n": 2
+  },
+  "prediction_homopolymers_TB2_zero": {
+   "n": 4,
+   "zero": 4
+  },
+  "recertified": 6
+ },
+ "gates": {
+  "E0_pass": true,
+  "E1_pass": true,
+  "G_all_pass": true,
+  "excluded": []
+ }
+}
