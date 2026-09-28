@@ -60,6 +60,11 @@ def deps(cell) -> frozenset:
     return base(cell[0]) | cell[1]
 
 
+def cfrom(dl):
+    """COMPUTED_FROM, flattened (C6 B3): COMPUTED_FROM(COMPUTED_FROM(x)) = COMPUTED_FROM(x)."""
+    return dl if dl[0] == "F" else ("F", dl)
+
+
 def computed(*cells):
     """COMPUTED over the operands' base labels; addr sets unioned."""
     bs, ad = set(), set()
@@ -70,12 +75,15 @@ def computed(*cells):
 
 
 class Store:
-    __slots__ = ("addr", "val", "cell", "side", "step", "pc", "performer", "ctrl", "exec_", "tix", "six", "lix")
+    __slots__ = ("addr", "val", "cell", "side", "step", "pc", "performer", "ctrl", "exec_", "tix", "six", "lix",
+                 "ctrl_slice")
 
-    def __init__(self, addr, val, cell, side, step, pc, performer, ctrl, exec_, tix=-1, six=-1, lix=-1):
+    def __init__(self, addr, val, cell, side, step, pc, performer, ctrl, exec_, tix=-1, six=-1, lix=-1,
+                 ctrl_slice=EMPTY):
         self.addr, self.val, self.cell, self.side, self.step = addr, val, cell, side, step
         self.pc, self.performer, self.ctrl, self.exec_ = pc, performer, ctrl, exec_
         self.tix, self.six, self.lix = tix, six, lix          # trace / store / load positions (record_trace only)
+        self.ctrl_slice = ctrl_slice                          # C6 C1: PC label from THIS slice's start
 
 
 class Shadow:
@@ -91,7 +99,8 @@ class Shadow:
         self.regs0, self.flags0 = regs, flags
         self.rl0, self.fl0 = reg_labels, flag_labels
         self.budget, self.ops_mask = budget, ops_mask
-        self.ctrl = EMPTY
+        self.ctrl = EMPTY                                  # PC label from INTERACTION start (C6 C1 primary)
+        self.ctrl_sl = EMPTY                               # PC label from the current slice's start (C6 C1)
         self.exec_all = EMPTY
         self.stores: List[Store] = []
         self.record_trace = record_trace
@@ -101,9 +110,15 @@ class Shadow:
         self.out = {}
         self.budget_ended = {}
 
+    def _cond(self, d):
+        """A conditional was EVALUATED: its inputs join both PC labels."""
+        self.ctrl = self.ctrl | d
+        self.ctrl_sl = self.ctrl_sl | d
+
     # ---------------------------------------------------------------- one slice
     def run_slice(self, side: int, start: int):
         mem, lab, size = self.mem, self.lab, self.size
+        self.ctrl_sl = EMPTY
         mask = size - 1
         pow2 = (size & mask) == 0
         r0 = self.regs0[side]
@@ -144,7 +159,8 @@ class Shadow:
             mem[a] = val & 0xFF
             lab[a] = new
             self.stores.append(Store(a, val & 0xFF, new, side, steps, at_pc, op_cell[0], self.ctrl, self.exec_all,
-                                     len(self.trace), len(self.store_addrs) - 1, len(self.load_addrs)))
+                                     len(self.trace), len(self.store_addrs) - 1, len(self.load_addrs),
+                                     self.ctrl_sl))
 
         while steps < budget:
             steps += 1
@@ -205,7 +221,8 @@ class Shadow:
                 fc = 1 if (t > 255 or t < 0) else 0
                 t &= 0xFF
                 fz = 1 if t == 0 else 0
-                fzl = fcl = res
+                fzl = res
+                fcl = (("K", "logic_nc"), EMPTY) if kind in (4, 5, 6) else res      # C6 B1
                 if kind != 7:
                     r[A], rl[A] = t, res
                 pc += 1
@@ -223,7 +240,7 @@ class Shadow:
                     store(addr, v, res, pd, opl, at_pc)
                 else:
                     v = r[d] = (r[d] + 1) & 0xFF
-                    res = rl[d] = (("F", rl[d][0]), rl[d][1])
+                    res = rl[d] = (cfrom(rl[d][0]), rl[d][1])
                 fz = 1 if v == 0 else 0
                 fzl = res
                 pc += 1
@@ -239,7 +256,7 @@ class Shadow:
                     store(addr, v, res, pd, opl, at_pc)
                 else:
                     v = r[d] = (r[d] - 1) & 0xFF
-                    res = rl[d] = (("F", rl[d][0]), rl[d][1])
+                    res = rl[d] = (cfrom(rl[d][0]), rl[d][1])
                 fz = 1 if v == 0 else 0
                 fzl = res
                 pc += 1
@@ -281,7 +298,7 @@ class Shadow:
                 # the pair as one register-only bijective op: low byte COMPUTED_FROM itself; high byte COMPUTED over
                 # both (the carry/borrow) -- CHOICE N-b, reported
                 chi, clo = rl[hi], rl[lo_]
-                rl[lo_] = (("F", clo[0]), clo[1])
+                rl[lo_] = (cfrom(clo[0]), clo[1])
                 rl[hi] = computed(chi, clo)
                 pc += 1
                 continue
@@ -291,9 +308,9 @@ class Shadow:
                 if e > 127:
                     e -= 256
                 if op == 0x20 or op == 0x28:
-                    self.ctrl = self.ctrl | deps(fzl)
+                    self._cond(deps(fzl))
                 elif op == 0x30 or op == 0x38:
-                    self.ctrl = self.ctrl | deps(fcl)
+                    self._cond(deps(fcl))
                 take = (op == 0x18 or (op == 0x20 and not fz) or (op == 0x28 and fz)
                         or (op == 0x30 and not fc) or (op == 0x38 and fc))
                 pc = pc + 2 + e if take else pc + 2
@@ -304,9 +321,9 @@ class Shadow:
                 n2, _c2 = fetch(pc + 2)
                 n = n1 | (n2 << 8)
                 if op == 0xC2 or op == 0xCA:
-                    self.ctrl = self.ctrl | deps(fzl)
+                    self._cond(deps(fzl))
                 elif op == 0xD2 or op == 0xDA:
-                    self.ctrl = self.ctrl | deps(fcl)
+                    self._cond(deps(fcl))
                 take = (op == 0xC3 or (op == 0xC2 and not fz) or (op == 0xCA and fz)
                         or (op == 0xD2 and not fc) or (op == 0xDA and fc))
                 pc = n if take else pc + 3
@@ -331,19 +348,22 @@ class Shadow:
                 fc = 1 if (t > 255 or t < 0) else 0
                 t &= 0xFF
                 fz = 1 if t == 0 else 0
-                fzl = fcl = res
+                fzl = res
+                fcl = (("K", "logic_nc"), EMPTY) if op in (0xE6, 0xEE, 0xF6) else res  # C6 B1
                 if op != 0xFE:
                     r[A], rl[A] = t, res
                 pc += 2
                 continue
 
             if op == 0xDB:                                   # IN: the pair context has no task inputs (N3)
-                r[A], rl[A] = 0, (("K", "in_exhausted"), EMPTY)
+                r[A], rl[A] = 0, (("K", "in_exhausted"), self.ctrl)                  # C6 B7
                 pc += 2
                 continue
             if op == 0xD3:                                   # OUT: out_gate_reads == 0 in the pair context
                 if len(outputs) < 64:
                     outputs.append(r[A])
+                if rec:                                      # C6 B8: OUT events enter the flip store sequence
+                    self.store_addrs.append(("OUT", side, len(outputs)))
                 pc += 2
                 continue
 
@@ -357,7 +377,7 @@ class Shadow:
                         continue
                     step = 1 if op2 == OP_LDIR else -1
                     n = (r[B] << 8) | r[C]
-                    self.ctrl = self.ctrl | deps(rl[B]) | deps(rl[C])          # the count / C == 0 exit
+                    self._cond(deps(rl[B]) | deps(rl[C]))          # the count / C == 0 exit
                     if n == 0:
                         n = 0x10000
                     src = (r[H] << 8) | r[L]
@@ -442,7 +462,7 @@ def initial_tape_labels(ga: bytes, gb: bytes, n: int, size: int, orig_a=None, or
         ent = "a" if side == 0 else "b"
         off = 0 if side == 0 else n
         for i in range(len(g)):
-            o = org[i] if org is not None and i < len(org) else None
+            o = org[i] if org is not None and i < len(org) else ent     # C6 A4: default orig_id = the side name
             lab[off + i] = (("E", ent, i, o), EMPTY)
     return lab
 

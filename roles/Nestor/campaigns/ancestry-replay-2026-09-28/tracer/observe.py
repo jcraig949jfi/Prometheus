@@ -42,7 +42,8 @@ def enc_label(dl):
     """JSON-safe data label."""
     k = dl[0]
     if k == "E":
-        return ["E", dl[1], dl[2], None if dl[3] is None else list(dl[3])]
+        o = dl[3]
+        return ["E", dl[1], dl[2], list(o) if isinstance(o, tuple) else o]
     if k == "C":
         return ["C", sorted(enc_base(b) for b in dl[1])]
     if k == "F":
@@ -109,7 +110,7 @@ class Observed(W.Runner):
                 calls += 1
                 g[i] = rng.randrange(256)
                 events.append({"pos": i, "call": calls - 1, "old": old, "new": g[i],
-                               "decode_dep_positions": [p for p in opcodes if p < i]})
+                               "decode_dep_positions": list(opcodes)})       # C6 E: all PRE-mutation boundaries
         return bytes(g[:self.slot_size]), events
 
     def _mutate(self, g):

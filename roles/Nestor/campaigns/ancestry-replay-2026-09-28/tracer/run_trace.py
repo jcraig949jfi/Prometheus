@@ -52,7 +52,8 @@ def export_birth(runner, iid, pre_oid, orgs, gs, regs, flags, sh, last_store, po
         if st is not None:
             rec.update({"store_side": ent[st.side], "store_step": st.step, "store_pc": st.pc,
                         "performer": O.enc_label(st.performer),
-                        "ctrl_at_store": O.enc_set(st.ctrl), "exec_at_store": O.enc_set(st.exec_),
+                        "ctrl_at_store": O.enc_set(st.ctrl), "ctrl_slice_at_store": O.enc_set(st.ctrl_slice),
+                        "exec_at_store": O.enc_set(st.exec_),
                         "addr": O.enc_set(st.cell[1])})
         loci.append(rec)
     wlog = [{"addr": s_.addr - voff, "value": s_.val, "side": ent[s_.side], "step": s_.step, "pc": s_.pc,
