@@ -8,6 +8,10 @@
   p=1/4 (reset), else uniform bytes; flags uniform bits; budget 300; ops_mask 0x0C. Compared per locus, BEFORE write-back.
 - Set M (added BEFORE the fresh run, to exercise the MUTATION class, which the first set did not): 100 further interactions of the
   same distribution. Each carries a write-back RNG seed, "wb_seed". Loci are compared AFTER write-back (world.py:484-550; C6 E).
+  * The RNG at write-back = random.Random(wb_seed), in that state at the start of the write-back (a's half, then b's).
+  * mut_rate = 0.04 (world.MUT_RATE["HIGH"]). The cell's LOW rate (0.002) would give only about 6 MUTATION loci in 100
+    interactions. The labelling path does not depend on the rate, and the reference checks the mutation against the engine.
+  * Set before the seed exists (after Nestor #852).
     python -m archaeon.attribution.probes.npe_fresh_set SEED_SHA OUT.jsonl
 """
 import hashlib
@@ -27,7 +31,7 @@ def gen(seed, n_a=300, n_m=100):
                "budget": 300, "ops_mask": 0x0C, "tape_len": 64}
         rec = {"k": k, "set": "A" if k < n_a else "M", "pre": pre}
         if k >= n_a:
-            rec["wb_seed"] = rng.randrange(2 ** 62)
+            rec["wb_seed"] = rng.randrange(2 ** 62); rec["mut_rate"] = 0.04
         out.append(rec)
     return out
 

@@ -131,5 +131,45 @@
     "exec": "{a0,a1,a2,a3,a4,a5,b0,b1,b10,b11,b12,b2,b3,b4,b5,b6,b7,b8,b9}"
    }
   }
+ },
+ {
+  "case": "D5_slice_wraps_into_other_half",
+  "pre": {
+   "ga": "767eb72800c3280018191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f",
+   "gb": "c30100000000000011140012760000005a000000000000000000000000000000",
+   "regs_a": null,
+   "regs_b": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    48,
+    0,
+    0
+   ],
+   "flags_a": [
+    0,
+    0
+   ],
+   "flags_b": [
+    0,
+    0
+   ],
+   "budget": 300,
+   "ops_mask": 12
+  },
+  "reference_reading": {
+   "a[20]": {
+    "value": 90,
+    "written": true,
+    "label": "COMPUTED{b16}",
+    "performer": "b11",
+    "ctrl": "{PREG(b.H),PREG(b.L),b16}",
+    "ctrl_slice": "{PREG(b.H),PREG(b.L),b16}",
+    "addr": "{PREG(b.H),PREG(b.L),b10,b9}",
+    "exec": "{a0,a1,a2,a3,a4,a5,a6,a7,b0,b1,b10,b11,b2,b8,b9}"
+   }
+  }
  }
 ]

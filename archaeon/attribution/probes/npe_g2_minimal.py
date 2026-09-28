@@ -60,6 +60,17 @@ CASES = [
     skip:
         HALT
     """)), [0, 0, 0, 0, 0, 20, 0, 0], None, [40 - 32]),
+    # D5 (after Nestor #852): the storing slice (b) WRAPS into a's half and executes a branch there. a halts at once, so every
+    # branch below is executed by b's slice; slice scope and primary scope must both contain its condition deps.
+    ("D5_slice_wraps_into_other_half", bytes([HALT]) + NF.asm("""
+        LD A, (HL)
+        OR A, A
+        JRZ next
+    next:
+        JP 40
+    """) + bytes(range(0x18, 0x18 + 24)), NF.half(NF.asm("""
+        JP 1
+    """), {8: 0x11, 9: 20, 10: 0, 11: 0x12, 12: HALT, 16: 0x5A}), None, [0, 0, 0, 0, 0, 48, 0, 0], [20]),
 ]
 
 
