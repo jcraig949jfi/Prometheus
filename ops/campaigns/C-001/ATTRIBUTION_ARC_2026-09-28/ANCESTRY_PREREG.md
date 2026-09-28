@@ -121,3 +121,5 @@ A replay that fails any applicable fixture does not proceed. An engine where a f
 - One BEE run and one NPE specimen family: this is not engine-wide.
 - In-situ capability is confounded with survival.
 - The replays test the ATTRIBUTION instrument. They are not a new science result about either engine.
+
+## Dated note 2026-09-28: SUPERSEDED before any execution by ANCESTRY_PREREG_v2.md, after adversarial Review 3 (review3/REVIEW_3.md; REVIEW_3_ADJUDICATION.md). The text above is unchanged.
