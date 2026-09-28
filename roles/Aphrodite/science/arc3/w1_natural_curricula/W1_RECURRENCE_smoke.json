@@ -1,0 +1,1106 @@
+{
+ "U:0": {
+  "stats": {
+   "proposals": 1793,
+   "accumulating": 269,
+   "admitted": 24,
+   "seconds": 19.8
+  },
+  "measure": {
+   "N": 24,
+   "distinct_bodies": 24,
+   "dup_body_share": 0.0,
+   "R3": 0.0,
+   "R3_unique_bodies": 0.0,
+   "P_reuse": 0.0,
+   "n_schemas": 99,
+   "n_schemas_ge3": 0,
+   "top5": [
+    [
+     "add(mul(gcd(HOLE,var:first),var:v),var:acc)",
+     2
+    ],
+    [
+     "add(mul(HOLE,var:v),var:acc)",
+     2
+    ],
+    [
+     "fdiv(HOLE,sub(var:acc,const:1))",
+     1
+    ],
+    [
+     "fdiv(var:v,sub(var:acc,HOLE))",
+     1
+    ],
+    [
+     "fdiv(var:v,sub(HOLE,const:1))",
+     1
+    ]
+   ],
+   "panel": {
+    "G1": {
+     "share": 0.125,
+     "distinct_compositions": 11,
+     "max_one_composition": 1
+    },
+    "SHAM_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    },
+    "SHAM_1": {
+     "share": 0.1667,
+     "distinct_compositions": 8,
+     "max_one_composition": 3
+    },
+    "OFF_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    }
+   }
+  },
+  "families": [
+   [
+    "0",
+    "(v // (acc - 1))",
+    "(0 - acc)"
+   ],
+   [
+    "0",
+    "(v * (acc + first))",
+    "(0 - acc)"
+   ],
+   [
+    "0",
+    "(v + (acc + (v + v)))",
+    "math.gcd(abs(last), abs(acc))"
+   ],
+   [
+    "1",
+    "(acc + (v * math.gcd(abs(first), abs(0))))",
+    "(1 * acc)"
+   ],
+   [
+    "1",
+    "(v + (acc * v))",
+    "(acc + first)"
+   ],
+   [
+    "1",
+    "(v - (acc * (v + first)))",
+    "acc"
+   ],
+   [
+    "1",
+    "(1 + (acc - (last // v)))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "1",
+    "(last + (acc - v))",
+    "(acc - first)"
+   ],
+   [
+    "1",
+    "(v * pow(acc, (1 % last)))",
+    "(last * acc)"
+   ],
+   [
+    "1",
+    "(v + (0 - acc))",
+    "(last * acc)"
+   ],
+   [
+    "1",
+    "(acc + (first + (first // v)))",
+    "(acc * last)"
+   ],
+   [
+    "1",
+    "(acc + (v * math.gcd(abs(first), abs(first))))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(first * (v - (first - acc)))",
+    "(1 * acc)"
+   ],
+   [
+    "0",
+    "(acc - (v * (first - 1)))",
+    "(acc + first)"
+   ],
+   [
+    "1",
+    "(last - (acc - (v - 1)))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "1",
+    "(acc - (v + (first * first)))",
+    "(1 * acc)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(0), abs((acc - first))))",
+    "(1 - acc)"
+   ],
+   [
+    "1",
+    "(v - (last + math.gcd(abs(acc), abs(acc))))",
+    "(last * acc)"
+   ],
+   [
+    "1",
+    "(v + (last % math.gcd(abs(acc), abs(acc))))",
+    "(acc * last)"
+   ],
+   [
+    "0",
+    "(acc + (last * math.gcd(abs(acc), abs(v))))",
+    "(acc // 1)"
+   ],
+   [
+    "1",
+    "(v - (first // math.gcd(abs(acc), abs(first))))",
+    "(acc + 0)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(first)))",
+    "(first - acc)"
+   ],
+   [
+    "1",
+    "(acc - (v // math.gcd(abs(acc), abs(1))))",
+    "(acc * last)"
+   ],
+   [
+    "1",
+    "(acc + math.gcd(abs(v), abs(first)))",
+    "(first - acc)"
+   ]
+  ]
+ },
+ "PCFG:0": {
+  "stats": {
+   "proposals": 2857,
+   "accumulating": 275,
+   "admitted": 24,
+   "seconds": 14.1
+  },
+  "measure": {
+   "N": 24,
+   "distinct_bodies": 24,
+   "dup_body_share": 0.0,
+   "R3": 0.0,
+   "R3_unique_bodies": 0.0,
+   "P_reuse": 0.0,
+   "n_schemas": 84,
+   "n_schemas_ge3": 0,
+   "top5": [
+    [
+     "sub(var:acc,add(HOLE,var:v))",
+     2
+    ],
+    [
+     "mul(add(HOLE,var:acc),var:v)",
+     2
+    ],
+    [
+     "mul(add(HOLE,const:1),var:v)",
+     2
+    ],
+    [
+     "sub(var:first,add(add(HOLE,var:acc),var:v))",
+     1
+    ],
+    [
+     "sub(HOLE,add(add(var:acc,var:acc),var:v))",
+     1
+    ]
+   ],
+   "panel": {
+    "G1": {
+     "share": 0.2917,
+     "distinct_compositions": 14,
+     "max_one_composition": 3
+    },
+    "SHAM_0": {
+     "share": 0.0833,
+     "distinct_compositions": 3,
+     "max_one_composition": 1
+    },
+    "SHAM_1": {
+     "share": 0.375,
+     "distinct_compositions": 17,
+     "max_one_composition": 3
+    },
+    "OFF_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    }
+   }
+  },
+  "families": [
+   [
+    "1",
+    "(first - (v + (acc + acc)))",
+    "(acc // last)"
+   ],
+   [
+    "0",
+    "(acc - math.gcd(abs(0), abs((acc - v))))",
+    "(acc % first)"
+   ],
+   [
+    "1",
+    "(v - (acc + math.gcd(abs(v), abs(1))))",
+    "(acc % first)"
+   ],
+   [
+    "0",
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(acc - last)"
+   ],
+   [
+    "1",
+    "(1 + (acc + v))",
+    "(acc % last)"
+   ],
+   [
+    "1",
+    "(acc + (v * v))",
+    "(acc + 0)"
+   ],
+   [
+    "0",
+    "(acc - (v + (v * v)))",
+    "(1 * acc)"
+   ],
+   [
+    "0",
+    "(acc - (v + (first - 1)))",
+    "(acc - first)"
+   ],
+   [
+    "1",
+    "(v * (1 - acc))",
+    "(last - acc)"
+   ],
+   [
+    "1",
+    "(v + (acc * last))",
+    "pow(acc, 1)"
+   ],
+   [
+    "1",
+    "(v * (acc + last))",
+    "(acc // first)"
+   ],
+   [
+    "1",
+    "(v * (acc + 1))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "0",
+    "(v - (last * math.gcd(abs(acc), abs(first))))",
+    "(acc - 1)"
+   ],
+   [
+    "1",
+    "(v * (1 + (acc // v)))",
+    "(acc + acc)"
+   ],
+   [
+    "0",
+    "(acc - v)",
+    "(acc * 1)"
+   ],
+   [
+    "0",
+    "(v - (acc * v))",
+    "(1 + acc)"
+   ],
+   [
+    "0",
+    "(first + (v + (acc - first)))",
+    "(0 + acc)"
+   ],
+   [
+    "0",
+    "(acc + (last + math.gcd(abs(v), abs(0))))",
+    "(acc // first)"
+   ],
+   [
+    "0",
+    "(last * (v + (acc % v)))",
+    "(last - acc)"
+   ],
+   [
+    "1",
+    "(v - math.gcd(abs(0), abs(math.gcd(abs(acc), abs(first)))))",
+    "(acc * 1)"
+   ],
+   [
+    "1",
+    "(acc * math.gcd(abs(v), abs(0)))",
+    "(last * acc)"
+   ],
+   [
+    "0",
+    "(last + (acc // math.gcd(abs(acc), abs(v))))",
+    "(0 + acc)"
+   ],
+   [
+    "1",
+    "(v * math.gcd(abs(acc), abs((last * last))))",
+    "(acc // first)"
+   ],
+   [
+    "0",
+    "(acc + v)",
+    "(acc * last)"
+   ]
+  ]
+ },
+ "AG:0": {
+  "stats": {
+   "proposals": 82,
+   "accumulating": 51,
+   "admitted": 24,
+   "seconds": 1.8
+  },
+  "measure": {
+   "N": 24,
+   "distinct_bodies": 3,
+   "dup_body_share": 0.875,
+   "R3": 0.9167,
+   "R3_unique_bodies": 0.0,
+   "P_reuse": 1.0,
+   "n_schemas": 12,
+   "n_schemas_ge3": 9,
+   "top5": [
+    [
+     "sub(HOLE,add(add(var:acc,var:v),var:first))",
+     22
+    ],
+    [
+     "sub(const:0,add(HOLE,var:first))",
+     16
+    ],
+    [
+     "sub(const:0,add(add(HOLE,var:v),var:first))",
+     16
+    ],
+    [
+     "sub(const:0,add(HOLE,add(var:acc,var:v)))",
+     16
+    ],
+    [
+     "sub(const:0,add(add(HOLE,var:acc),var:first))",
+     16
+    ]
+   ],
+   "panel": {
+    "G1": {
+     "share": 0.0833,
+     "distinct_compositions": 2,
+     "max_one_composition": 2
+    },
+    "SHAM_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    },
+    "SHAM_1": {
+     "share": 0.0833,
+     "distinct_compositions": 2,
+     "max_one_composition": 2
+    },
+    "OFF_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    }
+   }
+  },
+  "families": [
+   [
+    "1",
+    "(1 - (first + (acc + v)))",
+    "(acc - last)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(acc * acc)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(first * acc)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(0 + acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(0 + acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(1 + acc)"
+   ],
+   [
+    "0",
+    "(1 - (first + (acc + v)))",
+    "(acc * last)"
+   ],
+   [
+    "1",
+    "(1 - (first + (acc + v)))",
+    "(first - acc)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(last * acc)"
+   ],
+   [
+    "0",
+    "(first + (acc + v))",
+    "(acc % last)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(1 + acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(1 - (first + (acc + v)))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(1 - (first + (acc + v)))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(acc + acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(first + acc)"
+   ],
+   [
+    "0",
+    "(0 - (first + (acc + v)))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(last * acc)"
+   ],
+   [
+    "1",
+    "(0 - (first + (acc + v)))",
+    "(last + acc)"
+   ],
+   [
+    "0",
+    "(1 - (first + (acc + v)))",
+    "(1 * acc)"
+   ],
+   [
+    "1",
+    "(first + (acc + v))",
+    "(acc * 1)"
+   ]
+  ]
+ },
+ "FG:0": {
+  "stats": {
+   "proposals": 528,
+   "accumulating": 72,
+   "admitted": 24,
+   "seconds": 3.6
+  },
+  "measure": {
+   "N": 24,
+   "distinct_bodies": 8,
+   "dup_body_share": 0.6667,
+   "R3": 1.0,
+   "R3_unique_bodies": 1.0,
+   "P_reuse": 1.0,
+   "n_schemas": 29,
+   "n_schemas_ge3": 4,
+   "top5": [
+    [
+     "add(gcd(HOLE,var:last),var:v)",
+     24
+    ],
+    [
+     "add(HOLE,gcd(var:acc,var:last))",
+     15
+    ],
+    [
+     "add(gcd(HOLE,var:acc),var:v)",
+     15
+    ],
+    [
+     "add(gcd(sub(HOLE,var:acc),var:last),var:v)",
+     3
+    ],
+    [
+     "add(gcd(HOLE,gcd(var:acc,var:last)),var:v)",
+     2
+    ]
+   ],
+   "panel": {
+    "G1": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    },
+    "SHAM_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    },
+    "SHAM_1": {
+     "share": 0.625,
+     "distinct_compositions": 7,
+     "max_one_composition": 15
+    },
+    "OFF_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    }
+   }
+  },
+  "families": [
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(first + acc)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(0 + acc)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "pow(acc, 1)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs(math.gcd(abs(acc), abs(last)))))",
+    "(acc + 1)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc % first)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs((0 - acc))))",
+    "math.gcd(abs(acc), abs(0))"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs((acc + last))))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs((acc - last))))",
+    "(first * acc)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(last), abs(math.gcd(abs(acc), abs(last)))))",
+    "(acc % first)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc % last)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc + 1)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs((1 - acc))))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs((acc + last))))",
+    "(1 - acc)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc * 1)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc - 1)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc % first)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "math.gcd(abs(acc), abs(0))"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(1 - acc)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc * 1)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(1 * acc)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(last), abs((first - acc))))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(last), abs((acc % last))))",
+    "pow(acc, 1)"
+   ],
+   [
+    "1",
+    "(v + math.gcd(abs(acc), abs(last)))",
+    "(acc + 1)"
+   ]
+  ]
+ },
+ "LIN:0": {
+  "stats": {
+   "proposals": 703,
+   "accumulating": 104,
+   "admitted": 24,
+   "seconds": 5.6
+  },
+  "measure": {
+   "N": 24,
+   "distinct_bodies": 21,
+   "dup_body_share": 0.125,
+   "R3": 0.4167,
+   "R3_unique_bodies": 0.2857,
+   "P_reuse": 0.2225,
+   "n_schemas": 62,
+   "n_schemas_ge3": 4,
+   "top5": [
+    [
+     "sub(var:acc,gcd(HOLE,const:0))",
+     3
+    ],
+    [
+     "mul(sub(var:acc,HOLE),var:v)",
+     3
+    ],
+    [
+     "sub(var:v,add(HOLE,var:acc))",
+     3
+    ],
+    [
+     "sub(var:acc,gcd(HOLE,add(var:v,var:v)))",
+     3
+    ],
+    [
+     "sub(var:acc,gcd(HOLE,mul(var:v,var:v)))",
+     2
+    ]
+   ],
+   "panel": {
+    "G1": {
+     "share": 0.25,
+     "distinct_compositions": 12,
+     "max_one_composition": 3
+    },
+    "SHAM_0": {
+     "share": 0.125,
+     "distinct_compositions": 10,
+     "max_one_composition": 1
+    },
+    "SHAM_1": {
+     "share": 0.1667,
+     "distinct_compositions": 12,
+     "max_one_composition": 2
+    },
+    "OFF_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    }
+   }
+  },
+  "families": [
+   [
+    "1",
+    "(acc - math.gcd(abs(0), abs((v * v))))",
+    "(acc + 0)"
+   ],
+   [
+    "1",
+    "(acc + v)",
+    "(acc // first)"
+   ],
+   [
+    "1",
+    "(v * (acc - pow(1, first)))",
+    "(acc * last)"
+   ],
+   [
+    "1",
+    "(last + (acc * v))",
+    "(last + acc)"
+   ],
+   [
+    "0",
+    "(acc - (last * math.gcd(abs(acc), abs(v))))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(v - (acc + first))",
+    "(acc // first)"
+   ],
+   [
+    "0",
+    "math.gcd(abs(v), abs((1 - acc)))",
+    "(acc % last)"
+   ],
+   [
+    "1",
+    "(last * (v - (acc // last)))",
+    "(first * acc)"
+   ],
+   [
+    "1",
+    "(acc - (v * v))",
+    "(1 - acc)"
+   ],
+   [
+    "0",
+    "(acc - v)",
+    "(last * acc)"
+   ],
+   [
+    "0",
+    "(acc - math.gcd(abs(0), abs((v + v))))",
+    "(0 - acc)"
+   ],
+   [
+    "1",
+    "(acc - math.gcd(abs(v), abs((v + v))))",
+    "acc"
+   ],
+   [
+    "0",
+    "(v - (acc + 1))",
+    "(acc - 0)"
+   ],
+   [
+    "0",
+    "(acc - math.gcd(abs(0), abs((v + v))))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(last * (v - (acc // v)))",
+    "(last - acc)"
+   ],
+   [
+    "1",
+    "(last + (acc + v))",
+    "(0 - acc)"
+   ],
+   [
+    "1",
+    "(v * (acc - pow(1, v)))",
+    "(0 - acc)"
+   ],
+   [
+    "0",
+    "(acc - (v * last))",
+    "(acc + 1)"
+   ],
+   [
+    "1",
+    "(v * (acc - math.gcd(abs(v), abs(1))))",
+    "(acc + last)"
+   ],
+   [
+    "1",
+    "math.gcd(abs(v), abs((1 - acc)))",
+    "(0 + acc)"
+   ],
+   [
+    "0",
+    "(v - (acc + last))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(v - (acc - pow(1, v)))",
+    "(1 + acc)"
+   ],
+   [
+    "0",
+    "(acc - math.gcd(abs(acc), abs((v * v))))",
+    "(acc + 0)"
+   ],
+   [
+    "0",
+    "(last + (acc + v))",
+    "math.gcd(abs(acc), abs(acc))"
+   ]
+  ]
+ },
+ "STAR:0": {
+  "stats": {
+   "proposals": 2561,
+   "accumulating": 205,
+   "admitted": 24,
+   "seconds": 10.3
+  },
+  "measure": {
+   "N": 24,
+   "distinct_bodies": 22,
+   "dup_body_share": 0.0833,
+   "R3": 0.0,
+   "R3_unique_bodies": 0.0,
+   "P_reuse": 0.0,
+   "n_schemas": 67,
+   "n_schemas_ge3": 0,
+   "top5": [
+    [
+     "add(add(HOLE,var:first),var:acc)",
+     2
+    ],
+    [
+     "add(add(HOLE,var:v),var:acc)",
+     2
+    ],
+    [
+     "add(HOLE,add(var:first,var:v))",
+     2
+    ],
+    [
+     "sub(var:acc,gcd(HOLE,var:v))",
+     2
+    ],
+    [
+     "mul(gcd(HOLE,const:0),var:acc)",
+     1
+    ]
+   ],
+   "panel": {
+    "G1": {
+     "share": 0.25,
+     "distinct_compositions": 11,
+     "max_one_composition": 3
+    },
+    "SHAM_0": {
+     "share": 0.2083,
+     "distinct_compositions": 6,
+     "max_one_composition": 2
+    },
+    "SHAM_1": {
+     "share": 0.375,
+     "distinct_compositions": 12,
+     "max_one_composition": 3
+    },
+    "OFF_0": {
+     "share": 0.0,
+     "distinct_compositions": 0,
+     "max_one_composition": 0
+    }
+   }
+  },
+  "families": [
+   [
+    "1",
+    "(acc * math.gcd(abs(0), abs((1 - v))))",
+    "(first - acc)"
+   ],
+   [
+    "1",
+    "(acc * v)",
+    "(0 + acc)"
+   ],
+   [
+    "1",
+    "(acc + (v + first))",
+    "(last - acc)"
+   ],
+   [
+    "1",
+    "(acc - v)",
+    "(0 - acc)"
+   ],
+   [
+    "0",
+    "(acc - math.gcd(abs(v), abs(last)))",
+    "(1 * acc)"
+   ],
+   [
+    "1",
+    "(acc + (v * math.gcd(abs(v), abs(1))))",
+    "(0 + acc)"
+   ],
+   [
+    "0",
+    "(v - math.gcd(abs(acc), abs(first)))",
+    "(acc % last)"
+   ],
+   [
+    "1",
+    "(acc * v)",
+    "(acc - 0)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(math.gcd(abs(last), abs(last)))))",
+    "(0 - acc)"
+   ],
+   [
+    "1",
+    "(acc - math.gcd(abs(v), abs(first)))",
+    "(1 + acc)"
+   ],
+   [
+    "1",
+    "(acc + v)",
+    "(1 + acc)"
+   ],
+   [
+    "0",
+    "(v - (1 - acc))",
+    "(last - acc)"
+   ],
+   [
+    "0",
+    "(acc - (last * (v // first)))",
+    "(acc - first)"
+   ],
+   [
+    "1",
+    "(acc - (v // first))",
+    "(acc * last)"
+   ],
+   [
+    "1",
+    "(acc + (v + first))",
+    "math.gcd(abs(0), abs(acc))"
+   ],
+   [
+    "1",
+    "(last + (acc % v))",
+    "(1 - acc)"
+   ],
+   [
+    "1",
+    "(v + (acc + 1))",
+    "(acc % first)"
+   ],
+   [
+    "1",
+    "(last - (acc - v))",
+    "(acc % last)"
+   ],
+   [
+    "0",
+    "(acc - (v + first))",
+    "(0 - acc)"
+   ],
+   [
+    "1",
+    "(v - (1 + (acc * first)))",
+    "pow(acc, 1)"
+   ],
+   [
+    "0",
+    "(last + (acc * v))",
+    "(first + acc)"
+   ],
+   [
+    "1",
+    "(v + (last % acc))",
+    "(1 - acc)"
+   ],
+   [
+    "1",
+    "(v + (first * math.gcd(abs(acc), abs(0))))",
+    "(1 + acc)"
+   ],
+   [
+    "0",
+    "(1 - (v - acc))",
+    "(last + acc)"
+   ]
+  ]
+ }
+}
