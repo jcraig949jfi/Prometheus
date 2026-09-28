@@ -7,6 +7,14 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 IN PROGRESS (operator directive "turn the lens into an instrument")
+Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/. Branch archaeon/attribution-v0-2026-09-28
+(worktree D:\Prometheus-worktreesrchaeon-attribution-v0-2026-09-28). Code archaeon/attribution/ (spec ATTRIBUTION_V0.md);
+tests archaeon/tests/test_attribution_v0.py; packet folder ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/.
+Running (ubu002): TH-013 replay (tmux th013, output ~/wk/th013/th013_out.json) and adversarial Review 1 (tmux rev1, output
+~/wk/rev1/out/REVIEW_1.md). After both: th013_analyze.py, th015_archaeon.py on the replay's tapes, adjudicate Review 1, packet.
+Deep-block "block-13 founder material 0.0" is RETRACTED (dated notes). Thread ids: Artemis scheme adopted (ops/tools/thread_check.py).
+
 ## UPDATE 2026-09-27 (session m2-1034e815): CONTRACT v0.2 COMPLETE -- verdict PORTABLE_WITH_DOMAIN_LIMITS (not promoted)
 Ruling verbatim: roles/Archaeon/prompts/2026-09-27_contract_v02/. Merged to main (dfbc536cd).
 Packet: archaeon/causal_lens/pivot/CONTRACT_V02_REVIEW_2026-09-27.md. Report: archaeon/causal_lens/V02_REGRESSION_REPORT.md.
