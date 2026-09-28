@@ -236,10 +236,29 @@ def analyse_birth(rec, seed: int, K_dep: int = 8, K_byte: int = 4, per_byte: boo
             row["identified"] = row["flip"] != "FAILED" and changes == 0
         loci.append(row)
     out = {"child": rec["child"], "run": rec["run"], "victim_side": rec["victim_side"], "loci": loci,
-           "accepted_reproduced": base.accepted}
+           "accepted_reproduced": base.accepted,
+           "existence": birth_existence(pre, rng, K_dep),
+           "source_diversity": len({(l["move_ent"], l["src_locus"]) for l in loci
+                                    if l["written"] and l["kind"] == "E"})}
     if per_byte:
         out["per_byte"] = per_byte_arms(rec, pre, base, rng, K_byte)
     return out
+
+
+def birth_existence(pre: Pre, rng, K: int = 8):
+    """Amendment C4: Q8c-whether per birth, PERFORMER INCLUDED. Every source group (each entity's bytes, each side's
+    persisted registers) is randomised in turn, K draws; the share of draws in which the birth is NOT accepted."""
+    res = {}
+    for grp in ["ENT_a", "ENT_b"] + [REG_GROUP[s] for s in (0, 1) if pre.regs[s] is not None]:
+        sup = tot = 0
+        for _k in range(K):
+            c = randomise_group(pre, grp, rng)
+            if c is None:
+                break
+            tot += 1
+            sup += not Run(c, trace=False).accepted
+        res[grp] = [sup, tot]
+    return res
 
 
 def _named_bytes(rec_locus_sets, pre: Pre):
