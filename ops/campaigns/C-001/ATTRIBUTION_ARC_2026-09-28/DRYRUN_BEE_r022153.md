@@ -88,3 +88,28 @@ corrected:
 - **Pipeline deviations acknowledged:** flip test on the sample only; Q8c-whether missing; pooled flip coverage (the "other" class
   is 0.537, MARGINAL); the verdict was set by hand; the Q2 numbers came from an uncommitted births file (now committed:
   dry_r022153.births.json.gz).
+
+## Addendum 2026-09-28: the C4 re-run (pipeline v5.1, commit d3c89b0ee)
+- **Output:** dry51_r022153.json (+ .births.json.gz), committed here. Run on ubu001, 616 s, peak RSS 122 MB (was about 6 GB; see
+  Odysseus #826).
+- **Unchanged:** replay equal; transmission 30,945; identifiable 0.9518; Q1 0.140; Q8c 0.0003 [0.0002, 0.0004]; P2 native-label
+  finding 0.574 [0.520, 0.628].
+
+| C4 measurement | self-performed | parasite ("other") | "none" (18) |
+|---|---|---|---|
+| Q8c-whether: randomise the OCCUPANT (host) | 0.0001 | **0.927 [0.923, 0.930]** | 0.0 |
+| Q8c-whether: randomise the WRITER | 0.741 | 0.679 | 0.71 |
+| Q8c-whether: randomise the INPUT | 0.0005 | 0.0 | 0.06 |
+| Q4 isolated (dry run: 85% overall; Review 7: 117/120 self vs 0/120 parasite) | -- | -- | -- |
+| **Q4 HOST-ASSISTED** (the child against real self-performed hosts from this run) | 0.99 [0.97, 1.0] | **0.81 [0.65, 0.96]** | 1.0 |
+| flip coverage | 0.827 | 0.537 (MARGINAL) | 0.781 |
+
+- **Painting guard:** 30,889 of the 30,945 transmission births have source diversity >= 0.5. Q8c and Q-homology are unchanged
+  without the rest.
+- **Verdict computed in code:** VALIDATED (pending round-trip, three-tracer agreement with the owner, fixtures), with the parasite
+  class MARGINAL on flip coverage. Engine-native finding: P2 holds.
+
+**Reading:**
+- The parasite lineage's capacity is RELATIONAL: 0% in isolation, 81% with real hosts.
+- Its births depend on the host's material for their EXISTENCE (0.93), not for their content (Q8c 0.0003).
+- attribution v0 represents all of this with existing fields (performer, donor, dependence entry, capability with conditions).
