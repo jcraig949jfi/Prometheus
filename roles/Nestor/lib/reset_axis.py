@@ -9,6 +9,8 @@ condition applied to BOTH organisms immediately before every pair interaction:
     CONST:<hex>    all 8 register bytes = <hex byte> (e.g. CONST:5A), flags 0
     RANDOM         all 8 register bytes and both flags drawn uniformly from a per-run RNG (never the world's RNG)
     PATTERN:<16hex> the 8 register bytes given explicitly (B C D E H L (HL) A), flags 0
+    SCHEDULE       ZERO applied with probability p(epoch) given by a callable, else CARRIED (gradual withdrawal of the zero
+                   scaffold; use with_schedule(), the draw comes from a per-run RNG, never the world's)
 
 Historical results are NOT rewritten: earlier experiments' runners stay as they were (e.g. W1 X-DD-STATELESS = ZERO,
 P2 X-P2-REGSTATE = CARRIED/ZERO/CONST:5A/RANDOM); this module only makes the axis explicit for new work.
@@ -93,3 +95,18 @@ def selftest(world, base_cls, cell: dict, tier: str) -> tuple[bool, dict]:
                   "PATTERN:0102030405060708": [1, 2, 3, 4, 5, 6, 7, 8]}.get(pol)
         out[pol] = (v == expect) if expect is not None else (v not in ([7] * 8, [0] * 8, [0x5A] * 8))
     return all(out.values()), out
+
+
+def with_schedule(base_cls, p_of_epoch, prng: random.Random):
+    """ZERO reset with probability p_of_epoch(epoch) per organism per interaction; otherwise the carried state is kept."""
+
+    class Sched(base_cls):
+        reset_policy = "SCHEDULE"
+
+        def _pair_interact(self, i, a, b):
+            p = p_of_epoch(self.epoch)
+            for o in (a, b):
+                if prng.random() < p:
+                    o.regs, o.fz, o.fc = None, 0, 0
+            return super()._pair_interact(i, a, b)
+    return Sched
