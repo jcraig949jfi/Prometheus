@@ -131,3 +131,34 @@ def test_win_rule_uses_bounded_rungs_only():                 # diff #16: 2c is r
     v = S(mk(rungs=(0.3, 0.6, 1.0, 1.5, 2.45)))
     assert v["headline"]["label"] == "LOSSLESS_TRANSIENT_CONTRACTION"
     assert "2c" in v["headline"]["LR_minus_rung"]
+
+
+def test_R1_win_rule_needs_rungs_above_floor():             # pre-freeze review R1
+    v = S(mk(rungs=(-0.5, -0.3, -0.2, -0.1, 2.0), n1=0.0))
+    assert v["headline"]["label"] != "LOSSLESS_TRANSIENT_CONTRACTION"
+
+
+def test_R3_v031_set_label_is_descriptive():
+    v = S(mk(rungs=(0.3, 0.6, 1.0, 1.5, 2.45)))
+    assert v["headline"]["label"] == "LOSSLESS_TRANSIENT_CONTRACTION" and v["headline"]["v031_set_label"] == "not_firing"
+
+
+def test_recency_attribution_is_symmetric():
+    v = S(mk(sel={"c/4": 0.1}, fifo={"c/4": 0.1}, rungs=(0.3, 0.6, 1.0, 1.5, 2.0)))
+    assert v["eviction"]["at"]["c/4"]["label"] == "RECENCY_LOSES"
+    assert not [f for f in v["firings"] if "@c/4" in f["falsifier"]]
+
+
+def test_suffstat_reported_only_never_a_candidate():
+    rows = mk(sel={"c/4": 0.1})
+    for r in rows:
+        r["ladder"]["SUFFSTAT|table"] = dict(AC=2.5, meter=r["ladder"]["L-R|full"]["meter"], loci=r["ladder"]["L-R|full"]["loci"])
+    v = S(rows)
+    assert v["eviction"]["candidate"] == "keep_worst" and "suffstat_minus_LR" in v["headline"]
+
+
+def test_R4_missing_fixtures_fail_loudly(tmp_path):
+    import pytest
+    from ensorain.lm01.analysis import analyse
+    with pytest.raises(FileNotFoundError):
+        analyse(str(tmp_path), fixtures_path=str(tmp_path / "nope.json"))

@@ -114,6 +114,10 @@ def job(a):
     lr = _feed(LosslessR(w["dims"], rank=RANK), segs)
     lr_ac = _AC(_ac_cells(lr.predict(T), truth))
     lad["L-R|full"] = dict(B=n, B_frac=1.0, AC=lr_ac, meter=lr.meter.as_dict(), iters=_iters(lr), loci=lr.loci())
+    from .arms import SuffStatR                            # pre-freeze review R2: reported only, no verdict uses it
+    ss = _feed(SuffStatR(w["dims"], rank=RANK), segs)
+    lad["SUFFSTAT|table"] = dict(AC=_AC(_ac_cells(ss.predict(T), truth)), meter=ss.meter.as_dict(), loci=ss.loci(),
+                                 report_only=True)
     out["ladder"] = lad
     dual = {}
     if ev is not None:
@@ -129,7 +133,9 @@ def job(a):
                 arm = _feed(BufferALS(w["dims"], RANK, Bm, evict="random", seed=100 + k), segs).finalize()
                 r = rr(arm)
                 runs.append(dict(AC=_AC(_ac_cells(arm.predict(T), truth)), HR2=r["HR2"], bytes=arm.meter.peak_persistent))
-            dual[rung] = dict(target_HR2=lad[key]["HR2"], B_random=Bm, clamped=bool(Bm >= n), runs=runs)
+            tgt = lad[key]["HR2"]
+            dual[rung] = dict(target_HR2=tgt, B_random=Bm, runs=runs,
+                              clamped=bool(tgt > hs.max() or tgt < hs.min()))   # both ends (pre-freeze review)
     out["dual"] = dual
     d0 = w["dims"][0]
     prng = np.random.default_rng(sd + 5)

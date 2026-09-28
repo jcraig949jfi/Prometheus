@@ -1,7 +1,7 @@
 """v0.3.2 fixtures read by the frozen analysis (dev seeds only; the output dev/fixtures_v032.json is frozen with the prereg).
 
 headline_pc[level]: HEADLINE POSITIVE CONTROL (review F5/F15a). Planted F2 lowrank worlds (rank <= 3 = the readout's
-  class) with HIGH observation noise (SD 1.0, declared), life 4x, dev seeds 9_890_000-007. The world is built so that every
+  class) with observation noise SD 0.3 (declared before running; review R1; the first run at SD 1.0 was degenerate), life 4x, dev seeds 9_890_000-007. The world is built so that every
   additional exact record lowers the estimation error of the rank-3 fit. EXACT_RETENTION_PAYS "should" fire if the rung
   grid and the analysis can see retention paying at all.
   PASS iff analysis.headline() returns LOSSLESS_TRANSIENT_CONTRACTION or COUNTERMODEL_SIGNAL.
@@ -19,7 +19,7 @@ from .margins_reduce_v2 import DELTA
 HERE = os.path.dirname(__file__)
 OUT = os.path.join(HERE, "dev", "fixtures_v032.json")
 SEEDS = range(9_890_000, 9_890_008)
-NOISE = 1.0
+NOISE = 0.3          # pre-freeze review R1: declared non-degenerate level (3x campaign noise), not tuned; SD 1.0 was degenerate (bounded rungs below N1)
 
 
 def _world_rows(level, seed):

@@ -102,7 +102,8 @@ def headline(ok, d, hpc_pass):
     wdiffs = {g: _paired(ok, warm, lambda r, g=g: _lad(r, f"random|{g}")) for g in rungs}
     above_floor = {g: (c := _paired(ok, lambda r, g=g: _lad(r, f"random|{g}"), lambda r: r.get("N1"))) is not None
                    and c["lo"] > 0 for g in rungs}
-    out.update(LR_minus_rung=diffs, warm_minus_rung=wdiffs, endpoints_warm_minus_LR=_paired(ok, warm, lr))
+    out.update(LR_minus_rung=diffs, warm_minus_rung=wdiffs, endpoints_warm_minus_LR=_paired(ok, warm, lr),
+               suffstat_minus_LR=_paired(ok, lambda r: _lad(r, "SUFFSTAT|table"), lr))   # R2: reported only
 
     def bstar(dd):                       # monotone: the smallest rung from which ALL larger rungs are EQUIVALENT
         for i, g in enumerate(rungs):
@@ -111,7 +112,12 @@ def headline(ok, d, hpc_pass):
         return None
     out["B_star_LR"], out["B_star_warm"] = bstar(diffs), bstar(wdiffs)
     win_rungs = [g for g in rungs if g in WIN_RUNGS]
-    pays = bool(win_rungs) and all(_win(diffs[g], d) for g in win_rungs)
+    # pre-freeze review R1: every bounded rung in the WIN rule must itself be above the N1 floor (the same condition
+    # as the sufficiency readings), so "retention pays" cannot be read against broken bounded arms
+    pays = bool(win_rungs) and all(_win(diffs[g], d) and above_floor[g] for g in win_rungs)
+    # pre-freeze review R3: the v0.3.1 comparison set (every rung incl. 2c, no floor), a DESCRIPTIVE column only
+    out["v031_set_label"] = ("EXACT_RETENTION_PAYS" if rungs and all(_win(diffs[g], d) for g in rungs)
+                             else "not_firing")
     lk_eq = _eq(_paired(ok, lambda r: r["arms"]["L-K"]["AC"], lr), d)
     if pays:
         out["label"] = "COUNTERMODEL_SIGNAL" if lk_eq else "LOSSLESS_TRANSIENT_CONTRACTION"
@@ -153,7 +159,7 @@ def secondary(ok, d):
         rep = _rep_status(max((res[c]["S_minus_L"] for c in wins), key=lambda c: c["lo"]), "win", d)
     elif elig and all(res[c]["S_minus_L"] is not None and res[c]["S_minus_L"]["hi"] < -d for c in elig):
         lab = "LOSSLESS_TRANSIENT_CONTRACTION" if rows[0]["arms"]["LOSSLESS"]["label"].startswith("L-R") else "COUNTERMODEL_SIGNAL"
-    return dict(label=lab, caps=res, replication=rep, note="optimizer confounded (SGD vs ALS); never gates a falsifier")
+    return dict(label=lab, caps=res, replication=rep, note="confounded: optimizer (SGD vs ALS), model class, regularization, tuning point; never gates a falsifier")
 
 
 def e6_campaign(ok, d):
@@ -164,7 +170,7 @@ def e6_campaign(ok, d):
 def eviction(ok, d, e6_pass):
     """6.3 v0.3.2 (review F7): the two declared candidates are SURPRISE-DRIVEN heuristics (keep_worst,
     residual_reservoir), read against random AND the FIFO recency reference."""
-    ev = sorted({k.split("|")[0] for r in ok for k in r.get("ladder", {})} - {"random", "L-R", "fifo"})
+    ev = sorted({k.split("|")[0] for r in ok for k in r.get("ladder", {})} - {"random", "L-R", "fifo", "SUFFSTAT"})
     if not ev:
         return dict(label="UNRESOLVED", reason="no eviction candidate", at={})
     e = ev[0]
@@ -191,7 +197,10 @@ def eviction(ok, d, e6_pass):
         elif _win(i, d):
             lab = "HEURISTIC_BUYS_BYTES" if ii is not None else "UNRESOLVED_UNMATCHED"
         elif i is not None and i["hi"] < -d:
-            lab = "RANDOM_BEATS_HEURISTIC"
+            # pre-freeze review (recommended): symmetric recency attribution. If the heuristic loses to random but is
+            # EQUIVALENT to the FIFO recency reference, and random also beats FIFO, the loss is attributed to recency
+            fr = _paired(ok, lambda r: _lad(r, f"fifo|{g}"), lambda r: _lad(r, f"random|{g}"))
+            lab = "RECENCY_LOSES" if (_eq(f, d) and fr is not None and fr["hi"] < -d) else "RANDOM_BEATS_HEURISTIC"
         elif _eq(i, d) and _eq(ii, d):
             lab = "HEURISTIC_EQUIVALENT_TO_RANDOM"
         else:
@@ -275,7 +284,9 @@ def stratum(rows, dev, d, key_family=None, fixtures=None):
 def analyse(campaign_dir, dev_path=os.path.join(HERE, "dev", "margins_reduced_v2.json"),
             fixtures_path=os.path.join(HERE, "dev", "fixtures_v032.json")):
     dev = json.load(open(dev_path))
-    fixtures = json.load(open(fixtures_path)) if os.path.exists(fixtures_path) else {}
+    if not os.path.exists(fixtures_path):                  # pre-freeze review R4: fail loudly, never silently
+        raise FileNotFoundError(f"LM01: frozen fixtures file missing: {fixtures_path}")
+    fixtures = json.load(open(fixtures_path))
     res = {}
     for key, dv in dev.items():
         fn = os.path.join(campaign_dir, key.replace("|", "__") + ".jsonl")
@@ -285,19 +296,22 @@ def analyse(campaign_dir, dev_path=os.path.join(HERE, "dev", "margins_reduced_v2
             dvs = dict(dv, frame=dv.get("sensitivity", {}).get(str(sd), {}).get("frame", dv.get("frame")))
             res[key][str(sd)] = stratum(rows, dvs, sd, key.split("|")[0], fixtures)
     gov = {k: v[str(DELTA)] for k, v in res.items()}
+    GATE = ("UNTESTED", "UNRESOLVED_E6", "UNTESTED_NO_HEADROOM", "UNRESOLVED_INSTRUMENT_CANNOT_FIRE",
+            "UNTESTED_HEADLINE_NOT_LEARNABLE", "UNRESOLVED_UNMATCHED")
+    live = lambda lab: lab is not None and not str(lab).startswith(GATE)     # review: aggregate live readings only
     tested = [k for k, v in gov.items() if v.get("label") != "UNTESTED" and not k.startswith("F1_episodic")]
     mult = {}
     for lab, get in (("COUNTERMODEL_SIGNAL", lambda v: v["headline"].get("label")),
                      ("LOSSLESS_TRANSIENT_CONTRACTION", lambda v: v["headline"].get("label")),
                      ("SELECTIVE_ADVANTAGE", lambda v: v["secondary"]["label"]),
                      ("HYBRID_REQUIRED", lambda v: v["hybrid"]["label"])):
-        fired = [k for k in tested if get(gov[k]) == lab]
-        mult[lab] = dict(readings=len(tested), fired=len(fired), expected_by_chance=round(0.05 * len(tested), 2),
-                         strata=fired)
+        lv = [k for k in tested if live(get(gov[k]))]
+        fired = [k for k in lv if get(gov[k]) == lab]
+        mult[lab] = dict(readings=len(lv), fired=len(fired), expected_by_chance=round(0.05 * len(lv), 2), strata=fired)
     for lab in ("HEURISTIC_EQUIVALENT_TO_RANDOM", "RANDOM_BEATS_HEURISTIC", "HEURISTIC_ADVANTAGE", "RECENCY",
                 "HEURISTIC_BUYS_BYTES"):
         pts = [(k, g) for k in tested for g, a in gov[k]["eviction"].get("at", {}).items() if a["label"] == lab]
-        n_pts = sum(len(gov[k]["eviction"].get("at", {})) for k in tested)
+        n_pts = sum(1 for k in tested for a in gov[k]["eviction"].get("at", {}).values() if live(a["label"]))
         mult[lab] = dict(readings=n_pts, fired=len(pts), expected_by_chance=round(0.05 * n_pts, 2), points=pts)
     agg = {"headline": {}, "eviction@c/4": {}, "eviction@c": {}, "secondary": {}, "hybrid": {}}
     for k in tested:
@@ -310,13 +324,18 @@ def analyse(campaign_dir, dev_path=os.path.join(HERE, "dev", "margins_reduced_v2
             a = v["eviction"].get("at", {}).get(pt)
             if a:
                 agg[f"eviction@{pt}"].setdefault(f"{f}|{l}", {})[g] = a["label"]
-    gen_dep = {r: {fl: ("GENERATOR_DEPENDENT" if len(set(x.values())) > 1 else list(x.values())[0])
-                   for fl, x in m.items()} for r, m in agg.items()}
+    gen_dep = {}
+    for r, m in agg.items():
+        gen_dep[r] = {}
+        for fl, x in m.items():
+            lv = {g: lab for g, lab in x.items() if live(lab)}
+            gen_dep[r][fl] = ("NO_LIVE_READING" if not lv else
+                              ("GENERATOR_DEPENDENT" if len(set(lv.values())) > 1 else list(lv.values())[0]))
     cross = {}
     for k in tested:
         f, l, g = k.split("|")
         cross.setdefault(f"{f}|{g}", {})[l] = gov[k]["headline"].get("label")
-    crossover = {k: v for k, v in cross.items() if len(set(v.values())) > 1}
+    crossover = {k: v for k, v in cross.items() if len({x for x in v.values() if live(x)}) > 1}
     instr = [k for k, v in gov.items() if v.get("instrument") == "INSTRUMENT_FAILURE"]
     return dict(per_stratum=res, multiplicity=mult, aggregation=gen_dep, CROSSOVER=crossover,
                 INSTRUMENT_FAILURE=instr, delta=DELTA, sensitivity=list(SENS), fixtures=fixtures)

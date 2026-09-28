@@ -18,6 +18,7 @@ history: storage, the learned hypothesis, or query-time computation?
 | Rungs as FRACTIONS OF HISTORY (1/64 .. 1/2) instead of cells, so levels are comparable | review F5/F13 |
 | A hypothesis-description-length meter: the bits of the fitted model, plus an estimate of the information its weights hold about the sample | lit/LIT_THEORY.md (hypothesis compression is the locus with a generalization link) |
 | A RELEVANCE-selective eviction arm (oracle-free: evict by leave-one-out influence on a held-out prediction) vs surprise heuristics vs random vs FIFO | review F7; PKG-F dev probe (the selection signal matters) |
+| A SUFFICIENT-STATISTIC arm: a per-cell (sum, count) table refit by the same weighted ALS. By identity it equals the lossless refit for count-weighted readouts. The bounded comparator any "retention pays" claim must beat | LM01 pre-freeze review R2 (identity; probe p_suffstat.py) |
 | Changed-question tests (the target changes after writing; T22) | lit/LIT_MEMORY_SYSTEMS.md D3 |
 | A regime-DISCOVERING readout for switch worlds (changepoint gate) instead of a fixed recency | PKG-F probe v2 |
 | An answer-key bridge: every LM02 family paired with a PKG-S1 world of the same sufficiency class | PKG-S1 |
