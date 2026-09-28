@@ -13,7 +13,8 @@ import subprocess
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUT = os.path.join(os.path.dirname(__file__), "FREEZE.json")
 FILES = ["ensorain/PREREG_WTP_LM01.md", "ensorain/PREREG_WTP_LM01_TABLES.md", "ensorain/lm01/FROZEN_SELECTION.json",
-         "ensorain/lm01/dev/margins_reduced_v2.json"]
+         "ensorain/lm01/dev/margins_reduced_v2.json", "ensorain/lm01/dev/fixtures_v032.json",
+         "ensorain/lm01/dev/FIXTURE_RERUN_v032.json", "ensorain/LM01_DIFF_v031_to_v032.md"]   # R4: fixtures frozen too
 
 
 def _code():

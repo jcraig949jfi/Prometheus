@@ -35,6 +35,23 @@ dev TESTABLE frame, or campaign size. NOT retrofitted (operator): PKG-F, HMM, Ba
 
 | 16 | 1 | F5 | EXACT_RETENTION_PAYS required L-R to WIN over EVERY rung incl. 2c (37-73% of the history) | the WIN rule uses the genuinely BOUNDED rungs, B <= c (at most one record per cell). 2c is still measured and reported, and used for B*/NULL | FIXTURE-DEMONSTRATED DEFECT: the new headline positive control (planted noisy rank<=3 worlds) could NOT fire under v0.3.1's rule at any level. L2 dev: L-R minus c/8..c had CI.lo .78-1.13, but L-R minus 2c only .25; L3: .70-1.28 vs 2c .13. A comparison that cannot fire in its own positive control is an instrument defect (operator item 1). THIS IS THE ONE v0.3.2 CHANGE TO A HEADLINE CRITERION; flagged to the operator and the reviewer. |
 
+
+## Rows 17-25: the pre-freeze review of the v0.3.2 draft (ensorain/arc3/reviews/LM01_V032_PREFREEZE_REVIEW.md)
+
+The review recommended FREEZE AFTER LISTED FIXES; its findings are N1-N8.
+
+| # | review | change | why permitted pre-result |
+|---|---|---|---|
+| 17 | R1 | the WIN rule also requires every bounded rung above the N1 floor. The headline positive control was rerun at a DECLARED noise SD 0.3: the first control (SD 1.0) was degenerate, "firing" against rungs below N1 | the same floor the sufficiency readings already had; removes an asymmetry favouring the lossless label |
+| 18 | R2 | LTC rescoped to "beats a random-subsample reservoir". The per-cell sufficient-statistic identity is stated as a limitation. SUFFSTAT table readout REPORTED ONLY (a deterministic function of the stored records; no verdict uses it) | wording overclaimed; the reported readout measures operator item 6 (loci) without a new world or arm in any verdict |
+| 19 | R3 | disclosure of #16's dev projection: 4 dev strata UNRESOLVED -> LTC (F2-L3-spectral, F5-L3 cp/tt/spectral; bounded rungs above N1). The v0.3.1-set label is reported as a descriptive column | full disclosure of a rule change made with dev rows in hand |
+| 20 | R4 | fixtures_v032.json, FIXTURE_RERUN_v032.json and this diff added to the freeze list; a missing fixtures file raises; the draft status word is DRAFT until the freeze commit | freeze mechanics |
+| 21 | rec. | symmetric recency attribution: RECENCY_LOSES (random beats heuristic AND FIFO; heuristic EQUIVALENT to FIFO) is not a falsifier | FIFO could previously block only supports, not falsifiers |
+| 22 | rec. | GENERATOR_DEPENDENT, CROSSOVER and multiplicity count LIVE readings only | gate outcomes are not verdicts; chance counts were inflated |
+| 23 | rec. | the 6.2 confound label widened (optimizer, model class, regularization, tuning point); the 4 L-K strata are declared structurally ineligible in 6.2 | disclosure |
+| 24 | N5 | G1, E6 and headroom read campaign rows (disclosed). New labels are listed: INDEX_NOT_REQUIRED, UNRESOLVED_UNMATCHED, RECENCY, RECENCY_LOSES, UNRESOLVED_E6, UNTESTED_NO_HEADROOM, UNTESTED_HEADLINE_NOT_LEARNABLE, UNRESOLVED_INSTRUMENT_CANNOT_FIRE | disclosure |
+| 25 | minor | dual-matching clamp flagged at BOTH ends of the random ladder; comment fixed ("highest buffer slot", not "most recent") | code-prose accuracy |
+
 Not changed (and why):
 - The rung grid incl. 2c (still run and reported). The EXACT_RETENTION_PAYS comparison set changed (row 16), with
   fixture evidence.

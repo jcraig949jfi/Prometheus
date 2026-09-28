@@ -2,8 +2,9 @@
 
 Seat: Ensorain[m2-32b65655], M2.
 
-STATUS: FROZEN v0.3.2. It supersedes v0.3.1 (freeze 768ea8ce9) BEFORE any campaign row, by operator amendment
-2026-09-28.
+STATUS: DRAFT v0.3.2 (the freeze commit changes this word to FROZEN). It supersedes v0.3.1 (freeze 768ea8ce9) BEFORE
+any campaign row, by operator amendment 2026-09-28. Pre-freeze review: ensorain/arc3/reviews/LM01_V032_PREFREEZE_REVIEW.md
+(required fixes R1-R4 applied; diff rows 17-25).
 - The freeze commit is the commit that introduced this line. Its full SHA and the hash of every frozen file are in
   ensorain/lm01/FREEZE.json, committed right after.
 - Per-stratum numbers: PREREG_WTP_LM01_TABLES.md (generated, frozen with this file).
@@ -26,8 +27,13 @@ The candidate law is s1 of the program directive (frozen text held by Harmonia).
   competence of systems whose persistent state is a bounded, coarse-grained representation, under honestly accounted
   resources.
 - A contraction done transiently at readout and then discarded (L-R) is not persistent contraction. An L-R win is
-  labelled LOSSLESS_TRANSIENT_CONTRACTION. It damages the persistent-state reading only and says nothing either way about
-  a computation-inclusive law.
+  labelled LOSSLESS_TRANSIENT_CONTRACTION (LTC). SCOPE, narrowed pre-freeze (review R2):
+  - LTC means "exact retention + a transient rank-3 refit beats a RANDOM-SUBSAMPLE exact-record reservoir with the same
+    fixed factor model";
+  - it does NOT damage the persistent-state reading in general: a per-cell (sum, count) sufficient-statistic table,
+    bounded by the cell count, reproduces L-R's fit exactly by a weighted-least-squares identity (s11; reported as
+    SUFFSTAT, s6.1);
+  - it says nothing either way about a computation-inclusive law.
 - "Accessible" means operationally accessible to the acting system within its per-query budget; tested by index
   ablation (6.4).
 - WHETHER SELECTIVITY ITSELF IS CAUSALLY REQUIRED REMAINS UNTESTED in LM01 (operator 2026-09-26 item 5; D11).
@@ -119,9 +125,17 @@ The candidate law is s1 of the program directive (frozen text held by Harmonia).
 - ENDPOINTS, both reported: (a) L-R, the declared endpoint (noisier; local minima); (b) the warm full-store reservoir.
 - G1 HEADLINE-PAIR LEARNABILITY (v0.3.2): 6.1 is read only if CI.lo(L-R - N1) > .30 on the campaign rows. Otherwise
   UNTESTED_HEADLINE_NOT_LEARNABLE.
-- EXACT_RETENTION_PAYS: L-R WINS over EVERY genuinely BOUNDED rung, B <= c (c/8, c/4, c/2, c). This was v0.3.2 diff
-  #16: under v0.3.1 the set included 2c, which holds 37-73% of the history, and the headline positive control could not
-  fire. 2c is still measured and reported.
+- EXACT_RETENTION_PAYS: L-R WINS over EVERY genuinely BOUNDED rung, B <= c (c/8, c/4, c/2, c), AND each of those rungs
+  is itself above the N1 floor (CI.lo(rung - N1) > 0; review R1, the same floor as the sufficiency readings).
+  - This is v0.3.2 diff #16/#17. Under v0.3.1 the set included 2c (37-73% of the history), and the headline positive
+    control could not fire.
+  - DEV PROJECTION, disclosed (review R3; committed dev rows, v0.3.1 reservoir without the end-of-life refit): 4 of the
+    9 G1-learnable dev strata change from UNRESOLVED to LTC under the v0.3.2 rule (F2-L3-spectral, F5-L3 cp / tt /
+    spectral). Their bounded rungs are above N1, so the differences are real. No other dev label changes.
+  - The v0.3.1-set label is reported as a DESCRIPTIVE column (v031_set_label).
+  - 2c is still measured and reported.
+- SUFFSTAT (reported only, never in a verdict): the per-cell sufficient-statistic table refit by the same count-weighted
+  ALS. suffstat_minus_LR is reported beside the endpoints.
   - With L-K EQUIVALENT to L-R -> COUNTERMODEL_SIGNAL (F-B).
   - Otherwise -> LOSSLESS_TRANSIENT_CONTRACTION.
 - HEADLINE POSITIVE CONTROL (v0.3.2; dev/fixtures_v032.json): planted noisy rank<=3 worlds per level. If it does not
@@ -145,7 +159,9 @@ The candidate law is s1 of the program directive (frozen text held by Harmonia).
   - RECENCY: WIN(i) but not WIN(f).
   - HEURISTIC_ADVANTAGE: WIN(i), WIN(ii), WIN(f).
   - HEURISTIC_BUYS_BYTES: WIN(i) and WIN(f), not WIN(ii).
-  - RANDOM_BEATS_HEURISTIC: random WINS at (i).
+  - RANDOM_BEATS_HEURISTIC: random WINS at (i), unless the loss is attributable to recency.
+  - RECENCY_LOSES: random WINS over the heuristic AND over FIFO, and the heuristic is EQUIVALENT to FIFO. This is
+    symmetric recency attribution (pre-freeze review), and it is not a falsifier.
   - HEURISTIC_EQUIVALENT_TO_RANDOM: EQUIVALENT at (i) and (ii).
   - UNRESOLVED otherwise.
 6.4 HYBRID ACCESS:
@@ -154,16 +170,22 @@ The candidate law is s1 of the program directive (frozen text held by Harmonia).
 - Else UNRESOLVED.
 6.5 INTERVENTION: DEFERRED (D11); intervention.py is NOT USED.
 6.6 AGGREGATION:
-- GENERATOR_DEPENDENT: computed for every reading type.
-- CROSSOVER: the headline switches with level within a generator.
+- GENERATOR_DEPENDENT: computed for every reading type, over LIVE readings only. Gate outcomes (UNTESTED_*,
+  UNRESOLVED_E6, UNRESOLVED_INSTRUMENT_CANNOT_FIRE, UNRESOLVED_UNMATCHED) are not verdicts.
+- CROSSOVER: the headline switches with level within a generator (live readings only).
+- The multiplicity denominators count LIVE readings only.
+- GATES THAT READ CAMPAIGN ROWS, disclosed: G1 (headline-pair learnability), E6, and headroom use the campaign rows of
+  the stratum. They are control and learnability gates on quantities other than the reading's own contrast. The v0.3.1
+  statement "no campaign world decides eligibility" applies to the dev TESTABLE frame only.
 - NULL: the headline pair is learnable, the headline positive control passes at the level, and EVERY rung is EQUIVALENT
   to L-R.
 - INSTRUMENT_FAILURE: a calibration check fails (e.g. the F1 trigger).
 - UNTESTED and UNREPLICATED as defined.
 - The campaign-vs-dev E6 disagreement is reported.
 6.7 FALSIFIERS (written before data; per stratum; each on its own; none conjoins an absence):
-- F-B (lossless): COUNTERMODEL_SIGNAL (6.1). An L-R-only result is LOSSLESS_TRANSIENT_CONTRACTION (persistent-state
-  damage only).
+- F-B (lossless): COUNTERMODEL_SIGNAL (6.1).
+- An L-R-only result is LOSSLESS_TRANSIENT_CONTRACTION. It is not a falsifier. Its scope: a random-subsample reservoir
+  is a poor bounded state. It does not show that exact retention is necessary (the SUFFSTAT identity).
 - F-C (surprise-driven retention): HEURISTIC_EQUIVALENT_TO_RANDOM or RANDOM_BEATS_HEURISTIC (6.3). SCOPE: whether the
   two declared surprise-driven eviction heuristics beat random retention of exact records with the factor model fixed.
   It is not a test of relevance-selective contraction.
@@ -188,10 +210,13 @@ Rerun under v0.3.2 code (log: ensorain/lm01/dev/FIXTURE_RERUN_v032.json, 2026-09
 - Eviction positive control (oracle beats random at matched B): PASS, gap +.63. It was +.91 before the one-ALS-
   convergence rule (#677); the change is from that rule, not v0.3.2.
 - R1e ablation positive control (oracle-key HYBRID): PASS, gap 1.23.
-- HEADLINE POSITIVE CONTROL (dev/fixtures_v032.json; planted noise-SD 1.0 rank<=3 worlds, dev seeds 9_890_000-007):
-  - L2 PASS and L3 PASS (EXACT_RETENTION_PAYS fires as LOSSLESS_TRANSIENT_CONTRACTION).
-  - L1 FAILS (too few never-seen cells). An L1 headline that does not fire therefore reads
-    UNRESOLVED_INSTRUMENT_CANNOT_FIRE.
+- HEADLINE POSITIVE CONTROL (dev/fixtures_v032.json; planted rank<=3 worlds, dev seeds 9_890_000-007):
+  - The first run at noise SD 1.0 was DEGENERATE (the bounded rungs sat below N1, so the control "fired" against broken
+    arms; review R1).
+  - Rerun at the declared SD 0.3 under the floor rule: L2 PASS and L3 PASS, NON-DEGENERATE: every bounded rung is above N1 (L2 rungs .16-1.04 vs N1 -.02; L3 .23-1.17 vs
+    -.02), and L-R WINS over c/8..c (L2 CI.lo 1.53/1.39/1.17/.73; L3 1.46/1.28/.92/.52). L1 FAILS (only 2 of 8 dev
+    worlds have enough never-seen cells). A level that fails reads
+    UNRESOLVED_INSTRUMENT_CANNOT_FIRE for a non-firing headline.
 - Launch-gate negative controls: rejected (tests), including the operator's amendment text with its
   "<NEW_V0.3.2_HASH>" placeholder and the v0.3.1 hash.
 - Per-stratum E6 is evaluated on the campaign rows (6.3).
@@ -226,6 +251,15 @@ Rerun under v0.3.2 code (log: ensorain/lm01/dev/FIXTURE_RERUN_v032.json, 2026-09
 - EXACT_RETENTION_PAYS power per level is as the headline positive control shows (s7). It is judged against rungs
   <= c. The 2c comparison is reported but cannot carry a verdict: no dev stratum, and not even the planted control, had
   CI.lo(L-R - 2c) > .30.
+- SUFFICIENT-STATISTIC IDENTITY (review R2): L-R's count-weighted ridge-ALS objective equals, up to a constant, the
+  objective on per-cell means. A bounded (sum, count) table (<= c cells) therefore reproduces the L-R endpoint's fit
+  exactly (review probe p_suffstat.py: AC within .007 at ~1/3 of the bytes).
+  - Any LTC or COUNTERMODEL result is therefore a statement about the RANDOM-RECORD reservoir as the bounded comparator.
+  - It is not evidence that exact records are needed. LM02 carries the sufficient-statistic arm.
+- The secondary (6.2) is confounded by optimizer, model class, regularization and tuning point.
+- In the 4 strata whose frozen LOSSLESS is L-K, no SELECTIVE ladder point is eligible under the one-query read
+  convention (L-K reads each record once; any 3-pass learner reads 3n). The secondary there reads UNRESOLVED by
+  construction.
 - The fixed rank-3 readout means 6.1 cannot distinguish memory from readout capacity (review F11; a data-adaptive
   lossless readout belongs to LM02).
 - F-C covers surprise-driven heuristics only.
@@ -239,6 +273,7 @@ Rerun under v0.3.2 code (log: ensorain/lm01/dev/FIXTURE_RERUN_v032.json, 2026-09
 - D1-D12 as in v0.3.1.
 - D13 (v0.3.2): the independent pre-result review findings F1-F15, repaired or declared per
   ensorain/LM01_DIFF_v031_to_v032.md.
+- D14 (v0.3.2 pre-freeze review): R1-R4 plus the recommended items (diff rows 17-25).
 
 ## 14. Checklist self-check
 

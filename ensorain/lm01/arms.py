@@ -529,7 +529,7 @@ class BufferALS(Metered):
 
     def _reconstruct(self, idx, A):
         """v0.3.2 (review F10): memory-based reconstruction map: the buffered exact record at that cell where one is
-        retained (the most recent buffered value), else the factor readout."""
+        retained (if several are buffered, the one in the highest buffer slot), else the factor readout."""
         base = self._predict(A)
         if len(self.by) == 0:
             return base
@@ -546,3 +546,25 @@ class BufferALS(Metered):
     def loci(self):
         return dict(stored_record_bytes=int(self.bA.nbytes + self.by.nbytes),
                     hypothesis_bytes=int(self.U.nbytes + self.V.nbytes), transient_hypothesis_bytes=0)
+
+
+
+class SuffStatR(LosslessR):
+    """v0.3.2 (pre-freeze review R2): REPORTED-ONLY readout, never an arm in any verdict. A persistent per-cell
+    (sum, count) table (bounded by the cell count) refit by the SAME count-weighted ridge ALS as L-R. By the weighted-
+    least-squares identity it reproduces L-R's fit. It measures what the lossless endpoint's advantage needs: a bounded
+    sufficient statistic, not the individual records."""
+    name, category = "SUFFSTAT", "REPORT_ONLY"
+
+    def _fit_data(self):
+        A = self.store.A.astype(int)
+        c = np.ravel_multi_index(A.T, self.dims)
+        u, inv, cnt = np.unique(c, return_inverse=True, return_counts=True)
+        sums = np.bincount(inv, weights=self.store.y)
+        cells = np.array(np.unravel_index(u, self.dims)).T.astype(np.int16)
+        self._table_bytes = int(len(u) * (2 * len(self.dims) + 8 + 8))
+        return cells, sums / cnt, cnt.astype(float)
+
+    def loci(self):
+        return dict(stored_record_bytes=0, hypothesis_bytes=int(getattr(self, "_table_bytes", 0)),
+                    transient_hypothesis_bytes=int(getattr(self, "_last_fit_bytes", 0)))
