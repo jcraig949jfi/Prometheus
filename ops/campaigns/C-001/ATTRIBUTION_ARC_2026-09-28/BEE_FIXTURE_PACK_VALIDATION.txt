@@ -1,0 +1,27 @@
+K1_exact_self_copy PASS flip 23/23 (skipped 9) completeness-unnamed none []
+K2_scratch_copy PASS flip 8/8 (skipped 0) completeness-unnamed none []
+K4_shift4 PASS flip 19/19 (skipped 9) completeness-unnamed none []
+K5_self_painter PASS flip 0/0 (skipped 16) completeness-unnamed none []
+K6_computed PASS flip 0/0 (skipped 0) completeness-unnamed none []
+K7_retention PASS flip 8/8 (skipped 8) completeness-unnamed none []
+K8_value_coincidence PASS flip 0/0 (skipped 1) completeness-unnamed none []
+K10_overlap_ldir PASS flip 16/16 (skipped 0) completeness-unnamed none []
+K11_control_flow_copy PASS flip 0/0 (skipped 0) completeness-unnamed none []
+K12_translation_table PASS flip 1/1 (skipped 0) completeness-unnamed none []
+K13_input_laundering PASS flip 1/1 (skipped 0) completeness-unnamed none []
+K14_out_readback PASS flip 1/1 (skipped 0) completeness-unnamed none []
+K15_reset_register PASS flip 0/0 (skipped 0) completeness-unnamed none []
+K17_ldir_wrap PASS flip 0/0 (skipped 8) completeness-unnamed none []
+K22_guard_not_taken PASS flip 1/1 (skipped 15) completeness-unnamed none []
+K23_operand_cipher PASS flip 0/0 (skipped 0) completeness-unnamed none []
+K26_ldir_self_overwrite PASS flip 0/0 (skipped 0) completeness-unnamed none []
+
+mutation testing (each mutant must fail >= 1 fixture):
+  loc0            caught by ['K1_exact_self_copy', 'K4_shift4', 'K5_self_painter', 'K7_retention']
+  reverse         caught by ['K1_exact_self_copy', 'K4_shift4', 'K5_self_painter', 'K7_retention']
+  memmove         caught by NONE -- not detectable in this world
+  ptrlabel        caught by ['K5_self_painter', 'K6_computed', 'K8_value_coincidence', 'K11_control_flow_copy']
+  noexec          caught by ['K1_exact_self_copy', 'K2_scratch_copy', 'K4_shift4', 'K5_self_painter']
+  noctrl_untaken  caught by ['K22_guard_not_taken']
+
+ALL PASS

@@ -203,3 +203,29 @@ excess; Q7; Q-input; Q8r in both scopes.
 - One BEE run (seeded draw from one family) and one NPE specimen family.
 - The pair-execution confound is untested.
 - In-situ capability is confounded with survival; the isolated test is the primary.
+
+## Amendment A (2026-09-28): the BEE fixture pack
+- **Content:** archaeon/attribution/bee_fixtures.py, for r004041's world (BYTECODE32, L = 32, SEPARATED, no COPYALL).
+  * 17 applicable fixtures; each has an exact memory image and hand-written expected labels.
+  * Validated on the frozen VM by the independent reference tracer (archaeon/attribution/bee_ref_tracer.py), by the per-byte
+    flip test and by the completeness arms: all pass. Output: BEE_FIXTURE_PACK_VALIDATION.txt.
+- **Mutation testing:** the pack catches loc0, reverse, ptrlabel, noexec and noctrl_untaken. The memmove mutant is undetectable
+  in this world, because it has no COPYALL and LDIR is sequential by construction.
+- **Inapplicable, with reasons:**
+  * K3, K16, K24, K25: the PC is confined to the writer's own half-regions in SEPARATED;
+  * K10-COPYALL, K27: no COPYALL;
+  * K9, K18, K19: world-level, and remain the owner's fixtures;
+  * K20, K21, K28-K30: NPE.
+- **Consequence for Q6 in this world:** executed code is always the writer's, so co-execution by material is structurally 0.
+  Q6 is uninformative for r004041, which is recorded before the data.
+
+## Amendment A2 (2026-09-28): the performer exemption in identification (s2.1)
+- **Defect:** as written, s2.1(2) de-identifies a locus whenever exec_deps or ctrl_deps name any entity other than the data
+  label's. The performer's entity is always in exec_deps. So every birth in which one entity copies ANOTHER's material, the Q1
+  case itself, could never be identified, and Q1 would be INCONCLUSIVE by construction.
+- **Change:** the dependence sets are tested against {data-label entity, performer entity}. A third entity, or a non-entity base
+  label (INPUT/OTHER/RESET/ENV/CONTEXT), still de-identifies.
+- **Effect on fixtures:** K25 (occupant opcode copies the writer's bytes, pointers set by the writer) becomes IDENTIFIED descent
+  from the writer with performer = occupant, not IMPLICIT as Review 4 proposed. That is the producer != donor event Q1 exists to
+  count. K25 is inapplicable in BEE's SEPARATED world anyway; it stays in force for NPE.
+- **Found by:** Archaeon, while writing the reference tracer (not by a reviewer). It is flagged for Review 5's adjudication.
