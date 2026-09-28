@@ -82,3 +82,33 @@ Pending (original section 2 text follows).
 
 What the prior art does NOT give: a per-lineage attribution rule for WHICH entity is "the replicator" when the first copier is
 imperfect. That is the part this thread adds, once reviewed.
+
+## Dated result 2026-09-28: Attempt 2 (block 15, arm U, full length to 65,716). A COUNTER-INSTANCE
+- **Run:** probes/dominant_founders.py on ubu001, 12,292 s. dom15_U_full.json in this folder, sha256
+  0d6ee0832cd9109a6d5a0db87ea3d9a1ee2b221691eff5af6b0e3e935b2c1a7b.
+- **Births:** 3,419,189, of which SELF_COPY 3,388,232, HOST_EXECUTION 16,533, NEIGHBOUR_COPY 4,223 and ORIGINATION 7,980.
+- **Takeover lineage: glin 2405.**
+  * Material-descent root: a random-inflow ARRIVAL. First birth at epoch 37,826 (SELF_COPY).
+  * 3,164,161 births by epoch 64,000, of which 17,105 hosted. 121-128 cells alive from epoch 38,000 on. It is the top lineage
+    in every snapshot from 38,000 to 64,000.
+- **Its founder is ALREADY an exact self-copier:**
+  * class EXACT_GATED, fp_depth 0 (its fixed point is itself), births on 256/256 inputs;
+  * the sampled members are EXACT_UNGATED (8/8 at most snapshots; 7 + 1 INERT at 58,000).
+- **Reading:**
+  * In block 15 arm U, the takeover replicator IS its material founder. There is no founder -> fixed-point-child transition.
+  * The block-13 pattern is not universal in Archaeon: it is one route (near-copier -> fixed point), alongside a direct route
+    (an exact self-copier arriving by inflow).
+  * The member class differs from the founder's class (gated -> ungated). This replay does not resolve by which mechanism
+    (mutation, or the copy map), since members' tapes were not recorded. Recorded as open, not claimed.
+- **Correction to Attempt 1's explanation:**
+  * Attempt 1 attributed the empty 30,000 horizon to takeover genomes first reproducing at 64,768-65,472 (from ENVGATE-01
+    LINEAGES.json dominant-descendant records).
+  * In this replay, the takeover lineage's first birth is at 37,826. That is still after 30,000, so Attempt 1 remains
+    uninformative, but the dates it cited do not describe this lineage.
+  * The likely cause is that the LINEAGES.json records are dominant-DESCENDANT genomes (late variants), not the material
+    founder. This is not verified; it is recorded as a hypothesis.
+- **Consequence for section 3:**
+  * The cross-engine "common pattern" now has a same-engine counter-instance. The claim is weakened from "replicator identity is
+    better treated as a lineage-level attractor" to "BOTH routes occur; which one holds is a per-lineage empirical question, and
+    attribution must not assume the first copier is (or is not) the replicator".
+  * The BLOCK_128 arm was not replayed to full length.

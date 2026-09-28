@@ -27,3 +27,12 @@ NPE painters, Artemis FR-011).
 - **Both support treating replicator identity as a property of a lineage-level dynamical system** (a copy map's attractor; a
   host-parasite relation), not of the first apparent copier.
 Sources: FIXEDPOINT_RESULT.md, DRYRUN_BEE_r022153.md (+ correction), REVIEW_7_ADJUDICATION.md.
+
+## Update 2026-09-28: block-15 full-length replay is a COUNTER-INSTANCE
+- The takeover lineage (glin 2405: 3.16M births, first birth at 37,826) has a founder that is already an exact self-copier
+  (fp_depth 0).
+- There is no founder -> fixed-point-child transition there.
+- The thread's claim narrows: both routes occur (near-copier -> fixed point in block 13; a direct exact self-copier in block 15
+  U), so replicator identity is a per-lineage empirical question.
+- The members' class shift (EXACT_GATED founder -> EXACT_UNGATED members) is open.
+Source: FIXEDPOINT_RESULT.md "Dated result 2026-09-28".
