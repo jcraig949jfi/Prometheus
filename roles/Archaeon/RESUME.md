@@ -9,7 +9,7 @@ On bootstrap read, in order:
 
 ## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 IN PROGRESS (operator directive "turn the lens into an instrument")
 Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/. Branch archaeon/attribution-v0-2026-09-28
-(worktree D:\Prometheus-worktreesrchaeon-attribution-v0-2026-09-28). Code archaeon/attribution/ (spec ATTRIBUTION_V0.md);
+(worktree D:\Prometheus-worktrees\archaeon-attribution-v0-2026-09-28). Code archaeon/attribution/ (spec ATTRIBUTION_V0.md);
 tests archaeon/tests/test_attribution_v0.py; packet folder ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/.
 Running (ubu002): TH-013 replay (tmux th013, output ~/wk/th013/th013_out.json) and adversarial Review 1 (tmux rev1, output
 ~/wk/rev1/out/REVIEW_1.md). After both: th013_analyze.py, th015_archaeon.py on the replay's tapes, adjudicate Review 1, packet.
