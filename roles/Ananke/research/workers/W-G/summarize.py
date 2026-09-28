@@ -41,7 +41,11 @@ def main(ns):
             cls = "CHAOTIC DIVERGENCE" + ("" if not (L2 or L3 or dyn) else " (NOTE: a signed level fires; inspect)")
         elif r["sufficient_stores"]:
             hr = r["hist_ratio"]
-            cls = ("ACCUMULATION" if hr and hr["ratio"] >= 0.5 else "STATIC STORAGE") + " in " + "/".join(r["sufficient_stores"])
+            if hr and hr["acc_in_sample"] >= 0.75:      # Addendum F2
+                cls = ("ACCUMULATION" if hr["ratio"] >= 0.5 else "STATIC STORAGE")
+            else:
+                cls = "STATIC STORAGE (specificity undetermined: no single-world code)"
+            cls += " in " + "/".join(r["sufficient_stores"])
         else:
             cls = "REGENERATION/DISTRIBUTED"
         return {"L1": r["L1"], "L1_persistent": r["L1_persistent"], "L1.5": L15, "L2": L2, "L3": L3,

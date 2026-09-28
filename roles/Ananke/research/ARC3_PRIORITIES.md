@@ -48,9 +48,9 @@ Inputs: SYNTHESIS_2026-09-28_ARC2.md, BACKLOG_TEMPORAL_DISTRIBUTED.md
 - T-TM-2 (a routine latency fingerprint): subsumed by the W-A kernel
   model. MERGED into T-WA-2.
 - T-EXT-2 (a reservoir fossil): deep backlog; no current Thread needs it.
-- T-ENV-1 (a writable-environment dial): NEW-LENS, deep backlog. Revisit
-  only if T-RET-2 closes retention (then PTE lacks a persistent substrate
-  by construction and a writable field becomes the natural question).
+- T-ENV-1 (a writable-environment dial): NEW-LENS, deep backlog.
+  [CORRECTED by W-G: the "PTE lacks a persistent substrate" rationale was
+  wrong; plants show the substrate can retain.]
 - T-WC-2b (emission cost vs code class): deep backlog; X4 showed firing
   codes without a cost. Low information per GPU hour.
 

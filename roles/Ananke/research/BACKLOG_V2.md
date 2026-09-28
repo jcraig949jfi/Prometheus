@@ -13,7 +13,7 @@ T-RET-2 RETENTION CONFIRMATION | Does any champion keep a cue past its
   Decides SI01 and whether PTE has any persistent-memory lens | W-E NO
   (preregistered), scars, the f7e62fe3 integrator (exploratory) |
   scars inert? integrator real? | an adversarial prereg with a
-  confirmation namespace | PTE CPU | ACTIVE (W-G)
+  confirmation namespace | PTE CPU | ANSWERED (W-G): NO retention regime (L3/L4 all adj p = 1.0 in both namespaces; 5 controls valid, incl. a latent Kp store the L4 probes detect). f7e62fe3 = an ACCUMULATION trace (L2, replicated), inert. fresh2/3 w-scar READ but sign-scrambled (interference). The substrate CAN retain (plants C-EFF, C-AVL); the NO is about what evolved. SI01 CLOSED for current champions. Successor: T-RET-EVO (evolve under an n-back task that rewards the old cue; reachability controls C-AVL/C-EFF): sharpened, GPU
 T-BR-1 SETRULE ROLES | Which computational roles does dynamic rule
   switching provide; does it expand capability or compress a fixed
   program? | Decides whether "rules" is a capability dial or an artefact |
@@ -59,7 +59,7 @@ T-REDISCOVER (Block E second question) | Under altered demands (e.g.
   site resets between cue and readout that spare the ring buffer, or a
   multi-lag demand beyond the latch's single slot) | sharpened
 T-M3-2 the M3 in-flight swap reaches only .33 (dup / async inbox?) | CPU | sharpened
-T-SI-SCAR SI successor around an actual carrier | GATED on T-RET-2 | sharpened
+T-SI-SCAR REDEFINED on fresh3's +8 sensor w-write (the only signed plastic write that drives later behaviour, via chaos): is its direction recoverable given the routing state? | CPU | sharpened (deep)
 T-CT-4 why the MAJ pw4/dest-all/lat4 point is always channel | GPU | sharpened
 T-CT-5 relative FLIP threshold | instrument rule first | sharpened
 T-WC-1 two-axis carrier reporting as a lens function | after W-I | sharpened
@@ -74,8 +74,7 @@ T-WC-3..5 Aether proposals (fwd vs fwd_add; freeze flags vs bytes;
 ## Tier 4: deep backlog (raw or deliberately parked)
 T-DM-2 a genuinely joint (synergistic) code | reopen only with a trajectory
   showing simultaneous necessity with a non-unit accuracy sum
-T-ENV-1 a writable-environment dial (a NEW LENS) | natural if T-RET-2
-  closes retention
+T-ENV-1 a writable-environment dial (a NEW LENS) | NOT justified by "no substrate" (W-G: the substrate can retain); only if T-RET-EVO shows retention is unreachable by search
 T-X-2 Cosmos ruler cross-validation (gated on Cosmos)
 T-INS-5 JIDT/IDTxl screening with channel variables
 T-EXT-2 a reservoir / echo-state fossil

@@ -135,3 +135,21 @@ P-f Headline: NO nontrivial retention regime (p ~ 0.75).
 Run everything on 0x5EB (specimens + controls), fix bugs, and write
 Addendum F with any change (each labelled as a bug fix or a rule change
 made after seeing discovery data). Then run 0x5EC once and apply the rule.
+
+## Addendum F (written after the discovery run 0x5EB, BEFORE any use of 0x5EC)
+Discovery outcome seen: no specimen has L3 or L4-dyn after Holm; controls
+all behaved. Changes (none touches a level definition, a statistic, alpha,
+a family or the decision rule):
+F1 (rule defect fix, mechanism CLASS only). The heal test counted pairs
+   that merge anyway (D_544f3d24 merges naturally by trial k+6, so every
+   carrier looked "sufficient"). New rule: X is a sufficient store iff,
+   among pairs that differ at the heal tick AND stay different to episode
+   end without a heal, >= 90% are bitwise equal at the end with X healed.
+   If no pair persists unhealed, no store is sufficient (transient).
+F2 (rule defect fix, CLASS only). The accumulation ratio is used only when
+   the regression's best feature decodes cue k in-sample with accuracy
+   >= 0.75; otherwise the class is "STATIC STORAGE (specificity
+   undetermined)" (D_6a47bd68: best feature 0.56, ratio meaningless).
+F3 Confirmation: wg.py (with F1) on 0x5EC, all 16 specimens + 5 controls,
+   nperm 20000, one run, then summarize.py (with F2). The DECISION RULE is
+   applied exactly as written above. FROZEN.

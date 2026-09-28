@@ -440,9 +440,14 @@ def analyse(sp, ns, nperm):
                 fe = rec["final_eq"]            # X identical in every pair: heal is a no-op
             else:
                 fe = run(sp, tw, hooks={(K + 3) * Pd - 1: hk})["final_eq"]
+            persist = before & ~rec["final_eq"]          # differ at heal tick AND never merge unhealed
+            npers = int(persist.sum())
             heal[gname] = {"n_before": nb, "merged_at_end": int((fe & before).sum()),
-                           "frac": float((fe & before).sum() / max(nb, 1))}
-    suff = [g for g, v in heal.items() if v["n_before"] and v["frac"] >= 0.9]
+                           "frac": float((fe & before).sum() / max(nb, 1)),
+                           "n_persist_unhealed": npers, "merged_persist": int((fe & persist).sum()),
+                           "frac_rel": float((fe & persist).sum() / npers) if npers else None}
+    # Addendum F1: sufficiency relative to natural merging
+    suff = [g for g, v in heal.items() if v["n_persist_unhealed"] and v["frac_rel"] >= 0.9]
     hr = hist_ratio(rec, tw, c)
     # G4
     from prometheus.ananke import lens

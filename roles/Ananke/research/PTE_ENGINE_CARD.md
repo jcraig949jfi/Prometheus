@@ -89,9 +89,11 @@ KNOWN FAILURE MODES (established)
 - PRESENT-BUT-UNUSED carriers: a component can decode the cue without
   carrying it (4781b0a1 pay0: decoder 0.85, swap no effect). Decoders
   alone never identify a carrier.
-- WRITTEN-BUT-NEVER-READ SCARS: non-decaying plastic stores (w, Kp)
-  keep cue-signed traces forever with no effect (W-E). Retention is not
-  use.
+- PERSISTENT TRACES ARE NOT MEMORY (W-E, W-G): non-decaying stores keep
+  cue-signed or accumulated traces. Most are inert; some (fresh2/3 w) are
+  READ but sign-scrambled (interference). No champion expresses
+  trial-specific retention (preregistered, replicated). The SUBSTRATE can
+  retain (hand plants C-EFF, C-AVL); evolution was never rewarded for it.
 - TEMPORAL-WINDOW BLINDNESS: an ablation window missing the causal tick
   (C1 D-A). Fix: cue_arrival_profile reach checks.
 - CHANNEL INERT BY PHYSICS: frozen routing under dest_mode "all".
