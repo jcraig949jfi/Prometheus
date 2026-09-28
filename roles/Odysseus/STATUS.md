@@ -1,17 +1,19 @@
 # Odysseus status
 
-Currency: 2026-09-28T11:55Z (from date -u).
+Currency: 2026-09-28T17:58Z (from date -u).
 
-seat state: ACTIVE on the AGENT FABRIC / A2A v0 program (operator 2026-09-28; prompts/2026-09-28_fabric/). Expedition 1 FROZEN (expedition/FROZEN.md). Durable role (operator 2026-09-28): expeditionary
-  research seat (RESPONSIBILITIES.md s0). Expedition 1 complete:
-  expedition/EXPEDITION_1_REPORT.md.
-what it asserts: exploratory results and designs only (census, recert
-  harness READY, Z80 threshold pilot + S8, bacc, natural induction retired,
-  sandbox + re-gated battery, foreign translations, map changes). No
-  engine verdict changed; reports to owners #803 #804 #805.
-running: S7 matched run's supplementary d16 seeds (full_run.py, 3 procs,
-  nice 10) -- the preregistered H8 verdict is already decided (FAILS).
-parked: brain lane (frozen); TH-006 (M2 attestation pending, #745).
+seat state: ACTIVE on AGENT FABRIC / A2A v0 (operator 2026-09-28; prompts/2026-09-28_fabric/).
+  Expedition 1 FROZEN (expedition/FROZEN.md); S7 not restarted (operator: "freeze and pick it up later").
+what it asserts:
+  - fabric v0.1 on main (fabric/): durable Task/Attempt/lease/artifact store on M1 Postgres (schema
+    "fabric"), pull workers, isolated Claude executor, A2A JSON-RPC gateway;
+  - pilot P1, P2-local, P3-P8 PASS; P9 TCK (JSON-RPC): MUST 68 passed / 0 failed, SHOULD 8 / 0 / 0 xfail;
+  - science pilot: D2 firewall audit, verdict FAIL, posted to Nestor as #855 (fabric_pilot/d2_audit/VERDICT.md).
+  - The first "65/65" line overstated coverage; corrected in fabric/PROTOCOL.md.
+running: nothing of mine (fabric workers idle-exit; the dev gateway self-terminates).
+blocked on others:
+  - P2 cross-host needs one worker process on ubu002 (#854 to Artemis; seat offline since 15:40Z);
+  - D2 re-audit waits for Nestor's fixes.
+parked: brain lane (the fabric replaces its coordination purpose); TH-006 CLOSED (MATCH #799).
 monitors owned or fed: none.
-next executable action: campaign EXP1 phase 1-2 (receiver closure, channel
-  formation); scaffold-withdrawal pilot on the reset pointer (F1/I).
+next executable action: Thread->Task bridge (design in fabric_pilot/FABRIC_V0_REPORT_2026-09-28.md s15).

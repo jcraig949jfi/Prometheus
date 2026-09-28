@@ -65,7 +65,7 @@
 - **Access:** the child is a `spawn` process running as the same OS account as the custodian, so the secret paths
   (public in `custody.py:39-40`) and the released key file are readable.
 - **The AST audit only flags bare-name calls:**
-  - `np.fromfile('/…/hidden_D2.plain.json')` gives 0 flags;
+  - `np.fromfile('/.../hidden_D2.plain.json')` gives 0 flags;
   - `f=[open][0]; f(path)` gives 0 flags;
   - a bare `open()` is flagged (control).
 - **The audit only reads `.py` files, but every zip member is extracted.** A sourceless `.pyc` on the package
