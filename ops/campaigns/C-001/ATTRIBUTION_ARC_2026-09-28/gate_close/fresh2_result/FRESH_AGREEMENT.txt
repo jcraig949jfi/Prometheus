@@ -1,0 +1,27 @@
+G2 FRESH SET: reference sha e638eeb10540 vs Nestor sha 4f542a708ba3 (sealed output hashes); RAW, as declared before opening
+
+A
+  unwritten          addr 17904/17904; ctrl 17904/17904; exec 17904/17904; label 17904/17904; written 17904/17904
+  written_other      addr 553/553; ctrl 553/553; d3:ctrl_slice 530/553; d4:performer 553/553; d4:store_by 553/553; exec 553/553; label 553/553; written 553/553
+  written_perf_none  addr 67/67; ctrl 67/67; d3:ctrl_slice 63/67; d4:performer 67/67; d4:store_by 67/67; exec 67/67; label 67/67; written 67/67
+  written_self       addr 676/676; ctrl 676/676; d3:ctrl_slice 652/676; d4:performer 676/676; d4:store_by 676/676; exec 676/676; label 676/676; written 676/676
+A:d1_nonmutated
+  unwritten          addr 17904/17904; ctrl 17904/17904; exec 17904/17904; label 17904/17904; written 17904/17904
+  written_other      addr 553/553; ctrl 553/553; d3:ctrl_slice 530/553; d4:performer 553/553; d4:store_by 553/553; exec 553/553; label 553/553; written 553/553
+  written_perf_none  addr 67/67; ctrl 67/67; d3:ctrl_slice 63/67; d4:performer 67/67; d4:store_by 67/67; exec 67/67; label 67/67; written 67/67
+  written_self       addr 676/676; ctrl 676/676; d3:ctrl_slice 652/676; d4:performer 676/676; d4:store_by 676/676; exec 676/676; label 676/676; written 676/676
+M
+  unwritten          addr 5965/5965; ctrl 5965/5965; exec 5965/5965; label 5965/5965; written 5965/5965
+  written_other      addr 169/169; ctrl 169/169; d3:ctrl_slice 168/169; d4:performer 169/169; d4:store_by 169/169; exec 169/169; label 169/169; written 169/169
+  written_perf_none  addr 33/33; ctrl 33/33; d3:ctrl_slice 33/33; d4:performer 33/33; d4:store_by 33/33; exec 33/33; label 33/33; written 33/33
+  written_self       addr 233/233; ctrl 233/233; d3:ctrl_slice 215/233; d4:performer 233/233; d4:store_by 233/233; exec 233/233; label 233/233; written 233/233
+M:d1_nonmutated
+  unwritten          addr 5770/5770; ctrl 5770/5770; exec 5770/5770; label 5770/5770; written 5770/5770
+  written_other      addr 161/161; ctrl 161/161; d3:ctrl_slice 160/161; d4:performer 161/161; d4:store_by 161/161; exec 161/161; label 161/161; written 161/161
+  written_perf_none  addr 31/31; ctrl 31/31; d3:ctrl_slice 31/31; d4:performer 31/31; d4:store_by 31/31; exec 31/31; label 31/31; written 31/31
+  written_self       addr 226/226; ctrl 226/226; d3:ctrl_slice 209/226; d4:performer 226/226; d4:store_by 226/226; exec 226/226; label 226/226; written 226/226
+M:d2_MUTATION_content
+  mutated            flag+side+pos+old_label 212/212
+
+discrepant loci: 70 (FRESH_DISCREPANCIES.jsonl)
+G2 FRESH (gate, raw, per class, sets A and M): PASS
