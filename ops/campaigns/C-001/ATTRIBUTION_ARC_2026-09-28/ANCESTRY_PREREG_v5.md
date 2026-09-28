@@ -116,3 +116,10 @@ Limits recorded from the same list:
 - The mutation-testing items "ctrl omits the OUT guard / region-exit" are semantic no-ops in BEE SHARED (the counter's label IS
   the PC label), so they are undetectable there by construction.
 - Pins are sha256 prefixes of file contents (git blob of vm.py is 91d8516c).
+
+## Amendment C3 (2026-09-28, made AFTER the BEE dry-run data; flagged): P2's evaluation set
+- **Defect:** R7 evaluates P2 on the TRANSMISSION class, which is defined as writer-majority. Every "target"-labelled birth in that
+  class therefore disagrees with copy-descent by construction.
+- **Change:** P2 is evaluated on ALL identifiable births whose native label is "target" (v4's original wording).
+- **This amendment follows the data** (DRYRUN_BEE_r022153.md). It is admissible only because the outcome is the same under both
+  readings (HOLDS: 57% vs 100%). It is recorded so that no reader mistakes it for a pre-data choice.
