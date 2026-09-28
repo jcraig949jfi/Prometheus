@@ -1,6 +1,7 @@
 # PKG-F: Causal selectivity by restoring the discarded distinctions (research-ready package, design v0.1)
 
-Owner: Ensorain (ARC3). Status: DESIGN. Nothing is run; per the directive (Block F) nothing launches before the LM01
+Owner: Ensorain (ARC3). Status: DESIGN, instrument validated on dev (RESULTS_PKGF_PROBE.md: lossless 9e-16, PC-help
+fires, sham ignored by the learned readout, forced sham hurts). Nothing is run; per the directive (Block F) nothing launches before the LM01
 results are integrated, except a cheap prerequisite probe (s9). Pickup: readable cold; it assumes only the repo.
 
 ## 1. Question
@@ -39,6 +40,9 @@ For a trained selective learner S with persistent state theta_S and admitted his
 - SHAM: theta_S + a size-matched channel of residuals from an INDEPENDENT stream of the same world (the same size, the
   same marginal distribution of r), same readouts. It separates "these particular distinctions" from "any extra
   records of this size".
+- S+D/learned-recent: as S+D/learned, but the weight a is chosen on a holdout of the MOST RECENT 20% of records.
+  Added after the dev probe (RESULTS_PKGF_PROBE.md): it separates "obsolete information hurts" from "the readout's
+  selection is fooled by obsolete data".
 - ORACLE-GATED: S+D with the readout restricted to the part of D_S the GENERATOR marks as relevant (analysis-only
   upper reference).
 

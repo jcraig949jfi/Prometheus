@@ -62,7 +62,8 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - DISC: the restore design (PKG-F).
 - METHOD: WTP arms plus a restore operator.
 - RES: M2 or off-M2 (numpy).
-- MAT: designing (Block F).
+- MAT: instrument validated on dev (RESULTS_PKGF_PROBE.md). Noise/spurious channel nearly INERT; obsolete channel HURTS
+  (-0.9..-1.6) under the learned readout while the sham is ignored. Next: the recency-holdout arm + stationary twins.
 
 ## T05 Capacity vs selection (reservoir as bridge)
 - Q: at matched capacity, does semantic selection beat random retention, at matched bytes AND matched HR2?
