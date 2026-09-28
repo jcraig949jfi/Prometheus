@@ -454,3 +454,21 @@ self-poisoning) -> X-DD-STATE-RESET (reset only on genome change: CLEAN_NULL -- 
 is the self-produced one) -> X-DD-STATELESS (0.38 -> 0.90) -> C-STATELESS (both cells: NOT_CONFIRMED, p = 0.012; the
 effect sat entirely in ffa6) -> C-STATELESS-FFA6 (confirmed). **Not confirmed in 7ae3's cell.** Withdrawn along the way:
 'inherited state blocks the donor' (X-DD-NOCOPY-CONTEXT post hoc; killed by X-DD-STATE-RESET).
+
+## P2 (endogenous heredity program 2026-09-27; theory-aware by date)
+
+**E-P2-1 C-ZERO-SPECIFIC CONFIRMED (frozen b498b133b, fresh donor panel, 48 fresh seeds per arm):** the establishment
+rescue by fresh-state execution is specific to the environment's ZERO initial register state: ZERO 26/48 vs a different clean
+state (all bytes 0x5A) 2/48 (p = 2.4e-8); carried 6/48, random 3/48. This RE-DESCRIBES E-W1-2: the barrier is not 'persistent
+state' as such but dependence on environment-supplied zero addressing that the donor's own block copy consumes (P2 corpus:
+95.7% of competent donors are SELF-free offset-64 copiers taking their address from never-written zero registers + tape
+layout; stalled donors depend on a fresh HL 14/20). Part of this is by construction: the COMPETENT ruler certifies from zeros.
+**WITHDRAWN:** 'persistent register state is the establishment barrier' (as stated in the W1 report) and 'register persistence
+is an ffa6-specific barrier' (X-P2-BRIDGE: with a fixed donor panel the fresh-state effect is +0.25 in 7ae3, +0.09 in ffa6;
+W1's 7ae3 null read as low power).
+**Acquisition, re-described (EXPLORE, not promoted):** X-P2-ATTRIB -- 372/372 dense donors copy only through the alias;
+X-P2-SHAM -- one-byte block-write density without a usable copier gives 0/96 donors (density rival killed); X-P2-PLANT --
+the plain two-byte copy planted once in every initial genome gives 32/96 (vs 0 plain, 49 dense). Acquisition is limited by
+the AVAILABILITY of copy-capable material; the alias acts mainly by making it common. E-W1-1 stands as measured; its
+'encoding accessibility' reading narrows to 'frequency/availability'.
+Synthesis: campaigns/npe-p2-endogenous-heredity-2026-09-27/SYNTHESIS.md.

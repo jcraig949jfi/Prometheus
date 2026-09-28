@@ -9,8 +9,13 @@ Backlog: `BACKLOG.md`. Work packages: `work_packages/`. Delegate inputs: `delega
 
 W1's two barriers survive, but both are re-described.
 
-1. **Acquisition.** Donor competence runs entirely through the one-byte copy alias (372/372). [PENDING: SHAM and
-   PLANT verdicts decide between "a usable one-byte COPIER" and "copy presence or soup density".]
+1. **Acquisition** is limited by the AVAILABILITY of usable copy-capable material, not by encoding length as such.
+   - Donor competence runs entirely through the alias (372/372).
+   - The alias's block-write density without a usable copier produces NO donors (SHAM 0/96).
+   - The ordinary two-byte copy, simply made present in every initial genome, reproduces ~2/3 of the effect
+     (PLANT 32/96 vs 0 plain, 49 dense).
+   - The planted copy then disappears from the population (0.76 -> 0.16 of genomes). Donors arise while it is
+     common.
 
 2. **Establishment.** "Persistent register state poisons donors" is refuted as stated. Only the ZERO reset rescues
    establishment. A different clean state (0x5A) or a random state does WORSE than carried state, and even
@@ -21,7 +26,8 @@ W1's two barriers survive, but both are re-described.
    - The establishment barrier is therefore better described as **dependence on environmental scaffolding that
      the reproducer's own action destroys**.
    - This is partly built in by construction: the competence ruler certifies from zeros.
-   - [PENDING: C-ZERO-SPECIFIC, the fresh-panel CONFIRM.]
+   - **CONFIRMED (C-ZERO-SPECIFIC, fresh donor panel, fresh seeds):** ZERO 26/48 vs CONST 2/48, p = 2.4e-8; CARRY
+     6/48; RANDOM 3/48.
 
 3. **The "ffa6 but not 7ae3" split does not replicate.** It does not hold with a fixed implanted donor panel;
    there the state effect is largest in 7ae3. W1's 7ae3 null is best read as low power (8 donor runs per arm), not
@@ -32,8 +38,8 @@ W1's two barriers survive, but both are re-described.
 | W1 claim | Attack | Test | Outcome |
 |---|---|---|---|
 | Acquisition limited by encoding accessibility of block copy (C-DENSE-COPY) | Donors may succeed for reasons other than the alias | X-P2-ATTRIB: re-assay 372 dense donors on the stock VM | Competence runs through the alias: 0.93 -> 0.00 in 372/372. Negative control not exercised (no alias-free dense donors exist) |
-| same | "Instruction density changes unrelated dynamics" | X-P2-SHAM: same 1-byte block-write density, random src/dst, no usable copier | [PENDING] |
-| same | "Presence, not encoding" | X-P2-PLANT: a 2-byte ED B0/B8 planted in every initial genome, stock VM, paired seeds | [PENDING] |
+| same | "Instruction density changes unrelated dynamics" | X-P2-SHAM: same 1-byte block-write density, random src/dst, no usable copier | KILLED: 0/96 donors (plain 0, dense 49) |
+| same | "Presence, not encoding" | X-P2-PLANT: a 2-byte ED B0/B8 planted in every initial genome, stock VM, paired seeds | SUPPORTED: 32/96 donors (~2/3 of dense) with the 2-byte encoding; availability is the operative variable |
 | same | Horizon probabilities overstate or understate effects (literature pitfall 6) | reanalysis | Open: T-ACQ-7 |
 | same | Pair-tape soup vs random-walk search (Knierim 2026) | none yet | Open: T-ACQ-4, WP-5 |
 | Establishment limited by register persistence in ffa6 (C-STATELESS-FFA6) | Cell-specific? | X-P2-BRIDGE: implanted fixed panel, 4 cells x 2 states | Split does NOT replicate; W1's 7ae3 null reinterpreted as low power |
@@ -176,9 +182,9 @@ cheapest discriminator, lens and resource class. The change log is at its foot.
 | X-P2-REGSTATE | EXPLORE | SIGNAL (ZERO_SPECIFIC) | only the zero reset rescues; other clean states are worse than carried |
 | X-P2-LINEAGE | EXPLORE | WEAK_SIGNAL | late robust genomes: replacement in 9/13 runs, within D0's lineage in 4/13 |
 | X-P2-D0CHECK | EXPLORE | CLEAN_NULL | 3 of those 4 D0 sets were already robust; one candidate transition remains |
-| X-P2-SHAM | EXPLORE | [PENDING] | |
-| X-P2-PLANT | EXPLORE | [PENDING] | |
-| C-ZERO-SPECIFIC | CONFIRM | [PENDING] | fresh donor panel, frozen b498b133b |
+| X-P2-SHAM | EXPLORE | CLEAN_NULL | 1-byte block-write density without a usable copier: 0/96 donors |
+| X-P2-PLANT | EXPLORE | SIGNAL | the planted 2-byte copy gives 32/96 donors; the planted instruction is lost over time |
+| **C-ZERO-SPECIFIC** | CONFIRM | **CONFIRMED** | fresh panel: ZERO 26/48 vs CONST 2/48 (p = 2.4e-8); CARRY 6/48; RANDOM 3/48 |
 
 ## 12. Resource leases
 
@@ -188,15 +194,21 @@ cheapest discriminator, lens and resource class. The change log is at its foot.
   host reached 100% CPU.
 - **Yield.** Nestor stopped X-P2-PLANT at 36/96 (resumable) and released #6 at 19:23, announced on comms (#761 and
   #762).
-- **Re-acquire.** Through the host-lease-file convention, when Ananke's lease clears, then release. The record is in
-  `LEASES.jsonl`.
+- **Re-acquire.** Ananke released `cpu8` at 19:23:31 (comms #763). Nestor acquired it through the host lease file at
+  19:23:47, ran PLANT (resume), SHAM and C-ZERO-SPECIFIC, and released it at 21:31, all announced on comms. The
+  record is in `LEASES.jsonl`.
+- **Compute.** ~4.5 h of 10-worker pool time, <= ~45 worker-hours, 17:01-21:31. Plus light in-process analyses and
+  three delegates (no NPE compute). No GPU, no external spend.
 - **The finding.** The program has two lease conventions that do not see each other. One operator ruling would fix
   it (see s15).
 
 ## 13. Important nulls and withdrawn interpretations
 
-- **WITHDRAWN:** "persistent register state is the establishment barrier" (refuted by X-P2-REGSTATE; it is loss of
-  zero-state scaffolding).
+- **WITHDRAWN:** "persistent register state is the establishment barrier" (refuted by X-P2-REGSTATE; confirmed
+  re-description C-ZERO-SPECIFIC: it is loss of zero-state scaffolding).
+- **KILLED:** "the alias acts through block-write density" (X-P2-SHAM 0/96).
+- **NARROWED:** "acquisition limited by encoding accessibility" -> "by availability of copy-capable material"
+  (X-P2-PLANT).
 - **WITHDRAWN:** "register persistence is an ffa6-specific barrier" (X-P2-BRIDGE; 7ae3 null read as low power).
 - **NOT SUPPORTED:** "successful donors copy before poisoning" (X-P2-BRIDGE founder ages).
 - **NULL:** establishment in persistent lineages does not produce robustness afterwards; it selects robust

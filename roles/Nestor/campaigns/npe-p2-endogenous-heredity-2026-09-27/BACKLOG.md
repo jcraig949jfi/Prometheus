@@ -240,3 +240,11 @@ structure axis. Resource: LEASED.
 - 2026-09-27 opened (P2): 40 Threads from W1, delegates, and P2 early results.
 - 2026-09-27 T-END-1 narrowed after X-P2-ENDOSTATE CLEAN_NULL (establishment sorts founders in multi-genome early
   populations); lineage-identity question split out as T-INS-LINEAGE / X-P2-LINEAGE.
+- 2026-09-27 T-EST-1 CLOSED: the split does not replicate (X-P2-BRIDGE); the new Thread is why SLOTTED / NICHES raise baseline
+  establishment (-> T-WLD-3).
+- 2026-09-27 T-EST-2 answered: ZERO_SPECIFIC (X-P2-REGSTATE; CONFIRMED by C-ZERO-SPECIFIC). The Thread moves to WP-1
+  (matched-selection arms; circularity).
+- 2026-09-27 T-ACQ-1 answered: attribution SIGNAL (X-P2-ATTRIB), sham CLEAN_NULL (X-P2-SHAM). The density rival is killed.
+- 2026-09-27 T-ACQ-2 answered: presence suffices for ~2/3 (X-P2-PLANT). NEW: T-ACQ-8 -- why is the planted copy LOST (0.76 ->
+  0.16) while donors arise? A copy instruction at the wrong place may be deleterious, which would be a cost of accessibility.
+- 2026-09-27 T-END-1: one candidate within-lineage transition (7ae3 16000006; X-P2-D0CHECK), n = 1 -> WP-4 step 1.

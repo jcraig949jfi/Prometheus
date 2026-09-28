@@ -6,6 +6,15 @@ Nothing running. The loop is at rest, not retired. Charter: budgeted autonomous 
 (RESPONSIBILITIES.md section 2). **Resume from `EXPERIMENT_GRAPH.jsonl`**; the last line per id wins.
 Report: `campaigns/c9x-explore-2026-09-24/CAMPAIGN_REPORT.md`.
 
+## P2 -- ENDOGENOUS HEREDITY PROGRAM (operator directive 2026-09-27, prompts/2026-09-27_endogenous_heredity_program/)
+
+CLOSED 2026-09-27 ~21:35 EDT. Synthesis: campaigns/npe-p2-endogenous-heredity-2026-09-27/SYNTHESIS.md.
+Backlog (40+ Threads): BACKLOG.md. Work packages WP-1..WP-6: work_packages/. Nothing running; no lease held.
+- W1 merged into main (086801161) after integrity checks.
+- CONFIRMED: C-ZERO-SPECIFIC (the establishment rescue is specific to the ZERO reset: 26/48 vs 2/48, p = 2.4e-8).
+- Killed / narrowed / withdrawn: see SYNTHESIS s13.
+- HITL items: lease-convention unification; reset policy as a declared world axis (SYNTHESIS s15).
+
 ## NPE WINDOW W1 -- donor discovery (operator directive 2026-09-26, prompts/2026-09-26_npe_window_donor_discovery/)
 
 Window: 12 wall-h from 2026-09-26 09:32 EDT -> **21:32 EDT**; 10 workers; ~25% reserve (keep ~3 h).
