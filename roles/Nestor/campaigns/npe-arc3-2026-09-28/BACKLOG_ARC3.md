@@ -130,3 +130,6 @@ Resource classes:
   requested (#802). Every future heredity claim needs CVT-R or byte provenance. M: RUNNING (external).
 - 2026-09-28 NEW T-RULER-2 Cycle-aware self-state ruler: single-k ruler snapshots cycling state (forensic); X-P2 conclusions survive
   repair (X-A3-ENDOSTATE-R 326/341 agreement). M: ANSWERED.
+- 2026-09-28 X-A3-WITHDRAW closed CLEAN_NULL on withdrawal speed; robustness rises within the lineage after withdrawal (0.22 -> 0.94 vs
+  control 0.15 -> 0.10). NEW C-A3-WITHDRAW-ROBUST (frozen CONFIRM). M: DESIGNED. R: LEASED-M1 (~2.7 h at 10 procs).
+- 2026-09-28 T-SCAF-2 (Bourrat coupling) downgraded: the gradual-withdrawal premise did not hold for register initialization.

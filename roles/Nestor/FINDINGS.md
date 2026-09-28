@@ -523,3 +523,25 @@ seen in 18 runs: replacement by another lineage. Path: X-A3-ENDOSTATE-R (0.32 ->
 X-A3-FORENSIC-16000006 (distributed change; the copier fixes its own destination) -> C-A3-INTERNALIZE. Scope and limits: dense VM;
 'competent' is P-11 construction-competence (painter screen negative; CVT-R pending); self-location (tape placement) is NOT
 internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
+
+## ARC3: X-A3-WITHDRAW (2026-09-28, closed 10:12): withdrawal SPEED does not matter; withdrawal itself is followed by a robustness rise inside the lineage
+- **Preregistered question** (Bourrat 2022: internalization needs GRADUAL scaffold withdrawal): CLEAN_NULL.
+  - PERSISTS(GRADUAL) − PERSISTS(ABRUPT) = 0.00.
+  - In each arm (paired seeds, identical until epoch 300), 12 of 32 runs established and 12 of 12 persisted.
+  - The zero-specialist lineages did not collapse when the scaffold was removed, abruptly or gradually.
+- **Reported readout (not the classification):** the cycle-aware robust share of the founder lineage's competent
+  genomes.
+
+  | arm | epoch 300 | end |
+  |---|---|---|
+  | ABRUPT | 0.22 | 0.94 |
+  | GRADUAL | 0.24 | 0.93 |
+  | CONTROL_ZERO (scaffold kept) | 0.15 | 0.10 |
+
+  The founder lineage still holds the population at the end and was mostly NOT robust at withdrawal, so the rise is
+  change within the lineage, not sorting.
+- **Reading:** removing the register-reset scaffold is followed, within ~1700 epochs, by the lineage coming to cope with
+  carried state itself. This is register-initialization internalization under scaffold REMOVAL, the counterpart of
+  C-A3-INTERNALIZE, which was in the default world.
+- EXPLORE only. The frozen CONFIRM C-A3-WITHDRAW-ROBUST is declared (PLANNED).
+- Theory-aware; not offered as SI evidence.

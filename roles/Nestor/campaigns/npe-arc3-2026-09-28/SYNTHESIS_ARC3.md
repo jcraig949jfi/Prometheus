@@ -83,7 +83,16 @@ What the organism supplies versus the environment (transplant delegate, 332 copi
 | Copy primitive availability | PHYSICS (the instruction set) + accessibility (carrier exposure) | n/a |
 | Execution order / partner | Partner is not used by copiers (transplant T4); side-1 hijack exists | n/a |
 
-[X-A3-WITHDRAW, gradual vs abrupt withdrawal of the zero reset: PENDING at the time of writing.]
+**X-A3-WITHDRAW (the zero reset withdrawn after establishment)** was a CLEAN_NULL on its preregistered question:
+- the SPEED of withdrawal does not matter (gradual − abrupt persistence 0.00; 12/12 established lineages persist in
+  every arm);
+- Bourrat's gradual-withdrawal requirement is not borne out here.
+
+What it did show (reported readout, EXPLORE): after withdrawal, the founder lineage's cycle-robust share rose 0.22 ->
+0.94 (abrupt) and 0.24 -> 0.93 (gradual), against 0.15 -> 0.10 with the scaffold kept.
+
+So register initialization is internalized both where the scaffold is merely available (C-A3-INTERNALIZE, confirmed) and
+where it is removed (X-A3-WITHDRAW, awaiting C-A3-WITHDRAW-ROBUST).
 
 ## 7. Accessibility landscape
 
@@ -150,12 +159,17 @@ single-change form.
 | X-A3-FAIR | cpu8 host lease file | Ananke W-I (until ~03:07) | 03:07-05:06 |
 | X-A3-AUTOPSY | cpu8 | FAIR | 05:06-05:28 |
 | C-A3-INTERNALIZE | cpu8 | AUTOPSY | 05:28-07:31 |
-| X-A3-WITHDRAW | cpu8 | C-A3-INTERNALIZE | 07:32-[PENDING] |
+| X-A3-WITHDRAW | cpu8 (extended once, announced #809) | C-A3-INTERNALIZE | 07:32-10:12 |
 
 - Re-prioritized: WITHDRAW moved behind the confirm (queue health).
 - Repaired before launch: WITHDRAW's ruler (cycle-aware).
 - Every acquire and release is announced on comms and logged in `roles/Nestor/LEASES.jsonl`.
-- [Final release confirmation: PENDING.]
+- **All leases released.**
+  - The last release was by the WITHDRAW launcher at exit (10:12).
+  - `nestor_lease.py status` shows no Nestor lease.
+  - The earlier agora row (id 6) from P2 was released in P2.
+- One mid-run correction: WITHDRAW's runtime (~2.7 h) exceeded its 150-min lease. I added a token-checked `extend` to
+  the lease helper and extended with a comms announcement (#809) rather than letting the lease lapse.
 
 ## 14. Research-ready inventory
 
@@ -182,4 +196,13 @@ now also carries a documented ruler lesson for the program: P-11 certifies const
 
 ## 16. HITL
 
-[To be finalized after X-A3-WITHDRAW; see the final report.]
+No operator decision required. The next autonomous research arc is already prepared:
+- C-A3-WITHDRAW-ROBUST (frozen CONFIRM, declared);
+- T-STATE-2 (the route of internalization: the C-A3-INTERNALIZE lineages as a corpus);
+- WP-7 (tape rotation: withdraw the self-location scaffold);
+- WP-9 (full neutral baseline, portable).
+
+External inputs pending, none blocking:
+- Artemis CVT-R heredity certification of the Nestor donor sets (#802). Any heredity claim resting on a failing genome
+  will be re-checked.
+- Archaeon's ancestry-replay commission (#812/#818), accepted and queued next.
