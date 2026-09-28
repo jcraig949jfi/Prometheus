@@ -120,12 +120,21 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - MAT: idea.
 
 ## T11 Readout interference (irrelevant stored items)
+- EXT (lit/LIT_MEMORY_SYSTEMS.md):
+  - in exact stores, interference is mostly a READOUT property: harm scales with distractor SIMILARITY and position, not
+    count (GSM-IC; Context Rot), and the fixes are readout-only;
+  - the "random documents help" RAG claim failed reproduction;
+  - dense associative memory raises capacity from ~0.14N to exp(N) by changing ONLY the readout nonlinearity.
+- DISC update: vary distractor similarity at a FIXED distractor count (lit D6).
 - Q: does storing irrelevant items hurt through retrieval (k-NN neighbourhoods) rather than storage?
 - DISC: inject k irrelevant records into an exact store and measure L-K / H degradation vs L-R.
 - RES: light.
 - MAT: idea.
 
 ## T12 Optimizer confound, general
+- EXT: kNN-LM's gain over its own parametric model on the SAME data is a readout effect (key representation,
+  approximate search, softmax temperature; Xu, Alon, Neubig 2023). Parallel to our D6/D7: apparent memory effects
+  decompose into readout and optimization effects.
 - Q: does every apparent memory effect survive equalising the optimizer (SGD vs ALS vs closed form)?
 - EV: D6/D7.
 - DISC: rerun the T01 secondary with ALS-fit bounded substrates (BufferALS at B = 0).
@@ -211,3 +220,25 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
   to the Even process) with a tempered posterior.
 - RES: light.
 - MAT: idea. Pairs with T03.
+
+## T22 Change the question after writing (NEW; lit/LIT_MEMORY_SYSTEMS.md D3). KEY DISCRIMINATOR
+- Q: after the stream ends, query a latent or a formerly-nuisance variable that was NOT useful at write time. Which
+  memories can still answer it?
+- WHY: a write-time compressor must decide before it knows the query; an exact store defers compression to the readout.
+  This separates storage compression from readout compression without any capacity matching, and it is the natural
+  core of the causal-selectivity experiment (T04, Block F): the "discarded" distinctions become causally testable when
+  the task changes to need them.
+- DISC: WTP fields with two targets, target A during the life and target B (a different linear functional of the
+  latent, or the nuisance coordinate itself) at test. Arms: S (bounded, trained on A), BufferALS, L-R, L-K.
+- RES: light, WTP code (M2 or any node with the repo).
+- MAT: idea+, folded into PKG-F.
+
+## T23 Memorization -> generalization transition in bounded superposed memories (NEW; lit D5)
+- Q: as the number of stored episodes crosses a capacity, does exact recall fall WHILE unseen-combination accuracy
+  rises (Pham, Krotov et al. 2025; Kalaj et al. 2025)?
+- WHY: this is the regime where generalization is BOUGHT by compression; the direct counter to "lossless is the upper
+  bound".
+- DISC: sweep the stored count in a bounded low-rank / associative arm; plot recall-of-seen vs AC-on-unseen together.
+  LM01 reservoir rows give a partial version (HR2 vs never-seen AC per rung).
+- RES: light.
+- MAT: idea; partial data from T01.
