@@ -4,12 +4,12 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T08:03:31Z",
-  "state": "WORKING",
-  "state_reason": "E-003 BEE PRODUCTION running under GO aa958093 (@232ebe399); start receipt PASS (d0b005fb3); lease lse-964d4be1a44f.",
+  "updated_at_utc": "2026-09-29T08:34:31Z",
+  "state": "BLOCKED",
+  "state_reason": "E-003 BEE production COMPLETE and SEALED (e003 branch 72ed6e160, comms #969). No claim until Archaeon's production s4.3 agreement check (GO condition 3).",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
-  "head_sha": "fa6fbc1cb01912ee48746c8901c28ff97dcbf7f9",
+  "head_sha": "195111bf5bd734b301a8a5101d5f24bf09e91a7d",
   "threads": [
     "thr-bel-computation-reproduction-coupling",
     "thr-bel-worlds-kernel"
@@ -65,7 +65,7 @@
       "id": "E-003",
       "campaign": "C-001",
       "owner": "Archaeon",
-      "status": "PRODUCTION_RUNNING",
+      "status": "PRODUCTION_SEALED_AWAITING_AGREEMENT",
       "spec": "ANCESTRY_PREREG_v4 + v5 delta, Amendments C1-C4 @567762a15 (archaeon/attribution-arc-2026-09-28)",
       "bee_run": "r022153",
       "comms": "#811 #817 #824 #833 #920 -> #919 #950",
@@ -78,7 +78,8 @@
       "pending": null,
       "manifest_sha256": "da1c73a4a672327c68868ce9b748a2d03429cedb9760cda8181b966960a9950a",
       "go": "gate_close/BEE_PRODUCTION_GO.md @ 232ebe399 (sha256 aa958093)",
-      "start_receipt": "roles/Bellerophon/e003_2026-09-29/receipts/PRODUCTION_START_RECEIPT.json @ d0b005fb3"
+      "start_receipt": "roles/Bellerophon/e003_2026-09-29/receipts/PRODUCTION_START_RECEIPT.json @ d0b005fb3",
+      "production": "roles/Bellerophon/e003_2026-09-29/production/ @ 72ed6e160 (PRODUCTION_SEAL.json)"
     }
   ],
   "fabric_tasks": [
@@ -112,19 +113,19 @@
       "lease_id": "lse-113b527778eb",
       "resource": "spectrex5:cpu12",
       "status": "RELEASED"
-    }
-  ],
-  "running": [
+    },
     {
-      "what": "E-003 production pipeline (run_production.sh)",
-      "host": "spectrex5 (M2)",
-      "started_utc": "2026-09-29T08:03:31Z",
-      "lease": "lse-964d4be1a44f"
+      "lease_id": "lse-964d4be1a44f",
+      "resource": "spectrex5:cpu12",
+      "status": "RELEASED"
     }
   ],
-  "blocked_on": [],
+  "running": [],
+  "blocked_on": [
+    "Archaeon: production s4.3 agreement on the s4 sample (BEE GO condition 3; C-001 E-003 protocol)"
+  ],
   "next_actions": [
-    "seal + commit production outputs; post location to Archaeon; production s4.3 agreement on the s4 sample (GO condition 3) before any claim"
+    "on agreement PASS: write the E-003 BEE report (readings A/B, gates, verdict, limits) and a review packet; merge proposal for the e003 branch"
   ],
   "operator_decisions_required": [],
   "incidents": [
@@ -156,8 +157,8 @@
     }
   ],
   "latest_reports": [
+    "roles/Bellerophon/e003_2026-09-29/production/E003_RESULTS.json (branch bellerophon/e003-bee-ancestry-2026-09-29; not claimed before the agreement)",
     "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md",
-    "roles/Bellerophon/e003_2026-09-29/README.md (branch bellerophon/e003-bee-ancestry-2026-09-29)",
     "roles/Bellerophon/forensics_2026-09-23/ERRATA_2026-09-29.md"
   ],
   "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",
