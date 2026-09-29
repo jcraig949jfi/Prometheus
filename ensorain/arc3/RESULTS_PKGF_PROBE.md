@@ -307,3 +307,31 @@ Exploratory (NOT precommitted), the more important shape:
 - M1: rho = 0, mean dAC(SD_all) < +0.10. The gain vanishes with a matched substrate, i.e. v6's gain was mismatch.
 - M2: rho = 1, mean dAC(SD_all) < -0.5. The obsolete-history harm persists with either substrate.
 - If M1 fails, v6's "retention pays" survives a matched substrate and becomes a candidate PKG-F reading.
+
+### v6 control result (precommit commit e7958ce18; results/pkgf_partial_ctrl.json; 60 s)
+
+- Substrate labels: cp: F2-selected = F3-selected = S-cp, so the cp half of the control is IDENTICAL to v6 and tests
+  nothing. tt: F2-selected S-lowrank vs F3-selected S-tt, a genuine control.
+- **M1 REFUTED:** rho = 0 mean dAC(SD_all) = +0.48 (tt with the matched substrate: +0.17 .. +0.92). The stationary gain
+  is not a substrate mismatch.
+- **M2 SURVIVES:** rho = 1 mean dAC(SD_all) = -0.63 < -0.5.
+
+The actual mechanism (found while diagnosing M1; a world property, checked directly):
+- The F3-style headline test ("never_seen") is never-seen in the FINAL episode only.
+- 87-89% of those test cells WERE recorded in earlier episodes. Measured on v6 worlds 9_800_050/051 and the frozen F3
+  worlds with the same seeds.
+- In a stationary world those earlier records are exact and current, so the gain is EXACT RECALL. Under a full switch
+  they are stale at the very cells being tested, so the harm is STALE RECALL.
+- The v2-v5 F2 twins used F2's test, which is unseen over the WHOLE stream. That is why their gain was ~0.
+
+Consequences:
+- v6's exploratory "keep-and-ignore beats discard, shrinking with the obsolete fraction" is WITHDRAWN as a
+  generalization reading. It is a statement about reuse of exact old records at the tested cells.
+- All PKG-F F3 readings (v2-v6) concern re-querying cells seen only in earlier regimes. That is a legitimate and
+  intended LM01 F3 question (can stale exact records be ignored?), but it is not generalization to unseen cells.
+- The PKG-F design must report two headline splits separately:
+  - (a) cells seen only in earlier regimes: the stale-recall test;
+  - (b) cells unseen in the whole stream: the generalization test.
+  Every claim must name its split. Added as the next precommitted run.
+- Note for LM01 (read-only; no frozen change): its F3 headline test has the same composition, and its interpretation
+  should say so.

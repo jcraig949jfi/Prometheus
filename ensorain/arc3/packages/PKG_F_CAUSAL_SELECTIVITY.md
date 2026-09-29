@@ -131,6 +131,14 @@ The design reports both, so the prior can be falsified.
   where it is not needed. This must be tested on a design where harm and repeats are decoupled before it is claimed.
 - Untested: multiple or gradual switches; F5 nuisance drift; N5 decaying reliability.
 
+## 9d. Required headline splits (added after the v6 control, RESULTS_PKGF_PROBE.md)
+
+- The F3 "never_seen" test is unseen in the FINAL episode only. 87-89% of its cells were recorded in earlier episodes.
+- Every PKG-F reading must be reported on two splits:
+  - (a) STALE-RECALL: cells seen only in earlier regimes;
+  - (b) GENERALIZATION: cells unseen in the whole stream.
+- The v2-v6 F3 results are split (a) results.
+
 ## 10. What it cannot establish
 
 - Necessity beyond the tested readout families (k-NN / kernel residual smoothers). A cleverer readout might use D_S

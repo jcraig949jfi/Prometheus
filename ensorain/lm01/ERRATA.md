@@ -36,3 +36,13 @@ at freeze ee8cbe0c8).
 - Consequence for a future launch: campaign rows should be checked for non-finite predictions and AC. The analysis's
   handling of a NaN or inf row is not verified here.
 - No change to any frozen file or rule.
+
+## E-4 (2026-09-29): composition of the F3 headline test (interpretation note only)
+
+- The F3_switch headline test "never_seen" is drawn from cells unseen in the FINAL episode's walk.
+- 87-89% of them were recorded in EARLIER episodes: measured on dev seeds 9_800_050/051, frozen generator.
+- The F3 headline therefore mainly measures whether stale exact records at re-queried cells are ignored. It does not
+  measure generalization to wholly unseen cells.
+- This matches the F3 intent (obsolete episodes). But any LM01 F3 interpretation should state it and must not describe
+  F3 as a generalization-to-novel-cells result.
+- No change to any frozen file, rule or test.
