@@ -25,15 +25,16 @@ def run(x, B):
     Ps["mix3_fs"] = fixed_share([Ps["split"], Ps["cssr_em"], Ps["rand_em"]], x)
     return {k: float((lp(P, x) - B)[len(x) // 2:].mean()) for k, P in Ps.items()}
 
-out = {"family": {}, "w2_3": {}}; t0 = time.time()
-for S in (3, 4, 5):
-    for ws in range(1, 9):
-        w = random_unifilar(S, ws); x = w.sample(4000, np.random.default_rng(ws + 100)); B = lp(w.bayes(x), x)
-        out["family"][w.name] = run(x, B)
-for seed in range(1, 17):
-    w = W.W2(3); x = w.sample(4000, np.random.default_rng(seed)); B = lp(w.bayes(x), x)
-    out["w2_3"][seed] = run(x, B)
-for g in ("family", "w2_3"):
-    print(g, {k: round(float(np.mean([r[k] for r in out[g].values()])), 4) for k in next(iter(out[g].values()))}, flush=True)
-print("%.0fs" % (time.time() - t0))
-(pathlib.Path(__file__).parent / "results" / "mix3_eval.json").write_text(json.dumps(out, indent=1) + "\n")
+if __name__ == "__main__":
+    out = {"family": {}, "w2_3": {}}; t0 = time.time()
+    for S in (3, 4, 5):
+        for ws in range(1, 9):
+            w = random_unifilar(S, ws); x = w.sample(4000, np.random.default_rng(ws + 100)); B = lp(w.bayes(x), x)
+            out["family"][w.name] = run(x, B)
+    for seed in range(1, 17):
+        w = W.W2(3); x = w.sample(4000, np.random.default_rng(seed)); B = lp(w.bayes(x), x)
+        out["w2_3"][seed] = run(x, B)
+    for g in ("family", "w2_3"):
+        print(g, {k: round(float(np.mean([r[k] for r in out[g].values()])), 4) for k in next(iter(out[g].values()))}, flush=True)
+    print("%.0fs" % (time.time() - t0))
+    (pathlib.Path(__file__).parent / "results" / "mix3_eval.json").write_text(json.dumps(out, indent=1) + "\n")

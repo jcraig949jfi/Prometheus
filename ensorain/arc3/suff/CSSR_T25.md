@@ -391,3 +391,18 @@ Reading (answers reviewer Q2):
 Reading: the three initialization/structure hypotheses fail on different worlds, and a prequential arbiter recovers
 the best of each. Relative to the T = 4000 parametric floor (~.003), the family gap drops from 5-7x (MIX, .0231) to
 ~4x (.0133). The remainder is data-limited (D2).
+
+## Tick 2026-09-29T09:20Z: the held-out family at T = 16000, as Fabric script Tasks (t16k_family.py)
+
+- Three script-executor Tasks (S = 3, 4, 5), 8 worlds each, same stream seeds (ws + 100), 2nd-half excess.
+- Learners: STAT6, split, CSSR_EM, RAND_EM, MIX3_FS. Refit every 1000.
+- mix3_eval.py gained a __main__ guard so its fixed_share can be imported without re-running its evaluation.
+- Before submission, the script was run locally on NO world (smoke import only).
+
+### Precommitment (written BEFORE submitting; T = 4000 values from results/mix3_eval.json and heldout_eval.json)
+
+- G1: MIX3_FS family mean at T = 16000 < .008 (T = 4000: .0133). The .008 figure was proposed in the review packet
+  before this run.
+- G2: MIX3_FS decreases from T = 4000 to T = 16000 in >= 22/24 worlds.
+- G3: STAT6 family mean at T = 16000 > .025 (T = 4000: .0372). The window floor persists.
+- G4: MIX3_FS < STAT6 in 24/24 worlds at T = 16000.
