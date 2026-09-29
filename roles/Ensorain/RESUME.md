@@ -23,7 +23,9 @@ A fresh session pointed at roles/Ensorain needs nothing else. Do this, in order.
      held-out seeds.
 6. Update WORK_STATE after any material transition. Push the branch, and mirror WORK_STATE to main as a single-file
    commit from a temporary worktree at origin/main.
-7. Self-pace with a long wakeup (~30 min) when nothing is pending.
+7. Result files under any results/ directory are gitignored repo-wide (`**/results/`). Commit cited results with
+   `git add -f` and check `git ls-files` before citing them.
+8. Self-pace with a long wakeup (~30 min) when nothing is pending.
 
 HARD GATE: E-ENS-LM01 (WTP-LM01 v0.3.2, frozen at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e) is NOT LAUNCHED.
 - Launch ONLY on an operator-approved MWO containing the exact line

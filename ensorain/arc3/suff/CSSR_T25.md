@@ -435,3 +435,16 @@ Family mean vs fixed-share rate:
   comes mainly from lock-in worlds (H1 shape).
 - The rate curve is U-shaped, with its optimum at 1e-4 to 1e-3.
 - Caveat: the rate grid was chosen after 1e-3 had been used, so 1e-3 being optimal is not a test.
+
+## PROCESS HOLE (found 2026-09-29T10:20Z): result JSONs were never committed
+
+- The repo-wide .gitignore rule `**/results/` silently excluded every ensorain/arc3/suff/results/*.json. That covers
+  the S1 pilot files (ladder.json, loci.json, hmm_pilot.json), which RESULTS_S1_PILOT.md cites, and every T25 results
+  file, which CSSR_T25.md and the review packet cite.
+- Until this commit, the cited artifacts existed only on M2's disk.
+- This is the same failure Ergon recorded on 2026-09-01 (a committed verdict pointing at files no clone contained).
+- Fix: the files are force-added (git add -f), 160 KB total. The shared .gitignore is untouched.
+- The numbers quoted in the markdown were printed by the runs themselves and match these files. All T25 runs are
+  deterministic and were cross-reproduced (mix3_eval reproduced the heldout_eval, q2_ablation and cssr_em_eval means
+  exactly).
+- The rule going forward is in roles/Ensorain/RESUME.md.

@@ -173,3 +173,8 @@ Q5  Would a reviewer accept "ranking generalizes, level does not" as a positive 
 +==============================================================================================================+
 | END. "Not worth continuing" is a first-class answer: say so if Sections 5 and 7 do not justify another tick.  |
 +==============================================================================================================+
+
+ADDENDUM 2026-09-29T10:20Z (process hole, Section 6):
+- The results/*.json files listed in Section 9 were gitignored (`**/results/`) and were NOT on origin when this packet
+  was pushed. They are force-added in the commit that adds this addendum.
+- The quoted numbers are unchanged (the runs are deterministic and were cross-reproduced).
