@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T14:15:00Z",
+ "updated_at_utc": "2026-09-29T14:50:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -64,7 +64,8 @@
   "s4 v2.2 reviewed 2/2 CONFORMS -> tallies usable: K_R1 flip coverage FAIL in every gated class (INCONCLUSIVE on the frozen reading; no claim broadened)",
   "D2 v5 repairs on main 57c809387 (B-1/B-2/S-1..S-6; selftests PASS)",
   "copy search: 2 run-1 candidate dirs match SAMPLE_MANIFEST_CONTENT 11/11 by content (Nestor's check; verifier v2 pending)",
-  "D2 v6 repairs on main 7c7b0b836 (BP-1; selftests PASS)"
+  "D2 v6 repairs on main 7c7b0b836 (BP-1; selftests PASS)",
+  "FINDINGS.md A-2 pressure row: EXTERNAL-only scope note (Artemis S3 Q8, #1010)"
  ],
  "incidents": [
   "2026-09-29 00:45-00:49 -04:00: UNAUTHORIZED ancestry production run 3 from Nestor's stale one-time schtask trigger (lease wait-acquire); killed; nothing committed; 10/11 run-2 1% sample files destroyed; tasks disabled; record INCIDENT_RUN3_2026-09-29.md"
@@ -79,7 +80,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 997,
+ "comms_cursor": 1010,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
