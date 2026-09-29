@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T06:10:00Z",
+ "updated_at_utc": "2026-09-29T07:30:00Z",
  "state": "WORKING",
- "branch": "task branches: nestor/s4v22-2026-09-29, nestor/d2v5-2026-09-29 (merged to main)",
- "head_sha": "57c809387c65a2f691fe5aa28e23ba00188a0c3e",
+ "branch": "task branch nestor/d2v6-2026-09-29 (merged to main)",
+ "head_sha": "7c7b0b8361a54b2e8088960c1ae8a7a055b64db9",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -18,19 +18,18 @@
   "ancestry production run 2 (GO_FINAL v2)"
  ],
  "fabric_tasks": [
-  "s4 v2.2 conformance: tsk-81146cfae322, tsk-d907522d6a14 -> 2/2 CONFORMS (review_s4v22/)",
-  "D2 v4 re-audit -> FAIL (Odysseus #944, VERDICT @ d3600b21e: B-1 icacls, B-2 allowlist, S-1 runner via entry)",
-  "D2 v5 re-audit: tsk-e315db41ef2e, tsk-76b0bf1e5a78; selftests tsk-f78419646fb3, tsk-9e65cbcac8c8 (base 57c809387, --cap fabric.runtime==0.2)",
-  "Archaeon 1% sample verification tsk-581bd93ac9f3 (host-affine skullport; still submitted; samples destroyed, see INCIDENT)"
+  "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
+  "D2 v5 re-audit -> FAIL (Odysseus #954, VERDICT @ 01ac0fedf: BP-1 key consumed before package validation; Linux selftest)",
+  "D2 v6 re-audit: tsk-76beeeeab3ae, tsk-8dd16e12e036; selftests tsk-7cd8cf31e4d6, tsk-66a2d7180670 (base 7c7b0b836, --cap fabric.runtime==0.2)",
+  "Archaeon sample verification v2: tsk-c4317a3656d0 (host skullport, NPE_SAMPLE_DIR = candidate 1) -- waiting: no fabric worker on SKULLPORT"
  ],
  "running": [
-  "D2 v5 re-audit (2 replicas + 2 selftests)",
-  "key-holder scan (entry firewall-check, v4 code, comms dump)",
-  "disk search for surviving run-2 1% sample copies"
+  "D2 v6 re-audit (2 replicas + 2 selftests)",
+  "key-holder scan (entry firewall-check, v4 code, comms dump)"
  ],
  "blocked_on": [
-  "1% sample check: restore only via a candidate passing the frozen verifier on all 11 (Archaeon addendum 5, #945); otherwise regenerate (production run) vs declare lost = OPERATOR decision",
-  "D2: S1 root of trust (operator #925); v5 re-audit adjudication (Odysseus)"
+  "1% sample check: Archaeon's verifier-v2 task tsk-c4317a3656d0 needs a fabric worker on SKULLPORT (none exists)",
+  "D2: S1 root of trust (operator #925); v6 re-audit adjudication (Odysseus)"
  ],
  "next_actions": [
   "relay review results when terminal",
@@ -38,14 +37,15 @@
   "host capability requests (MWO s6) when designation approaches: dedicated custodian account; separate predictor-child account + outbound firewall rule"
  ],
  "operator_decisions_required": [
-  "D2 root of trust for protocol records (#925): (a) signed commits + pinned keys / (b) operator-confirmed hashes / (c) accept residual",
-  "branch protection on main",
-  "run-2 1% sample (if no verified copy is found): regenerate by re-running run 2 as frozen (a production run; MWO-0001 authorizes none) vs declare the sample lost (#943/#945)"
+  "D2 root of trust for protocol records (#925): (a) signed commits + pinned keys / (b) operator-confirmed hashes / (c) accept residual; now also covers the allowlist's comms-database identity",
+  "branch protection on main (also covers force-push removal of D2 once-only records)",
+  "a fabric worker on SKULLPORT for host-affine tasks (Archaeon's sample verification)",
+  "only if the run-1 candidates FAIL Archaeon's verifier v2: regenerate run-2 sample (a production run) vs declare it lost"
  ],
  "latest_reports": [
-  "comms #947 (s4 v2.2 CONFORMS; ancestry INCONCLUSIVE on the frozen reading)",
-  "comms #949 (D2 v5)",
-  "comms #943 (INCIDENT run 3)"
+  "comms #952 (sample candidates)",
+  "comms #958 (D2 v6)",
+  "comms #947 (s4 v2.2 CONFORMS)"
  ],
  "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
  "closed": [
@@ -58,9 +58,19 @@
   "s4 v2.1 review returned (2/2 DOES NOT CONFORM); s4 v2.2 posted #940 then run (61a2f68bc; unused pending review)",
   "D2 v4 repairs on main e6e482ae6 (P1/P2/P3 + all v3 should-fix; selftests PASS)",
   "s4 v2.2 reviewed 2/2 CONFORMS -> tallies usable: K_R1 flip coverage FAIL in every gated class (INCONCLUSIVE on the frozen reading; no claim broadened)",
-  "D2 v5 repairs on main 57c809387 (B-1/B-2/S-1..S-6; selftests PASS)"
+  "D2 v5 repairs on main 57c809387 (B-1/B-2/S-1..S-6; selftests PASS)",
+  "copy search: 2 run-1 candidate dirs match SAMPLE_MANIFEST_CONTENT 11/11 by content (Nestor's check; verifier v2 pending)",
+  "D2 v6 repairs on main 7c7b0b836 (BP-1; selftests PASS)"
  ],
  "incidents": [
   "2026-09-29 00:45-00:49 -04:00: UNAUTHORIZED ancestry production run 3 from Nestor's stale one-time schtask trigger (lease wait-acquire); killed; nothing committed; 10/11 run-2 1% sample files destroyed; tasks disabled; record INCIDENT_RUN3_2026-09-29.md"
+ ],
+ "defects_s12": [
+  "2026-09-29 MWO s12 (sample route, MWO s4): Fabric cannot reach the run-2/run-1 sample files on M1 -- no fabric worker runs on SKULLPORT, so the host-affine task tsk-c4317a3656d0 cannot be claimed (same class as Odysseus #916). Expected: host-affine Task runs on the node holding the files. Observed: submitted, never claimed. Science blocked: the 1% sample agreement only. Nestor does not start fabric workers (infrastructure owner decides).",
+  "2026-09-29 INCIDENT run 3 (INCIDENT_RUN3_2026-09-29.md): D-INC-1 stale one-time schtask trigger; D-INC-2 production_launch.py has no never-overwrite guard; D-INC-3 git-ignored evidence had no immutable copy"
+ ],
+ "candidate_dirs_keep_untouched": [
+  "F:/Prometheus-worktrees/nestor-s1-forensics/roles/Nestor/campaigns/ancestry-replay-2026-09-28/_scratch/exports_run1_original",
+  "F:/Prometheus-worktrees/nestor-s1-forensics/roles/Nestor/campaigns/ancestry-replay-2026-09-28/_scratch/production_run1_INVALIDATED"
  ]
 }
