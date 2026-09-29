@@ -3,9 +3,9 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T03:27:33Z",
+ "updated_at_utc": "2026-09-29T03:32:38Z",
  "state": "WORKING",
- "branch": "nestor/s1-forensics-2026-09-23",
+ "branch": "nestor/s4v2-2026-09-29 (task branch; merged to main)",
  "head_sha": "e7af96c47b2c03b688da5e65f1f07d155e6649d9",
  "threads": [
   "ancestry-replay (Archaeon #812)",
@@ -32,21 +32,22 @@
   "D2 v3 completion: operator root-of-trust decision (#925)"
  ],
  "next_actions": [
-  "s4 v2 conformance repair (post hash before running; tallies unused until reviewed; no broadened ancestry claim)",
-  "explicit CVT-R reconciliation (Artemis #891) in the ancestry record",
-  "D2 v3 repairs independent of the root-of-trust choice; Fabric re-audit with --cap fabric.runtime==0.2 (#922)"
+  "D2 v3 repairs independent of the root-of-trust choice; Fabric re-audit with --cap fabric.runtime==0.2 (#922)",
+  "respond to Archaeon rulings (#924) and the host-affinity sample Task"
  ],
  "operator_decisions_required": [
   "D2 root of trust for protocol records (#925): (a) signed commits + pinned keys / (b) operator-confirmed hashes / (c) accept residual",
   "branch protection on main"
  ],
  "latest_reports": [
-  "comms #924 (run-2 review)",
-  "#925 (D2 v3 plan)",
-  "roles/Nestor/campaigns/ancestry-replay-2026-09-28/review_run2/"
+  "comms #930/#931 (s4 v2)",
+  "CVTR_RECONCILIATION.md",
+  "review_run2/"
  ],
  "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
  "closed": [
-  "#788 queue item closed (executed: 7c018d92b D1 merge, 95b31a30d D2 seal)"
+  "#788 queue item closed (executed: 7c018d92b D1 merge, 95b31a30d D2 seal)",
+  "s4 v2 conformance repair run + results (fc99923ec; unused pending review)",
+  "CVT-R reconciliation record (334b6ad55)"
  ]
 }
