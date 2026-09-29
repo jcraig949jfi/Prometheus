@@ -1,0 +1,37 @@
+{
+ "X011": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 1, "usable": 2, "total": 9,
+  "checked_claims": [
+   "Per-family PAYS rates reproduce committed oracle_summary (c2 .160/.2683/.2608; c0b .140/.2592/.2625) -> verified, 917edba0a7b9:roles/Cosmos/campaigns/c2/run_7b14ec99e/oracle_summary.json:4-12 and c0b/run_21fd1b2cc/oracle_summary.json:4-12",
+   "Sealed F law BA .930 (law A) / .955 (law B) vs reported 5-NN .841/.833 -> verified, 917edba0a7b9:roles/Cosmos/campaigns/c2/F_adjudication.json:8,20,3635,3647",
+   "Campaign itself records law A as planted-invariant recovery with 97.5% agreement with hand-derived law -> verified, 917edba0a7b9:roles/Cosmos/campaigns/HANDOFF_2026-09-23.md:33-34"
+  ],
+  "notes": "Strong, reproducible audit anchored to committed pools and adjudication files; the headline analytic-vs-mined and McNemar numbers come from the author's uncommitted out/ scripts, so they can be reproduced but not checked in the repo. It lists what was not done but has no explicit 'what would change the conclusion' section."},
+ "X012": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+  "checked_claims": [
+   "BEE default pressure IMPLICIT, INIT_ENERGY 12, IMPLICIT/METABOLIC/EXPLOIT parent weights uniform [1.0]*n -> verified, prometheus/z80atlas/world.py:35,46,648. Energy in/out (1.0+0.5*s, 0.9+0.001*steps) is true but sits at world.py:670,674, not the cited :666,:670-671 (at both 5266cce and HEAD)",
+   "NPE NONE_IMPLICIT declared 'no task coupling at all' and is the control level of every pressure pair -> verified, roles/Nestor/campaigns/z80atlas-2026-09-19/grammar.py:71,212; _external_births is called only when reproduction==EXTERNAL, world.py:640,838",
+   "Historical 'replication shows no task dependence' paragraph stands unqualified and says the task 'barely enters' -> verified, roles/Bellerophon/forensics_2026-09-23/POST_CAMPAIGN_FORENSICS.md:119-120"
+  ],
+  "notes": "A careful code-level sweep that marks which citations it verified and which came from a sub-agent. It gives concrete retraction and scope-note actions and a clear falsifier list. A few line numbers are off by about 4."},
+ "X013": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+  "checked_claims": [
+   "ADAPTIVE_RECORD_02 exp/W599/d40 predicted 0.3042, observed 0.3475, pass=false -> verified, 5266ccebe:roles/Theophrastus/crucible/round2/ADAPTIVE_RECORD_02.json:69-93",
+   "SPEC-002 lists .35 (d=.40) as '(predicted; observed 1.000 and .3475)' -> verified, roles/Theophrastus/specimens/SPECIMENS_ROUND2_2026-09-14.md:117-118",
+   "Per-IC files store only success, not the final state (so 'all ones' is an inference) -> verified, theophrastus/dissect.py:65-81; kind registry of 8 kinds -> verified, vivarium/viv/kinds.py:209-573"
+  ],
+  "notes": "Precise, heavily cited status audit that finds a real prediction/write-up inconsistency. Next steps are specified as analysis.py parts, each with a decision rule."},
+ "X014": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+  "checked_claims": [
+   "Proteus declines to own or build a rewriting substrate and lists the missing store/step/normal-form/executor pieces -> verified, 5266ccebe:roles/Proteus/prompts/2026-09-16_replies/REPLY_NYX_189_rewriting_substrate.md:4-37",
+   "s3_trs.py rewrites to fixpoint or fuel (FUEL=80, 'ok'/'timeout'), and ASSETS.md calls it the only term-rewriting substrate and recommends ADAPT -> verified, agent_d3_blind/substrates/s3_trs.py:6,20,139,142; archaeon/docs/expansion/ASSETS.md:123-124",
+   "mutual_normalisation.cut2 depends on rewriting but has no hosting block while the other four do -> verified, nyx/specimens/lean_simp/pressures/*.json (hosting at :73-77 in four files, none in mutual_normalisation)"
+  ],
+  "notes": "Finds overlooked committed rewriting executors and gives a conditional, evidence-bounded answer to the 'should' question. One small slip: its list of registered kinds omits evaluate_bitstring and archaeon.probe.v0 (kinds.py:220,240), which does not affect the conclusion."},
+ "X015": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+  "checked_claims": [
+   "The only family/operator-shuffle null run (H5a OEIS) gave real lift@100 200.1 vs shuffle 169.1, verdict NULL -> verified, 5266ccebe:aporia/results/h5_oeis_mvp_2026_06_04.json:185-189",
+   "FP-003 is coordinate_invariant with anchors whose mechanisms differ (region_empty/source_saturated/expressiveness_ceiling) and opposite STOP/GROW remedies, logged as SHARPEST OPEN CRITIQUE; FP-004 audit NOT run -> verified, harmonia/primitives/failure_primitives.py:393-490,537",
+   "split() is called only in the test -> verified, roles/Hermes/science/convergence/test_convergence.py:204 is the only caller of record.py:125"
+  ],
+  "notes": "Finds relevant evidence the harvest missed and answers each sub-question with a precise status (not answerable / yes-by-design / untestable), each tied to citations. Limits and what would change the conclusion are explicit."}
+}
