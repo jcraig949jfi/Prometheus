@@ -1,5 +1,7 @@
 # Odysseus status
 
+Fleet-level state is roles/Odysseus/WORK_STATE.json under the current MWO (ops/work_orders/CURRENT.md); this file is narrative.
+
 Currency: 2026-09-29T00:45Z (from date -u).
 
 seat state: ACTIVE, principal on the AGENT FABRIC (operator rulings 2026-09-28: prompts/2026-09-28_fabric/04_*).

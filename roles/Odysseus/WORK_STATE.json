@@ -1,23 +1,46 @@
 {
  "schema": "prometheus.work_state.v1",
  "seat": "Odysseus",
- "mwo_id": "MWO-0001",
- "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T06:52:01Z",
+ "mwo_id": "MWO-0002",
+ "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+ "updated_at_utc": "2026-09-29T07:25:51Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "c11aeeebaad2d10110f0e042a350d8b272fc57f5",
+ "head_sha": "78a9694d36bcef50696c2e1a37c511cb26f3cd7f",
  "threads": [
-  "thr-d2-firewall-audit (auditor of record, firewall layer only)",
-  "thr-fabric-s2",
-  "thr-s3 (pending principal)"
+  {
+   "id": "thr-d2-firewall-audit",
+   "alias": "D2 firewall audit (Fabric thread label; NOT in ops/threads)",
+   "role": "auditor of record, firewall layer only"
+  },
+  {
+   "id": "thr-fabric-s2",
+   "alias": "Fabric adoption S2 (Fabric thread label; NOT in ops/threads)"
+  },
+  {
+   "id": "thr-s3",
+   "alias": "Fabric adoption S3 (planned label; NOT in ops/threads)"
+  },
+  {
+   "id": "thr-5c716f1f61da",
+   "alias": "TH-006 (closed slice: M2 attestation MATCH #799)"
+  }
  ],
  "campaigns": [
-  "Fabric adoption experiment (S2 closed; S3 ready for principal Artemis)"
+  {
+   "id": null,
+   "alias": "Fabric adoption experiment (unregistered; no ops/campaigns entry)"
+  }
  ],
  "experiments": [
-  "S2 CLOSED (roles/Odysseus/fabric_pilot/s2/RESULT.md)",
-  "S3 DRAFT ready (roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md)"
+  {
+   "id": null,
+   "alias": "S2 CLOSED (roles/Odysseus/fabric_pilot/s2/RESULT.md)"
+  },
+  {
+   "id": null,
+   "alias": "S3 DRAFT ready, principal Artemis (roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md)"
+  }
  ],
  "fabric_tasks": [
   "D2 re-audits v2..v6 all adjudicated FAIL (d2_audit/v2..v6); latest v6 @7c7b0b836"
@@ -32,9 +55,9 @@
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
  ],
  "next_actions": [
-  "seat loop: adjudicate any new D2 re-audit Tasks when they return",
-  "support S3 when Artemis is ready: plant the three canaries, stay out of the principal's Tasks, score quality afterwards",
-  "record defects that MWO work exposes (roles/Odysseus/fabric_pilot/DEFECTS.md)"
+  "seat loop: adjudicate D2 re-audits when Nestor submits (next: v7). Weigh Harmonia's pre-exposure adjudication rule (#960, Addendum E @9f6abdce6: consumed release without result seal = FORFEIT; infrastructure crash = VOID) when assessing the v6 'package can void the evaluation' finding",
+  "support S3 when Artemis runs on ubu001: plant the three canaries, stay out of her Tasks, score quality afterwards",
+  "record Fabric limitations surfaced by MWO work and census reports (roles/Odysseus/fabric_pilot/DEFECTS.md; MWO-0002 s6)"
  ],
  "operator_decisions_required": [
   "S3 needs an Artemis Claude session launched on ubu001 in its own worktree (host/session action; Odysseus cannot start it)",
@@ -45,5 +68,8 @@
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
   "roles/Odysseus/fabric_pilot/s2/RESULT.md",
   "fabric/promexec/STATUS_EXPERIMENTAL.md"
- ]
+ ],
+ "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+ "comms_cursor": 961,
+ "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json"
 }
