@@ -1,14 +1,14 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Ensorain",
-  "mwo_id": "MWO-0003",
-  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
-  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
-  "updated_at_utc": "2026-09-29T11:35:47Z",
-  "state": "HOLD",
-  "state_reason": "MWO-0003 adopted (found by own loop fetch 2026-09-29T11:31:06Z; blob sha256 verified). FP-001 micro-probe in flight (Fabric tsk-0aa403de01fd + tsk-fb5edb86a53e, 2 replicas of the LM01 reservoir fixture at freeze ee8cbe0c8). E-ENS-LM01 FROZEN and NOT LAUNCHED; HOLD on the launch authorization (MWO-0001 s7 clause 3). D2 pause (MWO-0003 s7) does not involve Ensorain.",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T11:49:12Z",
+  "state": "ACTIVE",
+  "state_reason": "MWO-0004 adopted (own loop fetch 2026-09-29T11:48:07Z; blob sha256 verified). LM01 at ee8cbe0c8 is HOLD / NOT LAUNCHED by decision (MWO-0004 G3), not a pending gate. ARC3 dev work continues inside the R2 envelope. MWO-0003 FP-001 filed: roles/Ensorain/probes/FP-001_RESULT.json (PASS; replicas identical; cross-platform ULP difference recorded).",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "d2d4dc9e2e48089b07bb6530a896702696fecba7",
+  "head_sha": "0a42b9c78115482f6d472217582c6cfc880dee40",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -97,14 +97,14 @@
       "title": "MWO-0003 FP-001 probe replica 1: LM01 fixture_reservoir replay at ee8cbe0c8",
       "thread": "thr-ens-lossless-memorizer",
       "experiment": "E-ENS-LM01",
-      "state": "submitted"
+      "state": "completed (succeeded; outputs identical across replicas)"
     },
     {
       "id": "tsk-fb5edb86a53e",
       "title": "MWO-0003 FP-001 probe replica 2: LM01 fixture_reservoir replay at ee8cbe0c8",
       "thread": "thr-ens-lossless-memorizer",
       "experiment": "E-ENS-LM01",
-      "state": "submitted"
+      "state": "completed (succeeded; outputs identical across replicas)"
     }
   ],
   "running": [],
@@ -119,18 +119,15 @@
     }
   },
   "blocked_on": [
-    "E-ENS-LM01 launch authorization (future MWO with the exact line and hash)",
-    "DEF-ENS-001: the frozen launch_gate refuses ANY ops/work_orders/archive MWO file as a carrier (it requires a MANIFEST.md in the directive's directory). It fails closed; see roles/Ensorain/DEFECTS.md"
+    "E-ENS-LM01 launch: HOLD by decision (MWO-0004 G3). Hard gate only if a later order launches it (MWO-0004 Part 4, frozen launch gate). DEF-ENS-001 matters only at that launch."
   ],
   "next_actions": [
-    "When a launch MWO is published: verify its git-blob sha256 against ops/work_orders/PUBLICATIONS.md, resolve the carrier per the DEF-ENS-001 option the MWO chooses, then take the Fabric lease (python -m fabric lease acquire <m2-host>:cpu8; MWO-0001 s3 and Odysseus #896), pin a fresh run worktree at ee8cbe0c8, verify the freeze, census the host, and launch",
-    "ARC3 (no campaign, no lease): PKG-F recency/changepoint design; LM02 design; T25 CSSR causal-state learner (motivated by the S1 optimum-vs-T result). Future Fabric code-execution tasks use the two-stage pattern (claude writes the code, a script executor runs the committed file)"
+    "ARC3 (R2 envelope, no campaign): consolidate T25 into the review packet (T=16000 addendum); PKG-F recency/changepoint design; LM02 design folding in T25's 'window-sufficient vs cryptic' result",
+    "At any future launch order: resolve DEF-ENS-001 as that order directs; Fabric lease; pinned worktree at ee8cbe0c8; freeze verify; launch on M2 (ERRATA E-2)"
   ],
-  "operator_decisions_required": [
-    "LM01 launch authorization via MWO (exact line + v0.3.2 hash ee8cbe0c8)",
-    "DEF-ENS-001 carrier resolution: (A) Ensorain transcribes the launch MWO verbatim into roles/Ensorain/prompts/ with PUBLICATIONS.md provenance + MANIFEST, no freeze change (recommended); or (B) gate repair, re-freezing as v0.3.3 with a new hash"
-  ],
+  "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ensorain/probes/FP-001_RESULT.json",
     "ensorain/arc3/reviews/T25_CSSR_REVIEW_2026-09-29.md (review packet)",
     "roles/Ensorain/MIGRATION_REPORT_MWO-0002.json",
     "ensorain/arc3/suff/CSSR_T25.md (T25 CSSR: split vs vote)",
@@ -146,5 +143,6 @@
   ],
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "migration_report": "roles/Ensorain/MIGRATION_REPORT_MWO-0002.json",
-  "resume": "roles/Ensorain/RESUME.md"
+  "resume": "roles/Ensorain/RESUME.md",
+  "fp001_result": "roles/Ensorain/probes/FP-001_RESULT.json"
 }
