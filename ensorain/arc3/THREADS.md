@@ -323,7 +323,11 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
   - The ranking generalizes: MIX_FS .0171 < EM .0219 < split .0399 ~ STAT6 .0372.
   - The absolute level does NOT: 5-7x the parametric floor.
   - Bayes-mixture lock-in; fixed-share fixes it.
-- NEXT: diagnose the worst worlds (crypticity / synchronization length vs T); a T-scaling run on the family.
+- Diagnosis (D1/D2 survive):
+  - the excess tracks window crypticity H6 (rho .58);
+  - the worst worlds are data-limited (4/4 fall > 2x to .003-.011 at T = 16000, while STAT6 stays flat);
+  - the learner pays a finite-sample cost, the window pays a representational floor.
+- NEXT: consolidate T25 into a review packet; a T = 16000 run on all 24 worlds (a Fabric script task candidate).
 - RES: light, off M2.
 - MAT: pilot done.
 

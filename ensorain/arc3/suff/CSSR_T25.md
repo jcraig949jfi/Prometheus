@@ -288,3 +288,36 @@ Implementation note:
   T = 4000 value in >= 3 of 4. That is, the failures are data-limited.
 - If D1 fails and gap or pmin correlates instead, the failure is statistical resolution (near-equal or rare states),
   not window crypticity.
+
+### Result (precommit commit 5d5678427; output results/heldout_diag.json)
+
+- **D1 SURVIVES:** Spearman(H6, MIX_FS excess) = .583 (p = .003).
+  - The competitors are weaker: gap .348 (p = .10), pmin .395 (p = .06), S_min .170 (p = .43).
+  - The loss tracks how much of the causal state the 6-symbol window leaves unresolved (crypticity at the window).
+    Statistical resolution (near-equal or rare states) is secondary.
+- **D2 SURVIVES, 4/4.** All 4 worst worlds drop more than 2x from T = 4000 to T = 16000 (2nd half), while STAT6 stays
+  flat (the window floor):
+
+  | world | MIX_FS T4000 -> T16000 | STAT6 at T16000 |
+  |---|---|---|
+  | U4_s3 | .0612 -> .0047 | .062 |
+  | U5_s3 | .0525 -> .0110 | .073 |
+  | U5_s1 | .0271 -> .0060 | .021 |
+  | U5_s2 | .0248 -> .0033 | .064 |
+
+## Revised reading (supersedes reading 2 of the held-out section, for its level claim)
+
+- The H2 refutation stands, but it is T-SPECIFIC. At T = 4000 the learner is 5-7x above the parametric floor. On the
+  worst worlds the gap is data-limited: at T = 16000 they reach .003-.011, i.e. near the floor.
+- The window statistic cannot close its gap at any T. Its floor is structural, and it is highest exactly where H6 is
+  large.
+- So the T25 learner's disadvantage is a FINITE-SAMPLE cost that shrinks with data. The window's disadvantage is a
+  REPRESENTATIONAL floor that does not. This is the same two-halves decomposition as the Even process, now on a
+  held-out family.
+- Claim ceiling (updated):
+  - The T25 learner is a hypothesis-locus compressor whose excess vs the causal-state oracle falls with data on 24/24
+    held-out unifilar worlds' ranking and 4/4 worst worlds' level. It was not tested at T = 16000 on the other 20.
+  - Crypticity at the window (H6) predicts where it needs more data.
+  - Dev and answer-keyed. Not preregistered beyond these per-tick precommitments.
+- Hygiene: heldout_eval.py lacked a __main__ guard. Importing it re-ran the family evaluation, which is deterministic
+  and gave the identical numbers. Guard added.
