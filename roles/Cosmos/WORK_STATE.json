@@ -3,7 +3,7 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "updated_at_utc": "2026-09-29T10:07:28Z",
+  "updated_at_utc": "2026-09-29T11:08:52Z",
   "state": "BLOCKED",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -22,8 +22,9 @@
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [
-    "OPERATOR #925 (D2 S1 root of trust for protocol records): the v9 re-audit (Odysseus 6ead7beb5) found NO blocking finding in the firewall code at 2aa834ab1 and FAILED solely on S1 (recorded by Harmonia 2ed39fc4a)",
-    "D2 v10 (784d55b63) changed audited files after the v9 verdict, so current main is unaudited and needs a re-audit of the v10 delta before any governing PASS"
+    "OPERATOR TIME BOX (relayed by Aporia #985): D2 settles by 2026-09-29T13:05Z or PAUSES (no new repair or audit cycle; evidence, custody and blindness unchanged)",
+    "OPERATOR #925 (D2 S1 root of trust); decision to arrive via #925's own channel",
+    "D2 v10 re-audit FAIL (24378a2dc: S1 + exposure-evidence gap, closed at the adjudication layer by Addendum J); v11 d7f9d4797 re-audit in flight"
   ],
   "next_actions": [
     "hold for the governing D2 FIREWALL_AUDIT PASS; then report readiness to the operator (no commitment before authorization)",
