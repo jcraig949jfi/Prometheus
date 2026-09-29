@@ -1,12 +1,12 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Ensorain",
-  "mwo_id": "MWO-0002",
-  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T11:35:28Z",
+  "mwo_id": "MWO-0003",
+  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
+  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
+  "updated_at_utc": "2026-09-29T11:35:47Z",
   "state": "HOLD",
-  "state_reason": "MWO-0002 adopted (census filed). E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8 and NOT LAUNCHED (MWO-0002 s6); HOLD on the launch authorization (MWO-0001 s7 clause 3). Eligible ARC3 dev work continues without a campaign or lease.",
+  "state_reason": "MWO-0003 adopted (found by own loop fetch 2026-09-29T11:31:06Z; blob sha256 verified). FP-001 micro-probe in flight (Fabric tsk-0aa403de01fd + tsk-fb5edb86a53e, 2 replicas of the LM01 reservoir fixture at freeze ee8cbe0c8). E-ENS-LM01 FROZEN and NOT LAUNCHED; HOLD on the launch authorization (MWO-0001 s7 clause 3). D2 pause (MWO-0003 s7) does not involve Ensorain.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
   "head_sha": "36b8d075675d8c5cebe580ee3c5bfe2e4ae9c41e",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
@@ -91,6 +91,20 @@
       "base_sha": "f4c82806c",
       "state": "completed (att succeeded 06:36-07:27 EDT on worker.ubu001.sci2; -> results/fabric_t16k/t16k_S5.json)",
       "precommitment": "G1-G4 in ensorain/arc3/suff/CSSR_T25.md@f4c82806c"
+    },
+    {
+      "id": "tsk-0aa403de01fd",
+      "title": "MWO-0003 FP-001 probe replica 1: LM01 fixture_reservoir replay at ee8cbe0c8",
+      "thread": "thr-ens-lossless-memorizer",
+      "experiment": "E-ENS-LM01",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-fb5edb86a53e",
+      "title": "MWO-0003 FP-001 probe replica 2: LM01 fixture_reservoir replay at ee8cbe0c8",
+      "thread": "thr-ens-lossless-memorizer",
+      "experiment": "E-ENS-LM01",
+      "state": "submitted"
     }
   ],
   "running": [],
