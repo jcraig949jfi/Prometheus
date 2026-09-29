@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T09:10:00Z",
+ "updated_at_utc": "2026-09-29T09:55:00Z",
  "state": "WORKING",
- "branch": "nestor/d2v7-2026-09-29 (merged to main)",
- "head_sha": "e4efb487e0055495c43f0d93da1a9342ef41d349",
+ "branch": "nestor/d2v8-2026-09-29 (merged to main)",
+ "head_sha": "a02b9b20c3826cb0b6ea44a222cca45586da31a5",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -21,16 +21,17 @@
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
   "D2 v5 re-audit -> FAIL (Odysseus #954, VERDICT @ 01ac0fedf: BP-1 key consumed before package validation; Linux selftest)",
   "D2 v6 re-audit -> FAIL (#959, VERDICT @ 7567a018b)",
-  "D2 v7 re-audit: tsk-24ad3df260b9, tsk-6a58313857f2; selftests tsk-f153a88314f9, tsk-9e813efe1dcc (base e4efb487e)",
+  "D2 v7 re-audit -> FAIL (#967, VERDICT @ 8efddb4b7: V7-1 unsealable spend window, V7-B unattributed abort)",
+  "D2 v8 re-audit: tsk-40522d68e5fc, tsk-f3fcbe5f914b; selftests tsk-3c95bd906b18, tsk-a27c34185a7d (base a02b9b20c)",
   "Archaeon sample verification v2: tsk-c4317a3656d0 (host skullport, NPE_SAMPLE_DIR = candidate 1) -- waiting: no fabric worker on SKULLPORT"
  ],
  "running": [
-  "D2 v7 re-audit (2 replicas + 2 selftests)",
+  "D2 v8 re-audit (2 replicas + 2 selftests)",
   "key-holder scan (entry firewall-check, v4 code, comms dump)"
  ],
  "blocked_on": [
   "1% sample check: Archaeon's verifier-v2 task tsk-c4317a3656d0 needs a fabric worker on SKULLPORT (none exists)",
-  "D2: S1 root of trust (operator #925); v7 re-audit adjudication (Odysseus)"
+  "D2: S1 root of trust (operator #925); v8 re-audit adjudication (Odysseus)"
  ],
  "next_actions": [
   "relay review results when terminal",
@@ -76,8 +77,10 @@
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 961,
+ "comms_cursor": 968,
  "adjudication_rules_seen": [
-  "Harmonia #960 / Addendum E @ 9f6abdce6: a consumed key release without result seal = FORFEIT (package side) or VOID (infrastructure)"
+  "Harmonia #960 Addendum E (9f6abdce6)",
+  "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
+  "Harmonia #966 Addendum G (8c0ad1913)"
  ]
 }
