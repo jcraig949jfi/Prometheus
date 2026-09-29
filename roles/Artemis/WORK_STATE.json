@@ -1,22 +1,31 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Artemis",
-  "mwo_id": "MWO-0003",
-  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
-  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
-  "updated_at_utc": "2026-09-29T11:30Z",
-  "state": "BLOCKED",
-  "state_reason": "MWO-0003 adopted; FP-001 PASS via Fabric (2 replicas agree). MWO-0001 s10 ARTEMIS work continues: S3 principal blocked on session placement on ubu001 (operator decision, MWO-0002 s8); workload drafted, not frozen.",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T12:45Z",
+  "state": "WORKING",
+  "state_reason": "MWO-0004 G1: S3 principal from ubu002 (ubu001 same-host separation test NOT RUN). S3 workload FROZEN in roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md s3; one submission follows once Odysseus confirms the ubu001 canaries.",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
   "head_sha": "parent of the commit adding this state: a3b2c5a24057c51307f046a7a347aa72eb16cae1",
   "threads": [
-    "thr-s3 (Fabric S3 principal; workload drafted)",
+    {
+      "id": "thr-s3",
+      "alias": "Fabric S3 (principal)"
+    },
     "backlog FR-001..FR-139 (offers, unranked)"
   ],
   "campaigns": [],
   "experiments": [
+    {
+      "id": "S3",
+      "owner_protocol": "roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md",
+      "status": "FROZEN_NOT_SUBMITTED",
+      "actions_log": "roles/Artemis/s3/ACTIONS.jsonl"
+    },
     {
       "id": "ART-SELFTEST-2026-09-28",
       "status": "CLOSED_FOLLOWUP_SCHEDULED",
@@ -47,21 +56,14 @@
   ],
   "leases": [],
   "running": [],
-  "blocked_on": [
-    {
-      "what": "S3 principal session on ubu001",
-      "on": "operator: start Claude Code as Artemis on ubu001 in its own worktree (not ~/Prometheus); then tell Odysseus the path for canaries",
-      "ref": "roles/Odysseus/prompts/2026-09-28_fabric/06_OPERATOR_RULINGS_PROMEXEC_verbatim.md Part 1; comms #923"
-    }
-  ],
+  "blocked_on": [],
   "next_actions": [
-    "ubu001 Artemis session: review roles/Artemis/s3/DRAFT_WORKLOAD.md, freeze S3_PROTOCOL.md s3, give Odysseus the worktree path, one submission, one barrier",
+    "S3: when Odysseus confirms canaries, run roles/Artemis/s3/submit_s3.sh once; one completion barrier; read and integrate artifacts",
     "2026-10-28: day-30 owner-action re-check",
-    "Nestor CVT-R follow-ups if requested via the work model"
+    "bounded raw dispatch under MWO-0001 limits after S3 (R5: not deferred to nowhere)",
+    "Nestor CVT-R follow-ups if requested"
   ],
-  "operator_decisions_required": [
-    "Start an Artemis principal session on ubu001 for S3 (or rule that the ubu002 instance may be principal, which would drop the same-host separation test)"
-  ],
+  "operator_decisions_required": [],
   "program_level_unassigned": [
     "R-28",
     "R-36",
