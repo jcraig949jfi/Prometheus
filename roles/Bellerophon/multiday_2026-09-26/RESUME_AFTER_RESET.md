@@ -1,3 +1,6 @@
+# TERMINAL 2026-09-29 ~05:10Z -- execution complete (4160/4160), frozen analysis run and committed. Do NOT relaunch.
+# Read MULTIDAY_CAMPAIGN_REPORT.md. Everything below is historical.
+
 # RESUME AFTER RESET -- Bellerophon multi-day campaign (written 2026-09-26 ~16:45Z at launch)
 
 Standing authority (operator rulings 2026-09-26, prompts/00_OPERATOR_RULINGS_verbatim.md): no further HITL for the

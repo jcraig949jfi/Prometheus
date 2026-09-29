@@ -1,19 +1,11 @@
 # Bellerophon status
 
-Currency: 2026-09-26 ~16:45Z (MULTI-DAY CAMPAIGN LAUNCHED).
+Currency: 2026-09-29 ~05:10Z (MULTI-DAY CAMPAIGN TERMINAL; analysed). Fleet state: roles/Bellerophon/WORK_STATE.json on main.
 
-BOOT POINTER -- READ FIRST: roles/Bellerophon/multiday_2026-09-26/RESUME_AFTER_RESET.md
-seat state: ACTIVE, autonomous (operator rulings 2026-09-26; no HITL for defined transitions). Worktree
-  D:/Prometheus-worktrees/bellerophon-multiday, branch bellerophon/multiday-campaign-2026-09-26.
-  Forensics + coupling branches MERGED to main (14a1ea268, cc63d7e8a). #550 closed (D is Nestor's).
-
-MULTI-DAY CAMPAIGN -- RUNNING since 2026-09-26T16:40:28Z (detached supervisor, 12 workers)
-  Prereg FROZEN 12ce26e23 (code a3086cece; plan 1ab324d5..., 4,160 runs x 20,000 ticks; 60 h active cap, ~27 h
-  expected). Lanes LADDER1 (ECHO founders, pays INC), COPIER (pays ECHO), REPAIR (REP+BAD, pays INC), LADDER2 (INC
-  founders, pays COND_ONE); arms ON/OFF/SHUFFLED/YOKED. Primaries Q1 x3 (acquisition + 2 pp kill margin), Q2 (task
-  robustness rises in ON), Q3 (repair > 4/60 and beats OFF/YOKED); Holm across 5. Workdir C:/Users/James/md_campaign_2026-09-26.
-  Pre-launch engineering: measurement-only 2.8x speedup (byte-identical), robustness metric, driver + supervisor,
-  75/75 tests, pilots (smoke replay 30/30; 10k; 20k). Blind until md_analysis.py runs after the stop.
+MULTI-DAY CAMPAIGN E-BEL-MD -- TERMINAL. Execution 4160/4160 (47.1 h active, 0 voids); frozen analysis 2026-09-29,
+  replay 114/114, instrument_ok. Q1_LADDER1 HOLDS (ECHO->INC 58/320 ON vs 0-1/320), Q1_COPIER HOLDS (36/240 vs 2-4),
+  Q1_LADDER2 FAILS (0 everywhere), Q2 HOLDS small (+0.0115), Q3 FAILS baseline clause (4.7% < 6.7%). Tags LADDER_CLIMBED,
+  PROTECTION_EVOLVED. Report multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md. Branch awaiting review/merge.
 
 COUPLING CAMPAIGN (physics v3) -- COMPLETE 2026-09-25T19:09:26Z; ANALYSED ~19:38Z
   Prereg frozen c9bed96de, Amendment 1 6607b3cb5 (operational). 11,657 runs (11,372 Phase 1 + 285 AUTO; EXT 0),
