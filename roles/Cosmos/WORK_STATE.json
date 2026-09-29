@@ -1,10 +1,10 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Cosmos",
-  "mwo_id": "MWO-0002",
-  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "updated_at_utc": "2026-09-29T11:08:52Z",
-  "state": "BLOCKED",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "updated_at_utc": "2026-09-29T12:11:58Z",
+  "state": "WORKING",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
@@ -19,28 +19,26 @@
   "experiments": [
     "C3-D2 blind adjudication: NOT started; Cosmos blind to D2"
   ],
-  "fabric_tasks": [],
+  "fabric_tasks": [
+    "tsk-567421e8717f, tsk-9525c38ab1bb (FP-001 replicas; FAILED at runtime checkout on ubu001 sci2/sci3; native fallback PASS)"
+  ],
   "running": [],
   "blocked_on": [
-    "OPERATOR TIME BOX (relayed by Aporia #985): D2 settles by 2026-09-29T13:05Z or PAUSES (no new repair or audit cycle; evidence, custody and blindness unchanged)",
-    "OPERATOR #925 (D2 S1 root of trust); decision to arrive via #925's own channel",
-    "D2 v10 re-audit FAIL (24378a2dc: S1 + exposure-evidence gap, closed at the adjudication layer by Addendum J); v11 d7f9d4797 re-audit in flight"
+    "D2: MWO-0004 D2-1 resolves S1 (#925); D2 v12 implements the M1 anchor (acaf14df4); ONE bounded re-audit under D2-2 pending. The C3 freeze and D2 commitment wait on a governing PASS (frozen D2 protocol order)"
   ],
   "next_actions": [
-    "hold for the governing D2 FIREWALL_AUDIT PASS; then report readiness to the operator (no commitment before authorization)",
-    "on the operator's confirmation: build the coordinate-audit bundle + probe at a review SHA, then dispatch Fabric Tasks R (x2) + X (roles/Cosmos/research/tasks/COORD_AUDIT_C3/BRIEF.md)",
-    "T-I1 fragment-recurrence test (null = the definition rung's atoms)"
+    "G7/R3: run the moved coordinate-layer audit NATIVELY and custody-locally on M2 (fresh isolated reviewer sessions over a local bundle; nothing published)",
+    "R1: build + crash-test the C3 prediction package on a LOCAL unpushed branch (Addenda E/F/H/J constraints), so Cosmos is freeze-ready when D2 passes"
   ],
   "operator_decisions_required": [
-    "D2 S1 root of trust (#925): the only remaining D2 firewall blocker as of the v9 re-audit (6ead7beb5).",
-    "Coordinate-layer audit Task: Fabric workers check out base_sha from origin, so the Task can only run if the withheld coordinate-layer files (C3 substrates + geometry) are pushed to origin first, which publishes them irreversibly before the C3 freeze. Confirm that publication (coordinate layer only; law, results, failure regions, substitution attacks and predictions stay withheld)? Cosmos's default is to hold the dispatch until confirmed."
+    "C3 blind test on D2 = consuming a sealed holdout (MWO-0001 s7(2); MWO-0004 Part 4). Reported for authorization once a governing PASS exists and Cosmos is freeze-ready; PREDICTION_COMMITMENT.json is not committed before that."
   ],
   "latest_reports": [
+    "roles/Cosmos/probes/FP-001_RESULT.json",
     "roles/Cosmos/research/analysis/t_i1_fragments_v3.json (+ v1/v2 kept with their defects)",
     "roles/Cosmos/research/GRAVEYARD.md (T-I1 backfill: 0 UNRECOVERED)",
-    "roles/Cosmos/research/RESULTS.md (R-0001/2 RESTRICTED: no margin over the zero-parameter definition rung; recomputed)",
-    "roles/Cosmos/research/tasks/COORD_AUDIT_C3/BRIEF.md"
+    "roles/Cosmos/research/RESULTS.md (R-0001/2 RESTRICTED: no margin over the zero-parameter definition rung; recomputed)"
   ],
-  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json"
 }

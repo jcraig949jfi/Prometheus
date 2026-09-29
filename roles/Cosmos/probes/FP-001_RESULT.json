@@ -1,0 +1,28 @@
+{
+  "seat": "Cosmos",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "python -m prometheus.cosmos.research_check (research-workspace checker; its cheat-control tests: prometheus/cosmos/tests/test_research_check.py)",
+  "base_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
+  "execution": "native",
+  "fabric_tasks": [
+    "tsk-567421e8717f",
+    "tsk-9525c38ab1bb"
+  ],
+  "fabric_attempts": [
+    "att-540389b44824",
+    "att-a651e5c3c26c",
+    "att-45bcf38c85e4",
+    "att-617e59156a74",
+    "att-3edc6de634a6",
+    "att-a230f751220d"
+  ],
+  "lease": null,
+  "wall_seconds": 1,
+  "result": "PASS",
+  "artifact_hashes": [
+    "sha256:b26c10cf8059f6f71e2645dbfed6203dc1e545b869e965aa6c9804542fc610c6 (native stdout: threads 11, results 2, graves 5, freeze F-0000 VERIFIED, PASS)"
+  ],
+  "fabric_blocker": "Both replicas failed ALL 3 Attempts each before execution, at runtime checkout on ubu001 (worker.ubu001.sci2, worker.ubu001.sci3): 'FabricError: worktree add failed ... error: unable to write file prometheus_math/algebraic_geometry.py ...' (fabric/worker.py:127). Deterministic infra failure, so the retries were spent in ~30 s. Not a probe defect. Native fallback per MWO-0004 R3.",
+  "notes": "Discovered MWO-0003 late: the seat loop fetched MWO-0004 as current and read MWO-0003 from the archive while adopting it (between-tick publication). Digest comparison across replicas was impossible because no replica executed. Native run on M2 SPECTREX5."
+}
