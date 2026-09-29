@@ -1,0 +1,108 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Aporia",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T06:58:34Z",
+  "branch": "main",
+  "head_sha": "(this commit)",
+  "bootstrap_independence": {
+    "answer": "NO",
+    "conditions": [
+      "Aporia's boot documents (roles/Aporia/RESPONSIBILITIES.md, resume_aporia.md, STATUS.md) and the base-role boot files (roles/base-role/RESPONSIBILITIES.md, WAKE_DIRECTIVE.md) contain no reference to ops/work_orders/CURRENT.md or MWO (0 matches at origin/main after R e9e169d01). A fresh Aporia instance booted from its own entry files would not find the current MWO unless prompted.",
+      "The only MWO-aware pointer for Aporia is the harness auto-memory note project_mwo_operating_model.md, which is not in the repository and not visible to other instances."
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "other",
+    "evidence": [
+      "roles/Aporia/prompts/2026-09-29_mwo0002_authoring/01_OPERATOR_ASSIGNMENT_verbatim.md",
+      "git grep -c -i -E 'work_orders|MWO' origin/main -- roles/base-role roles/Aporia/RESPONSIBILITIES.md roles/Aporia/resume_aporia.md roles/Aporia/STATUS.md -> 0 each"
+    ],
+    "note": "MWO-0001 reached Aporia only through the operator's MWO-0002 authoring assignment; MWO-0002 was authored and published by Aporia itself, so its discovery is not a test of the loop."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Aporia/WORK_STATE.json @ 7c84a44b4 (branch aporia/mwo-0002-candidate-2026-09-29)",
+        "roles/Aporia/journal/2026-09-29.md (committed-blob sha256 007054ad verified)"
+      ],
+      "note": "Adopted only when assigned work on 2026-09-29, a day after publication; not through the seat loop."
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "Aporia authored and published MWO-0002; unprompted discovery can't be measured for this seat in this cycle. By C-bootstrap evidence it would currently FAIL for a fresh instance."
+    },
+    "C3_work_state_useful": {
+      "status": "YES",
+      "evidence": [
+        "origin/main roles/Aporia/WORK_STATE.json (record commit R e9e169d01, and this commit)"
+      ],
+      "note": "v1 core fields present; HOLD with reason."
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "ops/work_orders/CURRENT.md s6 Aporia bullet @ 89512068ff07f0bab6953a36313d550167340722"
+      ],
+      "note": "Authorized work = publish MWO-0002 (done), file this report, then HOLD/advisory."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "PARTIAL",
+      "evidence": [
+        "comms sync Aporia 2026-09-29T06:57:55Z: 55 new, 0 queued"
+      ],
+      "note": "Comms was NOT synced at the start of the authoring assignment, only after publication. Of 55 messages, 45 were pre-cutover legacy LEASE broadcasts; 2 addressed to Aporia needed no action (#798, #873). No cursor field kept in WORK_STATE."
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "No portable execution work in this cycle."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "Aporia holds no Thread/Campaign/Experiment under MWO-0001/0002."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "No resource claims."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "ops/work_orders/CURRENT.md s2 (publisher designation), s9"
+      ],
+      "note": "No current stop. Publication proceeded on the explicit operator approval (custody change) only; one pre-publication question to the operator concerned blind-lane exposure (an s7(2)-type concern), answered 'Publish as approved'."
+    }
+  },
+  "hard_gates_current": [],
+  "migration_blockers": [
+    {
+      "what": "Seat boot documents and base-role boot files never point to ops/work_orders/CURRENT.md",
+      "kind": "policy",
+      "evidence": [
+        "git grep result in bootstrap_independence.evidence"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "Steward-era seat files: resume_aporia.md (loop doctrine, PULSE, shadow WORKLOG), RESPONSIBILITIES.md (void-detection/Deep Research charter), programs/selective_irreversibility/ tooling (prepost_check.py, DO_NOT_BRIEF.txt)",
+      "why": "They predate MWO-0001; nothing retired them. prepost_check refuses '*' broadcasts, so it could not be used for the MWO-0002 publication broadcast (#961) and was bypassed on the operator's publication instruction.",
+      "retire_plan": "needs_operator"
+    },
+    {
+      "convention": "Operator Deep Research hold (2026-09-25 bootstrap prompt: do not run the 20 deep research)",
+      "why": "A standing operator instruction outside any MWO; still honored.",
+      "retire_plan": "needs_operator"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [],
+    "campaign_ids_unresolved": [],
+    "note": "Aporia's WORK_STATE lists no Thread or Campaign ids."
+  }
+}
