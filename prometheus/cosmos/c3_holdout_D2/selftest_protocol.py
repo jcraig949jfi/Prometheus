@@ -1250,7 +1250,8 @@ def v9_checks(tmp, ts, pkg, sha):
     except runner.ChildNotIsolated as e:
         fr.abort(e)
     ab = fr.receipts.records[-1]["body"]
-    res["v9_3_restart_failure_labelled_with_world"] = ab.get("current_world") == 0 and ab.get("in_predictor_io") is True
+    # v10 (Odysseus v9 S-A/A3-1): the FIRST start failed before any world was delivered -> pre-exposure labels
+    res["v10_first_start_failure_labelled_pre_exposure"] = ab.get("current_world") == 0 and         ab.get("in_predictor_io") is False and ab.get("exposed") is False
     # V8-6: the child must be able to read the staged package, checked before the key
     fr, kd, outd = mk("pkgread", preflight=True, preflight_mkfile_dirs=())
     real_stage = fr._stage_package
@@ -1265,6 +1266,93 @@ def v9_checks(tmp, ts, pkg, sha):
     except runner.PredictorChildFailed:
         res["v9_V86_unreadable_package_refused_pre_key"] = (kd / "k.hex").exists() and \
             not (outd / "receipts.jsonl").exists()
+    return res
+
+
+def v10_checks(tmp, ts, pkg, sha):
+    """v10 (Odysseus v9 replicas): truthful labels after exposure; custodian seal-terminal; exclusive claim; lock freed."""
+    res = {}
+    g = GateRepo(tmp / "repos" / "v10", ts).full(sha)
+
+    def mk(name, **kw):
+        kd = tmp / ("v10_key_" + name)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v10_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, outd, **base), kd, outd
+    # a restart failure AFTER a world was delivered is labelled post-exposure with the new world
+    fr, kd, outd = mk("restart2")
+    fr.open()
+    fr._predict_one(0, fr.predictor_seed(0))
+    fr._stop_worker(kill=True)
+
+    def refuse_start():
+        raise runner.ChildNotIsolated("simulated restart probe failure")
+    fr._start_worker = refuse_start
+    try:
+        fr._predict_one(1, fr.predictor_seed(1))
+        res["v10_restart_after_exposure_labelled"] = False
+    except runner.ChildNotIsolated as e:
+        fr.abort(e)
+        ab = fr.receipts.records[-1]["body"]
+        res["v10_restart_after_exposure_labelled"] = ab.get("exposed") is True and ab.get("current_world") == 1 and \
+            ab.get("in_predictor_io") is True and ab.get("child_world") == 0 and ab.get("child_exitcode") is not None
+    # seal-terminal (a): a torn tail and no terminal record -> truncated, custodian abort, verifies, custody seals
+    fr, kd, outd = mk("torn")
+    fr.open()
+    with open(outd / "receipts.jsonl", "ab") as f:
+        f.write(b'{"seq": 1, "kind": "predic')                      # a torn, unterminated write
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v10_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    st = cu.seal_terminal(outd)
+    ok, recs, _w = runner.verify_receipts(outd / "receipts.jsonl")
+    try:
+        rs = cu.result_seal_record(outd, tmp / "v10_RS_torn.json")
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        rs = {}
+    res["v10_seal_terminal_torn_unterminated_run"] = st["custodian_abort_added"] and st["bytes_truncated"] > 0 and \
+        ok and recs[-1]["kind"] == "abort" and rs.get("terminal") == "abort"
+    # seal-terminal (b): a CLOSED run whose RESULT.json was lost -> rebuilt byte-identically from the receipts
+    fr, kd, outd = mk("lostresult")
+    r1 = fr.run_all()
+    before = (outd / "RESULT.json").read_bytes()
+    (outd / "RESULT.json").unlink()
+    st = cu.seal_terminal(outd)
+    res["v10_seal_terminal_rebuilds_result"] = r1.get("status") == "CLOSED" and not st["custodian_abort_added"] and \
+        (outd / "RESULT.json").read_bytes() == before
+    # seal-terminal refuses another designation's directory
+    other = tmp / "runs" / "v10_other" / "run_other"
+    other.mkdir(parents=True)
+    try:
+        cu.seal_terminal(other)
+        res["v10_seal_terminal_refuses_other_run_dir"] = False
+    except custody.CustodyRefusal:
+        res["v10_seal_terminal_refuses_other_run_dir"] = True
+    # B-3: an existing claim refuses a second consumption marker
+    fr, kd, outd = mk("claim")
+    fr.prepare()
+    (outd / "receipts.jsonl.claim").write_text("")
+    try:
+        fr.open()
+        res["v10_B3_concurrent_claim_refused"] = False
+    except FileExistsError:
+        res["v10_B3_concurrent_claim_refused"] = (kd / "k.hex").exists() and not (outd / "receipts.jsonl").exists()
+    # a malformed custody key frees the custody lock
+    msec = tmp / "v10_bad_secrets"
+    shutil.copytree(ts["secrets"], msec)
+    (msec / "hidden_D2.key.hex").write_text("zz\n")
+    cm = custody.Custody(repo=g.p, ref=REF, secrets_dir=msec, log=tmp / "v10_lock" / "custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        cm.release_key(RID, tmp / "v10_rel_bad")
+        res["v10_malformed_key_frees_lock"] = False
+    except Exception:                                                        # noqa: BLE001
+        res["v10_malformed_key_frees_lock"] = not (tmp / "v10_lock" / "custody.lock").exists()
     return res
 
 
@@ -1289,18 +1377,20 @@ def run() -> dict:
         v7 = v7_checks(tmp, ts, pkg, sha)
         v8 = v8_checks(tmp, ts, pkg, sha)
         v9 = v9_checks(tmp, ts, pkg, sha)
+        v10 = v10_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
     for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
-    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9}.items() if v is None)
-    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9}.items()
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10}.items() if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10}.items()
                    if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
            "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
            "not_applicable_on_this_os": not_applicable,
-           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7, **v8, **v9}.items() if k.endswith("_reason")},
+           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7, **v8, **v9, **v10}.items()
+                       if k.endswith("_reason")},
            "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
            "all_defect_controls_true": all(dcs.values())}
     res["selftest_pass"] = bool(res["all_checks_true"] and res["all_defect_controls_true"])

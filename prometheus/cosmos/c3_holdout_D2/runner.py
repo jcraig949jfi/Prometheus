@@ -381,12 +381,25 @@ class Receipts:
         if path.exists():
             raise ChainBroken("receipts.jsonl exists")
         rec = {"seq": 0, "kind": "open", "prev": genesis, "body": body, "hash": record_hash(0, "open", genesis, body)}
+        claim = path.with_name(path.name + ".claim")             # v10 (B-3): one runner only, even at the same instant
+        fd = os.open(str(claim), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        os.close(fd)
         tmp = path.with_name(path.name + ".tmp")
-        with open(tmp, "w", encoding="utf-8", newline="\n") as f:
-            f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
-            f.flush()
-            os.fsync(f.fileno())
-        os.replace(tmp, path)
+        try:
+            with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+                f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+                f.flush()
+                os.fsync(f.fileno())
+            if path.exists():
+                raise ChainBroken("receipts.jsonl exists")
+            os.replace(tmp, path)
+        except BaseException:
+            for x in (tmp, claim):
+                try:
+                    x.unlink()
+                except OSError:
+                    pass
+            raise
         self = cls.__new__(cls)
         self.path, self.genesis, self.records = path, genesis, [rec]
         return self
@@ -780,6 +793,7 @@ class FirewallRun:
         self._proc = ctx.Process(target=_worker_main, args=(child, pkg_dir, entry), daemon=True)
         self._proc.start()
         child.close()
+        self._child_world, self._last_exit = getattr(self, "_cur_world", None), None   # v10 (A3-2): per-child exit code
         _send(self._conn, ["probe", list(must_read) + list(read_paths), list(write_paths), list(mkfile_dirs)])
         try:                                                  # v5 (S-1): a child that cannot start is a refusal
             if not self._conn.poll(120):
@@ -804,31 +818,39 @@ class FirewallRun:
         (Harmonia Addendum E): package-attributable -> FORFEIT; infrastructure -> VOID. Type name only, no text."""
         if self.receipts is None:
             raise RunnerRefusal("abort before the consumption marker: nothing to seal")
-        if self.phase in ("CLOSED", "ABORTED"):
-            return {"status": self.phase}
+        if self.phase in ("CLOSED", "ABORTED"):              # v10 (B-4): a terminal record exists -> (re)build RESULT
+            result = result_from_records(self.receipts.records)
+            _write_result(self.out, result)
+            return result
+        import signal
+        import threading
+        old = None
+        if threading.current_thread() is threading.main_thread():
+            old = signal.signal(signal.SIGINT, signal.SIG_IGN)  # v10 (B-1): a second Ctrl-C cannot interrupt the abort
         try:
-            self._stop_worker(kill=True)
-        except Exception:                                    # noqa: BLE001
-            pass
-        self.receipts.repair()                               # v9: drop a torn trailing write before the terminal record
-        n_pred = sum(1 for r in self.receipts.records if r["kind"] == "prediction")
-        # v8 (V7-B/Q3): attribution EVIDENCE for the adjudicator (Harmonia Addendum E: FORFEIT vs VOID) -- which world
-        # was running, whether the failure arose inside predictor I/O, and the child's exit code. Evidence, not a verdict.
-        proc = getattr(self, "_proc", None)
-        exitcode = proc.exitcode if proc is not None else getattr(self, "_last_exitcode", None)
-        self.receipts.append("abort", {"phase": self.phase, "error_type": type(exc).__name__,
-                                       "n_predictions_recorded": n_pred, "utc": _utc(),
-                                       "current_world": getattr(self, "_cur_world", None),
-                                       "in_predictor_io": bool(getattr(self, "_in_predictor_io", False)),
-                                       "child_exitcode": exitcode})
-        self.phase = "ABORTED"
-        result = {"format": RECEIPT_FORMAT, "status": "ABORTED", "spec_id": self.manifest["spec_id"],
-                  "run_nonce": self.gates.get("run_nonce"), "package_sha256": self.package_sha256,
-                  "abort_phase": self.receipts.records[-1]["body"]["phase"], "error_type": type(exc).__name__,
-                  "chain_head": self.receipts.head, "n_records": len(self.receipts.records)}
-        (self.out / "RESULT.json").write_text(json.dumps(result, indent=1, sort_keys=True) + "\n",
-                                              encoding="utf-8", newline="\n")
-        return result
+            try:
+                self._stop_worker(kill=True)
+            except BaseException:                            # noqa: BLE001
+                pass
+            matched = self.receipts.repair()                 # v9: drop a torn trailing write before the terminal record
+            n_pred = sum(1 for r in self.receipts.records if r["kind"] == "prediction")
+            # attribution EVIDENCE (Harmonia Addenda E/F/H: labels count only once audited truthful)
+            proc = getattr(self, "_proc", None)
+            last = getattr(self, "_last_exit", None) or {}
+            self.receipts.append("abort", {
+                "phase": self.phase, "error_type": type(exc).__name__, "n_predictions_recorded": n_pred, "utc": _utc(),
+                "exposed": bool(getattr(self, "_exposed", False)), "current_world": getattr(self, "_cur_world", None),
+                "in_predictor_io": bool(getattr(self, "_in_predictor_io", False)),
+                "child_exitcode": proc.exitcode if proc is not None else last.get("exitcode"),
+                "child_world": getattr(self, "_child_world", None) if proc is not None else last.get("world"),
+                "disk_chain_matched": bool(matched)})
+            self.phase = "ABORTED"
+            result = result_from_records(self.receipts.records)
+            _write_result(self.out, result)
+            return result
+        finally:
+            if old is not None:
+                signal.signal(signal.SIGINT, old)
 
     def run_all(self) -> dict:
         """prepare (refusal consumes nothing) -> open -> predict -> seal -> certify -> close; after the open record any
@@ -890,7 +912,7 @@ class FirewallRun:
         if self._proc.is_alive():
             self._proc.kill()
             self._proc.join(10)
-        self._last_exitcode = self._proc.exitcode           # v9 (V8-2): kept for the abort's attribution evidence
+        self._last_exit = {"world": getattr(self, "_child_world", None), "exitcode": self._proc.exitcode}
         self._proc = self._conn = None
 
     def _serve(self, sysobj, method, args, usage):
@@ -924,7 +946,10 @@ class FirewallRun:
         w = self._worlds[i]
         sysobj = medium.ReactiveChannel(w)
         usage = {"calls": 0, "episode_steps": 0, "budget_exceeded": False}
-        self._cur_world, self._in_predictor_io = i, True     # v9 (V8-3): a (re)start failure is labelled with THIS world
+        # v10 (Odysseus v9 S-A/A3-1): the labels say what is TRUE. Before any world was delivered, a (re)start failure
+        # is pre-exposure (in_predictor_io false); after exposure, a restart follows a predictor-side event (true).
+        self._cur_world = i
+        self._in_predictor_io = bool(getattr(self, "_exposed", False))
         if self._proc is None:
             self._start_worker()
         try:                                                  # v8 (V7-B): a closed/broken pipe is THIS world's crash
@@ -932,10 +957,17 @@ class FirewallRun:
         except (OSError, ValueError, EOFError):
             self._stop_worker(kill=True)
             return {"status": "PREDICTOR_CRASH", "usage": usage, "where": "send_predict"}
+        self._exposed = True                                  # Harmonia Addendum H: exposure = first world delivered
+        self._in_predictor_io = True
         deadline = _dt.datetime.now().timestamp() + self.predict_timeout
         while True:
             left = deadline - _dt.datetime.now().timestamp()
-            if left <= 0 or not self._conn.poll(max(left, 0.0)):
+            try:                                              # v10 (S-B/B-2): the poll is inside the per-world guard
+                ready = left > 0 and self._conn.poll(max(left, 0.0))
+            except (OSError, ValueError, EOFError):
+                self._stop_worker(kill=True)
+                return {"status": "PREDICTOR_CRASH", "usage": usage, "where": "poll"}
+            if not ready:
                 self._stop_worker(kill=True)
                 return {"status": "TIMEOUT", "usage": usage}
             try:
@@ -987,6 +1019,7 @@ class FirewallRun:
                 self._stop_worker()
             except (OSError, ValueError, EOFError):          # v8: a broken pipe at shutdown is not a run failure
                 self._stop_worker(kill=True)
+        self._cur_world = None                               # v10: no stale world label outside PREDICT
 
     def seal_predictions(self) -> str:
         if self.phase != "OPEN":
@@ -1068,9 +1101,25 @@ class FirewallRun:
         certs = {r["body"]["i"]: r for r in self.receipts.records if r["kind"] == "certify"}
         if sorted(certs) != list(range(self.N)):
             raise OrderViolation("close refused: %d/%d worlds certified" % (len(certs), self.N))
-        preds = {r["body"]["i"]: r["body"] for r in self.receipts.records if r["kind"] == "prediction"}
+        self.receipts.append("close", {"n_certified": self.N, "utc": _utc()})
+        self.phase = "CLOSED"
+        result = result_from_records(self.receipts.records)     # v10: one builder for close, abort and seal-terminal
+        _write_result(self.out, result)
+        return result
+
+
+
+def result_from_records(recs: list) -> dict:
+    """v10: RESULT.json is a pure function of the receipts (close, abort, or a custodian seal-terminal abort)."""
+    op = recs[0]["body"]
+    base = {"format": RECEIPT_FORMAT, "spec_id": op["spec_id"], "run_nonce": op.get("run_nonce"),
+            "package_sha256": op["package"]["sha256"], "chain_head": recs[-1]["hash"], "n_records": len(recs)}
+    if recs[-1]["kind"] == "close":
+        certs = {r["body"]["i"]: r for r in recs if r["kind"] == "certify"}
+        preds = {r["body"]["i"]: r["body"] for r in recs if r["kind"] == "prediction"}
+        seal = next(r for r in recs if r["kind"] == "predictions_sealed")
         per_world = []
-        for i in range(self.N):
+        for i in sorted(certs):
             c = certs[i]["body"]
             ivr = c.get("intervention") or {"status": c.get("status", "CERTIFY_ERROR")}
             per_world.append({
@@ -1079,17 +1128,64 @@ class FirewallRun:
                 "intervention_status": ivr["status"],
                 "intervention_class": ivr.get("result", {}).get("class"),
                 "delta_J_intact": ivr.get("delta_J_intact"), "certify_receipt": certs[i]["hash"]})
-        self.receipts.append("close", {"n_certified": self.N, "utc": _utc()})
-        self.phase = "CLOSED"
-        seal = next(r for r in self.receipts.records if r["kind"] == "predictions_sealed")
-        result = {"format": RECEIPT_FORMAT, "status": "CLOSED", "spec_id": self.manifest["spec_id"],
-                  "run_nonce": self.gates.get("run_nonce"),
-                  "package_sha256": self.package_sha256, "predictions_seal_hash": seal["hash"],
-                  "chain_head": self.receipts.head, "n_records": len(self.receipts.records),
-                  "per_world": per_world}
-        (self.out / "RESULT.json").write_text(json.dumps(result, indent=1, sort_keys=True) + "\n",
-                                              encoding="utf-8", newline="\n")
-        return result
+        return dict(base, status="CLOSED", predictions_seal_hash=seal["hash"], per_world=per_world)
+    if recs[-1]["kind"] == "abort":
+        b = recs[-1]["body"]
+        return dict(base, status="ABORTED", abort_phase=b.get("phase"), error_type=b.get("error_type"))
+    raise ChainBroken("no terminal record")
+
+
+def _write_result(out, result) -> None:
+    (Path(out) / "RESULT.json").write_text(json.dumps(result, indent=1, sort_keys=True) + "\n", encoding="utf-8",
+                                           newline="\n")
+
+
+def seal_terminal(run_dir) -> dict:
+    """v10 (Odysseus v9 S-C / B-1 / B-4): CUSTODIAN tool for a spent run left without a sealable terminal state (the
+    abort write itself failed, an interrupt landed in a residual window, or RESULT.json was not written). Keeps the
+    LONGEST VERIFYING PREFIX of complete records (a torn tail is truncated), appends a custodian 'abort' when no
+    terminal record exists (labels null: the custodian asserts no cause), and rebuilds RESULT.json from the receipts.
+    Never removes a verifying record. Refuses when not even the open record verifies."""
+    run_dir = Path(run_dir)
+    p = run_dir / "receipts.jsonl"
+    raw = p.read_bytes()
+    keep, recs, prev, off = 0, [], None, 0
+    for line in raw.split(b"\n")[:-1]:                    # complete lines only
+        off += len(line) + 1
+        try:
+            r = json.loads(line.decode("utf-8"))
+        except ValueError:
+            break
+        n = len(recs)
+        if r.get("seq") != n or record_hash(r["seq"], r["kind"], r["prev"], r["body"]) != r.get("hash"):
+            break
+        if n == 0 and (r.get("kind") != "open" or r["body"].get("genesis") != r["prev"]):
+            break
+        if n > 0 and r["prev"] != prev:
+            break
+        recs.append(r)
+        prev, keep = r["hash"], off
+    if not recs:
+        raise ChainBroken("no verifying open record: nothing can be sealed")
+    truncated = len(raw) - keep
+    if truncated:
+        with open(p, "r+b") as f:
+            f.truncate(keep)
+            f.flush()
+            os.fsync(f.fileno())
+    rc = Receipts.__new__(Receipts)
+    rc.path, rc.genesis, rc.records = p, recs[0]["prev"], recs
+    added = False
+    if recs[-1]["kind"] not in ("close", "abort"):
+        rc.append("abort", {"phase": "UNKNOWN", "error_type": "SEALED_BY_CUSTODIAN", "utc": _utc(),
+                            "n_predictions_recorded": sum(1 for r in recs if r["kind"] == "prediction"),
+                            "exposed": None, "current_world": None, "in_predictor_io": None, "child_exitcode": None,
+                            "child_world": None, "disk_chain_matched": None})
+        added = True
+    result = result_from_records(rc.records)
+    _write_result(run_dir, result)
+    return {"sealed_terminal": rc.records[-1]["kind"], "custodian_abort_added": added, "bytes_truncated": truncated,
+            "chain_head": rc.records[-1]["hash"], "n_records": len(rc.records)}
 
 
 def main(argv=None) -> int:
@@ -1151,7 +1247,7 @@ def _run_cli(a) -> int:
         print(json.dumps(r))
         return 0
     res = run.run_all()
-    print(json.dumps({"status": res["status"], "chain_head": res["chain_head"], "out": str(out)}))
+    print(json.dumps({"status": res.get("status"), "chain_head": res.get("chain_head"), "out": str(out)}))
     return 0 if res["status"] == "CLOSED" else 4
 
 

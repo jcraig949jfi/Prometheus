@@ -168,10 +168,11 @@ class Custody:
         else:
             os.chmod(path, 0o700 if is_dir else 0o600)
 
-    def _test_decrypt(self, key: bytes) -> None:
-        """v9: the key must decrypt the sealed ciphertext on the reference (AES-GCM tag checked) before any copy is made."""
-        man_b = protocol._show(self.repo, self.ref, protocol.PKG_REL + "/MANIFEST_D2.json")
-        ct_b = protocol._show(self.repo, self.ref, protocol.PKG_REL + "/hidden_D2.enc")
+    def _test_decrypt(self, key: bytes, commit: str) -> None:
+        """v9: the key must decrypt the sealed ciphertext (AES-GCM tag checked) before any copy is made. v10: read at the
+        commit the gates resolved, not by re-resolving the reference name."""
+        man_b = protocol._show(self.repo, commit, protocol.PKG_REL + "/MANIFEST_D2.json")
+        ct_b = protocol._show(self.repo, commit, protocol.PKG_REL + "/hidden_D2.enc")
         try:
             man = json.loads(man_b.decode("utf-8"))
             sealbox.decrypt(key, bytes.fromhex(man["iv_hex"]), ct_b, man["family_src_sha256"])
@@ -200,14 +201,14 @@ class Custody:
             if self.require_preflight:                            # v6 (BP-1): a passing runner preflight first
                 protocol.preflight_ok(self.preflight_dir, g)
             key = sealbox.read_hex_file(self.secrets_dir / KEY_NAME, sealbox.KEY_BYTES)
-            self._test_decrypt(key)                               # v9 (Odysseus v8 item 1): only a PROVEN key leaves
+            self._test_decrypt(key, g["ref_commit"])              # v9/v10: only a PROVEN key leaves (resolved commit)
             dest.mkdir(parents=True)
             made = dest
             self._restrict(dest, g["account"])                    # v5: BEFORE the key exists
             self._write_excl(dest / KEY_NAME, key.hex().encode("ascii") + b"\n")
             written = dest / KEY_NAME
             del key
-        except (protocol.GateRefusal, CustodyRefusal, OSError) as e:
+        except (protocol.GateRefusal, CustodyRefusal, OSError, ValueError) as e:     # v10: malformed key -> lock freed
             # v5 (S-3/S-5): nothing is left behind by a failed release
             if written is not None and written.exists():
                 written.unlink()
@@ -231,6 +232,21 @@ class Custody:
             p.write_text(json.dumps(dict(body, utc=_utc()), indent=1, sort_keys=True) + "\n", encoding="utf-8",
                          newline="\n")
         return p
+
+    # ------------------------------------------------------------ v10: seal-terminal
+    def seal_terminal(self, run_dir) -> dict:
+        """Only for THIS designation's run directory (run_<nonce>, open record carrying the designation nonce)."""
+        from prometheus.cosmos.c3_holdout_D2 import runner       # broker-only import
+        run_dir = Path(run_dir)
+        try:
+            g = self._gates("DESIGNATION")
+            if run_dir.name != "run_" + str(g["run_nonce"]):
+                raise CustodyRefusal("not this designation's run directory")
+            r = runner.seal_terminal(run_dir)
+        except (protocol.GateRefusal, CustodyRefusal, OSError, ValueError, KeyError) as e:
+            self._refuse("seal-terminal", e)
+        self._append({"event": "SEAL_TERMINAL", **r})
+        return r
 
     # ------------------------------------------------------------ public result-seal record
     def result_seal_record(self, run_dir, record_out) -> dict:
@@ -310,7 +326,7 @@ class Custody:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="holdout D2 custody (M1)")
-    ap.add_argument("cmd", choices=("release-key", "result-seal", "reveal"))
+    ap.add_argument("cmd", choices=("release-key", "result-seal", "reveal", "seal-terminal"))
     ap.add_argument("--runner-id")
     ap.add_argument("--dest")
     ap.add_argument("--run")
@@ -325,7 +341,9 @@ def main(argv=None) -> int:
         return 3
     c = Custody(ref=a.ref)
     try:
-        if a.cmd == "release-key":
+        if a.cmd == "seal-terminal":                          # v10 (S-C): make a spent, unterminated run sealable
+            r = c.seal_terminal(a.run)
+        elif a.cmd == "release-key":
             r = c.release_key(a.runner_id, a.dest)
         elif a.cmd == "result-seal":
             r = c.result_seal_record(a.run, a.record_out)

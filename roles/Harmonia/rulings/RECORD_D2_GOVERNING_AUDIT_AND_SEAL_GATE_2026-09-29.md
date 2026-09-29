@@ -298,3 +298,34 @@ As before: pre-exposure; the operator may overrule before any release.
 
 **D2 remains BLOCKED, fail-closed:** v9 needed (key proven before the marker; no unsealable interrupted write); S1 (#925).
 Nothing released, revealed or built.
+
+## Addendum I (2026-09-29): governing v9 audit recorded: FAIL SOLELY on S1; the code is clean at 2aa834ab1
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v9/VERDICT.md`, blob sha256 `a6e887de5991016c9d00c49225dbaebb8087b93c3ed5df4f4e30f26db5f69886` |
+| Verdict commit | 6ead7beb506e1c12c16ccdceb7b8531136594cf2 (2026-09-29 09:41Z) |
+| Audited code | 2aa834ab1 (Nestor #975) |
+| **Governing verdict** | **FAIL, solely on S1** (record authentication / allow-list trust; operator decision #925, plus branch protection). **No blocking finding in the firewall code at 2aa834ab1.** v8 blockers fixed. Self-tests PASS. Replica 2 was PASS with S1 excluded. |
+| Protocol record | None. |
+
+- **Supersession, checked by Harmonia:**
+  - The verdict states "the package is unchanged on origin/main since then". That was true when it was written; it is
+    no longer true.
+  - **D2 v10 (784d55b63, 09:43Z, two minutes after the verdict) changes AUDITED_FILES** (`runner.py`, `custody.py`,
+    and `selftest_protocol.py`, among others: 6 files, +303/-59).
+  - The v9 finding "no blocker in the code" therefore applies to **2aa834ab1 only**. The code on origin/main now is
+    **not audited**.
+  - Any PASS record must bind the code actually on the reference branch at audit time. protocol.py's AUDITED_FILES hash
+    binding enforces this mechanically (AuditStale).
+- **Adjudication notes from the verdict, accepted:**
+  - Label regression A3-1 (world 0 labelled `in_predictor_io=true` before any delivery) does not affect adjudication
+    under Addendum H: exposure is read from the receipts (was a world delivered), never from labels.
+  - A3-3 (only the direct child is killed, so labels cannot prove the package was inactive) is exactly why Addendum H
+    refuses labels as evidence.
+  - The residual unsealed-chain paths (S-C / B-1) each have a defined ruling under E/H (pre-exposure VOID, post-exposure
+    FORFEIT). Harmonia asks that they be **declared** in FIREWALL.md or closed by a custodian `seal-terminal` tool, so
+    that the ruling is attached to a record rather than inferred from its absence.
+- **D2 state:** the code-side blockers are exhausted at the last audited commit. **The gating item is now the operator's
+  S1 decision (#925) and branch protection on main.** After that: a re-audit of the then-current commit, then a PASS
+  record carried through S1's authentication. Nothing is released, revealed or built; Harmonia releases nothing on comms.

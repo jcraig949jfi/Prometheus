@@ -350,3 +350,23 @@ A same-account child fails step 1, so nothing is ever released until the separat
 - **Windows `poll` timing:** plausible, unverified. A per-world poll failure is a per-world status; anything else is a sealed abort, labelled.
 - **RESULT.json write failure after close:** the chain still ends in `close`. RESULT.json can be rebuilt from the receipts, but no tool does that yet; declared.
 - **The released key copy after an abort:** it is deleted right after the marker; if that deletion itself fails, the run aborts and the copy remains on M1 under the restricted ACL; declared.
+
+## v10 (2026-09-29): should-fix items from the v9 re-audit replicas (tsk-5c232d68f717 FAIL on S1 only; tsk-fe9b89e4c15c PASS excluding S1)
+
+- **Neither replica found a new blocks-PASS finding.**
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+
+| v9 finding | v10 repair | test |
+|---|---|---|
+| S-A / A3-1: a failure of the FIRST child start was labelled post-exposure | New `exposed` flag, set only after the first predict send succeeds (Harmonia Addendum H: exposure = first world delivered). Before a (re)start, `in_predictor_io` is true only once exposure has happened. The abort record carries `exposed`. | first-start failure: current_world 0, in_predictor_io false, exposed false; restart failure after exposure: world 1, in_predictor_io true, exposed true |
+| A3-2: `child_exitcode` could come from another child | The exit code is tied to its child: `child_world` (the world at which that child was started) is recorded with it. | child_world and exit code of the stopped child |
+| S-B / B-2: the per-world `poll` was outside the guard | The poll is inside the per-world guard; a poll failure is that world's PREDICTOR_CRASH. | - |
+| S-C / B-4 / B-1: a spent run could end with no sealable terminal record, and no tool closed it | (a) `entry.py custody seal-terminal --run DIR`, custodian only, for THIS designation's run directory. It keeps the longest verifying prefix of complete records (truncating a torn tail), appends a custodian `abort` with null labels when there is no terminal record, and rebuilds RESULT.json from the receipts. It never removes a verifying record. (b) RESULT.json is a pure function of the receipts (`result_from_records`) for close, abort and seal-terminal alike; `abort()` after a CLOSED record whose RESULT write failed rebuilds it, and the CLI no longer raises a KeyError. (c) SIGINT is ignored while `abort()` runs. | a torn, unterminated run is sealed and custody result-seals it; a lost RESULT.json is rebuilt byte-identical; another designation's directory is refused |
+| B-3: no exclusive creation of the marker | An O_EXCL `receipts.jsonl.claim` is taken before the atomic rename, and released if the write fails. | an existing claim refuses, with the key intact and no receipts |
+| notes | Custody test-decrypts at the commit the gates resolved; a malformed custody key frees the custody lock; `abort()` records whether the disk chain matched memory (`disk_chain_matched`); no stale `current_world` outside PREDICT. | malformed key frees the lock |
+
+**Declared for Harmonia (A3-3):**
+- The runner kills its direct child only, not the child's process tree. So `in_predictor_io=false`, a SEALED phase or an exit code do not prove the package was inactive.
+- Under Addendum H these labels are evidence only once audited truthful. Until then every post-exposure abort is FORFEIT.
+- A custodian `seal-terminal` abort carries null labels by design: the custodian asserts no cause.
+- **Package-induced disk exhaustion through the child account** is a declared residual: it aborts or, at worst, needs seal-terminal. The separate child account's quota is part of the host capability request.
