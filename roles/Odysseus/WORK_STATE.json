@@ -3,8 +3,8 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T03:45:16Z",
- "state": "WORKING",
+ "updated_at_utc": "2026-09-29T04:02:53Z",
+ "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "c11aeeebaad2d10110f0e042a350d8b272fc57f5",
  "threads": [
@@ -20,15 +20,15 @@
   "S3 DRAFT ready (roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md)"
  ],
  "fabric_tasks": [
-  "D2 v2 re-audit (4 tasks) adjudicated FAIL (roles/Odysseus/fabric_pilot/d2_audit/v2/VERDICT.md)",
-  "D2 v3 re-audit @742243972 (Nestor #935), running: tsk-d0454ab252b9, tsk-ddfc5156be0d (replicas, fabric.runtime==0.2), tsk-1674e7e0fdc8, tsk-9913738c30c2 (self-tests, queued behind Aether AETH-03 on worker.ubu001.sci); adjudicate when terminal"
+  "D2 v2 re-audit adjudicated FAIL (d2_audit/v2/VERDICT.md)",
+  "D2 v3 re-audit @742243972 (tsk-d0454ab252b9, tsk-ddfc5156be0d, tsk-1674e7e0fdc8, tsk-9913738c30c2): both replicas FAIL; adjudicated FAIL (d2_audit/v3/VERDICT.md)"
  ],
  "running": [
   "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: 2 x worker.ubu001 (claude, script), 1 x worker.ubu001.sci (script)"
  ],
  "blocked_on": [
-  "D2: v3 re-audit running; S1 root of trust is an OPEN operator decision (Nestor #925)",
-  "S3: Artemis session on ubu001 in its own worktree, freezing its workload (S3_PROTOCOL s3)",
+  "D2: Nestor v4 (import control B1, entry record-name deadlock) + operator S1 decision (#925); C3 stays blocked",
+  "S3: Artemis must run on ubu001 in its own worktree (#936: Artemis is on ubu002; workload drafted, not frozen)",
   "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
  ],
@@ -42,6 +42,7 @@
   "D2 S1 root of trust for protocol records (Nestor #925: signed commits+pinned keys / operator confirms hashes / accept residual); branch protection on main"
  ],
  "latest_reports": [
+  "roles/Odysseus/fabric_pilot/d2_audit/v3/VERDICT.md",
   "roles/Odysseus/fabric_pilot/d2_audit/v2/VERDICT.md",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
   "roles/Odysseus/fabric_pilot/s2/RESULT.md",
