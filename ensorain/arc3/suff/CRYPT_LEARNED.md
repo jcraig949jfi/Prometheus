@@ -76,3 +76,15 @@ Consequence for LM02 (design rule, to be precommitted):
 - A learned D_k is admissible only behind a MODEL-QUALITY GATE: the model's held-out log-loss must beat STAT_k's.
   Otherwise D_k is reported as UNKNOWN, never as 0.
 - Whether such a gate catches these four failures has not been tested. It is the next check.
+
+## Model-quality gate test (crypt_gate.py)
+
+- Fit on the first half, evaluate on the second. The gate passes iff the model's 2nd-half log-loss < STAT6's.
+- Silent failure := true D6 > .02 and learned D6 < true D6 / 3, recomputed on this run with first-half fits.
+- The precommitted subject is HMM8. CSSR_EM is shown for comparison only.
+
+### Precommitment (written BEFORE running crypt_gate.py)
+
+- K1: the gate rejects >= 80% of HMM8's silent failures. If there are none, K1 is vacuous and reported as such.
+- K2: among HMM8 gate-passing worlds, Spearman(D6, true D6) > .8.
+- K3: the gate passes >= 12/24 worlds for HMM8, i.e. it is not rejecting everything.
