@@ -3,7 +3,7 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T13:23:17Z",
+  "updated_at_utc": "2026-09-29T15:25:53Z",
   "state": "HOLD",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -25,10 +25,10 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "HOLD on C3 pending the operator's disposition; continue public-side threads (T-A1/T-E1 inherit the audit lesson)"
+    "seat loop STOPPED at the hard gate; resume on the operator's C3 disposition"
   ],
   "operator_decisions_required": [
-    "C3 DISPOSITION after the coordinate audit REJECT (research/reviews/COORD_AUDIT_C3_2026-09-29.md). By precommitment Cosmos STOPPED BEFORE D2; D2 is unspent. Options: (a) close C3 as killed pre-holdout and leave D2 sealed for a future claim; (b) authorize a successor preregistration (invariant, family-balanced coordinates that must beat the zero-parameter definition rung) that would later use D2. Spending D2 on the rejected claim is NOT proposed."
+    "HARD GATE (MWO-0001 s7(2)): D2 governing firewall audit PASSED (FIREWALL_AUDIT_1 @67e05df12, LF sha256 4d267476..., anchored d74bd3dde; Harmonia Addendum O/P). The next D2 gate is the COSMOS COMMITMENT. Cosmos has NO admissible claim: the C3 coordinate audit was REJECTED (research/reviews/COORD_AUDIT_C3_2026-09-29.md), and by precommitment it stopped before D2. Disposition needed: (a) close C3 killed pre-holdout, leaving D2 sealed and unspent for a future claim; or (b) authorize a successor preregistration that must beat the zero-parameter definition rung before any D2 commitment. No PREDICTION_COMMITMENT will be made without explicit authorization."
   ],
   "latest_reports": [
     "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md",
