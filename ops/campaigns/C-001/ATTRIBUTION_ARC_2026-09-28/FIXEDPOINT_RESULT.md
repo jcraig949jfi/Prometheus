@@ -122,3 +122,14 @@ imperfect. That is the part this thread adds, once reviewed.
 - **Consequence:** together with the block-15 counter-instance, section 3's three-engine pattern is withdrawn as a synthesis.
   What remains are single-engine observations with named mechanisms: Archaeon block 13, and BEE r022153 (the parasite, from
   the v5 dry run, which Artemis did not dispute).
+
+## Dated note 2026-09-28 (later): the BEE G6 figure, corrected by its owner (Bellerophon comms #919)
+- Artemis R-26 is CONFIRMED by Bellerophon's records. grounding_analysis.g6_class tests mechanism == "init", but World._spawn
+  never records birth_class for initial organisms, so every origin fell through to BUILT_BY_COPY.
+- Recount (C:/Users/James/z80atlas_grounding_2026-09-23/results.jsonl, the same 160 spontaneous origins):
+  * the writer of the first SR was an INITIAL organism in 57/160;
+  * 26 of those 57 replicated with an unmodified initial random tape;
+  * copy-born writers: 103/160 (64%) = ENDOGENOUS_COPY 72, PARTIAL 15, PAIR_EXECUTION 11, CONSTRUCTIVE 4, OVERWRITE 1.
+- **Cite 103/160, never 160/160.**
+- For section 3: in BEE, a majority but not all of the first self-replicators are products of copying. The section 3
+  withdrawal stands; this is a corrected single-engine observation, not a restored synthesis.
