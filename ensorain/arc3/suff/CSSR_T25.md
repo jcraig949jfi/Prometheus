@@ -418,3 +418,20 @@ the best of each. Relative to the T = 4000 parametric floor (~.003), the family 
 - Q4a: family mean at share = 1e-3 is at least .002 BELOW share = 1. Adaptive weighting beats plain averaging.
 - Q4b: family mean at share = 1e-3 is BELOW share = 0. Switching beats a non-switching Bayes mixture.
 - If Q4a fails, the MIX3_FS gain is averaging (variance reduction), not selection.
+
+### Result (precommit commit dd3861556; output results/q4_switch.json; 205 s on M2)
+
+Family mean vs fixed-share rate:
+
+| 0 (Bayes) | 1e-4 | 1e-3 | 1e-2 | 1 (uniform average) |
+|---|---|---|---|---|
+| .0152 | .0135 | .0133 | .0150 | .0214 |
+
+- Q4a SURVIVES: 1e-3 is .0081 below the uniform average. The rate is better in 17/24 worlds.
+- Q4b SURVIVES in the mean (.0133 < .0152), but narrowly per world: better in only 13/24.
+- Answer to reviewer Q4: most of the MIX3_FS gain over the individual experts is ADAPTIVE SELECTION, not averaging.
+  The static average (.0214) is barely better than the best single expert, CSSR_EM (.0219).
+- Switching (share > 0) adds a smaller increment over a non-switching Bayes mixture (.0152 -> .0133). That increment
+  comes mainly from lock-in worlds (H1 shape).
+- The rate curve is U-shaped, with its optimum at 1e-4 to 1e-3.
+- Caveat: the rate grid was chosen after 1e-3 had been used, so 1e-3 being optimal is not a test.
