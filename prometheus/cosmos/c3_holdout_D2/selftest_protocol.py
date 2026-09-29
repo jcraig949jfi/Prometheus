@@ -1305,6 +1305,7 @@ def v10_checks(tmp, ts, pkg, sha):
     # seal-terminal (a): a torn tail and no terminal record -> truncated, custodian abort, verifies, custody seals
     fr, kd, outd = mk("torn")
     fr.open()
+    fr._release_lock()                                     # the runner is gone (v11: seal-terminal needs its lock)
     with open(outd / "receipts.jsonl", "ab") as f:
         f.write(b'{"seq": 1, "kind": "predic')                      # a torn, unterminated write
     cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v10_custody.jsonl", host=HOST,
@@ -1356,6 +1357,71 @@ def v10_checks(tmp, ts, pkg, sha):
     return res
 
 
+def v11_checks(tmp, ts, pkg, sha):
+    """v11 (Odysseus v10 / Harmonia J): deliver receipts; bounded sends; seal-terminal lock, binding, newline."""
+    import multiprocessing as _mp
+    import time
+    res = {}
+    g = GateRepo(tmp / "repos" / "v11", ts).full(sha)
+
+    def mk(name, **kw):
+        kd = tmp / ("v11_key_" + name)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v11_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, outd, **base), kd, outd
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v11_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    # deliver receipts: one per world, each BEFORE that world's prediction
+    fr, kd, outd = mk("deliver")
+    r = fr.run_all()
+    kinds = [(x["kind"], x["body"].get("i")) for x in fr.receipts.records]
+    ok = r.get("status") == "CLOSED"
+    for i in range(fr.N):
+        ok = ok and ("deliver", i) in kinds and ("prediction", i) in kinds and \
+            kinds.index(("deliver", i)) < kinds.index(("prediction", i))
+    res["v11_deliver_receipt_before_each_world"] = ok
+    # a closed run whose last record lost its newline: seal-terminal KEEPS the verifying close (Addendum J)
+    raw = (outd / "receipts.jsonl").read_bytes()
+    (outd / "receipts.jsonl").write_bytes(raw.rstrip(b"\n"))
+    st = cu.seal_terminal(outd)
+    ok2, recs, _w = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v11_seal_terminal_keeps_close_without_newline"] = st["sealed_terminal"] == "close" and \
+        not st["custodian_abort_added"] and ok2 and recs[-1]["kind"] == "close"
+    # bounded sends: a child that never reads cannot stall the parent
+    a, b = _mp.Pipe(duplex=True)
+    fr2, kd2, outd2 = mk("bounded")
+    fr2._conn, fr2._proc = a, None
+    t0 = time.time()
+    sent = fr2._send_bounded(["x" * (8 << 20)], 1.0)
+    res["v11_send_has_deadline"] = sent is False and time.time() - t0 < 15
+    b.close()
+    # seal-terminal refuses while a runner holds the run lock, and is bound to the designation's open record
+    fr3, kd3, outd3 = mk("live")
+    fr3.open()
+    try:
+        cu.seal_terminal(outd3)
+        res["v11_seal_terminal_refused_while_runner_live"] = False
+    except runner.ChainBroken:                                             # re-raised by custody._refuse
+        res["v11_seal_terminal_refused_while_runner_live"] = not any(
+            x["kind"] == "abort" for x in runner.verify_receipts(outd3 / "receipts.jsonl")[1])
+    fr3._release_lock()
+    try:
+        runner.seal_terminal(outd3, expect={"run_nonce": "other", "spec_id": ts["m"]["spec_id"],
+                                             "package_sha256": sha})
+        res["v11_seal_terminal_bound_to_open_record"] = False
+    except runner.ChainBroken:
+        res["v11_seal_terminal_bound_to_open_record"] = True
+    st3 = cu.seal_terminal(outd3)
+    res["v11_seal_terminal_after_runner_gone"] = st3["custodian_abort_added"] is True
+    return res
+
+
 def run() -> dict:
     with tempfile.TemporaryDirectory(prefix="c3D2_protocol_") as t:
         tmp = Path(t)
@@ -1378,18 +1444,21 @@ def run() -> dict:
         v8 = v8_checks(tmp, ts, pkg, sha)
         v9 = v9_checks(tmp, ts, pkg, sha)
         v10 = v10_checks(tmp, ts, pkg, sha)
+        v11 = v11_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
+        import gc
+        gc.collect()                                      # v11: close run.lock handles held by finished test runners
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
     for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
-    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10}.items() if v is None)
-    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10}.items()
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11}.items() if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11}.items()
                    if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
            "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
            "not_applicable_on_this_os": not_applicable,
-           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7, **v8, **v9, **v10}.items()
+           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11}.items()
                        if k.endswith("_reason")},
            "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
            "all_defect_controls_true": all(dcs.values())}

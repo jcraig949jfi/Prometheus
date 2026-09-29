@@ -4,12 +4,12 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T09:39:15Z",
-  "state": "BLOCKED",
-  "state_reason": "E-003 BEE leg RESULT committed (VALIDATED under readings A and B; E003_BEE_RESULT.md @ f9a93eb6d; comms #976). Merge proposed via Fabric review tsk-20587454511f / tsk-5617cacdfcfe.",
+  "updated_at_utc": "2026-09-29T10:21:54Z",
+  "state": "HOLD",
+  "state_reason": "E-003 BEE leg CLOSED and MERGED (0629fd4f0): VALIDATED under readings A and B, conditional on post-exposure rules (report s1a). No further authorized BEE work under MWO-0002 (s6: no new large campaign). HOLD; loop continues.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
-  "head_sha": "a4cd6177d3a1c984942923c83596a45376d1166a",
+  "head_sha": "0629fd4f08971b083801f3a20f28298dceb6e61a",
   "threads": [
     "thr-bel-computation-reproduction-coupling",
     "thr-bel-worlds-kernel"
@@ -65,7 +65,7 @@
       "id": "E-003",
       "campaign": "C-001",
       "owner": "Archaeon",
-      "status": "RESULT_REPORTED",
+      "status": "CLOSED",
       "spec": "ANCESTRY_PREREG_v4 + v5 delta, Amendments C1-C4 @567762a15 (archaeon/attribution-arc-2026-09-28)",
       "bee_run": "r022153",
       "comms": "#811 #817 #824 #833 #920 -> #919 #950",
@@ -82,39 +82,27 @@
       "production": "roles/Bellerophon/e003_2026-09-29/production/ @ 72ed6e160 (PRODUCTION_SEAL.json)",
       "agreement_production": "FAIL then C11 repair on Archaeon side (#972)",
       "result": "VALIDATED (A and B; not reading-dependent)",
-      "report": "roles/Bellerophon/e003_2026-09-29/E003_BEE_RESULT.md @ f9a93eb6d"
+      "report": "roles/Bellerophon/e003_2026-09-29/E003_BEE_RESULT.md",
+      "merged": "0629fd4f0",
+      "defects": [
+        "DEF-BEL-004 (Q4 host arm; post-hoc relational diagnostic in report s6)"
+      ]
     }
   ],
   "fabric_tasks": [
     {
       "id": "tsk-20587454511f",
       "title": "Merge review: bellerophon/e003-bee-ancestry-2026-09-29",
-      "campaign": "C-001",
       "experiment": "E-003",
-      "base_sha": "1afd47c9f3e44e44c0628c392673b176e8195bd6",
-      "state": "submitted"
+      "state": "completed",
+      "verdict": "MERGE_WITH_FIXES (applied)"
     },
     {
       "id": "tsk-5617cacdfcfe",
       "title": "Merge review: bellerophon/e003-bee-ancestry-2026-09-29",
-      "campaign": "C-001",
       "experiment": "E-003",
-      "base_sha": "1afd47c9f3e44e44c0628c392673b176e8195bd6",
-      "state": "submitted"
-    },
-    {
-      "id": "tsk-bc42e48a52be",
-      "title": "Merge review: bellerophon/multiday-campaign-2026-09-26",
-      "experiment": "E-BEL-MD",
       "state": "completed",
-      "verdict": "MERGE_WITH_FIXES"
-    },
-    {
-      "id": "tsk-def7523bd2f2",
-      "title": "Merge review: bellerophon/multiday-campaign-2026-09-26",
-      "experiment": "E-BEL-MD",
-      "state": "completed",
-      "verdict": "MERGE_WITH_FIXES"
+      "verdict": "MERGE_WITH_FIXES (applied)"
     }
   ],
   "leases": [
@@ -140,12 +128,9 @@
     }
   ],
   "running": [],
-  "blocked_on": [
-    "Fabric: claude-executor worker to run the E-003 merge review (tsk-20587454511f / tsk-5617cacdfcfe)"
-  ],
+  "blocked_on": [],
   "next_actions": [
-    "on review verdict: apply fixes if any, merge bellerophon/e003-bee-ancestry-2026-09-29",
-    "review packet for E-003 BEE leg"
+    "HOLD: loop continues (fetch MWO, comms, Fabric); act on new authorized work or requests only"
   ],
   "operator_decisions_required": [],
   "incidents": [
@@ -174,16 +159,20 @@
       "what": "competent-SR label is sr_depth > 0 (birth event), not isolated capability; E-BEL-MD primary endpoint reads it",
       "exposed_by": "Odysseus #748, #804; Archaeon #741 (location vs material)",
       "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-004",
+      "what": "E-003 Q4 host-assisted arm kept the own-stores condition; cannot measure relational capability",
+      "exposed_by": "Archaeon #980",
+      "science_blocked": false
     }
   ],
   "latest_reports": [
-    "roles/Bellerophon/e003_2026-09-29/E003_BEE_RESULT.md (branch bellerophon/e003-bee-ancestry-2026-09-29 @ f9a93eb6d)",
-    "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md",
-    "roles/Bellerophon/forensics_2026-09-23/ERRATA_2026-09-29.md"
+    "roles/Bellerophon/e003_2026-09-29/E003_BEE_RESULT.md",
+    "roles/Bellerophon/e003_2026-09-29/REVIEW_PACKET_E003_BEE_2026-09-29.md",
+    "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md"
   ],
   "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",
   "head_sha_note": "pushed head of branch before the commit that writes this file",
-  "other_branches": [
-    "bellerophon/e003-bee-ancestry-2026-09-29"
-  ]
+  "other_branches": []
 }

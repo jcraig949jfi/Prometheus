@@ -3,7 +3,7 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "updated_at_utc": "2026-09-29T09:06:21Z",
+  "updated_at_utc": "2026-09-29T10:07:28Z",
   "state": "BLOCKED",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -22,8 +22,8 @@
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [
-    "D2 governing firewall audit: v2-v8 all FAIL (latest v8 bea18a398: key proven only after consumption; interrupted-write unsealable chain; recorded by Harmonia 65329b9c5); v9 repair pending",
-    "D2 S1 root of trust (allow-list authentication) OPEN with the operator (#925)"
+    "OPERATOR #925 (D2 S1 root of trust for protocol records): the v9 re-audit (Odysseus 6ead7beb5) found NO blocking finding in the firewall code at 2aa834ab1 and FAILED solely on S1 (recorded by Harmonia 2ed39fc4a)",
+    "D2 v10 (784d55b63) changed audited files after the v9 verdict, so current main is unaudited and needs a re-audit of the v10 delta before any governing PASS"
   ],
   "next_actions": [
     "hold for the governing D2 FIREWALL_AUDIT PASS; then report readiness to the operator (no commitment before authorization)",
@@ -31,6 +31,7 @@
     "T-I1 fragment-recurrence test (null = the definition rung's atoms)"
   ],
   "operator_decisions_required": [
+    "D2 S1 root of trust (#925): the only remaining D2 firewall blocker as of the v9 re-audit (6ead7beb5).",
     "Coordinate-layer audit Task: Fabric workers check out base_sha from origin, so the Task can only run if the withheld coordinate-layer files (C3 substrates + geometry) are pushed to origin first, which publishes them irreversibly before the C3 freeze. Confirm that publication (coordinate layer only; law, results, failure regions, substitution attacks and predictions stay withheld)? Cosmos's default is to hold the dispatch until confirmed."
   ],
   "latest_reports": [

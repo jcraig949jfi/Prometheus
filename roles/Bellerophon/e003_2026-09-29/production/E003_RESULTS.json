@@ -1,0 +1,930 @@
+{
+ "gates": {
+  "A": {
+   "completeness_leak_le_5pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_ge_50pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_marginal": {
+    "none": false,
+    "other": true,
+    "self": false
+   },
+   "flip_failed_le_1pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "identifiable_ge_80pct_nonNM": true,
+   "marginal_ci_note": "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks",
+   "transmission_ge_30": true
+  },
+  "B": {
+   "completeness_leak_le_5pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_ge_50pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_marginal": {
+    "none": false,
+    "other": true,
+    "self": false
+   },
+   "flip_failed_le_1pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "identifiable_ge_80pct_nonNM": true,
+   "marginal_ci_note": "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks",
+   "transmission_ge_30": true
+  }
+ },
+ "inputs_sha256": {
+  "arms": "d11c7a6127f104b9ee37ef496c460064a602976388b357c58d357843d1334c10",
+  "compl": "2c8df1fb1bf1baf6149184ce79c7170f4a08325a0556c8644cb34eea95a8bf95",
+  "export": "db976c7822b180e0737d30f62020afe3f914f05c45f5d948654137027c39f85f",
+  "flip": "269e2c088bbc4f7e15df68bd9b102822fb99123a30cb180a68036242cf318042",
+  "q4": "805a74b906f450f397ed1eea82bf8461d8dc4fbeebce94c715f2318425621a9c",
+  "sample": "e91c183f278be7cd95168a6a1670d7ea026dc0e94153abac793e2dcb7a5d5df5"
+ },
+ "predictions": {
+  "A": {
+   "P1": "HOLDS",
+   "P2_engine_native": "HOLDS",
+   "P5": "HOLDS"
+  },
+  "B": {
+   "P1": "HOLDS",
+   "P2_engine_native": "HOLDS",
+   "P5": "HOLDS"
+  }
+ },
+ "reading_A": {
+  "P1_homology_transmission": [
+   0.962031,
+   [
+    0.960035,
+    0.96423
+   ]
+  ],
+  "P1_homology_transmission_div_ge_0.5": [
+   0.963737,
+   [
+    0.961665,
+    0.965721
+   ]
+  ],
+  "P2_native_target_disagrees_WPmajority": [
+   0.448463,
+   [
+    0.406872,
+    0.490054
+   ],
+   553
+  ],
+  "P2_native_target_disagrees_identifiable": [
+   0.503797,
+   [
+    0.455696,
+    0.551899
+   ],
+   395
+  ],
+  "Q1_performer_ne_majority_donor": [
+   0.141238,
+   [
+    0.13741,
+    0.145036
+   ],
+   32654
+  ],
+  "Q3_departure_uniparental": [
+   0.147531,
+   [
+    0.143815,
+    0.15143
+   ],
+   32827
+  ],
+  "Q4_host_assisted_capable_children": [
+   0.816767,
+   [
+    0.812593,
+    0.821001
+   ],
+   32827
+  ],
+  "Q4_incapable_isolated_but_host_capable": [
+   0.007311,
+   [
+    0.006397,
+    0.008255
+   ],
+   32827
+  ],
+  "Q4_isolated_capable_children": [
+   0.810095,
+   [
+    0.805861,
+    0.81436
+   ],
+   32827
+  ],
+  "Q4_material_without_capability_transmission": [
+   0.169485,
+   [
+    0.165472,
+    0.173434
+   ],
+   31401
+  ],
+  "Q5_descriptive_founder_share_of_capable_children_loci": 0.006755,
+  "Q5_drift_null": "NOT_COMPUTED (descriptive only)",
+  "Q6_exec_contains": {
+   "I": [
+    0.159716,
+    [
+     0.155908,
+     0.163737
+    ],
+    32827
+   ],
+   "P": [
+    0.162488,
+    [
+     0.158559,
+     0.166601
+    ],
+    32827
+   ],
+   "W": [
+    1.0,
+    [
+     1.0,
+     1.0
+    ],
+    32827
+   ]
+  },
+  "Q7_computed_share": [
+   0.000561,
+   [
+    0.000468,
+    0.000678
+   ]
+  ],
+  "Q7_source_diversity_mean": 0.997015,
+  "Q8c_all": [
+   0.00582,
+   [
+    0.005381,
+    0.00626
+   ]
+  ],
+  "Q8c_by_class": {
+   "NO_MATERIAL": [
+    0.214286,
+    [
+     0.0,
+     0.521739
+    ]
+   ],
+   "none": [
+    0.241941,
+    [
+     0.162042,
+     0.329772
+    ]
+   ],
+   "other": [
+    0.011489,
+    [
+     0.010086,
+     0.012943
+    ]
+   ],
+   "self": [
+    0.004375,
+    [
+     0.003992,
+     0.004765
+    ]
+   ]
+  },
+  "Q8c_nonmove": [
+   0.30851,
+   [
+    0.268862,
+    0.349131
+   ]
+  ],
+  "Q8c_transmission": [
+   0.00115,
+   [
+    0.000984,
+    0.001336
+   ]
+  ],
+  "Q8c_transmission_div_ge_0.5": [
+   0.001137,
+   [
+    0.000972,
+    0.001319
+   ]
+  ],
+  "Q8c_whether": {
+   "INPUT": {
+    "births": 32827,
+    "mean_suppression": 0.001634
+   },
+   "P": {
+    "births": 32683,
+    "mean_suppression": 0.147485
+   },
+   "W": {
+    "births": 32827,
+    "mean_suppression": 0.734197
+   }
+  },
+  "Q8c_whether_by_class": {
+   "NO_MATERIAL": {
+    "INPUT": {
+     "births": 183,
+     "mean_suppression": 0.002049
+    },
+    "P": {
+     "births": 56,
+     "mean_suppression": 0.544643
+    },
+    "W": {
+     "births": 183,
+     "mean_suppression": 0.858607
+    }
+   },
+   "none": {
+    "INPUT": {
+     "births": 62,
+     "mean_suppression": 0.354839
+    },
+    "P": {
+     "births": 62,
+     "mean_suppression": 0.425403
+    },
+    "W": {
+     "births": 62,
+     "mean_suppression": 0.691532
+    }
+   },
+   "other": {
+    "INPUT": {
+     "births": 4648,
+     "mean_suppression": 0.000377
+    },
+    "P": {
+     "births": 4648,
+     "mean_suppression": 0.926312
+    },
+    "W": {
+     "births": 4648,
+     "mean_suppression": 0.688092
+    }
+   },
+   "self": {
+    "INPUT": {
+     "births": 27934,
+     "mean_suppression": 0.001056
+    },
+    "P": {
+     "births": 27917,
+     "mean_suppression": 0.016401
+    },
+    "W": {
+     "births": 27934,
+     "mean_suppression": 0.741149
+    }
+   }
+  },
+  "Q8r_pdom_scope": "NOT_COMPUTED (secondary, non-gating; not implemented)",
+  "Q8r_rule_implicit_share_whole_execution": [
+   0.01312,
+   [
+    0.01192,
+    0.014328
+   ]
+  ],
+  "Q_homology_all_ident": [
+   0.951804,
+   [
+    0.949518,
+    0.954069
+   ]
+  ],
+  "Q_input": [
+   0.004306,
+   [
+    0.003789,
+    0.004843
+   ]
+  ],
+  "births": 32827,
+  "classes": {
+   "NO_MATERIAL": 183,
+   "none": 62,
+   "other": 4648,
+   "self": 27934
+  },
+  "completeness_by_class": {
+   "NO_MATERIAL": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 16577,
+    "named_effective": 2224,
+    "precision": 0.134162,
+    "unnamed": 24895
+   },
+   "none": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 30135,
+    "named_effective": 4963,
+    "precision": 0.164692,
+    "unnamed": 27657
+   },
+   "other": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 37668,
+    "named_effective": 5132,
+    "precision": 0.136243,
+    "unnamed": 20124
+   },
+   "self": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 54751,
+    "named_effective": 12369,
+    "precision": 0.225914,
+    "unnamed": 93857
+   }
+  },
+  "dep_vacuous_loci": 271,
+  "flip_by_class": {
+   "NO_MATERIAL": {
+    "confirmed": 1,
+    "coverage": 0.333333,
+    "coverage_ci95": [
+     0.333333,
+     0.333333
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.333333,
+     "move_loci": 3
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 3
+   },
+   "none": {
+    "confirmed": 1389,
+    "coverage": 0.719689,
+    "coverage_ci95": [
+     0.637332,
+     0.790656
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.742109,
+     "move_loci": 2978
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 1930
+   },
+   "other": {
+    "confirmed": 1195,
+    "coverage": 0.543429,
+    "coverage_ci95": [
+     0.438785,
+     0.645698
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.549844,
+     "move_loci": 2237
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 2199
+   },
+   "self": {
+    "confirmed": 4517,
+    "coverage": 0.82217,
+    "coverage_ci95": [
+     0.787806,
+     0.853348
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.814489,
+     "move_loci": 5687
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 5494
+   }
+  },
+  "gates": {
+   "completeness_leak_le_5pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_ge_50pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_marginal": {
+    "none": false,
+    "other": true,
+    "self": false
+   },
+   "flip_failed_le_1pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "identifiable_ge_80pct_nonNM": true,
+   "marginal_ci_note": "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks",
+   "transmission_ge_30": true
+  },
+  "identifiable_share_nonNM": [
+   0.968172,
+   [
+    0.966119,
+    0.969949
+   ],
+   32644
+  ],
+  "predictions": {
+   "P1": "HOLDS",
+   "P2_engine_native": "HOLDS",
+   "P5": "HOLDS"
+  },
+  "reading": "A",
+  "roundtrip": {
+   "check_failures": 0,
+   "mismatches": {},
+   "records": 32827,
+   "status": "PASS"
+  },
+  "transmission_births": 31401,
+  "verdict": {
+   "note": "INSTRUMENT_FAILED is decided by the three-way tracer agreement (s4.3), not here",
+   "verdict": "VALIDATED",
+   "why": []
+  }
+ },
+ "reading_B": {
+  "P1_homology_transmission": [
+   0.962031,
+   [
+    0.960035,
+    0.96423
+   ]
+  ],
+  "P1_homology_transmission_div_ge_0.5": [
+   0.963737,
+   [
+    0.961665,
+    0.965721
+   ]
+  ],
+  "P2_native_target_disagrees_WPmajority": [
+   0.448463,
+   [
+    0.406872,
+    0.490054
+   ],
+   553
+  ],
+  "P2_native_target_disagrees_identifiable": [
+   0.503797,
+   [
+    0.455696,
+    0.551899
+   ],
+   395
+  ],
+  "Q1_performer_ne_majority_donor": [
+   0.141238,
+   [
+    0.13741,
+    0.145036
+   ],
+   32654
+  ],
+  "Q3_departure_uniparental": [
+   0.147531,
+   [
+    0.143815,
+    0.15143
+   ],
+   32827
+  ],
+  "Q4_host_assisted_capable_children": [
+   0.816767,
+   [
+    0.812593,
+    0.821001
+   ],
+   32827
+  ],
+  "Q4_incapable_isolated_but_host_capable": [
+   0.007311,
+   [
+    0.006397,
+    0.008255
+   ],
+   32827
+  ],
+  "Q4_isolated_capable_children": [
+   0.810095,
+   [
+    0.805861,
+    0.81436
+   ],
+   32827
+  ],
+  "Q4_material_without_capability_transmission": [
+   0.169485,
+   [
+    0.165472,
+    0.173434
+   ],
+   31401
+  ],
+  "Q5_descriptive_founder_share_of_capable_children_loci": 0.006755,
+  "Q5_drift_null": "NOT_COMPUTED (descriptive only)",
+  "Q6_exec_contains": {
+   "I": [
+    0.159716,
+    [
+     0.155908,
+     0.163737
+    ],
+    32827
+   ],
+   "P": [
+    0.162488,
+    [
+     0.158559,
+     0.166601
+    ],
+    32827
+   ],
+   "W": [
+    1.0,
+    [
+     1.0,
+     1.0
+    ],
+    32827
+   ]
+  },
+  "Q7_computed_share": [
+   0.000561,
+   [
+    0.000468,
+    0.000678
+   ]
+  ],
+  "Q7_source_diversity_mean": 0.997015,
+  "Q8c_all": [
+   0.00582,
+   [
+    0.005381,
+    0.00626
+   ]
+  ],
+  "Q8c_by_class": {
+   "NO_MATERIAL": [
+    0.214286,
+    [
+     0.0,
+     0.521739
+    ]
+   ],
+   "none": [
+    0.245008,
+    [
+     0.170073,
+     0.325336
+    ]
+   ],
+   "other": [
+    0.011489,
+    [
+     0.010086,
+     0.012943
+    ]
+   ],
+   "self": [
+    0.004361,
+    [
+     0.003979,
+     0.004755
+    ]
+   ]
+  },
+  "Q8c_nonmove": [
+   0.30851,
+   [
+    0.268862,
+    0.349131
+   ]
+  ],
+  "Q8c_transmission": [
+   0.00115,
+   [
+    0.000984,
+    0.001336
+   ]
+  ],
+  "Q8c_transmission_div_ge_0.5": [
+   0.001137,
+   [
+    0.000972,
+    0.001319
+   ]
+  ],
+  "Q8c_whether": {
+   "INPUT": {
+    "births": 32827,
+    "mean_suppression": 0.001634
+   },
+   "P": {
+    "births": 32683,
+    "mean_suppression": 0.147485
+   },
+   "W": {
+    "births": 32827,
+    "mean_suppression": 0.734197
+   }
+  },
+  "Q8c_whether_by_class": {
+   "NO_MATERIAL": {
+    "INPUT": {
+     "births": 183,
+     "mean_suppression": 0.002049
+    },
+    "P": {
+     "births": 56,
+     "mean_suppression": 0.544643
+    },
+    "W": {
+     "births": 183,
+     "mean_suppression": 0.858607
+    }
+   },
+   "none": {
+    "INPUT": {
+     "births": 63,
+     "mean_suppression": 0.349206
+    },
+    "P": {
+     "births": 63,
+     "mean_suppression": 0.424603
+    },
+    "W": {
+     "births": 63,
+     "mean_suppression": 0.694444
+    }
+   },
+   "other": {
+    "INPUT": {
+     "births": 4648,
+     "mean_suppression": 0.000377
+    },
+    "P": {
+     "births": 4648,
+     "mean_suppression": 0.926312
+    },
+    "W": {
+     "births": 4648,
+     "mean_suppression": 0.688092
+    }
+   },
+   "self": {
+    "INPUT": {
+     "births": 27933,
+     "mean_suppression": 0.001056
+    },
+    "P": {
+     "births": 27916,
+     "mean_suppression": 0.016388
+    },
+    "W": {
+     "births": 27933,
+     "mean_suppression": 0.741144
+    }
+   }
+  },
+  "Q8r_pdom_scope": "NOT_COMPUTED (secondary, non-gating; not implemented)",
+  "Q8r_rule_implicit_share_whole_execution": [
+   0.01312,
+   [
+    0.01192,
+    0.014328
+   ]
+  ],
+  "Q_homology_all_ident": [
+   0.951804,
+   [
+    0.949518,
+    0.954069
+   ]
+  ],
+  "Q_input": [
+   0.004306,
+   [
+    0.003789,
+    0.004843
+   ]
+  ],
+  "births": 32827,
+  "classes": {
+   "NO_MATERIAL": 183,
+   "none": 63,
+   "other": 4648,
+   "self": 27933
+  },
+  "completeness_by_class": {
+   "NO_MATERIAL": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 16577,
+    "named_effective": 2224,
+    "precision": 0.134162,
+    "unnamed": 24895
+   },
+   "none": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 30135,
+    "named_effective": 4963,
+    "precision": 0.164692,
+    "unnamed": 27657
+   },
+   "other": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 37668,
+    "named_effective": 5132,
+    "precision": 0.136243,
+    "unnamed": 20124
+   },
+   "self": {
+    "leak_rate": 0.0,
+    "leaks": 0,
+    "named": 54751,
+    "named_effective": 12369,
+    "precision": 0.225914,
+    "unnamed": 93857
+   }
+  },
+  "dep_vacuous_loci": 271,
+  "flip_by_class": {
+   "NO_MATERIAL": {
+    "confirmed": 1,
+    "coverage": 0.333333,
+    "coverage_ci95": [
+     0.333333,
+     0.333333
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.333333,
+     "move_loci": 3
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 3
+   },
+   "none": {
+    "confirmed": 1389,
+    "coverage": 0.719689,
+    "coverage_ci95": [
+     0.637332,
+     0.790656
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.742109,
+     "move_loci": 2978
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 1930
+   },
+   "other": {
+    "confirmed": 1195,
+    "coverage": 0.543429,
+    "coverage_ci95": [
+     0.438785,
+     0.645698
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.549844,
+     "move_loci": 2237
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 2199
+   },
+   "self": {
+    "confirmed": 4517,
+    "coverage": 0.82217,
+    "coverage_ci95": [
+     0.787806,
+     0.853348
+    ],
+    "diagnostic_cond1_only": {
+     "coverage": 0.814489,
+     "move_loci": 5687
+    },
+    "failed": 0,
+    "failed_rate": 0.0,
+    "move_dep_loci": 5494
+   }
+  },
+  "gates": {
+   "completeness_leak_le_5pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_ge_50pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_marginal": {
+    "none": false,
+    "other": true,
+    "self": false
+   },
+   "flip_failed_le_1pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "identifiable_ge_80pct_nonNM": true,
+   "marginal_ci_note": "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks",
+   "transmission_ge_30": true
+  },
+  "identifiable_share_nonNM": [
+   0.968172,
+   [
+    0.966119,
+    0.969949
+   ],
+   32644
+  ],
+  "predictions": {
+   "P1": "HOLDS",
+   "P2_engine_native": "HOLDS",
+   "P5": "HOLDS"
+  },
+  "reading": "B",
+  "roundtrip": {
+   "check_failures": 0,
+   "mismatches": {},
+   "records": 32827,
+   "status": "PASS"
+  },
+  "transmission_births": 31401,
+  "verdict": {
+   "note": "INSTRUMENT_FAILED is decided by the three-way tracer agreement (s4.3), not here",
+   "verdict": "VALIDATED",
+   "why": []
+  }
+ },
+ "reading_dependent_fields": [
+  "classes",
+  "Q8c_by_class",
+  "Q8c_whether_by_class"
+ ],
+ "verdict": {
+  "A": "VALIDATED",
+  "B": "VALIDATED",
+  "READING_DEPENDENT": false
+ }
+}
