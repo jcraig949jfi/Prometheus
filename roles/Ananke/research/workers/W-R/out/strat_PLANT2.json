@@ -1,0 +1,5559 @@
+{
+ "spec": "PLANT2",
+ "meta": {
+  "plant": "echo_hold",
+  "physics": "c1b_echo_physics",
+  "update_period": 2
+ },
+ "M": 256,
+ "ns": "0x620",
+ "Pd": 17,
+ "strat_period": 2,
+ "strat_kind": "update_clock",
+ "update_mode": "sync",
+ "update_period": 2,
+ "trials": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "offsets": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12
+ ],
+ "ro_off": 13,
+ "normal_acc_by_t0_phase": {
+  "t0mod2=0": 1.0,
+  "t0mod2=1": 1.0
+ },
+ "wall_sim_s": 62.935078859329224,
+ "wall_s": 99.02868127822876,
+ "offsets_res": {
+  "0": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 0.45454545454545453,
+    "fN": 0.0,
+    "fX": 0.5454545454545454,
+    "ftie": 0.0,
+    "identity": 0.45454545454545453,
+    "identity_s0": 0.45454545454545453,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 1536
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      0.45454545454545453,
+      0.45454545454545453
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.5454545454545454,
+    "class": "IDENTITY-BROKEN",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 0.45454545454545453,
+     "fN": 0.0,
+     "fX": 0.5454545454545454,
+     "ftie": 0.0,
+     "identity": 0.45454545454545453,
+     "identity_s0": 0.45454545454545453,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       0.45454545454545453,
+       0.45454545454545453
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       0.45454545454545453,
+       0.45454545454545453
+      ]
+     },
+     "class": "IDENTITY-BROKEN"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 1.0,
+    "ftie": 0.0,
+    "identity": 0.0,
+    "identity_s0": 0.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 0,
+     "00": 1536
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      0.0,
+      0.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 1.0,
+    "class": "IDENTITY-BROKEN",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 1.0,
+     "ftie": 0.0,
+     "identity": 0.0,
+     "identity_s0": 0.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       0.0,
+       0.0
+      ]
+     },
+     "class": "IDENTITY-BROKEN"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": -1.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      -1.0,
+      -1.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "1": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "2": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "3": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "4": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "5": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.45454545454545453,
+    "fC": 0.5454545454545454,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fC": [
+      0.5454545454545454,
+      0.5454545454545454
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.5454545454545454,
+    "chan_acc": 0.45454545454545453,
+    "class": "MIXTURE",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.45454545454545453,
+     "fC": 0.5454545454545454,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": -0.9999999999999999,
+     "ci99": {
+      "fS": [
+       0.45454545454545453,
+       0.45454545454545453
+      ],
+      "fC": [
+       0.5454545454545454,
+       0.5454545454545454
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": [
+       -0.9999999999999999,
+       -0.9999999999999999
+      ],
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "MIXTURE"
+    }
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE",
+    "follow": {
+     "eligible": 640,
+     "fS": 1.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       1.0,
+       1.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "SITE"
+    }
+   },
+   "diff": {
+    "dS": 1.0,
+    "dC": -1.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      1.0,
+      1.0
+     ],
+     "dC": [
+      -1.0,
+      -1.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": "RESOLVES",
+   "resolution_follow": "RESOLVES"
+  },
+  "6": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.5454545454545454,
+    "fC": 0.45454545454545453,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 1536,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.5454545454545454,
+      0.5454545454545454
+     ],
+     "fC": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.45454545454545453,
+    "chan_acc": 0.5454545454545454,
+    "class": "MIXTURE",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.5454545454545454,
+     "fC": 0.45454545454545453,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": -0.9999999999999999,
+     "ci99": {
+      "fS": [
+       0.5454545454545454,
+       0.5454545454545454
+      ],
+      "fC": [
+       0.45454545454545453,
+       0.45454545454545453
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": [
+       -0.9999999999999999,
+       -0.9999999999999999
+      ],
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "MIXTURE"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 1536,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE",
+    "follow": {
+     "eligible": 768,
+     "fS": 1.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       1.0,
+       1.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "SITE"
+    }
+   },
+   "diff": {
+    "dS": 1.0,
+    "dC": -1.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      1.0,
+      1.0
+     ],
+     "dC": [
+      -1.0,
+      -1.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": "RESOLVES",
+   "resolution_follow": "RESOLVES"
+  },
+  "7": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "8": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "9": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "10": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 640,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  },
+  "11": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.45454545454545453,
+    "fC": 0.5454545454545454,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fC": [
+      0.5454545454545454,
+      0.5454545454545454
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.5454545454545454,
+    "chan_acc": 0.45454545454545453,
+    "class": "MIXTURE",
+    "follow": {
+     "eligible": 1408,
+     "fS": 0.45454545454545453,
+     "fC": 0.5454545454545454,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": -0.9999999999999999,
+     "ci99": {
+      "fS": [
+       0.45454545454545453,
+       0.45454545454545453
+      ],
+      "fC": [
+       0.5454545454545454,
+       0.5454545454545454
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": [
+       -0.9999999999999999,
+       -0.9999999999999999
+      ],
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "MIXTURE"
+    }
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL",
+    "follow": {
+     "eligible": 768,
+     "fS": 0.0,
+     "fC": 1.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       0.0,
+       0.0
+      ],
+      "fC": [
+       1.0,
+       1.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "CHANNEL"
+    }
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE",
+    "follow": {
+     "eligible": 640,
+     "fS": 1.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       1.0,
+       1.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "SITE"
+    }
+   },
+   "diff": {
+    "dS": 1.0,
+    "dC": -1.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      1.0,
+      1.0
+     ],
+     "dC": [
+      -1.0,
+      -1.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": "RESOLVES",
+   "resolution_follow": "RESOLVES"
+  },
+  "12": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     6,
+     8,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     7,
+     9,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 2816,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE",
+    "follow": {
+     "eligible": 1408,
+     "fS": 1.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       1.0,
+       1.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "SITE"
+    }
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE",
+    "follow": {
+     "eligible": 640,
+     "fS": 1.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       1.0,
+       1.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "SITE"
+    }
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 1536,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE",
+    "follow": {
+     "eligible": 768,
+     "fS": 1.0,
+     "fC": 0.0,
+     "fN": 0.0,
+     "fX": 0.0,
+     "ftie": 0.0,
+     "identity": 1.0,
+     "identity_s0": 1.0,
+     "phi": null,
+     "ci99": {
+      "fS": [
+       1.0,
+       1.0
+      ],
+      "fC": [
+       0.0,
+       0.0
+      ],
+      "fN": [
+       0.0,
+       0.0
+      ],
+      "phi": null,
+      "identity": [
+       1.0,
+       1.0
+      ]
+     },
+     "class": "SITE"
+    }
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null,
+   "resolution_follow": null
+  }
+ },
+ "permuted_mustfail": {
+  "0": {
+   "phase_trials": {
+    "0": [
+     3,
+     6,
+     7,
+     9,
+     11
+    ],
+    "1": [
+     1,
+     2,
+     4,
+     5,
+     8,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 0.45454545454545453,
+    "fN": 0.0,
+    "fX": 0.5454545454545454,
+    "ftie": 0.0,
+    "identity": 0.45454545454545453,
+    "identity_s0": 0.45454545454545453,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 1536
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      0.45454545454545453,
+      0.45454545454545453
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.5454545454545454,
+    "class": "IDENTITY-BROKEN"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 0.2,
+    "fN": 0.0,
+    "fX": 0.8,
+    "ftie": 0.0,
+    "identity": 0.2,
+    "identity_s0": 0.2,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 256,
+     "00": 1024
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      0.2,
+      0.2
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      0.2,
+      0.2
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.8,
+    "class": "IDENTITY-BROKEN"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 0.6666666666666666,
+    "fN": 0.0,
+    "fX": 0.3333333333333333,
+    "ftie": 0.0,
+    "identity": 0.6666666666666666,
+    "identity_s0": 0.6666666666666666,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1024,
+     "00": 512
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      0.6666666666666666,
+      0.6666666666666666
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      0.6666666666666666,
+      0.6666666666666666
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.3333333333333333,
+    "class": "IDENTITY-BROKEN"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.4666666666666666,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.4666666666666666,
+      0.4666666666666666
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": null
+  },
+  "1": {
+   "phase_trials": {
+    "0": [
+     1,
+     2,
+     4,
+     5,
+     6,
+     7
+    ],
+    "1": [
+     3,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "2": {
+   "phase_trials": {
+    "0": [
+     1,
+     7,
+     9,
+     10,
+     11
+    ],
+    "1": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     8
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "3": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     6,
+     9,
+     10,
+     11
+    ],
+    "1": [
+     2,
+     4,
+     5,
+     7,
+     8
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "4": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     7,
+     8,
+     9
+    ],
+    "1": [
+     2,
+     4,
+     5,
+     6,
+     10,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "5": {
+   "phase_trials": {
+    "0": [
+     1,
+     2,
+     3,
+     5,
+     7,
+     8
+    ],
+    "1": [
+     4,
+     6,
+     9,
+     10,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.45454545454545453,
+    "fC": 0.5454545454545454,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fC": [
+      0.5454545454545454,
+      0.5454545454545454
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.5454545454545454,
+    "chan_acc": 0.45454545454545453,
+    "class": "MIXTURE"
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.3333333333333333,
+    "fC": 0.6666666666666666,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -1.0,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 512,
+     "01": 1024,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.3333333333333333,
+      0.3333333333333333
+     ],
+     "fC": [
+      0.6666666666666666,
+      0.6666666666666666
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -1.0,
+      -1.0
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.6666666666666666,
+    "chan_acc": 0.3333333333333333,
+    "class": "MIXTURE"
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.6,
+    "fC": 0.4,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 768,
+     "01": 512,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.6,
+      0.6
+     ],
+     "fC": [
+      0.4,
+      0.4
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.4,
+    "chan_acc": 0.6,
+    "class": "MIXTURE"
+   },
+   "diff": {
+    "dS": 0.26666666666666666,
+    "dC": -0.2666666666666666,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.26666666666666666,
+      0.26666666666666666
+     ],
+     "dC": [
+      -0.2666666666666666,
+      -0.2666666666666666
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": "STAYS_MIXED"
+  },
+  "6": {
+   "phase_trials": {
+    "0": [
+     2,
+     4,
+     8,
+     9,
+     10
+    ],
+    "1": [
+     1,
+     3,
+     5,
+     6,
+     7,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.5454545454545454,
+    "fC": 0.45454545454545453,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 1536,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.5454545454545454,
+      0.5454545454545454
+     ],
+     "fC": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.45454545454545453,
+    "chan_acc": 0.5454545454545454,
+    "class": "MIXTURE"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.2,
+    "fC": 0.8,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -1.0,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 256,
+     "01": 1024,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.2,
+      0.2
+     ],
+     "fC": [
+      0.8,
+      0.8
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -1.0,
+      -1.0
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.8,
+    "chan_acc": 0.2,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.8333333333333334,
+    "fC": 0.16666666666666666,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 256,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.8333333333333334,
+      0.8333333333333334
+     ],
+     "fC": [
+      0.16666666666666666,
+      0.16666666666666666
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.16666666666666666,
+    "chan_acc": 0.8333333333333334,
+    "class": "SITE"
+   },
+   "diff": {
+    "dS": 0.6333333333333333,
+    "dC": -0.6333333333333334,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.6333333333333333,
+      0.6333333333333333
+     ],
+     "dC": [
+      -0.6333333333333334,
+      -0.6333333333333334
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": true,
+   "resolution": "RESOLVES"
+  },
+  "7": {
+   "phase_trials": {
+    "0": [
+     1,
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "1": [
+     2,
+     3,
+     4,
+     10,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "8": {
+   "phase_trials": {
+    "0": [
+     1,
+     3,
+     6,
+     7,
+     9
+    ],
+    "1": [
+     2,
+     4,
+     5,
+     8,
+     10,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "9": {
+   "phase_trials": {
+    "0": [
+     1,
+     2,
+     3,
+     8,
+     9,
+     10
+    ],
+    "1": [
+     4,
+     5,
+     6,
+     7,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "10": {
+   "phase_trials": {
+    "0": [
+     2,
+     3,
+     4,
+     6,
+     8
+    ],
+    "1": [
+     1,
+     5,
+     7,
+     9,
+     10,
+     11
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 2816,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1280,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 0.0,
+    "fC": 1.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 0,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.0,
+      0.0
+     ],
+     "fC": [
+      1.0,
+      1.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 1.0,
+    "chan_acc": 0.0,
+    "class": "CHANNEL"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  },
+  "11": {
+   "phase_trials": {
+    "0": [
+     1,
+     2,
+     4,
+     7,
+     8,
+     11
+    ],
+    "1": [
+     3,
+     5,
+     6,
+     9,
+     10
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 0.45454545454545453,
+    "fC": 0.5454545454545454,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 1536,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.45454545454545453,
+      0.45454545454545453
+     ],
+     "fC": [
+      0.5454545454545454,
+      0.5454545454545454
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.5454545454545454,
+    "chan_acc": 0.45454545454545453,
+    "class": "MIXTURE"
+   },
+   "q0": {
+    "eligible": 768,
+    "fS": 0.5,
+    "fC": 0.5,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -1.0,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 768,
+     "01": 768,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.5,
+      0.5
+     ],
+     "fC": [
+      0.5,
+      0.5
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -1.0,
+      -1.0
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.5,
+    "chan_acc": 0.5,
+    "class": "MIXTURE"
+   },
+   "q1": {
+    "eligible": 640,
+    "fS": 0.4,
+    "fC": 0.6,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": -0.9999999999999999,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 512,
+     "01": 768,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      0.4,
+      0.4
+     ],
+     "fC": [
+      0.6,
+      0.6
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": [
+      -0.9999999999999999,
+      -0.9999999999999999
+     ],
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 0,
+    "site_acc": 0.6,
+    "chan_acc": 0.4,
+    "class": "MIXTURE"
+   },
+   "diff": {
+    "dS": -0.09999999999999998,
+    "dC": 0.09999999999999998,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      -0.09999999999999998,
+      -0.09999999999999998
+     ],
+     "dC": [
+      0.09999999999999998,
+      0.09999999999999998
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": "STAYS_MIXED"
+  },
+  "12": {
+   "phase_trials": {
+    "0": [
+     3,
+     6,
+     7,
+     10,
+     11
+    ],
+    "1": [
+     1,
+     2,
+     4,
+     5,
+     8,
+     9
+    ]
+   },
+   "pooled": {
+    "eligible": 1408,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 2816,
+    "q": {
+     "11": 0,
+     "10": 2816,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE"
+   },
+   "q0": {
+    "eligible": 640,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1280,
+    "q": {
+     "11": 0,
+     "10": 1280,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE"
+   },
+   "q1": {
+    "eligible": 768,
+    "fS": 1.0,
+    "fC": 0.0,
+    "fN": 0.0,
+    "fX": 0.0,
+    "ftie": 0.0,
+    "identity": 1.0,
+    "identity_s0": 1.0,
+    "phi": null,
+    "cells": 1536,
+    "q": {
+     "11": 0,
+     "10": 1536,
+     "01": 0,
+     "00": 0
+    },
+    "ci99": {
+     "fS": [
+      1.0,
+      1.0
+     ],
+     "fC": [
+      0.0,
+      0.0
+     ],
+     "fN": [
+      0.0,
+      0.0
+     ],
+     "phi": null,
+     "identity": [
+      1.0,
+      1.0
+     ]
+    },
+    "phi_boot_undefined": 2000,
+    "site_acc": 0.0,
+    "chan_acc": 1.0,
+    "class": "SITE"
+   },
+   "diff": {
+    "dS": 0.0,
+    "dC": 0.0,
+    "dN": 0.0,
+    "ci99": {
+     "dS": [
+      0.0,
+      0.0
+     ],
+     "dC": [
+      0.0,
+      0.0
+     ],
+     "dN": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "phase_effect": false,
+   "resolution": null
+  }
+ }
+}

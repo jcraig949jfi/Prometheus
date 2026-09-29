@@ -141,3 +141,14 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   into lens. Successor T-SWAP-REL3: studentized/BCa interval (or P-dependent
   level), report z with a paired CI beside every FLIP_REL, count evidence by
   specimen x offset group.
+- T-INS-9 ANSWERED (W-R, E-ANANKE-W-R, workers/W-R/REPORT.md; 6 tests, principal
+  re-run 6 passed; spot-check of summary matches). Phase-stratifying the SINGLE
+  census (sync update_period 2) changes classes in every period-2 cell with
+  both phases observed. No pooled mixed reading fully resolves: 11 PARTLY (one
+  phase clean SITE/CHANNEL, the other still a within-phase ~50/50 S/C mixture;
+  e.g. 2dccdaa5 o5 q1 SITE 1.00, q0 S .47 / C .49), 6 stay mixed (4781b0a1
+  o5-10). Async negative control 369f5a5b flagged 2 offsets at ns 0x620 but
+  0/16 at 0x621 (pair-only CIs anti-conservative with 5-6 trials per stratum).
+  Successors: T-INS-11 (split the mixed phase by the carrier packet's delivery
+  tick vs wake tick), T-INS-12 (E2 with odd Pd), T-INS-13 (trial-level
+  resampling for phase-difference CIs).

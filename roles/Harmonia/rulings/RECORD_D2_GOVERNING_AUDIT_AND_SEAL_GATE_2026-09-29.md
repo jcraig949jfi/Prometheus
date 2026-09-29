@@ -424,3 +424,25 @@ Nothing released, revealed or built.
   Harmonia condition.
 - `operator_decisions_required` for Harmonia is now **empty** (S1 is resolved by the order; the Addendum E position is
   confirmed by G8).
+
+## Addendum N (2026-09-29): governing v12 audit (MWO-0004 D2-2, the bounded re-audit) recorded, FAIL; one final round remains
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v12/VERDICT.md`, blob sha256 `c4d116d7f64a7b4f0ba226e5c337d35ff07f0f3337e37ce6f978d128db354f07` |
+| Verdict commit | 47df49352d99e0ef138a43317bde11880ada5a90 (12:12Z) |
+| Audited code | b0763ebaa (Nestor #992; D2-1 anchor implementation). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** V12-1: an anchored record that no longer verifies is skipped, not refused. The replicas split PASS (conditional) / FAIL; the auditor ruled. Also in scope for the final repair: V12-3 (KEY_RELEASED/REVEALED not anchored), V12-4 (anchoring by name only), V12-2 (anchor rollback undeclared). Self-tests PASS. |
+
+- **Harmonia check (by reading code):** `protocol.py` line 582 builds `all_audits` from `_proto_tree(repo, ref)` (the files
+  present in the tree), and lines 583-584 filter them through `_is_allowlisted`. An anchored record absent from the tree,
+  or altered, therefore drops out instead of refusing. **V12-1 is confirmed as stated.**
+  - From the custody side this is the most important D2-1 property: a later anchored FAIL must never be removable by an
+    ordinary commit.
+- **Process state under MWO-0004 D2-2:** the bounded re-audit FAILED on an ordinary implementation defect. **Exactly one
+  final bounded repair and one final re-audit remain.** Then PASS proceeds under the existing protocol, or FAIL means
+  Harmonia records the remaining defect and D2 is HOLD, with no further rounds.
+- **For the final round, from the adjudicator's side:** the evidence bundle Harmonia will adjudicate from carries "every
+  record, incl. every audit version" (`evidence.py`). A governing set built from the anchor (the verdict's item 1) is what
+  lets that bundle prove that no anchored FAIL was hidden. Nothing further is required by Harmonia.
+- Nothing released, revealed or built.

@@ -1,22 +1,33 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Artemis",
-  "mwo_id": "MWO-0003",
-  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
-  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
-  "updated_at_utc": "2026-09-29T11:30Z",
-  "state": "BLOCKED",
-  "state_reason": "MWO-0003 adopted; FP-001 PASS via Fabric (2 replicas agree). MWO-0001 s10 ARTEMIS work continues: S3 principal blocked on session placement on ubu001 (operator decision, MWO-0002 s8); workload drafted, not frozen.",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T14:00Z",
+  "state": "ACTIVE",
+  "state_reason": "S3 executed and synthesized: 12/12 completed, 0 rescues, 0.67 principal coordination actions/execution (roles/Artemis/s3/SYNTHESIS.md). Blind quality scoring and authoritative canary scan are Odysseus's. Next: route S3 findings to owners; bounded raw dispatch.",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
   "head_sha": "parent of the commit adding this state: a3b2c5a24057c51307f046a7a347aa72eb16cae1",
   "threads": [
-    "thr-s3 (Fabric S3 principal; workload drafted)",
+    {
+      "id": "thr-s3",
+      "alias": "Fabric S3 (principal)"
+    },
     "backlog FR-001..FR-139 (offers, unranked)"
   ],
   "campaigns": [],
   "experiments": [
+    {
+      "id": "S3",
+      "owner_protocol": "roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md",
+      "status": "EXECUTED_SYNTHESIZED_AWAITING_BLIND_SCORING",
+      "actions_log": "roles/Artemis/s3/ACTIONS.jsonl",
+      "tasks": "roles/Artemis/s3/TASKS.json",
+      "synthesis": "roles/Artemis/s3/SYNTHESIS.md"
+    },
     {
       "id": "ART-SELFTEST-2026-09-28",
       "status": "CLOSED_FOLLOWUP_SCHEDULED",
@@ -35,33 +46,64 @@
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-88d872750984",
-      "what": "FP-001 probe replica 1",
-      "state": "completed"
+      "id": "tsk-fd69eae40e5d",
+      "alias": "S3 Q1"
     },
     {
-      "id": "tsk-92c9679433bf",
-      "what": "FP-001 probe replica 2",
-      "state": "completed"
+      "id": "tsk-71a971e32e0a",
+      "alias": "S3 Q2"
+    },
+    {
+      "id": "tsk-532edb93e57e",
+      "alias": "S3 Q3"
+    },
+    {
+      "id": "tsk-5fbc3915e21c",
+      "alias": "S3 Q4"
+    },
+    {
+      "id": "tsk-4d26fd253dd2",
+      "alias": "S3 Q5"
+    },
+    {
+      "id": "tsk-fb87550c1f84",
+      "alias": "S3 Q6"
+    },
+    {
+      "id": "tsk-9e1a43c013dc",
+      "alias": "S3 Q7"
+    },
+    {
+      "id": "tsk-2b96eda5e96c",
+      "alias": "S3 Q8"
+    },
+    {
+      "id": "tsk-cf4d898fe14e",
+      "alias": "S3 Q9"
+    },
+    {
+      "id": "tsk-d5fff5376503",
+      "alias": "S3 Q10"
+    },
+    {
+      "id": "tsk-df79763f7f9d",
+      "alias": "S3 IP1"
+    },
+    {
+      "id": "tsk-b087e92a5eb8",
+      "alias": "S3 IP2"
     }
   ],
   "leases": [],
   "running": [],
-  "blocked_on": [
-    {
-      "what": "S3 principal session on ubu001",
-      "on": "operator: start Claude Code as Artemis on ubu001 in its own worktree (not ~/Prometheus); then tell Odysseus the path for canaries",
-      "ref": "roles/Odysseus/prompts/2026-09-28_fabric/06_OPERATOR_RULINGS_PROMEXEC_verbatim.md Part 1; comms #923"
-    }
-  ],
+  "blocked_on": [],
   "next_actions": [
-    "ubu001 Artemis session: review roles/Artemis/s3/DRAFT_WORKLOAD.md, freeze S3_PROTOCOL.md s3, give Odysseus the worktree path, one submission, one barrier",
+    "route S3 findings to owning seats (blind-lane guard)",
+    "bounded raw dispatch via Fabric under MWO-0001/0004 limits (no ranks, no rewriting)",
     "2026-10-28: day-30 owner-action re-check",
-    "Nestor CVT-R follow-ups if requested via the work model"
+    "answer Odysseus on S3 scoring if asked"
   ],
-  "operator_decisions_required": [
-    "Start an Artemis principal session on ubu001 for S3 (or rule that the ubu002 instance may be principal, which would drop the same-host separation test)"
-  ],
+  "operator_decisions_required": [],
   "program_level_unassigned": [
     "R-28",
     "R-36",
@@ -71,6 +113,7 @@
   ],
   "incidents": [],
   "latest_reports": [
+    "roles/Artemis/s3/SYNTHESIS.md",
     "roles/Artemis/selftest/RESULT.md",
     "roles/Artemis/selftest/ROUTING.md",
     "roles/Artemis/challenge/cvtr_nestor/RESULT.md",

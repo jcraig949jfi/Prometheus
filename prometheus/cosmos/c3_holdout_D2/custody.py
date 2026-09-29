@@ -196,6 +196,8 @@ class Custody:
             g = self._gates("DESIGNATION", runner_id=runner_id)
             if any(e.get("event") == "KEY_RELEASED" and e.get("spec_id") == g["spec_id"] for e in self._events()):
                 raise CustodyRefusal("the key for this spec_id was already released once")
+            if protocol.anchored_role(self.allowlist, "KEY_RELEASED"):   # v13 (V12-3): the anchor remembers
+                raise CustodyRefusal("a KEY_RELEASED record is anchored: the key was already released")
             if protocol.once_record_present(self.repo, self.ref, protocol.KEY_RELEASED_FILE):
                 raise CustodyRefusal("a KEY_RELEASED record is committed: the key was already released (v3: git, not the log)")
             if self.require_preflight:                            # v6 (BP-1): a passing runner preflight first
@@ -301,6 +303,8 @@ class Custody:
                 raise CustodyRefusal("RESULT.json does not match the sealed result hash")
             if any(e.get("event") == "REVEALED" and e.get("spec_id") == g["spec_id"] for e in self._events()):
                 raise CustodyRefusal("already revealed")
+            if protocol.anchored_role(self.allowlist, "REVEALED"):       # v13 (V12-3)
+                raise CustodyRefusal("a REVEALED record is anchored: already revealed")
             if protocol.once_record_present(self.repo, self.ref, protocol.REVEALED_FILE):
                 raise CustodyRefusal("a REVEALED record is committed: already revealed (v3: git, not the log)")
             dest.mkdir(parents=True, exist_ok=True)

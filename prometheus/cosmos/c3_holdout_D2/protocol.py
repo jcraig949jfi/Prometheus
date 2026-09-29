@@ -477,19 +477,78 @@ def anchor_entries(path) -> list:
 
 
 def anchor_append(path, entry: dict) -> dict:
-    """Append ONE entry to the anchor (O_APPEND, fsync), chained to the last entry. Never rewrites the file."""
+    """Append ONE entry to the anchor (O_APPEND, fsync), chained to the last entry. Never rewrites the file.
+    v13: serialised by an O_EXCL lock file (<anchor>.lock), so two appends can never chain from the same predecessor."""
     path = Path(path)
-    prior = anchor_entries(path)
-    e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else ANCHOR_GENESIS)
-    e["entry_hash"] = _entry_hash(e)
     path.parent.mkdir(parents=True, exist_ok=True)
-    fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+    lock = path.with_name(path.name + ".lock")
     try:
-        os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
-        os.fsync(fd)
+        lfd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        raise NotAllowListed("anchor append refused: %s exists (another append in progress, or a stale lock the "
+                             "custodian must inspect)" % lock.name)
+    os.close(lfd)
+    try:
+        prior = anchor_entries(path)
+        e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else ANCHOR_GENESIS)
+        e["entry_hash"] = _entry_hash(e)
+        fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+        try:
+            os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+        return e
     finally:
-        os.close(fd)
-    return e
+        lock.unlink()
+
+
+# v13 (Odysseus v12 V12-1/V12-3): every anchored RECORD must still be on origin/main, unchanged; PREAUDIT_TOOL pins are
+# code pins, not records, and are checked by entry.py separately.
+RECORD_ROLES = ("AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL", "KEY_RELEASED", "REVEALED")
+
+
+class AnchorMismatch(GateRefusal):
+    pass
+
+
+def verify_anchor_state(repo, ref_commit: str, allowlist) -> int:
+    """v13 (Odysseus v12 V12-1): the governing state is built FROM THE ANCHOR, not filtered from the tree. For EVERY
+    anchored record (all roles, including the once-only KEY_RELEASED and REVEALED):
+      1. it is present at the resolved origin/main commit with the anchored blob (not deleted, not edited);
+      2. its anchored commit exists and is an ancestor of (or equal to) origin/main (no force-push rollback);
+      3. the record at the anchored commit has the anchored blob.
+    Any failure refuses (fail closed). Returns the number of anchored records verified."""
+    if allowlist is False:
+        return 0
+    n = 0
+    for e in anchor_entries(allowlist):
+        if e.get("role") not in RECORD_ROLES:
+            continue
+        rel, h, c = e.get("path"), e.get("sha256"), str(e.get("commit") or "")
+        now = _show(Path(repo), ref_commit, rel) if rel else None
+        if now is None:
+            raise AnchorMismatch("anchored %s record %s is missing on origin/main" % (e.get("role"), e.get("record")))
+        if record_sha(now) != h:
+            raise AnchorMismatch("anchored %s record %s was changed on origin/main" % (e.get("role"), e.get("record")))
+        if _git(Path(repo), "cat-file", "-e", c + "^{commit}").returncode != 0 or (
+                c != ref_commit and _git(Path(repo), "merge-base", "--is-ancestor", c, ref_commit).returncode != 0):
+            raise AnchorMismatch("anchored %s record %s: its commit %s is not on origin/main's history (rollback?)"
+                                 % (e.get("role"), e.get("record"), c[:12]))
+        at = _show(Path(repo), c, rel)
+        if at is None or record_sha(at) != h:
+            raise AnchorMismatch("anchored %s record %s: the anchored commit does not hold the anchored blob"
+                                 % (e.get("role"), e.get("record")))
+        n += 1
+    return n
+
+
+def anchored_role(allowlist, role: str) -> bool:
+    """v13 (V12-3): True if the anchor holds any record of this role (e.g. KEY_RELEASED): once released, always released,
+    whatever git's history later shows."""
+    if allowlist is False:
+        return False
+    return any(e.get("role") == role for e in anchor_entries(allowlist))
 
 
 def _is_allowlisted(allowlist, role, name, b, repo=None, ref=None) -> bool:
@@ -547,6 +606,19 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
                 runner_id: Optional[str] = None, host: Optional[str] = None, check_worktree_code: bool = True,
                 allowlist=DEFAULT_ALLOWLIST, verify_loaded: bool = False, account: Optional[str] = None,
                 run_params: Optional[dict] = None, pins: Optional[dict] = None) -> dict:
+    """The stage checks, then (v13, V12-1) the anchor state: every anchored record must still be on origin/main,
+    unchanged and on its history. The anchor check runs after the stage checks so an earlier refusal keeps its reason;
+    a state that passes every stage but contradicts the anchor (a deleted, edited or rolled-back anchored record) is
+    refused here."""
+    st = _check_gates_stages(repo, through, ref, package_sha256, runner_id, host, check_worktree_code, allowlist,
+                             verify_loaded, account, run_params, pins)
+    if through != "SEAL":                                     # SEAL involves no protocol record
+        st["anchored_records_verified"] = verify_anchor_state(repo, st["ref_commit"], allowlist)
+    return st
+
+
+def _check_gates_stages(repo, through, ref, package_sha256, runner_id, host, check_worktree_code, allowlist,
+                        verify_loaded, account, run_params, pins) -> dict:
     order = ("SEAL", "AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL")
     if through not in order:
         raise ValueError(through)

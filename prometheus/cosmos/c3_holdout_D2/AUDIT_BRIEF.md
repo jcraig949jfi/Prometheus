@@ -264,3 +264,15 @@ COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
 - selftest_D2: 10 checks + 13 negative controls.
 
 **Record:** the next record is FIREWALL_AUDIT_1.json. On PASS, commit it in ONE commit on main and post the commit. The custodian anchors it with `entry.py allowlist add --role AUDIT --record FIREWALL_AUDIT_1.json` (there is no sender check).
+
+## RE-AUDIT v13 (2026-09-29): the FINAL re-audit under MWO-0004 D2-2
+
+**Scope:** FIREWALL.md, section "v13": the v12 verdict items 1-3 exactly.
+
+**Outcome under MWO-0004 D2-2:**
+- PASS -> commit FIREWALL_AUDIT_1.json in one commit on main and post the commit and its LF sha256. The custodian anchors it with --expect-commit/--expect-sha256.
+- FAIL -> D2 goes to HOLD with the defect recorded. There are no further rounds.
+
+**Self-tests:**
+- selftest_protocol: 179 checks + 4 defect controls (runtime now about 12 minutes).
+- selftest_D2: 10 checks + 13 negative controls.

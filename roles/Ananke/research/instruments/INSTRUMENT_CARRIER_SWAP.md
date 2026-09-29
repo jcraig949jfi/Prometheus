@@ -105,3 +105,9 @@ clock phases (4781b0a1 o14: C 1.00 on even swap ticks, N .70 on odd). Report
 S/C/N per swap-tick phase. N always needs a site AND a channel component
 (lemma, W-P PLAN s0): name WHICH sub-arrays with the truth-table method in
 workers/W-P/tt.py before calling it a mixture or joint code.
+
+## UPDATE 2026-09-29 (W-R): phase-index classes on sync period-p physics
+On sync physics with update_period p > 1, report the carrier class per
+swap-tick phase q = (t0 + offset) mod p (workers/W-R/fork.py); the pooled
+class is only a weighted summary. Phase-difference CIs need trial-level as
+well as pair-level resampling when a stratum holds few trials.

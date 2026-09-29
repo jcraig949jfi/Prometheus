@@ -232,18 +232,55 @@ def _allowlist_entries(required: bool):
     return out
 
 
+RECORD_ROLES = ("AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL", "KEY_RELEASED", "REVEALED")
+
+
+def _verify_anchor_state(entries, ref_c) -> int:
+    """v13 (Odysseus v12 V12-1): every anchored RECORD must be present at origin/main with its anchored blob, and its
+    anchored commit must exist, be on origin/main's history and hold that blob (same rule as protocol)."""
+    n = 0
+    for e in entries:
+        if e.get("role") not in RECORD_ROLES:
+            continue
+        rel, h, c = e.get("path") or "", e.get("sha256"), str(e.get("commit") or "")
+        rc, now = git("show", "%s:%s" % (ref_c, rel), binary=True)
+        if rc != 0:
+            raise EntryRefusal("REFUSED: anchored %s record %s is missing on origin/main" % (e.get("role"), e.get("record")))
+        if lf_sha(now) != h:
+            raise EntryRefusal("REFUSED: anchored %s record %s was changed on origin/main" % (e.get("role"), e.get("record")))
+        if git("cat-file", "-e", c + "^{commit}")[0] != 0 or (
+                c != ref_c and git("merge-base", "--is-ancestor", c, ref_c)[0] != 0):
+            raise EntryRefusal("REFUSED: anchored %s record %s is not on origin/main's history (rollback?)"
+                               % (e.get("role"), e.get("record")))
+        rc, at = git("show", "%s:%s" % (c, rel), binary=True)
+        if rc != 0 or lf_sha(at) != h:
+            raise EntryRefusal("REFUSED: anchored %s record %s: the anchored commit does not hold the anchored blob"
+                               % (e.get("role"), e.get("record")))
+        n += 1
+    return n
+
+
 def _anchor_append(entry) -> dict:
-    prior = _allowlist_entries(required=False)
-    e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else "0" * 64)
-    e["entry_hash"] = _entry_hash(e)
+    lock = ALLOWLIST.with_name(ALLOWLIST.name + ".lock")          # v13: serialised appends (same lock as protocol)
     ALLOWLIST.parent.mkdir(parents=True, exist_ok=True)
-    fd = os.open(str(ALLOWLIST), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
     try:
-        os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
-        os.fsync(fd)
+        lfd = os.open(str(lock), os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        raise EntryRefusal("REFUSED: anchor append in progress or a stale %s" % lock.name)
+    os.close(lfd)
+    try:
+        prior = _allowlist_entries(required=False)
+        e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else "0" * 64)
+        e["entry_hash"] = _entry_hash(e)
+        fd = os.open(str(ALLOWLIST), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+        try:
+            os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
+            os.fsync(fd)
+        finally:
+            os.close(fd)
+        return e
     finally:
-        os.close(fd)
-    return e
+        lock.unlink()
 
 
 def _git_state_ok():
@@ -302,6 +339,7 @@ def verify(target_name):
     ref_c, names = resolve_and_check()
     pre = target_name in PRE_AUDIT_TARGETS
     entries = _allowlist_entries(required=not pre)
+    _verify_anchor_state(entries, ref_c)                          # v13 (V12-1): the anchor governs, not the tree
     audits = []
     for n, name in sorted((int(AUDIT_RE.match(x).group(1)), x) for x in names if AUDIT_RE.match(x)):
         rc, b = git("show", "%s:%s/%s" % (ref_c, PROTO_REL, name), binary=True)
