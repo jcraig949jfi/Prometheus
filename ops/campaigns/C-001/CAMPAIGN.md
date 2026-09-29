@@ -19,6 +19,7 @@ changing the science, and record what the Task needed in order to move.
 |---|---|---|
 | E-001 | B6: who / where / what | CLOSED 2026-09-27 (E-001/RESULT.md) |
 | E-002 | B1: hereditary continuity under recombination | STOPPING POINT 2026-09-27 (E-002/RESULT.md; fresh worker Artemis on ubu002, from Git alone; handoff record E-002/HANDOFF_FINDINGS.md) |
+| E-003 | Ancestry replay: does byte-level ancestry in BEE and NPE validate, alter or break attribution v0? (thr-a7fcb43e8092 TH-015; also thr-c64dca3118a1, thr-5085da70a143) | ALIAS added 2026-09-28 under MWO-0001, nothing renamed: ATTRIBUTION_ARC_2026-09-28/ (ANCESTRY_PREREG_v4/v5, gate_close/). NPE production run 2 done (Nestor 81895e729); the 1% sample agreement is a Fabric Task; BEE leg BLOCKED |
 
 ## Pilot finding 1 (2026-09-27): the first real Task moved off M2 -- T-001, A-002 on ubu001, science unchanged
 Result: ubu001 reproduced T-001 bit-for-bit.
