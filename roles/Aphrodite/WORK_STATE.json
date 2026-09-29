@@ -1,15 +1,15 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Aphrodite",
-  "mwo_id": "MWO-0001",
-  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T03:34:41Z",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "updated_at_utc": "2026-09-29T07:40:41Z",
   "state": "HOLD",
-  "state_reason": "ARC3 (C-003) CLOSED at the W8 block; close content at 889bf8ddd. No ARC3 wave until a future MWO reviews the close. Merge proposed through normal review. Nothing running.",
+  "state_reason": "ARC3 (C-003) CLOSED at the W8 block; close content at 889bf8ddd. MWO-0002 s6: no new wave. Merge proposed for review. Nothing running. MWO-0002 census report filed.",
   "branch": "aphrodite/arc3-2026-09-28",
-  "head_sha": "00a2030361e3b71c180720ba9ae7978d6f81e3e2",
-  "head_sha_note": "the pushed head immediately before this file's commit",
+  "head_sha": "b57f49ba84e4d3b672f13368fd21c5a5ad7ba630",
+  "head_sha_note": "the pushed head immediately before the commit that adds this file version",
   "base_sha": "98ed64ca3383ee310f8850e374f936f27f0378af",
   "threads": [
     {
@@ -91,10 +91,11 @@
     "non-blocking: whether a future MWO authorises the TH-019 donor stage T51 (~16 core-h)",
     "for review: constant-True gate conditions in historical S4/A16/A17 code (packet s5); no re-label by the seat"
   ],
-  "comms_cursor": 929,
+  "comms_cursor": 961,
   "latest_reports": [
     "roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md",
     "roles/Aphrodite/science/arc3/ARC3_SYNTHESIS_2026-09-28.md",
     "roles/Aphrodite/science/arc3/w8_lin_generator/REPORT.md"
-  ]
+  ],
+  "migration_report": "roles/Aphrodite/MIGRATION_REPORT_MWO-0002.json"
 }

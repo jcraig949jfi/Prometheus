@@ -32,7 +32,7 @@ Campaign C-003 = ARC3 (CLOSED). Experiments E-008..E-011 = AMENDMENTS 20-23.
 - Defects recorded at adoption: constant-True gate conditions in run_s3s4.py, a16.py and a17.py. See packet s5 and
   TH-021. No re-label: that is operator-level.
 
-## 2. What is authorised now (MWO-0001)
+## 2. What is authorised now (MWO-0001, carried forward by MWO-0002 @ 89512068f; census report filed: MIGRATION_REPORT_MWO-0002.json)
 - Preserve the ARC3 close. Get the branch merged through normal review.
 - Do NOT start another ARC3 wave. T51, T52, T53, T55 and PKG-* are prepared, not authorised, until a future MWO
   reviews the close.
