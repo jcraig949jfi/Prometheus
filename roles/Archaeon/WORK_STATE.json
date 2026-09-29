@@ -1,9 +1,9 @@
 {
  "schema": "prometheus.work_state.v1",
  "seat": "Archaeon",
- "mwo_id": "MWO-0002",
- "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T10:23:08Z",
+ "mwo_id": "MWO-0003",
+ "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
+ "updated_at_utc": "2026-09-29T11:20:24Z",
  "state": "HOLD",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -19,7 +19,7 @@
   "E-003 = ancestry replay: COMPLETE. BEE VALIDATED, CONDITIONAL on post-exposure C4.2/C4.4/C11; robust finding Q8c 0.00115; NPE uninformative by construction (E003_SYNTHESIS.md @ 056320b4c; reviews review_e003/)"
  ],
  "fabric_tasks": [
-  "tsk-aa9149d395ef + tsk-2d73d6f0ef26: synthesis review, completed (both FOLLOWS WITH CORRECTIONS; applied)",
+  "tsk-05b35561e844 + tsk-0147d5299dac: FP-001 BEE fixture probe, completed, identical digests",
   "tsk-c4317a3656d0: NPE 1% sample v2, host_affinity=skullport, UNCLAIMABLE (s12)"
  ],
  "running": [],
@@ -38,11 +38,12 @@
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (+ addendum 2026-09-29)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/ @ c24ee1fef"
  ],
- "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+ "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 983,
- "state_reason": "E-003 complete for its question (reviewed synthesis). No further authorized Archaeon work under MWO-0002; no new campaigns."
+ "comms_cursor": 987,
+ "state_reason": "E-003 complete for its question (reviewed synthesis). No further authorized Archaeon work under MWO-0002; no new campaigns.",
+ "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json"
 }

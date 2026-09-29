@@ -1,0 +1,25 @@
+{
+ "seat": "Archaeon",
+ "mwo": "MWO-0003",
+ "discovered_by": "publication_broadcast",
+ "probe": "python -m archaeon.attribution.bee_fixtures (BEE fixture-pack validation of Archaeon's frozen BEE tracer bee_ref_tracer.py c6449119, C11; 28 fixtures + 10 mutant tracers)",
+ "base_sha": "0715fe001c70930f3fcbbc0f0a7a389a44faf1fa",
+ "execution": "fabric",
+ "fabric_tasks": [
+  "tsk-05b35561e844",
+  "tsk-0147d5299dac"
+ ],
+ "fabric_attempts": [
+  "att-2eedf7063e0c",
+  "att-a7c25d10de5a"
+ ],
+ "lease": null,
+ "wall_seconds": 3,
+ "result": "PASS",
+ "artifact_hashes": [
+  "stdout 46a2f4fb4e247c5e63bbc3e745a78633914083642675a941f461bb56741b8868 (both replicas; art-e1b511f91fad, art-4759c7d680b9)",
+  "stderr e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 (empty, both)"
+ ],
+ "fabric_blocker": null,
+ "notes": "Two replicas on different ubu001 workers (worker.ubu001.sci3, worker.ubu001.b) produced identical stdout ending 'ALL PASS'. A native M2 run gives the same digest after CRLF->LF normalisation, so the probe is 3-way identical. Wall time is the native measurement (~3 s). MWO-0003 was discovered by broadcast #987 through the seat's comms watcher."
+}
