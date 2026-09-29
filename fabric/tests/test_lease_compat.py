@@ -69,12 +69,20 @@ def test_legacy_cli_vs_fabric_attempt_race_exactly_one_wins(env, helper):
     c, e, tmp = env
     rng = random.Random(7)
     wins = {"cli": 0, "attempt": 0}
+    # DEF-ODY-010: centre the claim delay on the CLI's MEASURED start-up (interpreter + import + connect), which
+    # varies with host load. A fixed window let the Attempt win every round, and the race stopped being a race.
+    t0 = time.time()
+    cli(e, ANANKE if helper == "ananke" else NESTOR, "status")
+    startup = time.time() - t0
     for i in range(12):
         tid = S.submit(c, "Tester", "race %d" % i, "synthetic", resources=[RES], max_attempts=1)["task_id"]
         out = {}
 
+        mode = ("cli-first", "attempt-first", "contended")[i % 3]
+
         def run_cli():
-            time.sleep(rng.uniform(0, 0.25))
+            if mode == "attempt-first":
+                time.sleep(1.5 * startup + 0.2)                       # the Attempt claims while the CLI waits
             if helper == "ananke":
                 p = cli(e, ANANKE, "acquire", "cpu8", "--owner", "race", "--ttl-min", "5")
                 out["cli"] = p.returncode == 0
@@ -84,7 +92,10 @@ def test_legacy_cli_vs_fabric_attempt_race_exactly_one_wins(env, helper):
                 out["cli"] = p.returncode == 0
 
         def run_claim():
-            time.sleep(rng.uniform(0.15, 0.45))                       # python start-up of the CLI is ~0.2-0.3 s
+            if mode == "cli-first":
+                time.sleep(2.0 * startup + 0.5)                       # the CLI (start-up included) acquires first
+            elif mode == "contended":
+                time.sleep(rng.uniform(0.3 * startup, 1.7 * startup))  # genuine race around the CLI's start-up
             cc = S.connect()
             out["claim"] = S.claim(cc, "worker.t", "t-1", HOST, [], ["synthetic"])
             cc.close()
@@ -105,7 +116,7 @@ def test_legacy_cli_vs_fabric_attempt_race_exactly_one_wins(env, helper):
                 cli(e, NESTOR, "release", "cpu8", "--log", str(tmp / "log.jsonl"))
             S.cancel(c, tid, "Tester")
         assert not [l for l in S.leases(c) if l["resource"] == RES]
-    assert wins["cli"] >= 1 and wins["attempt"] >= 1, wins            # both sides really contended
+    assert wins["cli"] >= 1 and wins["attempt"] >= 1, wins            # both acquisition paths exercised
 
 
 def test_unreachable_store_grants_nothing(env):
