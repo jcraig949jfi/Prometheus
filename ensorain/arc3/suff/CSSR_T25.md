@@ -359,3 +359,15 @@ Reading (answers reviewer Q2):
   optimum than random restarts find.
 - The two initializations fail on DIFFERENT worlds. That predicts a mixture over {CSSR_EM, RAND_EM} (fixed-share) beats
   either alone on the family. Exploratory; NOT run; a candidate for the next precommitment.
+
+## Tick 2026-09-29T08:45Z: fixed-share over three experts (mix3_eval.py)
+
+- MIX3_FS: K-expert fixed-share (rate 1e-3) over {split-CSSR, CSSR_EM, RAND_EM}.
+- MIX2_FS is recomputed alongside it, with the K-expert code, for a same-code comparison.
+
+### Precommitment (written BEFORE running mix3_eval.py)
+
+- F1: family mean MIX3_FS < .0171 (the earlier 2-expert MIX_FS family mean).
+- F2: MIX3_FS <= min(split, CSSR_EM, RAND_EM) + .003 in >= 22/24 family worlds.
+- F3: MIX3_FS < MIX2_FS (same code) on the family mean.
+- F4 (safety): on W2_3 (eval seeds 1..16), MIX3_FS mean < .006.
