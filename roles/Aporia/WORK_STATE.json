@@ -4,29 +4,37 @@
   "mwo_id": "MWO-0003",
   "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
   "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
-  "updated_at_utc": "2026-09-29T11:17:00Z",
-  "state": "WORKING",
+  "updated_at_utc": "2026-09-29T11:20:45Z",
+  "state": "HOLD",
   "branch": "main (record commit R); authoring branch aporia/mwo-0002-candidate-2026-09-29",
   "head_sha": "(record commit R)",
   "threads": [],
   "campaigns": [],
   "experiments": [],
-  "fabric_tasks": [],
-  "running": [
-    "FP-001 cold-start probe (MWO-0003 s5)"
+  "fabric_tasks": [
+    {
+      "id": "tsk-19b2d3b84026",
+      "state": "completed"
+    },
+    {
+      "id": "tsk-c2dc0b39b658",
+      "state": "completed"
+    }
   ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Run the MWO-0003 s5 cold-start probe; write roles/Aporia/probes/FP-001_RESULT.json; then HOLD"
+    "HOLD/advisory. MWO-0003 duties done (publication; FP-001 cold-start filed)."
   ],
   "operator_decisions_required": [
     "S1 (#925): root of trust for D2 protocol records; must reach Nestor directly, not via Aporia/comms"
   ],
   "latest_reports": [
     "ops/work_orders/archive/MWO-0003_2026-09-29.md (published, P=624a686ea)",
-    "roles/Aporia/MIGRATION_REPORT_MWO-0002.json"
+    "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
+    "roles/Aporia/probes/FP-001_RESULT.json"
   ],
-  "state_reason": "Published MWO-0003 as the operator-designated publisher (custody for this publication only). D2 time box relayed (#985, ends 13:05Z). No steward, coordinator, scheduling or adjudication authority.",
+  "state_reason": "MWO-0003 published (P 624a686ea, R 9d86a303b, #987); FP-001 cold-start PASS with boot-doc gap recorded. D2 time box relayed (#985).",
   "migration_report": "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)"
 }
