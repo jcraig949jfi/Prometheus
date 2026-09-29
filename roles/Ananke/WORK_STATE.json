@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T07:22:08Z",
-  "state": "WORKING",
-  "state_reason": "T-SWAP-AUDIT running as worker W-O (E-ANANKE-W-O, CPU, Fabric lease, <=3 h): re-run recorded 64-world CHANCE swap verdicts at 512 worlds. Audit table only; no record or frozen label is edited. No large PTE campaign under MWO-0001.",
+  "updated_at_utc": "2026-09-29T09:17:13Z",
+  "state": "ACTIVE",
+  "state_reason": "E-ANANKE-W-O (T-SWAP-AUDIT) complete and deposited; lease lse-9ef8ebed677c released. Nothing running. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -99,8 +99,8 @@
       "id": "E-ANANKE-W-O",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-AUDIT",
-      "status": "RUNNING",
-      "dir": "roles/Ananke/research/workers/W-O/"
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-O/REPORT.md"
     },
     {
       "id": "E-ANANKE-W-N",
@@ -120,17 +120,16 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [
-    "E-ANANKE-W-O (delegated worker, CPU)"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "deposit W-O report; review proposed record corrections before applying any",
-    "T-INS-8: split the N fraction of 369f5a5b/4781b0a1 by sub-array",
+    "submit the next portable CPU block as a Fabric Task (MIGRATION_REPORT C6): candidate T-SWAP-REL2 or T-INS-8",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/CORRECTIONS_2026-09-29_SWAP_AUDIT.md",
+    "roles/Ananke/research/workers/W-O/REPORT.md",
     "roles/Ananke/research/workers/W-N/REPORT.md",
     "roles/Ananke/research/workers/W-M/REPORT.md",
     "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md (7fc642367)",

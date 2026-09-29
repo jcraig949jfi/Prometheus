@@ -113,3 +113,9 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   512 worlds before reading it as mechanism; research-ready, CPU),
   T-SWAP-REL2 (per-verdict attainability instead of one gate; always pair
   CHANCE_REL with the SINGLE census, lens_swap).
+- T-SWAP-AUDIT ANSWERED (W-O, E-ANANKE-W-O): 733 CHANCE verdicts re-run at 512
+  worlds: 84% stay CHANCE, 12% -> FLIP (readable 8%), 4% -> NO-EFFECT; register
+  research/CORRECTIONS_2026-09-29_SWAP_AUDIT.md. Successors: T-SWAP-REL2 (now
+  justified by 42 low-accuracy complete transfers the absolute rule cannot
+  call), T-SWAP-AUDIT2 (the unaudited sources listed in the register),
+  T-WF-READ (re-judge W-F readability at 512 worlds: 12 cells gain a class).
