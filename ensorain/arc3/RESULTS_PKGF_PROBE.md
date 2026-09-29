@@ -395,3 +395,26 @@ Reading (supersedes the v6 exploratory reading):
   if it does not fire, that limitation is refuted.
 - N2: STALE split, mean dAC(REC20) < mean dAC(ALL). Handed-in recency picks its weight on the noisiest records and
   loses.
+
+### N5 result (precommit commit 1f607d35f; results/pkgf_n5.json; 15 s)
+
+- **N1 SURVIVES:** the v5 detector fires in 8/8 worlds with NO regime change. The detected start is at .88-.95 of the
+  stream, i.e. the noisiest tail.
+- **N2 SURVIVES:** STALE mean dAC: ALL +0.664 > REC20 +0.645 > CP3 +0.611. GEN: all within +-0.01.
+
+Shape:
+- The v5 statistic (squared disagreement across a split) cannot tell GROWING NOISE from a REGIME CHANGE. It reads rising
+  variance as a switch.
+- Both recency-based holdouts then choose the readout weight on the least reliable records. The weight falls from
+  1.0 to 0.5 or 0.25 in 3/8 worlds, so good old records are discounted.
+- The cost is small here (-0.05 mean on STALE, up to -0.20 in one world), only because the weight grid is coarse and
+  the fitted weights mostly stayed put. It is a failure mode, not a catastrophe.
+- Consistent with the PKG-F thread so far: a selection signal keyed to TIME (recency or regime) is right when newer
+  means more relevant, and wrong when newer means noisier.
+
+Design consequence (PKG-F s9e, to be precommitted before building):
+- A variance-robust detector must separate mean change from spread change.
+- Candidate: compare straddling-pair disagreement against a same-time noise reference, e.g. the within-cell spread of
+  records close in time on each side. Accept a regime only if straddling disagreement exceeds the LOCAL noise on both
+  sides.
+- An N5 world is then the required negative control for every PKG-F regime detector, alongside the stationary twins.

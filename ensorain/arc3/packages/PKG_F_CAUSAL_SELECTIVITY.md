@@ -173,7 +173,12 @@ N5 (decaying reliability; the Block G nuisance kind not yet probed):
   - v5 false detection >= 4/8 (it IS variance-sensitive, and that is a limitation);
   - the recency holdout is worse than the all-history holdout on stale recall.
 
-Build order: N5 first. It is the sharpest test of whether "recency" and "regime detection" are confused anywhere in
+N5 RESULT (2026-09-29, RESULTS_PKGF_PROBE.md):
+- The v5 detector fires 8/8 on pure noise growth, so it is NOT variance-robust.
+- Every PKG-F regime detector must now pass an N5 negative control as well as the stationary twins.
+- Next detector: a local-noise-referenced straddling statistic.
+
+Build order (original): N5 first. It is the sharpest test of whether "recency" and "regime detection" are confused anywhere in
 this pipeline. Then W-DRIFT, then W-MULTI. Each is precommitted before its run with the thresholds above, or with
 thresholds tightened after a world-property check that runs no detector.
 
