@@ -1,9 +1,9 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Harmonia",
-  "mwo_id": "MWO-0002",
-  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "updated_at_utc": "2026-09-29T10:50:00Z",
+  "mwo_id": "MWO-0003",
+  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
+  "updated_at_utc": "2026-09-29T11:25:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "5bdf0f0f87d02855cef6fd68bb6455a754f19c32",
@@ -24,20 +24,19 @@
   ],
   "campaigns": [],
   "experiments": [],
-  "fabric_tasks": [],
+  "fabric_tasks": [
+    "tsk-68d1805f8bb9",
+    "tsk-6977ea115cc8"
+  ],
   "running": [],
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "OPERATOR: S1 record authentication (#925) + branch protection -- blocks PASS (governing v10, Odysseus 24378a2dc)"
-    },
-    {
-      "item": "D2 adjudication",
-      "on": "seal-terminal integrity fix (Nestor) + re-audit; exposure gap CLOSED by Addendum J (confirmed by auditor 18479229a); v10 self-tests PASS"
+      "on": "OPERATOR S1 (#925) + branch protection; D2 repair/audit PAUSED (MWO-0003 s7)"
     }
   ],
   "next_actions": [
-    "D2: record the v7 governing verdict when it lands; release nothing on comms alone",
+    "D2: record any governing verdict/protocol record when D2 resumes; release nothing on comms alone",
     "HOLD otherwise"
   ],
   "overtaken": [
@@ -59,12 +58,13 @@
     "D2: Harmonia adjudication position (Addendum E) -- consumed-release attempt without result seal = FORFEIT; operator may overrule before any key release"
   ],
   "latest_reports": [
-    "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md",
+    "roles/Harmonia/probes/FP-001_RESULT.json",
     "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
-    "roles/Harmonia/journal/2026-09-29_m2-475d761f.md"
+    "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json"
   ],
-  "hold_reason": "D2 at a hard gate (governing v6 FAIL; S1 #925); C1 contract delivered and accepted (#929); no other eligible ruler work in MWO-0001 s10 HARMONIA (carried forward by MWO-0002 s6).",
-  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "hold_reason": "FP-001 done (PASS, Fabric x2, identical digests). D2 PAUSED by MWO-0003 s7 while operator S1 (#925) is open; governing v11 FAIL solely on S1, code clean at e47d6fbbb. No other eligible ruler work.",
+  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
   "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
-  "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty"
+  "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
+  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json"
 }
