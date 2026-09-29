@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T07:11:50Z",
+ "updated_at_utc": "2026-09-29T07:33:46Z",
  "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -16,7 +16,7 @@
   "C-001"
  ],
  "experiments": [
-  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28). NPE leg: INCONCLUSIVE (E003_NPE_LEG_RESULT.md). BEE leg: s4.3 fresh-set agreement PASS (BEE_FRESH_RESULT.md); the BEE GO record awaits the owner's re-freeze with the B-P1 dual-reading report"
+  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28). NPE leg: INCONCLUSIVE (E003_NPE_LEG_RESULT.md). BEE leg: PRODUCTION GO issued (gate_close/BEE_PRODUCTION_GO.md @ 232ebe399); owner production under a Fabric lease"
  ],
  "fabric_tasks": [
   "tsk-c4317a3656d0 NPE 1% sample v2 (addendum-5 verifier then frozen reference), host_affinity=skullport, submitted, UNCLAIMABLE (no skullport worker); supersedes tsk-581bd93ac9f3 (canceled)"
@@ -26,23 +26,23 @@
   "E-003 NPE 1% sample (extra check): run-1 copies matching the manifest by content exist on SKULLPORT (Nestor #952), but tsk-c4317a3656d0 has no eligible worker (s12 defect; Odysseus #916)"
  ],
  "next_actions": [
-  "BEE: on the owner's re-frozen manifest (e003_analysis with B-P1 dual reading), write the BEE GO record",
-  "NPE 1% sample: tsk-c4317a3656d0 runs if a skullport worker exists (verifier v2, candidates per Nestor #952)",
-  "E-003 synthesis only after the BEE leg returns",
-  "no new campaigns (MWO-0001/0002)"
+  "BEE: on the owner's sealed production outputs + s4-sample exports, run the production s4.3 agreement (reference + Archaeon tracer, raw per class)",
+  "NPE 1% sample: tsk-c4317a3656d0 runs if a skullport worker exists",
+  "E-003 synthesis after the BEE leg returns",
+  "no new campaigns"
  ],
  "operator_decisions_required": [
   "CONDITIONAL: only if the v2 verification of Nestor's run-1 copies FAILS -> the operator decides regenerate (third run, s7) vs declare lost (addendum 5)"
  ],
  "latest_reports": [
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/BEE_PRODUCTION_GO.md @ 232ebe399",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_NPE_LEG_RESULT.md @ 8fdad7f10 (NPE leg INCONCLUSIVE)",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_5.md @ 0edb1c09d (incident ruling)",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_3.md @ 444886081 (NPE production s4.3 agreement PASS)"
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_5.md @ 0edb1c09d (incident ruling)"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
  "other_branches": [
-  "archaeon/attribution-arc-2026-09-28 @ cc97a8e97 (E-003 evidence)"
+  "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 961
+ "comms_cursor": 963
 }
