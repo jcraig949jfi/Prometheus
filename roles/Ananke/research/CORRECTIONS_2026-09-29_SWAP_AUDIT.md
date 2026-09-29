@@ -35,3 +35,10 @@ specimen x source x offset groups, not 42 independent findings. Under the
 per-verdict relative rule, 95 of the 615 absolute-CHANCE verdicts become
 FLIP_REL (53 of them only under the non-strict rule). Per-verdict table:
 workers/W-Q/out/rel2_table.csv.
+
+## Qualification from W-R (T-INS-9, 2026-09-29)
+On sync period-2 cells single letters must be phase-indexed. c16d5231 o5 and
+8c37f32e o5 "S", 4781b0a1 o5 "S", and 4781b0a1 o11/o14/o15 "C/C/S" each hold
+in one update-clock phase only; the other phase is a mixture, UNRESOLVED or
+NEITHER. 369f5a5b o2 "S" is not supported (UNRESOLVED fS .50 in both phases).
+Tables: workers/W-R/out/summary.txt.
