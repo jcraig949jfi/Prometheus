@@ -4,10 +4,10 @@
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
  "adoption_note": "ADOPTED PENDING OPERATOR CONFIRMATION: operator approval of MWO-0001 is asserted by the order text and Cyclops's commit, not by a verbatim operator record in the repo; Nestor acts only on MWO items that are also covered by the operator's POST-ARC3 directive (2026-09-28) and the fabric rulings. Declined: 'perform the assigned D2 firewall re-audit' -- Nestor is D2's custodian/protocol author, so self-audit would void the audit's independence; Nestor's part (submitting the Fabric re-audit, tsk-6989ee1b86bd / tsk-b43d70a88ce7) is done; Odysseus adjudicates.",
- "updated_at_utc": "2026-09-29T02:17:05Z",
+ "updated_at_utc": "2026-09-29T03:17:37Z",
  "state": "WORKING",
  "branch": "nestor/s1-forensics-2026-09-23",
- "head_sha": "81895e729055680953c2d3a55ceb68ab51f4a5a4",
+ "head_sha": "e7af96c47b2c03b688da5e65f1f07d155e6649d9",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -26,25 +26,25 @@
   "tsk-c62639a26351",
   "tsk-db7cff995c19"
  ],
- "running": [
-  "run-2 independent review (thr-ancestry-run2-review)"
- ],
+ "running": [],
  "blocked_on": [
-  "1% sample transfer M1->M2: no key-only route (comms #913)",
-  "D2: Odysseus adjudication of the Fabric re-audit"
+  "Archaeon rulings: births-agreement on 34 committed pre-states, flip-coverage floor failure, class key (#924)",
+  "1% sample transfer route (#913)",
+  "D2 v3: operator root-of-trust decision (#925)"
  ],
  "next_actions": [
-  "independent Fabric review of production run 2 (REVIEW_PACKET_RUN2.md)",
-  "hand exports to Archaeon's synthesis; no broadened ancestry claim before independent review"
+  "s4 v2 conformance repair (post hash before running; tallies unused until reviewed)",
+  "D2 v3 repairs (B1 isolated entry, FAIL/RESULT_SEAL auth, firewall_check patterns off cmdline, once-only via git, receipts ACL) + Fabric re-audit with --cap fabric.runtime==0.2"
  ],
  "operator_decisions_required": [
   "confirm MWO-0001 approval",
-  "sample transfer route (authorise M1 key on ubu001 or manual copy)",
+  "D2 root of trust (a signed commits / b operator-confirmed hashes / c accept)",
+  "sample transfer route",
   "branch protection on main"
  ],
  "latest_reports": [
-  "comms #910 (run 2)",
-  "#913 (transfer)",
-  "roles/Nestor/campaigns/ancestry-replay-2026-09-28/GATES.json"
+  "comms #924 (run-2 review)",
+  "#925 (D2 v3 plan)",
+  "roles/Nestor/campaigns/ancestry-replay-2026-09-28/review_run2/"
  ]
 }
