@@ -335,3 +335,18 @@ Consequences:
   Every claim must name its split. Added as the next precommitted run.
 - Note for LM01 (read-only; no frozen change): its F3 headline test has the same composition, and its interpretation
   should say so.
+
+## v7: the two-split rerun of v6 (pkgf_split.py)
+
+- STALE split: cells unseen in the final episode but recorded earlier.
+- GEN split: cells unseen in the whole stream.
+- Same worlds, seeds and substrate as v6. Test cells are drawn with a new seed (seed + 99); each split is capped at
+  512 cells.
+
+### Precommitment (written BEFORE running pkgf_split.py)
+
+- T1: GEN, rho = 0: mean dAC(SD_all) in [-0.10, +0.10], i.e. no generalization gain from stored residuals in a
+  stationary world.
+- T2: GEN, rho = 1: mean dAC(SD_all) > -0.30. The obsolete-history harm is mostly a STALE-recall phenomenon.
+- T3: STALE, rho = 1 mean dAC(SD_all) < -0.80 AND STALE, rho = 0 mean dAC(SD_all) > +0.30. The STALE split carries
+  both v6 effects.
