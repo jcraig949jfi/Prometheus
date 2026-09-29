@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T09:17:13Z",
+  "updated_at_utc": "2026-09-29T09:48:39Z",
   "state": "ACTIVE",
   "state_reason": "E-ANANKE-W-O (T-SWAP-AUDIT) complete and deposited; lease lse-9ef8ebed677c released. Nothing running. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
   "branch": "ananke/base-role-adopt-2026-09-24",
@@ -123,7 +123,8 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "submit the next portable CPU block as a Fabric Task (MIGRATION_REPORT C6): candidate T-SWAP-REL2 or T-INS-8",
+    "PTE compute stays in-session under Fabric leases (no torch-capable Fabric worker; MIGRATION_REPORT C6 blocker)",
+    "T-INS-8 (split N fraction of 369f5a5b/4781b0a1 by sub-array), then T-SWAP-REL2",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],
