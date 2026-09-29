@@ -40,3 +40,16 @@ Reading:
   compression rank-correlates with learned D6.
 - Caveat: the learned D6 comes from the same CSSR_EM family whose gain it predicts. A learned-D6 measure from a
   different model family is needed to rule out circularity.
+
+## Circularity check: cross-family estimators (crypt_crossfamily.py)
+
+Estimators:
+- (a) D6 from a fixed-S = 8 HMM, EM from random restarts. It uses no CSSR proposal.
+- (b) A model-free D_seq: STAT6 minus the best of STAT8/10/12 on the 2nd half.
+
+### Precommitment (written BEFORE running crypt_crossfamily.py)
+
+- X1: Spearman(HMM8 D6, true D6) > .8.
+- X2: Spearman(D_seq, STAT6 - MIX3_FS at T = 16000) > .5. Weaker, because estimation cost confounds D_seq.
+- X3: Spearman(HMM8 D6, STAT6 - MIX3_FS at T = 16000) > .7.
+- If X1 and X3 hold, the moderator result is not an artefact of scoring the learner with its own model family.
