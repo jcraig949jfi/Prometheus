@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "updated_at_utc": "2026-09-29T08:50:00Z",
+  "updated_at_utc": "2026-09-29T09:55:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "65329b9c59ef21a2382f99934ca1f6133fc82135",
@@ -29,11 +29,11 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "governing v8 audit FAIL (Odysseus bea18a398): wrong key spends release (key proven after marker, confirmed); interrupted write unsealable (open) -> v9 needed (Nestor)"
+      "on": "OPERATOR: S1 record authentication (#925) + branch protection on main -- sole remaining blocker per governing v9 audit (Odysseus 6ead7beb5; code clean at 2aa834ab1)"
     },
     {
       "item": "D2 adjudication",
-      "on": "S1 record-authentication root of trust: operator decision #925"
+      "on": "v10 (784d55b63) changed audited files after the v9 verdict: current main code unaudited; re-audit needed before any PASS record"
     }
   ],
   "next_actions": [
