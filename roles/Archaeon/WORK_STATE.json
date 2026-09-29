@@ -3,8 +3,8 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T09:43:41Z",
- "state": "WORKING",
+ "updated_at_utc": "2026-09-29T10:02:27Z",
+ "state": "HOLD",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
  "threads": [
@@ -16,35 +16,33 @@
   "C-001"
  ],
  "experiments": [
-  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28). NPE leg: INCONCLUSIVE. BEE leg: VALIDATED (Bellerophon f9a93eb6d; spot-checked). Synthesis DRAFT E003_SYNTHESIS.md @ e6c8b5b2c under independent review"
+  "E-003 = ancestry replay: COMPLETE. BEE VALIDATED, CONDITIONAL on post-exposure C4.2/C4.4/C11; robust finding Q8c 0.00115; NPE uninformative by construction (E003_SYNTHESIS.md @ 056320b4c; reviews review_e003/)"
  ],
  "fabric_tasks": [
-  "tsk-aa9149d395ef + tsk-2d73d6f0ef26: E-003 synthesis adversarial review, 2 fresh replicas, repo read-only, base e6c8b5b2c",
+  "tsk-aa9149d395ef + tsk-2d73d6f0ef26: synthesis review, completed (both FOLLOWS WITH CORRECTIONS; applied)",
   "tsk-c4317a3656d0: NPE 1% sample v2, host_affinity=skullport, UNCLAIMABLE (s12)"
  ],
- "running": [
-  "tsk-aa9149d395ef",
-  "tsk-2d73d6f0ef26"
- ],
+ "running": [],
  "blocked_on": [
-  "E-003 NPE 1% sample (extra check): tsk-c4317a3656d0 has no skullport worker (s12)"
+  "NPE 1% sample check (non-blocking for E-003): no skullport Fabric worker (s12 defect; Odysseus #916)"
  ],
  "next_actions": [
-  "read both reviews; correct or withdraw per findings; then mark the E-003 synthesis final and return the integrated attribution arc",
-  "no new campaigns"
+  "HOLD. Resume if a skullport worker appears (tsk-c4317a3656d0) or a future MWO authorizes the recommended follow-ups",
+  "open analysis item: explain the dry-vs-production drift (Q8c transmission 0.0003 vs 0.00115; Q4 host-assisted) before any later citation"
  ],
  "operator_decisions_required": [
-  "CONDITIONAL: only if the v2 verification of Nestor's run-1 copies FAILS -> the operator decides regenerate (third run, s7) vs declare lost (addendum 5)"
+  "Future MWO: whether to run a NEW preregistered BEE run (to remove the post-exposure conditionality) and/or a decidable NPE design (>=30 transmission births; store-before-execute-free identification). Recorded, not requested.",
+  "CONDITIONAL (unchanged): the NPE 1% sample, if the v2 verification of the run-1 copies fails -> regenerate vs declare lost"
  ],
  "latest_reports": [
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md @ e6c8b5b2c (DRAFT)",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/BEE_PRODUCTION_GO_v2.md",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/ANCESTRY_PREREG_v5.md Amendment C11 @ 8469132d3"
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md @ 056320b4c (REVIEWED)",
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/ @ c24ee1fef"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 976
+ "comms_cursor": 976,
+ "state_reason": "E-003 complete for its question (reviewed synthesis). No further authorized Archaeon work under MWO-0002; no new campaigns."
 }
