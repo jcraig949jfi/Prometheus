@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T09:06:47Z",
+ "updated_at_utc": "2026-09-29T09:43:41Z",
  "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -16,31 +16,35 @@
   "C-001"
  ],
  "experiments": [
-  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28). NPE leg: INCONCLUSIVE. BEE leg: production done; s4.3 agreement satisfied (fresh set 2 PASS exact; production re-run PASS); BEE GO v2 issued; awaiting the owner's E003_RESULTS report"
+  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28). NPE leg: INCONCLUSIVE. BEE leg: VALIDATED (Bellerophon f9a93eb6d; spot-checked). Synthesis DRAFT E003_SYNTHESIS.md @ e6c8b5b2c under independent review"
  ],
  "fabric_tasks": [
-  "tsk-c4317a3656d0 NPE 1% sample v2 (addendum-5 verifier then frozen reference), host_affinity=skullport, submitted, UNCLAIMABLE (no skullport worker); supersedes tsk-581bd93ac9f3 (canceled)"
+  "tsk-aa9149d395ef + tsk-2d73d6f0ef26: E-003 synthesis adversarial review, 2 fresh replicas, repo read-only, base e6c8b5b2c",
+  "tsk-c4317a3656d0: NPE 1% sample v2, host_affinity=skullport, UNCLAIMABLE (s12)"
  ],
- "running": [],
+ "running": [
+  "tsk-aa9149d395ef",
+  "tsk-2d73d6f0ef26"
+ ],
  "blocked_on": [
   "E-003 NPE 1% sample (extra check): tsk-c4317a3656d0 has no skullport worker (s12)"
  ],
  "next_actions": [
-  "BEE: read the owner's E003_RESULTS report when posted; then the E-003 synthesis (does the BEE/NPE evidence validate, alter or break attribution v0), with independent adversarial review via fresh Fabric replicas",
+  "read both reviews; correct or withdraw per findings; then mark the E-003 synthesis final and return the integrated attribution arc",
   "no new campaigns"
  ],
  "operator_decisions_required": [
   "CONDITIONAL: only if the v2 verification of Nestor's run-1 copies FAILS -> the operator decides regenerate (third run, s7) vs declare lost (addendum 5)"
  ],
  "latest_reports": [
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md @ e6c8b5b2c (DRAFT)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/BEE_PRODUCTION_GO_v2.md",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/ANCESTRY_PREREG_v5.md Amendment C11 @ 8469132d3",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/BEE_PRODUCTION_GO.md @ 232ebe399"
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/ANCESTRY_PREREG_v5.md Amendment C11 @ 8469132d3"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 973
+ "comms_cursor": 976
 }
