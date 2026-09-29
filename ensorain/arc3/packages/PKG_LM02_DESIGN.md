@@ -57,5 +57,9 @@ Estimated 1.5-2x LM01 (the adaptive readout's CV refits dominate). M2 cpu8 under
     where H6 manages .61.
   - Circularity check (crypt_crossfamily.py): a random-restart HMM8 estimate FAILS SILENTLY toward "window
     sufficient" on exactly the worlds where it failed to learn (X1 refuted, rho .695).
-  - Design rule: D_k is admissible only behind a model-quality gate (held-out log-loss beats STAT_k). Otherwise it
-    is reported UNKNOWN, never 0. The gate's recall on known failures is still untested.
+  - Design rule, revised after the gate test (crypt_gate.py; K1 refuted, K2/K3 survive):
+    - A learned D_k behind a model-quality gate (held-out log-loss beats STAT_k) is a LOWER BOUND on crypticity.
+      The gate catches catastrophic model failures, but not partial ones.
+    - A large gated D_k licenses "discovery should win". A small D_k licenses NOTHING.
+    - "Window sufficient" needs separate evidence (a well-powered longer-window model that fails to beat STAT_k).
+    - The LM02 moderator must therefore be one-sided.

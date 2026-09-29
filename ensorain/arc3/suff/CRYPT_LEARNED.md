@@ -88,3 +88,34 @@ Consequence for LM02 (design rule, to be precommitted):
 - K1: the gate rejects >= 80% of HMM8's silent failures. If there are none, K1 is vacuous and reported as such.
 - K2: among HMM8 gate-passing worlds, Spearman(D6, true D6) > .8.
 - K3: the gate passes >= 12/24 worlds for HMM8, i.e. it is not rejecting everything.
+
+### Result (precommit commit 6c3723bcc; output results/crypt_gate.json; 69 s on M2)
+
+HMM8 (precommitted subject):
+- silent failures: U3_s4, U4_s1, U4_s2, U4_s8, U5_s1, U5_s2, U5_s3 (7);
+- caught by the gate: 5/7;
+- gate-passing worlds: 12/24;
+- gated Spearman(D6, true D6) = .900.
+
+| prediction | result |
+|---|---|
+| K1: gate catches >= 80% of silent failures | REFUTED (5/7 = 71%) |
+| K2: gated Spearman > .8 | SURVIVES (.900) |
+| K3: gate passes >= 12/24 | SURVIVES, exactly at the threshold (12/24) |
+
+CSSR_EM (comparison only, no prediction): 2 silent failures (U5_s1, U5_s3), 1 caught; 16/24 pass; gated Spearman .898.
+
+Failure shape of K1:
+- The gate catches CATASTROPHIC failures: a model worse than the window, e.g. U4_s1 .931 vs STAT6 .866.
+- It misses PARTIAL failures, where the model beats the window but has learned only part of the hidden structure:
+  - U3_s4: HMM8 .3849 < STAT6 .3896, D6 .0019 vs true .0272;
+  - U5_s3: .5344 < .5429, D6 .0112 vs true .0531.
+- The gate also rejects the window-sufficient worlds, where the model ties or loses slightly to STAT6 (U3_s7, U4_s7,
+  U5_s5). So it discards exactly the "window sufficient" evidence, and those worlds come out UNKNOWN.
+
+Consequence for LM02 (revises the design rule):
+- A gated learned D_k is a LOWER BOUND on crypticity. A pass means "at least this cryptic", never "no more".
+- A learned D_k can therefore support "discovery should win here" (large gated D_k). It can never support "the window
+  suffices here" (small D_k), because a small value is indistinguishable from partial learning.
+- A "window sufficient" claim needs a different kind of evidence: e.g. a longer-window model that fails to beat STAT_k
+  despite ample data (a power argument), not a small learned D_k.
