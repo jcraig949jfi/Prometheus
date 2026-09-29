@@ -96,3 +96,14 @@ Precommitment:
 - Status: kept as mode="lookahead" for the record. NOT promoted, no eval run, and no claim beyond the 2 debug seeds.
 - NEXT, the textbook remedy: CSSR is consistent only as Lmax grows with N, and the Even floor decays geometrically in
   Lmax. Test split-CSSR at Lmax in {6, 8, 10} and T in {4000, 16000}, with the predictions precommitted.
+
+## Precommitment: split-CSSR vs Lmax (written BEFORE running cssr_lmax.py)
+
+Setup: eval seeds 1..16, split mode, alpha 1e-3, refit 1000, Lmax in {6, 8, 10}, T in {4000, 16000}, metric =
+2nd-half excess. The exact Even window floors are .0315 (L6), .0157 (L8) and .0079 (L10).
+
+- Q1: Even at T = 16000. The mean excess falls monotonically L6 > L8 > L10, and each lies in [floor, floor + .011]:
+  L6 in [.031, .042], L8 in [.015, .027], L10 in [.007, .019].
+- Q2: Even at T = 4000: L8 mean < L6 mean.
+- Q3: Even at T = 16000: states = Lmax + 1 in >= 12/16 seeds for each Lmax (the 1-counter shape).
+- Q4: safety. At T = 16000, W2_3 mean excess < .01 and golden mean excess < .003 at every Lmax.
