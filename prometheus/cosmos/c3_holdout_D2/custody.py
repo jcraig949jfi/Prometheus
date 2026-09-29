@@ -81,13 +81,16 @@ def _inside(p: Path, root: Path) -> bool:
 
 class Custody:
     def __init__(self, repo=DEFAULT_REPO, ref=protocol.DEFAULT_REF, secrets_dir=SECRETS_DIR, log=CUSTODY_LOG,
-                 host=None, allowlist=None, pins=None, verify_loaded=True, restrict_acl=True):
+                 host=None, allowlist=None, pins=None, verify_loaded=True, restrict_acl=True, require_preflight=True,
+                 preflight_dir=None):
         self.repo, self.ref = Path(repo), ref
         self.secrets_dir, self.log = Path(secrets_dir), Path(log)
         self.host = host or socket.gethostname()
         self.allowlist = protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist
         self.pins, self.verify_loaded = pins, verify_loaded
         self.restrict_acl = restrict_acl
+        self.require_preflight = require_preflight                # constructor-only (tests); the CLI always requires it
+        self.preflight_dir = protocol.RUN_OUT_ROOT if preflight_dir is None else Path(preflight_dir)
 
     def _gates(self, through, **kw):
         return protocol.check_gates(self.repo, through, ref=self.ref, host=self.host, allowlist=self.allowlist,
@@ -184,6 +187,8 @@ class Custody:
                 raise CustodyRefusal("the key for this spec_id was already released once")
             if protocol.once_record_present(self.repo, self.ref, protocol.KEY_RELEASED_FILE):
                 raise CustodyRefusal("a KEY_RELEASED record is committed: the key was already released (v3: git, not the log)")
+            if self.require_preflight:                            # v6 (BP-1): a passing runner preflight first
+                protocol.preflight_ok(self.preflight_dir, g)
             dest.mkdir(parents=True)
             made = dest
             self._restrict(dest, g["account"])                    # v5: BEFORE the key exists

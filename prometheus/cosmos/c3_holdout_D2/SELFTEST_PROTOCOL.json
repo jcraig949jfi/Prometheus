@@ -119,7 +119,13 @@
   "v5_S5_failed_release_leaves_nothing": true,
   "v5_S5_grafts_refused_by_entry": true,
   "v5_S5_grafts_refused_by_protocol": true,
-  "v5_S6_once_record_git_error_raises": true
+  "v5_S6_once_record_git_error_raises": true,
+  "v6_BP1_flagged_package_refused_before_key": true,
+  "v6_BP1_release_after_matching_preflight": true,
+  "v6_BP1_release_refused_mismatched_preflight": true,
+  "v6_BP1_release_refused_without_preflight": true,
+  "v6_BP1_wrong_hash_package_refused_before_key": true,
+  "v6_account_sid_equality": true
  },
  "closure_extras": {
   "complete": [],
@@ -171,6 +177,9 @@
  },
  "hidden_set_or_key_touched": false,
  "not_applicable_on_this_os": [],
- "reasons": {},
+ "reasons": {
+  "v6_BP1_flagged_refusal_reason": "PackageAuditRefusal",
+  "v6_BP1_wrong_hash_refusal_reason": "PackageHashMismatch"
+ },
  "selftest_pass": true
 }

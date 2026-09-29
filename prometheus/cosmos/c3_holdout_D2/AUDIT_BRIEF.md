@@ -154,3 +154,17 @@ COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
 - **selftest_D2:** 10 checks + 13 negative controls.
 
 **Record:** format and allow-listing are unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v6 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v6". The v5 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v5/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** find ANY path on which a recoverable error (package, probe, argument, environment) happens after the key is read or the release is consumed. Also try to satisfy custody's preflight requirement without a real passing preflight, beyond the declared same-account residual.
+
+**Self-tests:**
+- selftest_protocol: 124 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.

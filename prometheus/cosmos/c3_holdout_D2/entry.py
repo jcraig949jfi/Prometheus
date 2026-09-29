@@ -185,6 +185,8 @@ def _allowlisted(entries, role, name, b) -> bool:
 
 
 def _allowlist_entries(required: bool):
+    if not ALLOWLIST.is_absolute():                               # v6: custody is M1-only; never a relative path
+        raise EntryRefusal("REFUSED: the allow-list path %s is not absolute on this OS" % ALLOWLIST)
     try:
         return json.loads(ALLOWLIST.read_text(encoding="utf-8"))["entries"]
     except FileNotFoundError:
@@ -273,7 +275,10 @@ def verify(target_name):
         raise EntryRefusal("REFUSED: no allow-listed PASS firewall audit governs on %s" % REF
                            if au is None else "REFUSED: governing audit %s is not PASS" % audits[-1][1])
     bound = committed_hashes(ref_c, PRE_AUDIT_FILES)
-    pins = {(e.get("record"), e.get("sha256")) for e in entries if e.get("role") == "PREAUDIT_TOOL"}
+    batches = sorted({e.get("pinned_utc", "") for e in entries if e.get("role") == "PREAUDIT_TOOL"})
+    latest = batches[-1] if batches else None                     # v6: only the LATEST pin batch counts (revocation)
+    pins = {(e.get("record"), e.get("sha256")) for e in entries
+            if e.get("role") == "PREAUDIT_TOOL" and e.get("pinned_utc", "") == latest}
     unpinned = sorted(rel for rel, h in bound.items() if (rel, h) not in pins)
     if unpinned:
         raise EntryRefusal("REFUSED: pre-audit tool files not pinned by the custodian (run entry.py pin-tools): %s"

@@ -53,9 +53,14 @@ def _db_settings() -> dict:
     local = cfg_dir / "config.local.json"
     if local.exists():
         cfg.update(json.loads(local.read_text(encoding="utf-8")))
-    return {"host": os.environ.get("EW_DB_HOST", cfg.get("db_host", "localhost")),
-            "dbname": os.environ.get("EW_DB_NAME", cfg.get("db_name")),
-            "user": cfg.get("db_user"), "password": os.environ.get("EW_DB_PASSWORD", cfg.get("db_password"))}
+    # v6 (Odysseus v5 F2/SF-3): WHICH database is asked is never taken from committed repository config: the custodian
+    # supplies host and database name in the environment; the repository config only supplies credentials
+    host, dbname = os.environ.get("EW_DB_HOST"), os.environ.get("EW_DB_NAME")
+    if not host or not dbname:
+        raise SystemExit("REFUSED: set EW_DB_HOST and EW_DB_NAME (the comms database is chosen by the custodian, not by "
+                         "committed configuration)")
+    return {"host": host, "dbname": dbname, "user": cfg.get("db_user"),
+            "password": os.environ.get("EW_DB_PASSWORD", cfg.get("db_password"))}
 
 
 def comms_message(mid):

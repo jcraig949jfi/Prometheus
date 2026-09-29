@@ -80,7 +80,7 @@ D_DIR = HERE.parent / "c3_holdout_D"
 RECEIPT_FORMAT = "c3-holdout-D2-receipts/1"
 PACKAGE_FORMAT = "c3-D2-prediction-package/1"
 CLASSES = ("NONE", "PASSIVE", "FUNCTIONAL", "INCOHERENT", "INDETERMINATE")
-DEFAULT_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2")
+DEFAULT_OUT_ROOT = protocol.RUN_OUT_ROOT                       # v6: one value, shared with custody's preflight check
 # Protocol gates are read from the COMMITTED tree of this repository's reference branch (protocol.py). The
 # selftest points these at a throwaway git repository it builds; the gates themselves are never skipped.
 DEFAULT_GATE_REPO = HERE.parents[2]
@@ -449,9 +449,11 @@ def audit_source(src: str, fname: str) -> List[str]:
     return flags
 
 
-def load_package(zip_path, expected_sha256: str, extract_to: Path, allow_flagged: bool = False) -> dict:
-    """Refuses (PackageHashMismatch) unless sha256 of the exact bytes used equals expected_sha256."""
-    data = Path(zip_path).read_bytes()
+def load_package(zip_path, expected_sha256: str, extract_to, allow_flagged: bool = False, data: bytes = None) -> dict:
+    """Refuses (PackageHashMismatch) unless sha256 of the exact bytes used equals expected_sha256.
+    v6 (Odysseus v5 BP-1): extract_to=None VALIDATES ONLY (hash, members, meta, AST audit), so every package check runs
+    BEFORE the key is read; `data` passes the exact bytes already validated, so extraction uses the same bytes."""
+    data = Path(zip_path).read_bytes() if data is None else data
     actual = sealbox.sha256_hex(data)
     if actual != str(expected_sha256).strip().lower():
         raise PackageHashMismatch("package sha256 mismatch: expected %s got %s" % (expected_sha256, actual))
@@ -493,6 +495,8 @@ def load_package(zip_path, expected_sha256: str, extract_to: Path, allow_flagged
             flags += audit_source(b.decode("utf-8", errors="replace"), n)
     if flags and not allow_flagged:
         raise PackageAuditRefusal("package audit flags: %s" % "; ".join(flags[:20]))
+    if extract_to is None:
+        return {"sha256": actual, "meta": meta, "entry": entry, "audit_flags": flags, "allow_flagged": bool(allow_flagged)}
     extract_to = Path(extract_to)
     extract_to.mkdir(parents=True, exist_ok=False)
     for n, b in files.items():
@@ -602,6 +606,7 @@ class FirewallRun:
         fam = sealbox.src_sha_lf(D_DIR / "medium.py")
         if fam != manifest["family_src_sha256"]:
             raise HiddenSetMismatch("holdout-D medium.py changed since the draw")
+        self.validate_package()                              # v6 (BP-1): every package check BEFORE the key is read
         if self.do_preflight:
             self.preflight()                                 # v5 (S-1): BEFORE the key is read and the run dir exists
         key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
@@ -638,7 +643,8 @@ class FirewallRun:
         self.out.mkdir(parents=True, exist_ok=True)
         if rpath.exists():
             raise RunnerRefusal("receipts.jsonl exists: use resume, never overwrite")
-        self.pkg = load_package(self.package_zip, self.package_sha256, self.out / "package", self.allow_flagged)
+        self.pkg = load_package(self.package_zip, self.package_sha256, self.out / "package", self.allow_flagged,
+                                data=self._pkg_bytes)             # v6: the bytes validated before the key was read
         self.receipts = Receipts(rpath, genesis, create=True)
         self.receipts.append("open", {
             "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
@@ -675,6 +681,21 @@ class FirewallRun:
         if tag != "probe_result" or opened:
             self._stop_worker(kill=True)
             raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
+
+    def validate_package(self) -> dict:
+        """v6 (BP-1): read the package ONCE, verify its hash, members, metadata and AST audit, and keep those exact bytes
+        for the later extraction. A refusal here happens before anything is consumed."""
+        self._pkg_bytes = self.package_zip.read_bytes()
+        return load_package(self.package_zip, self.package_sha256, None, self.allow_flagged, data=self._pkg_bytes)
+
+    def write_preflight_record(self, out_dir) -> Path:
+        """v6: the PUBLIC-FIELDS record custody requires before it releases the key (protocol.preflight_ok)."""
+        rec = {"format": protocol.PREFLIGHT_FORMAT, "verdict": "PASS", "run_nonce": self.gates.get("run_nonce"),
+               "spec_id": self.gates.get("spec_id"), "package_sha256": self.package_sha256,
+               "runner_id": self.runner_id, "account": self.account, "host": socket.gethostname(), "utc": _utc()}
+        p = Path(out_dir) / ("PREFLIGHT_%s.json" % rec["run_nonce"])
+        p.write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+        return p
 
     def preflight(self) -> dict:
         """v5 (Odysseus v4 S-1): start a predictor child exactly as a run would (spawn, same interpreter, same import
@@ -936,7 +957,10 @@ def _run_cli(a) -> int:
                       extra_probe_paths=[str(out / "receipts.jsonl")])
     if a.preflight:
         run.gates = g
-        print(json.dumps(run.preflight()))
+        run.validate_package()                                # v6 (BP-1): the package checks are part of the preflight
+        r = run.preflight()
+        r["record"] = str(run.write_preflight_record(out.parent))
+        print(json.dumps(r))
         return 0
     run.open()
     run.predict_all()

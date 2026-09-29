@@ -60,7 +60,7 @@ def load(secrets_dir: Path) -> dict:
 
 def _git_cmd(repo):
     from prometheus.cosmos.c3_holdout_D2 import protocol       # bound in the pre-audit entry binding
-    return [protocol.git_exe(Path(repo)), "-C", str(repo)], protocol.git_env()
+    return [protocol.git_exe(Path(repo)), *protocol.GIT_HARDEN, "-C", str(repo)], protocol.git_env()
 
 
 def scan_tree(root: Path, sec: dict) -> dict:

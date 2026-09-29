@@ -343,7 +343,8 @@ def end_to_end(tmp, ts, pkg, sha):
     repo = GateRepo(tmp / "repos" / "e2e", ts).full(sha)
     log = tmp / "custody.jsonl"
     cu = custody.Custody(repo=repo.p, ref=REF, secrets_dir=ts["secrets"], log=log, host=HOST, allowlist=repo.al,
-                         pins=repo.pins(), verify_loaded=False, restrict_acl=False)   # ACL tested in v4_checks
+                         pins=repo.pins(), verify_loaded=False, restrict_acl=False,   # ACL tested in v4_checks
+                         require_preflight=False)                                    # preflight tested in v6_checks
 
     def refused(fn, *a):
         try:
@@ -355,7 +356,8 @@ def end_to_end(tmp, ts, pkg, sha):
     pre = GateRepo(tmp / "repos" / "pre", ts)
     pre.seal()
     cu_pre = custody.Custody(repo=pre.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "cpre.jsonl", host=HOST,
-                             allowlist=pre.al, pins=pre.pins(), verify_loaded=False, restrict_acl=False)
+                             allowlist=pre.al, pins=pre.pins(), verify_loaded=False, restrict_acl=False,
+                             require_preflight=False)
     out["release_before_audit_refused"] = refused(cu_pre.release_key, RID, tmp / "rel_pre") == "AuditMissing"
     out["release_into_git_refused"] = refused(cu.release_key, RID, repo.p / "k") == "CustodyRefusal"
     rel = tmp / "released"
@@ -739,7 +741,7 @@ def v4_checks(tmp, ts, sha):
     lk.unlink()
     f = tmp / "acl_test.hex"
     f.write_text("00")
-    me = os.environ.get("USERNAME") or os.environ.get("USER") or ""
+    me = protocol.os_account()                             # v6: the account from the OS (the Linux node sets no USER)
     try:
         cu._restrict(f, me)
         if os.name == "nt":
@@ -829,7 +831,8 @@ def v5_checks(tmp, ts, pkg, sha):
     res["v5_S3_current_user_accepted"] = protocol.is_single_user_account(me)
     g = GateRepo(tmp / "repos" / "v5rel", ts).full(sha)                 # designated account c3runner: no such user
     cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v5_custody.jsonl", host=HOST,
-                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=True)
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=True,
+                         require_preflight=False)
     dest = tmp / "v5_rel"
     try:
         cu.release_key(RID, dest)
@@ -914,6 +917,68 @@ def v5_checks(tmp, ts, pkg, sha):
     return res
 
 
+def v6_checks(tmp, ts, pkg, sha):
+    """v6 (Odysseus v5 BP-1): a refused package consumes nothing; custody releases only after a matching preflight."""
+    import io
+    import zipfile
+    res = {}
+    g = GateRepo(tmp / "repos" / "v6", ts).full(sha)
+    # a FLAGGED package with the committed hash cannot be built (the hash is committed), so use a wrong-hash package and
+    # a flagged package: both must be refused BEFORE the key is read, with the key copy intact and no run directory
+    bad = tmp / "v6_flagged.zip"
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("package.json", json.dumps({"format": runner.PACKAGE_FORMAT, "entry": "p.py", "adjudication": {},
+                                               "intervention": {"knob": "p_decay", "to": 1.0}}))
+        z.writestr("p.py", "import socket\ndef predict(s, t, seed):\n    return {}\n")
+    bad.write_bytes(buf.getvalue())
+    bad_sha = sealbox.sha256_file(bad)
+    gb = GateRepo(tmp / "repos" / "v6flag", ts).full(bad_sha)        # Cosmos committed the flagged package's hash
+    # wrong_hash: the committed hash, but a different file on disk; flagged: the committed file, which the AST audit refuses
+    for tag, repo_, zp, zsha in (("wrong_hash", g, bad, sha), ("flagged", gb, bad, bad_sha)):
+        kd = tmp / ("v6_key_" + tag)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v6_" + tag) / ("run_" + RUN_NONCE)
+        fr = runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", zp, zsha, outd, runner_id=RID,
+                                gate_repo=repo_.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                                account=ACCT, allowlist=repo_.al, gate_pins=repo_.pins(), verify_loaded=False,
+                                delete_key=True, secret_paths=(), write_probe_paths=(), preflight=False)
+        try:
+            fr.open()
+            res["v6_BP1_%s_package_refused_before_key" % tag] = False
+        except (protocol.GateRefusal, runner.RunnerRefusal) as e:
+            want = runner.PackageHashMismatch if tag == "wrong_hash" else runner.PackageAuditRefusal
+            res["v6_BP1_%s_package_refused_before_key" % tag] = isinstance(e, want) and (kd / "k.hex").exists()                 and not outd.exists()
+            res["v6_BP1_%s_refusal" % tag + "_reason"] = type(e).__name__
+    # custody requires a passing preflight for THIS designation
+    pdir = tmp / "v6_preflights"
+    pdir.mkdir()
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v6_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, preflight_dir=pdir)
+    try:
+        cu.release_key(RID, tmp / "v6_rel_none")
+        res["v6_BP1_release_refused_without_preflight"] = False
+    except protocol.PreflightMissing:
+        res["v6_BP1_release_refused_without_preflight"] = not (tmp / "v6_rel_none").exists()
+    rec = {"format": protocol.PREFLIGHT_FORMAT, "verdict": "PASS", "run_nonce": RUN_NONCE,
+           "spec_id": ts["m"]["spec_id"], "package_sha256": "1" * 64, "runner_id": RID, "account": ACCT}
+    (pdir / ("PREFLIGHT_%s.json" % RUN_NONCE)).write_text(json.dumps(rec))
+    try:
+        cu.release_key(RID, tmp / "v6_rel_wrong")
+        res["v6_BP1_release_refused_mismatched_preflight"] = False
+    except protocol.PreflightMissing:
+        res["v6_BP1_release_refused_mismatched_preflight"] = not (tmp / "v6_rel_wrong").exists()
+    rec["package_sha256"] = sha
+    (pdir / ("PREFLIGHT_%s.json" % RUN_NONCE)).write_text(json.dumps(rec))
+    try:
+        res["v6_BP1_release_after_matching_preflight"] = cu.release_key(RID, tmp / "v6_rel_ok")["event"] == "KEY_RELEASED"
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        res["v6_BP1_release_after_matching_preflight"] = False
+    res["v6_account_sid_equality"] = protocol.same_account(protocol.os_account(), protocol.os_account().upper())
+    return res
+
+
 def run() -> dict:
     with tempfile.TemporaryDirectory(prefix="c3D2_protocol_") as t:
         tmp = Path(t)
@@ -931,17 +996,18 @@ def run() -> dict:
         v3 = v3_checks(tmp, ts, pkg, sha)
         v4 = v4_checks(tmp, ts, sha)
         v5 = v5_checks(tmp, ts, pkg, sha)
+        v6 = v6_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
     for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
-    not_applicable = sorted(k for k, v in {**v4, **v5}.items() if v is None)
-    checks.update({k: v for k, v in {**v4, **v5}.items() if v is not None and not k.endswith("_reason")})
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6}.items() if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6}.items() if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
            "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
            "not_applicable_on_this_os": not_applicable,
-           "reasons": {k: v for k, v in {**v3, **v4, **v5}.items() if k.endswith("_reason")},
+           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6}.items() if k.endswith("_reason")},
            "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
            "all_defect_controls_true": all(dcs.values())}
     res["selftest_pass"] = bool(res["all_checks_true"] and res["all_defect_controls_true"])
