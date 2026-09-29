@@ -1,0 +1,165 @@
+{
+ "schema": "prometheus.migration_report.v1",
+ "seat": "Nestor",
+ "mwo_id": "MWO-0002",
+ "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+ "reported_at_utc": "2026-09-29T08:05:00Z",
+ "branch": "nestor/d2v6-2026-09-29 (merged to main)",
+ "head_sha": "778ccbc76ac43db82b1771e2aab7ae4733270db9",
+ "bootstrap_independence": {
+  "answer": "CONDITIONAL",
+  "conditions": [
+   "a Nestor session must be started by the operator (no autonomous seat launcher); once running, the /loop reads CURRENT.md, WORK_STATE, comms and Fabric without any bespoke prompt"
+  ],
+  "how_mwo_0001_was_found": "operator_prompt",
+  "how_mwo_0002_was_found": "own_loop_fetch",
+  "evidence": [
+   "comms #961 seen by the s8 loop's comms check; CURRENT.md sha256 6f5a6a8b...3685 verified from origin/main blob = PUBLICATIONS.md entry"
+  ],
+  "note": "MWO-0001 arrived with the operator's boot directive (and broadcast #914); MWO-0002 was picked up by the running self-paced loop."
+ },
+ "criteria": {
+  "C1_adopted_mwo_0001": {
+   "status": "YES",
+   "evidence": [
+    "roles/Nestor/WORK_STATE.json @ 461c5e769 (mwo_id MWO-0001, mwo_commit 7e4c09f2c)",
+    "sha256 007054ad...88f3 verified from origin/main blob every loop tick"
+   ],
+   "note": ""
+  },
+  "C2_discovers_next_mwo_unprompted": {
+   "status": "YES",
+   "evidence": [
+    "comms #961 (broadcast) read in the loop; blob hash checked against ops/work_orders/PUBLICATIONS.md"
+   ],
+   "note": "Learned via the loop's comms check plus the per-tick CURRENT.md hash comparison; no per-seat prompt."
+  },
+  "C3_work_state_useful": {
+   "status": "YES",
+   "evidence": [
+    "roles/Nestor/WORK_STATE.json at this head (all v1 core fields)"
+   ],
+   "note": ""
+  },
+  "C4_identifies_authorized_work": {
+   "status": "YES",
+   "evidence": [
+    "MWO-0001 s10 NESTOR (carried by MWO-0002 s6)",
+    "campaign roles/Nestor/campaigns/ancestry-replay-2026-09-28 (within ops/campaigns/C-001)",
+    "Fabric thread thr-d2-firewall-audit (D2 v6 re-audit)"
+   ],
+   "note": "Ancestry: s4 v2.2 usable, outcome INCONCLUSIVE; D2: firewall repair loop with Odysseus; no third production run."
+  },
+  "C5_checks_comms_correctly": {
+   "status": "PARTIAL",
+   "evidence": [
+    "WORK_STATE.comms_cursor (added now: 961)"
+   ],
+   "note": "No idle broadcasts or ACKs; the cursor was held in session context until now, so it is recorded in WORK_STATE from this cycle. comms is used as the D2 S1 confirmation channel by design (open operator decision #925), not as approval."
+  },
+  "C6_uses_fabric_where_appropriate": {
+   "status": "PARTIAL",
+   "evidence": [
+    "tsk-81146cfae322",
+    "tsk-d907522d6a14",
+    "tsk-76beeeeab3ae",
+    "tsk-8dd16e12e036",
+    "tsk-7cd8cf31e4d6"
+   ],
+   "note": "All reviews/audits/portable selftests are Fabric Tasks; M1-local work (Windows controls, key-holder scan with secrets, s4v2 recompute) cannot be hosted: no Windows worker, and secrets never leave M1."
+  },
+  "C7_uses_common_hierarchy": {
+   "status": "PARTIAL",
+   "evidence": [
+    "WORK_STATE.threads"
+   ],
+   "note": "Thread entries are aliases ('ancestry-replay (Archaeon #812)', 'D2 custody'), not registry ids; Fabric thread ids are Fabric-level only."
+  },
+  "C8_uses_canonical_leases": {
+   "status": "PARTIAL",
+   "evidence": [
+    "lse-9689939a3b6f (s4 v2.2, python -m fabric lease)",
+    "lse-3db3a46c3932 (INCIDENT run 3)"
+   ],
+   "note": "New claims use the Fabric lease row; a legacy frontend (roles/Nestor/tools/nestor_lease.py wait-acquire) inside a stale scheduled task caused INCIDENT_RUN3_2026-09-29 (tasks disabled)."
+  },
+  "C9_distinguishes_gates_from_routine": {
+   "status": "YES",
+   "evidence": [
+    "WORK_STATE.blocked_on / operator_decisions_required"
+   ],
+   "note": "Gates below are custody/frozen-contract gates; waiting for Odysseus's audit verdict is the D2 protocol's own gate, not a steward sign-off."
+  }
+ },
+ "hard_gates_current": [
+  {
+   "gate": "prometheus/cosmos/c3_holdout_D2/protocol.py + FIREWALL.md (seal -> audit PASS -> commitment -> designation)",
+   "item": "D2: no allow-listed PASS firewall audit yet (v6 re-audit FAIL #959; v7 in work)",
+   "evidence": [
+    "roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md @ 7567a018b"
+   ]
+  },
+  {
+   "gate": "operator decision (MWO-0002 s8)",
+   "item": "D2 S1 root of trust (#925); branch protection on main",
+   "evidence": [
+    "comms #925"
+   ]
+  },
+  {
+   "gate": "MWO-0001 s10 / MWO-0002 s6",
+   "item": "no third ancestry production run",
+   "evidence": [
+    "INCIDENT_RUN3_2026-09-29.md"
+   ]
+  },
+  {
+   "gate": "GO_FINAL addendum 5 (Archaeon)",
+   "item": "run-2 1% sample: only via verifier v2 on a candidate copy; else operator decision",
+   "evidence": [
+    "comms #945, #952, #953"
+   ]
+  }
+ ],
+ "migration_blockers": [
+  {
+   "what": "Fabric has no Windows/SKULLPORT worker: Archaeon's host-affine sample verification tsk-c4317a3656d0 is unclaimable; M1-only checks run locally",
+   "kind": "fabric",
+   "evidence": [
+    "tsk-c4317a3656d0",
+    "WORK_STATE.defects_s12"
+   ]
+  },
+  {
+   "what": "D2 secrets and Windows-specific controls cannot be given to Fabric workers (custody by design)",
+   "kind": "custody",
+   "evidence": [
+    "FIREWALL.md v4-v6 residuals"
+   ]
+  }
+ ],
+ "legacy_conventions_still_used": [
+  {
+   "convention": "roles/Nestor/tools/nestor_lease.py frontend + roles/Nestor/LEASES.jsonl",
+   "why": "older launchers call it",
+   "retire_plan": "seat"
+  },
+  {
+   "convention": "Task Scheduler launchers for long local runs",
+   "why": "Bash-tool children die with the session",
+   "retire_plan": "seat"
+  }
+ ],
+ "identifier_check": {
+  "thread_ids_unresolved": [
+   "ancestry-replay (alias)",
+   "D2 custody (alias)",
+   "thr-d2-firewall-audit (Fabric thread)",
+   "thr-ancestry-s4v2-review (Fabric thread)"
+  ],
+  "campaign_ids_unresolved": [
+   "roles/Nestor/campaigns/ancestry-replay-2026-09-28 (seat path; part of ops/campaigns/C-001 arc)"
+  ],
+  "note": "Not repaired, per MWO-0002 s3. ops/README.md banner: not a source of confusion for this seat (MWO governs)."
+ }
+}

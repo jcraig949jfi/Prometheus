@@ -1,12 +1,12 @@
 {
  "schema": "prometheus.work_state.v1",
  "seat": "Nestor",
- "mwo_id": "MWO-0001",
- "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T07:30:00Z",
+ "mwo_id": "MWO-0002",
+ "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+ "updated_at_utc": "2026-09-29T08:05:00Z",
  "state": "WORKING",
  "branch": "task branch nestor/d2v6-2026-09-29 (merged to main)",
- "head_sha": "7c7b0b8361a54b2e8088960c1ae8a7a055b64db9",
+ "head_sha": "778ccbc76ac43db82b1771e2aab7ae4733270db9",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -20,16 +20,16 @@
  "fabric_tasks": [
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
   "D2 v5 re-audit -> FAIL (Odysseus #954, VERDICT @ 01ac0fedf: BP-1 key consumed before package validation; Linux selftest)",
-  "D2 v6 re-audit: tsk-76beeeeab3ae, tsk-8dd16e12e036; selftests tsk-7cd8cf31e4d6, tsk-66a2d7180670 (base 7c7b0b836, --cap fabric.runtime==0.2)",
+  "D2 v6 re-audit -> FAIL (Odysseus #959, VERDICT @ 7567a018b: extraction + receipts probe after key read; crash voids; Linux SID check) -> v7 in work",
   "Archaeon sample verification v2: tsk-c4317a3656d0 (host skullport, NPE_SAMPLE_DIR = candidate 1) -- waiting: no fabric worker on SKULLPORT"
  ],
  "running": [
-  "D2 v6 re-audit (2 replicas + 2 selftests)",
+  "D2 v7 repair (task worktree)",
   "key-holder scan (entry firewall-check, v4 code, comms dump)"
  ],
  "blocked_on": [
   "1% sample check: Archaeon's verifier-v2 task tsk-c4317a3656d0 needs a fabric worker on SKULLPORT (none exists)",
-  "D2: S1 root of trust (operator #925); v6 re-audit adjudication (Odysseus)"
+  "D2: S1 root of trust (operator #925); v7 repair then Odysseus re-audit"
  ],
  "next_actions": [
   "relay review results when terminal",
@@ -72,5 +72,11 @@
  "candidate_dirs_keep_untouched": [
   "F:/Prometheus-worktrees/nestor-s1-forensics/roles/Nestor/campaigns/ancestry-replay-2026-09-28/_scratch/exports_run1_original",
   "F:/Prometheus-worktrees/nestor-s1-forensics/roles/Nestor/campaigns/ancestry-replay-2026-09-28/_scratch/production_run1_INVALIDATED"
+ ],
+ "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+ "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
+ "comms_cursor": 961,
+ "adjudication_rules_seen": [
+  "Harmonia #960 / Addendum E @ 9f6abdce6: a consumed key release without result seal = FORFEIT (package side) or VOID (infrastructure)"
  ]
 }
