@@ -74,3 +74,25 @@ Precommitment:
 4. **Relation to the sufficiency ladder:** "discovering what can be discarded" needs a transition model that is not
    itself a window. A finite-suffix construction (STAT, split-CSSR) pays the window floor on crypticity even when its
    grouping is exact.
+
+## Tick 2026-09-29T04:40Z: "lookahead" successor repair (DEBUG seeds 1001-1002 only; NOT evaluated on eval seeds)
+
+- Rule: keep split determinization, but if the (Lmax+1)-suffix counts reject the truncated successor's group (p <
+  alpha_c = .01) while another group fits, redirect the successor to the best-fitting group.
+- Debug results (2nd-half excess):
+
+  | world | lookahead | split | vote |
+  |---|---|---|---|
+  | Even | .0033 / .0132, 12 states | ~.034 | ~.001 |
+  | W2_3 | .0362 / .0106 | .0009 / .0033 | - |
+  | golden, SNS | unchanged | | |
+
+- Reading: this is the same safety/reach trade as split vs vote, only softened.
+  - With about 128 (history, symbol) tests per fit, alpha_c yields about one false redirect per refit on Markov-3.
+  - In a hard-tracking machine one wrong transition derails tracking, so its cost has no bound, while the gain from a
+    repair is bounded.
+  - Local successor repairs to CSSR therefore carry an asymmetric risk.
+  - The EM-HMM's soft belief tracking does not have this failure mode.
+- Status: kept as mode="lookahead" for the record. NOT promoted, no eval run, and no claim beyond the 2 debug seeds.
+- NEXT, the textbook remedy: CSSR is consistent only as Lmax grows with N, and the Even floor decays geometrically in
+  Lmax. Test split-CSSR at Lmax in {6, 8, 10} and T in {4000, 16000}, with the predictions precommitted.

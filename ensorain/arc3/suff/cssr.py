@@ -41,15 +41,15 @@ def _pval(c, p1):
 
 
 class CSSR:
-    def __init__(self, Lmax=6, alpha=1e-3, refit=500, mode="split"):
-        assert mode in ("split", "vote")
-        self.Lmax, self.alpha, self.refit, self.mode = Lmax, alpha, refit, mode
+    def __init__(self, Lmax=6, alpha=1e-3, refit=500, mode="split", alpha_c=0.01):
+        assert mode in ("split", "vote", "lookahead")
+        self.Lmax, self.alpha, self.refit, self.mode, self.alpha_c = Lmax, alpha, refit, mode, alpha_c
         self.name = f"CSSR_{mode}_L{Lmax}_a{alpha:g}"
 
     # ---- structure learning ----
     def fit(self, x):
         Lmax, alpha = self.Lmax, self.alpha
-        cnt = _suffix_counts(x, Lmax)
+        cnt = _suffix_counts(x, Lmax + 1)
         hist = [{()}]                                        # state -> set of suffixes
         pool = [list(cnt[0][()])]                            # state -> pooled [n0, n1]
 
@@ -88,18 +88,48 @@ class CSSR:
         groups = [sorted(h for h in hs if len(h) == Lmax) for hs in hist]
         groups = [g for g in groups if g]
         state_of = {h: i for i, g in enumerate(groups) for h in g}
+        # successor HISTORY map. Default: the truncated successor h[1:] + b. "lookahead": if the (Lmax+1)-suffix h + b has
+        # next-symbol counts that REJECT the truncated successor's group (p < alpha_c) while some other step-2 group
+        # fits (p > alpha_c), use the best-fitting group instead, represented by its history sharing the longest suffix
+        # with h + b. This targets the finite-window artifact, where the truncated successor lands in an ambiguous state.
+        succ = {h: [h[1:] + (b,) for b in (0, 1)] for g in groups for h in g}
+        if self.mode == "lookahead":
+            gp = []
+            for g in groups:
+                n = [0, 0]
+                for hh in g:
+                    c = cnt[Lmax].get(hh, [0, 0]); n[0] += c[0]; n[1] += c[1]
+                gp.append(n[1] / (n[0] + n[1]) if n[0] + n[1] else 0.5)
+            for g in groups:
+                for h in g:
+                    for b in (0, 1):
+                        c = cnt[Lmax + 1].get(h + (b,))
+                        t = state_of.get(h[1:] + (b,))
+                        if not c or t is None or _pval(c, gp[t]) >= self.alpha_c:
+                            continue
+                        pv = [(_pval(c, gp[r]), r) for r in range(len(groups)) if r != t]
+                        if not pv or max(pv)[0] <= self.alpha_c:
+                            continue
+                        r = max(pv)[1]
+                        hb = h + (b,)
+                        def common(a):
+                            k = 0
+                            while k < len(a) and a[-1 - k] == hb[-1 - k]:
+                                k += 1
+                            return k
+                        succ[h][b] = max(sorted(groups[r]), key=common)
         # determinize. "split" (standard CSSR): split states until every history's successors agree. "vote": keep the
         # step-2 partition and give each (state, symbol) its count-weighted modal successor. At finite Lmax the
         # successor h[1:] + b drops the oldest symbol, so a history can land in an ambiguous (window-truncated) state;
         # "split" propagates that ambiguity backwards through the chain, and "vote" out-votes it.
-        changed = self.mode == "split"
+        changed = self.mode in ("split", "lookahead")
         while changed:
             changed = False
             new_groups = []
             for g in groups:
                 sig = defaultdict(list)
                 for h in g:
-                    key = tuple(state_of.get(h[1:] + (b,)) for b in (0, 1))
+                    key = tuple(state_of.get(succ[h][b]) for b in (0, 1))
                     sig[key].append(h)
                 if len(sig) > 1:
                     changed = True
@@ -109,9 +139,9 @@ class CSSR:
         trans = {}
         counts = []
         for i, g in enumerate(groups):
-            if self.mode == "split":
+            if self.mode in ("split", "lookahead"):
                 h = g[0]
-                trans[i] = tuple(state_of.get(h[1:] + (b,)) for b in (0, 1))
+                trans[i] = tuple(state_of.get(succ[h][b]) for b in (0, 1))
             else:
                 tr = []
                 for b in (0, 1):
