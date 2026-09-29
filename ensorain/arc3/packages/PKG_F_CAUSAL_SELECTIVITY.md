@@ -1,4 +1,4 @@
-# PKG-F: Causal selectivity by restoring the discarded distinctions (research-ready package, design v0.1)
+# PKG-F: Causal selectivity by restoring the discarded distinctions (research-ready package, design v0.2)
 
 Owner: Ensorain (ARC3). Status: DESIGN, instrument validated on dev (RESULTS_PKGF_PROBE.md: lossless 9e-16, PC-help
 fires, sham ignored by the learned readout, forced sham hurts). Nothing is run; per the directive (Block F) nothing launches before the LM01
@@ -45,6 +45,18 @@ For a trained selective learner S with persistent state theta_S and admitted his
   selection is fooled by obsolete data".
 - ORACLE-GATED: S+D with the readout restricted to the part of D_S the GENERATOR marks as relevant (analysis-only
   upper reference).
+- S+D/learned-regime (added v0.2, from dev probes v3-v5b in RESULTS_PKGF_PROBE.md): the weight a is chosen on a
+  holdout of the DISCOVERED current regime. The detector is MODEL-FREE: successive same-cell record disagreement across
+  a candidate split, within-cell time-permutation null (p < .01, recursive on the later part); if no split, it falls
+  back to the random holdout.
+  - Dev (F3/F2 L2, fresh seeds): 16/16 switches found, 0/16 false on stationary twins, F3 harm 0.000 vs -1.26 with
+    the all-history holdout.
+  - Power vanishes below ~100 same-cell pairs (thinning test v5b).
+  - REJECTED detector variants, which must not be revived without new evidence:
+    - residual segmentation on the trained substrate (v3). It inherits the bounded substrate's retention recency and
+      fires on stationary worlds (2/8 no-change);
+    - residual segmentation on an order-agnostic substrate (v4). It has no power on F3 (4/8 detected).
+  - Claim wording: v3 must not be cited as "discovered recency". Only v5 discovers.
 
 ## 5. Nuisance kinds (Block G). Each is a world variant in which D_S carries a different kind of distinction
 
@@ -109,6 +121,15 @@ as how predictive it is (Hermann et al. 2024). The prior therefore predicts:
 - harm under S+D/forced;
 - INERT under S+D/learned for N2.
 The design reports both, so the prior can be falsified.
+
+## 9c. Dev-probe status (v2-v5b; not preregistered; 4-8 worlds per stratum; one readout family)
+
+- Obsolete stored history hurts through SELECTION, not storage: with a holdout from the current regime (handed in, v2;
+  or discovered model-free, v5) the harm is ~0.
+- Discovery works when regimes are separated by a sharp switch and same-cell repeats are dense (L2: ~4,700 pairs).
+- Exploratory (v5b): detector power and the harm itself BOTH fade as repeats thin out. The detector may fail mainly
+  where it is not needed. This must be tested on a design where harm and repeats are decoupled before it is claimed.
+- Untested: multiple or gradual switches; F5 nuisance drift; N5 decaying reliability.
 
 ## 10. What it cannot establish
 

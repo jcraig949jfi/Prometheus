@@ -65,8 +65,13 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - MAT: instrument validated on dev (RESULTS_PKGF_PROBE.md). Noise/spurious channel nearly INERT; obsolete channel HURTS
   (-0.9..-1.6) under the learned readout while the sham is ignored. v2: with a RECENCY holdout, the F3 harm vanishes
   (-0.90 -> -0.01; -1.32 -> 0.00). Obsolete info can be stored and ignored given a regime-appropriate selection signal.
-  Next: a readout that must DISCOVER the regime (changepoint gate) instead of being handed recency; the N5 decaying
-  reliability world.
+  - v3-v5b (2026-09-29):
+    - residual-segmentation "discovery" (v3) was an artefact of the substrate's retention recency (v4);
+    - a MODEL-FREE same-cell detector (v5) finds the switch 16/16 with 0/16 false alarms and removes the harm (0.000
+      vs -1.26);
+    - power fades below ~100 same-cell pairs, and so does the harm (v5b, exploratory).
+  - Next: a harm/repeat-decoupled world; multi-switch and gradual-drift worlds; the N5 decaying-reliability world.
+    PKG-F design v0.2.
 
 ## T05 Capacity vs selection (reservoir as bridge)
 - Q: at matched capacity, does semantic selection beat random retention, at matched bytes AND matched HR2?
