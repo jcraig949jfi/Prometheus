@@ -54,7 +54,8 @@ REPO = HERE.parents[2]
 PKG_REL = "prometheus/cosmos/c3_holdout_D2"
 PROTO_REL = PKG_REL + "/protocol"
 REF = "refs/remotes/origin/main"
-ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
+ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")   # v12: the append-only M1 anchor
+ANCHOR_FORMAT = "c3-D2-anchor/1"
 AUDIT_RE = re.compile(r"^FIREWALL_AUDIT_([1-9][0-9]*)\.json$")
 FIXED = {"PREDICTION_COMMITMENT.json", "RUNNER_DESIGNATION.json", "RESULT_SEAL.json", "KEY_RELEASED.json",
          "REVEALED.json"}
@@ -180,21 +181,69 @@ if __name__ == "__mp_main__":
         sys.meta_path.insert(0, AuditedImportGuard(json.loads(_b)))
 
 
-def _allowlisted(entries, role, name, b) -> bool:
-    return any(e.get("role") == role and e.get("record") == name and e.get("sha256") == lf_sha(b) for e in entries)
+def _entry_hash(e) -> str:
+    return hashlib.sha256(json.dumps({k: v for k, v in e.items() if k != "entry_hash"}, sort_keys=True,
+                                     separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def _allowlisted(entries, role, name, b, ref_c=None) -> bool:
+    """v12 (MWO-0004 D2-1): an anchored entry for role/record/sha256 whose commit exists, is an ancestor of the resolved
+    origin/main commit, and still holds that blob (same rule as protocol._allowlisted)."""
+    h = lf_sha(b)
+    for e in entries:
+        if e.get("role") != role or e.get("record") != name or e.get("sha256") != h:
+            continue
+        if ref_c is None:
+            return True
+        c = str(e.get("commit") or "")
+        rel = e.get("path") or (PROTO_REL + "/" + name)
+        if git("cat-file", "-e", c + "^{commit}")[0] != 0:
+            continue
+        if c != ref_c and git("merge-base", "--is-ancestor", c, ref_c)[0] != 0:
+            continue
+        rc, at = git("show", "%s:%s" % (c, rel), binary=True)
+        if rc == 0 and lf_sha(at) == h:
+            return True
+    return False
 
 
 def _allowlist_entries(required: bool):
+    """v12: read the append-only anchor (JSONL) and verify its hash chain; a broken chain refuses everything."""
     if not ALLOWLIST.is_absolute():                               # v6: custody is M1-only; never a relative path
-        raise EntryRefusal("REFUSED: the allow-list path %s is not absolute on this OS" % ALLOWLIST)
+        raise EntryRefusal("REFUSED: the anchor path %s is not absolute on this OS" % ALLOWLIST)
     try:
-        return json.loads(ALLOWLIST.read_text(encoding="utf-8"))["entries"]
+        lines = ALLOWLIST.read_text(encoding="utf-8").splitlines()
     except FileNotFoundError:
         if required:
-            raise EntryRefusal("REFUSED: allow-list missing")
+            raise EntryRefusal("REFUSED: anchor missing")
         return []
     except Exception as e:                                        # noqa: BLE001
-        raise EntryRefusal("REFUSED: allow-list unreadable: %s" % type(e).__name__)
+        raise EntryRefusal("REFUSED: anchor unreadable: %s" % type(e).__name__)
+    out, prev = [], "0" * 64
+    for n, line in enumerate(x for x in lines if x.strip()):
+        try:
+            e = json.loads(line)
+        except ValueError:
+            raise EntryRefusal("REFUSED: anchor line %d is not JSON" % n)
+        if e.get("format") != ANCHOR_FORMAT or e.get("prev") != prev or e.get("entry_hash") != _entry_hash(e):
+            raise EntryRefusal("REFUSED: anchor hash chain broken at entry %d" % n)
+        out.append(e)
+        prev = e["entry_hash"]
+    return out
+
+
+def _anchor_append(entry) -> dict:
+    prior = _allowlist_entries(required=False)
+    e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else "0" * 64)
+    e["entry_hash"] = _entry_hash(e)
+    ALLOWLIST.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(str(ALLOWLIST), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+    try:
+        os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+    return e
 
 
 def _git_state_ok():
@@ -256,7 +305,7 @@ def verify(target_name):
     audits = []
     for n, name in sorted((int(AUDIT_RE.match(x).group(1)), x) for x in names if AUDIT_RE.match(x)):
         rc, b = git("show", "%s:%s/%s" % (ref_c, PROTO_REL, name), binary=True)
-        if rc == 0 and _allowlisted(entries, "AUDIT", name, b):   # the allow-list filters FIRST
+        if rc == 0 and _allowlisted(entries, "AUDIT", name, b, ref_c):   # the anchor filters FIRST (v12: + git)
             audits.append((n, name, b))
     au = json.loads(audits[-1][2].decode("utf-8")) if audits else None
     if au is not None and au.get("verdict") == "PASS":
@@ -295,16 +344,11 @@ def pin_tools(argv):
     if len(argv) == 2 and argv[0] == "--confirm":
         if argv[1] != digest:
             raise EntryRefusal("REFUSED: digest mismatch (the committed tool files changed since you reviewed them)")
-        try:
-            data = json.loads(ALLOWLIST.read_text(encoding="utf-8"))
-        except FileNotFoundError:
-            data = {"format": "c3-D2-allowlist/1", "entries": []}
         import datetime as _dt
-        now = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        data["entries"] += [{"role": "PREAUDIT_TOOL", "record": rel, "sha256": v, "commit": ref_c, "pinned_utc": now}
-                            for rel, v in sorted(h.items())]
-        ALLOWLIST.parent.mkdir(parents=True, exist_ok=True)
-        ALLOWLIST.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
+        now = _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+        for rel, v in sorted(h.items()):                           # v12: appended to the hash-chained anchor
+            _anchor_append({"role": "PREAUDIT_TOOL", "record": rel, "path": rel, "sha256": v, "commit": ref_c,
+                            "pinned_utc": now})
         print(json.dumps({"pinned": sorted(h), "commit": ref_c, "digest": digest}))
         return 0
     if argv:

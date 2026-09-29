@@ -1,26 +1,25 @@
-"""Custodian allow-list for the D2 protocol records (v2; Odysseus S1: records are unauthenticated in git).
+"""Custodian ANCHOR for the D2 protocol records (v12; MWO-0004 D2-1 resolves #925).
 
     python -I -B <repo>/prometheus/cosmos/c3_holdout_D2/entry.py allowlist add --role AUDIT|COMMITMENT|DESIGNATION|RESULT_SEAL \
-        --record <file name in protocol/> --comms-id N
+        --record <file name in protocol/>
     python -I -B <repo>/prometheus/cosmos/c3_holdout_D2/entry.py allowlist show
 
-A record governs ONLY if its sha256 (LF-normalised bytes as committed on refs/remotes/origin/main) is in this list. The
-custodian (Nestor, on M1) adds it after the record's author has confirmed exactly that sha256 over comms:
-    AUDIT       -> sender Odysseus (the operator-designated auditor)
-    COMMITMENT  -> sender Cosmos
-    DESIGNATION -> sender operator or Nestor (the custodian writes the designation)
-    RESULT_SEAL -> sender operator or Nestor
-This checks the comms message's SENDER and that its subject or body contains the full sha256, and refuses otherwise.
+Root of trust (MWO-0004 D2-1): published Git object identity + immutable blob hashes + an append-only
+out-of-repository anchor on M1. There is no comms-sender check any more; comms is notification only.
 
-v5 (Odysseus v4 re-audit B-2 / S-4): runs ONLY through entry.py (bound by the governing PASS audit, or before one exists
-by the custodian-pinned pre-audit binding); git goes through protocol (absolute path, hardened environment); the record
-is read from refs/remotes/origin/main only; and NO repository code outside the binding runs: the comms message is read
-with psycopg2 directly (site-packages; declared residual F-3P) using the evidence_wiki connection settings as DATA
-(config.json / config.local.json / EW_DB_* environment), not by importing comms or evidence_wiki.
+`add` confirms one protocol record. It reads the record from refs/remotes/origin/main, finds the ONE commit that added it
+(protocol._added_once: one blob in full history, one non-merge add), and APPENDS to the anchor:
+    role, record, repository path, blob sha256 (LF), adding commit, anchored_utc,
+    prev = the previous entry's entry_hash, entry_hash = sha256 of this entry's canonical body.
+It never rewrites the file. Anchoring the same role/record again with a DIFFERENT blob is refused (once only).
+Before every gated step protocol.check_gates and entry.py re-verify each record against its anchor entry:
+the commit exists, is an ancestor of the fetched origin/main, still holds the anchored blob, and is the adding commit.
+The anchor holds identifiers and hashes only: no sealed content.
+
+Runs ONLY through entry.py (governing PASS audit binding, or the custodian-pinned pre-audit binding).
 """
 import argparse
 import datetime as dt
-import hashlib
 import json
 import os
 import sys
@@ -31,12 +30,10 @@ from prometheus.cosmos.c3_holdout_D2 import protocol
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 PROTO_REL = "prometheus/cosmos/c3_holdout_D2/protocol"
-ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
-SENDERS = {"AUDIT": {"Odysseus"}, "COMMITMENT": {"Cosmos"}, "DESIGNATION": {"operator", "Nestor"},
-           "RESULT_SEAL": {"operator", "Nestor"}}
-# v3 STATUS (Odysseus v2 re-audit FAIL, decisive finding): the comms `sender` field is supplied by the posting client, so
-# this check does NOT authenticate the author. The root of trust for protocol records is an OPEN OPERATOR DECISION
-# (#925: signed commits + pinned keys / operator-confirmed hashes / accept). v5 does not claim S1 repaired.
+ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")
+ROLES = ("AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL")
+ERR = {"AUDIT": protocol.AuditMissing, "COMMITMENT": protocol.CommitmentMissing,
+       "DESIGNATION": protocol.DesignationMissing, "RESULT_SEAL": protocol.ResultNotSealed}
 
 
 def record_bytes(ref, name):
@@ -46,62 +43,28 @@ def record_bytes(ref, name):
     return b
 
 
-def _db_settings() -> dict:
-    """The evidence_wiki connection settings, read as DATA (no evidence_wiki / comms code is imported)."""
-    cfg_dir = REPO / "evidence_wiki"
-    cfg = json.loads((cfg_dir / "config.json").read_text(encoding="utf-8"))
-    local = cfg_dir / "config.local.json"
-    if local.exists():
-        cfg.update(json.loads(local.read_text(encoding="utf-8")))
-    # v6 (Odysseus v5 F2/SF-3): WHICH database is asked is never taken from committed repository config: the custodian
-    # supplies host and database name in the environment; the repository config only supplies credentials
-    host, dbname = os.environ.get("EW_DB_HOST"), os.environ.get("EW_DB_NAME")
-    if not host or not dbname:
-        raise SystemExit("REFUSED: set EW_DB_HOST and EW_DB_NAME (the comms database is chosen by the custodian, not by "
-                         "committed configuration)")
-    return {"host": host, "dbname": dbname, "user": cfg.get("db_user"),
-            "password": os.environ.get("EW_DB_PASSWORD", cfg.get("db_password"))}
-
-
-def comms_message(mid):
-    import psycopg2                                               # site-packages (declared residual F-3P)
-    schema = os.environ.get("COMMS_SCHEMA", "comms")
-    if not schema.replace("_", "").isalnum():
-        raise SystemExit("REFUSED: unsafe comms schema name")
-    conn = psycopg2.connect(**_db_settings())
-    try:
-        cur = conn.cursor()
-        cur.execute("SELECT sender, subject, body FROM {s}.messages WHERE id = %s".format(s=schema), (mid,))
-        row = cur.fetchone()
-    finally:
-        conn.close()
-    if not row:
-        raise SystemExit("REFUSED: no comms message %d" % mid)
-    return {"sender": row[0], "subject": row[1] or "", "body": row[2] or ""}
-
-
 def load(path):
-    if not path.exists():
-        return {"format": "c3-D2-allowlist/1", "entries": []}
-    return json.loads(path.read_text(encoding="utf-8"))
+    return protocol.anchor_entries(path)
 
 
-def add(role, name, mid, ref=protocol.DEFAULT_REF, path=ALLOWLIST, message=None):
-    if role not in SENDERS:
+def add(role, name, ref=protocol.DEFAULT_REF, path=ALLOWLIST) -> dict:
+    if role not in ROLES:
         raise SystemExit("REFUSED: unknown role %r" % role)
-    b = record_bytes(ref, name)
-    h = hashlib.sha256(b.replace(b"\r\n", b"\n")).hexdigest()
-    m = message if message is not None else comms_message(mid)
-    if m["sender"] not in SENDERS[role]:
-        raise SystemExit("REFUSED: comms #%d is from %r, not from %s" % (mid, m["sender"], sorted(SENDERS[role])))
-    if h not in m["subject"] and h not in m["body"]:
-        raise SystemExit("REFUSED: comms #%d does not contain the record's sha256 %s" % (mid, h))
-    data = load(path)
-    data["entries"].append({"role": role, "record": name, "sha256": h, "comms_id": mid, "sender": m["sender"],
-                            "added_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
-    return h
+    ref_c = protocol.resolve_ref(REPO, ref)
+    b = record_bytes(ref_c, name)
+    h = protocol.record_sha(b)
+    rel = "%s/%s" % (PROTO_REL, name)
+    try:
+        c = protocol._added_once(REPO, ref_c, rel, ERR[role])
+    except protocol.GateRefusal as e:
+        raise SystemExit("REFUSED: %s: %s" % (type(e).__name__, e))
+    prior = [e for e in load(path) if e.get("role") == role and e.get("record") == name]
+    if any(e.get("sha256") != h for e in prior):
+        raise SystemExit("REFUSED: %s/%s is already anchored with a different blob (once only)" % (role, name))
+    if prior:
+        return prior[0]
+    return protocol.anchor_append(path, {"role": role, "record": name, "path": rel, "sha256": h, "commit": c,
+                                         "anchored_utc": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")})
 
 
 def main(argv=None):
@@ -109,7 +72,6 @@ def main(argv=None):
     ap.add_argument("cmd", choices=("add", "show"))
     ap.add_argument("--role")
     ap.add_argument("--record")
-    ap.add_argument("--comms-id", type=int)
     a = ap.parse_args(argv)
     if not str(os.environ.get("C3D2_ENTRY", "")).startswith("verified"):
         print(json.dumps({"refused": True, "reason": "start allowlist through entry.py (v5 B-2)"}))
@@ -117,8 +79,9 @@ def main(argv=None):
     if a.cmd == "show":
         print(json.dumps(load(ALLOWLIST), indent=1))
         return 0
-    h = add(a.role, a.record, a.comms_id, protocol.DEFAULT_REF)
-    print(json.dumps({"added": a.record, "role": a.role, "sha256": h}))
+    e = add(a.role, a.record)
+    print(json.dumps({"anchored": a.record, "role": a.role, "sha256": e["sha256"], "commit": e["commit"],
+                      "entry_hash": e["entry_hash"]}))
     return 0
 
 

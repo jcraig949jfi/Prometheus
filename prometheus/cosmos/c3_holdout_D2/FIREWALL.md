@@ -383,3 +383,46 @@ A same-account child fails step 1, so nothing is ever released until the separat
 | seal-terminal could drop a verifying close that lacked a trailing newline | A verifying LAST record without its newline is kept and the newline added, so a valid close is never turned into an abort (Addendum J). | a close with its newline stripped is kept as close |
 | seal-terminal: no lock or liveness check | A live runner holds an OS-level exclusive lock on `<run>/run.lock` (msvcrt / flock) from before the consumption marker until its terminal record; the OS releases it if the process dies. seal-terminal refuses while that lock is held. | refused while a runner holds the lock; sealed after it is gone |
 | seal-terminal: not bound to the open record | Custody passes this designation's run_nonce, spec_id and committed package hash; seal-terminal refuses a run whose open record differs. | a different nonce is refused |
+
+## v12 (2026-09-29): MWO-0004 D2-1, the root of trust for protocol records (#925 RESOLVED by MWO-0004)
+
+MWO-0004 (P = 25a486d44, blob sha256 925660b2...99df) resolves S1:
+
+> The D2 protocol-record root of trust is: published Git object identity + immutable blob hashes + an append-only
+> out-of-repository anchor on M1.
+
+- No branch protection is required, and none is added.
+- Comms is notification only. The comms-sender check (the S1 finding since v2) is REMOVED.
+
+**The anchor** is `C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl` on M1, outside every repository. It replaces ALLOWLIST.json.
+- It is JSONL, one entry per confirmed record: role, record, repository path, blob sha256 (LF), the commit that added the record, and a UTC time.
+- Each entry carries `prev` (the previous entry's hash; genesis 0*64) and `entry_hash` (sha256 of its canonical body).
+- It is only ever APPENDED (O_APPEND + fsync) by `protocol.anchor_append`. An edited, removed or reordered entry breaks the chain, and every reader then refuses.
+- It holds identifiers and hashes only: no sealed content.
+
+**Confirmation:** `entry.py allowlist add --role R --record NAME` (custodian).
+- It reads the record at the resolved origin/main commit and finds the ONE commit that added it (`protocol._added_once`: one blob in full history, one non-merge add).
+- It appends role/record/path/sha256/commit.
+- Re-adding the same blob is idempotent; a DIFFERENT blob for the same role/record is refused (once only).
+
+**Verified before EVERY gated step**, by protocol.check_gates for every record (AUDIT including the audit filter, COMMITMENT, DESIGNATION, RESULT_SEAL) and by entry.py for the governing audit:
+1. the anchored commit exists;
+2. it is an ancestor of (or equal to) the fetched origin/main commit;
+3. the record at that commit still has the anchored blob sha256;
+4. the anchor chain is intact.
+
+check_gates also requires the anchored commit to be the commit that added the record. Any mismatch fails closed.
+
+The pre-audit tool pins (`entry.py pin-tools --confirm`) are appended to the same chained anchor. Only the latest pin batch counts.
+
+**Residual, accepted by MWO-0004:** repository history mutation is accepted only insofar as this mechanism detects it and stops execution. The anchor itself is protected by the M1 account (the account residual declared since v4).
+
+| check | test |
+|---|---|
+| anchor add records the adding commit; verifies against git | S1_anchor_add_records_adding_commit, S1_anchor_verifies_against_git |
+| once only | the same blob is idempotent; a different blob is refused |
+| commit existence / ancestry | a nonexistent commit is refused; a side-branch (non-ancestor) commit holding the same blob is refused |
+| append-only chain | an edited entry and a reordered pair each break the chain |
+| every earlier gate test | now runs on anchored records (GateRepo.allow anchors blob + adding commit) |
+
+**v11 should-fix items (V11-1 receive deadline, V11-2 stop-send deadline, V11-3 cleanup masking):** carried as-is. Under Addendum J all of these are FORFEIT paths; no VOID reading depends on them.

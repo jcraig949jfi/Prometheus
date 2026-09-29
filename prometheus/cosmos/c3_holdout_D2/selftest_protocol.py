@@ -80,7 +80,7 @@ def _git(repo: Path, *a: str) -> str:
 class GateRepo:
     def __init__(self, path: Path, ts: dict):
         self.p, self.ts = path, ts
-        self.al = path.parent / (path.name + "_ALLOWLIST.json")
+        self.al = path.parent / (path.name + "_ANCHOR.jsonl")     # v12: the append-only anchor (MWO-0004 D2-1)
         path.mkdir(parents=True)
         _git(path, "init", "-q", "-b", "main")
         _git(path, "config", "user.name", "selftest")
@@ -115,11 +115,16 @@ class GateRepo:
             self.commit(name)
 
     def allow(self, role, name):
-        b = subprocess.run(["git", "-C", str(self.p), "show", "%s:%s/%s" % (REF, protocol.PROTO_REL, name)],
-                           capture_output=True, check=True).stdout
-        data = json.loads(self.al.read_text()) if self.al.exists() else {"entries": []}
-        data["entries"].append({"role": role, "record": name, "sha256": protocol.record_sha(b)})
-        self.al.write_text(json.dumps(data))
+        """v12: anchor the record as the custodian would: blob sha256 + the commit that added it, hash-chained."""
+        rel = "%s/%s" % (protocol.PROTO_REL, name)
+        b = subprocess.run(["git", "-C", str(self.p), "show", "%s:%s" % (REF, rel)], capture_output=True,
+                           check=True).stdout
+        try:
+            c = protocol._added_once(self.p, REF, rel, protocol.GateRefusal)
+        except protocol.GateRefusal:                           # a deliberately rewritten record: its last commit
+            c = _git(self.p, "log", "-1", "--format=%H", REF, "--", rel)
+        protocol.anchor_append(self.al, {"role": role, "record": name, "path": rel, "sha256": protocol.record_sha(b),
+                                         "commit": c})
 
     def audit(self, n=1, verdict="PASS", commit=True, allow=True):
         name = "FIREWALL_AUDIT_%d.json" % n
@@ -422,25 +427,67 @@ def end_to_end(tmp, ts, pkg, sha):
 
 
 def allowlist_checks(tmp, ts, sha):
+    """v12 (MWO-0004 D2-1): the anchor. The custodian tool anchors blob sha256 + adding commit, hash-chained and
+    append-only; every gated step re-verifies commit existence, ancestry, the blob at that commit and the chain."""
     r = GateRepo(tmp / "repos" / "al", ts)
     r.seal(); r.audit(allow=False)
     name = "FIREWALL_AUDIT_1.json"
-    b = subprocess.run(["git", "-C", str(r.p), "show", "%s:%s/%s" % (REF, protocol.PROTO_REL, name)],
-                       capture_output=True, check=True).stdout
-    h = protocol.record_sha(b)
-    al = tmp / "al.json"
+    rel = "%s/%s" % (protocol.PROTO_REL, name)
+    b = subprocess.run(["git", "-C", str(r.p), "show", "%s:%s" % (REF, rel)], capture_output=True, check=True).stdout
+    ref_c = _git(r.p, "rev-parse", REF)
+    anc = tmp / "anchor_checks.jsonl"
     allowlist.REPO = r.p
     res = {}
-    for tag, msg, want_ok in (("good", {"sender": "Odysseus", "subject": "PASS " + h, "body": ""}, True),
-                              ("wrong_sender", {"sender": "Cosmos", "subject": h, "body": ""}, False),
-                              ("no_sha", {"sender": "Odysseus", "subject": "PASS", "body": "looks fine"}, False)):
+    try:
+        e = allowlist.add("AUDIT", name, REF, path=anc)
+        res["S1_anchor_add_records_adding_commit"] = e["commit"] == protocol._added_once(r.p, REF, rel, protocol.AuditMissing)
+        res["S1_anchor_verifies_against_git"] = protocol._is_allowlisted(anc, "AUDIT", name, b, repo=r.p, ref=ref_c)
+        res["S1_anchor_readd_same_blob_idempotent"] = allowlist.add("AUDIT", name, REF, path=anc)["entry_hash"] == \
+            e["entry_hash"]
+        other = tmp / "anchor_other.jsonl"
+        protocol.anchor_append(other, {"role": "AUDIT", "record": name, "path": rel, "sha256": "0" * 64, "commit": ref_c})
         try:
-            allowlist.add("AUDIT", name, 1, REF, path=al, message=msg)
-            ok = True
+            allowlist.add("AUDIT", name, REF, path=other)
+            res["S1_anchor_different_blob_refused"] = False
         except SystemExit:
-            ok = False
-        res["S1_allowlist_" + tag] = ok == want_ok
-    allowlist.REPO = REAL_REPO
+            res["S1_anchor_different_blob_refused"] = True
+        fake = tmp / "anchor_fake_commit.jsonl"
+        protocol.anchor_append(fake, {"role": "AUDIT", "record": name, "path": rel, "sha256": protocol.record_sha(b),
+                                      "commit": "d" * 40})
+        res["S1_anchor_nonexistent_commit_refused"] = not protocol._is_allowlisted(fake, "AUDIT", name, b, repo=r.p,
+                                                                                    ref=ref_c)
+        # a commit that exists but is NOT an ancestor of the reference (a side branch holding the same blob)
+        _git(r.p, "checkout", "-q", "-b", "side")
+        (r.p / "side.txt").write_text("x")
+        side = r.commit("side commit")
+        _git(r.p, "checkout", "-q", "main")
+        nonanc = tmp / "anchor_nonancestor.jsonl"
+        protocol.anchor_append(nonanc, {"role": "AUDIT", "record": name, "path": rel, "sha256": protocol.record_sha(b),
+                                        "commit": side})
+        res["S1_anchor_non_ancestor_commit_refused"] = not protocol._is_allowlisted(nonanc, "AUDIT", name, b,
+                                                                                     repo=r.p, ref=ref_c)
+        # the append-only chain: editing any entry breaks it (fail closed); so does reordering
+        raw = anc.read_text(encoding="utf-8")
+        tam = tmp / "anchor_tampered.jsonl"
+        tam.write_text(raw.replace(e["commit"], e["commit"][:-1] + ("0" if e["commit"][-1] != "0" else "1")),
+                       encoding="utf-8")
+        try:
+            protocol.anchor_entries(tam)
+            res["S1_anchor_edited_entry_breaks_chain"] = False
+        except protocol.NotAllowListed:
+            res["S1_anchor_edited_entry_breaks_chain"] = True
+        protocol.anchor_append(anc, {"role": "COMMITMENT", "record": "X.json", "path": "x", "sha256": "1" * 64,
+                                     "commit": ref_c})
+        lines = anc.read_text(encoding="utf-8").splitlines()
+        swp = tmp / "anchor_swapped.jsonl"
+        swp.write_text("\n".join([lines[1], lines[0]]) + "\n", encoding="utf-8")
+        try:
+            protocol.anchor_entries(swp)
+            res["S1_anchor_reordered_breaks_chain"] = False
+        except protocol.NotAllowListed:
+            res["S1_anchor_reordered_breaks_chain"] = True
+    finally:
+        allowlist.REPO = REAL_REPO
     return res
 
 
@@ -551,7 +598,7 @@ def v3_checks(tmp, ts, pkg, sha):
     return res
 
 
-AL_LITERAL = 'Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")'
+AL_LITERAL = 'Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")'
 
 
 def _plant(path: Path, marker: Path) -> None:

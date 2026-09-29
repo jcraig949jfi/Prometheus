@@ -242,3 +242,25 @@ COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
 - selftest_D2: 10 checks + 13 negative controls.
 
 **Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v12 (2026-09-29): the ONE bounded re-audit under MWO-0004 D2-2
+
+**Scope:**
+- FIREWALL.md section "v12": the MWO-0004 D2-1 root of trust (#925 resolved by MWO-0004; the append-only M1 anchor replaces the comms-sender allow-list).
+- Everything audited through v11 stands.
+
+**What to try:**
+- make a record govern without a verifying anchor entry;
+- forge, edit, reorder or truncate the anchor undetected;
+- make the anchored commit a non-ancestor, or a commit other than the one that added the record;
+- find any gated step that skips the re-verification.
+
+**Under MWO-0004 D2-2:**
+- PASS -> continue under the existing custody and reveal rules.
+- FAIL on an ordinary defect -> one final repair and one final re-audit; then PASS proceeds, FAIL holds D2.
+
+**Self-tests:**
+- selftest_protocol: 165 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** the next record is FIREWALL_AUDIT_1.json. On PASS, commit it in ONE commit on main and post the commit. The custodian anchors it with `entry.py allowlist add --role AUDIT --record FIREWALL_AUDIT_1.json` (there is no sender check).
