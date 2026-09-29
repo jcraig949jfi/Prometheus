@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T03:43:06Z",
+ "updated_at_utc": "2026-09-29T05:15:00Z",
  "state": "WORKING",
- "branch": "task branches: nestor/s4v21-2026-09-29, nestor/d2v3-2026-09-29 (both merged to main)",
- "head_sha": "742243972e6e5b334d0f4787470c39897140cb02",
+ "branch": "task branches: nestor/s4v22-2026-09-29, nestor/d2v4-2026-09-29 (both merged to main)",
+ "head_sha": "61a2f68bc9808ca8c28dc2376584b92da93f4741",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -18,31 +18,38 @@
   "ancestry production run 2 (GO_FINAL v2)"
  ],
  "fabric_tasks": [
-  "s4 v2.1 conformance: tsk-5b65fada2d69, tsk-6e51a53bfbf6 (clean prompt; tsk-b0b190949c7d / tsk-8929167a8439 cancelled: backtick-damaged prompt)",
-  "D2 v3 re-audit: tsk-d0454ab252b9, tsk-ddfc5156be0d; selftests tsk-9913738c30c2, tsk-1674e7e0fdc8"
+  "s4 v2.1 conformance: tsk-5b65fada2d69, tsk-6e51a53bfbf6 -> 2/2 DOES NOT CONFORM (B1); texts in review_s4v21/",
+  "s4 v2.2 conformance: tsk-81146cfae322, tsk-d907522d6a14 (base 61a2f68bc)",
+  "D2 v3 re-audit: tsk-d0454ab252b9, tsk-ddfc5156be0d -> FAIL (Odysseus #939, VERDICT @ 2d7517600)",
+  "D2 v4 re-audit: tsk-c69dc6012c70, tsk-93bad7474ae7; selftests tsk-c889e48bc5f1, tsk-ca86196f783b (base e6e482ae6, --cap fabric.runtime==0.2)",
+  "Archaeon 1% sample verification tsk-581bd93ac9f3 (host-affine skullport; still submitted; will fail stage 1: samples destroyed, INCIDENT)"
  ],
  "running": [
-  "s4 v2.1 conformance review (2 replicas)",
-  "D2 v3 re-audit (2 replicas + selftests)",
-  "key-holder all-history firewall scan (v3 in-process)"
+  "s4 v2.2 conformance review (2 replicas)",
+  "D2 v4 re-audit (2 replicas + 2 selftests)",
+  "key-holder scan through entry.py firewall-check (v4, comms dump included)",
+  "disk search for surviving run-2 1% sample copies"
  ],
  "blocked_on": [
-  "s4 tallies usable only if both conformance replicas return CONFORMS (addendum 3)",
-  "1% sample verification: Archaeon's host-affinity Fabric Task (MWO s4)",
-  "D2: S1 root of trust (operator #925); v3 re-audit adjudication (Odysseus)"
+  "s4 v2.2 tallies usable only if both replicas return CONFORMS (addendum 1/3)",
+  "1% sample check: 10/11 run-2 sample files destroyed by INCIDENT run 3 (#943); restore / regenerate (operator authorization) / declare lost = Archaeon + operator ruling",
+  "D2: S1 root of trust (operator #925); v4 re-audit adjudication (Odysseus)"
  ],
  "next_actions": [
-  "adjudicate/relay review results when terminal",
-  "separate child account for the D2 runner = host capability request (MWO s6) when designation approaches"
+  "relay review results when terminal",
+  "report key-holder scan booleans (public) to Odysseus",
+  "host capability requests (MWO s6) when designation approaches: dedicated custodian account; separate predictor-child account + outbound firewall rule"
  ],
  "operator_decisions_required": [
   "D2 root of trust for protocol records (#925): (a) signed commits + pinned keys / (b) operator-confirmed hashes / (c) accept residual",
   "branch protection on main"
  ],
  "latest_reports": [
-  "comms #930/#931 (s4 v2)",
-  "CVTR_RECONCILIATION.md",
-  "review_run2/"
+  "comms #940 (s4 v2.2 hash before run)",
+  "comms #942 (D2 v4)",
+  "comms #943 (INCIDENT run 3)",
+  "INCIDENT_RUN3_2026-09-29.md",
+  "review_s4v21/"
  ],
  "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
  "closed": [
@@ -51,6 +58,11 @@
   "CVT-R reconciliation record (334b6ad55)",
   "births agreement PASS (Archaeon addendum 3)",
   "s4 v2.1 (ruled key K_R1) run; results unused pending review",
-  "D2 v3 repairs on main 742243972 (DEF-HARM-D2-001 fixed)"
+  "D2 v3 repairs on main 742243972 (DEF-HARM-D2-001 fixed)",
+  "s4 v2.1 review returned (2/2 DOES NOT CONFORM); s4 v2.2 posted #940 then run (61a2f68bc; unused pending review)",
+  "D2 v4 repairs on main e6e482ae6 (P1/P2/P3 + all v3 should-fix; selftests PASS)"
+ ],
+ "incidents": [
+  "2026-09-29 00:45-00:49 -04:00: UNAUTHORIZED ancestry production run 3 from Nestor's stale one-time schtask trigger (lease wait-acquire); killed; nothing committed; 10/11 run-2 1% sample files destroyed; tasks disabled; record INCIDENT_RUN3_2026-09-29.md"
  ]
 }
