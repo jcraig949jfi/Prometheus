@@ -449,3 +449,40 @@ Family mean vs fixed-share rate:
   deterministic and were cross-reproduced (mix3_eval reproduced the heldout_eval, q2_ablation and cssr_em_eval means
   exactly).
 - The rule going forward is in roles/Ensorain/RESUME.md.
+
+### Result: T = 16000 held-out family (Fabric script Tasks; precommit commit f4c82806c)
+
+- Tasks:
+  - tsk-012756fe0245 (S = 3, worker.ubu001.sci, 44 min);
+  - tsk-8cd609311186 (S = 4, sci, 53 min);
+  - tsk-3533be634336 (S = 5, worker.ubu001.sci2, 51 min).
+- All ran at base f4c82806c with exit 0. Artifacts and env receipts are in results/fabric_t16k/.
+
+Family means (2nd half; T = 4000 values in parentheses):
+
+| STAT6 | split | CSSR_EM | RAND_EM | MIX3_FS |
+|---|---|---|---|---|
+| .0286 (.0372) | .0289 (.0399) | .0036 (.0219) | .0359 (.0403) | .0028 (.0133) |
+
+- **G1 SURVIVES:** .0028 < .008. The family mean now sits at the ~.003 parametric floor.
+- **G2 SURVIVES, exactly at the threshold:** 22/24 decrease.
+  - Rises: U3_s7 (.0006 -> .0017) and U4_s7 (.0016 -> .0024).
+- **G3 SURVIVES:** STAT6 .0286 > .025. The window floor persists.
+- **G4 REFUTED:** MIX3_FS < STAT6 in only 21/24 worlds. Exceptions:
+  - U3_s7: .0017 vs .0003;
+  - U4_s7: .0024 vs .0015;
+  - U5_s5: .0038 vs .0031.
+  - Shape: U3_s7 and U4_s7 have H6 = .000 / .0004 (heldout_diag). There the 6-symbol window IS the causal state, so
+    STAT6 is at its own parametric floor, while the mixture pays switching and structure overhead of ~.001.
+  - U5_s5 has H6 = .96 but a state gap of .0007: two nearly identical states, which the window can afford to merge.
+  - The two G2 rises are the same two sufficient-window worlds.
+
+Reading (revises the claim ceiling in the review packet):
+- With 4x the data, the three-expert learner reaches the parametric floor on the held-out family on average (.0028).
+  The window statistic stays at ~10x that.
+- The learner does NOT dominate a window statistic when the window is already sufficient (H6 ~ 0). There it pays a
+  small, measurable overhead of ~.001.
+- "Discover the partition" wins where the window is cryptic. "Keep the window" is the right compression where it is
+  not. That is the PKG-S1 reading 1, now on held-out worlds with the direction of the exception predicted by H6.
+- Note: RAND_EM alone gets relatively WORSE with data (.0359). Its catastrophic basins do not wash out.
+  CSSR_EM alone (.0036) is nearly as good as the mixture at T = 16000.
