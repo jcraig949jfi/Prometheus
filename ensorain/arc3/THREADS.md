@@ -70,8 +70,13 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
     - a MODEL-FREE same-cell detector (v5) finds the switch 16/16 with 0/16 false alarms and removes the harm (0.000
       vs -1.26);
     - power fades below ~100 same-cell pairs, and so does the harm (v5b, exploratory).
-  - Next: a harm/repeat-decoupled world; multi-switch and gradual-drift worlds; the N5 decaying-reliability world.
-    PKG-F design v0.2.
+  - v6-v7:
+    - partial switches: the detector finds 50%-cell switches 8/8 and 10%-cell switches 5/8;
+    - the F3 'never_seen' test is 87-89% earlier-episode cells (LM01 ERRATA E-4);
+    - on the two splits, stored records are neutral for generalization (|dAC| <= .02) and run from -1.15 to +0.86 on
+      stale recall. Regime gating removes the negative end (0.00) and keeps the positive end.
+  - Clean dev result: keep + regime-gate >= discard on recall; neutral on novel cells.
+  - Next: multi-switch / gradual drift; N5.
 
 ## T05 Capacity vs selection (reservoir as bridge)
 - Q: at matched capacity, does semantic selection beat random retention, at matched bytes AND matched HR2?

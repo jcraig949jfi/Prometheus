@@ -350,3 +350,34 @@ Consequences:
 - T2: GEN, rho = 1: mean dAC(SD_all) > -0.30. The obsolete-history harm is mostly a STALE-recall phenomenon.
 - T3: STALE, rho = 1 mean dAC(SD_all) < -0.80 AND STALE, rho = 0 mean dAC(SD_all) > +0.30. The STALE split carries
   both v6 effects.
+
+### v7 result (precommit commit 437251e55; results/pkgf_split.json; 64 s)
+
+Mean dAC vs S (8 worlds per cell):
+
+| rho | STALE SD_all | STALE SD_cp3 | GEN SD_all | GEN SD_cp3 |
+|---|---|---|---|---|
+| 1.0 | -1.153 | 0.000 | -0.137 | 0.000 |
+| 0.5 | +0.065 | +0.132 | -0.018 | -0.004 |
+| 0.1 | +0.389 | +0.371 | -0.007 | -0.008 |
+| 0.0 | +0.856 | +0.856 | -0.005 | -0.005 |
+
+- T1 SURVIVES: GEN, rho = 0, -0.005.
+- T2 SURVIVES: GEN, rho = 1, -0.137 > -0.30.
+- T3 SURVIVES: STALE, rho = 1, -1.153 and STALE, rho = 0, +0.856.
+- Caveat: the GEN split is small, 64-87 cells per world. Few cells are never visited at L2.
+
+Reading (supersedes the v6 exploratory reading):
+- Restoring stored exact records does NOTHING for generalization to never-seen cells, at any rho (|dAC| <= .02 for
+  rho < 1).
+- Under a full switch they cost -0.14 there, through nearest-neighbour smoothing over stale neighbours, and the
+  detected-regime holdout removes that cost.
+- Everything v2-v6 measured as "harm" or "gain" is STALE RECALL:
+  - the value of exact old records at re-queried cells runs smoothly from -1.15 (all obsolete) to +0.86 (all
+    current);
+  - the regime detector turns the negative end to 0 without losing the positive end (rho = .5: +0.13; rho = 0:
+    +0.86).
+- PKG-F therefore has one clean dev result: keeping exact records and gating their use by a discovered regime is never
+  worse than discarding them on re-queried cells (0 at a full switch, positive otherwise), and neutral for novel cells.
+  That is a statement about RECALL, not generalization. It is what the ARC3 question "can irrelevant distinctions
+  remain stored but simply be ignored?" asks, answered for recall.
