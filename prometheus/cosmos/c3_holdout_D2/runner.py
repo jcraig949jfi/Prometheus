@@ -398,12 +398,37 @@ class Receipts:
     def append(self, kind: str, body: dict) -> dict:
         seq, prev = len(self.records), self.head
         rec = {"seq": seq, "kind": kind, "prev": prev, "body": body, "hash": record_hash(seq, kind, prev, body)}
-        with open(self.path, "a", encoding="utf-8", newline="\n") as f:
-            f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
-            f.flush()
-            os.fsync(f.fileno())
+        try:
+            with open(self.path, "a", encoding="utf-8", newline="\n") as f:
+                f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+                f.flush()
+                os.fsync(f.fileno())
+        except BaseException:
+            # v9 (Odysseus v8 item 2): an interrupted write/fsync is rolled back to the last complete record, so the
+            # chain on disk always equals the chain in memory and stays sealable
+            self.repair()
+            raise
         self.records.append(rec)
         return rec
+
+    def _expected_bytes(self) -> bytes:
+        return "".join(json.dumps(r, sort_keys=True, separators=(",", ":")) + "\n" for r in self.records).encode("utf-8")
+
+    def repair(self) -> bool:
+        """Truncate trailing bytes that are not part of the in-memory chain (a torn final write). Returns True when the
+        file now equals the in-memory chain byte for byte."""
+        want = self._expected_bytes()
+        try:
+            with open(self.path, "r+b") as f:
+                have = f.read()
+                if have != want and have.startswith(want):
+                    f.truncate(len(want))
+                    f.flush()
+                    os.fsync(f.fileno())
+            with open(self.path, "rb") as f:
+                return f.read() == want
+        except OSError:
+            return False
 
 
 def verify_receipts(path) -> tuple:
@@ -664,7 +689,8 @@ class FirewallRun:
             dirs = self.preflight_mkfile_dirs + ([str(self.out)] if self.preflight_mkfile_dirs else [])
             self.out.parent.mkdir(parents=True, exist_ok=True)
             # v8 (V7-A): the stand-in is probed for READ as well as append
-            self._spawn_probe("", "", list(self.probe_paths) + [str(stand)], [str(stand)], dirs)
+            self._spawn_probe("", "", list(self.probe_paths) + [str(stand)], [str(stand)], dirs,
+                              must_read=[str(Path(self.pkg["dir"]) / self.pkg["entry"])])
             self._stop_worker(kill=False)
             self._proc = self._conn = None
         stand.unlink()
@@ -718,37 +744,43 @@ class FirewallRun:
         manifest, ct, fam = self._prepared
         self.manifest = manifest
         genesis, body = self._open_body
-        # the key is READ first (a missing or malformed key file refuses with nothing consumed), then the consumption
-        # marker appears ATOMICALLY with the pre-built open record (v8), then the released copy is deleted
+        # v9 (Odysseus v8 item 1): the key is READ and PROVEN -- it decrypts the sealed ciphertext and the plaintext is
+        # consistent with the manifest -- BEFORE the consumption marker exists. A wrong (even well-formed) key file
+        # refuses with nothing consumed and the released copy untouched.
         key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
-        rpath = self.out / "receipts.jsonl"
+        try:
+            plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
+            hidden = json.loads(plain.decode("utf-8"))
+        except Exception as e:                               # noqa: BLE001 -- InvalidTag etc.
+            raise HiddenSetMismatch("the key does not decrypt the sealed set (%s): nothing consumed" % type(e).__name__)
+        if hidden.get("family_src_sha256") != fam or hidden.get("n_worlds") != manifest["n_worlds"] \
+                or len(hidden.get("worlds", [])) != hidden["n_worlds"] \
+                or len(hidden.get("run_seeds", [])) != hidden["n_worlds"]:
+            raise HiddenSetMismatch("decrypted hidden set inconsistent with manifest: nothing consumed")
+        worlds = [medium.world_from_dict(w) for w in hidden["worlds"]]
+        seeds = [int(s) for s in hidden["run_seeds"]]
+        tags = [hmac.new(key, sealbox.canon_bytes([w, s]), hashlib.sha256).hexdigest()
+                for w, s in zip(hidden["worlds"], seeds)]
+        del key, plain, hidden
         self.N = int(manifest["n_worlds"])
-        self.receipts = Receipts.create_with_open(rpath, genesis, dict(body, utc=_utc()))
+        if self.N != len(worlds):
+            raise HiddenSetMismatch("decrypted world count differs from the manifest: nothing consumed")
+        rpath = self.out / "receipts.jsonl"
+        self.receipts = Receipts.create_with_open(rpath, genesis, dict(body, utc=_utc()))   # the consumption marker
         self.phase = "OPEN"
+        self._worlds, self._seeds, self._tags = worlds, seeds, tags
         if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
             self.key_path.unlink()
-        plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
-        hidden = json.loads(plain.decode("utf-8"))
-        if hidden["family_src_sha256"] != fam or hidden["n_worlds"] != manifest["n_worlds"] \
-                or len(hidden["worlds"]) != hidden["n_worlds"] or len(hidden["run_seeds"]) != hidden["n_worlds"]:
-            raise HiddenSetMismatch("decrypted hidden set inconsistent with manifest")
-        self._worlds = [medium.world_from_dict(w) for w in hidden["worlds"]]
-        self._seeds = [int(s) for s in hidden["run_seeds"]]
-        self._tags = [hmac.new(key, sealbox.canon_bytes([w, s]), hashlib.sha256).hexdigest()
-                      for w, s in zip(hidden["worlds"], self._seeds)]
-        del key, plain, hidden
-        if self.N != len(self._worlds):
-            raise HiddenSetMismatch("decrypted world count differs from the manifest")
         return manifest
 
     # ------------------------------------------------------------ predict
-    def _spawn_probe(self, pkg_dir, entry, read_paths, write_paths, mkfile_dirs):
+    def _spawn_probe(self, pkg_dir, entry, read_paths, write_paths, mkfile_dirs, must_read=()):
         ctx = mp.get_context("spawn")
         self._conn, child = ctx.Pipe(duplex=True)
         self._proc = ctx.Process(target=_worker_main, args=(child, pkg_dir, entry), daemon=True)
         self._proc.start()
         child.close()
-        _send(self._conn, ["probe", list(read_paths), list(write_paths), list(mkfile_dirs)])
+        _send(self._conn, ["probe", list(must_read) + list(read_paths), list(write_paths), list(mkfile_dirs)])
         try:                                                  # v5 (S-1): a child that cannot start is a refusal
             if not self._conn.poll(120):
                 raise EOFError("no probe answer within 120 s")
@@ -756,8 +788,13 @@ class FirewallRun:
         except (EOFError, OSError, ValueError, MemoryError, RecursionError) as e:
             self._stop_worker(kill=True)
             raise PredictorChildFailed("the predictor child did not start or answer the probe (%s)" % type(e).__name__)
-        opened = [p for p, r in res if r not in ("denied", "missing")]      # 'opened' / 'writable' / 'error:*'
-        if tag != "probe_result" or opened:
+        need = set(must_read)
+        unreadable = [p for p, r in res if p in need and r != "opened"]
+        if tag != "probe_result" or unreadable:              # v9 (V8-6): the package must be readable by the child
+            self._stop_worker(kill=True)
+            raise PredictorChildFailed("the predictor child cannot read the staged package: %s" % ", ".join(unreadable))
+        opened = [p for p, r in res if p not in need and r not in ("denied", "missing")]
+        if opened:
             self._stop_worker(kill=True)
             raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
 
@@ -773,15 +810,17 @@ class FirewallRun:
             self._stop_worker(kill=True)
         except Exception:                                    # noqa: BLE001
             pass
+        self.receipts.repair()                               # v9: drop a torn trailing write before the terminal record
         n_pred = sum(1 for r in self.receipts.records if r["kind"] == "prediction")
         # v8 (V7-B/Q3): attribution EVIDENCE for the adjudicator (Harmonia Addendum E: FORFEIT vs VOID) -- which world
         # was running, whether the failure arose inside predictor I/O, and the child's exit code. Evidence, not a verdict.
         proc = getattr(self, "_proc", None)
+        exitcode = proc.exitcode if proc is not None else getattr(self, "_last_exitcode", None)
         self.receipts.append("abort", {"phase": self.phase, "error_type": type(exc).__name__,
                                        "n_predictions_recorded": n_pred, "utc": _utc(),
                                        "current_world": getattr(self, "_cur_world", None),
                                        "in_predictor_io": bool(getattr(self, "_in_predictor_io", False)),
-                                       "child_exitcode": (proc.exitcode if proc is not None else None)})
+                                       "child_exitcode": exitcode})
         self.phase = "ABORTED"
         result = {"format": RECEIPT_FORMAT, "status": "ABORTED", "spec_id": self.manifest["spec_id"],
                   "run_nonce": self.gates.get("run_nonce"), "package_sha256": self.package_sha256,
@@ -851,6 +890,7 @@ class FirewallRun:
         if self._proc.is_alive():
             self._proc.kill()
             self._proc.join(10)
+        self._last_exitcode = self._proc.exitcode           # v9 (V8-2): kept for the abort's attribution evidence
         self._proc = self._conn = None
 
     def _serve(self, sysobj, method, args, usage):
@@ -884,9 +924,9 @@ class FirewallRun:
         w = self._worlds[i]
         sysobj = medium.ReactiveChannel(w)
         usage = {"calls": 0, "episode_steps": 0, "budget_exceeded": False}
+        self._cur_world, self._in_predictor_io = i, True     # v9 (V8-3): a (re)start failure is labelled with THIS world
         if self._proc is None:
             self._start_worker()
-        self._cur_world, self._in_predictor_io = i, True
         try:                                                  # v8 (V7-B): a closed/broken pipe is THIS world's crash
             _send(self._conn, ["predict", i, w.V, w.k, seed])
         except (OSError, ValueError, EOFError):
