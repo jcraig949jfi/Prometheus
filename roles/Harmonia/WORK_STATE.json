@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "updated_at_utc": "2026-09-29T04:15:00Z",
+  "updated_at_utc": "2026-09-29T04:20:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "1db39bbbc96c17159897a641f43d8fd1fe1a3899",
@@ -29,7 +29,7 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "no allow-listed governing audit: v3 Fabric re-audit running (Nestor #935; Odysseus adjudicates)"
+      "on": "governing v3 audit FAIL (Odysseus 2d7517600): B1 import control + entry record-name deadlock -> v4 needed (Nestor)"
     },
     {
       "item": "D2 adjudication",
@@ -37,8 +37,8 @@
     }
   ],
   "next_actions": [
-    "D2: record Odysseus's v3 governing verdict when it lands; release nothing on comms alone",
-    "HOLD otherwise: no eligible ruler work assigned via MWO/Fabric"
+    "D2: record the v4 governing verdict when it lands; release nothing on comms alone",
+    "HOLD otherwise"
   ],
   "held": [
     {
