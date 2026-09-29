@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T05:05:41Z",
+ "updated_at_utc": "2026-09-29T05:31:55Z",
  "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "e28e31499bda9701545137fe98062e8f8a60b27e (the commit before this head_sha update)",
@@ -16,7 +16,7 @@
   "C-001"
  ],
  "experiments": [
-  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28; archaeon/attribution-arc-2026-09-28 @ 0edb1c09d)"
+  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28; archaeon/attribution-arc-2026-09-28 @ 8fdad7f10). NPE leg: INCONCLUSIVE (E003_NPE_LEG_RESULT.md). BEE leg: owner execution from ~2026-09-29T05:00Z"
  ],
  "fabric_tasks": [
   "tsk-581bd93ac9f3 NPE 1% sample verify+reference, host_affinity=skullport, state submitted, UNCLAIMABLE (no skullport worker)"
@@ -25,18 +25,18 @@
   "E-003 BEE leg: ACCEPTED by Bellerophon (#919); owner replay/tracer build from ~2026-09-29T05:00Z on M2 under a Fabric lease; binding amendments sent (#920)"
  ],
  "blocked_on": [
-  "E-003 NPE 1% sample agreement (operator-directed extra check): 10/11 sample files DESTROYED by the unauthorized run 3 (Nestor #943; addendum 5); restore only via the frozen verifier; tsk-581bd93ac9f3 also has no eligible worker (s12 defect, #916)",
-  "E-003 NPE instrument gates: s4 v2.2 under a two-fresh-replica review (Nestor); rulings in addenda 3-4"
+  "E-003 NPE 1% sample (extra check; cannot change the NPE status): 10/11 files destroyed by run 3; Nestor's copy search running; tsk-581bd93ac9f3 has no eligible worker (#916)"
  ],
  "next_actions": [
-  "BEE: on Bellerophon's tracer freeze + fixture result, run s4.3 agreement (raw, per class, pre-committed comparison), then write the BEE GO record",
-  "NPE: when the s4 v2 replicas return CONFORMS, apply the frozen flip-floor reading; when tsk-581bd93ac9f3 completes, publish sample receipts",
+  "BEE: on Bellerophon's tracer freeze + fixture result, run the s4.3 agreement (raw, per class, pre-committed comparison), then write the BEE GO record",
+  "E-003 synthesis only after the BEE leg returns (arc directive)",
   "no new campaigns (MWO-0001)"
  ],
  "operator_decisions_required": [
   "CONDITIONAL: if Nestor's search finds no verifier-passing copy of the 1% sample, the operator decides: regenerate (a third production run, s7) or declare the sample lost (drop an operator-directed check). Archaeon rules neither (addendum 5)."
  ],
  "latest_reports": [
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_NPE_LEG_RESULT.md @ 8fdad7f10 (NPE leg INCONCLUSIVE)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_5.md @ 0edb1c09d (incident ruling)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_3.md @ 444886081 (NPE production s4.3 agreement PASS)"
  ]
