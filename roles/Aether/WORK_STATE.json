@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T02:59:38Z",
-  "state": "WORKING",
-  "state_reason": "promexec R1 review delivered (#917). d_horizon falsifier (T-087..T-090) running as Fabric Tasks on worker.ubu001.sci per operator ruling 2026-09-28 (no RunPod). Physics search deferred to the next MWO review; TH-007..012 parked.",
+  "updated_at_utc": "2026-09-29T04:08:17Z",
+  "state": "HOLD",
+  "state_reason": "All MWO-0001 Aether items delivered: promexec R1 (#917); d_horizon falsifier CLOSED as E-008 (HORIZON-DEPENDENT via clause iii for rcv_add and rcv_str); R-05 amendment; thread ids. Remaining work is gated: promexec round 2 on Odysseus's final install; physics search on the next MWO review. TH-007..012 parked.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "7113eb2b54834297678d39cbb8bcc7d7b431efc1",
+  "head_sha": "dd42b5eef84410c94a791614b5332a210a61a195",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -47,46 +47,37 @@
   ],
   "experiments": [
     {
-      "id": "E-AETH03-DHORIZON",
-      "status": "RUNNING",
-      "what": "10,000-tick falsifier for rcv_add/rcv_str (units.json set d_horizon, module v5 9862cfa9e)",
-      "code_pin": "c49f2ebad4c888e49fde639e49ecb0d8be3eea83",
-      "decision_rule": "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md s1 horizon rule, as declared"
+      "id": "E-008 (E-AETH03-DHORIZON)",
+      "status": "CLOSED",
+      "verdict": "HORIZON_DEPENDENT (clause iii only) for rcv_add and rcv_str",
+      "report": "ops/campaigns/C-002/E-008/RESULT.md"
     },
     {
       "id": "E-006 Block D rcv_str",
       "status": "UNRESOLVED",
-      "report": "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md Amendment A1 (R-05)"
+      "report": "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md Amendments A1, A2"
     }
   ],
   "fabric_tasks": [
     {
       "id": "tsk-f11c5d60cb83",
       "unit": "T-087",
-      "law": "rcv_add",
-      "seed": 0,
-      "state": "working"
+      "state": "completed"
     },
     {
       "id": "tsk-e56d9c5fea64",
       "unit": "T-088",
-      "law": "rcv_add",
-      "seed": 1,
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-eea4d3806a84",
       "unit": "T-089",
-      "law": "rcv_str",
-      "seed": 0,
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-55b1b35fab2a",
       "unit": "T-090",
-      "law": "rcv_str",
-      "seed": 1,
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-6ed598230989,tsk-d3d665f66b7f,tsk-942556352c75,tsk-eecfab9c883a",
@@ -94,21 +85,21 @@
       "note": "submitted with a mistyped base SHA (c49f2ebad0); failed closed at worktree add; resubmitted with the full SHA. Operator error, not a Fabric defect."
     }
   ],
-  "running": [
-    "Fabric: E-AETH03-DHORIZON on worker.ubu001.sci (capacity 1; ~7 min/unit on a pod, serial here)"
+  "running": [],
+  "blocked_on": [
+    "promexec round 2: Odysseus to report the final installed broker hash + ACCEPTANCE_RUNS (#917)",
+    "physics-search continuation: next MWO review (operator ruling 2026-09-28)"
   ],
-  "blocked_on": [],
   "next_actions": [
-    "Collect the four d_horizon results (dhorizon_T-08x.json via changes.patch + stdout), verify sha256 and cross-host determinism where comparable, and report against the s1 horizon rule",
-    "promexec round 2 when Odysseus reports the final installed hash + ACCEPTANCE_RUNS",
-    "s8 seat loop"
+    "s8 seat loop; act on comms/MWO changes",
+    "promexec round 2 when requested"
   ],
   "operator_decisions_required": [
     "Continuing the physics search (narrow rcv_add/rcv_str, redirect to TH-009, hand-offs TH-010..012): deferred to the next MWO review; input is Aether/AETH-03/RESEARCH_BLOCK_SYNTHESIS_2026-09-27.md"
   ],
   "latest_reports": [
+    "ops/campaigns/C-002/E-008/RESULT.md",
     "roles/Aether/reviews/2026-09-28_promexec_round1/FINDINGS.md",
-    "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md#amendment-a1",
-    "Aether/AETH-03/RESEARCH_BLOCK_SYNTHESIS_2026-09-27.md"
+    "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md#amendment-a2"
   ]
 }
