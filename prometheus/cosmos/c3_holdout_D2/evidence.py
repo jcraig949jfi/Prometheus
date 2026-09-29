@@ -55,7 +55,7 @@ def build(run_dir, out_dir, revealed_dir=None, repo=DEFAULT_REPO, ref=protocol.D
     g = protocol.check_gates(repo, "RESULT_SEAL", ref=ref, host=host, pins=pins, verify_loaded=verify_loaded,
                              allowlist=protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist)
     ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
-    if not ok or not recs or recs[-1]["kind"] != "close" or recs[-1]["hash"] != g["chain_head"]:
+    if not ok or not recs or recs[-1]["kind"] not in ("close", "abort") or recs[-1]["hash"] != g["chain_head"]:
         raise EvidenceRefusal("receipts do not verify or do not end at the sealed chain head (%s)" % why)
     if sealbox.sha256_file(run_dir / "RESULT.json") != g["result_sha256"]:
         raise EvidenceRefusal("RESULT.json does not match the sealed result hash")

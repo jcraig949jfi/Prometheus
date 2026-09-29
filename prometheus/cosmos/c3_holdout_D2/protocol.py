@@ -55,7 +55,7 @@ SHORT_REF = "origin/main"
 SEAL_COMMIT = "95b31a30d06daa973a27ca0cacd4b768ec7d5fff"                             # pinned (S5)
 SPEC_ID = "e2d3213b02aae58b0b20bbd6b5a296545b6335078ae6a0a382ceaf346dc0d9fe"         # pinned (S5)
 DEFAULT_ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
-RUN_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2")
+RUN_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/runs")   # v7: not shared with the allow-list / custody log
 PREFLIGHT_FORMAT = "c3-D2-preflight/1"
 CUSTODIAN_ACCOUNT = "jcrai"
 

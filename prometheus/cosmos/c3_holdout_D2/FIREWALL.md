@@ -279,3 +279,38 @@ Residuals, restated. These are NOT boundaries, and v5 does not claim them:
 3. The runner runs `entry.py runner ... --key K`.
 
 A same-account child fails step 1, so nothing is ever released until the separate child account exists (the host capability request).
+
+## v7 (2026-09-29): repairs after the v6 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md @ 7567a018b)
+
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+- **Adjudication rule (Harmonia #960, Addendum E @ 9f6abdce6), stated before any exposure:** a consumed release without a result seal is FORFEIT if attributable to the package, and VOID if infrastructure.
+
+**The run is now two phases.**
+- **`prepare()`: nothing consumed.** It runs:
+  - the gates;
+  - the run-directory, manifest and family checks;
+  - package VALIDATION;
+  - package STAGING into `<run>/package`, from the validated bytes;
+  - the child isolation probe on the released key path, the secret paths, a receipts STAND-IN in the run directory (read + append), and file creation in the run directory and its root.
+- **`open()`:**
+  1. The key is READ into memory; a missing or bad key file consumes nothing.
+  2. `receipts.jsonl` and the open record are written. This is the consumption marker; the run directory no longer is.
+  3. The released copy is deleted and the key decrypted.
+- **After the open record, `run_all()` ends every path in a TERMINAL record:** `close`, or `abort` with RESULT.json status ABORTED. custody `result-seal`, `reveal` and `evidence` accept both terminal kinds.
+
+| v6 finding | v7 repair | test |
+|---|---|---|
+| 1. extraction after the key read | staging in prepare(). Member names that could not stage are refused at VALIDATION: portable characters only, no reserved device names or trailing dot, bounded length, no case-insensitive or file/directory collision. A staging failure is a refusal before the key. An earlier staging is reused only if byte-identical. | 4 unstageable names refused; blocked staging refused with the key intact and no receipts |
+| 2. receipts probe after the key read | a receipts stand-in in the same directory is read/append-probed in prepare(), with file creation in the run directory. The post-key probe on the real receipts remains; its failure is now a sealed abort. | the stand-in is named by the pre-key refusal; no receipts |
+| 3. the package can crash the parent through the pipe (`_HiddenWorldStub__conn`) and void the run | (a) ANY malformed or unexpected child message, or a failed reply, is that world's PROTOCOL_ERROR: recorded, sealed with the predictions, and the run continues. (b) A per-world certify exception is recorded as CERTIFY_ERROR. (c) Any other exception after the open record, KeyboardInterrupt and MemoryError included, becomes a terminal `abort` receipt plus RESULT ABORTED, which custody can result-seal; Harmonia then adjudicates FORFEIT or VOID. (d) The AST audit flags private attributes (`._X`). This is a heuristic; the pipe no longer depends on it. | A package writing garbage into the pipe (allow_flagged) gives PROTOCOL_ERROR for every world, and the run CLOSES. A simulated MemoryError after open gives a sealed abort that custody result-seals (terminal "abort"). The private attribute is flagged. |
+| selftest on Linux | `v6_account_sid_equality` is None (not applicable) off Windows: SIDs exist on Windows only. | - |
+| should-fix: run output shared with the allow-list and custody log | RUN_OUT_ROOT is `.../holdout_D2/runs` | - |
+| should-fix: exceptions after the seal uncaught | per-world CERTIFY_ERROR, and abort for anything else | above |
+| should-fix: the preflight record is self-reported | Declared. The record only gates the RELEASE. The run's own prepare() repeats every check and probe before the key is read, so a forged record cannot get a run past an unmet check; at worst a key copy is released early and sits unused. | - |
+
+**Crash-after-release policy (declared, v6 item 3):** EXPLICIT RESIDUAL, no recovery path.
+- A crash outside the runner's control after the open record (power loss, OS kill, disk full while writing the abort) leaves receipts without a terminal record.
+- That attempt is an evaluation of record (Addendum E): package-attributable -> FORFEIT; infrastructure -> VOID.
+- The once-only rules stand: no second release, and no resume, for this spec_id.
+- D2 is then spent, and any further evaluation needs a successor seal, disclosed beside this attempt (Addendum E item 3).
+- Resume stays refused because a resumable run would give the package a second look at the hidden set.

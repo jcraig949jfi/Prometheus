@@ -230,8 +230,8 @@ class Custody:
             ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
             if not ok:
                 raise CustodyRefusal("receipt chain does not verify: %s" % why)
-            if not recs or recs[-1]["kind"] != "close":
-                raise CustodyRefusal("run is not closed")
+            if not recs or recs[-1]["kind"] not in ("close", "abort"):   # v7: an aborted run is sealed too
+                raise CustodyRefusal("run has no terminal record (close or abort)")
             if recs[0]["body"]["package"]["sha256"] != g["package_sha256"]:
                 raise CustodyRefusal("run used a package other than the committed one")
             if recs[0]["body"]["spec_id"] != g["spec_id"]:
@@ -245,7 +245,7 @@ class Custody:
             self._refuse("result-seal", e)
         rec = {"format": protocol.RESULT_SEAL_FORMAT, "spec_id": g["spec_id"], "package_sha256": g["package_sha256"],
                "run_nonce": g["run_nonce"],
-               "chain_head": recs[-1]["hash"], "result_sha256": sealbox.sha256_hex(res_b),
+               "chain_head": recs[-1]["hash"], "result_sha256": sealbox.sha256_hex(res_b), "terminal": recs[-1]["kind"],
                "n_receipts": len(recs), "sealed_by": "Nestor (custodian)", "utc": _utc()}
         Path(record_out).write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
         self._append({"event": "RESULT_SEAL_WRITTEN", **{k: rec[k] for k in ("spec_id", "chain_head", "result_sha256")}})
@@ -264,8 +264,8 @@ class Custody:
             ok, recs, why = runner.verify_receipts(run_dir / "receipts.jsonl")
             if not ok:
                 raise CustodyRefusal("receipt chain does not verify: %s" % why)
-            if not recs or recs[-1]["kind"] != "close" or recs[-1]["hash"] != g["chain_head"]:
-                raise CustodyRefusal("run on disk is not closed at the sealed chain head")
+            if not recs or recs[-1]["kind"] not in ("close", "abort") or recs[-1]["hash"] != g["chain_head"]:
+                raise CustodyRefusal("run on disk does not end at the sealed chain head")
             if recs[0]["body"]["package"]["sha256"] != g["package_sha256"] or recs[0]["body"]["spec_id"] != g["spec_id"] \
                     or recs[0]["body"].get("run_nonce") != g["run_nonce"]:
                 raise CustodyRefusal("run package / hidden set / designation nonce does not match the protocol")

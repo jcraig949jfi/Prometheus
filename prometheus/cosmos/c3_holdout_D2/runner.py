@@ -54,6 +54,7 @@ if os.environ.get("COSMOS_BROKER") != "1":
 import argparse
 import ast
 import base64
+import re
 import datetime as _dt
 import hashlib
 import hmac
@@ -111,6 +112,7 @@ FORBIDDEN_ATTRS = {"fromfile", "load", "loads", "loadtxt", "genfromtxt", "memmap
                    "read_bytes", "write_text", "write_bytes", "system", "popen", "spawn", "fork", "ctypeslib",
                    "f2py", "lib", "testing", "load_library", "dlopen"}
 ALLOWED_MEMBER_SUFFIXES = (".py", ".json", ".txt")
+WINDOWS_RESERVED = {"CON", "PRN", "AUX", "NUL"} | {"COM%d" % i for i in range(1, 10)} | {"LPT%d" % i for i in range(1, 10)}
 
 
 class RunnerRefusal(Exception):
@@ -441,6 +443,8 @@ def audit_source(src: str, fname: str) -> List[str]:
             flags.append("%s:%d reference to %s" % (fname, node.lineno, node.id))
         if isinstance(node, ast.Attribute) and node.attr in FORBIDDEN_ATTRS:
             flags.append("%s:%d attribute .%s" % (fname, node.lineno, node.attr))
+        if isinstance(node, ast.Attribute) and node.attr.startswith("_") and not node.attr.startswith("__"):
+            flags.append("%s:%d private attribute .%s" % (fname, node.lineno, node.attr))   # v7: e.g. _Stub__conn
         if isinstance(node, ast.Attribute) and node.attr.startswith("__") and node.attr.endswith("__") \
                 and node.attr not in ("__init__", "__name__"):
             flags.append("%s:%d attribute %s" % (fname, node.lineno, node.attr))
@@ -467,6 +471,16 @@ def load_package(zip_path, expected_sha256: str, extract_to, allow_flagged: bool
             raise PackageInvalid("unsafe member path")
         if not n.endswith(ALLOWED_MEMBER_SUFFIXES):          # v2 (F2): no .pyc / binaries: unaudited code
             raise PackageInvalid("member %r is not .py/.json/.txt" % n)
+        # v7 (Odysseus v6 1): a name that validates must also STAGE on every host: portable characters, no reserved
+        # device names, no trailing dot/space, bounded length, no case-insensitive or file/directory collision
+        parts = n.split("/")
+        if len(n) > 180 or any(not re.fullmatch(r"[A-Za-z0-9_.-]{1,64}", p) or p.endswith(".")
+                               or p.split(".")[0].upper() in WINDOWS_RESERVED for p in parts):
+            raise PackageInvalid("member name %r is not portable" % n)
+        low = n.lower()
+        if low in {k.lower() for k in files} or any(k.lower().startswith(low + "/") or low.startswith(k.lower() + "/")
+                                                    for k in files):
+            raise PackageInvalid("member name %r collides with another member" % n)
         files[n] = zf.read(info)
     if "package.json" not in files:
         raise PackageInvalid("package.json missing")
@@ -496,7 +510,8 @@ def load_package(zip_path, expected_sha256: str, extract_to, allow_flagged: bool
     if flags and not allow_flagged:
         raise PackageAuditRefusal("package audit flags: %s" % "; ".join(flags[:20]))
     if extract_to is None:
-        return {"sha256": actual, "meta": meta, "entry": entry, "audit_flags": flags, "allow_flagged": bool(allow_flagged)}
+        return {"sha256": actual, "meta": meta, "entry": entry, "audit_flags": flags, "allow_flagged": bool(allow_flagged),
+                "files": {n: sealbox.sha256_hex(b) for n, b in sorted(files.items())}}
     extract_to = Path(extract_to)
     extract_to.mkdir(parents=True, exist_ok=False)
     for n, b in files.items():
@@ -573,12 +588,17 @@ class FirewallRun:
         self.gate_repo = Path(gate_repo) if gate_repo is not None else DEFAULT_GATE_REPO
         self.gate_ref = gate_ref or DEFAULT_GATE_REF
         self.phase = "INIT"
+        self._prepared = None
+        self.receipts = None
         self._proc = self._conn = None
 
     # ------------------------------------------------------------ open
-    def open(self) -> dict:
-        # Protocol order (protocol.py): seal < PASSING firewall audit of this exact code < Cosmos's committed
-        # package hash < designation of THIS runner on THIS host. Checked before the key file is touched.
+    def prepare(self) -> dict:
+        """v7 (Odysseus v6 items 1-2): EVERY check that can refuse, and every probe, BEFORE anything is consumed:
+        gates, run-directory and manifest checks, package validation, STAGING of the package into the run directory,
+        and the child isolation probe including a receipts STAND-IN in the run directory (read + append) and file
+        creation in the run directory and its root. receipts.jsonl is the consumption marker, not the run directory:
+        a refusal here leaves the key copy and the run retryable."""
         if not self.runner_id:
             raise protocol.RunnerNotDesignated("a runner id is required")
         if self.resume:
@@ -607,45 +627,57 @@ class FirewallRun:
         if fam != manifest["family_src_sha256"]:
             raise HiddenSetMismatch("holdout-D medium.py changed since the draw")
         self.validate_package()                              # v6 (BP-1): every package check BEFORE the key is read
+        rpath = self.out / "receipts.jsonl"
+        if rpath.exists():
+            raise RunnerRefusal("receipts.jsonl exists: this designation's run was already consumed")
+        try:
+            self.out.mkdir(parents=True, exist_ok=True)
+            self.pkg = self._stage_package()                 # v7: staged BEFORE the key is read
+            stand = self.out / "receipts.preflight"
+            stand.write_text("", encoding="utf-8")
+        except OSError as e:
+            raise RunnerRefusal("staging failed before the key was read (%s): nothing consumed" % type(e).__name__)
         if self.do_preflight:
-            self.preflight()                                 # v5 (S-1): BEFORE the key is read and the run dir exists
-        key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
-        if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
-            self.key_path.unlink()
-        plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
-        hidden = json.loads(plain.decode("utf-8"))
-        if hidden["family_src_sha256"] != fam or hidden["n_worlds"] != manifest["n_worlds"] \
-                or len(hidden["worlds"]) != hidden["n_worlds"] or len(hidden["run_seeds"]) != hidden["n_worlds"]:
-            raise HiddenSetMismatch("decrypted hidden set inconsistent with manifest")
-        self._worlds = [medium.world_from_dict(w) for w in hidden["worlds"]]
-        self._seeds = [int(s) for s in hidden["run_seeds"]]
-        self._tags = [hmac.new(key, sealbox.canon_bytes([w, s]), hashlib.sha256).hexdigest()
-                      for w, s in zip(hidden["worlds"], self._seeds)]
-        del key, plain, hidden
-        self.N = len(self._worlds)
+            dirs = self.preflight_mkfile_dirs + ([str(self.out)] if self.preflight_mkfile_dirs else [])
+            self.out.parent.mkdir(parents=True, exist_ok=True)
+            self._spawn_probe("", "", self.probe_paths, [str(stand)], dirs)
+            self._stop_worker(kill=False)
+            self._proc = self._conn = None
+        stand.unlink()
+        self._prepared = (manifest, ct, fam)
+        return {"prepared": True, "run_dir": str(self.out)}
+
+    def _stage_package(self) -> dict:
+        """Extract the VALIDATED bytes into <run>/package. An existing staging (an earlier pre-key refusal) is reused
+        only if it holds exactly the validated members, byte for byte."""
+        d = self.out / "package"
+        if d.exists():
+            v = load_package(self.package_zip, self.package_sha256, None, self.allow_flagged, data=self._pkg_bytes)
+            on_disk = {str(p.relative_to(d)).replace("\\", "/"): sealbox.sha256_file(p) for p in d.rglob("*")
+                       if p.is_file()}
+            if on_disk != v["files"]:
+                raise RunnerRefusal("an earlier staged package differs from this package: the custodian must inspect "
+                                    "and remove %s by hand" % d)
+            return dict(v, dir=str(d))
+        return load_package(self.package_zip, self.package_sha256, d, self.allow_flagged, data=self._pkg_bytes)
+
+    def open(self) -> dict:
+        """v7: prepare() (nothing consumed) -> receipts + open record (the consumption marker) -> key read. From the
+        open record on, every failure ends in a TERMINAL receipt (close or abort), never an unsealed exit (run_all)."""
+        if self._prepared is None:
+            self.prepare()
+        manifest, ct, fam = self._prepared
         self.manifest = manifest
         genesis = sealbox.sha256_hex(sealbox.canon_bytes({
             "format": RECEIPT_FORMAT, "spec_id": manifest["spec_id"],
             "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
             "package_sha256": self.package_sha256}))
+        # the key is READ first (a missing or malformed key file refuses with nothing consumed), then the consumption
+        # marker is written, then the released copy is deleted
+        key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
         rpath = self.out / "receipts.jsonl"
-        if self.resume:
-            self.receipts = Receipts(rpath, genesis, create=False)
-            pkg_dir = self.out / "package"
-            data = self.package_zip.read_bytes()
-            if sealbox.sha256_hex(data) != self.package_sha256 or \
-                    self.receipts.records[0]["body"]["package"]["sha256"] != self.package_sha256:
-                raise PackageHashMismatch("package sha256 mismatch on resume")
-            self.pkg = dict(self.receipts.records[0]["body"]["package"], dir=str(pkg_dir))
-            kinds = [r["kind"] for r in self.receipts.records]
-            self.phase = "CLOSED" if "close" in kinds else "SEALED" if "predictions_sealed" in kinds else "OPEN"
-            return manifest
-        self.out.mkdir(parents=True, exist_ok=True)
-        if rpath.exists():
-            raise RunnerRefusal("receipts.jsonl exists: use resume, never overwrite")
-        self.pkg = load_package(self.package_zip, self.package_sha256, self.out / "package", self.allow_flagged,
-                                data=self._pkg_bytes)             # v6: the bytes validated before the key was read
         self.receipts = Receipts(rpath, genesis, create=True)
+        self.N = int(manifest["n_worlds"])
         self.receipts.append("open", {
             "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
             "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
@@ -660,6 +692,20 @@ class FirewallRun:
             "max_episode_steps_per_world": self.max_episode_steps,
             "python": sys.version.split()[0], "numpy": np.__version__})
         self.phase = "OPEN"
+        if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
+            self.key_path.unlink()
+        plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
+        hidden = json.loads(plain.decode("utf-8"))
+        if hidden["family_src_sha256"] != fam or hidden["n_worlds"] != manifest["n_worlds"] \
+                or len(hidden["worlds"]) != hidden["n_worlds"] or len(hidden["run_seeds"]) != hidden["n_worlds"]:
+            raise HiddenSetMismatch("decrypted hidden set inconsistent with manifest")
+        self._worlds = [medium.world_from_dict(w) for w in hidden["worlds"]]
+        self._seeds = [int(s) for s in hidden["run_seeds"]]
+        self._tags = [hmac.new(key, sealbox.canon_bytes([w, s]), hashlib.sha256).hexdigest()
+                      for w, s in zip(hidden["worlds"], self._seeds)]
+        del key, plain, hidden
+        if self.N != len(self._worlds):
+            raise HiddenSetMismatch("decrypted world count differs from the manifest")
         return manifest
 
     # ------------------------------------------------------------ predict
@@ -681,6 +727,45 @@ class FirewallRun:
         if tag != "probe_result" or opened:
             self._stop_worker(kill=True)
             raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
+
+    def abort(self, exc: BaseException) -> dict:
+        """v7 (Odysseus v6 item 2): after the consumption marker exists, ANY failure (package-induced or not) ends in a
+        TERMINAL 'abort' receipt and a RESULT.json with status ABORTED, which custody can result-seal. Adjudication
+        (Harmonia Addendum E): package-attributable -> FORFEIT; infrastructure -> VOID. Type name only, no text."""
+        if self.receipts is None:
+            raise RunnerRefusal("abort before the consumption marker: nothing to seal")
+        if self.phase in ("CLOSED", "ABORTED"):
+            return {"status": self.phase}
+        try:
+            self._stop_worker(kill=True)
+        except Exception:                                    # noqa: BLE001
+            pass
+        n_pred = sum(1 for r in self.receipts.records if r["kind"] == "prediction")
+        self.receipts.append("abort", {"phase": self.phase, "error_type": type(exc).__name__,
+                                       "n_predictions_recorded": n_pred, "utc": _utc()})
+        self.phase = "ABORTED"
+        result = {"format": RECEIPT_FORMAT, "status": "ABORTED", "spec_id": self.manifest["spec_id"],
+                  "run_nonce": self.gates.get("run_nonce"), "package_sha256": self.package_sha256,
+                  "abort_phase": self.receipts.records[-1]["body"]["phase"], "error_type": type(exc).__name__,
+                  "chain_head": self.receipts.head, "n_records": len(self.receipts.records)}
+        (self.out / "RESULT.json").write_text(json.dumps(result, indent=1, sort_keys=True) + "\n",
+                                              encoding="utf-8", newline="\n")
+        return result
+
+    def run_all(self) -> dict:
+        """prepare (refusal consumes nothing) -> open -> predict -> seal -> certify -> close; after the open record any
+        exception becomes a terminal abort (v7)."""
+        self.prepare()
+        try:
+            self.open()
+            self.predict_all()
+            self.seal_predictions()
+            self.certify_all()
+            return self.close()
+        except BaseException as e:                           # noqa: BLE001 -- incl. KeyboardInterrupt / MemoryError
+            if self.receipts is None:
+                raise
+            return self.abort(e)
 
     def validate_package(self) -> dict:
         """v6 (BP-1): read the package ONCE, verify its hash, members, metadata and AST audit, and keep those exact bytes
@@ -774,20 +859,28 @@ class FirewallRun:
             except (EOFError, OSError, ValueError, MemoryError, RecursionError):     # v4: hostile reply shapes
                 self._stop_worker(kill=True)
                 return {"status": "PREDICTOR_CRASH", "usage": usage}
-            if msg[0] == "call":
-                usage["calls"] += 1
-                try:
-                    _send(self._conn, ["ret", self._serve(sysobj, msg[1], msg[2], usage)])
-                except Exception as e:                       # noqa: BLE001 -- type name only: no knob leak
-                    _send(self._conn, ["err", type(e).__name__])
-            elif msg[0] == "done" and msg[1] == i:
-                why = validate_prediction(msg[2])
-                if why:
-                    return {"status": "INVALID_PREDICTION", "reason": why, "usage": usage}
-                return {"status": "OK", "prediction": msg[2], "usage": usage}
-            elif msg[0] == "fail" and msg[1] == i:
-                return {"status": "PREDICTOR_ERROR", "error": str(msg[2])[:400], "usage": usage}
-            else:
+            # v7 (Odysseus v6 item 2, V6-B2): the child controls these bytes; ANY malformed message or failed reply is
+            # this world's PROTOCOL_ERROR (recorded, sealed, run continues), never an exception in the parent
+            try:
+                if not isinstance(msg, list) or not msg:
+                    raise ValueError("malformed message")
+                if msg[0] == "call":
+                    usage["calls"] += 1
+                    try:
+                        reply = ["ret", self._serve(sysobj, msg[1], msg[2], usage)]
+                    except Exception as e:                   # noqa: BLE001 -- type name only: no knob leak
+                        reply = ["err", type(e).__name__]
+                    _send(self._conn, reply)
+                elif msg[0] == "done" and len(msg) == 3 and msg[1] == i:
+                    why = validate_prediction(msg[2])
+                    if why:
+                        return {"status": "INVALID_PREDICTION", "reason": why, "usage": usage}
+                    return {"status": "OK", "prediction": msg[2], "usage": usage}
+                elif msg[0] == "fail" and len(msg) == 3 and msg[1] == i:
+                    return {"status": "PREDICTOR_ERROR", "error": str(msg[2])[:400], "usage": usage}
+                else:
+                    raise ValueError("unexpected message")
+            except Exception:                                # noqa: BLE001
                 self._stop_worker(kill=True)
                 return {"status": "PROTOCOL_ERROR", "usage": usage}
 
@@ -874,7 +967,14 @@ class FirewallRun:
         done = {r["body"]["i"] for r in self.receipts.records if r["kind"] == "certify"}
         for i in range(self.N):
             if i not in done:
-                self.certify_world(i)
+                try:
+                    self.certify_world(i)
+                except OrderViolation:
+                    raise
+                except Exception as e:                       # noqa: BLE001 -- v7: recorded per world, type name only
+                    self._gate(i)
+                    self.receipts.append("certify", {"i": i, "world_tag": self._tags[i], "status": "CERTIFY_ERROR",
+                                                     "error_type": type(e).__name__, "utc": _utc()})
 
     def close(self) -> dict:
         certs = {r["body"]["i"]: r for r in self.receipts.records if r["kind"] == "certify"}
@@ -884,17 +984,18 @@ class FirewallRun:
         per_world = []
         for i in range(self.N):
             c = certs[i]["body"]
-            ivr = c["intervention"]
+            ivr = c.get("intervention") or {"status": c.get("status", "CERTIFY_ERROR")}
             per_world.append({
                 "i": i, "world_tag": c["world_tag"], "prediction_status": preds[i]["status"],
-                "prediction": preds[i].get("prediction"), "base_class": c["base"]["class"],
+                "prediction": preds[i].get("prediction"), "base_class": (c.get("base") or {}).get("class"),
                 "intervention_status": ivr["status"],
                 "intervention_class": ivr.get("result", {}).get("class"),
                 "delta_J_intact": ivr.get("delta_J_intact"), "certify_receipt": certs[i]["hash"]})
         self.receipts.append("close", {"n_certified": self.N, "utc": _utc()})
         self.phase = "CLOSED"
         seal = next(r for r in self.receipts.records if r["kind"] == "predictions_sealed")
-        result = {"format": RECEIPT_FORMAT, "spec_id": self.manifest["spec_id"], "run_nonce": self.gates.get("run_nonce"),
+        result = {"format": RECEIPT_FORMAT, "status": "CLOSED", "spec_id": self.manifest["spec_id"],
+                  "run_nonce": self.gates.get("run_nonce"),
                   "package_sha256": self.package_sha256, "predictions_seal_hash": seal["hash"],
                   "chain_head": self.receipts.head, "n_records": len(self.receipts.records),
                   "per_world": per_world}
@@ -947,8 +1048,8 @@ def _run_cli(a) -> int:
                              runner_id=a.runner_id, account=account, verify_loaded=True)
     rp = g["run_params"]
     out = Path(a.out_root) / ("run_" + g["run_nonce"])
-    if out.exists():
-        raise RunnerRefusal("run directory for this designation already exists: one run per designation")
+    if (out / "receipts.jsonl").exists():                   # v7: receipts are the consumption marker
+        raise RunnerRefusal("this designation's run was already consumed (receipts exist): one run per designation")
     run = FirewallRun(a.manifest, a.ciphertext, a.key or str(out.parent / "no_key_in_preflight.hex"), a.package,
                       a.package_sha256, out,
                       allow_flagged=a.allow_flagged, certify_kwargs=rp.get("certify_kwargs") or {},
@@ -956,20 +1057,14 @@ def _run_cli(a) -> int:
                       runner_id=a.runner_id, gate_ref=a.gate_ref, account=account, delete_key=True,
                       extra_probe_paths=[str(out / "receipts.jsonl")])
     if a.preflight:
-        run.gates = g
-        run.validate_package()                                # v6 (BP-1): the package checks are part of the preflight
-        r = run.preflight()
+        r = run.prepare()                                     # v7: validation, staging and every probe
+        r["preflight"] = "PASS"
         r["record"] = str(run.write_preflight_record(out.parent))
         print(json.dumps(r))
         return 0
-    run.open()
-    run.predict_all()
-    head = run.seal_predictions()
-    print(json.dumps({"predictions_sealed": True, "chain_head": head, "out": str(out)}))
-    run.certify_all()
-    res = run.close()
-    print(json.dumps({"closed": True, "chain_head": res["chain_head"], "out": str(out)}))
-    return 0
+    res = run.run_all()
+    print(json.dumps({"status": res["status"], "chain_head": res["chain_head"], "out": str(out)}))
+    return 0 if res["status"] == "CLOSED" else 4
 
 
 if __name__ == "__main__":
