@@ -45,7 +45,7 @@ the record that already exists.
     thr-52e8bb034fba  T-RET-SEL     OPEN      research/BACKLOG_V2.md | T-RET-SEL | d8ef2dc5b
     thr-5df816e9b844  T-SWAP-LOWACC OPEN      research/BACKLOG_V2.md | T-SWAP-LOWACC | d8ef2dc5b
     thr-f36dd8035762  T-WJ-1        OPEN      research/BACKLOG_V2.md | T-WJ-1 aggregation | 46dc8f25a
-    thr-8c7342a7d513  T-INS-6       OPEN      research/MACHINE_WORK.md | B-8 T-INS-6 | 7fc642367
+    thr-8c7342a7d513  T-INS-6       CLOSED     research/MACHINE_WORK.md | B-8 T-INS-6 | 7fc642367
     thr-ea0c97a4d5e9  T-CT-3'       OPEN      research/MACHINE_WORK.md | B-9 T-CT-3 | 7fc642367
     thr-3cb97e823f61  T-WJ-2        OPEN      research/MACHINE_WORK.md | B-11 T-WJ-2 | 7fc642367
     thr-597dda593a1f  T-H3          OPEN      research/MACHINE_WORK.md | B-12 T-H3 | 7fc642367
@@ -86,6 +86,7 @@ No campaign is running or queued. MWO-0001: no new large PTE campaign.
     E-ANANKE-W-J                ARC3   T-RS-1           research/workers/W-J/REPORT.md
     E-ANANKE-W-K                ARC3   T-X-4            research/workers/W-K/REPORT.md
     E-ANANKE-W-L                ARC3   T-RET-2 / T-RET-SEL research/workers/W-L/REPORT.md
+    E-ANANKE-W-M                MWO1   T-INS-6          research/workers/W-M/REPORT.md
 Instruments produced along the way (not experiments): research/instruments/
 INSTRUMENT_CARRIER_SWAP.md, INSTRUMENT_TEMPORAL_REACH.md,
 INSTRUMENT_REACH_VERIFICATION.md; code prometheus/ananke/lens.py

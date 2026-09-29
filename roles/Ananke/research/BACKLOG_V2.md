@@ -87,3 +87,15 @@ T-WC-2b emission cost vs code class (powered, >= 8 seeds per arm)
 ## Answered / superseded (history: BACKLOG_TEMPORAL_DISTRIBUTED.md)
 T-M2-1, T-M2-2, T-M2-3, T-M2-4, T-DC-1, T-DM-4, T-M3-1, T-X-1, T-RET-1,
 T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
+
+## Update 2026-09-29 (MWO-0001 seat loop)
+- T-INS-6 ANSWERED (W-M, E-ANANKE-W-M, workers/W-M/REPORT.md; 20 known-answer
+  tests, re-run by the principal: 20 passed). Under mirror swaps each
+  pair-trial is S / C / N; the sum cannot separate a 50/50 S/C mixture from
+  100% N, and in EVERY-trial mode history broke the identity in 5/7
+  census-JOINT cells although their sums stayed .97-1.01. SINGLE-trial swaps
+  restore identity (1.00 at o>=1). Real per-trial mixtures: 2dccdaa5 o5,
+  c16d5231 o4/o5, 78f3b0ec o9/o14, designed E2 lag -6 and o3. 369f5a5b and
+  4781b0a1 are S/N(/C) blends, not mixtures. Successors: T-INS-7 (make SINGLE
+  the instrument default; promote lens_ins6 + census_follow into lens after
+  review), T-INS-8 (split the N fraction of 369f5a5b/4781b0a1 by sub-array).
