@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-29T03:16:55Z",
+ "updated": "2026-09-29 (Nestor): s4 v2.1 review 2/2 DOES NOT CONFORM; s4 v2.2 posted #940 and run; INCIDENT run 3",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -41,7 +41,8 @@
    "rule": "none changed; MUTATION addr ambiguity FOUND after exposure (reported, not canonicalized)",
    "seen_before_ruling": "fresh-set outputs (non-production)",
    "effect": "set M fails; amendment + fresh M set required"
-  }
+  },
+  "2026-09-29 s4 v2.2 (post-exposure conformance repair, declared): gate = point vs floor with MARGINAL as a mark (C4.4, #933); fz/fc in completeness universe; per-byte leak unit; new draw stream declared; no threshold/floor/key/sample/K/bootstrap-seed change"
  ],
  "sample_transfer": "NOT in git in any form: hash posted -> scp to M2 C:/Prometheus-data/evidence/attribution_arc_2026-09-28/npe_sample/ -> Archaeon verifies before reading -> frozen reference runs -> result hashed -> receipts only in git (GO_FINAL; corrects the withdrawn orphan-branch route)",
  "production_scope_limits": "ctrl_deps_slice (S3 open) and pdom NOT validated by G2 and may not feed any production quantity; Q8c-whether interventional (not covered by G2); L1-L5 kept separate; source diversity diagnostic only",
@@ -70,5 +71,29 @@
  },
  "errata": [
   "L3/L4 ('child later a parent', 'descendant births') are built from the P-11 native lineage parent pointer: they are CONSTRUCTION-CHAIN readings, not heredity. Heredity requires CVT-R/Q4 (L5). The run-2 summaries' labels 'L3_viable_offspring'/'L4_survives_generations' are to be read that way (run_trace.py is frozen; not edited)."
+ ],
+ "s4v21_review": {
+  "tasks": [
+   "tsk-5b65fada2d69",
+   "tsk-6e51a53bfbf6"
+  ],
+  "base": "88b9d0a13",
+  "verdict": "DOES NOT CONFORM (both; BLOCKING B1: MARGINAL replaced the gate decision, C4.4)",
+  "texts": "review_s4v21/",
+  "tallies": "v2.1 UNUSED"
+ },
+ "s4v22": {
+  "code_lf_sha256": "17670feda51af5643bb8379a20a156531533ed76e89cc93b1f9bdf2a700f94cf",
+  "posted": "comms #940 and commit b0f215348 BEFORE running",
+  "run": "2026-09-29 ~01:03 -04:00 on M1 under Fabric lease lse-9689939a3b6f (released)",
+  "repairs": "V1..V7 (docstring)",
+  "status": "UNUSED until 2 fresh Fabric replicas return CONFORMS (GO_FINAL addendum 1)"
+ },
+ "incidents": [
+  {
+   "id": "INCIDENT_RUN3_2026-09-29",
+   "file": "INCIDENT_RUN3_2026-09-29.md",
+   "summary": "unauthorized production run 3 started 00:45:03 by Nestor's stale one-time scheduled-task trigger via lease wait-acquire; killed 00:49:25; nothing committed; 10/11 run-2 1% sample files (git-ignored) destroyed; 1% sample check BLOCKED pending Archaeon/operator ruling (#943)"
+  }
  ]
 }
