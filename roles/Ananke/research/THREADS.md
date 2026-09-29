@@ -93,6 +93,7 @@ No campaign is running or queued. MWO-0001: no new large PTE campaign.
     E-ANANKE-W-Q                MWO2   T-SWAP-LOWACC (REL2) research/workers/W-Q/REPORT.md
     E-ANANKE-W-R                MWO4   T-INS-6 (T-INS-9) research/workers/W-R/REPORT.md
     E-ANANKE-W-S                MWO4   T-INS-6 (T-INS-11) research/workers/W-S/REPORT.md
+    E-ANANKE-W-T                MWO4   T-INS-6 (T-INS-16) research/workers/W-T/REPORT.md
 Instruments produced along the way (not experiments): research/instruments/
 INSTRUMENT_CARRIER_SWAP.md, INSTRUMENT_TEMPORAL_REACH.md,
 INSTRUMENT_REACH_VERIFICATION.md; code prometheus/ananke/lens.py

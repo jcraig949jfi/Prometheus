@@ -1,0 +1,24 @@
+dev_PLANT_P1_J1 o4 q0 (frozen)
+  census {'C': 24, 'S': 15}
+  P8 decisive 1.000 [1.000,1.000] n20 cov 0.513 | strict 0.513 [0.350,0.675] n39 | dec-shuf 0.600 [0.467,0.714] n20
+  P8any 1.000 [1.000,1.000] n39 | shuf 0.333 [0.132,0.550] n39 | P8all dec 1.000 [1.000,1.000] n20 cov 0.513
+  xtab {'C>C': 10, 'C>M': 14, 'S>S': 10, 'S>U': 5}
+  VERDICT REACHES []
+dev_PLANT_P1_J1 o4 q1 (frozen)
+  census {'C': 32, 'S': 6}
+  P8 decisive 1.000 [1.000,1.000] n32 cov 0.842 | strict 0.842 [0.632,0.976] n38 | dec-shuf 1.000 [1.000,1.000] n32
+  P8any 1.000 [1.000,1.000] n38 | shuf 0.737 [0.500,0.949] n38 | P8all dec 1.000 [1.000,1.000] n32 cov 0.842
+  xtab {'C>C': 32, 'S>U': 6}
+  VERDICT REACHES []
+dev_PLANT_P1_J1 o5 q0 (frozen)
+  census {'C': 22, 'S': 16}
+  P8 decisive 1.000 [1.000,1.000] n23 cov 0.605 | strict 0.605 [0.375,0.816] n38 | dec-shuf 0.478 [0.190,0.708] n23
+  P8any 1.000 [1.000,1.000] n38 | shuf 0.368 [0.256,0.475] n38 | P8all dec 1.000 [1.000,1.000] n23 cov 0.605
+  xtab {'C>C': 13, 'C>M': 9, 'S>S': 10, 'S>U': 6}
+  VERDICT REACHES []
+dev_PLANT_P1_J1 o5 q1 (frozen)
+  census {'S': 39}
+  P8 decisive 1.000 [1.000,1.000] n34 cov 0.872 | strict 0.872 [0.667,1.000] n39 | dec-shuf 1.000 [1.000,1.000] n34
+  P8any 1.000 [1.000,1.000] n39 | shuf 1.000 [1.000,1.000] n39 | P8all dec 1.000 [1.000,1.000] n34 cov 0.872
+  xtab {'S>S': 34, 'S>U': 5}
+  VERDICT REACHES []

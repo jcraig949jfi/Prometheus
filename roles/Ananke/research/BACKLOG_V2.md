@@ -165,3 +165,13 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   8c37f32e's N is a split-copy artifact. Successors: T-INS-14 (decompile the
   split-copy outcomes), T-INS-15 (direct-carrier jitter plant to validate P8),
   T-INS-16 (does the first-broadcast rule reach MAJ / 78f3b0ec).
+- T-INS-16 ANSWERED (W-T, E-ANANKE-W-T, workers/W-T/REPORT.md; 10 tests,
+  principal re-run 10 passed; verdicts spot-checked). The first-broadcast
+  latency rule (W-S P8/P8any, frozen) is exact on a direct-carrier known-answer
+  plant (decisive 1.00, jitter-off control single-class, shuffle -> .47) but
+  does NOT reach any new cell: MAJ 4781b0a1 0/22 units (dense multi-sensor
+  traffic, ~30 cue copies per trial), 78f3b0ec 0/6 (source re-broadcasts; late
+  offsets follow the LATEST source emission, post hoc), e06701a5 fails only on
+  coin-toss split cases. It is a property of three RELAY cells, not a law of the
+  update-clock phase. Successors: T-INS-17 (causal-emission carrier: cue-flip
+  each source emission separately), T-INS-18 (MAJ per-sensor carrier census).
