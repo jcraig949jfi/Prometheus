@@ -22,3 +22,10 @@ date | call made | what was true | corrected by | changed practice
 2026-09-23 | c2x: c2none (no lines, no selection, seed 29) fails the location gate | it SURVIVED round 1 | c2x/PREREG.md | my C1->C2 "method improvement" story was seed; attribute only across seeds
 2026-09-23 | c2x: c2none28 (no lines, no selection, seed 28) fails | it SURVIVED round 1 | c2x/PREREG.md | the only failing cell is lines-without-selection (1 seed); do not generalise from one seed
 2026-09-24 | C3 G1: the P1/P2 certificate passes its hard gate on the first implementation | smoke run: NZ INCOHERENT (fixed 0.05-bit P1 floor vs a 3-SE P2 test: unequal sensitivity) | c3/S1_PREREG_P1P2_GATE.md A1 | paired tests use the same statistical logic; magnitude floors only when derived from resolution
+
+2026-09-29 | T-I1 fragment test v1 (roles/Cosmos/research/analysis/t_i1_fragments.py, declared at dc315d9f1) |
+  DEFECT, unreachable gate: a random-grammar null thresholded at the atom's marginal rate contains
+  expressions equivalent to the reference atoms, so q99 = 1.000 and the REEXPRESSES verdict cannot fire for
+  size >= 5. Found after running; the v1 verdicts are reported as declared, with the defect. Lesson: a null for
+  "is X a re-expression of R" must exclude R-equivalent members, or its tail is R itself. Compute the gate's
+  attainable range BEFORE running (PRE_RESULT_REVIEW class 1).
