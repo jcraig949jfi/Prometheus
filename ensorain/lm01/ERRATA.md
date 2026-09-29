@@ -14,3 +14,16 @@ at freeze ee8cbe0c8).
   - the fixture compares per-arm medians, not paired differences;
   - "random" eviction is distribution matching, not neutral, in non-stationary worlds.
   These are LM02 design inputs. The campaign's E6 reading (analysis.py) already uses paired CIs.
+
+## E-2 (2026-09-29, from MWO-0003 FP-001): LM01 outputs are bitwise platform-bound
+
+- Probe: the frozen fixture `python -m ensorain.lm01.fixture_reservoir` at ee8cbe0c8.
+  - M2 (Windows) reproduces the committed dev/fixture_reservoir.json byte-for-byte.
+  - Two Linux Fabric replicas (ubu001) agree with EACH OTHER byte-for-byte, but differ from the M2 file in the last
+    1-2 digits of 5 floats (relative <= ~4e-15).
+  - Every PASS flag and boolean is identical. Evidence: roles/Ensorain/probes/FP-001_RESULT.json.
+- Consequence for a future launch:
+  - A campaign run on a different platform than the fixtures is not bit-reproducible against them.
+  - A verdict could flip only if a statistic sat within ~1e-14 of a threshold.
+  - Preferred: launch on M2, the fixture platform, or record the platform in the run manifest.
+- No change to any frozen file or rule.

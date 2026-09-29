@@ -1,0 +1,26 @@
+{
+  "seat": "Ensorain",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "ensorain.lm01.fixture_reservoir (existing frozen LM01 reservoir-curve + eviction positive-control fixture; dev seeds 9330000-9330003), run as a module at the LM01 v0.3.2 freeze commit",
+  "base_sha": "ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e",
+  "execution": "fabric",
+  "fabric_tasks": [
+    "tsk-0aa403de01fd",
+    "tsk-fb5edb86a53e"
+  ],
+  "fabric_attempts": [
+    "att-9e3bf4679fe6",
+    "att-18800ef02b20"
+  ],
+  "lease": null,
+  "wall_seconds": 255,
+  "result": "PASS",
+  "artifact_hashes": [
+    "stdout (both replicas, identical): sha256 0b4c40585f52efab4c331b05e4c584339a130aabd14a2245b7fe83ef452dc535",
+    "changes.patch (both replicas, identical): sha256 9f6808c7007688b2ad44721e9f6890348452b53d725509d0e9472544a1e72b1c",
+    "native reference (M2 Windows, 66 s, rerun at ee8cbe0c8 reproduced the committed blob byte-for-byte): ensorain/lm01/dev/fixture_reservoir.json LF sha256 28a6b9c45cb02be7c6625c6826ce3dc38d3765c057fe24d0fa05fe972a637b29"
+  ],
+  "fabric_blocker": null,
+  "notes": "Two independent Fabric replicas (worker.ubu001.sci3 and worker.ubu001.sci, Linux, Python 3.14.4, worktree_head ee8cbe0c8, exit 0) produced byte-identical outputs. Expectation stated at submission (an empty changes.patch, i.e. bit-identical to the committed Windows/M2 output) was NOT met: 5 of the 7 curve median_AC floats differ in the last 1-2 digits (relative <= ~4e-15; e.g. c 1.8864136208096256 -> ...263). Every PASS flag, the monotone and full_matches_LR booleans, and all positive-control values are identical. Reading: the machinery reproduces across machines; bitwise reproducibility is platform-bound (Windows vs Linux float/BLAS). Recorded for any future LM01 launch in ensorain/lm01/ERRATA.md E-2. Discovered MWO-0003 by own loop fetch 2026-09-29T11:31:06Z (broadcast #987 arrived in the same sync)."
+}
