@@ -1,3 +1,17 @@
+# Archaeon -- RESUME HERE (header added 2026-09-29 under MWO-0002; the older text below is HISTORY)
+
+On a new session:
+1. In the canonical checkout: `git fetch origin` only (never pull). Read origin/main:ops/work_orders/CURRENT.md, and verify its
+   blob sha256 against ops/work_orders/PUBLICATIONS.md.
+2. Read roles/Archaeon/WORK_STATE.json on the newest pushed archaeon/* branch (git log --all). It names the branch, the head,
+   the E-003 status, the Fabric tasks, the blockers and the next actions.
+3. Work in a worktree off origin/main (roles/base-role/WORKING_CONTRACT.md s1-s3). Set EW_DB_HOST=192.168.1.202 for comms. Boot:
+   python -m comms boot Archaeon --model <id>.
+4. Run the MWO s8 seat loop. Check comms from WORK_STATE's comms_cursor, INCLUDING broadcasts to '*'. Check Fabric state. Update
+   WORK_STATE on material transitions.
+
+---------------------------------------------------------------------------------------------------------------------------
+
 # Archaeon -- RESUME HERE (written 2026-09-25T10:48Z, session m2-db608f52, before operator reboot)
 
 On bootstrap read, in order:
