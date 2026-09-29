@@ -220,7 +220,8 @@ reads instead of any local memory directory.
 
 ## 1. Boot sequence (every restart, in this order, nothing else first)
 
-1. Refuse to run from the canonical checkout (WORKING_CONTRACT.md s1;
+1. Before anything else: read origin/main:ops/work_orders/CURRENT.md, then roles/<Seat>/WORK_STATE.json.
+   Refuse to run from the canonical checkout (WORKING_CONTRACT.md s1;
    archaeon/workspace.py is the reference guard). Confirm your worktree,
    branch and base SHA; they go on your first receipt. Then RECORD THE
    BOOT: `python -m comms boot <Seat> --model <your model id>

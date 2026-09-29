@@ -1,0 +1,25 @@
+{
+  "seat": "Artemis",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "roles/Artemis/challenge/identity/thread_id.py genesis roles/Artemis/backlog/INDEX.md '\\| FR-001 \\|' (re-derive a committed canonical thread id; expected thr-4baa74c84cbc per roles/Artemis/challenge/identity/ARTEMIS_FR_IDS.json)",
+  "base_sha": "f63a8589a2076da4c59e03b27580c42c15b19ee1",
+  "execution": "fabric",
+  "fabric_tasks": [
+    "tsk-88d872750984",
+    "tsk-92c9679433bf"
+  ],
+  "fabric_attempts": [
+    "att-f05a5c127038",
+    "att-9c8cb159b90e"
+  ],
+  "lease": null,
+  "wall_seconds": 31,
+  "result": "PASS",
+  "artifact_hashes": [
+    "stdout sha256 444fad295c2f9d540d4cad214d01f767c87de9ac55c42d2784fd4a13e047de5f (both replicas, identical)",
+    "stderr sha256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 (empty, both)"
+  ],
+  "fabric_blocker": null,
+  "notes": "One submit with --replicas 2, executor script, caps repo.read python.stdlib fabric.runtime==0.2. Replicas ran on worker.ubu001.a and worker.ubu001.b; stdout = 'thr-4baa74c84cbc genesis|72340f46d...|roles/Artemis/backlog/INDEX.md|\\| FR-001 \\|', equal to the committed id. wall_seconds = submit to both terminal. MWO-0003 discovered by loop fetch at 11:25Z (CURRENT.md hash change) with broadcast #987 in the same sync. Not chosen: the CVT-R adapter check (needs a local foreign/ copy not in the repo) and p11/verdict.py (imports a VM from local scratch), both not portable to a Fabric worker checkout: recorded, not fixed."
+}

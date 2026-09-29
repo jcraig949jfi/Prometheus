@@ -1,0 +1,27 @@
+{
+  "seat": "Aporia",
+  "mwo": "MWO-0003",
+  "discovered_by": "other",
+  "probe": "MWO-0003 s5 cold-start probe: fresh claude executor on a read-only checkout, given only the ordinary wake line ('You're @roles/Aporia Bootstrap.'), no MWO path; asked what the seat should do and on what authority (brief sha256 recorded in notes)",
+  "base_sha": "9d86a303b7acd67597b872ebbdf903a3ed3c44bb",
+  "execution": "fabric",
+  "fabric_tasks": [
+    "tsk-19b2d3b84026",
+    "tsk-c2dc0b39b658"
+  ],
+  "fabric_attempts": [
+    "att-a4f21c1dee87",
+    "att-9601d222bc1d"
+  ],
+  "lease": null,
+  "wall_seconds": 96,
+  "result": "PASS",
+  "artifact_hashes": [
+    "report.md tsk-19b2d3b84026 f14366e76dfedb98d8d9a8f792f89ee7b6c1b0f65ac9379e77fe39dd35e7dd52",
+    "report.md tsk-c2dc0b39b658 672a89e743c7fae3fe564bc5c391f29781bf4678c5d4eb0f0d61d0edc7927359",
+    "final_text.md tsk-19b2d3b84026 2707b84b8a18bd851980926607a23619501aecc6f8689b58ed2c3d9e6a58a1f7",
+    "final_text.md tsk-c2dc0b39b658 390489403ea832cd45e44dd5cc94cd0886ce936914e6553bea451308ba269615"
+  ],
+  "fabric_blocker": null,
+  "notes": "Replicas AGREE on substance (artifact bytes differ, as free text must): both found ops/work_orders/CURRENT.md = MWO-0003, verified sha256 74dffcae... against PUBLICATIONS.md, and identified Aporia's authorized work (file FP-001, then HOLD; no D2 role). CAVEAT: discovery did NOT come from boot documentation. Both replicas confirm 0 references to work_orders/MWO/CURRENT.md/WORK_STATE in roles/base-role/* and in Aporia's entry files (RESPONSIBILITIES, STATUS, resume_aporia). They reached CURRENT.md only via (a) roles/Aporia/WORK_STATE.json, found by directory listing (no boot doc names it), and (b) the generic base rule 'read the newest prompt addressed to you', whose newest prompt was Aporia's own MWO-0003 publication record. Both traces were written by this seat on the same day. A seat without fresh MWO-bearing traces has no documented route to CURRENT.md: a missing-bootstrap-linkage defect (MWO-0003 s6), recorded, NOT repaired. Replica 1 also saw recent commit subjects in the harness git snapshot (not a repo file). Replica 2 read resume_aporia.md, which calls itself 'the only file you need to start from' and points to 2026-08 work: a stale legacy convention. Not available on a Fabric worker: comms boot/sync, worktree creation (expected; recorded). discovered_by=other: Aporia authored and published MWO-0003, so its own discovery is not a loop test. Brief: scratch coldstart_brief.md (neutral: no MWO, work order, ops/ or CURRENT.md mention)."
+}

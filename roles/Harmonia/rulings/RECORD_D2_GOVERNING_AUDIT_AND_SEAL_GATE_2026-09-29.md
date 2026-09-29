@@ -378,3 +378,49 @@ Nothing released, revealed or built.
      record): Nestor;
   3. a re-audit of the resulting commit with self-tests PASS.
 - D2 remains BLOCKED, fail-closed. Nothing released.
+
+## Addendum L (2026-09-29): governing v11 audit recorded, FAIL SOLELY on S1; D2 PAUSED by MWO-0003 s7
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v11/VERDICT.md`, blob sha256 `38c5570738caee868d872fdb844a19f5c947426b1c34e8dc3cff3f51ccb667dd` |
+| Verdict commit | 864cb36b1f719f7f33e2754fd19fc6afed154a59 (11:13Z; an ancestor of the MWO-0003 publication 624a686ea, so in flight and recordable under MWO-0003 s7) |
+| Audited code | e47d6fbbb (Nestor #984). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL, solely on S1** (record authentication; branch protection). **No blocking finding in the firewall code at e47d6fbbb.** Self-tests PASS. |
+
+- **Addendum J option (a) is now in the code:** a `deliver` receipt is appended before each world is sent, and
+  seal-terminal counts deliver records.
+  - The governing v11 audit (both replicas plus an auditor spot-check) found it sound.
+  - For adjudication of runs executed on code whose AUDITED_FILES hash-match the governing PASS audit that S1 will
+    eventually enable, Harmonia reads Addendum J item 2 as satisfied: **a verifying chain with zero `deliver` records
+    proves non-delivery, so VOID (pre-exposure).** Any `deliver` record means exposure, so FORFEIT unless a normal RESULT
+    is sealed.
+  - The Addendum H rule that labels are not evidence is unchanged. Delivery is read from the receipts, not from labels.
+- **MWO-0003 s7 (published 624a686ea, 11:14Z): D2 repair/re-audit is PAUSED** while S1 (#925) is open. Harmonia starts
+  nothing, releases nothing, and records only.
+- **D2 state:** code-side ready at e47d6fbbb. **Sole gate: the operator's S1 decision (#925).** Then a re-audit of an
+  unchanged package can PASS.
+
+## Addendum M (2026-09-29): MWO-0004 adopted; S1 resolved by the order; Harmonia's own conditions discharged or stated
+
+- **MWO-0004** (P 25a486d44, blob 925660b2, verified against PUBLICATIONS.md):
+  - Part 2 D2-1 **resolves #925 (S1)** by order. The root of trust is Git object identity + immutable blob hashes + an
+    append-only M1 anchor, checked before each gated step and failing closed. There is no branch protection.
+  - D2-2 allows one bounded completion attempt (implement D2-1, one conforming repair, one independent re-audit; at most
+    one final repair and re-audit). Then PASS proceeds under the existing protocol, and FAIL means HOLD D2 with no further
+    rounds.
+  - **G8: Addendum E stands**, and with it Addenda F, H, J and L as its refinements. No further review is needed.
+- **Addendum C custody condition, discharged by evidence:**
+  - Condition: "no release on a PASS unless an end-to-end run through `entry.py` completes BEFORE release, by execution,
+    on M1".
+  - It is satisfied by the committed M1 self-test output `prometheus/cosmos/c3_holdout_D2/SELFTEST_PROTOCOL.json` (last
+    written at d7f9d4797, v11). Its executed `checks/e2e[...]` run through entry on a throwaway set: release_key_ok ->
+    run_closed -> result_seal_carries_nonce -> reveal_ok -> evidence_bundle_ok, plus release_twice / release_before_audit /
+    reveal_before_result_seal refused, and `v4_entry_gates_pass_end_to_end`. All are true.
+  - **Harmonia adds no further gate.** Per MWO-0004 R1/R5, the only standing requirement is the protocol's own: the
+    governing PASS audit's commit must have self-tests PASS, which the audit brief already requires.
+- **What Harmonia will check when D2 proceeds:** that `check_gates` (called by runner, custody and evidence) includes the
+  D2-1 anchor verification (items 1-4 of D2-1). That is the D2-1 implementation itself, audited by Odysseus, not a
+  Harmonia condition.
+- `operator_decisions_required` for Harmonia is now **empty** (S1 is resolved by the order; the Addendum E position is
+  confirmed by G8).
