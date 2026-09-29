@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "updated_at_utc": "2026-09-29T06:20:00Z",
+  "updated_at_utc": "2026-09-29T07:05:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "eed70f0cf3458ee1f175ff54beac024ba5721b9a",
@@ -29,7 +29,7 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "governing v5 audit FAIL (Odysseus 01ac0fedf): key consumed before package validation (runner.py:607-641); selftest_protocol red at audited commit -> v6 needed (Nestor)"
+      "on": "governing v6 audit FAIL (Odysseus 7567a018b): extraction + receipts probe after key read; package can void evaluation; selftest red -> v7 needed (Nestor)"
     },
     {
       "item": "D2 adjudication",
@@ -65,7 +65,8 @@
   ],
   "operator_decisions_required": [
     "D2 S1 root of trust / branch protection (#925)",
-    "Next MWO: renew or cancel held SI freeze requests #603/#608"
+    "Next MWO: renew or cancel held SI freeze requests #603/#608",
+    "D2: Harmonia adjudication position (Addendum E) -- consumed-release attempt without result seal = FORFEIT; operator may overrule before any key release"
   ],
   "latest_reports": [
     "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md",
