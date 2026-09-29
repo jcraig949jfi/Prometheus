@@ -197,3 +197,21 @@ Mean 2nd-half excess [min, max over seeds]:
    - Each stage alone fails on at least one world of this ladder.
 4. **Claim ceiling:** dev and answer-keyed only. 4 binary worlds, T = 4000, one Lmax, one alpha. No held-out world
    family. Nothing here bears on LM01.
+
+## Tick 2026-09-29T05:50Z: held-out world family + fixed-share (heldout_eval.py; worlds_unifilar.py)
+
+- Family: random binary unifilar machines. S in {3, 4, 5} x world seeds 1..8 (24 worlds). Stream seed = world seed +
+  100; T = 4000.
+- The sampler was sanity-checked on world seeds 1001-1003 only (STAT excess only; no CSSR/EM/mixture run on any world).
+- Note: in this family the Bayes predictor KNOWS the parameters (unlike W2's posterior). So even a structurally exact
+  learner pays a KT parameter cost of roughly (S/2) log2(T)/T, about .003 in the 2nd half.
+- The fixed-share mixture uses switching rate 1e-3.
+
+### Precommitment (written BEFORE running heldout_eval.py)
+
+- H1: MIX <= min(split, EM) + .002 in >= 22/24 worlds.
+- H2: MIX family mean < .015.
+- H3: MIX family mean < min(STAT3 family mean, STAT6 family mean).
+- H4: EM family mean < split family mean.
+- H5: Even eval seeds 1..16: MIX_FS max excess < .01 AND MIX_FS mean <= .003 (fixes the late-switch seed).
+- H6: MIX_FS family mean <= MIX family mean + .001 (the price of fixed-share is small).
