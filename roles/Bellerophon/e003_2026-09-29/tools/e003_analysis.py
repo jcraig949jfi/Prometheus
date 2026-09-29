@@ -18,7 +18,10 @@ Readings of the prereg this seat applies (declared here, before production):
   The estimand is the mean over those loci, with a birth-clustered bootstrap (2,000 resamples, seed 1).
 - Painting guard (C4.6): per-birth source diversity = distinct (entity, source locus) / ENTITY loci. P1 and Q8c are
   also reported excluding births with diversity < 0.5.
-- Gated classes are self / other / none. NO_MATERIAL is reported, not gated (R1). CORRECTION 2026-09-29, pre-freeze,
+- Flip-coverage denominator (Archaeon ruling #951, pre-production): the sampled written loci meeting R1 conditions 1
+  AND 3 (ENTITY-MOVE, 0 dependence changes); the condition-1-only variant is a diagnostic. A birth-clustered CI is
+  reported, and MARGINAL is a mark only (C4.4). The class key returns TIED on a tie; TIED is gated if it occurs.
+- Gated classes are self / other / none (+ TIED). NO_MATERIAL is reported, not gated (R1). CORRECTION 2026-09-29, pre-freeze,
   made AFTER the dry run on r022153: the dry analysis had gated NO_MATERIAL (flip coverage 1/3 over 3 loci). Disclosed
   in the E-003 README.
 - Q5: the founder (ORIG) share of capable children's loci is reported. The drift-only null is NOT built (descriptive;
@@ -64,8 +67,12 @@ def perf_class(r):
             c["none"] += 1
         for e in ents:
             c[e] += 1
-    top = c.most_common(1)[0][0] if c else "none"
-    return {"W": "self", "P": "other"}.get(top, "none")
+    if not c:
+        return "none"
+    mc = c.most_common(2)
+    if len(mc) > 1 and mc[0][1] == mc[1][1]:
+        return "TIED"                                   # Archaeon ruling #951: TIED is gated if it occurs
+    return {"W": "self", "P": "other"}.get(mc[0][0], "none")
 
 
 def no_material(r):
@@ -149,7 +156,7 @@ def analyse(E, Q4, A, F, C, S, schema_mod):
             src = (d[0], int(d[1:])) if move else None
             perf = {p[0] for p in x["performer"]}
             implicit = move and any(b[0] in "WPI" and (b[0] == "I" or b[0] not in ({d[0]} | perf)) for b in x["ctrl"])
-            loci.append({"i": i, "move": move, "ident": ident, "dep_vacuous": move and a["dep_draws"] == 0, "flip": fv, "src": src,
+            loci.append({"i": i, "move": move, "ident": ident, "dep_ok": dep_ok, "dep_vacuous": move and a["dep_draws"] == 0, "flip": fv, "src": src,
                          "perf": perf, "q8c": (a["q8c_changes"] / a["q8c_draws"]) if (move and a["q8c_draws"]) else None,
                          "qin": (a["qin_changes"] / a["qin_draws"]) if a["qin_draws"] else None,
                          "nonmove": (a["nonmove_changes"] / a["nonmove_draws"]) if ((not move) and a["nonmove_draws"]) else None,
@@ -182,12 +189,17 @@ def analyse(E, Q4, A, F, C, S, schema_mod):
     out["transmission_births"] = len(TX)
     out["dep_vacuous_loci"] = sum(l["dep_vacuous"] for b in B for l in b["loci"])
     # flip coverage and failure (sample), per class
-    fc = {}                                              # coverage denominator: sampled written ENTITY-MOVE loci (R1 provenance clause)
+    fc = {}                                              # ruling #951: denominator = loci meeting R1 conditions 1 AND 3
     for cls in sorted({b["cls"] for b in B}):
-        ls = [l for b in B if b["in_sample"] and b["cls"] == cls for l in b["loci"] if l["move"] and l["flip"] is not None]
+        sel = [b for b in B if b["in_sample"] and b["cls"] == cls]
+        per_birth = [[int(l["flip"] in ("CONFIRMED", "FAILED")) for l in b["loci"] if l["move"] and l["dep_ok"] and l["flip"] is not None] for b in sel]
+        ls = [l for b in sel for l in b["loci"] if l["move"] and l["dep_ok"] and l["flip"] is not None]
+        ls1 = [l for b in sel for l in b["loci"] if l["move"] and l["flip"] is not None]
         conf = sum(l["flip"] == "CONFIRMED" for l in ls); fail = sum(l["flip"] == "FAILED" for l in ls); n = len(ls)
-        fc[cls] = {"move_loci": n, "confirmed": conf, "failed": fail, "coverage": round((conf + fail) / n, 6) if n else None,
-                   "failed_rate": round(fail / (conf + fail), 6) if conf + fail else None}
+        cov_pt, cov_ci = boot(per_birth)
+        fc[cls] = {"move_dep_loci": n, "confirmed": conf, "failed": fail, "coverage": round((conf + fail) / n, 6) if n else None,
+                   "coverage_ci95": cov_ci, "failed_rate": round(fail / (conf + fail), 6) if conf + fail else None,
+                   "diagnostic_cond1_only": {"move_loci": len(ls1), "coverage": round(sum(l["flip"] in ("CONFIRMED", "FAILED") for l in ls1) / len(ls1), 6) if ls1 else None}}
     out["flip_by_class"] = fc
     # completeness (R5) per class
     cc = {}
@@ -245,9 +257,10 @@ def analyse(E, Q4, A, F, C, S, schema_mod):
     out["Q5_drift_null"] = "NOT_COMPUTED (descriptive only)"
     # ---- gates and verdict (R3, C4.4 point estimate vs floor, CI reported) ------------------------------------------------
     gates = {}
-    GATED = ("self", "other", "none")                    # R1: NO_MATERIAL is REPORTED as its own class, not gated
+    GATED = ("self", "other", "none", "TIED")            # R1: NO_MATERIAL reported, not gated; TIED gated if it occurs (#951)
     gates["flip_failed_le_1pct"] = {c: (v["failed_rate"] is None or v["failed_rate"] <= 0.01) for c, v in fc.items() if c in GATED}
-    gates["flip_coverage_ge_50pct"] = {c: (v["coverage"] is None or v["move_loci"] == 0 or v["coverage"] >= 0.50) for c, v in fc.items() if c in GATED}
+    gates["flip_coverage_ge_50pct"] = {c: (v["coverage"] is None or v["move_dep_loci"] == 0 or v["coverage"] >= 0.50) for c, v in fc.items() if c in GATED}
+    gates["flip_coverage_marginal"] = {c: bool(v["coverage_ci95"] and v["coverage_ci95"][0] < 0.50 <= v["coverage_ci95"][1]) for c, v in fc.items() if c in GATED}
     gates["completeness_leak_le_5pct"] = {c: (v["leak_rate"] is None or v["leak_rate"] <= 0.05) for c, v in cc.items() if c in GATED}
     gates["marginal_ci_note"] = "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks"
     gates["identifiable_ge_80pct_nonNM"] = (out["identifiable_share_nonNM"][0] or 0) >= 0.80
