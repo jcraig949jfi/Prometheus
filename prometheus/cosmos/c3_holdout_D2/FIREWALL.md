@@ -370,3 +370,16 @@ A same-account child fails step 1, so nothing is ever released until the separat
 - Under Addendum H these labels are evidence only once audited truthful. Until then every post-exposure abort is FORFEIT.
 - A custodian `seal-terminal` abort carries null labels by design: the custodian asserts no cause.
 - **Package-induced disk exhaustion through the child account** is a declared residual: it aborts or, at worst, needs seal-terminal. The separate child account's quota is part of the host capability request.
+
+## v11 (2026-09-29): repairs after the v10 re-audit (roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md @ 24378a2dc)
+
+- **v10 status:** both replicas found no blocking item except S1. The auditor's must-close items, and Harmonia Addendum J (6c0c03904), are answered below.
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+
+| v10 item | v11 repair | test |
+|---|---|---|
+| No receipt recorded DELIVERY; a post-exposure stall could read as pre-exposure (Addendum J option a) | A `deliver` receipt (world index and tag) is appended BEFORE every world is sent to the package, so the chain proves which worlds could have reached it. Abort and seal-terminal records carry `deliver_records`. Under Addendum J a run with an open receipt is presumed exposed; deliver receipts are the positive evidence for any VOID reading once an audit confirms them truthful. | every world has a deliver receipt before its prediction |
+| V10-1: unbounded parent-to-child sends (a child that stops reading could stall the runner) | Every parent-to-child send (the world and every reply) runs with a deadline in a helper thread. On expiry the child is killed, which unblocks the pipe, and the world is TIMEOUT (`where` send_predict or send_reply). | an 8 MiB send to a child that never reads returns within the deadline |
+| seal-terminal could drop a verifying close that lacked a trailing newline | A verifying LAST record without its newline is kept and the newline added, so a valid close is never turned into an abort (Addendum J). | a close with its newline stripped is kept as close |
+| seal-terminal: no lock or liveness check | A live runner holds an OS-level exclusive lock on `<run>/run.lock` (msvcrt / flock) from before the consumption marker until its terminal record; the OS releases it if the process dies. seal-terminal refuses while that lock is held. | refused while a runner holds the lock; sealed after it is gone |
+| seal-terminal: not bound to the open record | Custody passes this designation's run_nonce, spec_id and committed package hash; seal-terminal refuses a run whose open record differs. | a different nonce is refused |

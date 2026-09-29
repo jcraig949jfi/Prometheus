@@ -242,8 +242,9 @@ class Custody:
             g = self._gates("DESIGNATION")
             if run_dir.name != "run_" + str(g["run_nonce"]):
                 raise CustodyRefusal("not this designation's run directory")
-            r = runner.seal_terminal(run_dir)
-        except (protocol.GateRefusal, CustodyRefusal, OSError, ValueError, KeyError) as e:
+            r = runner.seal_terminal(run_dir, expect={"run_nonce": g["run_nonce"], "spec_id": g["spec_id"],
+                                                      "package_sha256": g["package_sha256"]})
+        except (protocol.GateRefusal, CustodyRefusal, OSError, ValueError, KeyError, runner.ChainBroken) as e:
             self._refuse("seal-terminal", e)
         self._append({"event": "SEAL_TERMINAL", **r})
         return r

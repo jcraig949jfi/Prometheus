@@ -64,6 +64,7 @@ import json
 import multiprocessing as mp
 import socket
 import sys
+import threading
 import zipfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -193,6 +194,24 @@ def _dec(x):
     if isinstance(x, list):
         return [_dec(v) for v in x]
     return x
+
+
+def lock_run(path):
+    """v11 (Odysseus v10): an OS-level exclusive lock on <run>/run.lock, held by a live runner for its whole life and
+    released by the OS if it dies. Returns the open handle, or None if another live process holds it."""
+    f = open(path, "a+b")
+    try:
+        if os.name == "nt":
+            import msvcrt
+            f.seek(0)
+            msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        f.close()
+        return None
+    return f
 
 
 def _send(conn, obj) -> None:
@@ -779,7 +798,14 @@ class FirewallRun:
         if self.N != len(worlds):
             raise HiddenSetMismatch("decrypted world count differs from the manifest: nothing consumed")
         rpath = self.out / "receipts.jsonl"
-        self.receipts = Receipts.create_with_open(rpath, genesis, dict(body, utc=_utc()))   # the consumption marker
+        self._run_lock = lock_run(self.out / "run.lock")      # v11: held for the life of this runner process
+        if self._run_lock is None:
+            raise RunnerRefusal("another live runner holds this run's lock: nothing consumed")
+        try:
+            self.receipts = Receipts.create_with_open(rpath, genesis, dict(body, utc=_utc()))   # the consumption marker
+        except BaseException:
+            self._release_lock()
+            raise
         self.phase = "OPEN"
         self._worlds, self._seeds, self._tags = worlds, seeds, tags
         if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
@@ -840,6 +866,7 @@ class FirewallRun:
             self.receipts.append("abort", {
                 "phase": self.phase, "error_type": type(exc).__name__, "n_predictions_recorded": n_pred, "utc": _utc(),
                 "exposed": bool(getattr(self, "_exposed", False)), "current_world": getattr(self, "_cur_world", None),
+                "deliver_records": sum(1 for r in self.receipts.records if r["kind"] == "deliver"),
                 "in_predictor_io": bool(getattr(self, "_in_predictor_io", False)),
                 "child_exitcode": proc.exitcode if proc is not None else last.get("exitcode"),
                 "child_world": getattr(self, "_child_world", None) if proc is not None else last.get("world"),
@@ -847,10 +874,41 @@ class FirewallRun:
             self.phase = "ABORTED"
             result = result_from_records(self.receipts.records)
             _write_result(self.out, result)
+            self._release_lock()
             return result
         finally:
             if old is not None:
                 signal.signal(signal.SIGINT, old)
+
+    def _release_lock(self) -> None:
+        """v11: the run lock is released once a terminal record exists (or the marker was never written)."""
+        lk = getattr(self, "_run_lock", None)
+        if lk is not None:
+            try:
+                lk.close()
+            finally:
+                self._run_lock = None
+
+    def _send_bounded(self, obj, timeout) -> bool:
+        """v11 (Odysseus v10 V10-1): every parent->child send has a deadline. The send runs in a helper thread; if it has
+        not completed in time the child is killed (which unblocks the pipe) and False is returned. Send errors raise."""
+        conn, err = self._conn, []
+
+        def go():
+            try:
+                _send(conn, obj)
+            except BaseException as e:                       # noqa: BLE001
+                err.append(e)
+        t = threading.Thread(target=go, daemon=True)
+        t.start()
+        t.join(max(float(timeout), 0.05))
+        if t.is_alive():
+            self._stop_worker(kill=True)
+            t.join(10)
+            return False
+        if err:
+            raise err[0]
+        return True
 
     def run_all(self) -> dict:
         """prepare (refusal consumes nothing) -> open -> predict -> seal -> certify -> close; after the open record any
@@ -952,14 +1010,18 @@ class FirewallRun:
         self._in_predictor_io = bool(getattr(self, "_exposed", False))
         if self._proc is None:
             self._start_worker()
+        # v11 (Odysseus v10 / Harmonia Addendum J option a): a DELIVER receipt is written BEFORE every world is sent, so
+        # the chain proves which worlds could have reached the package; exposure is set with it
+        self.receipts.append("deliver", {"i": i, "world_tag": self._tags[i], "utc": _utc()})
+        self._exposed = True
+        self._in_predictor_io = True
+        deadline = _dt.datetime.now().timestamp() + self.predict_timeout
         try:                                                  # v8 (V7-B): a closed/broken pipe is THIS world's crash
-            _send(self._conn, ["predict", i, w.V, w.k, seed])
+            if not self._send_bounded(["predict", i, w.V, w.k, seed], self.predict_timeout):
+                return {"status": "TIMEOUT", "usage": usage, "where": "send_predict"}
         except (OSError, ValueError, EOFError):
             self._stop_worker(kill=True)
             return {"status": "PREDICTOR_CRASH", "usage": usage, "where": "send_predict"}
-        self._exposed = True                                  # Harmonia Addendum H: exposure = first world delivered
-        self._in_predictor_io = True
-        deadline = _dt.datetime.now().timestamp() + self.predict_timeout
         while True:
             left = deadline - _dt.datetime.now().timestamp()
             try:                                              # v10 (S-B/B-2): the poll is inside the per-world guard
@@ -986,7 +1048,9 @@ class FirewallRun:
                         reply = ["ret", self._serve(sysobj, msg[1], msg[2], usage)]
                     except Exception as e:                   # noqa: BLE001 -- type name only: no knob leak
                         reply = ["err", type(e).__name__]
-                    _send(self._conn, reply)
+                    left = deadline - _dt.datetime.now().timestamp()
+                    if not self._send_bounded(reply, left):   # v11: a child that stops reading cannot stall us
+                        return {"status": "TIMEOUT", "usage": usage, "where": "send_reply"}
                 elif msg[0] == "done" and len(msg) == 3 and msg[1] == i:
                     why = validate_prediction(msg[2])
                     if why:
@@ -1105,6 +1169,7 @@ class FirewallRun:
         self.phase = "CLOSED"
         result = result_from_records(self.receipts.records)     # v10: one builder for close, abort and seal-terminal
         _write_result(self.out, result)
+        self._release_lock()
         return result
 
 
@@ -1140,18 +1205,30 @@ def _write_result(out, result) -> None:
                                            newline="\n")
 
 
-def seal_terminal(run_dir) -> dict:
+def seal_terminal(run_dir, expect: dict = None) -> dict:
     """v10 (Odysseus v9 S-C / B-1 / B-4): CUSTODIAN tool for a spent run left without a sealable terminal state (the
     abort write itself failed, an interrupt landed in a residual window, or RESULT.json was not written). Keeps the
     LONGEST VERIFYING PREFIX of complete records (a torn tail is truncated), appends a custodian 'abort' when no
     terminal record exists (labels null: the custodian asserts no cause), and rebuilds RESULT.json from the receipts.
     Never removes a verifying record. Refuses when not even the open record verifies."""
     run_dir = Path(run_dir)
+    lk = lock_run(run_dir / "run.lock")                       # v11: never while a runner is alive
+    if lk is None:
+        raise ChainBroken("a live runner holds this run's lock: seal-terminal refused")
+    try:
+        return _seal_terminal_locked(run_dir, expect)
+    finally:
+        lk.close()
+
+
+def _seal_terminal_locked(run_dir, expect) -> dict:
     p = run_dir / "receipts.jsonl"
     raw = p.read_bytes()
-    keep, recs, prev, off = 0, [], None, 0
-    for line in raw.split(b"\n")[:-1]:                    # complete lines only
-        off += len(line) + 1
+    parts = raw.split(b"\n")
+    lines = [(x, True) for x in parts[:-1]] + ([(parts[-1], False)] if parts[-1] else [])
+    keep, recs, prev, off, fix_newline = 0, [], None, 0, False
+    for line, terminated in lines:                         # v11: a verifying LAST record without its newline is kept
+        off += len(line) + (1 if terminated else 0)
         try:
             r = json.loads(line.decode("utf-8"))
         except ValueError:
@@ -1165,12 +1242,21 @@ def seal_terminal(run_dir) -> dict:
             break
         recs.append(r)
         prev, keep = r["hash"], off
+        fix_newline = not terminated
     if not recs:
         raise ChainBroken("no verifying open record: nothing can be sealed")
+    if expect:                                              # v11: bound to THIS designation's open record
+        op = recs[0]["body"]
+        if op.get("run_nonce") != expect.get("run_nonce") or op.get("spec_id") != expect.get("spec_id") or \
+                op.get("package", {}).get("sha256") != expect.get("package_sha256"):
+            raise ChainBroken("the run's open record does not match this designation, spec or package")
     truncated = len(raw) - keep
-    if truncated:
+    if truncated or fix_newline:
         with open(p, "r+b") as f:
             f.truncate(keep)
+            if fix_newline:
+                f.seek(keep)
+                f.write(b"\n")
             f.flush()
             os.fsync(f.fileno())
     rc = Receipts.__new__(Receipts)
@@ -1179,6 +1265,7 @@ def seal_terminal(run_dir) -> dict:
     if recs[-1]["kind"] not in ("close", "abort"):
         rc.append("abort", {"phase": "UNKNOWN", "error_type": "SEALED_BY_CUSTODIAN", "utc": _utc(),
                             "n_predictions_recorded": sum(1 for r in recs if r["kind"] == "prediction"),
+                            "deliver_records": sum(1 for r in recs if r["kind"] == "deliver"),
                             "exposed": None, "current_world": None, "in_predictor_io": None, "child_exitcode": None,
                             "child_world": None, "disk_chain_matched": None})
         added = True
