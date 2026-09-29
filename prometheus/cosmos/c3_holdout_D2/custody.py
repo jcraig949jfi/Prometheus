@@ -168,6 +168,16 @@ class Custody:
         else:
             os.chmod(path, 0o700 if is_dir else 0o600)
 
+    def _test_decrypt(self, key: bytes) -> None:
+        """v9: the key must decrypt the sealed ciphertext on the reference (AES-GCM tag checked) before any copy is made."""
+        man_b = protocol._show(self.repo, self.ref, protocol.PKG_REL + "/MANIFEST_D2.json")
+        ct_b = protocol._show(self.repo, self.ref, protocol.PKG_REL + "/hidden_D2.enc")
+        try:
+            man = json.loads(man_b.decode("utf-8"))
+            sealbox.decrypt(key, bytes.fromhex(man["iv_hex"]), ct_b, man["family_src_sha256"])
+        except Exception as e:                                    # noqa: BLE001 -- InvalidTag etc.
+            raise CustodyRefusal("the custody key does not decrypt the sealed set (%s): nothing released" % type(e).__name__)
+
     def _write_excl(self, path: Path, data: bytes) -> None:
         fd = os.open(str(path), os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_BINARY", 0))
         with os.fdopen(fd, "wb") as f:
@@ -189,10 +199,11 @@ class Custody:
                 raise CustodyRefusal("a KEY_RELEASED record is committed: the key was already released (v3: git, not the log)")
             if self.require_preflight:                            # v6 (BP-1): a passing runner preflight first
                 protocol.preflight_ok(self.preflight_dir, g)
+            key = sealbox.read_hex_file(self.secrets_dir / KEY_NAME, sealbox.KEY_BYTES)
+            self._test_decrypt(key)                               # v9 (Odysseus v8 item 1): only a PROVEN key leaves
             dest.mkdir(parents=True)
             made = dest
             self._restrict(dest, g["account"])                    # v5: BEFORE the key exists
-            key = sealbox.read_hex_file(self.secrets_dir / KEY_NAME, sealbox.KEY_BYTES)
             self._write_excl(dest / KEY_NAME, key.hex().encode("ascii") + b"\n")
             written = dest / KEY_NAME
             del key

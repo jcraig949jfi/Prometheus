@@ -332,3 +332,21 @@ A same-account child fails step 1, so nothing is ever released until the separat
 - **The child can signal or pressure the parent.** Examples: Windows console control events to the shared console group, and memory or compute pressure through legitimate System calls. The resulting abort carries the attribution evidence above; its reading is Harmonia's.
 - **There is no code yet to start the predictor child under the separate account (V7-E).** That code will need its own audit before any designation.
 - **Crash-after-release (v7 policy) is unchanged.** The atomic marker means an ordinary exception can no longer spend the designation without a sealable terminal record.
+
+## v9 (2026-09-29): repairs after the v8 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v8/VERDICT.md @ bea18a398)
+
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+- **Adjudication reading:** Harmonia Addendum H (65329b9c5). Exposure is the first world delivered. Runner attribution labels count as evidence only once a governing audit finds them truthful.
+
+| v8 finding | v9 repair | test |
+|---|---|---|
+| 1 (V8-1, replica 1; blocking): the key was proven only after the marker, so a wrong but well-formed key spent D2 | `open()` reads the key and PROVES it BEFORE the consumption marker: it must decrypt the sealed ciphertext (AES-GCM tag checked), and the plaintext must match the manifest. The worlds, seeds and tags are also built first. Only then is receipts.jsonl created (atomically, v8) and the released copy deleted. custody `release-key` test-decrypts the custody key before any copy is made. | A well-formed wrong key is refused with the key file intact and no receipts. Custody with a wrong key releases nothing. |
+| 2 (V8-1, replica 2; blocking class): an interrupted record write could leave an unsealable chain | `Receipts.append` rolls a failed write/fsync back to the last complete record. `Receipts.repair()` truncates trailing bytes that are not in the in-memory chain, and `abort()` repairs before writing its terminal record. The chain on disk therefore always equals the chain in memory. | A simulated fsync failure on a later record: rolled back, the abort seals, the chain verifies, and custody result-seals it (terminal "abort"). |
+| 3a (V8-2): `child_exitcode` always null | The exit code is kept when the worker is stopped and reported in the abort record. | the abort carries a non-null exit code |
+| 3b (V8-3): a restart-probe failure was labelled as infrastructure | The world and the predictor-I/O label are set BEFORE the (re)start, so a restart refusal is attributed to that world. | a simulated restart failure gives an abort with current_world 0 and in_predictor_io true |
+| note (V8-6): staged package readability not checked pre-key | The pre-key probe REQUIRES the child to be able to read the staged package entry; otherwise PredictorChildFailed, before the key. | an unreadable staging is refused pre-key |
+
+**Notes carried:**
+- **Windows `poll` timing:** plausible, unverified. A per-world poll failure is a per-world status; anything else is a sealed abort, labelled.
+- **RESULT.json write failure after close:** the chain still ends in `close`. RESULT.json can be rebuilt from the receipts, but no tool does that yet; declared.
+- **The released key copy after an abort:** it is deleted right after the marker; if that deletion itself fails, the run aborts and the copy remains on M1 under the restricted ACL; declared.
