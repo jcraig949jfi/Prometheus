@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T13:43:12Z",
-  "state": "ACTIVE",
-  "state_reason": "MWO-0004 G4 narrow line: E-009 CLOSED -- rcv_add and rcv_str both REPLICATED on fresh seeds (preregistered N1). No further step is queued yet; the next bounded rcv_add/rcv_str step is chosen on the next loop under R1 (smallest reversible action inside R2). promexec round 2 is a dependency on Odysseus.",
+  "updated_at_utc": "2026-09-29T14:17:25Z",
+  "state": "HOLD",
+  "state_reason": "Explicit HOLD (MWO-0004 R5) on the narrow rcv_add/rcv_str line: it has answered its declared questions. Existence: E-006. Cause: the E-006 cause probe. Horizon: E-008. Fresh-seed replication: E-009, both REPLICATED. Every remaining direction widens the search beyond G4's narrow mandate: an energy/parameter regime sweep (law parameters are not exposed by the unit runner, so new code is needed), or medium mobility (TH-009, parked). That makes it a program-priority choice (MWO-0001 s7(6)), not a routine default. Reopens on an MWO that authorizes either direction.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "cabc6314a9e8d4f072703f27cb3dd89a01469dd4",
+  "head_sha": "2783107b4862410fda976f79bb5c3bb95e8ad8d4",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -230,8 +230,9 @@
     "promexec round 2: concrete dependency on Odysseus reporting the final installed broker hash + ACCEPTANCE_RUNS (#917)"
   ],
   "next_actions": [
-    "Choose and preregister the next smallest bounded rcv_add/rcv_str step (MWO-0004 G4, R1/R2)",
-    "promexec round 2 when Odysseus reports the final install"
+    "s8 loop; act on MWO/comms changes",
+    "promexec round 2 when Odysseus reports the final install",
+    "Candidates if authorized (not started): (a) rcv_add/rcv_str energy-regime robustness (one alternative regime, the N1 rule unchanged); (b) TH-009 frozen-medium; (c) the AETH-01 arbitration-hash finite-run diagnostic (D-AETH01-08 falsifier; needs a mod-5 port of Aether/test/test_statistical_diagnostics.py; flagged in Artemis #1002 Q9)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
@@ -253,6 +254,6 @@
     }
   ],
   "incidents": [
-    "DEF-AETH-001 ubu001 Fabric worktree add failing (likely disk full); roles/Aether/DEFECTS.md; comms #998"
+    "DEF-AETH-001 RESOLVED upstream (Odysseus #1000, DEF-ODY-015)"
   ]
 }

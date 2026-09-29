@@ -14,3 +14,7 @@
 - Not fixed by Aether (host change; MWO-0001 s6 / s7.5). Reported to Odysseus (Fabric principal).
 - Workaround used: MWO-0004 R3 native fallback on BUCKKEEP for the 16 affected E-009 units, under a canonical Fabric
   lease, same pinned code, same inputs (see ops/campaigns/C-002/E-009/RESULT.md).
+- RESOLVED 2026-09-29 by Odysseus (comms #1000): the disk had filled (232 GB, 100%) with per-worker checkout caches
+  (about 3 GB per base, never pruned). Cleaned about 12:45Z; temporary workers sci2/sci3 retired. Upstream record:
+  DEF-ODY-015 (roles/Odysseus/fabric_pilot/DEFECTS.md), bounded-cache repair under the FREEZE defect rule. E-009 had
+  already finished via native fallback, so no resubmission was needed.
