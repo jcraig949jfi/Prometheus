@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T12:40:00Z",
+ "updated_at_utc": "2026-09-29T12:55:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v10-2026-09-29 (merged to main)",
  "head_sha": "a823b596c48262b7607f8738adf5eecdf3d1a8fd",
@@ -28,14 +28,14 @@
   "D2 v10 final re-audit (should-fix): base a823b596c"
  ],
  "running": [
-  "D2 v10 final re-audit (2 replicas + 2 selftests)",
-  "key-holder scan (entry firewall-check, v4 code, comms dump)"
+  "D2 v10 final re-audit (2 replicas + 2 selftests)"
  ],
  "blocked_on": [
   "1% sample check: Archaeon's verifier-v2 task tsk-c4317a3656d0 needs a fabric worker on SKULLPORT (none exists)",
   "D2: only S1 root of trust (operator #925) and branch protection on main remain per Odysseus #977; v10 final re-audit running"
  ],
  "next_actions": [
+  "key-holder scan (entry.py firewall-check) OUTSTANDING: the 00:47 run was stopped by Claude Code for low system memory after ~5.5 h with no output; rerun only when the operator asks, narrower (current code; repo history + comms dump, not the canonical working tree)",
   "relay review results when terminal",
   "report key-holder scan booleans (public) to Odysseus",
   "host capability requests (MWO s6) when designation approaches: dedicated custodian account; separate predictor-child account + outbound firewall rule"
