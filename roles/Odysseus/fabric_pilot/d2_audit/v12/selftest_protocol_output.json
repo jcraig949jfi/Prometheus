@@ -1,3 +1,7 @@
+{"refused": true, "reason": "start firewall-check through entry.py (v4 F-KH)"}
+{"refused": true, "reason": "start allowlist through entry.py (v5 B-2)"}
+{"refused": true, "reason": "records are read from refs/remotes/origin/main only"}
+{"refused": true, "reason": "records are read from refs/remotes/origin/main only"}
 {
  "all_checks_true": true,
  "all_defect_controls_true": true,
@@ -92,8 +96,6 @@
   "v4_AST_flags_from_import_alias": true,
   "v4_AST_flags_logging": true,
   "v4_AST_flags_xmlrpc": true,
-  "v4_CWD_control_cwd_git_exe_is_found": true,
-  "v4_CWD_planted_git_exe_not_used": true,
   "v4_DEST_key_acl_restricted": true,
   "v4_DEST_local_fixed_accepted": true,
   "v4_DEST_unc_refused": true,
@@ -118,9 +120,6 @@
   "v4_entry_FIXED_equals_protocol_FIXED_RECORDS": true,
   "v4_entry_PKG_PY_is_the_package": true,
   "v4_entry_gates_pass_end_to_end": true,
-  "v5_B1_control_cwd_icacls_is_found": true,
-  "v5_B1_icacls_absolute_system_path": true,
-  "v5_B1_planted_icacls_not_used_acl_restricted": true,
   "v5_B2_allowlist_refused_unpinned": true,
   "v5_B2_allowlist_refuses_without_entry": true,
   "v5_B2_allowlist_through_entry_after_pins": true,
@@ -143,7 +142,6 @@
   "v6_BP1_release_refused_mismatched_preflight": true,
   "v6_BP1_release_refused_without_preflight": true,
   "v6_BP1_wrong_hash_package_refused_before_key": true,
-  "v6_account_sid_equality": true,
   "v7_1_receipts_standin_probed_before_key": true,
   "v7_1_staging_failure_before_key": true,
   "v7_1_unstageable_name_refused_bad_char": true,
@@ -217,7 +215,14 @@
   "wrong_runner_id": "RunnerNotDesignated"
  },
  "hidden_set_or_key_touched": false,
- "not_applicable_on_this_os": [],
+ "not_applicable_on_this_os": [
+  "v4_CWD_control_cwd_git_exe_is_found",
+  "v4_CWD_planted_git_exe_not_used",
+  "v5_B1_control_cwd_icacls_is_found",
+  "v5_B1_icacls_absolute_system_path",
+  "v5_B1_planted_icacls_not_used_acl_restricted",
+  "v6_account_sid_equality"
+ ],
  "reasons": {
   "v6_BP1_flagged_refusal_reason": "PackageAuditRefusal",
   "v6_BP1_wrong_hash_refusal_reason": "PackageHashMismatch"

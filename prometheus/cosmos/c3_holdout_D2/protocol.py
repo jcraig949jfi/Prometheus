@@ -54,7 +54,9 @@ DEFAULT_REF = "refs/remotes/origin/main"
 SHORT_REF = "origin/main"
 SEAL_COMMIT = "95b31a30d06daa973a27ca0cacd4b768ec7d5fff"                             # pinned (S5)
 SPEC_ID = "e2d3213b02aae58b0b20bbd6b5a296545b6335078ae6a0a382ceaf346dc0d9fe"         # pinned (S5)
-DEFAULT_ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
+# v12 (MWO-0004 D2-1): the custodian ALLOW-LIST is now the append-only, hash-chained M1 ANCHOR (the parameter keeps
+# its historic name "allowlist" throughout the code).
+DEFAULT_ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")
 RUN_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/runs")   # v7: not shared with the allow-list / custody log
 PREFLIGHT_FORMAT = "c3-D2-preflight/1"
 CUSTODIAN_ACCOUNT = "jcrai"
@@ -439,9 +441,60 @@ def record_sha(b: bytes) -> str:
     return sealbox.sha256_hex(b.replace(b"\r\n", b"\n"))
 
 
-def _is_allowlisted(allowlist, role, name, b) -> bool:
+ANCHOR_FORMAT = "c3-D2-anchor/1"
+ANCHOR_GENESIS = "0" * 64
+
+
+def _entry_hash(e: dict) -> str:
+    return sealbox.sha256_hex(json.dumps({k: v for k, v in e.items() if k != "entry_hash"}, sort_keys=True,
+                                         separators=(",", ":")).encode("utf-8"))
+
+
+def anchor_entries(path) -> list:
+    """v12 (MWO-0004 D2-1): read the append-only M1 anchor (JSONL, one entry per line) and VERIFY its hash chain: every
+    entry carries prev = the previous entry's entry_hash (genesis 0*64) and entry_hash = sha256 of its canonical body.
+    An edited, removed or reordered entry breaks the chain -> NotAllowListed (fail closed)."""
+    path = Path(path)
+    if not path.is_absolute():
+        raise NotAllowListed("the anchor path %s is not absolute on this OS" % path)
     try:
-        _allowlisted(allowlist, role, name, b)
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return []
+    except OSError as e:
+        raise NotAllowListed("anchor unreadable (%s): %s" % (path, type(e).__name__))
+    out, prev = [], ANCHOR_GENESIS
+    for n, line in enumerate(x for x in lines if x.strip()):
+        try:
+            e = json.loads(line)
+        except ValueError:
+            raise NotAllowListed("anchor line %d is not JSON" % n)
+        if e.get("format") != ANCHOR_FORMAT or e.get("prev") != prev or e.get("entry_hash") != _entry_hash(e):
+            raise NotAllowListed("anchor hash chain broken at entry %d" % n)
+        out.append(e)
+        prev = e["entry_hash"]
+    return out
+
+
+def anchor_append(path, entry: dict) -> dict:
+    """Append ONE entry to the anchor (O_APPEND, fsync), chained to the last entry. Never rewrites the file."""
+    path = Path(path)
+    prior = anchor_entries(path)
+    e = dict(entry, format=ANCHOR_FORMAT, prev=prior[-1]["entry_hash"] if prior else ANCHOR_GENESIS)
+    e["entry_hash"] = _entry_hash(e)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_APPEND | getattr(os, "O_BINARY", 0))
+    try:
+        os.write(fd, (json.dumps(e, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8"))
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+    return e
+
+
+def _is_allowlisted(allowlist, role, name, b, repo=None, ref=None) -> bool:
+    try:
+        _allowlisted(allowlist, role, name, b, repo=repo, ref=ref)
         return True
     except NotAllowListed:
         return False
@@ -458,19 +511,35 @@ def once_record_present(repo, ref, name) -> bool:
     return bool(p.stdout.strip())
 
 
-def _allowlisted(allowlist, role: str, name: str, b: bytes):
+def _allowlisted(allowlist, role: str, name: str, b: bytes, repo=None, ref=None, added_commit=None):
+    """v12 (MWO-0004 D2-1): the record is trusted only if the M1 ANCHOR (hash chain verified) holds an entry for this
+    role, record and blob sha256, AND -- verified against the repository before every gated step --
+      1. the anchored commit exists;
+      2. it is an ancestor of (or equal to) the resolved origin/main commit;
+      3. the record at that commit still has the anchored blob sha256;
+      4. it is the commit that added the record (when the caller knows it).
+    Any mismatch fails closed."""
     if allowlist is False:                                        # explicitly disabled (tests of other gates only)
         return
-    path = Path(allowlist)
-    if not path.is_absolute():                                # v6: custody is M1-only; never a relative path
-        raise NotAllowListed("the allow-list path %s is not absolute on this OS" % path)
-    try:
-        entries = json.loads(path.read_text(encoding="utf-8"))["entries"]
-    except Exception as e:                                        # noqa: BLE001
-        raise NotAllowListed("custodian allow-list unreadable (%s): %s" % (path, type(e).__name__))
+    entries = anchor_entries(allowlist)
     h = record_sha(b)
-    if not any(e.get("role") == role and e.get("record") == name and e.get("sha256") == h for e in entries):
-        raise NotAllowListed("%s (%s, sha256 %s...) is not in the custodian's allow-list" % (name, role, h[:12]))
+    cands = [e for e in entries if e.get("role") == role and e.get("record") == name and e.get("sha256") == h]
+    if not cands:
+        raise NotAllowListed("%s (%s, sha256 %s...) is not anchored" % (name, role, h[:12]))
+    if repo is None:
+        return
+    e = cands[0]
+    c = str(e.get("commit") or "")
+    rel = e.get("path") or (PROTO_REL + "/" + name)
+    if _git(Path(repo), "cat-file", "-e", c + "^{commit}").returncode != 0:
+        raise NotAllowListed("%s: the anchored commit %s does not exist" % (name, c[:12]))
+    if ref is not None and c != ref and _git(Path(repo), "merge-base", "--is-ancestor", c, ref).returncode != 0:
+        raise NotAllowListed("%s: the anchored commit %s is not an ancestor of %s" % (name, c[:12], ref[:12]))
+    at = _show(Path(repo), c, rel)
+    if at is None or record_sha(at) != h:
+        raise NotAllowListed("%s: the record at the anchored commit does not have the anchored sha256" % name)
+    if added_commit is not None and c != added_commit:
+        raise NotAllowListed("%s: anchored commit %s is not the commit that added the record" % (name, c[:12]))
 
 
 # ---------------------------------------------------------------- the gates
@@ -512,7 +581,8 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     # allow-listed audit records are considered; the highest-n allow-listed one governs; others are reported, ignored.
     all_audits = sorted((int(AUDIT_RE.match(n).group(1)), n) for n in _proto_tree(repo, ref) if AUDIT_RE.match(n))
     audits = [(n, name) for n, name in all_audits
-              if _is_allowlisted(allowlist, "AUDIT", name, _show(repo, ref, PROTO_REL + "/" + name) or b"")]
+              if _is_allowlisted(allowlist, "AUDIT", name, _show(repo, ref, PROTO_REL + "/" + name) or b"",
+                                 repo=repo, ref=ref)]
     st["audits_ignored_not_allowlisted"] = [name for _n, name in all_audits if (_n, name) not in audits]
     if not audits:
         raise AuditMissing("no allow-listed protocol/FIREWALL_AUDIT_<n>.json on %s" % ref)
@@ -529,7 +599,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise AuditMissing("governing audit %s has the wrong format, spec_id or n" % gov)
     if au.get("verdict") != "PASS":
         raise AuditNotPass("governing audit %s verdict is %r, not PASS" % (gov, au.get("verdict")))
-    _allowlisted(allowlist, "AUDIT", gov, au_b)
+    _allowlisted(allowlist, "AUDIT", gov, au_b, repo=repo, ref=ref, added_commit=au_c)
     bound = au.get("code_sha256") or {}
     if set(bound) != set(AUDITED_FILES):
         raise AuditStale("the audit does not bind exactly AUDITED_FILES")
@@ -557,7 +627,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise CommitmentMissing("prediction commitment has the wrong format, spec_id or package hash")
     if not _strict_ancestor(repo, au_c, cm_c):
         raise RecordOrderViolation("predictions were committed before the governing firewall audit")
-    _allowlisted(allowlist, "COMMITMENT", COMMITMENT_FILE, cm_b)
+    _allowlisted(allowlist, "COMMITMENT", COMMITMENT_FILE, cm_b, repo=repo, ref=ref, added_commit=cm_c)
     if package_sha256 is not None and package_sha256.lower() != cm["package_sha256"].lower():
         raise PackageNotCommitted("package sha256 differs from the committed prediction package")
     st.update(commitment_commit=cm_c, package_sha256=cm["package_sha256"])
@@ -577,7 +647,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise RunnerNotDesignated("the designated runner account must not be the custodian's account")
     if not _strict_ancestor(repo, cm_c, ds_c):
         raise RecordOrderViolation("runner designated before the prediction commitment")
-    _allowlisted(allowlist, "DESIGNATION", DESIGNATION_FILE, ds_b)
+    _allowlisted(allowlist, "DESIGNATION", DESIGNATION_FILE, ds_b, repo=repo, ref=ref, added_commit=ds_c)
     h = (host or socket.gethostname()).upper()
     if h in FORBIDDEN_HOSTS:
         raise ForbiddenHost("this host (%s) is Cosmos's machine" % h)
@@ -597,7 +667,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     # 5. RESULT_SEAL
     rs_b, rs = _load_bytes(repo, ref, RESULT_SEAL_FILE, ResultNotSealed)
     rs_c = _added_once(repo, ref, PROTO_REL + "/" + RESULT_SEAL_FILE, ResultNotSealed)
-    _allowlisted(allowlist, "RESULT_SEAL", RESULT_SEAL_FILE, rs_b)          # v3: result seal authenticated too
+    _allowlisted(allowlist, "RESULT_SEAL", RESULT_SEAL_FILE, rs_b, repo=repo, ref=ref, added_commit=rs_c)
     if rs.get("format") != RESULT_SEAL_FORMAT or rs.get("spec_id") != spec_id or \
             rs.get("package_sha256") != cm["package_sha256"] or not rs.get("chain_head") or \
             not rs.get("result_sha256") or rs.get("run_nonce") != ds["run_nonce"]:

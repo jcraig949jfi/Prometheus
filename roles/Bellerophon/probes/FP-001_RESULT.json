@@ -1,0 +1,24 @@
+{
+  "seat": "Bellerophon",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "python -m prometheus.z80atlas.multiday_campaign --inputs roles/Bellerophon/multiday_2026-09-26/receipts/md_inputs.json --plan-only (rebuild of the frozen E-BEL-MD plan; expected plan_sha256 1ab324d5..., 4160 runs)",
+  "base_sha": "2e716f7c7bc19ea0dd71a99abafb6a5d0db8a59f",
+  "execution": "fabric",
+  "fabric_tasks": [
+    "tsk-e951f8544793",
+    "tsk-9be92dd00323"
+  ],
+  "fabric_attempts": [
+    "att-095f68889549",
+    "att-1fce88cfe266"
+  ],
+  "lease": null,
+  "wall_seconds": 24,
+  "result": "PASS",
+  "artifact_hashes": [
+    "stdout sha256 31067b17135a589e10c0d81b0146e85dacd216f4f6a0a745cd652bbc3a2a62b6 (both replicas identical)"
+  ],
+  "fabric_blocker": null,
+  "notes": "Two independent replicas (worker.ubu001.sci, worker.ubu001.sci3) printed identical stdout reproducing the frozen plan hash 1ab324d59bc702688716514d95de46b9ea944a59f6612f5d5318b63e2c7f4259 and 4160 runs. Wall = claim 07:54:52.41 -> completed 07:55:16.52 ET (task events). MWO-0003 was already superseded by MWO-0004 when this seat's loop fetched; both found by the same loop tick."
+}

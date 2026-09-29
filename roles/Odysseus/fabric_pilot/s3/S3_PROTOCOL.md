@@ -3,6 +3,13 @@
 - **Prepared by:** Odysseus (ubu001), 2026-09-28, per the operator ruling (verbatim to be filed alongside).
 - **Status:** DRAFT, READY FOR THE PRINCIPAL (2026-09-29). The principal fills in section 3, and freezes this file by
   commit BEFORE the one submission.
+- **MWO-0004 G1 (2026-09-29), supersedes the placement below:** Artemis runs S3 from her EXISTING instance on
+  ubu002. The same-host/separate-session test on ubu001 is dropped for this run and recorded as **NOT RUN** (not
+  passed). No operator-managed session is started.
+  - Canaries for this run: the Odysseus-seat canary and the host fixture on ubu001, where the generic workers
+    execute.
+  - An Artemis-context canary on ubu001 is not applicable, because her seat memory lives on ubu002 and no Fabric
+    worker runs there.
 - **Rulings folded in:**
   - operator 2026-09-29 (prompts/2026-09-28_fabric/06_*): Artemis is the principal, after her self-test's blinded
     scoring and unsealing (done); the same principal as the control gives the strongest comparison;

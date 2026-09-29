@@ -1,12 +1,12 @@
 {
  "schema": "prometheus.work_state.v1",
  "seat": "Odysseus",
- "mwo_id": "MWO-0003",
- "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
- "updated_at_utc": "2026-09-29T11:37:20Z",
+ "mwo_id": "MWO-0004",
+ "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+ "updated_at_utc": "2026-09-29T12:11:38Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "d9f93461cf449950cbfc97a5fe6e8409f500618a",
+ "head_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
  "threads": [
   {
    "id": "thr-d2-firewall-audit",
@@ -43,35 +43,32 @@
   }
  ],
  "fabric_tasks": [
-  "FP-001 Fabric recovery probe tsk-8336e01d66d9: PASS (roles/Odysseus/probes/FP-001_RESULT.json)",
-  "D2 re-audits v2..v11 adjudicated FAIL; v11 @e47d6fbbb code-clean, FAIL solely on S1 (d2_audit/v11/VERDICT.md)"
+  "D2 v12 @b0763ebaa (MWO-0004 D2-2 bounded re-audit): FAIL on V12-1 (anchored records skipped rather than refused); ONE final repair + ONE final re-audit remain (d2_audit/v12/VERDICT.md)",
+  "FP-001 Fabric recovery probe tsk-8336e01d66d9: PASS"
  ],
  "running": [
   "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: worker.ubu001.a/.b (claude, script; audit.security.adversarial), worker.ubu001.sci (script); temporary worker.ubu001.sci2/.sci3 (1 h idle exit, DEF-ODY-014)"
  ],
  "blocked_on": [
-  "D2: PAUSED by MWO-0003 s7 (and the operator time box #985). No D2 repair or audit cycle while S1 (#925) is unresolved; evidence, custody and gates preserved. C3 blocked on D2",
-  "S3: Artemis must run on ubu001 in its own worktree (#936: Artemis is on ubu002; workload drafted, not frozen)",
-  "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
-  "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
+  "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed",
+  "D2: Nestor's ONE final bounded repair (V12-1 anchor-based audit set; anchor KEY_RELEASED/REVEALED; expect-commit/sha; rollback), then ONE final re-audit (MWO-0004 D2-2). PASS: commit FIREWALL_AUDIT_1. FAIL: D2 HOLD. C3 blocked on D2",
+  "S3: Artemis on ubu002 is the principal (MWO-0004 G1); same-host separation test NOT RUN. Awaiting Artemis's frozen workload"
  ],
  "next_actions": [
-  "D2 is PAUSED (MWO-0003 s7): no D2 audit cycle until the operator resolves S1 (#925) through its own channel, or a later MWO changes this",
-  "support S3 when Artemis runs on ubu001: plant the three canaries, stay out of her Tasks, score quality afterwards",
-  "record Fabric limitations surfaced by MWO work and census reports (roles/Odysseus/fabric_pilot/DEFECTS.md; MWO-0002 s6)"
+  "adjudicate the FINAL D2 re-audit when it lands (MWO-0004 D2-2): PASS: commit FIREWALL_AUDIT_1.json in one commit on main and post the commit to Nestor, who anchors it. FAIL: record the defect, D2 HOLD, no more rounds",
+  "S3 under MWO-0004 G1: when Artemis freezes the workload, plant the Odysseus-seat and host canaries on ubu001, stay out of her Tasks, score quality afterwards",
+  "record Fabric limitations surfaced by MWO work (roles/Odysseus/fabric_pilot/DEFECTS.md)"
  ],
- "operator_decisions_required": [
-  "S3 needs an Artemis Claude session launched on ubu001 in its own worktree (host/session action; Odysseus cannot start it)",
-  "D2 S1 root of trust for protocol records (#925) and branch protection on main: now the SOLE blocker of the D2 firewall PASS (v9 verdict)"
- ],
+ "operator_decisions_required": [],
  "latest_reports": [
+  "roles/Odysseus/fabric_pilot/d2_audit/v12/VERDICT.md",
   "roles/Odysseus/probes/FP-001_RESULT.json",
-  "roles/Odysseus/fabric_pilot/d2_audit/v11/VERDICT.md",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
   "roles/Odysseus/fabric_pilot/s2/RESULT.md",
   "fabric/promexec/STATUS_EXPERIMENTAL.md"
  ],
- "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
- "comms_cursor": 987,
- "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json"
+ "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+ "comms_cursor": 992,
+ "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
+ "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed; promexec NOT ENABLED is standing policy (MWO-0001 s6), not a pending decision"
 }

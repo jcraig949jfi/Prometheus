@@ -1,0 +1,19 @@
+{
+ "mwo": "MWO-0004 G2 + R3 (native fallback: no Fabric worker can host SKULLPORT-local files; tsk-c4317a3656d0 canceled)",
+ "delegation": "Archaeon comms #989",
+ "host": "SKULLPORT (M1)",
+ "base_sha": "b596883a3886239c75b32f90bf3629922150e864",
+ "command": "python -m archaeon.attribution.probes.npe_sample_task (NPE_SAMPLE_DIR=candidate 1, FABRIC_OUT_DIR=scratch)",
+ "candidate_dir": "F:/Prometheus-worktrees/nestor-s1-forensics/roles/Nestor/campaigns/ancestry-replay-2026-09-28/_scratch/exports_run1_original (read-only)",
+ "exit_code": 2,
+ "exit_meaning": "SCHEMA_UNDECLARED (stage 1 PASSED; stage 2 stopped before any comparison; key names only reported)",
+ "stage1": "SAMPLE VERIFIED (addendum 5 content identity): True (11 files, 28055 records); gz bytes differ (reported)",
+ "wall_seconds": 4,
+ "lease": "lse-3b4e395d9869 (skullport:cpu8, released)",
+ "candidate_2_run": false,
+ "outputs_sha256": {
+  "VERIFY.txt": "afe542743c8adbccbc65d44124f1bb365d1348d1f4b37e435bc37221130eb0ac",
+  "AGREEMENT.txt": "082970f47fa32b3a18e1dc7ac3c5d108cde5cdd7995aef6d9378a2d7422d5fbf"
+ },
+ "sample_files_in_git": false
+}

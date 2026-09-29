@@ -1,20 +1,20 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Aether",
-  "mwo_id": "MWO-0003",
-  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
-  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
-  "updated_at_utc": "2026-09-29T11:39:46Z",
-  "state": "HOLD",
-  "state_reason": "MWO-0003 adopted; FP-001 PASS (E-007 T-001 on Fabric, 2 replicas agree with the known answer). Not affected by the D2 pause. HOLD: physics-search continuation is a pending operator decision (MWO-0002 s8); promexec round 2 waits on Odysseus's final install. TH-007..012 parked.",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T12:12:55Z",
+  "state": "WORKING",
+  "state_reason": "MWO-0004 G4: the narrow rcv_add / rcv_str line continues within R2. E-009 (fresh-seed replication of the Block D positives, preregistered at c6196efb4) is running as 20 Fabric Tasks. FP-001 PASS (MWO-0003). TH-008..012 parked; TH-007 active only for this narrow line.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "9c666e8f8d34a51f216417fda10629fe75eb11d1",
+  "head_sha": "c6196efb4871fcbfbdd87849bd6b03f877619b43",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
       "id": "thr-10216c7f001e",
       "alias": "TH-007",
-      "state": "PARKED"
+      "state": "ACTIVE (narrow rcv_add/rcv_str line, MWO-0004 G4)"
     },
     {
       "id": "thr-040bc887221b",
@@ -43,9 +43,18 @@
     }
   ],
   "campaigns": [
-    "AETH-03 (ops/campaigns/C-002)"
+    {
+      "id": "C-002",
+      "alias": "AETH-03",
+      "path": "ops/campaigns/C-002"
+    }
   ],
   "experiments": [
+    {
+      "id": "E-009",
+      "status": "RUNNING",
+      "prereg": "ops/campaigns/C-002/E-009/EXPERIMENT.md@c6196efb4"
+    },
     {
       "id": "E-008 (E-AETH03-DHORIZON)",
       "status": "CLOSED",
@@ -59,6 +68,126 @@
     }
   ],
   "fabric_tasks": [
+    {
+      "id": "tsk-f936bf5d83e2",
+      "unit": "E9-rcv_str-s4",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-c6ff929b112b",
+      "unit": "E9-rcv_str-s5",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-52b284756c22",
+      "unit": "E9-rcv_str-s6",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-69ecb9a9bc1a",
+      "unit": "E9-rcv_str-s7",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-df5c41fbdfbe",
+      "unit": "E9-rcv_add-s4",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-52ca1d6c0e93",
+      "unit": "E9-rcv_add-s5",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-e09d4269c89e",
+      "unit": "E9-rcv_add-s6",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-814172ae320e",
+      "unit": "E9-rcv_add-s7",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-8fb852d1bab3",
+      "unit": "E9-rcv-s4",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-198642a92c8a",
+      "unit": "E9-rcv-s5",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-f4cf2718deb9",
+      "unit": "E9-rcv-s6",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-e87953d9e04f",
+      "unit": "E9-rcv-s7",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-83d750b583fe",
+      "unit": "E9-add-s4",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-33d0de30ed10",
+      "unit": "E9-add-s5",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-737874d983e2",
+      "unit": "E9-add-s6",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-8ec055575f87",
+      "unit": "E9-add-s7",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-743a1db43336",
+      "unit": "E9-str-s4",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-cf81375d1e54",
+      "unit": "E9-str-s5",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-88482dd2afe4",
+      "unit": "E9-str-s6",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
+    {
+      "id": "tsk-7d6f66d41433",
+      "unit": "E9-str-s7",
+      "experiment": "E-009",
+      "state": "submitted"
+    },
     {
       "id": "tsk-f11c5d60cb83",
       "unit": "T-087",
@@ -95,18 +224,17 @@
       "state": "completed"
     }
   ],
-  "running": [],
+  "running": [
+    "Fabric: E-009, 20 assay units (python.numpy workers on ubu001)"
+  ],
   "blocked_on": [
-    "promexec round 2: Odysseus to report the final installed broker hash + ACCEPTANCE_RUNS (#917)",
-    "physics-search continuation: next MWO review (operator ruling 2026-09-28)"
+    "promexec round 2: concrete dependency on Odysseus reporting the final installed broker hash + ACCEPTANCE_RUNS (#917)"
   ],
   "next_actions": [
-    "s8 seat loop; act on comms/MWO changes",
-    "promexec round 2 when requested"
+    "Collect E-009's 20 units, verify, reduce with aeth03_combinations_reduce.py (fd7ca4fde), apply the preregistered N1 rule, record RESULT + Amendment in PHYSICS_DESIGN_03",
+    "promexec round 2 when Odysseus reports the final install"
   ],
-  "operator_decisions_required": [
-    "Continuing the physics search (narrow rcv_add/rcv_str, redirect to TH-009, hand-offs TH-010..012): deferred to the next MWO review; input is Aether/AETH-03/RESEARCH_BLOCK_SYNTHESIS_2026-09-27.md"
-  ],
+  "operator_decisions_required": [],
   "latest_reports": [
     "roles/Aether/probes/FP-001_RESULT.json",
     "ops/campaigns/C-002/E-008/RESULT.md",
