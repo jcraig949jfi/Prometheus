@@ -67,3 +67,23 @@ Predictions, Even process, 16 seeds, grid k in {0, 1, 2, 3, 4, 6, 8, 10}:
 
 Failure: P1 fails if the argmin is outside {6, 8}; P2 fails if the argmin is not 8.
 The script is `optimum_vs_T.py`. It reuses the worker's generator and learners unchanged, importing them from its code.
+
+### Result (run after the precommitment commit 1366cced3; output in optimum_vs_T.txt)
+
+```
+T=  4000 k0:.2535 k1:.2087 k2:.1301 k3:.1113 k4:.0753 k6:.0597 k8:.0750 k10:.1210  argmin=k6
+T= 16000 k0:.2530 k1:.2087 k2:.1271 k3:.1063 k4:.0665 k6:.0403 k8:.0358 k10:.0507  argmin=k8
+T= 64000 k0:.2522 k1:.2080 k2:.1262 k3:.1044 k4:.0639 k6:.0341 k8:.0221 k10:.0222  argmin=k8
+```
+
+- P1 SURVIVES: at T = 16000 the argmin is k = 8, inside {6, 8}.
+- P2 SURVIVES NOMINALLY ONLY: k8 = .0221 vs k10 = .0222, a margin of 1e-4. That is far inside seed noise, so k8 and
+  k10 are a TIE at T = 64000.
+  - "Not 10" was not decisively tested.
+  - The honest reading is that the optimum sits at k 8-10 by T = 64000.
+- The direction of the effect (the optimum moves up with T) is unambiguous: k6 -> k8 -> k8/k10. Each learner's excess
+  falls toward its exact floor (k6 -> .0315, k8 -> .0157).
+- Consequence for PKG-S1 reading 3: "discard distinctions" is a DATA-DEPENDENT optimum over window statistics, not a
+  fixed property of the world.
+  - Only the causal-state statistic (2 states) is optimal at every T.
+  - This is the Still-Crutchfield / Shalizi CSSR picture, reproduced with answer-keyed numbers.
