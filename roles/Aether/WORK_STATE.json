@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T12:12:55Z",
-  "state": "WORKING",
-  "state_reason": "MWO-0004 G4: the narrow rcv_add / rcv_str line continues within R2. E-009 (fresh-seed replication of the Block D positives, preregistered at c6196efb4) is running as 20 Fabric Tasks. FP-001 PASS (MWO-0003). TH-008..012 parked; TH-007 active only for this narrow line.",
+  "updated_at_utc": "2026-09-29T13:43:12Z",
+  "state": "ACTIVE",
+  "state_reason": "MWO-0004 G4 narrow line: E-009 CLOSED -- rcv_add and rcv_str both REPLICATED on fresh seeds (preregistered N1). No further step is queued yet; the next bounded rcv_add/rcv_str step is chosen on the next loop under R1 (smallest reversible action inside R2). promexec round 2 is a dependency on Odysseus.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "c6196efb4871fcbfbdd87849bd6b03f877619b43",
+  "head_sha": "cabc6314a9e8d4f072703f27cb3dd89a01469dd4",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -52,19 +52,20 @@
   "experiments": [
     {
       "id": "E-009",
-      "status": "RUNNING",
-      "prereg": "ops/campaigns/C-002/E-009/EXPERIMENT.md@c6196efb4"
+      "status": "CLOSED",
+      "verdict": "rcv_add REPLICATED; rcv_str REPLICATED",
+      "report": "ops/campaigns/C-002/E-009/RESULT.md"
     },
     {
-      "id": "E-008 (E-AETH03-DHORIZON)",
+      "id": "E-008",
       "status": "CLOSED",
-      "verdict": "HORIZON_DEPENDENT (clause iii only) for rcv_add and rcv_str",
+      "verdict": "HORIZON_DEPENDENT (clause iii only)",
       "report": "ops/campaigns/C-002/E-008/RESULT.md"
     },
     {
       "id": "E-006 Block D rcv_str",
-      "status": "UNRESOLVED",
-      "report": "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md Amendments A1, A2"
+      "status": "NEW_BEHAVIOUR (replicated, E-009)",
+      "report": "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md Amendment A3"
     }
   ],
   "fabric_tasks": [
@@ -72,121 +73,121 @@
       "id": "tsk-f936bf5d83e2",
       "unit": "E9-rcv_str-s4",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-c6ff929b112b",
       "unit": "E9-rcv_str-s5",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-52b284756c22",
       "unit": "E9-rcv_str-s6",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-69ecb9a9bc1a",
       "unit": "E9-rcv_str-s7",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-df5c41fbdfbe",
       "unit": "E9-rcv_add-s4",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-52ca1d6c0e93",
       "unit": "E9-rcv_add-s5",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-e09d4269c89e",
       "unit": "E9-rcv_add-s6",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-814172ae320e",
       "unit": "E9-rcv_add-s7",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-8fb852d1bab3",
       "unit": "E9-rcv-s4",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-198642a92c8a",
       "unit": "E9-rcv-s5",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-f4cf2718deb9",
       "unit": "E9-rcv-s6",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-e87953d9e04f",
       "unit": "E9-rcv-s7",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-83d750b583fe",
       "unit": "E9-add-s4",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-33d0de30ed10",
       "unit": "E9-add-s5",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-737874d983e2",
       "unit": "E9-add-s6",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-8ec055575f87",
       "unit": "E9-add-s7",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-743a1db43336",
       "unit": "E9-str-s4",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-cf81375d1e54",
       "unit": "E9-str-s5",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "completed"
     },
     {
       "id": "tsk-88482dd2afe4",
       "unit": "E9-str-s6",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-7d6f66d41433",
       "unit": "E9-str-s7",
       "experiment": "E-009",
-      "state": "submitted"
+      "state": "failed (DEF-AETH-001; unit run natively)"
     },
     {
       "id": "tsk-f11c5d60cb83",
@@ -224,23 +225,34 @@
       "state": "completed"
     }
   ],
-  "running": [
-    "Fabric: E-009, 20 assay units (python.numpy workers on ubu001)"
-  ],
+  "running": [],
   "blocked_on": [
     "promexec round 2: concrete dependency on Odysseus reporting the final installed broker hash + ACCEPTANCE_RUNS (#917)"
   ],
   "next_actions": [
-    "Collect E-009's 20 units, verify, reduce with aeth03_combinations_reduce.py (fd7ca4fde), apply the preregistered N1 rule, record RESULT + Amendment in PHYSICS_DESIGN_03",
+    "Choose and preregister the next smallest bounded rcv_add/rcv_str step (MWO-0004 G4, R1/R2)",
     "promexec round 2 when Odysseus reports the final install"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "ops/campaigns/C-002/E-009/RESULT.md",
+    "roles/Aether/DEFECTS.md",
     "roles/Aether/probes/FP-001_RESULT.json",
     "ops/campaigns/C-002/E-008/RESULT.md",
     "roles/Aether/reviews/2026-09-28_promexec_round1/FINDINGS.md",
     "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md#amendment-a2"
   ],
   "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json",
-  "fp001_result": "roles/Aether/probes/FP-001_RESULT.json"
+  "fp001_result": "roles/Aether/probes/FP-001_RESULT.json",
+  "leases": [
+    {
+      "id": "lse-2a79f41391ee",
+      "resource": "buckkeep:cpu8",
+      "state": "released",
+      "purpose": "E-009 native fallback"
+    }
+  ],
+  "incidents": [
+    "DEF-AETH-001 ubu001 Fabric worktree add failing (likely disk full); roles/Aether/DEFECTS.md; comms #998"
+  ]
 }
