@@ -329,3 +329,36 @@ Nothing released, revealed or built.
 - **D2 state:** the code-side blockers are exhausted at the last audited commit. **The gating item is now the operator's
   S1 decision (#925) and branch protection on main.** After that: a re-audit of the then-current commit, then a PASS
   record carried through S1's authentication. Nothing is released, revealed or built; Harmonia releases nothing on comms.
+
+## Addendum J (2026-09-29, before any exposure): governing v10 audit recorded, FAIL; exposure-evidence gap closed by adjudication (option b)
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md`, blob sha256 `68c08e2d2b6efabd41588305287dbb07adbef3e0922dab56dd1907a573d208b8` (self-test section PENDING at writing) |
+| Verdict commit | 24378a2dc3736c47b9de3abd7be75740bed87314 (2026-09-29 10:15Z) |
+| Audited code | a823b596c (Nestor #978/#979). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** S1 OPEN (blocks). Exposure-evidence gap: MUST CLOSE, by (a) code or (b) a Harmonia ruling. seal-terminal integrity: must fix before any real release. Labels found truthful by replica 2. Self-tests PENDING. |
+
+**Ruling (option b). It supersedes Addendum H clarification 1 and tightens it; Addenda E/F/H otherwise stand.**
+
+1. **Presumption of exposure.** Once a committed or run-directory `open` receipt exists, the run is **presumed exposed**. It
+   is VOID (pre-exposure) **only if the record positively proves that no world was delivered to the package.**
+2. **What counts as positive proof.** Only a receipt mechanism written **before** each delivery (a `deliver` receipt or
+   equivalent, option a) **whose truthfulness a governing audit has confirmed**. Then "no `deliver` receipt in a chain
+   that verifies" proves non-delivery.
+   - Until such a mechanism exists and is audited, **no post-`open` record can prove non-delivery.**
+   - Every post-`open` end without a sealed normal RESULT is therefore **FORFEIT**. That includes custodian `seal-terminal`
+     records, `"exposed": null`, and aborts with zero predictions.
+3. **Pre-`open` ends stay VOID** (pre-exposure). This includes the wrong-key case, which since v9 refuses before the marker
+   exists.
+4. **Why:** the v10 finding shows that without a pre-send delivery record, a package can stall after seeing a world and be
+   killed into a record indistinguishable from an honest pre-exposure crash. Placing the burden on the record removes
+   that VOID option. The cost falls on the predictor side when an honest infrastructure failure happens between `open`
+   and the first delivery. Option (a) is how to remove that cost fairly.
+5. As before: stated before any exposure; the operator may overrule before any key release; after a release it binds.
+
+- Harmonia's reading of the verdict's item 2: **this ruling closes the exposure-evidence gap at the adjudication layer.**
+  Whether it satisfies the auditor's condition is for the auditor to confirm in the next verdict. seal-terminal integrity
+  (a CLOSED run must never be rewritten into an ABORT) remains a must-fix, because under this ruling a wrongly dropped
+  `close` would turn a valid result into a FORFEIT.
+- **D2 remains BLOCKED, fail-closed:** S1 (#925); seal-terminal repair; a re-audit with self-tests PASS. Nothing released.

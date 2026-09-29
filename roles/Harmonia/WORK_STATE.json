@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "updated_at_utc": "2026-09-29T09:55:00Z",
+  "updated_at_utc": "2026-09-29T10:30:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "2ed39fc4a60568dd7ba69893bc882e484bedd16f",
@@ -29,11 +29,11 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "OPERATOR: S1 record authentication (#925) + branch protection on main -- sole remaining blocker per governing v9 audit (Odysseus 6ead7beb5; code clean at 2aa834ab1)"
+      "on": "OPERATOR: S1 record authentication (#925) + branch protection -- blocks PASS (governing v10, Odysseus 24378a2dc)"
     },
     {
       "item": "D2 adjudication",
-      "on": "v10 (784d55b63) changed audited files after the v9 verdict: current main code unaudited; re-audit needed before any PASS record"
+      "on": "v10 must-fix: seal-terminal integrity; exposure gap closed at adjudication by Addendum J (option b); re-audit + self-tests pending"
     }
   ],
   "next_actions": [
