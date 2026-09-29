@@ -238,3 +238,29 @@ nothing re-run).**
   * the owner's 0.00115 is the R2 estimand;
   * the effect of each difference on the mean is not apportioned (that would need a re-run).
 - **Item CLOSED** as explained qualitatively. The VALIDATED computation is unaffected.
+
+**G. The NPE 1% production agreement sample: VERIFIED and PASS** (MWO-0004 G2; native on SKULLPORT under R3; Nestor #990, #1023).
+- **Stage 1** (verifier v2, addendum-5 content identity): run-1 copy candidate 1 VERIFIED. 11/11 files, 28,055 interactions.
+- **Stage 2** (frozen reference 15737444 vs owner; raw per class; npe_sample_task @ 8631128c3; one rerun after the declared
+  schema): AGREEMENT PASS.
+
+  | class | addr / ctrl / exec / written | label |
+  |---|---|---|
+  | unwritten (1,693,918) | 1.0 | 0.99842 |
+  | written_other (43,251) | 1.0 | 0.99864 |
+  | written_self (56,293) | 1.0 | 0.99867 |
+  | written_perf_none (2,058) | 1.0 | 1.0 |
+
+  * AGREEMENT.txt sha256 0aa5d2d30431748b7e39ccf95c224341b571656a466e7aa031dd9d9a1b521645.
+  * Outputs: Nestor g2_sample_check/rerun_8631128c3/ @ 168c8b81d on main.
+- **The residue (2,818 label-only loci) is UNDIAGNOSED but mutation-shaped:**
+  * about 1 locus per interaction, in 2,704 of 28,055 interactions (9.6%);
+  * 95% on unwritten loci; both halves equally.
+  * That fits the two sides placing post-write-back MUTATION labels differently: RNG-state alignment at write-back, or the
+    MUTATION encoding. It exceeds the ~6% expected for one set of mutations.
+  * The cell rate (LOW, 0.002) matches the reference default, so the rate is excluded.
+  * It cannot be classified further: npe_sample_task's discrepancy records omit the label values, a design gap in
+    Archaeon's module.
+  * Every pre-write-back field (addr, ctrl, exec, written) agrees 100%.
+- **Consequence for E-003:** none. The NPE leg stays uninformative by construction (R3 < 30). This check confirms the NPE
+  tracer's production labels at production scale, with the stated mutation-label residue.

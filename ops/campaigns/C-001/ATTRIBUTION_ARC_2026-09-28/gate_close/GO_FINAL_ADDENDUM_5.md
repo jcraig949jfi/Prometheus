@@ -39,3 +39,9 @@ consequence of this incident, NOT a tracer finding. It fails closed by design; n
   * The loci are POST-write-back, so the reference replays the write-back from rng_state_at_writeback at its T-003 cell rate.
   * Comparison: raw, per class, as before. accepted_sides is not gated.
 - **One rerun is requested**, same host and candidate, at the commit carrying this note.
+
+## Dated note 2026-09-29: stage 2 PASS
+- The one rerun at 8631128c3 on SKULLPORT exited 0: AGREEMENT PASS, raw per class. The label floor is 0.99842; every other
+  field is 1.0.
+- 2,818 label-only discrepancies (mutation-shaped, undiagnosed). See E003_SYNTHESIS.md item G.
+- The operator-directed 1% sample check is COMPLETE.
