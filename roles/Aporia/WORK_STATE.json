@@ -4,8 +4,8 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T11:44:07Z",
-  "state": "WORKING",
+  "updated_at_utc": "2026-09-29T11:45:18Z",
+  "state": "HOLD",
   "branch": "main (record commit R); authoring branch aporia/mwo-0002-candidate-2026-09-29",
   "head_sha": "(record commit R)",
   "threads": [],
@@ -21,19 +21,19 @@
       "state": "completed"
     }
   ],
-  "running": [
-    "MWO-0004 R4 boot-line implementation"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "R4: add the one boot line to roles/base-role/RESPONSIBILITIES.md as a separate commit; record it here; then HOLD/advisory"
+    "HOLD/advisory. MWO-0004 Aporia duties complete (publication P/R; R4 boot line)."
   ],
   "operator_decisions_required": [],
   "latest_reports": [
     "ops/work_orders/archive/MWO-0004_2026-09-29.md (published, P=25a486d44)",
-    "roles/Aporia/probes/FP-001_RESULT.json"
+    "roles/Aporia/probes/FP-001_RESULT.json",
+    "roles/base-role/RESPONSIBILITIES.md boot line (MWO-0004 R4) @ 17e25e67be040d04925ec04e63353503a4c03090"
   ],
-  "state_reason": "Published MWO-0004 (Gate Clearance) as the operator-designated publisher, for this publication only. #925 is resolved by MWO-0004 D2-1; no Aporia role in D2.",
+  "state_reason": "MWO-0004 published (P 25a486d44, R 13de76162, #988); R4 boot-line repair committed. HOLD/advisory; no steward, coordinator, scheduling or adjudication authority.",
   "migration_report": "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
-  "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)"
+  "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)",
+  "r4_boot_line_commit": "17e25e67be040d04925ec04e63353503a4c03090"
 }
