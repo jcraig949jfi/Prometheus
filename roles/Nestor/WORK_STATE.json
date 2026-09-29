@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T15:30:00Z",
+ "updated_at_utc": "2026-09-29T17:05:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -33,14 +33,12 @@
  ],
  "running": [],
  "blocked_on": [
-  "1% sample (MWO-0004 G2): stage 1 VERIFIED on the run-1 copy; stage 2 SCHEMA_UNDECLARED (exit 2) -> Archaeon declares schema, then one native rerun (#990)",
   "D2: FIREWALL_AUDIT_1 governs (gates PASSED through AUDIT); next gate COMMITMENT is Cosmos's (anchor it on Cosmos's published commit + sha256)"
  ],
  "next_actions": [
   "D2 before the first designation (Odysseus C-1): once the runner/child accounts exist, re-run icacls on holdout_D2 (neither account admin; only runner Modify on runs/) and publish the true/false before anchoring the designation",
   "key-holder scan (entry.py firewall-check) OUTSTANDING: the 00:47 run was stopped by Claude Code for low system memory after ~5.5 h with no output; rerun only when the operator asks, narrower (current code; repo history + comms dump, not the canonical working tree)",
-  "report key-holder scan booleans (public) to Odysseus",
-  "on Archaeon's schema declaration: rerun npe_sample_task once natively (candidate 1)"
+  "report key-holder scan booleans (public) to Odysseus"
  ],
  "operator_decisions_required": [
   "hard gate at D2 designation time only (MWO-0004 Part 4, privileged host change): a dedicated custodian account and a separate predictor-child account with an outbound firewall rule on M1"
@@ -66,7 +64,8 @@
   "copy search: 2 run-1 candidate dirs match SAMPLE_MANIFEST_CONTENT 11/11 by content (Nestor's check; verifier v2 pending)",
   "D2 v6 repairs on main 7c7b0b836 (BP-1; selftests PASS)",
   "FINDINGS.md A-2 pressure row: EXTERNAL-only scope note (Artemis S3 Q8, #1010)",
-  "D2 firewall: v13 FINAL re-audit PASS; FIREWALL_AUDIT_1.json anchored (pins == audited bindings); C-1 fact (today TRUE) + C-2 residuals declared in FIREWALL.md"
+  "D2 firewall: v13 FINAL re-audit PASS; FIREWALL_AUDIT_1.json anchored (pins == audited bindings); C-1 fact (today TRUE) + C-2 residuals declared in FIREWALL.md",
+  "MWO-0004 G2: 1% sample stage 1 VERIFIED + stage 2 AGREEMENT PASS (exit 0) on SKULLPORT @ 8631128c3; outputs g2_sample_check/rerun_8631128c3/"
  ],
  "incidents": [
   "2026-09-29 00:45-00:49 -04:00: UNAUTHORIZED ancestry production run 3 from Nestor's stale one-time schtask trigger (lease wait-acquire); killed; nothing committed; 10/11 run-2 1% sample files destroyed; tasks disabled; record INCIDENT_RUN3_2026-09-29.md"
@@ -81,7 +80,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 1020,
+ "comms_cursor": 1022,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
