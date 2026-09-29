@@ -5,6 +5,7 @@ python -m prometheus.cosmos.research_check [research_dir]      exit 1 on any ERR
 THREADS.md    required keys, status/zone vocabularies, unique ids; thread_id = "thr-" + sha256(id_rule)[:12]
               (the ops/threads convention; id_rule = genesis|<commit>|<path>|<title>)
 RESULTS.md    four layers present and non-empty (observation / law / domain / falsifier), never merged;
+              baselines must report the zero-parameter definition rung (or say NOT MEASURED);
               a KILLED result must name its GRAVEYARD entry, which must exist
 GRAVEYARD.md  required keys; killed_by beginning UNRECOVERED is counted, not an error
 FREEZES.md    every file freeze RE-HASHED (comms.manifest convention); supersedes must name an earlier
@@ -24,7 +25,8 @@ THREAD_KEYS = ("thread_id", "id_rule", "status", "zone", "question", "instrument
 THREAD_STATUS = {"OPEN", "DESIGNED", "REVIEWED", "FROZEN", "RUN", "SURVIVED_PROVISIONAL", "KILLED",
                  "INCONCLUSIVE", "PARKED", "SPAWNED", "BLOCKED"}
 ZONES = {"Z1", "Z2", "Z3"}
-RESULT_KEYS = ("status", "observation", "law", "domain", "falsifier")
+RESULT_KEYS = ("status", "observation", "law", "domain", "falsifier", "baselines")
+DEFINITION_RUNG = re.compile(r"definition rung", re.I)
 RESULT_STATUS = {"PROVISIONAL", "SURVIVED_Z2", "SURVIVED_Z3", "RESTRICTED", "KILLED"}
 GRAVE_KEYS = ("law", "campaign", "killed_by", "evidence", "fragments")
 FREEZE_KEYS = ("kind", "target", "sha256", "supersedes", "review", "status")
@@ -105,6 +107,9 @@ def check_results(p, grave_ids, errors):
         _need("RESULTS", eid, d, RESULT_KEYS, errors)
         if d.get("status") and d["status"] not in RESULT_STATUS:
             errors.append(f"RESULTS {eid}: status {d['status']!r} not in vocabulary")
+        if d.get("baselines") and not DEFINITION_RUNG.search(d["baselines"]):
+            errors.append(f"RESULTS {eid}: baselines must report the zero-parameter DEFINITION RUNG "
+                          f"(or say 'definition rung NOT MEASURED')")
         layers = [d.get(k, "") for k in ("observation", "law", "domain", "falsifier")]
         if all(layers) and len(set(layers)) < 4:
             errors.append(f"RESULTS {eid}: two layers are identical (layers collapsed)")

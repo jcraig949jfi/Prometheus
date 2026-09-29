@@ -26,6 +26,7 @@ RESULT = """### R-1 | r
 - law: l
 - domain: d
 - falsifier: {fals}
+- baselines: majority .5; definition rung .9
 {extra}"""
 GRAVE = """### G-1 | C0 | x
 - law: l
@@ -138,3 +139,9 @@ def test_absent_git_freeze_is_unverifiable_not_error(tmp_path):
 def test_catches_thread_id_that_does_not_rederive(tmp_path):
     rd, _ = ws(tmp_path, thread=THREAD.replace("THREADS.md|t\n", "THREADS.md|renamed\n"))
     assert any("re-derive" in e for e in check(rd, tmp_path)[0])
+
+
+def test_catches_results_without_definition_rung(tmp_path):
+    r = RESULT.format(status="PROVISIONAL", fals="x", extra="").replace("definition rung .9", "5-NN .8")
+    rd, _ = ws(tmp_path, result=r)
+    assert any("DEFINITION RUNG" in e for e in check(rd, tmp_path)[0])

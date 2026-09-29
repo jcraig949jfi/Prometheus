@@ -24,7 +24,7 @@ were all AUTHORED BY COSMOS, i.e. at most one author lineage; the CWE instrument
 - first_experiment: the single D adjudication, after: original seal on main, opaque successor seal, independent firewall check, freeze, pre-result review, operator authorization
 - kill_criterion: fixed in the C3 freeze file before D is opened; D is spent either way
 - depends_on: independent D2 firewall RE-AUDIT PASS (Fabric; Odysseus adjudicates); moved coordinate-layer audit (Fabric, public-side, fresh replicas; must return before the freeze); operator authorization. Done: #788 executed; original seal merged 7c018d92b; D2 sealed 95b31a30d; first audit FAILED 982819f8b; v2 repairs 7d759a203, f4cde414d
-- notes: D2 protocol (Nestor #828/#861): Cosmos commits protocol/PREDICTION_COMMITMENT.json ONLY after a governing FIREWALL_AUDIT_<n>.json with verdict PASS is on main, in one commit with no merge that touches the file, then posts the file's LF sha256 to Nestor on comms. Cosmos stays BLIND to D2 material.
+- notes: D2 protocol (Nestor #828/#861): Cosmos commits protocol/PREDICTION_COMMITMENT.json ONLY after a governing FIREWALL_AUDIT_<n>.json with verdict PASS is on main, in one commit with no merge that touches the file, then posts the file's LF sha256 to Nestor on comms. Cosmos stays BLIND to D2 material. PRE-RESULT REVIEW INPUT (public certificate, from Artemis R-10, a worker claim): per task shape, the v3 P1/P2 gate passed at V=4,k=6, but at V=2,k=8 a weak planted system certified 3/5 FUNCTIONAL (one INCOHERENT); for periodic-update engines a single swap at t=k may not suffice. D_CONTRACT allows V>=2, k in {2,4,8}, so the reviewer should check the certificate's calibration for each task shape. Recorded only; no method change before D (operator 2026-09-25).
 
 ### T-A1 | A law discovery | Open-vocabulary law mining
 - thread_id: thr-c613a790a4cd
@@ -91,6 +91,7 @@ were all AUTHORED BY COSMOS, i.e. at most one author lineage; the CWE instrument
 - first_experiment: ablate atoms and terms of laws A/B; plot held-out-lineage transfer and in-catalogue fit against description length, next to the classifier twin
 - kill_criterion: if the size-matched classifier transfers as well at every length, the law carries no content beyond a classifier
 - depends_on: none
+- notes: 2026-09-29: the NULL LAW TO BEAT is the zero-parameter definition rung G e^-N - C >= .10 AND (Q<1 OR CK/2 >= .10). Laws A/B are not significantly above it on any sealed universe (RESULTS R-0001/2, recomputed by Cosmos). Every compression rung reports its margin over that rung.
 
 ### T-F1 | F competing laws | Discriminating worlds between near-tied laws
 - thread_id: thr-1db153b23c55
@@ -113,6 +114,7 @@ were all AUTHORED BY COSMOS, i.e. at most one author lineage; the CWE instrument
 - first_experiment: re-count C0's support in independent generators. C0 D/E/F were all authored by Cosmos, so they count as one author lineage. Then commission one foreign generator for the same phenomenon.
 - kill_criterion: if a law's support reduces to one author lineage, its universality claim is restricted to that lineage in RESULTS.md
 - depends_on: none for the re-count; operator/other seats for foreign generators
+- notes: 2026-09-29: a new generator adds information only where its verdicts are NOT already fixed by the definition rung (e.g. a mechanism or coordinate the rung gets wrong). Count support in author lineages: C0 = 1.
 
 ### T-H1 | H mechanism | Change the causal quantity, hold correlates fixed
 - thread_id: thr-c8a8d939a05a
@@ -135,3 +137,4 @@ were all AUTHORED BY COSMOS, i.e. at most one author lineage; the CWE instrument
 - first_experiment: backfill the 7 C0 FAILED laws with their exact killing test from the stores; fragment table (e.g. the atom C - G exp(-N) appears in both FAILED and SURVIVED laws)
 - kill_criterion: fragment recurrence at the base rate of random atoms of equal size from the same grammar means fragments carry no information, and the recurrence analysis stops
 - depends_on: none
+- notes: 2026-09-29: backfill DONE. All 5 graveyard entries now name their killing test (the stores' law_events + adversary.json), 0 UNRECOVERED. Findings: the C0 v1->v2 cmap change raised the kill rate from 10.2% to 23.1%; G-0002 was a one-family (ca) kill; G-0005 was a 1.01-SE location kill that decided law B. Next: the fragment-recurrence test, whose null is the definition rung's atoms, not random atoms.
