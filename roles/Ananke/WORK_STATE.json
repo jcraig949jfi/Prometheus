@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T11:45:55Z",
-  "state": "WORKING",
-  "state_reason": "MWO-0004 adopted (blob verified vs PUBLICATIONS.md). FP-001 probe PASS (native, 95/95). T-SWAP-REL2 running as worker W-Q (E-ANANKE-W-Q, CPU in-session under Fabric lease; native per MWO-0004 R3: no torch-capable Fabric worker). Inside the R2 envelope. No large PTE campaign.",
+  "updated_at_utc": "2026-09-29T11:46:41Z",
+  "state": "ACTIVE",
+  "state_reason": "MWO-0004 adopted; FP-001 PASS. E-ANANKE-W-Q (T-SWAP-REL2) complete and deposited; lease lse-55fafa9180cf released. Nothing running. No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -99,8 +99,8 @@
       "id": "E-ANANKE-W-Q",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-REL2",
-      "status": "RUNNING",
-      "dir": "roles/Ananke/research/workers/W-Q/"
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-Q/REPORT.md"
     },
     {
       "id": "E-ANANKE-W-P",
@@ -134,17 +134,16 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [
-    "E-ANANKE-W-Q (delegated worker, CPU)"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "T-SWAP-REL2 (per-verdict attainability for the relative swap rule; 42 low-accuracy complete transfers), CPU in-session under Fabric lease",
+    "T-SWAP-REL3 (BCa/studentized interval for relative swap certificates at small P), native CPU under Fabric lease (MWO-0004 R2/R3)",
     "T-INS-9 phase-stratified census; T-INS-10 369f5a5b early interaction",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/workers/W-Q/REPORT.md",
     "roles/Ananke/research/workers/W-P/REPORT.md",
     "roles/Ananke/research/CORRECTIONS_2026-09-29_SWAP_AUDIT.md",
     "roles/Ananke/research/workers/W-O/REPORT.md",

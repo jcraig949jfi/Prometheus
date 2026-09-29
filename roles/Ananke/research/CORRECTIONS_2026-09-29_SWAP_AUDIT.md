@@ -27,3 +27,11 @@ pattern, but ~1/3 of pair-trials there (.64-.70 within one clock phase) are
 a clean JOINT carrier {Acc_sum, payload-1 in flight}. For 369f5a5b o2 the
 proposed J -> S is NOT supported (W-P: fS .45, fN .33, higher-order). Treat
 single letters on these cells as summaries only; see workers/W-P/REPORT.md.
+
+## Qualification from W-Q (T-SWAP-REL2, 2026-09-29)
+Of W-O's 42 "complete transfers at normal ~.57-.62", 24 are complete
+(z <= -.95) and 16 are partial (z -.57 to -.77); they are 20 dependent
+specimen x source x offset groups, not 42 independent findings. Under the
+per-verdict relative rule, 95 of the 615 absolute-CHANCE verdicts become
+FLIP_REL (53 of them only under the non-strict rule). Per-verdict table:
+workers/W-Q/out/rel2_table.csv.

@@ -130,3 +130,14 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   Successors: T-INS-9 (stratify every carrier-swap census by update-clock
   phase when update_period > 1), T-INS-10 (name 369f5a5b's early S1-Kp-r
   interaction in its own stage-2 run).
+- T-SWAP-REL2 ANSWERED (W-Q, E-ANANKE-W-Q, workers/W-Q/REPORT.md; 10 tests,
+  principal re-run 10 passed; principal recount of rel2_table.csv matches).
+  Per-verdict attainability replaces W-N's single gate: on W-O's 733 verdicts
+  FLIP_REL 170, NO_EFFECT_REL 81, CHANCE_REL 376, INDETERMINATE 105,
+  NOT_ELIGIBLE 1. All 42 low-accuracy cases certified FLIP_REL (24 complete,
+  z <= -.95; 16 partial); 53 more FLIP_REL rest on accepting a certificate
+  without 80% power (STRICT variant refuses them). The percentile bootstrap
+  misses the 1% false-certificate target at P32-P64 (up to 1.8%): NOT promoted
+  into lens. Successor T-SWAP-REL3: studentized/BCa interval (or P-dependent
+  level), report z with a paired CI beside every FLIP_REL, count evidence by
+  specimen x offset group.
