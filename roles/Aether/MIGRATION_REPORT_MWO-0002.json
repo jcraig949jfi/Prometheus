@@ -1,0 +1,154 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Aether",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:44:32Z",
+  "branch": "aether/mwo0001-2026-09-28",
+  "head_sha": "ea4d84c3e7c165d27d8fb4299e7578761102b120",
+  "head_sha_note": "last pushed work commit before this report commit (a file cannot hold its own commit hash)",
+  "bootstrap_independence": {
+    "answer": "CONDITIONAL",
+    "conditions": [
+      "The seat loop runs as a self-paced /loop inside one Claude Code session. If that session ends, something must start a new session. The restart needs only the generic boot (python -m comms boot Aether), origin/main:ops/work_orders/CURRENT.md and roles/Aether/WORK_STATE.json, not a bespoke prompt."
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "comms #961 (read in the same loop tick)",
+      "git show origin/main:ops/work_orders/CURRENT.md | sha256sum -> 6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685 = ops/work_orders/PUBLICATIONS.md MWO-0002 row"
+    ],
+    "note": "MWO-0002 was detected by the loop's fetch-and-hash step (the hash changed from 007054ad) and by the #961 broadcast in the same tick. No per-seat prompt was received."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Aether/WORK_STATE.json@befc9dfb5 (mwo_commit 7e4c09f2c, mwo_sha256 007054ad...)"
+      ],
+      "note": "Blob hash verified from the committed blob, not the working tree."
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "comms #961",
+        "loop tick 2026-09-29 ~06:45Z: CURRENT.md hash 6f5a6a8b != recorded 007054ad"
+      ],
+      "note": "Found by the seat loop (fetch plus inbox), not by a per-seat prompt."
+    },
+    "C3_work_state_useful": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Aether/WORK_STATE.json@62b280dbb",
+        "git ls-remote origin refs/heads/aether/* (2026-09-29): aether/mwo0001-2026-09-28 absent"
+      ],
+      "note": "All v1 core fields were filled and current, but the named branch was never pushed; all commits went to main via HEAD:main. Corrected in this commit by pushing the branch."
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "ops/work_orders/archive/MWO-0001_2026-09-28.md s10 AETHER",
+        "roles/Aether/WORK_STATE.json@62b280dbb state HOLD + state_reason"
+      ],
+      "note": "The assigned promexec review is done. Research is at HOLD: the physics search is deferred to MWO review (MWO-0002 s8 lists it), and promexec round 2 waits on Odysseus's final install."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "comms #917 (reply-to 912)",
+        "#918 (reply-to 801)",
+        "#938 (result report)"
+      ],
+      "note": "The inbox queue plus comms done serves as the cursor; there is no separate comms_cursor field. No idle broadcasts and no ACKs. Durable results are in Git."
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "YES",
+      "evidence": [
+        "tsk-f11c5d60cb83",
+        "tsk-e56d9c5fea64",
+        "tsk-eea4d3806a84",
+        "tsk-55b1b35fab2a",
+        "att-687d71d2c7d8",
+        "ops/campaigns/C-002/E-008/RESULT.md@dd42b5eef"
+      ],
+      "note": "The d_horizon falsifier ran as 4 script Tasks on worker.ubu001.sci instead of RunPod, per the operator ruling. Results were verified by blob id and hashes."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "PARTIAL",
+      "evidence": [
+        "ops/campaigns/C-002/E-008/RESULT.md@dd42b5eef",
+        "python -m fabric show tsk-f11c5d60cb83 (campaign_id AETH-03, experiment_id E-AETH03-DHORIZON, thread_id null)"
+      ],
+      "note": "Git records keep Attempt -> Task -> Experiment (E-008) -> Campaign (C-002) -> Thread (thr-10216c7f001e) distinct. The Fabric Task rows were tagged with non-registry ids (AETH-03 / E-AETH03-DHORIZON), and thread_id was null, because E-008 was registered after submission."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "No substantial resource claims this cycle. The Fabric Tasks used compute.cpu.light with no resource lease."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "ops/work_orders/archive/MWO-0001_2026-09-28.md s7(4)",
+        "ops/work_orders/archive/MWO-0001_2026-09-28.md s7(5)"
+      ],
+      "note": "The only hard gates are no RunPod spend (s7.4) and no promexec enablement or host change (s6, s7.5). The physics-search deferral and promexec round 2 are recorded as an operator decision and a dependency, not as gates."
+    }
+  },
+  "hard_gates_current": [
+    {
+      "gate": "MWO-0001 s7(4)",
+      "item": "RunPod spend (no approved envelope; restated MWO-0001 AETHER and MWO-0002 s6)",
+      "evidence": [
+        "ops/work_orders/archive/MWO-0002_2026-09-29.md s6"
+      ]
+    },
+    {
+      "gate": "MWO-0001 s7(5) / s6",
+      "item": "promexec enablement or any host change as part of promexec review",
+      "evidence": [
+        "roles/Aether/reviews/2026-09-28_promexec_round1/FINDINGS.md@bde107721"
+      ]
+    }
+  ],
+  "migration_blockers": [
+    {
+      "what": "comms validates recipients against roles/* in the checkout it runs from. Run from the canonical checkout, which the working contract says is never pulled, it rejected a newer seat (Odysseus): 'unknown recipients'. It works from an up-to-date worktree.",
+      "kind": "tooling",
+      "evidence": [
+        "comms/api.py:158",
+        "2026-09-28 post attempt from c:/Prometheus failed; retried from worktree -> #917"
+      ]
+    },
+    {
+      "what": "A frozen unit that takes --out on its command line cannot know FABRIC_OUT_DIR in advance, so results travel as an untracked file inside changes.patch.",
+      "kind": "fabric",
+      "evidence": [
+        "fabric/executors.py:163-182",
+        "ops/campaigns/C-002/E-008/RESULT.md@dd42b5eef (Fabric notes)"
+      ]
+    },
+    {
+      "what": "fabric submit does not check that --base resolves. A mistyped SHA fails only at claim time and burns max_attempts.",
+      "kind": "fabric",
+      "evidence": [
+        "tsk-6ed598230989 (error_summary: worktree add failed)"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "Operator rulings delivered in the per-seat session prompt (2026-09-28: Fabric instead of RunPod for the falsifier; physics search deferred) shape Aether's work but are not in an MWO.",
+      "why": "They arrived with the MWO-0001 bootstrap prompt. MWO-0002 s8 now lists the physics-search decision.",
+      "retire_plan": "needs_operator"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [],
+    "campaign_ids_unresolved": [
+      "AETH-03 (WORK_STATE campaigns entry and Fabric Task campaign_id; the registry campaign is C-002)",
+      "E-AETH03-DHORIZON (Fabric Task experiment_id; the registry experiment is C-002/E-008)"
+    ],
+    "note": "thread_check.py: threads=17 migrated=17 failures=0. TH-007..012 carry canonical ids since 7113eb2b5. The unresolved ids are recorded here, not repaired."
+  }
+}

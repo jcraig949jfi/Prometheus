@@ -168,3 +168,23 @@ COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
 - selftest_D2: 10 checks + 13 negative controls.
 
 **Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v7 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v7". The v6 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:**
+- Find a package-, argument- or environment-controlled failure that consumes the release WITHOUT a terminal (close or abort) record.
+- Find any check or probe that still runs after the key read and can refuse.
+- Find a way for the package to end the run without a sealed, attributable outcome.
+
+**The crash-after-release policy is declared** as an explicit residual; see FIREWALL.md v7.
+
+**Self-tests:**
+- selftest_protocol: 134 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+- Windows-only checks report `not_applicable_on_this_os` elsewhere.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.

@@ -1,14 +1,14 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Aether",
-  "mwo_id": "MWO-0001",
-  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T04:08:17Z",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "updated_at_utc": "2026-09-29T07:44:32Z",
   "state": "HOLD",
-  "state_reason": "All MWO-0001 Aether items delivered: promexec R1 (#917); d_horizon falsifier CLOSED as E-008 (HORIZON-DEPENDENT via clause iii for rcv_add and rcv_str); R-05 amendment; thread ids. Remaining work is gated: promexec round 2 on Odysseus's final install; physics search on the next MWO review. TH-007..012 parked.",
+  "state_reason": "MWO-0002 adopted (census report filed). MWO-0001 s10 AETHER work complete: promexec R1 (#917); E-008 d_horizon falsifier CLOSED. HOLD: physics-search continuation is a pending operator decision (MWO-0002 s8); promexec round 2 waits on Odysseus's final install. TH-007..012 parked.",
   "branch": "aether/mwo0001-2026-09-28",
-  "head_sha": "dd42b5eef84410c94a791614b5332a210a61a195",
+  "head_sha": "ea4d84c3e7c165d27d8fb4299e7578761102b120",
   "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)",
   "threads": [
     {
@@ -101,5 +101,6 @@
     "ops/campaigns/C-002/E-008/RESULT.md",
     "roles/Aether/reviews/2026-09-28_promexec_round1/FINDINGS.md",
     "Aether/AETH-03/PHYSICS_DESIGN_03_2026-09-27.md#amendment-a2"
-  ]
+  ],
+  "migration_report": "roles/Aether/MIGRATION_REPORT_MWO-0002.json"
 }

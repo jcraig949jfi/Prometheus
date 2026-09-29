@@ -894,9 +894,9 @@ def v5_checks(tmp, ts, pkg, sha):
     if not res["v5_S1_preflight_child_starts_under_entry"]:
         res["v5_S1_preflight_child_starts_under_entry_reason"] = (out + err)[-400:]
     rc, out, err = run_entry(rr, *(base + ["--key", str(kd / "hidden_D2.key.hex")]))
-    run_dir = tmp / "receipts_v5run" / ("run_" + RUN_NONCE)
+    run_dir = tmp / "receipts_v5run" / "runs" / ("run_" + RUN_NONCE)
     res["v5_S1_run_refused_before_key_consumed"] = rc == 3 and "ChildNotIsolated" in out and \
-        (kd / "hidden_D2.key.hex").exists() and not run_dir.exists()
+        (kd / "hidden_D2.key.hex").exists() and not (run_dir / "receipts.jsonl").exists()         and (run_dir / "package").is_dir()          # v7: staged (right path, non-vacuous), receipts = consumed: absent
     if not res["v5_S1_run_refused_before_key_consumed"]:
         res["v5_S1_run_refused_before_key_consumed_reason"] = (out + err)[-400:]
     # in-process: the preflight refuses a readable key BEFORE reading it
@@ -913,7 +913,8 @@ def v5_checks(tmp, ts, pkg, sha):
         fr.open()
         res["v5_S1_inprocess_preflight_refuses_before_key"] = False
     except runner.ChildNotIsolated:
-        res["v5_S1_inprocess_preflight_refuses_before_key"] = (kd2 / "k.hex").exists() and not outd.exists()
+        res["v5_S1_inprocess_preflight_refuses_before_key"] = (kd2 / "k.hex").exists() and \
+            not (outd / "receipts.jsonl").exists()
     return res
 
 
@@ -975,7 +976,113 @@ def v6_checks(tmp, ts, pkg, sha):
         res["v6_BP1_release_after_matching_preflight"] = cu.release_key(RID, tmp / "v6_rel_ok")["event"] == "KEY_RELEASED"
     except (protocol.GateRefusal, custody.CustodyRefusal):
         res["v6_BP1_release_after_matching_preflight"] = False
-    res["v6_account_sid_equality"] = protocol.same_account(protocol.os_account(), protocol.os_account().upper())
+    # SIDs exist on Windows only; elsewhere account names are case-sensitive, so the check does not apply (v7)
+    res["v6_account_sid_equality"] = protocol.same_account(protocol.os_account(), protocol.os_account().upper()) \
+        if os.name == "nt" else None
+    return res
+
+
+HOSTILE_PIPE_PREDICTOR = """
+def predict(system, task, seed):
+    c = system._HiddenWorldStub__conn
+    c.send_bytes(b"[]")
+    return {"class": "NONE", "intervention": {"class": "NONE"}}
+"""
+
+
+def v7_checks(tmp, ts, pkg, sha):
+    """v7 (Odysseus v6 FAIL): staging and every probe BEFORE the key; no package-initiated silent void; abort is sealed."""
+    import io
+    import zipfile
+    from prometheus.cosmos.c3_holdout_D2.selftest_D2 import make_package
+    res = {}
+
+    def zpkg(path, members):
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            z.writestr("package.json", json.dumps({"format": runner.PACKAGE_FORMAT, "entry": "p.py", "adjudication": {},
+                                                   "intervention": {"knob": "p_decay", "to": 1.0}}))
+            z.writestr("p.py", "def predict(s, t, seed):\n    return {}\n")
+            for n in members:
+                z.writestr(n, "x = 1\n")
+        path.write_bytes(buf.getvalue())
+        return sealbox.sha256_file(path)
+    for tag, members in (("case_collision", ["P.py"]), ("reserved_name", ["con.py"]),
+                         ("file_dir_collision", ["q.py", "q.py/r.py"]), ("bad_char", ["a b.py"])):
+        zp = tmp / ("v7_%s.zip" % tag)
+        zsha = zpkg(zp, members)
+        try:
+            runner.load_package(zp, zsha, None)
+            res["v7_1_unstageable_name_refused_%s" % tag] = False
+        except runner.PackageInvalid:
+            res["v7_1_unstageable_name_refused_%s" % tag] = True
+    # staging happens before the key: a blocked staging path refuses with the key intact and no receipts
+    g = GateRepo(tmp / "repos" / "v7", ts).full(sha)
+
+    def fr_for(name, key_present=True, **kw):
+        kd = tmp / ("v7_key_" + name)
+        kd.mkdir()
+        if key_present:
+            shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v7_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT,
+                    allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True, secret_paths=(),
+                    write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", kw.pop("pkg_path", pkg),
+                                  kw.pop("pkg_sha", sha), outd, **{k: v for k, v in base.items()
+                                                                   if k not in ("pkg_path", "pkg_sha")}), kd, outd
+    fr, kd, outd = fr_for("stageblock")
+    outd.mkdir()
+    (outd / "package").write_text("a file where the staging directory must go")
+    try:
+        fr.open()
+        res["v7_1_staging_failure_before_key"] = False
+    except runner.RunnerRefusal:
+        res["v7_1_staging_failure_before_key"] = (kd / "k.hex").exists() and not (outd / "receipts.jsonl").exists()
+    # the receipts STAND-IN is probed before the key (same-account child: it is writable -> refused, nothing consumed)
+    fr, kd, outd = fr_for("standin", key_present=False, preflight=True, preflight_mkfile_dirs=())
+    try:
+        fr.open()
+        res["v7_1_receipts_standin_probed_before_key"] = False
+    except runner.ChildNotIsolated as e:
+        res["v7_1_receipts_standin_probed_before_key"] = "receipts.preflight" in str(e) and \
+            not (outd / "receipts.jsonl").exists()
+    # a package that writes garbage into the leaked pipe: per-world PROTOCOL_ERROR, the run still closes and seals
+    hp = tmp / "v7_hostile.zip"
+    hsha = make_package(hp, HOSTILE_PIPE_PREDICTOR)
+    res["v7_2_private_attribute_flagged"] = any("private attribute" in f for f in
+                                                runner.audit_source(HOSTILE_PIPE_PREDICTOR, "p.py"))
+    gh = GateRepo(tmp / "repos" / "v7h", ts).full(hsha)
+    kdh = tmp / "v7_key_hostile"
+    kdh.mkdir()
+    shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kdh / "k.hex")
+    outh = tmp / "runs" / "v7_hostile" / ("run_" + RUN_NONCE)
+    frh = runner.FirewallRun(ts["manifest"], ts["enc"], kdh / "k.hex", hp, hsha, outh, runner_id=RID, gate_repo=gh.p,
+                             gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300, account=ACCT, allowlist=gh.al,
+                             gate_pins=gh.pins(), verify_loaded=False, delete_key=True, secret_paths=(),
+                             write_probe_paths=(), preflight=False, allow_flagged=True)
+    rh = frh.run_all()
+    preds = [r["body"]["status"] for r in frh.receipts.records if r["kind"] == "prediction"]
+    res["v7_2_pipe_garbage_is_per_world_protocol_error_and_run_closes"] = rh.get("status") == "CLOSED" and \
+        bool(preds) and all(x == "PROTOCOL_ERROR" for x in preds)
+    # any exception after the consumption marker -> terminal abort, RESULT ABORTED, and custody can result-seal it
+    fr, kd, outd = fr_for("abort")
+
+    def boom():
+        raise MemoryError("simulated")
+    fr.certify_all = boom
+    ra = fr.run_all()
+    res["v7_2_exception_after_open_is_sealed_abort"] = ra.get("status") == "ABORTED" and \
+        fr.receipts.records[-1]["kind"] == "abort" and json.loads((outd / "RESULT.json").read_text())["status"] == "ABORTED"
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v7_custody.jsonl", host=HOST,
+                         allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        rec = cu.result_seal_record(outd, tmp / "v7_RESULT_SEAL.json")
+        res["v7_2_aborted_run_result_sealable"] = rec.get("terminal") == "abort"
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        res["v7_2_aborted_run_result_sealable"] = False
     return res
 
 
@@ -997,17 +1104,18 @@ def run() -> dict:
         v4 = v4_checks(tmp, ts, sha)
         v5 = v5_checks(tmp, ts, pkg, sha)
         v6 = v6_checks(tmp, ts, pkg, sha)
+        v7 = v7_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
     for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
-    not_applicable = sorted(k for k, v in {**v4, **v5, **v6}.items() if v is None)
-    checks.update({k: v for k, v in {**v4, **v5, **v6}.items() if v is not None and not k.endswith("_reason")})
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7}.items() if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7}.items() if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
            "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
            "not_applicable_on_this_os": not_applicable,
-           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6}.items() if k.endswith("_reason")},
+           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7}.items() if k.endswith("_reason")},
            "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
            "all_defect_controls_true": all(dcs.values())}
     res["selftest_pass"] = bool(res["all_checks_true"] and res["all_defect_controls_true"])

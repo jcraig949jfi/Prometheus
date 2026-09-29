@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T08:05:00Z",
+ "updated_at_utc": "2026-09-29T09:10:00Z",
  "state": "WORKING",
- "branch": "task branch nestor/d2v6-2026-09-29 (merged to main)",
- "head_sha": "778ccbc76ac43db82b1771e2aab7ae4733270db9",
+ "branch": "nestor/d2v7-2026-09-29 (merged to main)",
+ "head_sha": "e4efb487e0055495c43f0d93da1a9342ef41d349",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -20,16 +20,17 @@
  "fabric_tasks": [
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
   "D2 v5 re-audit -> FAIL (Odysseus #954, VERDICT @ 01ac0fedf: BP-1 key consumed before package validation; Linux selftest)",
-  "D2 v6 re-audit -> FAIL (Odysseus #959, VERDICT @ 7567a018b: extraction + receipts probe after key read; crash voids; Linux SID check) -> v7 in work",
+  "D2 v6 re-audit -> FAIL (#959, VERDICT @ 7567a018b)",
+  "D2 v7 re-audit: tsk-24ad3df260b9, tsk-6a58313857f2; selftests tsk-f153a88314f9, tsk-9e813efe1dcc (base e4efb487e)",
   "Archaeon sample verification v2: tsk-c4317a3656d0 (host skullport, NPE_SAMPLE_DIR = candidate 1) -- waiting: no fabric worker on SKULLPORT"
  ],
  "running": [
-  "D2 v7 repair (task worktree)",
+  "D2 v7 re-audit (2 replicas + 2 selftests)",
   "key-holder scan (entry firewall-check, v4 code, comms dump)"
  ],
  "blocked_on": [
   "1% sample check: Archaeon's verifier-v2 task tsk-c4317a3656d0 needs a fabric worker on SKULLPORT (none exists)",
-  "D2: S1 root of trust (operator #925); v7 repair then Odysseus re-audit"
+  "D2: S1 root of trust (operator #925); v7 re-audit adjudication (Odysseus)"
  ],
  "next_actions": [
   "relay review results when terminal",
