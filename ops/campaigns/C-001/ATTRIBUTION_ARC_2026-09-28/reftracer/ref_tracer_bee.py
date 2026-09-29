@@ -118,8 +118,8 @@ class V:
 def v_unary_bij(x: V) -> V:
     """INC / DEC (register-only, no operand, bijective) -> COMPUTED_FROM(label). CHOICE 4 for CONSTANT / COMPUTED inputs."""
     lab = x.label
-    if lab[0] == "CONSTANT":
-        return V(C("computed"), x.addr)
+    if lab[0] == "CONSTANT":                          # Amendment C11 (2026-09-29): literal text, not CHOICE 4
+        return V(("COMPUTED_FROM", lab), x.addr)
     if lab[0] in ("COMPUTED", "COMPUTED_FROM"):
         return V(lab, x.addr)
     return V(("COMPUTED_FROM", lab), x.addr)
@@ -129,8 +129,8 @@ def v_compute(*xs: V) -> V:
     """Everything else that computes -> COMPUTED(flattened bases, CONSTANT dropped). All-CONSTANT -> CONSTANT computed (CHOICE 4)."""
     b = frozenset().union(*(base(x.label) for x in xs))
     a = frozenset().union(*(x.addr for x in xs))
-    if not b:
-        return V(C("computed"), a)
+    if not b:                                         # Amendment C11 (2026-09-29): COMPUTED{} (literal text; NPE C6 B4)
+        return V(("COMPUTED", frozenset()), a)
     return V(("COMPUTED", b), a)
 
 

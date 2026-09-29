@@ -57,12 +57,12 @@ def comp(*ls):
     s = set()
     for l in ls: s |= base(l)
     s = {b for b in s if b[0] != "CONST"}
-    return ("COMPUTED", frozenset(s)) if s else ("CONST", "computed")
+    return ("COMPUTED", frozenset(s))                 # Amendment C11: all-CONST -> COMPUTED{} (was CONST computed)
 
 
 def cfrom(l):
     s = {b for b in base(l) if b[0] != "CONST"}
-    return ("COMPUTED_FROM", frozenset(s)) if s else ("CONST", "computed")
+    return ("COMPUTED_FROM", frozenset(s))            # Amendment C11: INC/DEC of CONST -> COMPUTED_FROM{} (was CONST computed)
 
 
 def informative(b):

@@ -156,8 +156,8 @@ def main():
     # T10 K34 OUT past 16, then COPYALL from the output region -----------------------------------------------------------
     w = tape([vm.LD_B_n, 20, vm.INC_A, vm.OUT_A, vm.DJNZ_d, 0xFC, vm.LD_S_n, 0xF0, vm.LD_T_n, 64, vm.COPYALL, vm.HALT])
     check("T10 K34 OUT x20 + COPYALL from 0xF0", w, OCC, [7],
-          [([0], dict(label="K:computed", written=True, performer="w10", addr=ws(7, 9))),
-           (range(1, 16), dict(label="K:computed", addr=ws(1, 7, 9), ident=False)),
+          [([0], dict(label="CF(K:reset)", written=True, performer="w10", addr=ws(7, 9))),       # Amendment C11 (was K:computed)
+           (range(1, 16), dict(label="CF(K:reset)", addr=ws(1, 7, 9), ident=False)),
            (range(16, L), dict(label=lambda j: "w%d" % (j - 16), addr=ws(7, 9), ctrl=ws(1), ident=True))],
           note="16 outputs kept; OUT counter label = PC label; INC of a RESET register stays structural")
 

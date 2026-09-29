@@ -499,3 +499,36 @@ reference's reading only):
    - Commit-reveal as before.
 - **Exchange serialization for (a), fixed now so the raw comparison is defined:** MUTATION label = ["M", [side, k, pos],
   old_label], where side is "a" or "b", k follows E3 and pos is 0..31. Archaeon's exporter (npe_fresh_ref.py) is updated to it.
+
+## Amendment C11 (2026-09-29; BEE; after the production s4.3 agreement FAILED; post-agreement-test repair, flagged)
+**1. Result:** the BEE production s4.3 agreement FAILS (gate_close/bee_production_agreement/; declaration @ 768b24253).
+- Setup: 200 s4-sampled births, owner (frozen 823cbef1) vs the frozen reference 006a0789 and Archaeon 4f18a0e9.
+- written_other data label: 2434/2499 = 0.9740 < 0.995, owner vs BOTH.
+- Every other gated field is 1.0 in every class. Reference and Archaeon agree 100%.
+- The fresh-set agreement (seed fefefe074) never exercised this shape.
+
+**2. The disagreement (68 loci, 5 births; 64 of them one birth, k = 412): one shape, category (1), spec ambiguity.**
+- A value computed ONLY from CONSTANT inputs.
+- Owner: the literal v4 text, COMPUTED with CONSTANT bases dropped, i.e. COMPUTED{} for a computation and COMPUTED_FROM over the
+  constant for INC/DEC. Exchange form ["C", []] / ["F", []].
+- Reference and Archaeon: CONSTANT("computed"), the reference's SPEC_ISSUES CHOICE 4, flagged there as an agreement risk.
+- C2 adopted CHOICES 5, 3, 9, IN/OUT and 1/2, but NOT CHOICE 4. So the owner followed the normative text, and the Archaeon-side
+  tracers followed a reading that was never adopted.
+- NPE's normative C6 B4 is the same: "COMPUTED with no non-constant base stays ('COMPUTED', {}) (new material, not CONST)".
+
+**3. RULING (normative for BEE from here on):**
+- the literal text, consistent with NPE C6 B4: an all-CONSTANT computation is ("COMPUTED", {}); INC/DEC of a CONSTANT is
+  ("COMPUTED_FROM", <the constant>), which carries no bases.
+- Both are new material and non-MOVE. Neither is ENTITY, so identification, the class key, dependence sets and every
+  Q-relevant projection are unchanged. The labels differ only in kind.
+- The two ARCHAEON-SIDE tracers are repaired (reference ref_tracer_bee.py and Archaeon bee_ref_tracer.py; two lines each) and
+  re-frozen. The owner's frozen tracer and its production outputs are unchanged.
+- **Flagged for the independent final reviewer:** Archaeon repaired its own-side tracers after seeing the owner's reading. The
+  reading chosen is the literal prereg text plus the NPE precedent, not the side that avoided a production re-run. The choice
+  happens also to avoid one; that is recorded.
+
+**4. Procedure:**
+1. Repair and re-freeze both Archaeon-side tracers. Their fixture pack must still pass.
+2. A FRESH BEE agreement set 2, seeded after the re-freeze, with the same tool, run by the owner's UNCHANGED frozen tracer.
+3. Re-run the production s4.3 agreement on the same 200 births. Its inputs are sealed and unchanged.
+4. Only if both pass is a BEE GO v2 issued, binding the new Archaeon-side hashes. Until then no BEE claim is made.
