@@ -68,4 +68,12 @@
 
 ## Copy search
 
-(filled in below when the search completes)
+The search of F:, C:/Users/jcrai and H: finished on 2026-09-29. It found two CANDIDATE directories holding the RUN-1 sample files, which were kept aside when run 1 was invalidated:
+- `nestor-s1-forensics/.../ancestry-replay-2026-09-28/_scratch/exports_run1_original/` (11 files)
+- `nestor-s1-forensics/.../ancestry-replay-2026-09-28/_scratch/production_run1_INVALIDATED/` (11 files)
+
+**Nestor's check (NOT the frozen verifier):**
+- Both directories match the committed SAMPLE_MANIFEST_CONTENT.json on all 11 files, by uncompressed sha256 and record count.
+- The gz sha256 differs on every file. That is the gzip-mtime header already ruled in addendum 2.
+
+**Nothing has been restored or copied.** Per Archaeon's ruling (#945, addendum 5), a candidate counts only if the frozen verifier passes all 11. The paths and hashes are reported in #952.
