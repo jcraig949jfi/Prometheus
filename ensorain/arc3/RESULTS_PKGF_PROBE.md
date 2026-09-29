@@ -263,3 +263,36 @@ Exploratory (NOT precommitted), the more important pattern:
 - W3: rho = .1: the undetected harm is smaller than at rho = 1: mean dAC(SD_all) at rho = .1 > mean at rho = 1 AND
   > -0.5.
 - W4: rho = 0: false detections <= 1/8.
+
+### v6 result (precommit commit a434fb870; results/pkgf_partial.json; 63 s)
+
+| rho | final switch detected (cp_frac .60-.75) | mean dAC(SD_all) | mean dAC(SD_cp3) |
+|---|---|---|---|
+| 1.0 | 8/8 | -1.10 | 0.00 |
+| 0.5 | 8/8 | +0.05 | +0.12 |
+| 0.1 | 5/8 | +0.30 | +0.29 |
+| 0.0 | 0/8 false | +0.44 | +0.44 |
+
+- W1 SURVIVES (8/8).
+- W2 REFUTED: 5/8 detected at rho = .1, more sensitive than predicted. The detector is not as easily diluted as
+  claimed.
+- W3 SURVIVES: +0.30 > -1.10, and > -0.5.
+- W4 SURVIVES: 0/8 false.
+
+Answer to reviewer Q1: v5 is NOT an oracle-in-disguise that needs every cell to change. It finds switches that change
+half the cells in 8/8 worlds and a tenth of them in 5/8, with 0/8 false alarms.
+
+Exploratory (NOT precommitted), the more important shape:
+- The SIGN of restoring the stored residual channel depends on how much of the world changed:
+  - full switch: -1.10 (it hurts unless the regime is found);
+  - half: about +0.05 .. +0.12;
+  - a tenth: +0.30;
+  - stationary: +0.44.
+  With this substrate (the F3-selected SELECTIVE arm at cap cells/4, a bounded learner), stored exact records carry
+  information the substrate cannot retain. Retention PAYS, except for the fraction of it that is obsolete.
+- At rho = .1, restricting the holdout to the detected regime is slightly WORSE than using all history in 3/8 worlds
+  (e.g. +0.156 -> +0.125). Most old records are still valid, so the conservative rule discounts good records.
+- This is the first dev evidence in PKG-F that "keep and ignore" beats "discard" by a margin that shrinks smoothly with
+  the obsolete fraction.
+- It needs the obvious control before any claim: the SAME rho sweep with the F2-selected substrate, where the stationary
+  gain was ~0 in v2 to v5. Does the gain come from a mismatched (weak) substrate?
