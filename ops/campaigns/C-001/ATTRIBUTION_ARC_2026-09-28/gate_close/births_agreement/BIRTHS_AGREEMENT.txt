@@ -1,0 +1,13 @@
+E-003 NPE production tracer agreement (v4 s4.3): frozen reference vs owner run 2, RAW, victim half pre-mutation
+births: 29 distinct / 34 all
+addr NOT compared on 232 unwritten loci (not exported by the owner); reference addr non-empty on 0 of them
+[distinct]
+  unwritten          ctrl 171/171; exec 171/171; label 171/171; written 171/171
+  written_other      addr 227/227; ctrl 227/227; ctrl_slice(secondary) 227/227; exec 227/227; label 227/227; performer 227/227; store_by 227/227; written 227/227
+  written_self       addr 530/530; ctrl 530/530; ctrl_slice(secondary) 530/530; exec 530/530; label 530/530; performer 530/530; store_by 530/530; written 530/530
+[all34]
+  unwritten          ctrl 232/232; exec 232/232; label 232/232; written 232/232
+  written_other      addr 262/262; ctrl 262/262; ctrl_slice(secondary) 262/262; exec 262/262; label 262/262; performer 262/262; store_by 262/262; written 262/262
+  written_self       addr 594/594; ctrl 594/594; ctrl_slice(secondary) 594/594; exec 594/594; label 594/594; performer 594/594; store_by 594/594; written 594/594
+discrepant loci (all 34): 0
+s4.3 GATE on distinct births: PASS
