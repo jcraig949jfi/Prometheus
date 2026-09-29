@@ -3,8 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "adoption_note": "ADOPTED PENDING OPERATOR CONFIRMATION: operator approval of MWO-0001 is asserted by the order text and Cyclops's commit, not by a verbatim operator record in the repo; Nestor acts only on MWO items that are also covered by the operator's POST-ARC3 directive (2026-09-28) and the fabric rulings. Declined: 'perform the assigned D2 firewall re-audit' -- Nestor is D2's custodian/protocol author, so self-audit would void the audit's independence; Nestor's part (submitting the Fabric re-audit, tsk-6989ee1b86bd / tsk-b43d70a88ce7) is done; Odysseus adjudicates.",
- "updated_at_utc": "2026-09-29T03:17:37Z",
+ "updated_at_utc": "2026-09-29T03:27:33Z",
  "state": "WORKING",
  "branch": "nestor/s1-forensics-2026-09-23",
  "head_sha": "e7af96c47b2c03b688da5e65f1f07d155e6649d9",
@@ -29,22 +28,25 @@
  "running": [],
  "blocked_on": [
   "Archaeon rulings: births-agreement on 34 committed pre-states, flip-coverage floor failure, class key (#924)",
-  "1% sample transfer route (#913)",
-  "D2 v3: operator root-of-trust decision (#925)"
+  "1% sample verification: Archaeon's Fabric Task pinned by host affinity to M1 (MWO s4); s12 defect if Fabric cannot reach the files",
+  "D2 v3 completion: operator root-of-trust decision (#925)"
  ],
  "next_actions": [
-  "s4 v2 conformance repair (post hash before running; tallies unused until reviewed)",
-  "D2 v3 repairs (B1 isolated entry, FAIL/RESULT_SEAL auth, firewall_check patterns off cmdline, once-only via git, receipts ACL) + Fabric re-audit with --cap fabric.runtime==0.2"
+  "s4 v2 conformance repair (post hash before running; tallies unused until reviewed; no broadened ancestry claim)",
+  "explicit CVT-R reconciliation (Artemis #891) in the ancestry record",
+  "D2 v3 repairs independent of the root-of-trust choice; Fabric re-audit with --cap fabric.runtime==0.2 (#922)"
  ],
  "operator_decisions_required": [
-  "confirm MWO-0001 approval",
-  "D2 root of trust (a signed commits / b operator-confirmed hashes / c accept)",
-  "sample transfer route",
+  "D2 root of trust for protocol records (#925): (a) signed commits + pinned keys / (b) operator-confirmed hashes / (c) accept residual",
   "branch protection on main"
  ],
  "latest_reports": [
   "comms #924 (run-2 review)",
   "#925 (D2 v3 plan)",
   "roles/Nestor/campaigns/ancestry-replay-2026-09-28/review_run2/"
+ ],
+ "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
+ "closed": [
+  "#788 queue item closed (executed: 7c018d92b D1 merge, 95b31a30d D2 seal)"
  ]
 }
