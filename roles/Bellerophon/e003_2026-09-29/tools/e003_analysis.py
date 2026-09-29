@@ -18,6 +18,9 @@ Readings of the prereg this seat applies (declared here, before production):
   The estimand is the mean over those loci, with a birth-clustered bootstrap (2,000 resamples, seed 1).
 - Painting guard (C4.6): per-birth source diversity = distinct (entity, source locus) / ENTITY loci. P1 and Q8c are
   also reported excluding births with diversity < 0.5.
+- Gated classes are self / other / none. NO_MATERIAL is reported, not gated (R1). CORRECTION 2026-09-29, pre-freeze,
+  made AFTER the dry run on r022153: the dry analysis had gated NO_MATERIAL (flip coverage 1/3 over 3 loci). Disclosed
+  in the E-003 README.
 - Q5: the founder (ORIG) share of capable children's loci is reported. The drift-only null is NOT built (descriptive;
   stated in the report).
 - Q8r post-dominator scope: NOT implemented (secondary, non-gating; stated). The whole-execution rule-IMPLICIT share is
@@ -242,9 +245,11 @@ def analyse(E, Q4, A, F, C, S, schema_mod):
     out["Q5_drift_null"] = "NOT_COMPUTED (descriptive only)"
     # ---- gates and verdict (R3, C4.4 point estimate vs floor, CI reported) ------------------------------------------------
     gates = {}
-    gates["flip_failed_le_1pct"] = {c: (v["failed_rate"] is None or v["failed_rate"] <= 0.01) for c, v in fc.items()}
-    gates["flip_coverage_ge_50pct"] = {c: (v["coverage"] is None or v["move_loci"] == 0 or v["coverage"] >= 0.50) for c, v in fc.items()}
-    gates["completeness_leak_le_5pct"] = {c: (v["leak_rate"] is None or v["leak_rate"] <= 0.05) for c, v in cc.items()}
+    GATED = ("self", "other", "none")                    # R1: NO_MATERIAL is REPORTED as its own class, not gated
+    gates["flip_failed_le_1pct"] = {c: (v["failed_rate"] is None or v["failed_rate"] <= 0.01) for c, v in fc.items() if c in GATED}
+    gates["flip_coverage_ge_50pct"] = {c: (v["coverage"] is None or v["move_loci"] == 0 or v["coverage"] >= 0.50) for c, v in fc.items() if c in GATED}
+    gates["completeness_leak_le_5pct"] = {c: (v["leak_rate"] is None or v["leak_rate"] <= 0.05) for c, v in cc.items() if c in GATED}
+    gates["marginal_ci_note"] = "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks"
     gates["identifiable_ge_80pct_nonNM"] = (out["identifiable_share_nonNM"][0] or 0) >= 0.80
     gates["transmission_ge_30"] = len(TX) >= 30
     out["gates"] = gates
