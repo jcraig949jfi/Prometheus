@@ -181,3 +181,29 @@ Reading (revises v3):
 - R3: F3 mean dAC(SD_cp3 vs S) >= -0.10.
 - If same-cell pairs are too sparse in a world, the detector cannot fire. That is reported per world (the 'pairs'
   column) and counted as a miss, not excluded.
+
+### v5 result (precommit commit 370922f19; results/pkgf_cp3.json; 58 s)
+
+- **R1 SURVIVES:** a change is detected in 16/16 F3 worlds, the regime start at .667-.673 of the stream in every
+  world.
+- **R2 SURVIVES:** no change is detected in 16/16 stationary twins.
+- **R3 SURVIVES:** F3 mean dAC(SD_cp3 vs S) = 0.000. The all-history holdout gives -1.26 (range -0.74 to -2.21).
+  Twins: dAC(SD_cp3) = dAC(SD_all) = +.004, so discovery costs nothing without a change.
+
+Reading:
+- With a MODEL-FREE statistic (same-cell disagreement across a split, with a within-cell time-permutation null), the
+  selection signal IS discovered. The harm of stored obsolete history vanishes, with no recency prior and no
+  handed-in window.
+- This restores, on firmer ground, the claim v3 wrongly appeared to support:
+  - obsolete distinctions can stay stored and be ignored, IF the system can locate the regime boundary;
+  - here it can, from the stored records themselves.
+
+Scope (a reason for caution, not a footnote):
+- Every F3 L2 world switches once, sharply, at ~2/3 of the stream. The regime start is constant across seeds.
+- Every world has ~4,700 same-cell successive pairs, dense repeats.
+- This is the easy case for the detector. Untested:
+  - multiple or gradual switches;
+  - sparse repeats (L3, larger cell spaces);
+  - F5-style nuisance drifts;
+  - decaying-reliability worlds (N5).
+- Whether PKG-F would pass on those is open. A precommitted sparse-repeat test (L3) is the natural next check.
