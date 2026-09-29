@@ -1,0 +1,37 @@
+{
+  "X012": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "BEE default pressure IMPLICIT, EXTERNAL parent weights uniform under IMPLICIT/METABOLIC/EXPLOIT -> verified, prometheus/z80atlas/world.py:46, :648; grounding.py:30 BASE pressure=IMPLICIT; INIT_ENERGY=12.0 at world.py:35 (inflow/cost lines are actually world.py:670/674, not 666/670-671: minor line drift)",
+      "POST_CAMPAIGN_FORENSICS historical 'replication shows no task dependence' still stands -> verified, roles/Bellerophon/forensics_2026-09-23/POST_CAMPAIGN_FORENSICS.md:119",
+      "G1T five of six cells run-for-run identical, and G2 pools 160 origins including G1T (pseudo-replication knock-on) -> verified, roles/Bellerophon/forensics_2026-09-23/GROUNDING_REPORT.md:51-56; NPE NONE_IMPLICIT is 'no task coupling at all' at roles/Nestor/campaigns/z80atlas-2026-09-19/grammar.py:71, and it is the control level at :212"
+    ],
+    "notes": "A thorough sweep with (v) markers separating re-verified citations from sub-agent ones. The claims I checked hold; a few world.py line numbers are off by about 4. It identifies a new knock-on (B5) and gives clear retraction/scope-note actions."},
+  "X009": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "Seat report blamed a sampler 'dominated by degenerate draws'; 416 draws, Q3 rejected 233, Q2 151, Q4 12; mul/mod/powr 0/32 -> verified, 4f937e88f:roles/Aphrodite/pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-26.md:79 and STATUS.md:87-88",
+      "Tribunal metamorphic-check docstring assumes every declared body is commutative-associative -> verified, 4f937e88f:roles/Aphrodite/engine/meta_tribunal.py:143",
+      "Gold 'None' vs artifact 'overflow' mismatch -> verified in code: gold built as str(G.run_program(...)) at 4f937e88f:roles/Aphrodite/engine/a17.py:84 (None -> 'None'); artifact returns \"overflow\" at meta_tribunal.py:50-58; comparison str(got)!=gold at basis_v4.py:260. The 223/416 count is unverifiable (analysis scripts are not in the repo)."
+    ],
+    "notes": "A strong mechanistic diagnosis that overturns the seat's sampler premise, with clear design consequences. The per-draw and census numbers come from uncommitted work/ scripts, and the code claims cite files without line numbers, so the evidence is only partly checkable."},
+  "X019": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Source is prediction only ('No experiment is proposed here', 'None of the above is demonstrated') -> verified, techne/research/evolution-as-learning/FAILURE_LANDSCAPE_IMPLICATIONS.md:3, :34",
+      "E1 cycles targets every generation and was an instrument failure with K2 UNCHANGED; C0 runs a second independent population -> verified, e1_experiment.py:70, :227; E1_RESULT_INSTRUMENT_FAILURE.md:21, :92",
+      "Herakles HC-T01 T2 precedence test NOT ATTEMPTED -> verified, herakles/specimens/spec-toussaint-exploration/HC_T01_EXECUTION_REVIEW_PACKET.txt:188-190"
+    ],
+    "notes": "Answers precisely that H-D5-12 is OPEN, and shows line by line why E1 cannot bear on it. It marks the pointers it delegated and did not open, and it supplies a pre-committed decision rule for a follow-up."},
+  "X007": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "126/150 of cs-c3-2 score exactly 0.0 including all 120 random rules; random arm in 4 cells under v0 -> verified, roles/Techne/H3_ALPHA_RECEIPT_2026-09-10.md:114-125",
+      "Per-seed live family_b_solved top_k 8/11/10/11/12, behavioral 7/11/7/10/11, hybrid 7/11/6/10/11 -> verified at the cited lines of archaeon/docs/h0h5/H3_DEAD_STREAM_CONTROL_v2_2026-09-11.json (:51,:91,:111,:317,...,:1175); my recomputation gives mean +1.2 SE 0.49 t 2.45 and +1.4 SE 0.68 t 2.06, which match",
+      "Readout: coverage identical live vs dead to the cell; no claim about a real stream (C3-3 unissued); policy differences within one SE -> verified, archaeon/docs/h0h5/H3_DEAD_STREAM_READOUT_2026-09-11.md:93-97, :117-133"
+    ],
+    "notes": "Every load-bearing number is tied to committed rows, and the hand arithmetic checks out. It separates cleanly 'unanswerable on a real stream' from 'no QD advantage on the synthetic stream', and it states the confounds (non-deceptive landscape, post hoc stats)."},
+  "X018": {"evidence": 1, "correctness": 1, "answers": 2, "limits": 1, "usable": 2, "total": 7,
+    "checked_claims": [
+      "Specimens come from committed final-elite manifests in C3-SFE-01 rows.json -> verified, archaeon/campaign3/C3-SFE-01/rows.json (manifests present, 23 SHELF rows; the 19-unique count is unverified)",
+      "C3-SFE-08 two-value elites have no committed manifests -> verified, archaeon/campaign3/C3-SFE-08/rows.json contains no 'manifest' field",
+      "Central result: KEYSWAP/KEYNOVEL change 0% of outputs in 19/19 organisms, with no SPARE placement giving a lift -> unverifiable (probe.py/probe2.py and outputs are not in the repo); the POS_TABLE control exists at archaeon/wse/controls.py:189 and the Lexis fixture exists at roles/Lexis/handoff/state_injection_fixture.json"
+    ],
+    "notes": "A well-designed experiment with a positive control and a useful gating rule. Its load-bearing numbers rest entirely on uncommitted scripts with almost no path:line citations. Limits cover what was not run, but not what would change the conclusion."}
+}

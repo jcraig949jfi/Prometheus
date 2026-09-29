@@ -1,0 +1,37 @@
+{
+  "X003": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "E9 reproduces as raw 0.0476 / mix 0.0667 / home 0.6000 with 40 abstain and 0 guess -> verified: apollo/scripts/e9_score.py:50-52 targets; 6ff2b2f8a:apollo/cycles/campaign_20260825/E9_RESULT.json gives 6 abstain per category (4 for transitivity), 0 guessed, and transitivity 2/6",
+      "Transitivity parser accepts only greater-direction comparatives (taller|bigger|...|richer) -> verified: 6ff2b2f8a:apollo/src/blackboard_ops.py:39 (no younger/slower/poorer)",
+      "A 'Question: ' prefix takes numeric_comparison from 1.0 to 0.0 and moves the mix from 0.60 to 0.40 -> verified: 6ff2b2f8a:apollo/src/blackboard_ops_compare.py:25 requires problem_text.startswith('is '); the home battery has 10 of 50 tasks in numeric_comparison (apollo/data/clean_canary_v01.json), so weight 0.2 gives 0.60->0.40"
+    ],
+    "notes": "Every repository-side claim I checked is correct, and the causal explanation holds up in the source. The generator and leak numbers come from the author's own out-of-repo scripts, but those scripts are described clearly enough to rerun. Limits and which engines were left unanswered are stated precisely."},
+  "X002": {"evidence": 1, "correctness": 1, "answers": 2, "limits": 2, "usable": 2, "total": 8,
+    "checked_claims": [
+      "The Atlas harvester indexes only archaeon/campaignN/, not envgate, envgate2 or z80atlas -> verified: atlas/harvest/archaeon_campaigns.py:59 regex archaeon/(campaign\\d+)/; the envgate, envgate2 and z80atlas directories exist at 6ff2b2f8a",
+      "No varied/observed lens field exists under atlas/ -> verified (grep for varied/observed/lens_card under atlas/ returns nothing)",
+      "Corpus of 33 records with 62 of 480 cross-seat Z80 pairs -> partly: 62 is arithmetically consistent with 13 Z80 records split 4/3/4/2 across seats, but the source counts '31 from main + 3 from branch' add up to 34, not 33; the kappa and recall/precision headline results rest entirely on out-of-repo annotations and cannot be checked"
+    ],
+    "notes": "The premise checks hold and the design reasoning is sound, but the load-bearing numbers (kappa, recall, precision) come from out-of-repo sub-agent annotations, and the corpus count is internally inconsistent (31+3 is not 33). The limits section is candid, including the circularity of the ground truth."},
+  "X011": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Rebuilt pools reproduce committed per-family PAYS rates (c2 .160/.2683/.2608; c0b .140/.2592/.2625) -> verified exactly: 917edba0a:roles/Cosmos/campaigns/c2/run_7b14ec99e/oracle_summary.json and c0b/run_21fd1b2cc/oracle_summary.json",
+      "Law A and law B thresholds and the zero-parameter analytic formula come from committed sources -> verified: c0b/run_21fd1b2cc/mine_initial.json:660,670 (law A: -1.055/0.1792), c2/PREREG.md:44 (law B: -0.1577/-0.1022), c0e/PREREG.md:52-53 (analytic PAYS formula)",
+      "On sealed D/E the law BA is .983/.972, the analytic BA .973/.971 and the 5-NN baseline .841 -> verified: c0e/PREREG.md:54-55; c0b/run_21fd1b2cc/G5_holdout.json:6,17 (knn5 0.8410, law_ba 0.9835)"
+    ],
+    "notes": "Tightly tied to committed artefacts, and every check matched exactly. It extends the repository's own 'planted-invariant recovery' finding (HANDOFF_2026-09-23.md:33) to sealed universe F and to law B, and gives a concrete fix to the baseline ladder."},
+  "X006": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "The reversible-core experiment was never started and is assigned to the Nestor/NPE lane -> verified: 6ff2b2f8a:programs/selective_irreversibility/FALSIFIERS.md:29 ('NOT STARTED')",
+      "The stewards specified random export as the blind control with FIFO as a third arm only where recency-relevance decorrelation holds -> verified: memo/PORTFOLIO_MEMO_2026-09-25.md:62-64,158-160",
+      "The M2 attack predicted false non-merging from sequential RNG and a keyed-RNG cheat fixture; no cross-engine replay-and-perturb interface exists -> verified: memo/M2_sections.md:163-169; PORTFOLIO_MEMO:97. Minor error: the memo was first added at 10677aa30, not d50103524 (which modifies it)"
+    ],
+    "notes": "The design premises it attacks are correctly represented. All results come from a new toy built outside the repository, and repository documents are cited by name rather than path:line. It states clearly what the toy does and does not show, and gives actionable preregistration requirements."},
+  "X004": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "The ladder's F5-0 rung asks whether persistence helps beyond equal-information context, with kill condition 'no advantage at matched information and compute' -> verified: 2c7a19adb:roles/Atlas/proposals/2026-09-21_prior_art_raid/ENGINE_FIVE_EXPERIMENT_LADDER.md:35-36,63",
+      "The portable organ is {identity, description, executable payload, retrieval key}, with ablation and transplant experiments -> verified: 9e54a51ce:roles/Chiron/prompts/2026-09-21_synthesis_directive/SYNTHESIS_DIRECTIVE.md section VII (lines ~294-335)",
+      "A late library swap (F5-4) and raw demonstrations vs extracted organs are named near-term tests -> verified: the same directive, section XIV (F5-0, F5-4) and 'raw fossils vs extracted organs'; the claim that the compounding branch has no library-vs-context test was not fully checked"
+    ],
+    "notes": "The sources are cited by commit and path and represented accurately; the experimental numbers come from a self-built toy world with hashes but no committed data. The critique that the kill rung is badly posed (it needs a context arm that extracts), plus the stated LLM and world-family limits, make it directly actionable."}
+}

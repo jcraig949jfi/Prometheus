@@ -1,0 +1,37 @@
+{
+  "X001": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Specimen's committed held accuracy 0.8828 and zero_comm 0.500 -> verified, roles/Ananke/pte/c1_posthoc/posthoc_adjudication.json:8 (acc 0.8828125) and controls.zero_comm acc 0.5; ring 144, sync period 2, gap 8 in same file",
+      "Certificate v3 rule: 49 permutations, p<=0.02, P2 = 3 bootstrap SE, 2000 train / 3000 test, P1 at t=k+1, swap at t=k -> verified, 940b486f2:prometheus/cosmos/c3/certify.py (N_PERM=49, held pval<=0.02, eps=3*se, E_train=2000, E_test=3000, t_probe=k+1, swap_at=task.k)",
+      "v3 gate was passed at V=4, k=6 -> verified, 940b486f2:roles/Cosmos/c3/S1_PREREG_P1P2_GATE.md:39; 'packets in flight, not site state' also verified at roles/Ananke/pte/PREREG_PTE_C1b.md:20-21"
+    ],
+    "notes": "Commit-pinned inputs and exact rule parameters all check out; new run outputs are outside the repo and could not be verified, but the report says clearly what was skipped (B1 seeds 9-10, B3, the swap sweep) and why the three-way comparison cannot be done."},
+  "X002": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "Atlas harvester matches only archaeon/campaignN/ -> verified, 6ff2b2f8a:atlas/harvest/archaeon_campaigns.py:59 (re.match archaeon/(campaign\\d+)/); archaeon/envgate, envgate2, z80atlas exist at 6ff2b2f8a and are not matched",
+      "No varied/observed lens field exists under atlas/ -> verified, rogit grep at 6ff2b2f8a finds only an unrelated 'VARIED' state enum in atlas/sql/010_m1-1c645957_research_policy.sql:71",
+      "62 of 480 cross-seat Z80 pairs from 13 Z80 records split 4/3/4/2 -> verified arithmetically (C(13,2)=78 minus 16 within-seat pairs = 62); commit ee7a7d954 exists. Minor inconsistency: 31 + 3 records stated vs corpus n=33"
+    ],
+    "notes": "Premise checks are verified, but the main results (kappa, recall and precision) rest on annotation files outside the repo and are not tied to per-record paths in the report. It is candid about the circular ground truth and the small sample."},
+  "X003": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "E9: raw 0.0476, mix 0.0667 vs home 0.6000, 40/42 abstain, 0 guesses -> verified, 6ff2b2f8a:apollo/scripts/e9_score.py:5,15-16,50-51,181",
+      "Transitivity parser accepts only greater-direction comparatives (taller|bigger|...|richer than) -> verified, 6ff2b2f8a:apollo/src/blackboard_ops.py:39-40,49",
+      "Source bundle paths (apollo/scripts, roles/Charon/apollo_e9) exist at 6ff2b2f8a -> verified; the 0.833 organism is the one referenced at e9_score.py:3,42"
+    ],
+    "notes": "Its reproduction of E9 and its causal explanation from the parser check out; the new generator and calibration results are outside the repo and have no line cites. It states limits and next steps precisely, including that the third-author generator is no longer blind."},
+  "X004": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "Ladder rung F5-0 kill condition is 'no advantage at matched information and compute' -> verified, 2c7a19adb:roles/Atlas/proposals/2026-09-21_prior_art_raid/ENGINE_FIVE_EXPERIMENT_LADDER.md:35-36,63",
+      "Promotion gate needs >= 2 world families plus a swap test -> verified, 2c7a19adb:roles/Atlas/proposals/2026-09-21_prior_art_raid/ATLAS_EXPERIMENT_TODO.md:110 (in the TODO file, not the LADDER file itself)",
+      "Portable-organ section names removal and transplant tests and Techne/Nyx -> verified, 9e54a51ce:roles/Chiron/prompts/2026-09-21_synthesis_directive/SYNTHESIS_DIRECTIVE.md:294,362,396-397; branch origin/aphrodite/compounding-2026-09-27 exists"
+    ],
+    "notes": "The framing citations are accurate, but all results come from new code outside the repo (hashes are given, no committed data), so they cannot be checked here. It gives a clear verdict, explains why the rung is ill-posed, and lists what was not done."},
+  "X005": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Arbitration law (h0..h3 chain, priority = M(h3 XOR C(source)), M a bijection) and the explicit non-neutrality caveat -> verified, 5266cce:Aether/AETHER_SPEC.md:261-265,296-302,358; the derived 50/50 two-way symmetry proof is sound given the bijectivity stated there",
+      "D-AETH01-08 reuses the law, carries economic stakes, and has a stratified-rerun falsifier; D-AETH01-07 excludes tuple relocation -> verified, 5266cce:Aether/AETH-01/DECISIONS.md:141-158,161-177; rerun 'not executed this cycle' at REPAIR_LEDGER_01.md:504",
+      "Energy contest share 0.56% and S4 winner persistence 0.50 vs 0.50 (hys 0.97) -> verified, 5266cce:Aether/AETH-01/AETH02_CALIBRATION_2026-09-23.md:114 and Aether/AETH-03/PHYSICS_DESIGN_01_2026-09-26.md:415"
+    ],
+    "notes": "Every claim I sampled is pinned to commit and line and holds. It separates what it derived itself from what the repo states, and gives concrete falsifiers and the check still outstanding (analysis.py)."}
+}

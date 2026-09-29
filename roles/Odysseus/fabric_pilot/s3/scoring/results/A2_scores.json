@@ -1,0 +1,37 @@
+{
+  "X006": {"evidence": 1, "correctness": 1, "answers": 2, "limits": 2, "usable": 2, "total": 8,
+    "checked_claims": [
+      "M2 attack notes predicted the sequential-RNG cheat fixture and prescribed counter-keyed RNG by (time, site, purpose) -> verified, programs/selective_irreversibility/memo/M2_sections.md:164-169",
+      "The design calls for random export matched on the merge-time curve as the blind control -> verified, programs/selective_irreversibility/memo/PORTFOLIO_MEMO_2026-09-25.md:59-62, FALSIFIERS.md:24,39",
+      "The memo was 'first committed at d50103524' -> false (minor): d50103524 is the Cyclops co-sign; the memo was added in 10677aa30. All toy-experiment numbers are unverifiable because the code and logs sit outside the repository and are redacted"
+    ],
+    "notes": "A careful new toy experiment with good controls, a self-caught harness bug and explicit limits. The headline numbers rest entirely on uncommitted code with truncated hashes, so they cannot be checked in the repository, and one provenance sha is wrong."},
+  "X007": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Per-seed live-arm family_b_solved values are top_k 8/11/10/11/12, behavioral 7/11/7/10/11 and hybrid 7/11/6/10/11 -> verified, archaeon/docs/h0h5/H3_DEAD_STREAM_CONTROL_v2_2026-09-11.json:51,91,111,317,...,1175; the means 10.4/9.2/9.0 match the readout at :93-97",
+      "The TECHNE-24 real-stream tallies are top_k 4, uniform 6, behavioral 7 and hybrid 6 of 9 scorable, with status SCORED_WITHOUT_RANKING -> verified, techne/acquisition/receipts/adapter_qualification-pyribs-20260911T065018Z.json:309-310,441-442,573-574,705-706,771-782",
+      "126 of 150 score 0.0, all 120 random rules fall in four cells, and the readout rules coverage and score-threshold reuse UNSAFE -> verified, roles/Techne/H3_ALPHA_RECEIPT_2026-09-10.md:114-150; archaeon/docs/h0h5/H3_DEAD_STREAM_READOUT_2026-09-11.md:117-124"
+    ],
+    "notes": "Tightly cited, and the hand arithmetic checks out. It separates what the real stream can answer from what the synthetic stream shows, labels the post-hoc statistics honestly, and gives concrete overturn conditions."},
+  "X008": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Deep block 72923db05 is merged into origin/main -> verified with rogit branch -a --contains 72923db05",
+      "Block A finds C-OP' ILL_POSED on E1b, E4 and E5, and the narrowed rule is 'proposed, not adopted' -> verified, ops/campaigns/C-001/DEEP_BLOCK_2026-09-27/A_E002_REVIEW.md:22-47 (line numbers off by about 1)",
+      "The v0 singular parent is a FLOW/IBD share over all units with 0.75/0.10 thresholds and no operator null, so E4 would give parent b -> verified, archaeon/attribution/schema.py:65-66,88-95,134-139; ATTRIBUTION_V0.md:52,54,192; the assay's 3.3% and 4.9% at ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/ASSAY.md:28-29"
+    ],
+    "notes": "Accurate and well sourced. It corrects the harvest's provenance and identifies a real FLOW/DIFFERENCE tension in v0. Some citations give bare filenames without a directory, which makes them harder to locate."},
+  "X009": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "The rejections split 151 at the identifiability stage (Q2_size null), 233 at the tribunal (Q3 false) and 12 at the pilot, out of 416 draws -> verified by counting 4f937e88f:roles/Aphrodite/engine/A17_FOUNDRY_EVALS_2026-09-26.jsonl (151 null, 233 Q3 false, 20 accepted)",
+      "mul passes the first stage 42/64 and then the tribunal 1/42; powr passes the tribunal 1 time -> verified in the same file (22 mul nulls, 1 mul Q3 true, 1 powr Q3 true); the mul/mod/powr 0/32 premise is verified at roles/Aphrodite/engine/A17_FOUNDRY_2026-09-26.log and STATUS.md:88",
+      "The tribunal's metamorphic check assumes bodies are commutative-associative, and the artifact returns 'overflow' where run_program returns None -> verified, 4f937e88f:roles/Aphrodite/engine/meta_tribunal.py:143 and :50-58"
+    ],
+    "notes": "A decisive diagnosis that overturns the seat's 'degenerate sampler' explanation, with instrument defects to act on. The census and re-scoring scripts are not committed and it gives no path:line citations, so the core census numbers cannot be checked without rerunning its work."},
+  "X010": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "The source quote reads 'RA-1/RA-3 need nothing from Techne', and the Atlas journal says RA-4/RA-5 cannot run today -> verified, roles/Techne/journal/2026-09-25_gandalf-a04f7c25_RESET.md:91-92; roles/Atlas/journal/2026-09-21.md:41-42",
+      "Crius C2 is closed, and the PART takeover counts per c2d recombination seed are 32/582, 25/592 and 6/597 -> verified, crius/runs/C2_TERMINAL_DISPOSITION.md:54,63,79,95,103 (sums recomputed)",
+      "Pool assignment is endogenous: AUDIT controls are spawned only when an ADMITTED detector fired, ingest takes its pool from lineage mode, and choose_pool works by share deficit -> verified, archaeon/frontier/scheduler.py:178-200,239-248; ingest.py:120"
+    ],
+    "notes": "A thorough status, feasibility and answer breakdown for each RA, including a quote correction and a new confound finding. Every citation checked is accurate. Sub-agent rows are flagged MEDIUM, and analysis.py was not run, which the report says openly."}
+}
