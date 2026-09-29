@@ -14,9 +14,12 @@ Specimens live in git (roles/Ananke/pte/c1_rows/cells.jsonl.gz). Run state
 goes outside git. Rules: roles/Ananke/research/handoffs/COMMON_RULES.md +
 COMMON_RULES_ARC3.md (plan before running; log every attempt; no
 commits; report in the final message or hand the report file to the
-seat principal). Leases: roles/Ananke/research/lease.py covers M1 only.
-On another host, record the host in the owner string and post the lease
-record to comms if the machine is shared.
+seat principal). Leases: Fabric only (MWO-0001; cutover 8370083ae), on any
+host: `python -m fabric lease acquire <host>:<res> --as Ananke --purpose ...`
+(roles/Ananke/research/lease.py is a thin frontend onto the same row). No
+host lease files, no comms lease records. Portable CPU blocks should be
+submitted as Fabric Tasks (`python -m fabric submit ... --thread <thr-id>`,
+ids in research/THREADS.md).
 
 ## Blocks (maturity: research-ready)
 B-1 DESIGN, DON'T EVOLVE (T-WA-2). Use the zero-parameter echo model

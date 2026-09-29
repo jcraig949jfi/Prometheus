@@ -1,0 +1,1643 @@
+{
+ "summary": {
+  "inventory": 733,
+  "groups_run": 249,
+  "verdicts_run": 733,
+  "errors": 1,
+  "err_groups": [
+   [
+    "SCT",
+    "d_wave",
+    "4781b0a1",
+    "",
+    "all",
+    "MAJ"
+   ]
+  ],
+  "single_vs_every": {
+   "CHANCE|CHANCE": 25,
+   "FLIP|CHANCE": 1,
+   "FLIP|FLIP": 3
+  },
+  "single_every_agree": [
+   28,
+   29
+  ],
+  "single_vs_rel_ungated": {
+   "CHANCE|CHANCE_REL": 365,
+   "CHANCE|FLIP_REL": 95,
+   "CHANCE|INDETERMINATE": 101,
+   "CHANCE|NO_EFFECT_REL": 54,
+   "FLIP|CHANCE_REL": 10,
+   "FLIP|FLIP_REL": 75,
+   "FLIP|INDETERMINATE": 5,
+   "NO-EFFECT|CHANCE_REL": 1,
+   "NO-EFFECT|NO_EFFECT_REL": 27
+  },
+  "readability": {
+   "recR->512R": 495,
+   "recU->512U": 121,
+   "recU->512R": 117
+  },
+  "D1": {
+   "readable_n": 495,
+   "flip_k": 39,
+   "cluster99": [
+    0.037,
+    0.125
+   ],
+   "call": "PARTIAL"
+  },
+  "census_class_groups": {
+   "UNRESOLVED": 69,
+   "SITE": 45,
+   "UNDEFINED": 62,
+   "MIXTURE": 17,
+   "IDENTITY-BROKEN": 34,
+   "CHANNEL": 10,
+   "NEITHER": 12
+  },
+  "census_follow_groups": {
+   "UNRESOLVED": 65,
+   "SITE": 55,
+   "MIXTURE": 56,
+   "CHANNEL": 19,
+   "IDENTITY-BROKEN": 41,
+   "NEITHER": 13
+  },
+  "WF_class_changes": {
+   "rec_normal": 13,
+   "rerun_normal": 25
+  },
+  "WF_cells": 71,
+  "WI_reader_changes": 11,
+  "WI_sub_changes": 20,
+  "WI_offsets": 135,
+  "SCT": [
+   {
+    "parent": "c16d5231",
+    "changes": {
+     "sitestate": "CHANCE"
+    },
+    "we_class_rec": "in-flight",
+    "we_class_new": "in-flight",
+    "changed": false,
+    "affected": "W-E ret_census.specimens() class for D-wave cells with parent c16d5231"
+   },
+   {
+    "parent": "4781b0a1",
+    "changes": {
+     "inflight": "CHANCE",
+     "sitestate": "CHANCE",
+     "payload": "CHANCE"
+    },
+    "we_class_rec": "joint",
+    "we_class_new": "joint",
+    "changed": false,
+    "affected": "W-E ret_census.specimens() class for D-wave cells with parent 4781b0a1"
+   }
+  ]
+ },
+ "matrices": {
+  "all": {
+   "n": 733,
+   "label": "SINGLE abs, all",
+   "FLIP": {
+    "k": 90,
+    "p": 0.123,
+    "wilson99": [
+     0.095,
+     0.157
+    ],
+    "cluster99": [
+     0.076,
+     0.188
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 28,
+    "p": 0.038,
+    "wilson99": [
+     0.024,
+     0.061
+    ],
+    "cluster99": [
+     0.012,
+     0.068
+    ]
+   },
+   "CHANCE": {
+    "k": 615,
+    "p": 0.839,
+    "wilson99": [
+     0.801,
+     0.871
+    ],
+    "cluster99": [
+     0.771,
+     0.896
+    ]
+   }
+  },
+  "readable": {
+   "n": 495,
+   "label": "SINGLE abs, recorded lo99 >= .60",
+   "FLIP": {
+    "k": 39,
+    "p": 0.079,
+    "wilson99": [
+     0.053,
+     0.116
+    ],
+    "cluster99": [
+     0.037,
+     0.125
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 17,
+    "p": 0.034,
+    "wilson99": [
+     0.019,
+     0.062
+    ],
+    "cluster99": [
+     0.012,
+     0.068
+    ]
+   },
+   "CHANCE": {
+    "k": 439,
+    "p": 0.887,
+    "wilson99": [
+     0.845,
+     0.919
+    ],
+    "cluster99": [
+     0.826,
+     0.938
+    ]
+   }
+  },
+  "unreadable": {
+   "n": 238,
+   "label": "SINGLE abs, recorded lo99 < .60",
+   "FLIP": {
+    "k": 51,
+    "p": 0.214,
+    "wilson99": [
+     0.154,
+     0.29
+    ],
+    "cluster99": [
+     0.098,
+     0.429
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 11,
+    "p": 0.046,
+    "wilson99": [
+     0.022,
+     0.095
+    ],
+    "cluster99": [
+     0.0,
+     0.084
+    ]
+   },
+   "CHANCE": {
+    "k": 176,
+    "p": 0.739,
+    "wilson99": [
+     0.66,
+     0.806
+    ],
+    "cluster99": [
+     0.564,
+     0.85
+    ]
+   }
+  },
+  "src_WF": {
+   "n": 281,
+   "label": "WF",
+   "FLIP": {
+    "k": 64,
+    "p": 0.228,
+    "wilson99": [
+     0.17,
+     0.298
+    ],
+    "cluster99": [
+     0.126,
+     0.349
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 11,
+    "p": 0.039,
+    "wilson99": [
+     0.018,
+     0.081
+    ],
+    "cluster99": [
+     0.011,
+     0.073
+    ]
+   },
+   "CHANCE": {
+    "k": 206,
+    "p": 0.733,
+    "wilson99": [
+     0.66,
+     0.795
+    ],
+    "cluster99": [
+     0.611,
+     0.844
+    ]
+   }
+  },
+  "src_WF_readable": {
+   "n": 111,
+   "label": "WF readable",
+   "FLIP": {
+    "k": 18,
+    "p": 0.162,
+    "wilson99": [
+     0.092,
+     0.271
+    ],
+    "cluster99": [
+     0.066,
+     0.292
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 8,
+    "p": 0.072,
+    "wilson99": [
+     0.03,
+     0.162
+    ],
+    "cluster99": [
+     0.009,
+     0.153
+    ]
+   },
+   "CHANCE": {
+    "k": 85,
+    "p": 0.766,
+    "wilson99": [
+     0.649,
+     0.852
+    ],
+    "cluster99": [
+     0.624,
+     0.885
+    ]
+   }
+  },
+  "src_WI": {
+   "n": 448,
+   "label": "WI",
+   "FLIP": {
+    "k": 26,
+    "p": 0.058,
+    "wilson99": [
+     0.036,
+     0.093
+    ],
+    "cluster99": [
+     0.018,
+     0.095
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 17,
+    "p": 0.038,
+    "wilson99": [
+     0.021,
+     0.069
+    ],
+    "cluster99": [
+     0.009,
+     0.074
+    ]
+   },
+   "CHANCE": {
+    "k": 405,
+    "p": 0.904,
+    "wilson99": [
+     0.862,
+     0.934
+    ],
+    "cluster99": [
+     0.853,
+     0.963
+    ]
+   }
+  },
+  "src_WI_readable": {
+   "n": 380,
+   "label": "WI readable",
+   "FLIP": {
+    "k": 21,
+    "p": 0.055,
+    "wilson99": [
+     0.032,
+     0.094
+    ],
+    "cluster99": [
+     0.014,
+     0.095
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 9,
+    "p": 0.024,
+    "wilson99": [
+     0.01,
+     0.053
+    ],
+    "cluster99": [
+     0.004,
+     0.05
+    ]
+   },
+   "CHANCE": {
+    "k": 350,
+    "p": 0.921,
+    "wilson99": [
+     0.878,
+     0.95
+    ],
+    "cluster99": [
+     0.868,
+     0.974
+    ]
+   }
+  },
+  "src_SCT": {
+   "n": 4,
+   "label": "SCT",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.624
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.624
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 4,
+    "p": 1.0,
+    "wilson99": [
+     0.376,
+     1.0
+    ],
+    "cluster99": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "src_SCT_readable": {
+   "n": 4,
+   "label": "SCT readable",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.624
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.624
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 4,
+    "p": 1.0,
+    "wilson99": [
+     0.376,
+     1.0
+    ],
+    "cluster99": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "fam_HOLD": {
+   "n": 80,
+   "label": "HOLD",
+   "FLIP": {
+    "k": 35,
+    "p": 0.438,
+    "wilson99": [
+     0.305,
+     0.58
+    ],
+    "cluster99": [
+     0.215,
+     0.733
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 1,
+    "p": 0.013,
+    "wilson99": [
+     0.001,
+     0.098
+    ],
+    "cluster99": [
+     0.0,
+     0.063
+    ]
+   },
+   "CHANCE": {
+    "k": 44,
+    "p": 0.55,
+    "wilson99": [
+     0.408,
+     0.684
+    ],
+    "cluster99": [
+     0.263,
+     0.778
+    ]
+   }
+  },
+  "fam_RELAY": {
+   "n": 536,
+   "label": "RELAY",
+   "FLIP": {
+    "k": 33,
+    "p": 0.062,
+    "wilson99": [
+     0.04,
+     0.094
+    ],
+    "cluster99": [
+     0.022,
+     0.106
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 23,
+    "p": 0.043,
+    "wilson99": [
+     0.025,
+     0.072
+    ],
+    "cluster99": [
+     0.009,
+     0.081
+    ]
+   },
+   "CHANCE": {
+    "k": 480,
+    "p": 0.896,
+    "wilson99": [
+     0.857,
+     0.925
+    ],
+    "cluster99": [
+     0.833,
+     0.951
+    ]
+   }
+  },
+  "fam_MAJ": {
+   "n": 117,
+   "label": "MAJ",
+   "FLIP": {
+    "k": 22,
+    "p": 0.188,
+    "wilson99": [
+     0.113,
+     0.297
+    ],
+    "cluster99": [
+     0.033,
+     0.448
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 4,
+    "p": 0.034,
+    "wilson99": [
+     0.01,
+     0.108
+    ],
+    "cluster99": [
+     0.0,
+     0.104
+    ]
+   },
+   "CHANCE": {
+    "k": 91,
+    "p": 0.778,
+    "wilson99": [
+     0.665,
+     0.86
+    ],
+    "cluster99": [
+     0.494,
+     0.967
+    ]
+   }
+  },
+  "arm_Kp": {
+   "n": 5,
+   "label": "Kp",
+   "FLIP": {
+    "k": 1,
+    "p": 0.2,
+    "wilson99": [
+     0.024,
+     0.718
+    ],
+    "cluster99": [
+     0.0,
+     0.333
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.57
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 4,
+    "p": 0.8,
+    "wilson99": [
+     0.282,
+     0.976
+    ],
+    "cluster99": [
+     0.667,
+     1.0
+    ]
+   }
+  },
+  "arm_S": {
+   "n": 92,
+   "label": "S",
+   "FLIP": {
+    "k": 8,
+    "p": 0.087,
+    "wilson99": [
+     0.037,
+     0.193
+    ],
+    "cluster99": [
+     0.016,
+     0.178
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 1,
+    "p": 0.011,
+    "wilson99": [
+     0.001,
+     0.086
+    ],
+    "cluster99": [
+     0.0,
+     0.037
+    ]
+   },
+   "CHANCE": {
+    "k": 83,
+    "p": 0.902,
+    "wilson99": [
+     0.793,
+     0.957
+    ],
+    "cluster99": [
+     0.809,
+     0.984
+    ]
+   }
+  },
+  "arm_channel_all": {
+   "n": 169,
+   "label": "channel_all",
+   "FLIP": {
+    "k": 12,
+    "p": 0.071,
+    "wilson99": [
+     0.035,
+     0.14
+    ],
+    "cluster99": [
+     0.013,
+     0.154
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 10,
+    "p": 0.059,
+    "wilson99": [
+     0.027,
+     0.125
+    ],
+    "cluster99": [
+     0.008,
+     0.108
+    ]
+   },
+   "CHANCE": {
+    "k": 147,
+    "p": 0.87,
+    "wilson99": [
+     0.789,
+     0.923
+    ],
+    "cluster99": [
+     0.788,
+     0.947
+    ]
+   }
+  },
+  "arm_channel_content": {
+   "n": 92,
+   "label": "channel_content",
+   "FLIP": {
+    "k": 7,
+    "p": 0.076,
+    "wilson99": [
+     0.03,
+     0.179
+    ],
+    "cluster99": [
+     0.012,
+     0.162
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 3,
+    "p": 0.033,
+    "wilson99": [
+     0.008,
+     0.12
+    ],
+    "cluster99": [
+     0.0,
+     0.084
+    ]
+   },
+   "CHANCE": {
+    "k": 82,
+    "p": 0.891,
+    "wilson99": [
+     0.78,
+     0.95
+    ],
+    "cluster99": [
+     0.793,
+     0.97
+    ]
+   }
+  },
+  "arm_channel_count": {
+   "n": 40,
+   "label": "channel_count",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.142
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 3,
+    "p": 0.075,
+    "wilson99": [
+     0.019,
+     0.252
+    ],
+    "cluster99": [
+     0.0,
+     0.174
+    ]
+   },
+   "CHANCE": {
+    "k": 37,
+    "p": 0.925,
+    "wilson99": [
+     0.748,
+     0.981
+    ],
+    "cluster99": [
+     0.826,
+     1.0
+    ]
+   }
+  },
+  "arm_inbox": {
+   "n": 41,
+   "label": "inbox",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.139
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 1,
+    "p": 0.024,
+    "wilson99": [
+     0.003,
+     0.178
+    ],
+    "cluster99": [
+     0.0,
+     0.108
+    ]
+   },
+   "CHANCE": {
+    "k": 40,
+    "p": 0.976,
+    "wilson99": [
+     0.822,
+     0.997
+    ],
+    "cluster99": [
+     0.892,
+     1.0
+    ]
+   }
+  },
+  "arm_inflight": {
+   "n": 1,
+   "label": "inflight",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.869
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.869
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 1,
+    "p": 1.0,
+    "wilson99": [
+     0.131,
+     1.0
+    ],
+    "cluster99": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "arm_joint": {
+   "n": 75,
+   "label": "joint",
+   "FLIP": {
+    "k": 18,
+    "p": 0.24,
+    "wilson99": [
+     0.138,
+     0.385
+    ],
+    "cluster99": [
+     0.123,
+     0.373
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     -0.0,
+     0.081
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 57,
+    "p": 0.76,
+    "wilson99": [
+     0.615,
+     0.862
+    ],
+    "cluster99": [
+     0.627,
+     0.877
+    ]
+   }
+  },
+  "arm_pay0": {
+   "n": 19,
+   "label": "pay0",
+   "FLIP": {
+    "k": 1,
+    "p": 0.053,
+    "wilson99": [
+     0.006,
+     0.331
+    ],
+    "cluster99": [
+     0.0,
+     0.211
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.259
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 18,
+    "p": 0.947,
+    "wilson99": [
+     0.669,
+     0.994
+    ],
+    "cluster99": [
+     0.789,
+     1.0
+    ]
+   }
+  },
+  "arm_pay1": {
+   "n": 8,
+   "label": "pay1",
+   "FLIP": {
+    "k": 3,
+    "p": 0.375,
+    "wilson99": [
+     0.101,
+     0.763
+    ],
+    "cluster99": [
+     0.0,
+     0.75
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.453
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 5,
+    "p": 0.625,
+    "wilson99": [
+     0.237,
+     0.899
+    ],
+    "cluster99": [
+     0.25,
+     1.0
+    ]
+   }
+  },
+  "arm_pay3": {
+   "n": 1,
+   "label": "pay3",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.869
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.869
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 1,
+    "p": 1.0,
+    "wilson99": [
+     0.131,
+     1.0
+    ],
+    "cluster99": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "arm_payload": {
+   "n": 1,
+   "label": "payload",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.869
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.869
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 1,
+    "p": 1.0,
+    "wilson99": [
+     0.131,
+     1.0
+    ],
+    "cluster99": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "arm_r": {
+   "n": 15,
+   "label": "r",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.307
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 3,
+    "p": 0.2,
+    "wilson99": [
+     0.052,
+     0.532
+    ],
+    "cluster99": [
+     0.0,
+     0.273
+    ]
+   },
+   "CHANCE": {
+    "k": 12,
+    "p": 0.8,
+    "wilson99": [
+     0.468,
+     0.948
+    ],
+    "cluster99": [
+     0.727,
+     1.0
+    ]
+   }
+  },
+  "arm_site_all": {
+   "n": 172,
+   "label": "site_all",
+   "FLIP": {
+    "k": 40,
+    "p": 0.233,
+    "wilson99": [
+     0.16,
+     0.325
+    ],
+    "cluster99": [
+     0.146,
+     0.34
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 7,
+    "p": 0.041,
+    "wilson99": [
+     0.016,
+     0.099
+    ],
+    "cluster99": [
+     0.006,
+     0.097
+    ]
+   },
+   "CHANCE": {
+    "k": 125,
+    "p": 0.727,
+    "wilson99": [
+     0.632,
+     0.805
+    ],
+    "cluster99": [
+     0.61,
+     0.819
+    ]
+   }
+  },
+  "arm_sitestate": {
+   "n": 2,
+   "label": "sitestate",
+   "FLIP": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.768
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.768
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 2,
+    "p": 1.0,
+    "wilson99": [
+     0.232,
+     1.0
+    ],
+    "cluster99": [
+     1.0,
+     1.0
+    ]
+   }
+  },
+  "rel_ungated_all": {
+   "n": 733,
+   "label": "W-N REL ungated, all",
+   "FLIP_REL": {
+    "k": 170,
+    "p": 0.232,
+    "wilson99": [
+     0.194,
+     0.274
+    ],
+    "cluster99": [
+     0.152,
+     0.365
+    ]
+   },
+   "NO_EFFECT_REL": {
+    "k": 81,
+    "p": 0.111,
+    "wilson99": [
+     0.084,
+     0.144
+    ],
+    "cluster99": [
+     0.059,
+     0.155
+    ]
+   },
+   "CHANCE_REL": {
+    "k": 376,
+    "p": 0.513,
+    "wilson99": [
+     0.466,
+     0.56
+    ],
+    "cluster99": [
+     0.417,
+     0.595
+    ]
+   },
+   "INDETERMINATE": {
+    "k": 106,
+    "p": 0.145,
+    "wilson99": [
+     0.114,
+     0.181
+    ],
+    "cluster99": [
+     0.07,
+     0.208
+    ]
+   },
+   "NOT_ELIGIBLE": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.009
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO_PMIN": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.009
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "rel_gated_all": {
+   "n": 733,
+   "label": "W-N REL gated (attain_table p_min), all",
+   "FLIP_REL": {
+    "k": 117,
+    "p": 0.16,
+    "wilson99": [
+     0.128,
+     0.197
+    ],
+    "cluster99": [
+     0.098,
+     0.269
+    ]
+   },
+   "NO_EFFECT_REL": {
+    "k": 80,
+    "p": 0.109,
+    "wilson99": [
+     0.083,
+     0.142
+    ],
+    "cluster99": [
+     0.056,
+     0.155
+    ]
+   },
+   "CHANCE_REL": {
+    "k": 354,
+    "p": 0.483,
+    "wilson99": [
+     0.436,
+     0.53
+    ],
+    "cluster99": [
+     0.378,
+     0.567
+    ]
+   },
+   "INDETERMINATE": {
+    "k": 101,
+    "p": 0.138,
+    "wilson99": [
+     0.108,
+     0.174
+    ],
+    "cluster99": [
+     0.062,
+     0.201
+    ]
+   },
+   "NOT_ELIGIBLE": {
+    "k": 81,
+    "p": 0.111,
+    "wilson99": [
+     0.084,
+     0.144
+    ],
+    "cluster99": [
+     0.049,
+     0.217
+    ]
+   },
+   "NO_PMIN": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.009
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "rel_ungated_readable": {
+   "n": 495,
+   "label": "REL ungated, readable",
+   "FLIP_REL": {
+    "k": 35,
+    "p": 0.071,
+    "wilson99": [
+     0.046,
+     0.106
+    ],
+    "cluster99": [
+     0.027,
+     0.133
+    ]
+   },
+   "NO_EFFECT_REL": {
+    "k": 69,
+    "p": 0.139,
+    "wilson99": [
+     0.104,
+     0.184
+    ],
+    "cluster99": [
+     0.078,
+     0.206
+    ]
+   },
+   "CHANCE_REL": {
+    "k": 309,
+    "p": 0.624,
+    "wilson99": [
+     0.567,
+     0.678
+    ],
+    "cluster99": [
+     0.532,
+     0.737
+    ]
+   },
+   "INDETERMINATE": {
+    "k": 82,
+    "p": 0.166,
+    "wilson99": [
+     0.127,
+     0.213
+    ],
+    "cluster99": [
+     0.078,
+     0.254
+    ]
+   },
+   "NOT_ELIGIBLE": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.013
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO_PMIN": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.013
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "rel_gated_readable": {
+   "n": 495,
+   "label": "REL gated, readable",
+   "FLIP_REL": {
+    "k": 35,
+    "p": 0.071,
+    "wilson99": [
+     0.046,
+     0.106
+    ],
+    "cluster99": [
+     0.027,
+     0.133
+    ]
+   },
+   "NO_EFFECT_REL": {
+    "k": 69,
+    "p": 0.139,
+    "wilson99": [
+     0.104,
+     0.184
+    ],
+    "cluster99": [
+     0.078,
+     0.206
+    ]
+   },
+   "CHANCE_REL": {
+    "k": 309,
+    "p": 0.624,
+    "wilson99": [
+     0.567,
+     0.678
+    ],
+    "cluster99": [
+     0.532,
+     0.737
+    ]
+   },
+   "INDETERMINATE": {
+    "k": 82,
+    "p": 0.166,
+    "wilson99": [
+     0.127,
+     0.213
+    ],
+    "cluster99": [
+     0.078,
+     0.254
+    ]
+   },
+   "NOT_ELIGIBLE": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.013
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "NO_PMIN": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.013
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "rel_gated_unreadable": {
+   "n": 238,
+   "label": "REL gated, unreadable",
+   "FLIP_REL": {
+    "k": 82,
+    "p": 0.345,
+    "wilson99": [
+     0.27,
+     0.427
+    ],
+    "cluster99": [
+     0.193,
+     0.618
+    ]
+   },
+   "NO_EFFECT_REL": {
+    "k": 11,
+    "p": 0.046,
+    "wilson99": [
+     0.022,
+     0.095
+    ],
+    "cluster99": [
+     0.0,
+     0.097
+    ]
+   },
+   "CHANCE_REL": {
+    "k": 45,
+    "p": 0.189,
+    "wilson99": [
+     0.132,
+     0.263
+    ],
+    "cluster99": [
+     0.0,
+     0.373
+    ]
+   },
+   "INDETERMINATE": {
+    "k": 19,
+    "p": 0.08,
+    "wilson99": [
+     0.045,
+     0.137
+    ],
+    "cluster99": [
+     0.0,
+     0.159
+    ]
+   },
+   "NOT_ELIGIBLE": {
+    "k": 81,
+    "p": 0.34,
+    "wilson99": [
+     0.267,
+     0.423
+    ],
+    "cluster99": [
+     0.14,
+     0.665
+    ]
+   },
+   "NO_PMIN": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.027
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "every_subset_EVERY": {
+   "n": 29,
+   "label": "EVERY abs, subset",
+   "FLIP": {
+    "k": 3,
+    "p": 0.103,
+    "wilson99": [
+     0.027,
+     0.328
+    ],
+    "cluster99": [
+     0.0,
+     0.375
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.186
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 26,
+    "p": 0.897,
+    "wilson99": [
+     0.672,
+     0.973
+    ],
+    "cluster99": [
+     0.625,
+     1.0
+    ]
+   }
+  },
+  "every_subset_SINGLE": {
+   "n": 29,
+   "label": "SINGLE abs, same subset",
+   "FLIP": {
+    "k": 4,
+    "p": 0.138,
+    "wilson99": [
+     0.042,
+     0.369
+    ],
+    "cluster99": [
+     0.026,
+     0.391
+    ]
+   },
+   "NO-EFFECT": {
+    "k": 0,
+    "p": 0.0,
+    "wilson99": [
+     0.0,
+     0.186
+    ],
+    "cluster99": [
+     0.0,
+     0.0
+    ]
+   },
+   "CHANCE": {
+    "k": 25,
+    "p": 0.862,
+    "wilson99": [
+     0.631,
+     0.958
+    ],
+    "cluster99": [
+     0.609,
+     0.974
+    ]
+   }
+  }
+ }
+}

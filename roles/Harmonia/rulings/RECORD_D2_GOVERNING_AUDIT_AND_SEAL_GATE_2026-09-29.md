@@ -208,3 +208,195 @@ Operator decision possibly required: branch protection on main (Odysseus's v3 it
   - This is Harmonia's reading rule as adjudicator. It changes no D2 code, hypothesis or endpoint. The operator may
     overrule it **before** any key release. After a release it binds.
 - **D2 remains BLOCKED, fail-closed:** v7 needed; S1 (#925). Nothing released, revealed or built.
+
+## Addendum F (2026-09-29, before any exposure): Addendum E aligned with the D2 v7 terminal states
+
+Nestor's v7 (e4efb487e, #962) introduces:
+- PROTOCOL_ERROR and CERTIFY_ERROR, recorded per world;
+- a terminal `abort` receipt with RESULT ABORTED, result-sealable;
+- `receipts.jsonl` as the consumption marker;
+- crash-after-release as an EXPLICIT RESIDUAL (no resume, no second release; D2 spent).
+
+Addendum E is read against these states as follows. **This clarifies Addendum E; it widens nothing.**
+
+1. **Exposure point = the `open` receipt** (the package may meet the hidden worlds only after it). A release after which
+   no `open` receipt exists (bad key, crash before open) is **VOID (pre-exposure)**. The package saw nothing, so there is no
+   optional-stopping risk. D2 is still spent under v7's once-only release; Harmonia records that fact, not a result.
+2. **After `open`:**
+   - a sealed normal RESULT is adjudicated on its content;
+   - per-world PROTOCOL_ERROR / CERTIFY_ERROR count as **failed worlds** for that world (not dropped from the denominator);
+   - a sealed **RESULT ABORTED is FORFEIT** unless its abort receipt carries evidence that the cause lay outside the
+     package's control (for example host power loss). The burden of that evidence is on the run record, not on the
+     adjudicator. A MemoryError, a timeout or a pipe failure the package could have induced is FORFEIT.
+3. **No terminal record after `open`** (a crash that left no abort/close receipt) = evaluation of record, adjudicated
+   **FORFEIT** under the same burden rule. v7 declares that D2 is then spent.
+4. The adjudication bundle must show every consumed attempt (receipts files present) for this spec_id and any later
+   spec_id. That is Addendum E item 3, unchanged.
+
+As before: the operator may overrule before any key release; after a release this binds.
+
+## Addendum G (2026-09-29): governing v7 audit recorded, FAIL; how Addendum F bears on V7-B
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v7/VERDICT.md`, blob sha256 `3cc28628d337c3cda8b0f3666e6d2d6ade9b84ea1486d618e8c96f07078bf352` |
+| Verdict commit | 8efddb4b70b13bf6b8a77acc3c24195a34fcf132 (2026-09-29 08:00Z) |
+| Audited code | e4efb487e (Nestor #962). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** V7-1: an unsealable spend (the key read happens before the `open` record exists). V7-B: a package-initiated end is unattributed. V7-A: a probe gap, OPEN. S1 still OPEN. **Both self-tests PASS** (the first time since v4). |
+
+- **Harmonia check (by reading code):**
+  - `runner.py` `open()`: key read at line 677, then `Receipts(..., create=True)` at 679, then `append("open", ...)` at 681.
+  - **V7-1 is confirmed as stated.** A failure between 677 and 681 leaves a consumed release with no sealable record.
+    Neither VOID nor FORFEIT can be recorded, and Harmonia cannot adjudicate a state the chain cannot seal.
+- **V7-B and Addendum F:**
+  - The audit weighed Addendum E (#960). Addendum F (6da0d5b5f, #965) was pushed at about 07:58Z, while the re-audit was
+    already running on e4efb487e. Under F, a sealed ABORTED after `open` is **FORFEIT unless the record evidences a
+    cause outside the package's control**, so an unattributed abort **cannot** be recorded as VOID.
+  - V7-B's optional-stopping path is therefore closed **at the adjudication layer** by F.
+  - What V7-B still costs is the opposite error: a genuine infrastructure failure after `open` would be scored FORFEIT,
+    because the record cannot prove otherwise.
+  - Attribution (v8 item 2) remains **desirable for fairness to the predictor**; under F it is no longer required for
+    integrity.
+  - The auditor's severity ruling is the auditor's. Harmonia records this interaction and does not overrule it.
+- V7-F (package-induced resource pressure that looks like an infrastructure OOM): under F it is FORFEIT unless evidenced
+  otherwise. The burden sits where F placed it.
+- **D2 remains BLOCKED, fail-closed:** v8 needed (V7-1 at minimum); S1 (#925). Nothing released, revealed or built.
+
+## Addendum H (2026-09-29): governing v8 audit recorded, FAIL; two pre-exposure clarifications of Addendum F
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v8/VERDICT.md`, blob sha256 `5ac26fc7a8ee5cc365458a47afde26839e66e6e261b11a6c7daba9e3f3711ecb` |
+| Verdict commit | bea18a398a685bd565acd27583f4a1f666cf24d3 (2026-09-29 08:35Z) |
+| Audited code | a02b9b20c (Nestor #968). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** V8-1 (replica 1): a wrong but well-formed key spends the release, CONFIRMED. V8-1 (replica 2): an interrupted record write leaves an unsealable chain, OPEN. Should-fix V8-2 (`child_exitcode` always null) and V8-3 (a restart-probe failure is labelled `in_predictor_io=false`). S1 OPEN. Self-tests PASS. v7 blockers repaired. |
+
+- **Harmonia check (by reading code):**
+  - `runner.py` `open()`: `read_hex_file` (format and length only) -> `Receipts.create_with_open` (the marker) ->
+    `key_path.unlink()` -> `sealbox.decrypt`.
+  - **V8-1 (replica 1) is confirmed.** The key is proven only after consumption.
+
+**Clarification 1: the exposure point.** From v8 on, the `open` receipt precedes decryption, so "exposure = `open`"
+(Addendum F item 1) is refined:
+- **exposure = the first world delivered to the package** (the first per-world `predict` send);
+- a run that ends before that, including V8-1's wrong-key case, is **VOID (pre-exposure)**, because the package has seen
+  nothing;
+- after it, Addendum F items 2-3 apply unchanged.
+
+This is stricter on nothing and fairer on the V8-1 class.
+
+**Clarification 2: what counts as "evidence of a cause outside the package's control" (Addendum F item 2).**
+- A runner-assigned attribution label (`in_predictor_io`, `child_exitcode`, the named world) counts as evidence **only
+  once a governing audit has found that label truthful** (v9 item 3).
+- V8-2 and V8-3 show the current labels are not: an always-null exit code, and a package-caused restart failure
+  labelled as not predictor I/O.
+- Until then, **every post-exposure abort is FORFEIT whatever its label.**
+- This closes, at the adjudication layer, the path V8-3 describes (a package-caused failure read as infrastructure
+  VOID).
+
+As before: pre-exposure; the operator may overrule before any release.
+
+**D2 remains BLOCKED, fail-closed:** v9 needed (key proven before the marker; no unsealable interrupted write); S1 (#925).
+Nothing released, revealed or built.
+
+## Addendum I (2026-09-29): governing v9 audit recorded: FAIL SOLELY on S1; the code is clean at 2aa834ab1
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v9/VERDICT.md`, blob sha256 `a6e887de5991016c9d00c49225dbaebb8087b93c3ed5df4f4e30f26db5f69886` |
+| Verdict commit | 6ead7beb506e1c12c16ccdceb7b8531136594cf2 (2026-09-29 09:41Z) |
+| Audited code | 2aa834ab1 (Nestor #975) |
+| **Governing verdict** | **FAIL, solely on S1** (record authentication / allow-list trust; operator decision #925, plus branch protection). **No blocking finding in the firewall code at 2aa834ab1.** v8 blockers fixed. Self-tests PASS. Replica 2 was PASS with S1 excluded. |
+| Protocol record | None. |
+
+- **Supersession, checked by Harmonia:**
+  - The verdict states "the package is unchanged on origin/main since then". That was true when it was written; it is
+    no longer true.
+  - **D2 v10 (784d55b63, 09:43Z, two minutes after the verdict) changes AUDITED_FILES** (`runner.py`, `custody.py`,
+    and `selftest_protocol.py`, among others: 6 files, +303/-59).
+  - The v9 finding "no blocker in the code" therefore applies to **2aa834ab1 only**. The code on origin/main now is
+    **not audited**.
+  - Any PASS record must bind the code actually on the reference branch at audit time. protocol.py's AUDITED_FILES hash
+    binding enforces this mechanically (AuditStale).
+- **Adjudication notes from the verdict, accepted:**
+  - Label regression A3-1 (world 0 labelled `in_predictor_io=true` before any delivery) does not affect adjudication
+    under Addendum H: exposure is read from the receipts (was a world delivered), never from labels.
+  - A3-3 (only the direct child is killed, so labels cannot prove the package was inactive) is exactly why Addendum H
+    refuses labels as evidence.
+  - The residual unsealed-chain paths (S-C / B-1) each have a defined ruling under E/H (pre-exposure VOID, post-exposure
+    FORFEIT). Harmonia asks that they be **declared** in FIREWALL.md or closed by a custodian `seal-terminal` tool, so
+    that the ruling is attached to a record rather than inferred from its absence.
+- **D2 state:** the code-side blockers are exhausted at the last audited commit. **The gating item is now the operator's
+  S1 decision (#925) and branch protection on main.** After that: a re-audit of the then-current commit, then a PASS
+  record carried through S1's authentication. Nothing is released, revealed or built; Harmonia releases nothing on comms.
+
+## Addendum J (2026-09-29, before any exposure): governing v10 audit recorded, FAIL; exposure-evidence gap closed by adjudication (option b)
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md`, blob sha256 `68c08e2d2b6efabd41588305287dbb07adbef3e0922dab56dd1907a573d208b8` (self-test section PENDING at writing) |
+| Verdict commit | 24378a2dc3736c47b9de3abd7be75740bed87314 (2026-09-29 10:15Z) |
+| Audited code | a823b596c (Nestor #978/#979). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** S1 OPEN (blocks). Exposure-evidence gap: MUST CLOSE, by (a) code or (b) a Harmonia ruling. seal-terminal integrity: must fix before any real release. Labels found truthful by replica 2. Self-tests PENDING. |
+
+**Ruling (option b). It supersedes Addendum H clarification 1 and tightens it; Addenda E/F/H otherwise stand.**
+
+1. **Presumption of exposure.** Once a committed or run-directory `open` receipt exists, the run is **presumed exposed**. It
+   is VOID (pre-exposure) **only if the record positively proves that no world was delivered to the package.**
+2. **What counts as positive proof.** Only a receipt mechanism written **before** each delivery (a `deliver` receipt or
+   equivalent, option a) **whose truthfulness a governing audit has confirmed**. Then "no `deliver` receipt in a chain
+   that verifies" proves non-delivery.
+   - Until such a mechanism exists and is audited, **no post-`open` record can prove non-delivery.**
+   - Every post-`open` end without a sealed normal RESULT is therefore **FORFEIT**. That includes custodian `seal-terminal`
+     records, `"exposed": null`, and aborts with zero predictions.
+3. **Pre-`open` ends stay VOID** (pre-exposure). This includes the wrong-key case, which since v9 refuses before the marker
+   exists.
+4. **Why:** the v10 finding shows that without a pre-send delivery record, a package can stall after seeing a world and be
+   killed into a record indistinguishable from an honest pre-exposure crash. Placing the burden on the record removes
+   that VOID option. The cost falls on the predictor side when an honest infrastructure failure happens between `open`
+   and the first delivery. Option (a) is how to remove that cost fairly.
+5. As before: stated before any exposure; the operator may overrule before any key release; after a release it binds.
+
+- Harmonia's reading of the verdict's item 2: **this ruling closes the exposure-evidence gap at the adjudication layer.**
+  Whether it satisfies the auditor's condition is for the auditor to confirm in the next verdict. seal-terminal integrity
+  (a CLOSED run must never be rewritten into an ABORT) remains a must-fix, because under this ruling a wrongly dropped
+  `close` would turn a valid result into a FORFEIT.
+- **D2 remains BLOCKED, fail-closed:** S1 (#925); seal-terminal repair; a re-audit with self-tests PASS. Nothing released.
+
+## Addendum K (2026-09-29): v10 verdict amended by its auditor
+
+- `roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md` was amended at 18479229a. The new blob sha256 is
+  `a8061d77b247f33682cf361409a4d4ecfe32c27b5519fcc83b2a915021bf32d2`; Addendum J recorded the prior blob, 68c08e2d.
+- **Self-tests PASS at the audited commit a823b596c:**
+  - selftest_protocol tsk-cf4bd0802b78: output 86eb73e51622;
+  - selftest_D2 tsk-2677c356529e: output e7f766a0c618.
+  Neither touched the hidden set or the key. The package is unchanged on origin/main (Harmonia checked).
+- **The auditor records that Addendum J closes the exposure-evidence gap** (the verdict's item 2).
+- **Remaining for a PASS:**
+  1. S1 (#925) and branch protection: OPERATOR;
+  2. seal-terminal integrity (never drop a record the verifier accepts; lock or liveness check; bind to the open
+     record): Nestor;
+  3. a re-audit of the resulting commit with self-tests PASS.
+- D2 remains BLOCKED, fail-closed. Nothing released.
+
+## Addendum L (2026-09-29): governing v11 audit recorded, FAIL SOLELY on S1; D2 PAUSED by MWO-0003 s7
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v11/VERDICT.md`, blob sha256 `38c5570738caee868d872fdb844a19f5c947426b1c34e8dc3cff3f51ccb667dd` |
+| Verdict commit | 864cb36b1f719f7f33e2754fd19fc6afed154a59 (11:13Z; an ancestor of the MWO-0003 publication 624a686ea, so in flight and recordable under MWO-0003 s7) |
+| Audited code | e47d6fbbb (Nestor #984). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL, solely on S1** (record authentication; branch protection). **No blocking finding in the firewall code at e47d6fbbb.** Self-tests PASS. |
+
+- **Addendum J option (a) is now in the code:** a `deliver` receipt is appended before each world is sent, and
+  seal-terminal counts deliver records.
+  - The governing v11 audit (both replicas plus an auditor spot-check) found it sound.
+  - For adjudication of runs executed on code whose AUDITED_FILES hash-match the governing PASS audit that S1 will
+    eventually enable, Harmonia reads Addendum J item 2 as satisfied: **a verifying chain with zero `deliver` records
+    proves non-delivery, so VOID (pre-exposure).** Any `deliver` record means exposure, so FORFEIT unless a normal RESULT
+    is sealed.
+  - The Addendum H rule that labels are not evidence is unchanged. Delivery is read from the receipts, not from labels.
+- **MWO-0003 s7 (published 624a686ea, 11:14Z): D2 repair/re-audit is PAUSED** while S1 (#925) is open. Harmonia starts
+  nothing, releases nothing, and records only.
+- **D2 state:** code-side ready at e47d6fbbb. **Sole gate: the operator's S1 decision (#925).** Then a re-audit of an
+  unchanged package can PASS.

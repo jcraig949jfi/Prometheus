@@ -1,0 +1,121 @@
+{
+ "KA2": {
+  "offset": 6,
+  "site_all": {
+   "P": 256,
+   "cells": 6144,
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "swap": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "abs": "FLIP",
+   "rel_ungated": "FLIP_REL",
+   "z": -1.0
+  },
+  "channel_all": {
+   "P": 256,
+   "cells": 6144,
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "swap": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "abs": "NO-EFFECT",
+   "rel_ungated": "NO_EFFECT_REL",
+   "z": 1.0
+  },
+  "pass": true,
+  "channel_identical_to_normal": true,
+  "mustfail_NOEFFECT_check_fed_site_all": false
+ },
+ "KA3": {
+  "half_frac": 0.5625,
+  "mixture": {
+   "P": 256,
+   "cells": 6144,
+   "normal": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "swap": [
+    0.4375,
+    0.359375,
+    0.51953125
+   ],
+   "abs": "CHANCE",
+   "rel_ungated": "CHANCE_REL",
+   "z": -0.125
+  },
+  "pass": true,
+  "mustfail_all_pairs_reads_CHANCE": false
+ },
+ "KA1": {
+  "verdicts": {
+   "S": {
+    "P": 256,
+    "cells": 5632,
+    "normal": [
+     0.7164417613636364,
+     0.7001047585227272,
+     0.7310023082386363
+    ],
+    "swap": [
+     0.26988636363636365,
+     0.2533726917613636,
+     0.2844460227272727
+    ],
+    "abs": "FLIP",
+    "rel_ungated": "FLIP_REL",
+    "z": -1.0631665299425759
+   },
+   "site_all": {
+    "P": 256,
+    "cells": 5632,
+    "normal": [
+     0.7164417613636364,
+     0.7001047585227272,
+     0.7310023082386363
+    ],
+    "swap": [
+     0.26988636363636365,
+     0.2533726917613636,
+     0.2844460227272727
+    ],
+    "abs": "FLIP",
+    "rel_ungated": "FLIP_REL",
+    "z": -1.0631665299425759
+   },
+   "channel_all": {
+    "P": 256,
+    "cells": 5632,
+    "normal": [
+     0.7164417613636364,
+     0.7001047585227272,
+     0.7310023082386363
+    ],
+    "swap": [
+     0.7164417613636364,
+     0.7001047585227272,
+     0.7310023082386363
+    ],
+    "abs": "NO-EFFECT",
+    "rel_ungated": "NO_EFFECT_REL",
+    "z": 1.0
+   }
+  },
+  "pass": true,
+  "mustfail_FLIP_check_fed_channel_all": false
+ }
+}

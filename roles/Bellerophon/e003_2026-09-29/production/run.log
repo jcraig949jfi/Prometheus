@@ -1,0 +1,103 @@
+{
+ "run": "r022153",
+ "harness_pins": {
+  "world": "5b985241",
+  "vm": "2536b1ac",
+  "grammar": "3767d73d",
+  "tasks": "e2c37f76"
+ },
+ "native_rows_bit_for_bit": true,
+ "interactions": 123210,
+ "births": 32827,
+ "value_mismatch": 0,
+ "mutations": 60131,
+ "pollinations": 1449,
+ "probe_checked": 2878487,
+ "tracer_sha256": "823cbef18bdab2fad64b8623938e24a381e625fa087c83b2ca29d42844589f68",
+ "export": "C:/Users/James/e003_production/r022153_births_export.jsonl.gz",
+ "export_sha256": "db976c7822b180e0737d30f62020afe3f914f05c45f5d948654137027c39f85f",
+ "mutations_export": "C:\\Users\\James\\e003_production\\r022153_mutations_export.jsonl.gz",
+ "mutations_sha256": "71e8084a10f4d5eacdc990ab0c89124ba28e1e0a09c9b20db092451dec6bd00e"
+}
+{"unique_tapes": 10987, "host_pool": 8303, "out": "C:/Users/James/e003_production/q4.jsonl.gz", "sha256": "805a74b906f450f397ed1eea82bf8461d8dc4fbeebce94c715f2318425621a9c"}
+{"mode": "arms", "births": 32827, "out": "C:/Users/James/e003_production/arms.jsonl.gz", "sha256": "d11c7a6127f104b9ee37ef496c460064a602976388b357c58d357843d1334c10"}
+{
+ "sample": 200
+}
+{"mode": "flip", "births": 200, "out": "C:/Users/James/e003_production/flip.jsonl.gz", "sha256": "269e2c088bbc4f7e15df68bd9b102822fb99123a30cb180a68036242cf318042"}
+{"mode": "completeness", "births": 40, "out": "C:/Users/James/e003_production/compl.jsonl.gz", "sha256": "2c8df1fb1bf1baf6149184ce79c7170f4a08325a0556c8644cb34eea95a8bf95"}
+{"records": 200, "out": "C:/Users/James/e003_production/S4_SAMPLE_PRE.jsonl"}
+{"out": "C:/Users/James/e003_production/S4_SAMPLE_OWNER.jsonl", "sha256_lf": "76f7d6e8b7b04c77820ec6798393728f14cf9c94788b8c84f87680196d913288"}
+{
+ "verdict": {
+  "A": "VALIDATED",
+  "B": "VALIDATED",
+  "READING_DEPENDENT": false
+ },
+ "gates": {
+  "A": {
+   "flip_failed_le_1pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_ge_50pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_marginal": {
+    "none": false,
+    "other": true,
+    "self": false
+   },
+   "completeness_leak_le_5pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "marginal_ci_note": "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks",
+   "identifiable_ge_80pct_nonNM": true,
+   "transmission_ge_30": true
+  },
+  "B": {
+   "flip_failed_le_1pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_ge_50pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "flip_coverage_marginal": {
+    "none": false,
+    "other": true,
+    "self": false
+   },
+   "completeness_leak_le_5pct": {
+    "none": true,
+    "other": true,
+    "self": true
+   },
+   "marginal_ci_note": "C4.4: point estimates gate; bootstrap CIs are in the per-class blocks",
+   "identifiable_ge_80pct_nonNM": true,
+   "transmission_ge_30": true
+  }
+ },
+ "predictions": {
+  "A": {
+   "P1": "HOLDS",
+   "P5": "HOLDS",
+   "P2_engine_native": "HOLDS"
+  },
+  "B": {
+   "P1": "HOLDS",
+   "P5": "HOLDS",
+   "P2_engine_native": "HOLDS"
+  }
+ }
+}
+PRODUCTION_DONE
+rc=0

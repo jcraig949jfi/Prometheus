@@ -113,3 +113,20 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   512 worlds before reading it as mechanism; research-ready, CPU),
   T-SWAP-REL2 (per-verdict attainability instead of one gate; always pair
   CHANCE_REL with the SINGLE census, lens_swap).
+- T-SWAP-AUDIT ANSWERED (W-O, E-ANANKE-W-O): 733 CHANCE verdicts re-run at 512
+  worlds: 84% stay CHANCE, 12% -> FLIP (readable 8%), 4% -> NO-EFFECT; register
+  research/CORRECTIONS_2026-09-29_SWAP_AUDIT.md. Successors: T-SWAP-REL2 (now
+  justified by 42 low-accuracy complete transfers the absolute rule cannot
+  call), T-SWAP-AUDIT2 (the unaudited sources listed in the register),
+  T-WF-READ (re-judge W-F readability at 512 worlds: 12 cells gain a class).
+- T-INS-8 ANSWERED (W-P, E-ANANKE-W-P, workers/W-P/REPORT.md; full swap truth
+  tables, 128 pairs; principal spot-check of summaries matches). 4781b0a1 (MAJ):
+  N is a clean JOINT carrier, AND/OR of the site latch S1 and payload-1 packets
+  in flight ({S1, Msum pay1} decisive in 91-95% of N at o1-o6), moving to
+  {Acc_sum, pay1} at o14-15; N is concentrated in one phase of the sync update
+  clock (period 2). 369f5a5b (RELAY): JOINT-2(S1, channel-1 packets) at
+  o11-14; early N (o1-8) is higher-order and non-monotone, involving Kp/r/Mcnt.
+  The GATED (phase-register MUX) hypothesis never met its rule (<= 16% of N).
+  Successors: T-INS-9 (stratify every carrier-swap census by update-clock
+  phase when update_period > 1), T-INS-10 (name 369f5a5b's early S1-Kp-r
+  interaction in its own stage-2 run).

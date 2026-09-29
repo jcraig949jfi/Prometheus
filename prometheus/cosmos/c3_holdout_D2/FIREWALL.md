@@ -314,3 +314,72 @@ A same-account child fails step 1, so nothing is ever released until the separat
 - The once-only rules stand: no second release, and no resume, for this spec_id.
 - D2 is then spent, and any further evaluation needs a successor seal, disclosed beside this attempt (Addendum E item 3).
 - Resume stays refused because a resumable run would give the package a second look at the hidden set.
+
+## v8 (2026-09-29): repairs after the v7 re-audit replicas (tsk-24ad3df260b9, tsk-6a58313857f2; both FAIL)
+
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+
+| v7 finding | v8 repair | test |
+|---|---|---|
+| V7-1 / V7-C (blocking): the consumption marker existed before the open record, so a failure there left a chain starting with `abort` that never verifies, and the spec_id was spent unsealed | The WHOLE open record (every hash, the package meta, the run parameters) is built and serialised in prepare(); anything that cannot serialise is refused BEFORE the key. `Receipts.create_with_open` then writes record 0 to a temp file, fsyncs it and renames it to receipts.jsonl. The consumption marker therefore appears ATOMICALLY with a verifiable open record; a failure before the rename leaves no marker and the key intact. | A simulated write failure leaves no receipts and the key intact. A successful open starts with a verifiable open record. open followed by abort verifies. |
+| V7-A (blocking): the receipts stand-in was only append-probed | The stand-in is probed for READ and append before the key. | the pre-key refusal lists the stand-in for both |
+| V7-B (blocking): the parent's `predict` send was outside the per-world guard, so a package closing the pipe aborted the whole run with no attribution | The send is inside the guard: a broken or closed pipe is THIS world's PREDICTOR_CRASH and the run continues. A broken pipe at worker shutdown is not a run failure. | A package that closes the pipe every world gives per-world crash/protocol errors, and the run CLOSES. |
+| Q3: an abort carried a type name only | The abort record carries attribution EVIDENCE for Harmonia's FORFEIT/VOID decision (Addendum E): current world, whether it failed inside predictor I/O, and the child's exit code. It is evidence, not a verdict. | the abort carries the fields |
+| V7-F (note): unbounded child messages | Child messages are capped at 64 MiB; a longer message is that world's error. | - |
+| V7-D (note): AST bypass via `operator.attrgetter` / `faulthandler` | operator, faulthandler, functools and copyreg are flagged. This is a heuristic; the pipe does not depend on it. | attrgetter flagged |
+
+**Residuals added (declared, not boundaries):**
+- **The child can signal or pressure the parent.** Examples: Windows console control events to the shared console group, and memory or compute pressure through legitimate System calls. The resulting abort carries the attribution evidence above; its reading is Harmonia's.
+- **There is no code yet to start the predictor child under the separate account (V7-E).** That code will need its own audit before any designation.
+- **Crash-after-release (v7 policy) is unchanged.** The atomic marker means an ordinary exception can no longer spend the designation without a sealable terminal record.
+
+## v9 (2026-09-29): repairs after the v8 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v8/VERDICT.md @ bea18a398)
+
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+- **Adjudication reading:** Harmonia Addendum H (65329b9c5). Exposure is the first world delivered. Runner attribution labels count as evidence only once a governing audit finds them truthful.
+
+| v8 finding | v9 repair | test |
+|---|---|---|
+| 1 (V8-1, replica 1; blocking): the key was proven only after the marker, so a wrong but well-formed key spent D2 | `open()` reads the key and PROVES it BEFORE the consumption marker: it must decrypt the sealed ciphertext (AES-GCM tag checked), and the plaintext must match the manifest. The worlds, seeds and tags are also built first. Only then is receipts.jsonl created (atomically, v8) and the released copy deleted. custody `release-key` test-decrypts the custody key before any copy is made. | A well-formed wrong key is refused with the key file intact and no receipts. Custody with a wrong key releases nothing. |
+| 2 (V8-1, replica 2; blocking class): an interrupted record write could leave an unsealable chain | `Receipts.append` rolls a failed write/fsync back to the last complete record. `Receipts.repair()` truncates trailing bytes that are not in the in-memory chain, and `abort()` repairs before writing its terminal record. The chain on disk therefore always equals the chain in memory. | A simulated fsync failure on a later record: rolled back, the abort seals, the chain verifies, and custody result-seals it (terminal "abort"). |
+| 3a (V8-2): `child_exitcode` always null | The exit code is kept when the worker is stopped and reported in the abort record. | the abort carries a non-null exit code |
+| 3b (V8-3): a restart-probe failure was labelled as infrastructure | The world and the predictor-I/O label are set BEFORE the (re)start, so a restart refusal is attributed to that world. | a simulated restart failure gives an abort with current_world 0 and in_predictor_io true |
+| note (V8-6): staged package readability not checked pre-key | The pre-key probe REQUIRES the child to be able to read the staged package entry; otherwise PredictorChildFailed, before the key. | an unreadable staging is refused pre-key |
+
+**Notes carried:**
+- **Windows `poll` timing:** plausible, unverified. A per-world poll failure is a per-world status; anything else is a sealed abort, labelled.
+- **RESULT.json write failure after close:** the chain still ends in `close`. RESULT.json can be rebuilt from the receipts, but no tool does that yet; declared.
+- **The released key copy after an abort:** it is deleted right after the marker; if that deletion itself fails, the run aborts and the copy remains on M1 under the restricted ACL; declared.
+
+## v10 (2026-09-29): should-fix items from the v9 re-audit replicas (tsk-5c232d68f717 FAIL on S1 only; tsk-fe9b89e4c15c PASS excluding S1)
+
+- **Neither replica found a new blocks-PASS finding.**
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+
+| v9 finding | v10 repair | test |
+|---|---|---|
+| S-A / A3-1: a failure of the FIRST child start was labelled post-exposure | New `exposed` flag, set only after the first predict send succeeds (Harmonia Addendum H: exposure = first world delivered). Before a (re)start, `in_predictor_io` is true only once exposure has happened. The abort record carries `exposed`. | first-start failure: current_world 0, in_predictor_io false, exposed false; restart failure after exposure: world 1, in_predictor_io true, exposed true |
+| A3-2: `child_exitcode` could come from another child | The exit code is tied to its child: `child_world` (the world at which that child was started) is recorded with it. | child_world and exit code of the stopped child |
+| S-B / B-2: the per-world `poll` was outside the guard | The poll is inside the per-world guard; a poll failure is that world's PREDICTOR_CRASH. | - |
+| S-C / B-4 / B-1: a spent run could end with no sealable terminal record, and no tool closed it | (a) `entry.py custody seal-terminal --run DIR`, custodian only, for THIS designation's run directory. It keeps the longest verifying prefix of complete records (truncating a torn tail), appends a custodian `abort` with null labels when there is no terminal record, and rebuilds RESULT.json from the receipts. It never removes a verifying record. (b) RESULT.json is a pure function of the receipts (`result_from_records`) for close, abort and seal-terminal alike; `abort()` after a CLOSED record whose RESULT write failed rebuilds it, and the CLI no longer raises a KeyError. (c) SIGINT is ignored while `abort()` runs. | a torn, unterminated run is sealed and custody result-seals it; a lost RESULT.json is rebuilt byte-identical; another designation's directory is refused |
+| B-3: no exclusive creation of the marker | An O_EXCL `receipts.jsonl.claim` is taken before the atomic rename, and released if the write fails. | an existing claim refuses, with the key intact and no receipts |
+| notes | Custody test-decrypts at the commit the gates resolved; a malformed custody key frees the custody lock; `abort()` records whether the disk chain matched memory (`disk_chain_matched`); no stale `current_world` outside PREDICT. | malformed key frees the lock |
+
+**Declared for Harmonia (A3-3):**
+- The runner kills its direct child only, not the child's process tree. So `in_predictor_io=false`, a SEALED phase or an exit code do not prove the package was inactive.
+- Under Addendum H these labels are evidence only once audited truthful. Until then every post-exposure abort is FORFEIT.
+- A custodian `seal-terminal` abort carries null labels by design: the custodian asserts no cause.
+- **Package-induced disk exhaustion through the child account** is a declared residual: it aborts or, at worst, needs seal-terminal. The separate child account's quota is part of the host capability request.
+
+## v11 (2026-09-29): repairs after the v10 re-audit (roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md @ 24378a2dc)
+
+- **v10 status:** both replicas found no blocking item except S1. The auditor's must-close items, and Harmonia Addendum J (6c0c03904), are answered below.
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+
+| v10 item | v11 repair | test |
+|---|---|---|
+| No receipt recorded DELIVERY; a post-exposure stall could read as pre-exposure (Addendum J option a) | A `deliver` receipt (world index and tag) is appended BEFORE every world is sent to the package, so the chain proves which worlds could have reached it. Abort and seal-terminal records carry `deliver_records`. Under Addendum J a run with an open receipt is presumed exposed; deliver receipts are the positive evidence for any VOID reading once an audit confirms them truthful. | every world has a deliver receipt before its prediction |
+| V10-1: unbounded parent-to-child sends (a child that stops reading could stall the runner) | Every parent-to-child send (the world and every reply) runs with a deadline in a helper thread. On expiry the child is killed, which unblocks the pipe, and the world is TIMEOUT (`where` send_predict or send_reply). | an 8 MiB send to a child that never reads returns within the deadline |
+| seal-terminal could drop a verifying close that lacked a trailing newline | A verifying LAST record without its newline is kept and the newline added, so a valid close is never turned into an abort (Addendum J). | a close with its newline stripped is kept as close |
+| seal-terminal: no lock or liveness check | A live runner holds an OS-level exclusive lock on `<run>/run.lock` (msvcrt / flock) from before the consumption marker until its terminal record; the OS releases it if the process dies. seal-terminal refuses while that lock is held. | refused while a runner holds the lock; sealed after it is gone |
+| seal-terminal: not bound to the open record | Custody passes this designation's run_nonce, spec_id and committed package hash; seal-terminal refuses a run whose open record differs. | a different nonce is refused |

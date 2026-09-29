@@ -16,3 +16,5 @@ MWO-0002 | ops/work_orders/archive/MWO-0002_2026-09-29.md | 6f5a6a8bd3cfc977cda4
 Publication note (MWO-0002): two-commit protocol (MWO-0002 s2). P = 89512068f holds only CURRENT.md and the archive
 copy; this row, the broadcast id and the publisher's WORK_STATE are in the separate record commit R. Publishing
 seat Aporia by explicit operator custody designation for this publication only.
+
+MWO-0003 | ops/work_orders/archive/MWO-0003_2026-09-29.md | 74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b | 624a686ea066f971a83231e3b3528f9a29d41deb | 2026-09-29T11:14:53Z | comms #987 (to *) | publishing seat: Aporia

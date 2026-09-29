@@ -98,3 +98,10 @@ S/C/N census with phi and 99% pair-bootstrap CIs, classify() for the frozen
 SITE/CHANNEL/MIXTURE/NEITHER/UNRESOLVED/IDENTITY-BROKEN/UNDEFINED rule,
 census_follow() for one-sided abstainers. Evidence: workers/W-M/REPORT.md;
 known-answer tests prometheus/ananke/tests/test_lens_swap.py.
+
+## UPDATE 2026-09-29 (W-P): stratify by update-clock phase
+In sync physics with update_period > 1, a pooled per-offset census mixes two
+clock phases (4781b0a1 o14: C 1.00 on even swap ticks, N .70 on odd). Report
+S/C/N per swap-tick phase. N always needs a site AND a channel component
+(lemma, W-P PLAN s0): name WHICH sub-arrays with the truth-table method in
+workers/W-P/tt.py before calling it a mixture or joint code.
