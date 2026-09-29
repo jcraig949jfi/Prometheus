@@ -463,3 +463,12 @@ Next candidates (design, not run):
   separate significance test). This keeps v5's power and uses v8 as a veto against pure variance growth.
 - (b) per-cell normalization: divide each pair's disagreement by that cell's own pooled within-side spread.
 - Either must pass all four world types, precommitted.
+
+## v9: v5 proposes, v8 vetoes at the proposed tau only (pkgf_cp5.py). Detection only; FRESH seeds 9_800_080-083
+
+### Precommitment (written BEFORE running pkgf_cp5.py; the same thresholds as v8)
+
+- Z1: N5: false detections <= 1/8.
+- Z2: F3 L2: final switch (cp_frac in [.60, .75]) in >= 7/8.
+- Z3: F2 twins: false detections <= 1/8.
+- Z4: partial rho = .5: final switch in >= 6/8.
