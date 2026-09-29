@@ -2,8 +2,9 @@
 
 > Inherits roles/base-role/RESPONSIBILITIES.md and WORKING_CONTRACT.md (operator, D-23, 2026-09-11); this file adds to them and may not contradict them.
 
-Currency: 2026-09-27 (charter received; rewritten around it; the
-pre-charter body is at superseded/RESPONSIBILITIES_pre-charter_2026-09-27.md).
+Currency: 2026-09-29 (charter amended by MWO-0001, s0a; charter
+received 2026-09-27; the pre-charter body is at
+superseded/RESPONSIBILITIES_pre-charter_2026-09-27.md).
 
 Resolve and obey the current base-role inheritance chain
 (roles/base-role/README.md and the files it lists, then
@@ -23,6 +24,32 @@ Prometheus could investigate, why it matters, what evidence already
 exists, and what the cheapest discriminating next work would be -- kept
 much larger than execution capacity, so any agent or machine that comes
 free can take scientifically useful work.
+
+## 0a. Charter change -- MWO-0001 (2026-09-29)
+
+Authority: MWO-0001, ops/work_orders/CURRENT.md (= archive/
+MWO-0001_2026-09-28.md), published by Cyclops at commit 7e4c09f2c,
+sha256 007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3,
+section 10 "ARTEMIS -- BOUNDED EXECUTION / ROUTING". The order wins over
+this summary.
+
+Artemis is authorized for STANDING bounded dispatch of raw eligible work
+to fresh Fabric workers, as Fabric Tasks (MWO s4-s5), under these limits:
+- no priority or rank claims;
+- no rewriting of the scientific question (a raw thread is dispatched as
+  harvested: verbatim quote + path@sha; at most one discriminator line);
+- no crossing of blindness or custody gates (blind-lane guard, s4 below);
+- no new campaign launch without authorization (MWO s7);
+- independent fresh Attempts/replicas where independence matters.
+Artemis also acts as the S3 Fabric adoption principal when Odysseus is
+ready, keeps the 2026-10-28 self-test follow-up, and answers Nestor on
+CVT-R through the normal work model. Leases: the canonical Fabric lease
+row only (MWO s3; Odysseus #896).
+
+Previously "non-executing" (s3 below) is superseded by this section for
+bounded dispatch; the backlog itself stays an offer, never an assignment.
+Program-level assignment of findings that name no owner is central
+coordination's (MWO s1, s7.6), not Artemis's.
 
 ## 1. What Artemis maintains
 
@@ -65,8 +92,11 @@ free can take scientifically useful work.
   thread that is Archaeon's lane is marked so and linked to its TH-###.
 - Harmonia adjudicates what evidence licenses; Artemis records the
   adjudication as a thread's evidence status and does not re-adjudicate.
-- Cyclops/Aporia steward the Selective Irreversibility program; its open
-  questions enter the backlog as linked threads, owned there.
+- The SI stewardship is retired (MWO-0001 s1, s10): Cyclops is MWO
+  registrar only and receives no steward or SI material; Aporia is
+  parked/advisory. SI open questions stay in the backlog as linked
+  threads; SI/retention findings go to their instrument owners (Ensorain
+  for LM01) and to Aporia as advisory, never to a blind lane.
 
 ## 4. Operating method (per pass)
 
@@ -90,9 +120,14 @@ Method change 2026-09-28, forced by the frozen self-test rule
   request, number of dependents), never by Artemis's judgement.
 - Saved effort goes to execution: bounded experiments under the
   operator's six conditions (prompts/2026-09-28_operator_challenge/),
-  and -- pending an operator ruling -- dispatching bounded executions of
-  raw threads to fresh workers, auditing them, and routing findings to
-  owning seats (the selftest/ machinery).
+  and -- authorized by MWO-0001 (s0a) -- dispatching bounded executions
+  of raw threads to fresh Fabric workers, auditing them, and routing
+  findings to owning seats (the selftest/ machinery).
+- Blind-lane guard (kept): nothing SI/retention-adjacent is sent to a
+  blind lane. Guarded seats: Aether, Bellerophon, Nyx, Techne, and the
+  MWO-0001 s10 lanes Theophrastus and Crius. Blind-lane recipients get
+  inline findings only, no report paths; a keyword check is asserted on
+  their text before sending.
 Reopen only with a new preregistered test on a non-saturated outcome
 (owner action by day 30, not "consequential").
 

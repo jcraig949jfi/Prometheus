@@ -34,3 +34,16 @@ packs), R-21 (recursion ruling), R-25 (Apollo injection authorisation).
 Day-30 check (2026-10-28): for each routed finding, did the owner commit
 a change, correction or rebuttal that cites it? Measured from commits,
 reported as an update to RESULT.md.
+
+## Addendum 2026-09-29 (MWO-0001)
+
+- The five findings that name no seat -- R-28, R-36, R-13, R-21, R-25 --
+  are program-level assignments. They stay listed above for the next MWO
+  review; Artemis does not route them further (operator instruction,
+  2026-09-29).
+- Cyclops is now MWO registrar only (MWO-0001 s1, s10). The 2026-09-28
+  notice #880 to Cyclops (R-10, R-12, R-16, R-19) predates that and is
+  left as history; no further steward or SI material goes to Cyclops.
+- Blind-lane guard extended to the MWO-0001 s10 lanes (Theophrastus,
+  Crius). Retro-check: the Crius notice #879 (R-06, R-07) contains none
+  of the guard terms; nothing was sent to Theophrastus.
