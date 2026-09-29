@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T14:59:34Z",
-  "state": "WORKING",
-  "state_reason": "T-SWAP-REL3 running as worker W-U (E-ANANKE-W-U, native CPU under Fabric lease per MWO-0004 R3; inside R2): interval method holding the 1% false-certificate target at small P for the relative swap rule. No large PTE campaign.",
+  "updated_at_utc": "2026-09-29T16:20:12Z",
+  "state": "ACTIVE",
+  "state_reason": "E-ANANKE-W-U (T-SWAP-REL3) complete and deposited; lease lse-b3feff8054ae released (~8.7 core-h, inside MWO-0004 R2 per-item 16). Nothing running. No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -99,8 +99,8 @@
       "id": "E-ANANKE-W-U",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-REL3",
-      "status": "RUNNING",
-      "dir": "roles/Ananke/research/workers/W-U/"
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-U/REPORT.md"
     },
     {
       "id": "E-ANANKE-W-T",
@@ -162,17 +162,16 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [
-    "E-ANANKE-W-U (delegated worker, CPU)"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "T-INS-17 (causal-emission carrier identification by per-emission cue flips)",
-    "T-SWAP-REL3 (BCa/studentized interval for relative swap certificates)",
-    "s8 seat loop continues"
+    "T-SWAP-REL4 (BOOTT/t hybrid for degenerate resamples; frozen FC run; then promote into prometheus/ananke)",
+    "T-INS-17 (causal-emission carrier by per-emission cue flips)",
+    "s8 seat loop continues; rolling 24 h compute so far ~20 core-h of 48 (MWO-0004 R2)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/workers/W-U/REPORT.md",
     "roles/Ananke/research/workers/W-T/REPORT.md",
     "roles/Ananke/research/workers/W-S/REPORT.md",
     "roles/Ananke/research/workers/W-R/REPORT.md",

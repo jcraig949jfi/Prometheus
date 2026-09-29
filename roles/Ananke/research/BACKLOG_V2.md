@@ -175,3 +175,14 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   coin-toss split cases. It is a property of three RELAY cells, not a law of the
   update-clock phase. Successors: T-INS-17 (causal-emission carrier: cue-flip
   each source emission separately), T-INS-18 (MAJ per-sensor carrier census).
+- T-SWAP-REL3 ANSWERED (W-U, E-ANANKE-W-U, workers/W-U/REPORT.md; 10 tests,
+  principal re-run 10 passed; FC table spot-checked). Studentized pair
+  bootstrap (BOOTT) is the only candidate holding the 1% false-certificate
+  target at P=32 (not robust at K11/K12: upper CI 1.05-1.09%); floor P>=32;
+  percentile/BCa/t need P>=128, P-dependent level P>=64. REL3 on W-O's 733:
+  669 identical to REL2, 64 ambiguous (saved marginals only), 0 inconsistent.
+  Transfer class by paired z CI: 101 COMPLETE / 33 PARTIAL / 33 ambiguous of
+  170 FLIP_REL; of the 42, 19 COMPLETE / 18 PARTIAL / 5 ambiguous. NOT
+  promoted: BOOTT's power collapses at normal ~1 (degenerate resamples, p_min
+  1.0 for FLIP/NO_EFFECT at P32-64). Successor T-SWAP-REL4: frozen FC run for a
+  BOOTT/t hybrid on degenerate resamples, then promote to lens.
