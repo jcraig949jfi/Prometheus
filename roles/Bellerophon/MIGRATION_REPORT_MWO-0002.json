@@ -1,0 +1,129 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Bellerophon",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:07:56Z",
+  "branch": "bellerophon/mwo-0001-2026-09-28",
+  "head_sha": "d40f2cfbc70b246c9c56c65f8c59a607157bdafb",
+  "bootstrap_independence": {
+    "answer": "YES",
+    "conditions": [],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "comms #961 seen by the seat-loop sync at 2026-09-29T07:06Z",
+      "origin/main:ops/work_orders/CURRENT.md sha256 6f5a6a8b...3685 == PUBLICATIONS.md row"
+    ],
+    "note": "MWO-0001 arrived by the operator's per-seat prompt; MWO-0002 was found by the self-paced s8 loop (fetch + comms sync), no bespoke prompt."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Bellerophon/WORK_STATE.json@7d99c1e49 (mwo_commit 7e4c09f2c, mwo_sha256 007054ad...)"
+      ],
+      "note": "CURRENT.md blob hash verified from origin/main at boot 2026-09-29T03:04Z."
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "comms #961",
+        "git fetch origin in the /loop tick 2026-09-29T07:06Z"
+      ],
+      "note": "No per-seat prompt was used for MWO-0002."
+    },
+    "C3_work_state_useful": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Bellerophon/WORK_STATE.json on origin/main (be7c7d86d)"
+      ],
+      "note": "All v1 core fields present; head_sha held a placeholder string until this update; now it is the pushed head before the commit that writes it."
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "MWO-0001 s10 BELLEROPHON (carried by MWO-0002 s6)",
+        "C-001 E-003 (comms #811/#817/#824/#833, accepted #919)"
+      ],
+      "note": "Current work: E-003 BEE ancestry leg, waiting on the experiment owner's GO record after the s4.3 PASS (#956)."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "comms #919 #946 #950 #955 #957 (substantive replies only)"
+      ],
+      "note": "Comms sync at every loop tick; no idle broadcasts; durable state is in Git."
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "PARTIAL",
+      "evidence": [
+        "tsk-bc42e48a52be",
+        "tsk-def7523bd2f2"
+      ],
+      "note": "Independent merge reviews ran as Fabric Tasks. E-003 compute ran natively on M2 under canonical leases: an owner-native replay per the commission; the only live worker is compute.cpu.light and there are no Windows workers."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Bellerophon/WORK_STATE.json"
+      ],
+      "note": "Levels are kept distinct, but the seat's own thread/campaign ids are not in the ops registries (see identifier_check)."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "YES",
+      "evidence": [
+        "lse-a0185f56ea0c",
+        "lse-8e23caf77927"
+      ],
+      "note": "Both acquired and released through python -m fabric lease."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "roles/Bellerophon/WORK_STATE.json blocked_on"
+      ],
+      "note": "No stop is claimed as an MWO s7 gate. The E-003 production wait is the experiment owner's GO record under the C-001 protocol (#956), recorded as blocked_on, not as a hard gate."
+    }
+  },
+  "hard_gates_current": [],
+  "migration_blockers": [
+    {
+      "what": "Fabric has no Windows workers and only a compute.cpu.light worker live; E-003 Q4/arms compute (~1 CPU-h) and host-local M2 evidence ran natively",
+      "kind": "fabric",
+      "evidence": [
+        "python -m fabric agents 2026-09-29"
+      ]
+    },
+    {
+      "what": "the seat's thread/campaign ids are not in ops/threads or ops/campaigns",
+      "kind": "identifier",
+      "evidence": [
+        "identifier_check below"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "narrative roles/Bellerophon/STATUS.md alongside WORK_STATE",
+      "why": "human-readable history",
+      "retire_plan": "none"
+    },
+    {
+      "convention": "comms task-queue entries #811/#817/#824/#833 still listed after 'done'",
+      "why": "queue semantics unclear to the seat",
+      "retire_plan": "seat"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [
+      "thr-bel-computation-reproduction-coupling",
+      "thr-bel-worlds-kernel"
+    ],
+    "campaign_ids_unresolved": [
+      "C-BEL-COUPLING",
+      "C-BEL-MULTIDAY"
+    ],
+    "note": "C-001 resolves (ops/campaigns/C-001). Not repaired for the census. ops/README.md banner not read before this report; no confusion recorded."
+  }
+}
