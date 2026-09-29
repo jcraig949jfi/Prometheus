@@ -1,14 +1,14 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Ananke",
-  "mwo_id": "MWO-0001",
-  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T06:49:49Z",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "updated_at_utc": "2026-09-29T07:22:08Z",
   "state": "WORKING",
   "state_reason": "T-SWAP-AUDIT running as worker W-O (E-ANANKE-W-O, CPU, Fabric lease, <=3 h): re-run recorded 64-world CHANCE swap verdicts at 512 worlds. Audit table only; no record or frozen label is edited. No large PTE campaign under MWO-0001.",
   "branch": "ananke/base-role-adopt-2026-09-24",
-  "head_sha": "ffd452047",
+  "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
   "work_map": "roles/Ananke/research/THREADS.md",
   "threads": [
@@ -137,5 +137,6 @@
     "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC2.md (8eabc990b)",
     "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt (cc98596dd)",
     "roles/Ananke/pte/C1_ERRATA.md"
-  ]
+  ],
+  "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json"
 }
