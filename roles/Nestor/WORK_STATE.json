@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T11:10:00Z",
+ "updated_at_utc": "2026-09-29T12:40:00Z",
  "state": "WORKING",
- "branch": "nestor/d2v9-2026-09-29 (merged to main)",
- "head_sha": "2aa834ab18b530bb045b8065a94f1b97d2da535d",
+ "branch": "nestor/d2v10-2026-09-29 (merged to main)",
+ "head_sha": "a823b596c48262b7607f8738adf5eecdf3d1a8fd",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -23,16 +23,17 @@
   "D2 v6 re-audit -> FAIL (#959, VERDICT @ 7567a018b)",
   "D2 v7 re-audit -> FAIL (#967, VERDICT @ 8efddb4b7: V7-1 unsealable spend window, V7-B unattributed abort)",
   "D2 v8 re-audit -> FAIL (#970, VERDICT @ bea18a398: key proven after consumption; torn write)",
-  "D2 v9 re-audit: tsk-5c232d68f717, tsk-fe9b89e4c15c; selftests tsk-b1f9c9dd2f2e, tsk-6d7bb8774903 (base 2aa834ab1)",
-  "Archaeon sample verification v2: tsk-c4317a3656d0 (host skullport, NPE_SAMPLE_DIR = candidate 1) -- waiting: no fabric worker on SKULLPORT"
+  "Archaeon sample verification v2: tsk-c4317a3656d0 (host skullport, NPE_SAMPLE_DIR = candidate 1) -- waiting: no fabric worker on SKULLPORT",
+  "D2 v9 re-audit -> FAIL SOLELY on S1 (#977, VERDICT @ 6ead7beb5): no blocking finding in the firewall code",
+  "D2 v10 final re-audit (should-fix): base a823b596c"
  ],
  "running": [
-  "D2 v9 re-audit (2 replicas + 2 selftests)",
+  "D2 v10 final re-audit (2 replicas + 2 selftests)",
   "key-holder scan (entry firewall-check, v4 code, comms dump)"
  ],
  "blocked_on": [
   "1% sample check: Archaeon's verifier-v2 task tsk-c4317a3656d0 needs a fabric worker on SKULLPORT (none exists)",
-  "D2: S1 root of trust (operator #925); v9 re-audit adjudication (Odysseus)"
+  "D2: only S1 root of trust (operator #925) and branch protection on main remain per Odysseus #977; v10 final re-audit running"
  ],
  "next_actions": [
   "relay review results when terminal",
@@ -78,7 +79,7 @@
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 975,
+ "comms_cursor": 977,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
