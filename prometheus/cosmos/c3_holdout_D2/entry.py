@@ -48,6 +48,50 @@ def lf_sha(b: bytes) -> str:
     return hashlib.sha256(b.replace(b"\r\n", b"\n")).hexdigest()
 
 
+class AuditedImportGuard:
+    """v3 (Odysseus v2 re-audit, R2 B1): meta-path guard installed BEFORE any prometheus import. Every prometheus.*
+    module must resolve to a .py file inside the repo that the governing audit binds, and its bytes must hash to the
+    binding AT IMPORT TIME (closes the verify-then-import window). Anything else raises ImportError."""
+
+    def __init__(self, bound):
+        self.bound = bound
+
+    def find_spec(self, fullname, path=None, target=None):
+        if not (fullname == "prometheus" or fullname.startswith("prometheus.")):
+            return None
+        import importlib.machinery as M
+        spec = M.PathFinder.find_spec(fullname, path if path is not None else [str(REPO)])
+        if spec is None or not spec.origin or not spec.origin.endswith(".py"):
+            raise ImportError("audited import guard: %s has no .py source" % fullname)
+        p = Path(spec.origin).resolve()
+        try:
+            rel = str(p.relative_to(REPO.resolve())).replace("\\", "/")
+        except ValueError:
+            raise ImportError("audited import guard: %s resolves outside the repo" % fullname)
+        if rel not in self.bound:
+            raise ImportError("audited import guard: %s (%s) is not bound by the governing audit" % (fullname, rel))
+        spec.loader = _VerifiedSourceLoader(fullname, str(p), self.bound[rel])
+        return spec
+
+
+import importlib.machinery as _M  # noqa: E402
+
+
+class _VerifiedSourceLoader(_M.SourceFileLoader):
+    """Compiles from the SOURCE bytes it has just hashed; never reads __pycache__ (-B only stops writes, a planted .pyc
+    with a matching header would otherwise load), and the bytes compiled are the bytes verified (no check-then-read gap)."""
+
+    def __init__(self, fullname, path, want_sha):
+        super().__init__(fullname, path)
+        self.want_sha = want_sha
+
+    def get_code(self, fullname):
+        data = self.get_data(self.path)
+        if lf_sha(data) != self.want_sha:
+            raise ImportError("audited import guard: %s changed since the governing audit" % self.path)
+        return compile(data, self.path, "exec", dont_inherit=True)
+
+
 def verify(no_fetch=False):
     if not no_fetch:
         subprocess.run(["git", "-C", str(REPO), "fetch", "--no-tags", "--quiet", "origin"], capture_output=True)
@@ -91,14 +135,20 @@ def verify(no_fetch=False):
         p = REPO / rel
         if rc != 0 or lf_sha(cb) != h or not p.exists() or lf_sha(p.read_bytes()) != h:
             raise EntryRefusal("REFUSED: %s does not match the governing audit's binding" % rel)
-    return gov
+    return gov, bound
 
 
 def main():
     if len(sys.argv) < 2 or sys.argv[1] not in TARGETS:
         raise EntryRefusal("usage: entry.py runner|custody|evidence [args...]")
     target = TARGETS[sys.argv[1]]
-    gov = verify(no_fetch=os.environ.get("C3D2_NO_FETCH") == "1")
+    if not (sys.flags.isolated and sys.flags.dont_write_bytecode):
+        # v3 (B1): re-run in isolated mode (-I: no user site, no PYTHON* env, no script dir on sys.path) with no bytecode
+        # writes (-B), so no stale or planted .pyc can be imported and no environment variable can steer imports
+        env = dict(os.environ)
+        raise SystemExit(subprocess.run([sys.executable, "-I", "-B", str(Path(__file__).resolve())] + sys.argv[1:],
+                                        env=env).returncode)
+    gov, bound = verify(no_fetch=os.environ.get("C3D2_NO_FETCH") == "1")
     prefixes = [Path(x).resolve() for x in {sys.prefix, sys.base_prefix, sys.exec_prefix}]
     user_site = site.getusersitepackages() if hasattr(site, "getusersitepackages") else None
 
@@ -110,6 +160,7 @@ def main():
             return False
         return any(rp == pre or pre in rp.parents for pre in prefixes)
     sys.path[:] = [str(REPO)] + [p for p in sys.path if interpreter_path(p)]
+    sys.meta_path.insert(0, AuditedImportGuard(bound))
     os.environ["C3D2_ENTRY"] = "verified"
     print(json.dumps({"entry": "verified", "governing_audit": gov, "target": target}), file=sys.stderr)
     mod = __import__(target, fromlist=["main"])

@@ -1,0 +1,127 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Ananke",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
+  "updated_at_utc": "2026-09-29T03:35:47Z",
+  "state": "WORKING",
+  "state_reason": "MWO-0001 adopted (a90dede19). Small CPU block B-8 T-INS-6 running as worker W-M (E-ANANKE-W-M); no large PTE campaign.",
+  "branch": "ananke/base-role-adopt-2026-09-24",
+  "head_sha": "ffd452047",
+  "head_sha_note": "last pushed commit before this WORK_STATE commit",
+  "work_map": "roles/Ananke/research/THREADS.md",
+  "threads": [
+    {
+      "id": "thr-82e9c44ffc71",
+      "alias": "T-REACH-GAP",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-52e8bb034fba",
+      "alias": "T-RET-SEL",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-8c7342a7d513",
+      "alias": "T-INS-6",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-ea0c97a4d5e9",
+      "alias": "T-CT-3'",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-5df816e9b844",
+      "alias": "T-SWAP-LOWACC",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-f36dd8035762",
+      "alias": "T-WJ-1",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-3cb97e823f61",
+      "alias": "T-WJ-2",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-597dda593a1f",
+      "alias": "T-H3",
+      "state": "OPEN"
+    },
+    {
+      "id": "thr-a1dd79b7de09",
+      "alias": "T-REDISCOVER",
+      "state": "PARKED"
+    },
+    {
+      "id": "thr-56144b624b97",
+      "alias": "T-RET-2 (PTE-SI01)",
+      "state": "CLOSED"
+    },
+    {
+      "id": "thr-66db7bdd95ce",
+      "alias": "PTE-C1b",
+      "state": "CLOSED"
+    },
+    {
+      "id": "thr-5d13521c558d",
+      "alias": "PTE-C1",
+      "state": "CLOSED"
+    }
+  ],
+  "threads_note": "closed/answered arc threads (T-CT-1, T-INS-1, T-RET-1, T-TA-1, T-X-1, T-X-4, T-M2-2, T-M3-1, T-BR-1, T-CT-2, T-RS-1, T-DE-1) and their genesis rules are in work_map",
+  "campaigns": [
+    {
+      "id": "C-ANANKE-PTE-C1",
+      "alias": "PTE-C1",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/pte/C1_REPORT.md"
+    },
+    {
+      "id": "C-ANANKE-PTE-C1B",
+      "alias": "PTE-C1b",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt"
+    },
+    {
+      "id": "C-ANANKE-ARC3",
+      "alias": "ARC3",
+      "status": "CLOSED",
+      "report": "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E-ANANKE-W-M",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-6 (MACHINE_WORK B-8)",
+      "status": "RUNNING",
+      "what": "phi + single-trial swap mixture test; traj.py promoted as proposed lens extension with known-answer tests",
+      "dir": "roles/Ananke/research/workers/W-M/",
+      "resources": "CPU only, Fabric lease skullport:cpu8 if >2 threads >5 min"
+    }
+  ],
+  "experiments_note": "no experiment running; completed E-ANANKE-* rows (C1/C1b, W-A..W-L, designed echoes, joint carrier) are in work_map",
+  "fabric_tasks": [],
+  "leases": [],
+  "running": [
+    "E-ANANKE-W-M (delegated worker, CPU)"
+  ],
+  "blocked_on": [],
+  "next_actions": [
+    "deposit W-M report via research/deposit.py; review lens_ins6 before any promotion into prometheus/ananke/lens.py",
+    "then B-10 T-SWAP-LOWACC",
+    "s8 seat loop continues"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md (7fc642367)",
+    "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC2.md (8eabc990b)",
+    "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt (cc98596dd)",
+    "roles/Ananke/pte/C1_ERRATA.md"
+  ]
+}

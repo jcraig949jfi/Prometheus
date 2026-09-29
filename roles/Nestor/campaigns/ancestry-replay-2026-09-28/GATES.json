@@ -1,0 +1,74 @@
+{
+ "updated": "2026-09-29T03:16:55Z",
+ "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
+ "gates": {
+  "G1_fixture_validation": {
+   "status": "CLEAR",
+   "evidence": "Amendment C8 / VALIDATION_v2.txt: 451/451 expectations of the 26-fixture pack (incl. K16b, K16c, K37 and Archaeon's additions) agree with the INDEPENDENT reference tracer. Nestor verified that the validated copies (nestor_v2_npe_fixtures.py, FUZZ set, TRACER_FREEZE) are byte-identical to his frozen files. Mutants caught 3-22 times each."
+  },
+  "G2_independent_tracer_agreement": {
+   "status": "CLEAR",
+   "evidence": "Fresh set 2 (seed 49220fae2; pre c1589c6f; sealed hashes committed BEFORE opening: SEALED_HASHES_SET2.json ref e638eeb1 / nestor 4f542a70; both verified). Nestor's independent RAW comparison (g2_fresh/NESTOR_COMPARISON_SET2.json, frozen compare_fresh.py): set A PASS and set M PASS -- every gated field (label, addr, ctrl, exec, written, store_by, performer) 1.0000 in every class incl. MUTATION (212/212 label/addr/written). Secondary ctrl_slice 0.92-0.99 (S3 IN-guard, open, non-gating). NOTE: the frozen script's 'MUTATION_content' diagnostic reads the set-1 label layout and prints 0/212 -- a stale DIAGNOSTIC parser (script frozen, not edited); the raw label equality 212/212 supersedes it. Production still requires Archaeon's matching comparison and ANCESTRY_REPLAY_PRODUCTION_GO_FINAL (C9 s6) binding all hashes. | Archaeon's pre-committed comparison MATCHES (#905); ANCESTRY_REPLAY_PRODUCTION_GO_FINAL.md @ 13fae4b7b (record sha256 fefef4b0..., verified by Nestor) binds freeze 77a822ac, run_production c31cca76 (both verified), reference 15737444, fixtures, spec, unit, flip rule, agreement set 2. The 70 vs 69 ctrl_slice count differs only by class key (written-then-mutated loci), all ctrl_slice (non-gating)."
+  },
+  "G3_flip_rule": {
+   "status": "CLEAR",
+   "evidence": "C7.2: prefix rule is the gating rule for both engines, strict rule reported; data-before-store residue INAPPLICABLE. Preserved evidence: strict 0/64 on smoke births; prefix 31/32 on birth 257, 0/32 on birth 256 (copied bytes executed before their final store)"
+  },
+  "G4_experimental_unit": {
+   "status": "CLEAR",
+   "evidence": "C7.4: 9 distinct simulations / 29 distinct births; run-clustered bootstrap over 9; duplicates (s9200006 C, s9200008 C) reported. Ruled by Archaeon before any production statistic"
+  }
+ },
+ "outcome_adjacent_exposure": [
+  "120-epoch smoke of s9200001 B: 15 P4-eligible halves, 13 not accepted; 2 births with source diversity 2 (smoke only; no rule was changed in response)",
+  "20-epoch smoke of s9200001 B: structure check only; no quantity inspected"
+ ],
+ "post_exposure_rule_changes": [
+  {
+   "when": "2026-09-28 C8",
+   "rule": "A1/A2 label canonicalization for the G2 agreement gate",
+   "seen_before_ruling": "the raw label/performer disagreements of the fuzz comparison (non-production data)",
+   "effect": "canonical equivalence of semantically identical non-MOVE labels; no threshold, fixture, clustering or eligibility changed"
+  },
+  {
+   "when": "2026-09-28 C9",
+   "rule": "C9 s5(a) label clarifications (CF over COMPUTED, idiom kind names); A1/A2 withdrawn",
+   "seen_before_ruling": "the raw set-1 discrepancies (non-production)",
+   "effect": "tracer revised + re-frozen (v2); comparison rule unchanged (raw, >= 0.995 per class); fresh set required"
+  },
+  {
+   "when": "2026-09-28 fresh-set exchange",
+   "rule": "none changed; MUTATION addr ambiguity FOUND after exposure (reported, not canonicalized)",
+   "seen_before_ruling": "fresh-set outputs (non-production)",
+   "effect": "set M fails; amendment + fresh M set required"
+  }
+ ],
+ "sample_transfer": "NOT in git in any form: hash posted -> scp to M2 C:/Prometheus-data/evidence/attribution_arc_2026-09-28/npe_sample/ -> Archaeon verifies before reading -> frozen reference runs -> result hashed -> receipts only in git (GO_FINAL; corrects the withdrawn orphan-branch route)",
+ "production_scope_limits": "ctrl_deps_slice (S3 open) and pdom NOT validated by G2 and may not feed any production quantity; Q8c-whether interventional (not covered by G2); L1-L5 kept separate; source diversity diagnostic only",
+ "operator_gates_POST_ARC3": "all four satisfied: fixture validation (+ mutants caught), independent tracer agreement (frozen v3 vs frozen reference, fresh set 2 raw PASS, pdom text obtained), flip-rule ruling (C7.2), experimental-unit ruling (C7.4)",
+ "run2_independent_review": {
+  "tasks": [
+   "tsk-c62639a26351 (replica 1)",
+   "tsk-db7cff995c19 (replica 2)"
+  ],
+  "base": "cef9cc1b9",
+  "verdict": "RUN-2 INTEGRITY HOLDS WITH NOTES (both); s4_run.py DOES NOT CONFORM (both)",
+  "blocking_before_synthesis": [
+   "production-data tracer agreement not done (1% sample transfer blocked); replica 1 proposes the reference run on the 34 committed birth pre-states",
+   "s4 flip-coverage floor FAILS in both classes (self 0.447, other 0.125; with identified denominator 182/395, 41/301); never evaluated in code; instrument reading",
+   "s4: no CI / run-clustered bootstrap over 9 sims (C4.4/C7.4); class key donor-relative vs 'executing organism' unruled; NO_MATERIAL/TIED missing"
+  ],
+  "should_fix": [
+   "identified uses the STRICT flip rule not the gating C7.2 prefix rule (no effect: 0 FAILED)",
+   "completeness leak test requires the full path unchanged -> path-changing leaks uncountable, no applicability count: the 0.0 leak share is NOT evidence",
+   "Q8c None on ~22 loci (all draws suppressed) must not be read as 0",
+   "L3/L4 built from the P-11 native parent pointer = construction chains, labelled as heredity (ERRATUM recorded)",
+   "freeze/receipt do not cover s4_run.py, launcher, engine; launcher records s4/GO hashes without enforcing",
+   "byte-identity restart condition redefined after failure (addendum 2) -- declared here; run-1 comparison files not in git"
+  ],
+  "status": "s4 tallies remain UNUSED; production exports stand; no synthesis until the blocking items are resolved"
+ },
+ "errata": [
+  "L3/L4 ('child later a parent', 'descendant births') are built from the P-11 native lineage parent pointer: they are CONSTRUCTION-CHAIN readings, not heredity. Heredity requires CVT-R/Q4 (L5). The run-2 summaries' labels 'L3_viable_offspring'/'L4_survives_generations' are to be read that way (run_trace.py is frozen; not edited)."
+ ]
+}

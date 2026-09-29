@@ -150,3 +150,29 @@ Declared residuals (v2):
   a future seal should pad.
 - Anyone with the custodian account on M1 can read the secrets (unchanged; "key holder" includes any repo code run by
   that account, which is why the key-holding CLIs verify code before importing it).
+
+## v3 (2026-09-29): repairs after the v2 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v2/VERDICT.md) and Harmonia DEF-HARM-D2-001
+
+- **OPEN, the operator's decision (#925):** the root of trust for protocol records. The v2 decisive finding stands: the
+  comms `sender` field is client-supplied, so the S1 allow-list does NOT authenticate authors, and main is unprotected.
+  v3 does not claim S1 repaired.
+- **Everything else is repaired in code** and has a refusal test in `selftest_protocol.py` (67 checks + 4 defect
+  controls, SELFTEST_PROTOCOL.json).
+
+| finding | v3 repair | test |
+|---|---|---|
+| DEF-HARM-D2-001: the SEAL gate is unpassable on the real history | "added once" = every commit in the full history (merges diffed against each parent) touching the record carries ONE blob; exactly one non-merge commit adds it; no non-merge modification, deletion or rename; the blob at the ref is that blob. A merge carrying the sealed blob unchanged passes; a replacement through a merge still fails (F4 kept). | SEAL passes on the REAL origin/main history; a side-branch seal merged into main passes; the F4 forgery through a merge is refused; the F4 defect control (plain log) still accepts it |
+| B1: import control | entry.py re-executes itself with `python -I -B`, then installs a meta-path guard: every prometheus.* import must resolve inside the repo, be bound by the governing audit and be compiled by a loader from the SOURCE bytes it has just hashed. __pycache__ is never read, so a planted .pyc cannot load, and there is no check-then-read gap. | unbound module refused; changed source refused; verified source compiles |
+| a later unauthenticated FAIL / PASS could supersede | only ALLOW-LISTED audit records are considered (the highest n governs); others are ignored and reported | an unauthenticated later FAIL is ignored; an unauthenticated later PASS is ignored |
+| RESULT_SEAL not authenticated | RESULT_SEAL must be allow-listed (role RESULT_SEAL) | reveal refused until allow-listed |
+| "once only" rests on an editable custody log | custody writes protocol/KEY_RELEASED.json and REVEALED.json for immediate commit; a committed record refuses a second release or reveal whatever the log says | second release refused from git after the custody log is cleared |
+| secret-derived strings on the command line (firewall_check) | the all-history scan streams every reachable blob through `git cat-file --batch` over stdin and searches in-process; no secret appears in argv | (key-holder run) |
+| the receipts can be written by the same-account child | the isolation probe also tries to APPEND to the run's receipts; the child must be denied. INTENTIONAL: with the child running as the runner's own account this always fails closed, so the designation must provide a separate child account (a host capability: MWO s6, no seat creates users) | a child that can append is refused |
+| account from the environment | the OS account comes from GetUserNameW / pwd, not USERNAME | - |
+| custodian tools import code outside AUDITED_FILES (allowlist.py -> comms) | declared: allowlist.py never runs in a key-holding process; comms stays outside the audited closure | - |
+
+Residuals, restated:
+- The S1 root of trust is open.
+- Branch protection on main is off. That is the operator's setting.
+- A same-account child could read the runner's memory; the separate child account (above) is required.
+- The plaintext length is visible in the manifest (future seals should pad).

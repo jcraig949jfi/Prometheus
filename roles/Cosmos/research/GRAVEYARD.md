@@ -60,3 +60,11 @@ pool vs laws A .964 and B .978, and is statistically indistinguishable from them
 sealed universes. That matches Cosmos's own record (HANDOFF s1 V2: 97.5% agreement with the
 hand-derived law). T-I1's base-rate test must therefore use the ANALYTIC formula's atoms as the null,
 not random atoms.
+
+## T-I1 fragment test result (2026-09-29, v3 at d2ede5652; exploratory, Z1)
+On the 720 spent sealed rows, 11 of 15 atoms of the C0-C2 laws re-express the zero-parameter definition
+rung beyond a rate-matched, rung-equivalent-excluded grammar null (analysis/t_i1_fragments_v3.json). That
+includes every instance of the ceiling atom. Atoms that do NOT: G-0001b (C - exp(-CN)), G-0004b (K/(N + log C)),
+G-0004c (C log C + Q), and law B's log(Q - C K). So the atoms that died robustly (G-0004) were the non-certificate
+ones, and the survivors are almost entirely the certificate. The graveyard's recurring fragment is the
+planted economics, not a found invariant.

@@ -1,0 +1,28 @@
+{
+ "production_run": 1,
+ "status": "INVALIDATED (GO_FINAL hygiene: stop, invalidate, document, repair, re-freeze, restart)",
+ "defect": "run_production.py (bound c31cca76) marked duplicate_of = itself for the first record of each simulation, so all 11 records carried a non-null duplicate_of and s4_run.py excluded every birth from its distinct-simulation summary (S4_SUMMARY per-class tallies EMPTY).",
+ "unaffected": "all tracer outputs (births exports, 1% sample, compact rows), the 34 per-birth s4 results (S4_RESULTS.jsonl), the true duplicate pointers (s9200006 C -> A, s9200008 C -> A)",
+ "evidence_kept": "_scratch/production_run1_INVALIDATED/ (not in git; hashes below)",
+ "run1_hashes": {
+  "4931614d912c52b2-s1190-tL-a0__s9200001__B_reimplant_actual.summary.json": "a758b9f4b6beca0a2a94aaefb8a45e64521a747ddc6d020bebf6b053cd44e06b",
+  "4931614d912c52b2-s1190-tL-a0__s9200002__B_reimplant_actual.summary.json": "2c163badc5de633364b8be2604b901875dacd0a8c3e113f2de850da078dd76c2",
+  "4931614d912c52b2-s1190-tL-a0__s9200004__B_reimplant_actual.summary.json": "202411c01cfca9fad3338adbad4b78634c5a062fad8dd95aec0f420e3b55eb55",
+  "4931614d912c52b2-s1190-tL-a0__s9200006__A_in_situ.summary.json": "8a3890fdda3f2eefca224a930da40ab1fe7868ed703a87276c1e2addc1546f21",
+  "4931614d912c52b2-s1190-tL-a0__s9200006__C_reimplant_random.summary.json": "7d376d77595b695ca72d9288563db2644d522f5179d23eaca049079a7cd6033a",
+  "4931614d912c52b2-s1190-tL-a0__s9200007__B_reimplant_actual.summary.json": "702460c58e88362bfbeeb7c7ca33ca54dc31513a346702baada92bcb2a32c266",
+  "4931614d912c52b2-s1190-tL-a0__s9200008__A_in_situ.summary.json": "ea76bc3209975ee7c3e93b291b7a9818710308f0424c2845447996e0a3ec7104",
+  "4931614d912c52b2-s1190-tL-a0__s9200008__B_reimplant_actual.summary.json": "c5b14c3fb554024a0e7f098320b77095be7f0389bdc5e48dd0ab16006d6a0918",
+  "4931614d912c52b2-s1190-tL-a0__s9200008__C_reimplant_random.summary.json": "0125158172acd27a934e138f4e3c02608acff8b09fa81ba1c168fe3ad4fb5bdd",
+  "4931614d912c52b2-s1190-tL-a0__s9200009__B_reimplant_actual.summary.json": "6180ad40ec6a3fb17b9b4d966503410a24838764f774ad708bd0ac404b1ef5d3",
+  "4931614d912c52b2-s1190-tL-a0__s9200010__B_reimplant_actual.summary.json": "bb4cb47d289d96e0861bc4746f850ea100b0b01222d227bd60e4f2e062273ff3",
+  "END_RECEIPT.json": "86e3be8a867a95cc72b2eb0ae6be806d7e2459177ae6687edd1f4456164005fc",
+  "PRODUCTION_INDEX.json": "068a7f0dc5b2590172463362c4905faa08955d3be4629d09f7313c50b7332639",
+  "S4_SUMMARY.json": "fc2d1a1695ab6b19dd7984217072e38f4e27587baa289916b641f7b0818df724",
+  "SAMPLE_MANIFEST.json": "cba225166b1f4d8012610624afa1104eb295fa0b8fdbff61efb464c4297c7cee",
+  "START_RECEIPT.json": "1989ab723ac024acdb8520cfc43c44956e4013fdff6519d086c7c36f527d86e4"
+ },
+ "repair": "one line; duplicate_of = None for the first record of each lineage hash; new run_production.py sha256 c00e827e9e8e2b9bd7b590ff2fac6db048ea9832da283603182ba4fac252e20a",
+ "exposure": "the run-1 log printed per-run summaries (P4-eligible tallies, L3/L4 children, child genomes) to the Nestor seat; no rule, threshold, eligibility, clustering or code other than the duplicate bookkeeping line changed",
+ "restart_condition": "Archaeon re-binds run_production.py (and TRACER_FREEZE v4) in GO_FINAL; then a full re-run under a new receipt; deterministic, so run-2 births/sample exports must be byte-identical to run 1 (a check)"
+}

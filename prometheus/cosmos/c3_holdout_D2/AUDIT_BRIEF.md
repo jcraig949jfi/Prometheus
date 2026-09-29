@@ -95,3 +95,14 @@
   ```
 - Then post on comms (to Nestor) the sha256 of the committed record bytes (LF-normalised): the custodian adds it to the
   allow-list only from a message whose sender is Odysseus and which contains that sha256 (S1).
+
+
+## RE-AUDIT v3 (2026-09-29)
+Scope: everything in FIREWALL.md, section "v3".
+- S1 (authenticating records) is KNOWN OPEN, pending the operator's root-of-trust decision (#925). Please assess
+  everything else so that the remaining gap is S1 alone.
+- Your replicas run with read-only git (--cap fabric.runtime==0.2). Please execute
+  `COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.protocol` against the REAL history
+  (Harmonia DEF-HARM-D2-001), and verify B1 by trying to make the entry path load unbound code.
+- Record format, allow-listing and hashes are unchanged from the v2 section. The next record is FIREWALL_AUDIT_1.json
+  (no audit record exists yet).

@@ -1,3 +1,41 @@
+# Ananke -- RESUME (read right after RESPONSIBILITIES.md)
+
+Written 2026-09-29T03:34Z at MWO-0001 adoption. Boot from the repo, not
+memory: WORK_STATE.json is the authoritative seat state.
+
+## 1. Boot
+- `git fetch origin` only (never pull/rebase/stash). Work in worktree
+  Prometheus-worktrees/ananke-base-role, branch
+  ananke/base-role-adopt-2026-09-24; merge origin/main before pushing.
+- On M1 (SKULLPORT) no EW_DB_HOST needed; elsewhere set
+  EW_DB_HOST=192.168.1.202 before any comms call.
+- `python -m comms boot Ananke --model <id>`; read
+  origin/main:ops/work_orders/CURRENT.md (ANANKE section, s4, s7, s8, s9,
+  s11, s12).
+
+## 2. State
+- Nothing running; no leases; no Fabric tasks. Queue items #605/#631
+  (Aporia HOLD) closed as superseded by the operator release 2026-09-26.
+- Record: pte/C1_REPORT.md, pte/C1_ERRATA.md, pte/c1b/ (REVIEW_PACKET,
+  C1B_SUMMARY.json, CORRECTIONS_2026-09-27.md), research/SYNTHESIS_*.md,
+  research/BACKLOG_V2.md (canonical backlog), research/MACHINE_WORK.md.
+- Ids: research/THREADS.md (genesis thr- ids, C-ANANKE-*, E-ANANKE-*).
+
+## 3. Rules in force
+- MWO-0001: no new large PTE campaign; s6 no host mutations; s7 hard gates
+  go to the operator; s12 infrastructure defects recorded as evidence.
+- Leases through Fabric (`python -m fabric lease acquire <host>:<res>
+  --purpose ...`), fail closed. Workers deposit reports via
+  research/deposit.py; stage explicit paths only.
+- Seat loop per s8, self-paced; no idle broadcasts, no ACKs.
+
+## 4. Next
+Small CPU research blocks: B-8 T-INS-6, then B-10 T-SWAP-LOWACC, each as
+an E-ANANKE-* experiment under its thread, under a Fabric lease.
+
+---
+## SUPERSEDED (2026-09-25 text, kept verbatim; its operator questions Q1-Q4 were answered 2026-09-25/26)
+
 # Ananke -- RESUME after reboot (read right after RESPONSIBILITIES.md)
 
 Written 2026-09-25 ~11:30Z by instance m1-c5725d8e before an operator

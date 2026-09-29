@@ -60,7 +60,9 @@ AUDIT_RE = re.compile(r"^FIREWALL_AUDIT_([1-9][0-9]*)\.json$")
 COMMITMENT_FILE = "PREDICTION_COMMITMENT.json"
 DESIGNATION_FILE = "RUNNER_DESIGNATION.json"
 RESULT_SEAL_FILE = "RESULT_SEAL.json"
-FIXED_RECORDS = {COMMITMENT_FILE, DESIGNATION_FILE, RESULT_SEAL_FILE}
+KEY_RELEASED_FILE = "KEY_RELEASED.json"                      # v3: "once only" rests on git, not on the custody log
+REVEALED_FILE = "REVEALED.json"
+FIXED_RECORDS = {COMMITMENT_FILE, DESIGNATION_FILE, RESULT_SEAL_FILE, KEY_RELEASED_FILE, REVEALED_FILE}
 RESULT_SEAL_FORMAT = "c3-D2-result-seal/2"
 AUDIT_FORMAT = "c3-D2-firewall-audit/2"
 COMMITMENT_FORMAT = "c3-D2-prediction-commitment/1"
@@ -174,14 +176,19 @@ def resolve_ref(repo: Path, ref: str) -> str:
     return p.stdout.strip()
 
 
-def _commits_touching(repo: Path, ref: str, rel: str) -> list:
-    """F4: --full-history, so a record replaced through a merge shows up."""
-    p = _git(repo, "log", "--full-history", "--format=%H %P", ref, "--", rel)
-    out = []
+def _record_history(repo: Path, ref: str, rel: str):
+    """Every commit in the FULL history of `ref` that touches `rel` (merges diffed against EACH parent, -m), as
+    (commit, n_parents, status, new_blob). F4 (Odysseus v1) + DEF-HARM-D2-001 (Harmonia, 2026-09-29)."""
+    p = _git(repo, "log", "--full-history", "-m", "--raw", "--no-abbrev", "--format=C %H %P", ref, "--", rel)
+    out, cur, npar = [], None, 0
     for line in p.stdout.splitlines() if p.returncode == 0 else []:
-        parts = line.split()
-        if parts:
-            out.append((parts[0], len(parts) - 1))
+        if line.startswith("C "):
+            parts = line.split()
+            cur, npar = parts[1], len(parts) - 2
+        elif line.startswith(":") and cur:
+            meta, _path = line.split("	", 1)
+            f = meta.split()
+            out.append((cur, npar, f[4], f[3]))
     return out
 
 
@@ -190,14 +197,30 @@ def _strict_ancestor(repo: Path, a: str, b: str) -> bool:
 
 
 def _added_once(repo: Path, ref: str, rel: str, err_missing) -> str:
-    cs = _commits_touching(repo, ref, rel)
-    if not cs:
+    """v3 rule (DEF-HARM-D2-001 repair; keeps F4): a record is valid iff
+      - EVERY commit in the full history that touches it carries ONE AND THE SAME blob (a merge that carries the sealed
+        blob unchanged is NOT a rewrite; a replacement through a merge brings a second blob and is refused);
+      - exactly ONE non-merge commit ADDS it, and no non-merge commit modifies, deletes or renames it;
+      - the blob at `ref` is that blob.
+    Returns the adding commit."""
+    hist = _record_history(repo, ref, rel)
+    if not hist:
         raise err_missing("%s is not committed on %s" % (rel, ref))
-    if any(npar > 1 for _c, npar in cs):
-        raise RecordRewritten("%s is touched by a merge commit; records may not arrive or change through merges" % rel)
-    if len(cs) != 1:
-        raise RecordRewritten("%s was changed after it was recorded (%d commits touch it, full history)" % (rel, len(cs)))
-    return cs[0][0]
+    blobs = {b for _c, _n, st, b in hist if st != "D" and set(b) != {"0"}}
+    if any(st[0] in "DR" for _c, _n, st, _b in hist):
+        raise RecordRewritten("%s was deleted or renamed somewhere in its history" % rel)
+    if len(blobs) != 1:
+        raise RecordRewritten("%s carries %d different contents in its full history (replaced, incl. through a merge)"
+                              % (rel, len(blobs)))
+    adds = [c for c, n, st, _b in hist if n <= 1 and st == "A"]
+    mods = [c for c, n, st, _b in hist if n <= 1 and st != "A"]
+    if mods or len(adds) != 1:
+        raise RecordRewritten("%s: %d non-merge adds and %d non-merge modifications (must be exactly one add, none else)"
+                              % (rel, len(adds), len(mods)))
+    at_ref = _git(repo, "rev-parse", "%s:%s" % (ref, rel)).stdout.strip()
+    if at_ref != next(iter(blobs)):
+        raise RecordRewritten("%s at %s is not the recorded blob" % (rel, ref))
+    return adds[0]
 
 
 def _proto_tree(repo: Path, ref: str) -> list:
@@ -272,6 +295,20 @@ def record_sha(b: bytes) -> str:
     return sealbox.sha256_hex(b.replace(b"\r\n", b"\n"))
 
 
+def _is_allowlisted(allowlist, role, name, b) -> bool:
+    try:
+        _allowlisted(allowlist, role, name, b)
+        return True
+    except NotAllowListed:
+        return False
+
+
+def once_record_present(repo, ref, name) -> bool:
+    """v3: True iff protocol/<name> is committed on `ref` (a KEY_RELEASED / REVEALED record makes a second release or
+    reveal impossible whatever the custody log says)."""
+    return _show(Path(repo), ref, PROTO_REL + "/" + name) is not None
+
+
 def _allowlisted(allowlist, role: str, name: str, b: bytes):
     if allowlist is False:                                        # explicitly disabled (tests of other gates only)
         return
@@ -318,10 +355,14 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     if "AUDIT" not in need:
         return st
 
-    # 2. AUDIT (versioned; the highest n governs)
-    audits = sorted((int(AUDIT_RE.match(n).group(1)), n) for n in _proto_tree(repo, ref) if AUDIT_RE.match(n))
+    # 2. AUDIT (versioned). v3 (Odysseus v2 should-fix: an unauthenticated later record must not supersede): ONLY
+    # allow-listed audit records are considered; the highest-n allow-listed one governs; others are reported, ignored.
+    all_audits = sorted((int(AUDIT_RE.match(n).group(1)), n) for n in _proto_tree(repo, ref) if AUDIT_RE.match(n))
+    audits = [(n, name) for n, name in all_audits
+              if _is_allowlisted(allowlist, "AUDIT", name, _show(repo, ref, PROTO_REL + "/" + name) or b"")]
+    st["audits_ignored_not_allowlisted"] = [name for _n, name in all_audits if (_n, name) not in audits]
     if not audits:
-        raise AuditMissing("no protocol/FIREWALL_AUDIT_<n>.json on %s" % ref)
+        raise AuditMissing("no allow-listed protocol/FIREWALL_AUDIT_<n>.json on %s" % ref)
     prev_c = seal_c
     for _n, name in audits:                                       # each added once, in increasing commit order
         c = _added_once(repo, ref, PROTO_REL + "/" + name, AuditMissing)
@@ -401,8 +442,9 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         return st
 
     # 5. RESULT_SEAL
-    rs = _load_bytes(repo, ref, RESULT_SEAL_FILE, ResultNotSealed)[1]
+    rs_b, rs = _load_bytes(repo, ref, RESULT_SEAL_FILE, ResultNotSealed)
     rs_c = _added_once(repo, ref, PROTO_REL + "/" + RESULT_SEAL_FILE, ResultNotSealed)
+    _allowlisted(allowlist, "RESULT_SEAL", RESULT_SEAL_FILE, rs_b)          # v3: result seal authenticated too
     if rs.get("format") != RESULT_SEAL_FORMAT or rs.get("spec_id") != spec_id or \
             rs.get("package_sha256") != cm["package_sha256"] or not rs.get("chain_head") or \
             not rs.get("result_sha256") or rs.get("run_nonce") != ds["run_nonce"]:

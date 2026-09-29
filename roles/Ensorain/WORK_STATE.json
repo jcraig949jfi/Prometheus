@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T02:48:38Z",
+  "updated_at_utc": "2026-09-29T04:00:50Z",
   "state": "HOLD",
   "state_reason": "E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e and NOT LAUNCHED. HOLD on the launch authorization (MWO-0001 contains no launch line). Eligible ARC3 design work continues without a campaign or lease.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "51ddc856e268d1fbeafbff7149c809b33a9f1652",
+  "head_sha": "0d2abaf63ad6b2334a37941e99b6a304ec594ce4",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -29,8 +29,9 @@
     },
     {
       "id": "E-ENS-S1-PILOT",
-      "status": "DONE_DEV",
-      "report": "ensorain/arc3/suff/RESULTS_S1_PILOT.md"
+      "status": "DONE_DEV_REPLICATED",
+      "report": "ensorain/arc3/suff/RESULTS_S1_PILOT.md",
+      "replication": "ensorain/arc3/suff/replication/README.md"
     },
     {
       "id": "E-ENS-PKGF-PROBE",
@@ -44,6 +45,12 @@
     {
       "id": "E-ENS-LM02",
       "status": "DESIGN"
+    },
+    {
+      "id": "E-ENS-T25-CSSR",
+      "status": "DONE_DEV",
+      "report": "ensorain/arc3/suff/CSSR_T25.md",
+      "note": "6/6 precommitted predictions survived; split-CSSR is window-bounded on Even, vote fails on Markov-3; tau-hybrid next"
     }
   ],
   "fabric_tasks": [
@@ -52,7 +59,8 @@
       "title": "Independent stdlib replication of PKG-S1 sufficiency-ladder claims C1-C4",
       "thread": "thr-ens-sufficiency-ladder",
       "experiment": "E-ENS-S1-PILOT",
-      "state": "submitted"
+      "state": "completed",
+      "outcome": "C1-C4 CONFIRMED by an independent implementation, executed by Ensorain on M2 (the claude executor cannot run python, by design: fabric README D3). Evidence: ensorain/arc3/suff/replication/README.md"
     }
   ],
   "running": [],
@@ -72,13 +80,15 @@
   ],
   "next_actions": [
     "When a launch MWO is published: verify its git-blob sha256 against ops/work_orders/PUBLICATIONS.md, resolve the carrier per the DEF-ENS-001 option the MWO chooses, then take the Fabric lease (python -m fabric lease acquire <m2-host>:cpu8; MWO-0001 s3 and Odysseus #896), pin a fresh run worktree at ee8cbe0c8, verify the freeze, census the host, and launch",
-    "ARC3 (no campaign, no lease): T26 WTP legacy replay gate check (Artemis R-08); PKG-F recency/changepoint design; LM02 design folding in the pre-freeze review and Artemis R-10/R-16 inputs; candidate Fabric tasks listed in ensorain/arc3/HIERARCHY.md"
+    "ARC3 (no campaign, no lease): PKG-F recency/changepoint design; LM02 design; T25 CSSR causal-state learner (motivated by the S1 optimum-vs-T result). Future Fabric code-execution tasks use the two-stage pattern (claude writes the code, a script executor runs the committed file)"
   ],
   "operator_decisions_required": [
     "LM01 launch authorization via MWO (exact line + v0.3.2 hash ee8cbe0c8)",
     "DEF-ENS-001 carrier resolution: (A) Ensorain transcribes the launch MWO verbatim into roles/Ensorain/prompts/ with PUBLICATIONS.md provenance + MANIFEST, no freeze change (recommended); or (B) gate repair, re-freezing as v0.3.3 with a new hash"
   ],
   "latest_reports": [
+    "ensorain/arc3/suff/CSSR_T25.md (T25 CSSR: split vs vote)",
+    "ensorain/arc3/suff/replication/README.md (S1 replication + precommitted optimum-vs-T)",
     "ensorain/PREREG_WTP_LM01.md (v0.3.2 frozen)",
     "ensorain/LM01_DIFF_v031_to_v032.md",
     "ensorain/arc3/reviews/LM01_V032_PREFREEZE_REVIEW.md",

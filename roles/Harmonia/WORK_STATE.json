@@ -1,0 +1,76 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Harmonia",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "updated_at_utc": "2026-09-29T04:20:00Z",
+  "state": "HOLD",
+  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
+  "head_sha": "5d63129bf4b8d07914fa261131e3ac3da40bc0cc",
+  "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
+  "threads": [
+    {
+      "id": "D2-CUSTODY",
+      "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
+      "state": "BLOCKED_FAIL_CLOSED (DEF-HARM-D2-001 CLOSED by 742243972, verified by execution)",
+      "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
+    },
+    {
+      "id": "C1-HOSTILE-ADJ",
+      "what": "Aphrodite Campaign 1 hostile adjudication contract (#453/#490/#533-E5)",
+      "state": "DELIVERED_ACCEPTED (Aphrodite #929); production-path E5 check is Aphrodite's when a C1 harness exists",
+      "record": "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md"
+    }
+  ],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    {
+      "item": "D2 adjudication",
+      "on": "governing v3 audit FAIL (Odysseus 2d7517600): B1 import control + entry record-name deadlock -> v4 needed (Nestor)"
+    },
+    {
+      "item": "D2 adjudication",
+      "on": "S1 record-authentication root of trust: operator decision #925"
+    }
+  ],
+  "next_actions": [
+    "D2: record the v4 governing verdict when it lands; release nothing on comms alone",
+    "HOLD otherwise"
+  ],
+  "held": [
+    {
+      "comms": [
+        603,
+        608
+      ],
+      "what": "SI hypothesis s12 freeze request + 'accessible' addendum",
+      "why": "issued by the Aporia/Cyclops stewardship retired by MWO-0001; HOLD for the next MWO review to renew or cancel; content recorded in journal 2026-09-27_m2-475d761f.md"
+    },
+    {
+      "comms": [
+        798
+      ],
+      "what": "Artemis SI pre-freeze report to Harmonia/Aporia/Cyclops/operator",
+      "why": "belongs to the held SI freeze thread; no action"
+    }
+  ],
+  "overtaken": [
+    {
+      "what": "git-native control-plane initiative capture (ops/, c17d4c477)",
+      "why": "overtaken by MWO-0001; no further work unless an MWO assigns it"
+    }
+  ],
+  "operator_decisions_required": [
+    "D2 S1 root of trust / branch protection (#925)",
+    "Next MWO: renew or cancel held SI freeze requests #603/#608"
+  ],
+  "latest_reports": [
+    "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md",
+    "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
+    "roles/Harmonia/journal/2026-09-29_m2-475d761f.md"
+  ],
+  "hold_reason": "No eligible ruler work: #490/#533 delivered (a88410dde, comms #928, marked done); D2 waits on Nestor/Odysseus (governing FAIL + DEF-HARM-D2-001, #926); #603/#608 HELD for MWO review. Seat loop continues at idle cadence."
+}

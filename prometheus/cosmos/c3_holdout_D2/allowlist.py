@@ -25,7 +25,11 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 PROTO_REL = "prometheus/cosmos/c3_holdout_D2/protocol"
 ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
-SENDERS = {"AUDIT": {"Odysseus"}, "COMMITMENT": {"Cosmos"}, "DESIGNATION": {"operator", "Nestor"}}
+SENDERS = {"AUDIT": {"Odysseus"}, "COMMITMENT": {"Cosmos"}, "DESIGNATION": {"operator", "Nestor"},
+           "RESULT_SEAL": {"operator", "Nestor"}}
+# v3 STATUS (Odysseus v2 re-audit FAIL, decisive finding): the comms `sender` field is supplied by the posting client, so
+# this check does NOT authenticate the author. The root of trust for protocol records is an OPEN OPERATOR DECISION
+# (#925: signed commits + pinned keys / operator-confirmed hashes / accept). v3 does not claim S1 repaired.
 
 
 def record_bytes(ref, name):

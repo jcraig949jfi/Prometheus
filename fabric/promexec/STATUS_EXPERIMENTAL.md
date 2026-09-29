@@ -54,3 +54,29 @@ sudo rm /etc/sudoers.d/promexec /usr/local/sbin/promexec-run
 sudo rm -rf /opt/promexec /var/lib/promexec
 sudo userdel promexec
 ```
+
+## Independent review, round 1 (Aether, read-only): recorded 2026-09-29 under MWO-0001
+
+- **Source:** roles/Aether/reviews/2026-09-28_promexec_round1/FINDINGS.md @ d2b27c2b9 (request #912).
+- **Verdict:** STAYS EXPERIMENTAL / UNVERIFIED / NOT ENABLED.
+- **Per surface:**
+  - HOLDS: inherited fds/environment (3); arbitrary --in/--out, privilege-neutral (4); sudoers rule (9); symlink
+    and TOCTOU on transfer (2).
+  - BROKEN: argv disclosure (1, = B1); a root chown that follows a symlink in a promexec-owned directory (5, latent,
+    NEW); systemd isolation absent, no network restriction, persistence via setgid helpers not blocked (6, B2/B4
+    plus NEW gaps); sibling visibility through /proc of a same-UID sibling (7, = B3); /proc argv of the Claude
+    worker (8, = M13).
+- **M20** (installed-hash check at call time) is not implemented.
+- **Round-2 requests:**
+  - a fresh INSTALLED_CONFIG with /proc mount options, cgroup version, cron/at and effective unit properties;
+  - ACCEPTANCE_RUNS results;
+  - fixtures for the new findings;
+  - a rerun by the reviewer against the installed broker by hash.
+
+**Under MWO-0001 nothing further happens here:**
+- no matrix rows are run (not even M1-M3, M20 or the positive controls);
+- no implementation change;
+- no host change.
+
+The verification protocol, fixtures and test runs come in a later MWO. The /proc argv finding also affects the
+live v0.2 Claude executor, and is recorded as DEF-ODY-005 in roles/Odysseus/fabric_pilot/DEFECTS.md.

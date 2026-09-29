@@ -1,0 +1,68 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Artemis",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
+  "updated_at_utc": "2026-09-29T04:00Z",
+  "state": "BLOCKED",
+  "state_reason": "S3 is ready (Odysseus #923), but the operator ruling requires the Artemis principal to run on ubu001 in its own worktree; this Artemis instance is on ubu002. The S3 workload is DRAFTED (roles/Artemis/s3/DRAFT_WORKLOAD.md, seeded draw of 10 raw threads, not frozen, not submitted).",
+  "host": "ubu002",
+  "branch": "artemis/mwo-0001-2026-09-29",
+  "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
+  "head_sha": "see git log of this file on origin/main",
+  "threads": [
+    "thr-s3 (Fabric S3 principal; workload drafted)",
+    "backlog FR-001..FR-139 (offers, unranked)"
+  ],
+  "campaigns": [],
+  "experiments": [
+    {
+      "id": "ART-SELFTEST-2026-09-28",
+      "status": "CLOSED_FOLLOWUP_SCHEDULED",
+      "prereg": "roles/Artemis/challenge/prospective/PREREG.md @a9d5f5f23",
+      "result": "roles/Artemis/selftest/RESULT.md @781c11349",
+      "verdict": "sharpening not shown to add yield; priority labels dropped",
+      "followup": "2026-10-28 owner-action re-check of routed findings (selftest/ROUTING.md)"
+    },
+    {
+      "id": "ART-CVTR-NESTOR",
+      "status": "CLOSED",
+      "prereg": "roles/Artemis/challenge/cvtr_nestor/PREREG_CVTR_NESTOR.md @77bc0dbce",
+      "result": "roles/Artemis/challenge/cvtr_nestor/RESULT.md @d050937ec",
+      "recorded_by_owner": "Nestor #894 (QUALIFICATION in roles/Nestor/FINDINGS.md)"
+    }
+  ],
+  "fabric_tasks": [],
+  "leases": [],
+  "running": [],
+  "blocked_on": [
+    {
+      "what": "S3 principal session on ubu001",
+      "on": "operator: start Claude Code as Artemis on ubu001 in its own worktree (not ~/Prometheus); then tell Odysseus the path for canaries",
+      "ref": "roles/Odysseus/prompts/2026-09-28_fabric/06_OPERATOR_RULINGS_PROMEXEC_verbatim.md Part 1; comms #923"
+    }
+  ],
+  "next_actions": [
+    "ubu001 Artemis session: review roles/Artemis/s3/DRAFT_WORKLOAD.md, freeze S3_PROTOCOL.md s3, give Odysseus the worktree path, one submission, one barrier",
+    "2026-10-28: day-30 owner-action re-check",
+    "Nestor CVT-R follow-ups if requested via the work model"
+  ],
+  "operator_decisions_required": [
+    "Start an Artemis principal session on ubu001 for S3 (or rule that the ubu002 instance may be principal, which would drop the same-host separation test)"
+  ],
+  "program_level_unassigned": [
+    "R-28",
+    "R-36",
+    "R-13",
+    "R-21",
+    "R-25 (selftest/ROUTING.md; for next MWO review)"
+  ],
+  "incidents": [],
+  "latest_reports": [
+    "roles/Artemis/selftest/RESULT.md",
+    "roles/Artemis/selftest/ROUTING.md",
+    "roles/Artemis/challenge/cvtr_nestor/RESULT.md",
+    "roles/Artemis/challenge/CHALLENGE_PACKET.md"
+  ]
+}

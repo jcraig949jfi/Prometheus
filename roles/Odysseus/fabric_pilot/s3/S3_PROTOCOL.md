@@ -1,7 +1,12 @@
-# S3: open-research adoption of Fabric v0.2, run by a principal other than Odysseus (DRAFT to be frozen by that principal)
+# S3: open-research adoption of Fabric v0.2, principal ARTEMIS (DRAFT to be frozen by Artemis)
 
 - **Prepared by:** Odysseus (ubu001), 2026-09-28, per the operator ruling (verbatim to be filed alongside).
-- **Status:** DRAFT. The principal fills in section 3, and freezes this file by commit BEFORE the one submission.
+- **Status:** DRAFT, READY FOR THE PRINCIPAL (2026-09-29). The principal fills in section 3, and freezes this file by
+  commit BEFORE the one submission.
+- **Rulings folded in:**
+  - operator 2026-09-29 (prompts/2026-09-28_fabric/06_*): Artemis is the principal, after her self-test's blinded
+    scoring and unsealing (done); the same principal as the control gives the strongest comparison;
+  - MWO-0001: v0.2 only; promexec NOT used.
 - **Fabric:** tag `fabric-v0.2` (54e42c695), frozen (fabric/FREEZE.md). Pure ASCII.
 
 ## 0. Question
@@ -43,16 +48,13 @@ coordination action or fewer per execution?
 - **Required capabilities per package:** `research.repo_readonly` and `fabric.runtime==0.2`. Add
   `pin.<pkg>==<v>` if an exact environment matters.
 - **Budgets:** 30-90 minutes per package, set as `--wall-s` 1800-5400 and frozen per package.
-- **Code execution.** A Claude worker cannot run code (fabric D3: code as the node user can read the node's token;
-  no unprivileged sandbox exists on ubu001, since AppArmor blocks user namespaces and systemd user sandboxing is
-  silently ineffective, as tested 2026-09-28).
-  - **Default (no operator action):** packages do analysis by reading, counting and comparing. Where computation is
-    needed, the worker writes the analysis code as an artifact. The principal may review it, commit it, and submit
-    a `script` Task that runs it at the pinned SHA. Every such review, commit and submission is a counted
-    principal action.
-  - **Option A (operator security decision):** install bubblewrap and grant it an AppArmor userns exception, or
-    create a dedicated low-privilege OS user for executors. Worker code could then run inside the Attempt without
-    reaching secrets. Freeze whichever applies before submission.
+- **Code execution (MWO-0001: promexec is NOT ENABLED and NOT used in S3).**
+  - Claude workers cannot run code.
+  - Where computation is needed, the worker writes the analysis code as an artifact. The principal may review it,
+    commit it, and submit a pinned `script` Task that runs it (on a worker whose probed environment fits, e.g.
+    `python.numpy`).
+  - Each review, commit and script submission is a counted COORDINATION action (category "code-stage"). This is
+    the known cost of running without promexec, and S3 measures it (DEF-ODY-007).
 
 ## 3. Workload (the PRINCIPAL fills this in; frozen before submission)
 
@@ -73,11 +75,35 @@ The runtime also deposits `final_text.md`, stdout, stderr, the env receipt and a
 
 ## 4. What counts (frozen definitions)
 
-**Principal coordination action.** Any act by the principal between the freeze and the synthesis that is not
-scientific judgement. Categories: dispatch, completion noticed, status check, restart or resubmit, report
-salvage, isolation audit, concurrency or lease handling, environment fix, routing decision, code review/commit for
-a script stage, and message to or from a worker operator. The principal logs each one in `ACTIONS.jsonl` at the
-time it happens. Adjudication and synthesis are logged separately.
+**Scientific vs coordination actions** (operator 2026-09-29; the principal is also the control principal).
+
+SCIENTIFIC actions are NOT overhead. They are logged separately, for the record only:
+- reading returned research;
+- adjudicating disagreement;
+- designing a follow-up;
+- rejecting or accepting a worker conclusion;
+- integrating evidence;
+- the synthesis.
+
+COORDINATION actions are the measured overhead. Categories:
+- dispatch;
+- polling or status checks;
+- finding a worker;
+- recovering a crash;
+- restart or resubmit;
+- salvaging a report;
+- isolation audit;
+- managing a lease or concurrency;
+- moving or archiving an artifact;
+- fixing an environment;
+- routing decisions;
+- code-stage review/commit/submit (above);
+- messages to or from a worker operator.
+
+Every action is logged in `ACTIONS.jsonl` when it happens, with `"kind": "scientific"|"coordination"` and a
+category. The control (Artemis's self-test ledger) is re-coded with the same split before comparison: its
+CONTROL_COUNT categories dispatch, completion, isolation audit, salvage, incident, rule, concurrency and routing
+are coordination; its scoring shepherding is coordination; any adjudication is scientific.
 
 **Rescue.** Any human or principal intervention needed to obtain a package's result. Examples: resubmitting,
 recovering a report by hand, fixing an environment, or re-running with changed instructions. A package that needed
@@ -105,7 +131,7 @@ reports are sanitised in the same way and mixed with the S3 reports, and the sco
 ## 6. Measures
 
 - **Primary:** principal coordination actions per execution, with categories compared to the control.
-- **Gate:** 1.0 or fewer actions per execution, AND mean quality at least the control's minus 1 point (of 10), AND
+- **Gate:** 1.0 or fewer COORDINATION actions per execution, AND mean quality at least the control's minus 1 point (of 10), AND
   zero canary leaks.
 - **Secondary:**
   - fraction of packages producing durable artifacts without rescue;
