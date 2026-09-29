@@ -1,0 +1,29 @@
+{
+  "seat": "Aether",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "E-007 known-answer unit T-001 via Aether/observatory/aeth03_unit.py (v1, seed 0, OFF, slice 0:4; ops/campaigns/C-002/E-007/known_tasks.json)",
+  "base_sha": "c49f2ebad4c888e49fde639e49ecb0d8be3eea83",
+  "execution": "fabric",
+  "fabric_tasks": [
+    "tsk-c4e2b5f1afe6",
+    "tsk-7509eb3a48d5"
+  ],
+  "fabric_attempts": [
+    "att-2aacd1faab40",
+    "att-f7ab45e7303c"
+  ],
+  "lease": null,
+  "wall_seconds": 65.2,
+  "result": "PASS",
+  "artifact_hashes": [
+    "result_sha256:d3cb0525dc7c292846410cc2aa2a6190c32451be129a07b7af25485ecd449d3b",
+    "legacy_sha256:1aa05bb79de90692da1813ed24e833ae569c7c47872b9d8a12acf6f989ec9499",
+    "tsk-c4e2b5f1afe6 changes.patch sha256:749169e11e29b624a0f401434ecc18482f40c034e0459bb682c69fec20bdfa21",
+    "tsk-7509eb3a48d5 changes.patch sha256:8d67cbaf329d1affcd8a46c934c7a85cd8d4a2e36a812345562ed2141bea17a2",
+    "tsk-c4e2b5f1afe6 fp001_T-001.json sha256:cff8c9ea3e71f01e0e4252946887d8230583b31c5549814be6f9089b32726e20",
+    "tsk-7509eb3a48d5 fp001_T-001.json sha256:6f73bddf6e62d709a7a5f655d37ec421e74b8ea9aad36887d1f3c302818093f2"
+  ],
+  "fabric_blocker": null,
+  "notes": "Two replicas (--replicas 2) ran concurrently on different worker instances: worker.ubu001.sci (ubu001-32951b33) and worker.ubu001.sci2 (ubu001-bdce1014). Both are on host ubu001, so the replicas are independent in worktree and process, not in host. Both give result_sha256 d3cb0525..., identical to the 4 prior executions (BUCKKEEP + 3 RunPod pods, ops/campaigns/C-002/E-007/attempts). legacy_sha256 1aa05bb7... equals expected_legacy_sha256 derived from committed evidence. Each result file's git blob id equals its changes.patch index; stdout result_sha256 matches the file; 0 locality violations; ~64 s per replica. The whole result files differ between replicas only because they embed host, timing and resource fields; the comparison is on result_sha256. MWO-0003 was detected by the loop's CURRENT.md hash check; broadcast #987 was read in the same tick. Friction, recorded not fixed (s6): output travels as an untracked file in changes.patch, because the unit takes --out on its command line and cannot know FABRIC_OUT_DIR at submit time."
+}
