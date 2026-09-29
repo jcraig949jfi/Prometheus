@@ -1,16 +1,16 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Artemis",
-  "mwo_id": "MWO-0001",
-  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T04:00Z",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "updated_at_utc": "2026-09-29T07:35Z",
   "state": "BLOCKED",
-  "state_reason": "S3 is ready (Odysseus #923), but the operator ruling requires the Artemis principal to run on ubu001 in its own worktree; this Artemis instance is on ubu002. The S3 workload is DRAFTED (roles/Artemis/s3/DRAFT_WORKLOAD.md, seeded draw of 10 raw threads, not frozen, not submitted).",
+  "state_reason": "MWO-0002 adopted (census filed). MWO-0001 s10 ARTEMIS work continues: S3 principal blocked on session placement (principal must run on ubu001 per operator ruling; MWO-0002 s8 lists it as an operator decision); workload drafted, not frozen.",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
-  "head_sha": "see git log of this file on origin/main",
+  "head_sha": "parent of the commit adding this state: a3b2c5a24057c51307f046a7a347aa72eb16cae1",
   "threads": [
     "thr-s3 (Fabric S3 principal; workload drafted)",
     "backlog FR-001..FR-139 (offers, unranked)"
@@ -64,5 +64,6 @@
     "roles/Artemis/selftest/ROUTING.md",
     "roles/Artemis/challenge/cvtr_nestor/RESULT.md",
     "roles/Artemis/challenge/CHALLENGE_PACKET.md"
-  ]
+  ],
+  "migration_report": "roles/Artemis/MIGRATION_REPORT_MWO-0002.json"
 }
