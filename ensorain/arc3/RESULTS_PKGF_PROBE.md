@@ -73,3 +73,18 @@ DEV FINDING (provisional; 4 worlds per stratum; one readout family):
 - Scope: an additive residual readout with a 4-value weight grid. The PKG-F campaign must add richer readouts, more
   worlds, the decaying-reliability nuisance (N5), and a regime-change detector that must DISCOVER recency rather than
   being handed "last 20%".
+
+## v3: DISCOVERED recency (pkgf_cp.py), BIC binary segmentation on the residual sequence
+
+- The holdout is the final detected regime. If nothing is detected, the random 20% holdout is used.
+- The v2 worlds (seeds 9_800_000-003) are reported for comparability.
+- The FRESH seeds 9_800_020-023 are the precommitted subjects. The detector was designed after seeing v2's aggregate
+  table only, with no per-world tuning.
+
+### Precommitment (written BEFORE running pkgf_cp.py)
+
+- P1: F3 (cp, tt; 8 fresh worlds), mean dAC(SD_cp vs S) >= -0.10. The harm mostly vanishes; v2's all-history holdout
+  gave -0.90 / -1.32.
+- P2: F2 stationary twins (cp, tt; 8 fresh worlds): the detector finds NO change (cp_start = 0) in >= 6/8.
+- P3: F2 twins (8 fresh worlds), |mean dAC(SD_cp) - mean dAC(SD_all)| <= .05. Discovery costs nothing without a regime
+  change.
