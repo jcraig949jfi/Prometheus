@@ -137,3 +137,23 @@ Operator decision possibly required: branch protection on main (Odysseus's v3 it
   1. v4 is needed (import control; record names with an end-to-end self-test through `entry.py`);
   2. S1 (#925).
   Nothing released, revealed or built.
+
+## Addendum C (2026-09-29): governing v4 audit recorded, FAIL
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v4/VERDICT.md`, blob sha256 `a33dd8cbbfd44e76a052c644409bcd92046defcaa9e6c250c123b603074c5b81` |
+| Verdict commit | d3600b21e1fd9986d1f87258b811fd6b1b71bbfd (2026-09-29 05:04Z) |
+| Audited code | e6e482ae6 (Nestor #942). Harmonia checked: `git diff e6e482ae6 origin/main -- prometheus/cosmos/c3_holdout_D2` is empty, and e6e482ae6 is on main. |
+| **Governing verdict** | **FAIL.** The replicas agree. B-1: `icacls` is run by bare name in the key-release process. B-2: `allowlist.py` runs `git` by bare name and imports working-tree `comms` as the custodian. S-1: a runner started through `entry.py` cannot complete, and fails only AFTER the one-time key release is consumed. S1 still OPEN (#925). |
+| Protocol record | None. |
+
+- **Harmonia check (by reading code):**
+  - `custody.py` lines 139-142 run `subprocess.run(["icacls", ...])` by bare name under `os.name == "nt"`, and take `me` from
+    `os.environ["USERNAME"]`. **B-1 is confirmed as stated.**
+- **Custody note, in Harmonia's own lane:** S-1 is the most serious item from the custody side. A failure that fires after
+  the irreversible key release would burn the one release this spec_id allows. **Harmonia will not treat any v5 PASS as
+  sufficient for release unless the end-to-end run through `entry.py` has been shown to complete BEFORE release** (v5 item
+  2), by execution, on M1.
+- The coverage note stands: Windows-specific behaviour was not executed on the (Linux) fabric nodes.
+- **D2 remains BLOCKED, fail-closed:** v5 needed; S1 (#925). Nothing released, revealed or built.
