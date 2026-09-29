@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T16:20:12Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-U (T-SWAP-REL3) complete and deposited; lease lse-b3feff8054ae released (~8.7 core-h, inside MWO-0004 R2 per-item 16). Nothing running. No large PTE campaign.",
+  "updated_at_utc": "2026-09-29T16:20:48Z",
+  "state": "HOLD",
+  "state_reason": "Compute HOLD for R2 envelope (MWO-0004: <=48 CPU core-h per seat per rolling 24 h). Estimated Ananke CPU use since 2026-09-29T03:43Z ~55 core-h (W-O ~18, W-M ~8, W-U ~8.7, W-N ~6.5, W-P ~6, W-R 3.3, W-Q ~3, W-T 0.9, W-S 0.45; estimates from worker process x thread x wall). New compute blocks resume when the rolling total plus the next item fits (earliest ~2026-09-30T04:45Z; W-O's ~18 core-h leaves the window ~09:15Z). Nothing running. Non-compute work continues.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -163,11 +163,13 @@
   "fabric_tasks": [],
   "leases": [],
   "running": [],
-  "blocked_on": [],
+  "blocked_on": [
+    "R2 rolling 24 h CPU envelope (self-imposed conservative reading); clears ~2026-09-30T04:45Z"
+  ],
   "next_actions": [
-    "T-SWAP-REL4 (BOOTT/t hybrid for degenerate resamples; frozen FC run; then promote into prometheus/ananke)",
-    "T-INS-17 (causal-emission carrier by per-emission cue flips)",
-    "s8 seat loop continues; rolling 24 h compute so far ~20 core-h of 48 (MWO-0004 R2)"
+    "no-compute: consolidate W-M..W-U into a dated synthesis note (instrument + carrier-mechanism findings) when useful",
+    "after the rolling window clears: T-SWAP-REL4 (BOOTT/t hybrid, ~8 core-h), then T-INS-17",
+    "s8 seat loop continues (comms, MWO, Fabric checks)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
