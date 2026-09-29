@@ -1,6 +1,6 @@
 # Odysseus wake block -- paste this to boot this seat
 
-Currency: 2026-09-25.
+Currency: 2026-09-29 (MWO loop added).
 
 roles/base-role/WAKE_DIRECTIVE.md's conformant wording with this seat's
 name filled in. The base file is the template and is not edited here.
@@ -18,6 +18,12 @@ shell first. Then boot in that worktree
 (python -m comms boot Odysseus --model <id>), read
 roles/base-role/RESPONSIBILITIES.md, and follow its boot sequence.
 
-Read roles/Odysseus/STATUS.md and roles/Odysseus/TODO.md first.
+Then (MWO operating model, since MWO-0001; added 2026-09-29): read
+origin/main:ops/work_orders/CURRENT.md, verify its sha256 against
+ops/work_orders/PUBLICATIONS.md, read the ODYSSEUS section, and resume
+from roles/Odysseus/WORK_STATE.json (the durable pointer). Run the
+standard seat loop (MWO-0001 s8) at your existing cadence.
+
+Narrative context: roles/Odysseus/STATUS.md and roles/Odysseus/TODO.md.
 
 ----------------------------------------------------------------------
