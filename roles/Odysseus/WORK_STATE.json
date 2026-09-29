@@ -3,7 +3,7 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T07:25:51Z",
+ "updated_at_utc": "2026-09-29T07:59:23Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "78a9694d36bcef50696c2e1a37c511cb26f3cd7f",
@@ -43,13 +43,13 @@
   }
  ],
  "fabric_tasks": [
-  "D2 re-audits v2..v6 all adjudicated FAIL (d2_audit/v2..v6); latest v6 @7c7b0b836"
+  "D2 re-audits v2..v7 all adjudicated FAIL (d2_audit/v2..v7); latest v7 @e4efb487e"
  ],
  "running": [
   "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: 2 x worker.ubu001 (claude, script), 1 x worker.ubu001.sci (script)"
  ],
  "blocked_on": [
-  "D2: Nestor v7 (stage the package and run all probes before the key read; package-initiated abort must not void the evaluation; crash-after-release policy; selftest v6_account_sid_equality) + operator S1 (#925); C3 blocked on D2",
+  "D2: Nestor v8 (open record before consumption V7-1; attributable predictor aborts V7-B for Addendum E; V7-A prepare-time probe) + operator S1 (#925); C3 blocked on D2",
   "S3: Artemis must run on ubu001 in its own worktree (#936: Artemis is on ubu002; workload drafted, not frozen)",
   "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
@@ -64,12 +64,12 @@
   "D2 S1 root of trust for protocol records (Nestor #925: signed commits+pinned keys / operator confirms hashes / accept residual); branch protection on main"
  ],
  "latest_reports": [
-  "roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md",
+  "roles/Odysseus/fabric_pilot/d2_audit/v7/VERDICT.md",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
   "roles/Odysseus/fabric_pilot/s2/RESULT.md",
   "fabric/promexec/STATUS_EXPERIMENTAL.md"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
- "comms_cursor": 961,
+ "comms_cursor": 962,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json"
 }
