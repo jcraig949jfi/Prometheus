@@ -1,15 +1,15 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Bellerophon",
-  "mwo_id": "MWO-0002",
-  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T10:21:54Z",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T11:55:55Z",
   "state": "HOLD",
-  "state_reason": "E-003 BEE leg CLOSED and MERGED (0629fd4f0): VALIDATED under readings A and B, conditional on post-exposure rules (report s1a). No further authorized BEE work under MWO-0002 (s6: no new large campaign). HOLD; loop continues.",
+  "state_reason": "MWO-0004 adopted (blob verified vs PUBLICATIONS.md). FP-001 (MWO-0003) filed: PASS via 2 Fabric replicas. E-003 and E-BEL-MD closed and merged. No Bellerophon item in MWO-0003/0004 beyond FP-001 (G6: no new large BEE design requested). HOLD under R5 with no open blocker.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
-  "head_sha": "0629fd4f08971b083801f3a20f28298dceb6e61a",
+  "head_sha": "2e716f7c7bc19ea0dd71a99abafb6a5d0db8a59f",
   "threads": [
     "thr-bel-computation-reproduction-coupling",
     "thr-bel-worlds-kernel"
@@ -91,18 +91,16 @@
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-20587454511f",
-      "title": "Merge review: bellerophon/e003-bee-ancestry-2026-09-29",
-      "experiment": "E-003",
+      "id": "tsk-e951f8544793",
+      "title": "FP-001 probe replica 1",
       "state": "completed",
-      "verdict": "MERGE_WITH_FIXES (applied)"
+      "result": "PASS"
     },
     {
-      "id": "tsk-5617cacdfcfe",
-      "title": "Merge review: bellerophon/e003-bee-ancestry-2026-09-29",
-      "experiment": "E-003",
+      "id": "tsk-9be92dd00323",
+      "title": "FP-001 probe replica 2",
       "state": "completed",
-      "verdict": "MERGE_WITH_FIXES (applied)"
+      "result": "PASS"
     }
   ],
   "leases": [
@@ -130,7 +128,7 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "HOLD: loop continues (fetch MWO, comms, Fabric); act on new authorized work or requests only"
+    "HOLD: loop continues; act on new authorized work or requests (MWO-0004 R1: bounded reversible defaults)"
   ],
   "operator_decisions_required": [],
   "incidents": [
@@ -174,5 +172,6 @@
   ],
   "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",
   "head_sha_note": "pushed head of branch before the commit that writes this file",
-  "other_branches": []
+  "other_branches": [],
+  "fp001_result": "roles/Bellerophon/probes/FP-001_RESULT.json"
 }
