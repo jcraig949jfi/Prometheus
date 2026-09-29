@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T16:20:48Z",
+  "updated_at_utc": "2026-09-29T17:22:33Z",
   "state": "HOLD",
   "state_reason": "Compute HOLD for R2 envelope (MWO-0004: <=48 CPU core-h per seat per rolling 24 h). Estimated Ananke CPU use since 2026-09-29T03:43Z ~55 core-h (W-O ~18, W-M ~8, W-U ~8.7, W-N ~6.5, W-P ~6, W-R 3.3, W-Q ~3, W-T 0.9, W-S 0.45; estimates from worker process x thread x wall). New compute blocks resume when the rolling total plus the next item fits (earliest ~2026-09-30T04:45Z; W-O's ~18 core-h leaves the window ~09:15Z). Nothing running. Non-compute work continues.",
   "branch": "ananke/base-role-adopt-2026-09-24",
@@ -167,12 +167,13 @@
     "R2 rolling 24 h CPU envelope (self-imposed conservative reading); clears ~2026-09-30T04:45Z"
   ],
   "next_actions": [
-    "no-compute: consolidate W-M..W-U into a dated synthesis note (instrument + carrier-mechanism findings) when useful",
+    "done: SYNTHESIS_2026-09-29.md (no compute)",
     "after the rolling window clears: T-SWAP-REL4 (BOOTT/t hybrid, ~8 core-h), then T-INS-17",
     "s8 seat loop continues (comms, MWO, Fabric checks)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/SYNTHESIS_2026-09-29.md",
     "roles/Ananke/research/workers/W-U/REPORT.md",
     "roles/Ananke/research/workers/W-T/REPORT.md",
     "roles/Ananke/research/workers/W-S/REPORT.md",
