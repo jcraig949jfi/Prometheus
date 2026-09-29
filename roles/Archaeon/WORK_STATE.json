@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T05:55:41Z",
+ "updated_at_utc": "2026-09-29T06:06:57Z",
  "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "e28e31499bda9701545137fe98062e8f8a60b27e (the commit before this head_sha update)",
@@ -19,11 +19,11 @@
   "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28; archaeon/attribution-arc-2026-09-28 @ aa18ea622). NPE leg: INCONCLUSIVE (E003_NPE_LEG_RESULT.md). BEE leg: owner tracer frozen (cfb57f67a), fixtures 28/28; s4.3 fresh set seeded fefefe074, Archaeon/reference outputs sealed; awaiting owner output hash"
  ],
  "fabric_tasks": [
-  "tsk-581bd93ac9f3 NPE 1% sample verify+reference, host_affinity=skullport, state submitted, UNCLAIMABLE (no skullport worker)"
+  "tsk-c4317a3656d0 NPE 1% sample v2 (addendum-5 verifier then frozen reference), host_affinity=skullport, submitted, UNCLAIMABLE (no skullport worker); supersedes tsk-581bd93ac9f3 (canceled)"
  ],
  "running": [],
  "blocked_on": [
-  "E-003 NPE 1% sample (extra check; cannot change the NPE status): 10/11 files destroyed by run 3; Nestor's copy search running; tsk-581bd93ac9f3 has no eligible worker (#916)"
+  "E-003 NPE 1% sample (extra check): run-1 copies matching the manifest by content exist on SKULLPORT (Nestor #952), but tsk-c4317a3656d0 has no eligible worker (s12 defect; Odysseus #916)"
  ],
  "next_actions": [
   "BEE: on the owner's sealed hash, commit SEALED, exchange, run bee_fresh cmp; PASS -> BEE GO record; FAIL -> classify, no canonicalization",
@@ -31,7 +31,7 @@
   "no new campaigns (MWO-0001)"
  ],
  "operator_decisions_required": [
-  "CONDITIONAL: if Nestor's search finds no verifier-passing copy of the 1% sample, the operator decides: regenerate (a third production run, s7) or declare the sample lost (drop an operator-directed check). Archaeon rules neither (addendum 5)."
+  "CONDITIONAL: only if the v2 verification of Nestor's run-1 copies FAILS -> the operator decides regenerate (third run, s7) vs declare lost (addendum 5)"
  ],
  "latest_reports": [
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_NPE_LEG_RESULT.md @ 8fdad7f10 (NPE leg INCONCLUSIVE)",

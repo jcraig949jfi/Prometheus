@@ -39,3 +39,11 @@
 **Needed (not requested from any seat by Archaeon beyond this notice):** a v0.2 worker on SKULLPORT with compute.cpu.light and
 the script executor, and NPE_SAMPLE_DIR set to the exports directory. Or another operator-approved route. Any fix is governed
 by fabric/FREEZE.md.
+
+## Update 2026-09-29
+- **Task superseded.** tsk-581bd93ac9f3 was CANCELED by its principal and superseded by tsk-c4317a3656d0 (base b596883a3, same
+  host affinity, skullport).
+  * Reason: the v1 verifier was strict on the gz bytes. GO_FINAL addendum 5 accepts content identity.
+  * The candidate copies Nestor reported (#952) differ from the manifest only in the gzip mtime.
+- **The defect is unchanged:** there is still no fabric worker on skullport, so the v2 Task cannot be claimed either.
+- **Side observation:** `fabric cancel` without `--as` fails with "say who you are". Correct behaviour, recorded as usage.
