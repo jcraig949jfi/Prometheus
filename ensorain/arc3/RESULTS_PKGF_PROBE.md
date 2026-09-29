@@ -472,3 +472,27 @@ Next candidates (design, not run):
 - Z2: F3 L2: final switch (cp_frac in [.60, .75]) in >= 7/8.
 - Z3: F2 twins: false detections <= 1/8.
 - Z4: partial rho = .5: final switch in >= 6/8.
+
+### v9 result (precommit commit 22c472887; results/pkgf_cp5.json; 44 s)
+
+| world | detected | final switch in [.60, .75] | v5 | v8 |
+|---|---|---|---|---|
+| N5 (noise growth) | 2/8 false | - | 8/8 false | 0/8 |
+| F3 | 8/8 | 8/8 | 16/16 | 8/8 |
+| F2 twins | 0/8 | - | 0/16 | 0/8 |
+| partial rho = .5 | 8/8 | 8/8 | 8/8 | 1/8 |
+
+- **Z1 REFUTED (narrowly):** 2/8 > 1/8. Both false detections are seed 9_800_082, in its cp and tt variants. These
+  share the walk and noise draws (the N5 world's walk RNG is keyed on the seed only), so they are not independent:
+  effectively 1 of 4 seeds.
+- **Z2, Z3, Z4 SURVIVE.**
+
+Reading:
+- v9 recovers v5's power on partial switches (8/8, where v8 had 1/8) and keeps v8's robustness, up to the refuted
+  margin (2/8 correlated N5 false alarms).
+- It is the first detector in this series that is close on all four controls.
+- The obvious fix, a stricter veto level (p < .01 instead of .05), is a POST-HOC change. It must be precommitted and
+  run on fresh seeds, with independent generator variants (distinct walk seeds) so that the N5 count is not inflated by
+  correlated pairs.
+- Design note for every future PKG-F world builder: cp and tt variants of the same seed share the walk. Count per seed,
+  or de-correlate the walk.
