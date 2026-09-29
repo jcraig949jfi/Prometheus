@@ -80,7 +80,7 @@ D_DIR = HERE.parent / "c3_holdout_D"
 RECEIPT_FORMAT = "c3-holdout-D2-receipts/1"
 PACKAGE_FORMAT = "c3-D2-prediction-package/1"
 CLASSES = ("NONE", "PASSIVE", "FUNCTIONAL", "INCOHERENT", "INDETERMINATE")
-DEFAULT_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2")
+DEFAULT_OUT_ROOT = protocol.RUN_OUT_ROOT                       # v6: one value, shared with custody's preflight check
 # Protocol gates are read from the COMMITTED tree of this repository's reference branch (protocol.py). The
 # selftest points these at a throwaway git repository it builds; the gates themselves are never skipped.
 DEFAULT_GATE_REPO = HERE.parents[2]
@@ -139,6 +139,10 @@ class ChainBroken(RunnerRefusal):
 
 class HiddenSetMismatch(RunnerRefusal):
     pass
+
+
+class PredictorChildFailed(RunnerRefusal):
+    """v5 (Odysseus v4 S-1): the predictor child did not start or died before answering the isolation probe."""
 
 
 class ChildNotIsolated(RunnerRefusal):
@@ -259,16 +263,27 @@ def _probe_write(paths):
 
 
 def os_account() -> str:
-    """v3 (Odysseus v2 re-audit R1 F-ACCT): the OS account from the OS, not from the USERNAME/USER environment."""
-    if os.name == "nt":
-        import ctypes
-        n = ctypes.c_uint32(257)
-        buf = ctypes.create_unicode_buffer(257)
-        if not ctypes.windll.advapi32.GetUserNameW(buf, ctypes.byref(n)):
-            raise RunnerRefusal("GetUserNameW failed")
-        return buf.value
-    import pwd
-    return pwd.getpwuid(os.getuid()).pw_name
+    """v3 (F-ACCT): the OS account from the OS, not from USERNAME/USER. v5: one implementation, in protocol."""
+    return protocol.os_account()
+
+
+def _probe_mkfile(dirs):
+    """v5 (S-1 preflight): try to CREATE a file in each directory (then remove it); 'writable' / 'denied' / 'missing'."""
+    out = []
+    for d in dirs:
+        p = os.path.join(d, ".c3d2_probe_%d" % os.getpid())
+        try:
+            fd = os.open(p, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            os.close(fd)
+            os.remove(p)
+            out.append([d, "writable"])
+        except PermissionError:
+            out.append([d, "denied"])
+        except (FileNotFoundError, NotADirectoryError):
+            out.append([d, "missing"])
+        except OSError as e:
+            out.append([d, "error:%s" % type(e).__name__])
+    return out
 
 
 def _probe_paths(paths):
@@ -309,7 +324,8 @@ def _worker_main(conn, pkg_dir: str, entry: str) -> None:
     msg = _recv(conn)
     if msg[0] != "probe":
         return
-    _send(conn, ["probe_result", _probe_paths(msg[1]) + _probe_write(msg[2] if len(msg) > 2 else [])])
+    _send(conn, ["probe_result", _probe_paths(msg[1]) + _probe_write(msg[2] if len(msg) > 2 else [])
+                 + _probe_mkfile(msg[3] if len(msg) > 3 else [])])
     if _recv(conn)[0] != "go":
         return
     _disable_network()
@@ -433,9 +449,11 @@ def audit_source(src: str, fname: str) -> List[str]:
     return flags
 
 
-def load_package(zip_path, expected_sha256: str, extract_to: Path, allow_flagged: bool = False) -> dict:
-    """Refuses (PackageHashMismatch) unless sha256 of the exact bytes used equals expected_sha256."""
-    data = Path(zip_path).read_bytes()
+def load_package(zip_path, expected_sha256: str, extract_to, allow_flagged: bool = False, data: bytes = None) -> dict:
+    """Refuses (PackageHashMismatch) unless sha256 of the exact bytes used equals expected_sha256.
+    v6 (Odysseus v5 BP-1): extract_to=None VALIDATES ONLY (hash, members, meta, AST audit), so every package check runs
+    BEFORE the key is read; `data` passes the exact bytes already validated, so extraction uses the same bytes."""
+    data = Path(zip_path).read_bytes() if data is None else data
     actual = sealbox.sha256_hex(data)
     if actual != str(expected_sha256).strip().lower():
         raise PackageHashMismatch("package sha256 mismatch: expected %s got %s" % (expected_sha256, actual))
@@ -477,6 +495,8 @@ def load_package(zip_path, expected_sha256: str, extract_to: Path, allow_flagged
             flags += audit_source(b.decode("utf-8", errors="replace"), n)
     if flags and not allow_flagged:
         raise PackageAuditRefusal("package audit flags: %s" % "; ".join(flags[:20]))
+    if extract_to is None:
+        return {"sha256": actual, "meta": meta, "entry": entry, "audit_flags": flags, "allow_flagged": bool(allow_flagged)}
     extract_to = Path(extract_to)
     extract_to.mkdir(parents=True, exist_ok=False)
     for n, b in files.items():
@@ -523,7 +543,8 @@ class FirewallRun:
                  gate_repo=None, gate_ref: Optional[str] = None, account: Optional[str] = None,
                  allowlist=None, gate_pins: Optional[dict] = None, delete_key: bool = False,
                  extra_probe_paths=(), verify_loaded: bool = True, secret_paths=SECRET_PATHS,
-                 enforce_run_dir: bool = True, write_probe_paths=None):
+                 enforce_run_dir: bool = True, write_probe_paths=None, preflight_mkfile_dirs=None,
+                 preflight: bool = True):
         self.manifest_path, self.ciphertext_path = Path(manifest_path), Path(ciphertext_path)
         self.key_path, self.package_zip = Path(key_path), Path(package_zip)
         self.package_sha256 = str(package_sha256).lower()
@@ -541,6 +562,13 @@ class FirewallRun:
         # child account (documented in FIREWALL.md v3).
         self.write_probe_paths = [str(self.out / "receipts.jsonl")] if write_probe_paths is None else \
             [str(x) for x in write_probe_paths]
+        # v5 (Odysseus v4 S-1): the PREFLIGHT child, started before the key is read and before the run directory exists,
+        # must not be able to create files in the output root (default) -- a same-account child fails HERE, harmlessly
+        self.preflight_mkfile_dirs = [str(self.out.parent)] if preflight_mkfile_dirs is None else \
+            [str(x) for x in preflight_mkfile_dirs]
+        # constructor-only switch for in-process tests of later stages (a same-account child always fails the
+        # preflight); the CLI never sets it
+        self.do_preflight = preflight
         self.enforce_run_dir = enforce_run_dir
         self.gate_repo = Path(gate_repo) if gate_repo is not None else DEFAULT_GATE_REPO
         self.gate_ref = gate_ref or DEFAULT_GATE_REF
@@ -578,6 +606,9 @@ class FirewallRun:
         fam = sealbox.src_sha_lf(D_DIR / "medium.py")
         if fam != manifest["family_src_sha256"]:
             raise HiddenSetMismatch("holdout-D medium.py changed since the draw")
+        self.validate_package()                              # v6 (BP-1): every package check BEFORE the key is read
+        if self.do_preflight:
+            self.preflight()                                 # v5 (S-1): BEFORE the key is read and the run dir exists
         key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
         if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
             self.key_path.unlink()
@@ -612,7 +643,8 @@ class FirewallRun:
         self.out.mkdir(parents=True, exist_ok=True)
         if rpath.exists():
             raise RunnerRefusal("receipts.jsonl exists: use resume, never overwrite")
-        self.pkg = load_package(self.package_zip, self.package_sha256, self.out / "package", self.allow_flagged)
+        self.pkg = load_package(self.package_zip, self.package_sha256, self.out / "package", self.allow_flagged,
+                                data=self._pkg_bytes)             # v6: the bytes validated before the key was read
         self.receipts = Receipts(rpath, genesis, create=True)
         self.receipts.append("open", {
             "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
@@ -631,20 +663,56 @@ class FirewallRun:
         return manifest
 
     # ------------------------------------------------------------ predict
-    def _start_worker(self):
+    def _spawn_probe(self, pkg_dir, entry, read_paths, write_paths, mkfile_dirs):
         ctx = mp.get_context("spawn")
         self._conn, child = ctx.Pipe(duplex=True)
-        self._proc = ctx.Process(target=_worker_main, args=(child, self.pkg["dir"], self.pkg["entry"]), daemon=True)
+        self._proc = ctx.Process(target=_worker_main, args=(child, pkg_dir, entry), daemon=True)
         self._proc.start()
         child.close()
-        # v2 (F2): isolation probe. The child must be unable to open the released key path, every secret path and
-        # this run's receipts; otherwise the package could read them. Fail closed.
-        _send(self._conn, ["probe", list(self.probe_paths), list(self.write_probe_paths)])
-        tag, res = _recv(self._conn)
-        opened = [p for p, r in res if r not in ("denied", "missing")]      # 'opened' (read) or 'writable' (append)
+        _send(self._conn, ["probe", list(read_paths), list(write_paths), list(mkfile_dirs)])
+        try:                                                  # v5 (S-1): a child that cannot start is a refusal
+            if not self._conn.poll(120):
+                raise EOFError("no probe answer within 120 s")
+            tag, res = _recv(self._conn)
+        except (EOFError, OSError, ValueError, MemoryError, RecursionError) as e:
+            self._stop_worker(kill=True)
+            raise PredictorChildFailed("the predictor child did not start or answer the probe (%s)" % type(e).__name__)
+        opened = [p for p, r in res if r not in ("denied", "missing")]      # 'opened' / 'writable' / 'error:*'
         if tag != "probe_result" or opened:
             self._stop_worker(kill=True)
             raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
+
+    def validate_package(self) -> dict:
+        """v6 (BP-1): read the package ONCE, verify its hash, members, metadata and AST audit, and keep those exact bytes
+        for the later extraction. A refusal here happens before anything is consumed."""
+        self._pkg_bytes = self.package_zip.read_bytes()
+        return load_package(self.package_zip, self.package_sha256, None, self.allow_flagged, data=self._pkg_bytes)
+
+    def write_preflight_record(self, out_dir) -> Path:
+        """v6: the PUBLIC-FIELDS record custody requires before it releases the key (protocol.preflight_ok)."""
+        rec = {"format": protocol.PREFLIGHT_FORMAT, "verdict": "PASS", "run_nonce": self.gates.get("run_nonce"),
+               "spec_id": self.gates.get("spec_id"), "package_sha256": self.package_sha256,
+               "runner_id": self.runner_id, "account": self.account, "host": socket.gethostname(), "utc": _utc()}
+        p = Path(out_dir) / ("PREFLIGHT_%s.json" % rec["run_nonce"])
+        p.write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+        return p
+
+    def preflight(self) -> dict:
+        """v5 (Odysseus v4 S-1): start a predictor child exactly as a run would (spawn, same interpreter, same import
+        guard) and run the isolation probe -- the released key path, every secret path, and file creation in the output
+        root -- BEFORE the key is read, deleted or the run directory created. Refusal here consumes nothing: the key
+        copy stays where custody put it. Also the check to run before custody releases the key (entry.py runner
+        --preflight, no key needed)."""
+        self.out.parent.mkdir(parents=True, exist_ok=True)
+        self._spawn_probe("", "", self.probe_paths, [], self.preflight_mkfile_dirs)
+        self._stop_worker(kill=False)
+        self._proc = self._conn = None
+        return {"preflight": "PASS", "probed": len(self.probe_paths) + len(self.preflight_mkfile_dirs)}
+
+    def _start_worker(self):
+        # v2 (F2): isolation probe. The child must be unable to open the released key path, every secret path and
+        # this run's receipts; otherwise the package could read them. Fail closed.
+        self._spawn_probe(self.pkg["dir"], self.pkg["entry"], self.probe_paths, self.write_probe_paths, [])
         _send(self._conn, ["go"])
 
     def _stop_worker(self, kill: bool = False):
@@ -851,6 +919,8 @@ def main(argv=None) -> int:
     ap.add_argument("--runner-id", help="must equal protocol/RUNNER_DESIGNATION.json runner_id")
     ap.add_argument("--gate-ref", default=DEFAULT_GATE_REF)
     ap.add_argument("--verify-receipts")
+    ap.add_argument("--preflight", action="store_true",
+                    help="v5: gates + a predictor child's isolation probe, no key needed; run BEFORE custody releases")
     a = ap.parse_args(argv)
     if a.verify_receipts:
         ok, recs, why = verify_receipts(a.verify_receipts)
@@ -859,8 +929,19 @@ def main(argv=None) -> int:
         return 0 if ok else 1
     if os.environ.get("C3D2_ENTRY") != "verified":
         raise RunnerRefusal("start the runner through entry.py (pre-import code verification)")
-    if not (a.package and a.package_sha256 and a.key and a.runner_id):
-        ap.error("--package, --package-sha256, --key and --runner-id are required")
+    if a.gate_ref != DEFAULT_GATE_REF:                         # v5 (Odysseus v4 S-4)
+        print(json.dumps({"refused": True, "reason": "records are read from %s only" % DEFAULT_GATE_REF}))
+        return 3
+    if not (a.package and a.package_sha256 and a.runner_id and (a.key or a.preflight)):
+        ap.error("--package, --package-sha256, --runner-id and (--key or --preflight) are required")
+    try:
+        return _run_cli(a)
+    except (RunnerRefusal, protocol.GateRefusal) as e:          # v5: a refusal is reported, not a traceback
+        print(json.dumps({"refused": True, "reason": "%s: %s" % (type(e).__name__, e)}))
+        return 3
+
+
+def _run_cli(a) -> int:
     account = os_account()
     g = protocol.check_gates(DEFAULT_GATE_REPO, "DESIGNATION", ref=a.gate_ref, package_sha256=a.package_sha256,
                              runner_id=a.runner_id, account=account, verify_loaded=True)
@@ -868,11 +949,19 @@ def main(argv=None) -> int:
     out = Path(a.out_root) / ("run_" + g["run_nonce"])
     if out.exists():
         raise RunnerRefusal("run directory for this designation already exists: one run per designation")
-    run = FirewallRun(a.manifest, a.ciphertext, a.key, a.package, a.package_sha256, out,
+    run = FirewallRun(a.manifest, a.ciphertext, a.key or str(out.parent / "no_key_in_preflight.hex"), a.package,
+                      a.package_sha256, out,
                       allow_flagged=a.allow_flagged, certify_kwargs=rp.get("certify_kwargs") or {},
                       predict_timeout=rp["predict_timeout"], max_episode_steps=rp["max_episode_steps"],
                       runner_id=a.runner_id, gate_ref=a.gate_ref, account=account, delete_key=True,
                       extra_probe_paths=[str(out / "receipts.jsonl")])
+    if a.preflight:
+        run.gates = g
+        run.validate_package()                                # v6 (BP-1): the package checks are part of the preflight
+        r = run.preflight()
+        r["record"] = str(run.write_preflight_record(out.parent))
+        print(json.dumps(r))
+        return 0
     run.open()
     run.predict_all()
     head = run.seal_predictions()

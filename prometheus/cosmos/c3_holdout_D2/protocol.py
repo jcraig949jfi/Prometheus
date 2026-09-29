@@ -55,6 +55,8 @@ SHORT_REF = "origin/main"
 SEAL_COMMIT = "95b31a30d06daa973a27ca0cacd4b768ec7d5fff"                             # pinned (S5)
 SPEC_ID = "e2d3213b02aae58b0b20bbd6b5a296545b6335078ae6a0a382ceaf346dc0d9fe"         # pinned (S5)
 DEFAULT_ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
+RUN_OUT_ROOT = Path("C:/Users/jcrai/nestor_receipts/holdout_D2")
+PREFLIGHT_FORMAT = "c3-D2-preflight/1"
 CUSTODIAN_ACCOUNT = "jcrai"
 
 AUDIT_RE = re.compile(r"^FIREWALL_AUDIT_([1-9][0-9]*)\.json$")
@@ -154,6 +156,10 @@ class RunParamsMismatch(GateRefusal):
     pass
 
 
+class PreflightMissing(GateRefusal):
+    pass
+
+
 # ---------------------------------------------------------------- git access (committed trees only)
 def git_exe(repo: Optional[Path] = None) -> str:
     """v4 (Odysseus v3 F-CWD): git by ABSOLUTE path from an absolute PATH entry that is neither the current directory
@@ -185,14 +191,111 @@ def git_env() -> dict:
     return env
 
 
+# v5 (Odysseus v4 S-5): hooks off (a fetch or auto-gc could run one), auto-gc/maintenance off
+GIT_HARDEN = ("-c", "core.hooksPath=" + os.devnull, "-c", "gc.auto=0", "-c", "maintenance.auto=false")
+
+
 def _git(repo: Path, *args: str) -> subprocess.CompletedProcess:
-    return subprocess.run([git_exe(repo), "-C", str(repo), *args], capture_output=True, text=True, env=git_env())
+    return subprocess.run([git_exe(repo), *GIT_HARDEN, "-C", str(repo), *args], capture_output=True, text=True,
+                          env=git_env())
 
 
 def _show(repo: Path, ref: str, rel: str) -> Optional[bytes]:
-    p = subprocess.run([git_exe(repo), "-C", str(repo), "show", "%s:%s" % (ref, rel)], capture_output=True,
-                       env=git_env())
+    p = subprocess.run([git_exe(repo), *GIT_HARDEN, "-C", str(repo), "show", "%s:%s" % (ref, rel)],
+                       capture_output=True, env=git_env())
     return p.stdout if p.returncode == 0 else None
+
+
+def git_state_ok(repo: Path) -> None:
+    """v5 (S-5): refuse a repository whose history can be re-parented by grafts or truncated by a shallow file
+    (GIT_NO_REPLACE_OBJECTS does not cover these)."""
+    p = _git(repo, "rev-parse", "--git-common-dir")
+    if p.returncode != 0:
+        raise AmbiguousRef("not a git repository: %s" % repo)
+    g = Path(p.stdout.strip())
+    g = g if g.is_absolute() else Path(repo) / g
+    for f in ("info/grafts", "shallow"):
+        if (g / f).exists():
+            raise AmbiguousRef("%s exists in the git directory: history could be rewritten" % f)
+
+
+def os_account() -> str:
+    """The OS account from the OS (GetUserNameW / pwd), never from USERNAME/USER (v3 F-ACCT; v5 used by custody too)."""
+    if os.name == "nt":
+        import ctypes
+        n = ctypes.c_uint32(257)
+        buf = ctypes.create_unicode_buffer(257)
+        if not ctypes.windll.advapi32.GetUserNameW(buf, ctypes.byref(n)):
+            raise GateRefusal("GetUserNameW failed")
+        return buf.value
+    import pwd
+    return pwd.getpwuid(os.getuid()).pw_name
+
+
+def account_sid(name: str):
+    """v6 (Odysseus v5 should-fix): the account's SID bytes on Windows (None if it does not resolve); the name elsewhere."""
+    if not name:
+        return None
+    if os.name != "nt":
+        return name
+    import ctypes
+    from ctypes import wintypes
+    sid = ctypes.create_string_buffer(256)
+    cb = wintypes.DWORD(256)
+    dom = ctypes.create_unicode_buffer(256)
+    cd = wintypes.DWORD(256)
+    use = wintypes.DWORD(0)
+    if not ctypes.windll.advapi32.LookupAccountNameW(None, ctypes.c_wchar_p(name), sid, ctypes.byref(cb), dom,
+                                                     ctypes.byref(cd), ctypes.byref(use)):
+        return None
+    return sid.raw[:cb.value]
+
+
+def same_account(a, b) -> bool:
+    """SID equality when both resolve (aliases such as DOMAIN\\user or case variants cannot slip past); otherwise a
+    case-insensitive name comparison (accounts that do not exist on this host, e.g. in throwaway tests)."""
+    sa, sb = account_sid(str(a)), account_sid(str(b))
+    if sa is not None and sb is not None:
+        return sa == sb
+    return str(a).lower() == str(b).lower()
+
+
+def preflight_ok(record_dir, st: dict) -> None:
+    """v6 (Odysseus v5 BP-1): custody releases the key only after a PASSING runner preflight (package validated, child
+    started, isolation probed) for exactly this designation, package and account."""
+    p = Path(record_dir) / ("PREFLIGHT_%s.json" % st.get("run_nonce"))
+    try:
+        rec = json.loads(p.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        raise PreflightMissing("no passing runner preflight record %s (run: entry.py runner --preflight ...)" % p.name)
+    if rec.get("format") != PREFLIGHT_FORMAT or rec.get("verdict") != "PASS" or rec.get("run_nonce") != st.get("run_nonce") \
+            or rec.get("spec_id") != st.get("spec_id") or rec.get("package_sha256") != st.get("package_sha256") \
+            or rec.get("runner_id") != st.get("runner_id") or not same_account(rec.get("account"), st.get("account")):
+        raise PreflightMissing("the preflight record does not match this designation, package, runner and account")
+
+
+def is_single_user_account(name: str) -> bool:
+    """v5 (Odysseus v4 S-3): True iff `name` resolves to ONE user account (SidTypeUser), not a group or well-known
+    principal such as Everyone / Users (a designation naming a group would make the released key widely readable)."""
+    if not name or any(c in name for c in "*?,;"):
+        return False
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+        sid = ctypes.create_string_buffer(256)
+        cb = wintypes.DWORD(256)
+        dom = ctypes.create_unicode_buffer(256)
+        cd = wintypes.DWORD(256)
+        use = wintypes.DWORD(0)
+        ok = ctypes.windll.advapi32.LookupAccountNameW(None, ctypes.c_wchar_p(name), sid, ctypes.byref(cb), dom,
+                                                       ctypes.byref(cd), ctypes.byref(use))
+        return bool(ok) and use.value == 1                        # SidTypeUser
+    try:
+        import pwd
+        pwd.getpwnam(name)
+        return True
+    except KeyError:
+        return False
 
 
 def resolve_ref(repo: Path, ref: str) -> str:
@@ -348,13 +451,19 @@ def once_record_present(repo, ref, name) -> bool:
     """v3: a KEY_RELEASED / REVEALED record makes a second release or reveal impossible whatever the custody log says.
     v4 (Odysseus v3 F-ONCE): True iff protocol/<name> was EVER committed in the full history of `ref` (deleting the
     record later does not re-enable a release)."""
-    return bool(_record_history(Path(repo), ref, PROTO_REL + "/" + name)) or         _show(Path(repo), ref, PROTO_REL + "/" + name) is not None
+    rel = PROTO_REL + "/" + name
+    p = _git(Path(repo), "log", "--full-history", "-m", "--format=%H", ref, "--", rel)
+    if p.returncode != 0:                                         # v5 (S-6): a git error never reads as "no record"
+        raise AmbiguousRef("git log failed while checking %s (rc %d): refusing" % (name, p.returncode))
+    return bool(p.stdout.strip())
 
 
 def _allowlisted(allowlist, role: str, name: str, b: bytes):
     if allowlist is False:                                        # explicitly disabled (tests of other gates only)
         return
     path = Path(allowlist)
+    if not path.is_absolute():                                # v6: custody is M1-only; never a relative path
+        raise NotAllowListed("the allow-list path %s is not absolute on this OS" % path)
     try:
         entries = json.loads(path.read_text(encoding="utf-8"))["entries"]
     except Exception as e:                                        # noqa: BLE001
@@ -375,6 +484,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     need = order[: order.index(through) + 1]
     repo = Path(repo)
     pins = pins or {"seal_commit": SEAL_COMMIT, "spec_id": SPEC_ID}
+    git_state_ok(repo)                        # v5 (S-5)
     st: dict = {"ref": ref, "ref_commit": resolve_ref(repo, ref)}
     ref = st["ref_commit"]                    # v4 (TOCTOU note): resolved ONCE; every read below uses this commit
     check_records_dir(repo, ref)
@@ -463,7 +573,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise DesignationMissing("runner designation has the wrong format, spec_id, account, run_params or nonce")
     if str(ds["host"]).upper() in FORBIDDEN_HOSTS:
         raise ForbiddenHost("designated host %s is Cosmos's machine" % ds["host"])
-    if str(ds["account"]).lower() == CUSTODIAN_ACCOUNT:
+    if same_account(ds["account"], CUSTODIAN_ACCOUNT):
         raise RunnerNotDesignated("the designated runner account must not be the custodian's account")
     if not _strict_ancestor(repo, cm_c, ds_c):
         raise RecordOrderViolation("runner designated before the prediction commitment")
@@ -475,7 +585,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
         raise RunnerNotDesignated("this host %s is not the designated host %s" % (h, ds["host"]))
     if runner_id is not None and runner_id != ds["runner_id"]:
         raise RunnerNotDesignated("runner %r is not the designated runner" % runner_id)
-    if account is not None and account.lower() != str(ds["account"]).lower():
+    if account is not None and not same_account(account, ds["account"]):
         raise RunnerNotDesignated("this OS account %r is not the designated runner account" % account)
     if run_params is not None and run_params != ds["run_params"]:
         raise RunParamsMismatch("run parameters differ from the designation (S4)")

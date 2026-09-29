@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T05:15:10Z",
+  "updated_at_utc": "2026-09-29T06:27:50Z",
   "state": "HOLD",
   "state_reason": "E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e and NOT LAUNCHED. HOLD on the launch authorization (MWO-0001 contains no launch line). Eligible ARC3 design work continues without a campaign or lease.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "03bb7f32f032be5ef536e2d430194519c7397c5c",
+  "head_sha": "36b8d075675d8c5cebe580ee3c5bfe2e4ae9c41e",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -50,7 +50,7 @@
       "id": "E-ENS-T25-CSSR",
       "status": "DONE_DEV",
       "report": "ensorain/arc3/suff/CSSR_T25.md",
-      "note": "14/14 precommitted predictions survived over 3 rounds. CSSR->EM->mixture learner (no fixed S): Even .0024 / W2 .0029. Next: fixed-share + held-out random unifilar worlds"
+      "note": "Held-out: ranking generalizes; the level gap is data-limited (4/4 worst worlds fall >2x by T=16000; STAT6 flat); excess tracks window crypticity H6 (rho .58). Next: review packet + T=16000 on all 24"
     }
   ],
   "fabric_tasks": [

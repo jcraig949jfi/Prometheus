@@ -95,6 +95,9 @@ def main(argv=None) -> int:
     if os.environ.get("C3D2_ENTRY") != "verified":                # v4 (Odysseus v3 claim 4 note)
         print(json.dumps({"refused": True, "reason": "start evidence through entry.py (pre-import code verification)"}))
         return 3
+    if a.ref != protocol.DEFAULT_REF:                             # v5 (Odysseus v4 S-4)
+        print(json.dumps({"refused": True, "reason": "records are read from %s only" % protocol.DEFAULT_REF}))
+        return 3
     try:
         r = build(a.run, a.out, a.revealed, ref=a.ref)
     except (protocol.GateRefusal, EvidenceRefusal) as e:

@@ -1,0 +1,76 @@
+{
+ "about": "POST-HOC (labelled); not an endpoint",
+ "Q3_repair_by_K": {
+  "K16|OFF": {
+   "k": 0,
+   "n": 160
+  },
+  "K16|ON": {
+   "k": 10,
+   "n": 160
+  },
+  "K16|YOKED": {
+   "k": 0,
+   "n": 160
+  },
+  "K40|OFF": {
+   "k": 0,
+   "n": 160
+  },
+  "K40|ON": {
+   "k": 5,
+   "n": 160
+  },
+  "K40|YOKED": {
+   "k": 0,
+   "n": 160
+  }
+ },
+ "LADDER1_ON_ECHO_retention_last_checkpoint": {
+  "not_acquired": {
+   "n": 55,
+   "mean": 0.0129
+  },
+  "acquired": {
+   "n": 58,
+   "mean": 0.0406
+  }
+ },
+ "ops": {
+  "active_segments": [
+   [
+    1790440828.4739954,
+    1790610517.3117998,
+    "segment 1"
+   ]
+  ],
+  "active_elapsed_s": 169688.8,
+  "starts": [
+   "2026-09-26T16:40:28Z"
+  ],
+  "tail_repairs": null,
+  "workers_by_start": [
+   [
+    "2026-09-26T16:40:28Z",
+    12,
+    2
+   ]
+  ],
+  "stopped_reason": "complete",
+  "supervisor_events": [
+   "supervisor_start",
+   "integrity",
+   "launch",
+   "campaign_stopped"
+  ],
+  "memory_samples": 5656,
+  "min_free_gb": 7.71,
+  "max_tree_rss_mb": 12470,
+  "max_worker_rss_mb": 2223,
+  "run_wall_s": {
+   "mean": 486,
+   "max": 6764.1,
+   "sum_cpu_h": 561.2
+  }
+ }
+}

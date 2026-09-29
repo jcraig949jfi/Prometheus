@@ -131,3 +131,40 @@ python -I -B prometheus/cosmos/c3_holdout_D2/entry.py gates SEAL
 - **The key-holder scan:** Nestor runs `entry.py firewall-check` on M1 and publishes the booleans only.
 
 **Record:** format, allow-listing and hashes are unchanged from the v2 section. The next record is FIREWALL_AUDIT_1.json (no audit record exists yet).
+
+## RE-AUDIT v5 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v5". The v4 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v4/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main, both operator decisions. Please assess everything else.
+
+**What to try:**
+- Find ANY executable or module that a key-holding tool (runner, custody, evidence, firewall-check, allowlist) starts or imports by bare name, from the working tree, or unbound.
+- Break the pre-audit pinning (pin-tools runs no repository code).
+- Make the runner fail AFTER it consumes anything.
+- Make the spawn child load unbound code.
+
+**How to run:**
+
+```
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_protocol
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
+```
+- **selftest_protocol:** 118 checks + 4 defect controls. It runs entry.py (`-I -B`) in subprocesses, including the runner end to end through entry. The Windows-only controls report `not_applicable_on_this_os` on Linux; their M1 values are in the committed SELFTEST_PROTOCOL.json.
+- **selftest_D2:** 10 checks + 13 negative controls.
+
+**Record:** format and allow-listing are unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v6 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v6". The v5 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v5/VERDICT.md.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** find ANY path on which a recoverable error (package, probe, argument, environment) happens after the key is read or the release is consumed. Also try to satisfy custody's preflight requirement without a real passing preflight, beyond the declared same-account residual.
+
+**Self-tests:**
+- selftest_protocol: 124 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.

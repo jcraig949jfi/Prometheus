@@ -218,3 +218,64 @@ Residuals, restated. These are NOT boundaries, and v4 does not claim them:
 - **entry.py cannot vouch for itself.** A modified entry.py simply skips its checks. entry prints its own sha256 at start; the custodian compares it with the governing audit's binding before trusting a run.
 - **A committed KEY_RELEASED or REVEALED record by anyone blocks release or reveal.** This fails closed; authenticating records is S1.
 - **The plaintext length is visible in the manifest.** Future seals should pad.
+
+## v5 (2026-09-29): repairs after the v4 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v4/VERDICT.md @ d3600b21e)
+
+- **OPEN, the operator's decisions:** S1, the root of trust (#925); branch protection on main.
+- **Every v4 blocking and must-fix finding is repaired**, and so are the should-fix items.
+- `selftest_protocol.py`: 118 checks + 4 defect controls, 20 of them new in v5. Every attack test has a positive control where the attack is demonstrable on this OS.
+
+**The only invocation is `python -I -B <repo>/prometheus/cosmos/c3_holdout_D2/entry.py <target>`.** Targets:
+- `runner` (also `runner --preflight`);
+- `custody`, `evidence`, `gates`;
+- `firewall-check`, `allowlist`;
+- `pin-tools [--confirm DIGEST]`.
+
+| finding | v5 repair | test (positive control) |
+|---|---|---|
+| **B-1** (blocking): `icacls` by bare name in key release | icacls runs by absolute path in the system directory (GetSystemDirectoryW). entry sets NoDefaultCurrentDirectoryInExePath=1 for every verified process and its children. | An `icacls.exe` planted in the cwd is not executed; the ACL is really restricted. (Control: without the variable, plain Python runs the plant.) |
+| **B-2** (blocking): allowlist.py ran a bare `git` and imported working-tree comms / evidence_wiki code as the custodian | allowlist runs ONLY through entry, bound by the governing PASS audit, or before one exists by the custodian-pinned pre-audit binding. git goes through protocol (absolute path, hardened). Records come from origin/main only. The comms message is read with psycopg2 directly; the evidence_wiki connection settings are read as DATA, and comms/evidence_wiki code is never imported. | Refused unpinned; runs after `pin-tools --confirm`; refuses without entry |
+| **S-1** (must-fix): the runner could not complete through entry, and failed AFTER the key release was consumed | (a) The spawn child re-imports entry.py as `__mp_main__` and installs the parent's binding (C3D2_BOUND) before it unpickles its target, so it imports the runner through the same guard. (b) `FirewallRun.preflight()` starts a predictor child and runs the isolation probe (released key path, secret paths, file creation in the output root) BEFORE the key is read or deleted and before the run directory exists. A refusal consumes nothing. (c) `entry.py runner --preflight` (no key) is the check to run before custody releases the key. (d) A child that dies is PredictorChildFailed, a refusal rather than an uncaught EOFError. | END-TO-END THROUGH entry.py: `--preflight` and a full run both start the child under the guard and are refused ChildNotIsolated (same account); the key copy still exists and no run directory was made. In-process, the preflight refuses a readable key before reading it. |
+| S-2: firewall-check was bound only to the committed code, even after a PASS audit | A governing allow-listed PASS audit binds EVERY target. Before one exists, only firewall-check and allowlist may run, and only if every file is PINNED by the custodian (allow-list role PREAUDIT_TOOL). The pin comes from `entry.py pin-tools`, which runs no repository code: it prints the files' sha256 and a digest; `--confirm DIGEST` pins them. | wrong digest refused; pinned run shows `pre-audit:pinned@<commit>` |
+| S-3: plain `python entry.py` claimed safe | Only `-I -B` is accepted; anything else is refused. Under -I, sys.path entries inside the repository are dropped before any non-builtin import (N-2). | plain python refused |
+| S-4: key-holding CLIs accepted any `refs/...` | custody, evidence and runner refuse any ref other than refs/remotes/origin/main. | custody and runner refuse another ref |
+| S-3/S-5 (key hygiene) | The designated account must be ONE user account (LookupAccountNameW SidTypeUser; Everyone/Users refused). The destination must not exist; it is created and ACL-restricted (inheritance removed, custodian F plus runner M, inheritable) BEFORE the key is written. A failed release deletes the key and the directory. The custodian comes from the OS, not USERNAME. | groups refused; the current user accepted; a failed release leaves nothing; an existing dest is refused |
+| S-5 (git): hooks, grafts, shallow | Every git call carries `-c core.hooksPath=<devnull> -c gc.auto=0 -c maintenance.auto=false`. entry and check_gates refuse a repository with `info/grafts` or `shallow`. | grafts refused by entry and by protocol |
+| S-6: `once_record_present` failed open | A git error raises (AmbiguousRef); it never reads as "no record". | a bad ref raises |
+
+Residuals, restated. These are NOT boundaries, and v5 does not claim them:
+- S1 is open (#925); main is unprotected.
+- **The OS account is the boundary, not the process.** Every process of the custodian's account can read the secrets. v5 removes every place where the PROTOCOL'S OWN tools ran unbound code. It cannot stop other code that the account runs; the comms client this seat uses is one example. A dedicated custodian account is a host capability request (MWO s6).
+- **Separate predictor-child account.** A same-account child is always refused, now at the preflight, before anything is consumed.
+  - That account, with an outbound firewall rule for it, is a host capability request.
+  - It must be able to read the allow-list and the repository (`safe.directory`) and write the output root. The preflight checks the isolation half.
+- **F-3P:** site-packages code (numpy, scipy, cryptography, psycopg2, `.pth` files) runs unbound.
+- **Git configuration** (remote URL, `insteadOf`, fetch refspecs) is same-account state and stays within the account residual.
+- **Timing side channel (N-1):** the predictor controls its run time, and commit and utc times are public after the predictions are frozen. That leaks a few bits about the hidden set, after commitment. Declared.
+- **DoS by any main pusher (N-2):** a stray protocol/ record or a package `.py` makes entry refuse, which fails closed.
+- **entry.py cannot vouch for itself:** compare its printed sha256 with the governing audit's binding.
+- **The plaintext length is visible in the manifest.**
+
+## v6 (2026-09-29): repairs after the v5 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v5/VERDICT.md @ 01ac0fedf)
+
+- **OPEN, the operator's decisions:** S1, the root of trust (#925); branch protection on main.
+- **Branch protection also covers a force-push that removes the once-only records.** The custody log still refuses a second release on M1, but git is the durable record.
+
+| finding | v6 repair | test |
+|---|---|---|
+| **BP-1 / F1** (blocking): the runner read and deleted the key BEFORE validating the package; custody did not require a preflight | (a) `FirewallRun.validate_package()` reads the package ONCE and checks hash, members, metadata and the AST audit BEFORE the preflight and BEFORE the key is read. The extraction later uses exactly those validated bytes. (b) `entry.py runner --preflight` runs the package checks, starts the child and probes isolation, then writes `<run out root>/PREFLIGHT_<designation nonce>.json` (public fields only). (c) custody `release-key` REQUIRES a PASS preflight record matching this designation's nonce, spec_id, committed package hash, runner id and account (`protocol.preflight_ok`). | A wrong-hash package (PackageHashMismatch) and an AST-flagged package (PackageAuditRefusal) are each refused with the key copy intact and no run directory. Release is refused with no preflight and with a mismatched one, and succeeds with a matching one. |
+| self-test failed on the Linux node (`v4_DEST_key_acl_restricted`) | The test took the account from `$USER`, which the fabric script environment does not set. It now uses the OS account (`protocol.os_account()`); the POSIX path (chmod 0600) is unchanged. | passes on M1; expected to pass on Linux |
+| should-fix: account compared by name | `protocol.same_account`: SID equality (LookupAccountNameW) when both resolve, otherwise case-insensitive names. Used for the designated-account and custodian checks. | the same account in another case compares equal |
+| should-fix: pins irrevocable | Only the LATEST pin batch counts. A new `pin-tools --confirm` supersedes, and so revokes, every earlier pin. | - |
+| should-fix: firewall_check git without hardening | uses `protocol.GIT_HARDEN` | - |
+| should-fix: allow-list path relative on POSIX | entry and protocol refuse a non-absolute allow-list path. Custody is M1-only. | - |
+| widened S1 (F2/SF-3): the allowlist database came from committed config | The database HOST and NAME come ONLY from the custodian's environment (EW_DB_HOST, EW_DB_NAME); committed config supplies credentials only. Sender authentication is still S1. | - |
+
+**The documented command should name the interpreter by absolute path (SF-4):** `H:\Python312\python.exe -I -B <repo>\prometheus\cosmos\c3_holdout_D2\entry.py ...` on M1.
+
+**Release procedure (v6):**
+1. The runner account runs `entry.py runner --preflight --package P --package-sha256 H --runner-id R`, which writes the PREFLIGHT record.
+2. The custodian runs `entry.py custody release-key`, which requires that record.
+3. The runner runs `entry.py runner ... --key K`.
+
+A same-account child fails step 1, so nothing is ever released until the separate child account exists (the host capability request).

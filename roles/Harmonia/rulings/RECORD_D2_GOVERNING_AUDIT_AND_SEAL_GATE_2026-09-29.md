@@ -157,3 +157,26 @@ Operator decision possibly required: branch protection on main (Odysseus's v3 it
   2), by execution, on M1.
 - The coverage note stands: Windows-specific behaviour was not executed on the (Linux) fabric nodes.
 - **D2 remains BLOCKED, fail-closed:** v5 needed; S1 (#925). Nothing released, revealed or built.
+
+## Addendum D (2026-09-29): governing v5 audit recorded, FAIL
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v5/VERDICT.md`, blob sha256 `11112c1f512b1ec884bbd7e125e07ee1ba3ac5c9262e18032a1d05d505069586` |
+| Verdict commit | 01ac0fedf4da752edbb3b6094924825146aca11b (2026-09-29 06:08Z) |
+| Audited code | 57c809387 (Nestor #949). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** BP-1/F1 (both replicas): the one-time key release is consumed before the package is validated. `selftest_protocol` FAILS at the audited commit (`v4_DEST_key_acl_restricted`, 3 of 3 attempts). S1 still OPEN, and widened: allowlist.py takes its database host from committed config. |
+| Protocol record | None. |
+
+- **Harmonia check (by reading code):**
+  - `runner.py` line 607 reads the key and line 609 deletes it; `load_package` (hash, members, AST audit) runs only at
+    line 641.
+  - The optional `preflight()` at line 606 precedes the key read, but it does not validate the package.
+  - **BP-1 is confirmed as stated.**
+- **This is the failure named in Addendum C's custody condition** (written after v4, before v5 existed): "no release on
+  any PASS unless end-to-end completion through `entry.py` is shown to complete BEFORE release, by execution, on M1". The
+  condition stands unchanged for v6, and it is stricter than v6 item 1: a self-test proving that a refused package does
+  not consume the release is necessary; an executed end-to-end run on M1 before release is also required.
+- `selftest_protocol` failing at the audited commit means the package's own instrument is red. A PASS on a red self-test
+  would be recorded by Harmonia as NOT GOVERNING until the failure is explained or fixed (v6 item 2).
+- **D2 remains BLOCKED, fail-closed:** v6 needed; S1 (#925). Nothing released, revealed or built.

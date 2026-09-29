@@ -99,7 +99,33 @@
   "v4_allowlist_path_single_value": true,
   "v4_entry_FIXED_equals_protocol_FIXED_RECORDS": true,
   "v4_entry_PKG_PY_is_the_package": true,
-  "v4_entry_gates_pass_end_to_end": true
+  "v4_entry_gates_pass_end_to_end": true,
+  "v5_B1_control_cwd_icacls_is_found": true,
+  "v5_B1_icacls_absolute_system_path": true,
+  "v5_B1_planted_icacls_not_used_acl_restricted": true,
+  "v5_B2_allowlist_refused_unpinned": true,
+  "v5_B2_allowlist_refuses_without_entry": true,
+  "v5_B2_allowlist_through_entry_after_pins": true,
+  "v5_S1_inprocess_preflight_refuses_before_key": true,
+  "v5_S1_preflight_child_starts_under_entry": true,
+  "v5_S1_run_refused_before_key_consumed": true,
+  "v5_S2_pin_wrong_digest_refused": true,
+  "v5_S3_current_user_accepted": true,
+  "v5_S3_group_accounts_refused": true,
+  "v5_S3_plain_python_refused": true,
+  "v5_S4_custody_other_ref_refused": true,
+  "v5_S4_runner_other_ref_refused": true,
+  "v5_S5_existing_dest_refused": true,
+  "v5_S5_failed_release_leaves_nothing": true,
+  "v5_S5_grafts_refused_by_entry": true,
+  "v5_S5_grafts_refused_by_protocol": true,
+  "v5_S6_once_record_git_error_raises": true,
+  "v6_BP1_flagged_package_refused_before_key": true,
+  "v6_BP1_release_after_matching_preflight": true,
+  "v6_BP1_release_refused_mismatched_preflight": true,
+  "v6_BP1_release_refused_without_preflight": true,
+  "v6_BP1_wrong_hash_package_refused_before_key": true,
+  "v6_account_sid_equality": true
  },
  "closure_extras": {
   "complete": [],
@@ -151,6 +177,9 @@
  },
  "hidden_set_or_key_touched": false,
  "not_applicable_on_this_os": [],
- "reasons": {},
+ "reasons": {
+  "v6_BP1_flagged_refusal_reason": "PackageAuditRefusal",
+  "v6_BP1_wrong_hash_refusal_reason": "PackageHashMismatch"
+ },
  "selftest_pass": true
 }
