@@ -1,0 +1,28 @@
+{
+ "seat": "Odysseus",
+ "mwo": "MWO-0003",
+ "discovered_by": "own_loop_fetch",
+ "probe": "roles/Odysseus/probes/fp001_recovery.py (MWO-0003 s5 Fabric recovery probe: kill Attempt 1 mid-run, reap, successor Attempt)",
+ "base_sha": "54e42c6957a7c2481cb472dbbccf7e0a22409c15",
+ "execution": "fabric",
+ "fabric_tasks": [
+  "tsk-8336e01d66d9"
+ ],
+ "fabric_attempts": [
+  "att-6e69b188ddae",
+  "att-da6f9c6994cb"
+ ],
+ "lease": "ubu001:fp001-probe (fabric lease rows lse-a5dfab634b0f, lse-360b7995093c)",
+ "wall_seconds": 54.4,
+ "result": "PASS",
+ "artifact_hashes": [
+  "final_text.md:5d5cec57dfd1a730efb0f15349f091fdbc3fea633e13deb7d5f8d3904237955c",
+  "stdout:5d5cec57dfd1a730efb0f15349f091fdbc3fea633e13deb7d5f8d3904237955c",
+  "stderr:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "env_receipt.json:f18425bd73e6a01ce6aa2d0affa74927d320ec11bca9b0d7c4482bdf1d8be728",
+  "fp001.txt:dde5a8604bb8dce49e4527c37f511587b4f492e55a934941e18153cc7d429775",
+  "FP-001_recovery_evidence.json:c89108ac8d6be81c431d3cd1dbabd9ee3beb343a4a8686502864d042bdb04610"
+ ],
+ "fabric_blocker": null,
+ "notes": "Live store, frozen runtime fabric-v0.2 (54e42c695), synthetic only. Attempt 1 (worker.ubu001.probe1) was SIGKILLed while holding its lease, reaped as abandoned (lease released: attempt_abandoned), and the Task requeued. Successor Attempt 2 (worker.ubu001.probe2) claimed a fresh lease, succeeded and released it (attempt_succeeded). No unreleased lease remains on the resource; all 5 artifacts come from Attempt 2 and 0 from the killed Attempt. 10/10 checks; kill to completion 50.3 s. Single run, since replicas are not meaningful for a recovery probe. Discovered via the seat's own loop (CURRENT.md sha256 change at the 11:35Z tick), together with publication broadcast #987. The probe harness is committed at this result's commit; the Fabric code exercised is 54e42c695."
+}
