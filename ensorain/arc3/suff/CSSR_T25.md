@@ -277,3 +277,14 @@ Implementation note:
      their crypticity and synchronization length;
    - a T-scaling run on the family;
    - precommit MIX_FS as the default arbiter.
+
+## Tick 2026-09-29T06:25Z: diagnosis of the held-out family (heldout_diag.py)
+
+### Precommitment (written BEFORE running heldout_diag.py)
+
+- D1: across the 24 worlds, Spearman(H6, MIX_FS excess) > 0.5. H6 is the minimal-machine state uncertainty given the
+  last 6 symbols. The prediction: the failures are worlds whose causal state is NOT fixed by the CSSR window.
+- D2: on the 4 worst worlds (by MIX_FS at T = 4000), MIX_FS at T = 16000 (2nd half, same stream seed) is < 1/2 of its
+  T = 4000 value in >= 3 of 4. That is, the failures are data-limited.
+- If D1 fails and gap or pmin correlates instead, the failure is statistical resolution (near-equal or rare states),
+  not window crypticity.
