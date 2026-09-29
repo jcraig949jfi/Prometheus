@@ -207,3 +207,18 @@ ADDENDUM 2026-09-29 (after the owner's reply, comms #983; the BEE leg merged to 
 **Revised headline, unchanged in kind:** BEE VALIDATED is CONDITIONAL. It is now conditional on four post-exposure rules
 (C4.2, C4.4, NO_MATERIAL-not-gated, C11) and a partly-asserted expressibility clause. The robust finding remains Q8c
 (< 5%, both pipelines).
+
+**E. Cross-pipeline Q8c difference: partly localised (Archaeon, 2026-09-29; bounded check, nothing re-run).**
+- Per-birth join of Archaeon's dry51_r022153.births.json.gz (q8c_mean) with the owner's production/arms.jsonl.gz
+  (q8c_changes / q8c_draws per locus).
+- **Same births:** all 30,945 of the dry pipeline's TRANSMISSION births are present in both. The class definition is NOT the
+  cause of the mean difference.
+- **Per-birth means:** 0.00030 (Archaeon dry) vs 0.00103 (owner), unweighted.
+- **Disagreements run in both directions:**
+  * 629 self births are 0 in the dry pipeline but > 0 in the owner's;
+  * 273 self + 111 other births are lower in the owner's;
+  * 231 + 83 other births are higher in the owner's.
+- **Reading:** stochastic K = 8 draw noise, plus a SYSTEMATIC component (the 629 zero-vs-positive self births).
+- **Hypothesis (UNTESTED):** the owner's arm randomises a source group or byte range that the dry pipeline did not (e.g. the
+  input region beyond the supplied input).
+- **Status:** OPEN, non-blocking. Q8c < 5% in both pipelines. Resolving it needs a comparison of the arm group definitions.
