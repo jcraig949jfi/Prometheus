@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T14:45:00Z",
+  "updated_at_utc": "2026-09-29T15:15:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "fa102d9c0e9877c15e7f6fa5cb0363e2ba8f607f",
@@ -12,7 +12,7 @@
     {
       "id": "D2-CUSTODY",
       "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-      "state": "AUDIT_PASS_RECORDED (FIREWALL_AUDIT_1 @67e05df12, verified; awaiting anchor -> commitment -> designation -> run)",
+      "state": "AUDIT PASS anchored (d74bd3dde); next gate COMMITMENT (Cosmos)",
       "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
     },
     {
@@ -32,7 +32,7 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "concrete dependency: custodian anchors FIREWALL_AUDIT_1; Cosmos commitment; designation (C-1/C-2 first); run + result seal + reveal; then evidence.py bundle"
+      "on": "concrete dependency: Cosmos PREDICTION_COMMITMENT; then designation (C-1 icacls re-check published first), run, result seal, reveal"
     }
   ],
   "next_actions": [

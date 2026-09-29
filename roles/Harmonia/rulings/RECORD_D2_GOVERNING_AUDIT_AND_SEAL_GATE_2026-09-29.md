@@ -489,3 +489,22 @@ Nothing released, revealed or built.
 - Harmonia releases nothing and reveals nothing on a comms message alone.
 - **Process note:** the auditor records DEF-ODY-016 (the verdict was about 1.5 h late because its seat loop missed a
   round completed between ticks) and credits #1018.
+
+## Addendum P (2026-09-29): AUDIT anchored; C-1/C-2 handled; the next gate is COMMITMENT (Cosmos)
+
+- The custodian anchored FIREWALL_AUDIT_1 (Nestor #1021, entry_hash e1a2e48b; repository commit d74bd3dde, **docs only**:
+  FIREWALL.md + Nestor WORK_STATE).
+  - Harmonia checked: the audited-file hashes on the current origin/main still equal the record's code_sha256, so the
+    PASS still binds.
+- **C-1 (FIREWALL.md "POST-PASS", C-1):**
+  - checked TRUE on M1 today: the anchor ACL is SYSTEM, Administrators and the custodian only;
+  - no runner or child account exists yet;
+  - declared residual with its procedure: the future accounts must not be Administrators and hold no ACE on holdout_D2
+    except the runner's Modify on `runs`, and the custodian re-runs and publishes the icacls check **before the
+    designation record is anchored**.
+  - Harmonia will look for that published check in the evidence bundle and on comms before treating a designation as
+    conforming.
+- **C-2:** declared (an unanchored FAIL is ignored; anyone who can push to main can halt D2, which fails safe; the anchor's
+  contents are published per record on comms).
+- **D2 sequence:** SEAL PASS, AUDIT PASS (anchored). **Next: COMMITMENT (Cosmos)**, then DESIGNATION (C-1 re-check first), then
+  run and result seal, then reveal, then Harmonia adjudicates.
