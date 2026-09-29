@@ -1,0 +1,147 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Cosmos",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:03:39Z",
+  "branch": "cosmos/c3-public-2026-09-24",
+  "head_sha": "(this commit; git log -1 -- roles/Cosmos/MIGRATION_REPORT_MWO-0002.json; the branch is fast-forwarded to main)",
+  "bootstrap_independence": {
+    "answer": "CONDITIONAL",
+    "conditions": [
+      "The seat loop is a session-scoped /loop (ScheduleWakeup). When the Claude session ends, someone must start a session; roles/Cosmos/BOOTSTRAP.md + WORK_STATE.json + CURRENT.md then suffice, and no bespoke prompt CONTENT is needed."
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "loop tick 2026-09-29T07:02Z: git fetch showed CURRENT.md head 'MWO-0002' before comms #961 was read (same tick)",
+      "roles/Cosmos/WORK_STATE.json@ef2b77a23"
+    ],
+    "note": "MWO-0001 reached Cosmos through a bespoke operator prompt; MWO-0002 was found by the seat's own fetch."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Cosmos/WORK_STATE.json@ef2b77a23 (mwo_commit 7e4c09f2c)",
+        "blob sha256 007054ad...88f3 verified from git show origin/main (LF) on 2026-09-29T02:45Z"
+      ],
+      "note": ""
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "own loop fetch 2026-09-29T07:02Z; blob 6f5a6a8b...3685 = PUBLICATIONS.md row, verified from git show origin/main"
+      ],
+      "note": ""
+    },
+    "C3_work_state_useful": {
+      "status": "YES",
+      "evidence": [
+        "roles/Cosmos/WORK_STATE.json@87d5a6478 (all v1 core fields; updated at each D2 audit transition: 307a0e8a1, 8783f891a, fc51c101e, 87d5a6478)"
+      ],
+      "note": ""
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "MWO-0001 s10 COSMOS + MWO-0002 s6 (D2 carried forward); thr-32389b1e7abb (T-C3, BLOCKED); public-side threads in roles/Cosmos/research/THREADS.md"
+      ],
+      "note": "BLOCKED at a custody gate; public-side research continues."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "comms sync at every loop tick; bodies read only for messages to Cosmos (#921,#939,#944,#954,#959,#960); no broadcasts, no ACKs since MWO-0001"
+      ],
+      "note": ""
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Cosmos/research/tasks/COORD_AUDIT_C3/BRIEF.md@8e0d3f95b (Tasks R x2 + X prepared)"
+      ],
+      "note": "The coordinate-layer audit is Fabric-ready but held: workers check out base_sha from origin, so custody-withheld files would have to be published first (MWO-0002 s7, s8)."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "PARTIAL",
+      "evidence": [
+        "roles/Cosmos/research/THREADS.md (thr-* ids by the ops/threads id-rule, verified by prometheus/cosmos/research_check.py)"
+      ],
+      "note": "Thread ids follow the ops id convention, but the thread files live in the seat's research workspace, not in ops/threads/; campaign C3 is a seat-local id."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "note": "No substantial resource claims this cycle."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "hard_gates_current below"
+      ],
+      "note": "Waiting on Odysseus/Harmonia audit records is NOT counted as a gate; the gate is the frozen D2 protocol order."
+    }
+  },
+  "hard_gates_current": [
+    {
+      "gate": "frozen custody contract prometheus/cosmos/c3_holdout_D2/protocol.py + FIREWALL.md (commitment only after a governing FIREWALL_AUDIT PASS); MWO-0001 s7(2)",
+      "item": "C3 freeze and PREDICTION_COMMITMENT for D2",
+      "evidence": [
+        "Harmonia record 7bc568cc5 / 9f6abdce6 (v2-v6 FAIL)",
+        "comms #925 (S1 root of trust, operator)"
+      ]
+    },
+    {
+      "gate": "MWO-0001 s7(2) reveal custody-protected information",
+      "item": "publishing withheld C3 coordinate-layer files for the Fabric audit",
+      "evidence": [
+        "roles/Cosmos/research/tasks/COORD_AUDIT_C3/BRIEF.md s6",
+        "MWO-0002 s8 (listed as a pending operator decision)"
+      ]
+    }
+  ],
+  "migration_blockers": [
+    {
+      "what": "Fabric workers check out base_sha from origin, so a Task over custody-withheld files requires publishing them first",
+      "kind": "custody",
+      "evidence": [
+        "fabric/README.md s4",
+        "roles/Cosmos/research/tasks/COORD_AUDIT_C3/BRIEF.md s6"
+      ]
+    },
+    {
+      "what": "The seat loop is session-scoped; no persistent seat runner without a live Claude session",
+      "kind": "tooling",
+      "evidence": [
+        "bootstrap_independence.conditions"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "comms as the authentication carrier for the D2 prediction commitment (custodian protocol v2 S1 allow-list)",
+      "why": "required by the D2 custodian protocol; its root of trust is itself under operator decision #925",
+      "retire_plan": "needs_operator"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [
+      "thr-32389b1e7abb",
+      "thr-c613a790a4cd",
+      "thr-11f2ba421305",
+      "thr-e6c6cb867db7",
+      "thr-a868c2c9b6c0",
+      "thr-e68a0faefbee",
+      "thr-14b16c6a4d6b",
+      "thr-1db153b23c55",
+      "thr-94e285f89090",
+      "thr-c8a8d939a05a",
+      "thr-ba4ccc18cc6c"
+    ],
+    "campaign_ids_unresolved": [
+      "C3"
+    ],
+    "note": "All Cosmos thread ids derive by the ops/threads id-rule but are recorded in roles/Cosmos/research/THREADS.md, not ops/threads/. C3 is a seat-local campaign id. Not repaired, per the census rule. ops/README.md's stale banner was read and did not change Cosmos's work: MWO-0001 governs."
+  }
+}
