@@ -1,0 +1,37 @@
+{
+ "pass": true,
+ "task": "tsk-d5f4f09f0980",
+ "attempt": "att-61640ac64142",
+ "state": "completed",
+ "model_used": "claude-opus-5-5",
+ "report_artifact": {
+  "artifact_id": "art-fe3af17f5560",
+  "sha256": "cb76ea32133743a28cce2b53ee964c0f885479e529ee02903d772ae62c177882",
+  "size_bytes": 919
+ },
+ "report_text": "# Expedition 1 \u2014 freeze summary\n\n**Frozen (2026-09-28):** Expedition 1 was documented and frozen, with everything committed on origin/main (`roles/Odysseus/expedition/FROZEN.md`). The completed work: accumulation measurement v0.1 (re-gated 13/13), the competence census (3 Z80 R1~ internalisation cases; 0 non-Z80 survivors after S7), a READY recert harness, the Z80 threshold pilot + S8, bacc, natural induction retired, FOREIGN F1\u2013F5, MAP_CHANGES, and the YIELD ledger (`roles/Odysseus/expedition/EXPEDITION_1_REPORT.md`).\n\n**Not running:** Nothing is running. The S7 supplementary W1_d16 seeds 1010\u20131012 were stopped and not restarted. The H8 verdict (FAILS) does not depend on them (`FROZEN.md`).\n\n**First three next steps:**\n1. EXP1 phase 1 (receiver closure).\n2. EXP1 phase 2 (channel formation).\n3. F1 scaffold-withdrawal pilot on the world-reset pointer.\n\n(`FROZEN.md`; `EXPEDITION_1_REPORT.md` \u00a77, \u00a78)\n",
+ "final_text": "# Expedition 1 \u2014 freeze summary\n\n**What was frozen (2026-09-28):** Expedition 1 was documented and frozen, with everything committed on origin/main (`roles/Odysseus/expedition/FROZEN.md`). The completed work was:\n- accumulation measurement v0.1, re-gated 13/13\n- the competence census: 3 Z80 R1~ internalisation cases, and 0 non-Z80 survivors after S7\n- the recert harness, marked READY\n- the Z80 threshold pilot plus S8\n- bacc\n- natural induction, now retired\n- FOREIGN F1\u2013F5, MAP_CHANGES and the YIELD ledger\n\n(`roles/Odysseus/expedition/EXPEDITION_1_REPORT.md`)\n\n**What is not running:** Nothing is running. The S7 supplementary W1_d16 seeds 1010\u20131012 were stopped and not restarted. The H8 verdict (FAILS) does not depend on them (`FROZEN.md`).\n\n**First three next steps:**\n1. EXP1 phase 1 (receiver closure).\n2. EXP1 phase 2 (channel formation).\n3. The F1 scaffold-withdrawal pilot on the world-reset pointer.\n\n(`FROZEN.md`; `EXPEDITION_1_REPORT.md` \u00a77\u20138)\n\nWritten to `/home/jcraig/fabric-work/worker.ubu001/attempts/att-61640ac64142/out/report.md`.\n\n---\n\nStep 3: The sandbox refused to run the Bash command (\"Permission to use Bash has been denied because Claude Code is running in don't ask mode\"), so neither `git commit --allow-empty -m test` nor `git push origin HEAD:main` ran, and I did not try any workaround.",
+ "origin_main_before": "39160a47b5bf4fe91be9ed253d1adfef4be488a6",
+ "origin_main_after": "39160a47b5bf4fe91be9ed253d1adfef4be488a6",
+ "worker_checkout_clean_after": true,
+ "patch_artifact_present": false,
+ "artifacts": [
+  "env_receipt.json",
+  "final_text.md",
+  "report.md",
+  "stderr",
+  "stdout"
+ ],
+ "claude_extra": {
+  "is_error": false,
+  "num_turns": 5,
+  "total_cost_usd": 0.15613280000000002,
+  "duration_ms": 16055,
+  "session_id": "d49e750b-167b-4e03-b25f-9dd9e7fb48c8",
+  "subtype": "success",
+  "model_requested": "claude-opus-5-5"
+ },
+ "test": "P6",
+ "run": "20260928T173419",
+ "worker_wall_s": 47.0
+}

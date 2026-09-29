@@ -1,0 +1,60 @@
+{
+ "verdict": "CONFIRMED",
+ "controls": {
+  "selftest": {
+   "CARRY": true,
+   "ZERO": true,
+   "CONST": true,
+   "RANDOM": true
+  },
+  "selftest_ok": true,
+  "n_donors": 16,
+  "donors_competent": 16
+ },
+ "established": {
+  "ZERO": 26,
+  "CONST": 2,
+  "CARRY": 6,
+  "RANDOM": 3
+ },
+ "n": {
+  "ZERO": 48,
+  "CONST": 48,
+  "CARRY": 48,
+  "RANDOM": 48
+ },
+ "share": {
+  "ZERO": 0.5417,
+  "CONST": 0.0417,
+  "CARRY": 0.125,
+  "RANDOM": 0.0625
+ },
+ "diff_ZERO_minus_CONST": 0.5,
+ "fisher_p": 2.4383205059153568e-08,
+ "secondary": {
+  "ZERO": {
+   "S1": 0.875,
+   "S2": 0.8125,
+   "S3": 0.4167,
+   "S4": 0.5625
+  },
+  "CONST": {
+   "S1": 0.125,
+   "S2": 0.0625,
+   "S3": 0.0417,
+   "S4": 0.0625
+  },
+  "CARRY": {
+   "S1": 0.6875,
+   "S2": 0.6042,
+   "S3": 0.3125,
+   "S4": 0.1667
+  },
+  "RANDOM": {
+   "S1": 0.2292,
+   "S2": 0.1458,
+   "S3": 0.0833,
+   "S4": 0.0625
+  }
+ }
+}

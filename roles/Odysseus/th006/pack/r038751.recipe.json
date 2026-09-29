@@ -1,0 +1,11 @@
+{
+ "command": "python3 codeprov_replay.py r038751 out.json --config r038751.config.json --harness harness",
+ "code": {
+  "harness": {"git": "16fc6c2a", "path": "prometheus/z80atlas/", "module_sha256_lf_16": {"world.py": "5b9852410f801565", "vm.py": "2536b1ac6bc0b36d", "grammar.py": "3767d73d15d8dd1c", "tasks.py": "e2c37f76e994d653"}},
+  "traced_vm": {"git": "98a28dd39f5ccccec6d3a2531cbfcfed238a61aa", "branch": "bellerophon/coupling-campaign-2026-09-24", "paths": ["roles/Bellerophon/forensics_2026-09-23/tools/traced_replay.py", "roles/Bellerophon/forensics_2026-09-23/tools/load.py"], "traced_replay_sha256_lf_16": "fcb280d0bca5ca9a"},
+  "probe": {"path": "archaeon/causal_lens/tools_bee/codeprov_replay.py"}
+ },
+ "input": {"path": "ops/campaigns/C-001/E-001/inputs/r038751.config.json", "sha256_16": "aaca26e1834bf17a"},
+ "expected_result_sha256": "cd9547c24811f52b5f332ca9bcd2a793a7c6f816296559369f309dea9812f6cd",
+ "resources_observed": "1 CPU, ~145 MB RSS, ~51 s on ubu001"
+}

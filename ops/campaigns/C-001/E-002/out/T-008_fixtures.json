@@ -1,0 +1,340 @@
+{
+ "v01_symmetric_recombination/t": {
+  "C-MAJ": "ILL_POSED",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "ILL_POSED",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v01_symmetric_recombination",
+  "fixture_value": "ILL_POSED",
+  "shares": {
+   "hA": 0.5,
+   "hB": 0.5
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v02_majority_recombination_60_40/t": {
+  "C-MAJ": "hA",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hA",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v02_majority_recombination_60_40",
+  "fixture_value": "hA",
+  "shares": {
+   "hA": 0.6,
+   "hB": 0.4
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v03_rearranged_self_copy/t": {
+  "C-MAJ": "hW",
+  "C-OP|exchangeable": "hW",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hW",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hW",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v03_rearranged_self_copy",
+  "fixture_value": "hW",
+  "shares": {
+   "hW": 0.9
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v04_body_renamed_after_overwrite/t": {
+  "C-MAJ": "hD",
+  "C-OP|exchangeable": "hD",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hD",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hD",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v04_body_renamed_after_overwrite",
+  "fixture_value": "hD",
+  "shares": {
+   "hD": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v05_foreign_execution_own_writes/t": {
+  "C-MAJ": "hW",
+  "C-OP|exchangeable": "hW",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hW",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hW",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v05_foreign_execution_own_writes",
+  "fixture_value": "hW",
+  "shares": {
+   "hW": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v06_local_execution_foreign_writes/t": {
+  "C-MAJ": "hW",
+  "C-OP|exchangeable": "hW",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hW",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hW",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v06_local_execution_foreign_writes",
+  "fixture_value": "hW",
+  "shares": {
+   "hW": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v07_made_in_A_descended_from_B/t": {
+  "C-MAJ": "hB",
+  "C-OP|exchangeable": "hB",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hB",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hB",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v07_made_in_A_descended_from_B",
+  "fixture_value": "hB",
+  "shares": {
+   "hB": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v08_transplant_made_in_A_now_in_C/tx": {
+  "C-MAJ": "hD",
+  "C-OP|exchangeable": "hD",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hD",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hD",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "tx",
+  "fixture": "v08_transplant_made_in_A_now_in_C",
+  "fixture_value": "hD",
+  "shares": {
+   "hD": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v09_factual_contributor_fails_sufficiency/t": {
+  "C-MAJ": "hD",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hD",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v09_factual_contributor_fails_sufficiency",
+  "fixture_value": "hD",
+  "shares": {
+   "hD": 0.8,
+   "hV": 0.2
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v10_low_contribution_counterfactually_sufficient/t": {
+  "C-MAJ": "hV",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hV",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v10_low_contribution_counterfactually_sufficient",
+  "fixture_value": "hV",
+  "shares": {
+   "hD": 0.2,
+   "hV": 0.8
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v11_host_scaffold_no_material/t": {
+  "C-MAJ": "hW",
+  "C-OP|exchangeable": "hW",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hW",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hW",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v11_host_scaffold_no_material",
+  "fixture_value": "hW",
+  "shares": {
+   "hW": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ },
+ "v12_no_singular_lineage_stable_architecture/t": {
+  "C-MAJ": "ILL_POSED",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "ILL_POSED",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v12_no_singular_lineage_stable_architecture",
+  "fixture_value": "ILL_POSED",
+  "shares": {
+   "hA": 0.34,
+   "hB": 0.33,
+   "hC": 0.33
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v13_insufficient_evidence_not_ill_posed/t": {
+  "C-MAJ": "NOT_IDENTIFIABLE",
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v13_insufficient_evidence_not_ill_posed",
+  "fixture_value": "NOT_IDENTIFIABLE",
+  "note": "no complete share evidence in the fixture",
+  "shares": null
+ },
+ "v14_meaningless_concept_ill_posed/t0": {
+  "C-MAJ": "ILL_POSED",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "ILL_POSED",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t0",
+  "fixture": "v14_meaningless_concept_ill_posed",
+  "fixture_value": "ILL_POSED",
+  "shares": {
+   "hA": 0.5,
+   "hB": 0.5
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v14_meaningless_concept_ill_posed/t1": {
+  "C-MAJ": "ILL_POSED",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "ILL_POSED",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t1",
+  "fixture": "v14_meaningless_concept_ill_posed",
+  "fixture_value": "ILL_POSED",
+  "shares": {
+   "hA": 0.5,
+   "hB": 0.5
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v14_meaningless_concept_ill_posed/t2": {
+  "C-MAJ": "ILL_POSED",
+  "C-OP|exchangeable": "ILL_POSED",
+  "C-OP|exchangeable:clause": "3: exchangeable operator",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "ILL_POSED",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "NOT_IDENTIFIABLE",
+  "C-OP|undeclared:clause": "2: operator undeclared",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t2",
+  "fixture": "v14_meaningless_concept_ill_posed",
+  "fixture_value": "ILL_POSED",
+  "shares": {
+   "hA": 0.5,
+   "hB": 0.5
+  },
+  "verdict_depends_on_declaration": true
+ },
+ "v15_parent_body_identity_diverge/t": {
+  "C-MAJ": "hR",
+  "C-OP|exchangeable": "hR",
+  "C-OP|exchangeable:clause": "4: privileged operator -> declared rule",
+  "C-OP|exchangeable:v02_violations": [],
+  "C-OP|privileged": "hR",
+  "C-OP|privileged:clause": "4: privileged operator -> declared rule",
+  "C-OP|privileged:v02_violations": [],
+  "C-OP|undeclared": "hR",
+  "C-OP|undeclared:clause": "single contributor (no operator needed)",
+  "C-OP|undeclared:v02_violations": [],
+  "declared_operator_in_fixture": null,
+  "event": "t",
+  "fixture": "v15_parent_body_identity_diverge",
+  "fixture_value": "hR",
+  "shares": {
+   "hR": 1.0
+  },
+  "verdict_depends_on_declaration": false
+ }
+}

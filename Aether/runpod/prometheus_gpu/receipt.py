@@ -64,7 +64,15 @@ def _utc(when=None):
 
 def pod_record(pod_id, creation_outcome="confirmed", created_utc=None,
                terminate_acknowledged=False, observed_absent=False,
-               note=None):
+               note=None, absence_evidence=None, terminate_response=None):
+    """One pod's cleanup facts.
+
+    `absence_evidence` (Iteration 3) records the two reads absence rests
+    on: `list_omits` and `get_absent`. `observed_absent` may only be true
+    when BOTH are, which `validate` enforces whenever the evidence is
+    present: a LIST that omits a pod GET still returns is a disagreement,
+    not an absence.
+    """
     if creation_outcome not in CREATION_OUTCOMES:
         raise ReceiptError("creation_outcome must be one of %s"
                            % (CREATION_OUTCOMES,))
@@ -73,9 +81,36 @@ def pod_record(pod_id, creation_outcome="confirmed", created_utc=None,
            "created_utc": created_utc or _utc(),
            "terminate_acknowledged": bool(terminate_acknowledged),
            "observed_absent": bool(observed_absent)}
+    if absence_evidence is not None:
+        rec["absence_evidence"] = dict(absence_evidence)
+    if terminate_response is not None:
+        rec["terminate_response"] = terminate_response
     if note:
         rec["note"] = note
     return rec
+
+
+def estimates_block(spec_sheet_usd, scout_usd, actual_usd):
+    """The canonical estimate record: what was predicted, how, and how far off.
+
+    Errors are (estimate - actual) / actual, so a positive number means the
+    estimate was HIGH. Iteration 2's L4 campaign is the regression case:
+    spec sheet $0.0259, scout-calibrated $0.0432, actual $0.0408 -> the
+    spec sheet was 36.5% low and the scout 5.9% high.
+    """
+    def err(est):
+        if est is None or not actual_usd:
+            return None
+        return round((float(est) - float(actual_usd)) / float(actual_usd), 4)
+    return {"spec_sheet_usd": spec_sheet_usd,
+            "scout_calibrated_usd": scout_usd,
+            "actual_usd": actual_usd,
+            "spec_sheet_error": err(spec_sheet_usd),
+            "scout_error": err(scout_usd),
+            "error_convention": "(estimate - actual) / actual; positive = "
+                                "estimate was high",
+            "actual_basis": "measured wall time at a quoted rate, not "
+                            "provider billing"}
 
 
 def cleanup_block(pods, inventory_read_ok, billing_evidence=None):
@@ -180,6 +215,13 @@ def validate(rec):
         if pod.get("creation_outcome") not in CREATION_OUTCOMES:
             raise ReceiptError("pod %r has creation_outcome %r"
                                % (pod.get("id"), pod.get("creation_outcome")))
+        ev = pod.get("absence_evidence")
+        if ev is not None and pod.get("observed_absent") and not (
+                ev.get("list_omits") and ev.get("get_absent")):
+            raise ReceiptError(
+                "pod %r claims observed_absent but its evidence is %s; "
+                "absence needs LIST to omit it AND GET to return nothing"
+                % (pod.get("id"), json.dumps(ev, sort_keys=True)))
 
     clean = rec["cleanup"]
     derived = cleanup_block(pods, clean.get("inventory_read_ok", False),

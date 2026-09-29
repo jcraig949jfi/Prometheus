@@ -21,7 +21,7 @@ import numpy as np
 
 from .margins import (_feed, _ac_cells, _AC, _iters, _build, RANK, DUAL_AT, HERE)
 
-RUNG_SCALE = "all_cells"          # "all_cells" (as run in dev) | "real_cells" (#719 proposal for F5); set at the freeze
+RUNG_SCALE = "real_cells"         # operator ruling 2026-09-26 item 3 (governing); "all_cells" = the old dev-v1 interpretation
 OUTROOT = os.path.join(HERE, "campaign")
 
 
@@ -42,12 +42,12 @@ def selective_ladder(w, label, segs, T, truth, max_bytes):
     from .arms import Selective
     from .select_arms import SELECTIVE_GRID
     kind, recipe = dict(SELECTIVE_GRID)[label]
-    cells = int(np.prod(w["dims"]))
+    cells = _cells(w)                           # v0.3.2 (review F12): real-cells scale for F5, as the reservoir
     out, cap = {}, max(16, cells // 16)
     while cap * 8 <= max_bytes:
         try:
             arm = _feed(Selective(kind, w["dims"], cap=cap, recipe=recipe), segs)
-            out[str(cap)] = dict(AC=_AC(_ac_cells(arm.predict(T), truth)), meter=arm.meter.as_dict())
+            out[str(cap)] = dict(AC=_AC(_ac_cells(arm.predict(T), truth)), meter=arm.meter.as_dict(), loci=arm.loci())
         except ValueError as ex:
             out[str(cap)] = dict(status=f"INCOMPATIBLE: {ex}")
         cap *= 2
@@ -74,20 +74,21 @@ def job(a):
     n = len(y_all)
     out = {k: a[k] for k in ("family", "level", "gen", "seed")}
     out.update(n_test=int(len(T)), n_unseen=w["n_unseen"], coverage=w["coverage"], visits_per_cell=n / _cells(w),
-               rung_scale=RUNG_SCALE)
+               rung_scale=RUNG_SCALE, dims=list(w["dims"]), cells=_cells(w))
     if len(T) < 8:
         return dict(out, status="TOO_FEW_TEST", wall=time.time() - t0)
     out["N1"] = max(_AC(_ac_cells(np.full(len(T), y_all.mean()), truth)),
                     _AC(_ac_cells(np.full(len(T), y_all[-n // 4:].mean()), truth)))
     arms = {}
     lk = _feed(LosslessK(w["dims"]), segs)
-    arms["L-K"] = dict(AC=_AC(_ac_cells(lk.predict(T), truth)), meter=lk.meter.as_dict())
+    arms["L-K"] = dict(AC=_AC(_ac_cells(lk.predict(T), truth)), meter=lk.meter.as_dict(), loci=lk.loci())
     for fam in ("LOSSLESS", "HYBRID"):
         lab = ch.get(fam)
         if lab is None:
             continue
         arm = _feed(_build(fam, lab, w["dims"], 0), segs)
-        rec = dict(label=lab, AC=_AC(_ac_cells(arm.predict(T), truth)), meter=arm.meter.as_dict(), iters=_iters(arm))
+        ac = _AC(_ac_cells(arm.predict(T), truth))
+        rec = dict(label=lab, AC=ac, meter=arm.meter.as_dict(), iters=_iters(arm), loci=arm.loci())
         if fam == "HYBRID":
             rec["ablation"] = ablation_gap(arm, T, truth, seed=sd)
         arms[fam] = rec
@@ -100,16 +101,23 @@ def job(a):
     lad = {}
     ev = ch.get("RESERVOIR_EVICT_POLICY")
     for rung, B in _rungs(w, n).items():
-        for pol in ("random", ev):
+        # v0.3.2 (review F7): the FIFO recency reference runs at the two eviction points
+        pols = ["random", ev] + (["fifo"] if rung in DUAL_AT else [])
+        for pol in pols:
             if pol is None:
                 continue
-            arm = _feed(BufferALS(w["dims"], RANK, max(1, B), evict=pol), segs)
+            arm = _feed(BufferALS(w["dims"], RANK, max(1, B), evict=pol), segs).finalize()   # v0.3.2 (F1)
             r = rr(arm)
-            lad[f"{pol}|{rung}"] = dict(B=int(B), AC=_AC(_ac_cells(arm.predict(T), truth)), HR2=r["HR2"],
-                                        HR2_signal=r["HR2_signal"], R=r["R"], dist=r["dist"],
-                                        meter=arm.meter.as_dict(), iters=_iters(arm))
+            lad[f"{pol}|{rung}"] = dict(B=int(B), B_frac=float(B) / n, AC=_AC(_ac_cells(arm.predict(T), truth)),
+                                        HR2=r["HR2"], HR2_signal=r["HR2_signal"], R=r["R"], dist=r["dist"],
+                                        meter=arm.meter.as_dict(), iters=_iters(arm), loci=arm.loci())
     lr = _feed(LosslessR(w["dims"], rank=RANK), segs)
-    lad["L-R|full"] = dict(B=n, AC=_AC(_ac_cells(lr.predict(T), truth)), meter=lr.meter.as_dict(), iters=_iters(lr))
+    lr_ac = _AC(_ac_cells(lr.predict(T), truth))
+    lad["L-R|full"] = dict(B=n, B_frac=1.0, AC=lr_ac, meter=lr.meter.as_dict(), iters=_iters(lr), loci=lr.loci())
+    from .arms import SuffStatR                            # pre-freeze review R2: reported only, no verdict uses it
+    ss = _feed(SuffStatR(w["dims"], rank=RANK), segs)
+    lad["SUFFSTAT|table"] = dict(AC=_AC(_ac_cells(ss.predict(T), truth)), meter=ss.meter.as_dict(), loci=ss.loci(),
+                                 report_only=True)
     out["ladder"] = lad
     dual = {}
     if ev is not None:
@@ -122,10 +130,12 @@ def job(a):
             Bm = int(np.clip(np.interp(lad[key]["HR2"], hs, bs), 1, n))
             runs = []
             for k in range(3):
-                arm = _feed(BufferALS(w["dims"], RANK, Bm, evict="random", seed=100 + k), segs)
+                arm = _feed(BufferALS(w["dims"], RANK, Bm, evict="random", seed=100 + k), segs).finalize()
                 r = rr(arm)
                 runs.append(dict(AC=_AC(_ac_cells(arm.predict(T), truth)), HR2=r["HR2"], bytes=arm.meter.peak_persistent))
-            dual[rung] = dict(target_HR2=lad[key]["HR2"], B_random=Bm, runs=runs)
+            tgt = lad[key]["HR2"]
+            dual[rung] = dict(target_HR2=tgt, B_random=Bm, runs=runs,
+                              clamped=bool(tgt > hs.max() or tgt < hs.min()))   # both ends (pre-freeze review)
     out["dual"] = dual
     d0 = w["dims"][0]
     prng = np.random.default_rng(sd + 5)
@@ -135,9 +145,11 @@ def job(a):
     if keep.sum() >= 8:
         Bp = max(1, _cells(w) // 2)
         for pol in ("random", "oracle"):
-            arm = _feed(BufferALS(w["dims"], RANK, Bp, evict=pol, oracle_keep=lambda X, d0=d0: X[:, 0] >= d0 // 2), csegs)
+            arm = _feed(BufferALS(w["dims"], RANK, Bp, evict=pol, oracle_keep=lambda X, d0=d0: X[:, 0] >= d0 // 2),
+                        csegs).finalize()
             pc[pol] = _AC(_ac_cells(arm.predict(T[keep]), truth[keep]))
     out["posctl"] = pc
+    out["query_convention"] = "Q = 1 evaluation of the full headline test set per life (v0.3.2, declared)"
     return dict(out, status="OK", wall=time.time() - t0)
 
 

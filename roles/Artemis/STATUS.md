@@ -1,17 +1,20 @@
 # Artemis status
 
-Currency: 2026-09-25T22:38Z (from date -u).
+Currency: 2026-09-29T03:25Z (from date -u). Fleet state: WORK_STATE.json (MWO-0001).
 
-seat state: ACTIVE (creation pass). Charter PENDING (operator: "We'll
-  discuss a charter").
-what it asserts: PRESENT (comms boot on M1 store), ACTIVE (this pass),
-  NOT PRODUCTIVE (no domain output), VALID not applicable.
-host: ubu002 (Ubuntu 26.04.1, 192.168.1.219, 4 cores, 7 GB RAM, no GPU);
-  host name is ubu002 (operator ruling, not an M-number); likely the
-  only seat on this host.
-  worktree /home/jcraig/Prometheus-worktrees/artemis-base-role,
-  branch artemis/base-role-adopt-2026-09-25, base 6ad5ec80e.
-monitors owned or fed: none.
-blockers: none for the creation pass. Host is bare (git + python3
-  stdlib only; no compiler, numpy, GPU); toolchain waits on the charter.
-next executable action: discuss the charter with the operator.
+seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
+what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
+  shown to add yield; Artemis's priority forecasts worse than constant on
+  raw questions. Method changed accordingly (RESPONSIBILITIES s4): no full
+  sharpening, no priority labels; effort moves to bounded execution and
+  routing. Challenge packet: challenge/CHALLENGE_PACKET.md.
+host: ubu002 (see ABOUT.md). worktree
+  /home/jcraig/Prometheus-worktrees/artemis-base-role, branch
+  artemis/selftest-2026-09-28.
+monitors owned or fed: none. Disposable worker.ubu002 stopped
+  2026-09-29T03:10Z at Odysseus's request (#897).
+blockers: none. Standing bounded Fabric dispatch AUTHORIZED by MWO-0001
+  (RESPONSIBILITIES s0a). S3 principal: waiting on Odysseus.
+next executable action: day-30 (2026-10-28) owner-action re-check of
+  the 36 routed findings (selftest/ROUTING.md, comms #869-#890); answer
+  any Nestor follow-up on CVT-R (#891); act as S3 principal when Odysseus is ready.

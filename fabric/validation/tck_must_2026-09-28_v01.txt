@@ -1,0 +1,65 @@
+......s.ss.ss.ss.ss.s.....s.s.s.ss.ssssss.s.....ssssssssssssssssssssssss [ 30%]
+sssssssssssssssssss.ss.sssssssssss.ss.ss.ss.ss.ss.ss.ss.ss.ss.ss.ss.ss.s [ 61%]
+sssssss.ss.ss.ss.ss.ss.ss.sssssss....ssss...ssssssssssssssssssssssssssss [ 91%]
+ss.............ssss                                                      [100%]
+═══════════════════════════════════════════════════════
+             A2A TCK Compatibility Report              
+═══════════════════════════════════════════════════════
+SUT: http://127.0.0.1:8711
+Timestamp: 2026-09-28T17:49:30.572831+00:00
+
+OVERALL COMPATIBILITY: 60.2%
+
+┌─────────────┬────────┬────────┬─────────┬───────┐
+│ Level       │ Passed │ Failed │ Skipped │ Total │
+├─────────────┼────────┼────────┼─────────┼───────┤
+│ MUST        │     56 │     22 │      36 │   114 │
+│ SHOULD      │      0 │     11 │       0 │    11 │
+│ MAY         │      0 │      4 │       0 │     4 │
+└─────────────┴────────┴────────┴─────────┴───────┘
+
+BY TRANSPORT:
+  agent_card:    6/6 ✓
+  grpc:          0/65 (65 skipped) ✓
+  jsonrpc:       66/93 (27 skipped) ✓
+  http_json:     3/75 (72 skipped) ✓
+
+═══════════════════════════════════════════════════════
+
+
+=========================== short test summary info ============================
+SKIPPED [27] tests/compatibility/_test_helpers.py:86: Transport 'grpc' not configured
+SKIPPED [34] tests/compatibility/_test_helpers.py:86: Transport 'http_json' not configured
+SKIPPED [1] tests/compatibility/core_operations/test_error_handling.py:329: Agent card does not declare urn:a2a:tck:required-extension as required
+SKIPPED [1] tests/compatibility/core_operations/test_error_handling.py:353: Agent card does not declare urn:a2a:tck:required-extension as required
+SKIPPED [3] tests/compatibility/core_operations/test_error_handling.py:420: Agent does not declare extendedAgentCard capability
+SKIPPED [3] tests/compatibility/core_operations/test_error_handling.py:493: Agent does not declare extendedAgentCard capability
+SKIPPED [3] tests/compatibility/core_operations/test_multi_stream.py:153: Agent does not support streaming
+SKIPPED [3] tests/compatibility/core_operations/test_multi_stream.py:181: Agent does not support streaming
+SKIPPED [3] tests/compatibility/core_operations/test_multi_stream.py:221: Agent does not support streaming
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:122: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:150: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:187: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:222: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:252: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:284: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:331: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:430: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:465: Agent does not support push notifications
+SKIPPED [3] tests/compatibility/core_operations/test_push_notifications.py:496: Agent does not support push notifications
+SKIPPED [15] tests/compatibility/core_operations/test_requirements.py:177: Transport 'grpc' not configured (filtered by --transport)
+SKIPPED [15] tests/compatibility/core_operations/test_requirements.py:177: Transport 'http_json' not configured (filtered by --transport)
+SKIPPED [12] tests/compatibility/core_operations/test_requirements.py:58: Agent card does not declare capabilities for: ['streaming']
+SKIPPED [1] tests/compatibility/core_operations/test_stream_ordering.py:195: Agent does not support streaming
+SKIPPED [3] tests/compatibility/core_operations/test_task_lifecycle.py:372: Agent does not support streaming
+SKIPPED [3] tests/compatibility/core_operations/test_task_lifecycle.py:431: Agent does not support streaming
+SKIPPED [1] tests/compatibility/core_operations/test_transport_behavior.py:221: Streaming not supported: SendStreamingMessage is not supported by this agent
+SKIPPED [1] tests/compatibility/core_operations/test_transport_behavior.py:249: HTTP+JSON transport not configured
+SKIPPED [1] tests/compatibility/core_operations/test_transport_behavior.py:263: HTTP+JSON transport not configured
+SKIPPED [1] tests/compatibility/core_operations/test_transport_behavior.py:416: HTTP+JSON transport not configured
+SKIPPED [1] tests/compatibility/core_operations/test_transport_behavior.py:449: gRPC transport not configured
+SKIPPED [1] tests/compatibility/core_operations/test_transport_behavior.py:578: gRPC transport not configured
+SKIPPED [2] tests/compatibility/jsonrpc/test_sse_streaming.py:72: Agent does not support streaming
+SKIPPED [1] tests/compatibility/jsonrpc/test_sse_streaming.py:191: Agent does not support streaming
+SKIPPED [1] tests/compatibility/jsonrpc/test_sse_streaming.py:226: Agent does not support streaming
+68 passed, 167 skipped, 30 deselected in 38.80s

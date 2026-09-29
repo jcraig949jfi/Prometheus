@@ -1,0 +1,23 @@
+[flight 12:00:48] RESUME from ledger .ledger/soak-20260926T153321Z.json (never creates)
+[flight 12:00:48] credential source: host default key file
+[flight 12:00:48] bundle 21330d544d77 reachable at the pinned commit 162c7b7c981d
+[flight 12:00:49] RESUME soak-20260926T153321Z pod=ufxzb42i2p9i9k after 123 s without a controller
+[flight 12:01:11] pod clock offset +0.159 s (+/- 0.073 s)
+[flight 12:38:38] module reported end (status=ok)
+[flight 12:38:41] pod clock offset +0.186 s (+/- 0.082 s)
+[flight 12:38:42] receipt written to C:\Prometheus-worktrees\aether-iter3\Aether\runpod\receipts\soak-20260926T153321Z.json
+
+RECEIPT  soak-20260926T153321Z
+  module        soak@1   result OK
+  bundle        21330d544d7767a0dd8bee99bb2f35b4c49f8f984ba1ce503a3e3a5cb92a9281
+  window        2026-09-26T15:33:22Z -> 2026-09-26T16:38:41Z
+  cost          $0.2830 estimated over 3918.9 s (NOT reconciled with provider billing)
+  cleanup       terminate_ack=True observed_absent=True operational=True billing_reconciled=False
+  telemetry     398 records, units=3900, complete=True
+  artifacts     4 retrieved
+  lifecycle   {"pod_clock": {"fetch_s": 0.145, "verify_s": 0.006, "unpack_s": 0.006, "dependency_install_s": 8.013, "canary_s": 1.374, "bootstrap_total_s": 9.556, "execution_s": 3901.198}, "controller_clock": {"create_call_s": 1.331, "accepted_to_first_telemetry_s": 18.353, "accepted_to_first_contact_s": 18.353, "artifact_transfer_s": 2.036, "terminate_ack_s": 0.562, "absence_confirm_s": 0.964, "teardown_total_s": 3.865, "total_wall_s": 3919.849}, "cross_clock": {"provision_s": 2.245, "note": "controller instant subtracted from a pod instant; the two clocks are not synchronised and the offset is not measured here"}, "synchronised": {"offset_s": 0.1594, "uncertainty_s": 0.0735, "method": "min-RTT midpoint against the pod's /_clock", "provision_s": 2.085, "accepted_to_module_start_s": 11.641}, "module_reported_elapsed_s": 3900.993}
+  transfer    {"bytes": 4484594, "seconds": 1.0413, "bytes_per_s": 4306726.2, "largest": {"path": "ckpt.bin", "bytes": 4194304, "sha256": "f606390f7a6a91c7fbe6516da27a2c1ec64fd3068987106027dd20cd2ed71767", "fetch_s": 0.3645, "attempts": 1, "integrity": "verified"}, "largest_bytes_per_s": 11507006.9}
+  platform    {"samples": 392, "span_s": 3910.04, "gpu_names": ["NVIDIA RTX A5000"], "gpu_mem_used_mib_peak": 755.0, "gpu_mem_total_mib": 24564.0, "gpu_util_pct_mean": 99.1607, "gpu_util_pct_peak": 100.0, "gpu_temp_c_peak": 56.0, "gpu_power_w_peak": 227.35, "gpu_power_w_mean": 223.2541, "host_load1_peak": 33.18212890625, "host_mem_used_b_peak": 137679876096.0, "disk_free_b_min": 21146873856.0, "artifact_dir_b_peak": 29831620.0, "sample_cost_s_mean": 0.0419, "sample_cost_s_peak": 0.1762, "gpu_errors": []}
+  disposition {"cause": "OK", "controller_believes": {"result": "OK", "pod_id": "ufxzb42i2p9i9k", "terminate_acknowledged": true}, "provider_believes": {"list_contains_pod": false, "get_returns_pod": false, "terminate_response": "ACK_204", "reads": 1}, "evidence_retained": {"telemetry_records": 398, "telemetry_complete": true, "platform_samples": 392, "artifacts_verified": ["result.json", "series.jsonl", "ckpt.bin", "telemetry.jsonl"], "artifacts_unverified": [], "artifacts_corrupt": [], "artifacts_missing": [], "ledger": true}, "resumable": false, "cleanup_safe": true, "pod_state": "ABSENT: LIST omits it and GET returns nothing", "resumed": {"ledger_last_event": "watch", "controller_absent_s": 122.522, "resumed_utc": "2026-09-26T16:00:49Z"}}
+  api         {"fetch": {"calls": 685, "failures": 0, "latency_s": {"n": 685, "p50": 0.2209, "p95": 0.2972, "p99": 0.3426, "max": 0.488}, "first_half_p50_s": 0.2212, "second_half_p50_s": 0.2209, "first_half_failures": 0, "second_half_failures": 0}, "get_pod": {"calls": 30, "failures": 0, "latency_s": {"n": 30, "p50": 0.3516, "p95": 1.3603, "p99": 1.4577, "max": 1.4577}, "first_half_p50_s": 0.4018, "second_half_p50_s": 0.3181, "first_half_failures": 0, "second_half_failures": 0}, "list_pods": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.1847, "p95": 0.1847, "p99": 0.1847, "max": 0.1847}}, "terminate_pod": {"calls": 1, "failures": 0, "latency_s": {"n": 1, "p50": 0.5622, "p95": 0.5622, "p99": 0.5622, "max": 0.5622}}}
+[flight 12:38:42] FLIGHT_PASS

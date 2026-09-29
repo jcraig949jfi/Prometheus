@@ -1,0 +1,32 @@
+{
+ "t": "2026-09-28T09:32:25Z",
+ "pytest": "61 passed (ensorain/lm01/tests; cheat fixtures R1c/R1d on L-R, L-R-rec, H-rec; all gate/label known-answer tests incl. R1 floor, R3 column, recency symmetry, SUFFSTAT exclusion, R4 loud failure)",
+ "reservoir_curve_PASS": true,
+ "reservoir_curve_median": {
+  "c/8": 0.23214729287276026,
+  "c/4": 0.38817866776647436,
+  "c/2": 1.1539076625967857,
+  "c": 1.8864136208096256,
+  "2c": 2.32030426575138,
+  "full": 2.652719966741432,
+  "L-R": 2.624406715451349
+ },
+ "eviction_pc_PASS": true,
+ "eviction_pc_gap": 0.6325663399916153,
+ "instrument_trio_relative": {
+  "400": true,
+  "800": true,
+  "1500": true
+ },
+ "headline_pc": {
+  "L1": false,
+  "L2": true,
+  "L3": true
+ },
+ "ablation_pc": true,
+ "ablation_pc_gap": 1.2272938593487814,
+ "headline_pc_noise": 0.3,
+ "headline_pc_note": "rerun at declared SD 0.3 under the R1 floor rule; the SD 1.0 run was degenerate (pre-freeze review R1)",
+ "t_initial": "2026-09-28T09:10:06Z",
+ "t_note": "contents updated after the SD 0.3 headline-PC rerun and the 61-test run; t_initial = the first rerun"
+}

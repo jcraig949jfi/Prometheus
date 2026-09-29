@@ -1,0 +1,211 @@
+================================================================================
+EXTERNAL REVIEW PACKET
+PTE-C1b -- adjudication of C1's unexpected mechanisms M2 and M3 (Ananke)
+================================================================================
+Prepared:        2026-09-26   campaign COMPLETE (27/27 cells, 0 failed,
+                 510 s), frozen, NOT yet independently audited
+Authority:       operator C1B HOLD RELEASE 2026-09-26 (verbatim,
+                 roles/Ananke/prompts/2026-09-26_c1b_operator_release/,
+                 f6fff610c). Launched through the operator-release launcher
+                 (operator's choice over a v3 re-freeze): only the release
+                 check was swapped; science code, prereg and artifacts ran
+                 exactly as frozen.
+Location/Code:   prometheus/ananke/{c1b.py, c1b_run.py, engine.py switches};
+                 roles/Ananke/pte/PREREG_PTE_C1b.md (v1 + A1-A3);
+                 roles/Ananke/pte/c1b/ (FREEZE, fixtures, eligibility,
+                 C1B_SUMMARY.json, build_summary.py, c1b_rows/)
+Version/Hash:    freeze 5bd6c3945, code 4554a2fae, prereg LF sha256
+                 8e27a353e83e04c9, run tree 5f1991bca, raw rows sha256
+                 8019247c19cdf2f0 (27 rows)
+Headline:        M3 is TRANSPORT arriving on the readout tick; C1's
+                 "packet ablation did nothing" was an instrument blind spot
+                 (confirmed on the specimens). SETRULE is required, but the
+                 rule state carries no cue. M2's in-flight dependence is
+                 real and reproduces under fresh seeds (3/3 SIGNAL champions),
+                 but the bit is not the signed payload sum, and the specimen
+                 also leans slightly on routing weights. Every
+                 mechanism label carries _UNRESOLVED where a preregistered
+                 positive control could not fire at that physics.
+
+--------------------------------------------------------------------------------
+1. CLAIMS UNDER REVIEW
+--------------------------------------------------------------------------------
+C1 left two candidate mechanisms that its own labels could not adjudicate:
+M2 (HOLD 4ab2ba01): "the held bit lives in packets in flight, not in site
+state" (post-hoc, one cell). M3 (MAJ 0a23398f, f6b623cd): "self-modifying,
+timing-locked" (zero-comm 0.50, yet C1 packet ablation had no effect).
+C1b tests each with a per-carrier battery, fresh-seed replication (4
+searches per specimen) and a corrected packet-ablation window. No
+Selective-Irreversibility endpoint. C1 labels are NOT changed.
+
+--------------------------------------------------------------------------------
+2. METHOD / SUBSTRATE
+--------------------------------------------------------------------------------
+Same engine as C1. New assay switches only (per-carrier resets of S, inbox,
+Kp, w, En, r; flush of every in-flight slot; freeze_rule; read-only census).
+No physics change: every C1 control reproduces the frozen C1 engine bit
+for bit (176 golden cases), and 185 tests pass incl. the independent-oracle
+suite. Held-out: 64 worlds (32 mirror pairs), namespace 0xC1B0; fresh
+searches 0xC1B5, C1's SearchSpec. 99% bootstrap over mirror pairs.
+
+--------------------------------------------------------------------------------
+3. KEY DEFINITIONS (preregistered, before any row)
+--------------------------------------------------------------------------------
+kills   hi99 <= 0.60      drops   point <= -0.10 and lo99(diff) < -0.05
+intact  lo99(diff) >= -0.10 (an absence reading)
+A3: an absence reading counts only where a positive-control plant FIRED at
+that specimen's physics: competent (lo99 > 0.55) AND hi99(switched -
+normal) < -0.10. Otherwise NOT_ELIGIBLE, and the labels that use it carry
+_UNRESOLVED. Eligibility, fixed before any specimen row:
+  M2  B (non-packet resets intact) ok; Z (ITI-flush sham) NOT_ELIGIBLE
+  M3  not-R ok; T's "C1 window intact" NOT_ELIGIBLE; routing
+      INERT_BY_PHYSICS (dest_mode "all": w is never read)
+
+--------------------------------------------------------------------------------
+4. PRIMARY RESULT -- specimens (S1), pair-mean held-out accuracy
+--------------------------------------------------------------------------------
+    M3 arm                     0a23398f   f6b623cd
+    -------------------------  --------   --------
+    normal                        0.693      0.686
+    C1 drop window [t0,ro)        0.697      0.686   no effect (as in C1)
+    drop readout tick only        0.511      0.500   KILLS
+    corrected window [t0,ro]      0.501      0.500   KILLS
+    latency +1                    0.493      0.500   kills
+    latency -1                    0.741      0.715   improves
+    freeze_rule (SETRULE off)     0.520      0.522   drops
+    freeze_routing                0.693      0.686   inert by physics
+    zero_comm                     0.500      0.500
+    readout rule predicts cue     0.50       0.50    NO (r constant 0)
+    LABEL                         TRANSPORT+RULE_SWITCH_UNRESOLVED (both)
+    T positive components         readout-tick kill YES, corrected kill
+                                  YES, C1 window lo99 0.655 / 0.643
+
+    M2 arm (4ab2ba01)          acc      M2 arm                     acc
+    -------------------------  -----    -------------------------  -----
+    normal                     0.883    flush in flight, mid-gap   0.497
+    reset S / inbox            0.883    flush, 1 tick pre-readout  0.853
+    reset Kp / En              n/a      ITI-flush sham             0.888
+    reset w                    0.817    corrected drop window      0.500
+    reset all non-packet       0.821    zero_comm / rand payload   0.500
+    in-flight signed-sum predictor: 0.44 (perm p 0.998) -- NOT the code
+    LABEL  IN_FLIGHT_PLUS_JOINT_UNRESOLVED
+Carryover census (A1.2): ~1500-1900 packets in flight at every trial
+onset, NOT correlated with the previous target (all three specimens).
+
+--------------------------------------------------------------------------------
+5. FRESH-SEED REPLICATION (S2; 4 searches per specimen)
+--------------------------------------------------------------------------------
+    source     k  held   SIGNAL  label (specimen eligibility applied)
+    ---------  -  -----  ------  ---------------------------------------
+    M2 4ab2    0  0.527  no      -
+               1  0.842  yes     DELAY_LINE_SPECIMEN_UNRESOLVED
+               2  0.862  yes     IN_FLIGHT_UNDECODED_UNRESOLVED
+               3  0.861  yes     IN_FLIGHT_UNDECODED_UNRESOLVED
+    M3 0a23    0-3 0.54-0.59 no  - (0/4 reach SIGNAL)
+    M3 f6b6    0  0.577  yes     C1_CONTROL_NOT_REPRODUCED
+               1  0.626  yes     RULE_SWITCH_ONLY
+               2  0.560  no      -
+               3  0.594  yes     NOT_SUPPORTED
+M2: in every SIGNAL champion, the mid-gap flush -> 0.50 and the non-packet
+reset is intact. In-flight memory REPRODUCES (3/3). The strict
+DELAY_LINE_REPRODUCED label is NOT issued: it needs the specimen itself to
+be DELAY_LINE_SPECIMEN.
+M3: 0a23398f does NOT reproduce at this budget. f6b623cd's three SIGNAL
+champions all show the specimen's fingerprint DESCRIPTIVELY (C1 window no
+effect; readout-tick drop -> 0.50; latency +1 -> 0.50). The mechanical
+labels miss it because the thresholds are absolute ("kills" hi99 <= 0.60;
+T needs a C1-window lo99 >= 0.62) and these champions only reach
+0.56-0.63. M3_REPRODUCED: NO (mechanical).
+
+--------------------------------------------------------------------------------
+6. CORRECTED-WINDOW RECHECK OF ALL 12 C1 D-WAVE CELLS (S3)
+--------------------------------------------------------------------------------
+    family  cells  C1 window                corrected window
+    ------  -----  -----------------------  ------------------------
+    HOLD      4    1.00 (latches: no comm)  1.00
+    RELAY     4    0.50-0.64 (C1 verdict)   0.50 in all 4
+    MAJ       4    4781b0a1 0.50, 613162a3 0.54 -> corrected ~0.50;
+                   0a23398f 0.70, f6b623cd 0.69 -> corrected 0.50
+The defect (D-A) changed the reading of exactly the two M3 cells. No
+RELAY or HOLD verdict moves. C1's frozen_routing is VACUOUS in both M3
+cells (dest_mode "all").
+
+--------------------------------------------------------------------------------
+7. PREDICTIONS (C1b-P1..P6, preregistered)
+--------------------------------------------------------------------------------
+    P1 H-M3-0 in both M3 cells ..................... HELD (T true, both)
+    P2 M3 also RULE_SWITCH_REQUIRED (>= 1 cell) ..... HELD (both)
+    P3 M2 gets DELAY_LINE_SPECIMEN .................. LOST (C and B false)
+    P4 reset_inbox alone does not drop M2 ........... HELD (0.883)
+    P5 <= 1/4 fresh HOLD searches reproduce (a)-(c) . HELD BY THE LETTER
+       (exactly 1: k1), but LOST in intent: 3/3 SIGNAL champions are
+       in-flight memories; HOLD searches here did NOT find the latch.
+    P6 recheck changes no RELAY verdict ............. HELD
+
+--------------------------------------------------------------------------------
+8. DEFECTS, DEVIATIONS, DISCLOSURES
+--------------------------------------------------------------------------------
+- Launch: the frozen release gate accepted only Aporia; the operator
+  released directly and chose a launcher that swaps only that check
+  (committed with negative controls). Science unchanged.
+- Reporting defect (fixed in the summary, not the run): the driver looked
+  up NOT_ELIGIBLE by '<cell>:fresh<k>', so fresh rows ran without the
+  specimen's list. The summary re-applies it from the stored booleans
+  (same physics). As-run labels are kept beside the corrected ones.
+- Absolute thresholds make "kills" automatic, and T unattainable, for
+  champions near 0.6. This is a prereg limitation, reported, not repaired.
+- Earlier, before any row: the release guard's substring defect (#696),
+  fixed and re-frozen (v2); the F_DA fixture iti fix (03efea365).
+
+--------------------------------------------------------------------------------
+9. INDEPENDENT VERIFICATION
+--------------------------------------------------------------------------------
+Engine: independent CPU oracle (bit-exact). D-A: independently re-derived
+from code by Aporia (#640) before the run. Science: NONE yet. Kairos #564
+and Elenchus #565 never replied (advisory now). Same author throughout.
+
+--------------------------------------------------------------------------------
+10. KNOWN LIMITATIONS & CAVEATS
+--------------------------------------------------------------------------------
+- 4 fresh searches per specimen: "not reproduced" = not at this budget.
+- M2's code is unknown: in flight, but not the signed payload sum.
+  Timing, count or destination pattern are untested candidates.
+- M3's SETRULE role is inferred as configuration (the readout rule is
+  constantly 0). Which sites switch, and when, is not measured.
+- Holdouts are seed namespaces. One author. Positive controls were
+  hand-built by the same author.
+- C1b promotes nothing beyond the seat (operator ruling).
+
+--------------------------------------------------------------------------------
+11. REPRODUCTION
+--------------------------------------------------------------------------------
+    git worktree add --detach <dir> 5f1991bca
+    python -m pytest -q prometheus/ananke/tests                 (185 pass)
+    python roles/Ananke/pte/c1b/launch_operator_release.py --check
+    python roles/Ananke/pte/c1b/launch_operator_release.py --home <H>
+        (~9 min on one RTX 5060 Ti; deterministic, all-integer)
+Spot check (minutes): C1b_SUMMARY.json; or run c1b.m3_battery on
+0a23398f's champion (C1 rows) and compare drop_window_c1 with
+drop_readout_tick_only.
+
+--------------------------------------------------------------------------------
+12. VERDICT / DECISION
+--------------------------------------------------------------------------------
+    M3 = timing-self-modification memory ......................... no
+    M3 = transport landing ON the readout tick (C1 blind spot) ... YES
+         (label _UNRESOLVED by eligibility; positive kills direct)
+    M3 needs SETRULE ............................................. YES
+    M3 rule state carries the cue ................................ no (null)
+    M3 reproduced under fresh seeds (mechanical) ................. no
+    M2 bit in flight mid-gap ..................................... YES
+    M2 pure delay line (all non-packet carriers irrelevant) ...... no
+         (routing weights -0.06; label _UNRESOLVED)
+    M2 in-flight memory reproduced under fresh seeds ............. YES (3/3)
+    Any C1 RELAY/HOLD verdict changed by the corrected window .... no
+Reviewer's bottom line: is M2's in-flight bit carried by something other
+than the signed payload (timing, count, destinations)? And does M3's
+SETRULE dependence reflect configuration rather than memory, as the
+constant readout rule suggests?
+================================================================================
+END OF PACKET
+================================================================================

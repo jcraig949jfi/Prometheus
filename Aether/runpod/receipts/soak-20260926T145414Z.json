@@ -1,0 +1,188 @@
+{
+  "api_latency": {
+    "create_pod": {
+      "calls": 5,
+      "failures": 5,
+      "latency_s": {
+        "max": 0.3044,
+        "n": 5,
+        "p50": 0.2656,
+        "p95": 0.3044,
+        "p99": 0.3044
+      }
+    },
+    "list_pods": {
+      "calls": 12,
+      "failures": 0,
+      "first_half_failures": 0,
+      "first_half_p50_s": 0.2002,
+      "latency_s": {
+        "max": 0.2399,
+        "n": 12,
+        "p50": 0.2108,
+        "p95": 0.2315,
+        "p99": 0.2399
+      },
+      "second_half_failures": 0,
+      "second_half_p50_s": 0.1948
+    }
+  },
+  "args": [],
+  "artifacts": [],
+  "artifacts_expected": [
+    "result.json",
+    "series.jsonl",
+    "ckpt.bin",
+    "telemetry.jsonl"
+  ],
+  "artifacts_missing": [],
+  "bundle_sha256": "a223481c0285d5f21831a1218de7644926d5ae5fc19a1d23c7e55e187493be8f",
+  "calibrated_estimate": null,
+  "cleanup": {
+    "billing_reconciled": false,
+    "inventory_read_ok": true,
+    "observed_absent": true,
+    "operational_cleanup": true,
+    "pod_count": 0,
+    "terminate_acknowledged": true,
+    "unresolved": []
+  },
+  "clock_sync": {
+    "end": null,
+    "start": null
+  },
+  "controller_health": {
+    "polls": 0
+  },
+  "cost": {
+    "basis": "no pod existed (provider confirmed); nothing to bill",
+    "billing_reconciled": false,
+    "elapsed_s": 0.0,
+    "hourly_usd": 0.17,
+    "usd_estimated": 0.0
+  },
+  "create_attempts": [
+    {
+      "gpu_id": "NVIDIA RTX A4000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA RTX A5000",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA L4",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA GeForce RTX 4090",
+      "outcome": "FAILED_CLEAN"
+    },
+    {
+      "gpu_id": "NVIDIA A40",
+      "outcome": "FAILED_CLEAN"
+    }
+  ],
+  "created_utc": "2026-09-26T14:54:14Z",
+  "disposition": {
+    "cause": "NO_CAPACITY",
+    "cleanup_safe": true,
+    "controller_believes": {
+      "pod_id": null,
+      "result": "NOT_RUN",
+      "terminate_acknowledged": false
+    },
+    "evidence_retained": {
+      "artifacts_corrupt": [],
+      "artifacts_missing": [],
+      "artifacts_unverified": [],
+      "artifacts_verified": [],
+      "ledger": true,
+      "platform_samples": 0,
+      "telemetry_complete": false,
+      "telemetry_records": 0
+    },
+    "pod_state": "never created (provider confirmed by LIST)",
+    "provider_believes": {},
+    "resumable": false,
+    "resumed": null
+  },
+  "ended_utc": "2026-09-26T14:54:43Z",
+  "entrypoint": "run.py",
+  "evidence_dir": "receipts/soak-20260926T145414Z",
+  "evidence_kept": [
+    "api_calls.jsonl",
+    "ledger_events.json"
+  ],
+  "git": {
+    "available": true,
+    "commit": "b27834319c89c519360d2c428c12c49e771b8a3a",
+    "dirty": false,
+    "dirty_paths": []
+  },
+  "gpu_used": null,
+  "guardrails": {
+    "disk_gb": 20,
+    "max_runtime_s": 4500,
+    "telemetry_interval_s": 10
+  },
+  "last_stage": null,
+  "lifecycle": {
+    "controller_clock": {
+      "create_call_s": 28.469
+    },
+    "cross_clock": {},
+    "pod_clock": {}
+  },
+  "module": "soak@1",
+  "notes": [
+    "no capacity for any declared GPU (NVIDIA RTX A4000, NVIDIA RTX A5000, NVIDIA L4, NVIDIA GeForce RTX 4090, NVIDIA A40); provider confirms nothing exists. Declare more gpu.alternatives or try again later.",
+    "absence of a created pod rests on two LIST reads that showed none named soak-20260926T145414Z; a pod omitted from every LIST cannot be excluded without its id"
+  ],
+  "plan_cost_projection": {
+    "compute_is_ceiling": true,
+    "compute_s": 4500.0,
+    "gpu_class": "NVIDIA RTX A4000",
+    "gpu_count": 1,
+    "hourly_usd": 0.17,
+    "overhead_breakdown_s": {
+      "accept": 1.5,
+      "bootstrap": 8.0,
+      "canary": 1.2,
+      "end_detection": 5.0,
+      "module_setup": 1.5,
+      "provision": 2.3,
+      "retrieval": 5.3,
+      "teardown": 2.2
+    },
+    "overhead_fraction": 0.006,
+    "overhead_s": 27.0,
+    "total_s": 4527.0,
+    "usd_compute": 0.2125,
+    "usd_overhead": 0.0013,
+    "usd_per_pod_minute": 0.002833,
+    "usd_total": 0.2138,
+    "work_units": {
+      "estimate": 300.0,
+      "name": "soak_seconds",
+      "units_per_usd": 1403.3446380540286,
+      "usd_per_1e9_units": 712583.3333333334,
+      "usd_per_unit": 0.0007125833333333334
+    }
+  },
+  "pods": [],
+  "preregistered_estimate": null,
+  "ready_poll_s": 3.0,
+  "result": "NOT_RUN",
+  "run_id": "soak-20260926T145414Z",
+  "schema": "prometheus-gpu/run-receipt/1",
+  "seat": "Aether",
+  "spec_sha256": "e3622a94c8371ac9cd6a3c7088b018f2819515e30f2cd60ce24825afd2d07108",
+  "started_utc": "2026-09-26T14:54:14Z",
+  "telemetry_summary": {
+    "complete": false,
+    "note": "no telemetry; the workload may never have started",
+    "records": 0
+  },
+  "transport": "repo-pinned"
+}

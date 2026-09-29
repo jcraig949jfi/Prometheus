@@ -128,6 +128,28 @@ load.
 | `artifact_transfer` | total bytes, fetch seconds, rate, and the largest artifact with its own rate |
 | `artifacts[].fetch_s` | per-artifact fetch time |
 
+### Added in Iteration 3
+
+| field | what it holds |
+|:--|:--|
+| `disposition` | the six questions every ending must answer, DERIVED from the receipt's own facts: `cause` (e.g. `OK`, `MODULE_EXITED_WITHOUT_END`, `TELEMETRY_STALLED`, `ARTIFACT_SERVER_UNREACHABLE`, `POD_VANISHED`, `CONTAINER_RESTARTED`, `BUDGET_CEILING`, `MAX_RUNTIME`, `NO_CAPACITY`, `CREATE_UNRESOLVED`, `POD_GONE_BEFORE_RESUME`, `CAMPAIGN_FAIL_FAST`), `controller_believes`, `provider_believes` (LIST, GET, terminate response), `evidence_retained`, `resumable`, `cleanup_safe`, and `pod_state`, which says `ABSENT` only when LIST and GET agree and `UNCERTAIN: ...` otherwise |
+| `pods[].absence_evidence` | `list_omits`, `get_absent`, `reads`, `agree`. `observed_absent` may be true only when BOTH read true; `validate()` refuses otherwise |
+| `pods[].terminate_response` | `ACK_204` or `NOT_FOUND_404`, never collapsed |
+| `artifacts[].integrity` | `verified` (matches the pod's `/_manifest` size and sha256), `unverified` (no pod-side digest to check against: uncertainty), `mismatch` (arrived and is NOT what the pod holds; kept as evidence under `<path>.mismatch`, never as the artifact); `attempts`; `expected` on a mismatch |
+| `artifact_integrity` | the three lists plus `manifest_available` |
+| `artifacts_missing` | declared and not retrieved (ABSENT). A `NOT_RUN` receipt lists nothing here: nothing ran, so nothing is missing; `artifacts_expected` keeps the declaration |
+| `api_latency` | per provider operation: calls, failures, latency p50/p95/p99/max, and first-half vs second-half p50 and failures, which is what shows degradation over a long run |
+| `controller_health` | watch polls, loop time and poll-gap percentiles, the last spend and telemetry size seen |
+| `stock_at_launch` | advertised SECURE stock for the declared cards at launch, if the provider could say |
+| `resumed` | on a run resumed from its ledger: the ledger's last event, `controller_absent_s`, when it resumed. Cost still counts from the original create |
+| `estimates` | on a campaign flown from a plan: `spec_sheet_usd`, `scout_calibrated_usd`, `actual_usd`, and both errors as (estimate - actual) / actual. Actual is wall time at a quoted rate, not billing |
+
+A campaign of several pods also writes `<campaign>.campaign.json`
+(`prometheus-gpu/campaign-receipt/1`): per-shard result, cause, pod ids,
+cost and cleanup, `distinct_pods`, an aggregate result (`OK` only if every
+shard is; `PARTIAL` if some are; `UNKNOWN` if any shard is), and
+`operational_cleanup` only if every shard's own receipt claims it.
+
 ## The receipt begins as the plan
 
 `receipt.from_plan(plan)` builds the skeleton from the dry-run plan, so

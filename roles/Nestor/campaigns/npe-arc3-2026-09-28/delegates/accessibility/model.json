@@ -1,0 +1,134 @@
+{
+ "per_arm": {
+  "DENSE": {
+   "runs": 96,
+   "acquiring": 49,
+   "mean_f0": 0.4027,
+   "carrier_exposure": 143261,
+   "lambda_own": 0.0003420330725040311,
+   "per_cell": {
+    "7ae3": {
+     "acquiring": 19,
+     "E": 77850,
+     "lambda": 0.00024405908798972383
+    },
+    "ffa6": {
+     "acquiring": 30,
+     "E": 65411,
+     "lambda": 0.0004586384553056825
+    }
+   }
+  },
+  "PLANT": {
+   "runs": 96,
+   "acquiring": 32,
+   "mean_f0": 0.7615,
+   "carrier_exposure": 83598,
+   "lambda_own": 0.00038278427713581663,
+   "per_cell": {
+    "7ae3": {
+     "acquiring": 15,
+     "E": 56209,
+     "lambda": 0.00026686117881478055
+    },
+    "ffa6": {
+     "acquiring": 17,
+     "E": 27389,
+     "lambda": 0.0006206871371718573
+    }
+   }
+  },
+  "PLAIN": {
+   "runs": 96,
+   "acquiring": 0,
+   "mean_f0": 0.0022,
+   "carrier_exposure": 855,
+   "lambda_own": 0.0,
+   "per_cell": {
+    "7ae3": {
+     "acquiring": 0,
+     "E": 415,
+     "lambda": 0.0
+    },
+    "ffa6": {
+     "acquiring": 0,
+     "E": 440,
+     "lambda": 0.0
+    }
+   }
+  },
+  "SHAM": {
+   "runs": 96,
+   "acquiring": 0,
+   "mean_f0": 0.0023,
+   "carrier_exposure": 895,
+   "lambda_own": 0.0,
+   "per_cell": {
+    "7ae3": {
+     "acquiring": 0,
+     "E": 425,
+     "lambda": 0.0
+    },
+    "ffa6": {
+     "acquiring": 0,
+     "E": 470,
+     "lambda": 0.0
+    }
+   }
+  }
+ },
+ "tests": {
+  "fit_on_DENSE": {
+   "lambda": 0.0003420330725040311,
+   "a": 0.08912509381337455,
+   "predictions": {
+    "DENSE": {
+     "observed": 49,
+     "M1_carrier_exposure_expected": 49.0,
+     "M0_raw_frequency_expected": 48.76
+    },
+    "PLANT": {
+     "observed": 32,
+     "M1_carrier_exposure_expected": 28.59,
+     "M0_raw_frequency_expected": 70.78
+    },
+    "PLAIN": {
+     "observed": 0,
+     "M1_carrier_exposure_expected": 0.29,
+     "M0_raw_frequency_expected": 0.37
+    },
+    "SHAM": {
+     "observed": 0,
+     "M1_carrier_exposure_expected": 0.31,
+     "M0_raw_frequency_expected": 0.39
+    }
+   }
+  },
+  "fit_on_PLANT": {
+   "lambda": 0.00038278427713581663,
+   "a": 0.026915348039269153,
+   "predictions": {
+    "DENSE": {
+     "observed": 49,
+     "M1_carrier_exposure_expected": 54.84,
+     "M0_raw_frequency_expected": 18.64
+    },
+    "PLANT": {
+     "observed": 32,
+     "M1_carrier_exposure_expected": 32.0,
+     "M0_raw_frequency_expected": 32.18
+    },
+    "PLAIN": {
+     "observed": 0,
+     "M1_carrier_exposure_expected": 0.33,
+     "M0_raw_frequency_expected": 0.11
+    },
+    "SHAM": {
+     "observed": 0,
+     "M1_carrier_exposure_expected": 0.34,
+     "M0_raw_frequency_expected": 0.12
+    }
+   }
+  }
+ }
+}

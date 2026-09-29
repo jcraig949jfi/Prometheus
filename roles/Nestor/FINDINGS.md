@@ -326,6 +326,71 @@ atomic write-back, runaway causal heredity in 46/80 vs 1/80 (Fisher p = 4e-17; d
 specimens reach depth 5 in neither arm. Scope of the confirmed claim: 7ae3's cell. Post hoc, the
 other donors rarely make even one causal copy (36/120 vs 9/120 runs with any), so erosion is the
 barrier only once copying starts. Localization: X-DONOR-RATE.
+X-DONOR-RATE (SIGNAL): fresh-state P-11 pass rate 7ae3 0.96, cb7f and 4931 0.29, twelve donors 0.0;
+donor copy competence is the first barrier, erosion the second. X-DONOR-SWAP (EXPLORE, WEAK_SIGNAL):
+7ae3's genome implanted into the 11 eligible foreign cells (ATOMIC, 8 seeds each) runs away in 3 of 11
+(ffa6 4/8, 9cba 1/8, e160 1/8; pooled 6/88) vs its own cell 3/8; the declared SIGNAL bar was 4 cells.
+The genome's fresh-state assay rate is 0.955 only in 7ae3 and ffa6 (which differ only in representation and
+structure) and 0.0 in the ten other cells: **competence is a property of genome x cell, not of the genome.**
+Post hoc (hypothesis only): 9cba and e160 ran away although the founder's assay rate there is 0, so descendants
+can acquire competence the founder lacks.
+**X-SWAP-ORIGIN (CLEAN_NULL) withdraws that post hoc:** replayed with founder causal-lineage tracking, the 9cba and
+e160 runaways are NATIVE (founder depth 8 and 1 vs world depth 120 and 110); in ffa6 2 of 4 are founder-rooted.
+**Scope note (endpoint):** `max_causal_replication_depth` is WORLD-level. In 7ae3's own cell the world depth far
+exceeds the founder lineage's depth in 2 of 3 runaways (382 vs 71, 386 vs 27). C-RUNAWAY, C-CRITICAL-MASS and
+C-ATOMIC C1 are therefore claims about heredity in the cell carrying the implant, not about the implant's own
+lineage, until audited on a founder-rooted endpoint (X-ROOT-AUDIT, for C-ATOMIC C1).
+**X-ROOT-AUDIT (WEAK_SIGNAL):** on the founder-rooted endpoint C-ATOMIC C1 is 12/80 vs 0/80 (p = 1.6e-4, gap 0.15;
+C1's 0.25 effect bar missed). 34 of the 46 ATOMIC runaways are carried by lineages outside the founder's causal
+lineage. The frozen C1 verdict stands for its declared world-level endpoint; the reading that erosion stops the
+IMPLANT's heredity is supported only at 12/80. Missing null under test: ATOMIC without the genome (X-ATOMIC-RANDOM).
+**X-ATOMIC-RANDOM (SIGNAL) reverses that qualification:** with a random 64-byte implant in place of the genome, ATOMIC
+gives 0/80 runaways vs 46/80 (p = 1.3e-18), and in every genome runaway 100% of the final population carries the
+founder's ancestry marker. The runaways ARE the implant's descendants; the P-11-certified causal chain from the
+founder breaks at uncertified births, so founder causal depth undercounts the lineage. C-ATOMIC C1 reads as stated.
+**Correction to X-SWAP-ORIGIN:** its NATIVE labels mean 'outside the certified causal lineage', not native ancestry;
+the random implant gave 0/8 runaways in 9cba and e160 too. The withdrawn post hoc is reopened, under test in
+X-SWAP-ANCESTRY. Open instrument question: which births break certification, and how often.
+**X-SWAP-ANCESTRY (SIGNAL):** all five foreign runaways are founder-descended (anc0 share 0.99-1.0), including
+9cba and e160 where the founder genome cannot copy from a fresh state. Exploratory (one run per cell). Under
+CONFIRM: C-SWAP-ACQUIRE (240 fresh seeds per arm vs random implant). Mechanism under test: X-ACQUIRE.
+**C-SWAP-ACQUIRE NOT CONFIRMED** (frozen at 82b6caeb3): 9/240 vs 0/240 founder-descended runaways, p = 0.0018; the
+rule needed 10 vs 0. The claim is not made. X-ACQUIRE (WEAK_SIGNAL): 9-15% (lower bound) of the runaway populations
+carry genomes that copy from a fresh state where the founder cannot. **Caveat on every anc-based statement above:** the
+most frequent descendant genomes differ from the founder at 58-62 of 64 bytes. anc == 0 passes through overwrite
+events, so 'founder-descended' may mean slot lineage, not inherited content; byte-level provenance (z8taint) is next.
+**X-CONTENT (WEAK_SIGNAL) answers it:** in anc-descended runaway populations only a minority of bytes is founder material
+(z8taint, median 13% in 7ae3's cell, 25% in 9cba/e160; anc0 share ~1.0 everywhere), and in 17 of 19 populations no organism
+is even half founder bytes. **Every 'founder-descended' statement above (X-ATOMIC-RANDOM, X-SWAP-ANCESTRY, C-SWAP-ACQUIRE's
+endpoint) is lineage descent, not content inheritance.** What IS required is the genome at the start (random implant 0/80,
+0/240). Where the surviving founder bytes sit: X-CORE.
+X-CORE (WEAK_SIGNAL; the declared contiguous-core rule failed): post hoc, in all 5 own-cell runaways the founder bytes kept by
+>= 80% of the population include exactly the two world-op instructions, ED 32 (OP_SELF, positions 23-24) and ED B0 (LDIR,
+52-53), with most other bytes turned over. Hypothesis only; under CONFIRM in C-CORE (64 fresh seeds).
+**C-CORE CONFIRMED (frozen at 1c982e7e7, 64 fresh seeds):** in 7ae3's cell with atomic write-back, runaway pair-tape
+heredity conserves the founder's two world-op instructions as MATERIAL -- OP_SELF (ED 32, positions 23-24) and LDIR
+(ED B0, 52-53) -- and little else: 17/27 runaways meet the frozen CORE4-and-SPECIFIC endpoint (bar 60%); position 23 is
+conserved in 27/27, 52 in 23/27, and no other position in more than 13/27. What is inherited in a runaway is the
+self-location and copy instructions; the rest of the founder is replaced. Scope: 7ae3's cell, ATOMIC, single founder;
+thin margin over the bar.
+Interpretation limits (steward note, Aporia #621, accepted): C-CORE is exactly what PURIFYING SELECTION on a functional
+core plus drift elsewhere predicts; it is not evidence for any stronger account, and calling SELF/LDIR "relevant" because
+they survived would be circular. Provenance: C-CORE was frozen (19:53Z) after this seat read the selective-irreversibility
+directive (18:57Z), so under that program's date rule it is THEORY-AWARE; my #620 called it theory-blind, which was wrong.
+X-CORE-TIME (EXPLORE, SIGNAL, theory-aware): the core is HELD, not re-fixed -- in 7 of 8 runaways SELF+LDIR stay at ~0.99
+from epoch ~200 while all other founder material falls to 0 by epoch 300-900; one run shows a late sweep instead.
+Same limit as above: this is the purifying-selection trajectory.
+**Instrument note, X-CERT-BREAK (WEAK_SIGNAL):** inside runaway lineages ~5-16% of replication events are not P-11
+certified (mostly C2 + C4 failing: partial copies do not rebuild a randomized victim); one run 45%. A per-edge break
+rate p caps an unbroken certified chain from a fixed root at ~1/p generations, which is exactly the observed founder
+causal depth (5-22). So 'founder-rooted' (founder_depth >= 20) in X-SWAP-ORIGIN / X-ROOT-AUDIT measured the luck of a
+long unbroken run, not a different kind of heredity; lineage questions should use anc plus material (z8taint), and
+chain-depth endpoints should be read against the break rate.
+**SI framing withdrawn (operator directive 2026-09-26, prompts/2026-09-26_direct_operator_control/):** C-CORE,
+X-CORE-TIME and the rest of this chain keep their original Nestor questions, verdicts and provenance (theory-aware by
+date). They are NOT offered as Selective-Irreversibility evidence: X-CORE-TIME's docstring sentence "bears on the
+selective-irreversibility program" and my comms #620 to Aporia retrofitted them, and both are withdrawn as claims of
+relevance. SI relevance, if any, is for the operator to adjudicate separately.
 Scope: specimen 7ae3's cell, splice off. Evidence: `campaigns/c9x-explore-2026-09-24/c_critical_mass/`.
 
 ---
@@ -366,3 +431,117 @@ These generalise beyond either campaign and should survive into any successor.
     k=4 "beat" the independent-founders prediction at p = 1e-6, using p1 = 5/80 as if exact. A
     declared dose curve fitting p1 jointly (X-DOSE-CURVE) found no excess (LRT p = 0.42). Fit
     the null model's parameters on all arms before calling anything superadditive.
+
+## W1 (NPE window 2026-09-26, donor discovery; theory-aware by date)
+
+**E-W1-1 C-DENSE-COPY CONFIRMED (frozen at 57c1cd359, 64 fresh seeds per arm):** in random populations of the
+7ae3/ffa6 pair-tape cell class with atomic write-back, spontaneous acquisition of a fresh-start-competent hereditary
+donor is limited by the ENCODING ACCESSIBILITY of the block-copy instruction: giving LDIR/LDDR an additional one-byte
+encoding (semantics and ops-mask gating unchanged) raises donor acquisition from 1/64 to 39/64 runs (p = 1e-14).
+Presence is not the barrier: block-copy encodings occur in 87/96 plain populations (X-DD-DENSE-COPY) without any donor.
+Path: X-DONOR-DISCOVERY (acquisition-limited, 1/96; the one spontaneous donor copies WITHOUT OP_SELF, via LDIR/LDDR and
+incidental register state -- hypothesis, n = 1) -> X-DD-DENSE-COPY (0/96 -> 49/96) -> C-DENSE-COPY.
+Barrier map moved: variation -> [acquisition: was the gate; relieved by encoding accessibility] -> [establishment
+L2->L4, ~0.4: now the limit] -> sustained heredity. Scope: this cell class, ATOMIC, the one-byte alias treatment.
+
+**E-W1-2 C-STATELESS-FFA6 CONFIRMED (frozen 0cba4eb5c, 48 fresh seeds per arm; the ffa6 restriction was chosen
+post hoc from C-STATELESS and is declared as such):** in the ffa6 cell (Z8_SLOTTED, NICHES_HIGH_MIG; one-byte
+block-copy encodings, ATOMIC write-back, random populations), establishment of a spontaneous hereditary donor is
+limited by REGISTER-STATE PERSISTENCE across executions: starting every execution from the fresh state raises
+runaway-given-donor from 11/33 to 34/42 (p = 3e-5). Mechanism chain: X-DD-ESTABLISH (80% of stalled donors never copy
+in-world) -> X-DD-SELFSTATE (every stalled donor copies at 0.0 from the state its OWN execution leaves:
+self-poisoning) -> X-DD-STATE-RESET (reset only on genome change: CLEAN_NULL -- it is not the inherited state, it
+is the self-produced one) -> X-DD-STATELESS (0.38 -> 0.90) -> C-STATELESS (both cells: NOT_CONFIRMED, p = 0.012; the
+effect sat entirely in ffa6) -> C-STATELESS-FFA6 (confirmed). **Not confirmed in 7ae3's cell.** Withdrawn along the way:
+'inherited state blocks the donor' (X-DD-NOCOPY-CONTEXT post hoc; killed by X-DD-STATE-RESET).
+
+## P2 (endogenous heredity program 2026-09-27; theory-aware by date)
+
+**E-P2-1 C-ZERO-SPECIFIC CONFIRMED (frozen b498b133b, fresh donor panel, 48 fresh seeds per arm):** the establishment
+rescue by fresh-state execution is specific to the environment's ZERO initial register state: ZERO 26/48 vs a different clean
+state (all bytes 0x5A) 2/48 (p = 2.4e-8); carried 6/48, random 3/48. This RE-DESCRIBES E-W1-2: the barrier is not 'persistent
+state' as such but dependence on environment-supplied zero addressing that the donor's own block copy consumes (P2 corpus:
+95.7% of competent donors are SELF-free offset-64 copiers taking their address from never-written zero registers + tape
+layout; stalled donors depend on a fresh HL 14/20). Part of this is by construction: the COMPETENT ruler certifies from zeros.
+**WITHDRAWN:** 'persistent register state is the establishment barrier' (as stated in the W1 report) and 'register persistence
+is an ffa6-specific barrier' (X-P2-BRIDGE: with a fixed donor panel the fresh-state effect is +0.25 in 7ae3, +0.09 in ffa6;
+W1's 7ae3 null read as low power).
+**Acquisition, re-described (EXPLORE, not promoted):** X-P2-ATTRIB -- 372/372 dense donors copy only through the alias;
+X-P2-SHAM -- one-byte block-write density without a usable copier gives 0/96 donors (density rival killed); X-P2-PLANT --
+the plain two-byte copy planted once in every initial genome gives 32/96 (vs 0 plain, 49 dense). Acquisition is limited by
+the AVAILABILITY of copy-capable material; the alias acts mainly by making it common. E-W1-1 stands as measured; its
+'encoding accessibility' reading narrows to 'frequency/availability'.
+Synthesis: campaigns/npe-p2-endogenous-heredity-2026-09-27/SYNTHESIS.md.
+
+## ARC3 (2026-09-28; theory-aware by date) -- corrections and delegate findings so far
+
+**CORRECTION (mutation operator):** P2 described the 7ae3 cell (Z8_64) as 'per-byte mutation with frame shifts'. That is WRONG
+for these cells: both use the OPERAND operator with no insertions/deletions; in 7ae3 opcode bytes never mutate (a lineage's
+program skeleton is fixed; only copying changes it; ~34 mutations per lineage in 2000 epochs), in ffa6 slot offsets 1-3
+mutate (~239). Nothing dies in these cells: the only selection is being overwritten by a copy. (ARC3 accessibility delegate,
+campaigns/npe-arc3-2026-09-28/delegates/accessibility/ACCESSIBILITY.md.) P2's X-P2-BRIDGE axis reading ('mutation topology')
+is affected; its numbers are not.
+**Self-location (transplant, delegate):** all 280/280 SELF-free copiers fail when moved >= 16 bytes (absolute addresses; correct
+registers at the new position rescue none); 210/332 need the 128-byte wrap; 33 of 52 SELF users still copy to a fixed
+destination; only 2 genomes (one motif, seed 16000026) are true locators (any offset, other tape sizes, random registers, never
+self-poison). 182/332 copiers set every register they use ('state-free'), and state-freedom predicts state robustness (3/179
+self-poison vs 74/143; p = 1.5e-28). Register initialization is commonly internalized; self-location almost never.
+**Acquisition landscape (delegate):** no random genome or its 1-2-step mutants is competent (0/6,400); competent copiers sit on
+broad neutral networks (72-80% of 1-step mutants stay competent); losing the copy instruction is a trap (0/144 recovered).
+Acquisition across arms is predicted by CARRIER EXPOSURE (copy-carrier genomes screened, = frequency x persistence): one hazard
+fitted on DENSE predicts PLANT 28.6 (obs 32), fitted on PLANT predicts DENSE 54.8 (obs 49); starting frequency mis-orders them.
+Suggestive (one parameter, two informative arms). A neutral mutation walk reaches competence at about the soup's rate (pilot:
+ratio 1.75, p = 0.20): no evidence yet that the soup helps FIRST APPEARANCE; its advantage is spread.
+**RULER DEFECT (X-A3-FORENSIC-16000006):** the self-state robustness ruler used since W1 X-DD-SELFSTATE ('copies after ONE own
+execution', rate_1 >= 0.25 rate_0) is a one-point snapshot of carried register state that can CYCLE (7ae3 16000006 founders copy
+after 0, 2 and 5 own executions and fail after 1, 3, 4). 'Poisoned / robust' labels in X-DD-SELFSTATE, X-P2-ENDOSTATE and
+X-P2-D0CHECK are therefore unreliable; their CLAIMS about establishment sorting and the single candidate are superseded by the
+forensic result below. New work uses a cycle-aware rule (k = 1..6). The candidate endogenous transition (7ae3 16000006) is KILLED
+as a single-change transition (knock-in 0/5, revert 0/8, cross-graft 0/12), but robustness DID arise within D0's lineage by
+distributed change (118-126 replications, 49-54/64 bytes, lost and regained on 6/8 paths), via the copier fixing its own
+destination (LD DE,3200 before LDDR) -- i.e. internalized register initialization; partial knock-in effect (random-start
+robustness 0 -> ~0.33). n = 1 lineage.
+**RULER DEFECT (external, Artemis #793, 2026-09-28):** P-11 certifies CONSTRUCTION, not heredity -- it never perturbs the donor,
+so a program writing a fixed pattern that matches itself ('painter') passes like a copier (Artemis panel: painters certified
+0.90-1.00). Nestor's check: DOM (dominant-byte share) of the 1,278 competent P2-corpus genomes -- 0 >= 0.5 (max 0.28), panel donors
+0.03-0.08; together with the transplant study (offset-64 LDIR/LDDR copiers moving their own bytes), painter contamination of the
+Nestor donor corpora appears negligible. Formal CVT-R heredity certification requested from Artemis on three named donor sets.
+Standing rule from here: 'competent' = P-11 construction-competent; heredity claims need CVT-R or a byte-provenance ruler.
+**QUALIFICATION OF CYCLE-9-ERA COUNTS (Odysseus #803, converging with Artemis #793):** functional + causal recertification of the
+57 S1-C P-11-certified donors (first certified donor per run): 2 copy themselves, 1 context-dependent, 17 paint (mostly 0x36
+near-homopolymers), 37 do nothing from any reachable register state (16 copy only when handed registers). Any Nestor statement that
+counted S1-C / S1C-P11-REASSAY 'certified donors' as replicators is QUALIFIED to 'P-11-certified construction events'. The 7ae3
+founder underlying C9-H2, C-RUNAWAY, C-CRITICAL-MASS, C-ATOMIC and C-CORE is one of the genuine copiers (Artemis/Odysseus), so
+those claims keep their evidential basis; the W1/P2/ARC3 dense-VM corpora are separately screened (DOM, transplants). Evidence:
+roles/Odysseus/expedition/recert/ (RESULT.md s5), roles/Artemis/challenge/p11/.
+
+**E-A3-1 C-A3-INTERNALIZE CONFIRMED (frozen 86f929241, 144 fresh runs):** in the default CARRIED NPE world, reproductive lineages
+founded only by donors that depend on environment-supplied register values RECURRENTLY come to carry descendants that are
+competent from arbitrary (random) entry registers -- endogenous internalization of register initialization: 8 independent runs
+(bar 4; ffa6 7, 7ae3 1); at first donor appearance state-freedom is essentially absent (93/94 donor runs). Alternative route
+seen in 18 runs: replacement by another lineage. Path: X-A3-ENDOSTATE-R (0.32 -> 0.65) -> X-A3-SFLINEAGE (3/5 lineages) ->
+X-A3-FORENSIC-16000006 (distributed change; the copier fixes its own destination) -> C-A3-INTERNALIZE. Scope and limits: dense VM;
+'competent' is P-11 construction-competence (painter screen negative; CVT-R pending); self-location (tape placement) is NOT
+internalized in the same corpora (280/280 SELF-free copiers tape-anchored).
+
+## ARC3: X-A3-WITHDRAW (2026-09-28, closed 10:12): withdrawal SPEED does not matter; withdrawal itself is followed by a robustness rise inside the lineage
+- **Preregistered question** (Bourrat 2022: internalization needs GRADUAL scaffold withdrawal): CLEAN_NULL.
+  - PERSISTS(GRADUAL) − PERSISTS(ABRUPT) = 0.00.
+  - In each arm (paired seeds, identical until epoch 300), 12 of 32 runs established and 12 of 12 persisted.
+  - The zero-specialist lineages did not collapse when the scaffold was removed, abruptly or gradually.
+- **Reported readout (not the classification):** the cycle-aware robust share of the founder lineage's competent
+  genomes.
+
+  | arm | epoch 300 | end |
+  |---|---|---|
+  | ABRUPT | 0.22 | 0.94 |
+  | GRADUAL | 0.24 | 0.93 |
+  | CONTROL_ZERO (scaffold kept) | 0.15 | 0.10 |
+
+  The founder lineage still holds the population at the end and was mostly NOT robust at withdrawal, so the rise is
+  change within the lineage, not sorting.
+- **Reading:** removing the register-reset scaffold is followed, within ~1700 epochs, by the lineage coming to cope with
+  carried state itself. This is register-initialization internalization under scaffold REMOVAL, the counterpart of
+  C-A3-INTERNALIZE, which was in the default world.
+- EXPLORE only. The frozen CONFIRM C-A3-WITHDRAW-ROBUST is declared (PLANNED).
+- Theory-aware; not offered as SI evidence.

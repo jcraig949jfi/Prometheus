@@ -1,0 +1,42 @@
+{
+ "verdict": "CONFIRMED",
+ "controls": {
+  "selftest": {
+   "plain": false,
+   "dense": true
+  },
+  "vm_ok": true,
+  "pc_7ae3_competent": {
+   "plain": true,
+   "dense": true
+  }
+ },
+ "L2_runs": {
+  "PLAIN": 1,
+  "DENSE_COPY": 39
+ },
+ "n": {
+  "PLAIN": 64,
+  "DENSE_COPY": 64
+ },
+ "share_diff": 0.5938,
+ "fisher_p": 1.0171264457572148e-14,
+ "secondary": {
+  "PLAIN": {
+   "L4": 0,
+   "L4_given_L2": 0,
+   "per_cell_L2": {
+    "7ae3": 0,
+    "ffa6": 1
+   }
+  },
+  "DENSE_COPY": {
+   "L4": 15,
+   "L4_given_L2": 15,
+   "per_cell_L2": {
+    "7ae3": 14,
+    "ffa6": 25
+   }
+  }
+ }
+}

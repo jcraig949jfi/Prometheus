@@ -1,0 +1,283 @@
+=== ('DENSE', '7ae3', '0', 'LDIR', 0)  x_dd_dense_copy/DENSE_COPY/16000028  rate_noself=1.00  side_pass_10=[10, 0]  00000daa50aa6a8ca5dfa9103f299891b0aaabffabab3daae80a1e40d387d14de5eba42a18fe004bcd7ec9e2dd7002020065ea492e0bb200f650ab0008ab0000
++000  NOP
++001  NOP
++002  DEC C   ; C=FF
++003  XOR A,D
++004  LD D,B
++005  XOR A,D
++006  LD L,D
++007  ADC A,H
++008  AND A,L
++009  nop(DF)
++010  XOR A,C   ; A=FF
++011  nop(10)
++012  nop(3F)
++013  nop(29)
++014  SBC A,B
++015  SUB A,C   ; A=00
++016  OR A,B
++017  XOR A,D
++018  XOR A,E
++019  nop(FF)
++020  XOR A,E
++021  XOR A,E
++022  DEC A   ; A=FF
++023  XOR A,D
++024  nop(E8)
++025  LD A,(BC)   ; A=77
++026  LD E,40   ; E=40
++028  OUT
++030  nop(D1)
++031  LD C,L   ; C=00
++032  LDIR*  (E5 alias)   <- HL=0000 DE=0040 BC=0000 (HL&127=0, DE&127=64)
+
+=== ('DENSE', '7ae3', '0', 'LDDR', 1)  x_dd_dense_copy/DENSE_COPY/16000006  rate_noself=1.00  side_pass_10=[10, 0]  000a0ab33d26d48197fb0d24cb9421bf3c23580011002173e7f3d187de9dd6010d9b854f6d7c26daa0094d5040043bd4cf55dfc96e0230e594ac80337cc3997e
++000  NOP
++001  LD A,(BC)
++002  LD A,(BC)
++003  OR A,E
++004  DEC A   ; A=FF
++005  LD H,D4   ; H=D4
++007  ADD A,C
++008  SUB A,A   ; A=00
++009  nop(FB)
++010  DEC C   ; C=FF
++011  INC H   ; H=D5
++012  nop(CB)
++013  SUB A,H   ; A=2B
++014  LD HL,3CBF   ; H=3C L=BF
++017  INC HL   ; L=C0
++018  LD E,B
++019  NOP
++020  LD DE,2100   ; D=21
++023  LD (HL),E
++024  LDDR*  (E7 alias)   <- HL=3CC0 DE=2100 BC=00FF (HL&127=64, DE&127=0)
+
+=== ('DENSE', 'ffa6', '0', 'LDIR', 0)  c_dense_copy/DENSE_COPY/17000001  rate_noself=1.00  side_pass_10=[10, 0]  0000000000000000718ebb64008750b52a60d30042fcc5dd503c53108448a77100ff4ae4006c1ec11b70fcdfe57e3f53658ca69a0000330eedc27ee266b780ef
++000  NOP
++001  NOP
++002  NOP
++003  NOP
++004  NOP
++005  NOP
++006  NOP
++007  NOP
++008  LD (HL),C
++009  ADC A,(HL)
++010  CP A,E
++011  LD H,H
++012  NOP
++013  ADD A,A
++014  LD D,B
++015  OR A,L
++016  nop(2A)
++017  LD H,B
++018  OUT
++020  LD B,D
++021  nop(FC)
++022  nop(C5)
++023  nop(DD)
++024  LD D,B
++025  INC A   ; A=01
++026  LD D,E
++027  nop(10)
++028  ADD A,H
++029  LD C,B
++030  AND A,A
++031  LD (HL),C
++032  NOP
++033  nop(FF)
++034  LD C,D
++035  nop(E4)
++036  NOP
++037  LD L,H
++038  LD E,C1   ; E=C1
++040  DEC DE   ; E=C0
++041  LD (HL),B
++042  nop(FC)
++043  nop(DF)
++044  LDIR*  (E5 alias)   <- HL=0000 DE=00C0 BC=0000 (HL&127=0, DE&127=64)
+
+=== ('DENSE', 'ffa6', '0', 'LDDR', 1)  x_dd_dense_copy/DENSE_COPY/16000032  rate_noself=1.00  side_pass_10=[10, 0]  000044bc5d992038e24e26cf88af0600d2a5cedb796e6500f79b00c1671f23991c42bb47ea440c5f48cf2ec002e74c5947c0fbb42f2cc1acad83d6499db8bdc6
++000  NOP
++001  NOP
++002  LD B,H
++003  CP A,H
++004  LD E,L
++005  SBC A,C
++006  JRNZ +56
++008  nop(E2)
++009  LD C,(HL)
++010  LD H,CF   ; H=CF
++012  ADC A,B
++013  XOR A,A
++014  LD B,00
++016  JPNC CEA5
++037  LD B,H   ; B=CF
++038  INC C   ; C=01
++039  LD E,A
++040  LD C,B   ; C=CF
++041  nop(CF)
++042  LD L,C0   ; L=C0
++044  LD (BC),A
++045  LDDR*  (E7 alias)   <- HL=CFC0 DE=0000 BC=CFCF (HL&127=64, DE&127=0)
+
+=== ('DENSE', 'ffa6', '0', 'LDIR', 127)  c_dense_copy/DENSE_COPY/17000017  rate_noself=1.00  side_pass_10=[10, 0]  009c9054572f11c0411aa1803f86789ef48af2247db114c4ea7d603921ddf938636dfe9c17c9cf1b8e217ff3e51a04b6f98091b02acb6bac08a832b258c91d98
++000  NOP
++001  SBC A,H
++002  SUB A,B
++003  LD D,H
++004  LD D,A
++005  nop(2F)
++006  LD DE,41C0   ; D=41 E=C0
++009  LD A,(DE)   ; A=68
++010  AND A,C   ; A=00
++011  ADD A,B
++012  nop(3F)
++013  ADD A,(HL)
++014  LD A,B
++015  SBC A,(HL)
++016  nop(F4)
++017  ADC A,D   ; A=41
++018  nop(F2)
++019  INC H   ; H=01
++020  LD A,L   ; A=00
++021  OR A,C
++022  INC D   ; D=42
++023  nop(C4)
++024  nop(EA)
++025  LD A,L
++026  LD H,B   ; H=00
++027  nop(39)
++028  LD HL,F9DD   ; H=F9 L=DD
++031  JRC +99
++033  LD L,L
++034  CP A,9C
++036  nop(17)
++037  nop(C9)
++038  nop(CF)
++039  DEC DE   ; E=BF
++040  ADC A,(HL)   ; A=D9
++041  LD HL,F37F   ; H=F3 L=7F
++044  LDIR*  (E5 alias)   <- HL=F37F DE=42BF BC=0000 (HL&127=127, DE&127=63)
+
+=== ('DENSE', 'ffa6', '1', 'LDIR', 0)  x_dd_dense_copy/DENSE_COPY/16000000  rate_noself=0.75  side_pass_10=[0, 6]  d9edb4130b81bcd2e6b3d2ffd5cfa69a3e80c4d01f78588ea95813521d7a8cad5210c8cb189cf291331d7dbf21c025e581b0a1f567554af0f6aa606a681a3339
++000  nop(D9)
++001  ED B4
++003  INC DE   ; E=01
++004  DEC BC   ; B=FF C=FF
++005  ADD A,C   ; A=FF
++006  CP A,H
++007  JPNC B3E6
++038  nop(F2)
++039  SUB A,C   ; A=00
++040  nop(33)
++041  DEC E   ; E=00
++042  LD A,L
++043  CP A,A
++044  LD HL,25C0   ; H=25 L=C0
++047  LDIR*  (E5 alias)   <- HL=25C0 DE=0000 BC=FFFF (HL&127=64, DE&127=0)
+
+=== ('PLAIN', '7ae3', '0', 'LDDR', 1)  x_donor_discovery/PLAIN/15000022  rate_noself=1.00  side_pass_10=[10, 0]  00014400c021135ad6245737091da72c21046689e2d75e8f98bb66ba66531ff460b9108b5fac440c416a9f5ff1d926739350edb8008596833aaf0c4d4e01c4ea
++000  NOP
++001  LD BC,0044   ; C=44
++004  nop(C0)
++005  LD HL,5A13   ; H=5A L=13
++008  SUB A,24   ; A=DC
++010  LD D,A   ; D=DC
++011  nop(37)
++012  nop(09)
++013  DEC E   ; E=FF
++014  AND A,A
++015  INC L   ; L=14
++016  LD HL,6604   ; H=66 L=04
++019  ADC A,C   ; A=20
++020  nop(E2)
++021  nop(D7)
++022  LD E,(HL)   ; E=C0
++023  ADC A,A   ; A=41
++024  SBC A,B
++025  CP A,E
++026  LD H,(HL)   ; H=C0
++027  CP A,D
++028  LD H,(HL)
++029  LD D,E   ; D=C0
++030  nop(1F)
++031  nop(F4)
++032  LD H,B   ; H=00
++033  CP A,C
++034  nop(10)
++035  ADC A,E   ; A=02
++036  LD E,A   ; E=02
++037  XOR A,H
++038  LD B,H
++039  INC C   ; C=45
++040  LD B,C   ; B=45
++041  LD L,D   ; L=C0
++042  SBC A,A   ; A=00
++043  LD E,A   ; E=00
++044  nop(F1)
++045  nop(D9)
++046  LD H,73   ; H=73
++048  SUB A,E
++049  LD D,B   ; D=45
++050  LDDR   <- HL=73C0 DE=4500 BC=4545 (HL&127=64, DE&127=0)
+
+=== ('DENSE', 'ffa6', '0', 'LDIR', 127)  x_dd_establish/DENSE_COPY/16000011  rate_noself=1.00  side_pass_10=[9, 0]  378c4b0abcc6f189dbd559008d46930483171ec1d1a11bf70d233895a8909c698b162db6b4ef0da9d79743088128c49b912a2748f3bcbdef7e1f7173a61be5e9
++000  nop(37)
++001  ADC A,H
++002  LD C,E
++003  LD A,(BC)   ; A=37
++004  CP A,H
++005  ADD A,F1   ; A=28
++007  ADC A,C   ; A=29
++008  IN   ; A=00
++010  LD E,C
++011  NOP
++012  ADC A,L
++013  LD B,(HL)   ; B=37
++014  SUB A,E
++015  INC B   ; B=38
++016  ADD A,E
++017  nop(17)
++018  LD E,C1   ; E=C1
++020  nop(D1)
++021  AND A,C
++022  DEC DE   ; E=C0
++023  nop(F7)
++024  DEC C   ; C=FF
++025  INC HL   ; L=01
++026  JRC -107
++028  XOR A,B   ; A=38
++029  SUB A,B   ; A=00
++030  SBC A,H
++031  LD L,C   ; L=FF
++032  ADC A,E   ; A=C0
++033  LD D,2D   ; D=2D
++035  OR A,(HL)   ; A=CA
++036  OR A,H
++037  nop(EF)
++038  DEC C   ; C=FE
++039  XOR A,C   ; A=34
++040  nop(D7)
++041  SUB A,A   ; A=00
++042  LD B,E   ; B=C0
++043  nop(08)
++044  ADD A,C   ; A=FE
++045  JRZ -60
++047  SBC A,E   ; A=3E
++048  SUB A,C   ; A=40
++049  nop(2A)
++050  nop(27)
++051  LD C,B   ; C=C0
++052  nop(F3)
++053  CP A,H
++054  CP A,L
++055  nop(EF)
++056  LD A,(HL)   ; A=4A
++057  nop(1F)
++058  LD (HL),C
++059  LD (HL),E
++060  AND A,(HL)   ; A=40
++061  DEC DE   ; E=BF
++062  LDIR*  (E5 alias)   <- HL=00FF DE=2DBF BC=C0C0 (HL&127=127, DE&127=63)

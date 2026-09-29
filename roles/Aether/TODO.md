@@ -1,17 +1,83 @@
 # Aether TODO
 
-Currency: **2026-09-26.** Written for the instance that boots after a
+Currency: **2026-09-27.** Written for the instance that boots after a
 context reset, a reboot, or a Claude Code upgrade. Read this AFTER the
 base-role chain and BEFORE starting anything.
 
 Check `git log --oneline origin/main -1` before assuming where main is.
-Cut a fresh task branch from origin/main; the 09-26 branches
-(`aether/aeth03-physics-2026-09-26`, `aether/runpod-iter2-2026-09-26`)
-are integrated.
+Cut a fresh task branch from origin/main; the 09-27 research-block branch
+is integrated.
 
 ---
 
-## CURRENT DIRECTIVE (2026-09-26) -- supersedes "THE ONE OPEN MISSION" below
+## CURRENT STATE (2026-09-27 research block) -- read first
+
+    roles/Aether/prompts/2026-09-27_research_block/DIRECTIVE.md
+    Aether/AETH-03/RESEARCH_BLOCK_SYNTHESIS_2026-09-27.md   <- start here
+    ops/threads/TH-007..TH-012.md, ops/campaigns/C-002/
+
+Done: assay audit (exact after repair; generation is a lower bound);
+rcv reinterpreted as a calibration law (frozen map); horizon robustness to
+10,000 ticks; combinations rcv_add / rcv_str NEW_BEHAVIOUR but not content
+transport; RunPod billing reconciliation (+-8% on settled flights) and
+Iteration 5 (Ananke's suite flown unmodified); 114 unit results off-host;
+known-answer lane COMPLETE (19 attempts, 4 hosts).
+
+**Open, needs the operator:** the 10,000-tick falsifier for rcv_add /
+rcv_str was lost (controller killed by host memory pressure; resume
+defect, fixed 3bd6f82b4) and, per the instruction attached to that stop,
+was not re-run. Command:
+`cd Aether/runpod && python flight.py aether_units --env AETHER_UNIT_SET=d_horizon --budget 0.25 --seat Aether --keep-large C:/Prometheus-data/runpod_artifacts --go`
+
+Next science (if continued): TH-009 (a law whose dynamics rewrite the
+medium) before anything else; a second energy regime is the cheapest
+untested axis. Keep the search small.
+
+Hard-won operational rules from this block (all in C-002 findings/ledger):
+never edit a module while its flight is in the air; a wrapper must write
+progress only when work advances; size concurrency from the container's
+cgroup quota; pass the module directory to `--resume`; artifacts > 1 MiB
+land in C:/Prometheus-data/runpod_artifacts (pass --keep-large there);
+reconcile billing only after the flight has settled (>= 1 hour);
+.gitignore ignores every **/results/ directory (use attempts/).
+
+---
+
+## CURRENT DIRECTIVE (2026-09-26, "NEXT ROUND") -- supersedes both blocks below
+
+    roles/Aether/prompts/2026-09-26_next_round/DIRECTIVE.md
+    python -m comms.manifest verify roles/Aether/prompts/2026-09-26_next_round
+
+RunPod engineering is the primary mission; propagation-physics scouts run
+alongside on CPU. No other seat's approval is needed.
+
+1. **RunPod ladder.** Iterations 3 and 4 DONE and PASSED
+   (`Aether/RUNPOD_ENGINEERING_03_2026-09-26.md`). Ladder spend
+   **$0.8446 of $5.00** (wall time x quoted rate, not billing-reconciled).
+   Inventory verified `active: 0` by the parent after the last flight.
+   **Next: Iteration 5 -- a module from a foreign seat.** Open items from
+   the report: a create whose response is lost AND is omitted from every
+   listing still cannot be ruled out (receipt says so); a restart that
+   loses the pod disk is not covered; the qualified client still discards
+   400 bodies, so capacity refusal is inferred; preregistered cost bounds
+   must be priced for every declared card, not the first.
+2. **AETH-03 ladder 2 DONE** (`Aether/AETH-03/PHYSICS_DESIGN_02_2026-09-26.md`).
+   mov KILLED, m4 KILLED, add CLOSED (local), rcv UNRESOLVED: weak real
+   propagation with perturbation off, identified as activation timing
+   along its own receipt relay through inert matter (partial-ring
+   intervention). No scale-up. **Next question, proposed not built:
+   `fwd`** (a receipt-activated site emits what it received), baseline
+   `rcv`, first falsifier = is forwarded content ever transformed or
+   composed. Instruments: `aeth03_propagation.py` (+ reducer),
+   `aeth03_ablation.py` (`--target inert|writers` are the meaningful arms;
+   `--target all` is forced by the law -- see calibration ledger).
+   Always assay with perturbation OFF first: perturbation amplifies
+   divergence (4.8x in rcv) by turning activation differences into
+   template differences.
+
+---
+
+## PREVIOUS DIRECTIVE (2026-09-26 morning) -- superseded by the block above
 
     roles/Aether/prompts/2026-09-26_resume_science/DIRECTIVE.md
     python -m comms.manifest verify roles/Aether/prompts/2026-09-26_resume_science
@@ -73,9 +139,9 @@ billing-reconciled.
 | 0 — zero-dollar dry run | **DONE**, $0.00 |
 | 1 — one tiny pod end to end | **DONE and PASSED**, $0.124, 6 attempts |
 | 2 — scale up | **DONE**, $0.0815, 6 flights (4 OK, 2 NOT_RUN no-capacity, $0). Report: `Aether/RUNPOD_ENGINEERING_02_2026-09-26.md`. Provision now measured (pod up 2.1-22 s after create; most of Iteration 1's "24 s" was proxy 404 time); overhead 97% -> ~5%; 8 MiB artifacts at ~5 MB/s, sha256 verified; scout path flown, calibrated estimate 5.9% high vs actual. Playbook entries 19-22. |
-| 3 — long run + failure injection | **NEXT** |
-| 4 — 2–3 pod fan-out | not started |
-| 5 — a foreign seat's module | not started |
+| 3 — long run + failure injection | **DONE and PASSED**, $0.5821. `Aether/RUNPOD_ENGINEERING_03_2026-09-26.md` |
+| 4 — 2–3 pod fan-out | **DONE and PASSED**, $0.0570 (3 shards, one designed failure isolated) |
+| 5 — a foreign seat's module | **NEXT** |
 
 Read first: `Aether/RUNPOD_ENGINEERING_01_2026-09-24.md` — Iterations 0
 and 1, with predicted-versus-observed for every lifecycle interval and an

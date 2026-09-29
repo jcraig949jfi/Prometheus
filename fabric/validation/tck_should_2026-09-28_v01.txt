@@ -1,0 +1,32 @@
+....sssss.ss.ss.ss.s                                                     [100%]
+═══════════════════════════════════════════════════════
+             A2A TCK Compatibility Report              
+═══════════════════════════════════════════════════════
+SUT: http://127.0.0.1:8711
+Timestamp: 2026-09-28T17:49:52.323177+00:00
+
+OVERALL COMPATIBILITY: 5.4%
+
+┌─────────────┬────────┬────────┬─────────┬───────┐
+│ Level       │ Passed │ Failed │ Skipped │ Total │
+├─────────────┼────────┼────────┼─────────┼───────┤
+│ MUST        │      0 │    114 │       0 │   114 │
+│ SHOULD      │      7 │      4 │       0 │    11 │
+│ MAY         │      0 │      4 │       0 │     4 │
+└─────────────┴────────┴────────┴─────────┴───────┘
+
+BY TRANSPORT:
+  agent_card:    3/3 ✓
+  jsonrpc:       5/5 ✓
+  http_json:     0/5 (5 skipped) ✓
+  grpc:          0/4 (4 skipped) ✓
+
+═══════════════════════════════════════════════════════
+
+
+=========================== short test summary info ============================
+SKIPPED [1] tests/compatibility/core_operations/test_data_model.py:354: Transport 'http_json' not configured
+SKIPPED [3] tests/compatibility/core_operations/test_requirements.py:197: No requirements at this level
+SKIPPED [4] tests/compatibility/_test_helpers.py:86: Transport 'grpc' not configured
+SKIPPED [4] tests/compatibility/_test_helpers.py:86: Transport 'http_json' not configured
+8 passed, 12 skipped, 245 deselected in 21.01s

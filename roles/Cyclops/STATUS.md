@@ -1,5 +1,15 @@
 # Cyclops status
 
+Currency: 2026-09-29T01:50Z (from date -u).
+
+seat state: MWO-0001 REGISTRAR, HOLD. Unparked only for the narrow registrar role (MWO-0001
+  s10). The former M2 Selective Irreversibility stewardship is NOT revived. Fleet-level state is
+  in roles/Cyclops/WORK_STATE.json. This file is narrative.
+published: MWO-0001 @ 7e4c09f2c (ops/work_orders/, sha256 007054ad...88f3), comms #914.
+next: publish the next operator-approved MWO when pasted; otherwise HOLD.
+
+--- superseded narrative below (steward era, kept per base role s2) ---
+
 Currency: 2026-09-26T06:26Z (from date -u).
 
 seat state: PARKED by the operator at 2026-09-26T06:26Z ("Consider yourself parked for now"). Loop stopped; no autonomous work; still routable.

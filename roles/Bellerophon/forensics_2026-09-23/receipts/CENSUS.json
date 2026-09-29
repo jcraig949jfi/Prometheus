@@ -1,0 +1,1464 @@
+{
+ "coverage_families_by_axis_level": {
+  "env_dynamics": {
+   "COEVOLVE": 1746,
+   "DRIFT": 9207,
+   "ENV_REPRO": 7362,
+   "FIXED": 13627,
+   "PER_NICHE": 7005,
+   "SHIFT": 10465
+  },
+  "init": {
+   "RANDOM": 22900,
+   "SEEDED_HYBRID": 12703,
+   "SEEDED_REPLICATOR": 8463,
+   "SEEDED_WITNESS": 5346
+  },
+  "layout": {
+   "SEPARATED": 21556,
+   "SHARED": 27856
+  },
+  "mutation": {
+   "BYTE": 12515,
+   "OPCODE": 13200,
+   "OPERAND": 11434,
+   "STRUCTURAL": 12263
+  },
+  "mutation_rate": {
+   "HIGH": 16460,
+   "LOW": 16506,
+   "MED": 16446
+  },
+  "pressure": {
+   "EXPLICIT": 4560,
+   "EXPLOIT": 5819,
+   "GATED_INTERACTION": 5389,
+   "IMPLICIT": 9226,
+   "METABOLIC": 6819,
+   "MINIMAL_CRITERION": 3389,
+   "NOVELTY": 5669,
+   "QD": 4170,
+   "RESOURCE_GATED": 4371
+  },
+  "read_gate": {
+   "ABR": 21709,
+   "FORCED": 27703
+  },
+  "recombination": {
+   "CROSSOVER": 3506,
+   "NONE": 45906
+  },
+  "representation": {
+   "BYTECODE32": 15252,
+   "VM_COPY": 16700,
+   "Z80_64": 17460
+  },
+  "reproduction": {
+   "CONSTRUCTIVE": 3911,
+   "ENDOGENOUS_COPY": 13159,
+   "ENDOGENOUS_PARTIAL": 6481,
+   "EXTERNAL": 17383,
+   "OVERWRITE": 5086,
+   "PAIR_EXECUTION": 3392
+  },
+  "scoring": {
+   "ATOMIC": 18741,
+   "INCREMENTAL": 21156,
+   "NEUTRAL": 9515
+  },
+  "spatial": {
+   "LOCAL": 3147,
+   "NICHES_COMPETENCE_MIG": 4950,
+   "NICHES_ENV_MIG": 4609,
+   "NICHES_HIGH_MIG": 5544,
+   "NICHES_ISOLATED": 4404,
+   "NICHES_LOW_MIG": 6559,
+   "NICHES_PERIODIC": 5439,
+   "NICHES_POLLINATION": 6834,
+   "RESERVOIR": 4423,
+   "WELL_MIXED": 3503
+  },
+  "task": {
+   "COND_MULTI": 9619,
+   "COND_ONE": 8269,
+   "CONST": 8701,
+   "ECHO": 7837,
+   "INC": 7512,
+   "SUM2": 7474
+  },
+  "world": {
+   "GRAPH": 1624,
+   "GRID": 3250,
+   "NICHES": 42762,
+   "SOUP": 1776
+  }
+ },
+ "coverage_runs_by_axis_level": {
+  "env_dynamics": {
+   "COEVOLVE": 2129,
+   "DRIFT": 11537,
+   "ENV_REPRO": 9635,
+   "FIXED": 17837,
+   "PER_NICHE": 8889,
+   "SHIFT": 13220
+  },
+  "init": {
+   "RANDOM": 26050,
+   "SEEDED_HYBRID": 19728,
+   "SEEDED_REPLICATOR": 11237,
+   "SEEDED_WITNESS": 6232
+  },
+  "layout": {
+   "SEPARATED": 27070,
+   "SHARED": 36177
+  },
+  "mutation": {
+   "BYTE": 15783,
+   "OPCODE": 17273,
+   "OPERAND": 14601,
+   "STRUCTURAL": 15590
+  },
+  "mutation_rate": {
+   "HIGH": 20385,
+   "LOW": 21594,
+   "MED": 21268
+  },
+  "pressure": {
+   "EXPLICIT": 5993,
+   "EXPLOIT": 7206,
+   "GATED_INTERACTION": 7893,
+   "IMPLICIT": 11395,
+   "METABOLIC": 8639,
+   "MINIMAL_CRITERION": 4054,
+   "NOVELTY": 6963,
+   "QD": 5373,
+   "RESOURCE_GATED": 5731
+  },
+  "read_gate": {
+   "ABR": 26664,
+   "FORCED": 36583
+  },
+  "recombination": {
+   "CROSSOVER": 3978,
+   "NONE": 59269
+  },
+  "representation": {
+   "BYTECODE32": 18863,
+   "VM_COPY": 21514,
+   "Z80_64": 22870
+  },
+  "reproduction": {
+   "CONSTRUCTIVE": 4390,
+   "ENDOGENOUS_COPY": 17624,
+   "ENDOGENOUS_PARTIAL": 8360,
+   "EXTERNAL": 22159,
+   "OVERWRITE": 6258,
+   "PAIR_EXECUTION": 4456
+  },
+  "scoring": {
+   "ATOMIC": 24542,
+   "INCREMENTAL": 28131,
+   "NEUTRAL": 10574
+  },
+  "spatial": {
+   "LOCAL": 3572,
+   "NICHES_COMPETENCE_MIG": 6129,
+   "NICHES_ENV_MIG": 5678,
+   "NICHES_HIGH_MIG": 7341,
+   "NICHES_ISOLATED": 5015,
+   "NICHES_LOW_MIG": 8673,
+   "NICHES_PERIODIC": 6999,
+   "NICHES_POLLINATION": 9655,
+   "RESERVOIR": 6113,
+   "WELL_MIXED": 4072
+  },
+  "task": {
+   "COND_MULTI": 12551,
+   "COND_ONE": 10817,
+   "CONST": 10670,
+   "ECHO": 10252,
+   "INC": 9652,
+   "SUM2": 9305
+  },
+  "world": {
+   "GRAPH": 1807,
+   "GRID": 3790,
+   "NICHES": 55603,
+   "SOUP": 2047
+  }
+ },
+ "decisions_by_kind": {
+  "exploit": 6437,
+  "late_stage": 119,
+  "positive_controls": 1,
+  "promote": 31196,
+  "retire": 18,
+  "start": 1,
+  "stop": 1
+ },
+ "families": {
+  "by_creating_kind": {
+   "control": 11065,
+   "exploration": 18566,
+   "intervention": 1583,
+   "positive_control": 3,
+   "promoted": 12295,
+   "verification": 5900
+  },
+  "families_with_1_run": 39613,
+  "n": 49412,
+  "parent_depth_hist": {
+   "0": 18569,
+   "1": 15809,
+   "2": 7876,
+   "3": 4093,
+   "4": 1837,
+   "5": 786,
+   "6": 300,
+   "7": 103,
+   "8": 30,
+   "9": 9
+  },
+  "promoted": 31196,
+  "promotion_score_hist_all_runs": {
+   "0": 6468,
+   "1": 13000,
+   "2": 13706,
+   "3": 10649,
+   "4": 7708,
+   "5": 5392,
+   "6": 4028,
+   "7": 2004,
+   "8": 278,
+   "9": 13,
+   "10": 1
+  },
+  "promotions_by_promoting_run_kind": {
+   "control": 5662,
+   "exploration": 8485,
+   "intervention": 1926,
+   "promoted": 9861,
+   "verification": 5262
+  },
+  "retired": 18,
+  "runs_per_family_hist": {
+   "1": 39613,
+   "2": 6654,
+   "3": 2424,
+   "4": 581,
+   "5": 117,
+   "6": 17,
+   "7": 5,
+   "8": 1
+  },
+  "unique_vectors": 49412
+ },
+ "flag_family_overlap": {
+  "REACHED_INCREMENTAL_NOT_ATOMIC & REACHED_UNDER_ENDOGENOUS_NOT_EXTERNAL": 20,
+  "REACHED_INCREMENTAL_NOT_ATOMIC & REPRODUCTIVE_ARCHITECTURE_RESPONDED_TO_TASK": 23,
+  "REACHED_INCREMENTAL_NOT_ATOMIC & REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY": 13,
+  "REACHED_INCREMENTAL_NOT_ATOMIC & RESERVOIR_CROSSED_MOAT": 0,
+  "REACHED_UNDER_ENDOGENOUS_NOT_EXTERNAL & REPRODUCTIVE_ARCHITECTURE_RESPONDED_TO_TASK": 60,
+  "REACHED_UNDER_ENDOGENOUS_NOT_EXTERNAL & REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY": 25,
+  "REACHED_UNDER_ENDOGENOUS_NOT_EXTERNAL & RESERVOIR_CROSSED_MOAT": 0,
+  "REPRODUCTIVE_ARCHITECTURE_RESPONDED_TO_TASK & REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY": 47,
+  "REPRODUCTIVE_ARCHITECTURE_RESPONDED_TO_TASK & RESERVOIR_CROSSED_MOAT": 0,
+  "REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY & RESERVOIR_CROSSED_MOAT": 0
+ },
+ "flag_run_overlap": {
+  "REPRODUCTIVE_ARCHITECTURE_RESPONDED_TO_TASK & REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY": 8
+ },
+ "flag_union_families": 1297,
+ "flags": {
+  "REACHED_INCREMENTAL_NOT_ATOMIC": {
+   "by_family_creating_kind": {
+    "control": 24,
+    "exploration": 11,
+    "intervention": 23,
+    "promoted": 29,
+    "verification": 49
+   },
+   "by_init": {
+    "RANDOM": 31,
+    "SEEDED_HYBRID": 79,
+    "SEEDED_REPLICATOR": 18,
+    "SEEDED_WITNESS": 8
+   },
+   "by_mutation": {
+    "BYTE/HIGH": 8,
+    "BYTE/LOW": 13,
+    "BYTE/MED": 15,
+    "OPCODE/HIGH": 7,
+    "OPCODE/LOW": 13,
+    "OPCODE/MED": 18,
+    "OPERAND/HIGH": 8,
+    "OPERAND/LOW": 13,
+    "OPERAND/MED": 12,
+    "STRUCTURAL/HIGH": 7,
+    "STRUCTURAL/LOW": 15,
+    "STRUCTURAL/MED": 7
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 4,
+    "ENDOGENOUS_COPY": 49,
+    "ENDOGENOUS_PARTIAL": 19,
+    "EXTERNAL": 47,
+    "OVERWRITE": 9,
+    "PAIR_EXECUTION": 8
+   },
+   "by_scoring": {
+    "INCREMENTAL": 136
+   },
+   "by_task": {
+    "COND_MULTI": 23,
+    "COND_ONE": 29,
+    "CONST": 30,
+    "ECHO": 13,
+    "INC": 35,
+    "SUM2": 6
+   },
+   "by_topology": {
+    "GRAPH/LOCAL": 3,
+    "GRID/LOCAL": 1,
+    "GRID/WELL_MIXED": 2,
+    "NICHES/NICHES_COMPETENCE_MIG": 8,
+    "NICHES/NICHES_ENV_MIG": 11,
+    "NICHES/NICHES_HIGH_MIG": 15,
+    "NICHES/NICHES_ISOLATED": 7,
+    "NICHES/NICHES_LOW_MIG": 32,
+    "NICHES/NICHES_PERIODIC": 9,
+    "NICHES/NICHES_POLLINATION": 25,
+    "NICHES/RESERVOIR": 18,
+    "SOUP/WELL_MIXED": 5
+   },
+   "events": 136,
+   "unique_families": 136,
+   "unique_runs": null
+  },
+  "REACHED_UNDER_ENDOGENOUS_NOT_EXTERNAL": {
+   "by_family_creating_kind": {
+    "control": 54,
+    "exploration": 144,
+    "intervention": 20,
+    "promoted": 107,
+    "verification": 68
+   },
+   "by_init": {
+    "RANDOM": 32,
+    "SEEDED_HYBRID": 252,
+    "SEEDED_REPLICATOR": 28,
+    "SEEDED_WITNESS": 81
+   },
+   "by_mutation": {
+    "BYTE/HIGH": 5,
+    "BYTE/LOW": 55,
+    "BYTE/MED": 12,
+    "OPCODE/HIGH": 15,
+    "OPCODE/LOW": 45,
+    "OPCODE/MED": 23,
+    "OPERAND/HIGH": 30,
+    "OPERAND/LOW": 45,
+    "OPERAND/MED": 47,
+    "STRUCTURAL/HIGH": 12,
+    "STRUCTURAL/LOW": 86,
+    "STRUCTURAL/MED": 18
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 53,
+    "ENDOGENOUS_COPY": 194,
+    "ENDOGENOUS_PARTIAL": 46,
+    "OVERWRITE": 63,
+    "PAIR_EXECUTION": 37
+   },
+   "by_scoring": {
+    "ATOMIC": 128,
+    "INCREMENTAL": 265
+   },
+   "by_task": {
+    "COND_MULTI": 47,
+    "COND_ONE": 68,
+    "CONST": 68,
+    "ECHO": 108,
+    "INC": 72,
+    "SUM2": 30
+   },
+   "by_topology": {
+    "GRAPH/LOCAL": 10,
+    "GRID/LOCAL": 20,
+    "GRID/WELL_MIXED": 8,
+    "NICHES/NICHES_COMPETENCE_MIG": 43,
+    "NICHES/NICHES_ENV_MIG": 36,
+    "NICHES/NICHES_HIGH_MIG": 33,
+    "NICHES/NICHES_ISOLATED": 20,
+    "NICHES/NICHES_LOW_MIG": 58,
+    "NICHES/NICHES_PERIODIC": 39,
+    "NICHES/NICHES_POLLINATION": 87,
+    "NICHES/RESERVOIR": 28,
+    "SOUP/WELL_MIXED": 11
+   },
+   "events": 393,
+   "unique_families": 393,
+   "unique_runs": null
+  },
+  "REPRODUCTIVE_ARCHITECTURE_RESPONDED_TO_TASK": {
+   "by_family_creating_kind": {
+    "control": 39,
+    "exploration": 71,
+    "intervention": 138,
+    "promoted": 174,
+    "verification": 178
+   },
+   "by_init": {
+    "RANDOM": 1,
+    "SEEDED_HYBRID": 579,
+    "SEEDED_REPLICATOR": 19,
+    "SEEDED_WITNESS": 1
+   },
+   "by_mutation": {
+    "BYTE/LOW": 37,
+    "BYTE/MED": 5,
+    "OPCODE/HIGH": 3,
+    "OPCODE/LOW": 58,
+    "OPCODE/MED": 32,
+    "OPERAND/HIGH": 91,
+    "OPERAND/LOW": 143,
+    "OPERAND/MED": 142,
+    "STRUCTURAL/HIGH": 2,
+    "STRUCTURAL/LOW": 83,
+    "STRUCTURAL/MED": 4
+   },
+   "by_reproduction": {
+    "ENDOGENOUS_COPY": 284,
+    "ENDOGENOUS_PARTIAL": 172,
+    "OVERWRITE": 81,
+    "PAIR_EXECUTION": 63
+   },
+   "by_run_kind": {
+    "control": 14,
+    "exploration": 30,
+    "intervention": 103,
+    "promoted": 110,
+    "verification": 343
+   },
+   "by_run_stage": {
+    "early": 23,
+    "late": 446,
+    "middle": 131
+   },
+   "by_scoring": {
+    "ATOMIC": 153,
+    "INCREMENTAL": 447
+   },
+   "by_task": {
+    "COND_MULTI": 100,
+    "COND_ONE": 108,
+    "CONST": 75,
+    "ECHO": 120,
+    "INC": 121,
+    "SUM2": 76
+   },
+   "by_topology": {
+    "GRAPH/LOCAL": 2,
+    "GRID/LOCAL": 8,
+    "GRID/WELL_MIXED": 8,
+    "NICHES/NICHES_COMPETENCE_MIG": 41,
+    "NICHES/NICHES_ENV_MIG": 67,
+    "NICHES/NICHES_HIGH_MIG": 43,
+    "NICHES/NICHES_ISOLATED": 63,
+    "NICHES/NICHES_LOW_MIG": 109,
+    "NICHES/NICHES_PERIODIC": 67,
+    "NICHES/NICHES_POLLINATION": 97,
+    "NICHES/RESERVOIR": 87,
+    "SOUP/WELL_MIXED": 8
+   },
+   "events": 600,
+   "flagged_runs_per_6h_window": [
+    7,
+    4,
+    7,
+    11,
+    18,
+    26,
+    22,
+    21,
+    19,
+    109,
+    226,
+    130
+   ],
+   "runs_per_family_hist": {
+    "1": 404,
+    "2": 77,
+    "3": 14
+   },
+   "unique_families": 495,
+   "unique_runs": 600
+  },
+  "REPRODUCTIVE_MACHINERY_RAISED_BENEFICIAL_DENSITY": {
+   "by_family_creating_kind": {
+    "control": 46,
+    "exploration": 55,
+    "intervention": 158,
+    "promoted": 131,
+    "verification": 103
+   },
+   "by_init": {
+    "RANDOM": 1,
+    "SEEDED_HYBRID": 396,
+    "SEEDED_REPLICATOR": 96
+   },
+   "by_mutation": {
+    "BYTE/HIGH": 7,
+    "BYTE/LOW": 54,
+    "BYTE/MED": 21,
+    "OPCODE/HIGH": 14,
+    "OPCODE/LOW": 66,
+    "OPCODE/MED": 45,
+    "OPERAND/HIGH": 29,
+    "OPERAND/LOW": 83,
+    "OPERAND/MED": 57,
+    "STRUCTURAL/HIGH": 10,
+    "STRUCTURAL/LOW": 90,
+    "STRUCTURAL/MED": 17
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 17,
+    "ENDOGENOUS_COPY": 292,
+    "ENDOGENOUS_PARTIAL": 78,
+    "OVERWRITE": 57,
+    "PAIR_EXECUTION": 49
+   },
+   "by_run_kind": {
+    "control": 21,
+    "exploration": 36,
+    "intervention": 119,
+    "promoted": 117,
+    "verification": 200
+   },
+   "by_run_stage": {
+    "early": 29,
+    "late": 319,
+    "middle": 145
+   },
+   "by_scoring": {
+    "ATOMIC": 53,
+    "INCREMENTAL": 426,
+    "NEUTRAL": 14
+   },
+   "by_task": {
+    "COND_MULTI": 204,
+    "COND_ONE": 153,
+    "CONST": 2,
+    "ECHO": 27,
+    "INC": 33,
+    "SUM2": 74
+   },
+   "by_topology": {
+    "GRAPH/LOCAL": 5,
+    "GRID/LOCAL": 11,
+    "GRID/WELL_MIXED": 16,
+    "NICHES/NICHES_COMPETENCE_MIG": 61,
+    "NICHES/NICHES_ENV_MIG": 42,
+    "NICHES/NICHES_HIGH_MIG": 66,
+    "NICHES/NICHES_ISOLATED": 25,
+    "NICHES/NICHES_LOW_MIG": 79,
+    "NICHES/NICHES_PERIODIC": 71,
+    "NICHES/NICHES_POLLINATION": 64,
+    "NICHES/RESERVOIR": 36,
+    "SOUP/WELL_MIXED": 17
+   },
+   "events": 493,
+   "flagged_runs_per_6h_window": [
+    11,
+    8,
+    6,
+    15,
+    28,
+    21,
+    20,
+    20,
+    28,
+    68,
+    175,
+    93
+   ],
+   "runs_per_family_hist": {
+    "1": 390,
+    "2": 41,
+    "3": 7
+   },
+   "unique_families": 438,
+   "unique_runs": 493
+  },
+  "RESERVOIR_CROSSED_MOAT": {
+   "by_family_creating_kind": {
+    "control": 2,
+    "exploration": 1,
+    "promoted": 4
+   },
+   "by_init": {
+    "RANDOM": 2,
+    "SEEDED_HYBRID": 3,
+    "SEEDED_WITNESS": 2
+   },
+   "by_mutation": {
+    "BYTE/HIGH": 1,
+    "BYTE/LOW": 1,
+    "OPCODE/MED": 2,
+    "OPERAND/HIGH": 1,
+    "OPERAND/MED": 2
+   },
+   "by_reproduction": {
+    "ENDOGENOUS_COPY": 3,
+    "ENDOGENOUS_PARTIAL": 1,
+    "EXTERNAL": 3
+   },
+   "by_scoring": {
+    "ATOMIC": 4,
+    "INCREMENTAL": 3
+   },
+   "by_task": {
+    "COND_MULTI": 5,
+    "SUM2": 2
+   },
+   "by_topology": {
+    "NICHES/RESERVOIR": 7
+   },
+   "events": 7,
+   "unique_families": 7,
+   "unique_runs": null
+  }
+ },
+ "init_x_kind_runs": {
+  "RANDOM/control": 6266,
+  "RANDOM/exploration": 11548,
+  "RANDOM/intervention": 326,
+  "RANDOM/positive_control": 1,
+  "RANDOM/promoted": 7064,
+  "RANDOM/verification": 845,
+  "SEEDED_HYBRID/control": 1790,
+  "SEEDED_HYBRID/exploration": 2349,
+  "SEEDED_HYBRID/intervention": 2702,
+  "SEEDED_HYBRID/promoted": 5302,
+  "SEEDED_HYBRID/verification": 7585,
+  "SEEDED_REPLICATOR/control": 1589,
+  "SEEDED_REPLICATOR/exploration": 2339,
+  "SEEDED_REPLICATOR/intervention": 760,
+  "SEEDED_REPLICATOR/positive_control": 2,
+  "SEEDED_REPLICATOR/promoted": 4364,
+  "SEEDED_REPLICATOR/verification": 2183,
+  "SEEDED_WITNESS/control": 1434,
+  "SEEDED_WITNESS/exploration": 2358,
+  "SEEDED_WITNESS/intervention": 20,
+  "SEEDED_WITNESS/positive_control": 1,
+  "SEEDED_WITNESS/promoted": 2365,
+  "SEEDED_WITNESS/verification": 54
+ },
+ "integrity": {
+  "duplicate_run_ids": [],
+  "families_referenced_by_runs_not_in_families_jsonl": 0,
+  "families_with_zero_runs": 0,
+  "family_allocated_ne_runs": 0,
+  "family_allocated_total": 63247,
+  "family_run_lists_total": 63247,
+  "ingest_vs_runno_max_displacement": 37,
+  "missing_run_nos": [],
+  "run_dirs_on_disk": 63247,
+  "run_no_max": 63247,
+  "run_no_min": 1,
+  "state_n_runs": 63247,
+  "state_next_run_no": 63248,
+  "unique_run_ids": 63247
+ },
+ "mutation_regime_runs": {
+  "BYTE/HIGH": 5130,
+  "BYTE/LOW": 5350,
+  "BYTE/MED": 5303,
+  "OPCODE/HIGH": 5697,
+  "OPCODE/LOW": 5500,
+  "OPCODE/MED": 6076,
+  "OPERAND/HIGH": 4544,
+  "OPERAND/LOW": 4995,
+  "OPERAND/MED": 5062,
+  "STRUCTURAL/HIGH": 5014,
+  "STRUCTURAL/LOW": 5749,
+  "STRUCTURAL/MED": 4827
+ },
+ "n_decisions": 37773,
+ "n_families_jsonl": 49412,
+ "n_flags": 1629,
+ "n_runs_jsonl": 63247,
+ "reproduction_x_kind_runs": {
+  "CONSTRUCTIVE/control": 127,
+  "CONSTRUCTIVE/exploration": 2996,
+  "CONSTRUCTIVE/intervention": 7,
+  "CONSTRUCTIVE/promoted": 1231,
+  "CONSTRUCTIVE/verification": 29,
+  "ENDOGENOUS_COPY/control": 3127,
+  "ENDOGENOUS_COPY/exploration": 3071,
+  "ENDOGENOUS_COPY/intervention": 1015,
+  "ENDOGENOUS_COPY/positive_control": 2,
+  "ENDOGENOUS_COPY/promoted": 5678,
+  "ENDOGENOUS_COPY/verification": 4731,
+  "ENDOGENOUS_PARTIAL/control": 227,
+  "ENDOGENOUS_PARTIAL/exploration": 2904,
+  "ENDOGENOUS_PARTIAL/intervention": 404,
+  "ENDOGENOUS_PARTIAL/promoted": 2974,
+  "ENDOGENOUS_PARTIAL/verification": 1851,
+  "EXTERNAL/control": 7334,
+  "EXTERNAL/exploration": 5155,
+  "EXTERNAL/intervention": 1905,
+  "EXTERNAL/positive_control": 2,
+  "EXTERNAL/promoted": 5855,
+  "EXTERNAL/verification": 1908,
+  "OVERWRITE/control": 144,
+  "OVERWRITE/exploration": 2983,
+  "OVERWRITE/intervention": 228,
+  "OVERWRITE/promoted": 1881,
+  "OVERWRITE/verification": 1022,
+  "PAIR_EXECUTION/control": 120,
+  "PAIR_EXECUTION/exploration": 1485,
+  "PAIR_EXECUTION/intervention": 249,
+  "PAIR_EXECUTION/promoted": 1476,
+  "PAIR_EXECUTION/verification": 1126
+ },
+ "restart_events": [],
+ "run_triggers": {
+  "coexistence": {
+   "by_init": {
+    "RANDOM": 2854,
+    "SEEDED_HYBRID": 2427,
+    "SEEDED_REPLICATOR": 1340,
+    "SEEDED_WITNESS": 556
+   },
+   "by_kind": {
+    "control": 1009,
+    "exploration": 1788,
+    "intervention": 407,
+    "promoted": 2605,
+    "verification": 1368
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 1399,
+    "ENDOGENOUS_COPY": 1646,
+    "ENDOGENOUS_PARTIAL": 912,
+    "EXTERNAL": 2419,
+    "OVERWRITE": 342,
+    "PAIR_EXECUTION": 459
+   },
+   "by_stage": {
+    "early": 1570,
+    "late": 1775,
+    "middle": 3832
+   },
+   "families": 5513,
+   "runs": 7177
+  },
+  "cross_niche_transport": {
+   "by_init": {
+    "RANDOM": 17224,
+    "SEEDED_HYBRID": 14243,
+    "SEEDED_REPLICATOR": 7543,
+    "SEEDED_WITNESS": 3985
+   },
+   "by_kind": {
+    "control": 6487,
+    "exploration": 10301,
+    "intervention": 3127,
+    "promoted": 14247,
+    "verification": 8833
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 2802,
+    "ENDOGENOUS_COPY": 12223,
+    "ENDOGENOUS_PARTIAL": 5625,
+    "EXTERNAL": 14911,
+    "OVERWRITE": 4250,
+    "PAIR_EXECUTION": 3184
+   },
+   "by_stage": {
+    "early": 9979,
+    "late": 11960,
+    "middle": 21056
+   },
+   "families": 31833,
+   "runs": 42995
+  },
+  "environment_lineage": {
+   "by_init": {
+    "RANDOM": 539,
+    "SEEDED_HYBRID": 463,
+    "SEEDED_REPLICATOR": 308,
+    "SEEDED_WITNESS": 86
+   },
+   "by_kind": {
+    "control": 88,
+    "exploration": 459,
+    "promoted": 513,
+    "verification": 336
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 119,
+    "ENDOGENOUS_COPY": 423,
+    "ENDOGENOUS_PARTIAL": 336,
+    "EXTERNAL": 1,
+    "OVERWRITE": 295,
+    "PAIR_EXECUTION": 222
+   },
+   "by_stage": {
+    "early": 268,
+    "late": 336,
+    "middle": 792
+   },
+   "families": 1073,
+   "runs": 1396
+  },
+  "escape": {
+   "by_init": {
+    "RANDOM": 4901,
+    "SEEDED_HYBRID": 3528,
+    "SEEDED_REPLICATOR": 3751,
+    "SEEDED_WITNESS": 692
+   },
+   "by_kind": {
+    "control": 2028,
+    "exploration": 2892,
+    "intervention": 1093,
+    "positive_control": 1,
+    "promoted": 4645,
+    "verification": 2213
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 674,
+    "ENDOGENOUS_COPY": 3297,
+    "ENDOGENOUS_PARTIAL": 1553,
+    "EXTERNAL": 5285,
+    "OVERWRITE": 978,
+    "PAIR_EXECUTION": 1085
+   },
+   "by_stage": {
+    "early": 3100,
+    "late": 3306,
+    "middle": 6466
+   },
+   "families": 10043,
+   "runs": 12872
+  },
+  "exploit_recorded": {
+   "by_init": {
+    "RANDOM": 1506,
+    "SEEDED_HYBRID": 3459,
+    "SEEDED_REPLICATOR": 1112,
+    "SEEDED_WITNESS": 360
+   },
+   "by_kind": {
+    "control": 880,
+    "exploration": 1197,
+    "intervention": 507,
+    "positive_control": 4,
+    "promoted": 2246,
+    "verification": 1603
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 334,
+    "ENDOGENOUS_COPY": 1841,
+    "ENDOGENOUS_PARTIAL": 761,
+    "EXTERNAL": 2638,
+    "OVERWRITE": 304,
+    "PAIR_EXECUTION": 559
+   },
+   "by_stage": {
+    "early": 1296,
+    "late": 2110,
+    "middle": 3031
+   },
+   "families": 5207,
+   "runs": 6437
+  },
+  "moat_crossing": {
+   "by_init": {
+    "RANDOM": 8357,
+    "SEEDED_HYBRID": 13751,
+    "SEEDED_REPLICATOR": 4030,
+    "SEEDED_WITNESS": 4332
+   },
+   "by_kind": {
+    "control": 4268,
+    "exploration": 6025,
+    "intervention": 2575,
+    "promoted": 10333,
+    "verification": 7269
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 1608,
+    "ENDOGENOUS_COPY": 8502,
+    "ENDOGENOUS_PARTIAL": 3340,
+    "EXTERNAL": 12594,
+    "OVERWRITE": 2561,
+    "PAIR_EXECUTION": 1865
+   },
+   "by_stage": {
+    "early": 6382,
+    "late": 9844,
+    "middle": 14244
+   },
+   "families": 21463,
+   "runs": 30470
+  },
+  "novel_architecture": {
+   "by_init": {
+    "RANDOM": 1340,
+    "SEEDED_HYBRID": 11393,
+    "SEEDED_REPLICATOR": 6302,
+    "SEEDED_WITNESS": 218
+   },
+   "by_kind": {
+    "control": 1281,
+    "exploration": 2356,
+    "intervention": 1606,
+    "positive_control": 1,
+    "promoted": 6545,
+    "verification": 7464
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 35,
+    "ENDOGENOUS_COPY": 9907,
+    "ENDOGENOUS_PARTIAL": 4476,
+    "OVERWRITE": 2166,
+    "PAIR_EXECUTION": 2669
+   },
+   "by_stage": {
+    "early": 1806,
+    "late": 9070,
+    "middle": 8377
+   },
+   "families": 13135,
+   "runs": 19253
+  },
+  "novelty_distance": {
+   "by_init": {
+    "RANDOM": 1785,
+    "SEEDED_HYBRID": 8098,
+    "SEEDED_REPLICATOR": 5233,
+    "SEEDED_WITNESS": 498
+   },
+   "by_kind": {
+    "control": 1473,
+    "exploration": 2200,
+    "intervention": 1603,
+    "positive_control": 3,
+    "promoted": 5941,
+    "verification": 4394
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 411,
+    "ENDOGENOUS_COPY": 6546,
+    "ENDOGENOUS_PARTIAL": 2646,
+    "EXTERNAL": 2772,
+    "OVERWRITE": 1581,
+    "PAIR_EXECUTION": 1658
+   },
+   "by_stage": {
+    "early": 1998,
+    "late": 5997,
+    "middle": 7619
+   },
+   "families": 11103,
+   "runs": 15614
+  },
+  "persistence_above_control": {
+   "by_init": {
+    "RANDOM": 1,
+    "SEEDED_HYBRID": 1,
+    "SEEDED_REPLICATOR": 1
+   },
+   "by_kind": {
+    "exploration": 1,
+    "promoted": 2
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 1,
+    "ENDOGENOUS_PARTIAL": 1,
+    "EXTERNAL": 1
+   },
+   "by_stage": {
+    "early": 1,
+    "middle": 2
+   },
+   "families": 3,
+   "runs": 3
+  },
+  "persistent": {
+   "by_init": {
+    "RANDOM": 3024,
+    "SEEDED_HYBRID": 3914,
+    "SEEDED_REPLICATOR": 2150,
+    "SEEDED_WITNESS": 587
+   },
+   "by_kind": {
+    "control": 684,
+    "exploration": 2290,
+    "intervention": 484,
+    "promoted": 3601,
+    "verification": 2616
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 2076,
+    "ENDOGENOUS_COPY": 3737,
+    "ENDOGENOUS_PARTIAL": 1900,
+    "OVERWRITE": 795,
+    "PAIR_EXECUTION": 1167
+   },
+   "by_stage": {
+    "early": 1412,
+    "late": 3100,
+    "middle": 5163
+   },
+   "families": 7196,
+   "runs": 9675
+  },
+  "replication": {
+   "by_init": {
+    "RANDOM": 645,
+    "SEEDED_HYBRID": 11707,
+    "SEEDED_REPLICATOR": 6209,
+    "SEEDED_WITNESS": 86
+   },
+   "by_kind": {
+    "control": 1259,
+    "exploration": 2064,
+    "intervention": 1690,
+    "positive_control": 2,
+    "promoted": 6169,
+    "verification": 7463
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 3,
+    "ENDOGENOUS_COPY": 10171,
+    "ENDOGENOUS_PARTIAL": 3932,
+    "OVERWRITE": 2126,
+    "PAIR_EXECUTION": 2415
+   },
+   "by_stage": {
+    "early": 1647,
+    "late": 9153,
+    "middle": 7847
+   },
+   "families": 12555,
+   "runs": 18647
+  },
+  "reproductive_compression": {
+   "by_init": {
+    "RANDOM": 1461,
+    "SEEDED_HYBRID": 2696,
+    "SEEDED_REPLICATOR": 1275,
+    "SEEDED_WITNESS": 278
+   },
+   "by_kind": {
+    "control": 398,
+    "exploration": 1213,
+    "intervention": 411,
+    "promoted": 1991,
+    "verification": 1697
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 486,
+    "ENDOGENOUS_COPY": 2279,
+    "ENDOGENOUS_PARTIAL": 1528,
+    "OVERWRITE": 627,
+    "PAIR_EXECUTION": 790
+   },
+   "by_stage": {
+    "early": 780,
+    "late": 2108,
+    "middle": 2822
+   },
+   "families": 4964,
+   "runs": 5710
+  },
+  "spontaneous_replication": {
+   "by_init": {
+    "RANDOM": 544
+   },
+   "by_kind": {
+    "control": 58,
+    "exploration": 157,
+    "intervention": 42,
+    "promoted": 177,
+    "verification": 110
+   },
+   "by_reproduction": {
+    "ENDOGENOUS_COPY": 234,
+    "ENDOGENOUS_PARTIAL": 201,
+    "OVERWRITE": 47,
+    "PAIR_EXECUTION": 62
+   },
+   "by_stage": {
+    "early": 98,
+    "late": 152,
+    "middle": 294
+   },
+   "families": 471,
+   "runs": 544
+  },
+  "task_reproduction_coupling": {
+   "by_init": {
+    "RANDOM": 14,
+    "SEEDED_HYBRID": 4082,
+    "SEEDED_REPLICATOR": 231,
+    "SEEDED_WITNESS": 4
+   },
+   "by_kind": {
+    "control": 156,
+    "exploration": 213,
+    "intervention": 512,
+    "promoted": 909,
+    "verification": 2541
+   },
+   "by_reproduction": {
+    "ENDOGENOUS_COPY": 2575,
+    "ENDOGENOUS_PARTIAL": 912,
+    "OVERWRITE": 481,
+    "PAIR_EXECUTION": 363
+   },
+   "by_stage": {
+    "early": 198,
+    "late": 3053,
+    "middle": 1080
+   },
+   "families": 2249,
+   "runs": 4331
+  },
+  "task_score": {
+   "by_init": {
+    "RANDOM": 2128,
+    "SEEDED_HYBRID": 7008,
+    "SEEDED_REPLICATOR": 1000,
+    "SEEDED_WITNESS": 1550
+   },
+   "by_kind": {
+    "control": 1555,
+    "exploration": 1626,
+    "intervention": 1424,
+    "positive_control": 2,
+    "promoted": 3540,
+    "verification": 3539
+   },
+   "by_reproduction": {
+    "CONSTRUCTIVE": 381,
+    "ENDOGENOUS_COPY": 3069,
+    "ENDOGENOUS_PARTIAL": 1013,
+    "EXTERNAL": 6100,
+    "OVERWRITE": 725,
+    "PAIR_EXECUTION": 398
+   },
+   "by_stage": {
+    "early": 2115,
+    "late": 4963,
+    "middle": 4608
+   },
+   "families": 7635,
+   "runs": 11686
+  }
+ },
+ "runs_by_kind": {
+  "control": 11079,
+  "exploration": 18594,
+  "intervention": 3808,
+  "positive_control": 4,
+  "promoted": 19095,
+  "verification": 10667
+ },
+ "runs_by_kind_stage": {
+  "control/early": 8944,
+  "control/middle": 2135,
+  "exploration/early": 8944,
+  "exploration/middle": 9650,
+  "intervention/late": 3808,
+  "positive_control/early": 4,
+  "promoted/middle": 19095,
+  "verification/late": 10667
+ },
+ "runs_by_stage": {
+  "early": 17892,
+  "late": 14475,
+  "middle": 30880
+ },
+ "runs_per_6h_window": [
+  4954,
+  5062,
+  5023,
+  4954,
+  5257,
+  5217,
+  5044,
+  5130,
+  4986,
+  5494,
+  6104,
+  6022
+ ],
+ "seeds": {
+  "dup_by_kind": {
+   "verification": 97
+  },
+  "duplicate_examples": [
+   {
+    "n": 2,
+    "runs": [
+     "r049169",
+     "r049177"
+    ],
+    "vec_seed": 2121916509465
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r049161",
+     "r049185"
+    ],
+    "vec_seed": 2121916509465
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r052003",
+     "r052012"
+    ],
+    "vec_seed": 2121921983111
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r051993",
+     "r052001"
+    ],
+    "vec_seed": 2121921983111
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r051994",
+     "r052010"
+    ],
+    "vec_seed": 2121921983111
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r051995",
+     "r052004"
+    ],
+    "vec_seed": 2121921983111
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r052021",
+     "r052030"
+    ],
+    "vec_seed": 2121917887433
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r052054",
+     "r052060"
+    ],
+    "vec_seed": 2121910851010
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r052082",
+     "r052096"
+    ],
+    "vec_seed": 2121917510750
+   },
+   {
+    "n": 2,
+    "runs": [
+     "r052119",
+     "r052126"
+    ],
+    "vec_seed": 2121915949293
+   }
+  ],
+  "exact_duplicate_vec_seed_pairs": 49,
+  "max_reuse_of_one_seed": 22,
+  "runs": 63247,
+  "seeds_used_more_than_once": 9419,
+  "unique_seeds": 47444
+ },
+ "source": "C:\\Users\\James\\z80atlas_campaign_2026-09-19",
+ "stage_log": [
+  {
+   "runs_done": 0,
+   "stage": "early",
+   "utc": "2026-09-19T14:39:46Z"
+  },
+  {
+   "runs_done": 17892,
+   "stage": "middle",
+   "utc": "2026-09-20T12:15:58Z"
+  },
+  {
+   "runs_done": 48772,
+   "stage": "late",
+   "utc": "2026-09-22T00:18:00Z"
+  }
+ ],
+ "state_counters": {
+  "control": 11079,
+  "exploration": 18594,
+  "intervention": 3808,
+  "positive_control": 4,
+  "promoted": 19095,
+  "verification": 10667
+ },
+ "task_x_kind_runs": {
+  "COND_MULTI/control": 1906,
+  "COND_MULTI/exploration": 3084,
+  "COND_MULTI/intervention": 985,
+  "COND_MULTI/promoted": 4275,
+  "COND_MULTI/verification": 2301,
+  "COND_ONE/control": 1973,
+  "COND_ONE/exploration": 3116,
+  "COND_ONE/intervention": 665,
+  "COND_ONE/promoted": 3205,
+  "COND_ONE/verification": 1858,
+  "CONST/control": 2007,
+  "CONST/exploration": 3434,
+  "CONST/intervention": 222,
+  "CONST/promoted": 3753,
+  "CONST/verification": 1254,
+  "ECHO/control": 1670,
+  "ECHO/exploration": 2768,
+  "ECHO/intervention": 594,
+  "ECHO/promoted": 3101,
+  "ECHO/verification": 2119,
+  "INC/control": 1734,
+  "INC/exploration": 3050,
+  "INC/intervention": 697,
+  "INC/positive_control": 4,
+  "INC/promoted": 2373,
+  "INC/verification": 1794,
+  "SUM2/control": 1789,
+  "SUM2/exploration": 3142,
+  "SUM2/intervention": 645,
+  "SUM2/promoted": 2388,
+  "SUM2/verification": 1341
+ },
+ "topology_runs": {
+  "GRAPH/LOCAL": 1807,
+  "GRID/LOCAL": 1765,
+  "GRID/WELL_MIXED": 2025,
+  "NICHES/NICHES_COMPETENCE_MIG": 6129,
+  "NICHES/NICHES_ENV_MIG": 5678,
+  "NICHES/NICHES_HIGH_MIG": 7341,
+  "NICHES/NICHES_ISOLATED": 5015,
+  "NICHES/NICHES_LOW_MIG": 8673,
+  "NICHES/NICHES_PERIODIC": 6999,
+  "NICHES/NICHES_POLLINATION": 9655,
+  "NICHES/RESERVOIR": 6113,
+  "SOUP/WELL_MIXED": 2047
+ },
+ "wall": {
+  "completion_gaps_over_120s": [
+   [
+    "2026-09-22T04:32:47Z",
+    125.8
+   ],
+   [
+    "2026-09-22T11:12:09Z",
+    126.5
+   ]
+  ],
+  "completions_per_hour": [
+   848,
+   838,
+   811,
+   802,
+   807,
+   848,
+   808,
+   874,
+   854,
+   863,
+   882,
+   781,
+   865,
+   819,
+   791,
+   878,
+   808,
+   862,
+   844,
+   815,
+   744,
+   797,
+   872,
+   882,
+   865,
+   914,
+   853,
+   863,
+   919,
+   843,
+   850,
+   910,
+   849,
+   877,
+   850,
+   881,
+   831,
+   833,
+   845,
+   849,
+   798,
+   888,
+   812,
+   907,
+   876,
+   832,
+   839,
+   864,
+   798,
+   834,
+   812,
+   867,
+   817,
+   858,
+   811,
+   969,
+   850,
+   907,
+   972,
+   985,
+   1030,
+   1154,
+   1184,
+   961,
+   817,
+   958,
+   971,
+   924,
+   916,
+   937,
+   974,
+   1300,
+   0
+  ],
+  "first_summary_mtime": "2026-09-19T14:40:20Z",
+  "hours_declared": 72.0,
+  "last_summary_mtime": "2026-09-22T14:38:42Z",
+  "missing_summary_json": 0,
+  "run_wall_s": {
+   "max": 194.31,
+   "median": 25.51,
+   "sum_hours": 592.2
+  },
+  "start_utc": "2026-09-19T14:39:46Z",
+  "stopped_utc": "2026-09-22T14:38:42Z"
+ }
+}

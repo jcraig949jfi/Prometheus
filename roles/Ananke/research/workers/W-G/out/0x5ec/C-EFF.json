@@ -1,0 +1,412 @@
+{
+ "name": "C-EFF",
+ "cell": "plant",
+ "family": "HOLD",
+ "ns": "0x5ec",
+ "nperm": 20000,
+ "guards": {
+  "G1": true,
+  "G2_no_rediverge": true,
+  "G3": true,
+  "G3_probes": true
+ },
+ "normal_acc_ci": [
+  0.703125,
+  0.6614583333333335,
+  0.7447916666666666
+ ],
+ "ndiff_pairs_end_trial_k+j": {
+  "0": 32,
+  "1": 32,
+  "2": 32,
+  "3": 32,
+  "4": 32,
+  "5": 32,
+  "6": 32
+ },
+ "L1": true,
+ "L1_persistent": true,
+ "carrier_pairs_differing": {
+  "0": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "1": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "2": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "3": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "4": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "5": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "6": {
+   "S": 32,
+   "Kp": 0,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  }
+ },
+ "frozen_frac_k2_vs_k6": 1.0,
+ "elems": {
+  "k+2_median_elems": 1.0,
+  "k+6_median_elems": 1.0
+ },
+ "scar_sign_vs_cue_k+6": {
+  "pos": 32,
+  "neg": 0,
+  "zero_or_same": 0
+ },
+ "L3": {
+  "T": 15.0,
+  "p": 0.0038498075096245186,
+  "per_lag": {
+   "1": {
+    "sum_g": 12.0,
+    "sum_yg": -3.0
+   },
+   "2": {
+    "sum_g": 10.5,
+    "sum_yg": -2.5
+   },
+   "3": {
+    "sum_g": 7.0,
+    "sum_yg": 0.0
+   },
+   "4": {
+    "sum_g": 9.0,
+    "sum_yg": 0.0
+   },
+   "5": {
+    "sum_g": 6.5,
+    "sum_yg": 3.5
+   },
+   "6": {
+    "sum_g": 2.5,
+    "sum_yg": -0.5
+   }
+  },
+  "unsigned_answer_diff": {
+   "1": 0.4375,
+   "2": 0.4375,
+   "3": 0.28125,
+   "4": 0.34375,
+   "5": 0.21875,
+   "6": 0.09375
+  }
+ },
+ "decoders": {
+  "D1": {
+   "maxacc": 0.671875,
+   "p": 0.0007999600019999,
+   "per_lag": {
+    "2": {
+     "acc": 0.671875,
+     "feature": "S0_sum"
+    },
+    "3": {
+     "acc": 0.578125,
+     "feature": "S0_sum"
+    },
+    "4": {
+     "acc": 0.59375,
+     "feature": "S0_sum"
+    },
+    "5": {
+     "acc": 0.59375,
+     "feature": "S0_sum"
+    },
+    "6": {
+     "acc": 0.5703125,
+     "feature": "S0_sum"
+    }
+   }
+  },
+  "D2": {
+   "maxacc": 0.703125,
+   "p": 0.00024998750062496874,
+   "per_lag": {
+    "2": {
+     "acc": 0.703125,
+     "feature": "S0_sum"
+    },
+    "3": {
+     "acc": 0.671875,
+     "feature": "S0_sum"
+    },
+    "4": {
+     "acc": 0.6875,
+     "feature": "S0_sum"
+    },
+    "5": {
+     "acc": 0.671875,
+     "feature": "S0_sum"
+    },
+    "6": {
+     "acc": 0.609375,
+     "feature": "S0_sum"
+    }
+   }
+  },
+  "PAIR": {
+   "maxacc": 1.0,
+   "p": 4.999750012499375e-05,
+   "per_lag": {
+    "2": {
+     "acc": 1.0,
+     "feature": "S0_sum"
+    },
+    "3": {
+     "acc": 1.0,
+     "feature": "S0_sum"
+    },
+    "4": {
+     "acc": 1.0,
+     "feature": "S0_sum"
+    },
+    "5": {
+     "acc": 1.0,
+     "feature": "S0_sum"
+    },
+    "6": {
+     "acc": 1.0,
+     "feature": "S0_sum"
+    }
+   }
+  }
+ },
+ "probes": {
+  "BLANK": {
+   "T": 12.0,
+   "p": 0.00014999250037498125,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 12.0,
+     "n_diff": 14
+    },
+    "3": {
+     "sum_g": 12.0,
+     "n_diff": 14
+    },
+    "4": {
+     "sum_g": 12.0,
+     "n_diff": 14
+    },
+    "5": {
+     "sum_g": 12.0,
+     "n_diff": 14
+    },
+    "6": {
+     "sum_g": 12.0,
+     "n_diff": 14
+    }
+   }
+  },
+  "PING": {
+   "T": 14.0,
+   "p": 0.01504924753762312,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 12.0,
+     "n_diff": 12
+    },
+    "3": {
+     "sum_g": 12.0,
+     "n_diff": 12
+    },
+    "4": {
+     "sum_g": 12.0,
+     "n_diff": 12
+    },
+    "5": {
+     "sum_g": 12.0,
+     "n_diff": 12
+    },
+    "6": {
+     "sum_g": 12.0,
+     "n_diff": 12
+    }
+   }
+  },
+  "CLEAR_S0": {
+   "T": 0.0,
+   "p": 1.0,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "3": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "4": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "5": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "6": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    }
+   }
+  },
+  "CLEAR_FAST": {
+   "T": 0.0,
+   "p": 1.0,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "3": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "4": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "5": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "6": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    }
+   }
+  },
+  "RELOC": {
+   "T": 10.5,
+   "p": 0.000199990000499975,
+   "best": {
+    "j": 2,
+    "role": "act",
+    "d": 0,
+    "sum_g": 10.5,
+    "n_diff": 14
+   }
+  }
+ },
+ "heal": {
+  "S": {
+   "n_before": 32,
+   "merged_at_end": 32,
+   "frac": 1.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 32,
+   "frac_rel": 1.0
+  },
+  "Kp": {
+   "n_before": 32,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "w": {
+   "n_before": 32,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "E": {
+   "n_before": 32,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "r": {
+   "n_before": 32,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "inbox": {
+   "n_before": 32,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "flight": {
+   "n_before": 32,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 32,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  }
+ },
+ "sufficient_stores": [
+  "S"
+ ],
+ "hist_ratio": {
+  "acc_in_sample": 0.71875,
+  "feature": "S0_sum",
+  "ratio": 1.2606275114311565,
+  "frac_same_sign": 1.0,
+  "b_k": 255.9999999999997
+ },
+ "secs": 170.31237697601318
+}

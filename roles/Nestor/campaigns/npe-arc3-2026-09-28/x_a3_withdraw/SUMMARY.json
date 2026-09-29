@@ -1,0 +1,34 @@
+{
+ "per_arm": {
+  "CONTROL_ZERO": {
+   "runs": 32,
+   "established_300": 12,
+   "persists": 12,
+   "persist_share": 1.0,
+   "robust_share_300_persisting": 0.1528,
+   "robust_share_end_persisting": 0.1029,
+   "robust_share_300_all_established": 0.1528
+  },
+  "ABRUPT": {
+   "runs": 32,
+   "established_300": 12,
+   "persists": 12,
+   "persist_share": 1.0,
+   "robust_share_300_persisting": 0.2222,
+   "robust_share_end_persisting": 0.9444,
+   "robust_share_300_all_established": 0.2222
+  },
+  "GRADUAL": {
+   "runs": 32,
+   "established_300": 12,
+   "persists": 12,
+   "persist_share": 1.0,
+   "robust_share_300_persisting": 0.2361,
+   "robust_share_end_persisting": 0.9306,
+   "robust_share_300_all_established": 0.2361
+  }
+ },
+ "classification": "CLEAN_NULL",
+ "persist_diff_gradual_minus_abrupt": 0.0,
+ "robust_rise_in_gradual": true
+}

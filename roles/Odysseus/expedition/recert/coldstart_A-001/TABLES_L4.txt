@@ -1,0 +1,66 @@
+== P1 ruler reproducibility
+class mismatches: 0 / 393
+exact-input-set mismatches (labelled, first 16 compared): 0 / 81
+
+== P2 verdicts
+{'EXACT_GATED': {'LABEL_OK': 63}, 'INERT': {'UNLABELLED_STRUCTURE_WITHOUT_BEHAVIOUR': 176, 'UNLABELLED_LABEL_PROVENANCE_ONLY': 74, 'UNLABELLED_LABEL_CONTEXT_DEPENDENT': 1}, 'NEAR_COPIER': {'LABEL_OK': 18}, 'TOUCH': {'UNLABELLED_STRUCTURE_WITHOUT_BEHAVIOUR': 9, 'UNLABELLED_LABEL_PROVENANCE_ONLY': 5}, 'WRITER': {'UNLABELLED_STRUCTURE_WITHOUT_BEHAVIOUR': 46, 'UNLABELLED_LABEL_PROVENANCE_ONLY': 1}}
+
+== P3 mechanism (labelled)
+T: n=81 min 0.500 q1 0.703 med 0.750 q3 0.797 max 0.859
+bits: n=81 min 88.000 q1 160.000 med 184.000 q3 200.000 max 216.000
+T<0.6: [('E:51726147c1d85d7e', 'EXACT_GATED', 0.5156), ('E:8a2bc168a51f9b07', 'NEAR_COPIER', 0.5469), ('E:a47c4ffc3246310b', 'EXACT_GATED', 0.5), ('E:e688887b0d7693e0', 'EXACT_GATED', 0.5469)]
+offset k: Counter({0: 80, -1: 1})
+intervention env: Counter({'zero': 81})
+behaviour pass rate: Counter({1.0: 79, 0.5385: 2})
+
+== P4 heredity share, empty neighbour, uniform inputs
+EXACT_GATED heredity_share: n=63 min 0.066 q1 0.134 med 0.316 q3 0.462 max 1.000
+EXACT_GATED n_birth_inputs: n=63 min 10.000 q1 26.000 med 38.000 q3 96.000 max 256.000
+EXACT_GATED n_copier_inputs: n=63 min 10.000 q1 12.000 med 12.000 q3 12.000 max 17.000
+EXACT_GATED n_exact_inputs: n=63 min 1.000 q1 1.000 med 1.000 q3 1.000 max 1.000
+EXACT_GATED mean_birth_fid (now, isolation): n=63 min 0.004 q1 0.017 med 0.030 q3 0.042 max 0.103
+EXACT_GATED world mean fid (then, births-weighted): n=63 min 0.071 q1 0.114 med 0.164 q3 0.250 max 0.989
+EXACT_GATED world exact share (then): n=63 min 0.000 q1 0.009 med 0.018 q3 0.032 max 0.871
+NEAR_COPIER heredity_share: n=18 min 0.109 q1 0.124 med 0.241 q3 0.462 max 1.000
+NEAR_COPIER n_birth_inputs: n=18 min 8.000 q1 17.000 med 47.500 q3 97.000 max 101.000
+NEAR_COPIER n_copier_inputs: n=18 min 4.000 q1 10.000 med 11.000 q3 12.000 max 12.000
+NEAR_COPIER n_exact_inputs: n=18 min 0.000 q1 0.000 med 0.000 q3 0.000 max 0.000
+NEAR_COPIER mean_birth_fid (now, isolation): n=18 min 0.004 q1 0.011 med 0.018 q3 0.045 max 0.121
+NEAR_COPIER world mean fid (then, births-weighted): n=18 min 0.076 q1 0.107 med 0.189 q3 0.274 max 0.334
+NEAR_COPIER world exact share (then): n=18 min 0.000 q1 0.005 med 0.015 q3 0.027 max 0.099
+
+== gate width by environment (labelled): median copier-grade inputs per env / share of objects passing
+  zero   med  12.0  pass 81/81  narrower-than-zero  0  wider  0
+  rand0  med  12.0  pass 79/81  narrower-than-zero  2  wider  0
+  rand1  med  12.0  pass 79/81  narrower-than-zero  2  wider  0
+  rand2  med  12.0  pass 79/81  narrower-than-zero  2  wider  0
+  rand3  med  12.0  pass 81/81  narrower-than-zero  0  wider  2
+  rand4  med  12.0  pass 81/81  narrower-than-zero  0  wider  0
+  rand5  med  12.0  pass 81/81  narrower-than-zero  0  wider  2
+  eco0   med  12.0  pass 79/81  narrower-than-zero  2  wider  0
+  eco1   med  12.0  pass 81/81  narrower-than-zero  2  wider  1
+  eco2   med  12.0  pass 80/81  narrower-than-zero  2  wider  0
+  eco3   med  12.0  pass 80/81  narrower-than-zero  1  wider  1
+  eco4   med  12.0  pass 80/81  narrower-than-zero  1  wider  0
+  eco5   med  12.0  pass 80/81  narrower-than-zero  1  wider  1
+
+== P5 unlabelled controls
+Counter({'UNLABELLED_STRUCTURE_WITHOUT_BEHAVIOUR': 231, 'UNLABELLED_LABEL_PROVENANCE_ONLY': 80, 'UNLABELLED_LABEL_CONTEXT_DEPENDENT': 1})
+{"id": "E:5334b0df25513416", "then": {"label_then": "non-copier founder (ruler class INERT; HOST/NOVEL_CANDIDATE)", "founder_class": "INERT", "founder_exact_inputs": [], "n_founder_birth_inputs": 0, "n_lineages": 1, "lineages": [[15, "RESCUE_128", 2001663]], "arms": ["RESCUE_128"], "blocks": [15], "world_births": 16873, "world_exact_births": 14766, "world_mean_fid_births_weighted": 0.991, "world_max_gen": 327, "tape_sha": "5334b0df25513416"}, "structural": {"ok": true, "n_copy_bytes": 3, "n_store_bytes": 0, "dominant_byte_share": 0.0625, "entropy_bits_per_byte": 4.812, "ruler_class_now": "INERT"}, "behavioural": {"n_env": 13, "n_pass": 1, "pass_rate": 0.0769, "passing_envs": ["eco1"], "first_pass_detail": {"pass": true, "n_birth_inputs": 256, "n_copier_inputs": 256, "n_exact_inputs": 0, "exact_inputs": [], "copier_inputs": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "mean_birth_fid": 0.0, "best_x": 0, "best_k": -4, "best_fid": 0.0, "best_span": 28, "foreign_exec_at_best": 150}}, "causal": {"ok": true, "intervention_env": "eco1", "intervention_x": 0, "offset_k": -4, "transmission": 0.5781, "bits_transmitted": 128, "heredity_share_zero": null, "n_birth_inputs_zero": 0, "n_copier_inputs_zero": 0, "n_exact_inputs_zero": 0, "exact_inputs_zero": [], "mean_birth_fid_zero": null, "gate_width_by_env": {"zero": 0, "rand0": 0, "rand1": 0, "rand2": 0, "rand3": 0, "rand4": 0, "rand5": 0, "eco0": 0, "eco1": 256, "eco2": 0, "eco3": 0, "eco4": 0, "eco5": 0}}, "now": "UNLABELLED_LABEL_CONTEXT_DEPENDENT"}
+
+== reconciliation with census stage 2: EXACT retention at the founder's exact input(s), per occupied neighbour
+EXACT_GATED founders with an exact input: 63
+  rand0  exact kept 62/63
+  rand1  exact kept 62/63
+  rand2  exact kept 62/63
+  rand3  exact kept 63/63
+  rand4  exact kept 63/63
+  rand5  exact kept 63/63
+  eco0   exact kept 62/63
+  eco1   exact kept 62/63
+  eco2   exact kept 63/63
+  eco3   exact kept 62/63
+  eco4   exact kept 62/63
+  eco5   exact kept 62/63
+  all occupied envs: 748/756 = 0.99
+  coverage at the exact input, empty neighbour (bytes written of 32): {32: 63}

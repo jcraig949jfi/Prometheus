@@ -1,0 +1,9 @@
+{
+  "campaign_id": "i4",
+  "budget_usd_per_shard": 0.08,
+  "shards": [
+    {"id": "a", "units": 240, "env": {"SOAK_SEED": "1", "SOAK_CKPT_EVERY_S": "120"}},
+    {"id": "b", "units": 240, "env": {"SOAK_SEED": "2", "SOAK_CKPT_EVERY_S": "120"}},
+    {"id": "c", "units": 240, "env": {"SOAK_SEED": "3", "SOAK_CKPT_EVERY_S": "120", "SOAK_FAULT": "exit", "SOAK_FAULT_AT_S": "60"}}
+  ]
+}

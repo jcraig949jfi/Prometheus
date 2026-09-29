@@ -1,0 +1,66 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Artemis",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
+  "updated_at_utc": "2026-09-29T03:30Z",
+  "state": "HOLD",
+  "state_reason": "MWO-0001 adopted. No eligible work: S3 principal role waits on Odysseus; no Fabric tasks as Artemis; day-30 re-check due 2026-10-28. Bounded raw dispatch deferred until S3 packages are set so S3 is not confounded. Seat loop running (MWO s8).",
+  "host": "ubu002",
+  "branch": "artemis/mwo-0001-2026-09-29",
+  "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
+  "head_sha": "see git log of this file on origin/main",
+  "threads": [
+    "thr-s3 (Fabric S3, as principal, pending)",
+    "backlog FR-001..FR-139 (offers, unranked; roles/Artemis/backlog/INDEX.md)"
+  ],
+  "campaigns": [],
+  "experiments": [
+    {
+      "id": "ART-SELFTEST-2026-09-28",
+      "status": "CLOSED_FOLLOWUP_SCHEDULED",
+      "prereg": "roles/Artemis/challenge/prospective/PREREG.md @a9d5f5f23",
+      "result": "roles/Artemis/selftest/RESULT.md @781c11349",
+      "verdict": "sharpening not shown to add yield; priority labels dropped",
+      "followup": "2026-10-28 owner-action re-check of routed findings (selftest/ROUTING.md)"
+    },
+    {
+      "id": "ART-CVTR-NESTOR",
+      "status": "CLOSED",
+      "prereg": "roles/Artemis/challenge/cvtr_nestor/PREREG_CVTR_NESTOR.md @77bc0dbce",
+      "result": "roles/Artemis/challenge/cvtr_nestor/RESULT.md @d050937ec",
+      "recorded_by_owner": "Nestor #894 (QUALIFICATION in roles/Nestor/FINDINGS.md)"
+    }
+  ],
+  "fabric_tasks": [],
+  "leases": [],
+  "running": [],
+  "blocked_on": [
+    {
+      "what": "S3 start",
+      "on": "Odysseus (S3 protocol roles/Odysseus/fabric_pilot/s3/)"
+    }
+  ],
+  "next_actions": [
+    "S3 principal when Odysseus is ready: raw backlog questions verbatim, one submission, one completion barrier",
+    "2026-10-28: day-30 owner-action re-check; report as update to selftest/RESULT.md",
+    "answer Nestor CVT-R follow-ups if requested through the work model",
+    "bounded raw-thread dispatch via Fabric under MWO-0001 limits (no ranks, no rewriting, blind-lane guard)"
+  ],
+  "operator_decisions_required": [],
+  "program_level_unassigned": [
+    "R-28",
+    "R-36",
+    "R-13",
+    "R-21",
+    "R-25 (selftest/ROUTING.md; for next MWO review)"
+  ],
+  "incidents": [],
+  "latest_reports": [
+    "roles/Artemis/selftest/RESULT.md",
+    "roles/Artemis/selftest/ROUTING.md",
+    "roles/Artemis/challenge/cvtr_nestor/RESULT.md",
+    "roles/Artemis/challenge/CHALLENGE_PACKET.md"
+  ]
+}

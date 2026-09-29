@@ -7,6 +7,30 @@ On bootstrap read, in order:
 3. `roles/Archaeon/TODO.md` (2026-09-25 section: Azure E8s v5, commit-aware admission gate, RunPod probe, PEW gap).
 4. `roles/Archaeon/journal/2026-09-23_m2-db608f52.md` (full session history 09-23 .. 09-25).
 
+## UPDATE 2026-09-28 (session m2-1034e815): ATTRIBUTION v0 COMPLETE -- packet delivered, operator's call
+Directive verbatim: roles/Archaeon/prompts/2026-09-28_attribution_v0/.
+Packet: ops/campaigns/C-001/ATTRIBUTION_V0_2026-09-28/ATTRIBUTION_PACKET.md (all results, reviews, adjudications in that folder).
+Code archaeon/attribution/ (spec ATTRIBUTION_V0.md); tests archaeon/tests/test_attribution_v0.py.
+Two adversarial reviews (isolated Opus workers on ubu002) overturned several claims; adjudications kept.
+Open: material-taint replays for BEE/NPE (needs Bellerophon/Nestor), BEE/NPE TH-015 legs, "founder is not the replicator"
+representation, Aether's thread-id migration (#801). Nothing running.
+
+## UPDATE 2026-09-27 (session m2-1034e815): CONTRACT v0.2 COMPLETE -- verdict PORTABLE_WITH_DOMAIN_LIMITS (not promoted)
+Ruling verbatim: roles/Archaeon/prompts/2026-09-27_contract_v02/. Merged to main (dfbc536cd).
+Packet: archaeon/causal_lens/pivot/CONTRACT_V02_REVIEW_2026-09-27.md. Report: archaeon/causal_lens/V02_REGRESSION_REPORT.md.
+NEW deeper break B6: governing code = WHO / WHERE / WHAT. BEE persists WHERE (pc < L), NPE persists WHO (prov context), only
+Archaeon's taint VM tracks WHAT. Measured: 27,083/28,163 BEE location-foreign births are own-material governed (r038751).
+Host-conditioned assay: READY_WITH_ENGINE_SPECIFIC_LIMITS -- NOT preregistered, NOT launched (operator decides).
+Blocked on operator input: roles/Archaeon/BLOCKED_ON_OPERATOR_INPUT_2026-09-27.md (Azure). Aphrodite requests untouched.
+Nothing running.
+
+## UPDATE 2026-09-26 (session m2-1034e815): PORTABILITY-01 COMPLETE -- PORTABLE_WITH_DOMAIN_LIMITS
+Ruling verbatim: roles/Archaeon/prompts/2026-09-26_portability01/. ENVGATE line CLOSED (archaeon/envgate2/ENVGATE_CLOSURE_2026-09-26.md);
+no ENVGATE-03, no RIE-01. Lens lives in archaeon/causal_lens/ (contract v0.1, schema, corpus, adapters archaeon/bee/npe/ananke).
+Packet: archaeon/causal_lens/pivot/PORTABILITY01_REVIEW_2026-09-26.md; report PORTABILITY01_REPORT.md. Gates 8/8.
+Breaks B1-B5 -> proposed contract v0.2; candidate next experiment = cross-engine host-conditioned reproduction (PROPOSED ONLY).
+Nothing running. Next = the operator's call on the packet.
+
 ## UPDATE 2026-09-26 (session m2-1034e815): ENVGATE-02 CLOSED -- WINDOW_NOT_SUPPORTED, sequence STOPPED
 24/24 blocks complete 2026-09-26T02:50:06Z. Frozen analysis run on the operator's "Do phase C". The Phase-C gate FAILED on
 condition 6 (P2 0+/2-, P3 1+/0-). Blocking replicates (U 24 vs BAND0 5); the window rescue fails (RRIGHT 3 / RWEAK 2 /

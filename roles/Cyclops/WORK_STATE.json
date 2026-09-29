@@ -1,0 +1,23 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Cyclops",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "updated_at_utc": "2026-09-29T01:50:07Z",
+  "state": "HOLD",
+  "branch": "cyclops/mwo-0001-2026-09-28",
+  "head_sha": "(this commit; see git log -1 -- roles/Cyclops/WORK_STATE.json)",
+  "threads": [],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "When a new operator-approved MWO is pasted: publish verbatim to ops/work_orders/CURRENT.md + archive, record sha256 + commit in ops/work_orders/PUBLICATIONS.md, push, one broadcast."
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "ops/work_orders/PUBLICATIONS.md (MWO-0001 sha256 007054ad...88f3, commit 7e4c09f2c, comms #914)"
+  ]
+}

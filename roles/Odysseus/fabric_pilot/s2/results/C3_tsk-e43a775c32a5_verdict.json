@@ -1,0 +1,16 @@
+{"claim_id": "C3", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "Aether units_manifest.json records artifact-file hashes (artifact_sha256) per unit",
+   "status": "true",
+   "evidence": ["Aether/runpod/aether_units/run.py:13", "Aether/runpod/aether_units/run.py:177-178", "Aether/runpod/aether_units/run.py:190-193", "Aether/runpod/receipts/aether-units-20260927T165531Z/units_manifest.json:8-13"]},
+  {"part": "units_manifest.json has no per-unit result_sha256",
+   "status": "true",
+   "evidence": ["Aether/runpod/aether_units/run.py:177-178 (per-unit record keys are only task_id, exit_code, wall_s, artifact, artifact_sha256)", "Grep 'result_sha256' over Aether/runpod/receipts: hits only in T-*.json/T-*.log unit artifacts, none in any of the 5 committed units_manifest.json files"]},
+  {"part": "A committed BUCKKEEP (Windows) seed-0 rcv_add unit exists",
+   "status": "true",
+   "evidence": ["ops/campaigns/C-002/E-006/attempts_buckkeep/T-063__A-002__BUCKKEEP.json:15-17 (hostname BUCKKEEP, numpy 2.4.3, Windows-11)", "ops/campaigns/C-002/E-006/attempts_buckkeep/T-063__A-002__BUCKKEEP.json:23 (law rcv_add)", "ops/campaigns/C-002/E-006/attempts_buckkeep/T-063__A-002__BUCKKEEP.json:26 (seed_index 0)"]},
+  {"part": "That unit's result_sha256 begins 08929d70",
+   "status": "true",
+   "evidence": ["ops/campaigns/C-002/E-006/attempts_buckkeep/T-063__A-002__BUCKKEEP.json:41 (08929d701836200d2e75d5fe0563e388b5ff0a225dce2cca0a769ea716ee9927)"]}
+ ],
+ "notes": "The manifest schema comes from the generic runner, Aether/runpod/aether_units/run.py, and it holds for all 5 committed manifests. None of those manifests is for the rcv_add re-execution: R-13's pod manifest is not in Git, so the claim about it rests on the runner code, which writes the same schema for every unit set. Only one committed file has law rcv_add from BUCKKEEP (T-063), so the seed-0 hash is unambiguous. This check does not cover R-13's separate statement that the Linux seed-0 re-run is hash-identical, because the pod artifact is not committed."}

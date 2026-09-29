@@ -1,0 +1,62 @@
+{
+  "schema": "prometheus-gpu/preregistration/1",
+  "iteration": 3,
+  "written_utc": "2026-09-26T14:35:00Z",
+  "written_before": "any Iteration 3 or 4 real flight",
+  "machinery_commit": "3d88622ee",
+  "spend_caps_usd": {"iteration_3": 1.50, "iteration_4": 1.00,
+                     "ladder_so_far": 0.2055, "ladder_ceiling": 5.00},
+  "stop_rule": "stop real flying after 4 failed real flights per iteration; a NOT_RUN for capacity counts",
+  "flights": {
+    "L1_long_soak": {
+      "module": "examples/soak", "units_soak_seconds": 3900,
+      "gpu": "NVIDIA RTX A4000 first; alternatives A5000, L4, 4090, A40",
+      "controller": "poll 10 s, platform samples every 10 s, module windows every 10 s, checkpoints every 600 s (4 MiB)",
+      "controller_kill": "os._exit(137) at +1500 s after first telemetry; ~120 s with no controller; then --resume from the ledger",
+      "budget_ceiling_usd": 0.65,
+      "predictions": {
+        "P1_duration": "module elapsed 3900 s (+/- 2 s); pod wall <= module + 300 s",
+        "P2_cost": "<= $0.22 on an A4000 (quoted $0.17/h, ~72 min of pod); <= $0.62 on the worst alternative (A40)",
+        "P3_device_memory": "CuPy pool held bytes IDENTICAL from window 30 to the end (no creep); driver free bytes within 64 MiB of their window-30 value",
+        "P4_host_memory": "module VmRSS in the last 10 windows within 5% of windows 30-39",
+        "P5_throughput": "window p50 step latency, last 30 windows vs windows 30-59 (after a 5-min thermal settle): within 5%",
+        "P6_tail_latency": "p99/p50 ratio per window below 1.5 in >= 95% of windows",
+        "P7_telemetry_cadence": "no gap > 30 s (3 intervals) between consecutive module progress records, INCLUDING across the controller gap; platform sampler cost p50 in the last 10 min within 2x of the first 10 min",
+        "P8_artifact_growth": "series.jsonl grows ~linearly to 390 +/- 2 rows; 6 checkpoints written; artifact dir peak 25-40 MB; every declared artifact VERIFIED against /_manifest",
+        "P9_provider_latency": "per operation, second-half p50 within 2x of first-half p50; failures < 5% of calls",
+        "P10_clock": "start and end pod-clock offsets agree within 0.5 s (Iteration 2: 0.04 s over 10 min)",
+        "P11_controller_state": "the killed controller leaves the pod running and the ledger naming it; the resumed controller finds it by GET with a matching name, creates nothing (1 create total), watches to the module's end, retrieves, and establishes absence by LIST and GET together",
+        "P12_spend_accounting": "the last controller-health spend and the receipt's cost agree within 2%"
+      },
+      "falsified_if": "any P fails; each is reported individually, and a failure is a finding about the platform, not a reason to re-fly"
+    },
+    "F1_exit_nonzero": {
+      "module": "examples/soak", "units": 300, "fault": "exit at 60 s",
+      "predict": "result FAILED, cause MODULE_EXITED_WITHOUT_END, detected within 2 watch polls (<= 20 s) of the exit, well before max_runtime; cleanup LIST+GET absent; cost <= $0.02",
+      "qualifies": "the stage-file exit path through the real proxy"
+    },
+    "F2_artifact_server_killed": {
+      "module": "examples/soak", "units": 300, "fault": "killserver at 60 s",
+      "controller": "unreachable_s 120",
+      "predict": "result UNKNOWN, cause ARTIFACT_SERVER_UNREACHABLE after ~120 s of silence while GET still returns the pod; telemetry up to ~60 s retained; artifacts MISSING (absent), not mismatched; cleanup LIST+GET absent; cost <= $0.02",
+      "qualifies": "what the real RunPod proxy returns for a dead backend (status recorded), and the controller's unreachable path"
+    },
+    "F3_hang": {
+      "module": "examples/soak", "units": 300, "fault": "hang at 60 s",
+      "controller": "telemetry_stall_s 120",
+      "predict": "result ABORTED, cause TELEMETRY_STALLED ~120-130 s after the last progress record; artifacts: telemetry VERIFIED (it is not being written), result.json MISSING; cleanup absent; cost <= $0.02",
+      "qualifies": "hang detection against a live pod whose server keeps answering"
+    },
+    "A1_auto_chain": {
+      "module": "examples/gpu_load", "units": 3000,
+      "preregistered_usd_spec_sheet": 0.0148,
+      "predict": "one command runs scout -> calibrated plan -> pinned campaign; the receipt carries estimates{spec_sheet, scout, actual, both errors}; |scout error| < |spec-sheet error| unless the A4000 is the card (spec sheet was only 2.9% off there in Iteration 2)",
+      "qualifies": "the feedback-loop path as the easy default"
+    }
+  },
+  "iteration_4": {
+    "shards": "3 x examples/soak, 240 s each, seeds 1/2/3; shard c injects exit at 60 s",
+    "budget_per_shard_usd": 0.08,
+    "predict": "campaign PARTIAL: a and b OK with verified artifacts, c FAILED (MODULE_EXITED_WITHOUT_END); 3 distinct pods, 3 distinct run ids, every shard's own cleanup LIST+GET absent; campaign cost = sum of shard costs <= $0.12 on A4000-class cards; a and b unaffected by c (their module elapsed within 2% of 240 s)"
+  }
+}

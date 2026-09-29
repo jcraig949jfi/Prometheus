@@ -1,0 +1,21 @@
+{"claim_id": "C6", "verdict": "CONFIRMED",
+ "parts": [
+  {"part": "Aphrodite A17 per-draw/per-replicate evidence exists on aphrodite/* seat branches",
+   "status": "true",
+   "evidence": ["4f937e88f:roles/Aphrodite/engine/A17_E1_RESULT_2026-09-26.json (commit also adds A17_A_DONORS, A17_E2_RESULT, campaign report)",
+                "git log --all -- roles/Aphrodite/**/*A17*: 373d7ef28, 9adb83f6c, fb5628435, ac2a935db, 4f937e88f, 45a6bae22",
+                "git branch -a --contains 4f937e88f / 9adb83f6c: origin/aphrodite/{a16-campaign-2026-09-26, arc3-2026-09-28, compounding-2026-09-27, frontier-2026-09-27} (4 branches, matching R-13 'on 4 aphrodite/* seat branches')",
+                "roles/Artemis/selftest/runs/R-13/REPORT.md:67"]},
+  {"part": "A17 evidence is not on main",
+   "status": "true",
+   "evidence": ["HEAD 59b94b4ed == origin/main (git rev-parse)",
+                "Glob roles/Aphrodite/**/*[aA]17* on HEAD: no files; roles/Aphrodite/engine/ holds A16_* files but no A17_*",
+                "branch --contains for the A17 commits lists no main ref"]},
+  {"part": "BEE multi-day evidence is branch-only",
+   "status": "true",
+   "evidence": ["ee7a7d954 = origin/bellerophon/multiday-campaign-2026-09-26 (launch); 12ce26e23 (prereg frozen, roles/Bellerophon/multiday_2026-09-26/MULTIDAY_PREREG.md) and 45d7c0c0f are contained only in that branch",
+                "Glob roles/Bellerophon/multiday*/** on HEAD: no files",
+                "Only main-side item is roles/Bellerophon/coupling_2026-09-24/NEXT_MULTIDAY_CAMPAIGN.md:1-5, a pre-prereg design proposal ('nothing here is frozen, nothing is launched'), not multi-day evidence",
+                "roles/Artemis/selftest/runs/R-13/REPORT.md:34,59,183"]}
+ ],
+ "notes": "Checked against origin/main at 59b94b4ed. Local 'main' ref (22bfbc966) differs from origin/main and was not inspected (Bash access to ancestry commands was partly denied); the claim concerns the canonical main = origin/main. BEE multi-day outcomes themselves are not committed anywhere (R-13 grades it HOST-ONLY); what exists (prereg/code/pilots) is on the seat branch only, consistent with 'branch-only'."}

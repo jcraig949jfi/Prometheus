@@ -1,0 +1,180 @@
+{
+ "passed": 24,
+ "total": 24,
+ "checks": [
+  {
+   "check": "verdict: no behaviour, no structure",
+   "want": "LABEL_PROVENANCE_ONLY",
+   "got": "LABEL_PROVENANCE_ONLY",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verdict: no behaviour, structure",
+   "want": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "got": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verdict: behaviour, wrong mechanism",
+   "want": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "got": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verdict: behaviour in few envs, right mechanism",
+   "want": "LABEL_CONTEXT_DEPENDENT",
+   "got": "LABEL_CONTEXT_DEPENDENT",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verdict: behaviour everywhere, right mechanism",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verdict: behaviour, mechanism n/a",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "verdict: unlabelled capable object (false negative)",
+   "want": "UNLABELLED_LABEL_OK",
+   "got": "UNLABELLED_LABEL_OK",
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L1 true: LDIR replicator + random tail",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.9375 bits=480"
+  },
+  {
+   "check": "L1 true: LDI byte-loop replicator",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.9062 bits=464"
+  },
+  {
+   "check": "L1 impostor: copy routine behind HALT",
+   "want": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "got": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "pass": true,
+   "detail": "rate=0.00 T=None bits=None"
+  },
+  {
+   "check": "L1 impostor: blank tape carrying the label",
+   "want": "LABEL_PROVENANCE_ONLY",
+   "got": "LABEL_PROVENANCE_ONLY",
+   "pass": true,
+   "detail": "rate=0.00 T=None bits=None"
+  },
+  {
+   "check": "L1 impostor: zero painter (no byte of the tape read)",
+   "want": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "got": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "pass": true,
+   "detail": "rate=1.00 T=0.0 bits=0"
+  },
+  {
+   "check": "L1 control: unlabelled replicator",
+   "want": "UNLABELLED_LABEL_OK",
+   "got": "UNLABELLED_LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.00 T=0.9297 bits=472"
+  },
+  {
+   "check": "L1 painter: functional test passes, world copy-op rule rejects",
+   "want": [
+    true,
+    false
+   ],
+   "got": [
+    true,
+    false
+   ],
+   "pass": true,
+   "detail": ""
+  },
+  {
+   "check": "L2 true: side-agnostic block copier",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=0.89 T=0.9271 fresh=1.0"
+  },
+  {
+   "check": "L2 impostor: LDIR-smear zero painter (passes P-11)",
+   "want": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "got": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "pass": true,
+   "detail": "rate=0.50 T=0.0104 fresh=0.5"
+  },
+  {
+   "check": "L2 impostor: bare LDIR, addresses from registers",
+   "want": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "got": "STRUCTURE_WITHOUT_BEHAVIOUR",
+   "pass": true,
+   "detail": "rate=0.00 T=None fresh=0.0"
+  },
+  {
+   "check": "L2 impostor: random genome carrying the label",
+   "want": "LABEL_PROVENANCE_ONLY",
+   "got": "LABEL_PROVENANCE_ONLY",
+   "pass": true,
+   "detail": "rate=0.00 T=None fresh=0.0"
+  },
+  {
+   "check": "L2 boundary: absolute-address copier (side 0 only)",
+   "want": true,
+   "got": true,
+   "pass": true,
+   "detail": "now=LABEL_OK rate=0.50 T=0.9323"
+  },
+  {
+   "check": "L2 painter: p11.assay passes it directly (FR-011 claim)",
+   "want": true,
+   "got": true,
+   "pass": true,
+   "detail": "draws_passed=2 fid=0.906"
+  },
+  {
+   "check": "L3 true: INC witness",
+   "want": "LABEL_OK",
+   "got": "LABEL_OK",
+   "pass": true,
+   "detail": "rate=1.000 ko=0.0156"
+  },
+  {
+   "check": "L3 impostor: right only with an empty window",
+   "want": "LABEL_CONTEXT_DEPENDENT",
+   "got": "LABEL_CONTEXT_DEPENDENT",
+   "pass": true,
+   "detail": "rate=0.727 ko=0.0156"
+  },
+  {
+   "check": "L3 impostor: input read by address, not IN",
+   "want": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "got": "BEHAVIOUR_WITHOUT_EXPECTED_MECHANISM",
+   "pass": true,
+   "detail": "rate=1.000 ko=1.0"
+  },
+  {
+   "check": "L3 impostor: ECHO tape carrying an INC label",
+   "want": "LABEL_PROVENANCE_ONLY",
+   "got": "LABEL_PROVENANCE_ONLY",
+   "pass": true,
+   "detail": "rate=0.000 ko=None"
+  }
+ ]
+}

@@ -1,0 +1,80 @@
+{
+ "BLOCK_recertified": 5,
+ "BYTEWISE_recertified": 1,
+ "N3_zero_bit_share_CVT2": {
+  "CI95": [
+   0.2228,
+   0.9567
+  ],
+  "k": 4,
+  "n": 6,
+  "share": 0.6667
+ },
+ "N3_zero_bit_share_CVTR": {
+  "CI95": [
+   0.2228,
+   0.9567
+  ],
+  "k": 4,
+  "n": 6,
+  "share": 0.6667
+ },
+ "depth2_runs": {
+  "7ae3f9c1437c8000-s54765-tL-a0": {
+   "CVT2_TB": 7.3923,
+   "CVTR_TB": 7.3837,
+   "recertified": true
+  },
+  "c2a87e5970ad345d-s80949-tL-a0": {
+   "CVT2_TB": null,
+   "CVTR_TB": null,
+   "recertified": false
+  }
+ },
+ "files": {
+  "aa58/roles/Nestor/campaigns/z80atlas-2026-09-19/grammar.py": "c8992d7bac325d496c4deb962b44ccb2be436d135410254b46583a7427e9a61a",
+  "aa58/roles/Nestor/campaigns/z80atlas-2026-09-19/z8.py": "79ee46fb342506d4fb400aa1c3e1102b12eab5a34e1f3ed70f4c585695787f35",
+  "d764/roles/Nestor/campaigns/z80atlas-forensics-2026-09-23/P11_REASSAY.jsonl": "632e7d299ab2c2b0f5ad85a13d4015726f827dc4f6c98978680fbe0c57f2a1cd",
+  "d764/roles/Nestor/campaigns/z80atlas-forensics-2026-09-23/substrate/z8.py": "c8f2823e2471f6073ad6ef112badf1a688795fed9c9a7e669c31c690bdf672a9",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/anticheat.py": "5132192bef681fe1c9ab5a9517bc0f4790990b90ac4cd712867a6a822a5f6c05",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/constants.py": "7f60389039f49aba337374adcce23e87599e090989890d38367e07d0ca6309d1",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/grammar.py": "0289633d83224ff79ca07e350ce7c0e7d9c37e1a5bbd5aa623eef131af075c30",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/p11.py": "7a47c25dcf08ea7b923e19f06ac87f325aa926048518942e9e317a740a05e6dd",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/tasks.py": "eb93ffc67ceca0549bd35d19b9245f8118e2cc43f66d7f41ef55f5199d234c09",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/world.py": "b53057030a64f0b95c743c48ee67f04c8d2b43a9c85610901a44297a262ff7a1",
+  "d764/roles/Nestor/campaigns/z80atlas-verify-2026-09-22/z8.py": "8382574ba5db28d51209c99c79fc7ffe9c14684ea5dbf46d540486cd2c2d25dc"
+ },
+ "n_donors": 57,
+ "note": "Fresh-state re-assay (registers/victims of the original events are not committed). NEW file; S1-C P11_REASSAY.* are not rescored.",
+ "param_crosscheck_all_ok": true,
+ "strata": {
+  "BLOCK|dom<0.9": {
+   "CVT1_TB>=1": 2,
+   "CVT2_TB>=1": 2,
+   "CVTR_TB>=1": 2,
+   "FERT": 2,
+   "LOCAL": 2,
+   "donors": 33,
+   "recertified": 2
+  },
+  "BLOCK|dom>=0.9": {
+   "CVT1_TB>=1": 3,
+   "CVT2_TB>=1": 0,
+   "CVTR_TB>=1": 0,
+   "FERT": 0,
+   "LOCAL": 0,
+   "donors": 14,
+   "recertified": 3
+  },
+  "BYTEWISE|dom>=0.9": {
+   "CVT1_TB>=1": 1,
+   "CVT2_TB>=1": 0,
+   "CVTR_TB>=1": 0,
+   "FERT": 0,
+   "LOCAL": 0,
+   "donors": 10,
+   "recertified": 1
+  }
+ },
+ "wall_seconds": 9.5
+}

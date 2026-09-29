@@ -1,0 +1,410 @@
+{
+ "name": "D_0ad7dc00",
+ "cell": "0ad7dc00f146326f",
+ "family": "HOLD",
+ "ns": "0x5ec",
+ "nperm": 20000,
+ "guards": {
+  "G1": true,
+  "G2_no_rediverge": true,
+  "G3": true,
+  "G3_probes": true
+ },
+ "normal_acc_ci": [
+  1.0,
+  1.0,
+  1.0
+ ],
+ "ndiff_pairs_end_trial_k+j": {
+  "0": 32,
+  "1": 30,
+  "2": 30,
+  "3": 30,
+  "4": 30,
+  "5": 30,
+  "6": 30
+ },
+ "L1": true,
+ "L1_persistent": true,
+ "carrier_pairs_differing": {
+  "0": {
+   "S": 32,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "1": {
+   "S": 30,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "2": {
+   "S": 30,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "3": {
+   "S": 30,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "4": {
+   "S": 30,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "5": {
+   "S": 30,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  },
+  "6": {
+   "S": 30,
+   "Kp": 26,
+   "w": 0,
+   "E": 0,
+   "r": 0,
+   "inbox": 0,
+   "flight": 0
+  }
+ },
+ "frozen_frac_k2_vs_k6": 0.03333333333333333,
+ "elems": {
+  "k+2_median_elems": 2.0,
+  "k+6_median_elems": 2.0
+ },
+ "scar_sign_vs_cue_k+6": {
+  "pos": 3,
+  "neg": 27,
+  "zero_or_same": 2
+ },
+ "L3": {
+  "T": 0.0,
+  "p": 1.0,
+  "per_lag": {
+   "1": {
+    "sum_g": 0.0,
+    "sum_yg": 0.0
+   },
+   "2": {
+    "sum_g": 0.0,
+    "sum_yg": 0.0
+   },
+   "3": {
+    "sum_g": 0.0,
+    "sum_yg": 0.0
+   },
+   "4": {
+    "sum_g": 0.0,
+    "sum_yg": 0.0
+   },
+   "5": {
+    "sum_g": 0.0,
+    "sum_yg": 0.0
+   },
+   "6": {
+    "sum_g": 0.0,
+    "sum_yg": 0.0
+   }
+  },
+  "unsigned_answer_diff": {
+   "1": 0.0,
+   "2": 0.0,
+   "3": 0.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0
+  }
+ },
+ "decoders": {
+  "D1": {
+   "maxacc": 0.625,
+   "p": 0.00034998250087495624,
+   "per_lag": {
+    "2": {
+     "acc": 0.59375,
+     "feature": "Kp_sum"
+    },
+    "3": {
+     "acc": 0.578125,
+     "feature": "Kp_sum"
+    },
+    "4": {
+     "acc": 0.625,
+     "feature": "Kp_sum"
+    },
+    "5": {
+     "acc": 0.578125,
+     "feature": "Kp_sum"
+    },
+    "6": {
+     "acc": 0.578125,
+     "feature": "S1_sum"
+    }
+   }
+  },
+  "D2": {
+   "maxacc": 0.640625,
+   "p": 0.0007999600019999,
+   "per_lag": {
+    "2": {
+     "acc": 0.640625,
+     "feature": "Kp_sum"
+    },
+    "3": {
+     "acc": 0.625,
+     "feature": "Kp_sum"
+    },
+    "4": {
+     "acc": 0.578125,
+     "feature": "Kp_sum"
+    },
+    "5": {
+     "acc": 0.59375,
+     "feature": "Kp_sum"
+    },
+    "6": {
+     "acc": 0.625,
+     "feature": "Kp_sum"
+    }
+   }
+  },
+  "PAIR": {
+   "maxacc": 0.90625,
+   "p": 4.999750012499375e-05,
+   "per_lag": {
+    "2": {
+     "acc": 0.90625,
+     "feature": "Kp_sum"
+    },
+    "3": {
+     "acc": 0.90625,
+     "feature": "Kp_sum"
+    },
+    "4": {
+     "acc": 0.90625,
+     "feature": "Kp_sum"
+    },
+    "5": {
+     "acc": 0.90625,
+     "feature": "Kp_sum"
+    },
+    "6": {
+     "acc": 0.90625,
+     "feature": "Kp_sum"
+    }
+   }
+  }
+ },
+ "probes": {
+  "BLANK": {
+   "T": 0.0,
+   "p": 1.0,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "3": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "4": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "5": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "6": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    }
+   }
+  },
+  "PING": {
+   "T": 0.0,
+   "p": 1.0,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "3": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "4": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "5": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "6": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    }
+   }
+  },
+  "CLEAR_S0": {
+   "T": 0.0,
+   "p": 1.0,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "3": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "4": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "5": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "6": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    }
+   }
+  },
+  "CLEAR_FAST": {
+   "T": 0.0,
+   "p": 1.0,
+   "G3": true,
+   "per_lag": {
+    "2": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "3": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "4": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "5": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    },
+    "6": {
+     "sum_g": 0.0,
+     "n_diff": 0
+    }
+   }
+  },
+  "RELOC": {
+   "T": 0.0,
+   "p": 1.0,
+   "best": {
+    "j": 2,
+    "role": "act",
+    "d": 0,
+    "sum_g": 0.0,
+    "n_diff": 0
+   }
+  }
+ },
+ "heal": {
+  "S": {
+   "n_before": 30,
+   "merged_at_end": 4,
+   "frac": 0.13333333333333333,
+   "n_persist_unhealed": 30,
+   "merged_persist": 4,
+   "frac_rel": 0.13333333333333333
+  },
+  "Kp": {
+   "n_before": 30,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 30,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "w": {
+   "n_before": 30,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 30,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "E": {
+   "n_before": 30,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 30,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "r": {
+   "n_before": 30,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 30,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "inbox": {
+   "n_before": 30,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 30,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  },
+  "flight": {
+   "n_before": 30,
+   "merged_at_end": 0,
+   "frac": 0.0,
+   "n_persist_unhealed": 30,
+   "merged_persist": 0,
+   "frac_rel": 0.0
+  }
+ },
+ "sufficient_stores": [],
+ "hist_ratio": {
+  "acc_in_sample": 0.65625,
+  "feature": "Kp_sum",
+  "ratio": 0.9674795159509592,
+  "frac_same_sign": 1.0,
+  "b_k": -100.625
+ },
+ "secs": 92.51371097564697
+}

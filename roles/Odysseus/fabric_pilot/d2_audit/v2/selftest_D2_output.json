@@ -1,0 +1,33 @@
+{
+ "all_checks_true": true,
+ "all_negative_controls_false": true,
+ "checks": {
+  "audit_refuses_forbidden_import": true,
+  "certify_before_predictions_refused": true,
+  "commitment_round_trip": true,
+  "hash_mismatch_refused": true,
+  "predictor_sees_no_knobs": true,
+  "real_ciphertext_sha256_ok": true,
+  "real_family_src_sha256_ok": true,
+  "real_manifest_spec_id_ok": true,
+  "real_n_worlds_ge_128": true,
+  "runner_end_to_end": true
+ },
+ "hidden_set_or_key_touched": false,
+ "negative_controls_must_be_false": {
+  "audit_refuses_forbidden_import[allow_flagged]": false,
+  "certify_before_predictions_refused[DefectNoGate]": false,
+  "commitment_round_trip[altered_seed_redraw]": false,
+  "commitment_round_trip[edited_manifest]": false,
+  "commitment_round_trip[flipped_ciphertext]": false,
+  "commitment_round_trip[flipped_plaintext]": false,
+  "commitment_round_trip[wrong_key]": false,
+  "commitment_round_trip[wrong_salt]": false,
+  "hash_mismatch_refused[DefectNoHashCheck]": false,
+  "predictor_sees_no_knobs[DefectRawSystemInProcess]": false,
+  "runner_end_to_end[certify_before_seal_in_file]": false,
+  "runner_end_to_end[knob_leak_in_receipts]": false,
+  "runner_end_to_end[tampered_receipt]": false
+ },
+ "selftest_pass": true
+}

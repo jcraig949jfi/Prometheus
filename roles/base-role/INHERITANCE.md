@@ -17,7 +17,7 @@ Every role below carries the banner on its primary document(s):
 | Alethelia | RESPONSIBILITIES.md (already) |
 | Apollo | CHARTER.md (already) |
 | Aporia | RESPONSIBILITIES.md (already) |
-| Artemis | RESPONSIBILITIES.md (created 2026-09-25 on the seat's creation pass on ubu002; new seat, charter PENDING the operator's discussion; creation exchange verbatim in roles/Artemis/prompts/2026-09-25_creation/; self-service row per Archaeon ruling #39) |
+| Artemis | RESPONSIBILITIES.md (created 2026-09-25 on the seat's creation pass on ubu002; charter ADOPTED 2026-09-27 (research backlog ecology), verbatim in roles/Artemis/prompts/2026-09-27_charter_research_backlog_ecology/ with MANIFEST; pre-charter file at roles/Artemis/superseded/; self-service row per Archaeon ruling #39) |
 | Arachne | RESPONSIBILITIES.md (created with the banner, 2026-09-11 adoption pass; the seat had no roles/ directory before) |
 | Ares | RESPONSIBILITIES.md (created 2026-09-19 on the seat's creation pass on M2; charter ADOPTED the same day (pressure engineering / primordial soup sandbox), verbatim in roles/Ares/prompts/2026-09-19_charter/ with MANIFEST; pre-charter file at roles/Ares/superseded/; self-service row per Archaeon ruling #39) |
 | Archaeon | RESPONSIBILITIES.md (already), CHARTER.md (already) |
@@ -53,7 +53,7 @@ Every role below carries the banner on its primary document(s):
 | Mnemosyne | RESPONSIBILITIES.md (already) |
 | Nestor | RESPONSIBILITIES.md (created 2026-09-14 on the seat's creation pass; new seat, charter pending; self-service row per Archaeon ruling #39) |
 | Nous | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/nous/README.md is the March 2026 agent README, annotated by the seat file in ARCHAEOLOGY s5 rather than rewritten, and its cited scoring weights are contradicted by the artifact they cite) |
-| Odysseus | RESPONSIBILITIES.md (created 2026-09-25 on the seat's creation pass on ubu001; charter ADOPTED 2026-09-26 (distributed brain substrate), verbatim in roles/Odysseus/prompts/2026-09-26_charter/; pre-charter file at roles/Odysseus/superseded/; creation exchange verbatim in roles/Odysseus/prompts/2026-09-25_creation/; self-service row per Archaeon ruling #39) |
+| Odysseus | RESPONSIBILITIES.md (created 2026-09-25 on the seat's creation pass on ubu001; durable role 2026-09-28: expeditionary research seat, verbatim in roles/Odysseus/prompts/2026-09-28_expeditionary/; brain charter of 2026-09-26 PARKED, prompts/2026-09-26_charter/; pre-charter file at roles/Odysseus/superseded/; creation exchange verbatim in roles/Odysseus/prompts/2026-09-25_creation/; self-service row per Archaeon ruling #39) |
 | Pheme | RESPONSIBILITIES.md (created 2026-09-11 on the seat's adoption pass; the seat had no roles/ directory before; agents/pheme/CHARTER.md is Aporia's May design, annotated by the seat file, not stamped) |
 | MPADatabaseArchitect | RESPONSIBILITIES.md (already) |
 | PipelineOrchestrator | RESPONSIBILITIES.md (already) |

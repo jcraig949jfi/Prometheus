@@ -1,0 +1,254 @@
+{
+ "arm": "A1",
+ "k": 0,
+ "reduced": true,
+ "physics": {
+  "topology": "ring",
+  "n_sites": 144,
+  "radius": 3,
+  "k_random": 6,
+  "rewire": 50,
+  "state_dim": 2,
+  "payload_width": 2,
+  "channels": 1,
+  "fanout": 8,
+  "dest_mode": "sample",
+  "loss": 0.1,
+  "loss_per_hop": 0,
+  "lat_base": 1,
+  "lat_hop": 1,
+  "lat_jitter": 1,
+  "dup": 0.0,
+  "noise": 0,
+  "cap": 2,
+  "collision": "saturate",
+  "decay_shift": 0,
+  "update_mode": "sync",
+  "update_period": 2,
+  "update_p": 0.5,
+  "rules": 1,
+  "prog_len": 16,
+  "plastic_route": 1,
+  "adapt_shift": 5,
+  "wimm": 1,
+  "setrule": 0,
+  "mut_site": 0.0,
+  "e_income": 2,
+  "e_max": 64,
+  "c_emit": 1,
+  "c_op": 0,
+  "c_mem": 0,
+  "topo_seed": 1939803888
+ },
+ "spec": {
+  "pop": 24,
+  "M": 8,
+  "gens": 10,
+  "elite": 4,
+  "trunc": 0.25,
+  "p_field": 0.04,
+  "p_instr": 0.15,
+  "p_swap": 0.1,
+  "p_cross": 0.3,
+  "M_final": 8,
+  "M_held": 32,
+  "w_contrast": 0.1,
+  "w_any": 0.02
+ },
+ "held": {
+  "acc": 0.50390625,
+  "lo99": 0.49479166666666663,
+  "hi99": 0.5143294270833333,
+  "zero_comm": 0.5,
+  "comm_delta": 0.0039062499999999965,
+  "comm_delta_lo99": -0.0052083333333333495,
+  "comm_delta_hi99": 0.014329427083333202
+ },
+ "champion": [
+  [
+   [
+    153,
+    147,
+    18,
+    236,
+    -68
+   ],
+   [
+    233,
+    134,
+    36,
+    140,
+    99
+   ],
+   [
+    66,
+    16,
+    49,
+    206,
+    -127
+   ],
+   [
+    247,
+    196,
+    73,
+    78,
+    -101
+   ],
+   [
+    6,
+    189,
+    51,
+    86,
+    1
+   ],
+   [
+    30,
+    46,
+    199,
+    217,
+    -31
+   ],
+   [
+    215,
+    121,
+    88,
+    134,
+    14
+   ],
+   [
+    55,
+    0,
+    34,
+    116,
+    89
+   ],
+   [
+    217,
+    121,
+    224,
+    56,
+    62
+   ],
+   [
+    57,
+    86,
+    70,
+    106,
+    2
+   ],
+   [
+    153,
+    182,
+    247,
+    101,
+    127
+   ],
+   [
+    104,
+    36,
+    27,
+    48,
+    -97
+   ],
+   [
+    81,
+    176,
+    229,
+    186,
+    45
+   ],
+   [
+    4,
+    64,
+    94,
+    91,
+    -52
+   ],
+   [
+    88,
+    168,
+    130,
+    77,
+    37
+   ],
+   [
+    153,
+    222,
+    213,
+    184,
+    127
+   ]
+  ]
+ ],
+ "evolve_wall_s": 126.95007848739624,
+ "x1": {
+  "presence": 0,
+  "content_only": 0,
+  "fire": 0,
+  "payload_only": 0,
+  "chan_only": 0,
+  "w_diff_ticks": 0,
+  "r_diff": 0,
+  "S_diff": 0,
+  "presence_share": null,
+  "fire_share": null,
+  "chan_share": null,
+  "presence_without_fire_chan_or_w_at_lag": null,
+  "window": [
+   65,
+   75
+  ]
+ },
+ "x1b": {
+  "fire_diffs": 0,
+  "nonsensor_share": null,
+  "receipt_triggered_share_of_nonsensor": null,
+  "distinct_fire_diff_sites_per_pair": 0.0
+ },
+ "x5": {
+  "normal": [
+   0.509765625,
+   0.5032552083333333,
+   0.516279296875
+  ],
+  "content_null": [
+   0.509765625,
+   0.5032552083333333,
+   0.516279296875
+  ],
+  "verdict": "NO-EFFECT",
+  "ticks": "S-CT swap ticks"
+ },
+ "inflight": {
+  "acc": [
+   0.49348958333333337,
+   0.48893229166666663,
+   0.4973958333333333
+  ],
+  "verdict": "NO-EFFECT"
+ },
+ "sitestate": {
+  "acc": [
+   0.5065104166666667,
+   0.5026041666666667,
+   0.5110677083333334
+  ],
+  "verdict": "NO-EFFECT"
+ },
+ "payload": {
+  "acc": [
+   0.509765625,
+   0.5032552083333333,
+   0.516279296875
+  ],
+  "verdict": "NO-EFFECT"
+ },
+ "counts": {
+  "acc": [
+   0.49348958333333337,
+   0.48893229166666663,
+   0.4973958333333333
+  ],
+  "verdict": "NO-EFFECT"
+ }
+}
