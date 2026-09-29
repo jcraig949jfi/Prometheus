@@ -185,14 +185,69 @@ def git_env() -> dict:
     return env
 
 
+# v5 (Odysseus v4 S-5): hooks off (a fetch or auto-gc could run one), auto-gc/maintenance off
+GIT_HARDEN = ("-c", "core.hooksPath=" + os.devnull, "-c", "gc.auto=0", "-c", "maintenance.auto=false")
+
+
 def _git(repo: Path, *args: str) -> subprocess.CompletedProcess:
-    return subprocess.run([git_exe(repo), "-C", str(repo), *args], capture_output=True, text=True, env=git_env())
+    return subprocess.run([git_exe(repo), *GIT_HARDEN, "-C", str(repo), *args], capture_output=True, text=True,
+                          env=git_env())
 
 
 def _show(repo: Path, ref: str, rel: str) -> Optional[bytes]:
-    p = subprocess.run([git_exe(repo), "-C", str(repo), "show", "%s:%s" % (ref, rel)], capture_output=True,
-                       env=git_env())
+    p = subprocess.run([git_exe(repo), *GIT_HARDEN, "-C", str(repo), "show", "%s:%s" % (ref, rel)],
+                       capture_output=True, env=git_env())
     return p.stdout if p.returncode == 0 else None
+
+
+def git_state_ok(repo: Path) -> None:
+    """v5 (S-5): refuse a repository whose history can be re-parented by grafts or truncated by a shallow file
+    (GIT_NO_REPLACE_OBJECTS does not cover these)."""
+    p = _git(repo, "rev-parse", "--git-common-dir")
+    if p.returncode != 0:
+        raise AmbiguousRef("not a git repository: %s" % repo)
+    g = Path(p.stdout.strip())
+    g = g if g.is_absolute() else Path(repo) / g
+    for f in ("info/grafts", "shallow"):
+        if (g / f).exists():
+            raise AmbiguousRef("%s exists in the git directory: history could be rewritten" % f)
+
+
+def os_account() -> str:
+    """The OS account from the OS (GetUserNameW / pwd), never from USERNAME/USER (v3 F-ACCT; v5 used by custody too)."""
+    if os.name == "nt":
+        import ctypes
+        n = ctypes.c_uint32(257)
+        buf = ctypes.create_unicode_buffer(257)
+        if not ctypes.windll.advapi32.GetUserNameW(buf, ctypes.byref(n)):
+            raise GateRefusal("GetUserNameW failed")
+        return buf.value
+    import pwd
+    return pwd.getpwuid(os.getuid()).pw_name
+
+
+def is_single_user_account(name: str) -> bool:
+    """v5 (Odysseus v4 S-3): True iff `name` resolves to ONE user account (SidTypeUser), not a group or well-known
+    principal such as Everyone / Users (a designation naming a group would make the released key widely readable)."""
+    if not name or any(c in name for c in "*?,;"):
+        return False
+    if os.name == "nt":
+        import ctypes
+        from ctypes import wintypes
+        sid = ctypes.create_string_buffer(256)
+        cb = wintypes.DWORD(256)
+        dom = ctypes.create_unicode_buffer(256)
+        cd = wintypes.DWORD(256)
+        use = wintypes.DWORD(0)
+        ok = ctypes.windll.advapi32.LookupAccountNameW(None, ctypes.c_wchar_p(name), sid, ctypes.byref(cb), dom,
+                                                       ctypes.byref(cd), ctypes.byref(use))
+        return bool(ok) and use.value == 1                        # SidTypeUser
+    try:
+        import pwd
+        pwd.getpwnam(name)
+        return True
+    except KeyError:
+        return False
 
 
 def resolve_ref(repo: Path, ref: str) -> str:
@@ -348,7 +403,11 @@ def once_record_present(repo, ref, name) -> bool:
     """v3: a KEY_RELEASED / REVEALED record makes a second release or reveal impossible whatever the custody log says.
     v4 (Odysseus v3 F-ONCE): True iff protocol/<name> was EVER committed in the full history of `ref` (deleting the
     record later does not re-enable a release)."""
-    return bool(_record_history(Path(repo), ref, PROTO_REL + "/" + name)) or         _show(Path(repo), ref, PROTO_REL + "/" + name) is not None
+    rel = PROTO_REL + "/" + name
+    p = _git(Path(repo), "log", "--full-history", "-m", "--format=%H", ref, "--", rel)
+    if p.returncode != 0:                                         # v5 (S-6): a git error never reads as "no record"
+        raise AmbiguousRef("git log failed while checking %s (rc %d): refusing" % (name, p.returncode))
+    return bool(p.stdout.strip())
 
 
 def _allowlisted(allowlist, role: str, name: str, b: bytes):
@@ -375,6 +434,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     need = order[: order.index(through) + 1]
     repo = Path(repo)
     pins = pins or {"seal_commit": SEAL_COMMIT, "spec_id": SPEC_ID}
+    git_state_ok(repo)                        # v5 (S-5)
     st: dict = {"ref": ref, "ref_commit": resolve_ref(repo, ref)}
     ref = st["ref_commit"]                    # v4 (TOCTOU note): resolved ONCE; every read below uses this commit
     check_records_dir(repo, ref)
