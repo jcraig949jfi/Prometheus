@@ -4,12 +4,12 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T07:30:55Z",
+  "updated_at_utc": "2026-09-29T09:05:53Z",
   "state": "BLOCKED",
-  "state_reason": "E-003: agreement PASS (#956); re-frozen manifest with B-P1 dual reading posted (#963, e003 branch 4c38603dd, manifest da1c73a4). Waiting for the BEE GO record (C-001 E-003 protocol).",
+  "state_reason": "E-003: production s4.3 FAILED as preregistered on an Archaeon-side reading (C11: owner's literal reading correct; owner tracer + production outputs stand). Fresh set 2 owner output SEALED (#973, 44e36e3a2). Waiting for fresh-set-2 agreement + BEE GO v2; no claim before.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
-  "head_sha": "01944928a9db4182136a73cbfc6810ca0489f96a",
+  "head_sha": "b16c5b1c943018ac7547b36770207d8bbe55c7ef",
   "threads": [
     "thr-bel-computation-reproduction-coupling",
     "thr-bel-worlds-kernel"
@@ -65,7 +65,7 @@
       "id": "E-003",
       "campaign": "C-001",
       "owner": "Archaeon",
-      "status": "MANIFEST_POSTED_AWAITING_GO",
+      "status": "AWAITING_FRESH2_AGREEMENT_AND_GO_V2",
       "spec": "ANCESTRY_PREREG_v4 + v5 delta, Amendments C1-C4 @567762a15 (archaeon/attribution-arc-2026-09-28)",
       "bee_run": "r022153",
       "comms": "#811 #817 #824 #833 #920 -> #919 #950",
@@ -76,7 +76,11 @@
       "dry_run": "disclosed (receipts/DRY_RESULTS_r022153_pipeline_validation.json; not production)",
       "agreement": "s4.3 fresh set PASS (#956): owner~Archaeon 1.0 all fields; owner~reference gated 1.0 except 1 label locus (reference outlier)",
       "pending": null,
-      "manifest_sha256": "da1c73a4a672327c68868ce9b748a2d03429cedb9760cda8181b966960a9950a"
+      "manifest_sha256": "da1c73a4a672327c68868ce9b748a2d03429cedb9760cda8181b966960a9950a",
+      "go": "gate_close/BEE_PRODUCTION_GO.md @ 232ebe399 (sha256 aa958093)",
+      "start_receipt": "roles/Bellerophon/e003_2026-09-29/receipts/PRODUCTION_START_RECEIPT.json @ d0b005fb3",
+      "production": "roles/Bellerophon/e003_2026-09-29/production/ @ 72ed6e160 (PRODUCTION_SEAL.json)",
+      "agreement_production": "FAIL then C11 repair on Archaeon side (#972)"
     }
   ],
   "fabric_tasks": [
@@ -110,14 +114,19 @@
       "lease_id": "lse-113b527778eb",
       "resource": "spectrex5:cpu12",
       "status": "RELEASED"
+    },
+    {
+      "lease_id": "lse-964d4be1a44f",
+      "resource": "spectrex5:cpu12",
+      "status": "RELEASED"
     }
   ],
   "running": [],
   "blocked_on": [
-    "Archaeon: BEE GO record binding manifest da1c73a4 (C-001 E-003 protocol; not an MWO s7 gate)"
+    "Archaeon: fresh set 2 agreement result + BEE GO v2 (C-001 E-003 protocol, Amendment C11)"
   ],
   "next_actions": [
-    "on GO: E-003 production on r022153 under the frozen hashes (canonical lease), seal + commit outputs, post location"
+    "on agreement PASS: write the E-003 BEE report (readings A/B, gates, verdict, limits) and a review packet; merge proposal for the e003 branch"
   ],
   "operator_decisions_required": [],
   "incidents": [
@@ -149,8 +158,8 @@
     }
   ],
   "latest_reports": [
+    "roles/Bellerophon/e003_2026-09-29/production/E003_RESULTS.json (branch bellerophon/e003-bee-ancestry-2026-09-29; not claimed before the agreement)",
     "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md",
-    "roles/Bellerophon/e003_2026-09-29/README.md (branch bellerophon/e003-bee-ancestry-2026-09-29)",
     "roles/Bellerophon/forensics_2026-09-23/ERRATA_2026-09-29.md"
   ],
   "migration_report": "roles/Bellerophon/MIGRATION_REPORT_MWO-0002.json",

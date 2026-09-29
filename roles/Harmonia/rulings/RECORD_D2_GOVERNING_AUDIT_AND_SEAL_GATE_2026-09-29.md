@@ -208,3 +208,93 @@ Operator decision possibly required: branch protection on main (Odysseus's v3 it
   - This is Harmonia's reading rule as adjudicator. It changes no D2 code, hypothesis or endpoint. The operator may
     overrule it **before** any key release. After a release it binds.
 - **D2 remains BLOCKED, fail-closed:** v7 needed; S1 (#925). Nothing released, revealed or built.
+
+## Addendum F (2026-09-29, before any exposure): Addendum E aligned with the D2 v7 terminal states
+
+Nestor's v7 (e4efb487e, #962) introduces:
+- PROTOCOL_ERROR and CERTIFY_ERROR, recorded per world;
+- a terminal `abort` receipt with RESULT ABORTED, result-sealable;
+- `receipts.jsonl` as the consumption marker;
+- crash-after-release as an EXPLICIT RESIDUAL (no resume, no second release; D2 spent).
+
+Addendum E is read against these states as follows. **This clarifies Addendum E; it widens nothing.**
+
+1. **Exposure point = the `open` receipt** (the package may meet the hidden worlds only after it). A release after which
+   no `open` receipt exists (bad key, crash before open) is **VOID (pre-exposure)**. The package saw nothing, so there is no
+   optional-stopping risk. D2 is still spent under v7's once-only release; Harmonia records that fact, not a result.
+2. **After `open`:**
+   - a sealed normal RESULT is adjudicated on its content;
+   - per-world PROTOCOL_ERROR / CERTIFY_ERROR count as **failed worlds** for that world (not dropped from the denominator);
+   - a sealed **RESULT ABORTED is FORFEIT** unless its abort receipt carries evidence that the cause lay outside the
+     package's control (for example host power loss). The burden of that evidence is on the run record, not on the
+     adjudicator. A MemoryError, a timeout or a pipe failure the package could have induced is FORFEIT.
+3. **No terminal record after `open`** (a crash that left no abort/close receipt) = evaluation of record, adjudicated
+   **FORFEIT** under the same burden rule. v7 declares that D2 is then spent.
+4. The adjudication bundle must show every consumed attempt (receipts files present) for this spec_id and any later
+   spec_id. That is Addendum E item 3, unchanged.
+
+As before: the operator may overrule before any key release; after a release this binds.
+
+## Addendum G (2026-09-29): governing v7 audit recorded, FAIL; how Addendum F bears on V7-B
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v7/VERDICT.md`, blob sha256 `3cc28628d337c3cda8b0f3666e6d2d6ade9b84ea1486d618e8c96f07078bf352` |
+| Verdict commit | 8efddb4b70b13bf6b8a77acc3c24195a34fcf132 (2026-09-29 08:00Z) |
+| Audited code | e4efb487e (Nestor #962). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** V7-1: an unsealable spend (the key read happens before the `open` record exists). V7-B: a package-initiated end is unattributed. V7-A: a probe gap, OPEN. S1 still OPEN. **Both self-tests PASS** (the first time since v4). |
+
+- **Harmonia check (by reading code):**
+  - `runner.py` `open()`: key read at line 677, then `Receipts(..., create=True)` at 679, then `append("open", ...)` at 681.
+  - **V7-1 is confirmed as stated.** A failure between 677 and 681 leaves a consumed release with no sealable record.
+    Neither VOID nor FORFEIT can be recorded, and Harmonia cannot adjudicate a state the chain cannot seal.
+- **V7-B and Addendum F:**
+  - The audit weighed Addendum E (#960). Addendum F (6da0d5b5f, #965) was pushed at about 07:58Z, while the re-audit was
+    already running on e4efb487e. Under F, a sealed ABORTED after `open` is **FORFEIT unless the record evidences a
+    cause outside the package's control**, so an unattributed abort **cannot** be recorded as VOID.
+  - V7-B's optional-stopping path is therefore closed **at the adjudication layer** by F.
+  - What V7-B still costs is the opposite error: a genuine infrastructure failure after `open` would be scored FORFEIT,
+    because the record cannot prove otherwise.
+  - Attribution (v8 item 2) remains **desirable for fairness to the predictor**; under F it is no longer required for
+    integrity.
+  - The auditor's severity ruling is the auditor's. Harmonia records this interaction and does not overrule it.
+- V7-F (package-induced resource pressure that looks like an infrastructure OOM): under F it is FORFEIT unless evidenced
+  otherwise. The burden sits where F placed it.
+- **D2 remains BLOCKED, fail-closed:** v8 needed (V7-1 at minimum); S1 (#925). Nothing released, revealed or built.
+
+## Addendum H (2026-09-29): governing v8 audit recorded, FAIL; two pre-exposure clarifications of Addendum F
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v8/VERDICT.md`, blob sha256 `5ac26fc7a8ee5cc365458a47afde26839e66e6e261b11a6c7daba9e3f3711ecb` |
+| Verdict commit | bea18a398a685bd565acd27583f4a1f666cf24d3 (2026-09-29 08:35Z) |
+| Audited code | a02b9b20c (Nestor #968). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** V8-1 (replica 1): a wrong but well-formed key spends the release, CONFIRMED. V8-1 (replica 2): an interrupted record write leaves an unsealable chain, OPEN. Should-fix V8-2 (`child_exitcode` always null) and V8-3 (a restart-probe failure is labelled `in_predictor_io=false`). S1 OPEN. Self-tests PASS. v7 blockers repaired. |
+
+- **Harmonia check (by reading code):**
+  - `runner.py` `open()`: `read_hex_file` (format and length only) -> `Receipts.create_with_open` (the marker) ->
+    `key_path.unlink()` -> `sealbox.decrypt`.
+  - **V8-1 (replica 1) is confirmed.** The key is proven only after consumption.
+
+**Clarification 1: the exposure point.** From v8 on, the `open` receipt precedes decryption, so "exposure = `open`"
+(Addendum F item 1) is refined:
+- **exposure = the first world delivered to the package** (the first per-world `predict` send);
+- a run that ends before that, including V8-1's wrong-key case, is **VOID (pre-exposure)**, because the package has seen
+  nothing;
+- after it, Addendum F items 2-3 apply unchanged.
+
+This is stricter on nothing and fairer on the V8-1 class.
+
+**Clarification 2: what counts as "evidence of a cause outside the package's control" (Addendum F item 2).**
+- A runner-assigned attribution label (`in_predictor_io`, `child_exitcode`, the named world) counts as evidence **only
+  once a governing audit has found that label truthful** (v9 item 3).
+- V8-2 and V8-3 show the current labels are not: an always-null exit code, and a package-caused restart failure
+  labelled as not predictor I/O.
+- Until then, **every post-exposure abort is FORFEIT whatever its label.**
+- This closes, at the adjudication layer, the path V8-3 describes (a package-caused failure read as infrastructure
+  VOID).
+
+As before: pre-exposure; the operator may overrule before any release.
+
+**D2 remains BLOCKED, fail-closed:** v9 needed (key proven before the marker; no unsealable interrupted write); S1 (#925).
+Nothing released, revealed or built.

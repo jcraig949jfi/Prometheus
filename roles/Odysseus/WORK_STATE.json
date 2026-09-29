@@ -3,7 +3,7 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T07:25:51Z",
+ "updated_at_utc": "2026-09-29T09:07:33Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "78a9694d36bcef50696c2e1a37c511cb26f3cd7f",
@@ -43,19 +43,19 @@
   }
  ],
  "fabric_tasks": [
-  "D2 re-audits v2..v6 all adjudicated FAIL (d2_audit/v2..v6); latest v6 @7c7b0b836"
+  "D2 re-audits v2..v8 all adjudicated FAIL (d2_audit/v2..v8); latest v8 @a02b9b20c"
  ],
  "running": [
-  "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: 2 x worker.ubu001 (claude, script), 1 x worker.ubu001.sci (script)"
+  "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: worker.ubu001.a and worker.ubu001.b (claude, script; audit.security.adversarial; distinct checkout caches per DEF-ODY-011 stop-gap), worker.ubu001.sci (script)"
  ],
  "blocked_on": [
-  "D2: Nestor v7 (stage the package and run all probes before the key read; package-initiated abort must not void the evaluation; crash-after-release policy; selftest v6_account_sid_equality) + operator S1 (#925); C3 blocked on D2",
+  "D2: Nestor v9 (prove the key before the consumption marker V8-1; interrupted write leaves an unsealable chain V8-1(r2); truthful abort attribution V8-2/3) + operator S1 (#925); C3 blocked on D2",
   "S3: Artemis must run on ubu001 in its own worktree (#936: Artemis is on ubu002; workload drafted, not frozen)",
   "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
  ],
  "next_actions": [
-  "seat loop: adjudicate D2 re-audits when Nestor submits (next: v7). Weigh Harmonia's pre-exposure adjudication rule (#960, Addendum E @9f6abdce6: consumed release without result seal = FORFEIT; infrastructure crash = VOID) when assessing the v6 'package can void the evaluation' finding",
+  "seat loop: adjudicate D2 re-audits when Nestor submits (next: v9). Weigh Harmonia's rules. Addendum E (#960 @9f6abdce6): consumed release without seal = FORFEIT, infrastructure crash = VOID. Addendum H (#971 @65329b9c5): exposure = first world delivered to the package, so a pre-exposure end is VOID. Runner attribution labels are evidence only once an audit finds them truthful, so every post-exposure abort is FORFEIT. Therefore v9 is judged mainly on: the key proven before the consumption marker (V8-1 r1), no unsealable chain from an interrupted write (V8-1 r2), and label truthfulness (V8-2/V8-3) only if Nestor seeks it",
   "support S3 when Artemis runs on ubu001: plant the three canaries, stay out of her Tasks, score quality afterwards",
   "record Fabric limitations surfaced by MWO work and census reports (roles/Odysseus/fabric_pilot/DEFECTS.md; MWO-0002 s6)"
  ],
@@ -64,12 +64,12 @@
   "D2 S1 root of trust for protocol records (Nestor #925: signed commits+pinned keys / operator confirms hashes / accept residual); branch protection on main"
  ],
  "latest_reports": [
-  "roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md",
+  "roles/Odysseus/fabric_pilot/d2_audit/v8/VERDICT.md",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
   "roles/Odysseus/fabric_pilot/s2/RESULT.md",
   "fabric/promexec/STATUS_EXPERIMENTAL.md"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
- "comms_cursor": 961,
+ "comms_cursor": 971,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json"
 }

@@ -100,6 +100,7 @@ FORBIDDEN_MODULES = {
     # v4 (Odysseus v3 F-AST / F-NET): file-capable and network-capable modules
     "codecs", "fileinput", "gzip", "bz2", "lzma", "logging", "xmlrpc", "imaplib", "poplib", "telnetlib", "nntplib",
     "socketserver", "ssl", "select", "selectors", "xml", "wsgiref", "_socket", "_io", "_thread",
+    "operator", "faulthandler", "functools", "copyreg",          # v8 (V7-D): attrgetter / methodcaller bypasses
 }
 ALLOWED_PROMETHEUS = ("prometheus.cosmos.c3", "prometheus.cosmos.c3.")
 FORBIDDEN_CALLS = {"open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars",
@@ -198,8 +199,11 @@ def _send(conn, obj) -> None:
     conn.send_bytes(json.dumps(_enc(obj)).encode("utf-8"))
 
 
+MAX_MSG_BYTES = 64 << 20        # v8 (Odysseus v7 V7-F): a longer child message is an OSError -> that world's error
+
+
 def _recv(conn):
-    return _dec(json.loads(conn.recv_bytes().decode("utf-8")))
+    return _dec(json.loads(conn.recv_bytes(MAX_MSG_BYTES).decode("utf-8")))
 
 
 def _rng_from_state(state: dict):
@@ -368,6 +372,25 @@ class Receipts:
                 raise ChainBroken("genesis mismatch (different run identifiers)")
             self.records = recs
 
+    @classmethod
+    def create_with_open(cls, path: Path, genesis: str, body: dict) -> "Receipts":
+        """v8 (Odysseus v7 V7-1/V7-C): the consumption marker appears ATOMICALLY with record 0 (the open record):
+        written to a temporary file, fsynced, then renamed. A failure before the rename leaves NO receipts.jsonl
+        (nothing consumed); after it, the chain always starts with a verifiable open record."""
+        path = Path(path)
+        if path.exists():
+            raise ChainBroken("receipts.jsonl exists")
+        rec = {"seq": 0, "kind": "open", "prev": genesis, "body": body, "hash": record_hash(0, "open", genesis, body)}
+        tmp = path.with_name(path.name + ".tmp")
+        with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+        self = cls.__new__(cls)
+        self.path, self.genesis, self.records = path, genesis, [rec]
+        return self
+
     @property
     def head(self) -> str:
         return self.records[-1]["hash"] if self.records else self.genesis
@@ -375,12 +398,37 @@ class Receipts:
     def append(self, kind: str, body: dict) -> dict:
         seq, prev = len(self.records), self.head
         rec = {"seq": seq, "kind": kind, "prev": prev, "body": body, "hash": record_hash(seq, kind, prev, body)}
-        with open(self.path, "a", encoding="utf-8", newline="\n") as f:
-            f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
-            f.flush()
-            os.fsync(f.fileno())
+        try:
+            with open(self.path, "a", encoding="utf-8", newline="\n") as f:
+                f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+                f.flush()
+                os.fsync(f.fileno())
+        except BaseException:
+            # v9 (Odysseus v8 item 2): an interrupted write/fsync is rolled back to the last complete record, so the
+            # chain on disk always equals the chain in memory and stays sealable
+            self.repair()
+            raise
         self.records.append(rec)
         return rec
+
+    def _expected_bytes(self) -> bytes:
+        return "".join(json.dumps(r, sort_keys=True, separators=(",", ":")) + "\n" for r in self.records).encode("utf-8")
+
+    def repair(self) -> bool:
+        """Truncate trailing bytes that are not part of the in-memory chain (a torn final write). Returns True when the
+        file now equals the in-memory chain byte for byte."""
+        want = self._expected_bytes()
+        try:
+            with open(self.path, "r+b") as f:
+                have = f.read()
+                if have != want and have.startswith(want):
+                    f.truncate(len(want))
+                    f.flush()
+                    os.fsync(f.fileno())
+            with open(self.path, "rb") as f:
+                return f.read() == want
+        except OSError:
+            return False
 
 
 def verify_receipts(path) -> tuple:
@@ -640,10 +688,37 @@ class FirewallRun:
         if self.do_preflight:
             dirs = self.preflight_mkfile_dirs + ([str(self.out)] if self.preflight_mkfile_dirs else [])
             self.out.parent.mkdir(parents=True, exist_ok=True)
-            self._spawn_probe("", "", self.probe_paths, [str(stand)], dirs)
+            # v8 (V7-A): the stand-in is probed for READ as well as append
+            self._spawn_probe("", "", list(self.probe_paths) + [str(stand)], [str(stand)], dirs,
+                              must_read=[str(Path(self.pkg["dir"]) / self.pkg["entry"])])
             self._stop_worker(kill=False)
             self._proc = self._conn = None
         stand.unlink()
+        # v8 (V7-1/V7-C): build and serialise the whole open record NOW (every input, file hash and the package meta),
+        # so nothing that can fail runs between the key read and the consumption marker except the atomic write
+        genesis = sealbox.sha256_hex(sealbox.canon_bytes({
+            "format": RECEIPT_FORMAT, "spec_id": manifest["spec_id"],
+            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
+            "package_sha256": self.package_sha256}))
+        body = {
+            "genesis": genesis, "host": socket.gethostname(),
+            "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
+            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
+            "n_worlds": int(manifest["n_worlds"]), "runner_id": self.runner_id,
+            "run_nonce": self.gates.get("run_nonce"), "account": self.account,
+            "protocol_gates": {k: v for k, v in self.gates.items() if k.endswith("_commit") or k in ("ref", "auditor")},
+            "package": {k: self.pkg[k] for k in ("sha256", "meta", "entry", "audit_flags", "allow_flagged", "files")},
+            "runner_src_sha256": sealbox.src_sha_lf(Path(__file__)),
+            "certify_src_sha256": sealbox.src_sha_lf(HERE.parent / "c3" / "certify.py"),
+            "certify_kwargs": self.certify_kwargs, "predict_timeout_s": self.predict_timeout,
+            "max_episode_steps_per_world": self.max_episode_steps,
+            "python": sys.version.split()[0], "numpy": np.__version__}
+        try:
+            json.loads(json.dumps(body, sort_keys=True))                  # must serialise and round-trip now
+            record_hash(0, "open", genesis, body)
+        except (ValueError, TypeError, RecursionError) as e:
+            raise RunnerRefusal("the open record cannot be serialised (%s): refused before the key" % type(e).__name__)
+        self._open_body = (genesis, body)
         self._prepared = (manifest, ct, fam)
         return {"prepared": True, "run_dir": str(self.out)}
 
@@ -668,54 +743,44 @@ class FirewallRun:
             self.prepare()
         manifest, ct, fam = self._prepared
         self.manifest = manifest
-        genesis = sealbox.sha256_hex(sealbox.canon_bytes({
-            "format": RECEIPT_FORMAT, "spec_id": manifest["spec_id"],
-            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
-            "package_sha256": self.package_sha256}))
-        # the key is READ first (a missing or malformed key file refuses with nothing consumed), then the consumption
-        # marker is written, then the released copy is deleted
+        genesis, body = self._open_body
+        # v9 (Odysseus v8 item 1): the key is READ and PROVEN -- it decrypts the sealed ciphertext and the plaintext is
+        # consistent with the manifest -- BEFORE the consumption marker exists. A wrong (even well-formed) key file
+        # refuses with nothing consumed and the released copy untouched.
         key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
-        rpath = self.out / "receipts.jsonl"
-        self.receipts = Receipts(rpath, genesis, create=True)
+        try:
+            plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
+            hidden = json.loads(plain.decode("utf-8"))
+        except Exception as e:                               # noqa: BLE001 -- InvalidTag etc.
+            raise HiddenSetMismatch("the key does not decrypt the sealed set (%s): nothing consumed" % type(e).__name__)
+        if hidden.get("family_src_sha256") != fam or hidden.get("n_worlds") != manifest["n_worlds"] \
+                or len(hidden.get("worlds", [])) != hidden["n_worlds"] \
+                or len(hidden.get("run_seeds", [])) != hidden["n_worlds"]:
+            raise HiddenSetMismatch("decrypted hidden set inconsistent with manifest: nothing consumed")
+        worlds = [medium.world_from_dict(w) for w in hidden["worlds"]]
+        seeds = [int(s) for s in hidden["run_seeds"]]
+        tags = [hmac.new(key, sealbox.canon_bytes([w, s]), hashlib.sha256).hexdigest()
+                for w, s in zip(hidden["worlds"], seeds)]
+        del key, plain, hidden
         self.N = int(manifest["n_worlds"])
-        self.receipts.append("open", {
-            "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
-            "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
-            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
-            "n_worlds": self.N, "runner_id": self.runner_id, "run_nonce": self.gates.get("run_nonce"),
-            "account": self.account,
-            "protocol_gates": {k: v for k, v in self.gates.items() if k.endswith("_commit") or k in ("ref", "auditor")},
-            "package": {k: self.pkg[k] for k in ("sha256", "meta", "entry", "audit_flags", "allow_flagged", "files")},
-            "runner_src_sha256": sealbox.src_sha_lf(Path(__file__)),
-            "certify_src_sha256": sealbox.src_sha_lf(HERE.parent / "c3" / "certify.py"),
-            "certify_kwargs": self.certify_kwargs, "predict_timeout_s": self.predict_timeout,
-            "max_episode_steps_per_world": self.max_episode_steps,
-            "python": sys.version.split()[0], "numpy": np.__version__})
+        if self.N != len(worlds):
+            raise HiddenSetMismatch("decrypted world count differs from the manifest: nothing consumed")
+        rpath = self.out / "receipts.jsonl"
+        self.receipts = Receipts.create_with_open(rpath, genesis, dict(body, utc=_utc()))   # the consumption marker
         self.phase = "OPEN"
+        self._worlds, self._seeds, self._tags = worlds, seeds, tags
         if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
             self.key_path.unlink()
-        plain = sealbox.decrypt(key, bytes.fromhex(manifest["iv_hex"]), ct, fam)
-        hidden = json.loads(plain.decode("utf-8"))
-        if hidden["family_src_sha256"] != fam or hidden["n_worlds"] != manifest["n_worlds"] \
-                or len(hidden["worlds"]) != hidden["n_worlds"] or len(hidden["run_seeds"]) != hidden["n_worlds"]:
-            raise HiddenSetMismatch("decrypted hidden set inconsistent with manifest")
-        self._worlds = [medium.world_from_dict(w) for w in hidden["worlds"]]
-        self._seeds = [int(s) for s in hidden["run_seeds"]]
-        self._tags = [hmac.new(key, sealbox.canon_bytes([w, s]), hashlib.sha256).hexdigest()
-                      for w, s in zip(hidden["worlds"], self._seeds)]
-        del key, plain, hidden
-        if self.N != len(self._worlds):
-            raise HiddenSetMismatch("decrypted world count differs from the manifest")
         return manifest
 
     # ------------------------------------------------------------ predict
-    def _spawn_probe(self, pkg_dir, entry, read_paths, write_paths, mkfile_dirs):
+    def _spawn_probe(self, pkg_dir, entry, read_paths, write_paths, mkfile_dirs, must_read=()):
         ctx = mp.get_context("spawn")
         self._conn, child = ctx.Pipe(duplex=True)
         self._proc = ctx.Process(target=_worker_main, args=(child, pkg_dir, entry), daemon=True)
         self._proc.start()
         child.close()
-        _send(self._conn, ["probe", list(read_paths), list(write_paths), list(mkfile_dirs)])
+        _send(self._conn, ["probe", list(must_read) + list(read_paths), list(write_paths), list(mkfile_dirs)])
         try:                                                  # v5 (S-1): a child that cannot start is a refusal
             if not self._conn.poll(120):
                 raise EOFError("no probe answer within 120 s")
@@ -723,8 +788,13 @@ class FirewallRun:
         except (EOFError, OSError, ValueError, MemoryError, RecursionError) as e:
             self._stop_worker(kill=True)
             raise PredictorChildFailed("the predictor child did not start or answer the probe (%s)" % type(e).__name__)
-        opened = [p for p, r in res if r not in ("denied", "missing")]      # 'opened' / 'writable' / 'error:*'
-        if tag != "probe_result" or opened:
+        need = set(must_read)
+        unreadable = [p for p, r in res if p in need and r != "opened"]
+        if tag != "probe_result" or unreadable:              # v9 (V8-6): the package must be readable by the child
+            self._stop_worker(kill=True)
+            raise PredictorChildFailed("the predictor child cannot read the staged package: %s" % ", ".join(unreadable))
+        opened = [p for p, r in res if p not in need and r not in ("denied", "missing")]
+        if opened:
             self._stop_worker(kill=True)
             raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
 
@@ -740,9 +810,17 @@ class FirewallRun:
             self._stop_worker(kill=True)
         except Exception:                                    # noqa: BLE001
             pass
+        self.receipts.repair()                               # v9: drop a torn trailing write before the terminal record
         n_pred = sum(1 for r in self.receipts.records if r["kind"] == "prediction")
+        # v8 (V7-B/Q3): attribution EVIDENCE for the adjudicator (Harmonia Addendum E: FORFEIT vs VOID) -- which world
+        # was running, whether the failure arose inside predictor I/O, and the child's exit code. Evidence, not a verdict.
+        proc = getattr(self, "_proc", None)
+        exitcode = proc.exitcode if proc is not None else getattr(self, "_last_exitcode", None)
         self.receipts.append("abort", {"phase": self.phase, "error_type": type(exc).__name__,
-                                       "n_predictions_recorded": n_pred, "utc": _utc()})
+                                       "n_predictions_recorded": n_pred, "utc": _utc(),
+                                       "current_world": getattr(self, "_cur_world", None),
+                                       "in_predictor_io": bool(getattr(self, "_in_predictor_io", False)),
+                                       "child_exitcode": exitcode})
         self.phase = "ABORTED"
         result = {"format": RECEIPT_FORMAT, "status": "ABORTED", "spec_id": self.manifest["spec_id"],
                   "run_nonce": self.gates.get("run_nonce"), "package_sha256": self.package_sha256,
@@ -812,6 +890,7 @@ class FirewallRun:
         if self._proc.is_alive():
             self._proc.kill()
             self._proc.join(10)
+        self._last_exitcode = self._proc.exitcode           # v9 (V8-2): kept for the abort's attribution evidence
         self._proc = self._conn = None
 
     def _serve(self, sysobj, method, args, usage):
@@ -845,9 +924,14 @@ class FirewallRun:
         w = self._worlds[i]
         sysobj = medium.ReactiveChannel(w)
         usage = {"calls": 0, "episode_steps": 0, "budget_exceeded": False}
+        self._cur_world, self._in_predictor_io = i, True     # v9 (V8-3): a (re)start failure is labelled with THIS world
         if self._proc is None:
             self._start_worker()
-        _send(self._conn, ["predict", i, w.V, w.k, seed])
+        try:                                                  # v8 (V7-B): a closed/broken pipe is THIS world's crash
+            _send(self._conn, ["predict", i, w.V, w.k, seed])
+        except (OSError, ValueError, EOFError):
+            self._stop_worker(kill=True)
+            return {"status": "PREDICTOR_CRASH", "usage": usage, "where": "send_predict"}
         deadline = _dt.datetime.now().timestamp() + self.predict_timeout
         while True:
             left = deadline - _dt.datetime.now().timestamp()
@@ -896,9 +980,13 @@ class FirewallRun:
                 if i in done:
                     continue
                 out = self._predict_one(i, self.predictor_seed(i))
+                self._in_predictor_io = False
                 self.receipts.append("prediction", dict(out, i=i, world_tag=self._tags[i], utc=_utc()))
         finally:
-            self._stop_worker()
+            try:
+                self._stop_worker()
+            except (OSError, ValueError, EOFError):          # v8: a broken pipe at shutdown is not a run failure
+                self._stop_worker(kill=True)
 
     def seal_predictions(self) -> str:
         if self.phase != "OPEN":

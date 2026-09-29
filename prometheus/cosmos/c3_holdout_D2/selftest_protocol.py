@@ -1086,6 +1086,188 @@ def v7_checks(tmp, ts, pkg, sha):
     return res
 
 
+PIPE_CLOSER_PREDICTOR = """
+def predict(system, task, seed):
+    system._HiddenWorldStub__conn.send_bytes(b'["done", -1, {}]')
+    system._HiddenWorldStub__conn.close()
+    return {"class": "NONE", "intervention": {"class": "NONE"}}
+"""
+
+
+def v8_checks(tmp, ts, pkg, sha):
+    """v8 (Odysseus v7 V7-1, V7-A, V7-B): atomic consumption marker; read-probed stand-in; closed pipe = per-world."""
+    from prometheus.cosmos.c3_holdout_D2.selftest_D2 import make_package
+    res = {}
+    g = GateRepo(tmp / "repos" / "v8", ts).full(sha)
+
+    def mk(name, zp=pkg, zsha=sha, repo=None, **kw):
+        repo = repo or g
+        kd = tmp / ("v8_key_" + name)
+        kd.mkdir()
+        shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        outd = tmp / "runs" / ("v8_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=repo.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=repo.al, gate_pins=repo.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", zp, zsha, outd, **base), kd, outd
+    # V7-1: a failure while the consumption marker is being written leaves NO receipts and the key intact
+    fr, kd, outd = mk("atomic")
+    fr.prepare()
+    real = runner.Receipts.create_with_open
+
+    def failing(path, genesis, body):
+        raise OSError("simulated failure writing the first record")
+    runner.Receipts.create_with_open = staticmethod(failing)
+    try:
+        try:
+            fr.open()
+            res["v8_V71_marker_write_failure_consumes_nothing"] = False
+        except OSError:
+            res["v8_V71_marker_write_failure_consumes_nothing"] = (kd / "k.hex").exists() and \
+                not (outd / "receipts.jsonl").exists()
+    finally:
+        runner.Receipts.create_with_open = real
+    # ... and a successful open always starts with a verifiable open record
+    fr, kd, outd = mk("atomic_ok")
+    fr.open()
+    ok, recs, _why = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v8_V71_chain_starts_with_open_record"] = ok and len(recs) == 1 and recs[0]["kind"] == "open"
+    fr.abort(RuntimeError("x"))
+    ok, recs, _why = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v8_V71_abort_right_after_open_verifies"] = ok and [r["kind"] for r in recs] == ["open", "abort"]
+    # V7-A: the stand-in is READ-probed before the key (a path readable but not writable must still refuse)
+    fr, kd, outd = mk("standin_read", preflight=True, preflight_mkfile_dirs=())
+    (kd / "k.hex").unlink()
+    try:
+        fr.prepare()
+        res["v8_V7A_standin_read_probed"] = False
+    except runner.ChildNotIsolated as e:
+        res["v8_V7A_standin_read_probed"] = str(e).count("receipts.preflight") >= 2     # read AND append listed
+    # V7-B: a package that closes the pipe mid-run -> that world's PREDICTOR_CRASH / PROTOCOL_ERROR; the run CLOSES
+    hp = tmp / "v8_closer.zip"
+    hsha = make_package(hp, PIPE_CLOSER_PREDICTOR)
+    gh = GateRepo(tmp / "repos" / "v8h", ts).full(hsha)
+    fr, kd, outd = mk("closer", zp=hp, zsha=hsha, repo=gh, allow_flagged=True)
+    rr = fr.run_all()
+    st = [r["body"]["status"] for r in fr.receipts.records if r["kind"] == "prediction"]
+    res["v8_V7B_pipe_close_is_per_world_and_run_closes"] = rr.get("status") == "CLOSED" and bool(st) and \
+        all(x in ("PREDICTOR_CRASH", "PROTOCOL_ERROR") for x in st)
+    # attribution evidence in an abort
+    fr, kd, outd = mk("attr")
+
+    def boom():
+        raise RuntimeError("simulated")
+    fr.certify_all = boom
+    fr.run_all()
+    ab = fr.receipts.records[-1]["body"]
+    res["v8_abort_carries_attribution_evidence"] = all(k in ab for k in ("current_world", "in_predictor_io",
+                                                                          "child_exitcode"))
+    res["v8_V7D_attrgetter_flagged"] = bool(runner.audit_source(
+        "import operator\ndef predict(s, t, seed):\n    return operator.attrgetter('x')(s)\n", "p.py"))
+    return res
+
+
+def v9_checks(tmp, ts, pkg, sha):
+    """v9 (Odysseus v8): the key is proven before the marker; an interrupted write stays sealable; truthful attribution."""
+    res = {}
+    g = GateRepo(tmp / "repos" / "v9", ts).full(sha)
+
+    def mk(name, key_bytes=None, **kw):
+        kd = tmp / ("v9_key_" + name)
+        kd.mkdir()
+        if key_bytes is None:
+            shutil.copyfile(ts["secrets"] / "hidden_D2.key.hex", kd / "k.hex")
+        else:
+            (kd / "k.hex").write_text(key_bytes.hex() + "\n")
+        outd = tmp / "runs" / ("v9_" + name) / ("run_" + RUN_NONCE)
+        outd.parent.mkdir(parents=True)
+        base = dict(runner_id=RID, gate_repo=g.p, gate_ref=REF, certify_kwargs=SMALL, predict_timeout=300,
+                    account=ACCT, allowlist=g.al, gate_pins=g.pins(), verify_loaded=False, delete_key=True,
+                    secret_paths=(), write_probe_paths=(), preflight=False)
+        base.update(kw)
+        return runner.FirewallRun(ts["manifest"], ts["enc"], kd / "k.hex", pkg, sha, outd, **base), kd, outd
+    # item 1: a well-formed WRONG key refuses with nothing consumed (runner) and nothing released (custody)
+    fr, kd, outd = mk("wrongkey", key_bytes=bytes(range(32)))
+    try:
+        fr.open()
+        res["v9_1_wrong_key_refused_before_marker"] = False
+    except runner.HiddenSetMismatch:
+        res["v9_1_wrong_key_refused_before_marker"] = (kd / "k.hex").exists() and not (outd / "receipts.jsonl").exists()
+    wsec = tmp / "v9_wrong_secrets"
+    shutil.copytree(ts["secrets"], wsec)
+    (wsec / "hidden_D2.key.hex").write_text(bytes(range(32)).hex() + "\n")
+    cu = custody.Custody(repo=g.p, ref=REF, secrets_dir=wsec, log=tmp / "v9_custody.jsonl", host=HOST, allowlist=g.al,
+                         pins=g.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        cu.release_key(RID, tmp / "v9_rel_wrong")
+        res["v9_1_custody_test_decrypts_before_release"] = False
+    except custody.CustodyRefusal:
+        res["v9_1_custody_test_decrypts_before_release"] = not (tmp / "v9_rel_wrong").exists()
+    # item 2: an fsync failure while writing a later record -> the torn record is rolled back, the abort seals
+    fr, kd, outd = mk("fsync")
+    real_fsync = runner.os.fsync
+    calls = {"n": 0}
+
+    def flaky(fd):
+        calls["n"] += 1
+        if calls["n"] == 3:
+            raise OSError("simulated fsync failure")
+        return real_fsync(fd)
+    runner.os.fsync = flaky
+    try:
+        ra = fr.run_all()
+    finally:
+        runner.os.fsync = real_fsync
+    ok, recs, _w = runner.verify_receipts(outd / "receipts.jsonl")
+    res["v9_2_interrupted_write_rolled_back_and_sealable"] = ra.get("status") == "ABORTED" and ok and \
+        recs[-1]["kind"] == "abort"
+    try:
+        cu2 = custody.Custody(repo=g.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v9_c2.jsonl", host=HOST,
+                              allowlist=g.al, pins=g.pins(), verify_loaded=False, restrict_acl=False,
+                              require_preflight=False)
+        res["v9_2_torn_run_result_sealable"] = cu2.result_seal_record(outd, tmp / "v9_RS.json").get("terminal") == "abort"
+    except (protocol.GateRefusal, custody.CustodyRefusal):
+        res["v9_2_torn_run_result_sealable"] = False
+    # item 3: the real child exit code; a (re)start failure is labelled with the world being started
+    fr, kd, outd = mk("exitcode")
+
+    def boom():
+        raise RuntimeError("simulated")
+    fr.certify_all = boom
+    fr.run_all()
+    res["v9_3_child_exitcode_recorded"] = fr.receipts.records[-1]["body"].get("child_exitcode") is not None
+    fr, kd, outd = mk("restart")
+    fr.prepare()
+    fr.open()
+
+    def refuse_start():
+        raise runner.ChildNotIsolated("simulated restart probe failure")
+    fr._start_worker = refuse_start
+    try:
+        fr.predict_all()
+    except runner.ChildNotIsolated as e:
+        fr.abort(e)
+    ab = fr.receipts.records[-1]["body"]
+    res["v9_3_restart_failure_labelled_with_world"] = ab.get("current_world") == 0 and ab.get("in_predictor_io") is True
+    # V8-6: the child must be able to read the staged package, checked before the key
+    fr, kd, outd = mk("pkgread", preflight=True, preflight_mkfile_dirs=())
+    real_stage = fr._stage_package
+
+    def stage_elsewhere():
+        d = real_stage()
+        return dict(d, dir=str(tmp / "v9_no_such_pkg_dir"))
+    fr._stage_package = stage_elsewhere
+    try:
+        fr.prepare()
+        res["v9_V86_unreadable_package_refused_pre_key"] = False
+    except runner.PredictorChildFailed:
+        res["v9_V86_unreadable_package_refused_pre_key"] = (kd / "k.hex").exists() and \
+            not (outd / "receipts.jsonl").exists()
+    return res
+
+
 def run() -> dict:
     with tempfile.TemporaryDirectory(prefix="c3D2_protocol_") as t:
         tmp = Path(t)
@@ -1105,17 +1287,20 @@ def run() -> dict:
         v5 = v5_checks(tmp, ts, pkg, sha)
         v6 = v6_checks(tmp, ts, pkg, sha)
         v7 = v7_checks(tmp, ts, pkg, sha)
+        v8 = v8_checks(tmp, ts, pkg, sha)
+        v9 = v9_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
     for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
-    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7}.items() if v is None)
-    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7}.items() if v is not None and not k.endswith("_reason")})
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9}.items() if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9}.items()
+                   if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},
            "closure_extras": closure_raw, "defect_controls_must_be_true": dcs,
            "not_applicable_on_this_os": not_applicable,
-           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7}.items() if k.endswith("_reason")},
+           "reasons": {k: v for k, v in {**v3, **v4, **v5, **v6, **v7, **v8, **v9}.items() if k.endswith("_reason")},
            "hidden_set_or_key_touched": False, "all_checks_true": all(checks.values()),
            "all_defect_controls_true": all(dcs.values())}
     res["selftest_pass"] = bool(res["all_checks_true"] and res["all_defect_controls_true"])
