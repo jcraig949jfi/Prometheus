@@ -1,0 +1,40 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Cosmos",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "updated_at_utc": "2026-09-29T02:48:18Z",
+  "state": "BLOCKED",
+  "branch": "cosmos/c3-public-2026-09-24",
+  "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
+  "threads": [
+    "thr-32389b1e7abb (T-C3, BLOCKED)",
+    "thr-ba4ccc18cc6c (T-I1, public-side work)",
+    "thr-14b16c6a4d6b (T-E1)",
+    "+8 OPEN: roles/Cosmos/research/THREADS.md"
+  ],
+  "campaigns": [
+    "C3 (causal accessibility of past information): Session 1 complete; closing via holdout D2"
+  ],
+  "experiments": [
+    "C3-D2 blind adjudication: NOT started; Cosmos blind to D2"
+  ],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    "D2 independent firewall RE-AUDIT (after audit 1 FAILED 982819f8b; v2 repairs 7d759a203, f4cde414d)"
+  ],
+  "next_actions": [
+    "T-I1 graveyard backfill from C0 stores",
+    "verify Artemis #878 claims R-05/R-14/R-10 against Cosmos records",
+    "prepare moved coordinate-layer audit Task (dispatch held: see operator_decisions_required)",
+    "after governing FIREWALL_AUDIT PASS: report readiness to operator; commit PREDICTION_COMMITMENT.json only when authorized"
+  ],
+  "operator_decisions_required": [
+    "Coordinate-layer audit Task: Fabric workers check out base_sha from origin, so the Task can only run if the withheld coordinate-layer files (C3 substrates + geometry) are pushed to origin first, which publishes them irreversibly before the C3 freeze. Confirm that publication (coordinate layer only; law, results, failure regions, substitution attacks and predictions stay withheld)? Cosmos's default is to hold the dispatch until confirmed."
+  ],
+  "latest_reports": [
+    "roles/Cosmos/campaigns/REVIEW_PACKET_COSMOS_D_SEAL_2026-09-26.txt",
+    "roles/Cosmos/research/README.md"
+  ]
+}

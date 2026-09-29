@@ -2,7 +2,8 @@
 
 python -m prometheus.cosmos.research_check [research_dir]      exit 1 on any ERROR
 
-THREADS.md    required keys, status/zone vocabularies, unique ids
+THREADS.md    required keys, status/zone vocabularies, unique ids; thread_id = "thr-" + sha256(id_rule)[:12]
+              (the ops/threads convention; id_rule = genesis|<commit>|<path>|<title>)
 RESULTS.md    four layers present and non-empty (observation / law / domain / falsifier), never merged;
               a KILLED result must name its GRAVEYARD entry, which must exist
 GRAVEYARD.md  required keys; killed_by beginning UNRECOVERED is counted, not an error
@@ -10,6 +11,7 @@ FREEZES.md    every file freeze RE-HASHED (comms.manifest convention); supersede
               entry, which must be marked SUPERSEDED; git freezes checked against the local object
               store (absent -> UNVERIFIABLE_HERE, not an error)
 """
+import hashlib
 import re
 import subprocess
 import sys
@@ -17,8 +19,8 @@ from pathlib import Path
 
 from comms.manifest import artifact_hash
 
-THREAD_KEYS = ("status", "zone", "question", "instruments", "first_experiment", "kill_criterion",
-               "depends_on")
+THREAD_KEYS = ("thread_id", "id_rule", "status", "zone", "question", "instruments", "first_experiment",
+               "kill_criterion", "depends_on")
 THREAD_STATUS = {"OPEN", "DESIGNED", "REVIEWED", "FROZEN", "RUN", "SURVIVED_PROVISIONAL", "KILLED",
                  "INCONCLUSIVE", "PARKED", "SPAWNED", "BLOCKED"}
 ZONES = {"Z1", "Z2", "Z3"}
@@ -76,6 +78,12 @@ def check_threads(p, errors):
             errors.append(f"THREADS {eid}: status {d['status']!r} not in vocabulary")
         if d.get("zone") and d["zone"] not in ZONES:
             errors.append(f"THREADS {eid}: zone {d['zone']!r} not in Z1/Z2/Z3")
+        rule, tid = d.get("id_rule", ""), d.get("thread_id", "")
+        if rule and tid and "thr-" + hashlib.sha256(rule.encode()).hexdigest()[:12] != tid:
+            errors.append(f"THREADS {eid}: thread_id {tid} does not re-derive from id_rule")
+    ids = [d.get("thread_id") for _, d in entries if d.get("thread_id")]
+    if len(ids) != len(set(ids)):
+        errors.append("THREADS: duplicate thread_id")
     return entries
 
 

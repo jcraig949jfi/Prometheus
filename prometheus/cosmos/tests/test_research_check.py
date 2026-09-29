@@ -1,5 +1,5 @@
 """Cheat controls for research_check: it must FAIL on each defect it claims to detect."""
-import shutil
+import hashlib
 from pathlib import Path
 
 from comms.manifest import artifact_hash
@@ -7,7 +7,11 @@ from prometheus.cosmos.research_check import check
 
 REAL = Path(__file__).resolve().parents[3] / "roles" / "Cosmos" / "research"
 
+RULE = "genesis|abc|roles/Cosmos/research/THREADS.md|t"
+TID = "thr-" + hashlib.sha256(RULE.encode()).hexdigest()[:12]
 THREAD = """### T-X1 | A | t
+- thread_id: """ + TID + """
+- id_rule: """ + RULE + """
 - status: OPEN
 - zone: Z1
 - question: q
@@ -129,3 +133,8 @@ def test_absent_git_freeze_is_unverifiable_not_error(tmp_path):
                "\n- sha256: -\n- supersedes: -\n- review: N/A\n- status: ACTIVE\n")
     errors, s = check(rd, tmp_path)
     assert errors == [] and s["freezes"] == {"F-1": "UNVERIFIABLE_HERE"}
+
+
+def test_catches_thread_id_that_does_not_rederive(tmp_path):
+    rd, _ = ws(tmp_path, thread=THREAD.replace("THREADS.md|t\n", "THREADS.md|renamed\n"))
+    assert any("re-derive" in e for e in check(rd, tmp_path)[0])
