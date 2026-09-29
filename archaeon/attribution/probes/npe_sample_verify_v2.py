@@ -5,8 +5,7 @@ no sample content has been read.
 PASS iff, for all 11 files named in the pinned manifest (81895e729, e1584484...), the UNCOMPRESSED sha256 and the record count
 match. The gz sha256 is REPORTED, not required (addendum 2: the mtime header is not tracer output).
 Also refused:
-- a gz whose header differs from the canonical form in more than the mtime field (bytes 4-7), since only mtime drift is ruled
-  benign;
+- a file without the gzip magic/deflate header (1f 8b 08);
 - any extra file with the sample suffix.
 v1 (npe_sample_verify.py) is unchanged and stays the strict check.
     python -m archaeon.attribution.probes.npe_sample_verify_v2 DIR
