@@ -3,12 +3,12 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T12:14:44Z",
-  "state": "WORKING",
+  "updated_at_utc": "2026-09-29T12:21:32Z",
+  "state": "HOLD",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
-    "thr-32389b1e7abb (T-C3, BLOCKED)",
+    "thr-32389b1e7abb (T-C3, PARKED: coordinate audit REJECT, stopped before D2)",
     "thr-ba4ccc18cc6c (T-I1: backfill done; fragment test v3 -> ceiling-atom recurrence = certificate economics, DEAD as evidence)",
     "thr-14b16c6a4d6b (T-E1, null law = definition rung)",
     "+8 OPEN: roles/Cosmos/research/THREADS.md"
@@ -22,23 +22,17 @@
   "fabric_tasks": [
     "tsk-567421e8717f, tsk-9525c38ab1bb (FP-001 replicas; FAILED at runtime checkout on ubu001 sci2/sci3; native fallback PASS)"
   ],
-  "running": [
-    "C3 coordinate-layer audit, NATIVE on M2 per MWO-0004 G7/R3 (Fabric cannot host custody-withheld files): 2 isolated reviewer sessions (claude -p, read-only tools scoped to a local bundle, no session persistence) over C:/Users/James/cosmos_runs/c3_coord_audit/20260929T121351Z/bundle; bundle manifest sha256 e51997904d4304b0e139b929ef3b5c72b41a2566f64d130b389c0d29d5c0b63f; nothing published"
-  ],
-  "blocked_on": [
-    "D2: MWO-0004 D2-1 resolves S1 (#925); D2 v12 implements the M1 anchor (acaf14df4); ONE bounded re-audit under D2-2 pending. The C3 freeze and D2 commitment wait on a governing PASS (frozen D2 protocol order)"
-  ],
+  "running": [],
+  "blocked_on": [],
   "next_actions": [
-    "R1: build + crash-test the C3 prediction package on a LOCAL unpushed branch (Addenda E/F/H/J constraints), so Cosmos is freeze-ready when D2 passes"
+    "HOLD on C3 pending the operator's disposition; continue public-side threads (T-A1/T-E1 inherit the audit lesson)"
   ],
   "operator_decisions_required": [
-    "C3 blind test on D2 = consuming a sealed holdout (MWO-0001 s7(2); MWO-0004 Part 4). Reported for authorization once a governing PASS exists and Cosmos is freeze-ready; PREDICTION_COMMITMENT.json is not committed before that."
+    "C3 DISPOSITION after the coordinate audit REJECT (research/reviews/COORD_AUDIT_C3_2026-09-29.md). By precommitment Cosmos STOPPED BEFORE D2; D2 is unspent. Options: (a) close C3 as killed pre-holdout and leave D2 sealed for a future claim; (b) authorize a successor preregistration (invariant, family-balanced coordinates that must beat the zero-parameter definition rung) that would later use D2. Spending D2 on the rejected claim is NOT proposed."
   ],
   "latest_reports": [
-    "roles/Cosmos/probes/FP-001_RESULT.json",
-    "roles/Cosmos/research/analysis/t_i1_fragments_v3.json (+ v1/v2 kept with their defects)",
-    "roles/Cosmos/research/GRAVEYARD.md (T-I1 backfill: 0 UNRECOVERED)",
-    "roles/Cosmos/research/RESULTS.md (R-0001/2 RESTRICTED: no margin over the zero-parameter definition rung; recomputed)"
+    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md",
+    "roles/Cosmos/probes/FP-001_RESULT.json"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json"
