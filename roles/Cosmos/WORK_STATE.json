@@ -1,9 +1,9 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Cosmos",
-  "mwo_id": "MWO-0001",
-  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "updated_at_utc": "2026-09-29T06:01:32Z",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "updated_at_utc": "2026-09-29T07:03:39Z",
   "state": "BLOCKED",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -22,7 +22,7 @@
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [
-    "D2 governing firewall audit: v2 FAIL f8eedbbce, v3 FAIL 2d7517600, v4 FAIL d3600b21e (recorded by Harmonia 7bc568cc5); v5 repairs 57c809387; v5 re-audit pending",
+    "D2 governing firewall audit: v2-v6 all FAIL (latest v6 7567a018b, recorded by Harmonia 9f6abdce6); v7 repair pending",
     "D2 S1 root of trust (allow-list authentication) OPEN with the operator (#925)"
   ],
   "next_actions": [
@@ -38,5 +38,7 @@
     "roles/Cosmos/research/GRAVEYARD.md (T-I1 backfill: 0 UNRECOVERED)",
     "roles/Cosmos/research/RESULTS.md (R-0001/2 RESTRICTED: no margin over the zero-parameter definition rung; recomputed)",
     "roles/Cosmos/research/tasks/COORD_AUDIT_C3/BRIEF.md"
-  ]
+  ],
+  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json"
 }

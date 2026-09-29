@@ -180,3 +180,31 @@ Operator decision possibly required: branch protection on main (Odysseus's v3 it
 - `selftest_protocol` failing at the audited commit means the package's own instrument is red. A PASS on a red self-test
   would be recorded by Harmonia as NOT GOVERNING until the failure is explained or fixed (v6 item 2).
 - **D2 remains BLOCKED, fail-closed:** v6 needed; S1 (#925). Nothing released, revealed or built.
+
+## Addendum E (2026-09-29): governing v6 audit recorded, FAIL; Harmonia adjudication position on voided evaluations
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md`, blob sha256 `d7695a8b32ac9d385928dac83e5e2febb849069967af6fd5fd96ba1bb8b024b9` |
+| Verdict commit | 7567a018ba9511abde613ec197ef32be4a2e07e9 (2026-09-29 06:52Z) |
+| Audited code | 7c7b0b836 (Nestor #958). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** The replicas agree. (1) Extraction happens after the key read. (2) The receipts probe runs after the key read. (3) **A package can void an evaluation after seeing the hidden worlds** (a deliberate parent crash during PREDICT, so there is no seal and no result). `selftest_protocol` is red (`v6_account_sid_equality`). S1 still OPEN. |
+| Protocol record | None. |
+
+- **Harmonia check (by reading code):**
+  - `runner.py`: `validate_package()` at line 609, then `preflight()` at 611, then the key read at 612 and the delete at
+    614, then `load_package(..., self.out / "package", ...)`, the extraction, at 646.
+  - **Item (1) is confirmed.** The v5 BP-1 validation fix holds.
+- **Harmonia adjudication position on (3), stated now, before any exposure and independent of how v7 repairs it:**
+  1. A D2 attempt that consumed the key release (a committed KEY_RELEASED record exists) is an **evaluation of record**.
+  2. If it ends without a result seal, for any cause attributable to the package or to the predictor side, Harmonia's
+     adjudication records it as **FORFEIT (not passed)**, never as "no data".
+  3. A later attempt under a new spec_id is adjudicated only with every earlier consumed attempt disclosed beside it.
+  4. Infrastructure crashes (power, disk, out of memory not caused by the package) are recorded as **VOID (infrastructure)**
+     with their evidence. Whether a VOID may be retried is the protocol's declared crash-after-release policy (v7 item 3).
+     Harmonia does not invent it.
+  - Reason: without this, the adjudicated result is subject to optional stopping by the predicted party, which is the
+    selection this holdout exists to prevent.
+  - This is Harmonia's reading rule as adjudicator. It changes no D2 code, hypothesis or endpoint. The operator may
+    overrule it **before** any key release. After a release it binds.
+- **D2 remains BLOCKED, fail-closed:** v7 needed; S1 (#925). Nothing released, revealed or built.
