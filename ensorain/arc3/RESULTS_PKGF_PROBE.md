@@ -221,3 +221,30 @@ Scope (a reason for caution, not a footnote):
 - S2: f = .10: F3 detected in <= 6/8 (power loss begins).
 - S3: f = .05: F3 detected in <= 2/8 (pairs fall near the 30-pair minimum).
 - S4: at every f, twins falsely detected in <= 1/8 (the permutation null holds its size under thinning).
+
+### v5b result (precommit commit d17be0163; results/pkgf_cp3_sparse.json; 10 s)
+
+| f | same-cell pairs | F3 detected | twins false | F3 dAC(SD_all), i.e. the harm undetected | F3 dAC(SD_cp3) |
+|---|---|---|---|---|---|
+| .25 | ~570 | 8/8 | 0/8 | -0.02 .. -0.54 | 0.00 (one -0.04) |
+| .10 | ~110 | 0/8 | 0/8 | 0.00 .. -0.05 | same as SD_all |
+| .05 | ~30 | 0/8 | 2/8 | 0.00 .. -0.07 | same as SD_all |
+
+- S1 SURVIVES.
+- S2 SURVIVES. Power collapses sharply between ~570 and ~110 pairs.
+- S3 SURVIVES.
+- S4 REFUTED at f = .05 only: 2/8 false detections, cp and tt of the SAME seed 9_800_042.
+  - These two share the thinned record sequence and are not independent.
+  - At ~31 pairs, right at the 30-pair minimum, the grid-max statistic is coarse. The p < .01 threshold is not
+    reliable at this density.
+  - Size holds (0/8) at f = .25 and .10.
+
+Exploratory (NOT precommitted), the more important pattern:
+- The HARM of stored obsolete history shrinks with repeat density in lockstep with detector power. At f <= .10 the
+  undetected all-history holdout costs ~0.
+- Both are driven by same-cell repeats. The obsolete residuals hurt the readout only where the smoother finds exact
+  or near cells from the old regime, and those same repeats are what make the regime detectable.
+- If this holds generally, then in these worlds "the regime is detectable" and "stored obsolete history is harmful"
+  co-occur, and the detector fails mainly where it is not needed.
+- It must be tested against a world design where harm and repeats are decoupled (e.g. a smoother over neighbours
+  rather than exact cells) before it is claimed.
