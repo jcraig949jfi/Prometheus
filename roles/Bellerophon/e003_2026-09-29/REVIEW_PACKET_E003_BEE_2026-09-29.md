@@ -17,7 +17,9 @@ amendment C11, written and amended by Archaeon, reviewed adversarially 7 times
 before any production data.
 
 Result on one run (r022153; 32,827 births): VALIDATED under both readings of
-the one undefined case (B-P1). Value dependence outside {donor, performer} is
+the one undefined case (B-P1), CONDITIONAL on two rules adopted after the run's
+data had been seen (NO_MATERIAL not gated; C4.4 point estimates); either alone
+would give INCONCLUSIVE. See the report's s1a. Value dependence outside {donor, performer} is
 0.115% [0.098, 0.134] of loci in the transmission class; the ceiling for
 VALIDATED is 5%. This is a finding about the INSTRUMENT and the representation,
 not about heredity.
@@ -71,7 +73,10 @@ Predictions:
   P2 (engine-native) the native "target" label disagrees with copy-descent
      in 0.504 [0.456, 0.552] of such births             HOLDS
 Descriptives:
-  Q4 isolated-capable children 0.810, host-assisted 0.817.
+  Q4 isolated-capable children 0.810. The frozen host arm (0.817) does NOT
+  measure relational capability (DEF-BEL-004). The POST-HOC relational
+  diagnostic: occupant-performed children are 0.733 host-capable vs 0.0002
+  alone, the host performing 97% of those copies.
   17% of transmission-class children carry the writer's material but cannot
   copy in isolation.
   Existence dependence (Q8c-whether, birth suppression when randomising):
@@ -83,9 +88,10 @@ verdict changes.
 -----
 4. WHAT THIS DOES AND DOES NOT ESTABLISH
 -----
-DOES: on this run, births are L1 written and L2 causally donor-written, by
-intervention, and a singular-donor v0 record plus the agreed extensions
-describes them losslessly by the frozen tests. BEE's native "material" label is
+DOES: on this run, identified TRANSMISSION-class loci are L1 written and L2
+causally donor-written, by intervention; the v0 round-trip holds for the Qs it
+recomputes (majority donor, new share, source diversity, Q4-isolated). Not
+recomputed: homology, performer, Q6, Q8c, Q-input and Q4-host. BEE's native "material" label is
 not a descent label.
 DOES NOT:
 - say anything about inheritance or transmission (L3 later reproduction, L4

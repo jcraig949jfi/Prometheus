@@ -1,6 +1,8 @@
 # E-003 (C-001 attribution arc) -- BEE leg, Bellerophon
 
-Spec: ANCESTRY_PREREG_v4 + v5 delta through C10, on archaeon/attribution-arc-2026-09-28 @ 028f2eff8 (Archaeon #920).
+Spec: ANCESTRY_PREREG_v4 + v5 delta through C10 at the owner freeze (archaeon/attribution-arc-2026-09-28 @ 028f2eff8,
+Archaeon #920). C11 (constant-only COMPUTED labels) was adopted AFTER production and the production agreement FAIL;
+the owner tracer and outputs are unchanged by it.
 Commission: comms #811 / #817 / #824 / #833; accepted in #919. Run: r022153 (VM_COPY, SHARED, OPCODE mutation, INC).
 Independence: this seat's tracer is built from the prereg TEXT only. archaeon/attribution/bee_ref_tracer.py and
 ops/.../reftracer/ref_tracer_bee.py are NOT read before the first agreement run.
@@ -19,7 +21,15 @@ ops/.../reftracer/ref_tracer_bee.py are NOT read before the first agreement run.
 DRY RUN DISCLOSURE. The full pipeline was run once on r022153 before the freeze, to validate it: every number in
 receipts/DRY_RESULTS_* is DRY and is not a production result.
 - One change was made AFTER seeing that output: NO_MATERIAL was removed from the class GATES (R1 says it is reported, not
-  gated). The dry analysis had gated it at flip coverage 1/3 over 3 loci. No other code changed after the dry output.
+  gated). The dry analysis had gated it at flip coverage 1/3 over 3 loci; this change is OUTCOME-DETERMINATIVE
+  (see E003_BEE_RESULT.md s1a).
+- Later pre-production code changes, each tied to a ruling and recorded in FREEZE_MANIFEST.json refreeze:
+  * #951 (4): coverage denominator + TIED;
+  * #956 (B-P1): the performer-kind probe and the A/B report.
+  * tools/agreement_export.py entered the manifest at the #951/#956 refreeze without its own refreeze record; its
+    hash (a320d94b) is the one the agreement seals and both GO records bind.
+- Post-production additions (POST-HOC, labelled; no frozen file changed): tools/posthoc_q4_relational.py
+  (DEF-BEL-004).
 - Production re-runs every step under the frozen hashes after the GO record.
 
 Declared readings (full list in tools/e003_analysis.py docstring):
