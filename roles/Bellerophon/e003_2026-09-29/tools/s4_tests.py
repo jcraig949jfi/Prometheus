@@ -9,6 +9,8 @@ Single-interaction counterfactuals only (v4 s1.1): each birth's recorded pre-sta
     byte differs (R1 condition 3; identified needs 0 changes);
   - q8c_changes / q8c_draws: the same groups, draws where the write occurs (R2);
   - q_input: the INPUT group alone, write-occurring draws;
+  - *_B: the same dep / q8c counters under B-P1 reading (B) (Archaeon ruling #956): a store whose opcode label is not
+    ENTITY has no performer. Reading (A), the unsuffixed counters, uses the frozen tracer's entity bases.
   - nonmove (for CONST/COMPUTED loci): each ENTITY in turn, write-occurring draws.
   Per birth, whether (C4.1): per group, PERFORMER INCLUDED, draws in which the birth is suppressed, and per-locus write
   suppression.
@@ -90,7 +92,8 @@ def _arms(line: str) -> str:
     G = group_addrs(r, vm)
     loci = r["loci"]
     out_loci = [{"dep_changes": 0, "dep_draws": 0, "q8c_changes": 0, "q8c_draws": 0, "qin_changes": 0, "qin_draws": 0,
-                 "nonmove_changes": 0, "nonmove_draws": 0, "write_suppressed": 0, "write_draws": 0} for _ in range(L)]
+                 "nonmove_changes": 0, "nonmove_draws": 0, "write_suppressed": 0, "write_draws": 0,
+                 "dep_changes_B": 0, "dep_draws_B": 0, "q8c_changes_B": 0, "q8c_draws_B": 0} for _ in range(L)]
     whether = {}
     for g, addrs in G.items():
         sup = 0
@@ -111,12 +114,14 @@ def _arms(line: str) -> str:
                 d_ = x["data"]
                 if isinstance(d_, str) and d_[0] in "WP":
                     X = d_[0]; perf = {p[0] for p in x["performer"]}
-                    if g not in ({X} | perf):
-                        if wr:
-                            ch = after[L + i] != base_after[L + i]
-                            o["q8c_draws"] += 1; o["q8c_changes"] += ch
-                            if born:
-                                o["dep_draws"] += 1; o["dep_changes"] += ch
+                    perf_B = perf if x.get("perf_kind") == "E" else set()     # B-P1 reading (B): non-MOVE opcode label -> no performer
+                    for sfx, pf in (("", perf), ("_B", perf_B)):
+                        if g not in ({X} | pf):
+                            if wr:
+                                ch = after[L + i] != base_after[L + i]
+                                o["q8c_draws" + sfx] += 1; o["q8c_changes" + sfx] += ch
+                                if born:
+                                    o["dep_draws" + sfx] += 1; o["dep_changes" + sfx] += ch
                 elif g in ("W", "P") and wr:
                     o["nonmove_draws"] += 1; o["nonmove_changes"] += after[L + i] != base_after[L + i]
                 if g == "INPUT" and wr:

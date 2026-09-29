@@ -18,6 +18,10 @@ Readings of the prereg this seat applies (declared here, before production):
   The estimand is the mean over those loci, with a birth-clustered bootstrap (2,000 resamples, seed 1).
 - Painting guard (C4.6): per-birth source diversity = distinct (entity, source locus) / ENTITY loci. P1 and Q8c are
   also reported excluding births with diversity < 0.5.
+- B-P1 (Archaeon ruling #956): the whole analysis runs under reading (A) (performer = the frozen tracer's entity bases of
+  the store opcode label) and reading (B) (no performer when that label is not ENTITY). Class counts, per-class gates,
+  class-keyed Qs and the verdict are reported for both; a verdict that differs is READING-DEPENDENT. The s4 sample and
+  the Q4 host pool are drawn under reading (A) only (declared).
 - Flip-coverage denominator (Archaeon ruling #951, pre-production): the sampled written loci meeting R1 conditions 1
   AND 3 (ENTITY-MOVE, 0 dependence changes); the condition-1-only variant is a diagnostic. A birth-clustered CI is
   reported, and MARGINAL is a mark only (C4.4). The class key returns TIED on a tie; TIED is gated if it occurs.
@@ -58,11 +62,18 @@ def is_ent(d):
     return isinstance(d, str) and d[0] in "WP"
 
 
-def perf_class(r):
+def perf_ents(x, reading="A"):
+    """B-P1 (Archaeon ruling #956): (A) the frozen tracer's ENTITY bases of the store opcode label; (B) no entity when that
+    label is not itself ENTITY (perf_kind != "E")."""
+    e = {p[0] for p in x["performer"]}
+    return e if (reading == "A" or x.get("perf_kind") == "E") else set()
+
+
+def perf_class(r, reading="A"):
     W = [x for x in r["loci"] if x["written"]]
     c = collections.Counter()
     for x in W:
-        ents = {p[0] for p in x["performer"]}
+        ents = perf_ents(x, reading)
         if not ents:
             c["none"] += 1
         for e in ents:
@@ -136,7 +147,8 @@ def make_sample(E, Q4):
             "strata_sizes": {str(k): len(v) for k, v in strata.items()}, "sample": chosen, "completeness_subset": sub}
 
 
-def analyse(E, Q4, A, F, C, S, schema_mod):
+def analyse(E, Q4, A, F, C, S, schema_mod, reading="A"):
+    sfx = "" if reading == "A" else "_B"
     q4 = {q["tape"]: q for q in Q4}
     arms = {a["birth_index"]: a for a in A}
     flips = {f["birth_index"]: {int(k): v for k, v in f["flip"].items()} for f in F}
@@ -150,19 +162,19 @@ def analyse(E, Q4, A, F, C, S, schema_mod):
         for i in W:
             x = r["loci"][i]; a = ar[i]; d = x["data"]
             move = is_ent(d)
-            dep_ok = a["dep_changes"] == 0
+            dep_ok = a["dep_changes" + sfx] == 0
             fv = fl.get(i, {}).get("prefix") if bi in sample else None
             ident = move and dep_ok and fv != "FAILED"
             src = (d[0], int(d[1:])) if move else None
-            perf = {p[0] for p in x["performer"]}
+            perf = perf_ents(x, reading)
             implicit = move and any(b[0] in "WPI" and (b[0] == "I" or b[0] not in ({d[0]} | perf)) for b in x["ctrl"])
-            loci.append({"i": i, "move": move, "ident": ident, "dep_ok": dep_ok, "dep_vacuous": move and a["dep_draws"] == 0, "flip": fv, "src": src,
-                         "perf": perf, "q8c": (a["q8c_changes"] / a["q8c_draws"]) if (move and a["q8c_draws"]) else None,
+            loci.append({"i": i, "move": move, "ident": ident, "dep_ok": dep_ok, "dep_vacuous": move and a["dep_draws" + sfx] == 0, "flip": fv, "src": src,
+                         "perf": perf, "q8c": (a["q8c_changes" + sfx] / a["q8c_draws" + sfx]) if (move and a["q8c_draws" + sfx]) else None,
                          "qin": (a["qin_changes"] / a["qin_draws"]) if a["qin_draws"] else None,
                          "nonmove": (a["nonmove_changes"] / a["nonmove_draws"]) if ((not move) and a["nonmove_draws"]) else None,
                          "kind": d if isinstance(d, str) else list(d)[0], "implicit": implicit,
                          "exec_ents": {b[0] for b in x["exec"] if b[0] in "WPI"}})
-        cls = "NO_MATERIAL" if no_material(r) else perf_class(r)
+        cls = "NO_MATERIAL" if no_material(r) else perf_class(r, reading)
         n_id = sum(l["ident"] for l in loci)
         ent = [l for l in loci if l["move"]]
         srcs = {(l["src"][0], l["src"][1]) for l in ent}
@@ -182,7 +194,7 @@ def analyse(E, Q4, A, F, C, S, schema_mod):
                   "cap_iso": (q.get("isolated") or {}).get("capable"), "cap_host": (q.get("host") or {}).get("capable"),
                   "whether": arms[bi]["whether"], "loci": loci, "orig": [tuple(x["orig"]) for x in r["loci"]],
                   "in_sample": bi in sample})
-    out = {"births": len(B), "classes": dict(collections.Counter(b["cls"] for b in B))}
+    out = {"reading": reading, "births": len(B), "classes": dict(collections.Counter(b["cls"] for b in B))}
     nonNM = [b for b in B if b["cls"] != "NO_MATERIAL"]
     TX = [b for b in B if b["transmission"]]
     out["identifiable_share_nonNM"] = prop_boot([b["identifiable"] for b in nonNM])
@@ -357,7 +369,16 @@ def main() -> int:
         mod = None
         if a.v0_schema:
             spec = importlib.util.spec_from_file_location("attr_schema", a.v0_schema); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
-        res = analyse(E, Q4, rows(a.arms), rows(a.flip), rows(a.compl), S, mod)
+        A_, F_, C_ = rows(a.arms), rows(a.flip), rows(a.compl)
+        rA = analyse(E, Q4, A_, F_, C_, S, mod, "A")
+        rB = analyse(E, Q4, A_, F_, C_, S, mod, "B")
+        dep = [k for k in ("classes", "gates", "predictions", "verdict", "flip_by_class", "completeness_by_class", "Q8c_by_class",
+                           "Q8c_whether_by_class", "Q1_performer_ne_majority_donor", "Q3_departure_uniparental")
+               if json.dumps(rA.get(k), sort_keys=True, default=str) != json.dumps(rB.get(k), sort_keys=True, default=str)]
+        res = {"reading_A": rA, "reading_B": rB, "reading_dependent_fields": dep,
+               "verdict": {"A": rA["verdict"]["verdict"], "B": rB["verdict"]["verdict"],
+                           "READING_DEPENDENT": rA["verdict"]["verdict"] != rB["verdict"]["verdict"]},
+               "gates": {"A": rA["gates"], "B": rB["gates"]}, "predictions": {"A": rA["predictions"], "B": rB["predictions"]}}
         res["inputs_sha256"] = {k: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest() for k, p in
                                 (("export", a.export), ("q4", a.q4), ("arms", a.arms), ("flip", a.flip), ("compl", a.compl), ("sample", a.sample))}
     pathlib.Path(a.out).write_text(json.dumps(res, indent=1, default=str, sort_keys=True) + "\n", encoding="utf-8")

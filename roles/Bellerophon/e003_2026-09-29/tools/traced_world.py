@@ -36,6 +36,33 @@ TOOLS = HERE.parents[1] / "forensics_2026-09-23" / "tools"
 import bee_tracer as BT  # noqa: E402
 import replay_births as RB  # noqa: E402
 
+# ---- B-P1 performer-kind probe (Archaeon ruling #956): observation of the FROZEN tracer, no semantics added ------------
+# The frozen tracer records performer = the ENTITY bases of the store opcode byte's label. Reading (B) needs to know
+# whether that label was itself ENTITY (MOVE). Inside bee_tracer.trace's store(), the path event ("S", addr) is appended
+# and the FIRST bases() call that follows is bases(perf_lab) (store(): ev append -> M[addr] = V(...) -> recs dict whose
+# "performer" value calls bases(perf_lab); nothing in between calls bases). A list that arms on window stores plus a
+# pass-through wrapper of bases() therefore captures perf_lab exactly. Every capture is ASSERTED to reproduce the
+# performer set the tracer itself recorded; a mismatch stops the run.
+_PROBE = {"armed": None, "last": {}, "L": 64}
+_orig_bases = BT.bases
+
+
+def _probed_bases(lab):
+    a = _PROBE["armed"]
+    if a is not None:
+        _PROBE["last"][a] = lab; _PROBE["armed"] = None
+    return _orig_bases(lab)
+
+
+BT.bases = _probed_bases
+
+
+class _ProbeEv(list):
+    def append(self, e):
+        super().append(e)
+        if e[0] == "S" and _PROBE["L"] <= e[1] < 2 * _PROBE["L"]:
+            _PROBE["armed"] = e[1]
+
 
 def enc(lab):
     """compact JSON label encoding"""
@@ -82,7 +109,7 @@ def main() -> int:
         raise SystemExit("this tracer handles the SHARED / ENDOGENOUS_COPY cell only")
     TW = TR._traced_world_class(W)
     out_fh = gzip.open(a.out, "wt", encoding="utf-8", newline="\n")
-    stats = {"interactions": 0, "births": 0, "value_mismatch": 0, "mutations": 0, "pollinations": 0}
+    stats = {"interactions": 0, "births": 0, "value_mismatch": 0, "mutations": 0, "pollinations": 0, "probe_checked": 0}
 
     class SW(TW):
         def __init__(self, cfg_, seed):
@@ -121,8 +148,17 @@ def main() -> int:
             if partner_tape is None:                                  # v4 s1.2: EMPTY is FOREIGN-STRUCTURAL (CONSTANT, kind)
                 for a_ in range(L, 2 * L):
                     labels[a_] = ("CONST", "empty")
+            _PROBE["L"] = L; _PROBE["last"] = {}; _PROBE["armed"] = None
             after, recs, info = BT.trace(vmshim, pre, L, self.cfg.budget, list(inputs), allow_copyall=self.cfg.allow_copyall,
-                                         labels=labels, check=False)
+                                         labels=labels, check=False, ev=_ProbeEv())
+            perf_kind = {}
+            for k_ in range(L):
+                if recs[k_]["written"]:
+                    pl = _PROBE["last"].get(L + k_)
+                    if pl is None or frozenset(b for b in _orig_bases(pl) if b[0] == "E") != recs[k_]["performer"]:
+                        raise AssertionError("B-P1 probe does not reproduce the tracer's performer at tick %d locus %d" % (self.tick, k_))
+                    perf_kind[k_] = pl[0]
+                    stats["probe_checked"] += 1
             mem, tr = super()._execute(o, partner_tape, inputs)
             stats["interactions"] += 1
             if bytes(mem) != bytes(after):
@@ -131,6 +167,7 @@ def main() -> int:
             labs = info["labels_after"]; pid = p.id if p is not None else None
             prev_w = list(self.vec[o.id])
             self._last = {"pre": bytes(pre).hex(), "inputs": list(inputs), "writer": o.id, "occupant": pid, "recs": recs, "info": info,
+                          "perf_kind": perf_kind,
                           "vec_w": prev_w, "vec_p": list(self.vec[pid]) if pid is not None else None, "labs": labs}
             self.vec[o.id] = [self._origin(labs[k], o.id, pid, self.tick, k) for k in range(L)]
             return mem, tr
@@ -168,6 +205,7 @@ def main() -> int:
                 r = recs[k]
                 loci.append({"data": enc(r["data"]), "written": r["written"], "ctrl": encset(r["ctrl"]), "addr": encset(r["addr"]),
                              "exec": encset(r["exec"]), "performer": encset(r["performer"]),
+                             "perf_kind": last["perf_kind"].get(k),
                              "orig": list(self.vec[cid][k])})
             rec = {"birth_index": n_before, "tick": self.tick, "writer": parent.id, "child": cid, "occupant": last["occupant"],
                    "native_row": self.births[n_before], "pre_state": {"mem": last["pre"], "inputs": last["inputs"], "entry": 0,
