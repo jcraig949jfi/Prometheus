@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T03:34:00Z",
+  "updated_at_utc": "2026-09-29T03:34:41Z",
   "state": "HOLD",
   "state_reason": "ARC3 (C-003) CLOSED at the W8 block; close content at 889bf8ddd. No ARC3 wave until a future MWO reviews the close. Merge proposed through normal review. Nothing running.",
   "branch": "aphrodite/arc3-2026-09-28",
@@ -12,20 +12,70 @@
   "head_sha_note": "the pushed head immediately before this file's commit",
   "base_sha": "98ed64ca3383ee310f8850e374f936f27f0378af",
   "threads": [
-    {"id": "thr-4b608194554f", "alias": "TH-018", "title": "abstraction compounding", "status": "OPEN"},
-    {"id": "thr-5fb60bba1e73", "alias": "TH-019", "title": "recurrence x visibility", "status": "OPEN"},
-    {"id": "thr-71318d165e06", "alias": "TH-020", "title": "second-order compounding / representation", "status": "OPEN_GATED"},
-    {"id": "thr-1b0c5ac499ae", "alias": "TH-021", "title": "instrument validity (method)", "status": "OPEN"}
+    {
+      "id": "thr-4b608194554f",
+      "alias": "TH-018",
+      "title": "abstraction compounding",
+      "status": "OPEN"
+    },
+    {
+      "id": "thr-5fb60bba1e73",
+      "alias": "TH-019",
+      "title": "recurrence x visibility",
+      "status": "OPEN"
+    },
+    {
+      "id": "thr-71318d165e06",
+      "alias": "TH-020",
+      "title": "second-order compounding / representation",
+      "status": "OPEN_GATED"
+    },
+    {
+      "id": "thr-1b0c5ac499ae",
+      "alias": "TH-021",
+      "title": "instrument validity (method)",
+      "status": "OPEN"
+    }
   ],
   "campaigns": [
-    {"id": "C-003", "alias": "ARC3", "status": "CLOSED", "record": "ops/campaigns/C-003/CAMPAIGN.md"},
-    {"id": null, "alias": "Campaign 1", "status": "FROZEN_UNRUN", "note": "operator-gated; no C-* id allocated"}
+    {
+      "id": "C-003",
+      "alias": "ARC3",
+      "status": "CLOSED",
+      "record": "ops/campaigns/C-003/CAMPAIGN.md"
+    },
+    {
+      "id": null,
+      "alias": "Campaign 1",
+      "status": "FROZEN_UNRUN",
+      "note": "operator-gated; no C-* id allocated"
+    }
   ],
   "experiments": [
-    {"id": "E-008", "alias": "AMENDMENT 20 (C3)", "status": "CLOSED", "verdict": "UNTESTABLE"},
-    {"id": "E-009", "alias": "AMENDMENT 21 (C3R)", "status": "CLOSED", "verdict": "INVALID_DESIGN_DEFECT"},
-    {"id": "E-010", "alias": "AMENDMENT 22 (C3R2)", "status": "CLOSED", "verdict": "UNTESTABLE"},
-    {"id": "E-011", "alias": "AMENDMENT 23 (C3R2-CONFIRM)", "status": "CLOSED", "verdict": "G1_RECURRENT_STEPPING_STONE=YES; GENERIC 3/3 (constructed recurrence; mechanism only)"}
+    {
+      "id": "E-008",
+      "alias": "AMENDMENT 20 (C3)",
+      "status": "CLOSED",
+      "verdict": "UNTESTABLE"
+    },
+    {
+      "id": "E-009",
+      "alias": "AMENDMENT 21 (C3R)",
+      "status": "CLOSED",
+      "verdict": "INVALID_DESIGN_DEFECT"
+    },
+    {
+      "id": "E-010",
+      "alias": "AMENDMENT 22 (C3R2)",
+      "status": "CLOSED",
+      "verdict": "UNTESTABLE"
+    },
+    {
+      "id": "E-011",
+      "alias": "AMENDMENT 23 (C3R2-CONFIRM)",
+      "status": "CLOSED",
+      "verdict": "G1_RECURRENT_STEPPING_STONE=YES; GENERIC 3/3 (constructed recurrence; mechanism only)"
+    }
   ],
   "fabric_tasks": [],
   "running": [],
@@ -33,7 +83,7 @@
     "future MWO review of the ARC3 close (MWO-0001 APHRODITE: no new wave)"
   ],
   "next_actions": [
-    "merge aphrodite/arc3-2026-09-28 into main through normal review (roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md)",
+    "merge proposed through normal review: https://github.com/jcraig949jfi/Prometheus/compare/main...aphrodite/arc3-2026-09-28 (gh CLI absent on M4, so no PR opened by the seat; ready PR text in roles/Aphrodite/review/ARC3_PR_BODY.md; packet ARC3_MERGE_REVIEW_PACKET.md)",
     "seat loop per MWO-0001 s8; the news monitor continues in its narrow weekly scope"
   ],
   "operator_decisions_required": [
