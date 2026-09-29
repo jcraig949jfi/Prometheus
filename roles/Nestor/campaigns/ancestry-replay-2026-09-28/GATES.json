@@ -87,7 +87,7 @@
   "posted": "comms #940 and commit b0f215348 BEFORE running",
   "run": "2026-09-29 ~01:03 -04:00 on M1 under Fabric lease lse-9689939a3b6f (released)",
   "repairs": "V1..V7 (docstring)",
-  "status": "UNUSED until 2 fresh Fabric replicas return CONFORMS (GO_FINAL addendum 1)"
+  "status": "USABLE: 2/2 CONFORMS (tsk-81146cfae322, tsk-d907522d6a14); K_R1 flip coverage FAIL in every gated class -> INCONCLUSIVE on the frozen reading"
  },
  "incidents": [
   {
@@ -95,5 +95,9 @@
    "file": "INCIDENT_RUN3_2026-09-29.md",
    "summary": "unauthorized production run 3 started 00:45:03 by Nestor's stale one-time scheduled-task trigger via lease wait-acquire; killed 00:49:25; nothing committed; 10/11 run-2 1% sample files (git-ignored) destroyed; 1% sample check BLOCKED pending Archaeon/operator ruling (#943)"
   }
- ]
+ ],
+ "s4v22_review": {
+  "texts": "review_s4v22/",
+  "open_for_archaeon": "SF2 bootstrap resampling scheme (affects MARGINAL mark only)"
+ }
 }
