@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T10:02:27Z",
+ "updated_at_utc": "2026-09-29T10:23:08Z",
  "state": "HOLD",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -27,15 +27,15 @@
   "NPE 1% sample check (non-blocking for E-003): no skullport Fabric worker (s12 defect; Odysseus #916)"
  ],
  "next_actions": [
-  "HOLD. Resume if a skullport worker appears (tsk-c4317a3656d0) or a future MWO authorizes the recommended follow-ups",
-  "open analysis item: explain the dry-vs-production drift (Q8c transmission 0.0003 vs 0.00115; Q4 host-assisted) before any later citation"
+  "HOLD. Resume if a skullport worker appears (tsk-c4317a3656d0) or a future MWO authorizes the follow-ups",
+  "open (Archaeon side): trace why Archaeon's pre-C4 dry pipeline differs from the owner's frozen pipeline (Q8c 0.0003 vs 0.00115)"
  ],
  "operator_decisions_required": [
   "Future MWO: whether to run a NEW preregistered BEE run (to remove the post-exposure conditionality) and/or a decidable NPE design (>=30 transmission births; store-before-execute-free identification). Recorded, not requested.",
   "CONDITIONAL (unchanged): the NPE 1% sample, if the v2 verification of the run-1 copies fails -> regenerate vs declare lost"
  ],
  "latest_reports": [
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md @ 056320b4c (REVIEWED)",
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (+ addendum 2026-09-29)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/ @ c24ee1fef"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
@@ -43,6 +43,6 @@
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 976,
+ "comms_cursor": 983,
  "state_reason": "E-003 complete for its question (reviewed synthesis). No further authorized Archaeon work under MWO-0002; no new campaigns."
 }
