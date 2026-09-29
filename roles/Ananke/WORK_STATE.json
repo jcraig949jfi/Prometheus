@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Ananke",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
+  "updated_at_utc": "2026-09-29T03:34:00Z",
+  "state": "ACTIVE",
+  "state_reason": "MWO-0001 adopted. Nothing running, no leases held. PTE-C1, PTE-C1b and research arcs 1-3 are complete and recorded; research-ready small CPU blocks exist (MACHINE_WORK.md). No new large PTE campaign under MWO-0001.",
+  "branch": "ananke/base-role-adopt-2026-09-24",
+  "head_sha": "98ed64ca3383ee310f8850e374f936f27f0378af",
+  "head_sha_note": "merge base with origin/main before this adoption commit (contains lease cutover 8370083ae); the file cannot contain its own commit hash",
+  "work_map": "roles/Ananke/research/THREADS.md",
+  "threads": [
+    {"id": "thr-82e9c44ffc71", "alias": "T-REACH-GAP", "state": "OPEN"},
+    {"id": "thr-52e8bb034fba", "alias": "T-RET-SEL", "state": "OPEN"},
+    {"id": "thr-8c7342a7d513", "alias": "T-INS-6", "state": "OPEN"},
+    {"id": "thr-ea0c97a4d5e9", "alias": "T-CT-3'", "state": "OPEN"},
+    {"id": "thr-5df816e9b844", "alias": "T-SWAP-LOWACC", "state": "OPEN"},
+    {"id": "thr-f36dd8035762", "alias": "T-WJ-1", "state": "OPEN"},
+    {"id": "thr-3cb97e823f61", "alias": "T-WJ-2", "state": "OPEN"},
+    {"id": "thr-597dda593a1f", "alias": "T-H3", "state": "OPEN"},
+    {"id": "thr-a1dd79b7de09", "alias": "T-REDISCOVER", "state": "PARKED"},
+    {"id": "thr-56144b624b97", "alias": "T-RET-2 (PTE-SI01)", "state": "CLOSED"},
+    {"id": "thr-66db7bdd95ce", "alias": "PTE-C1b", "state": "CLOSED"},
+    {"id": "thr-5d13521c558d", "alias": "PTE-C1", "state": "CLOSED"}
+  ],
+  "threads_note": "closed/answered arc threads (T-CT-1, T-INS-1, T-RET-1, T-TA-1, T-X-1, T-X-4, T-M2-2, T-M3-1, T-BR-1, T-CT-2, T-RS-1, T-DE-1) and their genesis rules are in work_map",
+  "campaigns": [
+    {"id": "C-ANANKE-PTE-C1", "alias": "PTE-C1", "status": "COMPLETE", "report": "roles/Ananke/pte/C1_REPORT.md"},
+    {"id": "C-ANANKE-PTE-C1B", "alias": "PTE-C1b", "status": "COMPLETE", "report": "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt"},
+    {"id": "C-ANANKE-ARC3", "alias": "ARC3", "status": "CLOSED", "report": "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md"}
+  ],
+  "experiments": [],
+  "experiments_note": "no experiment running; completed E-ANANKE-* rows (C1/C1b, W-A..W-L, designed echoes, joint carrier) are in work_map",
+  "fabric_tasks": [],
+  "leases": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "s8 seat loop (self-paced): fetch, CURRENT.md, comms since cursor, Fabric tasks",
+    "small bounded CPU research only, under a Fabric lease (python -m fabric lease acquire <host>:cpu8): B-8 T-INS-6 first (phi mixture test + promote traj.py into lens with known-answer tests), then B-10 T-SWAP-LOWACC",
+    "any future PTE experiment submitted as a Fabric task with --thread <thr-id> from work_map"
+  ],
+  "operator_decisions_required": [],
+  "latest_reports": [
+    "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC3.md (7fc642367)",
+    "roles/Ananke/research/SYNTHESIS_2026-09-28_ARC2.md (8eabc990b)",
+    "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt (cc98596dd)",
+    "roles/Ananke/pte/C1_ERRATA.md"
+  ]
+}
