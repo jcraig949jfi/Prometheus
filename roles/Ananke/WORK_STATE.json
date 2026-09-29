@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T06:47:36Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-N (T-SWAP-LOWACC) complete and deposited; lease lse-4124e1f2992d released. Nothing running. No large PTE campaign under MWO-0001.",
+  "updated_at_utc": "2026-09-29T06:49:49Z",
+  "state": "WORKING",
+  "state_reason": "T-SWAP-AUDIT running as worker W-O (E-ANANKE-W-O, CPU, Fabric lease, <=3 h): re-run recorded 64-world CHANCE swap verdicts at 512 worlds. Audit table only; no record or frozen label is edited. No large PTE campaign under MWO-0001.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "ffd452047",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,13 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-O",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-AUDIT",
+      "status": "RUNNING",
+      "dir": "roles/Ananke/research/workers/W-O/"
+    },
+    {
       "id": "E-ANANKE-W-N",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-LOWACC",
@@ -113,10 +120,12 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-O (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
-    "T-SWAP-AUDIT: re-run recorded CHANCE verdicts from 64-world designs at 512 worlds (small, CPU, Fabric lease)",
+    "deposit W-O report; review proposed record corrections before applying any",
     "T-INS-8: split the N fraction of 369f5a5b/4781b0a1 by sub-array",
     "s8 seat loop continues"
   ],
