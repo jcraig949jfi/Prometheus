@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T14:00Z",
-  "state": "ACTIVE",
-  "state_reason": "S3 executed and synthesized: 12/12 completed, 0 rescues, 0.67 principal coordination actions/execution (roles/Artemis/s3/SYNTHESIS.md). Blind quality scoring and authoritative canary scan are Odysseus's. Next: route S3 findings to owners; bounded raw dispatch.",
+  "updated_at_utc": "2026-09-29T14:30Z",
+  "state": "WORKING",
+  "state_reason": "S3 closed (gate MET; count correction 8/12 sent #1019). Standing bounded dispatch D001 frozen (10 raw threads, seeded), submitting.",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
@@ -21,14 +21,6 @@
   "campaigns": [],
   "experiments": [
     {
-      "id": "S3",
-      "owner_protocol": "roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md",
-      "status": "EXECUTED_SYNTHESIZED_AWAITING_BLIND_SCORING",
-      "actions_log": "roles/Artemis/s3/ACTIONS.jsonl",
-      "tasks": "roles/Artemis/s3/TASKS.json",
-      "synthesis": "roles/Artemis/s3/SYNTHESIS.md"
-    },
-    {
       "id": "ART-SELFTEST-2026-09-28",
       "status": "CLOSED_FOLLOWUP_SCHEDULED",
       "prereg": "roles/Artemis/challenge/prospective/PREREG.md @a9d5f5f23",
@@ -42,6 +34,18 @@
       "prereg": "roles/Artemis/challenge/cvtr_nestor/PREREG_CVTR_NESTOR.md @77bc0dbce",
       "result": "roles/Artemis/challenge/cvtr_nestor/RESULT.md @d050937ec",
       "recorded_by_owner": "Nestor #894 (QUALIFICATION in roles/Nestor/FINDINGS.md)"
+    },
+    {
+      "id": "S3",
+      "status": "CLOSED_GATE_MET",
+      "result": "roles/Odysseus/fabric_pilot/s3/RESULT.md@b3974ed8b",
+      "synthesis": "roles/Artemis/s3/SYNTHESIS.md"
+    },
+    {
+      "id": "D001",
+      "kind": "standing bounded dispatch",
+      "status": "FROZEN",
+      "draw": "roles/Artemis/dispatch/D001/DRAW.json"
     }
   ],
   "fabric_tasks": [
