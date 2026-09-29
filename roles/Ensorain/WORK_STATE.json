@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T17:15:57Z",
+  "updated_at_utc": "2026-09-29T19:28:25Z",
   "state": "ACTIVE",
-  "state_reason": "MWO-0004 adopted (own loop fetch 2026-09-29T11:48:07Z; blob sha256 verified). LM01 at ee8cbe0c8 is HOLD / NOT LAUNCHED by decision (MWO-0004 G3), not a pending gate. ARC3 dev work continues inside the R2 envelope. MWO-0003 FP-001 filed: roles/Ensorain/probes/FP-001_RESULT.json (PASS; replicas identical; cross-platform ULP difference recorded).",
+  "state_reason": "MWO-0004 current. LM01 at ee8cbe0c8 HOLD / NOT LAUNCHED by decision (MWO-0004 G3). ARC3 dev lines (T25, crypticity, PKG-F) at resting points with review packets; next items are new directions (multi-switch/drift, N5, LM02 window-sufficiency test) paced deliberately.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "7801268a7054c451c51a9f77accc251860810954",
+  "head_sha": "256e1fd4072ce1d4d2f8c365768153d5dc2d7bf7",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -40,9 +40,9 @@
     },
     {
       "id": "E-ENS-PKGF",
-      "status": "DESIGN + DEV PROBES v3-v5",
+      "status": "DESIGN v0.2 + DEV PROBES v2-v7 (resting point)",
       "report": "ensorain/arc3/RESULTS_PKGF_PROBE.md",
-      "note": "v3's apparent discovered recency was a retention-recency artefact (v4); a model-free same-cell regime detector (v5) finds the F3 switch 16/16, 0/16 false on stationary twins, and removes the obsolete-history harm (dAC 0.000 vs -1.26). Scope: single sharp switch, dense repeats (L2). Next: sparse-repeat L3 test"
+      "note": "Clean dev result: keep exact records + gate by a model-free discovered regime >= discard on re-queried (stale-recall) cells (-1.15 -> 0.00 at full switch; +0.13..+0.86 otherwise), neutral for never-seen cells. v3 'discovered recency' and v6 'retention pays for generalization' withdrawn (recency artefact; test composition, LM01 ERRATA E-4)"
     },
     {
       "id": "E-ENS-LM02",
@@ -131,7 +131,7 @@
     "E-ENS-LM01 launch: HOLD by decision (MWO-0004 G3). Hard gate only if a later order launches it (MWO-0004 Part 4, frozen launch gate). DEF-ENS-001 matters only at that launch."
   ],
   "next_actions": [
-    "ARC3 (R2 envelope, no campaign): PKG-F next step needs a NEW world variant (harm without same-cell repeats; multi-switch) -- design first, then precommit; LM02 power-based 'window sufficient' test",
+    "ARC3 (R2 envelope, no campaign): design the multi-switch / gradual-drift PKG-F world and the N5 decaying-reliability world before probing; LM02 power-based 'window sufficient' test",
     "At any future launch order: resolve DEF-ENS-001 as that order directs; Fabric lease; pinned worktree at ee8cbe0c8; freeze verify; launch on M2 (ERRATA E-2)"
   ],
   "operator_decisions_required": [],
