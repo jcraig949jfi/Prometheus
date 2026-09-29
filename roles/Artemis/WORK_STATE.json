@@ -4,16 +4,16 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T03:30Z",
-  "state": "HOLD",
-  "state_reason": "MWO-0001 adopted. No eligible work: S3 principal role waits on Odysseus; no Fabric tasks as Artemis; day-30 re-check due 2026-10-28. Bounded raw dispatch deferred until S3 packages are set so S3 is not confounded. Seat loop running (MWO s8).",
+  "updated_at_utc": "2026-09-29T04:00Z",
+  "state": "BLOCKED",
+  "state_reason": "S3 is ready (Odysseus #923), but the operator ruling requires the Artemis principal to run on ubu001 in its own worktree; this Artemis instance is on ubu002. The S3 workload is DRAFTED (roles/Artemis/s3/DRAFT_WORKLOAD.md, seeded draw of 10 raw threads, not frozen, not submitted).",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
   "head_sha": "see git log of this file on origin/main",
   "threads": [
-    "thr-s3 (Fabric S3, as principal, pending)",
-    "backlog FR-001..FR-139 (offers, unranked; roles/Artemis/backlog/INDEX.md)"
+    "thr-s3 (Fabric S3 principal; workload drafted)",
+    "backlog FR-001..FR-139 (offers, unranked)"
   ],
   "campaigns": [],
   "experiments": [
@@ -38,17 +38,19 @@
   "running": [],
   "blocked_on": [
     {
-      "what": "S3 start",
-      "on": "Odysseus (S3 protocol roles/Odysseus/fabric_pilot/s3/)"
+      "what": "S3 principal session on ubu001",
+      "on": "operator: start Claude Code as Artemis on ubu001 in its own worktree (not ~/Prometheus); then tell Odysseus the path for canaries",
+      "ref": "roles/Odysseus/prompts/2026-09-28_fabric/06_OPERATOR_RULINGS_PROMEXEC_verbatim.md Part 1; comms #923"
     }
   ],
   "next_actions": [
-    "S3 principal when Odysseus is ready: raw backlog questions verbatim, one submission, one completion barrier",
-    "2026-10-28: day-30 owner-action re-check; report as update to selftest/RESULT.md",
-    "answer Nestor CVT-R follow-ups if requested through the work model",
-    "bounded raw-thread dispatch via Fabric under MWO-0001 limits (no ranks, no rewriting, blind-lane guard)"
+    "ubu001 Artemis session: review roles/Artemis/s3/DRAFT_WORKLOAD.md, freeze S3_PROTOCOL.md s3, give Odysseus the worktree path, one submission, one barrier",
+    "2026-10-28: day-30 owner-action re-check",
+    "Nestor CVT-R follow-ups if requested via the work model"
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "Start an Artemis principal session on ubu001 for S3 (or rule that the ubu002 instance may be principal, which would drop the same-host separation test)"
+  ],
   "program_level_unassigned": [
     "R-28",
     "R-36",
