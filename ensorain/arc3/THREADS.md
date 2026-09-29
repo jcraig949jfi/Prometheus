@@ -306,7 +306,12 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - Reading: when the learner's class can represent the causal-state compression, a LEARNED bounded state beats retaining
   more raw distinctions, and discovery needs little exact history. "Discovering what can be discarded" is the winning
   mechanism; model-class mismatch dominates otherwise.
-- NEXT: a CSSR-style causal-state learner (no fixed S); a learning-curve of history needed vs world crypticity.
+- CSSR (2026-09-29, suff/CSSR_T25.md; 6/6 precommitted predictions survived on eval seeds):
+  - standard split-CSSR at Lmax 6 collapses to the window floor on Even (.034, 7 states), because determinization
+    re-imports window truncation;
+  - modal-successor 'vote' recovers Even exactly (.0005, 3 states) but fails on Markov-3 (.39 mean);
+  - split is safe but window-bounded; vote is unbounded but unsafe.
+- NEXT: a tau-hybrid (split only when the minority successor carries mass > tau; tau precommitted); then a learning-curve of history needed vs world crypticity.
 - RES: light, off M2.
 - MAT: pilot done.
 
