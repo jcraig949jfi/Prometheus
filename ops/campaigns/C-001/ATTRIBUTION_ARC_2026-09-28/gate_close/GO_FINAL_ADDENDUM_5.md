@@ -26,3 +26,16 @@
 
 **Fabric Task tsk-581bd93ac9f3:** unchanged. If it is ever claimed against the damaged files, its stage-1 failure is an EXPECTED
 consequence of this incident, NOT a tracer finding. It fails closed by design; no content is read.
+
+## Dated note 2026-09-29 (MWO-0004 G2): the 1% sample is VERIFIED; schema declared for stage 2
+- **Stage 1 PASSED natively on SKULLPORT** (Nestor #990; g2_sample_check/ @ 85ca06ffd on main):
+  * candidate 1, the run-1 copy _scratch/exports_run1_original;
+  * verifier v2 (addendum-5 content identity): 11/11 files, 28,055 records;
+  * gz bytes differ only in the gzip mtime.
+  * The 1% sample is therefore RECOVERED and VERIFIED, not lost.
+- **Stage 2 stopped SCHEMA_UNDECLARED (exit 2), as designed.** The schema is now declared in npe_sample_task.py.
+  * It was taken from the owner's committed writer (tracer/run_trace.py sink()). No sample content was read by Archaeon.
+  * Record: {run, iid, oids, pre, rng_state_at_writeback, accepted_sides, loci}.
+  * The loci are POST-write-back, so the reference replays the write-back from rng_state_at_writeback at its T-003 cell rate.
+  * Comparison: raw, per class, as before. accepted_sides is not gated.
+- **One rerun is requested**, same host and candidate, at the commit carrying this note.

@@ -35,6 +35,15 @@ import sys
 from collections import Counter
 
 ALLOWED = {"pre", "loci", "k", "wb_seed", "mut_rate"}
+# SCHEMA DECLARATION (2026-09-29, MWO-0004 G2 R1; after stage 1 PASSED and stage 2 stopped SCHEMA_UNDECLARED, Nestor #990;
+# declared from the owner's committed writer tracer/run_trace.py sink(), with NO sample content read by Archaeon):
+# the production 1% sample record is {run, iid, oids, pre, rng_state_at_writeback, accepted_sides, loci}.
+#   - loci labels are POST-WRITE-BACK (run_trace.py: post[side][0]), so the reference replays the write-back from
+#     rng_state_at_writeback ([version, state list, gauss]) at the reference's T-003 cell rate (MUT_RATE; its selftest F11
+#     reproduces real T-003 interactions including the write-back and the RNG state).
+#   - oids / run / iid / accepted_sides are identifiers or interaction-level outputs: carried in discrepancy records, not
+#     compared (accepted_sides is not gated by v4 s4.3).
+PRODUCTION = {"run", "iid", "oids", "pre", "rng_state_at_writeback", "accepted_sides", "loci"}
 GATE = ("label", "addr", "ctrl", "exec")
 
 
@@ -60,13 +69,18 @@ def main():
     for f in files:
         for n, line in enumerate(gzip.open(os.path.join(d, f), "rt")):
             rec = json.loads(line)
-            extra = set(rec) - ALLOWED
+            prod = set(rec) == PRODUCTION
+            extra = set(rec) - (PRODUCTION if prod else ALLOWED)
             if extra or "pre" not in rec or "loci" not in rec:
                 open(os.path.join(out, "AGREEMENT.txt"), "w").write(
                     "SCHEMA_UNDECLARED in %s line %d: keys %s (declared %s)\n" % (f, n, sorted(rec), sorted(ALLOWED)))
                 return 2
             p = ast.literal_eval(rec["pre"]) if isinstance(rec["pre"], str) else rec["pre"]
-            kw = {"rng": random.Random(rec["wb_seed"]), "mut_rate": rec["mut_rate"]} if "wb_seed" in rec else {}
+            if prod:
+                st = rec["rng_state_at_writeback"]; g = random.Random(); g.setstate((st[0], tuple(st[1]), st[2]))
+                kw = {"rng": g}                                  # reference default cell rate (T-003)
+            else:
+                kw = {"rng": random.Random(rec["wb_seed"]), "mut_rate": rec["mut_rate"]} if "wb_seed" in rec else {}
             r = R.trace_interaction(bytes.fromhex(p["ga"]), bytes.fromhex(p["gb"]), (p["regs_a"],) + tuple(p["flags_a"]),
                                     (p["regs_b"],) + tuple(p["flags_b"]), budget=p["budget"], ops_mask=p["ops_mask"], **kw)
             for h, side in enumerate("ab"):
@@ -85,7 +99,7 @@ def main():
                     for k, ok in chk.items():
                         tot[(c, k)] += 1; bad[(c, k)] += not ok
                     if not all(chk.values()):
-                        disc.append({"file": f, "line": n, "half": side, "j": x["j"], "class": c,
+                        disc.append({"file": f, "line": n, "iid": rec.get("iid"), "half": side, "j": x["j"], "class": c,
                                      "fields": sorted(k for k, ok in chk.items() if not ok)})
     lines = ["NPE 1% production agreement sample: frozen reference vs owner, RAW per class (v4 s4.3)"]
     fails = []
