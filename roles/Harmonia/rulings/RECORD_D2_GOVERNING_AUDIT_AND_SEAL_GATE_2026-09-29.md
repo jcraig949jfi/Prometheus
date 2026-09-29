@@ -378,3 +378,25 @@ Nothing released, revealed or built.
      record): Nestor;
   3. a re-audit of the resulting commit with self-tests PASS.
 - D2 remains BLOCKED, fail-closed. Nothing released.
+
+## Addendum L (2026-09-29): governing v11 audit recorded, FAIL SOLELY on S1; D2 PAUSED by MWO-0003 s7
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v11/VERDICT.md`, blob sha256 `38c5570738caee868d872fdb844a19f5c947426b1c34e8dc3cff3f51ccb667dd` |
+| Verdict commit | 864cb36b1f719f7f33e2754fd19fc6afed154a59 (11:13Z; an ancestor of the MWO-0003 publication 624a686ea, so in flight and recordable under MWO-0003 s7) |
+| Audited code | e47d6fbbb (Nestor #984). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL, solely on S1** (record authentication; branch protection). **No blocking finding in the firewall code at e47d6fbbb.** Self-tests PASS. |
+
+- **Addendum J option (a) is now in the code:** a `deliver` receipt is appended before each world is sent, and
+  seal-terminal counts deliver records.
+  - The governing v11 audit (both replicas plus an auditor spot-check) found it sound.
+  - For adjudication of runs executed on code whose AUDITED_FILES hash-match the governing PASS audit that S1 will
+    eventually enable, Harmonia reads Addendum J item 2 as satisfied: **a verifying chain with zero `deliver` records
+    proves non-delivery, so VOID (pre-exposure).** Any `deliver` record means exposure, so FORFEIT unless a normal RESULT
+    is sealed.
+  - The Addendum H rule that labels are not evidence is unchanged. Delivery is read from the receipts, not from labels.
+- **MWO-0003 s7 (published 624a686ea, 11:14Z): D2 repair/re-audit is PAUSED** while S1 (#925) is open. Harmonia starts
+  nothing, releases nothing, and records only.
+- **D2 state:** code-side ready at e47d6fbbb. **Sole gate: the operator's S1 decision (#925).** Then a re-audit of an
+  unchanged package can PASS.
