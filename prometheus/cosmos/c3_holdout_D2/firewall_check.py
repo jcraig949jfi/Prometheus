@@ -81,14 +81,61 @@ def git_grep(repo: Path, ref: str, pattern_file: Path) -> dict:
     return {"ref": ref, "git_rc": r.returncode, "files_matching": n, "clean": r.returncode == 1 and n == 0}
 
 
+def history_scan(repo: Path, sec: dict) -> dict:
+    """v3 (Odysseus v2 re-audit should-fix): search EVERY blob reachable from any ref for the key/salt/nonce hex and each
+    hidden world's canonical JSON, IN-PROCESS. Object ids go to `git cat-file` over stdin, so no secret-derived string
+    is ever a command-line argument (visible to process listing). Blobs larger than MAX_BYTES are skipped (the secrets
+    are a few KB; the skip count is reported)."""
+    objs = subprocess.run(["git", "-C", str(repo), "rev-list", "--all", "--objects"], capture_output=True, text=True)
+    ids = [l.split()[0] for l in objs.stdout.splitlines() if l.strip()]
+    chk = subprocess.run(["git", "-C", str(repo), "cat-file", "--batch-check=%(objecttype) %(objectname) %(objectsize)"],
+                         input="\n".join(ids) + "\n", capture_output=True, text=True)
+    blobs, skipped = [], 0
+    for line in chk.stdout.splitlines():
+        t, oid, size = line.split()
+        if t == "blob":
+            if int(size) <= MAX_BYTES:
+                blobs.append(oid)
+            else:
+                skipped += 1
+    needles = {k: v.lower() for k, v in sec["strings"].items()}
+    hits = {k: 0 for k in list(needles) + ["world_json"]}
+    proc = subprocess.Popen(["git", "-C", str(repo), "cat-file", "--batch"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+    import threading
+
+    def feed():
+        for oid in blobs:
+            proc.stdin.write((oid + "\n").encode())
+        proc.stdin.close()
+    threading.Thread(target=feed, daemon=True).start()
+    n = 0
+    while True:
+        header = proc.stdout.readline()
+        if not header:
+            break
+        _oid, _t, size = header.split()
+        data = proc.stdout.read(int(size))
+        proc.stdout.read(1)
+        n += 1
+        low = data.lower()
+        for k, v in needles.items():
+            if v in low:
+                hits[k] += 1
+        if any(w in data for w in sec["worlds"]):
+            hits["world_json"] += 1
+    proc.wait()
+    return {"blobs_scanned": n, "blobs_expected": len(blobs), "blobs_skipped_large": skipped, "hits": hits,
+            "clean": proc.returncode == 0 and n == len(blobs) and not any(hits.values())}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--secrets", default=str(DEFAULT_SECRETS))
     ap.add_argument("--scan", nargs="*", default=[str(Path(__file__).resolve().parents[3])])
     ap.add_argument("--git-ref", nargs="*", default=["HEAD", "refs/remotes/origin/main"])
     ap.add_argument("--all-history", action="store_true",
-                    help="v2 (Odysseus S5): search EVERY commit on every ref (git log --all -S) for the key, salt and "
-                         "nonce hex and each hidden world's canonical JSON; counts only")
+                    help="search EVERY blob reachable from any ref, in-process (v3: no secret on the command line), "
+                         "for the key, salt and nonce hex and each hidden world's canonical JSON; counts only")
     a = ap.parse_args(argv)
     sd = Path(a.secrets)
     sec = load(sd)
@@ -105,18 +152,7 @@ def main(argv=None) -> int:
     finally:
         pf.unlink()
     if a.all_history:
-        repo = Path(a.scan[0])
-        needles = [(k, v.decode()) for k, v in sec["strings"].items()] + [("world_json", w.decode()) for w in sec["worlds"]]
-        n_hit = {}
-        for kind, needle in needles:
-            p = subprocess.run(["git", "-C", str(repo), "log", "--all", "--no-textconv", "--format=%H", "-S", needle],
-                               capture_output=True, text=True)
-            hits = [x for x in p.stdout.split() if x]
-            n_hit[kind] = n_hit.get(kind, 0) + (len(hits) if p.returncode == 0 else 1_000_000)   # error != clean
-        out["all_history"] = {"commits_containing": n_hit, "clean": all(v == 0 for v in n_hit.values()),
-                              "n_commits_searched": int(subprocess.run(
-                                  ["git", "-C", str(repo), "rev-list", "--all", "--count"],
-                                  capture_output=True, text=True).stdout.strip() or 0)}
+        out["all_history"] = history_scan(Path(a.scan[0]), sec)
     out["all_clean"] = bool(out.get("all_history", {"clean": True})["clean"]
                             and out["secrets_dir_outside_git"] and out["secrets_dir_files_expected"]
                             and all(s["clean"] for s in out["scans"].values())

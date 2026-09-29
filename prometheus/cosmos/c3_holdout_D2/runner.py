@@ -237,6 +237,37 @@ class _HiddenWorldStub(System):
         return self.__call("full_state", state)
 
 
+def _probe_write(paths):
+    """v3: try to open each path for APPEND without writing anything; 'writable' / 'denied' / 'missing' / 'error:<t>'.
+    A child that can append to the receipts could rewrite the run's evidence chain."""
+    out = []
+    for pth in paths:
+        try:
+            with open(pth, "ab"):
+                pass
+            out.append([pth, "writable"])
+        except PermissionError:
+            out.append([pth, "denied"])
+        except (FileNotFoundError, NotADirectoryError):
+            out.append([pth, "missing"])
+        except OSError as e:
+            out.append([pth, "error:%s" % type(e).__name__])
+    return out
+
+
+def os_account() -> str:
+    """v3 (Odysseus v2 re-audit R1 F-ACCT): the OS account from the OS, not from the USERNAME/USER environment."""
+    if os.name == "nt":
+        import ctypes
+        n = ctypes.c_uint32(257)
+        buf = ctypes.create_unicode_buffer(257)
+        if not ctypes.windll.advapi32.GetUserNameW(buf, ctypes.byref(n)):
+            raise RunnerRefusal("GetUserNameW failed")
+        return buf.value
+    import pwd
+    return pwd.getpwuid(os.getuid()).pw_name
+
+
 def _probe_paths(paths):
     """Try to open each path for reading; report 'opened' / 'denied' / 'missing' / 'error:<type>'."""
     out = []
@@ -259,7 +290,7 @@ def _worker_main(conn, pkg_dir: str, entry: str) -> None:
     msg = _recv(conn)
     if msg[0] != "probe":
         return
-    _send(conn, ["probe_result", _probe_paths(msg[1])])
+    _send(conn, ["probe_result", _probe_paths(msg[1]) + _probe_write(msg[2] if len(msg) > 2 else [])])
     if _recv(conn)[0] != "go":
         return
     sys.path.insert(0, pkg_dir)
@@ -469,7 +500,7 @@ class FirewallRun:
                  gate_repo=None, gate_ref: Optional[str] = None, account: Optional[str] = None,
                  allowlist=None, gate_pins: Optional[dict] = None, delete_key: bool = False,
                  extra_probe_paths=(), verify_loaded: bool = True, secret_paths=SECRET_PATHS,
-                 enforce_run_dir: bool = True):
+                 enforce_run_dir: bool = True, write_probe_paths=None):
         self.manifest_path, self.ciphertext_path = Path(manifest_path), Path(ciphertext_path)
         self.key_path, self.package_zip = Path(key_path), Path(package_zip)
         self.package_sha256 = str(package_sha256).lower()
@@ -482,6 +513,11 @@ class FirewallRun:
         self.allowlist = protocol.DEFAULT_ALLOWLIST if allowlist is None else allowlist
         self.gate_pins, self.delete_key, self.verify_loaded = gate_pins, delete_key, verify_loaded
         self.probe_paths = [str(self.key_path)] + [str(x) for x in secret_paths] + [str(x) for x in extra_probe_paths]
+        # v3: the child must not be able to APPEND to the receipts (default: this run's receipts file). With a child running
+        # as the runner's own account this ALWAYS fails closed -- intentionally: the designation must provide a separate
+        # child account (documented in FIREWALL.md v3).
+        self.write_probe_paths = [str(self.out / "receipts.jsonl")] if write_probe_paths is None else \
+            [str(x) for x in write_probe_paths]
         self.enforce_run_dir = enforce_run_dir
         self.gate_repo = Path(gate_repo) if gate_repo is not None else DEFAULT_GATE_REPO
         self.gate_ref = gate_ref or DEFAULT_GATE_REF
@@ -580,9 +616,9 @@ class FirewallRun:
         child.close()
         # v2 (F2): isolation probe. The child must be unable to open the released key path, every secret path and
         # this run's receipts; otherwise the package could read them. Fail closed.
-        _send(self._conn, ["probe", list(self.probe_paths)])
+        _send(self._conn, ["probe", list(self.probe_paths), list(self.write_probe_paths)])
         tag, res = _recv(self._conn)
-        opened = [p for p, r in res if r not in ("denied", "missing")]
+        opened = [p for p, r in res if r not in ("denied", "missing")]      # 'opened' (read) or 'writable' (append)
         if tag != "probe_result" or opened:
             self._stop_worker(kill=True)
             raise ChildNotIsolated("the predictor child can open: %s" % ", ".join(opened))
@@ -781,7 +817,6 @@ def main(argv=None) -> int:
     designation: predict -> seal predictions -> certify -> close. The run parameters are READ FROM the designation
     record (no command-line knobs to cherry-pick, S4); the run directory is <out-root>/run_<designation nonce>; the
     released key file is deleted as soon as it has been read (S5)."""
-    import getpass
     ap = argparse.ArgumentParser(description="holdout D2 across-the-firewall runner (v2)")
     ap.add_argument("--package")
     ap.add_argument("--package-sha256")
@@ -803,7 +838,7 @@ def main(argv=None) -> int:
         raise RunnerRefusal("start the runner through entry.py (pre-import code verification)")
     if not (a.package and a.package_sha256 and a.key and a.runner_id):
         ap.error("--package, --package-sha256, --key and --runner-id are required")
-    account = getpass.getuser()
+    account = os_account()
     g = protocol.check_gates(DEFAULT_GATE_REPO, "DESIGNATION", ref=a.gate_ref, package_sha256=a.package_sha256,
                              runner_id=a.runner_id, account=account, verify_loaded=True)
     rp = g["run_params"]

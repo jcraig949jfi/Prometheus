@@ -112,6 +112,8 @@ class Custody:
             g = self._gates("DESIGNATION", runner_id=runner_id)
             if any(e.get("event") == "KEY_RELEASED" and e.get("spec_id") == g["spec_id"] for e in self._events()):
                 raise CustodyRefusal("the key for this spec_id was already released once")
+            if protocol.once_record_present(self.repo, self.ref, protocol.KEY_RELEASED_FILE):
+                raise CustodyRefusal("a KEY_RELEASED record is committed: the key was already released (v3: git, not the log)")
             key = sealbox.read_hex_file(self.secrets_dir / KEY_NAME, sealbox.KEY_BYTES)
             dest.mkdir(parents=True, exist_ok=True)
             self._write_excl(dest / KEY_NAME, key.hex().encode("ascii") + b"\n")
@@ -121,7 +123,17 @@ class Custody:
         rec = {"event": "KEY_RELEASED", "spec_id": g["spec_id"], "runner_id": runner_id, "dest": str(dest),
                "gates": {k: v for k, v in g.items() if k.endswith("_commit")}}
         self._append(rec)
+        self._write_once_record(protocol.KEY_RELEASED_FILE, {k: rec[k] for k in ("event", "spec_id", "runner_id", "gates")})
         return rec
+
+    def _write_once_record(self, name, body):
+        """v3: write protocol/<name> in the working tree for the custodian to COMMIT immediately; once committed, a second
+        release/reveal is refused from git regardless of the custody log."""
+        p = self.repo / protocol.PROTO_REL / name
+        if not p.exists():
+            p.write_text(json.dumps(dict(body, utc=_utc()), indent=1, sort_keys=True) + "\n", encoding="utf-8",
+                         newline="\n")
+        return p
 
     # ------------------------------------------------------------ public result-seal record
     def result_seal_record(self, run_dir, record_out) -> dict:
@@ -173,6 +185,8 @@ class Custody:
                 raise CustodyRefusal("RESULT.json does not match the sealed result hash")
             if any(e.get("event") == "REVEALED" and e.get("spec_id") == g["spec_id"] for e in self._events()):
                 raise CustodyRefusal("already revealed")
+            if protocol.once_record_present(self.repo, self.ref, protocol.REVEALED_FILE):
+                raise CustodyRefusal("a REVEALED record is committed: already revealed (v3: git, not the log)")
             dest.mkdir(parents=True, exist_ok=True)
             for name in (PLAIN_NAME, SALT_NAME, KEY_NAME):
                 self._write_excl(dest / name, (self.secrets_dir / name).read_bytes())
@@ -187,6 +201,8 @@ class Custody:
         rec = {"event": "REVEALED", "spec_id": g["spec_id"], "dest": str(dest), "verify_reveal": chk,
                "result_seal_commit": g["result_seal_commit"]}
         self._append(rec)
+        self._write_once_record(protocol.REVEALED_FILE, {"event": "REVEALED", "spec_id": g["spec_id"],
+                                                         "result_seal_commit": g["result_seal_commit"]})
         return rec
 
 
