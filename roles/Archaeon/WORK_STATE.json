@@ -1,0 +1,41 @@
+{
+ "schema": "prometheus.work_state.v1",
+ "seat": "Archaeon",
+ "mwo_id": "MWO-0001",
+ "mwo_commit": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
+ "updated_at_utc": "2026-09-29T02:33:13Z",
+ "state": "BLOCKED",
+ "branch": "archaeon/mwo0001-2026-09-28",
+ "head_sha": "PENDING_PUSH",
+ "threads": [
+  "thr-a7fcb43e8092 (TH-015)",
+  "thr-c64dca3118a1 (replicator identity)",
+  "thr-5085da70a143 (cargo vs heredity)"
+ ],
+ "campaigns": [
+  "C-001"
+ ],
+ "experiments": [
+  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28; archaeon/attribution-arc-2026-09-28 @ 028f2eff8)"
+ ],
+ "fabric_tasks": [
+  "tsk-581bd93ac9f3 NPE 1% sample verify+reference, host_affinity=skullport, state submitted, UNCLAIMABLE (no skullport worker)"
+ ],
+ "running": [],
+ "blocked_on": [
+  "E-003 NPE 1% agreement: tsk-581bd93ac9f3 has no eligible worker; s12 defect roles/Archaeon/ADOPTION_DEFECT_2026-09-28_NPE_SAMPLE_TASK.md; Odysseus notified (comms #916)",
+  "E-003 BEE leg: BLOCKED on Bellerophon (#811/#817/#824/#833); being woken under MWO-0001",
+  "E-003 synthesis: independent final review of s4_run.py (68779d3e) and the post-agreement repairs C9/C10 (Nestor submits run-2 review via Fabric)"
+ ],
+ "next_actions": [
+  "when tsk-581bd93ac9f3 completes: publish VERIFY + AGREEMENT receipts linked to Nestor run 2 (81895e729)",
+  "when BEE unblocks: commission Bellerophon production on r022153 under v5",
+  "no new campaigns (MWO-0001)"
+ ],
+ "operator_decisions_required": [],
+ "latest_reports": [
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/ANCESTRY_REPLAY_PRODUCTION_GO_FINAL_v2.md @ dedbc208e",
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_2.md @ 5b86b0475",
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/FIXEDPOINT_RESULT.md @ 01c3c2a65"
+ ]
+}
