@@ -188,3 +188,17 @@ COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
 - Windows-only checks report `not_applicable_on_this_os` elsewhere.
 
 **Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v8 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v8". It answers the v7 replica findings V7-1, V7-A, V7-B and Q3, plus the V7-C, V7-D and V7-F notes.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** find any path where the release is consumed without a VERIFIABLE terminal record, or where a check or probe that can refuse runs after the key is read.
+
+**Self-tests:**
+- selftest_protocol: 141 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.

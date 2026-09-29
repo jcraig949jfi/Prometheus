@@ -314,3 +314,21 @@ A same-account child fails step 1, so nothing is ever released until the separat
 - The once-only rules stand: no second release, and no resume, for this spec_id.
 - D2 is then spent, and any further evaluation needs a successor seal, disclosed beside this attempt (Addendum E item 3).
 - Resume stays refused because a resumable run would give the package a second look at the hidden set.
+
+## v8 (2026-09-29): repairs after the v7 re-audit replicas (tsk-24ad3df260b9, tsk-6a58313857f2; both FAIL)
+
+- **OPEN, the operator's decisions:** S1 (#925); branch protection on main.
+
+| v7 finding | v8 repair | test |
+|---|---|---|
+| V7-1 / V7-C (blocking): the consumption marker existed before the open record, so a failure there left a chain starting with `abort` that never verifies, and the spec_id was spent unsealed | The WHOLE open record (every hash, the package meta, the run parameters) is built and serialised in prepare(); anything that cannot serialise is refused BEFORE the key. `Receipts.create_with_open` then writes record 0 to a temp file, fsyncs it and renames it to receipts.jsonl. The consumption marker therefore appears ATOMICALLY with a verifiable open record; a failure before the rename leaves no marker and the key intact. | A simulated write failure leaves no receipts and the key intact. A successful open starts with a verifiable open record. open followed by abort verifies. |
+| V7-A (blocking): the receipts stand-in was only append-probed | The stand-in is probed for READ and append before the key. | the pre-key refusal lists the stand-in for both |
+| V7-B (blocking): the parent's `predict` send was outside the per-world guard, so a package closing the pipe aborted the whole run with no attribution | The send is inside the guard: a broken or closed pipe is THIS world's PREDICTOR_CRASH and the run continues. A broken pipe at worker shutdown is not a run failure. | A package that closes the pipe every world gives per-world crash/protocol errors, and the run CLOSES. |
+| Q3: an abort carried a type name only | The abort record carries attribution EVIDENCE for Harmonia's FORFEIT/VOID decision (Addendum E): current world, whether it failed inside predictor I/O, and the child's exit code. It is evidence, not a verdict. | the abort carries the fields |
+| V7-F (note): unbounded child messages | Child messages are capped at 64 MiB; a longer message is that world's error. | - |
+| V7-D (note): AST bypass via `operator.attrgetter` / `faulthandler` | operator, faulthandler, functools and copyreg are flagged. This is a heuristic; the pipe does not depend on it. | attrgetter flagged |
+
+**Residuals added (declared, not boundaries):**
+- **The child can signal or pressure the parent.** Examples: Windows console control events to the shared console group, and memory or compute pressure through legitimate System calls. The resulting abort carries the attribution evidence above; its reading is Harmonia's.
+- **There is no code yet to start the predictor child under the separate account (V7-E).** That code will need its own audit before any designation.
+- **Crash-after-release (v7 policy) is unchanged.** The atomic marker means an ordinary exception can no longer spend the designation without a sealable terminal record.

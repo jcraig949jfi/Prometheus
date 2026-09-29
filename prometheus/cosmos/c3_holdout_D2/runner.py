@@ -100,6 +100,7 @@ FORBIDDEN_MODULES = {
     # v4 (Odysseus v3 F-AST / F-NET): file-capable and network-capable modules
     "codecs", "fileinput", "gzip", "bz2", "lzma", "logging", "xmlrpc", "imaplib", "poplib", "telnetlib", "nntplib",
     "socketserver", "ssl", "select", "selectors", "xml", "wsgiref", "_socket", "_io", "_thread",
+    "operator", "faulthandler", "functools", "copyreg",          # v8 (V7-D): attrgetter / methodcaller bypasses
 }
 ALLOWED_PROMETHEUS = ("prometheus.cosmos.c3", "prometheus.cosmos.c3.")
 FORBIDDEN_CALLS = {"open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars",
@@ -198,8 +199,11 @@ def _send(conn, obj) -> None:
     conn.send_bytes(json.dumps(_enc(obj)).encode("utf-8"))
 
 
+MAX_MSG_BYTES = 64 << 20        # v8 (Odysseus v7 V7-F): a longer child message is an OSError -> that world's error
+
+
 def _recv(conn):
-    return _dec(json.loads(conn.recv_bytes().decode("utf-8")))
+    return _dec(json.loads(conn.recv_bytes(MAX_MSG_BYTES).decode("utf-8")))
 
 
 def _rng_from_state(state: dict):
@@ -367,6 +371,25 @@ class Receipts:
             if recs and recs[0]["prev"] != genesis:
                 raise ChainBroken("genesis mismatch (different run identifiers)")
             self.records = recs
+
+    @classmethod
+    def create_with_open(cls, path: Path, genesis: str, body: dict) -> "Receipts":
+        """v8 (Odysseus v7 V7-1/V7-C): the consumption marker appears ATOMICALLY with record 0 (the open record):
+        written to a temporary file, fsynced, then renamed. A failure before the rename leaves NO receipts.jsonl
+        (nothing consumed); after it, the chain always starts with a verifiable open record."""
+        path = Path(path)
+        if path.exists():
+            raise ChainBroken("receipts.jsonl exists")
+        rec = {"seq": 0, "kind": "open", "prev": genesis, "body": body, "hash": record_hash(0, "open", genesis, body)}
+        tmp = path.with_name(path.name + ".tmp")
+        with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(rec, sort_keys=True, separators=(",", ":")) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
+        self = cls.__new__(cls)
+        self.path, self.genesis, self.records = path, genesis, [rec]
+        return self
 
     @property
     def head(self) -> str:
@@ -640,10 +663,36 @@ class FirewallRun:
         if self.do_preflight:
             dirs = self.preflight_mkfile_dirs + ([str(self.out)] if self.preflight_mkfile_dirs else [])
             self.out.parent.mkdir(parents=True, exist_ok=True)
-            self._spawn_probe("", "", self.probe_paths, [str(stand)], dirs)
+            # v8 (V7-A): the stand-in is probed for READ as well as append
+            self._spawn_probe("", "", list(self.probe_paths) + [str(stand)], [str(stand)], dirs)
             self._stop_worker(kill=False)
             self._proc = self._conn = None
         stand.unlink()
+        # v8 (V7-1/V7-C): build and serialise the whole open record NOW (every input, file hash and the package meta),
+        # so nothing that can fail runs between the key read and the consumption marker except the atomic write
+        genesis = sealbox.sha256_hex(sealbox.canon_bytes({
+            "format": RECEIPT_FORMAT, "spec_id": manifest["spec_id"],
+            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
+            "package_sha256": self.package_sha256}))
+        body = {
+            "genesis": genesis, "host": socket.gethostname(),
+            "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
+            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
+            "n_worlds": int(manifest["n_worlds"]), "runner_id": self.runner_id,
+            "run_nonce": self.gates.get("run_nonce"), "account": self.account,
+            "protocol_gates": {k: v for k, v in self.gates.items() if k.endswith("_commit") or k in ("ref", "auditor")},
+            "package": {k: self.pkg[k] for k in ("sha256", "meta", "entry", "audit_flags", "allow_flagged", "files")},
+            "runner_src_sha256": sealbox.src_sha_lf(Path(__file__)),
+            "certify_src_sha256": sealbox.src_sha_lf(HERE.parent / "c3" / "certify.py"),
+            "certify_kwargs": self.certify_kwargs, "predict_timeout_s": self.predict_timeout,
+            "max_episode_steps_per_world": self.max_episode_steps,
+            "python": sys.version.split()[0], "numpy": np.__version__}
+        try:
+            json.loads(json.dumps(body, sort_keys=True))                  # must serialise and round-trip now
+            record_hash(0, "open", genesis, body)
+        except (ValueError, TypeError, RecursionError) as e:
+            raise RunnerRefusal("the open record cannot be serialised (%s): refused before the key" % type(e).__name__)
+        self._open_body = (genesis, body)
         self._prepared = (manifest, ct, fam)
         return {"prepared": True, "run_dir": str(self.out)}
 
@@ -668,29 +717,13 @@ class FirewallRun:
             self.prepare()
         manifest, ct, fam = self._prepared
         self.manifest = manifest
-        genesis = sealbox.sha256_hex(sealbox.canon_bytes({
-            "format": RECEIPT_FORMAT, "spec_id": manifest["spec_id"],
-            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
-            "package_sha256": self.package_sha256}))
+        genesis, body = self._open_body
         # the key is READ first (a missing or malformed key file refuses with nothing consumed), then the consumption
-        # marker is written, then the released copy is deleted
+        # marker appears ATOMICALLY with the pre-built open record (v8), then the released copy is deleted
         key = sealbox.read_hex_file(self.key_path, sealbox.KEY_BYTES)
         rpath = self.out / "receipts.jsonl"
-        self.receipts = Receipts(rpath, genesis, create=True)
         self.N = int(manifest["n_worlds"])
-        self.receipts.append("open", {
-            "genesis": genesis, "utc": _utc(), "host": socket.gethostname(),
-            "manifest_sha256": sealbox.sha256_file(self.manifest_path), "spec_id": manifest["spec_id"],
-            "ciphertext_sha256": manifest["ciphertext_sha256"], "commitment": manifest["commitment"],
-            "n_worlds": self.N, "runner_id": self.runner_id, "run_nonce": self.gates.get("run_nonce"),
-            "account": self.account,
-            "protocol_gates": {k: v for k, v in self.gates.items() if k.endswith("_commit") or k in ("ref", "auditor")},
-            "package": {k: self.pkg[k] for k in ("sha256", "meta", "entry", "audit_flags", "allow_flagged", "files")},
-            "runner_src_sha256": sealbox.src_sha_lf(Path(__file__)),
-            "certify_src_sha256": sealbox.src_sha_lf(HERE.parent / "c3" / "certify.py"),
-            "certify_kwargs": self.certify_kwargs, "predict_timeout_s": self.predict_timeout,
-            "max_episode_steps_per_world": self.max_episode_steps,
-            "python": sys.version.split()[0], "numpy": np.__version__})
+        self.receipts = Receipts.create_with_open(rpath, genesis, dict(body, utc=_utc()))
         self.phase = "OPEN"
         if self.delete_key:                                  # v2 (S5): the released copy is gone before any child exists
             self.key_path.unlink()
@@ -741,8 +774,14 @@ class FirewallRun:
         except Exception:                                    # noqa: BLE001
             pass
         n_pred = sum(1 for r in self.receipts.records if r["kind"] == "prediction")
+        # v8 (V7-B/Q3): attribution EVIDENCE for the adjudicator (Harmonia Addendum E: FORFEIT vs VOID) -- which world
+        # was running, whether the failure arose inside predictor I/O, and the child's exit code. Evidence, not a verdict.
+        proc = getattr(self, "_proc", None)
         self.receipts.append("abort", {"phase": self.phase, "error_type": type(exc).__name__,
-                                       "n_predictions_recorded": n_pred, "utc": _utc()})
+                                       "n_predictions_recorded": n_pred, "utc": _utc(),
+                                       "current_world": getattr(self, "_cur_world", None),
+                                       "in_predictor_io": bool(getattr(self, "_in_predictor_io", False)),
+                                       "child_exitcode": (proc.exitcode if proc is not None else None)})
         self.phase = "ABORTED"
         result = {"format": RECEIPT_FORMAT, "status": "ABORTED", "spec_id": self.manifest["spec_id"],
                   "run_nonce": self.gates.get("run_nonce"), "package_sha256": self.package_sha256,
@@ -847,7 +886,12 @@ class FirewallRun:
         usage = {"calls": 0, "episode_steps": 0, "budget_exceeded": False}
         if self._proc is None:
             self._start_worker()
-        _send(self._conn, ["predict", i, w.V, w.k, seed])
+        self._cur_world, self._in_predictor_io = i, True
+        try:                                                  # v8 (V7-B): a closed/broken pipe is THIS world's crash
+            _send(self._conn, ["predict", i, w.V, w.k, seed])
+        except (OSError, ValueError, EOFError):
+            self._stop_worker(kill=True)
+            return {"status": "PREDICTOR_CRASH", "usage": usage, "where": "send_predict"}
         deadline = _dt.datetime.now().timestamp() + self.predict_timeout
         while True:
             left = deadline - _dt.datetime.now().timestamp()
@@ -896,9 +940,13 @@ class FirewallRun:
                 if i in done:
                     continue
                 out = self._predict_one(i, self.predictor_seed(i))
+                self._in_predictor_io = False
                 self.receipts.append("prediction", dict(out, i=i, world_tag=self._tags[i], utc=_utc()))
         finally:
-            self._stop_worker()
+            try:
+                self._stop_worker()
+            except (OSError, ValueError, EOFError):          # v8: a broken pipe at shutdown is not a run failure
+                self._stop_worker(kill=True)
 
     def seal_predictions(self) -> str:
         if self.phase != "OPEN":
