@@ -381,3 +381,17 @@ Reading (supersedes the v6 exploratory reading):
   worse than discarding them on re-queried cells (0 at a full switch, positive otherwise), and neutral for novel cells.
   That is a statement about RECALL, not generalization. It is what the ARC3 question "can irrelevant distinctions
   remain stored but simply be ignored?" asks, answered for recall.
+
+## N5: decaying reliability (pkgf_n5.py; design s9e)
+
+- The field is FIXED. Observation noise SD grows linearly from 1x to 3x NOISE over the stream, so old records are
+  more reliable than recent ones.
+- 3 episodes; STALE and GEN splits. Holdouts: ALL, REC20, CP3.
+- F3-selected substrate. FRESH seeds 9_800_060-063, cp and tt (8 worlds).
+
+### Precommitment (written BEFORE running pkgf_n5.py; the thresholds from design s9e, unchanged)
+
+- N1: the v5 detector FALSELY detects a regime in >= 4/8. Its squared-disagreement statistic is variance-sensitive;
+  if it does not fire, that limitation is refuted.
+- N2: STALE split, mean dAC(REC20) < mean dAC(ALL). Handed-in recency picks its weight on the noisiest records and
+  loses.
