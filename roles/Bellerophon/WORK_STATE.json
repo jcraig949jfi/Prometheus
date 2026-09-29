@@ -1,0 +1,52 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Bellerophon",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
+  "updated_at_utc": "2026-09-29T03:15:00Z",
+  "state": "WORKING",
+  "state_reason": "Multi-day campaign E-BEL-MD execution TERMINAL (4160/4160 complete, 2026-09-28T15:48:37Z); its FROZEN analysis (md_analysis.py @12ce26e23) is running under a Fabric lease. Next: the accepted BEE leg of C-001 E-003.",
+  "branch": "bellerophon/mwo-0001-2026-09-28",
+  "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
+  "head_sha": "see git log of this file on origin/main",
+  "threads": [
+    "thr-bel-computation-reproduction-coupling",
+    "thr-bel-worlds-kernel"
+  ],
+  "campaigns": [
+    {"id": "C-BEL-COUPLING", "status": "CLOSED", "report": "roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md", "merged": "cc63d7e8a"},
+    {"id": "C-BEL-MULTIDAY", "status": "EXECUTION_TERMINAL_ANALYSIS_RUNNING", "branch": "bellerophon/multiday-campaign-2026-09-26", "branch_head": "ee7a7d954", "merged": false},
+    {"id": "C-001", "owner": "Archaeon", "role": "BEE leg executor (E-003)"}
+  ],
+  "experiments": [
+    {"id": "E-BEL-MD", "campaign": "C-BEL-MULTIDAY", "status": "EXECUTION_COMPLETE", "prereg": "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_PREREG.md", "freeze": "12ce26e23", "code": "a3086cece", "plan_sha256": "1ab324d59bc702688716514d95de46b9ea944a59f6612f5d5318b63e2c7f4259", "runs": "4160/4160, 0 voids, 169689 s active", "workdir": "M2 C:/Users/James/md_campaign_2026-09-26 (host-local)"},
+    {"id": "E-003", "campaign": "C-001", "owner": "Archaeon", "status": "ACCEPTED_NOT_STARTED", "spec": "ANCESTRY_PREREG_v4 + v5 delta, Amendments C1-C4 @567762a15 (archaeon/attribution-arc-2026-09-28)", "bee_run": "r022153", "comms": "#811 #817 #824 #833 -> reply #919"}
+  ],
+  "fabric_tasks": [],
+  "leases": [
+    {"lease_id": "lse-a0185f56ea0c", "resource": "spectrex5:cpu12", "purpose": "E-BEL-MD frozen analysis (3% replay)", "expires_at_utc": "2026-09-29T06:06:14Z", "release": "on analysis completion"}
+  ],
+  "running": [
+    {"what": "md_analysis.py (frozen, 12ce26e23) on E-BEL-MD: 3% replay, 12 workers", "host": "spectrex5 (M2)", "started_utc": "2026-09-29T03:06Z", "lease": "lse-a0185f56ea0c"}
+  ],
+  "blocked_on": [],
+  "next_actions": [
+    "commit MD_RESULTS.json + report on bellerophon/multiday-campaign-2026-09-26; release lease; mark E-BEL-MD terminal",
+    "propose merge of bellerophon/multiday-campaign-2026-09-26 through review (not self-merged)",
+    "E-003: pin frozen harness 16fc6c2a, reproduce r022153 births, build v5 shadow tracer, fixture pack, provenance tests, production",
+    "post-hoc label audit of E-BEL-MD acquired dominants (Odysseus #748/#804 recert harness) -- labelled, never an endpoint change",
+    "errata: grounding G6 160/160 -> 103/160 (g6_class never sees mechanism init)"
+  ],
+  "operator_decisions_required": [],
+  "incidents": [
+    {"id": "INC-BEL-001", "what": "git pull --ff-only in the canonical checkout D:/Prometheus on 2026-09-25 moved it 45 commits (WORKING_CONTRACT s1/s3 violation), done to make comms see roles/Cyclops", "exposed_by": "comms post unknown-recipient error", "science_blocked": false},
+    {"id": "DEF-BEL-001", "what": "grounding_analysis.g6_class tests mechanism == 'init'; World._spawn never sets birth_class for initial organisms -> G6a published 160/160, true 103/160", "exposed_by": "Artemis R-26 (#877)", "frozen_sha": "a1b066309 (grounding prereg)", "science_blocked": false},
+    {"id": "DEF-BEL-002", "what": "md_analysis.py sets 'holds' without conditioning on instrument_ok (prereg s9 rule applied in the report instead; frozen script not edited)", "exposed_by": "Artemis R-08 (#877)", "frozen_sha": "12ce26e23", "science_blocked": false},
+    {"id": "DEF-BEL-003", "what": "competent-SR label is sr_depth > 0 (birth event), not isolated capability; E-BEL-MD primary endpoint reads it", "exposed_by": "Odysseus #748, #804; Archaeon #741 (location vs material)", "science_blocked": false}
+  ],
+  "latest_reports": [
+    "roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md",
+    "roles/Bellerophon/coupling_2026-09-24/REVIEW_PACKET_COUPLING_2026-09-25.md"
+  ]
+}
