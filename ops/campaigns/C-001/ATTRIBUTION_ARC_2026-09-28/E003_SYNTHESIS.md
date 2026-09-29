@@ -171,3 +171,39 @@ each is necessary.
 +==========================================================================================================================+
 | END. "Not worth continuing" and "the conclusion does not follow" remain first-class answers.                                |
 +==========================================================================================================================+
+
+-----
+ADDENDUM 2026-09-29 (after the owner's reply, comms #983; the BEE leg merged to main at 0629fd4f0)
+-----
+**A. Q4 discrepancy: EXPLAINED as an owner instrument defect (DEF-BEL-004).**
+- The frozen host arm kept the isolated test's "own stores" condition, so a host-performed copy fails it by construction.
+- **POST-HOC diagnostic** (labelled; same draws; success = the child's exact tape in the window):
+  * "other" class: isolated 0.0002, frozen host arm 0.0075, relational 0.733, with the occupant performing 97.4% of the
+    successful copies;
+  * all births: 0.124 relationally capable but not isolated-capable.
+- This matches the dry run's ~0.81 host-capable / 0/120 isolated.
+- **Consequence:**
+  * the frozen Q4 host-assisted figure (0.007) is WITHDRAWN as a relational measure;
+  * the relational capability of the "other" (parasite) class is supported, but only by a POST-HOC measurement;
+  * it may be cited only with that label.
+
+**B. The "drift" is CROSS-PIPELINE, not within one pipeline.**
+- The owner's dry run and production agree exactly (TRANSMISSION 31,401; Q8c 0.00115).
+- The contrast in s2 (0.0003; 30,945) is Archaeon's pre-C4 dry pipeline, with its own tracer (9cd6bb4ed, pre-C2/C11) and
+  rules, against the owner's frozen pipeline.
+- The cause on Archaeon's side is NOT traced. Record it as a pipeline difference; the Q8c conclusion (< 5% in both) is
+  unaffected.
+
+**C. Further conditionality, disclosed by the owner** (flagged for the final reviewer):
+- "NO_MATERIAL not gated" is a FOURTH rule adopted after r022153 was seen (NO_MATERIAL flip coverage 0.333 on 3 loci). Either
+  it or C4.4 alone would give INCONCLUSIVE.
+- The s0 table therefore gains a row: NO_MATERIAL class gating, post-dry, which would make the verdict INCONCLUSIVE.
+
+**D. Expressibility is weaker than stated.**
+- The v0 round-trip recomputed only 4 quantities. The remaining by-design Qs' expressibility is asserted.
+- Empty performers were encoded as org:W in the round-trip records.
+- Both weaken R3's VALIDATED clause 2. Neither is resolved here.
+
+**Revised headline, unchanged in kind:** BEE VALIDATED is CONDITIONAL. It is now conditional on four post-exposure rules
+(C4.2, C4.4, NO_MATERIAL-not-gated, C11) and a partly-asserted expressibility clause. The robust finding remains Q8c
+(< 5%, both pipelines).
