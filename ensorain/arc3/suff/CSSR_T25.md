@@ -444,6 +444,7 @@ Family mean vs fixed-share rate:
 - Until this commit, the cited artifacts existed only on M2's disk.
 - This is the same failure Ergon recorded on 2026-09-01 (a committed verdict pointing at files no clone contained).
 - Fix: the files are force-added (git add -f), 160 KB total. The shared .gitignore is untouched.
+- The same applied to ensorain/arc3/results/pkgf_probe*.json (40 KB), cited by RESULTS_PKGF_PROBE.md; also force-added.
 - The numbers quoted in the markdown were printed by the runs themselves and match these files. All T25 runs are
   deterministic and were cross-reproduced (mix3_eval reproduced the heldout_eval, q2_ablation and cssr_em_eval means
   exactly).
