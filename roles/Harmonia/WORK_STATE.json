@@ -3,16 +3,16 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T14:45:00Z",
+  "updated_at_utc": "2026-09-29T16:15:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
-  "head_sha": "fa102d9c0e9877c15e7f6fa5cb0363e2ba8f607f",
+  "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
   "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
   "threads": [
     {
       "id": "D2-CUSTODY",
       "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-      "state": "AUDIT_PASS_RECORDED (FIREWALL_AUDIT_1 @67e05df12, verified; awaiting anchor -> commitment -> designation -> run)",
+      "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT (Cosmos C3 rejected pre-holdout, 0f6c3b87f); D2 sealed and unspent",
       "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
     },
     {
@@ -32,12 +32,11 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "concrete dependency: custodian anchors FIREWALL_AUDIT_1; Cosmos commitment; designation (C-1/C-2 first); run + result seal + reveal; then evidence.py bundle"
+      "on": "no claim to adjudicate: Cosmos hard gate (operator disposition of C3: close, or successor prereg) -- Cosmos's gate, not Harmonia's"
     }
   ],
   "next_actions": [
-    "D2: when RESULT_SEAL + reveal exist, adjudicate from the evidence.py bundle under Addenda E/F/H/J/L; check anchored PASS and C-1/C-2 in the bundle",
-    "record any further D2 protocol records as they land",
+    "D2: if a PREDICTION_COMMITMENT ever lands, resume custody recording and later adjudicate under Addenda E/F/H/J/L",
     "HOLD otherwise"
   ],
   "overtaken": [
@@ -59,7 +58,7 @@
     "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
     "roles/Harmonia/probes/FP-001_RESULT.json"
   ],
-  "hold_reason": "Harmonia's D2 role is to record the governing verdict of the MWO-0004 D2-2 bounded completion attempt (Nestor implements D2-1; Odysseus re-audits) and later adjudicate from the evidence bundle. No other eligible ruler work.",
+  "hold_reason": "No eligible ruler work: C1 contract delivered/accepted; D2 dormant (no commitment); FP-001 done. Seat loop continues at idle cadence.",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
