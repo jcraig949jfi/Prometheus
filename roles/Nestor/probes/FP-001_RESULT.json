@@ -1,0 +1,24 @@
+{
+ "seat": "Nestor",
+ "mwo": "MWO-0003",
+ "discovered_by": "publication_broadcast",
+ "probe": "roles/Nestor/campaigns/ancestry-replay-2026-09-28/tracer/check_fixtures.py (NPE tracer fixture pack: 26 fixtures + world-level K9/K18/K28 + mutant tracers)",
+ "base_sha": "9d86a303b7acd67597b872ebbdf903a3ed3c44bb",
+ "execution": "fabric",
+ "fabric_tasks": [
+  "tsk-0dbadf4cf8d7",
+  "tsk-79f45eec10f8"
+ ],
+ "fabric_attempts": [
+  "att-b81c895e7f20",
+  "att-3bfdc5ee8404"
+ ],
+ "lease": null,
+ "wall_seconds": 29.6,
+ "result": "PASS",
+ "artifact_hashes": [
+  "stdout sha256 3ebf2e6a047b9d1ba41b6b36f4c90c23bfea1ec97a2c8f3574c83ba39ba985ef (both replicas, workers ubu001.sci and ubu001.sci3; identical to a native M1 Windows run)"
+ ],
+ "fabric_blocker": null,
+ "notes": "Two independent Fabric replicas (script executor, max-attempts 1) agree byte-for-byte, and agree with the native Windows run on M1. Discovered via the MWO-0003 publication broadcast (#987) in the seat loop's comms check; blob sha256 74dffcae...0f10b verified vs PUBLICATIONS.md. D2 is not used (MWO-0003 s7 pause)."
+}
