@@ -316,8 +316,11 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
   - it avoids the window's estimation cost (L10 .0086 vs best STAT .0358);
   - Lmax has its own data-dependent optimum;
   - a lookahead successor-repair was a debug negative (false redirects derail hard tracking).
-- NEXT: EM refinement initialized from the split-CSSR machine (soft tracking, S proposed rather than fixed); target: pay
-  neither half on Even while staying safe on Markov-3.
+- CSSR->EM->mixture (4/4 precommitted predictions survived; CSSR_T25.md):
+  - one no-fixed-S learner reaches Even .0024 and W2 .0029;
+  - EM alone overfits W2 (.016); split alone is window-bounded on Even (.034).
+- NEXT: a fixed-share mixture (late-switch seed); a held-out world family (golden-mean variants, a random unifilar
+  machine sampler) before any claim beyond these 4 worlds.
 - RES: light, off M2.
 - MAT: pilot done.
 

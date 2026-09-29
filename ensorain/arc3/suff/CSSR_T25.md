@@ -164,3 +164,36 @@ Debug, on seeds 1001-1002 only:
 - E2 (failure reproduces): CSSR_EM on W2_3, mean excess > .01.
 - E3: on every world, the MIX mean excess is <= min(split mean, EM mean) + .002.
 - E4: MIX on Even < .006 AND MIX on W2_3 < .006 (one learner, with no fixed S, safe on both).
+
+## Result (precommit commit d0d52f531; output results/cssr_em_eval.json; eval seeds 1..16, T = 4000)
+
+Mean 2nd-half excess [min, max over seeds]:
+
+| world | split-CSSR | CSSR_EM (50 it) | MIX (Bayes mixture) |
+|---|---|---|---|
+| Even | .0344 [.0294, .0378] | .0011 [-.0001, .0033] | .0024 [-.0001, .0215] |
+| Golden | .0005 | .0003 | .0004 |
+| W2_3 | .0027 [.0009, .0059] | .0160 [.0029, .0338] | .0029 [.0009, .0059] |
+| SNS | .0038 | .0029 | .0030 |
+
+- E1 SURVIVES (.0011).
+- E2 SURVIVES (.0160: the overfit reproduces).
+- E3 SURVIVES on all 4 worlds.
+- E4 SURVIVES (Even .0024, W2 .0029).
+
+## Readings
+
+1. **One learner with no fixed S now pays neither half on this ladder.** CSSR proposes the states. EM then escapes the
+   suffix-built transition model, given enough iterations. The mixture keeps the result safe where EM overfits.
+   - Even: .0024, vs .034 for CSSR alone and .0358 for the best window statistic at 4x the data.
+   - W2: .0029, i.e. split-level.
+2. **The mixture's residual cost on Even** comes from ONE seed (max .0215). The mixture follows cumulative loss from
+   t = 0, so when split led during the early refits the weight switches late.
+   - Fixed-share / switching mixtures (Herbster-Warmuth) are the standard remedy. Not run.
+3. **Locus reading (thr-ens-locus-of-compression):** "what can be discarded" was found by a two-stage learner.
+   - A STATISTICAL test proposes a partition (compression at storage).
+   - A LIKELIHOOD refinement repairs its transitions (compression in the hypothesis).
+   - A PREQUENTIAL arbiter (compression at readout) guards against the refinement's overfit.
+   - Each stage alone fails on at least one world of this ladder.
+4. **Claim ceiling:** dev and answer-keyed only. 4 binary worlds, T = 4000, one Lmax, one alpha. No held-out world
+   family. Nothing here bears on LM01.
