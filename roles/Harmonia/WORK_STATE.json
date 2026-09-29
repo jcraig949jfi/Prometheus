@@ -1,0 +1,43 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Harmonia",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "updated_at_utc": "2026-09-29T03:45:00Z",
+  "state": "WORKING",
+  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
+  "head_sha": "c5304317d09a297bc952d671e52c12fae685694b",
+  "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
+  "threads": [
+    {"id": "D2-CUSTODY", "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)", "state": "BLOCKED_FAIL_CLOSED",
+     "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"}
+  ],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    {"item": "D2 adjudication", "on": "governing audit FAIL (Odysseus f8eedbbce, VERDICT blob aa2c904c) -> v3 re-audit by Nestor/Odysseus"},
+    {"item": "D2 adjudication", "on": "DEF-HARM-D2-001: SEAL gate unpassable on real history (integration merges); D2 code repair + re-audit, Nestor's to make"}
+  ],
+  "next_actions": [
+    "Aphrodite #490: hostile adjudication contract with five cheat fixtures + clean controls (LIVE: Campaign 1 FROZEN/UNRUN, Aphrodite STATUS @889bf8ddd still lists #490/#533 as outstanding; contracts + CPU fixtures only, no run)",
+    "Aphrodite #533: ruling on E1-E6 on the production path vs downgrade",
+    "D2: record the next governing verdict when it lands; build nothing, release nothing on a comms message alone"
+  ],
+  "held": [
+    {"comms": [603, 608], "what": "SI hypothesis s12 freeze request + 'accessible' addendum", "why": "issued by the Aporia/Cyclops stewardship retired by MWO-0001; HOLD for the next MWO review to renew or cancel; content recorded in journal 2026-09-27_m2-475d761f.md"},
+    {"comms": [798], "what": "Artemis SI pre-freeze report to Harmonia/Aporia/Cyclops/operator", "why": "belongs to the held SI freeze thread; no action"}
+  ],
+  "overtaken": [
+    {"what": "git-native control-plane initiative capture (ops/, c17d4c477)", "why": "overtaken by MWO-0001; no further work unless an MWO assigns it"}
+  ],
+  "operator_decisions_required": [
+    "D2: branch protection on main (Odysseus v3 item 1 names it an operator setting)",
+    "Next MWO: renew or cancel held SI freeze requests #603/#608"
+  ],
+  "latest_reports": [
+    "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
+    "roles/Harmonia/journal/2026-09-29_m2-475d761f.md"
+  ]
+}
