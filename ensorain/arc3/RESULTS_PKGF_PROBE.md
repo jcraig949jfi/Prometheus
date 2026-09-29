@@ -207,3 +207,17 @@ Scope (a reason for caution, not a footnote):
   - F5-style nuisance drifts;
   - decaying-reliability worlds (N5).
 - Whether PKG-F would pass on those is open. A precommitted sparse-repeat test (L3) is the natural next check.
+
+## v5b: detector power vs repeat density (pkgf_cp3_sparse.py)
+
+- L3 is NOT sparser: a world property checked on spare seed 9_800_090 before this precommitment, with no detector run.
+  L3 has ~7,450 same-cell pairs vs ~4,700 at L2. So sparseness is induced instead: L2 streams thinned in time order to
+  a fraction f of records, f in {.25, .10, .05}.
+- Worlds: F3 and F2 twins (cp, tt), FRESH seeds 9_800_040-043. That is 8 F3 + 8 twin worlds per f.
+
+### Precommitment (written BEFORE running pkgf_cp3_sparse.py)
+
+- S1: f = .25: F3 detected in >= 7/8.
+- S2: f = .10: F3 detected in <= 6/8 (power loss begins).
+- S3: f = .05: F3 detected in <= 2/8 (pairs fall near the 30-pair minimum).
+- S4: at every f, twins falsely detected in <= 1/8 (the permutation null holds its size under thinning).
