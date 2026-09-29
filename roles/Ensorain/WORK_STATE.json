@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T04:00:50Z",
+  "updated_at_utc": "2026-09-29T04:38:18Z",
   "state": "HOLD",
   "state_reason": "E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e and NOT LAUNCHED. HOLD on the launch authorization (MWO-0001 contains no launch line). Eligible ARC3 design work continues without a campaign or lease.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "0d2abaf63ad6b2334a37941e99b6a304ec594ce4",
+  "head_sha": "de8ab41e1d6bf14446a4df840dabea72b3d82a9d",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -50,7 +50,7 @@
       "id": "E-ENS-T25-CSSR",
       "status": "DONE_DEV",
       "report": "ensorain/arc3/suff/CSSR_T25.md",
-      "note": "6/6 precommitted predictions survived; split-CSSR is window-bounded on Even, vote fails on Markov-3; tau-hybrid next"
+      "note": "6/6 + 4/4 precommitted predictions survived; split-CSSR = window floor on truncation but pools estimation (4x below best STAT at T=16000); next: EM refinement from CSSR proposal"
     }
   ],
   "fabric_tasks": [
