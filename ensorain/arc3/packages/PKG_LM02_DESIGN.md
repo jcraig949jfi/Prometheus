@@ -1,4 +1,4 @@
-# PKG-LM02: successor to LM01 (research-ready design package v0.1; thread T24)
+# PKG-LM02: successor to LM01 (research-ready design package v0.2; thread T24)
 
 Status: DESIGN. It receives everything the operator excluded from LM01 v0.3.2 as "expansion, not repair"
 (roles/Ensorain/prompts/2026-09-28_lm01_v032_amend/). It must not launch before the LM01 campaign rows are integrated.
@@ -22,6 +22,8 @@ history: storage, the learned hypothesis, or query-time computation?
 | Changed-question tests (the target changes after writing; T22) | lit/LIT_MEMORY_SYSTEMS.md D3 |
 | A regime-DISCOVERING readout for switch worlds (changepoint gate) instead of a fixed recency | PKG-F probe v2 |
 | An answer-key bridge: every LM02 family paired with a PKG-S1 world of the same sufficiency class | PKG-S1 |
+| A CRYPTICITY STRATIFIER: each LM02 world is tagged by how much of its generating state a bounded window of the retained records leaves unresolved (the analogue of T25's H6). This is a pre-declared moderator | T25 (arc3/suff/CSSR_T25.md): H6 predicts where learned compression beats window retention (rho .58) and the direction of the exceptions at T = 16000 |
+| A DISCOVERED-STATE arm: a CSSR-style proposal + EM refinement + fixed-share arbiter, adapted to the WTP key-value setting | T25: the three-stage learner reaches the parametric floor on held-out worlds at T = 16000; each single stage fails on some world |
 
 ## 3. Headline, v0 (to be power-checked against LM01 rows before freezing)
 
@@ -33,6 +35,11 @@ history: storage, the learned hypothesis, or query-time computation?
   pre-declared regression)?
 - A positive control for each reading, built into the design from day 0.
 
+- PREDICTED BOUNDARY (from T25; to be precommitted before any LM02 run): where the retained-window statistic is
+  already sufficient (low crypticity), bounded retention should match or beat discovered compression, which pays a small
+  overhead. Where it is cryptic, discovered compression should win by a margin that grows with data. An LM02 headline
+  that ignores this moderator risks averaging two opposite effects to zero.
+
 ## 4. Cost
 
 Estimated 1.5-2x LM01 (the adaptive readout's CV refits dominate). M2 cpu8 under the shared lease. A trimmed pilot
@@ -43,3 +50,6 @@ Estimated 1.5-2x LM01 (the adaptive readout's CV refits dominate). M2 cpu8 under
 - The CV-rank readout is itself a selective contraction at query time. Is "adaptive readout wins" then a statement
   about readout compression? (Yes. Say so in the claim.)
 - Can the influence-based relevance eviction be computed at WTP scale within budget? A dev timing probe is needed first.
+- How to measure crypticity in WTP worlds without an answer key? Candidate: the entropy of a held-out model's state
+  posterior given the last k records (a learned-model analogue of H6). This must itself be validated on PKG-S1 worlds
+  where H6 is exact.
