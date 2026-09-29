@@ -13,12 +13,16 @@ This script checks the comms message's SENDER and that its subject or body conta
 otherwise. It never touches the key, salt or plaintext, and it is not part of any key-holding process. The list lives
 outside git on M1 (DEFAULT path below); every change is appended, never rewritten.
 """
-import argparse
+import sys
+
+if __name__ == "__main__" and not sys.flags.safe_path and sys.path:
+    del sys.path[0]          # v4 (Odysseus v3 P1): the script directory must not shadow the standard library
+
+import argparse  # noqa: E402
 import datetime as dt
 import hashlib
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -40,7 +44,8 @@ def record_bytes(ref, name):
 
 
 def comms_message(mid):
-    sys.path.insert(0, str(REPO))
+    if str(REPO) not in sys.path:
+        sys.path.append(str(REPO))    # v4 (P2): LAST, so no repository file can shadow a standard-library module
     from comms import api                                        # the comms bus (outside the audited package)
     conn = api.connect()
     cur = conn.cursor()

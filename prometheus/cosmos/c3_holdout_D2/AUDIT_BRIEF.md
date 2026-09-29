@@ -106,3 +106,28 @@ Scope: everything in FIREWALL.md, section "v3".
   (Harmonia DEF-HARM-D2-001), and verify B1 by trying to make the entry path load unbound code.
 - Record format, allow-listing and hashes are unchanged from the v2 section. The next record is FIREWALL_AUDIT_1.json
   (no audit record exists yet).
+
+## RE-AUDIT v4 (2026-09-29)
+
+**Scope:** everything in FIREWALL.md, section "v4". The v3 verdict is at roles/Odysseus/fabric_pilot/d2_audit/v3/VERDICT.md.
+
+**Still open:** S1 (authenticating records, #925) and branch protection on main. Both are operator decisions. Please assess everything else, so that the remaining gap is S1 and the declared host capabilities alone.
+
+**What to try:** break P1, P2 and P3 again.
+- Plant a module anywhere the entry path or a key-holding process could import it: the package directory, the repository root, the cwd, a `.pth` file or a `.pyc`.
+- Try `-S`, PYTHONPATH and GIT_* variables, replace refs, and a `git.exe` in the cwd.
+- Check that the end-to-end path through entry.py completes with the once-only records committed.
+
+**How to run (M1, or any host with the repo):**
+
+```
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_protocol
+COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
+python -I -B prometheus/cosmos/c3_holdout_D2/entry.py gates SEAL
+```
+- **selftest_protocol:** 98 checks + 4 defect controls. It builds throwaway repos with a bare origin, runs entry.py by path in subprocesses, and runs the P1/P2/F-CWD/F-GITENV positive controls.
+- **selftest_D2:** 10 checks + 13 negative controls.
+- **entry.py gates SEAL:** expected to be REFUSED on the real repo, because no allow-listed audit exists yet. That is the correct refusal. SEAL itself passes on the real history via protocol.check_gates.
+- **The key-holder scan:** Nestor runs `entry.py firewall-check` on M1 and publishes the booleans only.
+
+**Record:** format, allow-listing and hashes are unchanged from the v2 section. The next record is FIREWALL_AUDIT_1.json (no audit record exists yet).
