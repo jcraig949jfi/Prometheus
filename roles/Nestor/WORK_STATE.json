@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T12:30:00Z",
+ "updated_at_utc": "2026-09-29T13:40:00Z",
  "state": "WORKING",
- "branch": "nestor/d2v12-2026-09-29 (merged to main)",
- "head_sha": "b0763ebaa2b5fb4c9ed5b6b5817a89e698b71454",
+ "branch": "nestor/d2v13-2026-09-29 (merged to main)",
+ "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -27,30 +27,30 @@
   "D2 v9 re-audit -> FAIL SOLELY on S1 (#977, VERDICT @ 6ead7beb5): no blocking finding in the firewall code",
   "D2 v10 re-audit -> FAIL on S1 + must-close (#981, VERDICT @ 24378a2dc): deliver evidence, seal-terminal fixes",
   "D2 v11 re-audit -> FAIL SOLELY on S1 (#986, VERDICT @ 864cb36b1): firewall code clean; should-fix V11-1 receive deadline, V11-2 stop-send deadline, V11-3 cleanup AssertionError masking (all FORFEIT under Addendum J)",
-  "D2 v12 re-audit (MWO-0004 D2-2 bounded, 1 of max 2): tsk-e33a0c5600d7, tsk-314baabdb741; selftests tsk-87e6fef17919, tsk-35aae2ef2123 (base b0763ebaa)",
-  "FP-001 probe: tsk-0dbadf4cf8d7, tsk-79f45eec10f8 (PASS)"
+  "FP-001 probe: tsk-0dbadf4cf8d7, tsk-79f45eec10f8 (PASS)",
+  "D2 v12 bounded re-audit -> FAIL (#993, VERDICT @ 47df49352: V12-1 anchored records skipped not refused)",
+  "D2 v13 FINAL re-audit (MWO-0004 D2-2, last round): tsk-786a631bbc11, tsk-833387561512; selftests tsk-f0e704e2fc9a, tsk-649848095158 (base b17320e64)"
  ],
  "running": [
-  "D2 v12 bounded re-audit (2 replicas + 2 selftests)"
+  "D2 v13 FINAL re-audit (2 replicas + 2 selftests)"
  ],
  "blocked_on": [
   "1% sample (MWO-0004 G2): stage 1 VERIFIED on the run-1 copy; stage 2 SCHEMA_UNDECLARED (exit 2) -> Archaeon declares schema, then one native rerun (#990)",
-  "D2 (MWO-0004 D2-2): v12 re-audit adjudication (Odysseus); on ordinary-defect FAIL one final repair + re-audit, then PASS proceeds / FAIL = HOLD"
+  "D2 (MWO-0004 D2-2): v13 FINAL re-audit adjudication (Odysseus). PASS -> anchor FIREWALL_AUDIT_1.json (--expect-commit/--expect-sha256) and continue; FAIL -> HOLD with the defect recorded, no further rounds"
  ],
  "next_actions": [
   "key-holder scan (entry.py firewall-check) OUTSTANDING: the 00:47 run was stopped by Claude Code for low system memory after ~5.5 h with no output; rerun only when the operator asks, narrower (current code; repo history + comms dump, not the canonical working tree)",
   "report key-holder scan booleans (public) to Odysseus",
-  "on the D2 v12 verdict: PASS -> anchor FIREWALL_AUDIT_1.json and continue the protocol; ordinary-defect FAIL -> one final repair incl. V11-1..3 + final re-audit",
   "on Archaeon's schema declaration: rerun npe_sample_task once natively (candidate 1)"
  ],
  "operator_decisions_required": [
   "hard gate at D2 designation time only (MWO-0004 Part 4, privileged host change): a dedicated custodian account and a separate predictor-child account with an outbound firewall rule on M1"
  ],
  "latest_reports": [
-  "comms #991 (D2 v12)",
+  "comms #994 (D2 v13)",
+  "comms #992 (D2 v12)",
   "comms #990 (G2 sample)",
-  "roles/Nestor/probes/FP-001_RESULT.json",
-  "comms #943 (INCIDENT run 3)"
+  "roles/Nestor/probes/FP-001_RESULT.json"
  ],
  "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
  "closed": [
@@ -80,7 +80,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 990,
+ "comms_cursor": 993,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
