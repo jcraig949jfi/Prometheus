@@ -120,3 +120,26 @@ Reading:
 Side finding: the frozen LM01 CP selective arm emits transient float-overflow warnings in training on F3 cp L2 dev seed
 9_800_001 (ensorain/wtp/organism.py grad_and_pred np.prod). Its final predictions are finite (max |p| 4.3). Recorded as
 LM01 ERRATA E-3.
+
+### v3 CORRECTION (2026-09-29T15:12Z, before any new run): the stated P2 mechanism was wrong
+
+- v3 attributed the false detections to the substrate's LEARNING CURVE. But v3's residuals are r = y - S_final(A),
+  computed with the FINAL model, not with online predictions, so there is no learning curve in them.
+- Revised hypothesis: RETENTION RECENCY. The bounded SELECTIVE substrate (cap cells/4, with eviction) retains mostly
+  recent records, so S_final fits recent records better than old ones. That is a variance change in time order even in
+  a stationary world.
+- This is a hypothesis, tested below (v4). The v3 'NEXT' line (refit a fixed end-of-stream model) is withdrawn: v3
+  already used one.
+
+## v4: order-agnostic residuals (pkgf_cp2.py)
+
+- The change point is detected on r_shuf = y - S_shuf(A), where S_shuf is the same substrate trained on a RANDOM
+  PERMUTATION of the stream: same records, no temporal order, so no retention recency.
+- The weight choice is unchanged: holdout = the detected final regime; g is fitted on the earlier records, as in v3.
+- Same fresh worlds (9_800_020-023).
+
+### Precommitment (written BEFORE running pkgf_cp2.py)
+
+- Q1: F2 stationary twins (8 fresh): no change detected in >= 6/8. If this fails, retention recency is NOT the (only)
+  mechanism.
+- Q2: F3 (8 fresh): a change detected in >= 7/8 AND mean dAC(SD_cp2 vs S) >= -0.10.
