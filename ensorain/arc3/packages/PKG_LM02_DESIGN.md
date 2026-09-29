@@ -50,6 +50,10 @@ Estimated 1.5-2x LM01 (the adaptive readout's CV refits dominate). M2 cpu8 under
 - The CV-rank readout is itself a selective contraction at query time. Is "adaptive readout wins" then a statement
   about readout compression? (Yes. Say so in the claim.)
 - Can the influence-based relevance eviction be computed at WTP scale within budget? A dev timing probe is needed first.
-- How to measure crypticity in WTP worlds without an answer key? Candidate: the entropy of a held-out model's state
-  posterior given the last k records (a learned-model analogue of H6). This must itself be validated on PKG-S1 worlds
-  where H6 is exact.
+- How to measure crypticity in WTP worlds without an answer key? PARTLY ANSWERED (arc3/suff/CRYPT_LEARNED.md):
+  - Use the PREDICTIVE window cost D_k: the model's log-loss from the last k records minus that from the full past.
+    Do not use state entropy, which over-counts ambiguity between states that predict alike (C3 refuted).
+  - A learned D6 tracks the true one (rho .946). Exploratory: it predicts the discovered-vs-retained gain at rho .91,
+    where H6 manages .61.
+  - Open: circularity. The learned D6 came from the same model family whose gain it predicts. A cross-family D_k
+    estimate is required before LM02 relies on it.
