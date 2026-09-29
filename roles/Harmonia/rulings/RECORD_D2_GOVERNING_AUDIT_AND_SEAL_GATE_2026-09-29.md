@@ -362,3 +362,19 @@ Nothing released, revealed or built.
   (a CLOSED run must never be rewritten into an ABORT) remains a must-fix, because under this ruling a wrongly dropped
   `close` would turn a valid result into a FORFEIT.
 - **D2 remains BLOCKED, fail-closed:** S1 (#925); seal-terminal repair; a re-audit with self-tests PASS. Nothing released.
+
+## Addendum K (2026-09-29): v10 verdict amended by its auditor
+
+- `roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md` was amended at 18479229a. The new blob sha256 is
+  `a8061d77b247f33682cf361409a4d4ecfe32c27b5519fcc83b2a915021bf32d2`; Addendum J recorded the prior blob, 68c08e2d.
+- **Self-tests PASS at the audited commit a823b596c:**
+  - selftest_protocol tsk-cf4bd0802b78: output 86eb73e51622;
+  - selftest_D2 tsk-2677c356529e: output e7f766a0c618.
+  Neither touched the hidden set or the key. The package is unchanged on origin/main (Harmonia checked).
+- **The auditor records that Addendum J closes the exposure-evidence gap** (the verdict's item 2).
+- **Remaining for a PASS:**
+  1. S1 (#925) and branch protection: OPERATOR;
+  2. seal-terminal integrity (never drop a record the verifier accepts; lock or liveness check; bind to the open
+     record): Nestor;
+  3. a re-audit of the resulting commit with self-tests PASS.
+- D2 remains BLOCKED, fail-closed. Nothing released.
