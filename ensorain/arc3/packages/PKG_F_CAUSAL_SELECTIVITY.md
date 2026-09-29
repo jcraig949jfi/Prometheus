@@ -139,6 +139,44 @@ The design reports both, so the prior can be falsified.
   - (b) GENERALIZATION: cells unseen in the whole stream.
 - The v2-v6 F3 results are split (a) results.
 
+## 9e. Next world designs (design only, 2026-09-29; not built)
+
+All are built from the frozen LM01 helpers (read-only), like v6/v7, and scored on BOTH headline splits (s9d).
+
+W-MULTI (several switches of varying size):
+- K = 6 equal episodes. The redraw fraction for each switch is drawn from {1, .5, .1, 0}, recorded per world.
+- The v5 detector recurses on the later part, so it should stop at the LAST switch it can resolve.
+- Question: when the last switch is small (rho = .1) but an earlier one was large, does the detector stop at the
+  large one?
+  - Then the holdout is too old but still post-large-switch.
+  - Or it finds the small one, and the holdout is short but correct.
+- Prediction candidate: stale-recall dAC(SD_cp3) >= dAC(SD_all) in >= 80% of worlds; never below -0.2.
+
+W-DRIFT (gradual change; the v5 statistic assumes a step):
+- One transition, x_t = (1 - lam(t)) * x_old + lam(t) * x_new, with lam ramping linearly from 0 to 1 over a window of
+  width w (fractions of the stream: w in {.02, .2, .5}), centred at 2/3.
+- Question: does the step detector localize a ramp, and where? The start, the middle, or the end?
+- The right holdout is after the ramp ends. A detector that fires at the ramp's middle gives a holdout that still
+  contains partly-stale records.
+- Prediction candidates:
+  - detection in >= 7/8 at w = .02 and .2, and <= 4/8 at w = .5;
+  - the detected start falls inside the ramp.
+
+N5 (decaying reliability; the Block G nuisance kind not yet probed):
+- The noise SD grows linearly over the stream (x fixed), so old records are MORE reliable than recent ones: the
+  opposite of recency.
+- Question: does anything tempt the readout toward recency here?
+  - The v5 detector should find NO regime change: the within-cell mean is unchanged and only the variance grows.
+    Its statistic is squared disagreement, so it may fire on the variance growth. That is a known risk, to be tested.
+  - The recency holdout (v2, "last 20%") would pick its weight on the noisiest records.
+- Prediction candidates:
+  - v5 false detection >= 4/8 (it IS variance-sensitive, and that is a limitation);
+  - the recency holdout is worse than the all-history holdout on stale recall.
+
+Build order: N5 first. It is the sharpest test of whether "recency" and "regime detection" are confused anywhere in
+this pipeline. Then W-DRIFT, then W-MULTI. Each is precommitted before its run with the thresholds above, or with
+thresholds tightened after a world-property check that runs no detector.
+
 ## 10. What it cannot establish
 
 - Necessity beyond the tested readout families (k-NN / kernel residual smoothers). A cleverer readout might use D_S
