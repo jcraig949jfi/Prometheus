@@ -13,11 +13,11 @@
  },
  "files": {
   "tools/bee_tracer.py": "823cbef18bdab2fad64b8623938e24a381e625fa087c83b2ca29d42844589f68",
-  "tools/traced_world.py": "085ea62ad4ab7206b4cdcae65a2605a2805d30fdba60f4748bcbab915909cfbf",
+  "tools/traced_world.py": "1e3136de0443085c4730c7ef3cb805c4dc403f202fd51ca45674d6ebac709dc7",
   "tools/replay_births.py": "196c1b9f61dd915621da1c7d6131e0f9b0e05f4020ca14c33aeb99f16505652d",
   "tools/q4.py": "a60f466f68512c96da87afa056c216b5eafbfba94966e53161014e60ab7a7c19",
-  "tools/s4_tests.py": "ac5da97e074e04ec8021b19db04da0efed20c6da6921ceb3f14d043068456ec1",
-  "tools/e003_analysis.py": "1b7380cc7d557130c2704785ec4551823f57baedc76550df5d184d474b95251f",
+  "tools/s4_tests.py": "5403be1f62076a863af56ec155b8cbc69b6e558e8999723685f9718ef60b37a6",
+  "tools/e003_analysis.py": "09f2f989c2cad0a8db004ed01dcbe3270edfef7fe8c19c65ae4f4b12a351e462",
   "tools/run_fixtures.py": "b4a5672c388a010e3c6052513ef21244258806eba75e1f8f64ae08d1afa52e17",
   "../forensics_2026-09-23/tools/traced_replay.py": "fcb280d0bca5ca9a134df5ccc5e25f6341040325d66e087a223ffcd2bdb481ec",
   "../forensics_2026-09-23/tools/load.py": "58cfa801d4571ba634b7cb6a1a11a5a812130f4b47e3b67c11b874efab7a80f9",
@@ -40,6 +40,33 @@
    "from": "d6b3cf88b9e49afae0b72e4487144526da85f265edb2819cc688c66c9503970a",
    "to": "1b7380cc7d557130c2704785ec4551823f57baedc76550df5d184d474b95251f",
    "why": "Archaeon ruling #951 (pre-production): flip-coverage denominator = R1 conditions 1 AND 3; TIED class gated if it occurs. No tracer change."
+  },
+  {
+   "utc": "2026-09-29",
+   "file": "tools/traced_world.py",
+   "from": "085ea62ad4ab7206b4cdcae65a2605a2805d30fdba60f4748bcbab915909cfbf",
+   "to": "1e3136de0443085c4730c7ef3cb805c4dc403f202fd51ca45674d6ebac709dc7",
+   "why": "Archaeon ruling #956 B-P1: dual-reading report (performer-kind probe in traced_world; reading-B counters in s4_tests; A/B analysis). Tracer unchanged."
+  },
+  {
+   "utc": "2026-09-29",
+   "file": "tools/s4_tests.py",
+   "from": "ac5da97e074e04ec8021b19db04da0efed20c6da6921ceb3f14d043068456ec1",
+   "to": "5403be1f62076a863af56ec155b8cbc69b6e558e8999723685f9718ef60b37a6",
+   "why": "Archaeon ruling #956 B-P1: dual-reading report (performer-kind probe in traced_world; reading-B counters in s4_tests; A/B analysis). Tracer unchanged."
+  },
+  {
+   "utc": "2026-09-29",
+   "file": "tools/e003_analysis.py",
+   "from": "1b7380cc7d557130c2704785ec4551823f57baedc76550df5d184d474b95251f",
+   "to": "09f2f989c2cad0a8db004ed01dcbe3270edfef7fe8c19c65ae4f4b12a351e462",
+   "why": "Archaeon ruling #956 B-P1: dual-reading report (performer-kind probe in traced_world; reading-B counters in s4_tests; A/B analysis). Tracer unchanged."
   }
- ]
+ ],
+ "agreement": {
+  "result": "s4.3 fresh-set PASS (#956; gate_close/BEE_FRESH_RESULT.md)",
+  "owner_output_sha256_lf": "3f882fc58fe692d48937d8cb97755b62d7c8e60615ab3f1e8f8d24b31005cf2a",
+  "seal_commit": "191fc2c18"
+ },
+ "dry_revalidation": "DRY only (not citable): pipeline ran end-to-end under readings A and B; round-trip PASS both; probe asserted on 2,878,487 written loci"
 }
