@@ -1,204 +1,52 @@
 # Aphrodite -- pick-up state for the next session
 
-Written 2026-09-25, before an operator-requested reset. READ THIS FIRST,
-then STATUS.md, then journal/2026-09-23.md (it covers 09-23 to 09-24, every
-error in full). The previous handoff (2026-09-22) is
-superseded/NEXT_SESSION_2026-09-22.md.
+Rewritten 2026-09-29 at MWO-0001 adoption from the branch's actual state. It replaces the 2026-09-25 handoff and its
+appended updates (now superseded/NEXT_SESSION_2026-09-25_plus_updates.md).
+Boot from the repo, not from memory.
 
---------------------------------------------------------------------------
-1. WHERE THE SCIENCE STANDS (dispositions, never pooled)
---------------------------------------------------------------------------
+## 0. Boot order
+1. git fetch origin. Read origin/main:ops/work_orders/CURRENT.md: the APHRODITE section plus s4, s7, s8, s9, s11,
+   s12.
+2. Read roles/Aphrodite/WORK_STATE.json: state, head, next actions, operator decisions.
+3. Set EW_DB_HOST=192.168.1.202 (M4 is not M1). Run: python -m comms boot Aphrodite --model <id>. Then check the
+   inbox from the cursor. IGNORE experiment management from Aporia and Cyclops; Cyclops' MWO publication notices are
+   registrar notices only.
+4. Worktree C:\Prometheus-worktrees\aphrodite-base-role, branch aphrodite/arc3-2026-09-28. NEVER git pull in
+   C:\Prometheus. Commit with -c user.name=Aphrodite -c user.email=jcraig949b@users.noreply.github.com.
 
-  DIRECT_COMPETENCE_REUSE             NO          slice 3
-  STRUCTURAL_SEARCH_LEVERAGE          YES         slice 4
-  TRANSFERABLE_SEARCH_LEVERAGE        YES_LOCAL   Tier 3B 47x, Tier 3C 345x
-  BOUNDED_RECURSIVE_SELF_IMPROVEMENT  NO          Tiers 3A-3C (old criterion)
-  GLOBAL_BEHAVIOR_IDENTITY            FAIL        permanent (S1 runs 1-3)
-  CAMPAIGN_RELEVANT_IDENTITY          PASS        class certificates (cert.py)
-  FAIR_META_SELECTION (S2)            PASS
-  ENDOGENOUS_ABSTRACTION (S3)         YES         donor derived + selected (acc + {H})
-  ABSTRACTION_TRANSPLANT (S4)         YES         ACCEPTED by operator 2026-09-24
-  BOUNDED_RSI (operator)              NOT YET ESTABLISHED
-  AMENDMENT 15 (G1->G2)               BRSI = NO, INTERPRETATION = UNTESTABLE_CATALOG
-                                      (no donor ran; not evidence either way)
-  AMENDMENT 16 (4-h campaign)         returned early for TIME:
-      catalogs A/B FOUNDRY_INCOMPLETE_TIME; E1/E2 UNTESTABLE; E3 UNTESTABLE;
-      E4 S1_NECESSITY = INCONCLUSIVE (WHOLE 3/3, BODY_ONLY 1/3; F3 was not
-      fully adversarial -- my prereg flaw); cloud $0 (no credentials)
+## 1. Where the science stands
+Close record: science/arc3/ARC3_SYNTHESIS_2026-09-28.md (s1-s18). Review packet:
+review/ARC3_MERGE_REVIEW_PACKET.md.
 
-The operator's S4 review (2026-09-24), in short: it is a real positive for
-endogenous derivation plus causal transplant INSIDE THIS DSL, and recursion is
-not established. The catalog partly funnelled toward (acc + {H}) (Q1).
-Condition 7 must be rewritten before reuse -- no grandfathering (Q3; done in
-AMENDMENT 15 R3). Positive-control admission is to be removed in future
-(done: treatment-blind admission).
+Ids: TH-018 abstraction compounding; TH-019 recurrence x visibility; TH-020 second order; TH-021 instruments.
+Campaign C-003 = ARC3 (CLOSED). Experiments E-008..E-011 = AMENDMENTS 20-23.
 
---------------------------------------------------------------------------
-2. WHERE TO RESUME THE SCIENCE
---------------------------------------------------------------------------
+- E-011 (A23): G1_RECURRENT_STEPPING_STONE = YES and GENERIC 3/3 under CONSTRUCTED recurrence.
+  - The claim is the mechanism only.
+  - Capability is budget-relative, and the donor mostly recovers the planted motif.
+  - G1 is not privileged.
+- W8: LIN recurrence is about 14x i.i.d. but fails W1's criteria. Recurrence lands where the pristine search cannot
+  see it; the 250k window holds about 2% of families.
+- Historical dispositions are unchanged. See STATUS.md: S4 ACCEPTED; BOUNDED_RSI NOT YET ESTABLISHED. Campaign 1
+  is FROZEN and UNRUN.
+- Defects recorded at adoption: constant-True gate conditions in run_s3s4.py, a16.py and a17.py. See packet s5 and
+  TH-021. No re-label: that is operator-level.
 
-The live question is exactly one: does the inherited G1 abstraction help
-produce a NEW, semantically distinct abstraction that improves a fresh G2
-relative to G1 (AMENDMENT 15 chain, R1-R5)? It has NEVER been tested: both
-attempts died at family supply.
+## 2. What is authorised now (MWO-0001)
+- Preserve the ARC3 close. Get the branch merged through normal review.
+- Do NOT start another ARC3 wave. T51, T52, T53, T55 and PKG-* are prepared, not authorised, until a future MWO
+  reviews the close.
+- The news monitor continues only in its existing narrow scope (monitors/news/). It authorises nothing.
+- New heavy work, when authorised, uses Fabric leases (Odysseus #896): python -m fabric lease acquire <host>:<res>.
+  The host-file lease ledger in leases/ is retired for new work.
+- Seat loop: MWO-0001 s8, at the existing cadence. Record HOLD when nothing is eligible. No idle broadcasts, no ACKs.
 
-Before any retry (needs a NEW preregistration and operator authorisation):
-  (1) FIX THE FOUNDRY: make Q2 calibration exact-fast (bitmask agreement
-      masks over the 240-probe pool); checkpoint every evaluated draw to disk;
-      budget from a CONTENDED pilot, not a solo timing (wave 1 took 62 min for
-      112 draws, ~6% acceptance).
-  (2) DECIDE FEASIBILITY: in G4, the mul/fdiv/gcd/powr strata accepted 0/64
-      draws each. A 4-per-stratum quota may be infeasible -- itself a finding
-      about the G4 task space. Options: drop the per-stratum quota for a
-      global one, or measure acceptance per stratum first (cheap once Q2 is
-      fast).
-  (3) OPTIONAL: E4 again with three genuinely adversarial forced observation
-      sets, to turn S1_NECESSITY from INCONCLUSIVE into a verdict.
-  (4) The G5 (depth-3) ceiling probe stays conditional on valid G4 negatives.
+## 3. Open operator decisions (non-blocking)
+- The TH-020 DSL fork: (A) a versioned promotion world, or (B) parked (the default).
+- Whether a future MWO authorises the TH-019 donor stage (T51, about 16 core-hours).
 
---------------------------------------------------------------------------
-3. OPEN QUESTIONS FOR THE OPERATOR
---------------------------------------------------------------------------
-
-  Q-A  Authorise AMENDMENT 17 = the AMENDMENT 16 E1/E2 design, with the
-       foundry fixes of s2(1), and with the quota rule chosen under s2(2)?
-  Q-B  Per-stratum quota vs a global quota with mechanical diversity, given
-       that 4 of 7 G4 operator strata looked empty?
-  Q-C  Provide cloud credentials (RUNPOD_API_KEY in the environment; az login
-       plus FSv2 quota) so the acceleration canaries can run ($1 per
-       provider)? RunPod fasteval is the stronger candidate (~12x end to end
-       locally, exact).
-  Q-D  Re-run E4 with a corrected fully-adversarial F3?
-  Q-E  Or declare the engine line complete at S4 (the "stop" answer remains
-       first-class).
-
---------------------------------------------------------------------------
-4. REPORTS AND FROZEN DESIGNS (all under roles/Aphrodite/)
---------------------------------------------------------------------------
-
-  pivot/APHRODITE_ENGINE_REVIEW_11_2026-09-24.md        S1-S4 chain packet
-  pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-24.md  4-h campaign
-  engine/AMENDMENT_12_2026-09-23.md + ADDENDUM_1/_2/_3  S1 and certification
-  engine/AMENDMENT_13_2026-09-23.md                     S2
-  engine/AMENDMENT_14_2026-09-23.md                     S3 + S4
-  engine/AMENDMENT_15_2026-09-24.md                     G1->G2 assay (frozen)
-  engine/AMENDMENT_16_2026-09-24.md                     4-h master prereg
-  Results: engine/S1_GATE_RUN{1,2,3}*, S1_LOCAL_GATE, S2_GATE, S3_ARTIFACT,
-    S4_RESULTS, T3E_*, G2_RESULTS, A16_DRAWS, A16_E4_RESULT (+ .log files)
-  Code: identity.py, cert.py, fair.py, tier3d.py, tier3e.py, run_s3s4.py,
-    run_g2.py, a16.py, a16_report.py, s1_gate.py, s1_local_gate.py, s2_gate.py
-
---------------------------------------------------------------------------
-5. APPARATUS FACTS TO REMEMBER
---------------------------------------------------------------------------
-
-  - behavior_id is a PROVISIONAL BUCKET; any class that affects science
-    needs a cert.py certificate (fresh B_CERT + threshold-adversarial A(S)).
-  - Identity domain D_TASK_T3_v1 (lengths 2-60, 80, 150, 200; values 2-30;
-    query 1-97). Conformance covers the ceiling edges (B1_BOUNDARY).
-  - Emitter v2 (output ceiling guard) for everything from S2 on; v1 is kept
-    byte-identical for reproducing Tiers 3A-3C.
-  - Recipient.fresh() wipes a GLOBAL marker dir: every process pool must use
-    a per-worker MARKER_DIR (see run_s3s4._worker_init).
-  - Family names must contain no digits (prompts are parsed by regex).
-  - The host Python has no pytest (use a venv). Commit with
-    -c user.name=Aphrodite. Never `git pull` in C:\Prometheus. Verify every
-    stopped process by PID (TaskStop does not kill detached children).
-  - Acceleration branches (engineering only, merged to main 2026-09-25):
-    accel-azure-cpu (process pool, 480/480 exact) and accel-runpod
-    (fasteval, 1.16M evaluations exact, ~12x). NEITHER is science-eligible
-    until its cloud canary passes.
-
-Campaign 1 remains FROZEN and UNRUN (contracts from Archaeon, Harmonia and
-Vivarium, plus benchmark receipts from Nestor and Archaeon, still outstanding).
-
---------------------------------------------------------------------------
-UPDATE 2026-09-26 -- AMENDMENT 16 CAMPAIGN, SECOND EXECUTION (AMENDMENT 17)
---------------------------------------------------------------------------
-Operator lifted the Q-A..Q-E hold 2026-09-26 and authorised the campaign.
-Report: pivot/APHRODITE_AMENDMENT16_CAMPAIGN_REPORT_2026-09-26.md
-Prereg: engine/AMENDMENT_17_2026-09-26.md @ 373d7ef28. 48 min of 4 h; $0.
-  E0 CATALOG_A TESTABLE (O4/V3/T4); CATALOG_B UNTESTABLE (O2/V2), not redrawn
-  E1_BOUNDED_RSI = NO   (valid R1 novelty failure: G1 donors only met successes
-                         (acc + {H}) already explains and re-derived it)
-  E2_BOUNDED_RSI = UNTESTABLE (catalog); REPLICATED = NO
-  G4_REPRESENTATIONAL_CEILING = UNTESTABLE (E2 never reached donors)
-  S1_NECESSITY = SUPPORTED (WHOLE 3/3, BODY_ONLY 0/3; F3 repaired to F3*)
-  RUNPOD/AZURE_UNAVAILABLE_TO_APHRODITE.
-Binding constraint now: family SUPPLY for non-additive G4 operators (Q3/Q2
-reject degenerate draws; mul/mod/powr 0/32 in both catalogs). Any new sampler
-is an operator design choice. Engineering now available: a17.py exact-fast
-Q2 (gated) + checkpointing; fasteval admitted by a 288k-pair gate.
-Comms: experiments are no longer managed via Aporia or Cyclops; ignore them.
-Branch aphrodite/a16-campaign-2026-09-26 (pushed; not yet merged to main).
-
---------------------------------------------------------------------------
-UPDATE 2026-09-27 -- RECURSIVE-IMPROVEMENT FRONTIER PROGRAM (no campaign run)
---------------------------------------------------------------------------
-Read science/frontier/APHRODITE_FRONTIER_SYNTHESIS_2026-09-27.md first.
-Key results (spikes K1-K8, all forensic, reproducible, M4):
-  - The catalog collapse is explained. The tribunal (permutation invariance + stress 200)
-    certifies commutative bounded folds = G1's span; only 7/10,500 draws are genuinely
-    non-additive qualified tasks.
-  - Inheriting G1 adds 0 derivable novel schemas (467 = 467). G1-composing schemas are
-    representable, but inaccessible without a composition move. With one (K8), 77
-    become derivable.
-  - G1 = an efficiency prior (PRISTINE finds the same solutions at a median ~300x more
-    charges). G1 donors COMPOUND efficiency (11/18 rich supplies) inside G1's span.
-  - Novelty ruler defects: R-a conjugate false positive; R-b abs()/junk false
-    positives; no compounding verdict. Use V1-V5 separate verdicts from now on.
-Next autonomous work: RB-1 ruler -> RB-2 task-world audit -> RB-4 compounding assay ->
-RB-3 Q2/Q3 (research_blocks/). Backlog: BACKLOG_RSI_FRONTIER.md (T01-T22).
-Operator choices open: (1) keep the "RSI" name vs rename the line to "abstraction
-compounding" and treat V5 separately; (2) whether Aphrodite may replace the inherited
-Tier-3 tribunal for the next task world.
-Branch aphrodite/frontier-2026-09-27 (pushed; not merged to main).
-
---------------------------------------------------------------------------
-UPDATE 2026-09-28 -- ABSTRACTION COMPOUNDING PROGRAM (operator rename 2026-09-27)
---------------------------------------------------------------------------
-Read science/compounding/COMPOUNDING_SYNTHESIS_2026-09-28.md first.
-  - New instruments: ruler v2 (rb1), TRIBUNAL T4 (engine/tribunal_t4.py, RB-2), world W5
-    (depth-3), exact fast cost (a18.fast_cost, gate 400/0).
-  - AMENDMENT 18 / C1 = UNTESTABLE (supply; the seat's screening flaw).
-  - AMENDMENT 19 / C2 (engine/A19_C2/): G1_STEPPING_STONE = NO, GENERIC 0/2,
-    S-NAT UNTESTABLE (bimodal learnability).
-  - Forensic existence proof: C2 replicate CON1. The G1 composition (v - (acc + {H}))
-    solved 2 families at <= 52k charges, where L1 and PRISTINE failed at 10M. The
-    binding constraint is now REUSE (compositions do not recur).
-  - RB-5: the fold DSL cannot express independent worlds (EC/OEIS). It needs integer
-    literals, a lag register, a position atom.
-  - P2 (improver evolution) is designed (rb6/); its tested levers are inert.
-  - Open operator choice: reuse-controlled supply vs natural curricula vs DSL extension.
-  Backlog: science/compounding/BACKLOG_COMPOUNDING.md (T01-T31). Blocks RB-7..RB-10 are
-  ready.
-  Branch aphrodite/compounding-2026-09-27 (pushed, not merged).
-
---------------------------------------------------------------------------
-UPDATE 2026-09-28 (close) -- ARC3 ABSTRACTION-COMPOUNDING PORTFOLIO
---------------------------------------------------------------------------
-Read science/arc3/ARC3_SYNTHESIS_2026-09-28.md first (18 sections).
-
-  A23 C3R2-CONFIRM (AMENDMENT 23)
-    Verdict: G1_RECURRENT_STEPPING_STONE = YES; GENERIC = 3/3.
-    n = 10 of 12 fillable; k = 6; sign p = 0.0078 vs G1_NC / P / OFF_0.
-    Scope: MECHANISM UNDER CONSTRUCTED RECURRENCE. Capability is budget-relative, and the
-    donor mostly recovers the planted motif. It is NOT retroactive RSI evidence, and no
-    historical label changed.
-    Predecessors: C3 (A20) UNTESTABLE, C3R (A21) INVALID, C3R2 (A22) UNTESTABLE
-    (forensic support).
-
-  Workers W1-W8 (science/arc3/w*/REPORT.md; manifest WORKER_MANIFEST.md).
-    - The composition-horizon and non-specificity rivals were killed.
-    - The C2 failure was a selection/validation valley.
-    - Bimodality comes from the instrument (escrow x walk cliff).
-    - CON1 survived in reduced form: generalising, route-sufficient, not G1-specific.
-
-  Backlog: T01-T54. The next autonomous arc is prepared in synthesis s16:
-    T53 -> T52 -> T47 (PKG-6 + 7) -> T51 (natural recurrence on the W8 supply).
-
-  HITL (non-blocking): the operator's DSL trigger is met for SECOND order
-  (PKG-5 promotion). Default if no ruling: keep the DSL parked, run T51 first.
-
-  Leases: all released (ledger ends empty). Campaign 1 frozen.
-  Branch aphrodite/arc3-2026-09-28 (pushed, not merged).
+## 4. Comms bookkeeping
+- Delegations #490 and #533 to Harmonia are CLOSED by Harmonia (#928). Aphrodite's status reply is #929.
+- #533's E5 production demonstration is Aphrodite's obligation. It stays dormant while Campaign 1 is frozen.
+- Artemis #871 (worker claims) is handled via TH-021 and packet s5.
+- Last inbox id seen at adoption: 929.
