@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T05:49:27Z",
+  "updated_at_utc": "2026-09-29T05:54:27Z",
   "state": "BLOCKED",
-  "state_reason": "E-003 (C-001 BEE leg) tracer FROZEN (cfb57f67a) with fixtures 28/28 and a disclosed dry pipeline run; production waits for Archaeon BEE GO + sealed s4.3 agreement set (#950). E-BEL-MD merge review queued (no live claude-executor Fabric worker).",
+  "state_reason": "E-BEL-MD CLOSED and MERGED (e51c8dec6) after two Fabric reviews (MERGE_WITH_FIXES, fixes applied). Only live item: E-003 (C-001 BEE leg) tracer FROZEN cfb57f67a, waiting for Archaeon BEE GO + sealed agreement set (#950).",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
   "head_sha": "see git log of this file on origin/main",
@@ -23,11 +23,11 @@
     },
     {
       "id": "C-BEL-MULTIDAY",
-      "status": "TERMINAL",
+      "status": "CLOSED",
       "branch": "bellerophon/multiday-campaign-2026-09-26",
       "branch_head": "bcab1d5ff47ddd6da91f1c1868a2d02382d9b901",
-      "merged": false,
-      "merge": "PROPOSED via Fabric review (2 replicas); clean vs origin/main",
+      "merged": "e51c8dec6",
+      "merge": "MERGED after Fabric reviews tsk-bc42e48a52be/tsk-def7523bd2f2 (MERGE_WITH_FIXES; prose/receipt fixes 1c6bca786)",
       "report": "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md (on branch)"
     },
     {
@@ -80,20 +80,16 @@
     {
       "id": "tsk-bc42e48a52be",
       "title": "Merge review: bellerophon/multiday-campaign-2026-09-26",
-      "thread": "thr-bel-computation-reproduction-coupling",
-      "campaign": "C-BEL-MULTIDAY",
       "experiment": "E-BEL-MD",
-      "base_sha": "bcab1d5ff47ddd6da91f1c1868a2d02382d9b901",
-      "state": "submitted"
+      "state": "completed",
+      "verdict": "MERGE_WITH_FIXES"
     },
     {
       "id": "tsk-def7523bd2f2",
       "title": "Merge review: bellerophon/multiday-campaign-2026-09-26",
-      "thread": "thr-bel-computation-reproduction-coupling",
-      "campaign": "C-BEL-MULTIDAY",
       "experiment": "E-BEL-MD",
-      "base_sha": "bcab1d5ff47ddd6da91f1c1868a2d02382d9b901",
-      "state": "submitted"
+      "state": "completed",
+      "verdict": "MERGE_WITH_FIXES"
     }
   ],
   "leases": [
@@ -112,13 +108,11 @@
   "running": [],
   "blocked_on": [
     "Archaeon: BEE GO record binding FREEZE_MANIFEST.json + rulings on 5 readings (#950)",
-    "Archaeon: fresh s4.3 agreement set (seeded after freezes)",
-    "Fabric: claude-executor worker to run merge review tsk-bc42e48a52be/tsk-def7523bd2f2"
+    "Archaeon: fresh s4.3 agreement set (seeded after freezes)"
   ],
   "next_actions": [
     "on GO: production run of E-003 under frozen hashes (lease), seal + commit outputs, post location to Archaeon",
-    "on agreement set: run frozen tracer, seal per-locus output before exchange",
-    "on review verdict MERGE: merge bellerophon/multiday-campaign-2026-09-26"
+    "on agreement set: run frozen tracer, seal per-locus output before exchange"
   ],
   "operator_decisions_required": [],
   "incidents": [
@@ -150,8 +144,8 @@
     }
   ],
   "latest_reports": [
-    "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md (branch bellerophon/multiday-campaign-2026-09-26)",
-    "roles/Bellerophon/forensics_2026-09-23/ERRATA_2026-09-29.md",
-    "roles/Bellerophon/coupling_2026-09-24/COUPLING_CAMPAIGN_REPORT.md"
+    "roles/Bellerophon/multiday_2026-09-26/MULTIDAY_CAMPAIGN_REPORT.md",
+    "roles/Bellerophon/e003_2026-09-29/README.md (branch bellerophon/e003-bee-ancestry-2026-09-29)",
+    "roles/Bellerophon/forensics_2026-09-23/ERRATA_2026-09-29.md"
   ]
 }
