@@ -1,0 +1,322 @@
+== KA_plant_J1 normal 1.000 KA_L {'checked': 5632, 'equal': 5632, 'nonempty_real': 2445, 'real_subset': 5632} mustfail {'checked': 5632, 'equal': 2341, 'nonempty_real': 2445, 'real_subset': 3872} wall 21s
+-- o5 q0  n768 census {'C': 768} tgt {'X': 768} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P1_first   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P2_dflight strict 0.00 [0.00,0.00] n768 | decisive 0.00 [0.00,0.00] n768 cov 1.0 | shuf 0.00 [0.00,0.00] n768 / 0.00 [0.00,0.00] n768 | {'C>S': 768}
+   P4_last    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P5_dleaf   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'C>U': 768}
+   P6_share   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'C>U': 768}
+   P7_stale   strict 0.52 [0.48,0.57] n768 | decisive 0.52 [0.48,0.57] n768 cov 1.0 | shuf 0.52 [0.48,0.57] n768 / 0.52 [0.48,0.57] n768 | {'C>C': 403, 'C>S': 365}
+   H3_loo     strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P7b(M only) n0 shuf n0
+   n_direct {'C': 2.0} flight {'C': 0.0} held {'C': 0.0}
+   causal {'C': {'fa_eq_chan': 0.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 768}
+   first_dist: {'C|1': 768}
+   first_jit: {'C|0': 567, 'C|1': 201}
+   first_jit_cross: {'C|0': 768}
+   first_sib_split: {'C|0': 768}
+   first_arr_rel: {'C|7': 567, 'C|8': 201}
+   first_te_rel: {'C|2': 768}
+   y_same_prev: {'C|0': 403, 'C|1': 365}
+-- o5 q1  n640 census {'S': 309, 'C': 331} tgt {'X': 640} maj 0.5171875
+   P3_cone    strict 0.48 [0.43,0.53] n640 | decisive 1.00 [1.00,1.00] n305 cov 0.48 | shuf 0.24 [0.20,0.28] n640 / 0.50 [0.43,0.58] n305 | {'C>C': 166, 'C>M': 165, 'S>M': 170, 'S>S': 139}
+   P1_first   strict 0.52 [0.46,0.57] n640 | decisive 0.52 [0.46,0.57] n640 cov 1.0 | shuf 0.52 [0.46,0.57] n640 / 0.52 [0.46,0.57] n640 | {'C>C': 331, 'S>C': 309}
+   P2_dflight strict 0.48 [0.43,0.54] n640 | decisive 0.48 [0.43,0.54] n640 cov 1.0 | shuf 0.48 [0.43,0.54] n640 / 0.48 [0.43,0.54] n640 | {'C>S': 331, 'S>S': 309}
+   P4_last    strict 0.52 [0.46,0.57] n640 | decisive 0.52 [0.46,0.57] n640 cov 1.0 | shuf 0.52 [0.46,0.57] n640 / 0.52 [0.46,0.57] n640 | {'C>C': 331, 'S>C': 309}
+   P5_dleaf   strict 0.00 [0.00,0.00] n640 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n640 / n0 | {'C>U': 331, 'S>U': 309}
+   P6_share   strict 0.00 [0.00,0.00] n640 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n640 / n0 | {'C>U': 331, 'S>U': 309}
+   P7_stale   strict 0.74 [0.70,0.79] n640 | decisive 0.74 [0.70,0.79] n640 cov 1.0 | shuf 0.48 [0.43,0.54] n640 / 0.48 [0.43,0.54] n640 | {'C>C': 246, 'C>S': 85, 'S>C': 79, 'S>S': 230}
+   H3_loo     strict 0.31 [0.22,0.41] n640 | decisive 0.50 [0.40,0.59] n397 cov 0.62 | shuf 0.31 [0.26,0.36] n640 / 0.54 [0.48,0.60] n397 | {'C>C': 117, 'C>S': 109, 'C>U': 105, 'S>C': 88, 'S>S': 83, 'S>U': 138}
+   P7b(M only) 1.00 [1.00,1.00] n335 shuf 0.52 [0.45,0.60] n335
+   n_direct {'S': 2.0, 'C': 2.0} flight {'S': 0.0, 'C': 0.0} held {'S': 0.0, 'C': 0.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 0.0}, 'C': {'fa_eq_chan': 0.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 331, 'S|0': 309}
+   first_dist: {'C|1': 331, 'S|1': 309}
+   first_jit: {'C|0': 262, 'C|1': 69, 'S|0': 227, 'S|1': 82}
+   first_jit_cross: {'C|0': 331, 'S|0': 309}
+   first_sib_split: {'C|0': 331, 'S|0': 309}
+   first_arr_rel: {'C|6': 262, 'C|7': 69, 'S|6': 227, 'S|7': 82}
+   first_te_rel: {'C|1': 331, 'S|1': 309}
+   y_same_prev: {'C|0': 246, 'C|1': 85, 'S|0': 79, 'S|1': 230}
+-- o6 q0  n640 census {'C': 640} tgt {'C': 640} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P1_first   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P2_dflight strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P4_last    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P5_dleaf   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P6_share   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P7_stale   strict 0.51 [0.46,0.56] n640 | decisive 0.51 [0.46,0.56] n640 cov 1.0 | shuf 0.51 [0.46,0.55] n640 / 0.51 [0.46,0.55] n640 | {'C>C': 325, 'C>S': 315}
+   H3_loo     strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P7b(M only) n0 shuf n0
+   n_direct {'C': 2.0} flight {'C': 2.0} held {'C': 0.0}
+   causal {'C': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 640}
+   first_dist: {'C|1': 640}
+   first_jit: {'C|0': 489, 'C|1': 151}
+   first_jit_cross: {'C|0': 640}
+   first_sib_split: {'C|0': 640}
+   first_arr_rel: {'C|5': 489, 'C|6': 151}
+   first_te_rel: {'C|0': 640}
+   y_same_prev: {'C|0': 325, 'C|1': 315}
+-- o6 q1  n768 census {'S': 382, 'C': 386} tgt {'X': 768} maj 0.5026041666666666
+   P3_cone    strict 0.51 [0.46,0.56] n768 | decisive 1.00 [1.00,1.00] n393 cov 0.51 | shuf 0.24 [0.20,0.28] n768 / 0.54 [0.47,0.60] n393 | {'C>C': 193, 'C>M': 193, 'S>M': 182, 'S>S': 200}
+   P1_first   strict 0.50 [0.46,0.55] n768 | decisive 0.50 [0.46,0.55] n768 cov 1.0 | shuf 0.50 [0.46,0.55] n768 / 0.50 [0.46,0.55] n768 | {'C>C': 386, 'S>C': 382}
+   P2_dflight strict 0.50 [0.45,0.54] n768 | decisive 0.50 [0.45,0.54] n768 cov 1.0 | shuf 0.50 [0.45,0.54] n768 / 0.50 [0.45,0.54] n768 | {'C>S': 386, 'S>S': 382}
+   P4_last    strict 0.50 [0.46,0.55] n768 | decisive 0.50 [0.46,0.55] n768 cov 1.0 | shuf 0.50 [0.46,0.55] n768 / 0.50 [0.46,0.55] n768 | {'C>C': 386, 'S>C': 382}
+   P5_dleaf   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'C>U': 386, 'S>U': 382}
+   P6_share   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'C>U': 386, 'S>U': 382}
+   P7_stale   strict 0.75 [0.70,0.79] n768 | decisive 0.75 [0.70,0.79] n768 cov 1.0 | shuf 0.51 [0.46,0.55] n768 / 0.51 [0.46,0.55] n768 | {'C>C': 297, 'C>S': 89, 'S>C': 106, 'S>S': 276}
+   H3_loo     strict 0.55 [0.48,0.62] n768 | decisive 0.55 [0.48,0.62] n768 cov 1.0 | shuf 0.49 [0.45,0.54] n768 / 0.49 [0.45,0.54] n768 | {'C>C': 205, 'C>S': 181, 'S>C': 167, 'S>S': 215}
+   P7b(M only) 1.00 [1.00,1.00] n375 shuf 0.50 [0.44,0.57] n375
+   n_direct {'S': 2.0, 'C': 2.0} flight {'S': 0.0, 'C': 0.0} held {'S': 0.0, 'C': 0.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 0.0}, 'C': {'fa_eq_chan': 0.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 386, 'S|0': 382}
+   first_dist: {'C|1': 386, 'S|1': 382}
+   first_jit: {'C|0': 281, 'C|1': 105, 'S|0': 286, 'S|1': 96}
+   first_jit_cross: {'C|0': 386, 'S|0': 382}
+   first_sib_split: {'C|0': 386, 'S|0': 382}
+   first_arr_rel: {'C|6': 281, 'C|7': 105, 'S|6': 286, 'S|7': 96}
+   first_te_rel: {'C|1': 386, 'S|1': 382}
+   y_same_prev: {'C|0': 297, 'C|1': 89, 'S|0': 106, 'S|1': 276}
+-- o11 q0  n768 census {'C': 768} tgt {'C': 768} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P1_first   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P2_dflight strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P4_last    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P5_dleaf   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P6_share   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P7_stale   strict 0.52 [0.48,0.57] n768 | decisive 0.52 [0.48,0.57] n768 cov 1.0 | shuf 0.52 [0.48,0.57] n768 / 0.52 [0.48,0.57] n768 | {'C>C': 403, 'C>S': 365}
+   H3_loo     strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P7b(M only) n0 shuf n0
+   n_direct {'C': 2.0} flight {'C': 2.0} held {'C': 0.0}
+   causal {'C': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 768}
+   first_dist: {'C|1': 768}
+   first_jit: {'C|0': 567, 'C|1': 201}
+   first_jit_cross: {'C|0': 768}
+   first_sib_split: {'C|0': 768}
+   first_arr_rel: {'C|1': 567, 'C|2': 201}
+   first_te_rel: {'C|-4': 768}
+   y_same_prev: {'C|0': 403, 'C|1': 365}
+-- o11 q1  n640 census {'S': 330, 'C': 310} tgt {'S': 330, 'C': 310} maj 0.515625
+   P3_cone    strict 0.49 [0.45,0.54] n640 | decisive 1.00 [1.00,1.00] n316 cov 0.49 | shuf 0.24 [0.19,0.29] n640 / 0.45 [0.38,0.52] n316 | {'C>C': 151, 'C>M': 159, 'S>M': 165, 'S>S': 165}
+   P1_first   strict 0.75 [0.71,0.79] n640 | decisive 0.75 [0.71,0.79] n640 cov 1.0 | shuf 0.50 [0.45,0.55] n640 / 0.50 [0.45,0.55] n640 | {'C>C': 151, 'C>S': 159, 'S>S': 330}
+   P2_dflight strict 0.74 [0.70,0.78] n640 | decisive 0.74 [0.70,0.78] n640 cov 1.0 | shuf 0.49 [0.44,0.54] n640 / 0.49 [0.44,0.54] n640 | {'C>C': 310, 'S>C': 165, 'S>S': 165}
+   P4_last    strict 0.74 [0.70,0.78] n640 | decisive 0.74 [0.70,0.78] n640 cov 1.0 | shuf 0.49 [0.44,0.54] n640 / 0.49 [0.44,0.54] n640 | {'C>C': 310, 'S>C': 165, 'S>S': 165}
+   P5_dleaf   strict 0.49 [0.45,0.54] n640 | decisive 1.00 [1.00,1.00] n316 cov 0.49 | shuf 0.24 [0.19,0.29] n640 / 0.45 [0.38,0.52] n316 | {'C>C': 151, 'C>M': 159, 'S>M': 165, 'S>S': 165}
+   P6_share   strict 0.75 [0.71,0.79] n640 | decisive 0.75 [0.71,0.79] n640 cov 1.0 | shuf 0.50 [0.45,0.55] n640 / 0.50 [0.45,0.55] n640 | {'C>C': 151, 'C>S': 159, 'S>S': 330}
+   P7_stale   strict 0.73 [0.69,0.78] n640 | decisive 0.73 [0.69,0.78] n640 cov 1.0 | shuf 0.51 [0.46,0.56] n640 / 0.51 [0.46,0.56] n640 | {'C>C': 232, 'C>S': 78, 'S>C': 93, 'S>S': 237}
+   H3_loo     strict 0.29 [0.20,0.38] n640 | decisive 0.48 [0.37,0.56] n391 cov 0.61 | shuf 0.31 [0.27,0.36] n640 / 0.47 [0.40,0.53] n391 | {'C>C': 87, 'C>S': 115, 'C>U': 108, 'S>C': 90, 'S>S': 99, 'S>U': 141}
+   P7b(M only) 1.00 [1.00,1.00] n324 shuf 0.46 [0.39,0.53] n324
+   n_direct {'S': 2.0, 'C': 2.0} flight {'S': 0.5, 'C': 1.4870967741935484} held {'S': 1.5, 'C': 0.5129032258064516}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}, 'C': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 310, 'S|0': 330}
+   first_dist: {'C|1': 310, 'S|1': 330}
+   first_jit: {'C|0': 159, 'C|1': 151, 'S|0': 330}
+   first_jit_cross: {'C|0': 159, 'C|1': 151, 'S|0': 330}
+   first_sib_split: {'C|0': 310, 'S|0': 330}
+   first_arr_rel: {'C|0': 159, 'C|1': 151, 'S|0': 330}
+   first_te_rel: {'C|-5': 310, 'S|-5': 330}
+   y_same_prev: {'C|0': 232, 'C|1': 78, 'S|0': 93, 'S|1': 237}
+-- o12 q0  n640 census {'S': 640} tgt {'S': 640} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P1_first   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P2_dflight strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P4_last    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P5_dleaf   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P6_share   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7_stale   strict 0.49 [0.44,0.54] n640 | decisive 0.49 [0.44,0.54] n640 cov 1.0 | shuf 0.49 [0.45,0.54] n640 / 0.49 [0.45,0.54] n640 | {'S>C': 325, 'S>S': 315}
+   H3_loo     strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7b(M only) n0 shuf n0
+   n_direct {'S': 2.0} flight {'S': 0.0} held {'S': 2.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'S|0': 640}
+   first_dist: {'S|1': 640}
+   first_jit: {'S|0': 489, 'S|1': 151}
+   first_jit_cross: {'S|0': 640}
+   first_sib_split: {'S|0': 640}
+   first_arr_rel: {'S|-1': 489, 'S|0': 151}
+   first_te_rel: {'S|-6': 640}
+   y_same_prev: {'S|0': 325, 'S|1': 315}
+-- o12 q1  n768 census {'S': 381, 'C': 387} tgt {'S': 381, 'C': 387} maj 0.50390625
+   P3_cone    strict 0.53 [0.48,0.58] n768 | decisive 1.00 [1.00,1.00] n407 cov 0.53 | shuf 0.27 [0.23,0.31] n768 / 0.51 [0.44,0.57] n407 | {'C>C': 201, 'C>M': 186, 'S>M': 175, 'S>S': 206}
+   P1_first   strict 0.76 [0.72,0.80] n768 | decisive 0.76 [0.72,0.80] n768 cov 1.0 | shuf 0.51 [0.46,0.55] n768 / 0.51 [0.46,0.55] n768 | {'C>C': 201, 'C>S': 186, 'S>S': 381}
+   P2_dflight strict 0.77 [0.73,0.81] n768 | decisive 0.77 [0.73,0.81] n768 cov 1.0 | shuf 0.51 [0.46,0.55] n768 / 0.51 [0.46,0.55] n768 | {'C>C': 387, 'S>C': 175, 'S>S': 206}
+   P4_last    strict 0.77 [0.73,0.81] n768 | decisive 0.77 [0.73,0.81] n768 cov 1.0 | shuf 0.51 [0.46,0.55] n768 / 0.51 [0.46,0.55] n768 | {'C>C': 387, 'S>C': 175, 'S>S': 206}
+   P5_dleaf   strict 0.53 [0.48,0.58] n768 | decisive 1.00 [1.00,1.00] n407 cov 0.53 | shuf 0.27 [0.23,0.31] n768 / 0.51 [0.44,0.57] n407 | {'C>C': 201, 'C>M': 186, 'S>M': 175, 'S>S': 206}
+   P6_share   strict 0.76 [0.72,0.80] n768 | decisive 0.76 [0.72,0.80] n768 cov 1.0 | shuf 0.51 [0.46,0.55] n768 / 0.51 [0.46,0.55] n768 | {'C>C': 201, 'C>S': 186, 'S>S': 381}
+   P7_stale   strict 0.74 [0.70,0.78] n768 | decisive 0.74 [0.70,0.78] n768 cov 1.0 | shuf 0.49 [0.44,0.54] n768 / 0.49 [0.44,0.54] n768 | {'C>C': 296, 'C>S': 91, 'S>C': 107, 'S>S': 274}
+   H3_loo     strict 0.47 [0.39,0.55] n768 | decisive 0.47 [0.39,0.55] n768 cov 1.0 | shuf 0.48 [0.44,0.53] n768 / 0.48 [0.44,0.53] n768 | {'C>C': 179, 'C>S': 208, 'S>C': 199, 'S>S': 182}
+   P7b(M only) 1.00 [1.00,1.00] n361 shuf 0.53 [0.47,0.60] n361
+   n_direct {'S': 2.0, 'C': 2.0} flight {'S': 0.45931758530183725, 'C': 1.5193798449612403} held {'S': 1.5406824146981628, 'C': 0.4806201550387597}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}, 'C': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 387, 'S|0': 381}
+   first_dist: {'C|1': 387, 'S|1': 381}
+   first_jit: {'C|0': 186, 'C|1': 201, 'S|0': 381}
+   first_jit_cross: {'C|0': 186, 'C|1': 201, 'S|0': 381}
+   first_sib_split: {'C|0': 387, 'S|0': 381}
+   first_arr_rel: {'C|0': 186, 'C|1': 201, 'S|0': 381}
+   first_te_rel: {'C|-5': 387, 'S|-5': 381}
+   y_same_prev: {'C|0': 296, 'C|1': 91, 'S|0': 107, 'S|1': 274}
+== KA_plant_J0 normal 1.000 KA_L {'checked': 5632, 'equal': 5632, 'nonempty_real': 1408, 'real_subset': 5632} mustfail {'checked': 5632, 'equal': 2816, 'nonempty_real': 1408, 'real_subset': 4224} wall 27s
+-- o5 q0  n768 census {'C': 768} tgt {'X': 768} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P1_first   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P2_dflight strict 0.00 [0.00,0.00] n768 | decisive 0.00 [0.00,0.00] n768 cov 1.0 | shuf 0.00 [0.00,0.00] n768 / 0.00 [0.00,0.00] n768 | {'C>S': 768}
+   P4_last    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P5_dleaf   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'C>U': 768}
+   P6_share   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'C>U': 768}
+   P7_stale   strict 0.52 [0.48,0.57] n768 | decisive 0.52 [0.48,0.57] n768 cov 1.0 | shuf 0.52 [0.48,0.57] n768 / 0.52 [0.48,0.57] n768 | {'C>C': 403, 'C>S': 365}
+   H3_loo     strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P7b(M only) n0 shuf n0
+   n_direct {'C': 2.0} flight {'C': 0.0} held {'C': 0.0}
+   causal {'C': {'fa_eq_chan': 0.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 768}
+   first_dist: {'C|1': 768}
+   first_jit: {'C|0': 768}
+   first_jit_cross: {'C|0': 768}
+   first_sib_split: {'C|0': 768}
+   first_arr_rel: {'C|7': 768}
+   first_te_rel: {'C|2': 768}
+   y_same_prev: {'C|0': 403, 'C|1': 365}
+-- o5 q1  n640 census {'S': 640} tgt {'X': 640} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P1_first   strict 0.00 [0.00,0.00] n640 | decisive 0.00 [0.00,0.00] n640 cov 1.0 | shuf 0.00 [0.00,0.00] n640 / 0.00 [0.00,0.00] n640 | {'S>C': 640}
+   P2_dflight strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P4_last    strict 0.00 [0.00,0.00] n640 | decisive 0.00 [0.00,0.00] n640 cov 1.0 | shuf 0.00 [0.00,0.00] n640 / 0.00 [0.00,0.00] n640 | {'S>C': 640}
+   P5_dleaf   strict 0.00 [0.00,0.00] n640 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n640 / n0 | {'S>U': 640}
+   P6_share   strict 0.00 [0.00,0.00] n640 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n640 / n0 | {'S>U': 640}
+   P7_stale   strict 0.49 [0.44,0.54] n640 | decisive 0.49 [0.44,0.54] n640 cov 1.0 | shuf 0.49 [0.45,0.54] n640 / 0.49 [0.45,0.54] n640 | {'S>C': 325, 'S>S': 315}
+   H3_loo     strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7b(M only) n0 shuf n0
+   n_direct {'S': 2.0} flight {'S': 0.0} held {'S': 0.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 0.0}}
+   first_from_source: {'S|0': 640}
+   first_dist: {'S|1': 640}
+   first_jit: {'S|0': 640}
+   first_jit_cross: {'S|0': 640}
+   first_sib_split: {'S|0': 640}
+   first_arr_rel: {'S|6': 640}
+   first_te_rel: {'S|1': 640}
+   y_same_prev: {'S|0': 325, 'S|1': 315}
+-- o6 q0  n640 census {'C': 640} tgt {'C': 640} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P1_first   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P2_dflight strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P4_last    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P5_dleaf   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P6_share   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P7_stale   strict 0.51 [0.46,0.56] n640 | decisive 0.51 [0.46,0.56] n640 cov 1.0 | shuf 0.51 [0.46,0.55] n640 / 0.51 [0.46,0.55] n640 | {'C>C': 325, 'C>S': 315}
+   H3_loo     strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'C>C': 640}
+   P7b(M only) n0 shuf n0
+   n_direct {'C': 2.0} flight {'C': 2.0} held {'C': 0.0}
+   causal {'C': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 640}
+   first_dist: {'C|1': 640}
+   first_jit: {'C|0': 640}
+   first_jit_cross: {'C|0': 640}
+   first_sib_split: {'C|0': 640}
+   first_arr_rel: {'C|5': 640}
+   first_te_rel: {'C|0': 640}
+   y_same_prev: {'C|0': 325, 'C|1': 315}
+-- o6 q1  n768 census {'S': 768} tgt {'X': 768} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P1_first   strict 0.00 [0.00,0.00] n768 | decisive 0.00 [0.00,0.00] n768 cov 1.0 | shuf 0.00 [0.00,0.00] n768 / 0.00 [0.00,0.00] n768 | {'S>C': 768}
+   P2_dflight strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P4_last    strict 0.00 [0.00,0.00] n768 | decisive 0.00 [0.00,0.00] n768 cov 1.0 | shuf 0.00 [0.00,0.00] n768 / 0.00 [0.00,0.00] n768 | {'S>C': 768}
+   P5_dleaf   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'S>U': 768}
+   P6_share   strict 0.00 [0.00,0.00] n768 | decisive n0 cov 0.0 | shuf 0.00 [0.00,0.00] n768 / n0 | {'S>U': 768}
+   P7_stale   strict 0.48 [0.43,0.52] n768 | decisive 0.48 [0.43,0.52] n768 cov 1.0 | shuf 0.48 [0.43,0.52] n768 / 0.48 [0.43,0.52] n768 | {'S>C': 403, 'S>S': 365}
+   H3_loo     strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P7b(M only) n0 shuf n0
+   n_direct {'S': 2.0} flight {'S': 0.0} held {'S': 0.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 0.0}}
+   first_from_source: {'S|0': 768}
+   first_dist: {'S|1': 768}
+   first_jit: {'S|0': 768}
+   first_jit_cross: {'S|0': 768}
+   first_sib_split: {'S|0': 768}
+   first_arr_rel: {'S|6': 768}
+   first_te_rel: {'S|1': 768}
+   y_same_prev: {'S|0': 403, 'S|1': 365}
+-- o11 q0  n768 census {'C': 768} tgt {'C': 768} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P1_first   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P2_dflight strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P4_last    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P5_dleaf   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P6_share   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P7_stale   strict 0.52 [0.48,0.57] n768 | decisive 0.52 [0.48,0.57] n768 cov 1.0 | shuf 0.52 [0.48,0.57] n768 / 0.52 [0.48,0.57] n768 | {'C>C': 403, 'C>S': 365}
+   H3_loo     strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'C>C': 768}
+   P7b(M only) n0 shuf n0
+   n_direct {'C': 2.0} flight {'C': 2.0} held {'C': 0.0}
+   causal {'C': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'C|0': 768}
+   first_dist: {'C|1': 768}
+   first_jit: {'C|0': 768}
+   first_jit_cross: {'C|0': 768}
+   first_sib_split: {'C|0': 768}
+   first_arr_rel: {'C|1': 768}
+   first_te_rel: {'C|-4': 768}
+   y_same_prev: {'C|0': 403, 'C|1': 365}
+-- o11 q1  n640 census {'S': 640} tgt {'S': 640} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P1_first   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P2_dflight strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P4_last    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P5_dleaf   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P6_share   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7_stale   strict 0.49 [0.44,0.54] n640 | decisive 0.49 [0.44,0.54] n640 cov 1.0 | shuf 0.49 [0.45,0.54] n640 / 0.49 [0.45,0.54] n640 | {'S>C': 325, 'S>S': 315}
+   H3_loo     strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7b(M only) n0 shuf n0
+   n_direct {'S': 2.0} flight {'S': 0.0} held {'S': 2.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'S|0': 640}
+   first_dist: {'S|1': 640}
+   first_jit: {'S|0': 640}
+   first_jit_cross: {'S|0': 640}
+   first_sib_split: {'S|0': 640}
+   first_arr_rel: {'S|0': 640}
+   first_te_rel: {'S|-5': 640}
+   y_same_prev: {'S|0': 325, 'S|1': 315}
+-- o12 q0  n640 census {'S': 640} tgt {'S': 640} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P1_first   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P2_dflight strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P4_last    strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P5_dleaf   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P6_share   strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7_stale   strict 0.49 [0.44,0.54] n640 | decisive 0.49 [0.44,0.54] n640 cov 1.0 | shuf 0.49 [0.45,0.54] n640 / 0.49 [0.45,0.54] n640 | {'S>C': 325, 'S>S': 315}
+   H3_loo     strict 1.00 [1.00,1.00] n640 | decisive 1.00 [1.00,1.00] n640 cov 1.0 | shuf 1.00 [1.00,1.00] n640 / 1.00 [1.00,1.00] n640 | {'S>S': 640}
+   P7b(M only) n0 shuf n0
+   n_direct {'S': 2.0} flight {'S': 0.0} held {'S': 2.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'S|0': 640}
+   first_dist: {'S|1': 640}
+   first_jit: {'S|0': 640}
+   first_jit_cross: {'S|0': 640}
+   first_sib_split: {'S|0': 640}
+   first_arr_rel: {'S|-1': 640}
+   first_te_rel: {'S|-6': 640}
+   y_same_prev: {'S|0': 325, 'S|1': 315}
+-- o12 q1  n768 census {'S': 768} tgt {'S': 768} maj 1.0
+   P3_cone    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P1_first   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P2_dflight strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P4_last    strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P5_dleaf   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P6_share   strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P7_stale   strict 0.48 [0.43,0.52] n768 | decisive 0.48 [0.43,0.52] n768 cov 1.0 | shuf 0.48 [0.43,0.52] n768 / 0.48 [0.43,0.52] n768 | {'S>C': 403, 'S>S': 365}
+   H3_loo     strict 1.00 [1.00,1.00] n768 | decisive 1.00 [1.00,1.00] n768 cov 1.0 | shuf 1.00 [1.00,1.00] n768 / 1.00 [1.00,1.00] n768 | {'S>S': 768}
+   P7b(M only) n0 shuf n0
+   n_direct {'S': 2.0} flight {'S': 0.0} held {'S': 2.0}
+   causal {'S': {'fa_eq_chan': 1.0, 'sa_eq_site': 1.0}}
+   first_from_source: {'S|0': 768}
+   first_dist: {'S|1': 768}
+   first_jit: {'S|0': 768}
+   first_jit_cross: {'S|0': 768}
+   first_sib_split: {'S|0': 768}
+   first_arr_rel: {'S|0': 768}
+   first_te_rel: {'S|-5': 768}
+   y_same_prev: {'S|0': 403, 'S|1': 365}
