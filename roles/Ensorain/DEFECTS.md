@@ -59,3 +59,9 @@
 - Science blocked? NO (closed campaigns; verdicts REDESIGN / PARK / known physics). LM01 does not use this code path.
 - Status: RECORDED. A fix belongs to any future WTP-04/Foundry revival (gate REPLICATED on replay_ok). No retroactive
   relabel is needed for WTP-01.
+
+### DEF-ENS-001 status update (2026-09-29T11:55Z, MWO-0004 G3)
+- LM01 is HOLD / NOT LAUNCHED by decision, not a pending operator gate.
+- DEF-ENS-001 no longer sits in operator_decisions_required. It matters only if a later order launches LM01, which
+  will then direct option A (transcription + MANIFEST) or B (gate repair, v0.3.3 re-freeze).
+- Status: OPEN, dormant.
