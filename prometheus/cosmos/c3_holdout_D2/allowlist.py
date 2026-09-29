@@ -31,9 +31,10 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 PROTO_REL = "prometheus/cosmos/c3_holdout_D2/protocol"
 ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ANCHOR.jsonl")
-ROLES = ("AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL")
+ROLES = ("AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL", "KEY_RELEASED", "REVEALED")   # v13: once-only records too
 ERR = {"AUDIT": protocol.AuditMissing, "COMMITMENT": protocol.CommitmentMissing,
-       "DESIGNATION": protocol.DesignationMissing, "RESULT_SEAL": protocol.ResultNotSealed}
+       "DESIGNATION": protocol.DesignationMissing, "RESULT_SEAL": protocol.ResultNotSealed,
+       "KEY_RELEASED": protocol.GateRefusal, "REVEALED": protocol.GateRefusal}
 
 
 def record_bytes(ref, name):
@@ -47,7 +48,7 @@ def load(path):
     return protocol.anchor_entries(path)
 
 
-def add(role, name, ref=protocol.DEFAULT_REF, path=ALLOWLIST) -> dict:
+def add(role, name, ref=protocol.DEFAULT_REF, path=ALLOWLIST, expect_commit=None, expect_sha256=None) -> dict:
     if role not in ROLES:
         raise SystemExit("REFUSED: unknown role %r" % role)
     ref_c = protocol.resolve_ref(REPO, ref)
@@ -58,6 +59,11 @@ def add(role, name, ref=protocol.DEFAULT_REF, path=ALLOWLIST) -> dict:
         c = protocol._added_once(REPO, ref_c, rel, ERR[role])
     except protocol.GateRefusal as e:
         raise SystemExit("REFUSED: %s: %s" % (type(e).__name__, e))
+    # v13 (Odysseus v12 V12-4): the custodian states what the author published; anything else is refused
+    if expect_commit is not None and c != expect_commit:
+        raise SystemExit("REFUSED: %s was added by %s, not the expected %s" % (name, c[:12], str(expect_commit)[:12]))
+    if expect_sha256 is not None and h != str(expect_sha256).lower():
+        raise SystemExit("REFUSED: %s has sha256 %s..., not the expected %s..." % (name, h[:12], str(expect_sha256)[:12]))
     prior = [e for e in load(path) if e.get("role") == role and e.get("record") == name]
     if any(e.get("sha256") != h for e in prior):
         raise SystemExit("REFUSED: %s/%s is already anchored with a different blob (once only)" % (role, name))
@@ -72,6 +78,8 @@ def main(argv=None):
     ap.add_argument("cmd", choices=("add", "show"))
     ap.add_argument("--role")
     ap.add_argument("--record")
+    ap.add_argument("--expect-commit", help="add: the commit the author published (required)")
+    ap.add_argument("--expect-sha256", help="add: the record's LF sha256 the author published (required)")
     a = ap.parse_args(argv)
     if not str(os.environ.get("C3D2_ENTRY", "")).startswith("verified"):
         print(json.dumps({"refused": True, "reason": "start allowlist through entry.py (v5 B-2)"}))
@@ -79,7 +87,10 @@ def main(argv=None):
     if a.cmd == "show":
         print(json.dumps(load(ALLOWLIST), indent=1))
         return 0
-    e = add(a.role, a.record)
+    if not (a.role and a.record and a.expect_commit and a.expect_sha256):
+        print(json.dumps({"refused": True, "reason": "add needs --role, --record, --expect-commit and --expect-sha256"}))
+        return 3
+    e = add(a.role, a.record, expect_commit=a.expect_commit, expect_sha256=a.expect_sha256)
     print(json.dumps({"anchored": a.record, "role": a.role, "sha256": e["sha256"], "commit": e["commit"],
                       "entry_hash": e["entry_hash"]}))
     return 0

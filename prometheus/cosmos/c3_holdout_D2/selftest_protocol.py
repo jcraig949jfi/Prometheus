@@ -1469,6 +1469,105 @@ def v11_checks(tmp, ts, pkg, sha):
     return res
 
 
+def v13_checks(tmp, ts, pkg, sha):
+    """v13 (Odysseus v12 V12-1/V12-3/V12-4): the ANCHOR governs. A deleted, edited or force-pushed-away anchored FAIL audit
+    is REFUSED (never lets the earlier PASS govern), in protocol.check_gates and in entry.py."""
+    res = {}
+    a2 = protocol.PROTO_REL + "/FIREWALL_AUDIT_2.json"
+
+    def with_anchored_fail(name):
+        r = GateRepo(tmp / "repos" / name, ts).full(sha)
+        r.audit(2, verdict="FAIL")                                  # anchored (allow=True)
+        return r, _git(r.p, "log", "-1", "--format=%H", REF, "--", a2)
+    # control: the anchored FAIL governs
+    r, c2 = with_anchored_fail("v13ctl")
+    res["v13_control_anchored_fail_governs"] = gates(r) == "AuditNotPass"
+    # deleted
+    (r.p / a2).unlink()
+    r.commit("delete the later FAIL audit")
+    res["v13_deleted_anchored_fail_refused"] = gates(r) == "AnchorMismatch"
+    # edited
+    r, c2 = with_anchored_fail("v13edit")
+    (r.p / a2).write_text((r.p / a2).read_text(encoding="utf-8").replace('"FAIL"', '"PASS"'), encoding="utf-8",
+                          newline="\n")
+    r.commit("edit the later FAIL audit")
+    res["v13_edited_anchored_fail_refused"] = gates(r) == "AnchorMismatch"
+    # force-pushed away (history rewound to before the FAIL audit)
+    r, c2 = with_anchored_fail("v13fp")
+    _git(r.p, "reset", "-q", "--hard", c2 + "^")
+    res["v13_rolled_back_anchored_fail_refused"] = gates(r) == "AnchorMismatch"
+    # defect control: without the anchor-state check the rollback WOULD let the earlier PASS govern
+    saved = protocol.verify_anchor_state
+    protocol.verify_anchor_state = lambda repo, ref_commit, allowlist: 0
+    try:
+        res["v13_defect_control_rollback_passes_without_check"] = gates(r) == "PASSED"
+    finally:
+        protocol.verify_anchor_state = saved
+    # entry.py: the same three cases through a real origin
+    for tag in ("del", "edit", "fp"):
+        e, bare = entry_repo(tmp, ts, sha, name="v13e" + tag)
+        e.audit(2, verdict="FAIL")
+        c2 = _git(e.p, "log", "-1", "--format=%H", REF, "--", a2)
+        _git(e.p, "push", "-q", "origin", "main")
+        if tag == "del":
+            (e.p / a2).unlink()
+            e.commit("delete")
+            _git(e.p, "push", "-q", "origin", "main")
+        elif tag == "edit":
+            (e.p / a2).write_text((e.p / a2).read_text(encoding="utf-8").replace('"FAIL"', '"PASS"'),
+                                  encoding="utf-8", newline="\n")
+            e.commit("edit")
+            _git(e.p, "push", "-q", "origin", "main")
+        else:
+            _git(e.p, "reset", "-q", "--hard", c2 + "^")
+            _git(e.p, "push", "-q", "-f", "origin", "main")
+        rc, out, err = run_entry(e, "gates", "DESIGNATION")
+        res["v13_entry_%s_anchored_fail_refused" % tag] = rc != 0 and "anchored AUDIT record" in (out + err)
+    # V12-3: an anchored KEY_RELEASED record refuses a second release even after git forgets it
+    r = GateRepo(tmp / "repos" / "v13kr", ts).full(sha)
+    r.put(protocol.KEY_RELEASED_FILE, {"event": "KEY_RELEASED", "spec_id": ts["m"]["spec_id"]})
+    r.allow("KEY_RELEASED", protocol.KEY_RELEASED_FILE)
+    res["v13_key_released_anchored"] = protocol.anchored_role(r.al, "KEY_RELEASED")
+    cu = custody.Custody(repo=r.p, ref=REF, secrets_dir=ts["secrets"], log=tmp / "v13_custody.jsonl", host=HOST,
+                         allowlist=r.al, pins=r.pins(), verify_loaded=False, restrict_acl=False, require_preflight=False)
+    try:
+        cu.release_key(RID, tmp / "v13_rel")
+        res["v13_anchored_key_release_refuses_second_release"] = False
+    except (custody.CustodyRefusal, protocol.GateRefusal):
+        res["v13_anchored_key_release_refuses_second_release"] = not (tmp / "v13_rel").exists()
+    # V12-4: allowlist add with the author's expected commit / sha256
+    r = GateRepo(tmp / "repos" / "v13exp", ts)
+    r.seal(); r.audit(allow=False)
+    rel = protocol.PROTO_REL + "/FIREWALL_AUDIT_1.json"
+    c = protocol._added_once(r.p, REF, rel, protocol.AuditMissing)
+    h = protocol.record_sha(subprocess.run(["git", "-C", str(r.p), "show", "%s:%s" % (REF, rel)], capture_output=True,
+                                           check=True).stdout)
+    allowlist.REPO = r.p
+    anc = tmp / "v13_anchor.jsonl"
+    try:
+        for tag, kw in (("wrong_commit", {"expect_commit": "e" * 40, "expect_sha256": h}),
+                        ("wrong_sha", {"expect_commit": c, "expect_sha256": "0" * 64})):
+            try:
+                allowlist.add("AUDIT", "FIREWALL_AUDIT_1.json", REF, path=anc, **kw)
+                res["v13_expect_%s_refused" % tag] = False
+            except SystemExit:
+                res["v13_expect_%s_refused" % tag] = True
+        res["v13_expect_matching_anchored"] = allowlist.add("AUDIT", "FIREWALL_AUDIT_1.json", REF, path=anc,
+                                                            expect_commit=c, expect_sha256=h)["commit"] == c
+    finally:
+        allowlist.REPO = REAL_REPO
+    # concurrent appends are serialised
+    lock = anc.with_name(anc.name + ".lock")
+    lock.write_text("")
+    try:
+        protocol.anchor_append(anc, {"role": "COMMITMENT", "record": "x", "path": "x", "sha256": "1" * 64, "commit": c})
+        res["v13_concurrent_append_refused"] = False
+    except protocol.NotAllowListed:
+        res["v13_concurrent_append_refused"] = True
+    lock.unlink()
+    return res
+
+
 def run() -> dict:
     with tempfile.TemporaryDirectory(prefix="c3D2_protocol_") as t:
         tmp = Path(t)
@@ -1492,14 +1591,16 @@ def run() -> dict:
         v9 = v9_checks(tmp, ts, pkg, sha)
         v10 = v10_checks(tmp, ts, pkg, sha)
         v11 = v11_checks(tmp, ts, pkg, sha)
+        v13 = v13_checks(tmp, ts, pkg, sha)
         dcs = defect_controls(tmp, ts, pkg, sha, f4_repo)
         import gc
         gc.collect()                                      # v11: close run.lock handles held by finished test runners
     checks = {"gate[%s]" % k: v["ok"] for k, v in gate_cases.items()}
     for grp in (closure, pk, en, al, {k: v for k, v in v3.items() if not k.endswith("_reason")}):
         checks.update(grp)
-    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11}.items() if v is None)
-    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11}.items()
+    not_applicable = sorted(k for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11, **v13}.items()
+                            if v is None)
+    checks.update({k: v for k, v in {**v4, **v5, **v6, **v7, **v8, **v9, **v10, **v11, **v13}.items()
                    if v is not None and not k.endswith("_reason")})
     checks.update({"e2e[%s]" % k: bool(v) for k, v in e2e.items()})
     res = {"checks": checks, "gate_outcomes": {k: v["got"] for k, v in gate_cases.items()},

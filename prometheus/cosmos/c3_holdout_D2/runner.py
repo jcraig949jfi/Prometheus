@@ -1318,6 +1318,8 @@ def _run_cli(a) -> int:
     g = protocol.check_gates(DEFAULT_GATE_REPO, "DESIGNATION", ref=a.gate_ref, package_sha256=a.package_sha256,
                              runner_id=a.runner_id, account=account, verify_loaded=True)
     rp = g["run_params"]
+    if Path(a.out_root) != Path(DEFAULT_OUT_ROOT):          # v13 (V12-3): one run location, so one run per designation
+        raise RunnerRefusal("the run output root is fixed (%s)" % DEFAULT_OUT_ROOT)
     out = Path(a.out_root) / ("run_" + g["run_nonce"])
     if (out / "receipts.jsonl").exists():                   # v7: receipts are the consumption marker
         raise RunnerRefusal("this designation's run was already consumed (receipts exist): one run per designation")
