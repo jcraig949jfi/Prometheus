@@ -222,3 +222,19 @@ ADDENDUM 2026-09-29 (after the owner's reply, comms #983; the BEE leg merged to 
 - **Hypothesis (UNTESTED):** the owner's arm randomises a source group or byte range that the dry pipeline did not (e.g. the
   input region beyond the supplied input).
 - **Status:** OPEN, non-blocking. Q8c < 5% in both pipelines. Resolving it needs a comparison of the arm group definitions.
+
+**F. Cross-pipeline Q8c difference: CAUSES IDENTIFIED (Archaeon, 2026-09-29; MWO-0004 R1 bounded item; code comparison only,
+nothing re-run).**
+- The source groups are IDENTICAL in both pipelines: W, P (when occupied) and the supplied INPUT bytes (owner
+  s4_tests.group_addrs; Archaeon bee_dryrun_v5.analyse_birth).
+- **The ESTIMAND differs.** Archaeon's pre-C4 dry pipeline did NOT compute R2 as written:
+  * per locus it took the MAX over outside groups of changes / K, where the owner pools changes / draws over (group, draw);
+  * its denominator K counted every draw, including draws in which the write is suppressed. R2, and the owner, count only
+    draws in which the write occurs.
+- **Draw streams are independent** (different RNG seeding). With K = 8, rare changes appear in one pipeline and not the other.
+  That fits the two-directional per-birth discordance in item E.
+- **Consequence:**
+  * the dry-run Q8c value (0.0003) is NOT an R2 value and must not be cited as one;
+  * the owner's 0.00115 is the R2 estimand;
+  * the effect of each difference on the mean is not apportioned (that would need a re-run).
+- **Item CLOSED** as explained qualitatively. The VALIDATED computation is unaffected.
