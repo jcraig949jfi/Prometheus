@@ -145,3 +145,22 @@ Mean 2nd-half excess (16 eval seeds):
    - Open design question: a learner with no fixed S that pays neither half on this ladder.
    - Candidates: soft belief-state tracking over CSSR-proposed states (EM refinement initialized from the split
      machine), or state merging by future-distribution equivalence (bisimulation-style) instead of suffix splitting.
+
+## Tick 2026-09-29T05:15Z: EM refinement from the split-CSSR machine (cssr_em.py)
+
+Debug, on seeds 1001-1002 only:
+- **10 EM iterations:** Even .028 / .032 (barely off the window floor).
+- **50 iterations:** Even .0011 / .0018.
+  - At 200 iterations the final-fit log-loss is .6721 / .6656, vs Bayes .6726 / .6664.
+  - So the stall was SLOW CONVERGENCE, not a local optimum. EM does leave the 1-counter basin.
+- **50 iterations on W2_3:** .0102 / .0464 (split: .0009 / .0033). EM overfits the over-split machine: 12-17 soft
+  states is several hundred free parameters on 4000 symbols. Golden and SNS are fine.
+- **Remedy with a guarantee:** the prequential Bayes mixture of split and EM. Its total log-loss is <= the better
+  learner's + 1 bit, by construction.
+
+## Precommitment (written BEFORE running cssr_em_eval.py; eval seeds 1..16, T = 4000)
+
+- E1: CSSR_EM on Even, mean 2nd-half excess < .005.
+- E2 (failure reproduces): CSSR_EM on W2_3, mean excess > .01.
+- E3: on every world, the MIX mean excess is <= min(split mean, EM mean) + .002.
+- E4: MIX on Even < .006 AND MIX on W2_3 < .006 (one learner, with no fixed S, safe on both).
