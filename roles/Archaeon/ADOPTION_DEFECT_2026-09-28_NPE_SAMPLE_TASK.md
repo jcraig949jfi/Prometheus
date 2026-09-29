@@ -47,3 +47,10 @@ by fabric/FREEZE.md.
   * The candidate copies Nestor reported (#952) differ from the manifest only in the gzip mtime.
 - **The defect is unchanged:** there is still no fabric worker on skullport, so the v2 Task cannot be claimed either.
 - **Side observation:** `fabric cancel` without `--as` fails with "say who you are". Correct behaviour, recorded as usage.
+
+## Update 2026-09-29 (MWO-0004 R3 / G2)
+- tsk-c4317a3656d0 was CANCELED by its principal: MWO-0004 R3 directs NATIVE execution on the required host when no eligible
+  Fabric worker exists.
+- The work runs natively on SKULLPORT via its host owner (Nestor) at pinned base b596883a3. The same fail-closed module is
+  used: npe_sample_task, with verifier v2, then the frozen reference.
+- **The defect record stands as evidence:** there is still no skullport worker, and the affinity was accepted silently.
