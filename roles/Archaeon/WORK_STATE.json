@@ -1,10 +1,10 @@
 {
  "schema": "prometheus.work_state.v1",
  "seat": "Archaeon",
- "mwo_id": "MWO-0003",
- "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
- "updated_at_utc": "2026-09-29T11:20:24Z",
- "state": "HOLD",
+ "mwo_id": "MWO-0004",
+ "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+ "updated_at_utc": "2026-09-29T11:46:29Z",
+ "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
  "threads": [
@@ -19,31 +19,29 @@
   "E-003 = ancestry replay: COMPLETE. BEE VALIDATED, CONDITIONAL on post-exposure C4.2/C4.4/C11; robust finding Q8c 0.00115; NPE uninformative by construction (E003_SYNTHESIS.md @ 056320b4c; reviews review_e003/)"
  ],
  "fabric_tasks": [
-  "tsk-05b35561e844 + tsk-0147d5299dac: FP-001 BEE fixture probe, completed, identical digests",
-  "tsk-c4317a3656d0: NPE 1% sample v2, host_affinity=skullport, UNCLAIMABLE (s12)"
+  "tsk-05b35561e844 + tsk-0147d5299dac: FP-001, completed PASS",
+  "tsk-c4317a3656d0: CANCELED under MWO-0004 R3 (native fallback)"
  ],
  "running": [],
  "blocked_on": [
-  "NPE 1% sample check (non-blocking for E-003): no skullport Fabric worker (s12 defect; Odysseus #916)"
+  "E-003 1% NPE sample: concrete dependency = Nestor's native SKULLPORT run of npe_sample_task @ b596883a3 (comms delegation). G2 default: both candidates fail -> LOST / NOT VERIFIED"
  ],
  "next_actions": [
-  "HOLD. Resume if a skullport worker appears (tsk-c4317a3656d0) or a future MWO authorizes the follow-ups",
-  "open (Archaeon side): trace why Archaeon's pre-C4 dry pipeline differs from the owner's frozen pipeline (Q8c 0.0003 vs 0.00115)"
+  "on Nestor's receipt: record VERIFY/AGREEMENT as an E-003 addendum, or declare the sample LOST per G2",
+  "bounded (R1): compare Archaeon's dry arm source groups with the owner's to close the cross-pipeline Q8c item",
+  "no new BEE/NPE design campaign (MWO-0004 G6)"
  ],
- "operator_decisions_required": [
-  "Future MWO: whether to run a NEW preregistered BEE run (to remove the post-exposure conditionality) and/or a decidable NPE design (>=30 transmission births; store-before-execute-free identification). Recorded, not requested.",
-  "CONDITIONAL (unchanged): the NPE 1% sample, if the v2 verification of the run-1 copies fails -> regenerate vs declare lost"
- ],
+ "operator_decisions_required": [],
  "latest_reports": [
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (+ addendum 2026-09-29)",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/ @ c24ee1fef"
  ],
- "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
+ "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 987,
- "state_reason": "E-003 complete for its question (reviewed synthesis). No further authorized Archaeon work under MWO-0002; no new campaigns.",
+ "comms_cursor": 988,
+ "state_reason": "MWO-0004 G2: 1% NPE sample check running natively on SKULLPORT via its host owner (R3)",
  "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json"
 }
