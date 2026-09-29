@@ -101,9 +101,13 @@ def initial_labels(L: int, n_inputs: int, in_base: int) -> List[tuple]:
 
 
 def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copyall: bool = True,
-          labels: Optional[List[tuple]] = None, check: bool = True) -> Tuple[bytearray, Dict[int, dict], dict]:
+          labels: Optional[List[tuple]] = None, check: bool = True, ev: Optional[list] = None) -> Tuple[bytearray, Dict[int, dict], dict]:
     """Shadow-execute one SHARED interaction from entry 0. Returns (memory after, recs per window locus 0..L-1, info).
-    `mem` is NOT mutated. check=True value-checks against vm.execute on a copy."""
+    `mem` is NOT mutated. check=True value-checks against vm.execute on a copy.
+    ev (optional list): the PATH is appended in execution order, for the flip test (v4 s4.1 + B1 + R4 + C7.2):
+    ("F", pc, opclass) for each fetch, where opclass is the opcode, or "U" for any undefined byte (R4: undefined opcodes
+    are equivalent NOPs); ("S", addr) for each store, OUT stores included; ("L", addr) for each data read (LD A,(r),
+    LDI/LDIR/COPYALL sources, IN reads)."""
     il = labels if labels is not None else initial_labels(L, len(inputs), vm.IN_BASE)
     M = [V(mem[a], il[a]) for a in range(256)]
     R = {r: V(0, RESET) for r in "ABCDST"}
@@ -117,6 +121,8 @@ def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copy
 
     def store(addr: int, val: V, perf_lab, ptr_dep: FrozenSet):
         addr &= 0xFF
+        if ev is not None:
+            ev.append(("S", addr))
         M[addr] = V(val.v, val.lab, val.addr | ptr_dep)
         if nb_lo <= addr < nb_hi:
             recs[addr - L] = {"written": True, "ctrl": pcl, "addr": M[addr].addr, "exec": ex,
@@ -125,6 +131,8 @@ def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copy
     while steps < budget:
         op = M[pc].v
         steps += 1
+        if ev is not None:
+            ev.append(("F", pc, op if op in vm.OPLEN else "U"))
         n = vm.OPLEN.get(op, 0)
         opl = M[pc].lab
         ex = ex | M[pc].dep()
@@ -140,12 +148,14 @@ def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copy
             R[reg] = V(arg, argV.lab, argV.addr)
         elif op in (vm.LD_A_pS, vm.LD_A_pT):
             P = R["S" if op == vm.LD_A_pS else "T"]; src = M[P.v]
+            if ev is not None: ev.append(("L", P.v))
             R["A"] = V(src.v, src.lab, src.addr | P.dep())
         elif op in (vm.LD_pT_A, vm.LD_pS_A):
             P = R["T" if op == vm.LD_pT_A else "S"]
             store(P.v, R["A"], opl, P.dep())
         elif op == vm.LDI:
             S_, T_ = R["S"], R["T"]; src = M[S_.v]
+            if ev is not None: ev.append(("L", S_.v))
             if nb_lo <= S_.v < nb_hi: flags["in_window_source"] = True
             store(T_.v, V(src.v, src.lab, src.addr | S_.dep()), opl, T_.dep())
             R["S"] = V(S_.v + 1, computed_from(S_.lab), S_.addr); R["T"] = V(T_.v + 1, computed_from(T_.lab), T_.addr)
@@ -154,6 +164,7 @@ def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copy
             if R["C"].v == 0: flags["ldir_c0_entered"] = True
             while True:
                 S_, T_ = R["S"], R["T"]; src = M[S_.v]
+                if ev is not None: ev.append(("L", S_.v))
                 if nb_lo <= S_.v < nb_hi: flags["in_window_source"] = True
                 store(T_.v, V(src.v, src.lab, src.addr | S_.dep()), opl, T_.dep())
                 R["S"] = V(S_.v + 1, computed_from(S_.lab), S_.addr); R["T"] = V(T_.v + 1, computed_from(T_.lab), T_.addr)
@@ -168,6 +179,7 @@ def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copy
             S_, T_ = R["S"], R["T"]
             for i in range(L):
                 src = M[(S_.v + i) & 0xFF]
+                if ev is not None: ev.append(("L", (S_.v + i) & 0xFF))
                 if nb_lo <= (S_.v + i) & 0xFF < nb_hi: flags["in_window_source"] = True
                 store((T_.v + i) & 0xFF, V(src.v, src.lab, src.addr | S_.dep()), opl, T_.dep())
             steps += L // 8
@@ -214,11 +226,13 @@ def trace(vm, mem: bytearray, L: int, budget: int, inputs: List[int], allow_copy
         elif op == vm.IN_A:
             if ip < 16:
                 src = M[(vm.IN_BASE + ip) & 0xFF]; R["A"] = V(src.v, src.lab, src.addr | pcl)
+                if ev is not None: ev.append(("L", (vm.IN_BASE + ip) & 0xFF))
             else:
                 R["A"] = V(0, EXHAUSTED, pcl)
             ip += 1
         elif op == vm.OUT_A:
             if len(outputs) < 16:
+                if ev is not None: ev.append(("S", vm.OUT_BASE + len(outputs)))
                 a = R["A"]; M[vm.OUT_BASE + len(outputs)] = V(a.v, a.lab, a.addr | pcl); outputs.append(a.v)
         elif op in (vm.LD_B_A, vm.LD_A_B, vm.LD_C_A, vm.LD_A_C, vm.LD_S_A, vm.LD_T_A, vm.LD_A_S, vm.LD_A_T, vm.LD_D_A, vm.LD_A_D):
             dst, src = {vm.LD_B_A: "BA", vm.LD_A_B: "AB", vm.LD_C_A: "CA", vm.LD_A_C: "AC", vm.LD_S_A: "SA", vm.LD_T_A: "TA",

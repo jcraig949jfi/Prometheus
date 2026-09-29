@@ -117,7 +117,12 @@ def main() -> int:
                 pre[L:2 * L] = partner_tape
             for k, v in enumerate(inputs[:16]):
                 pre[vm.IN_BASE + k] = v
-            after, recs, info = BT.trace(vmshim, pre, L, self.cfg.budget, list(inputs), allow_copyall=self.cfg.allow_copyall, check=False)
+            labels = BT.initial_labels(L, len(inputs[:16]), vm.IN_BASE)
+            if partner_tape is None:                                  # v4 s1.2: EMPTY is FOREIGN-STRUCTURAL (CONSTANT, kind)
+                for a_ in range(L, 2 * L):
+                    labels[a_] = ("CONST", "empty")
+            after, recs, info = BT.trace(vmshim, pre, L, self.cfg.budget, list(inputs), allow_copyall=self.cfg.allow_copyall,
+                                         labels=labels, check=False)
             mem, tr = super()._execute(o, partner_tape, inputs)
             stats["interactions"] += 1
             if bytes(mem) != bytes(after):
@@ -166,7 +171,7 @@ def main() -> int:
                              "orig": list(self.vec[cid][k])})
             rec = {"birth_index": n_before, "tick": self.tick, "writer": parent.id, "child": cid, "occupant": last["occupant"],
                    "native_row": self.births[n_before], "pre_state": {"mem": last["pre"], "inputs": last["inputs"], "entry": 0,
-                   "budget": self.cfg.budget, "allow_copyall": self.cfg.allow_copyall},
+                   "budget": self.cfg.budget, "allow_copyall": self.cfg.allow_copyall, "window_empty": last["occupant"] is None},
                    "writer_pre": last["pre"][:2 * L], "writer_post": bytes(parent.tape).hex(), "child_tape": bytes(child).hex(),
                    "occupant_tape": last["pre"][2 * L:4 * L] if last["occupant"] is not None else None,
                    "vec_writer_pre": [list(x) for x in last["vec_w"]], "vec_occupant_pre": [list(x) for x in last["vec_p"]] if last["vec_p"] else None,
