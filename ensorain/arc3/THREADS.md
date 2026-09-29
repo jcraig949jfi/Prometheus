@@ -315,4 +315,5 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - WHY: an instrument-integrity defect in the legacy Foundry engine (not LM01).
 - DISC: read ensorain/wtp/* (and wtp3) for the REPLICATED label path; add a test.
 - RES: none (code reading).
-- MAT: idea; eligible now.
+- MAT: ANSWERED 2026-09-29 -> roles/Ensorain/DEFECTS.md DEF-ENS-002 (confirmed; no WTP-01 label affected: 35/35
+  replay_ok true; WTP-02/03 record no replay).

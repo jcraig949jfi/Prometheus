@@ -40,3 +40,22 @@
       v0.3.3 hash.
   - Ensorain recommends (A): it preserves the reviewed freeze ee8cbe0c8.
 - Status: OPEN. Recorded in roles/Ensorain/WORK_STATE.json (blocked_on, operator_decisions_required).
+
+## DEF-ENS-002: the legacy WTP-01 engine records replay_ok but never gates REPLICATED on it
+
+- Recorded 2026-09-29T03:00Z. Source: Artemis R-08 (comms #882; a worker claim), verified by Ensorain.
+- Identifiers: MWO-0001; thread thr-ens-lossless-memorizer (legacy Foundry lineage); experiments WTP-01/02/03 (closed
+  campaigns); no Fabric Task.
+- Base SHA: bd48fac9b.
+- Expected: a REPLICATED label requires an identical replay of the original run.
+- Observed:
+  - ensorain/wtp/campaign.py:146 sets state = REPLICATED from hits >= 3 alone; replay_ok is recorded (line 150) but not
+    used.
+  - ensorain/wtp3/campaign3.py:339 has no replay check in its REPLICATED rule, and the WTP-02/03 rows carry no replay_ok
+    field.
+- Impact check on the committed rows: WTP-01 has 35 rows with replay_ok, 0 of them false, so NO WTP-01 REPLICATED
+  label was affected. WTP-02/03 cannot be assessed (no replay recorded). Their REPLICATED labels rest on independent
+  seed hits, not replay identity.
+- Science blocked? NO (closed campaigns; verdicts REDESIGN / PARK / known physics). LM01 does not use this code path.
+- Status: RECORDED. A fix belongs to any future WTP-04/Foundry revival (gate REPLICATED on replay_ok). No retroactive
+  relabel is needed for WTP-01.
