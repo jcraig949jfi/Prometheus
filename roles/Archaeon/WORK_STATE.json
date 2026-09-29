@@ -3,8 +3,8 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T11:54:17Z",
- "state": "WORKING",
+ "updated_at_utc": "2026-09-29T17:06:08Z",
+ "state": "HOLD",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
  "threads": [
@@ -16,31 +16,28 @@
   "C-001"
  ],
  "experiments": [
-  "E-003 = ancestry replay: COMPLETE. BEE VALIDATED, CONDITIONAL on post-exposure C4.2/C4.4/C11; robust finding Q8c 0.00115; NPE uninformative by construction (E003_SYNTHESIS.md @ 056320b4c; reviews review_e003/)"
+  "E-003 = ancestry replay: COMPLETE (E003_SYNTHESIS.md, items A-G). BEE VALIDATED conditional on post-exposure rules; robust Q8c 0.00115; NPE uninformative by construction; NPE 1% sample VERIFIED + AGREEMENT PASS"
  ],
  "fabric_tasks": [
   "tsk-05b35561e844 + tsk-0147d5299dac: FP-001, completed PASS",
   "tsk-c4317a3656d0: CANCELED under MWO-0004 R3 (native fallback)"
  ],
  "running": [],
- "blocked_on": [
-  "E-003 1% NPE sample: VERIFIED natively on SKULLPORT (stage 1 PASS, 11/11, 28,055 records); stage 2 awaits Nestor's single rerun at 8631128c3 (schema declared)"
- ],
+ "blocked_on": [],
  "next_actions": [
-  "on the rerun receipt: record the 1% sample agreement (PASS/FAIL, raw per class) as an E-003 addendum",
-  "no new BEE/NPE design campaign (MWO-0004 G6)"
+  "HOLD: no eligible work. Resume on a new MWO or on a seat request"
  ],
  "operator_decisions_required": [],
  "latest_reports": [
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (+ addendum 2026-09-29)",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/ @ c24ee1fef"
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_SYNTHESIS.md (items A-G)",
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/review_e003/"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Archaeon/MIGRATION_REPORT_MWO-0002.json",
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 990,
- "state_reason": "MWO-0004 G2: 1% NPE sample check running natively on SKULLPORT via its host owner (R3)",
+ "comms_cursor": 1023,
+ "state_reason": "E-003 complete, including the NPE 1% sample (VERIFIED + AGREEMENT PASS). No further authorized Archaeon work under MWO-0004 (G6: no new BEE/NPE design).",
  "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json"
 }
