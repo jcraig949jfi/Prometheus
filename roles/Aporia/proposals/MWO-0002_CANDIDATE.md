@@ -15,7 +15,8 @@ that holds seat work state not yet on main, including:
 * archaeon/mwo0001-2026-09-28 at b500d307b3
 
 Authored as a candidate by an assigned seat. This order becomes authoritative only after operator approval and
-publication by the designated publishing seat (section 2).
+publication by the designated publishing seat (section 2). The publishing seat for MWO-0002 is Aporia (section 2,
+PUBLISHER FOR MWO-0002).
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -44,12 +45,14 @@ Where this order is silent, MWO-0001 governs.
 
 1. WHAT THIS ORDER CHANGES
 
-Exactly three things change. Nothing else in MWO-0001 is amended.
+Exactly four things change. Nothing else in MWO-0001 is amended.
 
 1. Master Work Order custody is generalized: authoring, approval and publication are separated, and publication
-   is a function of a designated seat, not of a named seat (section 2).
+   is a function of a designated seat, not of a named seat. Publication uses a two-commit protocol (section 2).
 2. Each live seat files one small machine-readable migration report for this cycle (section 3).
 3. The WORK_STATE v1 schema is clarified: required core fields vs permitted extra fields (section 5).
+4. Two steward-era coordination requests, comms #603 and #608, are canceled as coordination requests
+   (section 2a).
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -73,33 +76,66 @@ APPROVAL
 * The operator, with central ChatGPT coordination, accepts, revises or rejects a candidate.
 * Only the approved text is authoritative. The approved text may differ from the candidate. When it does, the
   approved text governs and the candidate is kept only as history.
-* The approval names the publishing seat for that MWO.
+* The approval names the publishing seat for that MWO. Any seat may be designated.
 
 PUBLICATION
 
 The designated publishing seat performs the REGISTRAR FUNCTION for that one publication only. The registrar
-function is not a standing role. It confers no authority beyond these steps, and it ends when step 7 is done.
+function is not a standing role. It creates no steward, coordinator, scheduling or adjudication authority, and it
+ends at step 9.
 
-1. Commit the approved text verbatim to ops/work_orders/CURRENT.md and to
-   ops/work_orders/archive/<MWO-ID>_<date>.md, byte-identical, LF line endings.
-2. Compute the sha256 of the COMMITTED BLOB (git show origin/main:<path> | sha256sum), never of a working-tree
-   file. A CRLF checkout hashes differently.
-3. Append one row to ops/work_orders/PUBLICATIONS.md: MWO ID, archive path, sha256, publication commit, UTC time,
-   broadcast id, and the publishing seat.
-4. Push to origin/main.
-5. Verify from origin/main that CURRENT.md and the archive copy hash identically to the recorded sha256.
-6. Send one comms message to all seats: MWO ID, commit SHA, archive path, sha256, and the line
-   "fetch origin/main:ops/work_orders/CURRENT.md and adopt".
-7. Record the publication in the publishing seat's WORK_STATE, then return to that seat's own work or HOLD.
+Publication uses two commits. The publication commit P never has to contain its own SHA or a future broadcast
+ID; those are recorded afterwards in a separate record commit R.
+
+Phase A -- publication commit P
+
+1. Write the approved text verbatim and byte-identically, LF line endings, to:
+   * ops/work_orders/CURRENT.md
+   * ops/work_orders/archive/<MWO-ID>_<date>.md (the immutable archive path).
+2. Commit those two canonical MWO files, and only those. This commit is P, the publication commit.
+3. Push P to origin/main.
+4. Verify both committed blobs from origin/main (git show origin/main:<path> | sha256sum, never a working-tree
+   file; a CRLF checkout hashes differently). They must be identical. That value is the MWO's SHA-256.
+
+At this point the MWO is published and authoritative.
+
+Phase B -- notification and publication record
+
+5. Send one fleet-wide comms broadcast containing: the MWO ID; publication commit P; the archive path; the
+   committed-blob SHA-256; and the line "fetch origin/main:ops/work_orders/CURRENT.md and adopt".
+6. Append one publication record to ops/work_orders/PUBLICATIONS.md: MWO ID; archive path; blob SHA-256;
+   publication commit P; publication UTC time; broadcast ID; publishing seat.
+7. Update the publishing seat's WORK_STATE, with P as mwo_commit.
+8. Commit these records as a separate record commit R, and push R to origin/main.
+9. Verify that R is on origin/main. The registrar function then ends.
+
+A seat adopting an MWO takes mwo_commit = P (from the broadcast or PUBLICATIONS.md) and verifies the committed
+blob against the recorded SHA-256. If R is delayed or fails, P is still authoritative: its blob hash is checkable
+from Git alone.
 
 The registrar must not rewrite, summarize, expand, reinterpret or reprioritize the approved text, and must not
 require ACK messages. Only the designated publishing seat writes ops/work_orders/ for that publication.
 PUBLICATIONS.md remains append-only; its header line naming a maintainer is read as "maintained by the
 publishing seat of each row".
 
-PUBLISHER FOR MWO-0002: [DESIGNATED AT APPROVAL]. If the operator designates Cyclops, this publication also
-satisfies MWO-0001's custody sentence as written. If the operator designates another seat, the operator's
-approval of this text is the explicit custody change that MWO-0001 section 2 requires.
+PUBLISHER FOR MWO-0002: Aporia. The operator designates Aporia as the publishing seat for MWO-0002. This is an
+explicit operator custody change under MWO-0001 section 2. It covers the MWO-0002 publication only. After step 9
+Aporia returns to HOLD/advisory, with no steward or coordinator authority.
+
+----------------------------------------------------------------------------------------------------------------
+
+2a. STEWARD-ERA REQUESTS #603 AND #608
+
+The held Selective Irreversibility steward-era freeze requests, comms #603 and #608, are CANCELED / SUPERSEDED AS
+COORDINATION REQUESTS.
+
+Reason: the stewardship and sign-off mechanism that generated them was superseded by direct operator and
+central-MWO coordination (operator rulings of 2026-09-26).
+
+This cancellation does not reject, validate or otherwise adjudicate the underlying scientific ideas. Any
+still-useful scientific question may be proposed again through the current Thread / Campaign / MWO process. No
+seat need act on #603 or #608; a seat holding them may mark them done citing this section. This section does not
+resurrect any Aporia or Cyclops stewardship.
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -123,7 +159,8 @@ The roster is derived from Git, not from a list in this order:
 * any other seat that becomes live, for its own reasons, while MWO-0002 is current.
 
 At the review snapshot, the first rule gives: Aether, Ananke, Aphrodite, Archaeon, Artemis, Bellerophon, Cosmos,
-Cyclops, Ensorain, Harmonia, Nestor, Odysseus. That list is informative; the rule governs.
+Cyclops, Ensorain, Harmonia, Nestor, Odysseus; Aporia has since qualified (WORK_STATE pushed while authoring). That
+list is informative; the rule governs.
 
 No dormant or parked seat is woken to file a census report. A seat that stays dormant for the whole cycle is
 recorded by central coordination as NOT_LIVE, which is not a migration failure.
@@ -133,8 +170,8 @@ WHAT EACH ROSTER SEAT DOES (once, inside its normal loop)
 1. Adopt MWO-0002 per MWO-0001 section 8: fetch, verify the committed blob's sha256 against PUBLICATIONS.md, and
    read this order.
 2. Write roles/<Seat>/MIGRATION_REPORT_MWO-0002.json (schema in section 4).
-3. Update roles/<Seat>/WORK_STATE.json: set mwo_id to MWO-0002 and mwo_commit to the MWO-0002 publication commit,
-   and add "migration_report": "roles/<Seat>/MIGRATION_REPORT_MWO-0002.json".
+3. Update roles/<Seat>/WORK_STATE.json: set mwo_id to MWO-0002 and mwo_commit to the MWO-0002 publication commit
+   P, and add "migration_report": "roles/<Seat>/MIGRATION_REPORT_MWO-0002.json".
 4. Commit both files and push them to the seat's own working branch. A merge to main is NOT required to report.
 5. Continue its carried-forward work (section 6).
 
@@ -280,12 +317,12 @@ Carried forward explicitly, because they are easy to lose in a cutover:
 
 Seat-specific notes (census only; no new science):
 
-* Publishing seat: perform section 2 for MWO-0002, file its own census report, then return to its own work or
-  HOLD. No coordination, scheduling or adjudication role follows from publishing.
 * Odysseus: remains Fabric principal under the freeze. Record, as adoption-experiment evidence, any Fabric
   limitation surfaced by census reports (section 7). No feature work.
-* Aporia: authored this candidate on assignment. It remains advisory with no steward or control function. It
-  files a census report only if it is live during the cycle.
+* Aporia: authored this order on assignment and is its designated publishing seat. It performs section 2 for
+  MWO-0002 only, files its own census report as a live seat, and then returns to HOLD/advisory. No steward,
+  coordination, scheduling or adjudication role follows from authoring or publishing.
+* Harmonia (holder of #603/#608): no action required. The requests are canceled by section 2a.
 * Atlas, Atlas-M2, Vivarium, Daedalus, Nyx, Techne, Theophrastus, Crius and all other seats: no change from
   MWO-0001. File a census report only if live during the cycle.
 
@@ -307,13 +344,15 @@ remain governed by fabric/FREEZE.md, and scientific or custody changes by their 
 * Hash verification: a CRLF working-tree file hashes differently from the committed blob (recorded by Harmonia).
   Section 2 step 2 fixes the method for publishers; seats should verify the same way.
 * ops/README.md still carries a 2026-09-27 banner describing the Thread/Campaign model as a pilot that seats must
-  not adopt on their own initiative. MWO-0001 later adopted that model fleet-wide. The banner is out of date and
-  the MWO governs.
+  not adopt on their own initiative. MWO-0001 later adopted that model fleet-wide. Where they conflict,
+  MWO-0001/MWO-0002 govern. The banner is NOT to be repaired before or during the census. Whether seats were
+  confused by this stale, lower-authority document is itself census evidence (record it under
+  legacy_conventions_still_used or migration_blockers). A later MWO may retire or correct it.
 * Identifier drift: several WORK_STATE files use Thread or Campaign ids that are not in ops/threads/ or
   ops/campaigns/ on main.
-* Steward-era items still in comms queues (for example the Selective Irreversibility freeze requests #603 and #608,
-  held by Harmonia) predate the 2026-09-26 operator rulings that froze steward management and removed steward
-  sign-off. Their disposition is an operator decision (section 8).
+* Steward-era items still in comms queues predate the 2026-09-26 operator rulings that froze steward management
+  and removed steward sign-off. #603 and #608 are canceled by section 2a. A seat that finds any other steward-era
+  request still shaping its work records it under legacy_conventions_still_used.
 
 ----------------------------------------------------------------------------------------------------------------
 
@@ -329,7 +368,7 @@ listed so the census review can see them in one place. Each seat's own record re
 * Cosmos: whether withheld coordinate-layer files may be published so a Fabric audit Task can read them.
 * Aether: continuation of the physics search (deferred to MWO review), and promexec round 2.
 * Aphrodite: review of the ARC3 close; TH-019 donor stage T51; the TH-020 DSL fork.
-* Harmonia: renew or cancel the held SI freeze requests #603 and #608.
+(Harmonia's pending "renew or cancel #603/#608" is decided by section 2a of this order and no longer pending.)
 
 ----------------------------------------------------------------------------------------------------------------
 

@@ -3,7 +3,7 @@
   "seat": "Aporia",
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "updated_at_utc": "2026-09-29T06:25:02Z",
+  "updated_at_utc": "2026-09-29T06:31:25Z",
   "state": "HOLD",
   "branch": "aporia/mwo-0002-candidate-2026-09-29",
   "head_sha": "(this commit; see git log)",
@@ -14,14 +14,14 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "HOLD after delivering the MWO-0002 candidate; no independent authorized Aporia work under MWO-0001 (APORIA: remain parked/advisory)"
+    "HOLD until the operator approves MWO-0002; then publish the APPROVED text (Phase A: P; Phase B: broadcast + PUBLICATIONS row + WORK_STATE as R), then HOLD/advisory"
   ],
   "operator_decisions_required": [
-    "Review roles/Aporia/proposals/MWO-0002_CANDIDATE.md (author note: MWO-0002_AUTHOR_NOTE.md s5)"
+    "Approve MWO-0002 (candidate revision 1, roles/Aporia/proposals/MWO-0002_CANDIDATE.md); on approval Aporia publishes it per its s2 two-commit protocol, then returns to HOLD"
   ],
   "latest_reports": [
     "roles/Aporia/proposals/MWO-0002_CANDIDATE.md",
     "roles/Aporia/proposals/MWO-0002_AUTHOR_NOTE.md"
   ],
-  "state_reason": "Operator-assigned authoring task (roles/Aporia/prompts/2026-09-29_mwo0002_authoring/) delivered; authoring confers no steward role. Deep Research not fired."
+  "state_reason": "Revision 1 of the MWO-0002 candidate delivered per operator rulings (roles/Aporia/prompts/2026-09-29_mwo0002_revision/). Designated MWO-0002 publisher; no steward role."
 }
