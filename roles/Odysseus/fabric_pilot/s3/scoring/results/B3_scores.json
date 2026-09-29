@@ -1,0 +1,37 @@
+{
+  "X005": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Arbitration law priority=M(h3 XOR C(source)), SplitMix64 finalizer, bijection, payload excluded, plus explicit non-neutrality caveat -> verified, 5266cce:Aether/AETHER_SPEC.md (Collision arbitration section); derived 50/50 two-way symmetry proof checked and sound",
+      "Fan-in 0/1 at 98.4%, 2 at 1.6%, 3 at ~20 per million, 4 once -> verified, Aether/AETH-01/NATIVE_CIRCUITRY_01_2026-09-24.md:212-214; 1,754 persistent edges 0 contested -> verified :270",
+      "S4 same contested winner 0.50 vs 0.50 (hys 0.97) -> verified, Aether/AETH-03/PHYSICS_DESIGN_01_2026-09-26.md:415; AETH-01-scale stratified rerun 'not executed' -> verified, REPAIR_LEDGER_01.md:499-504; energy contest 0.56% -> verified AETH02_CALIBRATION_2026-09-23.md:114"
+    ],
+    "notes": "Dense path:line evidence, correct cites, and a sound derived argument with clear falsifiers. Minor slip: '99.998% of contests are two-way' should read of slots (~99.9% of contests), which does not change the conclusion."},
+  "X016": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "AETH-02 close says the negative must not be quoted as 'no possible circuitry' and lists what assays cannot see -> verified, Aether/AETH-01/AETH-02_CLOSE_2026-09-24.md:280-282",
+      "Astra closure review marks S04 and M08 PARTIALLY_CLOSED, S04 citing the funded prewired writer exclusion; K3 helper 'restricted field ontology' -> verified, Aether/AETH-01/ASTRA_CLOSURE_REVIEW_02.md:78,88,462",
+      "Terminology linter's deprecated list lacks parent/template/copy/inherit/Mu -> verified (list has copier/self-copying but not those terms), Aether/test/test_aeth01_terminology_audit.py:34-61"
+    ],
+    "notes": "Careful three-layer separation (vocabulary/contract/instrument), with claims tied to exact cites that check out. Limits and decision thresholds are explicit; the section 5 assays are clearly labelled as design, not evidence."},
+  "X017": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "Current fixture: random -0.126, oracle +0.506, keep_worst -0.182, residual_reservoir +0.023, gap +0.63 -> verified, ensorain/lm01/dev/fixture_reservoir.json:18-23",
+      "At 6a48ff937 residual_reservoir -0.457 vs random -0.335, gap +0.91 -> verified, 6a48ff937:ensorain/lm01/dev/fixture_reservoir.json",
+      "Freeze-review text still says both self-signal rules lose, with +.91 -> verified, ensorain/LM01_PREREG_REVIEW_2026-09-26.md:102 (ERRATA E-1 correcting it was added later, after the report's base 6ff2b2f8a)"
+    ],
+    "notes": "Reproduces the committed fixture exactly before extending it, then gives paired CIs and seed counts and separates the two surprise rules. New-run outputs are not committed, but commands, seeds and tables are given; limits and unresolved parts are explicit."},
+  "X001": {"evidence": 2, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 10,
+    "checked_claims": [
+      "M2 specimen cell 4ab2ba014aac967e, held accuracy 0.8828, zero_comm 0.5 -> verified, roles/Ananke/pte/c1_posthoc/posthoc_adjudication.json:4-12; prometheus/ananke/c1b.py:443",
+      "Certificate v3: 49 permutations, p<=0.02, P1 probe at t=k+1 -> verified, 940b486f2:prometheus/cosmos/c3/certify.py:21,27,54",
+      "SI01 has a directive but no prereg/code; C1b must finish first -> verified (partly), programs/selective_irreversibility/EXPERIMENTS.md:105-106 and roles/Ananke/prompts/2026-09-25_pte_si01_directive/"
+    ],
+    "notes": "The adapter reproduces the committed known answers before running the certificate, and it identifies a second hidden degree of freedom (wake phase at swap). It states exactly why the three-way comparison is impossible and what was not run."},
+  "X020": {"evidence": 1, "correctness": 2, "answers": 2, "limits": 2, "usable": 2, "total": 9,
+    "checked_claims": [
+      "SigmaKernel.PROMOTE at sigma_kernel.py:822 only checks for a non-BLOCK verdict; legacy files last touched 2026-05-08 -> verified, 6ff2b2f8a:sigma_kernel/sigma_kernel.py:822,849; last commit 71652470e dated 2026-05-08",
+      "NPE board_eligible accepts any non-empty cheat string and rows path -> verified, 6ff2b2f8a:primordial/core/contract.py:108-112",
+      "a16.py hardcodes donor_adjudication_valid = True -> verified at roles/Aphrodite/engine/a16.py:489 (cited :490, off by one); WTP replay_ok not gating REPLICATED later confirmed as DEF-ENS-002 (commit 51ddc856e)"
+    ],
+    "notes": "The load-bearing defect claims check out, and the conclusion is carefully separated into verified and residual parts. The ten-engine selection classification is mostly asserted without path:line support, and the commit-subject counts are unreproducible as given."}
+}

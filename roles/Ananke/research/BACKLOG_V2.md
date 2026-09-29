@@ -152,3 +152,16 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   Successors: T-INS-11 (split the mixed phase by the carrier packet's delivery
   tick vs wake tick), T-INS-12 (E2 with odd Pd), T-INS-13 (trial-level
   resampling for phase-difference CIs).
+- T-INS-11 ANSWERED (W-S, E-ANANKE-W-S, workers/W-S/REPORT.md; 7 tests, principal
+  re-run 7 passed; confirmatory 0x632 spot-checked). Frozen H1 predictor (P3
+  cue cone) NOT SUPPORTED (U1 PARTIAL .75, U2-U4 .16-.39): the source
+  re-broadcasts every wake and the readout ignores later copies. Post-hoc P8,
+  confirmed on fresh worlds (0x632, addendum frozen first): in the mixed
+  update-clock phase, S vs C is set by ONE latency-jitter draw on the source's
+  FIRST cue broadcast to the readout (jitter 0 lands at the swap tick -> S,
+  jitter 1 -> C); P8 decisive accuracy 1.00 in all four units, P8any .88 /
+  1.00 / 1.00 / .65; per-pair state (H3) and stale-state (H4) at chance. The
+  "per-trial S/C mixture" is delivery-latency randomness, not organism state;
+  8c37f32e's N is a split-copy artifact. Successors: T-INS-14 (decompile the
+  split-copy outcomes), T-INS-15 (direct-carrier jitter plant to validate P8),
+  T-INS-16 (does the first-broadcast rule reach MAJ / 78f3b0ec).

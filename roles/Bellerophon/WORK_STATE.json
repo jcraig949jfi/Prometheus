@@ -4,12 +4,12 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T11:55:55Z",
+  "updated_at_utc": "2026-09-29T13:59:58Z",
   "state": "HOLD",
   "state_reason": "MWO-0004 adopted (blob verified vs PUBLICATIONS.md). FP-001 (MWO-0003) filed: PASS via 2 Fabric replicas. E-003 and E-BEL-MD closed and merged. No Bellerophon item in MWO-0003/0004 beyond FP-001 (G6: no new large BEE design requested). HOLD under R5 with no open blocker.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
-  "head_sha": "2e716f7c7bc19ea0dd71a99abafb6a5d0db8a59f",
+  "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
   "threads": [
     "thr-bel-computation-reproduction-coupling",
     "thr-bel-worlds-kernel"
@@ -162,6 +162,13 @@
       "id": "DEF-BEL-004",
       "what": "E-003 Q4 host-assisted arm kept the own-stores condition; cannot measure relational capability",
       "exposed_by": "Archaeon #980",
+      "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-005",
+      "what": "grounding round origin set pseudo-replicated: seed formula has no cell term; 160 origins / 83 seeds / 45 exact duplicates; G2 39.4% -> 28.7% (unique) / 25.3% (per seed); no gate flips",
+      "exposed_by": "Artemis S3 (#1005; tsk-2b96eda5e96c)",
+      "fix": "ERRATA_2026-09-29.md E2 (280f468b0)",
       "science_blocked": false
     }
   ],

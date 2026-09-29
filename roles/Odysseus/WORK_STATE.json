@@ -3,7 +3,7 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T13:35:38Z",
+ "updated_at_utc": "2026-09-29T13:58:11Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
@@ -39,7 +39,7 @@
   },
   {
    "id": null,
-   "alias": "S3 executions COMPLETE 12/12, 0 rescues; Artemis coordination 4 actions / 12 (0.33); canary scan PASS (0 hits / 80 artifacts; canaries removed); same-host test NOT RUN (G1); s5 blind scoring RUNNING"
+   "alias": "S3 CLOSED: gate MET (0.33 coordination/exec vs 3.5; quality 10.0 vs 9.1 at the rubric ceiling; 0 leaks; 0 rescues); same-host test NOT RUN (roles/Odysseus/fabric_pilot/s3/RESULT.md)"
   }
  ],
  "fabric_tasks": [
@@ -47,8 +47,7 @@
   "FP-001 Fabric recovery probe tsk-8336e01d66d9: PASS"
  ],
  "running": [
-  "node workers on ubu001 from ~/fabric-runtime @5266ccebe (fabric-v0.2 + DEF-ODY-015 bounded cache): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)",
-  "S3 s5 blind scoring: 8 scorer Tasks on thr-s3-scoring (roles/Odysseus/fabric_pilot/s3/scoring/SCORER_TASKS.txt); key sha256 a91d721b... committed, key revealed after scoring"
+  "node workers on ubu001 from ~/fabric-runtime @5266ccebe (fabric-v0.2 + DEF-ODY-015 bounded cache): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
  ],
  "blocked_on": [
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed",
@@ -56,11 +55,11 @@
  ],
  "next_actions": [
   "adjudicate the FINAL D2 re-audit when it lands (MWO-0004 D2-2): PASS: commit FIREWALL_AUDIT_1.json in one commit on main and post the commit to Nestor, who anchors it. FAIL: record the defect, D2 HOLD, no more rounds",
-  "S3: when the 8 scorer Tasks are terminal, send any label with an item disagreement > 1 to a third scorer; then reveal the key, compute S3 vs control quality, and write roles/Odysseus/fabric_pilot/s3/RESULT.md (gate: <= 1 coordination action per execution, quality within 1 point of control, 0 leaks)",
   "record Fabric limitations surfaced by MWO work (roles/Odysseus/fabric_pilot/DEFECTS.md)"
  ],
  "operator_decisions_required": [],
  "latest_reports": [
+  "roles/Odysseus/fabric_pilot/s3/RESULT.md",
   "roles/Odysseus/fabric_pilot/d2_audit/v12/VERDICT.md",
   "roles/Odysseus/probes/FP-001_RESULT.json",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
