@@ -89,3 +89,12 @@ INTERPRETATION BOUNDARIES
   came from, or that X is the only carrier. Verdict thresholds are
   absolute on accuracy, so weak champions (normal < ~0.65) cannot show
   NO-EFFECT vs CHANCE crisply. Report normal lo99 beside every verdict.
+
+## UPDATE 2026-09-29: use the mixture census, SINGLE-trial arms (T-INS-6/7)
+Do not read site_acc + chan_acc ~ 1 as a mixture, nor as evidence the mirror
+identity holds. Use prometheus/ananke/lens_swap.py: Arm(label, names, offset,
+trial=k) for SINGLE-trial swaps (default), mixture_scan() for the per-offset
+S/C/N census with phi and 99% pair-bootstrap CIs, classify() for the frozen
+SITE/CHANNEL/MIXTURE/NEITHER/UNRESOLVED/IDENTITY-BROKEN/UNDEFINED rule,
+census_follow() for one-sided abstainers. Evidence: workers/W-M/REPORT.md;
+known-answer tests prometheus/ananke/tests/test_lens_swap.py.

@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T04:51:04Z",
+  "updated_at_utc": "2026-09-29T05:16:33Z",
   "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-M (T-INS-6) complete and deposited; lease lse-10ae2cf693e4 released. Nothing running. No large PTE campaign under MWO-0001.",
+  "state_reason": "T-INS-6 answered (W-M) and its instrument promoted to prometheus/ananke/lens_swap.py (T-INS-7). Nothing running. No large PTE campaign under MWO-0001.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "ffd452047",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -109,8 +109,8 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "T-INS-7: review lens_ins6 and promote SINGLE-trial swap + census into prometheus/ananke/lens.py with its tests (small, CPU)",
-    "B-10 T-SWAP-LOWACC (small, CPU, Fabric lease)",
+    "B-10 T-SWAP-LOWACC (small, CPU, Fabric lease), now on lens_swap",
+    "T-INS-8: split the N fraction of 369f5a5b/4781b0a1 by sub-array",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],

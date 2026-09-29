@@ -99,3 +99,5 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   4781b0a1 are S/N(/C) blends, not mixtures. Successors: T-INS-7 (make SINGLE
   the instrument default; promote lens_ins6 + census_follow into lens after
   review), T-INS-8 (split the N fraction of 369f5a5b/4781b0a1 by sub-array).
+- T-INS-7 DONE: lens_swap.py promoted from W-M lens_ins6 (principal review;
+  2 cosmetic fixes), tests test_lens_swap.py; lens + lens_swap tests 31 passed.
