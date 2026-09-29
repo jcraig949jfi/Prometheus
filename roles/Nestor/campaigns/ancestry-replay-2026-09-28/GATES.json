@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-28T23:17:33Z",
+ "updated": "2026-09-29T03:16:55Z",
  "authority": "operator POST-ARC3 DIRECTIVE 2026-09-28 s3; Archaeon ANCESTRY_PREREG_v5 C5-C7",
  "gates": {
   "G1_fixture_validation": {
@@ -45,5 +45,30 @@
  ],
  "sample_transfer": "NOT in git in any form: hash posted -> scp to M2 C:/Prometheus-data/evidence/attribution_arc_2026-09-28/npe_sample/ -> Archaeon verifies before reading -> frozen reference runs -> result hashed -> receipts only in git (GO_FINAL; corrects the withdrawn orphan-branch route)",
  "production_scope_limits": "ctrl_deps_slice (S3 open) and pdom NOT validated by G2 and may not feed any production quantity; Q8c-whether interventional (not covered by G2); L1-L5 kept separate; source diversity diagnostic only",
- "operator_gates_POST_ARC3": "all four satisfied: fixture validation (+ mutants caught), independent tracer agreement (frozen v3 vs frozen reference, fresh set 2 raw PASS, pdom text obtained), flip-rule ruling (C7.2), experimental-unit ruling (C7.4)"
+ "operator_gates_POST_ARC3": "all four satisfied: fixture validation (+ mutants caught), independent tracer agreement (frozen v3 vs frozen reference, fresh set 2 raw PASS, pdom text obtained), flip-rule ruling (C7.2), experimental-unit ruling (C7.4)",
+ "run2_independent_review": {
+  "tasks": [
+   "tsk-c62639a26351 (replica 1)",
+   "tsk-db7cff995c19 (replica 2)"
+  ],
+  "base": "cef9cc1b9",
+  "verdict": "RUN-2 INTEGRITY HOLDS WITH NOTES (both); s4_run.py DOES NOT CONFORM (both)",
+  "blocking_before_synthesis": [
+   "production-data tracer agreement not done (1% sample transfer blocked); replica 1 proposes the reference run on the 34 committed birth pre-states",
+   "s4 flip-coverage floor FAILS in both classes (self 0.447, other 0.125; with identified denominator 182/395, 41/301); never evaluated in code; instrument reading",
+   "s4: no CI / run-clustered bootstrap over 9 sims (C4.4/C7.4); class key donor-relative vs 'executing organism' unruled; NO_MATERIAL/TIED missing"
+  ],
+  "should_fix": [
+   "identified uses the STRICT flip rule not the gating C7.2 prefix rule (no effect: 0 FAILED)",
+   "completeness leak test requires the full path unchanged -> path-changing leaks uncountable, no applicability count: the 0.0 leak share is NOT evidence",
+   "Q8c None on ~22 loci (all draws suppressed) must not be read as 0",
+   "L3/L4 built from the P-11 native parent pointer = construction chains, labelled as heredity (ERRATUM recorded)",
+   "freeze/receipt do not cover s4_run.py, launcher, engine; launcher records s4/GO hashes without enforcing",
+   "byte-identity restart condition redefined after failure (addendum 2) -- declared here; run-1 comparison files not in git"
+  ],
+  "status": "s4 tallies remain UNUSED; production exports stand; no synthesis until the blocking items are resolved"
+ },
+ "errata": [
+  "L3/L4 ('child later a parent', 'descendant births') are built from the P-11 native lineage parent pointer: they are CONSTRUCTION-CHAIN readings, not heredity. Heredity requires CVT-R/Q4 (L5). The run-2 summaries' labels 'L3_viable_offspring'/'L4_survives_generations' are to be read that way (run_trace.py is frozen; not edited)."
+ ]
 }
