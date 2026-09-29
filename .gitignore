@@ -106,6 +106,8 @@ archive/
 # ...EXCEPT seat archives under roles/ (base role s2: corrections are annotations; superseded bodies
 # are kept). Found by Ergon 772edf15e; operator ruling 2026-09-11. Tested by test_base_role.py.
 !roles/*/archive/
+# ...and the immutable Master Work Order archive (MWO-0001 s2; Cyclops custody, 2026-09-28).
+!ops/work_orders/archive/
 !roles/*/archive/**
 
 # Databases (generated, local)

@@ -1,0 +1,222 @@
+{
+ "ablation": {
+  "D1": {
+   "cheats_escape_when_disabled": true,
+   "fixtures": [
+    "F1_memory_leak"
+   ]
+  },
+  "D2": {
+   "cheats_escape_when_disabled": true,
+   "fixtures": [
+    "F2_evaluator_exploit"
+   ]
+  },
+  "D3": {
+   "cheats_escape_when_disabled": true,
+   "fixtures": [
+    "F3a_unmetered_second_model",
+    "F3b_escrow_overrun",
+    "F3c_counter_edit",
+    "F3d_retries_outside_policy",
+    "F3e_unequal_escrow_across_arms"
+   ]
+  },
+  "D4": {
+   "cheats_escape_when_disabled": true,
+   "fixtures": [
+    "F4_memoriser"
+   ]
+  },
+  "D5": {
+   "cheats_escape_when_disabled": true,
+   "fixtures": [
+    "F5_lineage_id_shortcut"
+   ]
+  }
+ },
+ "cheats_caught": {
+  "A1_rows_edited_after_commit": true,
+  "A2_analysis_code_swapped": true,
+  "A3_verdict_supplied_by_a_model": true,
+  "F1_memory_leak": true,
+  "F2_evaluator_exploit": true,
+  "F3a_unmetered_second_model": true,
+  "F3b_escrow_overrun": true,
+  "F3c_counter_edit": true,
+  "F3d_retries_outside_policy": true,
+  "F3e_unequal_escrow_across_arms": true,
+  "F4_memoriser": true,
+  "F5_lineage_id_shortcut": true
+ },
+ "clean_twins_quiet": {
+  "A0_clean_path": true,
+  "F1c_honest_transplant": true,
+  "F1s_scratch_reads_nothing": true,
+  "F2c_honest": true,
+  "F3c_honest_equal_escrow": true,
+  "F4c_generaliser": true,
+  "F5c_label_invariant": true
+ },
+ "contract": "PASS",
+ "delta": 0.03,
+ "fixtures": {
+  "A0_clean_path": {
+   "cheat": false,
+   "fired": []
+  },
+  "A1_rows_edited_after_commit": {
+   "cheat": true,
+   "fired": [
+    "rows do not hash to the committed manifest"
+   ]
+  },
+  "A2_analysis_code_swapped": {
+   "cheat": true,
+   "fired": [
+    "analysis code does not hash to the preregistered value"
+   ]
+  },
+  "A3_verdict_supplied_by_a_model": {
+   "cheat": true,
+   "fired": [
+    "a verdict was supplied from outside the analysis code"
+   ]
+  },
+  "F1_memory_leak": {
+   "cheat": true,
+   "fired": [
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "undeclared read donor/M_l/memory.json",
+    "donor canary in output of add-7-0",
+    "donor canary in output of add-7-1",
+    "donor canary in output of add-7-2",
+    "donor canary in output of add-7-3",
+    "donor canary in output of add-7-4",
+    "donor canary in output of add-7-5",
+    "donor canary in output of add-7-6",
+    "donor canary in output of add-7-7",
+    "donor canary in output of add-7-8",
+    "donor canary in output of add-7-9",
+    "donor canary in output of add-7-10",
+    "donor canary in output of add-7-11"
+   ]
+  },
+  "F1c_honest_transplant": {
+   "cheat": false,
+   "fired": []
+  },
+  "F1s_scratch_reads_nothing": {
+   "cheat": false,
+   "fired": []
+  },
+  "F2_evaluator_exploit": {
+   "cheat": true,
+   "fired": [
+    "decoy answer reproduced on honey task add-7-0",
+    "decoy answer reproduced on honey task add-7-1",
+    "decoy answer reproduced on honey task add-7-2",
+    "decoy answer reproduced on honey task add-7-3"
+   ]
+  },
+  "F2c_honest": {
+   "cheat": false,
+   "fired": []
+  },
+  "F3a_unmetered_second_model": {
+   "cheat": true,
+   "fired": [
+    "answer for add-7-0 has no valid provider receipt (unmetered)",
+    "answer for add-7-1 has no valid provider receipt (unmetered)",
+    "answer for add-7-2 has no valid provider receipt (unmetered)",
+    "answer for add-7-3 has no valid provider receipt (unmetered)",
+    "answer for add-7-4 has no valid provider receipt (unmetered)",
+    "answer for add-7-5 has no valid provider receipt (unmetered)",
+    "answer for add-7-6 has no valid provider receipt (unmetered)",
+    "answer for add-7-7 has no valid provider receipt (unmetered)",
+    "answer for add-7-8 has no valid provider receipt (unmetered)",
+    "answer for add-7-9 has no valid provider receipt (unmetered)",
+    "answer for add-7-10 has no valid provider receipt (unmetered)",
+    "answer for add-7-11 has no valid provider receipt (unmetered)"
+   ]
+  },
+  "F3b_escrow_overrun": {
+   "cheat": true,
+   "fired": [
+    "12 call(s) refused at escrow (attempted overrun)",
+    "task add-7-0 retried 19 > policy 1"
+   ]
+  },
+  "F3c_counter_edit": {
+   "cheat": true,
+   "fired": [
+    "provider served 12 calls, meter ledger shows 0"
+   ]
+  },
+  "F3c_honest_equal_escrow": {
+   "cheat": false,
+   "fired": []
+  },
+  "F3d_retries_outside_policy": {
+   "cheat": true,
+   "fired": [
+    "task add-7-0 retried 2 > policy 1",
+    "task add-7-1 retried 2 > policy 1",
+    "task add-7-2 retried 2 > policy 1",
+    "task add-7-3 retried 2 > policy 1",
+    "task add-7-4 retried 2 > policy 1",
+    "task add-7-5 retried 2 > policy 1",
+    "task add-7-6 retried 2 > policy 1",
+    "task add-7-7 retried 2 > policy 1",
+    "task add-7-8 retried 2 > policy 1",
+    "task add-7-9 retried 2 > policy 1",
+    "task add-7-10 retried 2 > policy 1",
+    "task add-7-11 retried 2 > policy 1"
+   ]
+  },
+  "F3e_unequal_escrow_across_arms": {
+   "cheat": true,
+   "fired": [
+    "escrow differs across arms of lineage L07: {'SCRATCH': 40, 'TRANSPLANT': 40, 'MEMORY-ONLY': 40, 'SHAM': 48, 'POSITIVE': 40}"
+   ]
+  },
+  "F4_memoriser": {
+   "cheat": true,
+   "fired": [
+    "seen-instance score exceeds fresh by 1.000 > 0.030"
+   ]
+  },
+  "F4c_generaliser": {
+   "cheat": false,
+   "fired": []
+  },
+  "F5_lineage_id_shortcut": {
+   "cheat": true,
+   "fired": [
+    "12/12 outputs change when the labels change L07 -> L42",
+    "12/12 outputs change when the labels change L07 -> L55"
+   ]
+  },
+  "F5c_label_invariant": {
+   "cheat": false,
+   "fired": []
+  }
+ },
+ "memo_gap": 0.03,
+ "not_demonstrated": [
+  "isolation (in-process toy; production separates meter, provider log and key)",
+  "E5 on the Campaign 1 production path (no production harness exists yet)"
+ ],
+ "retry_policy": 1,
+ "version": "HA-1.0.1"
+}

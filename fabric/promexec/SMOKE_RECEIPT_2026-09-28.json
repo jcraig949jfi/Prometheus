@@ -1,0 +1,53 @@
+{
+ "test": "promexec smoke (positive control only; NOT isolation evidence)",
+ "utc": "2026-09-28T21:58:51Z (summary.json mtime; broker output files carry mtime 0 -- minor defect, tar transfer)",
+ "broker_sha256": "1db2016574efe28a8463a168dcc799ee6247f63139d8265ab4b8a7504f2725c6",
+ "wrapper_summary": {
+  "ok": true,
+  "run_dir": "/var/lib/promexec/runs/att-smoke-1-ce2c1bcd",
+  "limits": {
+   "wall_s": 60,
+   "mem_mb": 512,
+   "cpu_pct": 10,
+   "tasks": 4
+  },
+  "extra_properties": [],
+  "wall_s_used": 23.57,
+  "result": "success",
+  "exit_code": 0,
+  "stdout": "r = 0.9991\n",
+  "stderr": "",
+  "output_transfer": {
+   "as_promexec": 0,
+   "as_caller": 0
+  },
+  "exec_n": 1,
+  "script": "analysis.py",
+  "inputs_staged_files": 1,
+  "results_dir": "<scratch>/att-smoke/out/exec/1",
+  "output_files": [
+   "result.json"
+  ]
+ },
+ "script_result": {
+  "n": 200,
+  "r": 0.999131,
+  "uid": 999,
+  "cwd": "/var/lib/promexec/runs/att-smoke-1-ce2c1bcd/work",
+  "env_keys": [
+   "HOME",
+   "INVOCATION_ID",
+   "LANG",
+   "LOGNAME",
+   "MEMORY_PRESSURE_WATCH",
+   "MEMORY_PRESSURE_WRITE",
+   "MPLBACKEND",
+   "OMP_NUM_THREADS",
+   "PATH",
+   "PROMEXEC_IN",
+   "PROMEXEC_OUT",
+   "SYSTEMD_EXEC_PID",
+   "USER"
+  ]
+ }
+}

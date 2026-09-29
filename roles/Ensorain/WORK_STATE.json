@@ -1,0 +1,95 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Ensorain",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
+  "updated_at_utc": "2026-09-29T03:23:15Z",
+  "state": "HOLD",
+  "state_reason": "E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e and NOT LAUNCHED. HOLD on the launch authorization (MWO-0001 contains no launch line). Eligible ARC3 design work continues without a campaign or lease.",
+  "branch": "ensorain/base-role-adopt-2026-09-23",
+  "head_sha": "3cb3565144d54d188db907d25094192bba5d8f1b",
+  "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
+  "threads": [
+    "thr-ens-lossless-memorizer",
+    "thr-ens-locus-of-compression",
+    "thr-ens-causal-selectivity",
+    "thr-ens-sufficiency-ladder"
+  ],
+  "campaigns": [
+    "C-ENS-ARC3"
+  ],
+  "experiments": [
+    {
+      "id": "E-ENS-LM01",
+      "status": "FROZEN_NOT_LAUNCHED",
+      "freeze": "ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e",
+      "prereg": "ensorain/PREREG_WTP_LM01.md",
+      "freeze_verify": "0 mismatches over 60 files at base bd48fac9b"
+    },
+    {
+      "id": "E-ENS-S1-PILOT",
+      "status": "DONE_DEV_REPLICATED",
+      "report": "ensorain/arc3/suff/RESULTS_S1_PILOT.md",
+      "replication": "ensorain/arc3/suff/replication/README.md"
+    },
+    {
+      "id": "E-ENS-PKGF-PROBE",
+      "status": "DONE_DEV",
+      "report": "ensorain/arc3/RESULTS_PKGF_PROBE.md"
+    },
+    {
+      "id": "E-ENS-PKGF",
+      "status": "DESIGN"
+    },
+    {
+      "id": "E-ENS-LM02",
+      "status": "DESIGN"
+    }
+  ],
+  "fabric_tasks": [
+    {
+      "id": "tsk-ba120344aa29",
+      "title": "Independent stdlib replication of PKG-S1 sufficiency-ladder claims C1-C4",
+      "thread": "thr-ens-sufficiency-ladder",
+      "experiment": "E-ENS-S1-PILOT",
+      "state": "completed",
+      "outcome": "C1-C4 CONFIRMED by an independent implementation, executed by Ensorain on M2 (the claude executor cannot run python, by design: fabric README D3). Evidence: ensorain/arc3/suff/replication/README.md"
+    }
+  ],
+  "running": [],
+  "dependencies": {
+    "LM01_b_bellerophon_campaign_ended": {
+      "status": "SATISFIED",
+      "evidence": "The blocker was Bellerophon's MULTI-DAY campaign (launched 2026-09-26T16:40:28Z, 12 workers), not the coupling campaign (stopped 2026-09-25). C:/Users/James/md_campaign_2026-09-26/supervisor.jsonl ends with {event: campaign_stopped, rc: 0, utc: 2026-09-28T15:49:03Z}. STATUS.json shows active segment 1 closed at 47.1 h active, last_write 2026-09-28T15:48:37Z. Supervisor pid 11852 does not exist. Process census 2026-09-29T02:44:50Z: 2 python processes, both Ensorain's own shell at 0% CPU; total CPU 1.4%; 18.3 GB free. Bellerophon was not messaged."
+    },
+    "LM01_a_launch_authorization": {
+      "status": "OPEN",
+      "detail": "Needs an operator-approved MWO containing the exact line 'LAUNCH WTP-LM01 using frozen prereg <prefix of ee8cbe0c8>' (MWO-0001 s7). MWO-0001 itself is correctly REJECTED by the gate (no launch line)."
+    }
+  },
+  "blocked_on": [
+    "E-ENS-LM01 launch authorization (future MWO with the exact line and hash)",
+    "DEF-ENS-001: the frozen launch_gate refuses ANY ops/work_orders/archive MWO file as a carrier (it requires a MANIFEST.md in the directive's directory). It fails closed; see roles/Ensorain/DEFECTS.md"
+  ],
+  "next_actions": [
+    "When a launch MWO is published: verify its git-blob sha256 against ops/work_orders/PUBLICATIONS.md, resolve the carrier per the DEF-ENS-001 option the MWO chooses, then take the Fabric lease (python -m fabric lease acquire <m2-host>:cpu8; MWO-0001 s3 and Odysseus #896), pin a fresh run worktree at ee8cbe0c8, verify the freeze, census the host, and launch",
+    "ARC3 (no campaign, no lease): PKG-F recency/changepoint design; LM02 design; T25 CSSR causal-state learner (motivated by the S1 optimum-vs-T result). Future Fabric code-execution tasks use the two-stage pattern (claude writes the code, a script executor runs the committed file)"
+  ],
+  "operator_decisions_required": [
+    "LM01 launch authorization via MWO (exact line + v0.3.2 hash ee8cbe0c8)",
+    "DEF-ENS-001 carrier resolution: (A) Ensorain transcribes the launch MWO verbatim into roles/Ensorain/prompts/ with PUBLICATIONS.md provenance + MANIFEST, no freeze change (recommended); or (B) gate repair, re-freezing as v0.3.3 with a new hash"
+  ],
+  "latest_reports": [
+    "ensorain/arc3/suff/replication/README.md (S1 replication + precommitted optimum-vs-T)",
+    "ensorain/PREREG_WTP_LM01.md (v0.3.2 frozen)",
+    "ensorain/LM01_DIFF_v031_to_v032.md",
+    "ensorain/arc3/reviews/LM01_V032_PREFREEZE_REVIEW.md",
+    "ensorain/arc3/reviews/LM01_V032_CONFIRM.md",
+    "ensorain/lm01/ERRATA.md",
+    "roles/Ensorain/DEFECTS.md",
+    "ensorain/arc3/HIERARCHY.md",
+    "roles/Ensorain/DEFECTS.md#DEF-ENS-002"
+  ],
+  "head_sha_note": "the latest pushed work commit before this WORK_STATE commit (the file cannot contain its own commit hash)"
+}

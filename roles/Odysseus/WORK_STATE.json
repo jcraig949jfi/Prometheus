@@ -1,0 +1,49 @@
+{
+ "schema": "prometheus.work_state.v1",
+ "seat": "Odysseus",
+ "mwo_id": "MWO-0001",
+ "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+ "updated_at_utc": "2026-09-29T03:12:32Z",
+ "state": "ACTIVE",
+ "branch": "odysseus/fabric-v0-2026-09-28",
+ "head_sha": "c11aeeebaad2d10110f0e042a350d8b272fc57f5",
+ "threads": [
+  "thr-d2-firewall-audit (auditor of record, firewall layer only)",
+  "thr-fabric-s2",
+  "thr-s3 (pending principal)"
+ ],
+ "campaigns": [
+  "Fabric adoption experiment (S2 closed; S3 ready for principal Artemis)"
+ ],
+ "experiments": [
+  "S2 CLOSED (roles/Odysseus/fabric_pilot/s2/RESULT.md)",
+  "S3 DRAFT ready (roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md)"
+ ],
+ "fabric_tasks": [
+  "D2 v2 re-audit tsk-6989ee1b86bd, tsk-b43d70a88ce7, tsk-a07e46edb489, tsk-65f1de3d76f7: all completed; adjudicated FAIL (f8eedbbce)"
+ ],
+ "running": [
+  "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: 2 x worker.ubu001 (claude, script), 1 x worker.ubu001.sci (script)"
+ ],
+ "blocked_on": [
+  "D2: Nestor's v3 repairs, then re-audit (verdict FAIL recorded; C3 blocked on D2)",
+  "S3: Artemis session on ubu001 in its own worktree, freezing its workload (S3_PROTOCOL s3)",
+  "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
+  "lease cutover merge acknowledgements from Nestor, Ananke and Archaeon (#901) before legacy detection is removed"
+ ],
+ "next_actions": [
+  "seat loop: adjudicate any new D2 re-audit Tasks when they return",
+  "support S3 when Artemis is ready: plant the three canaries, stay out of the principal's Tasks, score quality afterwards",
+  "record defects that MWO work exposes (roles/Odysseus/fabric_pilot/DEFECTS.md)"
+ ],
+ "operator_decisions_required": [
+  "S3 needs an Artemis Claude session launched on ubu001 in its own worktree (host/session action; Odysseus cannot start it)",
+  "D2 S1 fix options include branch protection on main (an operator setting)"
+ ],
+ "latest_reports": [
+  "roles/Odysseus/fabric_pilot/d2_audit/v2/VERDICT.md",
+  "roles/Odysseus/fabric_pilot/DEFECTS.md",
+  "roles/Odysseus/fabric_pilot/s2/RESULT.md",
+  "fabric/promexec/STATUS_EXPERIMENTAL.md"
+ ]
+}

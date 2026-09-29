@@ -1,0 +1,40 @@
+# promexec installed configuration on ubu001, snapshot 2026-09-29T00:39:14Z (for independent review; no secrets)
+
+## hashes
+1db2016574efe28a8463a168dcc799ee6247f63139d8265ab4b8a7504f2725c6  /usr/local/sbin/promexec-run
+
+## modes/owners
+-rwxr-xr-x root:root /usr/local/sbin/promexec-run
+-r--r----- root:root /etc/sudoers.d/promexec
+drwxr-xr-x root:root /opt/promexec
+drwxr-xr-x root:root /opt/promexec/py
+lrwxrwxrwx root:root /opt/promexec/py/bin/python
+drwxr-xr-x root:root /var/lib/promexec
+drwx--x--x root:root /var/lib/promexec/runs
+drwxr-x--- jcraig:jcraig /home/jcraig
+
+## /etc/sudoers.d/promexec
+jcraig ALL=(root) NOPASSWD: /usr/local/sbin/promexec-run
+
+## user
+promexec:x:999:983::/var/lib/promexec:/usr/sbin/nologin
+uid=999(promexec) gid=983(promexec) groups=983(promexec)
+User promexec is not allowed to run sudo on ubu001.
+promexec L 2026-09-28 -1 -1 -1 -1
+
+## caller account sudo (context: jcraig also has unrestricted NOPASSWD sudo)
+    (ALL : ALL) ALL
+    (ALL) NOPASSWD: ALL
+    (root) NOPASSWD: /usr/local/sbin/promexec-run
+
+## execution environment
+Python 3.14.4
+numpy==2.5.3
+scipy==1.18.1
+
+## host
+Linux 7.0.0-34-generic x86_64
+systemd 259 (259.5-0ubuntu3.4)
+1
+VERSION_ID="26.04"
+ID=ubuntu

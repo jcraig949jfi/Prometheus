@@ -1,0 +1,77 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Harmonia",
+  "mwo_id": "MWO-0001",
+  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
+  "updated_at_utc": "2026-09-29T04:55:00Z",
+  "state": "HOLD",
+  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
+  "head_sha": "a88410dde38c6068c21f1e2ba08ee3833dacf668",
+  "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
+  "threads": [
+    {
+      "id": "D2-CUSTODY",
+      "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
+      "state": "BLOCKED_FAIL_CLOSED",
+      "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
+    },
+    {
+      "id": "C1-HOSTILE-ADJ",
+      "what": "Aphrodite Campaign 1 hostile adjudication contract (#453/#490/#533-E5)",
+      "state": "DELIVERED_AWAITING_PRODUCTION_PATH",
+      "record": "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md"
+    }
+  ],
+  "campaigns": [],
+  "experiments": [],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    {
+      "item": "D2 adjudication",
+      "on": "governing audit FAIL (Odysseus f8eedbbce, VERDICT blob aa2c904c) -> v3 re-audit by Nestor/Odysseus"
+    },
+    {
+      "item": "D2 adjudication",
+      "on": "DEF-HARM-D2-001: SEAL gate unpassable on real history (integration merges); D2 code repair + re-audit, Nestor's to make"
+    }
+  ],
+  "next_actions": [
+    "Aphrodite #490/#453/#533 answered: CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md + HA-1.0.1 (12/12 cheats caught, 7/7 clean quiet, 5/5 ablations); E5 on the production path UNDEMONSTRATED until a C1 harness exists (P1 OUTSIDE ENVELOPE until then)",
+    "D2: record the next governing verdict when it lands; build nothing, release nothing on a comms message alone",
+    "HOLD otherwise: no further eligible ruler work assigned via MWO/Fabric"
+  ],
+  "held": [
+    {
+      "comms": [
+        603,
+        608
+      ],
+      "what": "SI hypothesis s12 freeze request + 'accessible' addendum",
+      "why": "issued by the Aporia/Cyclops stewardship retired by MWO-0001; HOLD for the next MWO review to renew or cancel; content recorded in journal 2026-09-27_m2-475d761f.md"
+    },
+    {
+      "comms": [
+        798
+      ],
+      "what": "Artemis SI pre-freeze report to Harmonia/Aporia/Cyclops/operator",
+      "why": "belongs to the held SI freeze thread; no action"
+    }
+  ],
+  "overtaken": [
+    {
+      "what": "git-native control-plane initiative capture (ops/, c17d4c477)",
+      "why": "overtaken by MWO-0001; no further work unless an MWO assigns it"
+    }
+  ],
+  "operator_decisions_required": [
+    "D2: branch protection on main (Odysseus v3 item 1 names it an operator setting)",
+    "Next MWO: renew or cancel held SI freeze requests #603/#608"
+  ],
+  "latest_reports": [
+    "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md",
+    "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md",
+    "roles/Harmonia/journal/2026-09-29_m2-475d761f.md"
+  ],
+  "hold_reason": "No eligible ruler work: #490/#533 delivered (a88410dde, comms #928, marked done); D2 waits on Nestor/Odysseus (governing FAIL + DEF-HARM-D2-001, #926); #603/#608 HELD for MWO review. Seat loop continues at idle cadence."
+}

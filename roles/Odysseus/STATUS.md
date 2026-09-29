@@ -1,6 +1,6 @@
 # Odysseus status
 
-Currency: 2026-09-28T21:45Z (from date -u).
+Currency: 2026-09-29T00:45Z (from date -u).
 
 seat state: ACTIVE, principal on the AGENT FABRIC (operator rulings 2026-09-28: prompts/2026-09-28_fabric/04_*).
   Expedition 1 FROZEN.
@@ -18,8 +18,12 @@ done since last update: D12 repaired (rogit, plain git denied, P7c/P7d); lease c
 running:
   - node workers on ubu001 from ~/fabric-runtime @fabric-v0.2 (54e42c695): 2 x worker.ubu001 (claude, script;
     audit.security.adversarial) and 1 x worker.ubu001.sci (script). Logs in ~/fabric-work/logs.
-blocked on others: Nestor submits the D2 v2 re-audit (not chased, per ruling); operator picks the S3 principal and
-  decides the code-execution sandbox (S3 s2 option A); Nestor/Ananke/Archaeon merge the lease cutover (#901).
+blocked on others:
+  - promexec acceptance: the operator supplies the verification protocol fixtures (matrix frozen at 739ab28ed);
+    Aether's read-only independent review (#912);
+  - S3 principal: Artemis, after her self-test's blinded scoring and cohort unsealing;
+  - D2 re-audit (Nestor submits); lease cutover merges (#901).
 monitors owned or fed: none (S2 uses one blocking wait, by design).
-next executable action: none of mine on infrastructure (frozen). Next: break the fabric under S3; adjudicate D2 when
+next executable action: run the frozen matrix M1-M20 against the current (unhardened) boundary once the
+  verification fixtures are supplied; then harden B1-B4.
   artifacts arrive.
