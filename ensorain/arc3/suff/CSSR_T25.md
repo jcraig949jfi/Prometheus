@@ -107,3 +107,41 @@ Setup: eval seeds 1..16, split mode, alpha 1e-3, refit 1000, Lmax in {6, 8, 10},
 - Q2: Even at T = 4000: L8 mean < L6 mean.
 - Q3: Even at T = 16000: states = Lmax + 1 in >= 12/16 seeds for each Lmax (the 1-counter shape).
 - Q4: safety. At T = 16000, W2_3 mean excess < .01 and golden mean excess < .003 at every Lmax.
+
+## Result: split-CSSR vs Lmax (precommit commit 1a941aeb2; output results/cssr_lmax.json; 2 min on M2)
+
+Mean 2nd-half excess (16 eval seeds):
+
+| world | T | L6 | L8 | L10 |
+|---|---|---|---|---|
+| Even | 4000 | .0344 | .0192 | .0220 |
+| Even | 16000 | .0316 | .0163 | .0086 |
+| Golden | 16000 | .0001 | .0002 | .0002 |
+| W2_3 | 4000 | .0027 | .0116 | .0294 |
+| W2_3 | 16000 | .0003 | .0023 | .0073 |
+
+- State counts:
+  - Even at T = 16000: 7 / 9 / 11 states (= Lmax + 1) in 15 / 14 / 14 of 16 seeds.
+  - W2_3 at T = 16000: median ~12 / 40 / 140 states, against 8 true contexts. Split over-fragments as Lmax grows.
+- Q1 SURVIVES: monotone, and every value inside its band. Even at T = 16000 sits on the exact window floor
+  (.0316 vs .0315, .0163 vs .0157, .0086 vs .0079).
+- Q2 SURVIVES (.0192 < .0344).
+- Q3 SURVIVES.
+- Q4 SURVIVES (W2 .0073 max mean; golden <= .0002).
+
+## Readings
+
+1. **Split-CSSR is exactly a window learner on truncation** (it pays the H(X | last Lmax) floor to 3 decimals). But it
+   is NOT one on estimation: its states pool the counts.
+   - At T = 16000, CSSR L10 reaches .0086. The best window statistic reaches .0358 (STAT k8, optimum_vs_T.txt; a
+     different generator, 16-seed means).
+   - That is ~4x lower excess, with 11 states instead of 256 contexts.
+   - So "discover the partition" buys the estimation half of the bias-variance trade, not the truncation half.
+2. **The same data-dependent interior optimum reappears in Lmax.** At T = 4000, L10 is worse than L8 on Even (.0220 vs
+   .0192), and on W2 the error grows with Lmax (.0027 -> .0294) through over-fragmentation. CSSR's consistency needs
+   Lmax to grow slowly with N, which is the textbook condition, now measured.
+3. **Where the truncation half goes:** only a transition model not built from suffixes pays neither half. The 2-state
+   EM-HMM reaches .000 but needs S fixed in advance. "Vote" reaches .0005 but is unsafe on Markov-3.
+   - Open design question: a learner with no fixed S that pays neither half on this ladder.
+   - Candidates: soft belief-state tracking over CSSR-proposed states (EM refinement initialized from the split
+     machine), or state merging by future-distribution equivalence (bisimulation-style) instead of suffix splitting.

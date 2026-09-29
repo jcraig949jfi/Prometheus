@@ -311,7 +311,13 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
     re-imports window truncation;
   - modal-successor 'vote' recovers Even exactly (.0005, 3 states) but fails on Markov-3 (.39 mean);
   - split is safe but window-bounded; vote is unbounded but unsafe.
-- NEXT: a tau-hybrid (split only when the minority successor carries mass > tau; tau precommitted); then a learning-curve of history needed vs world crypticity.
+- Lmax sweep (4/4 precommitted predictions survived):
+  - split-CSSR pays the exact window truncation floor (Even at T = 16000: .0316 / .0163 / .0086 at L6 / 8 / 10);
+  - it avoids the window's estimation cost (L10 .0086 vs best STAT .0358);
+  - Lmax has its own data-dependent optimum;
+  - a lookahead successor-repair was a debug negative (false redirects derail hard tracking).
+- NEXT: EM refinement initialized from the split-CSSR machine (soft tracking, S proposed rather than fixed); target: pay
+  neither half on Even while staying safe on Markov-3.
 - RES: light, off M2.
 - MAT: pilot done.
 
