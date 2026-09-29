@@ -45,3 +45,29 @@ def test_probe_replaces_declared_environment_caps():
     assert "pin.numpy==0.0.1" not in eff["capabilities"]
     assert AGENT_NAME.match("worker.ubu002") and AGENT_NAME.match("worker.ubu001.sci")
     assert not AGENT_NAME.match("Artemis") and not AGENT_NAME.match("Odysseus")
+
+
+def test_gc_bases_keeps_only_most_recent(tmp_path):
+    """DEF-ODY-015: the per-worker base cache is bounded; removal goes through git and leaves the clone consistent."""
+    import os
+    import subprocess
+    import time
+    from fabric.worker import gc_bases
+    clone = tmp_path / "clone"; clone.mkdir()
+    g = lambda *a: subprocess.run(["git", "-C", str(clone), *a], check=True, capture_output=True, text=True).stdout
+    g("init", "-q", "-b", "main"); g("config", "user.email", "t@t"); g("config", "user.name", "t")
+    (clone / "f").write_text("x"); g("add", "-A"); g("commit", "-qm", "c")
+    bases = tmp_path / "worker" / "bases"; bases.mkdir(parents=True)
+    for i in range(4):
+        g("worktree", "add", "--detach", str(bases / ("b%d" % i)), "HEAD")
+        t = time.time() - 100 + i
+        os.utime(bases / ("b%d" % i), (t, t))
+    other = tmp_path / "not_a_base"; g("worktree", "add", "--detach", str(other), "HEAD")
+    removed = gc_bases(bases, clone, keep=2)
+    diag = "removed=%r left=%r mtimes=%r worktrees=%r" % (removed, sorted(p.name for p in bases.iterdir()),
+                                                           {p.name: p.stat().st_mtime for p in bases.iterdir()},
+                                                           g("worktree", "list"))
+    assert sorted(removed) == ["b0", "b1", "b2"], diag
+    assert sorted(p.name for p in bases.iterdir()) == ["b3"], diag
+    listed = g("worktree", "list")
+    assert str(other) in listed and "b3" in listed and "b0" not in listed

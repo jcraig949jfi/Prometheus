@@ -426,3 +426,18 @@ The pre-audit tool pins (`entry.py pin-tools --confirm`) are appended to the sam
 | every earlier gate test | now runs on anchored records (GateRepo.allow anchors blob + adding commit) |
 
 **v11 should-fix items (V11-1 receive deadline, V11-2 stop-send deadline, V11-3 cleanup masking):** carried as-is. Under Addendum J all of these are FORFEIT paths; no VOID reading depends on them.
+
+## v13 (2026-09-29): the ONE final bounded repair under MWO-0004 D2-2 (v12 verdict roles/Odysseus/fabric_pilot/d2_audit/v12/VERDICT.md @ 47df49352)
+
+This contains exactly the auditor's three items. No other behaviour changes.
+
+| v12 item | v13 repair | test |
+|---|---|---|
+| **1. V12-1 (blocking):** the audit set was filtered from the tree through the anchor, so a deleted, edited or rolled-back anchored record was SKIPPED and an earlier PASS could govern again | The ANCHOR governs. `protocol.verify_anchor_state` (in check_gates, after the stage checks, every stage past SEAL) and `entry._verify_anchor_state` (in verify, before binding) run for EVERY anchored record in every record role: AUDIT, COMMITMENT, DESIGNATION, RESULT_SEAL, KEY_RELEASED and REVEALED. Each record must be (1) present at the resolved origin/main commit with the anchored blob, (2) anchored at a commit that exists and is on origin/main's history, and (3) still holding the anchored blob at that commit. Otherwise AnchorMismatch / REFUSED. Unanchored tree files are still ignored. | Control: an anchored later FAIL governs (AuditNotPass). Deleted, edited and force-pushed-away: all REFUSED (AnchorMismatch). The same three cases through entry.py with a real origin (a force-push to the bare origin): all REFUSED. Defect control: with the anchor-state check removed, the rollback lets the earlier PASS govern. |
+| **1. once-only records (V12-3)** | KEY_RELEASED and REVEALED are anchored like every record (`allowlist add --role KEY_RELEASED` after the custodian commits the record). custody refuses a release (or reveal) when the anchor holds a KEY_RELEASED (or REVEALED) record, whatever git's history later shows. The runner's output root is fixed (no `--out-root` choice), so there is one run location per designation. | An anchored KEY_RELEASED refuses a second release |
+| **2. V12-4** | `allowlist add` requires `--expect-commit` and `--expect-sha256` (the values the author published). A mismatch is refused. | wrong commit refused; wrong sha refused; matching values anchored |
+| **3. anchor rollback** | Detected: an edited, reordered or partially written entry (the chain); concurrent appends are serialised by an O_EXCL `<anchor>.lock`. **Declared precisely:** tail truncation, or a complete re-chained rewrite, by a writer holding the M1 custodian account is NOT detected. That writer can also read the D2 key directly (the account residual declared since v4), so anchor rollback gives no capability beyond it. | a held lock refuses an append |
+
+**Self-tests:**
+- selftest_protocol: 179 checks + 4 defect controls PASS (14 new, including the defect control).
+- selftest_D2: PASS.

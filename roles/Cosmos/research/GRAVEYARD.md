@@ -49,6 +49,13 @@ tolerance 0.10.
 - evidence: c2_7b14ec99e (and c2_RERUN, identical events) law_events + adversary.json[0]
 - fragments: a MARGINAL kill. The 1.01-SE excess decided which law became law B: the successor a079ad5ec1 had regs -0.015 (SE 0.014). The ceiling atom survived unchanged in law B (t -0.1026 -> -0.102); only the second atom changed. This is a tolerance-sensitivity scar: under tolerance 0.15, G-0005 would not have died.
 
+### G-0006 | C3 | C3 preliminary law (Session 1; text withheld until the withheld branch is published)
+- law: WITHHELD (hash-committed through the withheld branch head 0ecafed1..., FREEZES F-0000)
+- campaign: C3
+- killed_by: PRE-RESULT COORDINATE AUDIT, verdict REJECT from 2 independent native replicas (2026-09-29, research/reviews/COORD_AUDIT_C3_2026-09-29.md), with the checkable claims EXECUTED by Cosmos: the coordinates restate the certificate's P1/P2 definition (a zero-parameter certificate rule reproduces 104/120 visible classes, and every miss is a noise-limited boundary case) or fingerprint the substrate family. Killed BEFORE holdout D2 was spent.
+- evidence: research/reviews/COORD_AUDIT_C3_2026-09-29.md; local VERIFY.json sha256 c294f24788ccfe04...; replica outputs e2d43755..., 6349aa10...
+- fragments: the only admitted coordinate is a task covariate (the delay). The structural lesson recurs from C0 (R-0001/2): coordinates built from the certificate's own construction re-derive the certificate. Any successor needs representation-invariant, family-balanced quantities AND a preregistered requirement to beat the zero-parameter definition rung. The reviewers warn that invariance pushes such quantities back onto the P1/P2 rung, which is an open tension, recorded for T-A1/T-E1.
+
 ## Cross-entry note (a pattern, not yet a claim)
 The atom C - G exp(-N) <= t appears in 3 FAILED laws (G-0002, G-0003, G-0005) and in SURVIVED law B.
 Law A carries the related C - (G + exp(-N)) instead. There is an explanation that makes this
