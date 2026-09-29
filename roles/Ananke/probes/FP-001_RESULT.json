@@ -1,0 +1,18 @@
+{
+  "seat": "Ananke",
+  "mwo": "MWO-0003",
+  "discovered_by": "own_loop_fetch",
+  "probe": "python -m pytest prometheus/ananke/tests/test_conformance.py -q (PTE engine vs independent CPU oracle, bit-identical state; eager vs CUDA-graph; checkpoint/resume)",
+  "base_sha": "e2952806dce6d9f6435a651b827a4088a257a402",
+  "execution": "native",
+  "fabric_tasks": [],
+  "fabric_attempts": [],
+  "lease": "lse-848b29b24607 (skullport:gpu, acquired and released 2026-09-29 ~11:48Z)",
+  "wall_seconds": 31,
+  "result": "PASS",
+  "artifact_hashes": [
+    "sha256:46d6a4749daf397bf52023b8e1d9eb62c3a12bfb024069f9d09630a7c47faa7d (pytest console output: 95 passed in 29.68s)"
+  ],
+  "fabric_blocker": "PTE engine requires torch (and CUDA for the graph/checkpoint tests); no Fabric worker advertises python.torch, and Fabric workers are Linux-only while this seat's engine host is SKULLPORT (Windows). See MIGRATION_REPORT_MWO-0002.json C6.",
+  "notes": "Found MWO-0003 by the seat's s8 loop (CURRENT.md hash change on fetch; broadcast #987 also read in the same pass). Tooling friction recorded, not fixed: `python -m fabric lease release skullport:gpu --as Ananke --token <t>` printed NOT RELEASED; it released only with `--lease <id>` added. Adopted directly at MWO-0004 (MWO-0003 was superseded before this loop pass)."
+}

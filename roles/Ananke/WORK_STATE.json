@@ -1,12 +1,12 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Ananke",
-  "mwo_id": "MWO-0002",
-  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T11:13:29Z",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T11:45:55Z",
   "state": "WORKING",
-  "state_reason": "T-SWAP-REL2 running as worker W-Q (E-ANANKE-W-Q, CPU in-session, Fabric lease): per-verdict attainability for the relative swap rule, applied to the 733 W-O verdicts. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
+  "state_reason": "MWO-0004 adopted (blob verified vs PUBLICATIONS.md). FP-001 probe PASS (native, 95/95). T-SWAP-REL2 running as worker W-Q (E-ANANKE-W-Q, CPU in-session under Fabric lease; native per MWO-0004 R3: no torch-capable Fabric worker). Inside the R2 envelope. No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -155,5 +155,6 @@
     "roles/Ananke/pte/c1b/REVIEW_PACKET_PTE_C1b.txt (cc98596dd)",
     "roles/Ananke/pte/C1_ERRATA.md"
   ],
-  "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json"
+  "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json",
+  "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json"
 }
