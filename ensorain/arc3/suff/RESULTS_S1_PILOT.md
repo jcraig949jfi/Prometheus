@@ -99,3 +99,15 @@ Readings (answer-keyed; calibration of concepts):
 3. The HYPOTHESIS locus pays only where fixed statistics cannot represent the needed compression (Even process): a
    320-bit learned state beats a 1,532-bit window statistic. This is the answer-keyed version of "discovering what can
    be discarded".
+
+## Independent replication (2026-09-29; Fabric tsk-ba120344aa29; replication/README.md)
+
+- C1-C4 were CONFIRMED by an independent pure-stdlib implementation written from a spec only.
+  - The worker (ubu002) wrote the code but could not execute it: the claude executor has no python, by design.
+  - Ensorain ran the worker's unmodified script on M2. The implementation is independent; the execution is not.
+- The Even-process interior optimum decomposes exactly into two parts:
+  - a representational floor, H(X | last k) - 2/3 = .2516 .2075 .1258 .1038 .0629 .0315 .0157;
+  - a finite-sample estimation cost.
+- Precommitted prediction (commit 1366cced3 before the run): the optimum k grows with T.
+  - At T = 4000/16000/64000 the argmin is k6 / k8 / k8, with k8 and k10 tied (margin 1e-4).
+  - The window-statistic optimum is data-dependent. The causal-state statistic is optimal at every T.
