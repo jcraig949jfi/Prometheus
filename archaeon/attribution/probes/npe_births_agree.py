@@ -50,9 +50,12 @@ def main(d, outdir):
                 y = {"written": y0["written"], "store_by": y0["store_by"], "performer": lab(y0["performer"]),
                      "label": lab(y0["label"])}
                 c = cls_of(y)
-                chk = {"label": nl(x["label"]) == nl(y["label"]),
-                       "addr": ns(x["addr"]) == ns(sorted(b(q) for q in y0["addr_deps"])),
-                       "written": x["written"] == y["written"]}
+                chk = {"label": nl(x["label"]) == nl(y["label"]), "written": x["written"] == y["written"]}
+                if "addr" in x:
+                    chk["addr"] = ns(x["addr"]) == ns(sorted(b(q) for q in y0["addr_deps"]))
+                else:                                   # amendment 1: the owner does not export addr on unwritten loci
+                    nb["unwritten_addr_not_exported"] += 1
+                    nb["ref_unwritten_addr_nonempty"] += bool(y0["addr_deps"]) and not y0["written"]
                 if x["written"] and y["written"]:
                     chk.update({"ctrl": ns(x["ctrl_at_store"]) == ns(sorted(b(q) for q in y0["ctrl_deps"])),
                                 "exec": ns(x["exec_at_store"]) == ns(sorted(b(q) for q in y0["exec_deps"])),
@@ -71,7 +74,9 @@ def main(d, outdir):
                                  "reference": {"label": R.fmt_label(y0["label"]), "store_by": y0["store_by"],
                                                "performer": R.fmt_label(y0["performer"]) if y0["performer"] else None}})
     lines = ["E-003 NPE production tracer agreement (v4 s4.3): frozen reference vs owner run 2, RAW, victim half pre-mutation",
-             "births: %d distinct / %d all" % (nb["distinct"], nb["all34"])]
+             "births: %d distinct / %d all" % (nb["distinct"], nb["all34"]),
+             "addr NOT compared on %d unwritten loci (not exported by the owner); reference addr non-empty on %d of them"
+             % (nb["unwritten_addr_not_exported"], nb["ref_unwritten_addr_nonempty"])]
     fails = []
     for scope in ("distinct", "all34"):
         lines.append("[%s]" % scope)
