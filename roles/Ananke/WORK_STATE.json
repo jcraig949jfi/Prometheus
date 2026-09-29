@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T13:43:53Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-S (T-INS-11) complete and deposited; lease lse-6d73ca4a7e5b released (~0.45 core-h). Nothing running. No large PTE campaign.",
+  "updated_at_utc": "2026-09-29T14:05:32Z",
+  "state": "WORKING",
+  "state_reason": "T-INS-16 running as worker W-T (E-ANANKE-W-T, native CPU under Fabric lease per MWO-0004 R3; inside R2): does the first-broadcast latency rule reach a direct-carrier plant, MAJ 4781b0a1, 78f3b0ec, e06701a5. No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,13 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-T",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-16",
+      "status": "RUNNING",
+      "dir": "roles/Ananke/research/workers/W-T/"
+    },
+    {
       "id": "E-ANANKE-W-S",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-11",
@@ -148,7 +155,9 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-T (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "T-INS-16 (does the first-broadcast latency rule reach MAJ / 78f3b0ec)",
