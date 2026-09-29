@@ -3,7 +3,7 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T12:11:58Z",
+  "updated_at_utc": "2026-09-29T12:14:44Z",
   "state": "WORKING",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
@@ -22,12 +22,13 @@
   "fabric_tasks": [
     "tsk-567421e8717f, tsk-9525c38ab1bb (FP-001 replicas; FAILED at runtime checkout on ubu001 sci2/sci3; native fallback PASS)"
   ],
-  "running": [],
+  "running": [
+    "C3 coordinate-layer audit, NATIVE on M2 per MWO-0004 G7/R3 (Fabric cannot host custody-withheld files): 2 isolated reviewer sessions (claude -p, read-only tools scoped to a local bundle, no session persistence) over C:/Users/James/cosmos_runs/c3_coord_audit/20260929T121351Z/bundle; bundle manifest sha256 e51997904d4304b0e139b929ef3b5c72b41a2566f64d130b389c0d29d5c0b63f; nothing published"
+  ],
   "blocked_on": [
     "D2: MWO-0004 D2-1 resolves S1 (#925); D2 v12 implements the M1 anchor (acaf14df4); ONE bounded re-audit under D2-2 pending. The C3 freeze and D2 commitment wait on a governing PASS (frozen D2 protocol order)"
   ],
   "next_actions": [
-    "G7/R3: run the moved coordinate-layer audit NATIVELY and custody-locally on M2 (fresh isolated reviewer sessions over a local bundle; nothing published)",
     "R1: build + crash-test the C3 prediction package on a LOCAL unpushed branch (Addenda E/F/H/J constraints), so Cosmos is freeze-ready when D2 passes"
   ],
   "operator_decisions_required": [
