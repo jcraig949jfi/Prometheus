@@ -27,3 +27,12 @@ at freeze ee8cbe0c8).
   - A verdict could flip only if a statistic sat within ~1e-14 of a threshold.
   - Preferred: launch on M2, the fixture platform, or record the platform in the run manifest.
 - No change to any frozen file or rule.
+
+## E-3 (2026-09-29): transient float overflow in the CP selective arm's online training
+
+- Seen in dev: F3_switch cp L2 seed 9_800_001, during a PKG-F probe.
+- ensorain/wtp/organism.py (frozen) grad_and_pred -> np.prod raises "overflow encountered in reduce" warnings in
+  learn(). The step is clipped at +-1e3, and the trained arm's predictions are finite (max |p| 4.3).
+- Consequence for a future launch: campaign rows should be checked for non-finite predictions and AC. The analysis's
+  handling of a NaN or inf row is not verified here.
+- No change to any frozen file or rule.

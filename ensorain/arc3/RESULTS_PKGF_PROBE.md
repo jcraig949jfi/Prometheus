@@ -88,3 +88,35 @@ DEV FINDING (provisional; 4 worlds per stratum; one readout family):
 - P2: F2 stationary twins (cp, tt; 8 fresh worlds): the detector finds NO change (cp_start = 0) in >= 6/8.
 - P3: F2 twins (8 fresh worlds), |mean dAC(SD_cp) - mean dAC(SD_all)| <= .05. Discovery costs nothing without a regime
   change.
+
+### v3 result (precommit commit 4ef32124c; results/pkgf_cp.json; 36 s on M2)
+
+Fresh worlds (9_800_020-023), dAC vs S:
+
+| stratum | SD_all (all-history holdout) | SD_cp (discovered) | detected regime start (fraction of stream) |
+|---|---|---|---|
+| F3 cp | -1.30 -1.63 -0.74 -1.70 | 0 0 0 -0.45 | .69 .67 .99 .999 |
+| F3 tt | -1.39 -1.77 -0.99 -2.21 | 0 0 0 0 | .67 .98 .98 .67 |
+| F2 cp twin | -.03 -.03 -.09 +.10 | identical | 0 .80 .81 0 |
+| F2 tt twin | -.02 -.00 -.01 +.11 | -.01 0 0 0 | .92 .94 .996 .985 |
+
+- **P1 SURVIVES:** F3 mean dAC(SD_cp) = -0.056 >= -0.10. The harm vanishes in 7/8 fresh worlds, with no handed-in
+  recency. v2 worlds: 8/8 at 0.
+- **P2 REFUTED:** the detector finds no change in only 2/8 stationary twins (needed >= 6).
+  - Shape: the residual series comes from an ONLINE-trained substrate whose error shrinks over the stream. The learning
+    curve itself is a variance change point, so BIC segmentation "discovers" a regime in stationary worlds.
+  - Most false detections sit at .8-.996 of the stream: a small trailing segment.
+- **P3 SURVIVES:** twins |mean dAC(SD_cp) - mean dAC(SD_all)| = .011 <= .05. The false detections were nearly
+  harmless: they pull the weight toward 0, which forgoes small gains such as F2 tt 023 (+.11 -> 0).
+
+Reading:
+- A discovered recency signal suffices to neutralize obsolete history. Discarding was not necessary, and the
+  selection signal can be found rather than handed in.
+- But this detector is not a REGIME detector. It conflates the substrate's learning curve with world change. Its
+  harmlessness on stationary twins comes from the asymmetric cost of the weight grid, not from correct detection.
+- NEXT (design): detect on residuals of a FIXED end-of-stream model, i.e. refit S once, then segment its residuals
+  over time. That removes the learning-curve artefact. Precommit that twins then show no change in >= 6/8.
+
+Side finding: the frozen LM01 CP selective arm emits transient float-overflow warnings in training on F3 cp L2 dev seed
+9_800_001 (ensorain/wtp/organism.py grad_and_pred np.prod). Its final predictions are finite (max |p| 4.3). Recorded as
+LM01 ERRATA E-3.
