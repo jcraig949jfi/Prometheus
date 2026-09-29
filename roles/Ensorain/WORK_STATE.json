@@ -4,22 +4,57 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T02:55:00Z",
+  "updated_at_utc": "2026-09-29T02:48:38Z",
   "state": "HOLD",
   "state_reason": "E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e and NOT LAUNCHED. HOLD on the launch authorization (MWO-0001 contains no launch line). Eligible ARC3 design work continues without a campaign or lease.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
   "head_sha": "343c04f97b9584065f02732d457c6f8ab47f8bd2",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
-  "threads": ["thr-ens-lossless-memorizer", "thr-ens-locus-of-compression", "thr-ens-causal-selectivity", "thr-ens-sufficiency-ladder"],
-  "campaigns": ["C-ENS-ARC3"],
-  "experiments": [
-    {"id": "E-ENS-LM01", "status": "FROZEN_NOT_LAUNCHED", "freeze": "ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e", "prereg": "ensorain/PREREG_WTP_LM01.md", "freeze_verify": "0 mismatches over 60 files at base bd48fac9b"},
-    {"id": "E-ENS-S1-PILOT", "status": "DONE_DEV", "report": "ensorain/arc3/suff/RESULTS_S1_PILOT.md"},
-    {"id": "E-ENS-PKGF-PROBE", "status": "DONE_DEV", "report": "ensorain/arc3/RESULTS_PKGF_PROBE.md"},
-    {"id": "E-ENS-PKGF", "status": "DESIGN"},
-    {"id": "E-ENS-LM02", "status": "DESIGN"}
+  "threads": [
+    "thr-ens-lossless-memorizer",
+    "thr-ens-locus-of-compression",
+    "thr-ens-causal-selectivity",
+    "thr-ens-sufficiency-ladder"
   ],
-  "fabric_tasks": [],
+  "campaigns": [
+    "C-ENS-ARC3"
+  ],
+  "experiments": [
+    {
+      "id": "E-ENS-LM01",
+      "status": "FROZEN_NOT_LAUNCHED",
+      "freeze": "ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e",
+      "prereg": "ensorain/PREREG_WTP_LM01.md",
+      "freeze_verify": "0 mismatches over 60 files at base bd48fac9b"
+    },
+    {
+      "id": "E-ENS-S1-PILOT",
+      "status": "DONE_DEV",
+      "report": "ensorain/arc3/suff/RESULTS_S1_PILOT.md"
+    },
+    {
+      "id": "E-ENS-PKGF-PROBE",
+      "status": "DONE_DEV",
+      "report": "ensorain/arc3/RESULTS_PKGF_PROBE.md"
+    },
+    {
+      "id": "E-ENS-PKGF",
+      "status": "DESIGN"
+    },
+    {
+      "id": "E-ENS-LM02",
+      "status": "DESIGN"
+    }
+  ],
+  "fabric_tasks": [
+    {
+      "id": "tsk-ba120344aa29",
+      "title": "Independent stdlib replication of PKG-S1 sufficiency-ladder claims C1-C4",
+      "thread": "thr-ens-sufficiency-ladder",
+      "experiment": "E-ENS-S1-PILOT",
+      "state": "submitted"
+    }
+  ],
   "running": [],
   "dependencies": {
     "LM01_b_bellerophon_campaign_ended": {
@@ -50,6 +85,7 @@
     "ensorain/arc3/reviews/LM01_V032_CONFIRM.md",
     "ensorain/lm01/ERRATA.md",
     "roles/Ensorain/DEFECTS.md",
-    "ensorain/arc3/HIERARCHY.md"
+    "ensorain/arc3/HIERARCHY.md",
+    "roles/Ensorain/DEFECTS.md#DEF-ENS-002"
   ]
 }
