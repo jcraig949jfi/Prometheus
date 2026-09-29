@@ -1,12 +1,12 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Artemis",
-  "mwo_id": "MWO-0002",
-  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
-  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T07:35Z",
+  "mwo_id": "MWO-0003",
+  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
+  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
+  "updated_at_utc": "2026-09-29T11:30Z",
   "state": "BLOCKED",
-  "state_reason": "MWO-0002 adopted (census filed). MWO-0001 s10 ARTEMIS work continues: S3 principal blocked on session placement (principal must run on ubu001 per operator ruling; MWO-0002 s8 lists it as an operator decision); workload drafted, not frozen.",
+  "state_reason": "MWO-0003 adopted; FP-001 PASS via Fabric (2 replicas agree). MWO-0001 s10 ARTEMIS work continues: S3 principal blocked on session placement on ubu001 (operator decision, MWO-0002 s8); workload drafted, not frozen.",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
@@ -33,7 +33,18 @@
       "recorded_by_owner": "Nestor #894 (QUALIFICATION in roles/Nestor/FINDINGS.md)"
     }
   ],
-  "fabric_tasks": [],
+  "fabric_tasks": [
+    {
+      "id": "tsk-88d872750984",
+      "what": "FP-001 probe replica 1",
+      "state": "completed"
+    },
+    {
+      "id": "tsk-92c9679433bf",
+      "what": "FP-001 probe replica 2",
+      "state": "completed"
+    }
+  ],
   "leases": [],
   "running": [],
   "blocked_on": [
@@ -65,5 +76,6 @@
     "roles/Artemis/challenge/cvtr_nestor/RESULT.md",
     "roles/Artemis/challenge/CHALLENGE_PACKET.md"
   ],
-  "migration_report": "roles/Artemis/MIGRATION_REPORT_MWO-0002.json"
+  "migration_report": "roles/Artemis/MIGRATION_REPORT_MWO-0002.json",
+  "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json"
 }
