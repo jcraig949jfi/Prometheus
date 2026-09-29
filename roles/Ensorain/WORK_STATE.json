@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T07:39:02Z",
+  "updated_at_utc": "2026-09-29T08:20:29Z",
   "state": "HOLD",
   "state_reason": "MWO-0002 adopted (census filed). E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8 and NOT LAUNCHED (MWO-0002 s6); HOLD on the launch authorization (MWO-0001 s7 clause 3). Eligible ARC3 dev work continues without a campaign or lease.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
@@ -50,7 +50,7 @@
       "id": "E-ENS-T25-CSSR",
       "status": "DONE_DEV",
       "report": "ensorain/arc3/suff/CSSR_T25.md",
-      "note": "Held-out: ranking generalizes; the level gap is data-limited (4/4 worst worlds fall >2x by T=16000; STAT6 flat); excess tracks window crypticity H6 (rho .58). Next: review packet + T=16000 on all 24"
+      "note": "Review packet ensorain/arc3/reviews/T25_CSSR_REVIEW_2026-09-29.md. Q2 ablation: CSSR init = insurance against catastrophic random-init basins (4/24 worlds +.10-.20), but worse on 11/24 (incl. its worst world); the two fail on different worlds. Next: fixed-share over {CSSR_EM, RAND_EM}"
     }
   ],
   "fabric_tasks": [

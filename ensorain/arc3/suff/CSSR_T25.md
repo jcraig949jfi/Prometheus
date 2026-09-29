@@ -335,3 +335,27 @@ Implementation note:
 - Q2b: Even (eval seeds 1..16), |RAND_EM mean - CSSR_EM mean| <= .003 (CSSR mean .0011). On a 2-state world the
   initialization does not matter.
 - Q2c: W2_3, RAND_EM mean > .01. It overfits like CSSR_EM, because S is the same.
+
+### Result (precommit commit 2497d5d7f; output results/q2_ablation.json; 440 s on M2)
+
+| | RAND_EM | CSSR_EM |
+|---|---|---|
+| Even (eval seeds) | .0008 | .0011 |
+| W2_3 | .0166 | .0160 |
+| held-out family (24) | .0403 | .0219 |
+
+- Q2a SURVIVES in the mean (.0403 >= .0219 + .003).
+- Q2b SURVIVES (|.0008 - .0011| <= .003).
+- Q2c SURVIVES (.0166 > .01).
+
+Shape of Q2a: a HEAVY TAIL, not a uniform advantage. The mean does not show this.
+- RAND_EM is worse in only 13/24 worlds. Four of those are catastrophic (+.096 U4_s2, +.110 U4_s1, +.117 U4_s8,
+  +.203 U5_s2). These are random-init EM failures on 4-5 state worlds.
+- RAND_EM is BETTER in 11/24, by up to .0585, on U4_s3. That is CSSR_EM's worst world (.0777 -> .0192).
+
+Reading (answers reviewer Q2):
+- The CSSR stage is not incidental. It is INSURANCE: it removes the catastrophic random-initialization basins.
+- But it is not a better basin everywhere. Where the CSSR proposal is itself wrong (U4_s3), it anchors EM to a worse
+  optimum than random restarts find.
+- The two initializations fail on DIFFERENT worlds. That predicts a mixture over {CSSR_EM, RAND_EM} (fixed-share) beats
+  either alone on the family. Exploratory; NOT run; a candidate for the next precommitment.
