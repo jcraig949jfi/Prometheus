@@ -3,7 +3,7 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T11:47:25Z",
+ "updated_at_utc": "2026-09-29T11:54:17Z",
  "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "d0ca26b168561d1e21031ea332e0dadac2b560bf (parent of the commit that records this field)",
@@ -24,10 +24,10 @@
  ],
  "running": [],
  "blocked_on": [
-  "E-003 1% NPE sample: concrete dependency = Nestor's native SKULLPORT run of npe_sample_task @ b596883a3 (comms delegation). G2 default: both candidates fail -> LOST / NOT VERIFIED"
+  "E-003 1% NPE sample: VERIFIED natively on SKULLPORT (stage 1 PASS, 11/11, 28,055 records); stage 2 awaits Nestor's single rerun at 8631128c3 (schema declared)"
  ],
  "next_actions": [
-  "on Nestor's native SKULLPORT receipt: record VERIFY/AGREEMENT as an E-003 addendum, or declare the sample LOST per G2",
+  "on the rerun receipt: record the 1% sample agreement (PASS/FAIL, raw per class) as an E-003 addendum",
   "no new BEE/NPE design campaign (MWO-0004 G6)"
  ],
  "operator_decisions_required": [],
@@ -40,7 +40,7 @@
  "other_branches": [
   "archaeon/attribution-arc-2026-09-28 @ 232ebe399 (E-003 evidence)"
  ],
- "comms_cursor": 988,
+ "comms_cursor": 990,
  "state_reason": "MWO-0004 G2: 1% NPE sample check running natively on SKULLPORT via its host owner (R3)",
  "fp001_result": "roles/Archaeon/probes/FP-001_RESULT.json"
 }
