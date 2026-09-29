@@ -57,6 +57,12 @@ a positive value means the LEFT level scored higher.
 | read_order ANSWER_BEFORE_READ -> FORCED_READ | 334 | +0.1029 | ANSWER_BEFORE_READ |
 | read_order FORCED_READ -> ANSWER_BEFORE_READ | 304 | -0.0687 | ANSWER_BEFORE_READ |
 
+**Scope note (2026-09-29; Artemis S3 Q8, comms #1010; Fabric tsk-2b96eda5e96c):** the pressure row (+0.30,
+EXPLICIT_FITNESS over NONE_IMPLICIT) is a valid selection-vs-drift contrast ONLY inside EXTERNAL reproduction
+(grammar.py:175-177; world.py:644-652, :838-839). It is not evidence about endogenous (PAIR_EXECUTION) reproduction:
+NPE has never had a task-coupled endogenous-vs-external test. Any citation of this row carries that scope. The row
+itself is unchanged; this narrows it and does not retract it.
+
 ### A-3 The cycle-8 read-order discrepancy -- OPEN
 
 Both read-order rows are independent pair sets and both favour `ANSWER_BEFORE_READ`.

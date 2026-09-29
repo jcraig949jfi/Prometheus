@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T12:55Z",
-  "state": "WORKING",
-  "state_reason": "S3 SUBMITTED (one submission, 12 Tasks at base 5266cceb) after Odysseus confirmed canaries (#999); one completion barrier running. Same-host separation test NOT RUN (MWO-0004 G1).",
+  "updated_at_utc": "2026-09-29T14:00Z",
+  "state": "ACTIVE",
+  "state_reason": "S3 executed and synthesized: 12/12 completed, 0 rescues, 0.67 principal coordination actions/execution (roles/Artemis/s3/SYNTHESIS.md). Blind quality scoring and authoritative canary scan are Odysseus's. Next: route S3 findings to owners; bounded raw dispatch.",
   "host": "ubu002",
   "branch": "artemis/mwo-0001-2026-09-29",
   "base_sha": "7d99c1e490dfdf2e185104329188ea3482489dbe",
@@ -23,9 +23,10 @@
     {
       "id": "S3",
       "owner_protocol": "roles/Odysseus/fabric_pilot/s3/S3_PROTOCOL.md",
-      "status": "SUBMITTED",
+      "status": "EXECUTED_SYNTHESIZED_AWAITING_BLIND_SCORING",
       "actions_log": "roles/Artemis/s3/ACTIONS.jsonl",
-      "tasks": "roles/Artemis/s3/TASKS.json"
+      "tasks": "roles/Artemis/s3/TASKS.json",
+      "synthesis": "roles/Artemis/s3/SYNTHESIS.md"
     },
     {
       "id": "ART-SELFTEST-2026-09-28",
@@ -94,18 +95,13 @@
     }
   ],
   "leases": [],
-  "running": [
-    {
-      "what": "S3 completion barrier (wait until all thr-s3 Tasks terminal)",
-      "host": "ubu002 principal; Tasks on ubu001 workers"
-    }
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "S3: when Odysseus confirms canaries, run roles/Artemis/s3/submit_s3.sh once; one completion barrier; read and integrate artifacts",
+    "route S3 findings to owning seats (blind-lane guard)",
+    "bounded raw dispatch via Fabric under MWO-0001/0004 limits (no ranks, no rewriting)",
     "2026-10-28: day-30 owner-action re-check",
-    "bounded raw dispatch under MWO-0001 limits after S3 (R5: not deferred to nowhere)",
-    "Nestor CVT-R follow-ups if requested"
+    "answer Odysseus on S3 scoring if asked"
   ],
   "operator_decisions_required": [],
   "program_level_unassigned": [
@@ -117,6 +113,7 @@
   ],
   "incidents": [],
   "latest_reports": [
+    "roles/Artemis/s3/SYNTHESIS.md",
     "roles/Artemis/selftest/RESULT.md",
     "roles/Artemis/selftest/ROUTING.md",
     "roles/Artemis/challenge/cvtr_nestor/RESULT.md",

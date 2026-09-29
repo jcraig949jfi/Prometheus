@@ -3,26 +3,25 @@
   "mwo": "MWO-0003",
   "discovered_by": "own_loop_fetch",
   "probe": "python -m prometheus.cosmos.research_check (research-workspace checker; its cheat-control tests: prometheus/cosmos/tests/test_research_check.py)",
-  "base_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
-  "execution": "native",
+  "base_sha": "6f18e1696921c5161035858a18abbbd739472ea0",
+  "execution": "fabric",
   "fabric_tasks": [
-    "tsk-567421e8717f",
-    "tsk-9525c38ab1bb"
+    "tsk-2847868eeac6",
+    "tsk-0cac20173212",
+    "(first submission, failed at checkout: tsk-567421e8717f, tsk-9525c38ab1bb)"
   ],
   "fabric_attempts": [
-    "att-540389b44824",
-    "att-a651e5c3c26c",
-    "att-45bcf38c85e4",
-    "att-617e59156a74",
-    "att-3edc6de634a6",
-    "att-a230f751220d"
+    "att-94a9577caa42",
+    "att-0171382c61b7",
+    "(failed: att-540389b44824, att-a651e5c3c26c, att-45bcf38c85e4, att-617e59156a74, att-3edc6de634a6, att-a230f751220d)"
   ],
   "lease": null,
   "wall_seconds": 1,
   "result": "PASS",
   "artifact_hashes": [
-    "sha256:b26c10cf8059f6f71e2645dbfed6203dc1e545b869e965aa6c9804542fc610c6 (native stdout: threads 11, results 2, graves 5, freeze F-0000 VERIFIED, PASS)"
+    "sha256:fc410bd4264962006f7d56add96f69619997140ec7785613f0395889e626f871 (stdout, BOTH Fabric replicas identical: threads 11, results 2, graves 6, freeze F-0000 UNVERIFIABLE_HERE, PASS)",
+    "sha256:b26c10cf8059f6f71e2645dbfed6203dc1e545b869e965aa6c9804542fc610c6 (earlier native fallback at e749fad15: graves 5, F-0000 VERIFIED, PASS)"
   ],
-  "fabric_blocker": "Both replicas failed ALL 3 Attempts each before execution, at runtime checkout on ubu001 (worker.ubu001.sci2, worker.ubu001.sci3): 'FabricError: worktree add failed ... error: unable to write file prometheus_math/algebraic_geometry.py ...' (fabric/worker.py:127). Deterministic infra failure, so the retries were spent in ~30 s. Not a probe defect. Native fallback per MWO-0004 R3.",
-  "notes": "Discovered MWO-0003 late: the seat loop fetched MWO-0004 as current and read MWO-0003 from the archive while adopting it (between-tick publication). Digest comparison across replicas was impossible because no replica executed. Native run on M2 SPECTREX5."
+  "fabric_blocker": null,
+  "notes": "First submission (base e749fad15) failed 6/6 Attempts at checkout on ubu001 sci2/sci3 (disk full; DEF-ODY-015, fixed 5266ccebe, Odysseus #1000), so the seat ran natively under MWO-0004 R3: PASS. Resubmitted after the fix (base 6f18e1696): 2 independent replicas on worker.ubu001.sci, identical stdout digests, PASS. The native and Fabric digests differ for two expected reasons: graves 5 -> 6 (G-0006 added between the bases), and the local-only withheld commit F-0000 being verifiable only on M2 (UNVERIFIABLE_HERE on ubu001). Discovered MWO-0003 late (it was read from the archive while adopting MWO-0004)."
 }

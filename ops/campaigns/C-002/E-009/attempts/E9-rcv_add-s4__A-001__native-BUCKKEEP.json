@@ -1,0 +1,6926 @@
+{
+ "code_sha256_lf": {
+  "observatory/__init__.py": "28a35b52368cfbff935f4aac6974fa17e63ce24c608cc3cc002c719b921fc8a2",
+  "observatory/aeth01_graph.py": "b70e5e40612778605f0d04425a7532f20516974537556b4af3c6832f5948c558",
+  "observatory/aeth01_observatory.py": "24d4cdd4877369d45b8b88088322e20756eb1a39a4dc7328734e08b0388b77fe",
+  "observatory/aeth01_run.py": "9d1e19d973024d0f9d6fc1f9969b29f110f007e9c7be77d718b4b49d3b213cb5",
+  "observatory/aeth03_longhorizon.py": "94a433f0723854a4a4c7112cbd07946ad54744289cb0b472624909b18aa77daf",
+  "observatory/aeth03_propagation.py": "7fb9b5e4c11c4d8e6485120f2fcae83fd93bff1b23934e8636ca46f964345c1d",
+  "observatory/aeth03_scouts.py": "8670d74d4aa3ef7bd7277ff363b2e07d45251dc1b806e5a4c185cdde949bcdb8",
+  "observatory/aeth03_unit.py": "28f73839c5d00c0e5b10afa8c4ff6c4a04203bb7c166f10865683e45b717dda7",
+  "observatory/aeth03_variants.py": "1b00b1c431dab6efab4f8af86cbf4565b9dd15b0ce741f3c95898bd3a27a0eb6",
+  "test/reference/gpu_aeth01.py": "379961f5e62ad2c6017096d6f4b871a57eb586ffdf5e9eaf49add6385c87f345"
+ },
+ "host": {
+  "hostname": "BUCKKEEP",
+  "numpy": "2.4.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.5"
+ },
+ "inputs": {
+  "arm": "off",
+  "instrument": "aeth03_propagation.assay",
+  "law": "rcv_add",
+  "n": 128,
+  "origins_total": 32,
+  "seed_index": 4,
+  "slice": [
+   0,
+   32
+  ],
+  "ticks": 400,
+  "warmup": 1500
+ },
+ "inputs_sha256": "6fa192dc5b2ffafa9a353c47411edbe1f4dff4198c4f1b230cd0abb505f90062",
+ "legacy_sha256": "a98c38f40c2d2679047d14775a5438101f8c5f770a5ea7a71bc88a9ecb530369",
+ "locality_violations": 0,
+ "resources": {
+  "peak_rss_mb": 35.15625,
+  "wall_seconds": 414.143590927124
+ },
+ "result_sha256": "0ac4a1cec53a3c22c2774c66578bc5911b9d63ba2f8176d517191e11fa28f862",
+ "runs": [
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      3,
+      0,
+      1,
+      4,
+      1
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 16,
+     "differing_pairs_by_field": [
+      3,
+      1,
+      1,
+      5,
+      6
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 13,
+     "differing_pairs_by_field": [
+      3,
+      1,
+      1,
+      5,
+      3
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 29,
+     "differing_pairs_by_field": [
+      5,
+      2,
+      1,
+      7,
+      14
+     ],
+     "differing_sites": 16,
+     "largest_component": 16,
+     "max_generation_now": 7,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 6
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 27,
+     "differing_pairs_by_field": [
+      6,
+      2,
+      1,
+      7,
+      11
+     ],
+     "differing_sites": 15,
+     "largest_component": 15,
+     "max_generation_now": 7,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 6
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 5,
+    "class": "SUSTAINED",
+    "content": {
+     "altered": 17,
+     "gen_ge2": 6,
+     "max_generation": 6,
+     "max_radius": 4,
+     "new": 17,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.00091552734375,
+    "last_new_generation_tick": 244,
+    "locality_violations": 0,
+    "max_generation": 7,
+    "max_radius": 5,
+    "new_by_generation": [
+     0,
+     4,
+     7,
+     3,
+     1,
+     2,
+     1,
+     4,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 22,
+    "new_gen1": 4,
+    "new_gen_ge2": 18,
+    "new_gen_ge5": 7,
+    "origin": [
+     18,
+     0
+    ],
+    "reentries": 7
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      2
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 7,
+    "branch_points": 0,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 1,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 1,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 0.0001220703125,
+    "last_new_generation_tick": 175,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     1,
+     2,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 3,
+    "new_gen1": 1,
+    "new_gen_ge2": 2,
+    "new_gen_ge5": 0,
+    "origin": [
+     6,
+     59
+    ],
+    "reentries": 1
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 3,
+    "branch_points": 5,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 13,
+     "gen_ge2": 8,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 14,
+     "preserved": 1,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 1,
+     "preserved_max_radius": 1
+    },
+    "died": false,
+    "duration": 400,
+    "field": 3,
+    "final_differing_fraction": 0.00018310546875,
+    "last_new_generation_tick": 2,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     6,
+     8,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 14,
+    "new_gen1": 6,
+    "new_gen_ge2": 8,
+    "new_gen_ge5": 0,
+    "origin": [
+     103,
+     80
+    ],
+    "reentries": 12
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 6,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 1,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     18,
+     114
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 13,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 26,
+     "preserved": 13,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 1,
+     "preserved_max_radius": 1
+    },
+    "died": false,
+    "duration": 400,
+    "field": 3,
+    "final_differing_fraction": 0.0001220703125,
+    "last_new_generation_tick": 1,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     26,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 26,
+    "new_gen1": 26,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     100,
+     121
+    ],
+    "reentries": 25
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      2,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      2,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      2,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      2,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 25,
+     "differing_pairs_by_field": [
+      5,
+      2,
+      7,
+      4,
+      7
+     ],
+     "differing_sites": 10,
+     "largest_component": 10,
+     "max_generation_now": 7,
+     "radius_now": 7,
+     "sites_gen_ge4_now": 5
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 2,
+    "class": "SUSTAINED",
+    "content": {
+     "altered": 21,
+     "gen_ge2": 19,
+     "max_generation": 6,
+     "max_radius": 6,
+     "new": 21,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.0006103515625,
+    "last_new_generation_tick": 392,
+    "locality_violations": 0,
+    "max_generation": 7,
+    "max_radius": 7,
+    "new_by_generation": [
+     0,
+     1,
+     1,
+     2,
+     2,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 9,
+    "new_gen1": 1,
+    "new_gen_ge2": 8,
+    "new_gen_ge5": 3,
+    "origin": [
+     104,
+     113
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 1,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 1,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 3,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 1,
+    "new_gen1": 1,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     13,
+     34
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      2,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      2,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      3,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      3,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      3,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 14,
+     "differing_pairs_by_field": [
+      3,
+      1,
+      4,
+      4,
+      2
+     ],
+     "differing_sites": 7,
+     "largest_component": 7,
+     "max_generation_now": 4,
+     "radius_now": 4,
+     "sites_gen_ge4_now": 2
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 25,
+     "differing_pairs_by_field": [
+      4,
+      3,
+      8,
+      4,
+      6
+     ],
+     "differing_sites": 10,
+     "largest_component": 10,
+     "max_generation_now": 5,
+     "radius_now": 4,
+     "sites_gen_ge4_now": 4
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 50,
+     "differing_pairs_by_field": [
+      10,
+      6,
+      12,
+      10,
+      12
+     ],
+     "differing_sites": 16,
+     "largest_component": 16,
+     "max_generation_now": 6,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 8
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 46,
+     "differing_pairs_by_field": [
+      10,
+      6,
+      12,
+      11,
+      7
+     ],
+     "differing_sites": 16,
+     "largest_component": 16,
+     "max_generation_now": 6,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 8
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 52,
+     "differing_pairs_by_field": [
+      11,
+      6,
+      12,
+      12,
+      11
+     ],
+     "differing_sites": 16,
+     "largest_component": 16,
+     "max_generation_now": 6,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 8
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 5,
+    "class": "SUSTAINED",
+    "content": {
+     "altered": 42,
+     "gen_ge2": 35,
+     "max_generation": 6,
+     "max_radius": 5,
+     "new": 42,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.0009765625,
+    "last_new_generation_tick": 132,
+    "locality_violations": 0,
+    "max_generation": 6,
+    "max_radius": 5,
+    "new_by_generation": [
+     0,
+     2,
+     3,
+     2,
+     4,
+     3,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 15,
+    "new_gen1": 2,
+    "new_gen_ge2": 13,
+    "new_gen_ge5": 4,
+    "origin": [
+     3,
+     34
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 1,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     10,
+     40
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      1,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 1,
+    "branch_points": 0,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 4,
+     "gen_ge2": 1,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 4,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.00018310546875,
+    "last_new_generation_tick": 2,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 2,
+    "new_gen1": 1,
+    "new_gen_ge2": 1,
+    "new_gen_ge5": 0,
+    "origin": [
+     90,
+     44
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 7,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 2,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 2,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 0,
+    "final_differing_fraction": 0.0001220703125,
+    "last_new_generation_tick": 1,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 1,
+    "new_gen1": 1,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     119,
+     72
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 10,
+     "differing_pairs_by_field": [
+      2,
+      2,
+      2,
+      2,
+      2
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 6,
+     "radius_now": 6,
+     "sites_gen_ge4_now": 3
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 14,
+     "differing_pairs_by_field": [
+      4,
+      1,
+      2,
+      3,
+      4
+     ],
+     "differing_sites": 7,
+     "largest_component": 7,
+     "max_generation_now": 7,
+     "radius_now": 7,
+     "sites_gen_ge4_now": 4
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 28,
+     "differing_pairs_by_field": [
+      6,
+      3,
+      3,
+      7,
+      9
+     ],
+     "differing_sites": 12,
+     "largest_component": 12,
+     "max_generation_now": 9,
+     "radius_now": 8,
+     "sites_gen_ge4_now": 9
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 32,
+     "differing_pairs_by_field": [
+      6,
+      3,
+      6,
+      8,
+      9
+     ],
+     "differing_sites": 12,
+     "largest_component": 12,
+     "max_generation_now": 9,
+     "radius_now": 8,
+     "sites_gen_ge4_now": 9
+    }
+   },
+   "summary": {
+    "bit": 3,
+    "branch_points": 1,
+    "class": "SUSTAINED",
+    "content": {
+     "altered": 83,
+     "gen_ge2": 82,
+     "max_generation": 8,
+     "max_radius": 8,
+     "new": 83,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 0.000732421875,
+    "last_new_generation_tick": 233,
+    "locality_violations": 0,
+    "max_generation": 9,
+    "max_radius": 8,
+    "new_by_generation": [
+     0,
+     1,
+     1,
+     1,
+     1,
+     2,
+     3,
+     1,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 12,
+    "new_gen1": 1,
+    "new_gen_ge2": 11,
+    "new_gen_ge5": 8,
+    "origin": [
+     41,
+     121
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 3,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 0,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     120,
+     117
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 4,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 1,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     99,
+     98
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 4,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     11,
+     62
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      4,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      4,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      4,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 4,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 1
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      3,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 4,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 1
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      3,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 4,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 2
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      3,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 6,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 3
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      4,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 6,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 4
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 29,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 33,
+     "gen_ge2": 32,
+     "max_generation": 6,
+     "max_radius": 2,
+     "new": 33,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 0.000244140625,
+    "last_new_generation_tick": 215,
+    "locality_violations": 0,
+    "max_generation": 6,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     1,
+     2,
+     8,
+     4,
+     8,
+     10,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 33,
+    "new_gen1": 1,
+    "new_gen_ge2": 32,
+    "new_gen_ge5": 18,
+    "origin": [
+     79,
+     40
+    ],
+    "reentries": 30
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 4,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 1,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     4,
+     59
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 62,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 1,
+    "new_gen1": 1,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     7,
+     77
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      2,
+      1
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      4,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 7,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      0,
+      5,
+      0
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 7,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      0,
+      5,
+      0
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      0,
+      3,
+      1
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      0,
+      3,
+      1
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      0,
+      3,
+      0
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 0,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 19,
+     "gen_ge2": 18,
+     "max_generation": 3,
+     "max_radius": 3,
+     "new": 19,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 0.00030517578125,
+    "last_new_generation_tick": 6,
+    "locality_violations": 0,
+    "max_generation": 3,
+    "max_radius": 3,
+    "new_by_generation": [
+     0,
+     1,
+     1,
+     16,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 18,
+    "new_gen1": 1,
+    "new_gen_ge2": 17,
+    "new_gen_ge5": 0,
+    "origin": [
+     1,
+     48
+    ],
+    "reentries": 13
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 1,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     58,
+     56
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      2,
+      1
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 7,
+    "branch_points": 8,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 45,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 100,
+     "preserved": 100,
+     "preserved_gen_ge2": 45,
+     "preserved_max_generation": 2,
+     "preserved_max_radius": 2
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 0.0001220703125,
+    "last_new_generation_tick": 152,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     16,
+     45,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 61,
+    "new_gen1": 16,
+    "new_gen_ge2": 45,
+    "new_gen_ge5": 0,
+    "origin": [
+     58,
+     107
+    ],
+    "reentries": 59
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      2,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      3,
+      1,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      4,
+      2,
+      0
+     ],
+     "differing_sites": 4,
+     "largest_component": 4,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      4,
+      4,
+      0
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 40,
+     "differing_pairs_by_field": [
+      3,
+      9,
+      7,
+      11,
+      10
+     ],
+     "differing_sites": 20,
+     "largest_component": 20,
+     "max_generation_now": 5,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 5
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 51,
+     "differing_pairs_by_field": [
+      4,
+      10,
+      9,
+      15,
+      13
+     ],
+     "differing_sites": 24,
+     "largest_component": 24,
+     "max_generation_now": 5,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 5
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 74,
+     "differing_pairs_by_field": [
+      9,
+      14,
+      15,
+      17,
+      19
+     ],
+     "differing_sites": 28,
+     "largest_component": 28,
+     "max_generation_now": 5,
+     "radius_now": 5,
+     "sites_gen_ge4_now": 7
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 96,
+     "differing_pairs_by_field": [
+      13,
+      19,
+      19,
+      22,
+      23
+     ],
+     "differing_sites": 35,
+     "largest_component": 35,
+     "max_generation_now": 6,
+     "radius_now": 6,
+     "sites_gen_ge4_now": 13
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 98,
+     "differing_pairs_by_field": [
+      14,
+      19,
+      19,
+      24,
+      22
+     ],
+     "differing_sites": 35,
+     "largest_component": 35,
+     "max_generation_now": 6,
+     "radius_now": 6,
+     "sites_gen_ge4_now": 13
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 109,
+     "differing_pairs_by_field": [
+      18,
+      20,
+      22,
+      25,
+      24
+     ],
+     "differing_sites": 41,
+     "largest_component": 41,
+     "max_generation_now": 7,
+     "radius_now": 7,
+     "sites_gen_ge4_now": 19
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 20,
+    "class": "SUSTAINED",
+    "content": {
+     "altered": 105,
+     "gen_ge2": 86,
+     "max_generation": 7,
+     "max_radius": 7,
+     "new": 105,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.00250244140625,
+    "last_new_generation_tick": 323,
+    "locality_violations": 0,
+    "max_generation": 7,
+    "max_radius": 7,
+    "new_by_generation": [
+     0,
+     4,
+     7,
+     10,
+     9,
+     6,
+     7,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 44,
+    "new_gen1": 4,
+    "new_gen_ge2": 40,
+    "new_gen_ge5": 14,
+    "origin": [
+     55,
+     108
+    ],
+    "reentries": 4
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      2,
+      0,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      3,
+      1,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      0,
+      2,
+      3,
+      1,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      0,
+      2,
+      3,
+      1,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      0,
+      2,
+      3,
+      1,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 20,
+     "differing_pairs_by_field": [
+      6,
+      2,
+      3,
+      1,
+      8
+     ],
+     "differing_sites": 9,
+     "largest_component": 9,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 3,
+     "differing_pairs": 20,
+     "differing_pairs_by_field": [
+      7,
+      3,
+      3,
+      1,
+      6
+     ],
+     "differing_sites": 9,
+     "largest_component": 7,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 23,
+     "differing_pairs_by_field": [
+      7,
+      4,
+      3,
+      1,
+      8
+     ],
+     "differing_sites": 10,
+     "largest_component": 10,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 29,
+     "differing_pairs_by_field": [
+      7,
+      6,
+      4,
+      3,
+      9
+     ],
+     "differing_sites": 11,
+     "largest_component": 11,
+     "max_generation_now": 4,
+     "radius_now": 4,
+     "sites_gen_ge4_now": 1
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 35,
+     "differing_pairs_by_field": [
+      8,
+      8,
+      6,
+      4,
+      9
+     ],
+     "differing_sites": 14,
+     "largest_component": 14,
+     "max_generation_now": 4,
+     "radius_now": 4,
+     "sites_gen_ge4_now": 1
+    }
+   },
+   "summary": {
+    "bit": 4,
+    "branch_points": 7,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 84,
+     "gen_ge2": 30,
+     "max_generation": 3,
+     "max_radius": 3,
+     "new": 84,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.0008544921875,
+    "last_new_generation_tick": 268,
+    "locality_violations": 0,
+    "max_generation": 4,
+    "max_radius": 4,
+    "new_by_generation": [
+     0,
+     5,
+     5,
+     8,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 19,
+    "new_gen1": 5,
+    "new_gen_ge2": 14,
+    "new_gen_ge5": 0,
+    "origin": [
+     67,
+     88
+    ],
+    "reentries": 6
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      1,
+      0,
+      2
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      0,
+      3,
+      1,
+      0,
+      2
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      3
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      3
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      2
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 10,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      4
+     ],
+     "differing_sites": 7,
+     "largest_component": 7,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      2
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      2
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      3
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 11,
+     "differing_pairs_by_field": [
+      0,
+      5,
+      1,
+      0,
+      5
+     ],
+     "differing_sites": 7,
+     "largest_component": 7,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 7,
+    "branch_points": 7,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 5,
+     "gen_ge2": 3,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 5,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.00042724609375,
+    "last_new_generation_tick": 5,
+    "locality_violations": 0,
+    "max_generation": 3,
+    "max_radius": 3,
+    "new_by_generation": [
+     0,
+     1,
+     3,
+     23,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 27,
+    "new_gen1": 1,
+    "new_gen_ge2": 26,
+    "new_gen_ge5": 0,
+    "origin": [
+     85,
+     118
+    ],
+    "reentries": 21
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      1,
+      2,
+      0,
+      2,
+      4
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 6,
+     "differing_pairs_by_field": [
+      1,
+      2,
+      0,
+      2,
+      1
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 10,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 8,
+     "gen_ge2": 3,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 8,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 0,
+    "final_differing_fraction": 0.00030517578125,
+    "last_new_generation_tick": 289,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     5,
+     8,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 13,
+    "new_gen1": 5,
+    "new_gen_ge2": 8,
+    "new_gen_ge5": 0,
+    "origin": [
+     51,
+     104
+    ],
+    "reentries": 8
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 0,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 2,
+     "preserved": 2,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 1,
+     "preserved_max_radius": 1
+    },
+    "died": false,
+    "duration": 400,
+    "field": 3,
+    "final_differing_fraction": 0.0001220703125,
+    "last_new_generation_tick": 1,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 1,
+    "new_gen1": 1,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     111,
+     83
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 4,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      1,
+      0,
+      2
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 5,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      1,
+      1,
+      2
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 7,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      1,
+      3,
+      2
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      3,
+      2
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      3,
+      2
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      4,
+      2
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 11,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      4,
+      4
+     ],
+     "differing_sites": 6,
+     "largest_component": 6,
+     "max_generation_now": 3,
+     "radius_now": 3,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 8,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      4,
+      1
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      4,
+      2
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 9,
+     "differing_pairs_by_field": [
+      1,
+      1,
+      1,
+      4,
+      2
+     ],
+     "differing_sites": 5,
+     "largest_component": 5,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 5,
+    "branch_points": 0,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 6,
+     "gen_ge2": 3,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 6,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 2,
+    "final_differing_fraction": 0.00030517578125,
+    "last_new_generation_tick": 17,
+    "locality_violations": 0,
+    "max_generation": 3,
+    "max_radius": 3,
+    "new_by_generation": [
+     0,
+     1,
+     3,
+     15,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 19,
+    "new_gen1": 1,
+    "new_gen_ge2": 18,
+    "new_gen_ge5": 0,
+    "origin": [
+     6,
+     13
+    ],
+    "reentries": 14
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 2,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      1,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 2,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 1,
+    "branch_points": 0,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 2,
+     "gen_ge2": 1,
+     "max_generation": 2,
+     "max_radius": 1,
+     "new": 2,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 18,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 2,
+    "new_gen1": 1,
+    "new_gen_ge2": 1,
+    "new_gen_ge5": 0,
+    "origin": [
+     88,
+     34
+    ],
+    "reentries": 1
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 7,
+    "branch_points": 0,
+    "class": "INERT",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 0,
+     "max_radius": 0,
+     "new": 0,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 1,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 0,
+    "locality_violations": 0,
+    "max_generation": 0,
+    "max_radius": 0,
+    "new_by_generation": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 0,
+    "new_gen1": 0,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     20,
+     126
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 3,
+     "differing_pairs_by_field": [
+      1,
+      0,
+      0,
+      2,
+      0
+     ],
+     "differing_sites": 3,
+     "largest_component": 3,
+     "max_generation_now": 2,
+     "radius_now": 2,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 3,
+    "branch_points": 5,
+    "class": "SECONDARY",
+    "content": {
+     "altered": 11,
+     "gen_ge2": 5,
+     "max_generation": 2,
+     "max_radius": 2,
+     "new": 11,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 3,
+    "final_differing_fraction": 0.00018310546875,
+    "last_new_generation_tick": 2,
+    "locality_violations": 0,
+    "max_generation": 2,
+    "max_radius": 2,
+    "new_by_generation": [
+     0,
+     6,
+     5,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 11,
+    "new_gen1": 6,
+    "new_gen_ge2": 5,
+    "new_gen_ge5": 0,
+    "origin": [
+     0,
+     76
+    ],
+    "reentries": 9
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      0,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 0,
+     "radius_now": 0,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      1
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 1,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      0,
+      0
+     ],
+     "differing_sites": 1,
+     "largest_component": 1,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 3,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 1,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 1,
+     "preserved": 0,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 0,
+     "preserved_max_radius": 0
+    },
+    "died": false,
+    "duration": 400,
+    "field": 4,
+    "final_differing_fraction": 6.103515625e-05,
+    "last_new_generation_tick": 3,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 1,
+    "new_gen1": 1,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     68,
+     19
+    ],
+    "reentries": 0
+   }
+  },
+  {
+   "horizons": {
+    "1": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "2": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "5": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "10": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "25": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "50": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "100": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "200": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "300": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    },
+    "400": {
+     "components": 1,
+     "differing_pairs": 2,
+     "differing_pairs_by_field": [
+      0,
+      1,
+      0,
+      1,
+      0
+     ],
+     "differing_sites": 2,
+     "largest_component": 2,
+     "max_generation_now": 1,
+     "radius_now": 1,
+     "sites_gen_ge4_now": 0
+    }
+   },
+   "summary": {
+    "bit": 3,
+    "branch_points": 0,
+    "class": "DIRECT_ONLY",
+    "content": {
+     "altered": 0,
+     "gen_ge2": 0,
+     "max_generation": 1,
+     "max_radius": 1,
+     "new": 6,
+     "preserved": 6,
+     "preserved_gen_ge2": 0,
+     "preserved_max_generation": 1,
+     "preserved_max_radius": 1
+    },
+    "died": false,
+    "duration": 400,
+    "field": 3,
+    "final_differing_fraction": 0.0001220703125,
+    "last_new_generation_tick": 1,
+    "locality_violations": 0,
+    "max_generation": 1,
+    "max_radius": 1,
+    "new_by_generation": [
+     0,
+     6,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "new_differences": 6,
+    "new_gen1": 6,
+    "new_gen_ge2": 0,
+    "new_gen_ge5": 0,
+    "origin": [
+     33,
+     86
+    ],
+    "reentries": 5
+   }
+  }
+ ],
+ "semantics_id": "aeth03.rcv_add.scout0",
+ "unit_id": "rcv_add-s4-off-0_32-6fa192dc5b"
+}

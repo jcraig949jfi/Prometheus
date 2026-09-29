@@ -309,3 +309,19 @@ RunPod), same unit IDs, code pinned c49f2ebad4. Record:
   `rcv_str` stays UNRESOLVED for §5.2.
 - §5.5 point 4 ("not completed") is superseded by E-008. Point 1 holds
   for v1, `add` and `rcv`, and does NOT hold for the two combinations.
+
+## AMENDMENT A3 (2026-09-29) — fresh-seed replication (E-009)
+
+*Appended; nothing above is edited. Preregistered at c6196efb4 before any run.*
+
+On seeds 4–7 (never run before), with the unchanged N1 rule and components from
+the same seeds (`ops/campaigns/C-002/E-009/RESULT.md`):
+
+- `rcv_add`: P_sust 22/128 (components 4/128 and 1/128) — **REPLICATED**.
+- `rcv_str`: P_sust 15/128 (components 4/128 and 0/128; minimum pass 13/128) —
+  **REPLICATED**.
+
+The UNRESOLVED status recorded in A1 for `rcv_str` is lifted: its §5.2
+NEW_BEHAVIOUR (N1) stands on two independent seed sets. The effect remains
+small and near the floor (per seed 3/2/5/5 of 32). N2 remains uninformative
+(E-P1). §5.5 point 2 now holds for both combinations.
