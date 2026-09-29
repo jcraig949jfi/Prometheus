@@ -431,3 +431,35 @@ Design consequence (PKG-F s9e, to be precommitted before building):
 - V2: F3 L2: detection with cp_frac in [.60, .75] in >= 7/8.
 - V3: F2 L2 twins: false detections <= 1/8.
 - V4: partial switch at rho = .5: detection with cp_frac in [.60, .75] in >= 6/8.
+
+### v8 result (precommit commit e8549ccbd; results/pkgf_cp4.json; 30 s)
+
+| world | detected | final switch in [.60, .75] | v5 on the same world type |
+|---|---|---|---|
+| N5 (noise growth) | 0/8 | - | 8/8 FALSE |
+| F3 (full switch) | 8/8 | 8/8 | 16/16 |
+| F2 twins | 0/8 | - | 0/16 |
+| partial rho = .5 | 4/8 | 1/8 | 8/8 |
+
+- V1 SURVIVES: 0/8 false on N5. The variance confound is fixed.
+- V2 SURVIVES: 8/8.
+- V3 SURVIVES: 0/8.
+- V4 REFUTED: 1/8 at the final switch.
+  - Three worlds stop at the FIRST switch (.327). The recursion on the later part then fails to find the second
+    switch.
+  - Four find nothing.
+
+Shape: a trade-off between robustness and power.
+- Referencing each split to its LOCAL left and right noise (a +-20% window) removes the noise-growth false alarms, but
+  it uses fewer pairs per test.
+- On partial switches (half the cells unchanged, which dilutes the mean shift) it loses the power v5 had. After a
+  first split the remaining segment is shorter, which cuts power further.
+- No single detector in this series passes all four controls:
+  - v5 fails N5;
+  - v8 fails partial switches.
+
+Next candidates (design, not run):
+- (a) combine both: accept a split only if v5 fires AND the v8 local-noise statistic is positive at that tau (with no
+  separate significance test). This keeps v5's power and uses v8 as a veto against pure variance growth.
+- (b) per-cell normalization: divide each pair's disagreement by that cell's own pooled within-side spread.
+- Either must pass all four world types, precommitted.
