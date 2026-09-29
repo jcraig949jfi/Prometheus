@@ -215,3 +215,65 @@ Mean 2nd-half excess [min, max over seeds]:
 - H4: EM family mean < split family mean.
 - H5: Even eval seeds 1..16: MIX_FS max excess < .01 AND MIX_FS mean <= .003 (fixes the late-switch seed).
 - H6: MIX_FS family mean <= MIX family mean + .001 (the price of fixed-share is small).
+
+### Result (precommit commit f57504071; output results/heldout_eval.json; 85 s on M2)
+
+Family means (24 held-out random unifilar worlds, 2nd-half excess):
+
+| STAT3 | STAT6 | split-CSSR | CSSR_EM | MIX | MIX_FS |
+|---|---|---|---|---|---|
+| .0674 | .0372 | .0399 | .0219 | .0231 | .0171 |
+
+Per S (split / EM / MIX_FS):
+- S = 3: .0324 / .0153 / .0128
+- S = 4: .0546 / .0232 / .0186
+- S = 5: .0328 / .0274 / .0197
+
+Even eval seeds 1..16 (mean, max):
+- MIX: .0031, .0327
+- MIX_FS: .0018, .0040
+
+Precommitment:
+- **H1 REFUTED.** MIX > min(split, EM) + .002 in 6/24 worlds (allowed <= 2): U3_s1, U3_s4, U3_s8, U4_s6, U5_s3,
+  U5_s5.
+  - Failure shape: Bayes-mixture LOCK-IN. The expert that led early (usually split, before EM's refits mature) keeps
+    the weight after it stops being better. In U4_s6, MIX = split = .0772 while EM = .0256.
+  - The per-symbol guarantee "<= best + 1 bit TOTAL" is honoured over the whole stream. It says nothing about the
+    2nd half when the better expert changes mid-stream.
+- **H2 REFUTED.** MIX family mean .0231, vs the precommitted < .015.
+  - Even the best learner is ~.017-.022, i.e. 5-7x the ~.003 parametric cost of a structurally exact learner.
+  - On random machines the structure is often NOT recovered at T = 4000. Worst worlds: U4_s3 at .06-.08 for every
+    learner; U5_s3 at .05-.07.
+  - The 4-world ladder result (Even .0024, W2 .0029) does NOT generalize at the absolute level.
+- **H3 SURVIVES:** .0231 < STAT6 .0372.
+- **H4 SURVIVES:** EM .0219 < split .0399.
+- **H5 SURVIVES:** MIX_FS max .0040 < .01, mean .0018 <= .003. This fixes the late-switch seed.
+- **H6 SURVIVES:** MIX_FS .0171 <= MIX + .001. It is in fact better.
+
+Exploratory (NOT precommitted; for the next precommitment only):
+- MIX_FS would fail the H1 criterion in only 1/24 worlds (U5_s3).
+- Its family mean .0171 is below the per-world best-of-(split, EM) mean .0189. Switching WITHIN a stream beats
+  picking the better expert per world.
+
+Implementation note:
+- The earlier cssr_em_eval.py mixture weighted by CLIPPED cumulative log-loss (floor 1e-12).
+- heldout_eval.py computes the exact sequential Bayes posterior.
+- They differ when an expert assigns ~0 probability to an event. That is why the MIX numbers on the Even seeds differ
+  (.0024 / .0215 before vs .0031 / .0327 here). The exact mixture is the more fragile one; fixed-share removes the
+  fragility.
+
+## Readings after the held-out family
+
+1. **The ranking generalizes:** mixture-with-switching < EM < split ~ STAT6 < STAT3. So "learned transitions beat
+   suffix-built ones" holds out-of-sample.
+2. **The absolute claim does not generalize.** At T = 4000, random 3-5 state machines are mostly NOT learned to the
+   parametric floor.
+   - The Even-process success was partly a property of the Even process: one ambiguous suffix, and a floor that
+     decays geometrically.
+   - Claim ceiling: T25's learner is a better hypothesis-locus compressor than window statistics. It is NOT a
+     causal-state discoverer in general.
+3. **Next** (not run):
+   - diagnose the worst worlds (U4_s3, U5_s3): is it data (T), a CSSR proposal failure, or an EM optimum? Compute
+     their crypticity and synchronization length;
+   - a T-scaling run on the family;
+   - precommit MIX_FS as the default arbiter.

@@ -319,8 +319,11 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - CSSR->EM->mixture (4/4 precommitted predictions survived; CSSR_T25.md):
   - one no-fixed-S learner reaches Even .0024 and W2 .0029;
   - EM alone overfits W2 (.016); split alone is window-bounded on Even (.034).
-- NEXT: a fixed-share mixture (late-switch seed); a held-out world family (golden-mean variants, a random unifilar
-  machine sampler) before any claim beyond these 4 worlds.
+- Held-out random unifilar family (24 worlds; H1-H6 precommitted): H1 and H2 REFUTED, H3-H6 survive.
+  - The ranking generalizes: MIX_FS .0171 < EM .0219 < split .0399 ~ STAT6 .0372.
+  - The absolute level does NOT: 5-7x the parametric floor.
+  - Bayes-mixture lock-in; fixed-share fixes it.
+- NEXT: diagnose the worst worlds (crypticity / synchronization length vs T); a T-scaling run on the family.
 - RES: light, off M2.
 - MAT: pilot done.
 
