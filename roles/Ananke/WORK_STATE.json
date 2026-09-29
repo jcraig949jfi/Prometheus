@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T10:52:20Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-P (T-INS-8) complete and deposited; lease lse-feb3419a6fe6 released. Nothing running. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
+  "updated_at_utc": "2026-09-29T11:13:29Z",
+  "state": "WORKING",
+  "state_reason": "T-SWAP-REL2 running as worker W-Q (E-ANANKE-W-Q, CPU in-session, Fabric lease): per-verdict attainability for the relative swap rule, applied to the 733 W-O verdicts. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,13 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-Q",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL2",
+      "status": "RUNNING",
+      "dir": "roles/Ananke/research/workers/W-Q/"
+    },
+    {
       "id": "E-ANANKE-W-P",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-8",
@@ -127,7 +134,9 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-Q (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "T-SWAP-REL2 (per-verdict attainability for the relative swap rule; 42 low-accuracy complete transfers), CPU in-session under Fabric lease",
