@@ -43,3 +43,11 @@ cd ~/fabric-runtime && EW_DB_HOST=192.168.1.202 python3 -m fabric worker --agent
 
 The claude executor also needs `~/.config/prometheus/claude.env` on the node, containing `CLAUDE_CODE_OAUTH_TOKEN`.
 It is never printed, logged or committed.
+
+## Incident log (defect repairs made under this freeze)
+
+- **2026-09-29, DEF-ODY-015** (roles/Odysseus/fabric_pilot/DEFECTS.md): the per-worker checkout cache was
+  unbounded, filled ubu001's disk, and failed 20 real Tasks.
+  - Repair: `fabric/worker.py` `gc_bases` / `KEEP_BASES`.
+  - Regression test: `fabric/tests/test_executors.py::test_gc_bases_keeps_only_most_recent`.
+  - It rolls into `~/fabric-runtime` at a quiet point.

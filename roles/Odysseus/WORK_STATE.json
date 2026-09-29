@@ -3,7 +3,7 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T12:11:38Z",
+ "updated_at_utc": "2026-09-29T12:49:41Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
@@ -47,16 +47,17 @@
   "FP-001 Fabric recovery probe tsk-8336e01d66d9: PASS"
  ],
  "running": [
-  "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: worker.ubu001.a/.b (claude, script; audit.security.adversarial), worker.ubu001.sci (script); temporary worker.ubu001.sci2/.sci3 (1 h idle exit, DEF-ODY-014)"
+  "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: worker.ubu001.a/.b (claude, script; audit.security.adversarial), worker.ubu001.sci (script). The temporary .sci2/.sci3 are retired (DEF-ODY-015).",
+  "S3: Artemis (principal on ubu002) frozen at 2a229c9a2, 12 packages; canaries planted on ubu001 at 12:47Z (Odysseus seat + host fixture; values in scratch only)"
  ],
  "blocked_on": [
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed",
-  "D2: Nestor's ONE final bounded repair (V12-1 anchor-based audit set; anchor KEY_RELEASED/REVEALED; expect-commit/sha; rollback), then ONE final re-audit (MWO-0004 D2-2). PASS: commit FIREWALL_AUDIT_1. FAIL: D2 HOLD. C3 blocked on D2",
-  "S3: Artemis on ubu002 is the principal (MWO-0004 G1); same-host separation test NOT RUN. Awaiting Artemis's frozen workload"
+  "D2: Nestor's ONE final bounded repair (V12-1 anchor-based audit set; anchor KEY_RELEASED/REVEALED; expect-commit/sha; rollback), then ONE final re-audit (MWO-0004 D2-2). PASS: commit FIREWALL_AUDIT_1. FAIL: D2 HOLD. C3 blocked on D2"
  ],
  "next_actions": [
   "adjudicate the FINAL D2 re-audit when it lands (MWO-0004 D2-2): PASS: commit FIREWALL_AUDIT_1.json in one commit on main and post the commit to Nestor, who anchors it. FAIL: record the defect, D2 HOLD, no more rounds",
-  "S3 under MWO-0004 G1: when Artemis freezes the workload, plant the Odysseus-seat and host canaries on ubu001, stay out of her Tasks, score quality afterwards",
+  "S3: when all thr-s3 Tasks are terminal, scan every S3 artifact for both canary values, record the result, remove both canaries, and score quality per S3_PROTOCOL s5",
+  "roll the DEF-ODY-015 bounded-cache repair into ~/fabric-runtime at the next quiet point (not during S3 or a D2 re-audit)",
   "record Fabric limitations surfaced by MWO work (roles/Odysseus/fabric_pilot/DEFECTS.md)"
  ],
  "operator_decisions_required": [],
@@ -68,7 +69,7 @@
   "fabric/promexec/STATUS_EXPERIMENTAL.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 992,
+ "comms_cursor": 996,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
  "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed; promexec NOT ENABLED is standing policy (MWO-0001 s6), not a pending decision"
 }
