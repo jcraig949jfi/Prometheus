@@ -1,7 +1,8 @@
 """Fabric script Task: the NPE 1% production agreement sample (MWO-0001 ARCHAEON; operator decision 2026-09-28: a Fabric Task with
 host affinity to the node holding the sample, no SSH trust between hosts). Committed BEFORE any sample content is read.
 
-Stage 1: the frozen pre-read verification (npe_sample_verify, efd7295a0).
+Stage 1: the pre-read verification. Task v2 uses npe_sample_verify_v2 (addendum 5: content identity; v1 efd7295a0 was strict
+  on the gz bytes).
 - Every file named in the pinned manifest (81895e729, sha256 e1584484...) must match its gz sha256, its uncompressed sha256 and
   its record count.
 - On failure the Task writes VERIFY.txt and exits 1. Stage 2 never runs.
@@ -43,7 +44,7 @@ def main():
     if not d or not os.path.isdir(d):
         open(os.path.join(out, "VERIFY.txt"), "w").write("NPE_SAMPLE_DIR unset or not a directory: %r\n" % d)
         return 3
-    from archaeon.attribution.probes import npe_sample_verify as V
+    from archaeon.attribution.probes import npe_sample_verify_v2 as V        # addendum 5 content identity (Task v2)
     buf = io.StringIO()
     with contextlib.redirect_stdout(buf):
         rc = V.main(d)
