@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T03:23:15Z",
+  "updated_at_utc": "2026-09-29T04:00:50Z",
   "state": "HOLD",
   "state_reason": "E-ENS-LM01 (WTP-LM01 v0.3.2) is FROZEN at ee8cbe0c8cb1ef131e6bc8181c8272656eaa5a6e and NOT LAUNCHED. HOLD on the launch authorization (MWO-0001 contains no launch line). Eligible ARC3 design work continues without a campaign or lease.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "3cb3565144d54d188db907d25094192bba5d8f1b",
+  "head_sha": "0d2abaf63ad6b2334a37941e99b6a304ec594ce4",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -45,6 +45,12 @@
     {
       "id": "E-ENS-LM02",
       "status": "DESIGN"
+    },
+    {
+      "id": "E-ENS-T25-CSSR",
+      "status": "DONE_DEV",
+      "report": "ensorain/arc3/suff/CSSR_T25.md",
+      "note": "6/6 precommitted predictions survived; split-CSSR is window-bounded on Even, vote fails on Markov-3; tau-hybrid next"
     }
   ],
   "fabric_tasks": [
@@ -81,6 +87,7 @@
     "DEF-ENS-001 carrier resolution: (A) Ensorain transcribes the launch MWO verbatim into roles/Ensorain/prompts/ with PUBLICATIONS.md provenance + MANIFEST, no freeze change (recommended); or (B) gate repair, re-freezing as v0.3.3 with a new hash"
   ],
   "latest_reports": [
+    "ensorain/arc3/suff/CSSR_T25.md (T25 CSSR: split vs vote)",
     "ensorain/arc3/suff/replication/README.md (S1 replication + precommitted optimum-vs-T)",
     "ensorain/PREREG_WTP_LM01.md (v0.3.2 frozen)",
     "ensorain/LM01_DIFF_v031_to_v032.md",
