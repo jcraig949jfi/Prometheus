@@ -327,7 +327,12 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
   - the excess tracks window crypticity H6 (rho .58);
   - the worst worlds are data-limited (4/4 fall > 2x to .003-.011 at T = 16000, while STAT6 stays flat);
   - the learner pays a finite-sample cost, the window pays a representational floor.
-- NEXT: consolidate T25 into a review packet; a T = 16000 run on all 24 worlds (a Fabric script task candidate).
+- Consolidated in ensorain/arc3/reviews/T25_CSSR_REVIEW_2026-09-29.md (+ Addendum 2).
+  - Q2: the CSSR proposal is insurance.
+  - Q4: the gain is adaptive selection.
+  - T = 16000 on Fabric: MIX3_FS .0028 = parametric floor. G4 refuted where the window is already sufficient
+    (H6 ~ 0).
+- MAT: CLOSED as a dev line 2026-09-29. It feeds LM02 (the window-sufficient vs cryptic boundary).
 - RES: light, off M2.
 - MAT: pilot done.
 

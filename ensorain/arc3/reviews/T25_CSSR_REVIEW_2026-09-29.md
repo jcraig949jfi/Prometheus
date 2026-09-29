@@ -178,3 +178,48 @@ ADDENDUM 2026-09-29T10:20Z (process hole, Section 6):
 - The results/*.json files listed in Section 9 were gitignored (`**/results/`) and were NOT on origin when this packet
   was pushed. They are force-added in the commit that adds this addendum.
 - The quoted numbers are unchanged (the runs are deterministic and were cross-reproduced).
+
++==============================================================================================================+
+| ADDENDUM 2 (2026-09-29T12:25Z): results after the packet; REVISES Sections 0(c), 5 and 8                     |
++==============================================================================================================+
+
+A2.1 Q2 answered: is the CSSR stage incidental? (precommit 2497d5d7f; all 3 predictions survived)
+  RAND_EM = EM from 3 random restarts with the same S as CSSR. Held-out family at T = 4000:
+    RAND_EM .0403 vs CSSR_EM .0219.
+  Shape: RAND_EM is worse in only 13/24 worlds, but 4 of those are catastrophic (+.10 to +.20). It is BETTER in
+  11/24, including CSSR_EM's worst world U4_s3 (.0777 -> .0192).
+  Reading: the CSSR proposal is INSURANCE against bad EM basins, not a uniformly better basin.
+
+A2.2 Three-expert fixed-share {split, CSSR_EM, RAND_EM} (precommit 82b43a65f; F1-F4 survived)
+  Family T = 4000: MIX3_FS .0133 (MIX2_FS .0171; per-world best single expert .0138). W2_3: .0027 (safe).
+
+A2.3 Q4 answered: switching or averaging? (precommit dd3861556; both survived)
+  Share rate:   0 (Bayes) .0152 | 1e-4 .0135 | 1e-3 .0133 | 1e-2 .0150 | 1 (static average) .0214
+  Reading: the gain is ADAPTIVE SELECTION (a static average is barely better than the best single expert).
+  Switching adds a smaller increment (better in only 13/24 worlds). The grid was chosen after using 1e-3.
+
+A2.4 Held-out family at T = 16000, run as 3 Fabric script Tasks on ubu001 (precommit f4c82806c)
+  Family means:  STAT6 .0286 | split .0289 | CSSR_EM .0036 | RAND_EM .0359 | MIX3_FS .0028
+  G1 SURVIVES   MIX3_FS < .008. At .0028 it sits at the ~.003 parametric floor.
+  G2 SURVIVES   22/24 worlds decrease (exactly the threshold). Rises: U3_s7, U4_s7.
+  G3 SURVIVES   STAT6 .0286 > .025. The window floor persists.
+  G4 REFUTED    MIX3_FS < STAT6 in only 21/24 worlds. The exceptions (U3_s7, U4_s7, U5_s5):
+                - U3_s7 and U4_s7 have H6 ~ 0, i.e. the 6-window IS the causal state. There STAT6 is at its own floor
+                  and the learner pays ~.001 overhead.
+                - U5_s5 has two nearly identical states (gap .0007).
+  RAND_EM alone gets relatively worse with data (.0359): its bad basins do not wash out.
+
+REVISED CLAIM CEILING (replaces Section 0(c)):
+- On 24 held-out random unifilar machines, the CSSR -> EM (+ random-restart EM) -> fixed-share learner:
+  - reaches the parametric floor on average at T = 16000 (.0028);
+  - stays ~10x below the window statistic's structural floor.
+- It does NOT dominate a window statistic where the window is already sufficient (H6 ~ 0). There it pays ~.001.
+- "Discover the partition" is the right compression where the window is cryptic. "Keep the window" is right where it
+  is not.
+- Still dev, answer-keyed, binary, one Lmax/alpha/eps. Not preregistered.
+
+REVISED RECOMMENDATION (replaces Section 7):
+- Close T25 as a dev line.
+- Carry the window-sufficient vs cryptic distinction into the LM02 design, as the predicted boundary between
+  retention and discovered compression.
+- "Not worth continuing" remains a valid answer for any further T25 refinement.
