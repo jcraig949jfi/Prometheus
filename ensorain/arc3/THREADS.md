@@ -71,7 +71,9 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 ## T05 Capacity vs selection (reservoir as bridge)
 - Q: at matched capacity, does semantic selection beat random retention, at matched bytes AND matched HR2?
 - WHY: directive M. If random matches, the "selective" advantage is capacity.
-- EV: dev positive control: oracle eviction +.91; both system candidates LOSE to random under heteroscedastic noise.
+- EV: dev positive control (after the #677 convergence rule): oracle +.51 vs random -.13 (gap +.63).
+  residual_reservoir +.02 BEATS random; keep_worst -.18 loses. (The earlier "+.91; both lose" is stale; see
+  ensorain/lm01/ERRATA.md E-1, from Artemis R-16.)
 - DISC: T01 F-C readings plus a sweep of noise heteroscedasticity (where residual eviction should flip from harmful to
   helpful).
 - RES: light.
@@ -307,3 +309,10 @@ filled from the lit raids) / UNC (uncertainty) / DISC (cheapest discriminator) /
 - NEXT: a CSSR-style causal-state learner (no fixed S); a learning-curve of history needed vs world crypticity.
 - RES: light, off M2.
 - MAT: pilot done.
+
+## T26 WTP legacy replay gate (from Artemis R-08, comms #882; unverified claim)
+- Q: does the WTP-01/02 engine let REPLICATED be set without replay_ok gating it?
+- WHY: an instrument-integrity defect in the legacy Foundry engine (not LM01).
+- DISC: read ensorain/wtp/* (and wtp3) for the REPLICATED label path; add a test.
+- RES: none (code reading).
+- MAT: idea; eligible now.
