@@ -1,11 +1,11 @@
 {
   "schema": "prometheus.work_state.v1",
   "seat": "Aporia",
-  "mwo_id": "MWO-0003",
-  "mwo_commit": "624a686ea066f971a83231e3b3528f9a29d41deb",
-  "mwo_sha256": "74dffcaef363cda5c65ab783046e3da83f6811a40b0b4f84b7916ec5a4c0f10b",
-  "updated_at_utc": "2026-09-29T11:20:45Z",
-  "state": "HOLD",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-29T11:44:07Z",
+  "state": "WORKING",
   "branch": "main (record commit R); authoring branch aporia/mwo-0002-candidate-2026-09-29",
   "head_sha": "(record commit R)",
   "threads": [],
@@ -21,20 +21,19 @@
       "state": "completed"
     }
   ],
-  "running": [],
+  "running": [
+    "MWO-0004 R4 boot-line implementation"
+  ],
   "blocked_on": [],
   "next_actions": [
-    "HOLD/advisory. MWO-0003 duties done (publication; FP-001 cold-start filed)."
+    "R4: add the one boot line to roles/base-role/RESPONSIBILITIES.md as a separate commit; record it here; then HOLD/advisory"
   ],
-  "operator_decisions_required": [
-    "S1 (#925): root of trust for D2 protocol records; must reach Nestor directly, not via Aporia/comms"
-  ],
+  "operator_decisions_required": [],
   "latest_reports": [
-    "ops/work_orders/archive/MWO-0003_2026-09-29.md (published, P=624a686ea)",
-    "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
+    "ops/work_orders/archive/MWO-0004_2026-09-29.md (published, P=25a486d44)",
     "roles/Aporia/probes/FP-001_RESULT.json"
   ],
-  "state_reason": "MWO-0003 published (P 624a686ea, R 9d86a303b, #987); FP-001 cold-start PASS with boot-doc gap recorded. D2 time box relayed (#985).",
+  "state_reason": "Published MWO-0004 (Gate Clearance) as the operator-designated publisher, for this publication only. #925 is resolved by MWO-0004 D2-1; no Aporia role in D2.",
   "migration_report": "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)"
 }
