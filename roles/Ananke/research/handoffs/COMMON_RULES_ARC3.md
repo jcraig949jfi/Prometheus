@@ -18,7 +18,9 @@
 3 DISAGREEMENT IS A RESULT. Where your evidence contradicts a principal
   interpretation, say so explicitly in a "DISAGREEMENTS" section of the
   report.
-4 LEASES: unchanged (roles/Ananke/research/lease.py). Acquire BEFORE
+4 LEASES: unchanged (roles/Ananke/research/lease.py; since cutover 8370083ae
+  it is a frontend onto the Fabric lease row, equivalently `python -m fabric
+  lease acquire <host>:<res> --as Ananke`). Acquire BEFORE
   starting any process that uses the GPU, or > 2 CPU threads for > 5 min.
   Release on completion, abandonment or crash. If BUSY: queue in your
   QUEUE.md and do other work; do not start a weaker substitute experiment.
