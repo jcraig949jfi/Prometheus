@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
   "mwo_sha256": "007054adfdb1e6d78157f73c017e653983de9f93f21d835361e74d3f139b88f3",
-  "updated_at_utc": "2026-09-29T05:16:33Z",
-  "state": "ACTIVE",
-  "state_reason": "T-INS-6 answered (W-M) and its instrument promoted to prometheus/ananke/lens_swap.py (T-INS-7). Nothing running. No large PTE campaign under MWO-0001.",
+  "updated_at_utc": "2026-09-29T05:17:15Z",
+  "state": "WORKING",
+  "state_reason": "B-10 T-SWAP-LOWACC running as worker W-N (E-ANANKE-W-N, CPU, Fabric lease). T-INS-6/7 done (lens_swap.py). No large PTE campaign under MWO-0001.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "ffd452047",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,14 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-N",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-LOWACC (MACHINE_WORK B-10)",
+      "status": "RUNNING",
+      "what": "relative carrier-swap verdict for low-accuracy specimens + eligibility range, known-answer plants, applied to W-L and W-F low-accuracy champions",
+      "dir": "roles/Ananke/research/workers/W-N/"
+    },
+    {
       "id": "E-ANANKE-W-M",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-6",
@@ -106,10 +114,12 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-N (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
-    "B-10 T-SWAP-LOWACC (small, CPU, Fabric lease), now on lens_swap",
+    "deposit W-N report; review swap_rel before any promotion",
     "T-INS-8: split the N fraction of 369f5a5b/4781b0a1 by sub-array",
     "s8 seat loop continues"
   ],
