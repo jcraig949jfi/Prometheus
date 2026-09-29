@@ -248,3 +248,18 @@ Exploratory (NOT precommitted), the more important pattern:
   co-occur, and the detector fails mainly where it is not needed.
 - It must be tested against a world design where harm and repeats are decoupled (e.g. a smoother over neighbours
   rather than exact cells) before it is claimed.
+
+## v6: PARTIAL switches (reviewer Q1 of PKGF_CRYPT_REVIEW; pkgf_partial.py)
+
+- Worlds are built from the frozen LM01 helpers: the F3-like episode structure (3 equal episodes, so the final regime
+  starts at 2/3). At each switch only a fraction rho of cells is redrawn.
+- rho in {1, .5, .1, 0}; rho = 0 is stationary. Generators cp and tt; FRESH seeds 9_800_050-053 (8 worlds per rho).
+- Design note: built without waiting for review, under MWO-0004 R1 (a small reversible dev probe).
+
+### Precommitment (written BEFORE running pkgf_partial.py)
+
+- W1: rho = .5: v5 detects the final switch (cp_frac in [.60, .75]) in >= 7/8.
+- W2: rho = .1: detection in <= 4/8. The straddling-pair statistic is diluted by the ~90% unchanged cells.
+- W3: rho = .1: the undetected harm is smaller than at rho = 1: mean dAC(SD_all) at rho = .1 > mean at rho = 1 AND
+  > -0.5.
+- W4: rho = 0: false detections <= 1/8.
