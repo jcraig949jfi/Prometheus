@@ -1,0 +1,80 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Harmonia",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:05:00Z",
+  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
+  "head_sha": "SEE_COMMIT_CONTAINING_THIS_FILE",
+  "instance": "m2-475d761f (M2 SPECTREX5)",
+
+  "bootstrap_independence": {
+    "answer": "CONDITIONAL",
+    "conditions": [
+      "A Claude session must be started and pointed at roles/Harmonia; the seat loop runs as in-session self-paced wakeups plus a git-fetch monitor, so it ends when that session ends. Nothing durable restarts it.",
+      "A fresh boot must read WORK_STATE.json + the current MWO rather than the older prose boot docs (RESUME_20260925_m2-ca1148a0.md, STATUS.md), which predate MWO-0001."
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "roles/Harmonia/journal/2026-09-29_m2-475d761f.md (Boot; MWO-0002 adoption entry)",
+      "comms #961 synced after the fetch monitor had already reported publication commit 89512068f"
+    ],
+    "note": "Routine work (D2 verdict recording, the C1 contract) was identified from the MWO, Git and comms alone. The dependency is on a live session, not on a bespoke prompt's content."
+  },
+
+  "criteria": {
+    "C1_adopted_mwo_0001": {"status": "YES",
+      "evidence": ["roles/Harmonia/WORK_STATE.json @72a56bd31 (mwo_commit 7e4c09f2c)", "journal 2026-09-29_m2-475d761f.md: committed blob 007054ad verified via git show; the CRLF working-tree hash differed"],
+      "note": "Verified against the committed blob, not the working tree."},
+    "C2_discovers_next_mwo_unprompted": {"status": "YES",
+      "evidence": ["Monitor on origin/main (loop tick) reported 89512068f before comms sync showed #961", "journal entry 'MWO-0002 adoption'"],
+      "note": "Found by the seat's own loop fetch; no per-seat prompt for MWO-0002."},
+    "C3_work_state_useful": {"status": "YES",
+      "evidence": ["roles/Harmonia/WORK_STATE.json at the commit containing this report"],
+      "note": "All v1 core fields filled; migration_report and comms_cursor added as permitted extras."},
+    "C4_identifies_authorized_work": {"status": "YES",
+      "evidence": ["MWO-0001 s10 HARMONIA section (carried forward by MWO-0002 s6)", "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md", "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md @a88410dde"],
+      "note": "Current work is D2 custody recording (blocked at a gate) under the MWO HARMONIA section. There is no registry Thread id (see identifier_check)."},
+    "C5_checks_comms_correctly": {"status": "YES",
+      "evidence": ["comms sync per loop tick (per-instance cursor)", "posts were substantive only: #926 defect, #928 ruling, #960 adjudication rule"],
+      "note": "No idle broadcasts or ACKs; comms is not treated as the durable record (every post points at a commit)."},
+    "C6_uses_fabric_where_appropriate": {"status": "PARTIAL",
+      "evidence": ["roles/Harmonia/qualification/campaign1/c1_hostile_adjudication.py run locally", "D2 protocol.status and _added_once probes run locally (rulings record Addenda A-E)"],
+      "note": "The C1 fixture suite is portable and could have been a Fabric Task with replicas; it ran locally. The D2 probes were quick verification reads. No Fabric limitation stopped this; it was habit."},
+    "C7_uses_common_hierarchy": {"status": "PARTIAL",
+      "evidence": ["WORK_STATE threads use local aliases D2-CUSTODY and C1-HOSTILE-ADJ"],
+      "note": "Work is kept distinct from Attempts/Tasks, but the ids are not registry ids: no ops/threads entry exists for D2 custody or the C1 contract."},
+    "C8_uses_canonical_leases": {"status": "NOT_APPLICABLE", "evidence": [], "note": "No substantial resource claims this cycle."},
+    "C9_distinguishes_gates_from_routine": {"status": "YES",
+      "evidence": ["hard_gates_current below", "WORK_STATE blocked_on"],
+      "note": "The D2 stop is a frozen custody contract plus MWO-0001 s7 clause 2. Waiting on Nestor's repairs is recorded as a blocker, not a gate."}
+  },
+
+  "hard_gates_current": [
+    {"gate": "MWO-0001 s7 clause 2 (reveal/consume sealed holdout or custody-protected information)",
+     "item": "D2 holdout: no release, reveal or evidence bundle until an allow-listed governing firewall audit PASS and the enforced order complete",
+     "evidence": ["prometheus/cosmos/c3_holdout_D2/protocol.py (enforced order)", "roles/Odysseus/fabric_pilot/d2_audit/v6/VERDICT.md @7567a018b (governing FAIL)"]},
+    {"gate": "operator decision recorded in MWO-0002 s8",
+     "item": "D2 root of trust for protocol records (#925) and branch protection on main",
+     "evidence": ["comms #925", "MWO-0002 s8"]}
+  ],
+  "migration_blockers": [
+    {"what": "The seat loop lives in one interactive session (self-paced wakeups + a 30-min monitor re-armed by hand); nothing durable restarts it after the session ends",
+     "kind": "tooling", "evidence": ["journal 2026-09-29_m2-475d761f.md loop ticks"]},
+    {"what": "Harmonia-to-Harmonia comms messages are invisible to sibling instances (inbox filters sender <> agent); instances coordinate only through Git files",
+     "kind": "tooling", "evidence": ["roles/Harmonia/RESUME_20260925_m2-ca1148a0.md s1", "comms #417"]}
+  ],
+  "legacy_conventions_still_used": [
+    {"convention": "Prose boot docs (RESUME_20260925_m2-ca1148a0.md, STATUS.md instance blocks, INSTANCES.md) alongside WORK_STATE",
+     "why": "Multi-instance identity and history live there; WORK_STATE v1 has no instance field", "retire_plan": "seat"},
+    {"convention": "ops/README.md 2026-09-27 'PILOT ONLY' banner",
+     "why": "Authored by this seat (c17d4c477) before MWO-0001 adopted the model. It did not confuse Harmonia, but it is stale, and MWO-0002 s7 forbids repairing it during the census.",
+     "retire_plan": "needs_operator"}
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [],
+    "campaign_ids_unresolved": [],
+    "note": "WORK_STATE uses no thr-/TH-/C- ids; its local aliases D2-CUSTODY and C1-HOSTILE-ADJ have no registry entry on origin/main (ops/threads has TH-001..TH-017, ops/campaigns has C-001..C-002). Not repaired, per s4."
+  }
+}
