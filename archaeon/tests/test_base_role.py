@@ -50,7 +50,8 @@ def test_every_mandatory_artifact_path_is_committable_for_every_seat():
 
 
 def test_base_role_files_exist_and_are_pure_ascii():
-    for name in ("RESPONSIBILITIES.md", "WORKING_CONTRACT.md", "NORTH_STAR.md", "README.md", "INHERITANCE.md"):
+    for name in ("RESPONSIBILITIES.md", "WORKING_CONTRACT.md", "NORTH_STAR.md", "README.md", "INHERITANCE.md",
+                 "WAKE_DIRECTIVE.md"):
         f = BASE / name
         assert f.exists(), name
         raw = f.read_bytes()
@@ -209,3 +210,44 @@ def test_every_enabled_prometheus_scheduled_task_on_this_host_is_registered():
         pytest.skip("no Prometheus scheduled tasks on this host")
     missing = sorted(tasks - _registry_names())
     assert not missing, "enabled scheduled tasks with no registry row: {}".format(missing)
+
+
+# --- Operator addendum 2026-09-29: the work-conserving research loop ---------------------------
+# (roles/Aporia/prompts/2026-09-29_base_role_work_conserving/). Plain substring checks only.
+NORTH_STAR_0911_SHA256 = "3b73b293c3eb7174c9e6f50c255a0e9077e07c92c0f35d5bd04c1f2d94122011"
+NORTH_STAR_0911_LEN = 2636
+
+
+def _text(name):
+    return (BASE / name).read_bytes().replace(b"\r\n", b"\n").decode("ascii")
+
+
+def test_north_star_0911_text_is_preserved_and_the_addendum_follows_it():
+    raw = (BASE / "NORTH_STAR.md").read_bytes().replace(b"\r\n", b"\n")
+    assert hashlib.sha256(raw[:NORTH_STAR_0911_LEN]).hexdigest() == NORTH_STAR_0911_SHA256
+    assert raw[NORTH_STAR_0911_LEN:].count(b"## Operator addendum 2026-09-29: a work-conserving research ecology") == 1
+
+
+def test_responsibilities_send_an_active_seat_into_the_loop():
+    t = _text("RESPONSIBILITIES.md")
+    assert "## 2a. Work-conserving research loop" in t
+    boot = t[t.index("## 1. Boot sequence"):t.index("## 2. Doctrine")]
+    assert "if the seat\n   is ACTIVE, enter the work-conserving research loop in section 2a" in boot
+    assert "read origin/main:ops/work_orders/CURRENT.md, then roles/<Seat>/WORK_STATE.json" in t
+    assert "does not\n  make PARKED, DORMANT or RETIRED seats autonomous workers" in t
+
+
+def test_wake_task_line_is_optional_and_its_absence_is_not_a_hold():
+    t = _text("WAKE_DIRECTIVE.md")
+    assert "No task line is required." in t
+    assert "Do not HOLD merely because this wake\nmessage contained no bespoke assignment." in t
+    assert "task line, if any" not in t
+
+
+def test_base_role_doctrine_carries_no_seat_specific_terms():
+    terms = ("selective irreversib", "selective-irreversib", "selective_irreversib",
+             "2026-09-23-selective-irreversibility", "accessible causal state", "relevance-selective",
+             "LM01", "rcv_add", "rcv_str", "ARC3", "holdout D2", "TINYPROG", "PTE-", "WTP-")
+    hits = [(n, s) for n in ("NORTH_STAR.md", "RESPONSIBILITIES.md", "WAKE_DIRECTIVE.md", "README.md")
+            for s in terms if s.lower() in _text(n).lower()]
+    assert not hits, hits

@@ -4,9 +4,12 @@ The responsibilities and the repository working contract every Prometheus
 seat inherits. Adopted by the operator 2026-09-11.
 
 - NORTH_STAR.md -- the operator's north star, verbatim; read before any charter.
+  Its 2026-09-29 addendum makes the North Star the default work selector.
 - RESPONSIBILITIES.md -- north star, boot sequence, doctrine, journaling, communication
   (ASCII paste blocks; write-a-prompt-when-blocked; suggest work at boot),
-  Claude Code rules, session close.
+  Claude Code rules, session close. Section 2a is the work-conserving research
+  loop: local North-Star selection, options become sequences, a blocked item
+  is not a blocked seat, frontier replenishment, no coordination-induced idle.
 - WORKING_CONTRACT.md -- the git/workspace invariant (D-23): worktree per
   seat, task branches from a recorded base SHA, no `git pull`, receipts
   carry base_sha/branch/worktree_path, fast-forward integration, pinned

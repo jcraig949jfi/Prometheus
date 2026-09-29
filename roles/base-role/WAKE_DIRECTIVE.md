@@ -7,7 +7,11 @@ seats ran `git pull` in the canonical checkout because the directive they
 were woken with said "Pull the latest from the repo first", and they read
 WORKING_CONTRACT.md s3 only afterwards). The directive's source is the
 operator's chat template; this file is the replacement text. Paste the
-block; edit only the seat name and the task line.
+block; edit only the seat name and the optional task line.
+Amended 2026-09-29 (operator directive, verbatim at
+roles/Aporia/prompts/2026-09-29_base_role_work_conserving/): the task line
+is optional; an ACTIVE seat woken without one runs the inherited
+work-conserving loop (RESPONSIBILITIES.md section 2a).
 
 ----------------------------------------------------------------------
 
@@ -22,7 +26,12 @@ shell first. Then boot in that worktree
 (python -m comms boot <Seat> --model <id>), read
 roles/base-role/RESPONSIBILITIES.md, and follow its boot sequence.
 
-<task line, if any>
+No task line is required. If none is supplied, after bootstrap follow
+CURRENT.md, your WORK_STATE, your charter and the inherited
+work-conserving research loop. Do not HOLD merely because this wake
+message contained no bespoke assignment.
+
+<optional task line>
 
 ----------------------------------------------------------------------
 

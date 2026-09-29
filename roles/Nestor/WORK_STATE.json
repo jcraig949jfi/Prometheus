@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T13:40:00Z",
+ "updated_at_utc": "2026-09-29T14:15:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -29,16 +29,15 @@
   "D2 v11 re-audit -> FAIL SOLELY on S1 (#986, VERDICT @ 864cb36b1): firewall code clean; should-fix V11-1 receive deadline, V11-2 stop-send deadline, V11-3 cleanup AssertionError masking (all FORFEIT under Addendum J)",
   "FP-001 probe: tsk-0dbadf4cf8d7, tsk-79f45eec10f8 (PASS)",
   "D2 v12 bounded re-audit -> FAIL (#993, VERDICT @ 47df49352: V12-1 anchored records skipped not refused)",
-  "D2 v13 FINAL re-audit (MWO-0004 D2-2, last round): tsk-786a631bbc11, tsk-833387561512; selftests tsk-f0e704e2fc9a, tsk-649848095158 (base b17320e64)"
+  "D2 v13 FINAL re-audit: tsk-786a631bbc11 PASS, tsk-833387561512 PASS (no blocks-PASS); selftests tsk-f0e704e2fc9a PASS, tsk-649848095158 (base b17320e64) -- awaiting Odysseus's adjudication"
  ],
- "running": [
-  "D2 v13 FINAL re-audit (2 replicas + 2 selftests)"
- ],
+ "running": [],
  "blocked_on": [
   "1% sample (MWO-0004 G2): stage 1 VERIFIED on the run-1 copy; stage 2 SCHEMA_UNDECLARED (exit 2) -> Archaeon declares schema, then one native rerun (#990)",
-  "D2 (MWO-0004 D2-2): v13 FINAL re-audit adjudication (Odysseus). PASS -> anchor FIREWALL_AUDIT_1.json (--expect-commit/--expect-sha256) and continue; FAIL -> HOLD with the defect recorded, no further rounds"
+  "D2: awaiting Odysseus's adjudication of the v13 FINAL re-audit (both replicas PASS). On PASS: anchor FIREWALL_AUDIT_1.json with --expect-commit/--expect-sha256"
  ],
  "next_actions": [
+  "before the first D2 designation (replica condition N-1/R-B): when the anchor directory C:/Users/jcrai/nestor_receipts/holdout_D2 is created, restrict and verify its ACL (custodian + SYSTEM + Administrators write; runner account write only on runs/) and publish the booleans; declare in FIREWALL.md",
   "key-holder scan (entry.py firewall-check) OUTSTANDING: the 00:47 run was stopped by Claude Code for low system memory after ~5.5 h with no output; rerun only when the operator asks, narrower (current code; repo history + comms dump, not the canonical working tree)",
   "report key-holder scan booleans (public) to Odysseus",
   "on Archaeon's schema declaration: rerun npe_sample_task once natively (candidate 1)"
@@ -47,7 +46,7 @@
   "hard gate at D2 designation time only (MWO-0004 Part 4, privileged host change): a dedicated custodian account and a separate predictor-child account with an outbound firewall rule on M1"
  ],
  "latest_reports": [
-  "comms #994 (D2 v13)",
+  "comms #997 (D2 v13)",
   "comms #992 (D2 v12)",
   "comms #990 (G2 sample)",
   "roles/Nestor/probes/FP-001_RESULT.json"
@@ -80,7 +79,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 993,
+ "comms_cursor": 997,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
