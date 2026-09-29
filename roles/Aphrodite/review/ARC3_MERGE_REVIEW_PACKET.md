@@ -45,10 +45,10 @@ extended.
 
 ## 4. Id mapping (MWO-0001 s4; aliases only, nothing renamed)
 Threads:
-- TH-018: abstraction compounding
-- TH-019: recurrence x visibility
-- TH-020: second-order / representation
-- TH-021: instrument validity (method)
+- TH-018 (thr-4b608194554f): abstraction compounding
+- TH-019 (thr-5fb60bba1e73): recurrence x visibility
+- TH-020 (thr-71318d165e06): second-order / representation
+- TH-021 (thr-1b0c5ac499ae): instrument validity (method)
 
 Campaign: C-003 = ARC3 (CLOSED).
 
@@ -58,8 +58,8 @@ Experiments:
 - E-010 = AMENDMENT 22 (C3R2)
 - E-011 = AMENDMENT 23 (C3R2-CONFIRM)
 
-Tasks: W1-W8 (pre-Fabric; no tsk-* ids). Canonical thr-* ids are derived by ops/tools/thread_check.py rules from
-their genesis commit.
+Tasks: W1-W8 (pre-Fabric; no tsk-* ids). Canonical ids are derived from genesis commit 32c3e52fe;
+ops/tools/thread_check.py reports threads=21, failures=0.
 
 ## 5. Defects found at adoption (MWO-0001 s12) -- evidence, not fixed here
 Exposed by Artemis #871 (R-08, R-11), a worker's claim that the principal verified 2026-09-29 at base 889bf8ddd.

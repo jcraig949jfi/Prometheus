@@ -1,6 +1,6 @@
 # C-003 -- ARC3: autonomous abstraction-compounding research portfolio (Aphrodite, 2026-09-28)
 
-Thread: TH-018 (primary); TH-019, TH-020, TH-021. Owner: Aphrodite (M4, harry1).
+Thread: TH-018 / thr-4b608194554f (primary); TH-019 / thr-5fb60bba1e73, TH-020 / thr-71318d165e06, TH-021 / thr-1b0c5ac499ae. Owner: Aphrodite (M4, harry1).
 Opened 2026-09-28 05:08Z under the operator's ARC3 directive. CLOSED 2026-09-28 14:50Z at the W8 block (MWO-0001:
 "ARC3 has closed its current W8 block"). Branch aphrodite/arc3-2026-09-28; close content @ 889bf8ddd.
 Envelope: M4 CPU only, $0, under host-file leases (roles/Aphrodite/leases/). All were released; the ledger ends empty.
