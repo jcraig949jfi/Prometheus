@@ -53,3 +53,26 @@ Estimators:
 - X2: Spearman(D_seq, STAT6 - MIX3_FS at T = 16000) > .5. Weaker, because estimation cost confounds D_seq.
 - X3: Spearman(HMM8 D6, STAT6 - MIX3_FS at T = 16000) > .7.
 - If X1 and X3 hold, the moderator result is not an artefact of scoring the learner with its own model family.
+
+### Result (precommit commit f5eb1437a; output results/crypt_crossfamily.json; 97 s on M2)
+
+- X1 REFUTED: Spearman(HMM8 D6, true D6) = .695 < .8.
+- X2 REFUTED: Spearman(D_seq, gap16) = .419 < .5.
+- X3 SURVIVES, barely: Spearman(HMM8 D6, gap16) = .709 > .7.
+
+Failure shape (this is the finding):
+- The random-restart HMM8 reports D6 ~ 0 where the true D6 is ~.05: U4_s1 .0036 vs .052; U4_s2 .0025 vs .082; U4_s8
+  .0002 vs .046; U5_s2 .0001 vs .055.
+- These are EXACTLY the four worlds where random-init EM failed catastrophically in the Q2 ablation (T25). A model
+  that did not learn the hidden structure cannot see the crypticity it failed to learn.
+- So a learned D_k is FAILURE-SILENT, and it errs toward "the window is sufficient". That is the dangerous direction:
+  it would steer LM02 toward retention exactly where discovery was needed but failed.
+- D_seq is mostly NEGATIVE at T = 4000: longer windows' estimation cost dominates their truncation gain. It is not a
+  usable crypticity proxy at this sample size.
+- CSSR_EM's learned D6 (rho .946 in C1) was good because CSSR_EM rarely fails catastrophically (the Q2 insurance
+  result). Its apparent reliability is inherited from the learner, not intrinsic to D6.
+
+Consequence for LM02 (design rule, to be precommitted):
+- A learned D_k is admissible only behind a MODEL-QUALITY GATE: the model's held-out log-loss must beat STAT_k's.
+  Otherwise D_k is reported as UNKNOWN, never as 0.
+- Whether such a gate catches these four failures has not been tested. It is the next check.

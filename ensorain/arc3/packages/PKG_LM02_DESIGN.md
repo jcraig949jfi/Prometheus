@@ -55,5 +55,7 @@ Estimated 1.5-2x LM01 (the adaptive readout's CV refits dominate). M2 cpu8 under
     Do not use state entropy, which over-counts ambiguity between states that predict alike (C3 refuted).
   - A learned D6 tracks the true one (rho .946). Exploratory: it predicts the discovered-vs-retained gain at rho .91,
     where H6 manages .61.
-  - Open: circularity. The learned D6 came from the same model family whose gain it predicts. A cross-family D_k
-    estimate is required before LM02 relies on it.
+  - Circularity check (crypt_crossfamily.py): a random-restart HMM8 estimate FAILS SILENTLY toward "window
+    sufficient" on exactly the worlds where it failed to learn (X1 refuted, rho .695).
+  - Design rule: D_k is admissible only behind a model-quality gate (held-out log-loss beats STAT_k). Otherwise it
+    is reported UNKNOWN, never 0. The gate's recall on known failures is still untested.
