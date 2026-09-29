@@ -96,6 +96,9 @@ FORBIDDEN_MODULES = {
     "runpy", "code", "codeop", "signal", "mmap", "winreg", "_winapi", "nt", "posix", "platform",
     "sqlite3", "zipfile", "tarfile", "zipimport", "pkgutil", "site", "sysconfig", "traceback", "types",
     "weakref", "dis", "linecache", "tokenize", "webbrowser", "secrets", "hashlib", "hmac", "base64",
+    # v4 (Odysseus v3 F-AST / F-NET): file-capable and network-capable modules
+    "codecs", "fileinput", "gzip", "bz2", "lzma", "logging", "xmlrpc", "imaplib", "poplib", "telnetlib", "nntplib",
+    "socketserver", "ssl", "select", "selectors", "xml", "wsgiref", "_socket", "_io", "_thread",
 }
 ALLOWED_PROMETHEUS = ("prometheus.cosmos.c3", "prometheus.cosmos.c3.")
 FORBIDDEN_CALLS = {"open", "exec", "eval", "compile", "__import__", "globals", "locals", "vars",
@@ -285,6 +288,22 @@ def _probe_paths(paths):
     return out
 
 
+def _disable_network() -> None:
+    """v4 (Odysseus v3 F-NET): HEURISTIC in-process block of new sockets in the predictor child before any package code
+    runs. NOT a boundary (a package can reach the OS by other means); the boundary is an outbound firewall rule for the
+    separate child account (host capability request, FIREWALL.md v4)."""
+    import socket as _s
+    import _socket
+
+    def _refused(*_a, **_k):
+        raise OSError("network is disabled in the holdout D2 predictor child")
+    for m in (_s, _socket):
+        for n in ("socket", "create_connection", "create_server", "socketpair", "fromfd", "getaddrinfo",
+                  "gethostbyname", "gethostbyname_ex"):
+            if hasattr(m, n):
+                setattr(m, n, _refused)
+
+
 def _worker_main(conn, pkg_dir: str, entry: str) -> None:
     # v2 (F2): before ANY package code is imported, the runner makes this process try the secret paths.
     msg = _recv(conn)
@@ -293,6 +312,7 @@ def _worker_main(conn, pkg_dir: str, entry: str) -> None:
     _send(conn, ["probe_result", _probe_paths(msg[1]) + _probe_write(msg[2] if len(msg) > 2 else [])])
     if _recv(conn)[0] != "go":
         return
+    _disable_network()
     sys.path.insert(0, pkg_dir)
     spec = importlib.util.spec_from_file_location("c3_d2_predictor", os.path.join(pkg_dir, entry))
     mod = importlib.util.module_from_spec(spec)
@@ -390,6 +410,9 @@ def audit_source(src: str, fname: str) -> List[str]:
             if node.level:
                 continue                                  # package-relative import of its own files
             mods = [node.module or ""]
+            for a in node.names:                          # v4 (F-AST): `from numpy import fromfile as ff`
+                if a.name in FORBIDDEN_ATTRS or a.name in FORBIDDEN_CALLS or a.name == "*":
+                    flags.append("%s:%d from %s import %s" % (fname, node.lineno, node.module, a.name))
         for m in mods:
             top = m.split(".")[0]
             if top in FORBIDDEN_MODULES:
@@ -680,7 +703,7 @@ class FirewallRun:
                 return {"status": "TIMEOUT", "usage": usage}
             try:
                 msg = _recv(self._conn)
-            except (EOFError, OSError, ValueError):
+            except (EOFError, OSError, ValueError, MemoryError, RecursionError):     # v4: hostile reply shapes
                 self._stop_worker(kill=True)
                 return {"status": "PREDICTOR_CRASH", "usage": usage}
             if msg[0] == "call":

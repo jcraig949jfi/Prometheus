@@ -53,3 +53,9 @@ place at the swap tick. It does not by itself show a per-trial mixture.
 What the designed specimen does show is that the READER-side carrier moves
 channel -> site at a known time. The mixture-vs-conflict question needs phi
 (W-I), which was not computed for E2 (backlog T-INS-6).
+
+## UPDATE (2026-09-29, W-M, SINGLE-trial swap census)
+The lag -6 CHANCE/CHANCE reading on E2 is now resolved: it is a real
+per-trial S/C MIXTURE (fS .48, fC .50, phi -.98 [-1.00,-.95]); the echo
+return time jitters across trials. The channel phase ends at lag -7, lag -4
+is SITE. See workers/W-M/REPORT.md.

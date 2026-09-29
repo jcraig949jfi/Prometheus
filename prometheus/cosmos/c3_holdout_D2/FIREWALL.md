@@ -176,3 +176,45 @@ Residuals, restated:
 - Branch protection on main is off. That is the operator's setting.
 - A same-account child could read the runner's memory; the separate child account (above) is required.
 - The plaintext length is visible in the manifest (future seals should pad).
+
+## v4 (2026-09-29): repairs after the v3 re-audit FAIL (roles/Odysseus/fabric_pilot/d2_audit/v3/VERDICT.md @ 2d7517600)
+
+- **OPEN, the operator's decisions:**
+  - the root of trust for protocol records (S1, #925);
+  - branch protection on main.
+  - v4 does not claim S1 repaired.
+- **Every other blocking finding and should-fix is repaired in code.** Each repair has a test in `selftest_protocol.py` (98 checks + 4 defect controls, 31 of them new in v4). Every attack test has a POSITIVE CONTROL: the planted file, replace ref or fake git DOES act when the defence is absent.
+- **Invocation is now:** `python -I -B <repo>/prometheus/cosmos/c3_holdout_D2/entry.py runner|custody|evidence|gates|firewall-check ...`. Plain `python entry.py` also works, because stage 1 re-executes safely.
+
+| finding | v4 repair | test (positive control) |
+|---|---|---|
+| **P1** (blocking): stage 1 imported json/hashlib/subprocess/... with the script directory first on sys.path | Stage 1 imports nothing from a path before re-executing. `sys` is built in. sys.path[0] is dropped FIRST; sys.path is then cut to the interpreter's standard-library directories (PYTHONPATH entries and site-packages removed); only then is `subprocess` imported. If site did not preload `os` (`-S`), stage 1 refuses. Defence in depth: any `*.py` in the package directory outside the known module list is refused. | A `json.py` planted in the package directory is NOT executed and is refused. (Control: the same plant runs when that directory is on the path.) |
+| **P2** (blocking): the repository root was first on sys.path in the key-holding process; the guard covered prometheus.* only | The repository root is NOT on sys.path. `prometheus` is served only by the guard, from an explicit path. The guard refuses ANY other module that would resolve to a file inside the repository. `protocol.loaded_closure` reports every loaded module whose file is inside the repository, and check_gates refuses what the audit does not bind. | `argparse.py` and `__future__.py` planted at the repository root, with the custodian's cwd there, are NOT executed; the gates still pass. The closure reports a repo-root module. (Control: the plant runs when the root is on the path.) |
+| **P3** (blocking): entry.py refused KEY_RELEASED.json / REVEALED.json, so the protocol deadlocked after release | entry's allowed record names include both. The selftest asserts `entry.FIXED == protocol.FIXED_RECORDS`. There is a new END-TO-END test THROUGH entry.py: a throwaway repository with a bare `origin`, a real fetch, and a `gates` target. | entry passes the gates, and still passes with both once-only records committed |
+| F-GOV: entry picked the highest audit before the allow-list filter (DoS) | The allow-list filters first, exactly as in protocol.check_gates. | An unauthenticated later FAIL audit is ignored by entry and reported. |
+| F-FETCH: fetch failure ignored; C3D2_NO_FETCH bypass | A failed fetch REFUSES. The bypass variable is removed. The reference is resolved ONCE to a commit, and every later read uses that commit (the TOCTOU note; the same in check_gates). | An unreachable origin is refused. |
+| F-GITENV: GIT_* variables and replace refs could present a forged history | git runs with every GIT_* variable removed and GIT_NO_REPLACE_OBJECTS=1 (entry and protocol). | A local replace ref swapping the governing audit for a FAIL is ignored. (Control: plain git shows the forgery.) |
+| F-CWD (CONFIRMED on M1): Windows CreateProcess searched the current directory for `git` | git runs by ABSOLUTE path from an absolute PATH entry that is neither the current directory nor inside the repository (entry, protocol, firewall_check). | A `git.exe` in the custodian's cwd (the repository root) is not executed. (Control: without the variable NoDefaultCurrentDirectoryInExePath, plain Python runs the planted `git.exe`.) |
+| F-KH: key-holding tools started with `python -m` (cwd on the path, `.pyc` honoured) | `firewall_check` runs only through `entry.py firewall-check`. That target runs BEFORE any audit, so it is bound to the COMMITTED code at the resolved origin/main (the working tree must equal it). custody `result-seal` and `evidence` also require entry. allowlist.py drops its script directory first and appends the repository root LAST. | firewall-check through entry is clean on a throwaway repo; it finds a planted (upper-cased) key copy; it refuses without entry |
+| F-ONCE: the once-only records were checked only at the ref; concurrent release possible | A record EVER committed in the full history counts. release and reveal hold an O_EXCL lock. | A record deleted later still counts. A second lock is refused. |
+| F-DEST: `--dest` could be a UNC or network path or a synced folder; the key file had the default ACL | Only a local fixed drive is accepted: UNC, non-fixed drives and OneDrive roots are refused. The released key file's ACL is cut to the custodian plus the designated account (icacls, inheritance removed); release is refused if that fails. | A UNC path is refused; a local path is accepted; the ACL has no Everyone / Users / Authenticated Users entry |
+| F-AST: `from X import name` aliases were not inspected | Imported NAMES are checked against the forbidden attributes and calls; `import *` is flagged. File- and network-capable modules are added (codecs, fileinput, gzip, bz2, lzma, logging, xmlrpc, imaplib, poplib, telnetlib, nntplib, socketserver, ssl, select, selectors, xml, wsgiref, _socket, _io, _thread). | `from numpy import fromfile as ff`, `from codecs import open`, `logging` and `xmlrpc` are flagged; the dummy package is clean |
+| F-NET: nothing blocked the child's network | HEURISTIC: before any package code runs, the child replaces the socket constructors and resolvers with refusals. NOT a boundary; see residuals. | In a child, socket creation works before the block and is refused after it. |
+| claim 2: key-holder scan quality | The history scan ALWAYS runs, and all_clean requires it. Key and salt are also searched as raw bytes and base64 / base64url; seed clusters are searched in history too. comms is scanned by dumping the messages to a directory outside git and passing it with `--scan` (custodian procedure). | positive control above |
+| claim 6: the redraw did not check its own code | `verify_reveal` redraw reports `redraw_code_matches_manifest`: draw.py, sealbox.py and __init__.py against `d2_src_sha256_at_draw`, and medium.py against `family_src_sha256`. | the evidence bundle's REVEAL_VERIFY carries it |
+| note: hostile reply shapes (MemoryError / RecursionError) crashed the runner | Hostile replies are caught as PREDICTOR_CRASH. | - |
+
+Residuals, restated. These are NOT boundaries, and v4 does not claim them:
+- The S1 root of trust is open (#925). Branch protection on main is off.
+- **The OS account is the boundary, not the process.**
+  - Every process of the custodian's account (jcrai on M1) can read the secrets directory. That includes every seat and tool that runs repository code as that account.
+  - entry.py stops the protocol's OWN tools from executing unbound code; it cannot stop other code that the same account runs.
+  - A real boundary needs a dedicated custodian account that holds the secrets and runs only verified code. That is a host capability request (MWO s6); no seat creates users.
+- **Separate predictor-child account.**
+  - Every production run still fails closed with ChildNotIsolated, because the child shares the runner's account.
+  - That account is the second host capability request.
+  - Network egress needs an outbound firewall rule for the child account, a third privileged host setting. The in-process socket block is a heuristic only.
+- **Third-party code (F-3P).** numpy, scipy, cryptography and site-packages `.pth` files run unbound in the key-holding process. On M1, H:\Python312 site-packages is writable by the custodian account.
+- **entry.py cannot vouch for itself.** A modified entry.py simply skips its checks. entry prints its own sha256 at start; the custodian compares it with the governing audit's binding before trusting a run.
+- **A committed KEY_RELEASED or REVEALED record by anyone blocks release or reveal.** This fails closed; authenticating records is S1.
+- **The plaintext length is visible in the manifest.** Future seals should pad.

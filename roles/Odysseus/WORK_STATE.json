@@ -3,8 +3,8 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T04:02:53Z",
- "state": "ACTIVE",
+ "updated_at_utc": "2026-09-29T04:50:52Z",
+ "state": "WORKING",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "c11aeeebaad2d10110f0e042a350d8b272fc57f5",
  "threads": [
@@ -21,13 +21,14 @@
  ],
  "fabric_tasks": [
   "D2 v2 re-audit adjudicated FAIL (d2_audit/v2/VERDICT.md)",
-  "D2 v3 re-audit @742243972 (tsk-d0454ab252b9, tsk-ddfc5156be0d, tsk-1674e7e0fdc8, tsk-9913738c30c2): both replicas FAIL; adjudicated FAIL (d2_audit/v3/VERDICT.md)"
+  "D2 v3 re-audit @742243972 (tsk-d0454ab252b9, tsk-ddfc5156be0d, tsk-1674e7e0fdc8, tsk-9913738c30c2): both replicas FAIL; adjudicated FAIL (d2_audit/v3/VERDICT.md)",
+  "D2 v4 re-audit @e6e482ae6 (Nestor #942), running: replicas tsk-c69dc6012c70, tsk-93bad7474ae7 (the first attempt of the latter lost to DEF-ODY-011; retry running); self-tests tsk-c889e48bc5f1, tsk-ca86196f783b completed; adjudicate when terminal"
  ],
  "running": [
   "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: 2 x worker.ubu001 (claude, script), 1 x worker.ubu001.sci (script)"
  ],
  "blocked_on": [
-  "D2: Nestor v4 (import control B1, entry record-name deadlock) + operator S1 decision (#925); C3 stays blocked",
+  "D2: v4 re-audit running; S1 root of trust still an OPEN operator decision (#925); C3 blocked on D2",
   "S3: Artemis must run on ubu001 in its own worktree (#936: Artemis is on ubu002; workload drafted, not frozen)",
   "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"

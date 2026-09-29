@@ -36,6 +36,7 @@ Nothing in this module reads secrets.
 from __future__ import annotations
 
 import json
+import os
 import re
 import socket
 import subprocess
@@ -154,12 +155,43 @@ class RunParamsMismatch(GateRefusal):
 
 
 # ---------------------------------------------------------------- git access (committed trees only)
+def git_exe(repo: Optional[Path] = None) -> str:
+    """v4 (Odysseus v3 F-CWD): git by ABSOLUTE path from an absolute PATH entry that is neither the current directory
+    nor inside the repository (same rule as entry.git_exe)."""
+    root = Path(repo).resolve() if repo is not None else HERE.parents[2].resolve()
+    cwd = Path.cwd().resolve()
+    names = ("git.exe",) if os.name == "nt" else ("git",)
+    for d in os.environ.get("PATH", "").split(os.pathsep):
+        if not d or not os.path.isabs(d):
+            continue
+        try:
+            rd = Path(d).resolve()
+        except OSError:
+            continue
+        if rd == cwd or rd == root or root in rd.parents:
+            continue
+        for n in names:
+            if (rd / n).is_file():
+                return str(rd / n)
+    raise GateRefusal("no git on an absolute PATH entry outside the repository and the current directory")
+
+
+def git_env() -> dict:
+    """v4 (F-GITENV): no GIT_* steering, replace objects disabled, no current-directory executable search."""
+    env = {k: v for k, v in os.environ.items()
+           if not k.upper().startswith("GIT_") and k.upper() != "NODEFAULTCURRENTDIRECTORYINEXEPATH"}
+    env["GIT_NO_REPLACE_OBJECTS"] = "1"
+    env["NoDefaultCurrentDirectoryInExePath"] = "1"
+    return env
+
+
 def _git(repo: Path, *args: str) -> subprocess.CompletedProcess:
-    return subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True)
+    return subprocess.run([git_exe(repo), "-C", str(repo), *args], capture_output=True, text=True, env=git_env())
 
 
 def _show(repo: Path, ref: str, rel: str) -> Optional[bytes]:
-    p = subprocess.run(["git", "-C", str(repo), "show", "%s:%s" % (ref, rel)], capture_output=True)
+    p = subprocess.run([git_exe(repo), "-C", str(repo), "show", "%s:%s" % (ref, rel)], capture_output=True,
+                       env=git_env())
     return p.stdout if p.returncode == 0 else None
 
 
@@ -257,12 +289,21 @@ def worktree_code_hashes(repo: Path) -> Dict[str, Optional[str]]:
 
 
 def loaded_closure(repo: Path) -> Dict[str, str]:
-    """{repo-relative path: sha256 LF} of every loaded prometheus.* module; a module whose file is outside the repo, or
-    has no file, is reported as such (and is refused by check_gates)."""
+    """{repo-relative path: sha256 LF} of every loaded prometheus.* module AND (v4, Odysseus v3 P2) of every other
+    loaded module whose file lies inside the repository; a prometheus module whose file is outside the repo, or has no
+    file, is reported as such. check_gates refuses anything here that the audit does not bind."""
     root = Path(repo).resolve()
     out = {}
     for name, mod in list(sys.modules.items()):
         if not (name == "prometheus" or name.startswith("prometheus.")):
+            f = getattr(mod, "__file__", None)
+            if not f:
+                continue
+            try:
+                rel = str(Path(f).resolve().relative_to(root)).replace("\\", "/")
+            except (ValueError, OSError):
+                continue                                          # stdlib / site-packages: declared residual F-3P
+            out[rel] = sealbox.src_sha_lf(Path(f)) if Path(f).suffix == ".py" else "<not-source>"
             continue
         f = getattr(mod, "__file__", None)
         if not f:
@@ -304,9 +345,10 @@ def _is_allowlisted(allowlist, role, name, b) -> bool:
 
 
 def once_record_present(repo, ref, name) -> bool:
-    """v3: True iff protocol/<name> is committed on `ref` (a KEY_RELEASED / REVEALED record makes a second release or
-    reveal impossible whatever the custody log says)."""
-    return _show(Path(repo), ref, PROTO_REL + "/" + name) is not None
+    """v3: a KEY_RELEASED / REVEALED record makes a second release or reveal impossible whatever the custody log says.
+    v4 (Odysseus v3 F-ONCE): True iff protocol/<name> was EVER committed in the full history of `ref` (deleting the
+    record later does not re-enable a release)."""
+    return bool(_record_history(Path(repo), ref, PROTO_REL + "/" + name)) or         _show(Path(repo), ref, PROTO_REL + "/" + name) is not None
 
 
 def _allowlisted(allowlist, role: str, name: str, b: bytes):
@@ -334,6 +376,7 @@ def check_gates(repo, through: str = "DESIGNATION", ref: str = DEFAULT_REF, pack
     repo = Path(repo)
     pins = pins or {"seal_commit": SEAL_COMMIT, "spec_id": SPEC_ID}
     st: dict = {"ref": ref, "ref_commit": resolve_ref(repo, ref)}
+    ref = st["ref_commit"]                    # v4 (TOCTOU note): resolved ONCE; every read below uses this commit
     check_records_dir(repo, ref)
 
     # 1. SEAL
@@ -465,6 +508,28 @@ def status(repo, ref: str = DEFAULT_REF, allowlist=DEFAULT_ALLOWLIST) -> dict:
             out[stage] = "%s: %s" % (type(e).__name__, e)
             break
     return out
+
+
+def main(argv=None) -> int:
+    """v4: `entry.py gates [STAGE]`: the gate check through STAGE on the real repository, run through the verified
+    entry (loaded closure verified). Prints public commit ids and booleans only."""
+    import argparse
+    ap = argparse.ArgumentParser(description="holdout D2 gates through a stage (public; through entry.py)")
+    ap.add_argument("stage", nargs="?", default="DESIGNATION",
+                    choices=("SEAL", "AUDIT", "COMMITMENT", "DESIGNATION", "RESULT_SEAL"))
+    a = ap.parse_args(argv)
+    if os.environ.get("C3D2_ENTRY") != "verified":
+        print(json.dumps({"refused": True, "reason": "start through entry.py"}))
+        return 3
+    try:
+        st = check_gates(HERE.parents[2], a.stage, verify_loaded=True, host=socket.gethostname())
+    except GateRefusal as e:
+        print(json.dumps({"refused": True, "stage": a.stage, "reason": "%s: %s" % (type(e).__name__, e)}))
+        return 3
+    print(json.dumps({"gates": "PASSED", "stage": a.stage,
+                      "commits": {k: v for k, v in st.items() if k.endswith("_commit")},
+                      "audits_ignored_not_allowlisted": st.get("audits_ignored_not_allowlisted", [])}, sort_keys=True))
+    return 0
 
 
 if __name__ == "__main__":
