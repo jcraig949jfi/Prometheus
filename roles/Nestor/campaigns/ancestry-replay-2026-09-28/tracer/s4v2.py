@@ -1,4 +1,6 @@
-"""s4 v2: CONFORMANCE REPAIR of the owner's s4 instrument tests (post-exposure; declared as such).
+"""s4 v2.1 (adds the RULED class key K_R1, Archaeon GO_FINAL addendum 3 ruling 3; otherwise identical to v2).
+
+s4 v2: CONFORMANCE REPAIR of the owner's s4 instrument tests (post-exposure; declared as such).
 
 Why: the independent review of production run 2 (review_run2/, Fabric tsk-c62639a26351 / tsk-db7cff995c19) found
 s4_run.py (68779d3e) does not conform. This module repairs conformance only. It changes no threshold, rule, sample,
@@ -50,6 +52,18 @@ def class_of(loci, donor, key):
     written = [l for l in loci if l["written"]]
     if not written or sum(1 for l in written if l["kind"] == "E") <= 0.10 * len(written):
         return "NO_MATERIAL"
+    if key == "K_R1":
+        # v2.1 (Archaeon addendum 3, ruling 3): R1's executing organism = the slice organism (store_by). Per birth,
+        # self iff the MAJORITY performer entity == the MAJORITY store_by entity; ties in either majority -> TIED;
+        # a majority performer that is not an ENTITY -> none.
+        pc = Counter(l["performer_ent"] if l["performer_ent"] else "none" for l in written)
+        sc = Counter(l.get("store_by_ent") for l in written)
+        pt, st = pc.most_common(), sc.most_common()
+        if (len(pt) > 1 and pt[0][1] == pt[1][1]) or (len(st) > 1 and st[0][1] == st[1][1]):
+            return "TIED"
+        if pt[0][0] == "none":
+            return "none"
+        return "self" if pt[0][0] == st[0][0] else "other"
     c = Counter()
     for l in written:
         pe = l["performer_ent"]
@@ -156,7 +170,7 @@ def main():
     comp_by = {(c["run"], c["child"]): c for c in comp}
     summary = {"repairs": "R-a..R-g (docstring)", "s4_results_sha256": S4_RESULTS_SHA, "boot": [BOOT_B, BOOT_SEED],
                "n_distinct_births": len(distinct), "n_duplicate_births": len(rows) - len(distinct), "keys": {}}
-    for key in ("K_DONOR", "K_EXEC"):
+    for key in ("K_R1", "K_DONOR", "K_EXEC"):          # K_R1 = the RULED key (addendum 3); the others reported
         per_class = defaultdict(lambda: defaultdict(lambda: Counter()))
         for r in distinct:
             c = class_of(r["loci"], r["donor"], key)
@@ -201,6 +215,7 @@ def main():
                                 "completeness_applicability_share": (tot["ca_applicable"] / tot["ca_draws"]) if tot["ca_draws"] else None},
                       "ci95_run_clustered": ci, "floor_verdict": {k: verdict(ci[k], FLOORS[k]) for k in FLOORS}}
         summary["keys"][key] = out
+    summary["ruled_class_key"] = "K_R1 (addendum 3); K_DONOR and K_EXEC reported only"
     (EXPORTS / "S4V2_SUMMARY.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({k: {c: v["floor_verdict"] for c, v in d.items()} for k, d in summary["keys"].items()}))
 
