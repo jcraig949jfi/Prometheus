@@ -321,3 +321,17 @@ Implementation note:
   - Dev and answer-keyed. Not preregistered beyond these per-tick precommitments.
 - Hygiene: heldout_eval.py lacked a __main__ guard. Importing it re-ran the family evaluation, which is deterministic
   and gave the identical numbers. Guard added.
+
+## Tick 2026-09-29T08:15Z: reviewer Q2 ablation. Is the CSSR stage incidental? (q2_ablation.py)
+
+- RAND_EM uses the same state count S as the split-CSSR fit at each refit, but EM starts from 3 random
+  initializations x 50 iterations, keeping the best likelihood. It uses nothing of the CSSR machine's structure.
+- Compared against CSSR_EM (numbers from results/cssr_em_eval.json and heldout_eval.json).
+
+### Precommitment (written BEFORE running q2_ablation.py; no debug run of RAND_EM)
+
+- Q2a: held-out family (24 worlds), RAND_EM mean >= CSSR_EM mean + .003 (CSSR mean .0219). The CSSR structure matters
+  on random machines.
+- Q2b: Even (eval seeds 1..16), |RAND_EM mean - CSSR_EM mean| <= .003 (CSSR mean .0011). On a 2-state world the
+  initialization does not matter.
+- Q2c: W2_3, RAND_EM mean > .01. It overfits like CSSR_EM, because S is the same.

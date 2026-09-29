@@ -43,7 +43,7 @@ class CSSR_EM:
             if t > 0 and t % self.refit == 0:
                 m = CSSR(Lmax=self.Lmax, alpha=self.alpha, mode="split").fit([int(v) for v in x[:t]])
                 S, Tm = self._init(m)
-                Tm = _em(x[:t], S, Tm, self.it)[0]
+                Tm = self._fit(x[:t], S) if Tm is None else _em(x[:t], S, Tm, self.it)[0]
                 b = np.full(S, 1.0 / S)
                 for s in x[:t]:
                     b = b @ Tm[s]
@@ -58,3 +58,31 @@ class CSSR_EM:
                 P[t] = [1 - p, p]
             c0[x[t]] += 1
         return P, dict(bits=float(T + 2 * S * S * 32 + S * 32), query_ops=float(S * S), states=S)
+
+
+class RAND_EM(CSSR_EM):
+    """Q2 ablation: the SAME state count S as the split-CSSR fit at each refit, but EM from random initializations
+    (restarts x n_iter, best log-likelihood kept), with no use of the CSSR machine's structure."""
+
+    def __init__(self, restarts=3, seed=12345, **kw):
+        super().__init__(**kw)
+        self.restarts, self.seed = restarts, seed
+        self.name = f"RAND_EM_L{self.Lmax}_r{restarts}"
+
+    def run(self, x):
+        self._rng = np.random.default_rng(self.seed)
+        return super().run(x)
+
+    def _init(self, m):
+        S = len(m.counts)
+        self._S = S
+        return S, None
+
+    def _fit(self, h, S):
+        best = None
+        for _ in range(self.restarts):
+            init = _normalize_rows([self._rng.random((S, S)), self._rng.random((S, S))])
+            cand = _em(h, S, init, self.it)
+            if best is None or cand[1] > best[1]:
+                best = cand
+        return best[0]
