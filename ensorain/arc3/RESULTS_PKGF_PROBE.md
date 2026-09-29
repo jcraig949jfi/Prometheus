@@ -166,3 +166,18 @@ Reading (revises v3):
   - A powered regime detector remains unbuilt. Candidates: a detector on per-cell residual SIGN agreement across
     time; or BOCPD on the prediction of a model refit per window.
   - Do not describe v3 as "discovered recency" anywhere downstream.
+
+## v5: MODEL-FREE regime detector, no recency prior (pkgf_cp3.py)
+
+- Statistic: disagreement of successive same-cell records STRADDLING a candidate split, minus the non-straddling
+  disagreement.
+- Null: within-cell time permutation (200); a split is accepted iff p < .01; it recurses on the later part.
+- Worlds: seeds 9_800_020-023 plus FRESH 9_800_030-033 (16 F3 worlds + 16 F2 stationary twins).
+
+### Precommitment (written BEFORE running pkgf_cp3.py)
+
+- R1: F3: a change is detected in >= 14/16.
+- R2: F2 twins: no change detected in >= 13/16.
+- R3: F3 mean dAC(SD_cp3 vs S) >= -0.10.
+- If same-cell pairs are too sparse in a world, the detector cannot fire. That is reported per world (the 'pairs'
+  column) and counted as a miss, not excluded.
