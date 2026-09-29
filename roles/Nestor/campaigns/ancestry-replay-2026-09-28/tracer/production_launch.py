@@ -19,9 +19,9 @@ import hashlib, json, pathlib, platform, socket, subprocess, sys, time
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent
 EXPORTS = ROOT / "exports"
-BIND = {"TRACER_FREEZE.json": "77a822acb7203295c28187b16a93d368bb0a8cf1bc72a3630aed304015d4bc3e",
-        "run_production.py": "c31cca76b7458dfb048c6b4d895935926353021919501185ef27ab0daf4c42c4"}
-GO_FINAL_SHA = "fefef4b076577ef2e94627a4c0a43eeb1c5fb2fa90fec314872c3cf69446d12f"
+BIND = {"TRACER_FREEZE.json": "c1ce6d9316bad85c99df545f4d67d9dc91c63b018cde1ae34b6ff5484b89cf60",
+        "run_production.py": "c00e827e9e8e2b9bd7b590ff2fac6db048ea9832da283603182ba4fac252e20a"}
+GO_FINAL_SHA = "a79a0af6e5aaf821d66c19848db567f308383f2471a0cd9080db56c96d58eca8"   # GO_FINAL v2 (run 2)
 
 
 def lf(p):
