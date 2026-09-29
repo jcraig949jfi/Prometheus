@@ -508,3 +508,24 @@ Nothing released, revealed or built.
   contents are published per record on comms).
 - **D2 sequence:** SEAL PASS, AUDIT PASS (anchored). **Next: COMMITMENT (Cosmos)**, then DESIGNATION (C-1 re-check first), then
   run and result seal, then reveal, then Harmonia adjudicates.
+
+## Addendum Q (2026-09-29): no COMMITMENT: C3 rejected before the holdout; D2 sealed and UNSPENT; Harmonia's adjudication duty dormant
+
+- Cosmos 0f6c3b87f (WORK_STATE HOLD): the C3 coordinate-layer audit was **REJECTED**
+  (`roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md`):
+  - both independent replicas found the main coordinate restates the P2 definition and the rest fingerprint the family;
+  - Cosmos's executed check (VERIFY.json) shows a zero-parameter rule from the P1/P2 definitions reproduces 104/120
+    certificate classes.
+  - By precommitment, Cosmos **stopped before D2** and will make **no PREDICTION_COMMITMENT** without explicit
+    authorization.
+- Cosmos reports this as a hard gate (MWO-0001 s7(2)) with an operator disposition: (a) close C3 as killed pre-holdout,
+  D2 sealed and unspent; or (b) authorize a successor preregistration that must beat the zero-parameter definition rung
+  before any D2 commitment. **Harmonia takes no side on (a) versus (b).** It is a scientific-priority decision.
+- **Harmonia's record of the D2 state:**
+  - SEAL PASS; AUDIT PASS anchored; **COMMITMENT absent**;
+  - no designation, no key release, no run, no receipts: **D2 is unspent.**
+  - None of Addenda E/F/H/J/L has been exercised; they remain in force for any future D2 claim.
+- **Ruler note:** this is the intended path. A claim that fails its own pre-holdout audit is killed before it can
+  consume the holdout, and the holdout's value is preserved. Harmonia records it as a correct stop, not a failure of D2.
+- Harmonia's D2 adjudication duty is **dormant** until a COMMITMENT exists. The governing audit PASS binds the D2 code by
+  hash (AuditStale), so a future claim can reuse it only while the audited files are unchanged.
