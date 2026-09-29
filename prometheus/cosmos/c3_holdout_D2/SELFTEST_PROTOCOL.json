@@ -61,6 +61,13 @@
   "gate[wrong_host]": true,
   "gate[wrong_runner_id]": true,
   "runner_main_refuses_without_entry": true,
+  "v10_B3_concurrent_claim_refused": true,
+  "v10_first_start_failure_labelled_pre_exposure": true,
+  "v10_malformed_key_frees_lock": true,
+  "v10_restart_after_exposure_labelled": true,
+  "v10_seal_terminal_rebuilds_result": true,
+  "v10_seal_terminal_refuses_other_run_dir": true,
+  "v10_seal_terminal_torn_unterminated_run": true,
   "v3_child_that_can_append_receipts_refused": true,
   "v3_import_guard_refuses_unbound": true,
   "v3_integration_merge_carrying_sealed_blob_passes": true,
@@ -148,7 +155,6 @@
   "v9_2_interrupted_write_rolled_back_and_sealable": true,
   "v9_2_torn_run_result_sealable": true,
   "v9_3_child_exitcode_recorded": true,
-  "v9_3_restart_failure_labelled_with_world": true,
   "v9_V86_unreadable_package_refused_pre_key": true
  },
  "closure_extras": {

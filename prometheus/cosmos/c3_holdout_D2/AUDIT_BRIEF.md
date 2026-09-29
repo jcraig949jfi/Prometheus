@@ -216,3 +216,17 @@ COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.selftest_D2
 - selftest_D2: 10 checks + 13 negative controls.
 
 **Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
+
+## RE-AUDIT v10 (2026-09-29)
+
+**Scope:** FIREWALL.md, section "v10". It covers the should-fix items from the v9 replicas: S-A/A3-1, A3-2, S-B/B-2, S-C/B-1/B-4, B-3 and the notes.
+
+**Still open:** S1 (#925) and branch protection on main.
+
+**What to try:** check that every attribution label is truthful. Check that seal-terminal can seal every spent, unterminated run and can never remove or forge a verifying record.
+
+**Self-tests:**
+- selftest_protocol: 154 checks + 4 defect controls.
+- selftest_D2: 10 checks + 13 negative controls.
+
+**Record:** unchanged. The next record is FIREWALL_AUDIT_1.json.
