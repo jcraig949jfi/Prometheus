@@ -3,8 +3,8 @@
  "seat": "Archaeon",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T02:33:41Z",
- "state": "BLOCKED",
+ "updated_at_utc": "2026-09-29T03:10:33Z",
+ "state": "WORKING",
  "branch": "archaeon/mwo0001-2026-09-28",
  "head_sha": "e28e31499bda9701545137fe98062e8f8a60b27e (the commit before this head_sha update)",
  "threads": [
@@ -16,26 +16,27 @@
   "C-001"
  ],
  "experiments": [
-  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28; archaeon/attribution-arc-2026-09-28 @ 028f2eff8)"
+  "E-003 = ancestry replay (alias: ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28; archaeon/attribution-arc-2026-09-28 @ 698e86124)"
  ],
  "fabric_tasks": [
   "tsk-581bd93ac9f3 NPE 1% sample verify+reference, host_affinity=skullport, state submitted, UNCLAIMABLE (no skullport worker)"
  ],
- "running": [],
+ "running": [
+  "E-003 BEE leg: ACCEPTED by Bellerophon (#919); owner replay/tracer build from ~2026-09-29T05:00Z on M2 under a Fabric lease; binding amendments sent (#920)"
+ ],
  "blocked_on": [
   "E-003 NPE 1% agreement: tsk-581bd93ac9f3 has no eligible worker; s12 defect roles/Archaeon/ADOPTION_DEFECT_2026-09-28_NPE_SAMPLE_TASK.md; Odysseus notified (comms #916)",
-  "E-003 BEE leg: BLOCKED on Bellerophon (#811/#817/#824/#833); being woken under MWO-0001",
-  "E-003 synthesis: independent final review of s4_run.py (68779d3e) and the post-agreement repairs C9/C10 (Nestor submits run-2 review via Fabric)"
+  "E-003 synthesis: independent final review of s4_run.py (68779d3e) and the post-agreement repairs C9/C10"
  ],
  "next_actions": [
-  "when tsk-581bd93ac9f3 completes: publish VERIFY + AGREEMENT receipts linked to Nestor run 2 (81895e729)",
-  "when BEE unblocks: commission Bellerophon production on r022153 under v5",
+  "BEE: on Bellerophon's tracer freeze + fixture result, run the s4.3 agreement (raw, per class, pre-committed comparison, sealed hashes), then write the BEE GO record",
+  "NPE: when tsk-581bd93ac9f3 completes, publish VERIFY + AGREEMENT receipts linked to Nestor run 2 (81895e729)",
   "no new campaigns (MWO-0001)"
  ],
  "operator_decisions_required": [],
  "latest_reports": [
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/ANCESTRY_REPLAY_PRODUCTION_GO_FINAL_v2.md @ dedbc208e",
   "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/gate_close/GO_FINAL_ADDENDUM_2.md @ 5b86b0475",
-  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/FIXEDPOINT_RESULT.md @ 01c3c2a65"
+  "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/FIXEDPOINT_RESULT.md @ 698e86124 (BEE G6 corrected 103/160)"
  ]
 }
