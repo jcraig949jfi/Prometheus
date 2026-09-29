@@ -3,7 +3,7 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0002",
  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
- "updated_at_utc": "2026-09-29T10:40:31Z",
+ "updated_at_utc": "2026-09-29T11:13:09Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "78a9694d36bcef50696c2e1a37c511cb26f3cd7f",
@@ -43,13 +43,13 @@
   }
  ],
  "fabric_tasks": [
-  "D2 re-audits v2..v10 adjudicated FAIL; v10 @a823b596c: self-tests PASS (appended); exposure gap closed at the adjudication layer by Harmonia Addendum J (#982); remaining: S1 + seal-terminal integrity (d2_audit/v10/VERDICT.md)"
+  "D2 re-audits v2..v11 adjudicated FAIL; v11 @e47d6fbbb: the firewall code has NO blocking finding; FAIL solely on S1 (d2_audit/v11/VERDICT.md)"
  ],
  "running": [
   "node workers on ubu001 from ~/fabric-runtime @ fabric-v0.2 54e42c695: worker.ubu001.a/.b (claude, script; audit.security.adversarial), worker.ubu001.sci (script); temporary worker.ubu001.sci2/.sci3 (1 h idle exit, DEF-ODY-014)"
  ],
  "blocked_on": [
-  "D2: operator S1 (#925) + branch protection; Nestor seal-terminal integrity (never drop a verifying record; lock/liveness; bind to the open record); then a clean re-audit. C3 blocked on D2",
+  "D2: ONLY the operator's S1 (#925, via its own channel) + branch protection. Operator time box (#985): settles by 13:05Z 2026-09-29 or PAUSES (no new repair/audit cycle). C3 blocked on D2",
   "S3: Artemis must run on ubu001 in its own worktree (#936: Artemis is on ubu002; workload drafted, not frozen)",
   "promexec: verification protocol and fixtures in a later MWO (stays EXPERIMENTAL / UNVERIFIED / NOT ENABLED; no host changes)",
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed"
@@ -64,12 +64,12 @@
   "D2 S1 root of trust for protocol records (#925) and branch protection on main: now the SOLE blocker of the D2 firewall PASS (v9 verdict)"
  ],
  "latest_reports": [
-  "roles/Odysseus/fabric_pilot/d2_audit/v10/VERDICT.md",
+  "roles/Odysseus/fabric_pilot/d2_audit/v11/VERDICT.md",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
   "roles/Odysseus/fabric_pilot/s2/RESULT.md",
   "fabric/promexec/STATUS_EXPERIMENTAL.md"
  ],
  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
- "comms_cursor": 982,
+ "comms_cursor": 985,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json"
 }

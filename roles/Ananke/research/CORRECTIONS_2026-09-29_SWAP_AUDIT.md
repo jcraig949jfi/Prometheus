@@ -20,3 +20,10 @@ provenance). Read them through these registers:
 - W-E classes (from s_ct): no change.
 Not audited: W-B deepdive*, W-C x1b_x5/x4, W-H cf, W-J e2/e3/e6, spikes
 s_joint_4781 / s_m2.
+
+## Qualification from W-P (T-INS-8, 2026-09-29)
+For 4781b0a1 o14/o15 the corrected letters C / S describe the dominant
+pattern, but ~1/3 of pair-trials there (.64-.70 within one clock phase) are
+a clean JOINT carrier {Acc_sum, payload-1 in flight}. For 369f5a5b o2 the
+proposed J -> S is NOT supported (W-P: fS .45, fN .33, higher-order). Treat
+single letters on these cells as summaries only; see workers/W-P/REPORT.md.
