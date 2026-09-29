@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T14:27:42Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-T (T-INS-16) complete and deposited; lease lse-33d3f78d0178 released (~0.9 core-h). Nothing running. No large PTE campaign.",
+  "updated_at_utc": "2026-09-29T14:59:34Z",
+  "state": "WORKING",
+  "state_reason": "T-SWAP-REL3 running as worker W-U (E-ANANKE-W-U, native CPU under Fabric lease per MWO-0004 R3; inside R2): interval method holding the 1% false-certificate target at small P for the relative swap rule. No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,13 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-U",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL3",
+      "status": "RUNNING",
+      "dir": "roles/Ananke/research/workers/W-U/"
+    },
+    {
       "id": "E-ANANKE-W-T",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-16",
@@ -155,7 +162,9 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-U (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "T-INS-17 (causal-emission carrier identification by per-emission cue flips)",
