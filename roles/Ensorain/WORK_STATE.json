@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T11:49:12Z",
+  "updated_at_utc": "2026-09-29T12:23:03Z",
   "state": "ACTIVE",
   "state_reason": "MWO-0004 adopted (own loop fetch 2026-09-29T11:48:07Z; blob sha256 verified). LM01 at ee8cbe0c8 is HOLD / NOT LAUNCHED by decision (MWO-0004 G3), not a pending gate. ARC3 dev work continues inside the R2 envelope. MWO-0003 FP-001 filed: roles/Ensorain/probes/FP-001_RESULT.json (PASS; replicas identical; cross-platform ULP difference recorded).",
   "branch": "ensorain/base-role-adopt-2026-09-23",
@@ -44,12 +44,13 @@
     },
     {
       "id": "E-ENS-LM02",
-      "status": "DESIGN"
+      "status": "DESIGN v0.2",
+      "report": "ensorain/arc3/packages/PKG_LM02_DESIGN.md"
     },
     {
       "id": "E-ENS-T25-CSSR",
-      "status": "DONE_DEV",
-      "report": "ensorain/arc3/suff/CSSR_T25.md",
+      "status": "CLOSED_DEV",
+      "report": "ensorain/arc3/reviews/T25_CSSR_REVIEW_2026-09-29.md (+Addendum 2)",
       "note": "T=16000 held-out (Fabric x3): MIX3_FS family .0028 (parametric floor) vs STAT6 .0286; G1-G3 survive, G4 refuted (3/24 worlds where the 6-window is already sufficient, H6~0, STAT6 wins by ~.001). Review packet ensorain/arc3/reviews/T25_CSSR_REVIEW_2026-09-29.md"
     }
   ],
@@ -122,7 +123,7 @@
     "E-ENS-LM01 launch: HOLD by decision (MWO-0004 G3). Hard gate only if a later order launches it (MWO-0004 Part 4, frozen launch gate). DEF-ENS-001 matters only at that launch."
   ],
   "next_actions": [
-    "ARC3 (R2 envelope, no campaign): consolidate T25 into the review packet (T=16000 addendum); PKG-F recency/changepoint design; LM02 design folding in T25's 'window-sufficient vs cryptic' result",
+    "ARC3 (R2 envelope, no campaign): validate a learned-crypticity measure (held-out model state-posterior entropy) against exact H6 on PKG-S1/unifilar worlds (LM02 open question); PKG-F recency/changepoint design",
     "At any future launch order: resolve DEF-ENS-001 as that order directs; Fabric lease; pinned worktree at ee8cbe0c8; freeze verify; launch on M2 (ERRATA E-2)"
   ],
   "operator_decisions_required": [],
