@@ -1,0 +1,124 @@
+{
+ "schema": "prometheus.migration_report.v1",
+ "seat": "Archaeon",
+ "mwo_id": "MWO-0002",
+ "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+ "reported_at_utc": "2026-09-29T07:11:50Z",
+ "branch": "archaeon/mwo0001-2026-09-28",
+ "head_sha": "(the commit adding this file; see git log)",
+ "bootstrap_independence": {
+  "answer": "CONDITIONAL",
+  "conditions": [
+   "Within the running session the self-paced s8 loop (ScheduleWakeup + comms/Fabric watcher) continues unprompted. A NEW session still needs a generic wake, and roles/Archaeon/RESUME.md (written 2026-09-25) is stale: it predates MWO-0001 and does not point to CURRENT.md or WORK_STATE.json."
+  ],
+  "how_mwo_0001_was_found": "operator_prompt",
+  "how_mwo_0002_was_found": "own_loop_fetch",
+  "evidence": [
+   "loop tick 2026-09-29 ~07:00Z: git fetch; sha256 of origin/main:ops/work_orders/CURRENT.md changed 007054ad -> 6f5a6a8b; verified == PUBLICATIONS.md row (MWO-0002, P 89512068f)",
+   "roles/Archaeon/RESUME.md @ f38759992 (stale)"
+  ],
+  "note": "MWO-0002 was found by the loop's own git fetch, NOT by broadcast #961: the seat's comms watcher filtered recipients by name and missed '{*}' broadcasts."
+ },
+ "criteria": {
+  "C1_adopted_mwo_0001": {
+   "status": "YES",
+   "evidence": [
+    "roles/Archaeon/WORK_STATE.json @ d45016a7a (mwo_commit 7e4c09f2c)",
+    "roles/Archaeon/ADOPTION_DEFECT_2026-09-28_NPE_SAMPLE_TASK.md @ 32a98bada (records sha256 007054ad...)"
+   ],
+   "note": "The first WORK_STATE push named origin/main head bd48fac9b as mwo_commit. It was corrected to publication commit 7e4c09f2c after broadcast #914."
+  },
+  "C2_discovers_next_mwo_unprompted": {
+   "status": "YES",
+   "evidence": [
+    "this report's bootstrap_independence evidence (own_loop_fetch)"
+   ],
+   "note": "No per-seat prompt was used for MWO-0002."
+  },
+  "C3_work_state_useful": {
+   "status": "YES",
+   "evidence": [
+    "roles/Archaeon/WORK_STATE.json at this head"
+   ],
+   "note": "All v1 core fields are filled; updated on each material transition."
+  },
+  "C4_identifies_authorized_work": {
+   "status": "YES",
+   "evidence": [
+    "MWO-0001 s10 ARCHAEON",
+    "ops/campaigns/C-001/CAMPAIGN.md @ archaeon/attribution-arc-2026-09-28 cc97a8e97 (E-003 row)",
+    "thr-a7fcb43e8092"
+   ],
+   "note": "E-003 ancestry replay: NPE leg recorded INCONCLUSIVE; BEE leg at the GO record; 1% NPE sample blocked (Fabric)."
+  },
+  "C5_checks_comms_correctly": {
+   "status": "PARTIAL",
+   "evidence": [
+    "comms #914 and #961 (broadcasts to *)",
+    "Archaeon rulings recorded in Git: gate_close/GO_FINAL_ADDENDUM_3.md @ 444886081; comms used only as pointers"
+   ],
+   "note": "Checks run from a cursor (id > last), with no idle broadcasts and no ACKs. But the watcher's recipient filter missed '*' broadcasts (#961). Fixed seat-side in this cycle."
+  },
+  "C6_uses_fabric_where_appropriate": {
+   "status": "PARTIAL",
+   "evidence": [
+    "tsk-c4317a3656d0 (supersedes tsk-581bd93ac9f3, canceled)",
+    "archaeon/attribution/probes/npe_births_agree.py @ 6eb2fe74f",
+    "archaeon/attribution/probes/bee_fresh.py @ c28a74a97"
+   ],
+   "note": "The host-local sample work was expressed as a Fabric Task, but it is unclaimable (no skullport/Windows worker). The small agreement comparisons ran locally on M2 rather than as Fabric script Tasks, although they read only committed inputs."
+  },
+  "C7_uses_common_hierarchy": {
+   "status": "YES",
+   "evidence": [
+    "roles/Archaeon/WORK_STATE.json",
+    "ops/campaigns/C-001/ATTRIBUTION_ARC_2026-09-28/E003_NPE_LEG_RESULT.md @ 8fdad7f10"
+   ],
+   "note": "Thread thr-a7fcb43e8092 / Campaign C-001 / Experiment E-003 / Tasks tsk-*; no Attempt exists."
+  },
+  "C8_uses_canonical_leases": {
+   "status": "NOT_APPLICABLE",
+   "evidence": [],
+   "note": "No substantial resource claims were made this cycle. Only light single-core runs of minutes on M2, reading committed files."
+  },
+  "C9_distinguishes_gates_from_routine": {
+   "status": "YES",
+   "evidence": [
+    "gate_close/GO_FINAL_ADDENDUM_5.md @ 0edb1c09d"
+   ],
+   "note": "No current stop is at a gate. Regenerating the destroyed 1% sample would be a third production run: operator (MWO-0001 s10 Nestor; s7). It is held as a CONDITIONAL decision only if the v2 verification fails."
+  }
+ },
+ "hard_gates_current": [],
+ "migration_blockers": [
+  {
+   "what": "Fabric has no worker on SKULLPORT (a Windows host), so the host-affine Task for host-local evidence is unclaimable and was accepted with no waiting_reason",
+   "kind": "fabric",
+   "evidence": [
+    "tsk-c4317a3656d0",
+    "roles/Archaeon/ADOPTION_DEFECT_2026-09-28_NPE_SAMPLE_TASK.md",
+    "comms #916"
+   ]
+  },
+  {
+   "what": "The seat's comms watcher recipient filter missed '*' broadcasts (MWO publication notices)",
+   "kind": "tooling",
+   "evidence": [
+    "comms #961"
+   ]
+  },
+  {
+   "what": "roles/Archaeon/RESUME.md is stale (2026-09-25); a new session has no MWO-aware entry point beyond WORK_STATE.json",
+   "kind": "tooling",
+   "evidence": [
+    "roles/Archaeon/RESUME.md @ f38759992"
+   ]
+  }
+ ],
+ "legacy_conventions_still_used": [],
+ "identifier_check": {
+  "thread_ids_unresolved": [],
+  "campaign_ids_unresolved": [],
+  "note": "thr-a7fcb43e8092 and C-001 resolve on origin/main. thr-c64dca3118a1, thr-5085da70a143 and the E-003 row resolve only on the seat's pushed branch archaeon/attribution-arc-2026-09-28 (not yet merged). The ops/README.md pilot banner was not read and caused no confusion."
+ }
+}
