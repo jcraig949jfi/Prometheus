@@ -441,3 +441,37 @@ This contains exactly the auditor's three items. No other behaviour changes.
 **Self-tests:**
 - selftest_protocol: 179 checks + 4 defect controls PASS (14 new, including the defect control).
 - selftest_D2: PASS.
+
+## POST-PASS (2026-09-29): FIREWALL_AUDIT_1.json governs; conditions C-1 and C-2 (Odysseus #1020, v13 VERDICT)
+
+**Audit record:**
+- file: prometheus/cosmos/c3_holdout_D2/protocol/FIREWALL_AUDIT_1.json;
+- commit: 67e05df127e042d32b7444c3796735829e7f0ee3;
+- LF sha256: 4d267476...2546;
+- verdict PASS, auditor Odysseus, audited commit b17320e64.
+
+**Anchored by the custodian on M1**, 2026-09-29, with Odysseus's published --expect-commit and --expect-sha256. Anchor entry_hash: e1a2e48bc21c4c7b9bf5ce1452cfbe3427a7418dc3bd7998bedf935d0dbc1c7a.
+
+**Preceded by the pre-audit tool pins**, commit 17946cbea, digest 92416be8...4d04:
+- the 7 tool files pinned: prometheus/__init__.py, prometheus/cosmos/__init__.py, c3_holdout_D2/__init__.py, firewall_check.py, allowlist.py, protocol.py, sealbox.py;
+- all 7 hashes EQUAL the audit's code_sha256 bindings.
+
+**Verified through `python -I -B entry.py gates AUDIT`:**
+- governing FIREWALL_AUDIT_1.json; gates PASSED through AUDIT;
+- entry.py's own sha256 d13a5aa3... equals the audited binding;
+- the next gate, COMMITMENT, is Cosmos's.
+
+**C-1: who can write the anchor (M1 fact, 2026-09-29).**
+- `icacls C:\Users\jcrai\nestor_receipts\holdout_D2` and `...\ANCHOR.jsonl` grant access to exactly three principals: NT AUTHORITY\SYSTEM, BUILTIN\Administrators and SKULLPORT\jcrai (the custodian). All three are inherited from the profile.
+- No runner or predictor-child account exists yet.
+- TRUE today: no non-custodian user principal can write ANCHOR.jsonl.
+- Declared residual until designation: when the designated runner and child accounts are created (the host capability request):
+  - neither may be an Administrator;
+  - neither may hold any ACE on holdout_D2 except the runner's Modify on holdout_D2/runs;
+  - the custodian re-runs this icacls check and publishes the true/false BEFORE the designation record is anchored.
+- An account that can write ANCHOR.jsonl could truncate it or re-chain it (the hash chain uses no secret).
+
+**C-2: declared residuals.**
+- **A FAIL audit takes effect only once the custodian anchors it.** A committed but unanchored record (PASS or FAIL) is ignored by design (MWO-0004 D2-1). An anchored FAIL governs and can no longer be removed by deleting, editing or rolling back git (v13).
+- **Anyone who can push to main can HALT D2.** They can take a fixed record name first (for example PREDICTION_COMMITMENT.json), or delete or rewrite an anchored record. Every such case fails SAFE: nothing is released, and the anchor-state check refuses. It is a denial of service, not an integrity breach.
+- **Third parties cannot see the anchor's contents** (it is on M1 only). The custodian publishes each anchored record's commit, sha256 and entry_hash on comms when anchoring.
