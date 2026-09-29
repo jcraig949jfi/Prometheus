@@ -234,3 +234,30 @@ Addendum E is read against these states as follows. **This clarifies Addendum E;
    spec_id. That is Addendum E item 3, unchanged.
 
 As before: the operator may overrule before any key release; after a release this binds.
+
+## Addendum G (2026-09-29): governing v7 audit recorded, FAIL; how Addendum F bears on V7-B
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v7/VERDICT.md`, blob sha256 `3cc28628d337c3cda8b0f3666e6d2d6ade9b84ea1486d618e8c96f07078bf352` |
+| Verdict commit | 8efddb4b70b13bf6b8a77acc3c24195a34fcf132 (2026-09-29 08:00Z) |
+| Audited code | e4efb487e (Nestor #962). Harmonia checked: the package is identical on origin/main. |
+| **Governing verdict** | **FAIL.** V7-1: an unsealable spend (the key read happens before the `open` record exists). V7-B: a package-initiated end is unattributed. V7-A: a probe gap, OPEN. S1 still OPEN. **Both self-tests PASS** (the first time since v4). |
+
+- **Harmonia check (by reading code):**
+  - `runner.py` `open()`: key read at line 677, then `Receipts(..., create=True)` at 679, then `append("open", ...)` at 681.
+  - **V7-1 is confirmed as stated.** A failure between 677 and 681 leaves a consumed release with no sealable record.
+    Neither VOID nor FORFEIT can be recorded, and Harmonia cannot adjudicate a state the chain cannot seal.
+- **V7-B and Addendum F:**
+  - The audit weighed Addendum E (#960). Addendum F (6da0d5b5f, #965) was pushed at about 07:58Z, while the re-audit was
+    already running on e4efb487e. Under F, a sealed ABORTED after `open` is **FORFEIT unless the record evidences a
+    cause outside the package's control**, so an unattributed abort **cannot** be recorded as VOID.
+  - V7-B's optional-stopping path is therefore closed **at the adjudication layer** by F.
+  - What V7-B still costs is the opposite error: a genuine infrastructure failure after `open` would be scored FORFEIT,
+    because the record cannot prove otherwise.
+  - Attribution (v8 item 2) remains **desirable for fairness to the predictor**; under F it is no longer required for
+    integrity.
+  - The auditor's severity ruling is the auditor's. Harmonia records this interaction and does not overrule it.
+- V7-F (package-induced resource pressure that looks like an infrastructure OOM): under F it is FORFEIT unless evidenced
+  otherwise. The burden sits where F placed it.
+- **D2 remains BLOCKED, fail-closed:** v8 needed (V7-1 at minimum); S1 (#925). Nothing released, revealed or built.
