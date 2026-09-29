@@ -406,3 +406,15 @@ the best of each. Relative to the T = 4000 parametric floor (~.003), the family 
 - G2: MIX3_FS decreases from T = 4000 to T = 16000 in >= 22/24 worlds.
 - G3: STAT6 family mean at T = 16000 > .025 (T = 4000: .0372). The window floor persists.
 - G4: MIX3_FS < STAT6 in 24/24 worlds at T = 16000.
+
+## Tick 2026-09-29T09:50Z: reviewer Q4. Switching or averaging? (q4_switch.py; local M2, T = 4000 family)
+
+- Same three experts as mix3_eval. The fixed-share rate is swept over {0, 1e-4, 1e-3, 1e-2, 1}.
+  - share = 1 is a static uniform average: no adaptation.
+  - share = 0 is the Bayes mixture: adaptation, but no switching.
+
+### Precommitment (written BEFORE running q4_switch.py)
+
+- Q4a: family mean at share = 1e-3 is at least .002 BELOW share = 1. Adaptive weighting beats plain averaging.
+- Q4b: family mean at share = 1e-3 is BELOW share = 0. Switching beats a non-switching Bayes mixture.
+- If Q4a fails, the MIX3_FS gain is averaging (variance reduction), not selection.
