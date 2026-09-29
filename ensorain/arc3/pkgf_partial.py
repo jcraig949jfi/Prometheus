@@ -35,9 +35,9 @@ def world(seed, gen, rho):
     return dict(dims=list(dims), train=segs, test=(U, x[tuple(U.T)]))
 
 
-def one(gen, seed, rho):
+def one(gen, seed, rho, sub_family="F3_switch"):
     fz = json.load(open(os.path.join(HERE, "..", "lm01", "FROZEN_SELECTION.json")))["choices"]
-    kind, recipe = dict(SELECTIVE_GRID)[fz[f"F3_switch|L2|{gen}"]["SELECTIVE"]]
+    kind, recipe = dict(SELECTIVE_GRID)[fz[f"{sub_family}|L2|{gen}"]["SELECTIVE"]]
     w = world(seed, gen, rho); T, truth = w["test"]
     A = np.concatenate([s[0] for s in w["train"]]); y = np.concatenate([s[1] for s in w["train"]]); n = len(y)
     cells = int(np.prod(w["dims"]))
@@ -48,7 +48,7 @@ def one(gen, seed, rho):
     pick = lambda hoi, tri: min(ALPHAS, key=lambda a: np.mean((S.predict(A[hoi]) + a * g_smooth(A[tri], r[tri], A[hoi]) - y[hoi]) ** 2))
     a_all = pick(ho, tr); a_cp = a_all if st == 0 else pick(np.arange(st, n), np.arange(0, st))
     s0 = S.predict(T); gD = g_smooth(A, r, T)
-    return dict(gen=gen, seed=seed, rho=rho, pairs=len(pairs(A, y, 0, n)), cp_frac=round(st / n, 3),
+    return dict(gen=gen, seed=seed, rho=rho, sub_family=sub_family, pairs=len(pairs(A, y, 0, n)), cp_frac=round(st / n, 3),
                 AC=dict(S=AC(s0, truth, 1.0), SD_all=AC(s0 + a_all * gD, truth, 1.0), SD_cp3=AC(s0 + a_cp * gD, truth, 1.0)))
 
 

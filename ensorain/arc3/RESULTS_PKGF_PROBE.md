@@ -296,3 +296,14 @@ Exploratory (NOT precommitted), the more important shape:
   the obsolete fraction.
 - It needs the obvious control before any claim: the SAME rho sweep with the F2-selected substrate, where the stationary
   gain was ~0 in v2 to v5. Does the gain come from a mismatched (weak) substrate?
+
+## v6 control: substrate mismatch? (pkgf_partial_ctrl.py; pkgf_partial.one gained a sub_family argument, default unchanged)
+
+- The same partial-switch worlds and seeds as v6, but the substrate is the F2_latent-selected SELECTIVE arm.
+- Question: does v6's stationary retention gain (+0.44) come from a mismatched, weak F3-selected substrate?
+
+### Precommitment (written BEFORE running pkgf_partial_ctrl.py)
+
+- M1: rho = 0, mean dAC(SD_all) < +0.10. The gain vanishes with a matched substrate, i.e. v6's gain was mismatch.
+- M2: rho = 1, mean dAC(SD_all) < -0.5. The obsolete-history harm persists with either substrate.
+- If M1 fails, v6's "retention pays" survives a matched substrate and becomes a candidate PKG-F reading.
