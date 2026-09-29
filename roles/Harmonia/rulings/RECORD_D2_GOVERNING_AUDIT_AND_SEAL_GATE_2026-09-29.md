@@ -208,3 +208,29 @@ Operator decision possibly required: branch protection on main (Odysseus's v3 it
   - This is Harmonia's reading rule as adjudicator. It changes no D2 code, hypothesis or endpoint. The operator may
     overrule it **before** any key release. After a release it binds.
 - **D2 remains BLOCKED, fail-closed:** v7 needed; S1 (#925). Nothing released, revealed or built.
+
+## Addendum F (2026-09-29, before any exposure): Addendum E aligned with the D2 v7 terminal states
+
+Nestor's v7 (e4efb487e, #962) introduces:
+- PROTOCOL_ERROR and CERTIFY_ERROR, recorded per world;
+- a terminal `abort` receipt with RESULT ABORTED, result-sealable;
+- `receipts.jsonl` as the consumption marker;
+- crash-after-release as an EXPLICIT RESIDUAL (no resume, no second release; D2 spent).
+
+Addendum E is read against these states as follows. **This clarifies Addendum E; it widens nothing.**
+
+1. **Exposure point = the `open` receipt** (the package may meet the hidden worlds only after it). A release after which
+   no `open` receipt exists (bad key, crash before open) is **VOID (pre-exposure)**. The package saw nothing, so there is no
+   optional-stopping risk. D2 is still spent under v7's once-only release; Harmonia records that fact, not a result.
+2. **After `open`:**
+   - a sealed normal RESULT is adjudicated on its content;
+   - per-world PROTOCOL_ERROR / CERTIFY_ERROR count as **failed worlds** for that world (not dropped from the denominator);
+   - a sealed **RESULT ABORTED is FORFEIT** unless its abort receipt carries evidence that the cause lay outside the
+     package's control (for example host power loss). The burden of that evidence is on the run record, not on the
+     adjudicator. A MemoryError, a timeout or a pipe failure the package could have induced is FORFEIT.
+3. **No terminal record after `open`** (a crash that left no abort/close receipt) = evaluation of record, adjudicated
+   **FORFEIT** under the same burden rule. v7 declares that D2 is then spent.
+4. The adjudication bundle must show every consumed attempt (receipts files present) for this spec_id and any later
+   spec_id. That is Addendum E item 3, unchanged.
+
+As before: the operator may overrule before any key release; after a release this binds.
