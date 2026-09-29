@@ -81,3 +81,9 @@ to a host.
 - A thread's EXISTING EVIDENCE is re-checked against git on each pass it
   is reviewed; "Last reviewed" records the date and what changed.
 - The operator reads FRONTIER.md, not the index.
+
+## Harvest currency (added 2026-09-29, from Fabric S3)
+
+A harvest entry's "later evidence" / status note was wrong or stale in 5 of 10 S3 packages two days after harvest
+(roles/Artemis/s3/SYNTHESIS.md s4). Dispatched packages therefore say that harvest status notes are unverified,
+and the worker, not the curator, establishes current status from the repository.
