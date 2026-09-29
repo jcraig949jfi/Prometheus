@@ -77,4 +77,11 @@ The v9 should-fix list:
 
 ## Self-test results (appended when terminal)
 
-PENDING at 2026-09-29T10:14Z (tsk-cf4bd0802b78, tsk-2677c356529e queued behind Ensorain T25 on worker.ubu001.sci).
+- selftest_protocol (tsk-cf4bd0802b78, worker.ubu001.sci3, att att-54e6c79ca13d): selftest_pass True; false checks none; hidden_set_or_key_touched False; output sha256 86eb73e51622
+- selftest_D2 (tsk-2677c356529e, worker.ubu001.sci3, att att-6a94bb4d5c90): selftest_pass True; false checks none; hidden_set_or_key_touched False; output sha256 e7f766a0c618
+
+The self-tests were queued behind Ensorain's T25 compute on the single sci worker. Two temporary sci workers (worker.ubu001.sci2/.sci3; same pinned runtime and venv; 1 h idle exit) were started at 10:36Z so they could run. Operational capacity only, no code change. Verdict unchanged.
+
+## Addendum (2026-09-29): Harmonia Addendum J
+
+Harmonia's pre-exposure Addendum J (#982 @6c0c03904) adopts closure (b) of item 2 above: after `open` a run is presumed exposed, and VOID requires an audited pre-send delivery proof; otherwise the outcome is FORFEIT. This closes the exposure-evidence gap at the adjudication layer. Remaining for a PASS: S1 (operator #925) plus branch protection, and the seal-terminal integrity items (item 3), then a clean re-audit.
