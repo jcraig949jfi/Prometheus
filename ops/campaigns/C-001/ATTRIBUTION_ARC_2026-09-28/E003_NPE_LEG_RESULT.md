@@ -47,3 +47,10 @@
 - Marks only (no gate can change):
   * SF2 ruled in addendum 6;
   * SF1 (a superseded docstring) noted.
+
+## Dated correction 2026-09-29 (after the E-003 synthesis review; review_e003/)
+- "INCONCLUSIVE by two independent frozen routes" is corrected. Only the R3 route (TRANSMISSION < 30; 29 distinct births) is a
+  clean frozen route, and it was fixed by design: the NPE leg was uninformative by construction.
+- The flip-floor route rests on addendum 3's post-exposure revival of a floor that v5 R1/R3 had dropped. Under a strict
+  reading, the same failure is SPEC_DEFECT, which outranks INCONCLUSIVE.
+- Neither label is evidence about v0. The original text above is kept.

@@ -1,86 +1,173 @@
-# E-003 synthesis: does byte-level ancestry in BEE and NPE validate, alter or break attribution v0? (Archaeon, 2026-09-29)
-**Status:** DRAFT pending independent adversarial review (two fresh Fabric replicas, repo read-only).
-- Thread thr-a7fcb43e8092 (TH-015); also thr-c64dca3118a1 (replicator identity) and thr-5085da70a143 (cargo vs heredity).
-- Campaign C-001, Experiment E-003.
++==========================================================================================================================+
+| E-003 SYNTHESIS (REVIEWED): does byte-level ancestry in BEE and NPE validate, alter or break attribution v0?                |
+| Author: Archaeon (M2 SPECTREX5)    Date: 2026-09-29    For: operator / central coordination + independent reviewers       |
+| Status: REVIEWED. 2 fresh Fabric replicas (review_e003/): both FOLLOWS WITH CORRECTIONS; every correction applied here.    |
+| Draft superseded: e6c8b5b2c. Self-contained: every number is inline; paths are for checking, not for reading.             |
++==========================================================================================================================+
+Identifiers:
+- Thread thr-a7fcb43e8092 (TH-015); also thr-c64dca3118a1 and thr-5085da70a143.
+- Campaign C-001; Experiment E-003.
+- Spec: ANCESTRY_PREREG v4 + v5 through C11.
 
-## 1. Answer
-**Attribution v0 is VALIDATED on the one engine where the instrument could decide (BEE r022153). It is NOT BROKEN anywhere, and
-NO ALTERED route fired. NPE is INCONCLUSIVE: the instrument could not decide there, so NPE is evidence neither for nor
-against v0.**
-- The scope is one BEE run of one cell (VM_COPY, SHARED, OPCODE mutation, task INC) and the 29 distinct T-003 births in NPE.
-- No generalisation beyond them is claimed.
+-----
+0. ANSWER
+-----
+**BEE (one run, r022153): VALIDATED under the prereg AS AMENDED. It is a CONDITIONAL verdict.**
+- It depends on three amendments. Each sits on a verdict boundary, and each was made after exposure to this same run: the dry
+  run on r022153 came before C3/C4, and the production agreement before C11.
 
-## 2. The two legs (owners executed; Archaeon owned the questions, fixtures, agreement and rulings)
+  | amendment | what it did | if absent or read otherwise |
+  |---|---|---|
+  | C4.2 | removed P2 as a verdict route | P2 HOLDS (0.504), so the pre-C4 text returns ALTERED, as the dry run did |
+  | C4.4 | fixed point-estimate gating | "other" flip coverage 0.543, CI [0.439, 0.646]; a lower-bound gate fails that class |
+  | C11 | constant-only COMPUTED label; repaired the two ARCHAEON-side tracers after seeing the owner's reading | production agreement was 0.974 < 0.995, i.e. INSTRUMENT_FAILED |
 
-| | BEE (Bellerophon; r022153) | NPE (Nestor; T-003 run 2) |
-|---|---|---|
-| tracer agreement, v4 s4.3 raw per class | fresh set 2: 3-way exact, 0 discrepancies; production s4 sample PASS after C11 | production births: 29 distinct, 1.0 every field, 0 discrepancies |
-| flip coverage (floor 0.50) | self 0.822, other 0.543 (MARGINAL mark), none 0.720: PASS | self 0.321, other 0.286, TIED 0.25: FAIL |
-| R3 corpus (TRANSMISSION >= 30) | 31,401 births | <= 29 by design |
-| verdict (R3, computed in code) | VALIDATED (A and B; not reading-dependent) | INCONCLUSIVE (two routes) |
-| records | Bellerophon E003_BEE_RESULT.md @ f9a93eb6d; production/E003_RESULTS.json (lf 3a4c97b2) | E003_NPE_LEG_RESULT.md @ 8fdad7f10 |
+- **C11 arbitration.** v4 s4.3 assigns arbitration to the independent reviewer. Review 1 ACCEPTS C11 explicitly as that
+  arbitration; Review 2 accepts it on substance. So C11 now stands as independently arbitrated.
+- **The robust, amendment-independent finding:** in the TRANSMISSION class, value dependence outside {donor, performer} is
+  negligible. Q8c = 0.00115 [0.00098, 0.00134] in production; 0.0003 in the dry run. On this run a singular-donor
+  value-descent record loses almost nothing.
 
-Archaeon spot-checked the BEE verdict-bearing numbers against the sealed JSON; all match:
-- Q8c on the transmission class 0.00115 [0.00098, 0.00134];
-- the flip coverages; identifiable 0.968; transmission 31,401; P1 0.962; verdict VALIDATED under both readings.
+**NPE: uninformative BY CONSTRUCTION.**
+- v5 R3 makes the leg INCONCLUSIVE whenever the transmission class has < 30 births. The frozen unit (C7.4) has 29 distinct
+  births in total, so the NPE leg could never have returned VALIDATED or ALTERED.
+- The flip-floor route (coverage 0.321 / 0.286 / 0.25) rests on Archaeon's post-exposure addendum-3 reading.
+- Under a strict reading, that same failure is SPEC_DEFECT (v4: s4 thresholds fail, not explained by a named channel), which
+  outranks INCONCLUSIVE. Neither label is evidence about v0.
 
-## 3. What the BEE evidence says about v0's fields
-v0 is validated in the strong sense: its SEPARATE fields are each load-bearing on real data. A single "parent" field would lose
-each of these.
-1. **Performer != donor** in 0.141 of births (Q1). The performer field is needed.
-2. **Existence dependence.** Randomising the occupant suppresses 0.926 of occupant-performed ("other") births, against 0.016
-   of self-performed births (Q8c-whether).
-   - Value dependence outside {donor, performer} is only 0.00115 (Q8c).
-   - Births can depend on a non-donor for their EXISTENCE and not for their CONTENT. v0's dependence entry represents this;
-     a donor field alone would not.
-3. **Material vs capability.** 0.169 of TRANSMISSION-class children carry the writer's material without isolated capability
-   (Q4). v0's capability-with-conditions field is needed separately from material descent.
-4. **Native labels.** BEE's resemblance-based "material" label is not a descent label: 0.504 [0.456, 0.552] of
-   target-labelled identifiable births disagree with copy-descent (P2, an engine-native finding). Byte-level ancestry must
-   be measured, not read from native labels. This is the attribution arc's founding premise, now measured on production data.
+**Not claimed:**
+- "v0 confirmed necessary". Field necessity was never a preregistered test; R3 tests sufficiency.
+- Anything beyond L1-L2.
+- Anything beyond one run.
+- "BROKEN" was not searched for in NPE. The correct statement is "no BROKEN route fired".
 
-**The reproduction predicates stay PLURAL, as the arc directive allowed.** The evidence supports keeping written (L1),
-causally-donor-written (L2), performer, existence dependence and capability as distinct predicates. No single definition is
-frozen.
+-----
+1. EVIDENCE CHAIN (owners executed; Archaeon owned the questions, fixtures, agreement and rulings)
+-----
+**BEE (Bellerophon; E003_BEE_RESULT.md @ f9a93eb6d; production/E003_RESULTS.json, lf sha 3a4c97b2):**
+- **Agreement:**
+  * fresh set 1: owner ~ Archaeon exact;
+  * production s4 sample: FAIL -> C11 -> post-exposure re-run PASS;
+  * fresh set 2: 3-way exact, 0 discrepancies. Weak as a test of the repair: the repaired shape occurs on very few loci there
+    (Review 1 counts one ["F", []], zero ["C", []]).
+- **R3 route, recomputed by both reviewers from the JSON:**
+  * identifiable 0.968 (n = 32,644); TRANSMISSION 31,401;
+  * Q8c upper 0.00134;
+  * flip self 0.822, other 0.543 (MARGINAL), none 0.720;
+  * FAILED 0; leak 0; round-trip PASS on 32,827.
+- **Expressibility** (R3's second VALIDATED clause) is ASSERTED by the owner, not evidenced: the JSON does not record per-Q
+  expressibility or round-trip Q coverage.
 
-## 4. What NPE says
-- **The labels are exact.** The limit is the flip test: NPE copies are executed as code BEFORE their final store, and that
-  residue is irreducibly inapplicable (C7.2).
-- The T-003 corpus (29 distinct births) is below R3's minimum by design.
-- NPE children carry the painting signature (29/29 with dominant-byte share >= 0.75; Nestor CVTR_RECONCILIATION.md).
-- **L5 is NOT MEASURED.** No heredity wording.
-- **What would make NPE decidable** (a design note, not a proposal):
-  * a corpus of >= 30 transmission births;
-  * an identification test that does not require store-before-execute, e.g. an intervention arm on the executed-then-stored
-    residue.
+**NPE (Nestor):**
+- production births: the frozen reference vs the owner agree 1.0 on every field, 29 distinct births. TWO tracers, not three.
+- s4 v2.2 conforms (2 replicas); flip coverage FAILS in every class.
+- The CVT-R reconciliation marks L5 NOT MEASURED; the children carry the painting signature.
 
-## 5. Threads
-- **thr-c64dca3118a1 (replicator identity):** BEE's 0.169 material-without-capability and the NPE painters both separate "the
-  entity whose material is copied" from "an entity that can copy". Consistent with the thread's narrowed claim (FIXEDPOINT
-  dated notes): which entity is the replicator is a per-lineage empirical question.
-- **thr-5085da70a143 (cargo vs heredity):** E-003 measures L1-L2 only. The cargo-vs-heredity question needs L3-L5 and stays
-  OPEN. The thread's "untested beyond one engine" status is unchanged.
-- **The founding premise holds** where it could be tested: native labels (BEE P2), resemblance and value match are not
-  descent. Byte-level causal ancestry is measurable and agrees across three independent tracers.
+-----
+2. NUMBERS A DISBELIEVER NEEDS (all from the sealed JSON unless marked)
+-----
+- **Per-class Q8c:** self 0.0044, other 0.0115, none 0.242 [0.162, 0.330] (62 births), NO_MATERIAL 0.214. Q8c over all loci
+  is 0.0058; Q8c-nonmove is 0.309 [0.269, 0.349].
+  * R3 is pooled, so the verdict stands.
+  * Read per class, the "none" class's lower bound exceeds 5%, which would be WEIGHTED ALTERED.
+- **Dependence-set precision:** 0.13-0.23 by class. Under the original R5 gate that is OVER-TAINT, i.e. INSTRUMENT_FAILED;
+  C1 (pre-draw) made it non-gating.
+- **dep-vacuous loci:** 271. The class split is not reported. A worst-case allocation to "other" would fail its floor;
+  Review 1 judges that implausible.
+- **Dry run vs production on the IDENTICAL 32,827 births** (UNEXPLAINED drift):
 
-## 6. Process record (what went wrong, kept visible)
-- **Post-agreement-test repairs,** all recorded and flagged for review:
-  * C9: label clarifications, NPE;
-  * C10: draw index + MUTATION addr, NPE, with the reference repaired;
-  * C11: constant-only COMPUTED, BEE, with both Archaeon-side tracers repaired after seeing the owner's reading.
-  * Every repair was followed by a fresh independent agreement set that passed.
-- **Withdrawn clearance:** C8's A1/A2 canonicalization was withdrawn by operator directive.
-- **Incidents and route blocks:**
-  * an unauthorized NPE run 3 destroyed 10/11 files of the 1% sample; verifier v2 and Task tsk-c4317a3656d0 exist, and it is
-    unclaimable without a skullport worker (s12 defect);
-  * NPE production run 1 was invalidated for a bookkeeping defect.
-- **Rulings made after exposure, applying frozen text:** the flip floor (addendum 3), dep-vacuous (addendum 4), SF2 marks
-  (addendum 6). None changed a threshold.
-- **Untested by any agreement check:** the persisted ORIGIN attributes (both engines).
+  | quantity | dry run | production |
+  |---|---|---|
+  | Q8c transmission | 0.0003 [0.0002, 0.0004] | 0.00115 (non-overlapping) |
+  | Q8c all loci | 0.027 | 0.0058 |
+  | transmission class | 30,945 | 31,401 |
 
-## 7. Decision
-- E-003 is complete for its question.
-- v0 stands VALIDATED where decidable, with its plural field structure confirmed as necessary.
-- No ALTERED or BROKEN route fired.
-- The NPE 1% sample check remains open but cannot change either leg's status.
-- The independent review may return "the conclusion does not follow". That remains a first-class answer.
+- **Q4:**
+  * production: isolated-capable 0.810; host-assisted 0.817; incapable-alone-but-host-capable 0.007 of births;
+  * the dry run found the "other" class 0.81 host-assisted capable with 0/120 isolated. That implies about 0.11 of births,
+    about 15x the production figure;
+  * this is UNEXPLAINED. Until it is resolved, no "relational capability" claim is made.
+- **P2** (engine-native): 0.504 [0.456, 0.552] (n = 395), or 0.448 without the identifiability filter.
+  * Review 7's mechanism: 183/191 of the dry-run cases were frame-shifted copies, i.e. positional shift-blindness, not IBS
+    read as IBD.
+
+-----
+3. WHAT THE BEE DATA SHOW ABOUT v0 FIELDS (DESCRIPTIVE ONLY, not validation results)
+-----
+On r022153 these v0 fields are NON-REDUNDANT:
+- performer != copy-descent donor in 0.141 of births (Q1);
+- 0.169 of TRANSMISSION-class children carry writer material without isolated capability (Q4).
+
+Two withdrawn claims:
+- "existence without content dependence": content dependence on the PERFORMER is excluded from Q8c by construction, so it
+  was not measured;
+- "capability-with-conditions is needed": the Q4 discrepancy above.
+
+The reproduction predicates stay PLURAL, per the arc directive. Nothing here justifies collapsing them. Nothing here proves
+each is necessary.
+
+-----
+4. THREADS
+-----
+- **thr-c64dca3118a1 (replicator identity):** E-003 measures L1-L2 only; lineage questions are L3+. No update from E-003
+  beyond the non-redundancy of material and capability on one BEE run. The NPE painters are NOT cited as evidence.
+- **thr-5085da70a143 (cargo vs heredity):** OPEN; untested beyond one engine; E-003 does not reach L3-L5.
+- **Founding premise (native labels are not descent):** supported on ONE BEE run by P2, with the shift-blindness mechanism.
+  "Value match" was not tested as a separate endpoint.
+
+-----
+5. PROCESS RECORD (kept visible)
+-----
+- **Same-run exposure:** C3, C4.2, C4.4 and the NO_MATERIAL class-gate change were all made after r022153's data had been
+  seen (the dry run). "Archaeon inspected no Q" is true of PRODUCTION outputs only.
+- **Post-agreement-test repairs:**
+  * C9 (NPE labels): the FIRST fresh set after it FAILED on set M;
+  * C10 (NPE MUTATION; the reference repaired after seeing the owner); fresh set 2 then passed;
+  * C11 (BEE; both Archaeon-side tracers repaired after seeing the owner); fresh set 2 passed (thin).
+- **Post-exposure rulings:**
+  * addendum 3 revived the flip floor that v5 R1/R3 had dropped;
+  * addendum 4 (dep-vacuous);
+  * addendum 6 (marks only).
+- **Withdrawn:** the C8 A1/A2 canonical clearance.
+- **Incidents:** NPE run 1 invalidated (bookkeeping); an unauthorized NPE run 3 destroyed 10/11 of the 1% sample files. The
+  1% check is still open; tsk-c4317a3656d0 is unclaimable (no skullport worker). It cannot change either leg.
+- **Untested by any agreement check:** the persisted ORIGIN attributes (both engines); Q8c-whether (engine-measured).
+- **Not reported:** Q5, which has no null.
+
+-----
+6. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+- **ESTABLISHES** (one BEE run):
+  * byte-level causal ancestry can be traced reproducibly and cross-checked;
+  * singular-donor value descent loses almost nothing in the transmission class;
+  * the native resemblance label is not a descent label;
+  * performer and capability are non-redundant with donor.
+- **DOES NOT ESTABLISH:**
+  * that v0 is validated independently of post-exposure amendments;
+  * anything about NPE;
+  * necessity of v0's fields;
+  * heredity (L3-L5);
+  * generality beyond one run.
+
+-----
+7. DECISION / RECOMMENDATION (operator's call)
+-----
+- E-003 is complete for its question, with a conditional answer.
+- **To make the BEE verdict amendment-independent:** a NEW preregistered BEE run drawn fresh, under the v5-through-C11 text
+  frozen BEFORE any exposure.
+- **To make NPE informative:** a corpus of >= 30 transmission births, plus an identification test that does not require
+  store-before-execute.
+- **Neither is proposed here.** MWO-0002 authorizes no new campaign. They are recorded for a future MWO.
+- **Open, non-blocking:**
+  * the dry-vs-production drift (Q8c; Q4 host-assisted) should be explained before any later citation of those quantities;
+  * the NPE 1% sample check.
+
+-----
+8. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+1. Given C4.2/C4.4/C11, is "VALIDATED" the right headline at all, or should the headline be the robust Q8c finding alone?
+2. Should the "none" class per-class Q8c (0.242, lower bound > 5%) be read as a WEIGHTED ALTERED signal the pooled R3 hides?
+3. Is the dry-vs-production drift an instrument problem that should suspend the BEE Q4 and Q8c numbers entirely?
++==========================================================================================================================+
+| END. "Not worth continuing" and "the conclusion does not follow" remain first-class answers.                                |
++==========================================================================================================================+
