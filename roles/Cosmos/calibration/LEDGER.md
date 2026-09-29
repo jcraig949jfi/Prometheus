@@ -29,3 +29,9 @@ date | call made | what was true | corrected by | changed practice
   size >= 5. Found after running; the v1 verdicts are reported as declared, with the defect. Lesson: a null for
   "is X a re-expression of R" must exclude R-equivalent members, or its tail is R itself. Compute the gate's
   attainable range BEFORE running (PRE_RESULT_REVIEW class 1).
+
+2026-09-29 | T-I1 fragment test v2 (t_i1_fragments_v2.py, declared at 0b44853f6) |
+  the declared reachability guard FIRED (9/15 INDETERMINATE_GATE) instead of issuing false NOT_RUNG. The guard
+  worked. DEFECT found by it: under ties, a quantile-thresholded "marginal-matched" null is not rate-matched
+  (Q = 1 on ~92% of rows collapses Q-expressions onto the Q < 1 split). Repaired in v3 (realized-rate filter).
+  Lesson: after matching marginals, CHECK the realized marginal; tied variables break quantile matching.
