@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0002",
   "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
   "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
-  "updated_at_utc": "2026-09-29T09:48:39Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-O (T-SWAP-AUDIT) complete and deposited; lease lse-9ef8ebed677c released. Nothing running. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
+  "updated_at_utc": "2026-09-29T09:49:11Z",
+  "state": "WORKING",
+  "state_reason": "T-INS-8 running as worker W-P (E-ANANKE-W-P, CPU in-session, Fabric lease): name the N (neither) interaction in 369f5a5b / 4781b0a1. No large PTE campaign (MWO-0001 s10 / MWO-0002 s6).",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,13 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-P",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-8",
+      "status": "RUNNING",
+      "dir": "roles/Ananke/research/workers/W-P/"
+    },
+    {
       "id": "E-ANANKE-W-O",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-AUDIT",
@@ -120,7 +127,9 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-P (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "PTE compute stays in-session under Fabric leases (no torch-capable Fabric worker; MIGRATION_REPORT C6 blocker)",
