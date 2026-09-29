@@ -101,3 +101,15 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   review), T-INS-8 (split the N fraction of 369f5a5b/4781b0a1 by sub-array).
 - T-INS-7 DONE: lens_swap.py promoted from W-M lens_ins6 (principal review;
   2 cosmetic fixes), tests test_lens_swap.py; lens + lens_swap tests 31 passed.
+- T-SWAP-LOWACC ANSWERED (W-N, E-ANANKE-W-N, workers/W-N/REPORT.md; 23 tests,
+  principal re-run 23 passed). The recorded CHANCE verdicts on low-accuracy
+  champions were a SAMPLE-SIZE effect, not a rule gap: at M=512 with all
+  scored trials the absolute swap_verdict already gives FLIP on all 5 W-L
+  n-back champions (S carrier, z ~ -1) and on 11 recorded-CHANCE C1 arms.
+  The relative rule (swap_rel.py) adds certified NO_EFFECT and a CHANCE_REL /
+  INDETERMINATE split; its worst-case eligibility gate is too strict (p_min
+  .91 at P32 K3), so it is NOT promoted into lens. Successors:
+  T-SWAP-AUDIT (re-run every recorded CHANCE verdict from 64-world designs at
+  512 worlds before reading it as mechanism; research-ready, CPU),
+  T-SWAP-REL2 (per-verdict attainability instead of one gate; always pair
+  CHANCE_REL with the SINGLE census, lens_swap).
