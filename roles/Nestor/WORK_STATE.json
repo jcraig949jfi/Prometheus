@@ -3,10 +3,10 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0001",
  "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
- "updated_at_utc": "2026-09-29T03:32:38Z",
+ "updated_at_utc": "2026-09-29T03:43:06Z",
  "state": "WORKING",
- "branch": "nestor/s4v2-2026-09-29 (task branch; merged to main)",
- "head_sha": "e7af96c47b2c03b688da5e65f1f07d155e6649d9",
+ "branch": "task branches: nestor/s4v21-2026-09-29, nestor/d2v3-2026-09-29 (both merged to main)",
+ "head_sha": "742243972e6e5b334d0f4787470c39897140cb02",
  "threads": [
   "ancestry-replay (Archaeon #812)",
   "D2 custody (C3 successor seal)"
@@ -18,22 +18,22 @@
   "ancestry production run 2 (GO_FINAL v2)"
  ],
  "fabric_tasks": [
-  "tsk-6989ee1b86bd",
-  "tsk-b43d70a88ce7",
-  "tsk-a07e46edb489",
-  "tsk-65f1de3d76f7",
-  "tsk-c62639a26351",
-  "tsk-db7cff995c19"
+  "s4 v2.1 conformance: tsk-5b65fada2d69, tsk-6e51a53bfbf6 (clean prompt; tsk-b0b190949c7d / tsk-8929167a8439 cancelled: backtick-damaged prompt)",
+  "D2 v3 re-audit: tsk-d0454ab252b9, tsk-ddfc5156be0d; selftests tsk-9913738c30c2, tsk-1674e7e0fdc8"
  ],
- "running": [],
+ "running": [
+  "s4 v2.1 conformance review (2 replicas)",
+  "D2 v3 re-audit (2 replicas + selftests)",
+  "key-holder all-history firewall scan (v3 in-process)"
+ ],
  "blocked_on": [
-  "Archaeon rulings: births-agreement on 34 committed pre-states, flip-coverage floor failure, class key (#924)",
-  "1% sample verification: Archaeon's Fabric Task pinned by host affinity to M1 (MWO s4); s12 defect if Fabric cannot reach the files",
-  "D2 v3 completion: operator root-of-trust decision (#925)"
+  "s4 tallies usable only if both conformance replicas return CONFORMS (addendum 3)",
+  "1% sample verification: Archaeon's host-affinity Fabric Task (MWO s4)",
+  "D2: S1 root of trust (operator #925); v3 re-audit adjudication (Odysseus)"
  ],
  "next_actions": [
-  "D2 v3 repairs independent of the root-of-trust choice; Fabric re-audit with --cap fabric.runtime==0.2 (#922)",
-  "respond to Archaeon rulings (#924) and the host-affinity sample Task"
+  "adjudicate/relay review results when terminal",
+  "separate child account for the D2 runner = host capability request (MWO s6) when designation approaches"
  ],
  "operator_decisions_required": [
   "D2 root of trust for protocol records (#925): (a) signed commits + pinned keys / (b) operator-confirmed hashes / (c) accept residual",
@@ -48,6 +48,9 @@
  "closed": [
   "#788 queue item closed (executed: 7c018d92b D1 merge, 95b31a30d D2 seal)",
   "s4 v2 conformance repair run + results (fc99923ec; unused pending review)",
-  "CVT-R reconciliation record (334b6ad55)"
+  "CVT-R reconciliation record (334b6ad55)",
+  "births agreement PASS (Archaeon addendum 3)",
+  "s4 v2.1 (ruled key K_R1) run; results unused pending review",
+  "D2 v3 repairs on main 742243972 (DEF-HARM-D2-001 fixed)"
  ]
 }
