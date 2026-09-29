@@ -418,3 +418,16 @@ Design consequence (PKG-F s9e, to be precommitted before building):
   records close in time on each side. Accept a regime only if straddling disagreement exceeds the LOCAL noise on both
   sides.
 - An N5 world is then the required negative control for every PKG-F regime detector, alongside the stationary twins.
+
+## v8: variance-robust detector (pkgf_cp4.py). Detection only; FRESH seeds 9_800_070-073, cp and tt
+
+- Statistic: straddling-pair disagreement minus the mean of the left and right local disagreement, within a window of
+  +-20% of the stream.
+- Same permutation null, threshold and recursion as v5.
+
+### Precommitment (written BEFORE running pkgf_cp4.py)
+
+- V1: N5 (noise growth, no change): false detections <= 1/8.
+- V2: F3 L2: detection with cp_frac in [.60, .75] in >= 7/8.
+- V3: F2 L2 twins: false detections <= 1/8.
+- V4: partial switch at rho = .5: detection with cp_frac in [.60, .75] in >= 6/8.
