@@ -1,0 +1,152 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Ensorain",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:05:45Z",
+  "branch": "ensorain/base-role-adopt-2026-09-23",
+  "head_sha": "36b8d075675d8c5cebe580ee3c5bfe2e4ae9c41e",
+  "head_sha_note": "pushed branch head BEFORE the commit that adds this report (a file cannot contain its own commit hash)",
+  "bootstrap_independence": {
+    "answer": "CONDITIONAL",
+    "conditions": [
+      "The seat loop runs inside a live Claude Code session, as a self-paced /loop started by the operator's per-seat MWO-0001 boot message. If the session ends, someone must start a new session pointed at roles/Ensorain; the seat does not wake itself.",
+      "Once a session is started at roles/Ensorain, no bespoke content is needed: origin/main:ops/work_orders/CURRENT.md, roles/Ensorain/WORK_STATE.json and roles/Ensorain/DEFECTS.md identify the current work and gates. There is no roles/Ensorain/RESUME.md that encodes the MWO loop (see legacy_conventions_still_used)."
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "self-paced loop tick 2026-09-29T07:01:05Z: git fetch origin; origin/main:ops/work_orders/CURRENT.md header changed from MWO-0001 to MWO-0002 (origin/main 778ccbc76); the same tick's comms sync delivered broadcast #961",
+      "roles/Ensorain/WORK_STATE.json@da790d43a (mwo_id MWO-0001, loop state HOLD)"
+    ],
+    "note": "MWO-0002 was detected by the loop's own fetch/compare. No per-seat prompt named MWO-0002."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Ensorain/WORK_STATE.json@366d536d7 (mwo_commit 7e4c09f2c, mwo_sha256 007054ad...88f3)"
+      ],
+      "note": "Hash verified from the committed blob (git show), not the CRLF working file; see the hashing note in roles/Ensorain/DEFECTS.md DEF-ENS-001."
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "loop tick 2026-09-29T07:01:05Z (own fetch; broadcast #961 in the same sync)"
+      ],
+      "note": "The loop itself was started by a per-seat operator prompt at MWO-0001 boot. MWO-0002 needed no prompt."
+    },
+    "C3_work_state_useful": {
+      "status": "YES",
+      "evidence": [
+        "roles/Ensorain/WORK_STATE.json on main @da790d43a and on the branch"
+      ],
+      "note": "All v1 core fields present. The main copy carries the branch head; the branch copy's head_sha lags by one commit by construction."
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "MWO-0002 s6 (LM01 FROZEN AND NOT LAUNCHED at ee8cbe0c8)",
+        "MWO-0001 s10 ENSORAIN + ARC3 directive roles/Ensorain/prompts/2026-09-28_arc3_directive/",
+        "ensorain/arc3/HIERARCHY.md",
+        "ensorain/arc3/suff/CSSR_T25.md@36b8d0756"
+      ],
+      "note": "E-ENS-LM01: HOLD at a hard gate. Current routine work: ARC3 T25 dev experiments (no campaign, no lease)."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "python -m comms sync Ensorain at every loop tick: 2026-09-29T03:21:10Z, 03:57:19Z, 04:34:05Z, 05:10:13Z, 05:47:06Z, 06:22:05Z, 07:01:05Z",
+        "comms #961 (the only message received this cycle)"
+      ],
+      "note": "No Ensorain comms posts since MWO-0001 adoption: no idle broadcasts, no ACKs. Git is the durable record."
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "PARTIAL",
+      "evidence": [
+        "tsk-ba120344aa29 / att-32409eb521dc (independent S1 replication; result in ensorain/arc3/suff/replication/README.md@3cb356514)"
+      ],
+      "note": "One portable replica task went to Fabric. It was mis-specified: the claude executor cannot run python (fabric/README.md D3), so the replica was executed on M2. The ARC3 dev runs (seconds to 5 CPU-min, iterated inside debugging) ran locally. The next sweep is a script-executor Task candidate."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "PARTIAL",
+      "evidence": [
+        "ensorain/arc3/HIERARCHY.md",
+        "roles/Ensorain/WORK_STATE.json (threads / campaigns / experiments / fabric_tasks kept distinct)"
+      ],
+      "note": "Levels are kept distinct, but the Thread and Campaign ids are seat-local aliases and are not registered under ops/threads or ops/campaigns (see identifier_check)."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [
+        "roles/Ensorain/WORK_STATE.json next_actions (the LM01 lease will be a Fabric lease row at launch: python -m fabric lease acquire <m2>:cpu8)"
+      ],
+      "note": "No substantial resource claim this cycle. The legacy .leases file convention is retired for LM01."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "roles/Ensorain/WORK_STATE.json dependencies (b SATISFIED from evidence, not by sign-off)",
+        "roles/Ensorain/DEFECTS.md DEF-ENS-001"
+      ],
+      "note": "The only stop is the LM01 launch gate (MWO-0001 s7 clause 3 + frozen launch_gate.py). Bellerophon's campaign end was established from evidence, not waited on as a sign-off."
+    }
+  },
+  "hard_gates_current": [
+    {
+      "gate": "MWO-0001 s7 clause 3 (campaign with an explicit operator launch gate); frozen contract ensorain/PREREG_WTP_LM01.md v0.3.2 + ensorain/lm01/launch_gate.py at freeze ee8cbe0c8",
+      "item": "E-ENS-LM01 (WTP-LM01) launch: needs an operator-approved MWO containing 'LAUNCH WTP-LM01 using frozen prereg <prefix of ee8cbe0c8>'",
+      "evidence": [
+        "MWO-0002 s6",
+        "roles/Ensorain/WORK_STATE.json@da790d43a"
+      ]
+    }
+  ],
+  "migration_blockers": [
+    {
+      "what": "The frozen LM01 launch gate refuses any ops/work_orders/archive MWO file as its carrier: it requires a MANIFEST.md in the directive's directory. So MWO-0001 s7's 'MWO satisfies direct-chat' meets a frozen implementation expecting another carrier. It fails closed. Resolution options A (verbatim transcription + manifest, no freeze change) / B (gate repair, v0.3.3 re-freeze) await the operator.",
+      "kind": "custody",
+      "evidence": [
+        "roles/Ensorain/DEFECTS.md DEF-ENS-001",
+        "MWO-0002 s7"
+      ]
+    },
+    {
+      "what": "The Fabric claude executor has no shell/python by design, so code-execution replicas need a separate script-executor Task over a committed file. Not a Fabric defect; a task-design constraint seats must know.",
+      "kind": "fabric",
+      "evidence": [
+        "tsk-ba120344aa29",
+        "fabric/README.md s4 and D3"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "Seat continuity depends on a live Claude Code session running a /loop started by a per-seat operator prompt. There is no roles/Ensorain/RESUME.md encoding the MWO seat loop.",
+      "why": "session-bound agent runtime",
+      "retire_plan": "seat"
+    },
+    {
+      "convention": "Seat-local directive transcripts under roles/Ensorain/prompts/<date>_*/ with MANIFEST.md, used as the LM01 launch-gate carrier",
+      "why": "frozen LM01 launch_gate.py (DEF-ENS-001)",
+      "retire_plan": "needs_operator"
+    },
+    {
+      "convention": "ops/README.md 2026-09-27 pilot banner",
+      "why": "not encountered: this seat did not consult ops/README.md; no confusion recorded",
+      "retire_plan": "none"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [
+      "thr-ens-lossless-memorizer",
+      "thr-ens-locus-of-compression",
+      "thr-ens-causal-selectivity",
+      "thr-ens-sufficiency-ladder"
+    ],
+    "campaign_ids_unresolved": [
+      "C-ENS-ARC3"
+    ],
+    "note": "None resolves under ops/threads/ or ops/campaigns/ on origin/main 778ccbc76; ops/tools/thread_check.py ops/threads -> threads=17 migrated=17 failures=0, none Ensorain's. Not repaired, per MWO-0002 s4."
+  }
+}
