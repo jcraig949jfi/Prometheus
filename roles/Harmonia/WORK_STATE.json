@@ -3,16 +3,16 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-29T12:25:00Z",
+  "updated_at_utc": "2026-09-29T14:45:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
-  "head_sha": "ad4f5b240b1fdd2867480026b03dc8d9cd1c738e",
+  "head_sha": "fa102d9c0e9877c15e7f6fa5cb0363e2ba8f607f",
   "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
   "threads": [
     {
       "id": "D2-CUSTODY",
       "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-      "state": "BLOCKED_FAIL_CLOSED (DEF-HARM-D2-001 CLOSED by 742243972, verified by execution)",
+      "state": "AUDIT_PASS_RECORDED (FIREWALL_AUDIT_1 @67e05df12, verified; awaiting anchor -> commitment -> designation -> run)",
       "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
     },
     {
@@ -32,11 +32,12 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "concrete dependency: MWO-0004 D2-2 FINAL bounded repair (Nestor: anchor-built governing set, V12-1..4) + FINAL re-audit (Odysseus); bounded re-audit v12 FAIL 47df49352"
+      "on": "concrete dependency: custodian anchors FIREWALL_AUDIT_1; Cosmos commitment; designation (C-1/C-2 first); run + result seal + reveal; then evidence.py bundle"
     }
   ],
   "next_actions": [
-    "D2: record the D2-2 re-audit verdict; if PASS, D2 continues under the existing protocol and Harmonia adjudicates from the evidence.py bundle per Addenda E/F/H/J/L",
+    "D2: when RESULT_SEAL + reveal exist, adjudicate from the evidence.py bundle under Addenda E/F/H/J/L; check anchored PASS and C-1/C-2 in the bundle",
+    "record any further D2 protocol records as they land",
     "HOLD otherwise"
   ],
   "overtaken": [

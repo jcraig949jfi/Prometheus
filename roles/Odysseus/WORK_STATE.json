@@ -3,7 +3,7 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-29T13:58:11Z",
+ "updated_at_utc": "2026-09-29T14:32:01Z",
  "state": "ACTIVE",
  "branch": "odysseus/fabric-v0-2026-09-28",
  "head_sha": "e749fad15d3b821543f1695e3ea843c1bfae7d03",
@@ -39,19 +39,18 @@
   },
   {
    "id": null,
-   "alias": "S3 CLOSED: gate MET (0.33 coordination/exec vs 3.5; quality 10.0 vs 9.1 at the rubric ceiling; 0 leaks; 0 rescues); same-host test NOT RUN (roles/Odysseus/fabric_pilot/s3/RESULT.md)"
+   "alias": "S3 CLOSED: gate MET (0.67 coordination/exec (corrected, Artemis #1019) vs 3.5; quality 10.0 vs 9.1 at the rubric ceiling; 0 leaks; 0 rescues); same-host test NOT RUN (roles/Odysseus/fabric_pilot/s3/RESULT.md)"
   }
  ],
  "fabric_tasks": [
-  "D2 v12 @b0763ebaa (MWO-0004 D2-2 bounded re-audit): FAIL on V12-1 (anchored records skipped rather than refused); ONE final repair + ONE final re-audit remain (d2_audit/v12/VERDICT.md)",
-  "FP-001 Fabric recovery probe tsk-8336e01d66d9: PASS"
+  "D2 v13 FINAL re-audit @b17320e64: PASS; FIREWALL_AUDIT_1.json committed alone at 67e05df12 (LF sha256 4d267476...); awaiting Nestor's anchoring (d2_audit/v13/VERDICT.md)"
  ],
  "running": [
   "node workers on ubu001 from ~/fabric-runtime @5266ccebe (fabric-v0.2 + DEF-ODY-015 bounded cache): worker.ubu001.a/.b (claude, script), worker.ubu001.sci (script)"
  ],
  "blocked_on": [
   "lease cutover merge acknowledgements (#901): Ananke merged (#934); Nestor and Archaeon pending before legacy detection is removed",
-  "D2: Nestor's ONE final bounded repair (V12-1 anchor-based audit set; anchor KEY_RELEASED/REVEALED; expect-commit/sha; rollback), then ONE final re-audit (MWO-0004 D2-2). PASS: commit FIREWALL_AUDIT_1. FAIL: D2 HOLD. C3 blocked on D2"
+  "D2: the firewall audit PASSED (67e05df12). Next are Nestor's anchoring and the C-1/C-2 conditions before the first designation (custodian/Cosmos steps, not Odysseus's). C3 unblocked at the AUDIT gate"
  ],
  "next_actions": [
   "adjudicate the FINAL D2 re-audit when it lands (MWO-0004 D2-2): PASS: commit FIREWALL_AUDIT_1.json in one commit on main and post the commit to Nestor, who anchors it. FAIL: record the defect, D2 HOLD, no more rounds",
@@ -59,15 +58,15 @@
  ],
  "operator_decisions_required": [],
  "latest_reports": [
+  "roles/Odysseus/fabric_pilot/d2_audit/v13/VERDICT.md",
+  "prometheus/cosmos/c3_holdout_D2/protocol/FIREWALL_AUDIT_1.json@67e05df12",
   "roles/Odysseus/fabric_pilot/s3/RESULT.md",
-  "roles/Odysseus/fabric_pilot/d2_audit/v12/VERDICT.md",
   "roles/Odysseus/probes/FP-001_RESULT.json",
   "roles/Odysseus/fabric_pilot/DEFECTS.md",
-  "roles/Odysseus/fabric_pilot/s2/RESULT.md",
-  "fabric/promexec/STATUS_EXPERIMENTAL.md"
+  "roles/Odysseus/fabric_pilot/s2/RESULT.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 1001,
+ "comms_cursor": 1019,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
  "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed; promexec NOT ENABLED is standing policy (MWO-0001 s6), not a pending decision"
 }
