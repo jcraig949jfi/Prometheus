@@ -371,3 +371,23 @@ Reading (answers reviewer Q2):
 - F2: MIX3_FS <= min(split, CSSR_EM, RAND_EM) + .003 in >= 22/24 family worlds.
 - F3: MIX3_FS < MIX2_FS (same code) on the family mean.
 - F4 (safety): on W2_3 (eval seeds 1..16), MIX3_FS mean < .006.
+
+### Result (precommit commit 82b43a65f; output results/mix3_eval.json; 334 s on M2)
+
+| | split | CSSR_EM | RAND_EM | MIX2_FS | MIX3_FS |
+|---|---|---|---|---|---|
+| family (24) | .0399 | .0219 | .0403 | .0171 | .0133 |
+| W2_3 (16) | .0027 | .0160 | .0166 | .0030 | .0027 |
+
+- F1 SURVIVES (.0133 < .0171).
+- F2 SURVIVES: 0/24 worlds exceed min(expert) + .003.
+- F3 SURVIVES (.0133 < .0171).
+- F4 SURVIVES (.0027 < .006).
+- Reproducibility: all three single-expert means reproduce the earlier independent runs exactly (heldout_eval,
+  q2_ablation, cssr_em_eval). The pipeline is deterministic.
+- The MIX3_FS family mean (.0133) is below the per-world BEST single expert (.0138). Within-stream switching
+  contributes beyond selecting per world. Reviewer Q4 (switching vs averaging) is still not separated.
+
+Reading: the three initialization/structure hypotheses fail on different worlds, and a prequential arbiter recovers
+the best of each. Relative to the T = 4000 parametric floor (~.003), the family gap drops from 5-7x (MIX, .0231) to
+~4x (.0133). The remainder is data-limited (D2).
