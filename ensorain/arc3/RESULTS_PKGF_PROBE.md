@@ -143,3 +143,26 @@ LM01 ERRATA E-3.
 - Q1: F2 stationary twins (8 fresh): no change detected in >= 6/8. If this fails, retention recency is NOT the (only)
   mechanism.
 - Q2: F3 (8 fresh): a change detected in >= 7/8 AND mean dAC(SD_cp2 vs S) >= -0.10.
+
+### v4 result (precommit commit f11553f85; results/pkgf_cp2.json; 16 s)
+
+- **Q1 SURVIVES:** stationary twins show no change in 7/8 (v3: 2/8). The retention-recency hypothesis for v3's false
+  detections is supported.
+- **Q2 REFUTED:** a change is detected in only 4/8 F3 worlds (cp 020, 021, 023; tt 023), and the mean
+  dAC(SD_cp2) = -0.61. In undetected worlds the full harm returns (-0.74 to -1.77).
+  - Shape: the order-agnostic model averages both regimes, so the regime structure largely disappears from its
+    residual mean and variance.
+
+Reading (revises v3):
+- v3's success on F3 and its false detections on stationary twins had ONE cause: the substrate's retention recency.
+  v3 "discovered" recency in every stream. That happened to be right in switch worlds and nearly free in stationary
+  ones.
+- So what neutralized obsolete history in v2 and v3 was a RECENCY PRIOR, not regime DISCOVERY.
+- A residual-segmentation detector without that prior (v4) has little power on these F3 worlds at L2.
+- For PKG-F:
+  - The claim "the selection signal can be discovered" is NOT supported by v3 + v4.
+  - The supported claim is narrower: a recency-weighted selection signal is sufficient to neutralize obsolete stored
+    history, and costs little when there is no change.
+  - A powered regime detector remains unbuilt. Candidates: a detector on per-cell residual SIGN agreement across
+    time; or BOCPD on the prediction of a model refit per window.
+  - Do not describe v3 as "discovered recency" anywhere downstream.
