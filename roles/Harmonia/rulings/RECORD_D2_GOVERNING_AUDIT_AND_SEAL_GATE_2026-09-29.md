@@ -95,3 +95,45 @@ D2 = **BLOCKED (fail-closed)** on two independent grounds:
 2. DEF-HARM-D2-001: the SEAL gate is unpassable on the real history (a code repair plus a re-audit are needed).
 
 Operator decision possibly required: branch protection on main (Odysseus's v3 item 1 names it as an operator setting).
+
+## Addendum A (2026-09-29, same instance): DEF-HARM-D2-001 CLOSED, verified by execution
+
+- Nestor's D2 v3 (742243972; comms #935) redefines "added once" as one blob across the full history (each merge diffed
+  against each parent), exactly one non-merge add, and no non-merge modification, deletion or rename.
+- **Executed** on origin/main 7c12fb175 (clean worktree, fast-forwarded):
+  `python -m prometheus.cosmos.c3_holdout_D2.protocol` -> `SEAL: PASS`, `AUDIT: AuditMissing (no allow-listed
+  FIREWALL_AUDIT_<n>.json)`. The ciphertext still hashes to f75ba333; its only non-merge commit is still 95b31a30d.
+- **F4 kept.** Harmonia's own probes of `protocol._added_once` on throwaway repositories outside every worktree (no
+  broker mode, no secrets):
+  - an integration merge carrying the sealed blob unchanged: **PASS**;
+  - delete, re-add with forged content, then merge: **RecordRewritten**;
+  - a merge whose conflict resolution replaces the record's content: **RecordRewritten** ("3 different contents").
+- Not run: `selftest_protocol` (67 checks + 4 defect controls), which is broker-only (`COSMOS_BROKER=1`). Harmonia does
+  not assume that role on M2. Nestor reports it PASS.
+- **D2 remains BLOCKED (fail-closed):**
+  1. no allow-listed governing audit (the v3 Fabric re-audit is running; Odysseus adjudicates);
+  2. S1, the root of trust for record authentication, is an open operator decision (#925).
+  Harmonia records the next governing verdict when it lands, and releases nothing on a comms message alone.
+
+## Addendum B (2026-09-29): governing v3 audit recorded, FAIL
+
+| Item | Value |
+|---|---|
+| Verdict file | `roles/Odysseus/fabric_pilot/d2_audit/v3/VERDICT.md`, blob sha256 `e254a12156f23b229c24f7ff745f66f052837433ef388a10c0392ce70e071fb2` |
+| Verdict commit | 2d7517600a314af7f177b5bb97408ff43c77a29a (2026-09-29 04:03Z) |
+| Audited code | 742243972 (Nestor #935; the package is unchanged on origin/main since, last touched by 05211e20b) |
+| **Governing verdict** | **FAIL.** The replicas agree: B1 import control around `entry.py` is broken in two places. The auditor confirmed an entry record-name deadlock (MUST-FIX). S1 is still OPEN (operator #925). |
+| Protocol record | None. `prometheus/cosmos/c3_holdout_D2/protocol/` does not exist on origin/main. |
+
+- **Harmonia check (by reading code at origin/main):**
+  - `entry.py` `FIXED = {PREDICTION_COMMITMENT, RUNNER_DESIGNATION, RESULT_SEAL}`;
+  - `protocol.py` `FIXED_RECORDS` also contains `KEY_RELEASED.json` and `REVEALED.json`.
+  - The deadlock claim is **confirmed as stated.**
+- **Not executed by anyone:** the verdict says the B1 import-path findings were reasoned from documented interpreter
+  behaviour (workers cannot execute code, and the auditor did not run them). This is recorded so it is not later read as
+  a measured result. A v4 re-audit should demonstrate the shadowing exploit and its refusal by execution.
+- The DEF-HARM-D2-001 repair **holds** (both replicas; Addendum A).
+- **D2 remains BLOCKED, fail-closed:**
+  1. v4 is needed (import control; record names with an end-to-end self-test through `entry.py`);
+  2. S1 (#925).
+  Nothing released, revealed or built.

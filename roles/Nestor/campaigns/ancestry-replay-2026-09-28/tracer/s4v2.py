@@ -1,4 +1,26 @@
-"""s4 v2.1 (adds the RULED class key K_R1, Archaeon GO_FINAL addendum 3 ruling 3; otherwise identical to v2).
+"""s4 v2.2: CONFORMANCE REPAIR of v2.1 after its 2-replica review (review_s4v21/, Fabric tsk-5b65fada2d69 /
+tsk-6e51a53bfbf6; both DOES NOT CONFORM, same blocking finding). Post-exposure, declared as such: the v2.1 tallies were
+seen. Changes no threshold, floor, class key, sample, K or bootstrap seed; the tallies stay UNUSED until reviewed.
+  V1 [B1]    gate = POINT ESTIMATE vs floor (PASS / FAIL / NO_DATA); MARGINAL is a separate mark = the 95% CI
+             straddles the floor (C4.4, addendum 3 ruling 2). v2.1 let MARGINAL replace the decision.
+  V2 [S1]    completeness universe includes the persisted flags fz/fc per side, flipped exactly as the frozen
+             interventions.per_byte_arms does (interventions.py:305, :323-326).
+  V3 [S2/S3] completeness unit = per unnamed BYTE as R5 / s4_run count it: a byte leaks if any of its K draws leaks; a
+             byte is APPLICABLE if at least one of its K draws is applicable (path, acceptance and the write preserved).
+             leak share = leaking bytes / applicable bytes. Per-draw figures are reported alongside, not gated.
+  V4 [S2/N1] the completeness draws use a NEW deterministic stream (S4V2CA|SEED|run|child); the birth SUBSET is s4_run's
+             (per_byte_sampled), the draws are not s4_run's draws. v2.1's "identical seeds" claim was false; retracted.
+  V5 [S4/N5] rule-identified loci with NO usable dependence draws (q8c None) are counted and reported, with the coverage
+             excluding them as a REPORTED sensitivity only (the gate stays on the literal R1 reading); ruling is Archaeon's.
+  V6 [S5/N2] every statistic reports its cluster count (simulations with a nonzero denominator) and the number of
+             bootstrap resamples dropped for a zero denominator; a 1-cluster statistic is marked SINGLE_CLUSTER.
+  V7 [N6/N2] input guard: PRODUCTION_INDEX.json is checked against END_RECEIPT's sha256 and every births file against
+             its index births_sha256 (LF-normalised); any mismatch -> REFUSED. Written sets in S4_RESULTS must equal the
+             births files' written sets.
+Not changed (reviewers' notes kept as notes): K_R1 tie ordering (ruling text: a tie in either majority -> TIED);
+NO_MATERIAL counts kind "E" only (only E and C occur); '__ep' births files (none exist).
+
+s4 v2.1 (adds the RULED class key K_R1, Archaeon GO_FINAL addendum 3 ruling 3; otherwise identical to v2).
 
 s4 v2: CONFORMANCE REPAIR of the owner's s4 instrument tests (post-exposure; declared as such).
 
@@ -42,6 +64,11 @@ K_BYTE = 4                       # unchanged
 BOOT_B, BOOT_SEED = 2000, 20260929
 FLOORS = {"flip_coverage": (0.50, "ge"), "flip_failed_share": (0.01, "le"), "completeness_leak_share": (0.05, "le")}
 S4_RESULTS_SHA = "e232fd04cb4ae5a0b9044f4c92c140ada41019503c488f5ab08492227976f137"
+INDEX_SHA = "f478ce0d88c3a575baf3e5aaca07896866fb55331f6e85e445d9b28a87481f10"      # END_RECEIPT.json
+
+
+def lf_sha(path):
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def h(s):
@@ -91,8 +118,9 @@ def completeness_applicability(args):
     universe = [("T", s, i) for s in (0, 1) for i in range(len(pre.g[s]))]
     for s in (0, 1):
         if pre.regs[s] is not None:
-            universe += [("R", s, r) for r in range(8)]
-    out = {"run": rec["run"], "child": rec["child"], "draws": 0, "applicable": 0, "leaks": 0}
+            universe += [("R", s, r) for r in range(8)] + [("R", s, "fz"), ("R", s, "fc")]      # V2
+    out = {"run": rec["run"], "child": rec["child"], "draws": 0, "applicable": 0, "leaks": 0,
+           "bytes": 0, "bytes_applicable": 0, "bytes_leaking": 0}
     for j in range(pre.n):
         if not base.written(j):
             continue
@@ -101,17 +129,28 @@ def completeness_applicability(args):
         for u in universe:
             if u in named:
                 continue
+            b_app = b_leak = False
             for _k in range(K_BYTE):
                 c = pre.copy()
                 if u[0] == "T":
                     c.g[u[1]][u[2]] = rng.randrange(256)
+                elif u[2] == "fz":                                   # as interventions.per_byte_arms
+                    c.flags[u[1]] = (1 - c.flags[u[1]][0], c.flags[u[1]][1])
+                elif u[2] == "fc":
+                    c.flags[u[1]] = (c.flags[u[1]][0], 1 - c.flags[u[1]][1])
                 else:
                     c.regs[u[1]][u[2]] = rng.randrange(256)
                 r = I.Run(c)
                 out["draws"] += 1
                 if r.path == base.path and r.accepted and r.written(j):
                     out["applicable"] += 1
-                    out["leaks"] += r.victim[j] != base.victim[j]
+                    lk = r.victim[j] != base.victim[j]
+                    out["leaks"] += lk
+                    b_app = True
+                    b_leak |= lk
+            out["bytes"] += 1                                         # V3: the R5 unit
+            out["bytes_applicable"] += b_app
+            out["bytes_leaking"] += b_leak
     return out
 
 
@@ -125,28 +164,40 @@ def boot_ci(per_sim, stat):
         if v is not None:
             vals.append(v)
     if not vals:
-        return None
+        return None, BOOT_B
     vals.sort()
-    return [round(vals[int(0.025 * len(vals))], 4), round(vals[int(0.975 * len(vals)) - 1], 4)]
+    return [round(vals[int(0.025 * len(vals))], 4), round(vals[int(0.975 * len(vals)) - 1], 4)], BOOT_B - len(vals)
 
 
-def verdict(ci, floor):
-    if ci is None:
+def gate(point, floor):
+    """V1: the gate is the POINT ESTIMATE against the floor."""
+    if point is None:
         return "NO_DATA"
     thr, kind = floor
+    return ("PASS" if point >= thr else "FAIL") if kind == "ge" else ("PASS" if point <= thr else "FAIL")
+
+
+def marginal(ci, floor):
+    """V1: the MARGINAL mark = the 95% CI straddles the floor (both sides of it). A mark, never the decision."""
+    if ci is None:
+        return None
+    thr, kind = floor
     lo, hi = ci
-    if kind == "ge":
-        return "PASS" if lo >= thr else ("FAIL" if hi < thr else "MARGINAL")
-    return "PASS" if hi <= thr else ("FAIL" if lo > thr else "MARGINAL")
+    return (lo < thr <= hi) if kind == "ge" else (lo <= thr < hi)
 
 
 def main():
     raw = (EXPORTS / "S4_RESULTS.jsonl").read_bytes().replace(b"\r\n", b"\n")      # checkout may convert to CRLF
     if hashlib.sha256(raw).hexdigest() != S4_RESULTS_SHA:
         sys.exit("REFUSED: S4_RESULTS.jsonl is not the committed run-2 file")
+    if lf_sha(EXPORTS / "PRODUCTION_INDEX.json") != INDEX_SHA:
+        sys.exit("REFUSED: PRODUCTION_INDEX.json is not END_RECEIPT's (V7)")
     idx = json.loads((EXPORTS / "PRODUCTION_INDEX.json").read_text(encoding="utf-8"))
     births = {}
     for p in sorted(EXPORTS.glob("*.births.jsonl")):
+        run = p.name[:-len(".births.jsonl")]
+        if run not in idx or lf_sha(p) != idx[run]["births_sha256"]:
+            sys.exit("REFUSED: %s does not match its PRODUCTION_INDEX births_sha256 (V7)" % p.name)
         for line in open(p, encoding="utf-8"):
             b = json.loads(line)
             births[(b["run"], b["child"])] = b
@@ -156,6 +207,8 @@ def main():
             sys.exit("REFUSED: %s missing from PRODUCTION_INDEX (R-g)" % r["run"])
         b = births[(r["run"], r["child"])]
         sb = {st["j"]: st.get("store_side") for st in b["loci"] if st.get("written")}
+        if set(sb) != {l["j"] for l in r["loci"] if l["written"]}:
+            sys.exit("REFUSED: written sets differ between S4_RESULTS and births for %s|%s (V7)" % (r["run"], r["child"]))
         for l in r["loci"]:
             l["store_by_ent"] = sb.get(l["j"])
         r["donor"] = b["donor_side"]
@@ -168,7 +221,8 @@ def main():
         for c in comp:
             f.write(json.dumps(c, sort_keys=True) + "\n")
     comp_by = {(c["run"], c["child"]): c for c in comp}
-    summary = {"repairs": "R-a..R-g (docstring)", "s4_results_sha256": S4_RESULTS_SHA, "boot": [BOOT_B, BOOT_SEED],
+    summary = {"version": "s4v2.2", "repairs": "R-a..R-g, V1..V7 (docstring)", "index_sha256": INDEX_SHA,
+               "completeness_draws": "NEW deterministic stream S4V2CA|SEED|run|child on s4_run's per_byte_sampled subset (V4)", "s4_results_sha256": S4_RESULTS_SHA, "boot": [BOOT_B, BOOT_SEED],
                "n_distinct_births": len(distinct), "n_duplicate_births": len(rows) - len(distinct), "keys": {}}
     for key in ("K_R1", "K_DONOR", "K_EXEC"):          # K_R1 = the RULED key (addendum 3); the others reported
         per_class = defaultdict(lambda: defaultdict(lambda: Counter()))
@@ -186,10 +240,15 @@ def main():
                     t["q8c_no_usable_draws"] += 1
                 if rule_id:
                     t["cov_" + l["flip_prefix"]] += 1
+                    if l.get("q8c") is None:                                # V5: rule-identified with no usable draws
+                        t["rule_id_no_usable_draws"] += 1
+                        t["nud_cov_" + l["flip_prefix"]] += 1
                     t["identified_prefix"] += l["flip_prefix"] != "FAILED"
             cc = comp_by.get((r["run"], r["child"]))
             if cc:
                 t["ca_draws"] += cc["draws"]; t["ca_applicable"] += cc["applicable"]; t["ca_leaks"] += cc["leaks"]
+                t["cb_bytes"] += cc["bytes"]; t["cb_applicable"] += cc["bytes_applicable"]
+                t["cb_leaking"] += cc["bytes_leaking"]
         out = {}
         for c, sims in per_class.items():
             tot = Counter()
@@ -204,20 +263,39 @@ def main():
                 a = sum(t["cov_FAILED"] for t in ts); d = sum(t["cov_CONFIRMED"] + t["cov_FAILED"] for t in ts)
                 return a / d if d else None
 
-            def leak(ts):
-                a = sum(t["ca_leaks"] for t in ts); d = sum(t["ca_applicable"] for t in ts)
+            def leak(ts):                                   # V3: per byte, the gated unit
+                a = sum(t["cb_leaking"] for t in ts); d = sum(t["cb_applicable"] for t in ts)
                 return a / d if d else None
-            ci = {"flip_coverage": boot_ci(sims, cov), "flip_failed_share": boot_ci(sims, fail),
-                  "completeness_leak_share": boot_ci(sims, leak)}
-            out[c] = {"n_sims": len(sims), "totals": dict(tot),
-                      "point": {"flip_coverage": cov(list(sims.values())), "flip_failed_share": fail(list(sims.values())),
-                                "completeness_leak_share": leak(list(sims.values())),
-                                "completeness_applicability_share": (tot["ca_applicable"] / tot["ca_draws"]) if tot["ca_draws"] else None},
-                      "ci95_run_clustered": ci, "floor_verdict": {k: verdict(ci[k], FLOORS[k]) for k in FLOORS}}
+
+            def cov_excl_nud(ts):                           # V5: reported sensitivity only
+                a = sum(t["cov_CONFIRMED"] + t["cov_FAILED"] - t["nud_cov_CONFIRMED"] - t["nud_cov_FAILED"] for t in ts)
+                d = sum(t["rule_identified"] - t["rule_id_no_usable_draws"] for t in ts)
+                return a / d if d else None
+            den = {"flip_coverage": lambda t: t["rule_identified"],
+                   "flip_failed_share": lambda t: t["cov_CONFIRMED"] + t["cov_FAILED"],
+                   "completeness_leak_share": lambda t: t["cb_applicable"]}
+            fn = {"flip_coverage": cov, "flip_failed_share": fail, "completeness_leak_share": leak}
+            vs = list(sims.values())
+            point, ci, dropped, clusters, gates, marks = {}, {}, {}, {}, {}, {}
+            for k in FLOORS:
+                point[k] = fn[k](vs)
+                ci[k], dropped[k] = boot_ci(sims, fn[k])
+                clusters[k] = sum(1 for t in vs if den[k](t) > 0)
+                gates[k] = gate(point[k], FLOORS[k])
+                marks[k] = [m for m in (("MARGINAL" if marginal(ci[k], FLOORS[k]) else None),
+                                        ("SINGLE_CLUSTER" if clusters[k] == 1 else None)) if m]
+            out[c] = {"n_sims": len(sims), "totals": dict(tot), "point": point,
+                      "reported": {"completeness_applicability_share_bytes": (tot["cb_applicable"] / tot["cb_bytes"]) if tot["cb_bytes"] else None,
+                                   "completeness_leak_share_draws": (tot["ca_leaks"] / tot["ca_applicable"]) if tot["ca_applicable"] else None,
+                                   "completeness_applicability_share_draws": (tot["ca_applicable"] / tot["ca_draws"]) if tot["ca_draws"] else None,
+                                   "flip_coverage_excluding_no_usable_draw_loci": cov_excl_nud(vs)},
+                      "ci95_run_clustered": ci, "boot_resamples_dropped_zero_denominator": dropped,
+                      "n_clusters": clusters, "gate": gates, "marks": marks}
         summary["keys"][key] = out
     summary["ruled_class_key"] = "K_R1 (addendum 3); K_DONOR and K_EXEC reported only"
     (EXPORTS / "S4V2_SUMMARY.json").write_text(json.dumps(summary, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({k: {c: v["floor_verdict"] for c, v in d.items()} for k, d in summary["keys"].items()}))
+    print(json.dumps({k: {c: {g: [v["gate"][g]] + v["marks"][g] for g in FLOORS} for c, v in d.items()}
+                      for k, d in summary["keys"].items()}))
 
 
 if __name__ == "__main__":

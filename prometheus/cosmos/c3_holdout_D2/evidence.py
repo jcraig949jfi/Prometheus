@@ -1,6 +1,6 @@
 """Holdout D2 evidence bundle for adjudication (Harmonia), built on M1 after the result seal.
 
-  COSMOS_BROKER=1 python -m prometheus.cosmos.c3_holdout_D2.evidence --run RUN_DIR --out DIR [--revealed DIR] [--ref origin/main]
+  COSMOS_BROKER=1 python -I -B <repo>/prometheus/cosmos/c3_holdout_D2/entry.py evidence --run RUN_DIR --out DIR [--revealed DIR]
 
 Refused unless protocol.check_gates(..., "RESULT_SEAL") passes, the run's receipt chain verifies and ends at the
 sealed chain head, and RESULT.json hashes to the sealed result hash. So no bundle (and no result) can leave M1
@@ -92,6 +92,9 @@ def main(argv=None) -> int:
     ap.add_argument("--revealed")
     ap.add_argument("--ref", default=protocol.DEFAULT_REF)
     a = ap.parse_args(argv)
+    if os.environ.get("C3D2_ENTRY") != "verified":                # v4 (Odysseus v3 claim 4 note)
+        print(json.dumps({"refused": True, "reason": "start evidence through entry.py (pre-import code verification)"}))
+        return 3
     try:
         r = build(a.run, a.out, a.revealed, ref=a.ref)
     except (protocol.GateRefusal, EvidenceRefusal) as e:

@@ -3,22 +3,22 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0001",
   "mwo_commit": "7e4c09f2ca8eae4a3a019dc43b3054e08bec3e77",
-  "updated_at_utc": "2026-09-29T04:55:00Z",
+  "updated_at_utc": "2026-09-29T04:20:00Z",
   "state": "HOLD",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
-  "head_sha": "a88410dde38c6068c21f1e2ba08ee3833dacf668",
+  "head_sha": "5d63129bf4b8d07914fa261131e3ac3da40bc0cc",
   "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
   "threads": [
     {
       "id": "D2-CUSTODY",
       "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-      "state": "BLOCKED_FAIL_CLOSED",
+      "state": "BLOCKED_FAIL_CLOSED (DEF-HARM-D2-001 CLOSED by 742243972, verified by execution)",
       "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
     },
     {
       "id": "C1-HOSTILE-ADJ",
       "what": "Aphrodite Campaign 1 hostile adjudication contract (#453/#490/#533-E5)",
-      "state": "DELIVERED_AWAITING_PRODUCTION_PATH",
+      "state": "DELIVERED_ACCEPTED (Aphrodite #929); production-path E5 check is Aphrodite's when a C1 harness exists",
       "record": "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md"
     }
   ],
@@ -29,17 +29,16 @@
   "blocked_on": [
     {
       "item": "D2 adjudication",
-      "on": "governing audit FAIL (Odysseus f8eedbbce, VERDICT blob aa2c904c) -> v3 re-audit by Nestor/Odysseus"
+      "on": "governing v3 audit FAIL (Odysseus 2d7517600): B1 import control + entry record-name deadlock -> v4 needed (Nestor)"
     },
     {
       "item": "D2 adjudication",
-      "on": "DEF-HARM-D2-001: SEAL gate unpassable on real history (integration merges); D2 code repair + re-audit, Nestor's to make"
+      "on": "S1 record-authentication root of trust: operator decision #925"
     }
   ],
   "next_actions": [
-    "Aphrodite #490/#453/#533 answered: CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md + HA-1.0.1 (12/12 cheats caught, 7/7 clean quiet, 5/5 ablations); E5 on the production path UNDEMONSTRATED until a C1 harness exists (P1 OUTSIDE ENVELOPE until then)",
-    "D2: record the next governing verdict when it lands; build nothing, release nothing on a comms message alone",
-    "HOLD otherwise: no further eligible ruler work assigned via MWO/Fabric"
+    "D2: record the v4 governing verdict when it lands; release nothing on comms alone",
+    "HOLD otherwise"
   ],
   "held": [
     {
@@ -65,7 +64,7 @@
     }
   ],
   "operator_decisions_required": [
-    "D2: branch protection on main (Odysseus v3 item 1 names it an operator setting)",
+    "D2 S1 root of trust / branch protection (#925)",
     "Next MWO: renew or cancel held SI freeze requests #603/#608"
   ],
   "latest_reports": [

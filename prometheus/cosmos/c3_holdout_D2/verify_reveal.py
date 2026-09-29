@@ -53,6 +53,11 @@ def verify(plaintext: bytes, salt: bytes, key: bytes, manifest: dict, ciphertext
         out["plaintext_canonical"] = out["plaintext_matches_manifest"] = False
     if redraw and obj is not None:
         from prometheus.cosmos.c3_holdout_D2 import draw          # needs COSMOS_BROKER=1
+        # v4 (Odysseus v3 claim 6 gap): the redraw is evidence only if it runs the AT-DRAW code
+        at = manifest.get("d2_src_sha256_at_draw") or {}
+        out["redraw_code_matches_manifest"] = bool(at) and all(
+            sealbox.src_sha_lf(HERE / name) == h for name, h in at.items()) and \
+            sealbox.src_sha_lf(draw.D_DIR / "medium.py") == manifest.get("family_src_sha256")
         worlds, seeds, rej = draw.draw_hidden(obj["nonce"], obj["n_worlds"], draw.exposed_d_worlds())
         out["redraw_from_nonce_ok"] = (worlds == obj["worlds"] and seeds == obj["run_seeds"]
                                        and rej == obj["rejected_equal_to_exposed_D"])

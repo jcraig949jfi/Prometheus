@@ -13,19 +13,27 @@ This script checks the comms message's SENDER and that its subject or body conta
 otherwise. It never touches the key, salt or plaintext, and it is not part of any key-holding process. The list lives
 outside git on M1 (DEFAULT path below); every change is appended, never rewritten.
 """
-import argparse
+import sys
+
+if __name__ == "__main__" and not sys.flags.safe_path and sys.path:
+    del sys.path[0]          # v4 (Odysseus v3 P1): the script directory must not shadow the standard library
+
+import argparse  # noqa: E402
 import datetime as dt
 import hashlib
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 PROTO_REL = "prometheus/cosmos/c3_holdout_D2/protocol"
 ALLOWLIST = Path("C:/Users/jcrai/nestor_receipts/holdout_D2/ALLOWLIST.json")
-SENDERS = {"AUDIT": {"Odysseus"}, "COMMITMENT": {"Cosmos"}, "DESIGNATION": {"operator", "Nestor"}}
+SENDERS = {"AUDIT": {"Odysseus"}, "COMMITMENT": {"Cosmos"}, "DESIGNATION": {"operator", "Nestor"},
+           "RESULT_SEAL": {"operator", "Nestor"}}
+# v3 STATUS (Odysseus v2 re-audit FAIL, decisive finding): the comms `sender` field is supplied by the posting client, so
+# this check does NOT authenticate the author. The root of trust for protocol records is an OPEN OPERATOR DECISION
+# (#925: signed commits + pinned keys / operator-confirmed hashes / accept). v3 does not claim S1 repaired.
 
 
 def record_bytes(ref, name):
@@ -36,7 +44,8 @@ def record_bytes(ref, name):
 
 
 def comms_message(mid):
-    sys.path.insert(0, str(REPO))
+    if str(REPO) not in sys.path:
+        sys.path.append(str(REPO))    # v4 (P2): LAST, so no repository file can shadow a standard-library module
     from comms import api                                        # the comms bus (outside the audited package)
     conn = api.connect()
     cur = conn.cursor()

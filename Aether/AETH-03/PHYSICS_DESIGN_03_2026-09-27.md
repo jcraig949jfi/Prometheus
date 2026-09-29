@@ -282,3 +282,30 @@ Corrections:
    point 4), now submitted as Fabric Tasks per operator ruling
    2026-09-28 (MWO-0001; no RunPod). Its outcome is reported against the
    §1 horizon rule as declared, not against a new bar.
+
+## AMENDMENT A2 (2026-09-29) — the horizon falsifier ran (E-008)
+
+*Appended; nothing above is edited.*
+
+The d_horizon units T-087..T-090 ran as Fabric Tasks on ubu001 (no
+RunPod), same unit IDs, code pinned c49f2ebad4. Record:
+`ops/campaigns/C-002/E-008/RESULT.md`.
+
+- **Verdict under the §1 rule: HORIZON-DEPENDENT for both `rcv_add` and
+  `rcv_str`, through clause (iii) only.** 6 of 32 origins in each law set
+  a new maximum generation after tick 2,000 (3 of 16 in every seed).
+  Clause (i) does not fire (radius ≥ 5 share ×1.10 and ×1.29). Clause (ii)
+  does not fire (no breach; largest radius 19 against the 28 bar).
+- These are the first OFF arms where the horizon matters. The components
+  were horizon-robust (§5.1). The dependence is slow deepening inside a
+  bounded region, not escape. `rcv_str` reaches radius 8 at +500 and 19 at
+  +10,000.
+- The combinations' effect is not a short-horizon transient. Differences
+  persist and keep deepening, so nothing here weakens the `rcv_add`
+  positive.
+- **Correction to A1 point 4:** this run does not resolve `rcv_str`'s
+  Block D status. That verdict rests on the assay's N1 clause at 128
+  origins, and this instrument asks a different question at 32 origins.
+  `rcv_str` stays UNRESOLVED for §5.2.
+- §5.5 point 4 ("not completed") is superseded by E-008. Point 1 holds
+  for v1, `add` and `rcv`, and does NOT hold for the two combinations.
