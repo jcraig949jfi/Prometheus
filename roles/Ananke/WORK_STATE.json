@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T09:19:10Z",
-  "state": "ACTIVE",
-  "state_reason": "CWO ANANKE: CURRENT zero-compute REL4 plan (done, committed first); NEXT T-SWAP-REL4 blocked only on the skullport:cpu8 lease (held by Nestor); Harmonia audit #1045 corrections applied.",
+  "updated_at_utc": "2026-09-30T09:19:43Z",
+  "state": "WORKING",
+  "state_reason": "CWO ANANKE CURRENT: T-SWAP-REL4 running as worker W-W under the plan frozen at a7cba8221; <=2 threads without a lease while skullport:cpu8 is held by Nestor (scales to 8 only if the lease is acquired); cap 8 core-h.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,15 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-W",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL4",
+      "status": "RUNNING",
+      "plan": "roles/Ananke/research/plans/T-SWAP-REL4_PLAN.md @ a7cba8221",
+      "dir": "roles/Ananke/research/workers/W-W/",
+      "compute_cap_core_h": 8
+    },
+    {
       "id": "E-ANANKE-W-V",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-18",
@@ -169,7 +178,9 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-W (delegated worker, CPU <=2 threads unless cpu8 lease acquired)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "launch E-ANANKE-W-W (REL4) under the frozen plan when the cpu8 lease is free",
@@ -198,22 +209,16 @@
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1031)",
   "queue": {
-    "CURRENT": "T-SWAP-REL4 run (E-ANANKE-W-W) per research/plans/T-SWAP-REL4_PLAN.md: start when skullport:cpu8 is free, or at <=2 threads without a lease",
+    "CURRENT": "T-SWAP-REL4 run (E-ANANKE-W-W) per research/plans/T-SWAP-REL4_PLAN.md @ a7cba8221 -- RUNNING",
     "NEXT": "Analyze REL4; promote the relative swap rule into prometheus/ananke only if the frozen promotion bar is met",
     "RESERVE": [
       "T-INS-20 readout Kp[7] swap (4781b0a1)",
       "T-INS-19 sensor-addressed traffic census (4781b0a1 o2-o9)",
       "T-INS-17 causal-emission carrier"
     ],
-    "BLOCKED": [
-      {
-        "item": "T-SWAP-REL4 at 8 threads",
-        "dependency": "Fabric lease skullport:cpu8",
-        "owner": "Nestor (current holder)"
-      }
-    ],
+    "BLOCKED": [],
     "RESOURCE_STATUS": "rolling 24 h CPU ~23 core-h of 48 (W-O's ~18 left the window 09:14Z); REL4 capped at 8",
     "LAST_RECEIPT": "E-ANANKE-W-V (T-INS-18) report, workers/W-V/REPORT.md",
-    "LAST_STATE_UPDATE": "2026-09-30T09:19:10Z"
+    "LAST_STATE_UPDATE": "2026-09-30T09:19:43Z"
   }
 }
