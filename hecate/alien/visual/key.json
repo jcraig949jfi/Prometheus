@@ -1,0 +1,156 @@
+{
+ "VC-8650": {
+  "sys_id": "SYS-67770",
+  "class": "ALIEN_LAWFUL",
+  "null_type": null,
+  "planted": [
+   {
+    "max_transient": 20,
+    "type": "all_orbits_fixed"
+   }
+  ],
+  "matched_to": "SYS-29593"
+ },
+ "VC-8041": {
+  "sys_id": "SYS-29593",
+  "class": "MATCHED_NOISE",
+  "null_type": "SCRAMBLE",
+  "planted": [],
+  "matched_to": "SYS-67770"
+ },
+ "VC-1439": {
+  "sys_id": "SYS-67205",
+  "class": "KNOWN_LAWFUL",
+  "null_type": null,
+  "planted": [],
+  "matched_to": null
+ },
+ "VC-1653": {
+  "sys_id": "SYS-98078",
+  "class": "ALIEN_LAWFUL",
+  "null_type": null,
+  "planted": [
+   {
+    "mod": 1000,
+    "type": "conserved_linear",
+    "w": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   }
+  ],
+  "matched_to": "SYS-11297"
+ },
+ "VC-9148": {
+  "sys_id": "SYS-11297",
+  "class": "MATCHED_NOISE",
+  "null_type": "CONJ",
+  "planted": [],
+  "matched_to": "SYS-98078"
+ },
+ "VC-2384": {
+  "sys_id": "SYS-47418",
+  "class": "KNOWN_LAWFUL",
+  "null_type": null,
+  "planted": [],
+  "matched_to": null
+ },
+ "VC-3905": {
+  "sys_id": "SYS-99585",
+  "class": "ALIEN_LAWFUL",
+  "null_type": null,
+  "planted": [
+   {
+    "mod": 4,
+    "type": "conserved_weights",
+    "w": [
+     0,
+     3,
+     0,
+     0
+    ]
+   },
+   {
+    "min_period": 2,
+    "primary": false,
+    "type": "has_cycle"
+   }
+  ],
+  "matched_to": "SYS-67174"
+ },
+ "VC-9731": {
+  "sys_id": "SYS-67174",
+  "class": "MATCHED_NOISE",
+  "null_type": "DSCRAMBLE",
+  "planted": [],
+  "matched_to": "SYS-99585"
+ },
+ "VC-6721": {
+  "sys_id": "SYS-86243",
+  "class": "KNOWN_LAWFUL",
+  "null_type": null,
+  "planted": [],
+  "matched_to": null
+ },
+ "VC-2256": {
+  "sys_id": "SYS-75695",
+  "class": "ALIEN_LAWFUL",
+  "null_type": null,
+  "planted": [
+   {
+    "mod": 7,
+    "type": "conserved_linear",
+    "w": [
+     0,
+     5,
+     6,
+     2
+    ]
+   }
+  ],
+  "matched_to": "SYS-91403"
+ },
+ "VC-7155": {
+  "sys_id": "SYS-91403",
+  "class": "MATCHED_NOISE",
+  "null_type": "DSCRAMBLE",
+  "planted": [],
+  "matched_to": "SYS-75695"
+ },
+ "VC-6279": {
+  "sys_id": "SYS-39793",
+  "class": "KNOWN_LAWFUL",
+  "null_type": null,
+  "planted": [],
+  "matched_to": null
+ },
+ "VC-2058": {
+  "sys_id": "SYS-28905",
+  "class": "ALIEN_LAWFUL",
+  "null_type": null,
+  "planted": [
+   {
+    "type": "bijective"
+   }
+  ],
+  "matched_to": "SYS-70364"
+ },
+ "VC-7605": {
+  "sys_id": "SYS-70364",
+  "class": "MATCHED_NOISE",
+  "null_type": "SCRAMBLE",
+  "planted": [],
+  "matched_to": "SYS-28905"
+ },
+ "VC-1752": {
+  "sys_id": "SYS-90967",
+  "class": "KNOWN_LAWFUL",
+  "null_type": null,
+  "planted": [],
+  "matched_to": null
+ }
+}
