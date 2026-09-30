@@ -30,14 +30,14 @@ were all AUTHORED BY COSMOS, i.e. at most one author lineage; the CWE instrument
 ### T-C4 | close | C4: upstream causes of causally accessible history (successor to C3, new preregistration)
 - thread_id: thr-cac8c079f216
 - id_rule: genesis|a89ff753bad29ec1df05c7d422e16eaade817850|roles/Cosmos/research/THREADS.md|C4: upstream causes of causally accessible history (successor to C3, new preregistration)
-- status: OPEN
+- status: DESIGNED
 - zone: Z1
 - question: What physical properties of a world, upstream of any certificate, cause historical information to remain reliably and causally accessible, and does a compact substrate-independent representation of them predict functional historical use better than the certificate's own zero-parameter semantics?
 - instruments: prometheus/cosmos/c3/ certificate (as the LABEL only); needed: upstream world-property measurements that share no machinery with the P1/P2 labelling (no paired common-random-number construction, ablation result, causal-effect statistic or probe output); a second legitimate certificate (gate S3); leave-one-family-out evaluation
 - first_experiment: DESIGN ONLY (operator 2026-09-30). Preregister the trivial rules (majority, family-ID, simple native features, zero-parameter certificate rule) BEFORE any law search, then measure on visible worlds whether any upstream representation could beat them under leave-one-family-out (gate S0)
 - kill_criterion: the directive's stop conditions: zero-parameter semantics still explain almost everything; the coordinates remain strong family identifiers; performance collapses under leave-one-family-out; results depend on one certificate implementation; the only working intervention moves the label-defining quantity; or no compact substrate-independent representation emerges. "No successor law earned" is an acceptable result
 - depends_on: C3 autopsy (T-C3). Holdout use is NOT authorized; D2 eligibility is decided separately, only after the visible-world gates S0-S4 pass
-- notes: designed from the C3 scar. The predictor and the certificate must not share the machinery that manufactures the answer. Nothing about D2 may inform the design.
+- notes: designed from the C3 scar. The predictor and the certificate must not share the machinery that manufactures the answer. Nothing about D2 may inform the design. 2026-09-30: DESIGN v0.1 c4/DESIGN_C4.md; S0 trivial rules frozen F-0001 (c4/S0_TRIVIAL_RULES.md) BEFORE any number; visible S0 analysis: T3-DOWN BA .905, all 7 errors false positives; a candidate needs >= 6/7 fixes with 0 new errors on a C3-like distribution, so C4 needs >= 240 determinate worlds with >= 50% in label-blind high-noise/near-critical strata. Pre-result design review PENDING; execution NOT authorized.
 
 ### T-A1 | A law discovery | Open-vocabulary law mining
 - thread_id: thr-c613a790a4cd

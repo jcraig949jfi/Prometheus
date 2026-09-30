@@ -3,20 +3,20 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T14:20:00Z",
+  "updated_at_utc": "2026-09-30T15:10:00Z",
   "state": "ACTIVE",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
-    "thr-32389b1e7abb (T-C3, KILLED pre-holdout: coordinate audit REJECT; operator disposition 2026-09-30; G-0006 scar)",
-    "thr-cac8c079f216 (T-C4, OPEN: successor design only)",
-    "thr-ba4ccc18cc6c (T-I1: fragment test v3 -> ceiling-atom recurrence = certificate economics, DEAD as evidence)",
-    "thr-14b16c6a4d6b (T-E1, null law = definition rung)",
+    "thr-32389b1e7abb (T-C3, KILLED pre-holdout; G-0006 scar; autopsy done)",
+    "thr-cac8c079f216 (T-C4, DESIGNED: v0.1, S0 frozen F-0001; execution not authorized)",
+    "thr-ba4ccc18cc6c (T-I1)",
+    "thr-14b16c6a4d6b (T-E1)",
     "+7 OPEN: roles/Cosmos/research/THREADS.md"
   ],
   "campaigns": [
-    "C3: CLOSED / KILLED BEFORE HOLDOUT (operator 2026-09-30)",
-    "C4: successor, DESIGN ONLY (operator 2026-09-30)"
+    "C3: CLOSED / KILLED BEFORE HOLDOUT (operator 2026-09-30); autopsy public + withheld",
+    "C4: DESIGNED v0.1 (design only; no holdout)"
   ],
   "experiments": [
     "C3-D2 adjudication: NEVER STARTED; D2 SEALED / UNREAD / UNSPENT, reserved"
@@ -25,28 +25,29 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "C4 protocol design + S0 visible-baseline analysis",
-    "completion message to Aporia (CWO-B s11), then READY"
+    "completion message to Aporia",
+    "await rulings: C4 execution authority (Q1), foreign visible family (Q2), design reviewer (Q3); D2 ciphertext-grep incident ruling (Nestor/Harmonia #1105/#1106)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Cosmos/c4/DESIGN_C4.md",
+    "roles/Cosmos/c4/S0_TRIVIAL_RULES.md",
     "roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md",
-    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md",
-    "roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/DIRECTIVE_VERBATIM.md"
+    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
   "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
   "work_order": "Operator C3 disposition 2026-09-30 (roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/) within CWO-2026-09-30, CWO-2026-09-30B and MWO-0004",
-  "current": "C4 successor protocol DESIGN (thread T-C4 thr-cac8c079f216; gates S0-S4) + visible-data S0 baseline analysis. Design only; no holdout; NO D2 ACCESS.",
-  "next": "Completion message to Aporia (CWO-B s11), then READY",
+  "current": "Completion report to Aporia (CWO-B s11) for the operator-authorized set: state reconciliation, C3 autopsy, C4 design + S0 visible baselines",
+  "next": "READY: awaiting Aporia/operator. C4 steps 2-5 (design review, F-0002 prereg freeze, instrument build, visible gates) need explicit authorization (DESIGN_C4.md s12 Q1-Q3)",
   "reserve": [
     "Public Cosmos tooling",
     "Future-world generators that cannot expose D2",
     "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
   ],
   "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
-  "last_receipt": "C3 autopsy DONE: public research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md (this commit); withheld local commit c9f8aff1777ceec49951bd5ee09ab734caea6370 (cosmos/c3-autopsy-2026-09-30, never pushed)",
+  "last_receipt": "C4 DESIGN v0.1 roles/Cosmos/c4/DESIGN_C4.md + S0 frozen F-0001 (1b45b89ea); visible S0 analysis local 197daf5f3; C3 autopsy public 9bdfd85e1, withheld c9f8aff17",
   "open_incidents": [
     "2026-09-30 ~14:10Z: a Cosmos leak-scan git grep also scanned the D2 ciphertext (binary match line only; no bytes, no decryption). Recorded in c3/INFO_LEDGER.md as REPORTED_FOR_RULING; custodian/auditor told on comms"
   ]
