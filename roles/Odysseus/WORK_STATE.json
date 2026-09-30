@@ -3,10 +3,10 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T09:26:15Z",
- "state": "ACTIVE",
+ "updated_at_utc": "2026-09-30T13:36:11Z",
+ "state": "BLOCKED",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "9f95f9ea06ff6b5cf78e81a3686ce11a49f591dd",
+ "head_sha": "a89ff753bad29ec1df05c7d422e16eaade817850",
  "threads": [
   {
    "id": "thr-d2-firewall-audit",
@@ -52,9 +52,9 @@
   "operator: promexec round-2 broker install (see blocked)"
  ],
  "next_actions": [
-  "BUILDER-FABRIC: hand Aporia the friction classes with evidence (DEFECTS.md)",
-  "on install: python3 fabric/promexec/acceptance.py; commit ACCEPTANCE_RUNS/1.json; hand the installed hash to Aether",
-  "adjudicate any new round on thr-d2-firewall-audit (FIREWALL_AUDIT_2)"
+  "on install: acceptance run 1, commit ACCEPTANCE_RUNS/1.json, hand the installed hash to Aether, send the CWO-B s11 completion message to Aporia",
+  "adjudicate any new thr-d2-firewall-audit round (FIREWALL_AUDIT_2)",
+  "record Fabric defects; route build work to Aporia (no BUILDER-FABRIC build under CWO-B)"
  ],
  "operator_decisions_required": [
   "promexec round-2 broker install (privileged host modification; CWO s4). Runbook: fabric/promexec/OPERATOR_STEPS_ROUND2.md"
@@ -72,15 +72,13 @@
   "roles/Odysseus/fabric_pilot/s2/RESULT.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 1046,
+ "comms_cursor": 1093,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
  "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed. promexec stays NOT ENABLED (MWO-0004 G4); the round-2 install is listed because it is a privileged host modification (CWO s4), not an enablement",
- "work_order": "MWO-0004 (ops/work_orders/CURRENT.md) + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, sha256 ab93f646...b7e; queue ops/fleet/QUEUE.json)",
- "current": "RESERVE promoted: BUILDER-FABRIC customer/guide -- turn this deployment's friction into Builder work (disk-full checkout cache DEF-ODY-015; no SKULLPORT/Windows worker DEF-ODY-012; stale worker instances DEF-ODY-008/017; base_sha validation DEF-ODY-009; per-agent cache race DEF-ODY-011)",
- "next": "promexec round 2 acceptance run 1 and Aether handoff, as soon as the operator installs the round-2 broker",
- "reserve": [
-  "D2 adjudication if a re-audit is submitted (standing, thr-d2-firewall-audit)"
- ],
+ "work_order": "MWO-0004 + CWO-2026-09-30 (fleet activation) + CWO-2026-09-30B (finish-in-place; ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md, sha256 e62cb5ee...00b9; supersedes auto-promotion)",
+ "current": "promexec round 2 (Fabric broker transition): source DONE and source-reviewed by Aether (#1046/#1052); BLOCKED on the privileged install; then acceptance run 1 and Aether's round 2 proper",
+ "next": "none: CWO-B s2, no self-promotion; awaiting Aporia after completion",
+ "reserve": [],
  "blocked": [
   {
    "item": "promexec round 2 install + ACCEPTANCE_RUNS/1.json (CWO CURRENT)",
@@ -91,5 +89,10 @@
   }
  ],
  "resource_status": "no compute or spend held; ubu001 disk 24%; workers .a/.b/.sci on ~/fabric-runtime @8cc7dc841",
- "last_receipt": "9f95f9ea0: promexec N1/N2 applied after Aether's round-2 source review (#1046: all round-1 items closed on source, nothing blocks install)"
+ "last_receipt": "29d607314 DEF-ODY-018; CWO-B heartbeat #1104 to Aporia",
+ "in_flight": [
+  "promexec round 2 (blocked on the operator install)",
+  "standing: ubu001 node workers; Fabric defect ledger; D2 auditor of record on demand",
+  "ops aid: ubu001->ubu002 ssh key waiting for the operator's paste"
+ ]
 }
