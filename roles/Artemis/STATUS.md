@@ -1,6 +1,6 @@
 # Artemis status
 
-Currency: 2026-09-30T11:40Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO 2026-09-30).
+Currency: 2026-09-30T14:16Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO 2026-09-30).
 
 seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
 what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
@@ -13,5 +13,5 @@ host: ubu002 (see ABOUT.md). worktree
 monitors owned or fed: none.
 D001: reconciled 2026-09-30 -- 10/10 completed on Fabric (dispatch/D001/RECEIPTS.json).
 blockers: none.
-CURRENT: D002 -- run D001's 9 unrun analysis.py as Fabric script Tasks.
-NEXT: route D001/D002 findings to owners; D003 seeded raw draw.
+CURRENT: route D001+D002 findings (D002 closed: dispatch/D002/RESULT.md).
+NEXT: D003 seeded raw draw; re-run the 3 timed-out D002 scripts once Fabric keeps partial output.

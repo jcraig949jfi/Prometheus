@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T11:39Z",
+  "updated_at_utc": "2026-09-30T14:16Z",
   "state": "WORKING",
-  "state_reason": "D002 submitted 11:38Z (11 script Tasks at c628f3e); completion barrier running.",
+  "state_reason": "D002 closed (8/11 returned; 3 timeouts). Routing D001+D002 findings.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -47,15 +47,18 @@
       "status": "COMPLETED_RECONCILED",
       "draw": "roles/Artemis/dispatch/D001/DRAW.json",
       "receipts": "roles/Artemis/dispatch/D001/RECEIPTS.json",
-      "result": "10/10 Tasks completed, 1 attempt each, exit 0, workers worker.ubu001.a/.b, 2026-09-29 14:10Z-14:46Z, 3.7-11.7 min; 10/10 returned REPORT.md+claims.json, 9/10 an unrun analysis.py; all artifact sha256 re-verified on fetch"
+      "result": "10/10 Tasks completed, 1 attempt each, exit 0, workers worker.ubu001.a/.b, 2026-09-29 14:10Z-14:46Z, 3.7-11.7 min; 10/10 returned REPORT.md+claims.json, 9/10 an unrun analysis.py; all artifact sha256 re-verified on fetch",
+      "digest": "roles/Artemis/dispatch/D001/DIGEST.md (30/30 claims verified)"
     },
     {
       "id": "D002",
       "kind": "standing bounded dispatch (script executor)",
-      "status": "SUBMITTED",
+      "status": "CLOSED",
       "plan": "roles/Artemis/dispatch/D002/PLAN.md",
       "batch": "roles/Artemis/dispatch/D002/BATCH.json",
-      "tasks": "roles/Artemis/dispatch/D002/TASKS.json"
+      "tasks": "roles/Artemis/dispatch/D002/TASKS.json",
+      "result": "roles/Artemis/dispatch/D002/RESULT.md",
+      "receipts": "roles/Artemis/dispatch/D002/RECEIPTS.json"
     }
   ],
   "fabric_tasks": [
@@ -105,20 +108,13 @@
     }
   ],
   "leases": [],
-  "running": [
-    {
-      "what": "D002 completion barrier",
-      "tasks": "roles/Artemis/dispatch/D002/TASKS.json"
-    },
-    {
-      "what": "D001 claim spot-check (fresh read-only reader) before routing"
-    }
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "D002: freeze the 9 D001 analysis.py by commit and run them as Fabric script Tasks (worker.ubu001.sci, numpy/scipy); decision rules were written by the workers before any run",
-    "route D001 findings to owners after spot-check (blind-lane guard)",
-    "2026-10-28: day-30 owner-action re-check"
+    "route D001+D002 findings (this commit + comms)",
+    "D003 seeded raw draw (no ranks)",
+    "Fabric adversary: re-attack F1-F3 once BUILDER-FABRIC reports fixes",
+    "2026-10-28 day-30 re-check"
   ],
   "operator_decisions_required": [],
   "program_level_unassigned": [
@@ -140,16 +136,16 @@
   "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1026)",
   "queue": {
-    "CURRENT": "D002: run the 9 unrun D001 analysis.py as Fabric script Tasks at a frozen commit (real compute workload on the script executor + numpy worker); compare each output with the decision rule its worker wrote in REPORT.md before the run",
-    "NEXT": "Route D001 (+D002) findings to owning seats under the blind-lane guard; then D003 seeded raw draw (no ranks) from the remaining eligible backlog",
+    "CURRENT": "Route D001+D002 findings to owners (blind-lane guard); residuals of parked programs to Tyche/Hecate (CWO 1.5)",
+    "NEXT": "D003: seeded raw draw of the remaining eligible backlog (no ranks), claude workers; plus re-run of D002-02/03/06 once F1 (unbuffered output) is fixed, with an explicit longer wall",
     "RESERVE": [
-      "Fabric reliability adversary: feed D001/D002 failure modes to BUILDER-FABRIC; attack repaired paths",
+      "Fabric reliability adversary: F1-F4 handed to BUILDER-FABRIC (D002/RESULT.md s2); attack repaired paths",
       "2026-10-28 day-30 owner-action re-check (selftest/ROUTING.md)"
     ],
     "BLOCKED": [],
     "RESOURCE_STATUS": "claude workers on ubu001 (no local compute on ubu002); script Tasks compute.cpu.light only",
-    "LAST_RECEIPT": "roles/Artemis/dispatch/D001/RECEIPTS.json (2026-09-30)",
-    "LAST_STATE_UPDATE": "2026-09-30T11:39Z",
+    "LAST_RECEIPT": "roles/Artemis/dispatch/D002/RECEIPTS.json + RESULT.md (2026-09-30)",
+    "LAST_STATE_UPDATE": "2026-09-30T14:16Z",
     "WORK_ORDER": "MWO-0004 + CWO 2026-09-30"
   }
 }
