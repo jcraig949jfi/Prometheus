@@ -1,14 +1,15 @@
 # Theseus backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-30 (charter adopted; v0 machinery built and
-preregistered). Priority order; first five today.
+THESEUS-23 | Make the rulers discriminate: plant deep-ancestry structure as positive controls and require the mechanistic and lens rulers to separate planted structure from matched random programs before they judge D | C1 | alpha | M | none | control table: planted vs R separation per ruler, committed with a prereg
+THESEUS-24 | Raise H1's equal n above 51: generate ~300 LLM-arm genomes by the same spec, and report H1-without-A as a secondary | C1 | alpha | S | none | theseus/controls/llm_arm_v1/ + H1 at n >= 150
+THESEUS-20 | Replicate H1 across >= 3 master seeds and report the between-seed spread of every H1 statistic | C1 | alpha | S | THESEUS-23 | multi-seed table in a v1 report
+THESEUS-25 | Verify v0_1 bitwise reproducibility (rerun the ecology phase, compare entity hashes) | EVIDENCE | alpha | S | none | hash comparison in the journal
+THESEUS-26 | Make the population cap bind (elite protection per grid capped) and measure what fossilisation removes | C1 | beta | S | none | pop history with active <= cap + fossil table
+THESEUS-06 | Tyche interface for dark objects and lenses (question posted; blocked on Tyche's answer) | EVIDENCE | alpha | S | Tyche | roles/Theseus/prompts/2026-09-30_to_tyche/ + reply
+Currency: 2026-09-30 (v0 DONE: H1 FAIL; v0_1 corrected replication:
+INDETERMINATE. THESEUS-01..05 closed by this commit; 23-26 added from the
+v0 failure shapes). Priority order; first five next.
 
-THESEUS-01 | Run the preregistered v0 campaign and commit every row it writes | C1 | alpha | S | none | theseus/runs/v0_2026-09-30/REPORT.json + per-run files in the charter layout
-THESEUS-02 | Score H1 and P1-P9 mechanically and commit the v0 report | EVIDENCE | alpha | S | THESEUS-01 | theseus/reports/v0_2026-09-30.md
-THESEUS-03 | Write calibration-ledger rows for every wrong v0 prediction | EVIDENCE | alpha | S | THESEUS-02 | roles/Theseus/calibration/LEDGER.md rows
-THESEUS-04 | Produce the v0 review packet (pure ASCII) and commit it | EVIDENCE | alpha | S | THESEUS-02 | roles/Theseus/REVIEW_PACKET_v0_2026-09-30.txt
-THESEUS-05 | Replenish the frontier from v0 failure shapes and preregister v1 | C1 | alpha | S | THESEUS-02 | roles/Theseus/prereg/<date>_v1/PREREG.md
-THESEUS-06 | Notify Tyche that dark objects and admitted lenses are exported with a Tyche-shaped world spec, and ask what Tyche needs to consume them | EVIDENCE | alpha | S | THESEUS-01 | comms message + roles/Theseus/prompts/<date>_to_tyche/ with MANIFEST
 THESEUS-07 | Replace the keyword G0 compiler's text-length confound with a length-normalised compile and test whether descendants of enriched G0 dominate | C1 | beta | M | THESEUS-02 | theseus/synth/compile_g0.py v2 + stratified ancestry table
 THESEUS-08 | Add a property-shuffled G0 control (concept identity vs property set) | C1 | beta | S | THESEUS-07 | control arm rows + report section
 THESEUS-09 | Enlarge the known-mechanism library (more families, larger search) and re-test every NOT_REPRODUCED_YET | C1 | beta | M | THESEUS-02 | theseus/synth/known.py v2 + re-verdict table
@@ -22,6 +23,5 @@ THESEUS-16 | Evolve experiments: let the perturbation battery gain interventions
 THESEUS-17 | Add exploitation-by-organisms ruler: organisms that act in a candidate's world and gain from its dynamics | C1 | 1.0 | L | THESEUS-10 | organism ruler + rows
 THESEUS-18 | Export VISUAL_EXPORT rows in the Visual Cortex format once that format is committed | TOOLS | 1.0 | S | Visual Cortex format | converter + one rendered example
 THESEUS-19 | Scale the ecology (population 500, 50 generations, larger G0 subset) only if v0/v1 show the loop discriminates | C1 | 1.0 | M | THESEUS-05 | run rows within MWO R2 envelope + Fabric lease
-THESEUS-20 | Replicate v0 with a second master seed and report seed variance of every H1 statistic | C1 | beta | S | THESEUS-02 | theseus/runs/v0_<seed2>/REPORT.json + variance table
 THESEUS-21 | Replace the LLM arm with a second model family and with prompted-for-weirdness synthesis to bound "LLM synthesis" | C1 | beta | M | THESEUS-02 | two further A arms + comparison
 THESEUS-22 | Submit the v0 result (whatever it is) to the evidence wiki via the API | EVIDENCE | beta | S | THESEUS-02 | wiki ids in the journal

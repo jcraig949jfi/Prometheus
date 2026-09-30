@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T13:12:51Z",
-  "state": "ACTIVE",
-  "state_reason": "CWO 2026-09-30: E-BEL-REPL-01 closed (DISAPPEARS K3); NEXT promoted to CURRENT without prompt (CWO 1.1)",
+  "updated_at_utc": "2026-09-30T15:03:28Z",
+  "state": "READY",
+  "state_reason": "CWO-B: in-flight set complete (E-BEL-REPL-01 + errata merged; E-BEL-REPL-02 closed). No automatic promotion; waiting for Aporia.",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
   "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
@@ -92,7 +92,7 @@
     {
       "id": "E-BEL-REPL-01",
       "status": "CLOSED",
-      "verdict": "DISAPPEARS (K3) -- frozen; post-hoc shift-tolerant replay confirms kill real",
+      "verdict": "DISAPPEARS (K3) frozen; descent UNRESOLVED in BEE (ERRATA_REPL01); K1 = mostly transient appearance (REPL-02 post-hoc)",
       "summary": "C-A3-INTERNALIZE rebuilt in BEE: K1 SURVIVES 93/200 vs 18/100 p=6.6e-7; K4 SURVIVES 86/93; K3 0/93 (founder content). NPE X-MAT ENDOGENOUS 8/8 (read after seal): NPE claim not killed; descent does not transfer",
       "branch": "bellerophon/repl-internalize-2026-09-30",
       "freeze": "74f72e805",
@@ -101,56 +101,42 @@
       "result": "279927367 (+addendum 9c2c42938)",
       "packet": "roles/Bellerophon/repl_2026-09-30/REVIEW_PACKET_E-BEL-REPL-01_2026-09-30.md (19026e76b, on branch)",
       "comms": "#1051 #1055 #1077 #1078",
-      "merge": "pending adversarial Fabric reviews tsk-ad966fa39590 / tsk-750695b70564"
+      "merge": "MERGED c776cea6a after adversarial reviews tsk-ad966fa39590/tsk-750695b70564 (MERGE_WITH_FIXES; fixes applied)"
+    },
+    {
+      "id": "E-BEL-REPL-02",
+      "status": "CLOSED",
+      "verdict": "RESIDUE_NOT_REPLICATED (ABSENT) -- frozen; caveat: dominance readout reachability undemonstrated",
+      "freeze": "4d1a7c885",
+      "seal": "bb8c66fd2",
+      "result": "roles/Bellerophon/repl_2026-09-30/RESULT_02.md (64d8d2d3f)",
+      "posthoc": "REPL-01 K1 events mostly transient (state-free at tick 2000: P90 8/100, P75 17/100, ZERO 4/100)"
     }
   ],
   "fabric_tasks": [
     {
       "id": "tsk-ad966fa39590",
-      "title": "adversarial merge review E-BEL-REPL-01 [1/2]",
-      "state": "submitted"
+      "state": "completed",
+      "result": "MERGE_WITH_FIXES (applied)"
     },
     {
       "id": "tsk-750695b70564",
-      "title": "adversarial merge review E-BEL-REPL-01 [2/2]",
-      "state": "submitted"
+      "state": "completed",
+      "result": "MERGE_WITH_FIXES (applied)"
     }
   ],
   "leases": [
     {
-      "lease_id": "lse-a0185f56ea0c",
-      "resource": "spectrex5:cpu12",
-      "status": "RELEASED"
-    },
-    {
-      "lease_id": "lse-8e23caf77927",
-      "resource": "spectrex5:cpu12",
-      "status": "RELEASED"
-    },
-    {
-      "lease_id": "lse-113b527778eb",
-      "resource": "spectrex5:cpu12",
-      "status": "RELEASED"
-    },
-    {
-      "lease_id": "lse-964d4be1a44f",
-      "resource": "spectrex5:cpu12",
-      "status": "RELEASED"
-    },
-    {
       "lease_id": "lse-4e19412ded95",
-      "resource": "spectrex5:cpu12",
-      "status": "IDLE_UNRELEASABLE (token not kept; expires ~14:18Z; Aporia #1077)"
+      "status": "EXPIRED (TTL)"
+    },
+    {
+      "lease_id": "lse-ede8c1ed2167",
+      "status": "RELEASED"
     }
   ],
   "running": [],
-  "blocked_on": [
-    {
-      "item": "E-BEL-REPL-02 production restart",
-      "dependency": "operator go-ahead to relaunch (host memory pressure)",
-      "owner": "operator"
-    }
-  ],
+  "blocked_on": [],
   "next_actions": [
     "S0: survey fleet candidates (Hecate, Tyche, Ensorain, Nestor, Archaeon, own residuals); write SELECTION.md with criteria before ranking",
     "S1: prereg the rebuild + kill battery (frozen, LF-normalised hash) before any run",
@@ -212,6 +198,13 @@
       "exposed_by": "Harmonia evidence audit sample 2 item H (cffcfc64b; #1044); Archaeon concurs #1048",
       "fix": "roles/Bellerophon/e003_2026-09-29/ERRATA_2026-09-30.md; tools/posthoc_q4_summary.py reproduces the published summary exactly",
       "science_blocked": false
+    },
+    {
+      "id": "DEF-BEL-007",
+      "what": "E-BEL-REPL-01 overclaims (K3 'kill real', BEE-specific, zero continuity) + false 'sealed' blinding via merge of main; pair-900 smoke output deleted",
+      "exposed_by": "adversarial reviews tsk-ad966fa39590/tsk-750695b70564",
+      "fix": "ERRATA_REPL01_2026-09-30.md; correction #1113; ledger",
+      "science_blocked": false
     }
   ],
   "latest_reports": [
@@ -226,33 +219,23 @@
   "work_order": {
     "mwo": "MWO-0004 (ops/work_orders/CURRENT.md, blob 925660b2d2be53af)",
     "cwo": "CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569)",
-    "assignment_msg": "comms #1033 (Aporia -> Bellerophon)"
+    "assignment_msg": "comms #1033 (Aporia -> Bellerophon)",
+    "cwo_b": "CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md); heartbeat #1112"
   },
-  "current": {
-    "id": "E-BEL-REPL-02",
-    "title": "Mutant/falsifier expansion (CWO NEXT, promoted automatically)",
-    "text": "Apply adversarial transformations to the surviving residue of E-BEL-REPL-01: scaffold-dependent de novo emergence of state-freedom in BEE (payoff-dependent K1, ruler-independent K4, backwards dose P90>P75, 18/100 with no payoff). Prereg before any run.",
-    "step": "S1 FROZEN 4d1a7c885. S3 PAUSED at 82/750 runs: the launcher and its 12 workers were stopped by the host (Claude Code background reaper, M2 low on memory: 4.6/31.8 GB free). The runner is resumable (skips written pairs) with no design change. Restart awaits the operator's word per harness policy; outputs are unread and unsealed.",
-    "started_at_utc": "2026-09-30T12:34:33Z",
-    "freeze": "4d1a7c88565e1ca7f73755da58a0b210b0c19693"
-  },
-  "next": {
-    "id": "E-BEL-BUILD-01",
-    "title": "Generalize useful BEE controls into BUILDER-EXPERIMENT (planted state-free/zero-dependent copiers, label-vs-content descent check, replay gate, freeze manifest)"
-  },
+  "current": null,
+  "next": null,
   "reserve": [],
   "resource_status": {
-    "envelope": "MWO-0004 R2: <= 16 CPU core-hours per item, <= 48 per day",
     "leases_held": [],
-    "core_hours_today": 12.6,
+    "core_hours_today": 19.1,
     "gpu": "none",
     "spend_usd": 0,
-    "note": "E-BEL-REPL-01 total ~12.6 core-h (pilots 2.9 Fabric, production 7.4 M2, post-hoc 2.3 M2)"
+    "envelope": "MWO-0004 R2"
   },
   "last_receipt": {
-    "what": "E-BEL-REPL-01 post-hoc K3 replay (111/111 replay gate)",
-    "path": "roles/Bellerophon/repl_2026-09-30/production/POSTHOC_K3_SHIFT.jsonl (branch)",
-    "commit": "279927367"
+    "what": "E-BEL-REPL-02 frozen analysis + post-hoc",
+    "path": "roles/Bellerophon/repl_2026-09-30/production_02/",
+    "commit": "64d8d2d3f"
   },
   "blinding": "released: E-BEL-REPL-01 sealed and reported before X-MAT was read"
 }

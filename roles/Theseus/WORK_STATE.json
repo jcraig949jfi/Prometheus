@@ -3,8 +3,8 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T14:30:00Z",
-  "state": "ACTIVE",
+  "updated_at_utc": "2026-09-30T14:55:00Z",
+  "state": "READY",
   "branch": "theseus/charter-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
   "threads": [
@@ -19,20 +19,44 @@
     {
       "id": "v0",
       "prereg": "roles/Theseus/prereg/2026-09-30_v0/PREREG.md",
-      "status": "READY",
-      "command": "python -m theseus.synth.run_v0 --tag v0_2026-09-30 --workers 4"
+      "status": "DONE",
+      "verdicts": {
+        "H1": "FAIL"
+      },
+      "report": "theseus/reports/v0_2026-09-30.md"
+    },
+    {
+      "id": "v0_1",
+      "prereg": "roles/Theseus/prereg/2026-09-30_v0/PREREG_AMENDMENT_1.md",
+      "status": "DONE",
+      "verdicts": {
+        "H1": "INDETERMINATE"
+      },
+      "report": "theseus/reports/v0_1_2026-09-30.md"
     }
   ],
   "fabric_tasks": [],
   "running": [],
-  "blocked_on": [],
+  "blocked_on": [
+    {
+      "item": "THESEUS-06",
+      "on": "Tyche",
+      "prompt": "roles/Theseus/prompts/2026-09-30_to_tyche/"
+    }
+  ],
   "next_actions": [
-    "THESEUS-01 run v0",
-    "THESEUS-02 score and report",
-    "THESEUS-03 calibration rows",
-    "THESEUS-04 review packet",
-    "THESEUS-05 frontier replenishment + v1 prereg"
+    "awaiting Aporia (CWO-B); proposed: THESEUS-23 ruler discrimination",
+    "THESEUS-23 ruler discrimination: planted-structure positive controls; mechanistic and lens rulers must separate R from planted structure (READY)",
+    "THESEUS-24 raise H1 n: ~300 LLM-arm genomes or H1-without-A secondary (READY)",
+    "THESEUS-20 multi-seed H1 variance, 3+ master seeds (READY)",
+    "THESEUS-06 Tyche interface answer (BLOCKED on Tyche reply; question posted)",
+    "THESEUS-25 verify v0_1 bitwise reproducibility by rerunning (READY, cheap)"
   ],
   "operator_decisions_required": [],
-  "latest_reports": []
+  "latest_reports": [
+    "roles/Theseus/REVIEW_PACKET_v0_2026-09-30.txt",
+    "theseus/reports/v0_2026-09-30.md",
+    "theseus/reports/v0_1_2026-09-30.md"
+  ],
+  "work_order": "CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5): in-flight set complete, completion sent to Aporia (comms #1125); awaiting assignment, no self-promotion"
 }

@@ -23,3 +23,4 @@ MWO-0004 | ops/work_orders/archive/MWO-0004_2026-09-29.md | 925660b2d2be53af2ee4
 
 CWO-2026-09-30 | ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md | ab93f64684d94771350848d2aef5d518f9045e1f8b79ba7834e419c83aba7b7e | (this commit) | 2026-09-30 | comms broadcast | executor: Aporia (operator CWO; supplements MWO-0004, CURRENT.md unchanged)
 CWO-2026-09-30B | ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md | e62cb5ee986d78758ef9912642da1975ee32c715a091088de210d22d803000b9 | (this commit) | 2026-09-30 | comms broadcast | executor: Aporia (operator CWO; supplements MWO-0004; supersedes CWO-2026-09-30 auto-promotion)
+CWO-2026-09-30C | ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md | edc4792d30a7829709f1eb392ead55c092f47139c760879556ef17408c867e6c | (this commit) | 2026-09-30 | comms broadcast | executor: Aporia (operator CWO; governing fleet-operating order; supersedes conflicting CWO-2026-09-30/-30B text)

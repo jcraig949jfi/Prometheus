@@ -1,6 +1,6 @@
 {
   "schema": "prometheus.fleet_census.v1",
-  "work_order": "CWO-2026-09-30B",
+  "work_order": "CWO-2026-09-30C",
   "maintainer": "Aporia",
   "discovery": {
     "method": "comms agent_instances sync/active < 48h; comms senders 24h; commit prefixes 24h; WORK_STATE files; fabric agents",
@@ -27,58 +27,124 @@
       "state": null,
       "current_work": null,
       "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "last_heartbeat": "NO RESPONSE by 14:16Z deadline",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING?",
+        "visibility": "VISIBILITY_STALE",
+        "current_objective": "E-012 rcv_str frozen-energy-snapshot lesion",
+        "next_milestone": "E-012 prereg/run",
+        "expected_artifact": "E-012 RESULT",
+        "likely_blocker": "promexec (operator) only if used",
+        "dependency_owner": "operator",
+        "last_push": "5ac5426c8 10:21Z",
+        "last_heartbeat": "none since CWO-B"
+      }
     },
     "Ananke": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SKULLPORT m1-7d1e2413",
+      "uptime": "UNKNOWN; instance first seen 09-25T21:23Z",
+      "model": "claude-opus-5-5[1m]",
+      "state": "READY -> assigned C4 R-STAT (#1137)",
+      "current_work": "none; T-SWAP-AUDIT3 done (92.7% vs 95% bar missed)",
+      "blocker": "none",
+      "last_heartbeat": "#1100 13:23Z",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING (C4 R-STAT)",
+        "visibility": "HEALTHY",
+        "current_objective": "C4 v0.2 R-STAT review",
+        "next_milestone": "phase-1 review",
+        "expected_artifact": "roles/Cosmos/c4/reviews/ R-STAT",
+        "likely_blocker": "final verdict waits foreign family + C3 publication",
+        "dependency_owner": "Theseus / Cosmos",
+        "last_push": "c172f7ff3 13:23Z",
+        "last_heartbeat": "#1100"
+      }
     },
     "Archaeon": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SPECTREX5 m2-1034e815",
+      "uptime": "since 09-25T12:09Z (~5d1h20m)",
+      "model": "claude-opus-5-5",
+      "state": "READY",
+      "current_work": "none; E-003 complete",
+      "blocker": "none (operator: E-003 BEE verdict of record, #1044)",
+      "last_heartbeat": "#1102 13:30Z",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "READY -> dispatched (shared hang)",
+        "visibility": "HEALTHY",
+        "current_objective": "comms/evidence_wiki connection-hang check",
+        "next_milestone": "finding: present/absent",
+        "expected_artifact": "repair commit or NOT_PRESENT receipt",
+        "likely_blocker": "none",
+        "dependency_owner": "-",
+        "last_push": "branch archaeon/mwo0001-2026-09-28 837a2ed60",
+        "last_heartbeat": "#1102"
+      }
     },
     "Artemis": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "ubu002 ubu002-1dd2dd19",
+      "uptime": "booted 11:32Z",
+      "model": "claude-opus-5-5",
+      "state": "READY",
+      "current_work": "D002 closed; D003/D004 self-promoted after CWO-B (declared), D005 cancelled",
+      "blocker": "none",
+      "last_heartbeat": "#1134 15:33Z (late)",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "READY -> dispatched (IQ-NULL/G1)",
+        "visibility": "HEALTHY",
+        "current_objective": "IQ-NULL/G1 admissibility cleanup",
+        "next_milestone": "partition-key recovery verdict",
+        "expected_artifact": "RESULT under roles/Artemis/",
+        "likely_blocker": "none",
+        "dependency_owner": "-",
+        "last_push": "c1b99475b 15:33Z",
+        "last_heartbeat": "#1134"
+      }
     },
     "Bellerophon": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SPECTREX5 m2-e9845b74",
+      "uptime": "since 09-25T12:08Z",
+      "model": "claude-opus-5-5",
+      "state": "READY -> assigned C4 R-MECH (#1138)",
+      "current_work": "E-BEL-REPL-02 RESIDUE_NOT_REPLICATED (ABSENT) closed (#1126)",
+      "blocker": "none",
+      "last_heartbeat": "#1112; completion #1126",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING (C4 R-MECH)",
+        "visibility": "HEALTHY",
+        "current_objective": "C4 v0.2 R-MECH review",
+        "next_milestone": "phase-1 review",
+        "expected_artifact": "roles/Cosmos/c4/reviews/ R-MECH",
+        "likely_blocker": "final verdict waits foreign family + C3 publication",
+        "dependency_owner": "Theseus / Cosmos",
+        "last_push": "84e21775e 15:03Z",
+        "last_heartbeat": "#1112/#1126"
+      }
     },
     "Cosmos": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SPECTREX5 m2-44f84976",
+      "uptime": "booted 09-30T10:25Z",
+      "model": "claude-opus-5-5",
+      "state": "BLOCKED item-level on C4 reviewers -> routed (#1136)",
+      "current_work": "C3 autopsy + C4 design done (#1107)",
+      "blocker": "none",
+      "last_heartbeat": "#1103 13:34Z; completion #1107",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING",
+        "visibility": "HEALTHY",
+        "current_objective": "C4 design under review",
+        "next_milestone": "publish C3 after foreign commit; reconcile reviews",
+        "expected_artifact": "C3 publication; review reconciliation",
+        "likely_blocker": "foreign family (Theseus) -> C3 publication -> reviewer finals",
+        "dependency_owner": "Theseus",
+        "last_push": "99541a365 15:27Z",
+        "last_heartbeat": "#1103/#1107/#1127"
+      }
     },
     "Cyclops": {
       "host_instance": null,
@@ -87,48 +153,103 @@
       "state": null,
       "current_work": null,
       "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "last_heartbeat": "NO RESPONSE by 14:16Z deadline",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "PARKED",
+        "visibility": "VISIBILITY_STALE",
+        "current_objective": "none",
+        "next_milestone": "-",
+        "expected_artifact": "-",
+        "likely_blocker": "-",
+        "dependency_owner": "-",
+        "last_push": "9ec36b2bf 10:31Z",
+        "last_heartbeat": "none"
+      }
     },
     "Ensorain": {
       "host_instance": null,
       "uptime": null,
       "model": null,
       "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "current_work": "operator direct re-order: PKG-F/W-DRIFT -> LM02 bounded -> freeze (#1111)",
+      "blocker": "LM01 (MWO-0004 G3)",
+      "last_heartbeat": "#1111 13:57Z (queue update, NOT a heartbeat: no uptime/model)",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING",
+        "visibility": "VISIBILITY_STALE",
+        "current_objective": "WTP-04 Habitable Islands (operator re-order)",
+        "next_milestone": "UNKNOWN",
+        "expected_artifact": "UNKNOWN",
+        "likely_blocker": "LM01 gate (not needed)",
+        "dependency_owner": "-",
+        "last_push": "4d0ddb001 14:54Z",
+        "last_heartbeat": "queue update #1111 only"
+      }
     },
     "Harmonia": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SPECTREX5 m2-475d761f",
+      "uptime": "since 09-25T11:57Z",
+      "model": "claude-opus-5-5",
+      "state": "HOLD",
+      "current_work": "waiting: Nyx ASAL prereg packet; E-003 BEE verdict",
+      "blocker": "Nyx packet (Nyx); E-003 verdict of record (operator)",
+      "last_heartbeat": "#1101 13:24Z",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "HOLD",
+        "visibility": "HEALTHY",
+        "current_objective": "routed adjudications",
+        "next_milestone": "Nyx ASAL prereg review",
+        "expected_artifact": "ruling",
+        "likely_blocker": "Nyx packet; E-003 verdict (operator)",
+        "dependency_owner": "Nyx / operator",
+        "last_push": "19ffc2d0b 16:00Z",
+        "last_heartbeat": "#1101"
+      }
     },
     "Hecate": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SKULLPORT m1-dd0c3882",
+      "uptime": "UNKNOWN; >=11h20m (first commit 01:56Z)",
+      "model": "claude-opus-5-5[1m]",
+      "state": "BLOCKED",
+      "current_work": "alien-lawful B/C (frozen PREREG) + verify Harmonia audit #1037",
+      "blocker": "free-tier quota (time / optional operator spend)",
+      "last_heartbeat": "#1097 13:18Z",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "BLOCKED",
+        "visibility": "HEALTHY",
+        "current_objective": "alien-lawful B/C + verify #1037",
+        "next_milestone": "quota reset",
+        "expected_artifact": "B/C scored",
+        "likely_blocker": "free-tier quota",
+        "dependency_owner": "time (optional operator spend)",
+        "last_push": "cf70bbb05 13:18Z",
+        "last_heartbeat": "#1097"
+      }
     },
     "Nestor": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "SKULLPORT session 7438ee6f",
+      "uptime": "transcript since 09-25T12:13Z (~5d1h); process start UNKNOWN",
+      "model": "claude-opus-5-5[1m]",
+      "state": "READY",
+      "current_work": "none; X-MAT-INTERNALIZE CLOSED ENDOGENOUS (ae38658fe)",
+      "blocker": "none",
+      "last_heartbeat": "#1098 13:18Z",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "READY -> dispatched (prereg only)",
+        "visibility": "HEALTHY",
+        "current_objective": "prereg task-coupled/input-gated discriminator (design + freeze only)",
+        "next_milestone": "PREREG frozen",
+        "expected_artifact": "PREREG commit",
+        "likely_blocker": "execution needs a separate dispatch",
+        "dependency_owner": "Aporia",
+        "last_push": "ac5ed7a26 13:17Z",
+        "last_heartbeat": "#1098"
+      }
     },
     "Nyx": {
       "host_instance": null,
@@ -137,18 +258,40 @@
       "state": null,
       "current_work": null,
       "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "last_heartbeat": "NO RESPONSE by 14:16Z deadline",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "ACTIVE?",
+        "visibility": "VISIBILITY_STALE",
+        "current_objective": "full-domain ASAL replication packet",
+        "next_milestone": "packet frozen",
+        "expected_artifact": "prereg packet",
+        "likely_blocker": "Harmonia review; Techne R19 answer",
+        "dependency_owner": "Techne",
+        "last_push": "c343e28dd 11:20Z",
+        "last_heartbeat": "none"
+      }
     },
     "Odysseus": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "ubu001 pid 1680",
+      "uptime": "4d18h39m (ps start 09-25T18:55:52Z)",
+      "model": "claude-opus-5-5; CLI 2.1.283",
+      "state": "BLOCKED",
+      "current_work": "promexec round 2; ubu001 workers; DEF-ODY-019 repaired",
+      "blocker": "promexec broker install (operator, privileged)",
+      "last_heartbeat": "#1104 13:36Z",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "BLOCKED + P0 repair",
+        "visibility": "HEALTHY",
+        "current_objective": "P0 Windows Fabric CLI (#1135); promexec round 2",
+        "next_milestone": "Windows fix commit",
+        "expected_artifact": "fabric/store.py fix + Windows smoke",
+        "likely_blocker": "promexec install (operator)",
+        "dependency_owner": "operator",
+        "last_push": "bcb7a4d73 14:48Z",
+        "last_heartbeat": "#1104/#1115"
+      }
     },
     "Techne": {
       "host_instance": null,
@@ -157,18 +300,40 @@
       "state": null,
       "current_work": null,
       "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "last_heartbeat": "NO RESPONSE by 14:16Z deadline",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "ACTIVE?",
+        "visibility": "VISIBILITY_STALE",
+        "current_objective": "R19 provenance-grade answer to Nyx (#1071)",
+        "next_milestone": "answer posted",
+        "expected_artifact": "comms answer + receipt",
+        "likely_blocker": "-",
+        "dependency_owner": "-",
+        "last_push": "0f145b21e 11:18Z",
+        "last_heartbeat": "none"
+      }
     },
     "Theseus": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "host_instance": "DESKTOP-RUAPVAI desktop-ruapvai-01f15f15",
+      "uptime": "UNKNOWN; first action ~11:35Z",
+      "model": "claude-opus-5-5[1m]",
+      "state": "READY -> assigned C4 foreign author (#1139)",
+      "current_work": "v0 H1 FAIL, v0_1 INDETERMINATE (done)",
+      "blocker": "THESEUS-06 waits on Tyche (#1124)",
+      "last_heartbeat": "#1125 14:44Z (late)",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING (C4 foreign author)",
+        "visibility": "HEALTHY",
+        "current_objective": "one C4 visible world family per contract",
+        "next_milestone": "family committed on main",
+        "expected_artifact": "family commit",
+        "likely_blocker": "none",
+        "dependency_owner": "-",
+        "last_push": "56f0fc547 14:45Z",
+        "last_heartbeat": "#1125"
+      }
     },
     "Tyche": {
       "host_instance": null,
@@ -177,8 +342,43 @@
       "state": null,
       "current_work": null,
       "blocker": null,
-      "last_heartbeat": null,
-      "heartbeat_msg": null
+      "last_heartbeat": "NO RESPONSE by 14:16Z deadline",
+      "heartbeat_msg": null,
+      "forward": {
+        "state": "WORKING",
+        "visibility": "VISIBILITY_STALE",
+        "current_objective": "v2 Dark Ecology build (operator v2)",
+        "next_milestone": "UNKNOWN",
+        "expected_artifact": "UNKNOWN",
+        "likely_blocker": "Theseus #1124 interface question pending",
+        "dependency_owner": "-",
+        "last_push": "4dbbc07d0 14:50Z",
+        "last_heartbeat": "none"
+      }
     }
-  }
+  },
+  "heartbeat_window": "requested 13:16:39Z (#1080-1096), closed 14:16:58Z",
+  "operator_decisions": {
+    "COSMOS-C3": "DECIDED A by operator (per Cosmos #1103/#1107); closed",
+    "E-003 BEE verdict of record": "OPEN (Harmonia #1044; Archaeon #1102): ALTERED vs VALIDATED-as-amended",
+    "Hecate spend": "OPTIONAL (<$5); default free-tier",
+    "promexec broker install": "OPEN privileged install (Odysseus #1104; pinned sha256 3cf32a64...0df3)"
+  },
+  "open_defects_routed": {
+    "#1135": "fabric store _harden_socket (9c022347e) breaks Fabric CLI on Windows (Errno 9) -> Odysseus",
+    "#1128": "evidence_wiki gap_prospective_v1 sealed mapping inferable -> Harmonia ruled VOID_BY_CONSTRUCTION",
+    "#1115": "comms/evidence_wiki pool half-open-connection exposure -> no active owner (Mnemosyne parked)"
+  },
+  "as_of_utc": "2026-09-30T18:05Z",
+  "forward_view_columns": [
+    "state",
+    "visibility",
+    "current_objective",
+    "next_milestone",
+    "expected_artifact",
+    "likely_blocker",
+    "dependency_owner",
+    "last_push",
+    "last_heartbeat"
+  ]
 }

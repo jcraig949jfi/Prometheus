@@ -1,0 +1,214 @@
++==========================================================================================+
+| REVIEW PACKET -- C3 failure autopsy + C4 successor design v0.1                            |
+| Author: Cosmos[m2-44f84976] (claude-opus-5-5), M2 SPECTREX5                                 |
+| Date: 2026-09-30                                                                         |
+| For: operator (HITL) + external reviewers                                                |
+| Status: C3 CLOSED / KILLED BEFORE HOLDOUT; C4 DESIGNED, not frozen, not authorized to run |
+| Self-contained: no repo access needed. PUBLIC: no withheld coordinate, law, threshold    |
+| or world; no D2 content.                                                                 |
++==========================================================================================+
+
+-----
+0. SUMMARY / MANDATE / VERDICT
+-----
+Mandate (operator, 2026-09-30):
+- close C3 as killed before holdout and preserve the falsification as a scar;
+- run the failure autopsy (a withheld technical product and a public one);
+- design a successor as a NEW campaign (C4) that passes gates S0-S4 on visible worlds before any
+  holdout is considered;
+- keep D2 sealed, unread and unspent.
+Verdicts, kept separate:
+  CHAMBER / INSTRUMENT: the C3 certificate stands (v3 gate PASS, with a known power limit on noisy
+    binary states). The C3 coordinate construction is REJECTED: it shares machinery with the label.
+  CANDIDATE LAW (C3): KILLED. It restates the certificate plus a noise floor. On the adversary's
+    confident out-of-sample stratum it ties a zero-parameter rule exactly (42 = 42).
+  METHOD (C4): designed. The key finding is that on a C3-like world distribution the binding gate S0
+    is close to a PERFECTION gate. C4 is feasible only with a world sample enriched where
+    "perturbation registered" and "information usable" diverge.
+
+-----
+1. WHAT WAS BUILT, AND WHAT WAS COMMITTED BEFORE MEASUREMENT
+-----
+- The operator direction was recorded verbatim with a manifest, before any work.
+- The state files were reconciled (seat HOLD -> ACTIVE -> READY).
+- Autopsy script (withheld): it re-executes the zero-parameter rule, compares the law to it in-sample
+  and out-of-sample, and measures certificate coupling and family leakage. Its output is
+  byte-identical on re-run.
+- S0 trivial-rule preregistration: FROZEN (hash-chained freeze F-0001) BEFORE any C4 number was
+  computed.
+- S0 visible analysis (withheld): baselines, headroom and a power simulation. Byte-identical on re-run.
+- DESIGN_C4.md v0.1 (public).
+
+-----
+2. THE CLAIM AND WHY IT MATTERS
+-----
+C3 asked whether one cross-substrate quantity decides when a system USES information from its past
+(label: certificate class NONE / PASSIVE / FUNCTIONAL, from P1 decodability + P2 paired-history swap).
+The preliminary law passed all 5 of its own preregistered gates, including an adversary and a
+substitution attack. A coordinate-layer audit then rejected it. If that audit is right, a
+"cross-substrate law" can pass every internal gate while saying nothing beyond its measurement
+apparatus. Any law foundry needs to know that failure mode.
+
+-----
+3. AUTOPSY RESULTS (OBSERVED; visible worlds only, 3 families x 40)
+-----
+- Zero-parameter rule = the P1/P2 preconditions written in the coordinate construction. It has no
+  fit and no threshold, and it scores 104/120 (by family 40, 34, 30). It gets 12/12 substitution worlds.
+- Its 16 misses:
+  - 7 worlds where the certificate itself returned no class;
+  - 9 where a perturbation registers but carries no usable information.
+- Law vs rule on the fitted binary target (113 determinate worlds):
+  - 6 worlds only the law got right, 1 only the rule got right; McNemar p = .125;
+  - all 6 law wins are noise-floor cases.
+- Out of sample (the adversary's 90 fresh certified worlds):
+  - confident stratum (n 44): law 42, rule 42, zero discordant;
+  - all 81 determinate rows: rule 64 vs law 60.
+  - The band stratum was chosen near the law's own boundary, so it is biased against the law.
+- Certificate coupling:
+  - Spearman(law coordinate, P2 effect) = .875;
+  - within FUNCTIONAL, .68-.77 per family;
+  - all 31 worlds with the coordinate exactly 0 have a P2 effect <= 1/3000.
+- Family leakage: the coordinate set identifies the family at .77 (1-NN leave-one-out; .87 with the
+  diagnostics) vs chance .33, i.e. kappa ~.65. One family is identified perfectly (40/40) by a
+  bitwise identity between two coordinates.
+- Ancestry:
+  - the winning form was preregistered as the EXPECTED result (credence .5) before any data;
+  - all 12 top search candidates contain the same coordinate;
+  - the definition rung was not a preregistered baseline. The ladder that requires it arrived
+    5 days later.
+INFERRED: the coupling is mechanical. Both audit replicas traced shared code paths: the same paired
+noise and the same swap time.
+CONCLUDED: the C3 candidate invariant showed no explanatory structure beyond its own certificate
+construction. This is the second instance of the failure mode; the C0 laws re-derived the C0
+certificate economics.
+
+-----
+4. INCIDENTS AND PROCESS HOLES (recorded plainly)
+-----
+I1 PROVENANCE: the 09-29 audit's verification record stored hit COUNTS only, not the rule text or the
+   code hash. The autopsy re-derived the rule from a replica's finding and reproduced the counts
+   exactly. Lesson L4.
+I2 D2 CUSTODY, self-reported: a leak-scan git grep over a package tree also matched the D2
+   CIPHERTEXT file. The only output was a binary-match line: no bytes, no decryption, and the key
+   is off-machine. Cosmos reads it as "no information" but does not rule on its own contact. The
+   ruling is with the custodian and auditor. Prevention: searches now exclude the holdout package.
+I3 LEAK CAUGHT: the same scan found one withheld coordinate name in a draft public results line. It
+   was fixed before commit.
+I4 TIMESTAMPS: several clock times were ESTIMATED and ran ahead of the real clock (e.g. 14:20Z
+   written at 13:5xZ). They were corrected from commit receipts and annotated, not silently
+   rewritten.
+I5 LATE HEARTBEAT: the fleet heartbeat was due within 1 h, but the session booted after the window.
+   The heartbeat also flagged that the fleet order said "remain at the gate", while the later
+   operator direction authorized this work.
+
+-----
+5. S0 DESIGN AND VISIBLE-DATA ANALYSIS
+-----
+Frozen before any number (F-0001):
+- T0 majority; T1 family-ID (under LOFO it equals majority; plus a within-family leakage reference);
+- T2 task-parameter logistic (LOFO) + within-family native ceiling;
+- T3-DOWN, the zero-parameter certificate rule. BINDING.
+- Pass rule: LOFO BA margin >= .05 over each rule, with the 95% paired-bootstrap lower bound > 0; AND
+  McNemar p < .05 vs T3-DOWN with more candidate-only wins; AND worst-family BA >= T3-DOWN's.
+Visible results (113 determinate worlds, pooled LOFO BA / worst family):
+  T0 .500/.500   T1-leak .752/.500   T2-task .428/.434   T2-native-ceiling .825/.625
+  T3-DOWN .905/.500 (accuracy .938)
+OBSERVED:
+- All 7 T3-DOWN errors are FALSE POSITIVES.
+- A candidate right wherever T3-DOWN is right passes only if it corrects >= 6 of those 7 with 0 new
+  errors (7 fixes, 1 new error -> p .07, FAIL).
+Power, synthetic (candidate corrects 70% of T3-DOWN errors and adds 2% new errors):
+  failure-regime share of negatives:   .19 (C3)   .35    .50
+  n=120                                 .14        .72    .94
+  n=240                                 .34        .995   1.00
+  n=480                                 .46        1.00   1.00
+A 50%-correcting candidate essentially never passes at the C3 share, and passes less often as n grows.
+INFERRED: on a C3-like distribution C4 would STOP for lack of headroom, not for lack of physics.
+
+-----
+6. C4 DESIGN v0.1 (key choices)
+-----
+- Question moved upstream: what physical properties of a world make history causally accessible?
+- S1 machinery firewall:
+  - coordinates come ONLY from task-free, single, unperturbed trajectories;
+  - unconditional statistics at any lag; input-conditioned statistics only at lags 0-1;
+  - no twins, swaps, ablations, resampling or task-trained readouts;
+  - enforced by an import audit, a mutation test (the coordinates must be bitwise unchanged when the
+    certificate code or seeds change), a runner that never stores inputs older than 1 step, and a
+    re-encoding invariance suite.
+- S2: family predictability reported as kappa. WARNING above .30 triggers three dependence tests.
+  LOFO is primary.
+- S3: Certificate B shares no machinery with A: a different estimator class, and an unpaired
+  marginal-resampling intervention instead of the paired swap.
+- S4: the target intervention arm is "perturbation still registered, upstream property changed ->
+  predicted FUNCTIONAL->NONE", where the certificate rule predicts no change. It has a matched
+  opposite arm.
+- Planted calibration includes a PURE-CHAOS control: T3-DOWN calls it FUNCTIONAL, and it is NONE by
+  construction.
+- World sample: >= 240 determinate worlds, >= 4 families (>= 2 new mechanisms), and a label-blind
+  sampler putting >= 50% in high-noise / near-critical strata. The C3 visible worlds are burned for
+  scoring.
+- D2: its compatibility is determined separately, after the visible gates, by a seat other than
+  Cosmos, against the operator's 4 conditions (including the I2 ruling).
+
+-----
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+-----
+DOES:
+- C3's candidate was a certificate restatement;
+- killing it before D2 was correct;
+- C4's gate S0 is reachable only with an enriched world distribution.
+DOES NOT:
+- show that no upstream law exists;
+- test any C4 coordinate (none exists yet, by design);
+- say anything about D2;
+- give C4 a result. Everything in C4 is Z1 design, from a single author lineage (Cosmos).
+
+-----
+8. DECISION / RECOMMENDATION (the operator's call; Cosmos's lean)
+-----
+Q1 Authorize C4 steps 2-5 (design review -> freeze the prereg F-0002 -> instrument build + planted
+   calibration -> visible gates)?
+   Lean: authorize the design review first, and the build only after the review passes.
+Q2 Should a foreign seat author one VISIBLE family now (not a holdout)?
+   Lean: yes. Otherwise any visible pass counts one author lineage.
+Q3 Who reviews the design?
+   Lean: not Harmonia, which should stay free to rule on D2 custody/compatibility.
+"Stop at design: C4 not worth building" remains a first-class answer.
+
+-----
+9. QUESTIONS FOR THE REVIEWER (written to resist agreement)
+-----
+R1 Is the S1 firewall so strict that no admissible coordinate can carry lag-k information? That would
+   make S0 unreachable by construction, a different tautology.
+R2 Upstream timescales and noise shares may themselves be family fingerprints (C3's diagnostics
+   were). Is S2's kappa > .30 warning too lenient or too strict?
+R3 Is Certificate B really independent of A, or does marginal resampling at t=k re-implement the same
+   causal contrast?
+R4 Is enriching the sample toward the rule's failure regime a form of selection that inflates the
+   candidate's apparent margin? Should S0 also be reported on an unenriched stratum?
+R5 Should T3-DOWN be binding at all? It is a cheap RE-MEASUREMENT of the label, not an explanation.
+   Would it be fairer to require beating it only where it is not saturated?
+R6 Is the I2 ciphertext contact really "no information"? What would make it otherwise?
+
+-----
+10. ARTIFACTS (origin/main unless marked LOCAL)
+-----
+roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/        60965e0a6 (directive, verbatim)
+roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md   9bdfd85e1
+roles/Cosmos/research/RESULTS.md R-0003, GRAVEYARD.md G-0006    9bdfd85e1 / 60965e0a6
+roles/Cosmos/c3/INFO_LEDGER.md (disposition + incident I2)      9bdfd85e1, eeebefa16
+roles/Cosmos/c4/S0_TRIVIAL_RULES.md (F-0001, sha256 75125607cff4b40b2ac4676e5e7536787cb1201e9a06b5e268960cb7355fd66c)  1b45b89ea
+roles/Cosmos/c4/DESIGN_C4.md                                    c37e2c687
+LOCAL (M2, never pushed): branch cosmos/c3-autopsy-2026-09-30
+  c9f8aff1777ceec49951bd5ee09ab734caea6370  technical autopsy
+    AUTOPSY_C3_WITHHELD.md  adc2e8883de11c2ff9d93cfeb88bea79acc3b0afed8955f1bd4edb27152febcc
+    AUTOPSY_DATA.json       298ef81696537e474d1427724eb78d9ed197d1a94ae81a1e5859407a870be646
+  197daf5f3  S0 visible analysis
+    S0_VISIBLE.json         7b0a1341ac5deaa75107129846447d2e6895605a040fbe80f3ff2bbc328ec535
+comms: #1103 heartbeat, #1105/#1106 incident, #1107 completion (READY)
+
++==========================================================================================+
+| END. Reviewer: "C4 is not worth building" and "the S0 bar is mis-specified" are both      |
+| acceptable answers. Say which, and why.                                                   |
++==========================================================================================+

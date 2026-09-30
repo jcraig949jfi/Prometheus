@@ -62,7 +62,7 @@ class Field:
             self.P[p] = self.P[p] + 0.1 * (c - self.P[p])
 
     def tick(self, active):
-        ids = list(active)
+        ids = sorted(active)
         if len(ids) < 2:
             return
         X = np.array([self.P[i] for i in ids])
@@ -76,9 +76,9 @@ class Field:
 
 
 def choose_coalition(reg, tensor, field, active, lane, k, rng, lenses=(), need_lens=False, tries=25):
-    pool = [i for i in active if en.eligible(reg, i, lane)]
+    pool = sorted(i for i in active if en.eligible(reg, i, lane))  # sorted: RNG draws must not depend on set order
     if need_lens:
-        lens_pool = [i for i in lenses if i in active]
+        lens_pool = sorted(i for i in lenses if i in active)
         pool = [i for i in pool if reg[i].get("kind") != "lens"]
         if not lens_pool or len(pool) < k - 1:
             return None, None
