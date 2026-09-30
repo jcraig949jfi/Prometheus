@@ -1,0 +1,1311 @@
+{
+  "id": "HT-a9e2ba7618",
+  "key": "Neural Oscillations + Topology + Wavelet Transforms",
+  "stratum": "S1_cross_extreme",
+  "concepts": [
+    {
+      "field": "Neuroscience",
+      "mechanism": "dynamics",
+      "name": "Neural Oscillations",
+      "short_description": "Rhythmic brain activity at multiple frequencies; gamma binding, theta sequences, cross-frequency coupling."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "structure",
+      "name": "Topology",
+      "short_description": "Study of properties preserved under continuous deformations; connectedness, holes, and invariants."
+    },
+    {
+      "field": "Signal Processing",
+      "mechanism": "measure",
+      "name": "Wavelet Transforms",
+      "short_description": "Multi-resolution time-frequency analysis; localized basis functions, multiresolution analysis, denoising."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Neural Oscillations + Topology + Wavelet Transforms",
+    "humanreadable": "agents/hephaestus/humanreadable/Topology---Wavelet_Transforms---Neural_Oscillations.md",
+    "ledger_lines": [
+      1480
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L1480",
+    "upstream_nous": [
+      "agents/nous/runs/20260324_131206/responses.jsonl#L486"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 7.0,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-a9e2ba7618",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Neural Oscillations",
+          "defining_structures": [
+            "limit-cycle units with a phase variable on S1",
+            "coupling between units (phase-difference dependent)",
+            "nested rhythms: slow carrier (theta) whose phase gates fast bursts (gamma)"
+          ],
+          "invariants": [
+            "phase is defined only modulo 2*pi",
+            "locked phase differences in a synchronized cluster",
+            "frequency ratios in n:m locking"
+          ],
+          "transformations": [
+            "phase shift (global rotation leaves dynamics unchanged)",
+            "phase reset by input pulse",
+            "frequency modulation by drive"
+          ],
+          "conserved_quantities": [
+            "none strictly; the global phase is a neutral (gauge-like) direction",
+            "winding of phase around a closed coupling loop between slip events"
+          ],
+          "failure_modes": [
+            "phase slip (locked pair loses a full cycle)",
+            "desynchronization / incoherence under noise",
+            "pathological hypersynchrony (everything locks, no information)",
+            "amplitude death"
+          ],
+          "dynamics": [
+            "entrainment and locking",
+            "synchronization transitions with coupling strength",
+            "phase precession within a slow cycle",
+            "cross-frequency phase-amplitude coupling"
+          ],
+          "scales": [
+            "frequency bands spanning roughly 1-100 Hz, often near-octave spaced",
+            "cycle length sets a time window for integration"
+          ],
+          "locality": [
+            "local coupling within a population, long-range coupling via coherence",
+            "locality in phase: only near-phase units interact strongly"
+          ],
+          "memory": [
+            "persistent phase offsets",
+            "sequence order stored as phase order within a slow cycle",
+            "reverberating locked patterns"
+          ],
+          "identity": [
+            "an assembly is the set of units sharing a locked phase",
+            "identity is relational (phase difference), not absolute"
+          ],
+          "reproduction": [
+            "a locked pattern can entrain a naive population (copying by entrainment)"
+          ],
+          "selection": [
+            "inputs resonant with intrinsic frequency win",
+            "phase windows select which inputs are effective (communication through coherence)"
+          ],
+          "information": [
+            "carried in phase relative to a reference rhythm",
+            "in which units are co-locked (binding)",
+            "in cross-frequency slot position"
+          ],
+          "constraint": [
+            "a slow cycle holds only a few fast cycles (capacity by frequency ratio)",
+            "noise sets the coherence time"
+          ]
+        },
+        {
+          "concept": "Topology",
+          "defining_structures": [
+            "spaces up to continuous deformation",
+            "loops and holes (homotopy, homology)",
+            "cell/graph complexes",
+            "maps between spaces and their degree"
+          ],
+          "invariants": [
+            "Betti numbers",
+            "winding number / degree of a map S1 -> S1",
+            "Euler characteristic",
+            "connectedness"
+          ],
+          "transformations": [
+            "homeomorphism / homotopy (allowed)",
+            "surgery: cutting and gluing (changes invariants)"
+          ],
+          "conserved_quantities": [
+            "integer invariants under continuous change",
+            "total topological charge of defects in a closed domain"
+          ],
+          "failure_modes": [
+            "invariants change only through singular events (tearing, defect creation, slips)",
+            "invariants are blind to metric detail: two very different systems look equal"
+          ],
+          "dynamics": [
+            "none intrinsic; dynamics enters as a path through a space of configurations",
+            "defect nucleation and annihilation"
+          ],
+          "scales": [
+            "scale-free in principle; persistent homology introduces a filtration scale"
+          ],
+          "locality": [
+            "local moves cannot change global invariants",
+            "invariants are global but can be computed from local data (sums of local windings)"
+          ],
+          "memory": [
+            "an integer invariant is a memory that survives any small perturbation",
+            "persistence (birth-death) records history of a filtration"
+          ],
+          "identity": [
+            "two objects are the same if deformable into each other",
+            "identity = equivalence class"
+          ],
+          "reproduction": [
+            "covering maps replicate local structure",
+            "gluing copies"
+          ],
+          "selection": [
+            "persistence length selects robust features over noise"
+          ],
+          "information": [
+            "discrete, coarse information robust to metric noise",
+            "count of holes / classes as bits"
+          ],
+          "constraint": [
+            "change requires crossing a singular configuration (energy barrier or cut)",
+            "charge neutrality on closed domains"
+          ]
+        },
+        {
+          "concept": "Wavelet Transforms",
+          "defining_structures": [
+            "a mother wavelet dilated and translated",
+            "dyadic multiresolution ladder of nested approximation spaces",
+            "time-frequency tiling with fixed Heisenberg area"
+          ],
+          "invariants": [
+            "admissibility (zero mean)",
+            "vanishing moments: blindness to polynomials below order p",
+            "energy preservation (orthonormal case)",
+            "covariance under translation and dilation"
+          ],
+          "transformations": [
+            "dilation (change of scale)",
+            "translation (change of position)",
+            "thresholding / shrinkage of coefficients",
+            "reconstruction from coefficients"
+          ],
+          "conserved_quantities": [
+            "signal energy across coefficients (Parseval, orthonormal bases)"
+          ],
+          "failure_modes": [
+            "edge effects at boundaries",
+            "aliasing/shift variance of decimated transforms",
+            "uncertainty trade-off: cannot localize fine in time and frequency at once",
+            "thresholding removes weak true features"
+          ],
+          "dynamics": [
+            "none intrinsic; defines a cascade coarse-to-fine or fine-to-coarse"
+          ],
+          "scales": [
+            "octave (dyadic) spaced scales",
+            "scale-dependent time resolution"
+          ],
+          "locality": [
+            "compact support: coefficients depend on a local window",
+            "local in scale as well as time"
+          ],
+          "memory": [
+            "coarse approximation retains a summary of discarded detail",
+            "ridges of the scalogram trace component frequency over time"
+          ],
+          "identity": [
+            "a feature is identified by its ridge or by its persistence across scales"
+          ],
+          "reproduction": [
+            "self-similarity: all basis functions are copies of one mother",
+            "the refinement equation builds each scale from the next"
+          ],
+          "selection": [
+            "thresholding keeps large coefficients, discards small",
+            "choice of basis selects which structures look sparse"
+          ],
+          "information": [
+            "sparse representation of piecewise-smooth signals",
+            "singularities appear as coefficients persisting across scales (decay exponent)"
+          ],
+          "constraint": [
+            "time-frequency uncertainty",
+            "dyadic ladder fixes allowed scale ratios at 2"
+          ]
+        }
+      ],
+      "unexplained": [
+        "whether any interpretation needs all three concepts or only two",
+        "whether 'topological protection' of phase differs from local stiffness",
+        "what role wavelets play beyond a measurement tool"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-a9e2ba7618",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P0",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "wavelet contribution is weak (readout only) in M1, M9, M13, M14",
+        "M5 may be just a shared reference frame",
+        "M3 oscillators may add nothing over graph components"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-a9e2ba7618",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P1",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15"
+      ],
+      "unexplained": [
+        "no lens yet tests M4 capacity cliff or M10 merge-tree traces",
+        "whether slip-ridge coincidence holds under realistic observation noise"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-a9e2ba7618",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P2",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7",
+        "M1",
+        "M2",
+        "M3",
+        "M5",
+        "M12",
+        "M14"
+      ],
+      "unexplained": [
+        "M4, M6, M7, M9, M10, M11 have no world yet",
+        "W1 may show pure Kramers behaviour, collapsing the triplicate to a familiar mechanism",
+        "whether the wavelet is ever causal rather than a readout"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Topologically protected phase memory: in a ring of coupled oscillators the winding number of phase around the loop is an integer that can change only by a phase slip; the ring stores integers robustly, and wavelet-localized phase is the readout that sees slips as local transients."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Binding by cross-scale persistence: features of an input that keep the same connected-component structure across several wavelet scales are the ones an oscillator population locks together; synchrony implements the persistence selection of a filtration."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Nested rhythms as a dyadic address space: slow-phase / fast-cycle nesting is a multiresolution ladder, and the topology of the nesting (tree of octaves vs torus of incommensurate rhythms) sets how many items can be addressed and how addresses fail."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Defect bookkeeping as computation: in a 2D oscillator medium phase singularities carry integer charge; computation is creation, motion and annihilation of charges under a conservation law, with wavelets localizing each event in time and scale."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Learning as surgery: the coupling graph changes its cycle structure when wavelet coherence between units crosses a threshold at some scale; learning events are exactly the moments the graph's Betti numbers change, and new cycles create new places to store windings."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Deformation-invariant timing: a code written in phase relative to a carrier is invariant to monotone warps of time (homeomorphisms of the time axis) because the carrier warps along with the message; wavelet phase tracking is what makes the reference co-moving."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Drift immunity through vanishing moments: a readout built from wavelets with p vanishing moments ignores polynomial phase drift below order p, so an oscillator code need only protect the non-polynomial part of its phase; topology decides which part cannot drift away (the integer part)."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Winding-number memory: a closed ring of identical phase oscillators with nearest-neighbour coupling holds twisted states whose integer winding q is a stored value; q changes only via a phase slip on one link, so retention time is set by the slip barrier, not by the per-unit noise.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the phase variable on S1 and the locking that makes twisted states attractors",
+        "Topology": "the closed loop that makes q an integer invariant",
+        "Wavelet Transforms": "local instantaneous phase readout at each node from noisy observations"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no phase variable, no winding; memory would need a separate bistable mechanism",
+        "Topology": "on an open chain with free ends the twist relaxes to synchrony; q is not defined",
+        "Wavelet Transforms": "weak: phases could be read directly in simulation; the wavelet only matters when units are observed through noisy signals"
+      },
+      "simpler_alternative": "local gradient stiffness: each link independently holds a phase difference 2*pi*q/N, and retention is just the per-link escape rate (a Kramers problem), with the loop playing no role beyond fixing the boundary condition",
+      "questions": {
+        "what_exists": "N phase oscillators on a cycle graph",
+        "what_changes": "phases; q only at slips",
+        "what_persists": "q between slips",
+        "what_is_selected": "twisted states with small local gradient (low |q|/N)",
+        "what_can_reproduce": "q can be copied by entraining a second ring",
+        "what_can_learn": "nothing learns in the base mechanism",
+        "what_can_transfer": "q transfers to any closed-loop substrate (2D torus, spin ring)",
+        "distinguishing_observable": "retention time of q in a ring vs a pinned-end chain holding the same local gradient"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Slip-ridge repair: a phase slip appears as a localized discontinuity in the wavelet ridge of the two nodes adjacent to the slipping link; a local controller that detects the discontinuity and injects an opposite slip restores q without any global knowledge.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "slips are the only way the stored state is lost",
+        "Topology": "the error is an integer jump, so correction is exact, not approximate",
+        "Wavelet Transforms": "time-scale localization of the discontinuity lets a local detector find it"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no slips to correct; noise acts continuously",
+        "Topology": "without the loop a slip is not an error (no invariant to restore)",
+        "Wavelet Transforms": "detection would need the full global phase field instead of a local time-frequency test"
+      },
+      "simpler_alternative": "periodically re-imposing the target phase profile from an external copy (refresh), which needs global knowledge but no detection",
+      "questions": {
+        "what_exists": "ring + local detector per link",
+        "what_changes": "q under noise, corrected by injections",
+        "what_persists": "q (if detection works)",
+        "what_is_selected": "controllers with low false-positive rate",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "detector threshold can be tuned",
+        "what_can_transfer": "the detect-and-inject-opposite rule to any integer-charge system",
+        "distinguishing_observable": "retention gain versus a twin that injects the same number of corrections at random times and links"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Cross-scale persistence binding: two locations of an input are coupled (and therefore synchronize) only if they fall in the same connected component of a superlevel set of the scalogram at k or more of the dyadic scales; synchrony clusters then equal the scale-persistent components.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "synchronization turns graph connectivity into shared phase that can be read out downstream",
+        "Topology": "connected components and their persistence across a filtration",
+        "Wavelet Transforms": "the multiscale family over which persistence is measured"
+      },
+      "knockouts": {
+        "Neural Oscillations": "the result could be read as graph components with no dynamics; oscillators only add a readout (knockout may be weak)",
+        "Topology": "without component structure there is nothing to be persistent",
+        "Wavelet Transforms": "a single scale reverts to ordinary thresholded segmentation"
+      },
+      "simpler_alternative": "multiscale smoothing followed by thresholding and connected-component labelling, with no oscillators",
+      "questions": {
+        "what_exists": "input signal, scalogram, coupling graph, oscillators",
+        "what_changes": "phases",
+        "what_persists": "component membership that survives k scales",
+        "what_is_selected": "features persisting across scales",
+        "what_can_reproduce": "no",
+        "what_can_learn": "k and threshold could be adapted",
+        "what_can_transfer": "the persistence rule to 2D images or graphs",
+        "distinguishing_observable": "cluster agreement of the cross-scale rule vs a single-scale rule with matched edge count"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Dyadic nesting address: a slow rhythm with f_slow and fast rhythm with f_fast = 2^d f_slow form a d-level address tree; the number of reliably addressable slots grows as 2^d until phase noise in the slow cycle exceeds a slot width, giving a capacity cliff at a predictable d.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the nested rhythms and phase-amplitude coupling",
+        "Topology": "circle-of-circles structure (a torus when ratios are incommensurate, a tree when dyadic)",
+        "Wavelet Transforms": "the dyadic ladder that defines the address levels"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no nesting, no address",
+        "Topology": "if the nesting is incommensurate the address space becomes a torus with no clean slots; weak but real",
+        "Wavelet Transforms": "the dyadic choice is arbitrary; any integer ratio would give a similar cliff (weak dependency)"
+      },
+      "simpler_alternative": "a fixed-size buffer with k slots set by the ratio of two timescales; capacity cliff from ordinary timing jitter",
+      "questions": {
+        "what_exists": "two coupled rhythms plus items",
+        "what_changes": "slot contents each slow cycle",
+        "what_persists": "slot assignment across cycles",
+        "what_is_selected": "items that lock to a slot",
+        "what_can_reproduce": "sequences replayed each cycle",
+        "what_can_learn": "none",
+        "what_can_transfer": "capacity law to any two-clock system",
+        "distinguishing_observable": "capacity vs d follows 2^d up to a cliff whose location scales with slow-phase noise"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Warp-invariant phase code: message symbols are coded by phase relative to a carrier that is carried along with the message; any monotone time warp applied to the transmission leaves carrier-relative phase unchanged, so decoding by wavelet-tracked carrier phase is invariant to tempo changes that break clock-time decoding.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the carrier rhythm acting as a co-moving reference",
+        "Topology": "monotone warps are homeomorphisms of the time line; order and relative position are what survive",
+        "Wavelet Transforms": "adaptive-scale phase tracking follows the carrier when its local frequency changes"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no carrier, no reference",
+        "Topology": "weak: the topological framing adds vocabulary; the invariance is just a shared reference frame",
+        "Wavelet Transforms": "a fixed-frequency Hilbert or FFT phase estimate breaks under strong warps"
+      },
+      "simpler_alternative": "any shared co-warped clock (e.g. a sync pulse each cycle) gives the same invariance; nothing oscillatory or topological is needed",
+      "questions": {
+        "what_exists": "transmitter, carrier, warp, decoder",
+        "what_changes": "local tempo",
+        "what_persists": "carrier-relative phase of each symbol",
+        "what_is_selected": "codes that use relative rather than absolute timing",
+        "what_can_reproduce": "no",
+        "what_can_learn": "no",
+        "what_can_transfer": "to any tempo-varying channel",
+        "distinguishing_observable": "decoding accuracy under warp for carrier-phase vs clock-time decoders"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Coherence-triggered surgery: an edge is added between two oscillators when their wavelet coherence exceeds c* at some scale for T steps and removed when it falls below c_low; the cycle rank of the coupling graph therefore grows with the number of independent rhythmic co-occurrences in the input, creating new loops that can hold windings.",
+      "derived_from": [
+        "I5",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the coherence that drives the rule",
+        "Topology": "Betti-1 of the coupling graph as the learned quantity",
+        "Wavelet Transforms": "scale-resolved coherence decides at which scale co-activity counts"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no coherence signal, the rule never fires",
+        "Topology": "without tracking cycles the rule is ordinary Hebbian wiring",
+        "Wavelet Transforms": "a single-band coherence would miss co-occurrences at other scales"
+      },
+      "simpler_alternative": "Hebbian correlation-based wiring; loops appear only as a side effect of edge density",
+      "questions": {
+        "what_exists": "graph + oscillators + input",
+        "what_changes": "edges",
+        "what_persists": "loops that keep being reinforced",
+        "what_is_selected": "co-occurring rhythms",
+        "what_can_reproduce": "graph motifs could be copied",
+        "what_can_learn": "the coupling graph",
+        "what_can_transfer": "learned loops to storage tasks",
+        "distinguishing_observable": "cycle rank vs number of independent input rhythms, compared to degree-matched random rewiring"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Betti-matching pressure: in a population of oscillator networks selected on a task needing M integers of memory, selection favours networks whose coupling graph has cycle rank at least M; wavelet energy penalties at unused scales push the rest of the graph to be tree-like.",
+      "derived_from": [
+        "I1",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the memory medium",
+        "Topology": "cycle rank as the resource count",
+        "Wavelet Transforms": "the scale-energy penalty shaping the rest of the graph"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no memory medium",
+        "Topology": "without the loop resource the pressure has no target",
+        "Wavelet Transforms": "without the penalty graphs just stay dense (weak dependency)"
+      },
+      "simpler_alternative": "selection for any memory capacity yields more recurrent connections; loop count is a correlate of edge count",
+      "questions": {
+        "what_exists": "population of graphs",
+        "what_changes": "edges under mutation",
+        "what_persists": "loop count",
+        "what_is_selected": "graphs with the right cycle rank",
+        "what_can_reproduce": "graphs",
+        "what_can_learn": "structure over generations",
+        "what_can_transfer": "to other integer-storage media",
+        "distinguishing_observable": "cycle rank tracks M while edge count is held fixed by constraint"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Vanishing-moment drift immunity: a phase readout using wavelets with p vanishing moments is exactly blind to polynomial phase drift of order below p, so an oscillator code subjected to slow polynomial frequency drift remains decodable, while the integer part (winding) is protected separately.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the drifting phase",
+        "Topology": "the integer part that cannot drift",
+        "Wavelet Transforms": "vanishing moments define what the readout ignores"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no phase, no drift problem",
+        "Topology": "weak: the drift immunity works without any loop; topology only names the non-drifting part",
+        "Wavelet Transforms": "the central role; without it the drift corrupts decoding"
+      },
+      "simpler_alternative": "detrending with a polynomial fit before decoding",
+      "questions": {
+        "what_exists": "drifting oscillators, readout",
+        "what_changes": "phase trend",
+        "what_persists": "detail coefficients",
+        "what_is_selected": "codes living in detail bands",
+        "what_can_reproduce": "no",
+        "what_can_learn": "p could be chosen",
+        "what_can_transfer": "to any drifting sensor",
+        "distinguishing_observable": "decoding error vs drift order crosses a step at order p"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Defect-charge logic: in a 2D lattice of phase oscillators, vortices of charge +1/-1 are tokens; pair annihilation implements a subtraction and charge conservation guarantees the net count survives any smooth perturbation; wavelet transients at the core mark each event.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the medium supporting vortices",
+        "Topology": "charge as an integer invariant and its conservation",
+        "Wavelet Transforms": "event localization in time and scale"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no medium",
+        "Topology": "no charge, no token",
+        "Wavelet Transforms": "weak: plaquette winding sums detect cores without wavelets"
+      },
+      "simpler_alternative": "counting particles in a reaction A + B -> 0 with diffusion; the oscillator medium only supplies the particles",
+      "questions": {
+        "what_exists": "lattice, vortices",
+        "what_changes": "vortex positions",
+        "what_persists": "net charge",
+        "what_is_selected": "long-lived isolated vortices",
+        "what_can_reproduce": "no",
+        "what_can_learn": "no",
+        "what_can_transfer": "to spin or superfluid-like media",
+        "distinguishing_observable": "net charge conserved under noise while total defect count decays"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Scalogram Reeb graph as trace: the merge tree of level sets of a network's output scalogram records when rhythms split and merge; distinct computations produce distinct merge trees even when their power spectra match.",
+      "derived_from": [
+        "I2",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the rhythms that split and merge",
+        "Topology": "Reeb graph / merge tree of level sets",
+        "Wavelet Transforms": "the time-scale plane whose level sets are taken"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no rhythmic structure, trivial tree",
+        "Topology": "without topology this is just a spectrogram",
+        "Wavelet Transforms": "without the transform no plane to take level sets of"
+      },
+      "simpler_alternative": "comparing spectrograms directly with a distance metric",
+      "questions": {
+        "what_exists": "output signals and their merge trees",
+        "what_changes": "tree shape",
+        "what_persists": "tree class under small noise",
+        "what_is_selected": "none",
+        "what_can_reproduce": "no",
+        "what_can_learn": "no",
+        "what_can_transfer": "as a descriptor to any time series",
+        "distinguishing_observable": "classification of computations by merge tree beyond spectrogram distance at matched power spectrum"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Homotopy-only relay: oscillator layers at frequencies f, 2f, 4f couple only between adjacent octaves and only through a coarse phase sign; what passes between scales is the winding class, not the phase value, so coarse layers constrain fine ones only up to homotopy.",
+      "derived_from": [
+        "I3",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the octave-spaced layers",
+        "Topology": "the winding class as the transmitted quantity",
+        "Wavelet Transforms": "the dyadic scale ladder"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no layers",
+        "Topology": "without restricting to class the relay passes full phase (ordinary coupling)",
+        "Wavelet Transforms": "any ratio would do (weak)"
+      },
+      "simpler_alternative": "quantized coupling: a 1-bit channel between layers",
+      "questions": {
+        "what_exists": "layered oscillators",
+        "what_changes": "fine phases",
+        "what_persists": "class across layers",
+        "what_is_selected": "consistent classes",
+        "what_can_reproduce": "no",
+        "what_can_learn": "no",
+        "what_can_transfer": "to hierarchical controllers",
+        "distinguishing_observable": "mutual information between layers bounded by log2 of number of classes"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Shrinkage-feedback dynamics: the network's activity is repeatedly wavelet-transformed, soft-thresholded and fed back; small components die and persistent structures survive, so the dynamics performs topological simplification in real time.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the ongoing activity being simplified",
+        "Topology": "persistence as the survival criterion",
+        "Wavelet Transforms": "shrinkage as the operator"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no ongoing activity",
+        "Topology": "without persistence the effect is just denoising",
+        "Wavelet Transforms": "without shrinkage no simplification"
+      },
+      "simpler_alternative": "iterated low-pass filtering",
+      "questions": {
+        "what_exists": "activity, operator",
+        "what_changes": "activity",
+        "what_persists": "large-scale structures",
+        "what_is_selected": "high-persistence features",
+        "what_can_reproduce": "no",
+        "what_can_learn": "threshold",
+        "what_can_transfer": "to images",
+        "distinguishing_observable": "features removed ranked by persistence, not by amplitude alone"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Slip mutation: in an evolving population of rings, mutation inserts a single phase slip (q -> q +/- 1) rather than perturbing weights; heredity of q is exact between mutations and the mutation spectrum is discrete.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "the oscillatory medium hosting q",
+        "Topology": "the integer genome",
+        "Wavelet Transforms": "slip detection for bookkeeping"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no carrier for q",
+        "Topology": "without q, mutation is continuous",
+        "Wavelet Transforms": "weak: bookkeeping only"
+      },
+      "simpler_alternative": "integer-valued genomes with +/-1 mutations",
+      "questions": {
+        "what_exists": "population of rings",
+        "what_changes": "q",
+        "what_persists": "q between mutations",
+        "what_is_selected": "q near target",
+        "what_can_reproduce": "rings via entrainment copying",
+        "what_can_learn": "no",
+        "what_can_transfer": "to integer genomes",
+        "distinguishing_observable": "fitness landscape over q is discrete-stepped"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Length-protected lifetime: retention time of winding q grows with ring length N at fixed q because the per-link gradient 2*pi*q/N shrinks; protection is local stiffness scaled by the loop's length.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "coupling stiffness",
+        "Topology": "the loop fixing total twist",
+        "Wavelet Transforms": "readout of slips"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no stiffness",
+        "Topology": "without the loop no total twist",
+        "Wavelet Transforms": "weak"
+      },
+      "simpler_alternative": "Kramers escape over a per-link barrier",
+      "questions": {
+        "what_exists": "ring",
+        "what_changes": "q",
+        "what_persists": "q",
+        "what_is_selected": "long rings",
+        "what_can_reproduce": "no",
+        "what_can_learn": "no",
+        "what_can_transfer": "to spin chains",
+        "distinguishing_observable": "lifetime depends on N only through q/N"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Wavelet-kernel coupling: oscillators coupled through a Mexican-hat kernel in space form phase domains whose number is set by kernel scale; the domain count (Betti-0) is a scale-selected integer.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Neural Oscillations": "phase domains",
+        "Topology": "domain count",
+        "Wavelet Transforms": "kernel shape"
+      },
+      "knockouts": {
+        "Neural Oscillations": "no domains",
+        "Topology": "weak: domain count is a detail",
+        "Wavelet Transforms": "kernel could be any lateral inhibition shape (weak)"
+      },
+      "simpler_alternative": "Turing-type lateral inhibition patterning",
+      "questions": {
+        "what_exists": "lattice",
+        "what_changes": "domains",
+        "what_persists": "domain count",
+        "what_is_selected": "kernel scale",
+        "what_can_reproduce": "no",
+        "what_can_learn": "no",
+        "what_can_transfer": "to reaction-diffusion",
+        "distinguishing_observable": "domain count vs kernel scale follows an integer staircase"
+      }
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Winding ledger",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Invented for this triplicate: if memory is an integer carried by loops, the natural record is a ledger of windings per independent cycle and of every slip event.",
+      "sourceRepresentation": "phase time series of all nodes plus the cycle basis of the coupling graph",
+      "transformation": "sum wrapped phase differences around each basis cycle each step; record jumps as slip events with link and time",
+      "observables": [
+        "q per cycle over time",
+        "slip count and location per unit time",
+        "inter-slip interval distribution"
+      ],
+      "predictedSignals": [
+        "q piecewise constant with rare jumps",
+        "slip locations concentrated where local gradient is largest"
+      ],
+      "nullExpectation": "for random or unlocked phases q performs a random walk with frequent jumps",
+      "failureModes": [
+        "unwrapping errors at coarse sampling",
+        "ambiguity when a link sits near pi"
+      ],
+      "informationAddedBeyondExistingLenses": "gives the integer state directly instead of inferring it from correlations",
+      "targets": [
+        "M1",
+        "M2",
+        "M13",
+        "M14"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Scalogram persistence barcode",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Invented: turn the scalogram into a stack of filtrations so binding can be compared with persistence directly.",
+      "sourceRepresentation": "continuous wavelet scalogram |W(s,t)| at 6 dyadic scales",
+      "transformation": "superlevel-set 0-dimensional persistent homology per scale, then link components across scales",
+      "observables": [
+        "bar lengths per scale",
+        "number of components surviving k scales",
+        "cross-scale component matching"
+      ],
+      "predictedSignals": [
+        "true objects persist across >= k scales, noise bumps do not"
+      ],
+      "nullExpectation": "for power-spectrum-matched phase-randomized surrogates, bar length distributions match the object-free case",
+      "failureModes": [
+        "threshold dependence",
+        "edge effects at signal boundaries"
+      ],
+      "informationAddedBeyondExistingLenses": "quantifies the persistence side independently of the oscillator dynamics",
+      "targets": [
+        "M3",
+        "M10",
+        "M12"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Slip-ridge coincidence",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Invented: tests whether time-frequency events and topological events are the same events.",
+      "sourceRepresentation": "wavelet ridges of each node's observed signal plus the winding ledger",
+      "transformation": "detect ridge phase discontinuities above a jump threshold; match to ledger slips within a time tolerance",
+      "observables": [
+        "precision and recall of ridge-detected slips vs ledger slips",
+        "detection latency"
+      ],
+      "predictedSignals": [
+        "precision and recall >= 0.8 at moderate observation noise"
+      ],
+      "nullExpectation": "for time-shuffled ridge events the coincidence rate equals the chance rate set by event density",
+      "failureModes": [
+        "low SNR smears ridges",
+        "ridge discontinuities from amplitude dips not slips"
+      ],
+      "informationAddedBeyondExistingLenses": "connects the measure concept to the structure concept causally, not only by vocabulary",
+      "targets": [
+        "M2",
+        "M9"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Barrier accounting (statistical mechanics)",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Stock lens used to expose M1 as possibly a familiar Kramers mechanism.",
+      "sourceRepresentation": "retention times across N, q, coupling K, noise D",
+      "transformation": "fit log mean lifetime vs K/D and vs q/N",
+      "observables": [
+        "mean first-slip time",
+        "slope of log lifetime on K/D",
+        "collapse of curves when plotted vs q/N"
+      ],
+      "predictedSignals": [
+        "if protection is purely local, curves for different N collapse on q/N"
+      ],
+      "nullExpectation": "no collapse would mean the loop contributes beyond local gradient",
+      "failureModes": [
+        "finite simulation time censors long lifetimes"
+      ],
+      "informationAddedBeyondExistingLenses": "decides whether 'topological protection' is more than local stiffness",
+      "targets": [
+        "M1",
+        "M14"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Time-warp gauge",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Invented: treat monotone time warps as a gauge freedom and ask which decoders are gauge invariant.",
+      "sourceRepresentation": "encoded symbol streams before and after random monotone warps",
+      "transformation": "apply piecewise-linear warps of strength w and decode with carrier-phase and clock-time decoders",
+      "observables": [
+        "decoding accuracy vs w for each decoder"
+      ],
+      "predictedSignals": [
+        "carrier-phase decoder flat in w, clock decoder falling"
+      ],
+      "nullExpectation": "if the carrier is not warped with the message, both decoders fall together",
+      "failureModes": [
+        "warps strong enough to fold cycles into each other break any decoder"
+      ],
+      "informationAddedBeyondExistingLenses": "separates invariance due to a co-moving reference from invariance due to the code itself",
+      "targets": [
+        "M5",
+        "M8"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Cycle-rank budget",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Graph-theoretic accounting of how many independent loops a network has versus how many integers it must hold.",
+      "sourceRepresentation": "coupling graph snapshots over learning or evolution",
+      "transformation": "compute cycle rank E - V + C and compare with task memory demand M and edge count",
+      "observables": [
+        "cycle rank",
+        "edge count",
+        "task performance"
+      ],
+      "predictedSignals": [
+        "performance tracks cycle rank at fixed edge count"
+      ],
+      "nullExpectation": "performance tracks edge count and cycle rank is irrelevant",
+      "failureModes": [
+        "edge count and cycle rank are coupled unless constrained"
+      ],
+      "informationAddedBeyondExistingLenses": "separates loop resources from connection density",
+      "targets": [
+        "M6",
+        "M7"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Charge audit",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P2",
+      "rationale": "Invented for defect media: a bookkeeping check that a conservation law actually holds under noise.",
+      "sourceRepresentation": "2D phase field snapshots",
+      "transformation": "compute plaquette windings; sum charges in bulk and flux through the boundary",
+      "observables": [
+        "net charge",
+        "total defect count",
+        "boundary flux events"
+      ],
+      "predictedSignals": [
+        "net charge changes only by boundary flux"
+      ],
+      "nullExpectation": "no conservation in an unlocked random field",
+      "failureModes": [
+        "plaquette winding ill-defined at high noise"
+      ],
+      "informationAddedBeyondExistingLenses": "tests whether tokens are robust enough to compute with",
+      "targets": [
+        "M9",
+        "M15"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M14"
+      ],
+      "lens_ids": [
+        "L1",
+        "L4"
+      ],
+      "hypothesis": "A closed ring retains winding q longer than a chain whose two ends are pinned to hold the same total twist, at matched local gradient; if not, 'topological protection' reduces to local stiffness.",
+      "mechanism": "Noisy Kuramoto ring dtheta_i = K[sin(theta_{i+1}-theta_i)+sin(theta_{i-1}-theta_i)]dt + sqrt(2D)dW, initialized in twisted state q.",
+      "intervention": "vary topology: ring vs pinned-end chain (end phases clamped at 0 and 2*pi*q*(N-1)/N) vs free-end chain; vary N in {32,64,128} with q scaled to keep q/N fixed, and D in {0.1,0.2,0.3,0.4}",
+      "control": "free-end chain with the same N and K (twist relaxes; lower bound)",
+      "positive_control": "ring at D=0 must retain q for all steps in 100% of seeds",
+      "observable": "first-slip time and final q from the winding ledger (L1)",
+      "success_criterion": "at the D where pinned-chain median first-slip time is between 10% and 90% of the run, ring median first-slip time >= 2x pinned-chain median (bootstrap 95% CI of ratio excludes 1) in >= 2 of 3 N values",
+      "failure_criterion": "ring/pinned-chain lifetime ratio CI includes 1 at all N, or log-lifetime curves for different N collapse on q/N within 10% (then the mechanism is local stiffness, M14 wins)",
+      "alternative_explanation": "pinned ends are an artificially strong boundary condition that stabilizes the chain more than the ring's loop does, masking any loop effect",
+      "null_twin": "pinned-end chain: same N, same per-link gradient and noise, same number of coupled links minus one, loop removed",
+      "substrate": "network",
+      "why_this_implementation": "a 1D phase ring is the smallest system with a winding invariant; no learning substrate is needed",
+      "size": "N in {32,64,128}; 3 topologies; 4 noise levels; 20000 Euler-Maruyama steps dt=0.05; 20 seeds",
+      "cost_estimate": 5,
+      "stupid_explanations": [
+        "the ring has one more coupled link than the pinned chain",
+        "pinned ends inject or absorb slips at the boundary, inflating chain slip rate",
+        "retention differences come from integration step size near pi"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M2"
+      ],
+      "lens_ids": [
+        "L3",
+        "L1"
+      ],
+      "hypothesis": "A local controller that detects slips from wavelet ridge discontinuities in node signals and injects an opposite slip raises q retention beyond a twin making the same number of random injections.",
+      "mechanism": "ring of W1 (N=64, q=3) observed only through x_i = cos(theta_i) + observation noise sigma=0.3; complex Morlet at the natural frequency gives phase; a ridge-phase jump > pi/2 between neighbours within 20 steps triggers injection of -sign(jump)*2*pi across that link",
+      "intervention": "controller on vs off, D in {0.2,0.3,0.4}",
+      "control": "no controller",
+      "positive_control": "oracle controller reading true wrapped differences (upper bound)",
+      "observable": "fraction of seeds with final q equal to initial q; ridge-vs-ledger precision/recall",
+      "success_criterion": "retention(wavelet controller) - retention(random twin) >= 0.25 at D=0.3 over 40 seeds (Fisher exact p < 0.01) and detection precision and recall >= 0.8",
+      "failure_criterion": "retention gain over random twin < 0.1, or precision < 0.5 (controller creates slips)",
+      "alternative_explanation": "injections act as a generic stiffening kick regardless of timing",
+      "null_twin": "random-injection controller: same count and sign distribution of injections, placed at random links and times",
+      "substrate": "network",
+      "why_this_implementation": "tests error correction on an integer invariant with only local information; a trained NN detector would displace the explicit time-frequency test that is the point",
+      "size": "N=64, q=3, 3 noise levels, 20000 steps, 40 seeds, 4 controller conditions",
+      "cost_estimate": 6,
+      "stupid_explanations": [
+        "the controller just prevents slips by adding energy",
+        "retention measured at a single end time hides slips that were corrected by chance",
+        "observation noise level chosen so the wavelet trivially sees everything"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M12"
+      ],
+      "lens_ids": [
+        "L2"
+      ],
+      "hypothesis": "Coupling by cross-scale persistence makes oscillator synchrony clusters match true objects better than single-scale coupling with the same edge count, and better than reading graph components without dynamics.",
+      "mechanism": "1D signals of length 1024 with 3 localized objects at different widths plus 1/f noise; 64 oscillators on a location grid; edge if same superlevel component at >= k=3 of 6 dyadic scales; Kuramoto dynamics 2000 steps; clusters by PLV > 0.9",
+      "intervention": "coupling rule: cross-scale (k=3) vs finest-scale only with random edges added/removed to match edge count",
+      "control": "phase-randomized surrogate signal with the same power spectrum (objects destroyed)",
+      "positive_control": "noise-free signal with well separated objects: ARI >= 0.95",
+      "observable": "adjusted Rand index (ARI) between sync clusters and ground-truth objects; ARI of plain connected components of the coupling graph",
+      "success_criterion": "median ARI(cross-scale) >= 0.7 and exceeds matched single-scale twin by >= 0.2 (paired Wilcoxon p < 0.01, 50 seeds) AND ARI(oscillators) > ARI(graph components) + 0.02",
+      "failure_criterion": "ARI gap to twin < 0.1, or ARI(oscillators) <= ARI(graph components) + 0.02 (then oscillators add nothing and M3 reduces to segmentation)",
+      "alternative_explanation": "coarse scales simply smooth noise; any low-pass filter would do the same",
+      "null_twin": "single-scale rule with degree-matched rewiring: same edge count and degree distribution, persistence criterion removed",
+      "substrate": "network",
+      "why_this_implementation": "a persistence filtration over a wavelet stack with an explicit phase readout; a GNN segmenter would displace the persistence mechanism under test",
+      "size": "signals n=1024, 6 scales, 64 oscillators, 2000 steps, 50 seeds, 3 conditions",
+      "cost_estimate": 4,
+      "stupid_explanations": [
+        "cross-scale rule just has larger components because coarse scales merge everything",
+        "PLV threshold tuned to the favoured condition",
+        "objects placed so their widths align with dyadic scales"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M5"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "Carrier-relative phase decoding is invariant to monotone time warps only when the carrier is warped together with the message; the invariance comes from the co-moving reference, not from the code.",
+      "mechanism": "5 symbols per slow cycle coded by phase slot relative to a 6 Hz-like carrier; transmission warped by random piecewise-linear monotone maps of strength w; decoder tracks carrier phase with an adaptive-scale Morlet ridge",
+      "intervention": "warp strength w in {0, 0.1, 0.2, 0.4}",
+      "control": "clock-time decoder assigning slots by elapsed time since cycle onset",
+      "positive_control": "w=0: both decoders >= 0.98 accuracy",
+      "observable": "symbol decoding accuracy",
+      "success_criterion": "carrier-phase accuracy at w=0.4 >= 0.9 with drop from w=0 <= 0.05, AND clock decoder drop >= 0.3, AND in the null twin carrier-phase drop >= 0.3",
+      "failure_criterion": "carrier-phase drop > 0.1 at w=0.4, or null twin shows the same invariance (then the result is an artifact of the decoder)",
+      "alternative_explanation": "any shared co-warped clock gives invariance; the oscillation is incidental",
+      "null_twin": "carrier generated unwarped while the message is warped: same spectra and symbol counts, co-moving reference destroyed",
+      "substrate": "causal toy",
+      "why_this_implementation": "signal-level toy with a hand-built decoder isolates the reference-frame question",
+      "size": "200 sequences x 20 cycles per condition, 4 warp levels, 10 seeds",
+      "cost_estimate": 2,
+      "stupid_explanations": [
+        "monotone warps preserve order so any order decoder is invariant",
+        "warps too weak to move symbols across slot boundaries",
+        "adaptive-scale decoder overfits the warp family"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "SPECULATIVE",
+  "evidenceSummary": {
+    "layer": "speculation",
+    "note": "Pass 0-3 specs only; nothing run"
+  }
+}

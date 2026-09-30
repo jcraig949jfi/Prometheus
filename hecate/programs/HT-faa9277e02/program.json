@@ -1,0 +1,1332 @@
+{
+  "id": "HT-faa9277e02",
+  "key": "Hebbian Learning + Information Theory + Morphogenesis",
+  "stratum": "S5_random",
+  "concepts": [
+    {
+      "field": "Neuroscience",
+      "mechanism": "dynamics",
+      "name": "Hebbian Learning",
+      "short_description": "Neurons that fire together wire together; activity-dependent synaptic strengthening, LTP/LTD."
+    },
+    {
+      "field": "Mathematics",
+      "mechanism": "measure",
+      "name": "Information Theory",
+      "short_description": "Quantification of information, entropy, and channel capacity; Shannon entropy, mutual information, KL divergence."
+    },
+    {
+      "field": "Biology",
+      "mechanism": "dynamics",
+      "name": "Morphogenesis",
+      "short_description": "Self-organized pattern formation in development; Turing patterns, morphogen gradients, reaction-diffusion."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Hebbian Learning + Information Theory + Morphogenesis",
+    "humanreadable": "agents/hephaestus/humanreadable/Information_Theory---Morphogenesis---Hebbian_Learning.md",
+    "ledger_lines": [
+      6368
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L6368",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L552"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "trap_battery_failed"
+    ],
+    "nous_composite_max": 5.0,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-faa9277e02",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Hebbian Learning",
+          "defining_structures": [
+            "weight w_ij between two units",
+            "local update dw_ij proportional to pre*post activity",
+            "LTP/LTD sign split by threshold or timing"
+          ],
+          "invariants": [
+            "locality: update uses only quantities available at the synapse",
+            "symmetry of plain Hebb (w_ij and w_ji updated alike); broken by spike timing"
+          ],
+          "transformations": [
+            "correlation -> connectivity",
+            "repeated co-activity -> attractor",
+            "input covariance -> principal eigenvector (with normalization)"
+          ],
+          "conserved_quantities": [
+            "none in raw Hebb (unbounded growth)",
+            "total weight per unit under normalization/synaptic scaling (Oja, BCM sliding threshold)"
+          ],
+          "failure_modes": [
+            "runaway excitation",
+            "all weights converge to same feature (no competition)",
+            "catastrophic overwrite of older traces",
+            "saturation"
+          ],
+          "dynamics": [
+            "positive feedback on correlations",
+            "slow weight timescale vs fast activity timescale",
+            "competition under normalization"
+          ],
+          "scales": [
+            "single synapse",
+            "dendritic cluster",
+            "cortical map (mm)",
+            "seconds-to-days"
+          ],
+          "locality": [
+            "strictly pairwise local in space",
+            "local in time (coincidence window)"
+          ],
+          "memory": [
+            "weights are the memory; activity is transient",
+            "trace decays without rehearsal"
+          ],
+          "identity": [
+            "a cell assembly is defined by mutual strong weights, not by fixed labels"
+          ],
+          "reproduction": [
+            "none intrinsic; assemblies can be re-instantiated by partial cue (pattern completion)"
+          ],
+          "selection": [
+            "synaptic competition: correlated inputs win, uncorrelated pruned"
+          ],
+          "information": [
+            "extracts second-order statistics of input",
+            "with normalization approximates infomax for Gaussian inputs"
+          ],
+          "constraint": [
+            "needs a stabilizer (decay, normalization, homeostasis)",
+            "cannot see higher-order statistics without nonlinearity"
+          ]
+        },
+        {
+          "concept": "Information Theory",
+          "defining_structures": [
+            "random variables and their joint distributions",
+            "entropy H, mutual information I, KL divergence",
+            "channel with capacity C"
+          ],
+          "invariants": [
+            "data-processing inequality: processing cannot raise I(X;Y)",
+            "I symmetric and invariant under invertible reparametrization"
+          ],
+          "transformations": [
+            "encoding/decoding",
+            "compression",
+            "coarse-graining (reduces I)"
+          ],
+          "conserved_quantities": [
+            "none dynamical; bounds rather than conserved quantities (capacity, rate-distortion)"
+          ],
+          "failure_modes": [
+            "estimation bias with few samples",
+            "measure depends on chosen variables/partition",
+            "information present but not usable by a local reader"
+          ],
+          "dynamics": [
+            "not a dynamics; a measure applied to one",
+            "entropy production in physical processes"
+          ],
+          "scales": [
+            "bits per symbol, per cell, per organism",
+            "any scale where a probability can be defined"
+          ],
+          "locality": [
+            "non-local: MI can be carried by joint configurations no single part holds (synergy)"
+          ],
+          "memory": [
+            "memory = I(past; present state)"
+          ],
+          "identity": [
+            "an entity can be defined as a set of variables with high internal and low external MI"
+          ],
+          "reproduction": [
+            "copying = channel from parent to offspring with fidelity bounded by capacity"
+          ],
+          "selection": [
+            "selection transmits information from environment into genome (bits per generation bounds)"
+          ],
+          "information": [
+            "itself: bits",
+            "positional information = I(cell state; position)"
+          ],
+          "constraint": [
+            "capacity bounds, rate-distortion bounds, Landauer cost of erasure"
+          ]
+        },
+        {
+          "concept": "Morphogenesis",
+          "defining_structures": [
+            "morphogen fields c(x,t)",
+            "reaction terms f(c) plus diffusion D*Laplacian c",
+            "activator short-range, inhibitor long-range",
+            "sources/sinks setting gradients"
+          ],
+          "invariants": [
+            "intrinsic wavelength set by reaction kinetics and D ratio, not by tissue size (until boundaries dominate)",
+            "symmetry breaking from homogeneous state"
+          ],
+          "transformations": [
+            "noise -> periodic pattern",
+            "gradient -> threshold-defined domains (French flag)",
+            "tissue growth -> pattern insertion/splitting"
+          ],
+          "conserved_quantities": [
+            "mass in closed reaction systems (often not)",
+            "pattern wavelength under scaling (approx)"
+          ],
+          "failure_modes": [
+            "pattern fails to scale with size",
+            "defects/dislocations frozen in",
+            "noise-induced boundary imprecision",
+            "no pattern if D ratio too small"
+          ],
+          "dynamics": [
+            "diffusion-driven instability",
+            "wave fronts",
+            "coarsening",
+            "growth-coupled pattern refinement"
+          ],
+          "scales": [
+            "cell diameter to tissue (10-1000 cells)",
+            "hours to days"
+          ],
+          "locality": [
+            "local reaction, local diffusion, but effective non-local interaction via inhibitor range"
+          ],
+          "memory": [
+            "pattern is held dynamically (needs continuous flux) until cells commit to fate (epigenetic lock)"
+          ],
+          "identity": [
+            "a cell's fate/identity is read from local concentrations"
+          ],
+          "reproduction": [
+            "spot splitting (self-replicating spots in some RD regimes)",
+            "segment repetition"
+          ],
+          "selection": [
+            "the fastest-growing Fourier mode wins (mode selection)"
+          ],
+          "information": [
+            "positional information carried by gradients",
+            "pattern stores bits in the positions of boundaries"
+          ],
+          "constraint": [
+            "diffusion speed limits patterning time",
+            "morphogen noise limits boundary precision"
+          ]
+        }
+      ],
+      "unexplained": [
+        "whether Information Theory enters any mechanism causally or only as a measurement",
+        "whether Hebbian coupling plasticity differs from known adaptive-transport models",
+        "which interpretation yields a quantity that could surprise"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-faa9277e02",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "Information Theory is causal only in M3, M8, M13 (as bound, fitness or stopping rule); elsewhere it is an observer",
+        "M4 and M14 likely known mechanisms in disguise (local Hopfield, Physarum-style flow reinforcement)",
+        "M2 vs M11 may be duplicates"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-faa9277e02",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16"
+      ],
+      "unexplained": [
+        "no lens yet tests whether information-theoretic quantities feed back into dynamics",
+        "border pinning may explain both recall and repair"
+      ],
+      "decision": "BUILD_ENGINE",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-faa9277e02",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new substrate",
+        "new intervention",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M10",
+        "M11",
+        "M15",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5"
+      ],
+      "unexplained": [
+        "M9 polarity and M13 segment-count not yet given worlds",
+        "whether W1 recall survives stronger boundary controls (periodic boundaries)",
+        "the information-theory leg remains mostly a yardstick"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Plastic transport: the diffusion couplings between neighbouring cells are themselves Hebbian, strengthened by co-activation of the activator; the pattern carves the medium it runs on, so a dynamic Turing pattern can become written into structure. Experiment: re-run pattern formation from fresh noise on the learned coupling graph and test recall."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Hebbian readout of positional information: cells must decode position from noisy gradients; a local Hebbian competitive readout either reaches or falls short of the information-theoretic bound (bits of positional information set by gradient noise). Experiment: bits decoded by Hebbian readout vs optimal decoder vs integration time."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Feature-map formation is a Turing instability in weight space: Hebbian positive feedback is the activator, normalization/lateral inhibition the inhibitor. The open question is whether the selected wavelength is set by the kernel (morphogenesis) or by input covariance structure (information). Experiment: vary input correlation length and track map wavelength."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Development as a lossy decompression whose missing bits are supplied by the environment via Hebbian correlation: phenotype information = genome bits + bits absorbed during growth. Experiment: grow the same developmental program under different input statistics and partition I(structure; genome) vs I(structure; environment)."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A plastic reaction-diffusion medium as associative memory: several patterns stored as attractors of the coupled field, with a capacity in bits per cell limited by locality. Experiment: sequentially store patterns, recall from corrupted cue, measure capacity vs a local Hopfield control."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Morphogenetic error correction: Hebbian consolidation of neighbour agreements creates redundancy that lets a lesioned pattern regrow; the redundancy is measurable as a code distance. Experiment: lesion size vs recovered bits, with and without consolidated couplings."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Dissipative-to-structural transition: a pattern maintained by continuous flux is costly; Hebbian consolidation converts it into a frozen structure whose maintenance costs less per stored bit. Experiment: dissipation per maintained bit before vs after consolidation, and persistence after flux shut-off."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Coupling-plastic reaction-diffusion: edge diffusion coefficients D_ij evolve as dD_ij = eta*(a_i*a_j - theta) - lambda*(D_ij - D0), clipped to [Dmin,Dmax]; activator co-activity opens channels, anti-correlation closes them.",
+      "derived_from": [
+        "I1",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "the activity-dependent update of D_ij",
+        "Information Theory": "the criterion for what the medium retains: I(coupling graph; past pattern)",
+        "Morphogenesis": "the activator-inhibitor dynamics that generate the correlated activity to be written"
+      },
+      "knockouts": {
+        "Hebbian Learning": "couplings fixed: pattern is purely dynamic, forgets on reset",
+        "Information Theory": "mechanism still runs; only the measurement disappears (weak dependency: info theory is observer here)",
+        "Morphogenesis": "no symmetry breaking, activity uniform, couplings drift uniformly"
+      },
+      "simpler_alternative": "Hand-imposed spatial heterogeneity in D (a prepattern) that pins spots, with no learning at all.",
+      "questions": {
+        "what_exists": "cells with activator/inhibitor state; plastic edges",
+        "what_changes": "fast: concentrations; slow: couplings",
+        "what_persists": "the coupling graph after the pattern is gone",
+        "what_is_selected": "which edges survive (those inside co-active domains)",
+        "what_can_reproduce": "the pattern, when re-run from noise on learned couplings",
+        "what_can_learn": "the medium (couplings) learns the pattern",
+        "what_can_transfer": "learned coupling graph could be transplanted onto a new medium",
+        "distinguishing_observable": "recall correlation of re-grown pattern with original, above permuted-coupling null"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Oja-normalized Hebbian weights on a sheet with short-range excitatory lateral coupling and long-range inhibition generate a periodic feature map whose wavelength is jointly set by the lateral kernel and the input correlation length.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "positive-feedback weight growth (activator role)",
+        "Information Theory": "input covariance whose principal modes Hebbian learning extracts",
+        "Morphogenesis": "activator-inhibitor lateral kernel producing mode selection"
+      },
+      "knockouts": {
+        "Hebbian Learning": "no map; weights stay at initialization",
+        "Information Theory": "with white input the kernel alone sets wavelength (plain Turing)",
+        "Morphogenesis": "without lateral kernel each unit learns the same top PC; no spatial pattern"
+      },
+      "simpler_alternative": "Plain Turing instability of the lateral kernel; input statistics irrelevant.",
+      "questions": {
+        "what_exists": "sheet of units with feedforward weights",
+        "what_changes": "weights",
+        "what_persists": "map wavelength and phase",
+        "what_is_selected": "the Fourier mode with largest growth rate",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "weights",
+        "what_can_transfer": "map wavelength law across input ensembles",
+        "distinguishing_observable": "slope of log wavelength vs log input correlation length (kernel-only predicts zero)"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Each cell has K readout units receiving noisy concentrations of two opposing gradients; competitive Hebbian learning (winner-take-most with Oja decay) allocates readout tuning curves where positional information per unit is highest, approaching the positional-information bound set by gradient noise.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "unsupervised competitive allocation of tuning curves",
+        "Information Theory": "the bound (bits of positional information) that defines success",
+        "Morphogenesis": "the gradients and their noise"
+      },
+      "knockouts": {
+        "Hebbian Learning": "fixed random readout: fewer bits",
+        "Information Theory": "no yardstick; readout still forms",
+        "Morphogenesis": "no gradient, no positional information to decode"
+      },
+      "simpler_alternative": "Uniform tiling of tuning curves in concentration space (fixed quantizer) giving similar bits.",
+      "questions": {
+        "what_exists": "gradients, cells, readout units",
+        "what_changes": "readout tuning",
+        "what_persists": "tuning allocation",
+        "what_is_selected": "readout units that win more samples",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "readout",
+        "what_can_transfer": "trained readout to a new gradient shape",
+        "distinguishing_observable": "fraction of optimal-decoder bits achieved vs uniform quantizer"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Engram tiling: a 2D plastic RD medium with coupling plasticity (M1) stores several distinct patterns sequentially; each becomes a basin of the coupled field and is recalled from a partial cue.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "writing each pattern into the couplings",
+        "Information Theory": "capacity in bits per plastic edge",
+        "Morphogenesis": "the field dynamics that do pattern completion"
+      },
+      "knockouts": {
+        "Hebbian Learning": "no storage",
+        "Information Theory": "capacity unmeasured; storage still occurs",
+        "Morphogenesis": "without reaction nonlinearity recall is just diffusion blurring"
+      },
+      "simpler_alternative": "Nearest-neighbour Hopfield network: this is probably a local Hopfield net in disguise.",
+      "questions": {
+        "what_exists": "field plus couplings",
+        "what_changes": "field fast, couplings slow",
+        "what_persists": "stored patterns",
+        "what_is_selected": "patterns that were rehearsed",
+        "what_can_reproduce": "patterns re-instantiated from cues",
+        "what_can_learn": "the medium",
+        "what_can_transfer": "stored pattern set to a new medium by copying couplings",
+        "distinguishing_observable": "capacity and basin size relative to a local Hopfield control with equal edge count"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Fossilization transition: after a consolidation period the reaction flux is shut off or the fields reset, and the pattern persists or re-forms only because couplings now carry it; a critical consolidation time t* separates forgetting from retention.",
+      "derived_from": [
+        "I7",
+        "I1"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "consolidation of co-activity into structure",
+        "Information Theory": "measured bits retained after flux shut-off",
+        "Morphogenesis": "the dynamic pattern being fossilized"
+      },
+      "knockouts": {
+        "Hebbian Learning": "no transition; pattern always lost",
+        "Information Theory": "weak: observer only",
+        "Morphogenesis": "nothing to fossilize"
+      },
+      "simpler_alternative": "Slow relaxation: long intrinsic timescale of the fields makes the pattern appear to persist.",
+      "questions": {
+        "what_exists": "field, couplings",
+        "what_changes": "field then couplings",
+        "what_persists": "coupling structure",
+        "what_is_selected": "domains held longest",
+        "what_can_reproduce": "pattern re-formation",
+        "what_can_learn": "medium",
+        "what_can_transfer": "fossilized structure as prepattern for another medium",
+        "distinguishing_observable": "sharp threshold in retained bits vs consolidation time (sigmoid with finite t*)"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Neighbour-consensus repair: consolidated couplings bias a lesioned region to re-grow the original pattern rather than a new random one; recovered bits scale with the redundancy stored in intact border couplings.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "stores neighbour agreements as coupling",
+        "Information Theory": "code distance and recovered bits",
+        "Morphogenesis": "regrowth dynamics"
+      },
+      "knockouts": {
+        "Hebbian Learning": "lesion regrows a random pattern (same wavelength, wrong phase)",
+        "Information Theory": "observer only",
+        "Morphogenesis": "no regrowth"
+      },
+      "simpler_alternative": "Boundary pinning: the intact surrounding pattern alone fixes phase in the lesion.",
+      "questions": {
+        "what_exists": "pattern, lesion, couplings",
+        "what_changes": "lesion fields",
+        "what_persists": "couplings outside and inside lesion",
+        "what_is_selected": "phase consistent with memory",
+        "what_can_reproduce": "the original pattern locally",
+        "what_can_learn": "medium",
+        "what_can_transfer": "repair capacity across lesion shapes",
+        "distinguishing_observable": "recovery with couplings inside lesion scrambled vs intact, controlling for border pinning"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Hebbian-biased mutation: the offspring's initial coupling template is mutated preferentially on edges that were co-active during the parent's development (a Lamarckian-ish channel).",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "co-activity statistics used as mutation bias",
+        "Information Theory": "bits transferred from parent's experience to offspring genome",
+        "Morphogenesis": "the developing pattern that generates co-activity"
+      },
+      "knockouts": {
+        "Hebbian Learning": "uniform mutation",
+        "Information Theory": "observer only",
+        "Morphogenesis": "no structured co-activity"
+      },
+      "simpler_alternative": "Plain inheritance of acquired couplings (copying), not a mutation bias. Three-way dependency weak.",
+      "questions": {
+        "what_exists": "lineage of coupling templates",
+        "what_changes": "templates across generations",
+        "what_persists": "template bits",
+        "what_is_selected": "templates with good pattern",
+        "what_can_reproduce": "templates",
+        "what_can_learn": "lineage",
+        "what_can_transfer": "biases across environments",
+        "distinguishing_observable": "rate of adaptation vs uniform mutation at equal mutation load"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Selection on positional-information bits: a population of developmental programs is selected for I(cell fate; position) under noise, and Hebbian plasticity during development is a heritable parameter.",
+      "derived_from": [
+        "I2",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "within-life plasticity that may be selected for or against",
+        "Information Theory": "the fitness function",
+        "Morphogenesis": "the developmental program"
+      },
+      "knockouts": {
+        "Hebbian Learning": "selection on genome alone",
+        "Information Theory": "no fitness",
+        "Morphogenesis": "no development to select"
+      },
+      "simpler_alternative": "Direct optimization of a threshold-reading decoder; plasticity irrelevant. Hebbian dependency weak.",
+      "questions": {
+        "what_exists": "population of programs",
+        "what_changes": "genomes",
+        "what_persists": "positional code",
+        "what_is_selected": "high-bit programs",
+        "what_can_reproduce": "programs",
+        "what_can_learn": "plasticity rate evolves",
+        "what_can_transfer": "evolved plasticity to new noise level",
+        "distinguishing_observable": "whether evolved plasticity rate rises with environmental variability"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Timing-asymmetric Hebbian coupling (STDP-like) under travelling morphogen waves writes an antisymmetric component D_ij - D_ji aligned with wave direction, creating a polarity field (a tissue arrow) from purely temporal order.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "timing-dependent asymmetric update",
+        "Information Theory": "directional information: transfer entropy along edges",
+        "Morphogenesis": "travelling waves"
+      },
+      "knockouts": {
+        "Hebbian Learning": "no polarity recorded",
+        "Information Theory": "observer only",
+        "Morphogenesis": "no waves, no order to record"
+      },
+      "simpler_alternative": "Advection/drift term in the RD equation giving the same asymmetry without learning.",
+      "questions": {
+        "what_exists": "cells, directed couplings, waves",
+        "what_changes": "couplings",
+        "what_persists": "polarity field",
+        "what_is_selected": "edges aligned with past waves",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "medium learns direction",
+        "what_can_transfer": "polarity as bias for later patterning",
+        "distinguishing_observable": "polarity alignment with wave history after waves stop"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Anti-Hebbian lateral decorrelation acts as the long-range inhibitor: cells whose outputs are correlated strengthen mutual inhibition, producing spaced fates whose spacing equals the decorrelation length (whitening = spacing pattern).",
+      "derived_from": [
+        "I3",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "anti-Hebbian update of inhibition",
+        "Information Theory": "redundancy reduction objective",
+        "Morphogenesis": "spacing pattern (lateral-inhibition-like)"
+      },
+      "knockouts": {
+        "Hebbian Learning": "fixed inhibition: spacing set by kernel only",
+        "Information Theory": "observer; mechanism still runs",
+        "Morphogenesis": "without spatial embedding, decorrelation gives no spatial pattern"
+      },
+      "simpler_alternative": "Fixed lateral inhibition (Notch-Delta-like) with no learning.",
+      "questions": {
+        "what_exists": "cells with learned inhibition",
+        "what_changes": "inhibition weights",
+        "what_persists": "spacing",
+        "what_is_selected": "fates that decorrelate",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "inhibition",
+        "what_can_transfer": "spacing law to new input",
+        "distinguishing_observable": "spacing tracks input correlation length under learning but not under fixed inhibition"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Morphogenesis as physical PCA: a plastic tissue perturbed by structured noise settles on the Fourier mode that matches the top eigenmode of the perturbation covariance, so the pattern is a readout of environmental statistics.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "eigenvector extraction",
+        "Information Theory": "covariance/entropy of perturbations",
+        "Morphogenesis": "mode selection in the field"
+      },
+      "knockouts": {
+        "Hebbian Learning": "mode set by kernel",
+        "Information Theory": "no structured perturbation",
+        "Morphogenesis": "no field"
+      },
+      "simpler_alternative": "Resonance: linear filter amplifying the input band; overlaps heavily with M2 (possible duplicate).",
+      "questions": {
+        "what_exists": "tissue, perturbation ensemble",
+        "what_changes": "field and couplings",
+        "what_persists": "selected mode",
+        "what_is_selected": "mode aligned with top eigenvector",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "tissue",
+        "what_can_transfer": "mode choice to new noise",
+        "distinguishing_observable": "selected wavenumber vs top eigen-wavenumber across ensembles"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Conjunctive positional code: with two orthogonal gradients, Hebbian learning builds conjunctive readout units whose tiling approaches the 2D positional-information bound; units become periodic (grid-like) when the gradients are periodic.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "conjunctive unit formation",
+        "Information Theory": "2D positional bits",
+        "Morphogenesis": "orthogonal gradients"
+      },
+      "knockouts": {
+        "Hebbian Learning": "separable (non-conjunctive) code",
+        "Information Theory": "observer",
+        "Morphogenesis": "no gradients"
+      },
+      "simpler_alternative": "Product of two 1D quantizers.",
+      "questions": {
+        "what_exists": "cells, two gradients, units",
+        "what_changes": "tuning",
+        "what_persists": "tiling",
+        "what_is_selected": "units covering high-density regions",
+        "what_can_reproduce": "none",
+        "what_can_learn": "readout",
+        "what_can_transfer": "code to new geometry",
+        "distinguishing_observable": "synergy: I(x,y;code) minus sum of separable codes"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Segment number set by bits: a growing body adds segments until the positional-information budget per segment drops below one bit; Hebbian reinforcement of segment boundaries prevents boundary drift.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "boundary stabilization",
+        "Information Theory": "bits-per-segment stopping rule",
+        "Morphogenesis": "growth and segmentation"
+      },
+      "knockouts": {
+        "Hebbian Learning": "boundaries drift, segments fuse",
+        "Information Theory": "no stopping rule, segment count set by length/wavelength",
+        "Morphogenesis": "no segments"
+      },
+      "simpler_alternative": "Segment count = length / intrinsic wavelength.",
+      "questions": {
+        "what_exists": "growing body, segments",
+        "what_changes": "length and segment count",
+        "what_persists": "segment boundaries",
+        "what_is_selected": "segment count",
+        "what_can_reproduce": "segments by splitting",
+        "what_can_learn": "boundary strength",
+        "what_can_transfer": "stopping rule to other noise",
+        "distinguishing_observable": "segment count scaling with noise at fixed length (wavelength-only predicts none)"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Conserved total coupling per cell (synaptic scaling) plus flux-driven Hebbian reinforcement makes transport channels compete and branch into a hierarchical network that maximizes delivered morphogen information per unit coupling.",
+      "derived_from": [
+        "I1",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "flux-driven reinforcement",
+        "Information Theory": "delivered information per unit coupling as the objective the network approaches",
+        "Morphogenesis": "source/sink morphogen transport"
+      },
+      "knockouts": {
+        "Hebbian Learning": "no network",
+        "Information Theory": "observer",
+        "Morphogenesis": "no flux"
+      },
+      "simpler_alternative": "Physarum-style flow reinforcement (known adaptive transport network): very likely familiar in disguise.",
+      "questions": {
+        "what_exists": "cells, conserved coupling",
+        "what_changes": "couplings",
+        "what_persists": "network topology",
+        "what_is_selected": "high-flux channels",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "network",
+        "what_can_transfer": "topology to new sources",
+        "distinguishing_observable": "information delivered vs flux-optimal network"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Speed-precision law: Hebbian time-averaging of noisy morphogen raises positional bits as 0.5*log2(T) until the gradient's capacity, so developmental speed trades against boundary precision with a predictable exponent.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "temporal integration via slow weights",
+        "Information Theory": "log-law and capacity ceiling",
+        "Morphogenesis": "noisy gradient"
+      },
+      "knockouts": {
+        "Hebbian Learning": "no integration: bits fixed at single-sample level",
+        "Information Theory": "no law",
+        "Morphogenesis": "no gradient"
+      },
+      "simpler_alternative": "Any low-pass filter gives the same law; Hebbian specificity unnecessary.",
+      "questions": {
+        "what_exists": "cells, noisy gradient",
+        "what_changes": "estimates",
+        "what_persists": "readout",
+        "what_is_selected": "none",
+        "what_can_reproduce": "none",
+        "what_can_learn": "readout",
+        "what_can_transfer": "law across noise levels",
+        "distinguishing_observable": "slope of bits vs log2 T near 0.5 and a ceiling"
+      }
+    },
+    {
+      "id": "M16",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Sign-flipped plasticity selects pattern morphology: Hebbian coupling (co-activity strengthens) favours spots, anti-Hebbian favours labyrinths, and the transition point is where pattern entropy per cell is maximal.",
+      "derived_from": [
+        "I3",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Hebbian Learning": "sign of plasticity",
+        "Information Theory": "pattern entropy as order parameter",
+        "Morphogenesis": "RD morphology space"
+      },
+      "knockouts": {
+        "Hebbian Learning": "morphology set by kinetics alone",
+        "Information Theory": "observer",
+        "Morphogenesis": "no morphology"
+      },
+      "simpler_alternative": "Plasticity just shifts effective D ratio, which is known to move spot/stripe boundaries.",
+      "questions": {
+        "what_exists": "field, couplings",
+        "what_changes": "morphology",
+        "what_persists": "morphology class",
+        "what_is_selected": "morphology",
+        "what_can_reproduce": "spots may split",
+        "what_can_learn": "couplings",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "entropy peak at the morphology transition vs shift of D ratio alone"
+      }
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Coupling-ledger lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "If the medium writes patterns into couplings, the coupling graph should be a readable ledger of pattern history.",
+      "sourceRepresentation": "time series of edge couplings D_ij(t) and field snapshots a(t)",
+      "transformation": "compute I(D(t); past pattern) and decode past pattern from D alone via re-growth",
+      "observables": [
+        "recall correlation of re-grown pattern",
+        "MI between thresholded couplings and past domain membership"
+      ],
+      "predictedSignals": [
+        "recall correlation well above permuted-coupling null",
+        "MI rising with consolidation time"
+      ],
+      "nullExpectation": "Permuted couplings (same value histogram) give recall at chance, i.e. matching fresh-noise RD baseline",
+      "failureModes": [
+        "boundary-pinned patterns recur regardless of couplings",
+        "MI estimator bias at small cell counts"
+      ],
+      "informationAddedBeyondExistingLenses": "Treats structure as memory of dynamics; no other lens reads the coupling graph",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M4",
+        "M5"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Positional-bits lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "Positional information is the natural currency tying gradients to readouts.",
+      "sourceRepresentation": "cell index x and readout state r(x) across noise samples",
+      "transformation": "estimate I(x; r) in bits by binning; compare with optimal Bayesian decoder bits",
+      "observables": [
+        "bits of positional information",
+        "ratio to optimal-decoder bits"
+      ],
+      "predictedSignals": [
+        "Hebbian readout reaches large fraction of optimal",
+        "bits grow as ~0.5 log2 T with integration time"
+      ],
+      "nullExpectation": "random fixed readout of equal norm gives substantially fewer bits",
+      "failureModes": [
+        "binning bias",
+        "optimal decoder bound mis-specified if noise model wrong"
+      ],
+      "informationAddedBeyondExistingLenses": "Quantifies readout quality rather than pattern shape",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M8",
+        "M12",
+        "M15",
+        "M13"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Fossilization-clock lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "Invented here: measures when a dynamic pattern turns into a structural one.",
+      "sourceRepresentation": "consolidation duration t_c and retained recall after flux shut-off/field reset",
+      "transformation": "sweep t_c, fit sigmoid of recall vs log t_c",
+      "observables": [
+        "retention curve",
+        "t* and sharpness"
+      ],
+      "predictedSignals": [
+        "sharp threshold t* (transition-like)"
+      ],
+      "nullExpectation": "smooth, gradual rise proportional to accumulated coupling change (no transition)",
+      "failureModes": [
+        "threshold artifact of clipping bounds Dmin/Dmax"
+      ],
+      "informationAddedBeyondExistingLenses": "Distinguishes a phase-like transition from simple accumulation",
+      "passId": "P2",
+      "targets": [
+        "M5",
+        "M1",
+        "M6"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Wavelength-versus-covariance lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "Decides whether pattern scale is kernel-set (morphogenesis) or statistics-set (information).",
+      "sourceRepresentation": "spatial power spectrum of learned map; eigen-spectrum of input covariance",
+      "transformation": "compare dominant wavenumber k* with kernel-predicted k_T and top eigen-wavenumber k_PC across input ensembles",
+      "observables": [
+        "k*",
+        "k_T",
+        "k_PC",
+        "log-log slope of lambda* vs xi"
+      ],
+      "predictedSignals": [
+        "k* moves with input correlation length"
+      ],
+      "nullExpectation": "k* = k_T regardless of input statistics (slope ~ 0)",
+      "failureModes": [
+        "finite ring size quantizes k",
+        "boundary effects"
+      ],
+      "informationAddedBeyondExistingLenses": "Only lens that separates the two causes of scale",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M11",
+        "M10"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Wound-bit-accounting lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "Invented here: repair counted in bits, separating border pinning from stored memory.",
+      "sourceRepresentation": "pattern before lesion, after regrowth; couplings inside/outside lesion",
+      "transformation": "bits recovered = I(original lesion region; regrown region), under three conditions: intact couplings, scrambled-inside couplings, fixed-coupling medium",
+      "observables": [
+        "recovered bits per lesioned cell"
+      ],
+      "predictedSignals": [
+        "intact > scrambled-inside > fixed"
+      ],
+      "nullExpectation": "intact = scrambled-inside (border pinning explains all recovery)",
+      "failureModes": [
+        "lesion smaller than wavelength trivially recovers"
+      ],
+      "informationAddedBeyondExistingLenses": "Separates two memory sources: neighbours vs stored couplings",
+      "passId": "P2",
+      "targets": [
+        "M6",
+        "M4"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Dissipation-per-bit lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "Tests the claim that structure is cheaper than flux for holding a pattern.",
+      "sourceRepresentation": "reaction flux sum |f(a,h)| over time and retained bits",
+      "transformation": "ratio of flux to recalled bits before and after consolidation",
+      "observables": [
+        "flux per bit"
+      ],
+      "predictedSignals": [
+        "lower after consolidation"
+      ],
+      "nullExpectation": "no change",
+      "failureModes": [
+        "flux definition arbitrary in toy kinetics"
+      ],
+      "informationAddedBeyondExistingLenses": "Adds a cost axis",
+      "passId": "P2",
+      "targets": [
+        "M5",
+        "M14"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Polarity-arrow lens",
+      "triplicateId": "HT-faa9277e02",
+      "rationale": "Invented here: reads temporal order written into asymmetric couplings.",
+      "sourceRepresentation": "antisymmetric part of coupling matrix A_ij = D_ij - D_ji",
+      "transformation": "correlate local arrow field with past wave direction",
+      "observables": [
+        "mean cosine between arrow and wave direction"
+      ],
+      "predictedSignals": [
+        "cosine > 0 persisting after waves stop"
+      ],
+      "nullExpectation": "cosine ~ 0 with symmetric Hebb",
+      "failureModes": [
+        "numerical drift introducing asymmetry"
+      ],
+      "informationAddedBeyondExistingLenses": "Only lens sensitive to direction/time",
+      "passId": "P2",
+      "targets": [
+        "M9"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3",
+      "id": "W1",
+      "mechanism_ids": [
+        "M1",
+        "M5"
+      ],
+      "lens_ids": [
+        "L1",
+        "L3"
+      ],
+      "hypothesis": "Coupling-plastic RD writes its pattern into edge couplings so that re-running from fresh noise on the learned graph reproduces the original pattern.",
+      "mechanism": "Gierer-Meinhardt kinetics on a 48x48 grid, 4-neighbour edges; activator diffusion on edge e is D0*g_e, g_e updated by dg = eta*(a_i*a_j/mean(a)^2 - 1) - lambda*(g-1), clipped [0.2,5].",
+      "intervention": "Phase A: 3000 steps with plasticity on (seed s). Phase B: reset fields to uniform plus fresh noise (seed s+1000), plasticity off, run 3000 steps.",
+      "control": "Phase B on the uniform graph g=1 (baseline recurrence from boundary pinning).",
+      "positive_control": "Phase B on a hand-carved graph with g=5 inside original activator-high domains and 0.2 across domain boundaries.",
+      "observable": "Pearson r between z-scored Phase A final activator map and Phase B final activator map.",
+      "success_criterion": "Mean r (10 seeds) >= 0.5 and exceeds null-twin mean by >= 0.3, one-sided Wilcoxon signed-rank p < 0.01 over paired seeds; positive control r >= 0.7.",
+      "failure_criterion": "Mean r minus null-twin mean < 0.1, or positive control r < 0.5 (world cannot express the effect).",
+      "alternative_explanation": "Learned couplings merely lower effective activator diffusion globally, changing wavelength, and boundary effects align patterns.",
+      "null_twin": "Same learned g values randomly permuted across edges (identical value histogram and mean), so coupling statistics match but spatial alignment with the pattern is destroyed.",
+      "substrate": "reaction-diffusion",
+      "why_this_implementation": "Direct discretized PDE keeps the morphogenetic ontology; no neural network is used; the plastic element is a transport coefficient, not a weight in a learner.",
+      "size": "48x48 cells, 4512 edges, 6000 steps total, 10 seeds x 3 conditions (+positive control)",
+      "cost_estimate": "about 2 CPU core-minutes (numpy)",
+      "stupid_explanations": [
+        "boundary pinning makes any RD run reproduce similar stripes near edges",
+        "Pearson r inflated by the shared wavelength (periodic maps correlate by chance at some phases)",
+        "clipping bounds create a static prepattern independent of learning",
+        "insufficient noise reset so Phase B starts near Phase A state"
+      ]
+    },
+    {
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3",
+      "id": "W2",
+      "mechanism_ids": [
+        "M3",
+        "M15"
+      ],
+      "lens_ids": [
+        "L2"
+      ],
+      "hypothesis": "Competitive Hebbian readout of two noisy opposing gradients recovers most of the optimal positional information, and bits grow with integration time as ~0.5 log2 T up to a ceiling.",
+      "mechanism": "100 cells on a line; gradients c1=exp(-x/20), c2=exp(-(100-x)/20) with multiplicative noise sigma=0.3; K=8 readout units per cell population, winner-take-most Hebbian with Oja decay, trained on 20000 samples; input averaged over T samples.",
+      "intervention": "Train Hebbian readout; sweep T in {1,2,4,8,16,32}.",
+      "control": "Uniform fixed quantizer tiling (K=8 bins evenly in log-concentration space).",
+      "positive_control": "Optimal Bayesian decoder using known noise model.",
+      "observable": "I(x; readout) in bits, plug-in estimate with 50000 test samples, Miller-Madow corrected.",
+      "success_criterion": "Hebbian bits >= 0.8 x optimal-decoder bits (restricted to K=8 outputs) at T=1, and exceeds null twin by >= 0.5 bits; slope of bits vs log2 T over T<=8 in [0.3,0.7] for 10 seeds.",
+      "failure_criterion": "Hebbian bits <= uniform quantizer bits + 0.1, or slope outside [0.15,0.85].",
+      "alternative_explanation": "Any quantizer adapted to input density (histogram equalization) gives the same result; Hebbian specificity not needed.",
+      "null_twin": "Readout with tuning centres drawn at random from the input range (same K, same widths), destroying learned allocation.",
+      "substrate": "population",
+      "why_this_implementation": "Small population of readout units with explicit gradients; competitive Hebb is a local rule, not a trained network; information measured directly.",
+      "size": "100 cells, 8 units, 20000 train / 50000 test samples, 6 T values, 10 seeds",
+      "cost_estimate": "about 1 CPU core-minute",
+      "stupid_explanations": [
+        "MI estimator bias favours whichever readout has more occupied bins",
+        "optimal bound computed with wrong noise model making ratio look high",
+        "the 0.5 log2 T law follows from Gaussian averaging with no role for Hebb"
+      ]
+    },
+    {
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3",
+      "id": "W3",
+      "mechanism_ids": [
+        "M2",
+        "M11",
+        "M10"
+      ],
+      "lens_ids": [
+        "L4"
+      ],
+      "hypothesis": "Map wavelength formed by Oja-Hebbian learning under a Mexican-hat lateral kernel tracks the input correlation length rather than being fixed by the kernel.",
+      "mechanism": "Ring of 128 units, each with feedforward weights from 128 inputs; lateral kernel difference of Gaussians (sigma_e=2, sigma_i=6); inputs Gaussian with spatial correlation length xi.",
+      "intervention": "Sweep xi in {1,2,4,8,16}; train 20000 samples each.",
+      "control": "Kernel-only prediction k_T (fastest-growing mode of kernel) computed analytically.",
+      "positive_control": "Set lateral kernel to identity (no Turing) with structured input: the map should become top-PC dominated, confirming the PCA channel operates.",
+      "observable": "dominant wavelength lambda* of the learned preferred-position map, from power spectrum peak.",
+      "success_criterion": "Spearman rho(xi, lambda*) >= 0.9 pooled over 5 seeds per xi, and log-log slope >= 0.5; null-twin slope < 0.2.",
+      "failure_criterion": "slope < 0.2 in the structured condition (kernel sets wavelength: plain Turing, mechanism reduces to familiar)",
+      "alternative_explanation": "Weight smoothing from correlated input simply low-passes the map, lengthening apparent wavelength without mode selection.",
+      "null_twin": "Inputs with identical per-unit variance and identical temporal statistics but spatially shuffled channels (xi effectively 0) per sample.",
+      "substrate": "network",
+      "why_this_implementation": "A small linear-Hebbian ring is the minimal form in which weight-space Turing instability exists; it is not a deep network; the non-ML alternative (a continuum field equation for the weight density) is displaced only because the ring is easier to seed-control.",
+      "size": "128 units x 128 inputs, 20000 samples, 5 xi, 5 seeds",
+      "cost_estimate": "about 4 CPU core-minutes",
+      "stupid_explanations": [
+        "ring size quantizes wavelength so small shifts look like steps",
+        "low-pass smoothing inflates lambda* measured by peak",
+        "learning not converged for large xi, giving spurious trend"
+      ]
+    },
+    {
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3",
+      "id": "W4",
+      "mechanism_ids": [
+        "M4",
+        "M6"
+      ],
+      "lens_ids": [
+        "L1",
+        "L5"
+      ],
+      "hypothesis": "A plastic RD medium stores several patterns and recovers a lesioned pattern using stored couplings beyond what border pinning explains.",
+      "mechanism": "W1 medium (32x32) with sequential storage of P patterns, each produced by clamped Phase A from a different seed; recall from cue with 20% of cells re-randomized; lesion test removes a 8x8 square.",
+      "intervention": "Sweep P in {1,2,3,4,6}; lesion tests on P=1 with couplings inside the lesion intact vs scrambled.",
+      "control": "Nearest-neighbour Hopfield network with the same number of plastic edges storing the same binarized patterns.",
+      "positive_control": "P=1 with hand-carved couplings (as in W1).",
+      "observable": "overlap between recalled and target binarized pattern; recovered bits inside lesion.",
+      "success_criterion": "capacity (largest P with mean overlap >= 0.9 over 5 seeds) >= 2; lesion overlap with intact couplings exceeds scrambled-inside by >= 0.2 (paired, 10 seeds, Wilcoxon p<0.01).",
+      "failure_criterion": "capacity < 2 or intact-minus-scrambled lesion overlap < 0.05.",
+      "alternative_explanation": "Local Hopfield dynamics in disguise; border phase pinning drives repair.",
+      "null_twin": "scrambled-inside couplings for lesion test; permuted couplings for recall test.",
+      "substrate": "reaction-diffusion",
+      "why_this_implementation": "Keeps memory in transport coefficients of a field; the Hopfield comparison is included as the familiar baseline, not the ontology.",
+      "size": "32x32 grid, 1984 edges, up to 6 patterns, 3000 steps per phase, 5-10 seeds",
+      "cost_estimate": "about 6 CPU core-minutes",
+      "stupid_explanations": [
+        "patterns from different seeds share wavelength so overlap floor is high",
+        "8x8 lesion below wavelength is refilled by diffusion alone",
+        "binarization threshold tuned post hoc"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "SPECULATIVE",
+  "evidenceSummary": {
+    "layer": "speculation",
+    "note": "Pass 0-3 specs only; nothing run"
+  }
+}

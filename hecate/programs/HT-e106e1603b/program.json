@@ -1,0 +1,981 @@
+{
+  "id": "HT-e106e1603b",
+  "key": "Error Correcting Codes + Phase Transitions + Self-Organized Criticality",
+  "stratum": "S3_nous_high",
+  "concepts": [
+    {
+      "field": "Information Science",
+      "mechanism": "structure",
+      "name": "Error Correcting Codes",
+      "short_description": "Redundancy-based protection against noise; Hamming distance, Reed-Solomon, LDPC, turbo codes."
+    },
+    {
+      "field": "Physics",
+      "mechanism": "dynamics",
+      "name": "Phase Transitions",
+      "short_description": "Abrupt qualitative changes in system behavior at critical parameters; universality classes, order parameters."
+    },
+    {
+      "field": "Complex Systems",
+      "mechanism": "dynamics",
+      "name": "Self-Organized Criticality",
+      "short_description": "Systems naturally evolve to critical states with power-law avalanches; sandpile models, 1/f noise."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Error Correcting Codes + Phase Transitions + Self-Organized Criticality",
+    "humanreadable": "agents/hephaestus/humanreadable/Phase_Transitions---Self-Organized_Criticality---Error_Correcting_Codes.md",
+    "ledger_lines": [
+      2240
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L2240",
+    "upstream_nous": [
+      "agents/nous/runs/20260324_214225/responses.jsonl#L637"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "api_call_failed"
+    ],
+    "nous_composite_max": 7.33,
+    "nous_high_potential": true,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-e106e1603b",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": ["new interpretation"],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Error Correcting Codes",
+          "defining_structures": ["codebook as a subset of a noisy word space", "parity-check matrix / Tanner graph of variable and check nodes", "minimum distance d", "rate k/n"],
+          "invariants": ["every codeword has zero syndrome", "syndrome depends only on the error, not on the transmitted codeword", "linear codes are closed under addition"],
+          "transformations": ["encoding map", "syndrome computation", "decoding (nearest-codeword, bit-flipping, message passing)", "concatenation, puncturing, interleaving"],
+          "conserved_quantities": ["the k information bits (up to decodable noise)", "code dimension", "parity of each check under paired flips"],
+          "failure_modes": ["noise above the decoding threshold -> block failure", "miscorrection to a wrong codeword (silent failure)", "trapping / stopping sets that stall iterative decoders", "burst errors that exceed local redundancy"],
+          "dynamics": ["iterative message passing as a relaxation", "bit-flip decoding as greedy descent on unsatisfied-check count"],
+          "scales": ["block length n", "distance d", "noise rate p relative to threshold p*", "burst length relative to interleaver depth"],
+          "locality": ["checks are local (low-density) but the protected information is delocalised over the block"],
+          "memory": ["redundancy is stored memory; a code is a way of remembering against noise", "residual errors persist between scrub cycles"],
+          "identity": ["a message is identified with a decoding region (Voronoi cell) rather than one word"],
+          "reproduction": ["re-encoding / copying through a noisy channel", "concatenation reproduces a code at a larger scale"],
+          "selection": ["the decoder selects the most likely codeword", "code ensembles are selected for threshold"],
+          "information": ["channel capacity bounds rate at given noise", "syndrome is information about the error only"],
+          "constraint": ["parity checks are hard constraints", "sphere-packing / Singleton-type trade-offs between rate and distance"]
+        },
+        {
+          "concept": "Phase Transitions",
+          "defining_structures": ["order parameter", "control parameter", "free energy landscape", "correlation length", "universality class"],
+          "invariants": ["critical exponents within a universality class", "symmetry of the governing rule"],
+          "transformations": ["coarse-graining / renormalisation", "symmetry breaking", "finite-size scaling collapse"],
+          "conserved_quantities": ["symmetry charges", "conserved densities in conserving dynamics"],
+          "failure_modes": ["metastability and hysteresis", "finite-size rounding hides the transition", "frustration / glassiness produce many competing states"],
+          "dynamics": ["critical slowing down", "nucleation and domain growth", "coarsening"],
+          "scales": ["diverging correlation length at criticality", "system size L as the cutoff"],
+          "locality": ["local couplings produce long-range order"],
+          "memory": ["broken-symmetry state remembers its initial bias", "hysteresis loops store history"],
+          "identity": ["a phase is a macroscopic basin, identified by the order parameter"],
+          "reproduction": ["a nucleus of the stable phase converts its neighbourhood"],
+          "selection": ["free-energy minimisation selects the phase", "the control parameter selects the regime"],
+          "information": ["long-range correlations and susceptibility peak near the critical point", "success/failure of inference can itself be a sharp transition"],
+          "constraint": ["random constraint problems show satisfiable/unsatisfiable transitions", "symmetry constrains allowed order parameters"]
+        },
+        {
+          "concept": "Self-Organized Criticality",
+          "defining_structures": ["slowly driven threshold system", "toppling rule", "dissipation (typically at boundaries)", "separation of drive and relaxation timescales"],
+          "invariants": ["abelian property of some sandpiles: final state independent of toppling order", "recurrent-configuration set forms a group", "scale-free avalanche statistics up to a size cutoff"],
+          "transformations": ["drive (add a grain)", "relax (avalanche)", "dissipate (lose grains)"],
+          "conserved_quantities": ["grains in bulk toppling", "only the boundary dissipates"],
+          "failure_modes": ["bulk dissipation -> subcritical characteristic avalanche size", "fast drive -> overlapping avalanches, loss of scale-freeness", "system-spanning characteristic events"],
+          "dynamics": ["intermittent avalanches", "1/f-like fluctuations", "attraction to a critical state without parameter tuning"],
+          "scales": ["avalanche size cutoff scaling with system size", "drive interval >> relaxation time"],
+          "locality": ["nearest-neighbour toppling", "nonlocal consequences through avalanches"],
+          "memory": ["slowly built stress landscape stores the drive history", "the recurrent state encodes a group element"],
+          "identity": ["an avalanche is a transient entity with size, duration, area"],
+          "reproduction": ["a toppling triggers topplings; branching ratio near one"],
+          "selection": ["the dynamics selects the recurrent critical attractor"],
+          "information": ["susceptibility and dynamic range claimed to be maximal at criticality"],
+          "constraint": ["thresholds", "bulk conservation often required for criticality"]
+        }
+      ],
+      "unexplained": [
+        "whether the decoding threshold of a code can act as the attractor of a self-organizing process, or only as a tuned point",
+        "whether critical media store information better or worse than ordered media once burst statistics are accounted for",
+        "whether parity conservation in codes plays the role that grain conservation plays in sandpiles"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-e106e1603b",
+      "index": 1,
+      "kind": "collision",
+      "added": ["new mechanism"],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": ["P0", "I1", "I2", "I3", "I4", "I5", "I6", "I7"],
+      "unexplained": [
+        "several mechanisms (M2, M11, M13) may reduce to a feedback controller or a mutation-selection balance with no genuine SOC content",
+        "no mechanism yet says why a slowly driven decoder would stop at the threshold rather than at zero error",
+        "the Laplacian-lattice code (M4) has unclear distance properties"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "low",
+        "baseline_resistance": "low",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-e106e1603b",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": ["new lens", "new observable"],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": ["P1", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M12", "M15"],
+      "unexplained": [
+        "which lens statistic distinguishes a true self-organized threshold from a controller parked at a quantile",
+        "whether power-law avalanche fits survive a matched-mean null twin at the small sizes affordable here",
+        "no lens yet addresses identity (which message survives) as opposed to how much survives"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "low",
+        "baseline_resistance": "low",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-e106e1603b",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": ["new substrate", "new intervention", "new falsifier"],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": ["P2", "M1", "M2", "M7", "M9", "L1", "L2", "L3", "L4", "L5", "L6", "L7"],
+      "unexplained": [
+        "small sizes (L <= 64, n <= 2000) may be too small to separate power laws from broad exponentials",
+        "W2 may simply accumulate trapping-set residue without a stationary density",
+        "none of the worlds tests transfer of a learned code across substrates"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "low",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "high",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A decoder that is driven by slowly injected noise and relaxes between injections is a sandpile: unsatisfied checks are stress, bit flips are topplings. The decoding threshold (a phase transition) may be the self-organized attractor of such a driven decoder rather than a parameter someone tunes."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A system rewarded for throughput and punished for decoding failure will spend redundancy down until it sits at the edge of its code's threshold; the rate-noise phase boundary becomes an operating point reached by self-organization, and failures there come in bursts."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A medium at criticality has long-range correlations and so spreads any imprint nonlocally, which is what redundancy does; a critical medium may therefore act as an unengineered distributed code whose recoverability after local damage peaks at the critical point."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "SOC is a noise source, not a mechanism of protection: a critical world produces power-law bursts of damage, and no fixed-depth code or interleaver suffices against scale-free bursts; codes that survive in a critical world must be multi-scale, and the need for a hierarchy of redundancy is the signature."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The abelian sandpile's recurrent configurations form a finite group equal to integer vectors modulo the graph Laplacian lattice; sandpile relaxation therefore computes a coset representative, i.e. a syndrome, for free. A sandpile is a syndrome computer for a lattice code whose codewords are toppling vectors."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Codes conserve parity the way sandpiles conserve grains: errors create defects in pairs and local decoders move and annihilate them. Bulk conservation is what makes sandpiles critical; parity conservation might make driven local decoders critical, and breaking it should remove the criticality."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A population whose genomes carry evolvable redundancy under mutation has an error threshold (a phase transition in heredity); if redundancy costs fitness, the population self-organizes to the edge of that threshold, with extinction and sweep events of scale-free size."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Syndrome sandpile: on a sparse Tanner graph, noise is injected one bit at a time and a threshold bit-flip rule (flip a variable when at least t of its checks are unsatisfied) runs to quiescence between injections. The stationary residual-error density self-tunes toward the ensemble's bit-flip decoding threshold, because below it relaxation removes errors and above it stalled trapping sets accumulate and flips create new errors.",
+      "derived_from": ["I1"],
+      "concept_contributions": {
+        "Error Correcting Codes": "the Tanner graph, the syndrome as stress field, the bit-flip rule as toppling",
+        "Phase Transitions": "the decoding threshold as the candidate attractor density",
+        "Self-Organized Criticality": "slow drive with relaxation to quiescence, avalanche = flips per injection"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "without the parity structure there is no stress field, only a random walk of flips",
+        "Phase Transitions": "without a sharp threshold there is no special density for the dynamics to find",
+        "Self-Organized Criticality": "without timescale separation it is just decoding at a fixed noise rate"
+      },
+      "simpler_alternative": "the decoder clears isolated errors and the density goes to zero, or trapping-set residue accumulates monotonically; either gives no special relation to threshold",
+      "questions": {
+        "what_exists": "a fixed LDPC-like graph, a bit vector relative to the all-zero codeword",
+        "what_changes": "which bits are wrong",
+        "what_persists": "the stationary residual density, if any, and trapping-set residue",
+        "what_is_selected": "configurations stable under the flip rule",
+        "what_can_reproduce": "flip cascades trigger further flips",
+        "what_can_learn": "nothing adaptive; the attractor is a property of the rule",
+        "what_can_transfer": "the density-versus-threshold relation across code ensembles",
+        "distinguishing_observable": "stationary density rho* against independently measured threshold p*, and avalanche-size tail growth with n"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Redundancy thermostat: a storage agent lowers its protection (scrub effort or transmit power) by a small step after every successful epoch and raises it by a large step after every failure, with residual errors persisting between epochs. The operating point is driven to the edge of the scrubbing threshold and failures arrive in heavy-tailed bursts because persistent residue couples consecutive epochs.",
+      "derived_from": ["I2"],
+      "concept_contributions": {
+        "Error Correcting Codes": "the code and scrub decoder that define success and failure",
+        "Phase Transitions": "the sharp failure-versus-noise curve that makes the edge well defined",
+        "Self-Organized Criticality": "slow greedy drive toward the edge with fast failure-triggered relaxation"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "any system with a sigmoid failure curve behaves the same; the code contributes only the curve shape",
+        "Phase Transitions": "with a shallow failure curve the controller still converges, just to a blurred point",
+        "Self-Organized Criticality": "WEAK: the SOC element may be just an asymmetric step controller tracking a failure quantile; heavy tails would need the residue coupling, which is the only non-trivial part"
+      },
+      "simpler_alternative": "a stochastic-approximation controller that settles where step-up times failure-rate equals step-down times success-rate, with geometric inter-failure intervals",
+      "questions": {
+        "what_exists": "one code, one scrub decoder, one scalar protection level",
+        "what_changes": "protection level and residual error pattern",
+        "what_persists": "residual errors across epochs",
+        "what_is_selected": "an operating point near the failure edge",
+        "what_can_reproduce": "failures can seed further failures through residue",
+        "what_can_learn": "the protection level adapts",
+        "what_can_transfer": "the update rule to any threshold system",
+        "distinguishing_observable": "inter-failure interval distribution against a memoryless Bernoulli twin driven by the same measured failure curve"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Critical medium as distributed code: a pattern is imprinted on a threshold medium by biased driving; after erasing a random fraction of sites, the imprint is recovered by a linear readout of the remaining sites. Recoverability peaks near the critical point of the medium because correlations spread the imprint without the medium forgetting it.",
+      "derived_from": ["I3"],
+      "concept_contributions": {
+        "Error Correcting Codes": "erasure recovery as the success measure; redundancy as delocalisation",
+        "Phase Transitions": "the control parameter sweeping ordered, critical, disordered regimes",
+        "Self-Organized Criticality": "the medium reaches its critical regime by its own driving rather than by tuning"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "without an erasure-recovery criterion this is only a correlation-length measurement",
+        "Phase Transitions": "without a regime sweep there is no peak to find",
+        "Self-Organized Criticality": "a tuned critical medium gives the same test; SOC only supplies the claim that no tuning is needed"
+      },
+      "simpler_alternative": "recoverability tracks the imprint's surviving amplitude, which is maximal in the ordered phase; any peak is a readout-regularisation artifact",
+      "questions": {
+        "what_exists": "a grid medium, an imprint, an erasure mask, a linear readout",
+        "what_changes": "medium state under drive",
+        "what_persists": "imprint signal",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the readout weights",
+        "what_can_transfer": "the readout across erasure masks",
+        "distinguishing_observable": "recovery accuracy versus control parameter, and its peak location against the independently measured critical point"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Sandpile syndrome computer: take the graph Laplacian lattice as a lattice code (codewords = integer toppling vectors times the reduced Laplacian). Relaxing a received grain vector to its recurrent representative computes its coset, i.e. its syndrome, by purely local threshold dynamics; decoding reduces to a lookup from recurrent configuration to minimum-weight grain error.",
+      "derived_from": ["I5"],
+      "concept_contributions": {
+        "Error Correcting Codes": "lattice code, syndrome, minimum-weight decoding",
+        "Phase Transitions": "WEAK: only through the claim that decoding success versus grain-noise rate sharpens with graph size",
+        "Self-Organized Criticality": "abelian relaxation and the recurrent group supply the syndrome computation"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "the sandpile group is just a group; no error correction without a decoding rule",
+        "Phase Transitions": "WEAK: nothing structural is lost; the mechanism is a two-way ECC x SOC mechanism",
+        "Self-Organized Criticality": "syndrome must be computed by linear algebra instead of local relaxation"
+      },
+      "simpler_alternative": "Smith normal form of the Laplacian computes the same coset; relaxation is merely an expensive way to do integer reduction",
+      "questions": {
+        "what_exists": "a graph with sink, integer grain vectors",
+        "what_changes": "grain configuration under noise and relaxation",
+        "what_persists": "the coset (group element)",
+        "what_is_selected": "the recurrent representative",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "the syndrome-by-relaxation primitive to other lattices",
+        "distinguishing_observable": "decoding failure rate versus grain-noise rate per graph family, and topplings per syndrome versus Smith-form cost"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Error-threshold seeking: genomes carry an evolvable repetition factor on their functional bits; redundancy costs replication speed. The population evolves toward the minimum redundancy that keeps it below its heredity error threshold, and extinction or sweep events near that edge have scale-free size distributions.",
+      "derived_from": ["I7"],
+      "concept_contributions": {
+        "Error Correcting Codes": "repetition coding of genome function",
+        "Phase Transitions": "the heredity error threshold",
+        "Self-Organized Criticality": "selection as slow drive toward the edge, collapses as avalanches"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "without redundancy there is no knob to evolve",
+        "Phase Transitions": "without a sharp threshold redundancy settles at a smooth optimum",
+        "Self-Organized Criticality": "without scale-free events it is ordinary mutation-selection balance"
+      },
+      "simpler_alternative": "mutation-selection balance at a smooth cost-benefit optimum, with event sizes set by population size",
+      "questions": {
+        "what_exists": "a population of genomes with redundancy and function bits",
+        "what_changes": "redundancy, function, population composition",
+        "what_persists": "functional lineages",
+        "what_is_selected": "replication speed times heredity fidelity",
+        "what_can_reproduce": "genomes",
+        "what_can_learn": "the population's redundancy level",
+        "what_can_transfer": "evolved redundancy levels across mutation rates",
+        "distinguishing_observable": "distance of evolved redundancy from the threshold redundancy and tail exponent of lineage-collapse sizes"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Failure-size criticality at threshold: the number of wrong bits left after iterative decoding is bimodal away from threshold (zero or large) and broad, possibly power-law, exactly at threshold, so the size distribution of decoding failures is an order-parameter probe of the code's phase.",
+      "derived_from": ["I1", "I4"],
+      "concept_contributions": {
+        "Error Correcting Codes": "iterative decoder and its failure residue",
+        "Phase Transitions": "threshold as critical point, failure size as order-parameter fluctuation",
+        "Self-Organized Criticality": "WEAK: only the avalanche vocabulary; nothing is self-organized"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "no residue to measure",
+        "Phase Transitions": "no special point",
+        "Self-Organized Criticality": "WEAK: removing it changes nothing; this is a two-way mechanism"
+      },
+      "simpler_alternative": "a mixture of a success mode and a failure mode whose weights cross at threshold gives an apparently broad distribution without criticality",
+      "questions": {
+        "what_exists": "a code, iid noise at fixed p, a decoder",
+        "what_changes": "decoder state per iteration",
+        "what_persists": "residual errors after decoding",
+        "what_is_selected": "the decoder's fixed point",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "failure-size diagnostics to other decoders",
+        "distinguishing_observable": "residue-size distribution at p* versus a two-component mixture fit"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Scale-free burst memory: marks written into a sandpile are erased when their site topples. At criticality erasures come in spatially compact bursts of every size, so the benefit of scattering an erasure-code's symbols (interleaving) over placing them contiguously grows with system size, whereas in a subcritical pile the benefit saturates once the spread exceeds the characteristic avalanche size.",
+      "derived_from": ["I4"],
+      "concept_contributions": {
+        "Error Correcting Codes": "erasure code with n-k tolerance, interleaving as layout",
+        "Phase Transitions": "critical versus subcritical regime changes the burst-size law",
+        "Self-Organized Criticality": "the pile generates the scale-free bursts without tuning"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "without the k-of-n recovery rule there is only per-site survival",
+        "Phase Transitions": "without the regime contrast the size-dependence has no reference",
+        "Self-Organized Criticality": "iid erasures make layout irrelevant"
+      },
+      "simpler_alternative": "scattered layouts win whenever erasures are spatially correlated at any scale; growth with L may just track the mean avalanche area growing with L",
+      "questions": {
+        "what_exists": "a driven sandpile, one codeword's symbols pinned at sites",
+        "what_changes": "which symbols are erased",
+        "what_persists": "the decodable message until more than n-k symbols are erased",
+        "what_is_selected": "layouts that survive longer",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "nothing in this form; a layout optimiser in a later pass",
+        "what_can_transfer": "layout rules across burst laws",
+        "distinguishing_observable": "ratio of median survival times scattered/contiguous as a function of L, critical versus subcritical versus iid twin"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Critical slowing down as noise estimator: the number of iterations an iterative decoder needs grows sharply as noise approaches threshold, so an agent can read its own distance-to-threshold from convergence time and adjust protection without ever observing a failure.",
+      "derived_from": ["I1", "I2"],
+      "concept_contributions": {
+        "Error Correcting Codes": "iterative decoder",
+        "Phase Transitions": "critical slowing down near threshold",
+        "Self-Organized Criticality": "the agent uses the signal to hold itself near the edge"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "no iteration count to read",
+        "Phase Transitions": "iteration count is flat in noise",
+        "Self-Organized Criticality": "the estimator exists but nothing drives the system to the edge"
+      },
+      "simpler_alternative": "the syndrome weight before decoding is already an unbiased noise estimator; iteration count adds nothing",
+      "questions": {
+        "what_exists": "code, decoder, adaptive protection",
+        "what_changes": "noise level, protection level",
+        "what_persists": "the estimator's calibration",
+        "what_is_selected": "operating point",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the mapping iterations -> distance to threshold",
+        "what_can_transfer": "the mapping across code ensembles",
+        "distinguishing_observable": "mutual information between iteration count and noise beyond what initial syndrome weight carries"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Parity-conserving lazy decoder: on a planar surface-code-like lattice, edge flips create defect pairs; a lazy local decoder acts only where a neighbourhood holds at least theta defects, and its moves either annihilate adjacent pairs or hop a defect (parity preserving). Defects leave only at the boundary. Parity conservation plus threshold laziness plus boundary-only loss should make decoding avalanches scale-free; allowing bulk single-defect deletion should destroy it.",
+      "derived_from": ["I6", "I1"],
+      "concept_contributions": {
+        "Error Correcting Codes": "stabilizer-like parity checks, defects in pairs, logical failure as a spanning chain",
+        "Phase Transitions": "the defect-density at which spanning (logical) failures proliferate",
+        "Self-Organized Criticality": "threshold toppling, bulk conservation, boundary dissipation, slow drive"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "without the pair constraint defects are just grains; logical failure is undefined",
+        "Phase Transitions": "without a logical-failure transition the density has no reference point",
+        "Self-Organized Criticality": "an eager decoder (theta = 1) removes stress accumulation and avalanches"
+      },
+      "simpler_alternative": "a conserved sandpile relabelled; any heavy tail comes from conservation alone with no role for code structure",
+      "questions": {
+        "what_exists": "a lattice of edges, vertex parity checks, defects",
+        "what_changes": "edge error pattern, defect positions",
+        "what_persists": "defect parity per region, the logical class",
+        "what_is_selected": "configurations below the laziness threshold",
+        "what_can_reproduce": "a decoder move triggers neighbour moves",
+        "what_can_learn": "nothing adaptive",
+        "what_can_transfer": "the conservation requirement to other decoders",
+        "distinguishing_observable": "avalanche size cutoff scaling with L in the conserving rule versus the bulk-deletion twin matched on mean avalanche size; logical-failure rate per injection"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Failure-driven code growth: a code grows by adding a new check node over the bits involved in each decoding failure; the grown Tanner graph self-organizes to a structure whose threshold sits just above the ambient noise, and failure sizes become scale-free as the code approaches that edge.",
+      "derived_from": ["I1", "I2"],
+      "concept_contributions": {
+        "Error Correcting Codes": "Tanner graph structure as the growing body",
+        "Phase Transitions": "threshold of the grown code relative to ambient noise",
+        "Self-Organized Criticality": "growth stops only when failures are rare, poising the code at its edge"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "growth has no functional meaning",
+        "Phase Transitions": "growth would continue smoothly without a stopping edge",
+        "Self-Organized Criticality": "a designed code at fixed rate; nothing is poised"
+      },
+      "simpler_alternative": "adding checks monotonically lowers failure rate; growth slows as failures become rare, a plain diminishing-returns curve",
+      "questions": {
+        "what_exists": "a growing sparse graph, a noisy channel",
+        "what_changes": "graph topology and degree distribution",
+        "what_persists": "checks once added",
+        "what_is_selected": "check placements that stopped failures",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "the code's structure",
+        "what_can_transfer": "grown codes to new noise levels",
+        "distinguishing_observable": "threshold of the grown code relative to training noise, and degree distribution against random codes of equal rate"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Coarse-graining as decoding: majority-rule block coarse-graining is a concatenated repetition decoder; its fixed-point structure (flow to all-correct or to random) is the threshold of the concatenated code, so a system that repeatedly coarse-grains its own state keeps information iff noise is below an RG critical point.",
+      "derived_from": ["I3"],
+      "concept_contributions": {
+        "Error Correcting Codes": "concatenated repetition code and majority decoding",
+        "Phase Transitions": "RG fixed points and the unstable critical point",
+        "Self-Organized Criticality": "WEAK: only if the noise is itself generated by avalanches of the coarse-graining process"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "coarse-graining loses its interpretation as information retention",
+        "Phase Transitions": "no fixed-point dichotomy",
+        "Self-Organized Criticality": "WEAK: nothing essential disappears; mostly a two-way ECC x PT mechanism"
+      },
+      "simpler_alternative": "iterating the majority map on independent noise is a textbook fixed-point calculation",
+      "questions": {
+        "what_exists": "a hierarchical block structure",
+        "what_changes": "block values under noise and majority",
+        "what_persists": "the top-level bit below threshold",
+        "what_is_selected": "majority values",
+        "what_can_reproduce": "blocks replicate their majority upward",
+        "what_can_learn": "nothing",
+        "what_can_transfer": "threshold values across block sizes",
+        "distinguishing_observable": "top-level retention versus noise and its sharpening with depth"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Avalanche mutation: mutations hit genomes as sandpile avalanches mapped onto the genome layout (correlated bursts with scale-free sizes) rather than iid with the same mean rate. Populations with evolvable symbol layout evolve multi-scale interleaving, which iid-mutated populations never do.",
+      "derived_from": ["I4", "I7"],
+      "concept_contributions": {
+        "Error Correcting Codes": "genome-level code and its layout",
+        "Phase Transitions": "critical burst law versus subcritical burst law as treatment",
+        "Self-Organized Criticality": "source of the correlated mutation bursts"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "no layout to evolve",
+        "Phase Transitions": "no contrast between burst laws",
+        "Self-Organized Criticality": "iid mutation, no layout pressure"
+      },
+      "simpler_alternative": "any spatially correlated mutation (fixed-size bursts) selects scattered layouts; scale-freeness is irrelevant",
+      "questions": {
+        "what_exists": "genomes with position-indexed code symbols",
+        "what_changes": "symbol positions and values",
+        "what_persists": "decodable function",
+        "what_is_selected": "layouts that survive bursts",
+        "what_can_reproduce": "genomes",
+        "what_can_learn": "the layout",
+        "what_can_transfer": "evolved layouts to new burst laws",
+        "distinguishing_observable": "spatial spread spectrum of evolved layouts under scale-free versus fixed-size bursts with matched mean damage"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Throughput heats the channel: the world's noise rate rises with the information rate pushed through it and relaxes slowly; a transmitter maximising goodput drives the channel to the code's threshold, where noise fluctuations are amplified by the steep failure curve.",
+      "derived_from": ["I2"],
+      "concept_contributions": {
+        "Error Correcting Codes": "goodput and failure depend on rate and noise",
+        "Phase Transitions": "steep threshold curve amplifies fluctuations",
+        "Self-Organized Criticality": "slow heating/cooling as the drive"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "no goodput definition",
+        "Phase Transitions": "smooth optimum, no amplification",
+        "Self-Organized Criticality": "WEAK: likely just a feedback loop with delay, which oscillates rather than self-organizes"
+      },
+      "simpler_alternative": "delayed negative feedback producing a limit cycle",
+      "questions": {
+        "what_exists": "channel temperature, transmitter rate, code",
+        "what_changes": "rate and temperature",
+        "what_persists": "the time-averaged operating point",
+        "what_is_selected": "rate",
+        "what_can_reproduce": "nothing",
+        "what_can_learn": "rate policy",
+        "what_can_transfer": "policy across codes",
+        "distinguishing_observable": "spectrum of the noise trace: 1/f-like versus a limit-cycle peak"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Split-phase organism: an organism that must both detect weak signals (favoured at criticality) and retain states (favoured in an ordered, code-protected phase) evolves a partition into a critical sensing module and an ordered, redundant memory module, when each module has its own control parameter; with one shared parameter it settles at a compromise that is worse at both.",
+      "derived_from": ["I3", "I2"],
+      "concept_contributions": {
+        "Error Correcting Codes": "redundant memory module",
+        "Phase Transitions": "ordered versus critical regimes of each module",
+        "Self-Organized Criticality": "the sensing module holds itself near criticality"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "memory is just an ordered phase with no designed redundancy",
+        "Phase Transitions": "no regime choice",
+        "Self-Organized Criticality": "sensing must be tuned; the self-organized version is not tested"
+      },
+      "simpler_alternative": "two tasks with different optima favour two parameters; any modular system shows this",
+      "questions": {
+        "what_exists": "two threshold media coupled to an environment",
+        "what_changes": "module parameters",
+        "what_persists": "stored state",
+        "what_is_selected": "parameter pairs with high task fitness",
+        "what_can_reproduce": "organisms",
+        "what_can_learn": "the parameters",
+        "what_can_transfer": "the split across tasks",
+        "distinguishing_observable": "evolved parameter distance from each module's critical point"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Miscorrection contagion: a network of storage nodes each scrubs its own codeword, but a miscorrection at one node leaks corrupted symbols into its neighbours' codewords. The branching ratio of miscorrection set by code distance and coupling determines whether failures stay local or cascade, and repair policies that reduce scrub effort after quiet periods poise the network at branching ratio one.",
+      "derived_from": ["I1", "I2"],
+      "concept_contributions": {
+        "Error Correcting Codes": "miscorrection probability as a function of distance and load",
+        "Phase Transitions": "the branching-ratio-one transition between local and cascading failure",
+        "Self-Organized Criticality": "effort relaxation during quiet periods as slow drive toward the edge"
+      },
+      "knockouts": {
+        "Error Correcting Codes": "failure probability is a free parameter, not a code property",
+        "Phase Transitions": "no cascade transition",
+        "Self-Organized Criticality": "effort fixed; the network sits wherever it is set"
+      },
+      "simpler_alternative": "a branching process with an effort controller; heavy tails exactly at branching ratio one are textbook",
+      "questions": {
+        "what_exists": "nodes with codewords, a coupling graph",
+        "what_changes": "codeword corruption, scrub effort",
+        "what_persists": "uncorrupted nodes",
+        "what_is_selected": "effort levels",
+        "what_can_reproduce": "failures propagate",
+        "what_can_learn": "effort policy",
+        "what_can_transfer": "policy across coupling graphs",
+        "distinguishing_observable": "cascade-size distribution and effective branching ratio under adaptive versus fixed effort matched on mean effort"
+      }
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Syndrome-grain bookkeeping",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M1", "M9", "M15"],
+      "rationale": "Treat unsatisfied checks as grains and decoder moves as topplings so that sandpile statistics can be computed on decoders directly.",
+      "sourceRepresentation": "time series of decoder moves per injection, with the defect/unsatisfied-check set before and after each move",
+      "transformation": "segment into avalanches (moves between consecutive injections), compute size, duration, area, and branching ratio (moves caused per move)",
+      "observables": ["avalanche size distribution P(s)", "95th-percentile size s95 as a function of system size", "empirical branching ratio", "stationary defect density"],
+      "predictedSignals": ["s95 grows with system size roughly as a power", "branching ratio near 1 in the conserving rule"],
+      "nullExpectation": "sizes have a characteristic scale independent of system size; branching ratio clearly below 1",
+      "failureModes": ["finite-size cutoff dominates at small L", "log-log straightness mistaken for power law", "overlapping avalanches when drive is not slow"],
+      "informationAddedBeyondExistingLenses": "makes decoders measurable with sandpile statistics rather than only with failure rates"
+    },
+    {
+      "id": "L2",
+      "name": "Threshold-distance thermometer",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M1", "M2", "M6", "M8"],
+      "rationale": "Any claim that a dynamics sits 'at threshold' needs an independent threshold measurement made without the dynamics.",
+      "sourceRepresentation": "block failure probability versus iid noise rate p for two block lengths of the same ensemble",
+      "transformation": "fit logistic curves, locate the crossing of the two curves as p*; express any operating point as (p - p*)/p*",
+      "observables": ["p* estimate with bootstrap interval", "curve steepness at p*", "relative distance of self-organized operating points to p*"],
+      "predictedSignals": ["self-organized densities within 20% of p*"],
+      "nullExpectation": "operating points unrelated to p* (e.g. near zero or far above)",
+      "failureModes": ["curves do not cross at small n", "bit-flip decoder threshold poorly defined for small blocks"],
+      "informationAddedBeyondExistingLenses": "an external reference point, so that 'critical' is not self-certified by the dynamics being tested"
+    },
+    {
+      "id": "L3",
+      "name": "Interleaver-depth demand curve",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M7", "M12"],
+      "rationale": "Invented for this triplicate: the burst law of a critical world should show up as a growing demand for spread in a code's layout, which is a code-side measurement of criticality.",
+      "sourceRepresentation": "survival time of a k-of-n erasure-coded message under a given layout in a given burst world",
+      "transformation": "compute median survival for contiguous and scattered layouts, and the minimal spread radius that reaches 90% of scattered-layout survival, as a function of system size L",
+      "observables": ["survival ratio R(L) = median survival scattered / contiguous", "required spread radius D(L)"],
+      "predictedSignals": ["R(L) and D(L) increase with L at criticality", "both saturate in a subcritical world", "R near 1 in an iid world"],
+      "nullExpectation": "R(L) flat in L in all regimes",
+      "failureModes": ["mean avalanche area growth alone drives R(L) growth", "boundary effects at small L"],
+      "informationAddedBeyondExistingLenses": "measures criticality through its consequence for information retention rather than through avalanche histograms"
+    },
+    {
+      "id": "L4",
+      "name": "Coset ledger",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M4"],
+      "rationale": "Invented for this triplicate: view every sandpile configuration by its coset modulo the Laplacian lattice so that relaxation is read as syndrome computation.",
+      "sourceRepresentation": "integer grain vectors on non-sink vertices of a small graph",
+      "transformation": "map each vector to its recurrent representative by stabilisation plus the identity-element trick; tabulate minimum-weight error per coset by breadth-first enumeration",
+      "observables": ["group order", "minimum L1 weight of a nonzero lattice vector", "decoding success versus grain-noise rate", "topplings per syndrome computation"],
+      "predictedSignals": ["decoding success curve sharpens with graph size within a family"],
+      "nullExpectation": "success curve shape unchanged by graph size",
+      "failureModes": ["cosets too many to tabulate beyond ~16 vertices", "lattice minimum distance fixed by vertex degree so no family scaling"],
+      "informationAddedBeyondExistingLenses": "gives the sandpile an algebraic code reading independent of avalanche statistics"
+    },
+    {
+      "id": "L5",
+      "name": "Defect-parity audit",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M9", "M1"],
+      "rationale": "Tests the analogy grain conservation <-> parity conservation directly by counting where parity is broken.",
+      "sourceRepresentation": "defect set per time step with a region partition",
+      "transformation": "compute per-region defect-parity changes not accounted for by boundary crossings",
+      "observables": ["bulk parity-violation rate", "correlation of violation rate with avalanche cutoff exponent"],
+      "predictedSignals": ["zero violations in the conserving rule, with the largest cutoff scaling", "cutoff scaling falls as bulk violation rate rises"],
+      "nullExpectation": "cutoff scaling independent of violation rate",
+      "failureModes": ["region choice changes the count", "annihilation mislabelled as violation"],
+      "informationAddedBeyondExistingLenses": "isolates the conservation ingredient rather than treating the decoder rule as a black box"
+    },
+    {
+      "id": "L6",
+      "name": "Residue-cluster geometry",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M1", "M6", "M9"],
+      "rationale": "Failure residue that is critical should have fractal, system-spanning clusters; failure residue that is a mixture should have compact, bounded clusters.",
+      "sourceRepresentation": "set of wrong bits after relaxation, embedded in the Tanner graph or lattice",
+      "transformation": "connected components in the graph induced by wrong bits and their shared checks; size and graph-diameter per component",
+      "observables": ["largest-component fraction", "component-size distribution", "mass-diameter relation"],
+      "predictedSignals": ["largest component fraction rises sharply near p*", "broad component-size distribution only near p*"],
+      "nullExpectation": "components are those of iid errors at the same density",
+      "failureModes": ["expander-like Tanner graphs make diameter uninformative", "density matching of iid null is approximate"],
+      "informationAddedBeyondExistingLenses": "looks at the spatial form of residue, not only its count"
+    },
+    {
+      "id": "L7",
+      "name": "Inter-failure clock",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P2",
+      "targets": ["M2", "M13", "M15"],
+      "rationale": "Separates a controller parked at a quantile (memoryless failures) from a system with memory-coupled bursts.",
+      "sourceRepresentation": "sequence of failure epochs",
+      "transformation": "inter-failure interval distribution, Fano factor of failure counts in windows of 10, 100, 1000 epochs",
+      "observables": ["Fano factor versus window size", "interval CCDF", "likelihood ratio power-law versus exponential"],
+      "predictedSignals": ["Fano factor grows with window size when residue couples epochs"],
+      "nullExpectation": "Fano factor near 1 at all windows (Bernoulli failures)",
+      "failureModes": ["controller oscillation produces clustering without criticality", "short runs make large-window Fano noisy"],
+      "informationAddedBeyondExistingLenses": "a temporal-memory test that does not rely on spatial avalanche definitions"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P3",
+      "mechanism_ids": ["M9"],
+      "lens_ids": ["L1", "L5", "L6"],
+      "hypothesis": "A lazy, parity-conserving local decoder on a planar parity-check lattice under slow edge-flip drive produces decoding avalanches whose size cutoff scales with lattice size; permitting bulk single-defect deletion, at a rate matched to give the same mean avalanche size, removes that scaling.",
+      "mechanism": "LxL planar lattice, errors on edges, vertex parity checks give defects. Drive: flip one uniformly random edge, then relax. Relaxation: any vertex whose 3x3 neighbourhood holds >= theta=3 defects is active; an active vertex either annihilates an adjacent defect pair by flipping the connecting edge or moves one of its defects one step toward the nearest lattice boundary (random tie-breaks). Defects reaching a boundary are removed. Relax until no active vertex.",
+      "intervention": "null twin rule: identical, plus each active step deletes a bulk defect without flipping an edge with probability eps, eps calibrated by bisection so mean avalanche size matches the conserving rule within 5%",
+      "control": "eager decoder theta=1 (no stress accumulation) at the same sizes",
+      "positive_control": "2D BTW sandpile at L=16,32,64 through the same avalanche-analysis code must give s95(64)/s95(16) >= 4",
+      "observable": "s95 (95th percentile avalanche size in edge flips) per L; bulk parity-violation count; logical-failure count (boundary-to-boundary error chain) per 1000 injections",
+      "success_criterion": "conserving rule: s95(L=64)/s95(L=16) >= 4 AND null twin: s95(64)/s95(16) <= 2, both with 4-seed bootstrap 90% intervals not overlapping",
+      "failure_criterion": "conserving rule s95(64)/s95(16) < 2, OR null twin ratio within the conserving rule's 90% interval, OR positive control fails (then the run is void, not a failure)",
+      "alternative_explanation": "cutoff growth comes from boundary distance alone (defects travel farther in bigger lattices) rather than from conservation-driven criticality; checked by the null twin, which keeps boundaries",
+      "null_twin": "bulk-deletion twin matched on mean avalanche size and identical drive, lattice and boundaries; destroys parity conservation only",
+      "substrate": "graph",
+      "why_this_implementation": "a plain lattice with explicit parity checks keeps the code structure visible (defects, logical chains); a cellular-automaton formulation was displaced because synchronous updates would obscure the drive/relax separation that defines SOC",
+      "size": "L in {16, 32, 64}; 2000 burn-in + 20000 measured injections per run; 4 seeds; 3 rules (conserving, bulk-deletion twin, eager) plus BTW positive control",
+      "cost_estimate": 8,
+      "stupid_explanations": [
+        "defects walking to the boundary take ~L steps, so any size measure grows with L regardless of criticality",
+        "the laziness threshold creates a backlog that is released in big clearances simply because the lattice fills, not because the state is critical",
+        "eps calibration matches the mean but not the variance, so the twin differs in more than conservation"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P3",
+      "mechanism_ids": ["M1", "M6"],
+      "lens_ids": ["L1", "L2", "L6"],
+      "hypothesis": "Under one-bit-at-a-time noise injection with bit-flip relaxation to quiescence, the stationary residual-error density of a regular (3,6) sparse code sits within 20% of the independently measured bit-flip threshold of the same ensemble.",
+      "mechanism": "random (3,6)-regular Tanner graph, all-zero codeword, error vector e. Drive: flip one random bit of e. Relax: parallel sweeps flipping every variable with >= 2 of 3 checks unsatisfied, up to 50 sweeps or quiescence. Record residual density |e|/n after each relaxation.",
+      "intervention": "null twin: same injection, but relaxation flips a uniformly random set of variables of the same size as the syndrome rule would have flipped at that step (syndrome-blind)",
+      "control": "fast drive: inject 10 bits per relaxation instead of 1",
+      "positive_control": "L2 threshold measurement: iid errors at p in a grid of 20 values, 200 blocks each, n in {1000, 2000}; crossing must exist in [0.01, 0.2] or the run is void",
+      "observable": "stationary density rho* = mean of |e|/n over the last half of injections; drift slope of |e|/n over the last half; L2 threshold p*",
+      "success_criterion": "|rho* - p*|/p* <= 0.2 AND drift slope over last half < 0.05 * rho* per 10^4 injections (stationary) AND null twin |rho*_twin - p*|/p* > 0.5",
+      "failure_criterion": "rho* < 0.2 p* (decoder simply cleans up), OR non-stationary drift above the bound (trapping-set accumulation), OR null twin also within 20% of p*",
+      "alternative_explanation": "any threshold decoder driven slowly will park at a density where flip-in equals flip-out, which could coincide with p* by accident of the degree profile; tested by repeating at t=3-of-3 whose threshold differs",
+      "null_twin": "syndrome-blind relaxation with matched flip counts; destroys the parity-driven mechanism while preserving drive and flip volume",
+      "substrate": "graph",
+      "why_this_implementation": "a Tanner graph with a threshold flip rule is the literal code; a neural decoder was not considered because the question is about the code's own dynamics",
+      "size": "n in {1000, 2000}; 30000 injections per run; 3 seeds; threshold sweep 20 p-values x 200 blocks x 2 n",
+      "cost_estimate": 7,
+      "stupid_explanations": [
+        "residue accumulates in trapping sets monotonically and the density 'at' p* is just where the run was stopped",
+        "the density equals p* because both are set by the same degree-3 majority arithmetic, not by self-organization",
+        "the twin fails merely because random flips inject errors, a trivially different drive"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P3",
+      "mechanism_ids": ["M7"],
+      "lens_ids": ["L3"],
+      "hypothesis": "In a critical sandpile the survival advantage of scattered over contiguous placement of an erasure code's symbols grows with system size, while in a subcritical pile it saturates and in an iid-erasure world it is absent.",
+      "mechanism": "2D BTW sandpile LxL, open boundaries, driven one grain at a time after burn-in. A message is one (n=32, k=16) erasure codeword: 32 symbols pinned at 32 sites; a symbol is erased the first time its site topples. The message dies when more than 16 symbols are erased. Layouts: contiguous 4x8 block at a random position, or 32 uniformly scattered sites.",
+      "intervention": "subcritical regime: each toppling loses a grain in the bulk with probability 0.05; iid twin: each site is erased per grain added with probability equal to that site class's empirical per-grain toppling probability measured in the critical run",
+      "control": "same pipeline with k=32 of n=32 (no redundancy): layout should matter less",
+      "positive_control": "iid twin must give R within [0.9, 1.1], confirming layout is irrelevant without spatial correlation",
+      "observable": "R(L) = median survival (in grains added) of scattered / contiguous layouts, per regime and L",
+      "success_criterion": "critical: R(64)/R(16) >= 1.5; subcritical: R(64)/R(16) <= 1.15; iid: R within [0.9, 1.1] at both L; 400 messages per cell, bootstrap 90% intervals non-overlapping between critical and subcritical ratios",
+      "failure_criterion": "critical R(64)/R(16) < 1.2, OR subcritical ratio within the critical ratio's 90% interval, OR iid positive control out of range (void)",
+      "alternative_explanation": "R grows with L because contiguous blocks of fixed 4x8 size become a smaller fraction of a growing avalanche's area, which holds for any correlated erasure law whose mean area grows with L; the subcritical arm is what separates this",
+      "null_twin": "iid erasures matched on per-site erasure rate; destroys spatial burst structure",
+      "substrate": "reaction-diffusion",
+      "why_this_implementation": "a threshold-toppling grid is the minimal generator of scale-free compact bursts; a cellular-automaton reading is possible but the sequential drive/relax loop is kept explicit rather than recast as a CA",
+      "size": "L in {16, 32, 64}; 400 messages per layout x regime x L (messages overlaid on shared runs, 8 per run); 3 regimes; 2 seeds of sandpile history",
+      "cost_estimate": 9,
+      "stupid_explanations": [
+        "sites near the boundary topple less, and scattered layouts oversample the boundary",
+        "contiguous blocks are wiped by a single avalanche at any size; survival differences reflect block size, not burst law",
+        "the subcritical arm has a much lower toppling rate, so its survival times are longer and ratios compress"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P3",
+      "mechanism_ids": ["M2"],
+      "lens_ids": ["L2", "L7"],
+      "hypothesis": "A storage scrubber that lowers effort after each clean epoch and raises it after each failure, with residual errors persisting between epochs, shows failure clustering (Fano factor growing with window) beyond a memoryless twin driven by the same measured failure curve.",
+      "mechanism": "(3,6)-regular code n=1000 stored in a noisy memory; each epoch adds iid bit flips at p=0.02; scrub = s sweeps of bit-flip (s is the effort, integer 1..20); failure = residual errors > 0 after scrub; residual errors persist. Update: s -= 1 after 20 consecutive clean epochs, s += 3 after a failure.",
+      "intervention": "memoryless twin: at each epoch failure is Bernoulli(Pfail(s)) with Pfail(s) measured from fresh-start scrubs at each s; same update rule",
+      "control": "fixed effort at the adaptive run's median s",
+      "positive_control": "a synthetic failure stream with injected clustering (Markov-modulated Bernoulli, burst prob 0.3) must produce Fano(1000)/Fano(10) >= 3 through the same L7 code",
+      "observable": "Fano factor of failure counts at windows 10, 100, 1000 epochs; mean effort; time-averaged residual density",
+      "success_criterion": "adaptive: Fano(1000)/Fano(10) >= 2 AND memoryless twin: Fano(1000)/Fano(10) <= 1.3, 3 seeds each, all seeds agreeing in direction",
+      "failure_criterion": "adaptive and twin ratios both within 1.3x of each other, in which case M2 is recorded as a plain controller",
+      "alternative_explanation": "the asymmetric step rule creates sawtooth effort oscillations that cluster failures regardless of residue coupling; the memoryless twin shares the rule and controls for this",
+      "null_twin": "memoryless Bernoulli failures with the same effort-to-failure curve and the same update rule; destroys the persistent-residue coupling",
+      "substrate": "optimizer",
+      "why_this_implementation": "a scalar effort controller around a real scrub decoder is the minimal form; a reinforcement-learning agent was displaced because the question is whether the code's persistence creates memory, not whether a learner finds a policy",
+      "size": "n=1000; 60000 epochs per run; 3 seeds; Pfail(s) calibration 20 s-values x 300 fresh starts",
+      "cost_estimate": 9,
+      "stupid_explanations": [
+        "the sawtooth controller clusters failures on its own",
+        "Pfail(s) measured from fresh starts underestimates failure with residue, so the twin runs at a different operating point",
+        "residue grows without bound and the run is nonstationary, which inflates large-window Fano trivially"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "SPECULATIVE",
+  "evidenceSummary": {
+    "layer": "speculation",
+    "note": "Pass 0-3 specs only; nothing run"
+  }
+}

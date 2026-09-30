@@ -1,0 +1,1390 @@
+{
+  "id": "HT-5b0b3ebb8d",
+  "key": "Abductive Reasoning + Epistemology + Model Checking",
+  "stratum": "S5_random",
+  "concepts": [
+    {
+      "field": "Philosophy",
+      "mechanism": "dynamics",
+      "name": "Abductive Reasoning",
+      "short_description": "Inference to best explanation from incomplete data; hypothesis generation, explanatory virtues."
+    },
+    {
+      "field": "Philosophy",
+      "mechanism": "structure",
+      "name": "Epistemology",
+      "short_description": "Study of knowledge, justification, and belief; foundationalism, coherentism, reliabilism."
+    },
+    {
+      "field": "Formal Methods",
+      "mechanism": "constraint",
+      "name": "Model Checking",
+      "short_description": "Exhaustive verification of finite-state systems against specifications; temporal logic, state space exploration."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Abductive Reasoning + Epistemology + Model Checking",
+    "humanreadable": "agents/hephaestus/humanreadable/Epistemology---Abductive_Reasoning---Model_Checking.md",
+    "ledger_lines": [
+      3012
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L3012",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L852"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "api_call_failed"
+    ],
+    "nous_composite_max": 7.0,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "unexplained": [
+        "whether any interpretation needs all three concepts or reduces to known active learning / truth maintenance",
+        "which epistemology school (foundationalist, coherentist, reliabilist) has a distinctive computational signature"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      },
+      "concept_extractions": {
+        "Abductive Reasoning": {
+          "defining_structures": [
+            "surprising observation O",
+            "candidate explanation H with H => O",
+            "ranking over explanations by explanatory virtues",
+            "background theory T that H must be consistent with"
+          ],
+          "invariants": [
+            "H together with T must entail (or raise the probability of) O",
+            "H must be consistent with T",
+            "abduction is defeasible: conclusions can be withdrawn"
+          ],
+          "transformations": [
+            "surprise -> hypothesis generation",
+            "hypothesis -> ranking",
+            "new data -> re-ranking or retraction",
+            "explanation -> prediction (abduction feeding deduction)"
+          ],
+          "conserved_quantities": [
+            "none strictly; the set of already-explained observations is intended to be preserved across revisions"
+          ],
+          "failure_modes": [
+            "overfitting ad hoc hypotheses",
+            "missing the true hypothesis because it was never generated (bad lot)",
+            "loveliness mistaken for likeliness",
+            "premature closure on the first adequate explanation"
+          ],
+          "dynamics": [
+            "triggered by surprise, not continuous",
+            "generate-rank-test cycle",
+            "defeasible revision under new evidence"
+          ],
+          "scales": [
+            "single observation vs body of evidence",
+            "local patch hypotheses vs global theory change"
+          ],
+          "locality": [
+            "explanation targets a specific anomaly",
+            "minimal-change preference keeps revisions local"
+          ],
+          "memory": [
+            "set of explained observations",
+            "background theory accumulated from past abductions"
+          ],
+          "identity": [
+            "a hypothesis is identified by what it explains and what it predicts, not by its syntax"
+          ],
+          "reproduction": [
+            "accepted explanations spawn derived predictions and sub-hypotheses"
+          ],
+          "selection": [
+            "inference to the BEST explanation: selection among competitors by simplicity, scope, coherence, fertility"
+          ],
+          "information": [
+            "surprise measures information content of O relative to T",
+            "explanation compresses observations"
+          ],
+          "constraint": [
+            "consistency with T",
+            "the hypothesis space actually generated bounds what can be concluded"
+          ]
+        },
+        "Epistemology": {
+          "defining_structures": [
+            "belief, justification, truth, knowledge",
+            "foundationalist DAG with basic beliefs",
+            "coherentist web of mutual support",
+            "reliabilist belief-forming processes with track records"
+          ],
+          "invariants": [
+            "knowledge implies truth (factivity)",
+            "knowledge requires justification not reducible to luck (anti-Gettier)",
+            "justification should be transmitted along support relations"
+          ],
+          "transformations": [
+            "evidence -> justification",
+            "justification -> belief",
+            "defeater -> retraction",
+            "reflection: belief about one's own beliefs"
+          ],
+          "conserved_quantities": [
+            "under foundationalism, justification flows from basics and is not created in transit",
+            "under coherentism, global coherence is the quantity being maintained"
+          ],
+          "failure_modes": [
+            "Gettier cases: justified true belief true by luck",
+            "regress of justification",
+            "skeptical scenarios indistinguishable from the actual one",
+            "coherent but disconnected-from-world belief systems",
+            "unreliable process producing lucky truths"
+          ],
+          "dynamics": [
+            "belief revision (expansion, contraction, revision)",
+            "defeat and reinstatement",
+            "accumulation of track record for processes"
+          ],
+          "scales": [
+            "single belief",
+            "belief system",
+            "belief-forming process over many uses",
+            "community of knowers"
+          ],
+          "locality": [
+            "foundationalism: support local along chains",
+            "coherentism: support global over the web"
+          ],
+          "memory": [
+            "stored beliefs and their support links",
+            "process track records"
+          ],
+          "identity": [
+            "a belief is individuated by content and by the basis on which it is held"
+          ],
+          "reproduction": [
+            "beliefs propagate by inference and testimony"
+          ],
+          "selection": [
+            "defeaters eliminate beliefs",
+            "reliable processes are trusted more"
+          ],
+          "information": [
+            "evidence as information",
+            "knowledge as a stable relation to truth robust to counterfactual variation"
+          ],
+          "constraint": [
+            "factivity",
+            "consistency norms",
+            "closure principles (knowledge closed under known entailment, contested)"
+          ]
+        },
+        "Model Checking": {
+          "defining_structures": [
+            "finite Kripke structure / labeled transition system",
+            "temporal logic specification (LTL, CTL)",
+            "exhaustive state-space exploration",
+            "counterexample trace or witness trace"
+          ],
+          "invariants": [
+            "answer is sound and complete for the given finite model",
+            "a violated safety property always has a finite counterexample",
+            "liveness violations need lasso-shaped (infinite) counterexamples"
+          ],
+          "transformations": [
+            "model x spec -> yes / counterexample",
+            "abstraction (quotienting) and refinement",
+            "product construction with property automaton",
+            "fixed-point computation over state sets"
+          ],
+          "conserved_quantities": [
+            "bisimulation preserves CTL truth",
+            "abstraction preserves universal properties if it over-approximates"
+          ],
+          "failure_modes": [
+            "state-space explosion",
+            "spec does not say what was meant (vacuity, wrong spec)",
+            "model does not match system (verified the wrong artifact)",
+            "spurious counterexamples from over-abstraction"
+          ],
+          "dynamics": [
+            "breadth/depth exploration of reachable states",
+            "iterated fixed points",
+            "counterexample-guided abstraction refinement loop"
+          ],
+          "scales": [
+            "number of reachable states",
+            "trace length / bound k",
+            "number of atomic propositions"
+          ],
+          "locality": [
+            "transitions are local; properties are global over paths",
+            "counterexamples localize a failure to a path"
+          ],
+          "memory": [
+            "visited-state set",
+            "fixed-point iterates"
+          ],
+          "identity": [
+            "states identified up to labeling; systems up to bisimulation"
+          ],
+          "reproduction": [
+            "none intrinsic; counterexamples generate refinements"
+          ],
+          "selection": [
+            "exhaustive, not selective: every reachable state is examined"
+          ],
+          "information": [
+            "a counterexample is a certificate of falsity; a proof/invariant is a certificate of truth",
+            "yes answers carry less information than counterexamples"
+          ],
+          "constraint": [
+            "finiteness",
+            "the specification is fixed and external",
+            "exhaustiveness over the model, not over the world"
+          ]
+        }
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M4, M6, M12 may be familiar mechanisms (JTMS, Hedge, Myhill-Nerode) in disguise",
+        "no mechanism yet shows that epistemic norms change outcomes beyond relabeling"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "M17"
+      ],
+      "unexplained": [
+        "whether L6 luck flag survives visit-count matching",
+        "whether L7 references are distinct enough in random worlds"
+      ],
+      "decision": "BUILD_ENGINE",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new intervention",
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "M10",
+        "M12",
+        "M7",
+        "M3",
+        "M14",
+        "M1",
+        "M11",
+        "M13",
+        "L7",
+        "L3",
+        "L5",
+        "L2",
+        "L1",
+        "L6"
+      ],
+      "unexplained": [
+        "all four worlds are unrun specifications",
+        "baseline resistance unknown until null twins run"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Counterexample as surprise: the model checker's counterexample (or a world trace that contradicts the verified model) is the surprising fact that triggers abduction; the abduced object is a minimal model repair; a repair becomes knowledge only when it survives re-verification plus fresh traces. Experiment: repair loops on hidden automata, measuring trace-efficiency and brittleness of repairs."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Knowledge as a model-checkable modal property: the agent's epistemic state is a finite set of candidate models (epistemic alternatives); 'the agent knows phi' is literally 'phi holds in every remaining candidate', decided by model checking; abduction is the operator that removes and adds candidates. Experiment: track the frontier of known formulas as evidence accumulates and test for discontinuous jumps and false-knowledge events."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Explanatory virtue as verification cost: the virtue that abduction should maximize is not description length but the cost of exhaustively checking the explanation; cheap-to-verify explanations are preferred because only they can be justified by the agent's bounded checker. Experiment: pit a verification-cost prior against an MDL prior where the two disagree (short programs with huge reachable state spaces)."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Three justification topologies as three state-space regimes: foundationalism = acyclic support graph with axioms, coherentism = greatest consistent fixed point of mutually constraining models, reliabilism = temporal property over the history of a belief-forming process. Experiment: insert abductive hypotheses into each topology and measure retraction avalanches and consistency maintenance cost."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Safety/liveness epistemic asymmetry: from finite evidence, safety claims are refutable but never finitely verified by traces alone, liveness claims are neither finitely refutable nor verifiable; abduction of a model is what lets an agent come to 'know' liveness, so liveness knowledge is structurally more abduction-dependent and more fragile. Experiment: compare false-knowledge rates for safety vs liveness formulas under matched base rates."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Spec-relevant abstraction as justified granularity: an agent that abduces an abstraction only as fine as a specification requires (CEGAR-style) holds beliefs at the coarsest granularity that justifies its decisions; distinctions the spec does not need are never believed. Experiment: compare spec-triggered splitting with prediction-error splitting and measure whether the learned partition aligns with the spec-relevant quotient."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Gettier cases as unrealized witnesses: a belief can be true and model-checked (justified) while its witness path does not exist in the real system; this is a checkable, mechanical definition of epistemic luck. Experiment: flag beliefs whose certificate path was never observed and test whether they fail more under mechanism shifts."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Counterexample-guided abductive repair: an agent holds a finite automaton model plus a fixed spec; whenever a world trace contradicts the model, it abduces the minimal edit (add state / redirect transition / flip label) that explains the trace AND keeps the spec satisfied; edits are provisional until they survive k fresh traces.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "generates minimal edits that explain the contradicting trace",
+        "Epistemology": "provisional vs accepted status of edits (defeasibility with a survival criterion)",
+        "Model Checking": "spec-preservation check on every candidate edit"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no repair is proposed; the agent can only reject its model",
+        "Epistemology": "every edit is treated as final; no distinction between repaired and known structure",
+        "Model Checking": "edits are unconstrained; becomes ordinary passive automaton learning"
+      },
+      "simpler_alternative": "Passive state-merging automaton inference (RPNI-style) on the accumulated traces, ignoring the spec.",
+      "questions": {
+        "what_exists": "a hidden automaton, a spec it satisfies, a candidate model, traces",
+        "what_changes": "the candidate model via edits",
+        "what_persists": "accepted edits and the spec",
+        "what_is_selected": "edits that both explain traces and keep the spec true",
+        "what_can_reproduce": "accepted edits are reused as templates for later repairs",
+        "what_can_learn": "the hidden automaton structure",
+        "what_can_transfer": "the repair operator to a new automaton family with the same spec",
+        "distinguishing_observable": "traces-to-identification is lower than spec-free inference when the spec is true, and HIGHER when the spec is subtly false"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Verification-cost prior: explanations are ranked by the number of reachable states the agent must explore to check them against its spec battery, not by description length; the agent prefers explanations it can afford to justify.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the candidate explanation set to be ranked",
+        "Epistemology": "the norm that only checkable beliefs may be held (justification access)",
+        "Model Checking": "the cost measure: reachable-state count"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "nothing to rank; mechanism is a pure cost-of-verification metric",
+        "Epistemology": "cost preference loses its rationale and becomes an arbitrary speed prior",
+        "Model Checking": "falls back to description length; cost measure disappears"
+      },
+      "simpler_alternative": "Speed prior / Levin-style time-bounded simplicity, or plain MDL.",
+      "questions": {
+        "what_exists": "candidate explanations with description length and reachable-state count",
+        "what_changes": "the ranking as the spec battery grows",
+        "what_persists": "explanations with small reachable state spaces",
+        "what_is_selected": "cheap-to-verify explanations",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "which explanation family the world uses",
+        "what_can_transfer": "cost-ranking to a world with a different spec battery",
+        "distinguishing_observable": "in worlds where short descriptions have huge state spaces (e.g. large modular counters), cost-prior picks different explanations than MDL and differs in held-out accuracy"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Epistemic frontier by exhaustive checking: the belief state is a finite set of candidate models; knowledge of phi is computed by model checking phi in every candidate; abduction adds candidates on surprise, evidence removes them; the agent acts only on known formulas.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "adds candidates when all current ones fail to explain an observation",
+        "Epistemology": "defines knowledge as truth in all epistemic alternatives",
+        "Model Checking": "decides phi in each candidate exhaustively"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "the candidate set can only shrink and may become empty (no recovery from a bad initial lot)",
+        "Epistemology": "the set is just a hypothesis pool with no knowledge operator; agent acts on majority not unanimity",
+        "Model Checking": "knowledge must be estimated by sampling; false-knowledge rate changes"
+      },
+      "simpler_alternative": "Version-space learning with a unanimity vote.",
+      "questions": {
+        "what_exists": "candidate models and a formula battery",
+        "what_changes": "candidate set membership",
+        "what_persists": "formulas true in all candidates",
+        "what_is_selected": "candidates consistent with evidence",
+        "what_can_reproduce": "candidates spawn repaired variants via abduction",
+        "what_can_learn": "which formulas are true of the world",
+        "what_can_transfer": "the frontier procedure to new formula batteries",
+        "distinguishing_observable": "the known-formula frontier grows in discrete jumps whose timing is predicted by candidate-set disagreement, and false-knowledge events occur only after abductive re-population"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Certificate-chained justification: each accepted belief stores the model-checking certificate (witness or invariant) that justified it and the abductions that model depended on; retracting an abduction recursively invalidates all beliefs whose certificates depended on it.",
+      "derived_from": [
+        "I1",
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the abductive hypotheses that can later be retracted",
+        "Epistemology": "foundationalist transmission of justification along support links",
+        "Model Checking": "the certificates themselves (witness paths, inductive invariants)"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no retractable hypotheses: dependencies never change",
+        "Epistemology": "no transmission: beliefs are retracted one at a time without propagation",
+        "Model Checking": "no certificates: dependency links must be declared by hand (plain truth maintenance)"
+      },
+      "simpler_alternative": "Justification-based truth maintenance system (JTMS). Likely a familiar mechanism in disguise.",
+      "questions": {
+        "what_exists": "beliefs, certificates, dependency links",
+        "what_changes": "which beliefs are in/out",
+        "what_persists": "beliefs with intact certificate chains",
+        "what_is_selected": "beliefs whose support survives",
+        "what_can_reproduce": "certificates reused across beliefs",
+        "what_can_learn": "which abductions are fragile",
+        "what_can_transfer": "the dependency structure to new domains",
+        "distinguishing_observable": "retraction cascade size distribution vs a system without certificate links"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Coherence fixed point under abductive insertion: beliefs are mutually constraining small models; after each abductive insertion the checker recomputes the greatest mutually consistent subset; the system exhibits retraction avalanches whose size distribution depends on how tightly models constrain each other.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the stream of insertions (perturbations)",
+        "Epistemology": "coherentist global consistency as the maintained quantity",
+        "Model Checking": "fixed-point computation of the consistent subset"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no perturbations; system is static",
+        "Epistemology": "no global coherence requirement; insertions never trigger retractions",
+        "Model Checking": "consistency is judged locally or heuristically; avalanches become arbitrary"
+      },
+      "simpler_alternative": "Incremental random constraint satisfaction with greedy conflict removal.",
+      "questions": {
+        "what_exists": "a web of small models linked by shared propositions",
+        "what_changes": "subset membership after each insertion",
+        "what_persists": "the maximal consistent core",
+        "what_is_selected": "models compatible with the core",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "nothing learns; this is a law of the belief web",
+        "what_can_transfer": "avalanche statistics across web densities",
+        "distinguishing_observable": "avalanche-size distribution shape (heavy-tailed near a density threshold vs exponential)"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Reliabilist process selection: a population of abductive procedures (minimal-edit, merge-states, most-recent-reuse, random-consistent) each proposes models; a procedure's weight is the fraction of its past proposals that later passed model checks on held-out traces; beliefs are held with the weight of the process that produced them, not the evidence for the belief.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the population of hypothesis-generating procedures",
+        "Epistemology": "the reliabilist norm: justification is the reliability of the producing process",
+        "Model Checking": "the pass/fail oracle that builds each track record"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no procedures, nothing to weight",
+        "Epistemology": "weights attach to hypotheses, not processes (ordinary Bayesian mixture)",
+        "Model Checking": "track records must come from noisy prediction scores"
+      },
+      "simpler_alternative": "Multiplicative-weights / Hedge over experts. Weak three-way dependency: epistemology relabels expert weighting.",
+      "questions": {
+        "what_exists": "procedures, proposals, track records",
+        "what_changes": "procedure weights",
+        "what_persists": "high-reliability procedures",
+        "what_is_selected": "procedures, by track record",
+        "what_can_reproduce": "not applicable unless procedures are mutated",
+        "what_can_learn": "which procedure fits the world family",
+        "what_can_transfer": "procedure weights across a family shift",
+        "distinguishing_observable": "after a world-family shift, process-level weighting and hypothesis-level weighting recover at different rates"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Spec abduction with asymmetric credence: the agent abduces temporal-logic properties of the world from finite traces; safety-type hypotheses are refutable by a finite trace, liveness-type are not; the agent assigns structurally lower ceiling credence to abduced liveness properties unless they are entailed by an abduced model.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "generates candidate properties to explain regularities and absences in traces",
+        "Epistemology": "credence ceilings tied to refutability class",
+        "Model Checking": "classification of properties as safety/liveness and checking them against candidate models"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no candidate properties are generated",
+        "Epistemology": "all properties get the same credence rule; asymmetry disappears",
+        "Model Checking": "the safety/liveness distinction cannot be computed; credence rule is undefined"
+      },
+      "simpler_alternative": "Frequency-based confidence with a fixed discount for rarely observed events.",
+      "questions": {
+        "what_exists": "traces, candidate properties, candidate models",
+        "what_changes": "credences",
+        "what_persists": "properties never refuted",
+        "what_is_selected": "properties with highest credence",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "which properties hold",
+        "what_can_transfer": "credence rules to new property classes",
+        "distinguishing_observable": "false-knowledge rate for liveness vs safety at matched base rates and matched formula length"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "information bottleneck",
+      "statement": "Horizon-tagged belief: the checker runs with depth bound k; every belief carries its horizon tag and the agent must represent 'unknown beyond k' separately from 'true'; abduction is only allowed to fill in beyond-horizon structure when a spec forces it.",
+      "derived_from": [
+        "I5",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the extrapolation beyond k",
+        "Epistemology": "the distinction between known-up-to-k and known",
+        "Model Checking": "the bounded check itself"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "beyond-k is always unknown; agent never extrapolates",
+        "Epistemology": "horizon tags collapse; bounded truth is treated as truth",
+        "Model Checking": "no bound; tags are meaningless"
+      },
+      "simpler_alternative": "Finite-horizon lookahead with a confidence decay.",
+      "questions": {
+        "what_exists": "beliefs with horizon tags",
+        "what_changes": "tags as k grows",
+        "what_persists": "beliefs verified at every horizon tried",
+        "what_is_selected": "beliefs worth extending",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "where the world's behaviour changes beyond short horizons",
+        "what_can_transfer": "horizon policies",
+        "distinguishing_observable": "error rate at horizon k+j as a function of j for tagged vs untagged agents in worlds with late-onset violations"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Spec-disagreement exploration: the agent chooses actions that maximize disagreement among candidate models about whether the SPEC holds (not about next-state predictions), so exploration concentrates where verification verdicts are uncertain.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the candidate models whose disagreement defines the target",
+        "Epistemology": "the epistemic goal is knowing the spec's truth, not knowing the world",
+        "Model Checking": "spec verdict per candidate"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "single model, no disagreement signal",
+        "Epistemology": "goal reverts to model identification (next-state disagreement)",
+        "Model Checking": "disagreement must be computed on predictions"
+      },
+      "simpler_alternative": "Query-by-committee active learning on next-state predictions.",
+      "questions": {
+        "what_exists": "agent, world, candidate set, spec",
+        "what_changes": "the candidate set via chosen experiments",
+        "what_persists": "spec-relevant knowledge",
+        "what_is_selected": "actions with maximal verdict disagreement",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "whether the spec holds",
+        "what_can_transfer": "exploration policy to other specs",
+        "distinguishing_observable": "fewer actions to decide the spec, but WORSE full-model identification than prediction-disagreement exploration"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Spec-driven abstraction growth: the agent starts with a one-state abstraction of the world and splits abstract states only when a counterexample to the spec turns out spurious on real traces; the belief partition therefore grows only as fine as the spec requires.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the choice of which split explains the spuriousness",
+        "Epistemology": "the abstraction is the agent's justified granularity of belief",
+        "Model Checking": "abstract counterexample generation and spuriousness check"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "splits are chosen at random among states on the spurious path",
+        "Epistemology": "no rationale for stopping; granularity is set by budget",
+        "Model Checking": "no counterexamples; splits must be triggered by prediction error"
+      },
+      "simpler_alternative": "Decision-tree / state splitting driven by prediction error (U-tree-like).",
+      "questions": {
+        "what_exists": "abstract states, concrete traces, spec",
+        "what_changes": "the partition",
+        "what_persists": "splits that removed spurious counterexamples",
+        "what_is_selected": "splits relevant to the spec",
+        "what_can_reproduce": "partitions reused when the spec changes slightly",
+        "what_can_learn": "the spec-relevant quotient of the world",
+        "what_can_transfer": "abstraction to a new spec sharing propositions",
+        "distinguishing_observable": "the learned partition aligns with the spec-relevant quotient and ignores spec-irrelevant labels that prediction-error splitting captures"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Witness grounding (mechanical Gettier detection): a belief phi is flagged as lucky if it is true in the world and verified in the agent's model but its certificate (witness path) has never been realized in observed traces; lucky beliefs are held at reduced strength and prioritized for testing.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the model in which the witness lives came from abduction and may contain fictitious structure",
+        "Epistemology": "the Gettier distinction: justification that does not connect to the truthmaker",
+        "Model Checking": "the witness path as an explicit certificate"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "models are learned only from observed structure; fictitious witnesses rarely arise",
+        "Epistemology": "no distinction between grounded and lucky truths",
+        "Model Checking": "no certificate to compare against observation"
+      },
+      "simpler_alternative": "Novelty/visit-count confidence: trust predictions on paths you have seen more.",
+      "questions": {
+        "what_exists": "world, agent model, witnesses, traces",
+        "what_changes": "grounded status of witnesses",
+        "what_persists": "grounded beliefs",
+        "what_is_selected": "beliefs to test",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "which parts of the model are fictitious",
+        "what_can_transfer": "grounding check across mechanisms",
+        "distinguishing_observable": "after a mechanism shift, flagged-lucky beliefs fail at a higher rate than grounded ones matched for visit counts"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Bisimulation-quotient epistemics: hypotheses that are bisimilar with respect to observable labels are identified; abduction operates on quotient classes; the agent never distinguishes observationally equivalent explanations and cannot represent a preference between them.",
+      "derived_from": [
+        "I2",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "hypotheses to be grouped",
+        "Epistemology": "underdetermination made explicit: indistinguishable alternatives count as one epistemic state",
+        "Model Checking": "bisimulation computation"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no hypotheses",
+        "Epistemology": "agent keeps separate beliefs about indistinguishable models (and may wrongly prefer one)",
+        "Model Checking": "equivalence must be estimated empirically"
+      },
+      "simpler_alternative": "Minimal DFA / Myhill-Nerode minimization. Weak three-way dependency: epistemology only names the quotient.",
+      "questions": {
+        "what_exists": "hypotheses, quotient classes",
+        "what_changes": "class membership",
+        "what_persists": "class invariants",
+        "what_is_selected": "classes consistent with data",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "the observational quotient of the world",
+        "what_can_transfer": "quotient to new label sets",
+        "distinguishing_observable": "sample efficiency gain equal to the average class size; if none, the quotient buys nothing"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Skeptic-believer game: a skeptic searches (by model checking over candidate structures) for a counter-model consistent with all evidence in which the believer's claim fails; the believer answers by abducing a discriminating experiment; a claim becomes knowledge when the skeptic's bounded search is exhausted.",
+      "derived_from": [
+        "I2",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "believer's generation of discriminating experiments",
+        "Epistemology": "skeptical scenarios as the test of knowledge",
+        "Model Checking": "exhaustive counter-model search"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "believer cannot respond; skeptic always wins or the game is passive",
+        "Epistemology": "no role structure; reduces to consistency checking",
+        "Model Checking": "skeptic samples counter-models; exhaustion never certified"
+      },
+      "simpler_alternative": "Minimax active learning / version space with worst-case queries.",
+      "questions": {
+        "what_exists": "believer, skeptic, evidence, candidate structures",
+        "what_changes": "evidence via experiments",
+        "what_persists": "claims that survived exhaustive skeptic search",
+        "what_is_selected": "experiments that kill the most counter-models",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "the world structure",
+        "what_can_transfer": "skeptic search strategy",
+        "distinguishing_observable": "claims certified by the game have lower false-knowledge rate than claims certified by unanimity of a randomly sampled candidate set of equal size"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Abductive directed mutation under a verifier guard: an evolving population of candidate automata mutates by abducing a minimal edit that fixes one misclassified example, and offspring that violate a known spec are killed before selection.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "directed (explanation-seeking) mutation",
+        "Epistemology": "defeasibility and a norm that no individual may hold a spec-violating belief",
+        "Model Checking": "guard via product-automaton emptiness"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "random mutation",
+        "Epistemology": "guard is replaced by fitness penalty (beliefs allowed to violate norms)",
+        "Model Checking": "no guard at all"
+      },
+      "simpler_alternative": "Hill climbing with error-directed edits and a constraint penalty.",
+      "questions": {
+        "what_exists": "population of automata, labeled examples, spec",
+        "what_changes": "automata via edits",
+        "what_persists": "spec-satisfying lineages",
+        "what_is_selected": "automata with best training accuracy among guarded",
+        "what_can_reproduce": "automata, by copying with edits",
+        "what_can_learn": "the hidden language",
+        "what_can_transfer": "the directed-mutation operator to other automaton families",
+        "distinguishing_observable": "a positive directed x guard interaction on generations-to-fit and held-out accuracy"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Obligation memory: memory stores open temporal obligations (pending 'until' and 'eventually' formulas implied by current beliefs) instead of facts; a belief is demoted when an obligation it created expires unmet and promoted when obligations are discharged.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "abduced beliefs generate the obligations",
+        "Epistemology": "justification is earned by discharged obligations over time",
+        "Model Checking": "runtime monitor automata for the obligations"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "obligations arise only from given rules",
+        "Epistemology": "discharge does not change belief status",
+        "Model Checking": "obligations cannot be tracked exactly"
+      },
+      "simpler_alternative": "Prediction-error tracking with delayed credit assignment.",
+      "questions": {
+        "what_exists": "beliefs, obligations, monitors",
+        "what_changes": "obligation status",
+        "what_persists": "beliefs with discharged obligations",
+        "what_is_selected": "beliefs whose obligations tend to be met",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "timing structure of the world",
+        "what_can_transfer": "obligation templates",
+        "distinguishing_observable": "beliefs promoted by obligation discharge are more robust to later evidence than beliefs promoted by equal counts of immediate confirmations"
+      }
+    },
+    {
+      "id": "M16",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Loveliness as checkable scope: an explanation's loveliness is the number of spec formulas it makes decidable within the checker's budget; the agent prefers lovely explanations over merely likely ones and the question is whether loveliness predicts future survival beyond likelihood.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "the lovely/likely distinction in explanation choice",
+        "Epistemology": "explanatory virtue as a guide to truth (contested)",
+        "Model Checking": "decidability-within-budget as a scope measure"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no alternative explanations to prefer among",
+        "Epistemology": "virtue has no claimed link to truth; preference is aesthetic",
+        "Model Checking": "scope must be measured syntactically"
+      },
+      "simpler_alternative": "Occam or fit-plus-complexity regularization.",
+      "questions": {
+        "what_exists": "explanations, spec battery, budget",
+        "what_changes": "which explanation is preferred",
+        "what_persists": "lovely explanations if loveliness tracks truth",
+        "what_is_selected": "lovely explanations",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "whether loveliness is truth-conducive in a world family",
+        "what_can_transfer": "virtue weightings",
+        "distinguishing_observable": "partial correlation between loveliness and future survival controlling for likelihood and size"
+      }
+    },
+    {
+      "id": "M17",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Surprise tax: in a world where every unexplained observation costs the agent, and every model-checking step also costs, the agent must trade abductive repair against verification; the rule predicts an interior optimum of checking effort per repair that shifts with world stochasticity.",
+      "derived_from": [
+        "I1",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Abductive Reasoning": "repair as the response to surprise",
+        "Epistemology": "the rational allocation of justification effort",
+        "Model Checking": "verification cost"
+      },
+      "knockouts": {
+        "Abductive Reasoning": "no repair option; agent just pays surprise",
+        "Epistemology": "no normative target; optimum is just cost minimization",
+        "Model Checking": "no verification cost; check everything"
+      },
+      "simpler_alternative": "Exploration-exploitation cost trade-off; bounded rationality with two costs.",
+      "questions": {
+        "what_exists": "agent, world, two cost streams",
+        "what_changes": "checking effort per repair",
+        "what_persists": "policies near the optimum",
+        "what_is_selected": "effort levels",
+        "what_can_reproduce": "not applicable",
+        "what_can_learn": "the effort level",
+        "what_can_transfer": "effort level across stochasticity",
+        "distinguishing_observable": "optimum effort shifts non-monotonically with noise; a monotone shift indicates plain cost trade-off"
+      }
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Counterexample genealogy",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "Every accepted belief in this triplicate descends from a counterexample; the ancestry of repairs is where abduction and checking meet.",
+      "sourceRepresentation": "log of (counterexample, abduced edit, verification outcome) events",
+      "transformation": "build a DAG from each edit to the counterexample that triggered it and to earlier edits it modified",
+      "observables": [
+        "genealogy depth",
+        "branching factor",
+        "fraction of final model edges with a live ancestor chain",
+        "edit half-life"
+      ],
+      "predictedSignals": [
+        "spec-guarded repair produces shallower, more reused genealogies",
+        "unguarded repair produces long chains of patches on patches"
+      ],
+      "nullExpectation": "genealogy depth distribution matches that of edits triggered by random misclassified examples",
+      "failureModes": [
+        "genealogy dominated by trivial one-step repairs",
+        "edit identity ambiguous after merges"
+      ],
+      "informationAddedBeyondExistingLenses": "structural history of the belief system, invisible in accuracy curves",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M4",
+        "M14"
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Knows-frontier trace",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "Turns the epistemic operator into a time series: which formulas the agent knows at each step.",
+      "sourceRepresentation": "candidate-model set over time and a fixed formula battery",
+      "transformation": "at each step model-check every formula in every candidate; record unanimous-true, unanimous-false, split",
+      "observables": [
+        "frontier size curve",
+        "jump times and sizes",
+        "false-knowledge events (known-true but false in world)",
+        "knowledge losses"
+      ],
+      "predictedSignals": [
+        "frontier grows in discrete jumps",
+        "false-knowledge events cluster right after abductive re-population"
+      ],
+      "nullExpectation": "frontier grows smoothly and false-knowledge events are uniform in time",
+      "failureModes": [
+        "battery too easy (everything known immediately)",
+        "candidate set empties"
+      ],
+      "informationAddedBeyondExistingLenses": "separates knowing from being accurate on average",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M9",
+        "M13"
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Justification ledger thermodynamics",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "Checking has a cost in states explored; belief entropy has a cost in wrong actions; the ratio is the exchange rate of justification.",
+      "sourceRepresentation": "per-step reachable-state counts and candidate-set entropy",
+      "transformation": "compute bits of candidate-set entropy removed per 1000 states explored, per repair",
+      "observables": [
+        "entropy reduction per explored state",
+        "cumulative explored states at identification",
+        "marginal exchange rate over time"
+      ],
+      "predictedSignals": [
+        "verification-cost prior achieves higher exchange rate early and lower late"
+      ],
+      "nullExpectation": "exchange rate equal across priors within seed variation",
+      "failureModes": [
+        "state counts dominated by one pathological candidate",
+        "entropy estimates degenerate when the set is tiny"
+      ],
+      "informationAddedBeyondExistingLenses": "cost-side view absent from accuracy and frontier lenses",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M8",
+        "M17"
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Retraction avalanche spectrum",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "Coherentist and foundationalist webs respond to insertions by retraction cascades; their size distribution is a fingerprint of topology.",
+      "sourceRepresentation": "belief in/out status before and after each insertion",
+      "transformation": "count beliefs flipped per insertion; fit exponential vs power-law tail by likelihood ratio",
+      "observables": [
+        "avalanche size distribution",
+        "tail exponent",
+        "largest avalanche / web size"
+      ],
+      "predictedSignals": [
+        "heavy tail near a critical web density for coherence dynamics",
+        "short exponential tail for certificate-chained foundationalist webs"
+      ],
+      "nullExpectation": "exponential tail independent of web density",
+      "failureModes": [
+        "finite-size cutoff mistaken for tail shape",
+        "insertion stream correlated with web structure"
+      ],
+      "informationAddedBeyondExistingLenses": "global dynamics of the belief web, not individual belief quality",
+      "passId": "P2",
+      "targets": [
+        "M4",
+        "M5"
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Refutability-class split",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "The safety/liveness distinction divides beliefs into finitely refutable and not; this lens asks if the agent's errors respect that division.",
+      "sourceRepresentation": "formula battery labeled safety / liveness / mixed, credence trajectories",
+      "transformation": "stratify all epistemic metrics by refutability class at matched base rate and formula size",
+      "observables": [
+        "false-knowledge rate per class",
+        "time-to-knowledge per class",
+        "credence overshoot per class"
+      ],
+      "predictedSignals": [
+        "liveness false-knowledge rate exceeds safety rate when knowledge comes via abduced models"
+      ],
+      "nullExpectation": "rates equal once base rate and length are matched",
+      "failureModes": [
+        "class labels confounded with formula size",
+        "too few liveness formulas become known"
+      ],
+      "informationAddedBeyondExistingLenses": "shows whether a formal-methods distinction shapes epistemic error",
+      "passId": "P2",
+      "targets": [
+        "M7",
+        "M8",
+        "M15"
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Witness grounding audit",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "Gettier luck is checkable when justifications are explicit paths.",
+      "sourceRepresentation": "agent's witness paths and the set of observed concrete traces",
+      "transformation": "mark each true, verified belief as grounded (witness realized in traces) or lucky (not realized)",
+      "observables": [
+        "lucky fraction",
+        "post-shift failure rate of lucky vs grounded",
+        "visit-count-matched failure rates"
+      ],
+      "predictedSignals": [
+        "lucky beliefs fail more under mechanism shift even at matched visit counts"
+      ],
+      "nullExpectation": "failure rates equal once visit counts are matched",
+      "failureModes": [
+        "lucky flag is just a proxy for low visit count",
+        "witness choice arbitrary among many witnesses"
+      ],
+      "informationAddedBeyondExistingLenses": "an explicit luck variable not present in any accuracy or frontier measure",
+      "passId": "P2",
+      "targets": [
+        "M11",
+        "M13"
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Spec-relevance alignment map",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "rationale": "Abstractions should carve the world where the spec needs it; this measures where the carving actually falls.",
+      "sourceRepresentation": "learned partition of concrete states and two reference partitions (spec-relevant quotient, full observational quotient)",
+      "transformation": "compute adjusted mutual information of the learned partition with each reference",
+      "observables": [
+        "AMI with spec-relevant quotient",
+        "AMI with full quotient",
+        "partition size"
+      ],
+      "predictedSignals": [
+        "spec-driven splitting aligns with spec-relevant quotient and stays small"
+      ],
+      "nullExpectation": "alignment with both references proportional to partition size alone",
+      "failureModes": [
+        "references nearly identical in the chosen worlds (no contrast)",
+        "AMI saturates"
+      ],
+      "informationAddedBeyondExistingLenses": "directly tests the justified-granularity idea",
+      "passId": "P2",
+      "targets": [
+        "M10",
+        "M12"
+      ]
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M10",
+        "M12"
+      ],
+      "lens_ids": [
+        "L7",
+        "L3"
+      ],
+      "hypothesis": "Abstraction that is split only on spurious spec counterexamples aligns with the spec-relevant quotient of the world and stays smaller than prediction-error splitting with the same split budget.",
+      "mechanism": "CEGAR-style loop: one-state abstraction; model-check safety spec AG not p_bad on abstraction; if counterexample, replay on concrete traces; if spurious, split the abstract state at the failure point on the concrete predicate that separates the replayed states.",
+      "intervention": "Split trigger = spurious spec counterexample.",
+      "control": "Same splitting procedure but triggered by next-label prediction error (U-tree-like), same maximum number of splits.",
+      "positive_control": "Planted world where p_bad depends only on a 2-state component product with a 20-state irrelevant component; spec-driven splitting must recover exactly the 2-block partition (AMI >= 0.95).",
+      "observable": "AMI of learned partition with spec-relevant quotient (A_spec) and with full observational quotient (A_full); partition size.",
+      "success_criterion": "Over 30 seeds, median(A_spec - A_full) for the treatment exceeds the same median for the control by >= 0.15 (Wilcoxon signed-rank p < 0.01), and median treatment partition size <= 0.6 x control.",
+      "failure_criterion": "Difference < 0.05 or p > 0.1, or treatment partition size >= control size.",
+      "alternative_explanation": "Any splitting procedure with fewer splits looks more spec-aligned because coarse partitions trivially match the coarse reference.",
+      "null_twin": "Split times copied from the treatment run (matching split count and timing) but split location chosen uniformly among states on the replayed path: preserves split budget, destroys counterexample information.",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "Explicit finite labeled transition systems keep the spec-relevant quotient computable exactly; no learned function approximator is needed or wanted.",
+      "size": "40-state random LTS, 3 actions, 2 propositions (p_bad spec-relevant, q irrelevant), 200 random-walk traces of length 30, max 20 splits, 30 seeds",
+      "cost_estimate": 3,
+      "stupid_explanations": [
+        "coarser partitions trivially score higher AMI with a coarse reference",
+        "the random LTS generator makes q correlated with p_bad",
+        "the spurious-check replays only a few traces so splits are effectively random"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M7",
+        "M3"
+      ],
+      "lens_ids": [
+        "L5",
+        "L2"
+      ],
+      "hypothesis": "When knowledge is defined as truth in all remaining candidate models and candidates are refilled abductively, liveness formulas reach 'known' status with a higher false-knowledge rate than safety formulas of matched base rate and length.",
+      "mechanism": "Candidate set of Kripke structures; finite trace prefixes eliminate candidates; when the set empties, abduce minimal repairs of the last surviving candidates; knowledge frontier computed by CTL model checking every formula in every candidate.",
+      "intervention": "Evidence stream of finite prefixes; knowledge certified by unanimity over abductively maintained candidates.",
+      "control": "Same stream, candidate set drawn fresh from the prior when it empties (no abductive repair).",
+      "positive_control": "Candidate set containing the true structure and never emptying: false-knowledge rate must be 0 for both classes.",
+      "observable": "False-knowledge rate FK_live and FK_safe = fraction of known formulas that are false in the true structure, per class.",
+      "success_criterion": "Over 40 seeds, FK_live / FK_safe >= 2 with bootstrap 95% CI lower bound > 1.2, and the ratio under the control is < 1.5.",
+      "failure_criterion": "Ratio CI includes 1, or the control shows the same ratio (asymmetry not abduction-dependent).",
+      "alternative_explanation": "Liveness formulas in the battery are simply harder or have different truth base rates.",
+      "null_twin": "Randomly permute the safety/liveness labels across formulas matched on length and base rate: nuisance statistics identical, refutability class destroyed; ratio must go to ~1.",
+      "substrate": "causal toy",
+      "why_this_implementation": "Exhaustive CTL checking over small explicit structures gives exact knowledge; a probabilistic learner would blur the unanimity definition that the mechanism depends on.",
+      "size": "true structure 20 states, 500 candidates, 20 safety + 20 liveness formulas matched on length and base rate, prefixes up to length 30, 60 prefixes per run, 40 seeds",
+      "cost_estimate": 6,
+      "stupid_explanations": [
+        "the random structure generator makes liveness formulas almost always true so any error looks large",
+        "few liveness formulas become known, so the ratio is noise",
+        "the repair operator systematically adds self-loops that satisfy AF-type formulas"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M14",
+        "M1"
+      ],
+      "lens_ids": [
+        "L1"
+      ],
+      "hypothesis": "Directed abductive mutation and a spec guard interact: the guard helps directed mutation more than it helps random mutation.",
+      "mechanism": "Population of DFAs; directed mutation picks one misclassified string and applies the minimal edit (redirect one transition or flip one accept bit on its run) that fixes it; guard rejects offspring whose product with the spec's violation automaton is non-empty.",
+      "intervention": "2x2 design: mutation in {directed, random} x guard in {on, off}.",
+      "control": "Random mutation with guard off.",
+      "positive_control": "Spec equal to the exact hidden language: guard alone must drive all guarded arms to 100% held-out accuracy.",
+      "observable": "Generations to 100% training accuracy (capped), held-out accuracy on 1000 strings, final spec-satisfaction fraction; L1 genealogy depth.",
+      "success_criterion": "Over 40 seeds per arm, the interaction coefficient in a linear model of log(generations) is negative with bootstrap 95% CI excluding 0, and held-out accuracy of directed+guard exceeds random+no-guard by >= 0.05.",
+      "failure_criterion": "Interaction CI includes 0, or directed+guard held-out accuracy <= random+guard.",
+      "alternative_explanation": "Directed mutation is simply a better local search and the guard is a generic regularizer; the interaction could be a ceiling effect.",
+      "null_twin": "Directed mutation that targets a correctly classified string of the same length instead of a misclassified one: identical edit locality statistics, no counterexample information.",
+      "substrate": "population",
+      "why_this_implementation": "Explicit DFAs make the spec guard an exact emptiness check; an RL or neural policy would replace the guard with a penalty and destroy the norm-as-hard-constraint reading.",
+      "size": "hidden 6-state DFA over {a,b}, candidate DFAs up to 10 states, population 50, 200 training strings length <= 12, 300 generations cap, 40 seeds x 4 arms",
+      "cost_estimate": 6,
+      "stupid_explanations": [
+        "the spec eliminates most of the hypothesis space so guarded arms are just searching a tiny space",
+        "the cap on generations produces a ceiling-driven interaction",
+        "the hidden DFA family is so small that directed edits find it by enumeration"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-5b0b3ebb8d",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M11",
+        "M13"
+      ],
+      "lens_ids": [
+        "L6",
+        "L2"
+      ],
+      "hypothesis": "True, model-checked beliefs whose witness paths were never realized in observed traces (lucky beliefs) fail more often after a mechanism shift than grounded beliefs matched on visit counts.",
+      "mechanism": "Agent learns a Kripke model from traces with abductive completion of unobserved transitions; for each reachability-type formula it records a witness path; witness grounding marks it grounded if the path appears in traces.",
+      "intervention": "Mechanism shift: one of two redundant mechanisms (disjoint paths making EF goal true) is disabled at random.",
+      "control": "Beliefs grouped by visit-count deciles of the states on their witness paths, ignoring grounding.",
+      "positive_control": "Planted cases where the witness uses a fabricated transition and the disabled mechanism is the only real support: flagged beliefs must fail at rate >= 0.9.",
+      "observable": "Post-shift failure rate of lucky vs grounded beliefs within visit-count decile strata.",
+      "success_criterion": "Pooled over 60 seeds x 30 formulas, Cochran-Mantel-Haenszel common odds ratio of failure (lucky vs grounded, stratified by visit decile) >= 1.5 with p < 0.01.",
+      "failure_criterion": "Stratified odds ratio < 1.2 or p > 0.1.",
+      "alternative_explanation": "Lucky flag is a proxy for being far from the start state or for low visit counts.",
+      "null_twin": "Flag a random subset of true verified beliefs as lucky at the same rate and with the same visit-count distribution: nuisance matched, grounding information destroyed.",
+      "substrate": "causal toy",
+      "why_this_implementation": "Explicit witness paths exist only in an explicit-state model; a learned value function has no certificate to ground.",
+      "size": "16-state true structure with 2 redundant goal mechanisms, 80 training traces length 20, 30 reachability formulas, 60 seeds",
+      "cost_estimate": 2,
+      "stupid_explanations": [
+        "lucky beliefs concentrate on the disabled mechanism by construction of the shift",
+        "witness selection picks shortest paths that happen to use abduced edges",
+        "visit-count strata too coarse to remove the confound"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "SPECULATIVE",
+  "evidenceSummary": {
+    "layer": "speculation",
+    "note": "Pass 0-3 specs only; nothing run"
+  }
+}

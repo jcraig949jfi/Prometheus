@@ -1,0 +1,1359 @@
+{
+  "id": "HT-e743909f97",
+  "key": "Feedback Control + Free Energy Principle + Immune Systems",
+  "stratum": "S4_nous_failure",
+  "concepts": [
+    {
+      "field": "Control Theory",
+      "mechanism": "dynamics",
+      "name": "Feedback Control",
+      "short_description": "Using output error to adjust input; PID controllers, stability margins, Bode plots, Nyquist criterion."
+    },
+    {
+      "field": "Theoretical Neuroscience",
+      "mechanism": "dynamics",
+      "name": "Free Energy Principle",
+      "short_description": "Biological systems minimize variational free energy; prediction error minimization, Markov blankets."
+    },
+    {
+      "field": "Biology",
+      "mechanism": "dynamics",
+      "name": "Immune Systems",
+      "short_description": "Adaptive defense via clonal selection and memory; antibody diversity, self/non-self discrimination."
+    }
+  ],
+  "provenance": {
+    "historicalId": "Feedback Control + Free Energy Principle + Immune Systems",
+    "humanreadable": "agents/hephaestus/humanreadable/Immune_Systems---Feedback_Control---Free_Energy_Principle.md",
+    "ledger_lines": [
+      4971
+    ],
+    "source": "hephaestus",
+    "sourceArtifact": "agents/hephaestus/ledger.jsonl#L4971",
+    "upstream_nous": [
+      "agents/nous/runs/20260325_132552/responses.jsonl#L1646"
+    ],
+    "selected_by": "roles/Hecate/prereg/2026-09-29_first_selection/"
+  },
+  "history": {
+    "forged": false,
+    "ledger_n": 1,
+    "ledger_reasons": [
+      "validation:runtime_error: UnboundLocalError: cannot access local variable 'ab' where it is not associated with a value"
+    ],
+    "nous_composite_max": 5.33,
+    "nous_high_potential": false,
+    "nous_models": [
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "nous_n": 1,
+    "nous_unproductive_any": false
+  },
+  "passes": [
+    {
+      "id": "P0",
+      "triplicateId": "HT-e743909f97",
+      "index": 0,
+      "kind": "raw_interpretation",
+      "added": [
+        "new interpretation"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [],
+      "concept_extractions": [
+        {
+          "concept": "Feedback Control",
+          "defining_structures": [
+            "plant, sensor, controller, actuator in a closed loop",
+            "setpoint and error signal e = r - y",
+            "loop gain / transfer function L(s)",
+            "P, I, D terms"
+          ],
+          "invariants": [
+            "closed-loop stability iff Nyquist encirclement count matches open-loop RHP poles",
+            "internal model principle: rejecting a persistent disturbance requires a copy of its generator in the loop",
+            "gain and phase margins"
+          ],
+          "transformations": [
+            "Laplace/frequency transform",
+            "loop shaping",
+            "gain scheduling",
+            "cascade decomposition into inner/outer loops"
+          ],
+          "conserved_quantities": [
+            "Bode sensitivity integral: integral of log|S(jw)| is fixed (waterbed effect)",
+            "passivity/energy balance in passive loops"
+          ],
+          "failure_modes": [
+            "instability from delay or excess gain",
+            "integrator windup under saturation",
+            "limit cycles and chattering",
+            "sensor-noise amplification at high gain",
+            "non-minimum-phase undershoot"
+          ],
+          "dynamics": [
+            "exponential error decay in the stable regime",
+            "transient vs steady state",
+            "oscillation at crossover when margins shrink"
+          ],
+          "scales": [
+            "loop bandwidth",
+            "actuator/sensor time constants",
+            "timescale separation between nested loops"
+          ],
+          "locality": [
+            "signals local to the loop; coupling only through plant and sensors"
+          ],
+          "memory": [
+            "integrator state accumulates past error",
+            "derivative uses short history"
+          ],
+          "identity": [
+            "the setpoint defines what the loop is for",
+            "the loop is identified by what it holds constant"
+          ],
+          "reproduction": [
+            "none intrinsic; designs are copied externally"
+          ],
+          "selection": [
+            "none intrinsic; tuning is external or an adaptive-control rule"
+          ],
+          "information": [
+            "error is the only information used",
+            "Bode-Shannon limits on disturbance attenuation vs channel capacity"
+          ],
+          "constraint": [
+            "actuator saturation",
+            "transport delay",
+            "bandwidth limited by RHP zeros and noise"
+          ]
+        },
+        {
+          "concept": "Free Energy Principle",
+          "defining_structures": [
+            "Markov blanket partition: internal, sensory, active, external states",
+            "generative model p(o,s) and recognition density q(s)",
+            "variational free energy F = complexity - accuracy, an upper bound on surprisal",
+            "precision (inverse variance) weights on prediction errors"
+          ],
+          "invariants": [
+            "conditional independence of internal and external states given the blanket",
+            "existence of a nonequilibrium steady-state density",
+            "F >= -log p(o)"
+          ],
+          "transformations": [
+            "perception: update q to reduce F",
+            "action: change observations to reduce F",
+            "hierarchical message passing of prediction errors up and predictions down",
+            "Bayesian model reduction"
+          ],
+          "conserved_quantities": [
+            "the steady-state density under solenoidal (divergence-free) flow",
+            "none strictly conserved during learning"
+          ],
+          "failure_modes": [
+            "dark room: minimising surprise by sensory deprivation",
+            "aberrant precision: over-trusting priors or noise (false inference)",
+            "overly rigid priors that never update",
+            "blanket dissolution = loss of the system"
+          ],
+          "dynamics": [
+            "gradient flow on F",
+            "fast inference, slower learning, slowest model-structure change"
+          ],
+          "scales": [
+            "nested blankets from cell to organism to group",
+            "timescale hierarchy of beliefs"
+          ],
+          "locality": [
+            "everything the system knows passes through its blanket"
+          ],
+          "memory": [
+            "priors and model parameters",
+            "slowly updated hyperpriors on precision"
+          ],
+          "identity": [
+            "the system is whatever maintains its blanket and its characteristic states (self-evidencing)"
+          ],
+          "reproduction": [
+            "none intrinsic in the formalism; models can be copied"
+          ],
+          "selection": [
+            "model evidence selects models",
+            "states outside the characteristic set are selected against by the definition of persistence"
+          ],
+          "information": [
+            "surprisal, KL divergence, expected free energy (epistemic + pragmatic)"
+          ],
+          "constraint": [
+            "model capacity",
+            "complexity cost",
+            "action repertoire"
+          ]
+        },
+        {
+          "concept": "Immune Systems",
+          "defining_structures": [
+            "a large, randomly generated receptor repertoire (V(D)J recombination)",
+            "clonal selection and expansion on antigen binding",
+            "negative selection (thymic deletion) of self-reactive clones",
+            "memory cells",
+            "innate layer with fixed pattern recognisers and damage/danger signals",
+            "cytokine signalling network"
+          ],
+          "invariants": [
+            "self-tolerance (maintained, not guaranteed)",
+            "rough homeostasis of total lymphocyte count",
+            "repertoire covers shape space only up to the cross-reactivity radius"
+          ],
+          "transformations": [
+            "somatic hypermutation and affinity maturation",
+            "class switching",
+            "expansion then contraction",
+            "anergy/exhaustion"
+          ],
+          "conserved_quantities": [
+            "approximately fixed total lymphocyte niche (competition for space and survival signals)",
+            "finite antigen/T-help resource in germinal centres"
+          ],
+          "failure_modes": [
+            "autoimmunity (tolerance broken)",
+            "immunodeficiency (holes in repertoire)",
+            "cytokine storm (runaway positive feedback)",
+            "original antigenic sin (memory blocks a better new response)",
+            "chronic exhaustion",
+            "immune escape by pathogen mutation"
+          ],
+          "dynamics": [
+            "exponential clonal expansion, delayed by days",
+            "Darwinian micro-evolution in germinal centres",
+            "predator-prey-like pathogen/clone oscillation"
+          ],
+          "scales": [
+            "molecule (epitope)",
+            "cell",
+            "clone",
+            "tissue/lymph node",
+            "organism",
+            "host population"
+          ],
+          "locality": [
+            "recognition is local contact",
+            "responses are compartmentalised in lymph nodes and tissues"
+          ],
+          "memory": [
+            "memory B/T cells",
+            "long-lived antibody",
+            "trained innate immunity"
+          ],
+          "identity": [
+            "self is learned during development as what is not attacked",
+            "MHC presentation defines self context"
+          ],
+          "reproduction": [
+            "clonal proliferation of selected cells"
+          ],
+          "selection": [
+            "affinity-based competition for antigen and help",
+            "deletion of self-reactive clones"
+          ],
+          "information": [
+            "repertoire as a distributed, population-coded model of antigen space",
+            "danger signals as a second information channel"
+          ],
+          "constraint": [
+            "finite repertoire and niche",
+            "cross-reactivity",
+            "metabolic/inflammatory cost",
+            "delay of adaptive response"
+          ]
+        }
+      ],
+      "unexplained": [
+        "whether any of I1-I7 needs all three concepts",
+        "whether the Bode waterbed has a real analogue in repertoire space",
+        "whether precision = clone count predicts anything beyond renaming"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "low",
+        "falsifiability": "low",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P1",
+      "triplicateId": "HT-e743909f97",
+      "index": 1,
+      "kind": "collision",
+      "added": [
+        "new mechanism",
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P0",
+        "I1",
+        "I2",
+        "I3",
+        "I4",
+        "I5",
+        "I6",
+        "I7"
+      ],
+      "unexplained": [
+        "M5 may be a particle filter in disguise",
+        "M10, M13, M14, M15 have weak three-way dependency",
+        "whether FEP adds predictions or only vocabulary in M3 and M6"
+      ],
+      "decision": "DEEPEN",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P2",
+      "triplicateId": "HT-e743909f97",
+      "index": 2,
+      "kind": "lens_explosion",
+      "added": [
+        "new lens",
+        "new observable",
+        "new falsifier"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P1",
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16"
+      ],
+      "unexplained": [
+        "whether the L1 conservation is more than fixed detector count",
+        "estimator bias in L4 at small samples"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "medium",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "medium",
+        "potential_importance": "medium"
+      }
+    },
+    {
+      "id": "P3",
+      "triplicateId": "HT-e743909f97",
+      "index": 3,
+      "kind": "minimal_worlds",
+      "added": [
+        "new intervention",
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass0_3_v1.md",
+        "prompt_sha256": "9ac5468dffb0a5792840809c84b3ad1ab22056397741dacb893386fd206baf3d"
+      },
+      "inspected_prior": [
+        "P2",
+        "L1",
+        "L2",
+        "L3",
+        "L4",
+        "L5",
+        "L6",
+        "L7"
+      ],
+      "unexplained": [
+        "M7 blanket-by-patrol and M8 danger gating not yet given worlds",
+        "whether W1 survives the matched fixed-gain control",
+        "whether W3 differs from adaptive-jitter SMC"
+      ],
+      "decision": "FALSIFY",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "medium",
+        "falsifiability": "high",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "medium",
+        "cost": "low",
+        "unexpectedness": "low",
+        "potential_importance": "medium"
+      }
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "I1",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The self is a learned setpoint: negative selection builds the prior of a generative model by deleting whatever matches experienced inputs, and control action fires on residual matches. Tests whether a setpoint learned by deletion behaves differently from one learned by density estimation."
+    },
+    {
+      "id": "I2",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "A conserved sensitivity budget: the Bode waterbed says attenuation in one band costs amplification elsewhere; a finite repertoire and the FEP complexity cost suggest that tolerance in one region of input space must create blindness or over-reaction in another. Tests whether sensitivity is redistributed, not created, by learning."
+    },
+    {
+      "id": "I3",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Precision is a population: the gain on a prediction error is the size of the clone that detects it, so learning precision is clonal expansion and runaway precision is a cytokine storm, i.e. a loop-stability failure predictable from Nyquist. Tests stability margins of population-coded gain under delay."
+    },
+    {
+      "id": "I4",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "The Markov blanket is not a given structure but a controlled variable maintained by a patrolling detector population; the system's identity persists only while the patrol keeps boundary leakage below a threshold. Tests boundary persistence as a function of patrol density."
+    },
+    {
+      "id": "I5",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Inference by clonal competition: the recognition density is a population of hypotheses whose frequencies are updated by replication proportional to prediction accuracy and whose parameters are refined by error-scaled hypermutation. Tests whether a replicator population tracks the Bayes posterior and how it re-tracks after change."
+    },
+    {
+      "id": "I6",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Immune memory is an integral term: original antigenic sin is integrator windup, and anergy is an anti-windup rule. Tests whether memory strength vs drift reproduces a windup signature and whether an anti-windup clamp restores performance."
+    },
+    {
+      "id": "I7",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P0",
+      "kind": "interpretation",
+      "layer": "speculation",
+      "statement": "Three different triggers compete: control acts on error to a setpoint, FEP acts on surprise, immunity acts on damage/danger. Tests which trigger signal yields least harm per unit of response under novel-but-harmless vs familiar-but-harmful inputs."
+    },
+    {
+      "id": "M1",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "developmental process",
+      "statement": "Tolerance-by-deletion setpoint: during a developmental window a random detector repertoire is exposed to the system's own inputs and every detector that fires is deleted; after the window, any detector firing drives corrective action. The setpoint is the complement of the surviving repertoire.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "error-driven corrective action after the window",
+        "Free Energy Principle": "the surviving repertoire is an implicit prior; firing = high surprisal",
+        "Immune Systems": "negative selection of a random repertoire"
+      },
+      "knockouts": {
+        "Feedback Control": "no action is taken; the mechanism becomes a pure anomaly detector",
+        "Free Energy Principle": "loses the link between detection rate and surprisal; weak effect on the testable world",
+        "Immune Systems": "no deletion: the setpoint is not learned and detectors fire on self (autoimmunity)"
+      },
+      "simpler_alternative": "Novelty detection by distance threshold to stored training samples (kNN density).",
+      "questions": {
+        "what_exists": "random detectors, a self sample, a plant",
+        "what_changes": "repertoire composition during development only",
+        "what_persists": "the surviving repertoire",
+        "what_is_selected": "detectors that do not match self",
+        "what_can_reproduce": "none (detectors are not copied)",
+        "what_can_learn": "the self set, once",
+        "what_can_transfer": "the tolerance map only by redevelopment",
+        "distinguishing_observable": "detection AUC vs input dimension at matched memory against kNN; a hole-fraction curve that kNN does not have"
+      }
+    },
+    {
+      "id": "M2",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "causal constraint",
+      "statement": "Waterbed repertoire allocation: total detector mass is fixed; expanding coverage (sensitivity) in one region of input space must reduce it elsewhere, so the summed log-sensitivity over input space is approximately conserved under learning.",
+      "derived_from": [
+        "I2"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "the Bode integral as the conservation law",
+        "Free Energy Principle": "complexity cost as the price of sensitivity",
+        "Immune Systems": "finite niche and competition for survival signals"
+      },
+      "knockouts": {
+        "Feedback Control": "no conservation law to test; becomes an ordinary capacity limit",
+        "Free Energy Principle": "loses the reading of sensitivity as precision; still testable",
+        "Immune Systems": "no finite repertoire; nothing forces redistribution"
+      },
+      "simpler_alternative": "Any fixed-capacity classifier trades recall between classes.",
+      "questions": {
+        "what_exists": "detector mass distributed over input bins",
+        "what_changes": "allocation across bins",
+        "what_persists": "total mass",
+        "what_is_selected": "bins with recent error",
+        "what_can_reproduce": "clones in high-error bins",
+        "what_can_learn": "the allocation",
+        "what_can_transfer": "the conservation law, if substrate-independent",
+        "distinguishing_observable": "summed log-sensitivity across bins stays within a band while individual bins shift by large factors"
+      }
+    },
+    {
+      "id": "M3",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Clonal gain loop: controller gain equals the size of the responding clone; the clone grows in proportion to delayed error and decays at a cost rate. The loop has a delay-dependent oscillatory instability (storm) whose onset is predicted by the Nyquist criterion of the linearised loop.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "Nyquist/delay stability analysis of the loop",
+        "Free Energy Principle": "gain read as precision on the prediction error",
+        "Immune Systems": "delayed clonal expansion and contraction"
+      },
+      "knockouts": {
+        "Feedback Control": "no predictive stability theory; only simulation",
+        "Free Energy Principle": "weak: the mechanism is fully specified without FEP, which only renames gain as precision",
+        "Immune Systems": "gain is a fixed parameter; no storm"
+      },
+      "simpler_alternative": "MIT-rule adaptive gain controller with delay; Lotka-Volterra with delay.",
+      "questions": {
+        "what_exists": "pathogen load, clone count",
+        "what_changes": "both, coupled",
+        "what_persists": "the equilibrium if stable, a limit cycle if not",
+        "what_is_selected": "the clone that binds",
+        "what_can_reproduce": "the clone",
+        "what_can_learn": "the gain",
+        "what_can_transfer": "the stability-boundary formula",
+        "distinguishing_observable": "critical delay tau* measured vs predicted from the linearisation"
+      }
+    },
+    {
+      "id": "M4",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "representation",
+      "statement": "Precision-as-clone-count: each prediction-error channel is weighted by the number of detectors assigned to it, so precision is integer-valued and learned by birth-death rather than by gradient.",
+      "derived_from": [
+        "I3",
+        "I5"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "weighted error sum drives action",
+        "Free Energy Principle": "precision-weighted prediction error",
+        "Immune Systems": "clone population dynamics"
+      },
+      "knockouts": {
+        "Feedback Control": "weights are only for inference, not action",
+        "Free Energy Principle": "no reason to call counts precision; weights become arbitrary",
+        "Immune Systems": "precision is a continuous parameter with gradient updates"
+      },
+      "simpler_alternative": "Learned per-channel weights by any running inverse-variance estimator.",
+      "questions": {
+        "what_exists": "channels and their counts",
+        "what_changes": "counts",
+        "what_persists": "count ratios",
+        "what_is_selected": "channels whose errors are informative",
+        "what_can_reproduce": "detector cells",
+        "what_can_learn": "per-channel precision",
+        "what_can_transfer": "counts as priors for a new task",
+        "distinguishing_observable": "count ratios converge to inverse noise-variance ratios; demographic noise makes low-count channels fluctuate in a way a continuous estimator does not"
+      }
+    },
+    {
+      "id": "M5",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "selection mechanism",
+      "statement": "Replicator inference: the recognition density is a finite population of hypothesis clones; each step clones replicate in proportion to exp(-prediction error) and mutate with a rate scaled by their current error.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "error signal as fitness",
+        "Free Energy Principle": "population frequencies as q(s); free energy as objective",
+        "Immune Systems": "clonal selection plus affinity maturation"
+      },
+      "knockouts": {
+        "Feedback Control": "no closed loop on the world; pure inference",
+        "Free Energy Principle": "no normative target (exact posterior) to compare to",
+        "Immune Systems": "no population; becomes a single gradient-updated estimate"
+      },
+      "simpler_alternative": "A bootstrap particle filter with jitter (sequential Monte Carlo). Likely the same mechanism.",
+      "questions": {
+        "what_exists": "hypothesis clones",
+        "what_changes": "their frequencies and parameters",
+        "what_persists": "the best-fitting lineages",
+        "what_is_selected": "clones with low error",
+        "what_can_reproduce": "clones",
+        "what_can_learn": "the posterior approximation",
+        "what_can_transfer": "the population as a warm start",
+        "distinguishing_observable": "KL between clone frequencies and exact posterior; re-tracking time after a switch under error-scaled vs constant mutation"
+      }
+    },
+    {
+      "id": "M6",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "memory structure",
+      "statement": "Antigenic-sin windup: stored memory clones respond first and consume the antigen that naive clones need to be selected, so after drift the response stays locked to the old target. An anti-windup rule suppresses memory recall when error is not falling.",
+      "derived_from": [
+        "I6"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "integrator windup and anti-windup theory",
+        "Free Energy Principle": "an overly precise prior that resists update",
+        "Immune Systems": "memory cells competing with naive cells"
+      },
+      "knockouts": {
+        "Feedback Control": "no anti-windup design; only the failure is described",
+        "Free Energy Principle": "weak: the precision reading adds vocabulary, not a new prediction",
+        "Immune Systems": "no memory; nothing to wind up"
+      },
+      "simpler_alternative": "Stale prior / momentum in any online learner.",
+      "questions": {
+        "what_exists": "memory and naive clones, drifting antigen",
+        "what_changes": "which clone wins",
+        "what_persists": "memory clones",
+        "what_is_selected": "the clone that binds first",
+        "what_can_reproduce": "both",
+        "what_can_learn": "the new antigen, if memory releases",
+        "what_can_transfer": "the anti-windup rule",
+        "distinguishing_observable": "clearance time vs drift distance shows a threshold under memory that is absent under randomly placed memory"
+      }
+    },
+    {
+      "id": "M7",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "world rule",
+      "statement": "Blanket-by-patrol: the boundary between inside and outside exists only while a population of mobile detectors removes intruding non-self elements; blanket integrity is itself the controlled variable.",
+      "derived_from": [
+        "I4"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "regulation of leakage to a setpoint",
+        "Free Energy Principle": "the Markov blanket and its conditional independence as the measured quantity",
+        "Immune Systems": "patrolling detectors with self/non-self discrimination"
+      },
+      "knockouts": {
+        "Feedback Control": "no setpoint on leakage; patrol is open-loop",
+        "Free Energy Principle": "no measure of what the boundary achieves (conditional MI)",
+        "Immune Systems": "nothing removes intruders; the boundary dissolves"
+      },
+      "simpler_alternative": "A wall with a repair rate.",
+      "questions": {
+        "what_exists": "grid cells, intruders, patrols",
+        "what_changes": "intruder density",
+        "what_persists": "the interior, if patrol is sufficient",
+        "what_is_selected": "intruders removed, interior cells kept",
+        "what_can_reproduce": "patrols, if recruited in proportion to intrusions",
+        "what_can_learn": "patrol placement",
+        "what_can_transfer": "the critical patrol-density law",
+        "distinguishing_observable": "a sharp transition in blanket persistence and in I(inside; outside | boundary) as patrol density crosses a threshold"
+      }
+    },
+    {
+      "id": "M8",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Danger-gated learning: model updates and actions are licensed by a damage signal (realised harm), not by surprise or error, so novel-but-harmless input is tolerated and familiar-but-harmful input is attacked.",
+      "derived_from": [
+        "I7"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "error as the action variable once licensed",
+        "Free Energy Principle": "surprise as the ungated alternative trigger",
+        "Immune Systems": "danger model of immune activation"
+      },
+      "knockouts": {
+        "Feedback Control": "no action",
+        "Free Energy Principle": "no comparison trigger",
+        "Immune Systems": "no damage channel; collapses to surprise gating"
+      },
+      "simpler_alternative": "Reward-gated learning (reinforcement learning with a harm cost). Displaced as default ontology: here the gate is a binary licence, not a value to maximise.",
+      "questions": {
+        "what_exists": "inputs and a damage signal",
+        "what_changes": "model and action, only when licensed",
+        "what_persists": "tolerance to harmless novelty",
+        "what_is_selected": "responses that reduce damage",
+        "what_can_reproduce": "none",
+        "what_can_learn": "which inputs are harmful",
+        "what_can_transfer": "the gating rule",
+        "distinguishing_observable": "harm per unit response under a mix of harmless-novel and harmful-familiar inputs"
+      }
+    },
+    {
+      "id": "M9",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Idiotypic internal model: detectors that recognise other detectors form a network whose own oscillatory modes can embody the generator of a periodic disturbance, satisfying the internal model principle without an explicit oscillator.",
+      "derived_from": [
+        "I1",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "internal model principle",
+        "Free Energy Principle": "generative model of the disturbance",
+        "Immune Systems": "idiotypic (anti-antibody) network"
+      },
+      "knockouts": {
+        "Feedback Control": "no requirement that a generator copy be present; the network is just dynamics",
+        "Free Energy Principle": "no model interpretation",
+        "Immune Systems": "no self-recognising network; needs an explicit oscillator"
+      },
+      "simpler_alternative": "An explicit resonant filter tuned to the disturbance frequency.",
+      "questions": {
+        "what_exists": "a detector-detector network",
+        "what_changes": "network activity",
+        "what_persists": "oscillatory modes",
+        "what_is_selected": "modes matching the disturbance",
+        "what_can_reproduce": "clones",
+        "what_can_learn": "the disturbance frequency",
+        "what_can_transfer": "the embedded oscillator",
+        "distinguishing_observable": "steady-state rejection of a periodic disturbance only when a network mode matches its frequency"
+      }
+    },
+    {
+      "id": "M10",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "mutation operator",
+      "statement": "Error-scheduled hypermutation: mutation step size is a feedback-controlled variable set by residual error, like annealing whose temperature is closed-loop.",
+      "derived_from": [
+        "I5"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "closed-loop schedule",
+        "Free Energy Principle": "error read as surprisal",
+        "Immune Systems": "somatic hypermutation"
+      },
+      "knockouts": {
+        "Feedback Control": "open-loop schedule",
+        "Free Energy Principle": "weak: nothing FEP-specific; three-way dependency is weak",
+        "Immune Systems": "no mutation"
+      },
+      "simpler_alternative": "Adaptive step size (1/5th success rule) in evolution strategies.",
+      "questions": {
+        "what_exists": "a population",
+        "what_changes": "mutation size",
+        "what_persists": "low-error lineages",
+        "what_is_selected": "fitter variants",
+        "what_can_reproduce": "clones",
+        "what_can_learn": "parameters",
+        "what_can_transfer": "the schedule",
+        "distinguishing_observable": "re-tracking time after a switch vs constant rate at matched mean"
+      }
+    },
+    {
+      "id": "M11",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "computational primitive",
+      "statement": "Complement coding of expectation: prediction error is computed not as observation minus prediction but as the firing of a stored set of not-expected detectors; the model represents the complement of the expected.",
+      "derived_from": [
+        "I1"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "error as trigger",
+        "Free Energy Principle": "prediction-error computation",
+        "Immune Systems": "negative selection"
+      },
+      "knockouts": {
+        "Feedback Control": "no action consequence",
+        "Free Energy Principle": "loses the equivalence claim to prediction error",
+        "Immune Systems": "no complement repertoire"
+      },
+      "simpler_alternative": "Threshold on distance to nearest stored example.",
+      "questions": {
+        "what_exists": "complement detectors",
+        "what_changes": "nothing after development",
+        "what_persists": "detectors",
+        "what_is_selected": "non-self matchers",
+        "what_can_reproduce": "none",
+        "what_can_learn": "nothing online",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "scaling of detector count with dimension for fixed AUC vs kNN memory scaling"
+      }
+    },
+    {
+      "id": "M12",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "interaction law",
+      "statement": "Cross-reactivity bandwidth trade: broadly cross-reactive detectors act like high-bandwidth, low-precision feedback, narrow ones like narrow-band high-precision feedback; broad clones plus positive feedback produce autoimmune instability.",
+      "derived_from": [
+        "I2",
+        "I3"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "bandwidth-precision trade and stability",
+        "Free Energy Principle": "precision",
+        "Immune Systems": "cross-reactivity and autoimmunity"
+      },
+      "knockouts": {
+        "Feedback Control": "no stability consequence",
+        "Free Energy Principle": "no precision reading",
+        "Immune Systems": "no cross-reactivity parameter"
+      },
+      "simpler_alternative": "Kernel width in any nearest-neighbour detector.",
+      "questions": {
+        "what_exists": "detectors with a width",
+        "what_changes": "widths, via selection",
+        "what_persists": "a width distribution",
+        "what_is_selected": "widths that reduce error without self-attack",
+        "what_can_reproduce": "clones",
+        "what_can_learn": "the width distribution",
+        "what_can_transfer": "the width law",
+        "distinguishing_observable": "autoimmune events vs mean width, showing a threshold"
+      }
+    },
+    {
+      "id": "M13",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "organism architecture",
+      "statement": "Innate/adaptive cascade: a fast fixed-gain loop holds the system while a slow learned loop sets the fast loop's setpoint, a timescale hierarchy as in hierarchical FEP. Three-way dependency weak: this is cascade control.",
+      "derived_from": [
+        "I3"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "cascade control",
+        "Free Energy Principle": "timescale hierarchy",
+        "Immune Systems": "innate vs adaptive split"
+      },
+      "knockouts": {
+        "Feedback Control": "no stability reasoning",
+        "Free Energy Principle": "weak; hierarchy is generic",
+        "Immune Systems": "weak; the split is generic"
+      },
+      "simpler_alternative": "Standard cascade PID.",
+      "questions": {
+        "what_exists": "two loops",
+        "what_changes": "both, at different rates",
+        "what_persists": "the setpoint",
+        "what_is_selected": "slow-loop setpoints that reduce error",
+        "what_can_reproduce": "none",
+        "what_can_learn": "the slow loop",
+        "what_can_transfer": "the architecture",
+        "distinguishing_observable": "performance vs timescale ratio; expected to match cascade theory exactly"
+      }
+    },
+    {
+      "id": "M14",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "dynamical law",
+      "statement": "Tolerance-inflammation hysteresis: positive feedback between damage and inflammation plus negative feedback from regulatory cells gives a bistable switch; the self/non-self boundary in input space shows hysteresis when the input is swept.",
+      "derived_from": [
+        "I2",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "bistability from loop structure",
+        "Free Energy Principle": "two attracting belief states",
+        "Immune Systems": "regulatory vs effector balance"
+      },
+      "knockouts": {
+        "Feedback Control": "no bistability analysis",
+        "Free Energy Principle": "weak: FEP only relabels the two states",
+        "Immune Systems": "no inflammatory feedback"
+      },
+      "simpler_alternative": "Generic positive-feedback toggle switch.",
+      "questions": {
+        "what_exists": "effector and regulatory populations",
+        "what_changes": "their balance",
+        "what_persists": "the current mode",
+        "what_is_selected": "the mode",
+        "what_can_reproduce": "clones",
+        "what_can_learn": "a shifted threshold",
+        "what_can_transfer": "none",
+        "distinguishing_observable": "hysteresis loop area under forward vs backward sweep"
+      }
+    },
+    {
+      "id": "M15",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "learning pressure",
+      "statement": "Sentinel repertoire: a fixed fraction of detectors is reserved for low-affinity epistemic sampling (expected information gain) and never expanded, to keep coverage of unseen regions.",
+      "derived_from": [
+        "I5",
+        "I7"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "none beyond budget control",
+        "Free Energy Principle": "epistemic value term",
+        "Immune Systems": "naive repertoire reserve"
+      },
+      "knockouts": {
+        "Feedback Control": "weak: no feedback element",
+        "Free Energy Principle": "no epistemic justification for the reserve",
+        "Immune Systems": "no reserve"
+      },
+      "simpler_alternative": "Epsilon-greedy exploration.",
+      "questions": {
+        "what_exists": "reserve detectors",
+        "what_changes": "reserve positions",
+        "what_persists": "the reserve fraction",
+        "what_is_selected": "nothing",
+        "what_can_reproduce": "none",
+        "what_can_learn": "coverage",
+        "what_can_transfer": "the reserve fraction",
+        "distinguishing_observable": "time to first detection of a novel threat vs reserve fraction"
+      }
+    },
+    {
+      "id": "M16",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P1",
+      "kind": "mechanism",
+      "layer": "speculation",
+      "form": "error-correction mechanism",
+      "statement": "Anergy as chronic precision down-regulation: when an error persists without falling, the responding clone's gain is reduced, preventing storm and windup at the cost of tolerating chronic error.",
+      "derived_from": [
+        "I3",
+        "I6"
+      ],
+      "concept_contributions": {
+        "Feedback Control": "anti-windup / gain limiting",
+        "Free Energy Principle": "precision reduction on unresolvable error",
+        "Immune Systems": "T-cell exhaustion"
+      },
+      "knockouts": {
+        "Feedback Control": "no stability benefit to predict",
+        "Free Energy Principle": "no reason to link to precision",
+        "Immune Systems": "no exhaustion"
+      },
+      "simpler_alternative": "Gain decay or forgetting factor.",
+      "questions": {
+        "what_exists": "clones with an exhaustion variable",
+        "what_changes": "gain",
+        "what_persists": "a stable but nonzero error",
+        "what_is_selected": "clones not exhausted",
+        "what_can_reproduce": "clones",
+        "what_can_learn": "when to give up",
+        "what_can_transfer": "the rule",
+        "distinguishing_observable": "increase of critical delay tau* and of chronic error level under exhaustion"
+      }
+    }
+  ],
+  "lenses": [
+    {
+      "id": "L1",
+      "name": "Waterbed ledger",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M2",
+        "M12",
+        "M1"
+      ],
+      "rationale": "Invented for this triplicate: tests whether detector-mediated sensitivity obeys a conservation law analogous to the Bode integral.",
+      "sourceRepresentation": "per-bin detector allocation and per-bin detection sensitivity over a discretised input space",
+      "transformation": "compute S_b = missed-detection odds per bin; sum log S_b across bins before and after learning",
+      "observables": [
+        "sum_b log S_b over time",
+        "per-bin log S_b shifts"
+      ],
+      "predictedSignals": [
+        "sum stays within +-10% while individual bins change by > 2x"
+      ],
+      "nullExpectation": "the sum moves freely with learning; no conservation beyond detector count",
+      "failureModes": [
+        "conservation is just fixed detector count",
+        "bins too coarse to see redistribution"
+      ],
+      "informationAddedBeyondExistingLenses": "a conservation-law observable rather than a performance metric"
+    },
+    {
+      "id": "L2",
+      "name": "Clone-Nyquist",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M3",
+        "M16",
+        "M14"
+      ],
+      "rationale": "Invented: linearise the population-gain loop and use classical stability theory as an a-priori prediction for a population process.",
+      "sourceRepresentation": "delay-difference equations of pathogen and clone counts",
+      "transformation": "linearise at equilibrium, form the open-loop transfer function, compute critical delay tau*",
+      "observables": [
+        "predicted tau*",
+        "observed onset of sustained oscillation",
+        "oscillation amplitude"
+      ],
+      "predictedSignals": [
+        "observed onset within 15% of predicted tau*"
+      ],
+      "nullExpectation": "demographic noise or nonlinearity shifts onset unpredictably",
+      "failureModes": [
+        "small clone counts invalidate linearisation",
+        "stochastic extinction masks oscillation"
+      ],
+      "informationAddedBeyondExistingLenses": "a quantitative prediction made before simulation instead of a post-hoc fit"
+    },
+    {
+      "id": "L3",
+      "name": "Tolerance hole map",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M1",
+        "M11",
+        "M12"
+      ],
+      "rationale": "Invented: maps regions of non-self that no surviving detector covers, as a function of dimension.",
+      "sourceRepresentation": "binary strings with r-contiguous matching",
+      "transformation": "sample non-self; mark covered/uncovered by surviving detectors",
+      "observables": [
+        "hole fraction",
+        "AUC vs dimension",
+        "detector count for fixed AUC"
+      ],
+      "predictedSignals": [
+        "hole fraction rises sharply with L"
+      ],
+      "nullExpectation": "same curve for randomly drawn, undeleted detectors",
+      "failureModes": [
+        "the matching rule, not deletion, dominates holes"
+      ],
+      "informationAddedBeyondExistingLenses": "separates deletion-induced blindness from generic sparsity"
+    },
+    {
+      "id": "L4",
+      "name": "Blanket leakage audit",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M7",
+        "M4"
+      ],
+      "rationale": "Measure the property that defines a Markov blanket directly rather than assuming it.",
+      "sourceRepresentation": "time series of interior, boundary and exterior cell states",
+      "transformation": "estimate conditional mutual information I(interior; exterior | boundary) with a plug-in estimator on binned states",
+      "observables": [
+        "conditional MI",
+        "blanket persistence time"
+      ],
+      "predictedSignals": [
+        "CMI low above a patrol-density threshold, high below"
+      ],
+      "nullExpectation": "CMI varies smoothly with patrol density",
+      "failureModes": [
+        "estimator bias at small samples",
+        "binning artifacts"
+      ],
+      "informationAddedBeyondExistingLenses": "tests the FEP-defining statistic, not just survival"
+    },
+    {
+      "id": "L5",
+      "name": "Repertoire-as-posterior",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M5",
+        "M4",
+        "M10"
+      ],
+      "rationale": "Compare clone frequencies to an exact Bayesian posterior where one is computable.",
+      "sourceRepresentation": "clone frequency histogram over a parameter grid",
+      "transformation": "KL(clone histogram || exact posterior) per step",
+      "observables": [
+        "KL over time",
+        "re-tracking time after a regime switch"
+      ],
+      "predictedSignals": [
+        "KL < 0.1 nats at stationarity",
+        "faster re-tracking with error-scaled mutation"
+      ],
+      "nullExpectation": "identical to a particle filter with the same jitter",
+      "failureModes": [
+        "histogram binning",
+        "exact posterior mis-specified"
+      ],
+      "informationAddedBeyondExistingLenses": "a normative yardstick for the population"
+    },
+    {
+      "id": "L6",
+      "name": "Windup hysteresis loop",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M6",
+        "M14",
+        "M16"
+      ],
+      "rationale": "Invented: sweep antigen drift forward and backward and read the response-latency hysteresis as the windup signature.",
+      "sourceRepresentation": "antigen position and clearance-time series",
+      "transformation": "latency vs drift distance on forward and reverse sweeps; loop area",
+      "observables": [
+        "hysteresis loop area",
+        "threshold drift distance"
+      ],
+      "predictedSignals": [
+        "nonzero loop area under memory, near zero without memory"
+      ],
+      "nullExpectation": "loop area equal for randomly placed memory",
+      "failureModes": [
+        "resource exhaustion rather than competition causes latency"
+      ],
+      "informationAddedBeyondExistingLenses": "a history-dependence observable"
+    },
+    {
+      "id": "L7",
+      "name": "Trigger-signal counterfactual",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P2",
+      "targets": [
+        "M8",
+        "M15"
+      ],
+      "rationale": "Invented: swap only the triggering signal (error, surprise, damage) holding all else fixed; the one variable the three concepts disagree on.",
+      "sourceRepresentation": "input stream labelled harmless/harmful and novel/familiar",
+      "transformation": "run three otherwise-identical agents with different triggers",
+      "observables": [
+        "harm per unit response",
+        "false-alarm rate on harmless novelty"
+      ],
+      "predictedSignals": [
+        "damage trigger lowest harm per response on decorrelated streams"
+      ],
+      "nullExpectation": "trigger choice irrelevant when harmfulness correlates with novelty",
+      "failureModes": [
+        "stream design decides the winner"
+      ],
+      "informationAddedBeyondExistingLenses": "isolates the trigger variable"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "W1",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M3",
+        "M16"
+      ],
+      "lens_ids": [
+        "L2"
+      ],
+      "hypothesis": "The onset of sustained oscillation (storm) in a delayed clonal-gain loop is predicted by the linearised Nyquist critical delay, and exhaustion (M16) raises the critical delay beyond what an equal mean-gain reduction does.",
+      "mechanism": "Discrete-time stochastic loop: pathogen p grows at rate r and is killed at rate k*p*C; clone C grows at rate a*p(t - tau) and decays at rate c; an exhaustion variable reduces a when p has not fallen for T steps.",
+      "intervention": "sweep delay tau over 40 values; toggle exhaustion on/off",
+      "control": "fixed-gain controller with gain equal to the time-averaged k*C of the adaptive run (with and without exhaustion)",
+      "positive_control": "linear delayed proportional loop with an analytic critical delay; the pipeline must recover it within 5%",
+      "observable": "oscillation indicator: coefficient of variation of p over the last 2000 steps > 0.2; tau_obs = smallest tau with the indicator true in >= 50% of seeds",
+      "success_criterion": "|tau_obs - tau_pred| / tau_pred <= 0.15 over 20 seeds AND tau_obs(exhaustion) / tau_obs(no exhaustion) >= 1.3 AND that ratio exceeds the matched fixed-gain control's ratio by >= 0.1",
+      "failure_criterion": "relative error > 0.15, OR exhaustion ratio < 1.1, OR exhaustion ratio within 0.1 of the matched fixed-gain ratio, OR the positive control misses by > 5%",
+      "alternative_explanation": "exhaustion simply lowers mean gain; any lower fixed gain would raise tau* equally",
+      "null_twin": "clone counts replaced by a phase-randomised surrogate of the adaptive run's C(t) (same mean, variance and spectrum) decoupled from p; destroys the feedback while matching gain statistics",
+      "substrate": "population",
+      "why_this_implementation": "a stochastic population process keeps clone counts integer and expansion delayed, which is the peculiar immune structure; no learned model is needed",
+      "size": "1 pathogen, 1 clone population; 40 delays x 2 exhaustion settings x 20 seeds x 5000 steps",
+      "cost_estimate": 2,
+      "stupid_explanations": [
+        "exhaustion only reduces mean gain (checked by the matched fixed-gain control)",
+        "stochastic extinction at low counts ends oscillation early and looks like stability",
+        "the CV threshold 0.2 is tuned to the result"
+      ]
+    },
+    {
+      "id": "W2",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M1",
+        "M11",
+        "M2"
+      ],
+      "lens_ids": [
+        "L3",
+        "L1"
+      ],
+      "hypothesis": "A negative-selection repertoire matches a kNN density detector at equal memory in low dimension, but its detection AUC falls faster with dimension because deletion creates holes.",
+      "mechanism": "random r-contiguous detectors over {0,1}^L; delete any that match a self sample; score test strings by the number of matching surviving detectors",
+      "intervention": "vary L in {8, 12, 16, 20, 24}; hold stored bits equal between methods",
+      "control": "kNN distance-to-self scorer with the same number of stored bits",
+      "positive_control": "anomalies at Hamming distance > L/2 from all self: both methods must reach AUC >= 0.95",
+      "observable": "ROC AUC on held-out self vs structured non-self; hole fraction; sum of log miss-odds across 16 input bins (L1)",
+      "success_criterion": "mean AUC(negsel) >= mean AUC(kNN) - 0.02 at L <= 12 AND mean AUC(kNN) - mean AUC(negsel) >= 0.10 at L = 24 over 10 seeds AND negsel minus null-twin AUC >= 0.05 at L = 8",
+      "failure_criterion": "negsel within 0.10 of kNN at L = 24, OR worse by > 0.02 at L <= 12, OR not >= 0.05 above the null twin at L = 8, OR positive control fails",
+      "alternative_explanation": "the r-contiguous matching rule, not deletion, causes the drop",
+      "null_twin": "same detector count and matching radius drawn randomly WITHOUT deletion (destroys tolerance learning, matches detector statistics)",
+      "substrate": "symbolic rewriting",
+      "why_this_implementation": "a binary shape space with contiguous matching preserves the repertoire-and-deletion structure; a neural autoencoder (displaced) would replace deletion with a learned density and erase the mechanism",
+      "size": "self set 200 strings, 2000 candidate detectors, 1000 test strings, 5 dimensions, 10 seeds",
+      "cost_estimate": 4,
+      "stupid_explanations": [
+        "the non-self generator sits closer to self at high L, so every method drops",
+        "memory accounting favours one method",
+        "AUC dominated by ties in integer match counts"
+      ]
+    },
+    {
+      "id": "W3",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M5",
+        "M10",
+        "M4"
+      ],
+      "lens_ids": [
+        "L5"
+      ],
+      "hypothesis": "A clonal replicator population with error-scaled hypermutation approximates the exact posterior at stationarity and re-tracks faster after a regime switch than mutation of matched statistics that is not coupled to error.",
+      "mechanism": "256 hypothesis clones over the drift parameter of a 1D linear-Gaussian system; replicate proportional to exp(-squared prediction error); mutation sd proportional to each clone's recent error",
+      "intervention": "switch the true parameter at step 1000; compare error-scaled vs constant mutation",
+      "control": "bootstrap particle filter with constant jitter of the same time-averaged size",
+      "positive_control": "exact grid posterior computed alongside; replicator with zero mutation and exact weights must reach KL < 0.02",
+      "observable": "KL(clone histogram || grid posterior) on a 64-bin grid; re-tracking time = steps until posterior mean is within 1 sd of the new truth",
+      "success_criterion": "median stationary KL < 0.1 nats AND median re-tracking time (error-scaled) <= 0.7 x both the constant-jitter control and the null twin, over 30 seeds",
+      "failure_criterion": "KL >= 0.1, OR re-tracking ratio > 0.9 against either the control or the null twin",
+      "alternative_explanation": "it is a particle filter with adaptive jitter; any adaptive jitter gives the speed-up",
+      "null_twin": "mutation sd drawn from the same empirical distribution as the error-scaled run but permuted across clones and time (destroys error coupling, matches mutation statistics)",
+      "substrate": "population",
+      "why_this_implementation": "a finite replicating population keeps counts and lineages explicit, unlike a variational gradient method",
+      "size": "256 clones, 2000 steps, 30 seeds, 64-bin grid",
+      "cost_estimate": 3,
+      "stupid_explanations": [
+        "larger mutation after the switch just raises exploration",
+        "grid coarseness makes KL small anyway",
+        "it is sequential Monte Carlo renamed"
+      ]
+    },
+    {
+      "id": "W4",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P3",
+      "mechanism_ids": [
+        "M6",
+        "M16"
+      ],
+      "lens_ids": [
+        "L6"
+      ],
+      "hypothesis": "Memory clones that compete with naive clones for antigen produce a windup threshold in clearance time vs antigen drift, and an anti-windup rule restores clearance near the no-memory level.",
+      "mechanism": "2D shape space; antigen drifts by distance d between exposures; memory clones at the old position bind first and consume antigen in proportion to affinity; naive clones need antigen to expand",
+      "intervention": "sweep d over 20 values forward and backward; toggle anti-windup (suppress memory if load has not halved within T steps)",
+      "control": "no-memory population",
+      "positive_control": "at d = 0 memory must clear at least 2x faster than no-memory",
+      "observable": "clearance time; hysteresis loop area between forward and reverse sweeps",
+      "success_criterion": "for some d* the memory clearance time exceeds 1.5x no-memory, the loop area is > 3x the null-twin area, AND anti-windup stays within 1.2x of no-memory at every d, over 20 seeds",
+      "failure_criterion": "no d with memory > 1.5x no-memory, OR loop area <= 3x null, OR anti-windup > 1.2x no-memory at any d, OR positive control fails",
+      "alternative_explanation": "memory simply depletes a shared resource, independent of history",
+      "null_twin": "memory clones placed at random positions with the same count and affinity distribution (destroys history-specificity)",
+      "substrate": "ecology",
+      "why_this_implementation": "competition for antigen is the peculiar immune structure; an online gradient learner would hide it inside momentum",
+      "size": "500 naive clones, 50 memory clones; 20 drift values x 2 directions x 2 anti-windup settings x 20 seeds x 300 steps",
+      "cost_estimate": 5,
+      "stupid_explanations": [
+        "resource depletion, not competition",
+        "anti-windup just deletes memory, making it identical to the control",
+        "the 1.5x threshold chosen after seeing curves"
+      ]
+    }
+  ],
+  "candidateEngines": [],
+  "currentVerdict": "SPECULATIVE",
+  "evidenceSummary": {
+    "layer": "speculation",
+    "note": "Pass 0-3 specs only; nothing run"
+  }
+}
