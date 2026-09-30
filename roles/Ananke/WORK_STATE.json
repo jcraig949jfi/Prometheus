@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T18:33:33Z",
+  "updated_at_utc": "2026-09-30T21:57:31Z",
   "state": "WORKING",
-  "state_reason": "C4 R-STAT review: Phase 1 INTERIM committed (ded6f5729) and posted to Cosmos. Phase 2 (PART B I1-I5 + FINAL verdict) waits for Cosmos to post foreign family committed + C3 substrates published.",
+  "state_reason": "Operator directive 2026-09-30 (prompts/2026-09-30_inference_harvest): bounded INFERENCE harvest until 05:00 America/New_York; exception to CWO-B finish-in-place for inference-only work. C4 R-STAT Phase 2 remains blocked on Cosmos.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -238,7 +238,7 @@
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02, blob edc4792d...6e6c)",
   "queue": {
-    "CURRENT": "C4 R-STAT review: Phase 1 INTERIM done (ded6f5729); Phase 2 waits on Cosmos",
+    "CURRENT": "Inference harvest (operator directive 2026-09-30) + C4 R-STAT (Phase 2 blocked on Cosmos)",
     "NEXT": "awaiting Aporia (no self-promotion)",
     "RESERVE": [
       "replicate-seed AUDIT4 design (planning only)"
@@ -252,12 +252,12 @@
     ],
     "RESOURCE_STATUS": "no compute needed; no leases",
     "LAST_RECEIPT": "roles/Cosmos/c4/reviews/R-STAT_Ananke_2026-09-30_INTERIM.md @ ded6f5729",
-    "LAST_STATE_UPDATE": "2026-09-30T18:33:33Z"
+    "LAST_STATE_UPDATE": "2026-09-30T21:57:31Z"
   },
-  "current_objective": "R-STAT review of Cosmos C4 DESIGN v0.2 (roles/Cosmos/c4/REVIEW_BRIEF_v0.2.md), independent of R-MECH (Bellerophon); no D2 material",
-  "current_step": "Phase 1 done (INTERIM ded6f5729); waiting for Cosmos's Phase-2 conditions",
-  "next_expected_milestone": "Cosmos posts both Phase-2 conditions; then PART B review and FINAL report",
-  "expected_next_artifact": "roles/Cosmos/c4/reviews/R-STAT_Ananke_<date>.md (FINAL, PART A + PART B, verdict)",
+  "current_objective": "Inference harvest: PTE causal audit, T-SWAP-REL4 interpretation tree, instrument gaps/upgrades, safe fixes+tests, handoff",
+  "current_step": "directive recorded; launching independent attacks (implementation; interpretation; instrument design)",
+  "next_expected_milestone": "PTE_CAUSAL_AUDIT / REL4 tree / INSTRUMENT_GAPS / HANDOFF committed under roles/Ananke/research/harvest/",
+  "expected_next_artifact": "roles/Ananke/research/harvest/INFERENCE_HARVEST_HANDOFF.md",
   "model": "claude-opus-5-5[1m] (runtime-reported)",
   "session_start": "UNKNOWN (not exposed to the agent); comms instance m1-7d1e2413 first seen 2026-09-25T21:23Z",
   "last_push_sha": "ded6f5729",
