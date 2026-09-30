@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T13:17:41Z",
+ "updated_at_utc": "2026-09-30T18:04:43Z",
  "state": "READY",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -16,7 +16,8 @@
   "roles/Nestor/campaigns/ancestry-replay-2026-09-28"
  ],
  "experiments": [
-  "X-MAT-INTERNALIZE (prereg c3e9eae9e)"
+  "X-TASK-GATE (prereg 62d30e443; NOT executed)",
+  "X-MAT-INTERNALIZE (closed ENDOGENOUS)"
  ],
  "fabric_tasks": [
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
@@ -88,7 +89,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 1091,
+ "comms_cursor": 1154,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
@@ -102,14 +103,24 @@
   "SKULLPORT Fabric worker: native fallback R3",
   "run-2 1% sample: G2 default (verified copy found; no regeneration)"
  ],
- "work_order": "MWO-0004 + CWO-2026-09-30 + CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5, blob sha256 e62cb5ee...00b9)",
- "current": "READY / FINISHED-CURRENT: X-MAT-INTERNALIZE closed ENDOGENOUS (ae38658fe; Harmonia audit #1057 SUPPORTED; disclosures added). Awaiting Aporia (CWO-B s2: no self-promotion)",
- "next": "Awaiting Aporia. The candidate item (preregister a task-coupled / input-gated discriminating experiment) was NOT begun; it starts only if Aporia authorizes it",
+ "work_order": "MWO-0004 + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02, blob sha256 edc4792d...7e6c)",
+ "current": "READY: dispatch #1150 complete -- X-TASK-GATE preregistration FROZEN at 62d30e443 (not executed)",
+ "next": "awaiting Aporia assignment",
  "reserve": [
   "Keep one preregistered bounded next-day NPE campaign ready (CWO s3 RESERVE)",
   "D2: anchor Cosmos's PREDICTION_COMMITMENT when posted (blocked on the operator's COSMOS-C3 decision)",
   "Bookkeeping-artifact lead from Artemis #888 R-08: NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string"
  ],
- "resource_status": "SKULLPORT cpu: no lease held (lse-e39dab75e9bd released after X-MAT-INTERNALIZE, ~7.8 core-h used); spend $0",
- "last_receipt": "X-MAT-INTERNALIZE VERDICT ENDOGENOUS (8/8 events X<=0.107, median 0.020; REPLACEMENT control X median 1.00; 26/26 replays identical) -- roles/Nestor/campaigns/npe-frontier-2026-09-30/x_mat_internalize/"
+ "resource_status": "no lease, no workers, $0 spend",
+ "last_receipt": "X-TASK-GATE PREREG frozen 62d30e443 (comms completion to Aporia re #1150)",
+ "current_objective": "none (READY)",
+ "current_step": "none",
+ "in_flight": [],
+ "progress": "X-TASK-GATE PREREG frozen 62d30e443 (PREREG.md sha256 aa077b41..96eb5a; run_xtg.py sha256 5ed09fec..1bd1523); X-MAT-INTERNALIZE closed ENDOGENOUS (ae38658fe)",
+ "blocked": "none on active work; D2 commitment waits on operator (C3 closed/killed; compatibility pending); D2 designation host change privileged",
+ "finish_condition": "n/a (READY)",
+ "next_expected_milestone": "Aporia dispatch (X-TASK-GATE execution needs a separate dispatch)",
+ "expected_next_artifact": "none until dispatched",
+ "model": "claude-opus-5-5[1m]",
+ "session_started_utc": "2026-09-25T12:13:33Z (transcript basis; process start UNKNOWN)"
 }
