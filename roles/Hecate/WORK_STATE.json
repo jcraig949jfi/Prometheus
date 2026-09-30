@@ -3,8 +3,8 @@
   "seat": "Hecate",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T10:11:00Z",
-  "state": "ACTIVE",
+  "updated_at_utc": "2026-09-30T13:18:00Z",
+  "state": "BLOCKED",
   "branch": "hecate/base-role-adopt-2026-09-29",
   "head_sha": "(this commit; see git log -1 -- roles/Hecate/WORK_STATE.json)",
   "threads": [
@@ -70,13 +70,14 @@
     "hecate/autopsy/AUTOPSY.md",
     "hecate/alien/REPORT_pilot.md"
   ],
-  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/QUEUE.json; comms #1024, #1029)",
-  "current": "Alien-lawful Families B/C free-tier trickle under the frozen PREREG + DEVIATION_01 (8a517eb2d); stops cleanly on daily quota and resumes next session",
-  "next": "FIRST: verify and answer Harmonia audit #1037 (3 MAJOR claims; see journal/2026-09-30.md). THEN resume B/C trickle, THEN mechanical novelty ruler PREREG",
+  "work_order": "MWO-0004 + CWO-2026-09-30 + CWO-2026-09-30B finish-in-place (comms #1080, #1090)",
+  "current": "Finish alien-lawful Families B/C (frozen PREREG + DEVIATION_01) with Harmonia audit #1037 verification attached",
+  "next": "REPORT TO APORIA on completion -- DO NOT SELF-PROMOTE (CWO-B)",
   "reserve": [
     "Generator-side novelty interventions (generate, implement, attack, then test reducibility)",
     "Alien assay v2 PREREG (T1 names the predictive standard; analogy tested with the canonical mechanism)",
-    "Second selection of 16 triplicates via Pass 3 v2"
+    "Second selection of 16 triplicates via Pass 3 v2",
+    "(withdrawn by CWO-B: mechanical novelty ruler -- not to be started without Aporia/operator authorization)"
   ],
   "blocked": [
     {
@@ -93,5 +94,5 @@
     }
   ],
   "resource_status": "CPU negligible; model calls: Claude subscription, Gemini/Groq free tier; spend $0",
-  "last_receipt": "hecate/autopsy/AUTOPSY.md (64c9353e0): zero-UNFAMILIAR is an instrument result (R1, 0/32 alien rules UNFAMILIAR)"
+  "last_receipt": "comms #1097 heartbeat (CWO-B); hecate/autopsy/AUTOPSY.md"
 }
