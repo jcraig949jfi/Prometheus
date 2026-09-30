@@ -4,7 +4,7 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T13:08:50Z",
+  "updated_at_utc": "2026-09-30T13:12:51Z",
   "state": "ACTIVE",
   "state_reason": "CWO 2026-09-30: E-BEL-REPL-01 closed (DISAPPEARS K3); NEXT promoted to CURRENT without prompt (CWO 1.1)",
   "branch": "bellerophon/mwo-0001-2026-09-28",
@@ -143,15 +143,14 @@
       "status": "IDLE_UNRELEASABLE (token not kept; expires ~14:18Z; Aporia #1077)"
     }
   ],
-  "running": [
+  "running": [],
+  "blocked_on": [
     {
-      "what": "E-BEL-REPL-02 production",
-      "where": "M2 local 12 procs",
-      "outputs": "C:/Users/James/repl_2026-09-30/production_02",
-      "started_utc": "2026-09-30T13:08:50Z"
+      "item": "E-BEL-REPL-02 production restart",
+      "dependency": "operator go-ahead to relaunch (host memory pressure)",
+      "owner": "operator"
     }
   ],
-  "blocked_on": [],
   "next_actions": [
     "S0: survey fleet candidates (Hecate, Tyche, Ensorain, Nestor, Archaeon, own residuals); write SELECTION.md with criteria before ranking",
     "S1: prereg the rebuild + kill battery (frozen, LF-normalised hash) before any run",
@@ -233,7 +232,7 @@
     "id": "E-BEL-REPL-02",
     "title": "Mutant/falsifier expansion (CWO NEXT, promoted automatically)",
     "text": "Apply adversarial transformations to the surviving residue of E-BEL-REPL-01: scaffold-dependent de novo emergence of state-freedom in BEE (payoff-dependent K1, ruler-independent K4, backwards dose P90>P75, 18/100 with no payoff). Prereg before any run.",
-    "step": "S1 FROZEN 4d1a7c885 (PREREG_02, label-free dominance, M1-M6); S3 RUNNING on M2 (750 runs, 12 procs) under held lease lse-4e19412ded95 (same seat; disclosed)",
+    "step": "S1 FROZEN 4d1a7c885. S3 PAUSED at 82/750 runs: the launcher and its 12 workers were stopped by the host (Claude Code background reaper, M2 low on memory: 4.6/31.8 GB free). The runner is resumable (skips written pairs) with no design change. Restart awaits the operator's word per harness policy; outputs are unread and unsealed.",
     "started_at_utc": "2026-09-30T12:34:33Z",
     "freeze": "4d1a7c88565e1ca7f73755da58a0b210b0c19693"
   },
