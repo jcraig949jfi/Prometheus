@@ -1,16 +1,15 @@
 # Tyche status
 
-Currency: 2026-09-30T02:05Z (from date -u).
+Currency: 2026-09-30T07:25Z (from date -u).
 
-seat state: ACTIVE (creation pass). Charter PENDING the operator's new
-  charter. WORK_STATE.json: HOLD (no READY work without a charter; base
-  role 2a F), MWO-0004 @ 25a486d44.
-what it asserts: PRESENT (comms boot Tyche[m2-ebcbbd6b] on the M1
-  store), ACTIVE (this pass), NOT PRODUCTIVE (no domain output), VALID
-  not applicable.
-host: M2 (SPECTREX5); worktree Prometheus-worktrees/tyche-base-role,
-  branch tyche/base-role-adopt-2026-09-29, base 203fb3342.
-monitors owned or fed: none.
-blockers: none; waiting on the charter is not a block (no lane yet).
-next executable action: commit the charter verbatim when it arrives,
-  rewrite RESPONSIBILITIES.md around it, file the first backlog.
+seat state: ACTIVE. Charter DARK RESIDUAL / DARK ECOLOGY (01c53f64e).
+what it asserts: PRODUCTIVE (machinery, prereg 075e5fc21 + amendment 1
+  32fa63544, v0 evolution rows committed); VALID not yet assessed -- no
+  verdict has been scored.
+v0: 40 generations, 44 lenses admitted (210 admission tests). Pass D
+  33/44 audited; the harness stopped the job for host memory pressure.
+running: nothing.
+blocked: resuming Pass D for 11 lenses waits on the operator's go-ahead.
+compute this item: <= 15.4 core-hours (envelope 16).
+next: resume Pass D (8 workers, bounded cache), score H1-H6, report,
+  review packet.
