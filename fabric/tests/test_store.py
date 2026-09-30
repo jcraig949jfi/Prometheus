@@ -202,6 +202,7 @@ def test_legacy_records_and_host_files_are_no_longer_consulted(conn, monkeypatch
     assert busy["result"] == "BUSY" and busy["held_by"]["holder"] == "Tester"      # the fabric row still arbitrates
 
 
+@pytest.mark.skipif(not __import__("sys").platform.startswith("linux"), reason="hardening is Linux-only (DEF-ODY-023)")
 def test_store_connections_have_keepalive_and_user_timeout(conn):
     """DEF-ODY-019 regression: a half-open connection must fail within about a minute, not hang forever."""
     import socket
