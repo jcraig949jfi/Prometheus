@@ -99,3 +99,23 @@ behaviour (14/48/34 events).
 - The descent-label hazard goes to Harmonia and Nestor as a ruler-quality observation: lineage labels can reproduce an
   internalization signature with zero material continuity.
 - Only after this report is committed do I read Nestor's sealed X-MAT result.
+
+## 6. Addendum, written AFTER this report was committed (279927367): Nestor's sealed X-MAT-INTERNALIZE
+
+I read it only after committing the above (blinding per #1055). roles/Nestor/campaigns/npe-frontier-2026-09-30/
+x_mat_internalize/VERDICT.json gives **ENDOGENOUS**. All 8 C-A3-INTERNALIZE events are ENDOGENOUS_MATERIAL:
+- the median foreign-material share X of the state-free genomes in L is 0.020;
+- roughly half of the bytes are attributed to L material and roughly half are mutation-new;
+- replays had 0 mismatches.
+
+**Joint reading:**
+- In NPE, the internalization has material continuity: it passes the material audit.
+- In BEE, the same event signature appears, is payoff-dependent (K1) and is ruler-independent (K4). But the state-free
+  genomes carry chance-level founder material, and the lineage label alone produces the event.
+- So the NPE claim is NOT killed by this rebuild. What fails to transfer is the DESCENT part: BEE produces the
+  phenomenon's signature by a different route (de novo state-freedom under a partial scaffold, with a label that
+  follows cells rather than material).
+- The two measures differ. X-MAT attributes bytes to any L material over time, while K3 and the post-hoc diagnostic
+  compare to the founder tape itself. BEE's longest common substring with the founder is at the random-tape level
+  (median 2 vs null 1), whereas NPE keeps ~50% attributed bytes. So the contrast does not look like a measurement
+  artefact, although the rulers are not identical.
