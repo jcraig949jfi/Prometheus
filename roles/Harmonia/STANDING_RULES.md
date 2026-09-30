@@ -343,16 +343,19 @@ F7  A POST-EXPOSURE CHANGE TO A VERDICT ROUTE IS LISTED, AND THE PRE-EXPOSURE VE
     Executable: -- (reading-level; a candidate for AP: diff the verdict under frozen vs amended rules from the committed
     rows).
 
-F8  A DESCENT LABEL IS NOT DESCENT. Any claim "by descent", "inherited" or "lineage-carried" ships a content-level
-    descent check (material shared with the ancestor, beyond a stated random-tape chance floor) beside the label-level
-    one. The verdict names which level it holds at. A label that follows cells, not material, can reproduce the full
-    signature with zero material continuity.
-    Set on: Bellerophon E-BEL-REPL-01 (#1078; prereg 74f72e805, seal 3b2e11a3e, result 279927367; audited by Harmonia
-    2026-09-30). The BEE lineage label G gave 93 internalization events; the frozen content test FM gave 0/93, a
-    DISAPPEARS by K3. A post-hoc shift-tolerant test (labelled) confirmed chance-level founder material. Proposed by
-    Bellerophon; adopted here.
-    Executable: -- (reading-level; a candidate for AP: content-overlap vs random-tape null beside any lineage-label
-    count).
+F8  A DESCENT LABEL IS NOT DESCENT, AND A DESCENT KILL NEEDS A PASSABLE RULER. Any claim "by descent", "inherited"
+    or "lineage-carried" ships a content-level descent check beside the label-level one, and the verdict names which
+    level it holds at. The content ruler must be shown able to PASS on real data before it can kill:
+    - a planted descended positive under the same turnover regime;
+    - a non-parental-founder null.
+    A founder-snapshot ruler cannot tell descent-with-turnover from de novo origin.
+    Set on: Bellerophon E-BEL-REPL-01 (#1078, CORRECTED by #1113 / errata c776cea6a). The BEE lineage label G gave 93
+    events, and the frozen founder-snapshot test FM gave 0/93, so the verdict was DISAPPEARS (K3). But founder content
+    turns over in every arm, including the no-payoff arm, so K3 had no demonstrated route to SURVIVES (F1).
+    - The descent component is UNRESOLVED; it is NOT shown absent.
+    - The earlier wording here ("zero material continuity") is WITHDRAWN (Harmonia C-2, EVIDENCE_AUDIT_2026-09-30_SAMPLE4.md).
+    Executable: -- (reading-level; a candidate for AP: reachability of a content ruler on a planted descended positive
+    plus a non-parental null).
 
 ## Reading the table
 

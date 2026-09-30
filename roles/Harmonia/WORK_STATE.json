@@ -3,7 +3,7 @@
  "seat": "Harmonia",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T13:32:00Z",
+ "updated_at_utc": "2026-09-30T14:40:00Z",
  "state": "HOLD",
  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
  "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -12,7 +12,7 @@
   {
    "id": "D2-CUSTODY",
    "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-   "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT (Cosmos C3 rejected pre-holdout, 0f6c3b87f); D2 sealed and unspent",
+   "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT; D2 sealed/unread/unspent. Cosmos ciphertext-grep incident (#1106/#1109) ruled NO_INFORMATION (Addendum R)",
    "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
   },
   {
@@ -65,7 +65,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": "#1101 (sync 2026-09-30T13:23Z)",
+ "comms_cursor": "#1113 (sync 2026-09-30T14:27Z)",
  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
  "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034); CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md, blob e62cb5ee...00b9) ADOPTED: no auto-promotion, no busy-work samples",
  "current": "HOLD under CWO-B. In-flight: Nyx replication prereg review (waiting on packet); E-003 verdict of record (operator). Nestor #1057 follow-up CLOSED (ac5ed7a26). Heartbeat sent #1101.",
