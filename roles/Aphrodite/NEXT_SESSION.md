@@ -4,6 +4,21 @@ Rewritten 2026-09-29 at MWO-0001 adoption from the branch's actual state. It rep
 appended updates (now superseded/NEXT_SESSION_2026-09-25_plus_updates.md).
 Boot from the repo, not from memory.
 
+## RESET NOTE (2026-09-30, operator-requested session reset)
+The last session adopted MWO-0002 and filed its census report, then held.
+Unread and unadopted at the reset:
+- MWO-0003 (@624a686ea, #987);
+- MWO-0004 (@25a486d44, current on main);
+- the operator CWO fleet activation: ops/fleet/QUEUE.json, #1024.
+
+Do these FIRST, from Git, verifying each blob hash against ops/work_orders/PUBLICATIONS.md.
+
+State at the reset:
+- aphrodite/arc3-2026-09-28 @ d3e391a3f, pushed, NOT merged.
+- Nothing running; 0 python processes; no leases; no Fabric tasks.
+- The comms cursor is 961.
+- The previous session's /loop dies with the session. Restart the s8 loop with /loop.
+
 ## 0. Boot order
 1. git fetch origin. Read origin/main:ops/work_orders/CURRENT.md: the APHRODITE section plus s4, s7, s8, s9, s11,
    s12.
