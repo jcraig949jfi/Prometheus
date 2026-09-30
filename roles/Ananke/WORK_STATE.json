@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T10:34:43Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-W (T-SWAP-REL4) complete: H2 promotable by the frozen rule, promotion held for a targeted FC check (REL5, plan frozen by commit). Lease lse-658bd3b24ea0 released (~4.3 core-h).",
+  "updated_at_utc": "2026-09-30T10:35:13Z",
+  "state": "WORKING",
+  "state_reason": "CWO ANANKE: T-SWAP-REL5 running as worker W-X under plan frozen at 22b9bbd51 (targeted FC check of the REL4 H2 hybrid at near-degenerate boundary truths; cap 3 core-h).",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,14 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-X",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-REL5",
+      "status": "RUNNING",
+      "plan": "roles/Ananke/research/plans/T-SWAP-REL5_PLAN.md @ 22b9bbd51",
+      "compute_cap_core_h": 3
+    },
+    {
       "id": "E-ANANKE-W-W",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-REL4",
@@ -176,7 +184,9 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
+  "running": [
+    "E-ANANKE-W-X (delegated worker, CPU)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "launch E-ANANKE-W-W (REL4) under the frozen plan when the cpu8 lease is free",
@@ -206,7 +216,7 @@
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1031)",
   "queue": {
-    "CURRENT": "T-SWAP-REL5 (E-ANANKE-W-X) per research/plans/T-SWAP-REL5_PLAN.md: targeted FC check of H2 at near-degenerate boundary truths (<=3 core-h)",
+    "CURRENT": "T-SWAP-REL5 (E-ANANKE-W-X) per research/plans/T-SWAP-REL5_PLAN.md: targeted FC check of H2 at near-degenerate boundary truths (<=3 core-h) -- RUNNING",
     "NEXT": "Promote H2 (swap_rel4) into prometheus/ananke if REL5 passes; else promote REL3 with the documented blind spot",
     "RESERVE": [
       "T-INS-20 readout Kp[7] swap (4781b0a1)",
@@ -216,6 +226,6 @@
     "BLOCKED": [],
     "RESOURCE_STATUS": "rolling 24 h CPU ~28 core-h of 48",
     "LAST_RECEIPT": "E-ANANKE-W-W report, workers/W-W/REPORT.md",
-    "LAST_STATE_UPDATE": "2026-09-30T10:34:43Z"
+    "LAST_STATE_UPDATE": "2026-09-30T10:35:13Z"
   }
 }
