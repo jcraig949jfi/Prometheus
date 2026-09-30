@@ -120,19 +120,21 @@ def paired(d):
 
 _SPECS = {}
 _W = {}
+_CACHE_MAX = 64
 
 
-def _worker_init(specs):
-    global _SPECS, _W
+def _worker_init(specs, cache_max=64):
+    global _SPECS, _W, _CACHE_MAX
     _SPECS = {s["id"]: s for s in specs}
     _W = {}
+    _CACHE_MAX = cache_max
 
 
 def get_world(wid, seed):
     k = (wid, seed)
     if k not in _W:
-        if len(_W) > 64:
-            _W.clear()
+        if len(_W) >= _CACHE_MAX:
+            _W.pop(next(iter(_W)))
         _W[k] = WorldEval(_SPECS[wid], seed)
     return _W[k]
 
