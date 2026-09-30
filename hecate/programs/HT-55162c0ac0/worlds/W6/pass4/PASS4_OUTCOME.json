@@ -1,0 +1,455 @@
+{
+ "triplicateId": "HT-55162c0ac0",
+ "world": "W6",
+ "R": {
+  "reproduced": false,
+  "stats": {
+   "grouping": {
+    "n_seeds_ge_0.8": 10,
+    "n": 10,
+    "met": true,
+    "mean_ari_ftle": 1.0
+   },
+   "corr_chance": {
+    "mean_ari_corr": -0.11105720664048076,
+    "met": false
+   },
+   "null_twin_groups": {
+    "n_seeds_ge_0.8": 0,
+    "n": 10,
+    "met": false,
+    "mean_ari_ftle": -0.014384613924404313
+   },
+   "per_seed_ari_ftle": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "per_seed_ari_corr": [
+    -0.06751054852320673,
+    -0.10852713178294576,
+    0.11814345991561183,
+    -0.16033755274261602,
+    -0.1832669322709163,
+    -0.09561752988047807,
+    -0.23318385650224216,
+    -0.09561752988047807,
+    -0.05147058823529411,
+    -0.23318385650224216
+   ],
+   "seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+   ],
+   "lle_mean": 0.6512020485773657
+  }
+ },
+ "ORIG": {
+  "fired": false,
+  "stats": {
+   "r0.2_sigma0.0": {
+    "readable": false,
+    "grouping": {
+     "n_seeds_ge_0.8": 10,
+     "n": 10,
+     "met": true,
+     "mean_ari_ftle": 1.0
+    },
+    "per_seed_ari_ftle": [
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "treatment_lle_mean": -0.6161861394238237,
+    "ftle_within_mean": -12.655376282690195,
+    "ftle_between_mean": -12.655376282692284,
+    "traj_std_mean": 5.1927645679789895e-138
+   },
+   "r0.2_sigma0.01": {
+    "readable": true,
+    "grouping": {
+     "n_seeds_ge_0.8": 0,
+     "n": 10,
+     "met": false,
+     "mean_ari_ftle": -0.024650470764457283
+    },
+    "per_seed_ari_ftle": [
+     0.04776119402985077,
+     -0.0835820895522388,
+     -0.14336917562724016,
+     -0.0835820895522388,
+     -0.017910447761194014,
+     -0.06451612903225808,
+     -0.017910447761194014,
+     -0.03125000000000003,
+     -0.03125000000000003,
+     0.17910447761194032
+    ],
+    "treatment_lle_mean": -0.6167292749286453,
+    "ftle_within_mean": -12.657759357457465,
+    "ftle_between_mean": -12.65719194461918,
+    "traj_std_mean": 0.011648731611266241
+   },
+   "r0.2_sigma0.05": {
+    "readable": true,
+    "grouping": {
+     "n_seeds_ge_0.8": 0,
+     "n": 10,
+     "met": false,
+     "mean_ari_ftle": -0.23807145355081022
+    },
+    "per_seed_ari_ftle": [
+     -0.2531645569620253,
+     -0.2531645569620253,
+     -0.2531645569620253,
+     -0.1832669322709163,
+     -0.2531645569620253,
+     -0.2531645569620253,
+     -0.2531645569620253,
+     -0.2531645569620253,
+     -0.2531645569620253,
+     -0.17213114754098363
+    ],
+    "treatment_lle_mean": -0.629739392980152,
+    "ftle_within_mean": -12.754624604403052,
+    "ftle_between_mean": -12.702648691377004,
+    "traj_std_mean": 0.057979804633993416
+   },
+   "fired_by": []
+  }
+ },
+ "ALT": {
+  "status": "FAIL",
+  "stats": {
+   "A1": {
+    "value": 0.0,
+    "threshold": 0.2,
+    "met": false
+   },
+   "A2": {
+    "value": 0.3693773092471725,
+    "threshold": 0.6,
+    "met": false
+   },
+   "level_mean_ari_ftle": {
+    "0.2": -0.23807145355081022,
+    "0.35": -0.03025808457711445,
+    "0.5": 0.7314209905660377,
+    "0.65": 1.0,
+    "0.8": 1.0,
+    "0.9": 1.0,
+    "1.0": 1.0
+   },
+   "level_mean_lle_treatment": {
+    "0.2": -0.629739392980152,
+    "0.35": -0.09317138633472102,
+    "0.5": -0.5623596879662113,
+    "0.65": -0.919056502661561,
+    "0.8": -0.04270096036538272,
+    "0.9": 0.37638917075556017,
+    "1.0": 0.6659440820354008
+   },
+   "level_class_frozen": {
+    "0.2": "non-chaotic",
+    "0.35": "non-chaotic",
+    "0.5": "non-chaotic",
+    "0.65": "non-chaotic",
+    "0.8": "non-chaotic",
+    "0.9": "chaotic",
+    "1.0": "chaotic"
+   },
+   "spearman_level_means_secondary": 0.4531634835874829,
+   "level_mean_ari_corr": {
+    "0.2": 0.04018397694608465,
+    "0.35": -0.0230200878605988,
+    "0.5": 0.026535756583974324,
+    "0.65": 0.06806770980005632,
+    "0.8": 0.002495407487675175,
+    "0.9": 0.023357584945736715,
+    "1.0": -0.02989801998756485
+   }
+  }
+ },
+ "controls": {
+  "positive_detected": true,
+  "cheat_detected": true,
+  "detail": {
+   "R": {
+    "positive": {
+     "n_seeds_ge_0.8": 10,
+     "n": 10,
+     "met": true,
+     "mean_ari_ftle": 1.0,
+     "corr": {
+      "mean_ari_corr": -0.048703508955285656,
+      "met": true
+     }
+    },
+    "cheat": {
+     "n_seeds_ge_0.8": 10,
+     "n": 10,
+     "met": true,
+     "mean_ari_ftle": 1.0,
+     "corr": {
+      "mean_ari_corr": -0.048703508955285656,
+      "met": true
+     }
+    },
+    "null_twin_groups": {
+     "n_seeds_ge_0.8": 0,
+     "n": 10,
+     "met": false,
+     "mean_ari_ftle": -0.014384613924404313
+    }
+   },
+   "ORIG": {
+    "r0.2_sigma0.0": {
+     "positive": {
+      "n_seeds_ge_0.8": 0,
+      "n": 10,
+      "met": false,
+      "mean_ari_ftle": 0.140625
+     },
+     "cheat": {
+      "n_seeds_ge_0.8": 10,
+      "n": 10,
+      "met": true,
+      "mean_ari_ftle": 1.0
+     },
+     "null_twin_groups": {
+      "n_seeds_ge_0.8": 0,
+      "n": 10,
+      "met": false,
+      "mean_ari_ftle": -0.036377990583888395
+     },
+     "lle_max_all_arms": -0.6161861394238237,
+     "lle_all_negative": true,
+     "treatment_lle_mean": -0.6161861394238237,
+     "readable": false
+    },
+    "r0.2_sigma0.01": {
+     "positive": {
+      "n_seeds_ge_0.8": 10,
+      "n": 10,
+      "met": true,
+      "mean_ari_ftle": 1.0
+     },
+     "cheat": {
+      "n_seeds_ge_0.8": 10,
+      "n": 10,
+      "met": true,
+      "mean_ari_ftle": 1.0
+     },
+     "null_twin_groups": {
+      "n_seeds_ge_0.8": 0,
+      "n": 10,
+      "met": false,
+      "mean_ari_ftle": 0.05298106753539318
+     },
+     "lle_max_all_arms": -0.6167009786970878,
+     "lle_all_negative": true,
+     "treatment_lle_mean": -0.6167292749286453,
+     "readable": true
+    },
+    "r0.2_sigma0.05": {
+     "positive": {
+      "n_seeds_ge_0.8": 10,
+      "n": 10,
+      "met": true,
+      "mean_ari_ftle": 1.0
+     },
+     "cheat": {
+      "n_seeds_ge_0.8": 10,
+      "n": 10,
+      "met": true,
+      "mean_ari_ftle": 1.0
+     },
+     "null_twin_groups": {
+      "n_seeds_ge_0.8": 0,
+      "n": 10,
+      "met": false,
+      "mean_ari_ftle": -0.013878895987359396
+     },
+     "lle_max_all_arms": -0.6293994125067037,
+     "lle_all_negative": true,
+     "treatment_lle_mean": -0.629739392980152,
+     "readable": true
+    }
+   },
+   "ALT": {
+    "eligible_frozen": true,
+    "positive": {
+     "A1": {
+      "value": 0.9957640365958103,
+      "threshold": 0.2,
+      "met": true
+     },
+     "A2": {
+      "value": 0.6757916391167287,
+      "threshold": 0.6,
+      "met": true
+     }
+    },
+    "cheat": {
+     "A1": {
+      "value": 0.9957640365958103,
+      "threshold": 0.2,
+      "met": true
+     },
+     "A2": {
+      "value": 0.6757916391167287,
+      "threshold": 0.6,
+      "met": true
+     }
+    },
+    "null_twin": {
+     "A1": {
+      "value": -0.05141418741064862,
+      "threshold": 0.2,
+      "met": false
+     },
+     "A2": {
+      "value": -0.02924475121806397,
+      "threshold": 0.6,
+      "met": false
+     }
+    },
+    "recomputed_ok": true
+   }
+  }
+ },
+ "predicate": "PARK",
+ "anomalies": [
+  {
+   "what": "ORIG variant r0.2_sigma0.0 not readable",
+   "detail": {
+    "lle_all_negative": true,
+    "lle_max_all_arms": -0.6161861394238237,
+    "pc_met": false,
+    "cheat_met": true,
+    "twin_groups": false
+   }
+  },
+  {
+   "what": "R: correlation grouping fails the |mean ARI| <= 0.1 'at chance' reading because it is BELOW chance",
+   "mean_ari_corr": -0.11105720664048076,
+   "round3_mean_ari_corr": -0.083018601827008,
+   "note": "negative ARI carries no positive grouping information; reading was frozen in NOTES.md before the run and is kept"
+  },
+  {
+   "what": "ORIG r0.2_sigma0.0: treatment groups >= 0.8 on >= 9/10 seeds but the variant is not readable (positive control failed)",
+   "grouping": {
+    "n_seeds_ge_0.8": 10,
+    "n": 10,
+    "met": true,
+    "mean_ari_ftle": 1.0
+   },
+   "ftle_within_mean": -12.655376282690195,
+   "ftle_between_mean": -12.655376282692284,
+   "traj_std_mean": 5.1927645679789895e-138,
+   "note": "noiseless contracting carrier sits at its fixed point; responses near the 1e-18 floor; not read"
+  },
+  {
+   "what": "ALT: non-chaotic levels (LLE < 0) group at mean ARI >= 0.8 with matched coupling and noise",
+   "levels": {
+    "0.65": {
+     "mean_ari_ftle": 1.0,
+     "lle_treatment": -0.919056502661561
+    },
+    "0.8": {
+     "mean_ari_ftle": 1.0,
+     "lle_treatment": -0.04270096036538272
+    }
+   },
+   "note": "chaos is not needed for the perturbation-spread readout at these carrier scales; ORIG as preregistered (r = 0.2) did not fire"
+  }
+ ],
+ "stupid_explanations_status": [
+  {
+   "text": "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
+   "addressed_by_this_run": true,
+   "evidence": {
+    "R_corr_between_mean": 0.04061571477702481,
+    "R_traj_min": -0.9384559157140815,
+    "R_traj_max": 0.9414350832552292
+   }
+  },
+  {
+   "text": "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
+   "addressed_by_this_run": true,
+   "evidence": {
+    "R_null_twin_mean_ari_ftle": -0.014384613924404313,
+    "ALT_null_twin_level_means": {
+     "0.2": -0.013878895987359396,
+     "0.35": -0.007837375621890566,
+     "0.5": -0.0018560675396601923,
+     "0.65": -0.032974559784773566,
+     "0.8": 0.004235963404189744,
+     "0.9": -0.04717822400645887,
+     "1.0": 0.011809360571134225
+    }
+   }
+  },
+  {
+   "text": "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)",
+   "addressed_by_this_run": true,
+   "evidence": {
+    "R_corr_within_mean": 0.033915227261936146,
+    "R_corr_between_mean": 0.04061571477702481
+   }
+  },
+  {
+   "text": "tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)",
+   "addressed_by_this_run": false,
+   "evidence": {
+    "R_ftle_within_mean": -7.928461251625285,
+    "R_ftle_between_mean": -8.701676424195238,
+    "note": "tau frozen at 8; no tau sweep in PREREG"
+   }
+  },
+  {
+   "text": "Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.",
+   "addressed_by_this_run": true,
+   "evidence": {
+    "ORIG_fired": false,
+    "ORIG_fired_by": [],
+    "ALT_status": "FAIL"
+   }
+  }
+ ],
+ "core_minutes": 0.6171875,
+ "attempts": 1,
+ "evaluate_runs": [
+  {
+   "n": 1,
+   "what": "first run"
+  },
+  {
+   "n": 2,
+   "what": "anomaly-reporting block added; no rule, reading or threshold changed; attack not rerun"
+  }
+ ],
+ "notes": "readings per NOTES.md: R chance = |mean ari_corr| <= 0.1; ORIG existence test over sigma grid {0,0.01,0.05} at r=0.2, readable variants only; ALT A2 pooled over (level, seed)"
+}

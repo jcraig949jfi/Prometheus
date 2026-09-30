@@ -85,12 +85,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- the MUS is trivially the conflicting channel, so any per-channel reset-on-mismatch rule would do equally well (SAT adds nothing)
-- drop-oldest is a strawman here because a window of 32 over 8 channels means the stale clause is usually young; the advantage is window geometry, not conflict localisation
-- the treatment wins only because sensor noise is rare (3%); at higher noise 'oldest in core' deletes valid clauses and the effect vanishes
+- ORIG fired as predicted: channel-reset (no SAT) made exactly the same 1278 errors seed for seed. ALT (cross-channel clauses; cores span >= 3 channels in ~91%) FAILED: 0.601 of drop-oldest, 0.856 of channel-reset.
 
 ## CURRENT VERDICT
-PROBING (an allocation state, not a truth claim). round 3 W5 SIGNAL: round-3 SIGNAL; Pass 4 next
+PARK (an allocation state, not a truth claim). Pass 4 round 1: PARK
 
 ## NEXT PASS
-decision after P3-probe3: FALSIFY
+decision after P4: PARK

@@ -87,11 +87,10 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- tau = 8 is either too short for within-group spread or long enough for the leak to saturate everything (report ftle_within_mean and ftle_between_mean)
-- Any perturbation-response (causal intervention) readout recovers a coupling graph whether or not the carrier is chaotic; success would show that intervention beats observation, not that chaos is what measures interactivity. Separately, the global leak may synchronise units so that every readout sees one block.
+- R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos.
 
 ## CURRENT VERDICT
-PROBING (an allocation state, not a truth claim). round 3 W6 SIGNAL: round-3 SIGNAL; Pass 4 next
+PARK (an allocation state, not a truth claim). Pass 4 round 1: PARK
 
 ## NEXT PASS
-decision after P3-probe3: FALSIFY
+decision after P4: PARK

@@ -565,6 +565,43 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P4",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 4,
+      "kind": "first_falsification",
+      "added": [
+        "new falsifier",
+        "new substrate"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (attacker)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/pass4_impl_v2.md",
+        "prompt_sha256": "e55576b2abf79aca49dd5b740bfd6a0d9a6d8ce4060652fc13aded01fb0e2d8c"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_pass4_round2/PREREG.md",
+      "inspected_prior": [
+        "W6"
+      ],
+      "unexplained": [
+        "R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos."
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -1130,6 +1167,20 @@
         "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl"
       ],
       "statement": "W6 probe round 3: SIGNAL. ['treatment: S1=1.0000, S2=1.0830; success met']",
+      "derived_from": [
+        "M12"
+      ]
+    },
+    {
+      "id": "O-W6-p4",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P4",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl"
+      ],
+      "statement": "Pass 4 on W6: PARK. R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos. readings per NOTES.md: R chance = |mean ari_corr| <= 0.1; ORIG existence test over sigma grid {0,0.01,0.05} at r=0.2, readable variants only; ALT A2 pooled over (level, seed)",
       "derived_from": [
         "M12"
       ]
@@ -2054,14 +2105,211 @@
         "the leak synchronises units (check corr_between_mean and trajectory range; the twin at eps_g = 0.05 stays unsynchronised, mean |corr| about 0.04)",
         "the ARI of a 4-cluster average-linkage partition is inflated by cluster-size artefacts (report the partitions; chance ARI in the twins is about 0)",
         "the invariant density is not symmetric, so E[v] != 0 and product coupling leaks first-order correlation (report corr_within_mean vs corr_between_mean)"
-      ]
+      ],
+      "pass4": {
+        "predicate": "PARK",
+        "R": {
+          "reproduced": false,
+          "stats": {
+            "grouping": {
+              "n_seeds_ge_0.8": 10,
+              "n": 10,
+              "met": true,
+              "mean_ari_ftle": 1.0
+            },
+            "corr_chance": {
+              "mean_ari_corr": -0.11105720664048076,
+              "met": false
+            },
+            "null_twin_groups": {
+              "n_seeds_ge_0.8": 0,
+              "n": 10,
+              "met": false,
+              "mean_ari_ftle": -0.014384613924404313
+            },
+            "per_seed_ari_ftle": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "per_seed_ari_corr": [
+              -0.06751054852320673,
+              -0.10852713178294576,
+              0.11814345991561183,
+              -0.16033755274261602,
+              -0.1832669322709163,
+              -0.09561752988047807,
+              -0.23318385650224216,
+              -0.09561752988047807,
+              -0.05147058823529411,
+              -0.23318385650224216
+            ],
+            "seeds": [
+              100,
+              101,
+              102,
+              103,
+              104,
+              105,
+              106,
+              107,
+              108,
+              109
+            ],
+            "lle_mean": 0.6512020485773657
+          }
+        },
+        "ORIG": {
+          "fired": false,
+          "stats": {
+            "r0.2_sigma0.0": {
+              "readable": false,
+              "grouping": {
+                "n_seeds_ge_0.8": 10,
+                "n": 10,
+                "met": true,
+                "mean_ari_ftle": 1.0
+              },
+              "per_seed_ari_ftle": [
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "treatment_lle_mean": -0.6161861394238237,
+              "ftle_within_mean": -12.655376282690195,
+              "ftle_between_mean": -12.655376282692284,
+              "traj_std_mean": 5.1927645679789895e-138
+            },
+            "r0.2_sigma0.01": {
+              "readable": true,
+              "grouping": {
+                "n_seeds_ge_0.8": 0,
+                "n": 10,
+                "met": false,
+                "mean_ari_ftle": -0.024650470764457283
+              },
+              "per_seed_ari_ftle": [
+                0.04776119402985077,
+                -0.0835820895522388,
+                -0.14336917562724016,
+                -0.0835820895522388,
+                -0.017910447761194014,
+                -0.06451612903225808,
+                -0.017910447761194014,
+                -0.03125000000000003,
+                -0.03125000000000003,
+                0.17910447761194032
+              ],
+              "treatment_lle_mean": -0.6167292749286453,
+              "ftle_within_mean": -12.657759357457465,
+              "ftle_between_mean": -12.65719194461918,
+              "traj_std_mean": 0.011648731611266241
+            },
+            "r0.2_sigma0.05": {
+              "readable": true,
+              "grouping": {
+                "n_seeds_ge_0.8": 0,
+                "n": 10,
+                "met": false,
+                "mean_ari_ftle": -0.23807145355081022
+              },
+              "per_seed_ari_ftle": [
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.1832669322709163,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.2531645569620253,
+                -0.17213114754098363
+              ],
+              "treatment_lle_mean": -0.629739392980152,
+              "ftle_within_mean": -12.754624604403052,
+              "ftle_between_mean": -12.702648691377004,
+              "traj_std_mean": 0.057979804633993416
+            },
+            "fired_by": []
+          }
+        },
+        "ALT": {
+          "status": "FAIL",
+          "stats": {
+            "A1": {
+              "value": 0.0,
+              "threshold": 0.2,
+              "met": false
+            },
+            "A2": {
+              "value": 0.3693773092471725,
+              "threshold": 0.6,
+              "met": false
+            },
+            "level_mean_ari_ftle": {
+              "0.2": -0.23807145355081022,
+              "0.35": -0.03025808457711445,
+              "0.5": 0.7314209905660377,
+              "0.65": 1.0,
+              "0.8": 1.0,
+              "0.9": 1.0,
+              "1.0": 1.0
+            },
+            "level_mean_lle_treatment": {
+              "0.2": -0.629739392980152,
+              "0.35": -0.09317138633472102,
+              "0.5": -0.5623596879662113,
+              "0.65": -0.919056502661561,
+              "0.8": -0.04270096036538272,
+              "0.9": 0.37638917075556017,
+              "1.0": 0.6659440820354008
+            },
+            "level_class_frozen": {
+              "0.2": "non-chaotic",
+              "0.35": "non-chaotic",
+              "0.5": "non-chaotic",
+              "0.65": "non-chaotic",
+              "0.8": "non-chaotic",
+              "0.9": "chaotic",
+              "1.0": "chaotic"
+            },
+            "spearman_level_means_secondary": 0.4531634835874829,
+            "level_mean_ari_corr": {
+              "0.2": 0.04018397694608465,
+              "0.35": -0.0230200878605988,
+              "0.5": 0.026535756583974324,
+              "0.65": 0.06806770980005632,
+              "0.8": 0.002495407487675175,
+              "0.9": 0.023357584945736715,
+              "1.0": -0.02989801998756485
+            }
+          }
+        },
+        "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl",
+        "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/PASS4_OUTCOME.json",
+        "note": "R strictly not reproduced: grouping 10/10 at ARI 1.0 but correlation control -0.111 (below chance, outside |mean| <= 0.1). ORIG did NOT fire (contracting carrier r=0.2 groups 0/10) -- the author's prediction was wrong. ALT FAILED: non-chaotic levels r=0.65 (Lyapunov -0.92) and r=0.8 group perfectly; the readout tracks carrier amplitude, not chaos."
+      }
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "PROBING",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/probe/rows.jsonl",
-    "note": "round 3 W6 SIGNAL: round-3 SIGNAL; Pass 4 next"
+    "rows": "hecate/programs/HT-55162c0ac0/worlds/W6/pass4/rows.jsonl",
+    "note": "Pass 4 round 1: PARK"
   }
 }
