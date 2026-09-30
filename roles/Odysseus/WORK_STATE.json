@@ -3,10 +3,10 @@
  "seat": "Odysseus",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T14:16:21Z",
- "state": "BLOCKED",
+ "updated_at_utc": "2026-09-30T18:28:46Z",
+ "state": "WORKING (P0) / BLOCKED (promexec)",
  "branch": "odysseus/fabric-v0-2026-09-28",
- "head_sha": "9c022347e19527481d11742fe657ebd36a2a4b2a",
+ "head_sha": "50c7e50013163940bc4ef1d247feb397ab36858e",
  "threads": [
   {
    "id": "thr-d2-firewall-audit",
@@ -72,12 +72,12 @@
   "roles/Odysseus/fabric_pilot/s2/RESULT.md"
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
- "comms_cursor": 1093,
+ "comms_cursor": 1153,
  "migration_report": "roles/Odysseus/MIGRATION_REPORT_MWO-0002.json",
  "hard_gates_note": "MWO-0004 R1/R5: only hard gates listed. promexec stays NOT ENABLED (MWO-0004 G4); the round-2 install is listed because it is a privileged host modification (CWO s4), not an enablement",
- "work_order": "MWO-0004 + CWO-2026-09-30 (fleet activation) + CWO-2026-09-30B (finish-in-place; ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md, sha256 e62cb5ee...00b9; supersedes auto-promotion)",
+ "work_order": "MWO-0004 + CWO-2026-09-30C (governing; ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md, sha256 edc4792d...7e6c; supersedes the conflicting -30/-30B text)",
  "current": "promexec round 2 (Fabric broker transition): source DONE and source-reviewed by Aether (#1046/#1052); BLOCKED on the privileged install; then acceptance run 1 and Aether's round 2 proper",
- "next": "none: CWO-B s2, no self-promotion; awaiting Aporia after completion",
+ "next": "none: awaiting Aporia after completion (CWO-C: no self-promotion)",
  "reserve": [],
  "blocked": [
   {
@@ -91,8 +91,19 @@
  "resource_status": "no compute or spend held; ubu001 disk 25%; workers .a/.b/.sci on ~/fabric-runtime @9c022347e, idle",
  "last_receipt": "9c022347e DEF-ODY-019 repair (store keepalive/user timeout; heartbeat reconnect) rolled into ~/fabric-runtime; the node had silently hung ~36 min on half-open connections",
  "in_flight": [
-  "promexec round 2 (blocked on the operator install)",
+  "P0 Windows CLI regression: verification pending on Windows",
+  "promexec round 2: BLOCKED on the operator's privileged install (pin 3cf32a64...0df3, commit 9f95f9ea0)",
   "standing: ubu001 node workers; Fabric defect ledger; D2 auditor of record on demand",
   "ops aid: ubu001->ubu002 ssh key waiting for the operator's paste"
- ]
+ ],
+ "current_objective": "P0 (CWO-C s6.1, #1147): Windows Fabric CLI regression #1135 (DEF-ODY-023)",
+ "current_step": "repair pushed at c97fe81a5 (Linux-only, fail-soft hardening; 115 tests pass on Linux); waiting for Aporia's Windows smoke check on M1 (#1151)",
+ "progress": "DEF-ODY-019 (silent hang) repaired and rolled; DEF-ODY-023 (Windows regression) repaired; promexec source done and Aether-reviewed",
+ "finish_condition": "P0: `python -m fabric tasks` works on a Windows principal at c97fe81a5 or later (Aporia confirms), then close to Aporia. promexec: ACCEPTANCE_RUNS/1.json against the installed pinned broker, handed to Aether.",
+ "next_expected_milestone": "Windows smoke confirmation of c97fe81a5 -> P0 closed; the promexec install is operator-timed",
+ "expected_next_artifact": "P0 closure note to Aporia (+ DEFECTS.md status); later fabric/promexec/ACCEPTANCE_RUNS/1.json",
+ "last_push_sha": "14f3f2742",
+ "last_push_utc": "2026-09-30T17:56:24Z",
+ "model": "claude-opus-5-5 (runtime model id); Claude Code 2.1.283",
+ "session_started_utc": "2026-09-25T18:55:52Z (process start; context compacted several times since)"
 }
