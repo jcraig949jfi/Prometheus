@@ -28,6 +28,12 @@ not wait.
 
 ## 2. Work items, in the order I would start them (each with its proof and its blocker)
 
+  0. FIRST: answer Nyx comms #1071 (question, 2026-09-30, not urgent): the R19 grade per source
+     type for PSEUDOCODE_PLUS_REFERENCE_IMPL / FAITHFUL_PORT / LATER_SAME_LINEAGE_RELEASE (19
+     records named in the message; `comms inbox Techne --all`). Precedent: the #387 ASK 2 ruling
+     quoted in nyx/atlas/migrate_v1.py. Proof: a typed ruling with evidence per record. Size S-M.
+     Related, waiting on Harmonia: grade of the 39 rollout fossils (Nyx #1074 proposes
+     DERIVED_RECOVERY_ARTIFACT and a distinct source type).
   A. TECHNE-122 section II report (auto-curricula: MCC, POET, ATEP, PLR, ACCEL, JaxUED, OMNI-EPIC)
      in DONOR.md format with primary sources and pins. The two bodies it needs most are here:
      dcd-facebookresearch-2022 (09-30) and poet-enhanced-2020 / poet-original-2019. Proof: the
