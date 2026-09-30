@@ -232,6 +232,7 @@ def main():
     n = 1 + max([int(p.stem) for p in RUNS_DIR.glob("*.json") if p.stem.isdigit()] or [0])
     rec = {"run": n, "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "note": ns.note,
            "broker_installed_sha256": sha(BROKER), "broker_committed_sha256": sha(HERE / "broker.py"),
+           "broker_reviewed_pin": (HERE / "REVIEWED_BROKER_SHA256").read_text().split()[0],
            "repo_head": subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip(),
            "host": host_facts(), "rows": {}, "evidence": {}}
     rows, ev = rec["rows"], rec["evidence"]

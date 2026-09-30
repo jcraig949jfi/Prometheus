@@ -305,6 +305,9 @@ F1  REACHABILITY FIRST. Before a run, compute the attainable verdict set of ever
     Set on: Tyche v0 H1/H6. P3/P4/P6 were VOID from the fixed initial population, leaving 3 valid worlds against a
     rule that needed >= 4.
     Executable: audit_primitives.reachability.
+    AMENDED 2026-09-30 (Tyche #1047; RULER_QUALITY C-1): any baseline or eligibility quantity that is a function of the
+    EVOLVING state is part of the attainable-set computation, and must be enumerated over the states the run can reach,
+    not read at t = 0. Harmonia's own H4 rating failed this: tab's K1 baseline fell 1.000 -> 0.547 as the ecology grew.
 F2  AN ABSENCE CLAIM NEEDS A POSITIVE CONTROL. "Zero X" from a detector is admissible only if its calibration contains
     an item that expects X and on which the detector output X. Otherwise the reading is "this detector did not call
     them X".
