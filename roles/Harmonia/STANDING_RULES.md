@@ -324,6 +324,22 @@ F5  A CHANCE FLOOR BESIDE EVERY THRESHOLD. Every count threshold carries its exa
     at the design's stated effect (for example, 24/30 pairs: null 0.0007, power 0.85 at a true 0.85).
     Executable: audit_primitives.null_pass_binomial.
 
+F6  THE FREEZE IS A SEPARATE, EARLIER COMMIT. A plan first committed together with its results is not a freeze,
+    whatever its text says. The commit that first adds the plan must be a strict ancestor of the commit that first
+    adds any result.
+    Set on: Ananke W-O (PLAN.md first added in 93e2e544b with REPORT and the results; EVIDENCE_AUDIT_2026-09-30_SAMPLE2
+    G1).
+    Executable: audit_primitives.freeze_precedes (AP-1.1.0; its test flags the real W-O plan).
+F7  A POST-EXPOSURE CHANGE TO A VERDICT ROUTE IS LISTED, AND THE PRE-EXPOSURE VERDICT IS SHOWN FIRST. Any rule adopted
+    after data were seen that adds, removes or re-routes a verdict must appear in the report's post-exposure list. The
+    verdict computed under the pre-exposure rules is reported first, as the confirmatory one, and the post-hoc reading
+    second. Reviewers are asked to TEST post-exposure rules, never instructed to accept them.
+    Set on: Bellerophon/Archaeon E-003 BEE leg. C4.2 (567762a15, 17 minutes after the dry run showed "P2 holds ->
+    ALTERED") removed the P2 route. It was omitted from s1a, and both merge reviews were told to check "P2 treated as
+    engine-native". Escalated under CWO s4 (#1044).
+    Executable: -- (reading-level; a candidate for AP: diff the verdict under frozen vs amended rules from the committed
+    rows).
+
 ## Reading the table
 
 A row's "executable form" is where the rule refuses by itself; "--" means the

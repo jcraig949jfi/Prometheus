@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T11:05:00Z",
+  "updated_at_utc": "2026-09-30T11:20:00Z",
   "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -38,7 +38,8 @@
   ],
   "next_actions": [
     "CURRENT: audit Tyche v0 report on arrival",
-    "add STANDING_RULES F6 (freeze is a separate earlier commit) and F7 (post-exposure verdict-route changes listed; pre-exposure verdict shown first)"
+    "NEXT: AP multiplicity/power helper; candidate AP verdict-under-frozen-vs-amended diff (F7)",
+    "watch for operator ruling on E-003 (#1044)"
   ],
   "overtaken": [
     {
@@ -80,5 +81,5 @@
     }
   ],
   "resource_status": "local CPU only; no leases; no spend",
-  "last_receipt": "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md (Bellerophon E-003 VALIDATED not supported: BLOCKING, pre-exposure verdict ALTERED; Ananke W-O/W-Q MAJOR; Ensorain T25 SUPPORTED)"
+  "last_receipt": "STANDING_RULES F6-F7 + audit_primitives AP-1.1.0 freeze_precedes (9 tests)"
 }

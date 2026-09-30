@@ -24,11 +24,12 @@ from __future__ import annotations
 
 import itertools
 import json
+import subprocess
 import sys
 from math import comb
 from typing import Callable, Dict, Iterable, List, Optional
 
-VERSION = "AP-1.0.0"
+VERSION = "AP-1.1.0"   # 1.1.0: + freeze_precedes (STANDING_RULES F6)
 
 
 # ------------------------------------------------------------------------------------------------------------ helpers
@@ -88,6 +89,29 @@ def ceiling(control: float, maximum: float, margin: float) -> dict:
     return {"control": control, "maximum": maximum, "margin": margin, "headroom": round(headroom, 6),
             "fail_below": round(control - margin, 6), "flag": saturated,
             "reading": "SANITY_CHECK_ONLY" if saturated else "DISCRIMINATING"}
+
+
+# ------------------------------------------------------------------------------------------------------------ F6
+def freeze_precedes(repo: str, plan_path: str, result_paths: List[str], ref: str = "HEAD") -> dict:
+    """STANDING_RULES F6: a plan counts as frozen only if the commit that FIRST added it is a strict ancestor of the
+    commit that first added every result path. A plan first committed together with its results is not a freeze.
+    Read-only git (log --diff-filter=A, merge-base --is-ancestor)."""
+    def first_add(path):
+        p = subprocess.run(["git", "-C", repo, "log", "--diff-filter=A", "--format=%H", ref, "--", path],
+                           capture_output=True, text=True)
+        shas = p.stdout.split()
+        return shas[-1] if shas else None
+    plan = first_add(plan_path)
+    rows = []
+    for rp in result_paths:
+        r = first_add(rp)
+        strict = (plan is not None and r is not None and plan != r and
+                  subprocess.run(["git", "-C", repo, "merge-base", "--is-ancestor", plan, r]).returncode == 0)
+        rows.append({"result": rp, "result_added": r, "plan_strictly_before": strict})
+    bad = [x["result"] for x in rows if not x["plan_strictly_before"]]
+    return {"plan": plan_path, "plan_added": plan, "results": rows, "flag": plan is None or bool(bad),
+            "reason": ("plan never committed" if plan is None else
+                       ("plan not strictly before: %s" % ", ".join(bad)) if bad else None)}
 
 
 # ------------------------------------------------------------------------------------------------------------ fixtures
