@@ -4,11 +4,11 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T10:25:00Z",
+  "updated_at_utc": "2026-09-30T11:20:00Z",
   "state": "ACTIVE",
-  "state_reason": "CWO-2026-09-30 adopted on top of MWO-0004. LM01 HOLD (item-level BLOCKED). CURRENT = PKG-F soft gate on W-DRIFT + per-cell test power, then LM02 window-sufficiency test.",
+  "state_reason": "Operator direction 2026-09-30 adopted (queue re-ordered over the CWO). CURRENT = PKG-F W-DRIFT observability repair, then bounded LM02, then freeze; NEXT = WTP-04 Habitable Islands. LM01 HOLD.",
   "branch": "ensorain/base-role-adopt-2026-09-23",
-  "head_sha": "36b8d075675d8c5cebe580ee3c5bfe2e4ae9c41e",
+  "head_sha": "fe6393297",
   "base_sha": "bd48fac9b5d51262e84b76d0ca16b8d9054eb5f1",
   "threads": [
     "thr-ens-lossless-memorizer",
@@ -40,9 +40,9 @@
     },
     {
       "id": "E-ENS-PKGF",
-      "status": "DESIGN v0.2+ ; DEV PROBES v2-v9b, N5, W-DRIFT, W-MULTI, soft gate",
+      "status": "DONE_DEV: observability gate of record (pkgf_obs.obs_keep)",
       "report": "ensorain/arc3/RESULTS_PKGF_PROBE.md",
-      "note": "Detector of record v9b (v5 propose + v8 local-noise veto, p<.01) passes stationary / noise-growth / full / partial controls. Earlier 'gating' was a channel weight (a->0); the per-cell soft gate (record selection) beats it and keep-all on 16 fresh multi-switch worlds (STALE +.048 vs +.017 vs -.390; within .02 of keep-all in 15/16). All stored-record effects are stale-recall (LM01 ERRATA E-4). Open: per-cell test power at low counts; soft gate on drift; not yet prereg-ready"
+      "note": "Operator ruling 2026-09-30 implemented: low power -> QUARANTINED. 48 fresh worlds (9_813_xxx): leak 3e-4 vs v1 .30 (DRIFT) / .70 (MULTI); OB1 survives, OB2 refuted in STAT STALE by .006, C1 price confirmed (stationary STALE gain +.60 forfeited), C2 failed as predicted. Gate ~= recent window (verifies 4% of valid pre records). Open: population/exchangeability admission (operator policy); mid-ramp post-tau stale records (detector placement)."
     },
     {
       "id": "E-ENS-LM02",
@@ -130,15 +130,14 @@
   "blocked_on": [
     {
       "item": "E-ENS-LM01 launch",
-      "dependency": "operator-approved MWO carrying the exact LAUNCH line (MWO-0004 G3 HOLD)",
+      "dependency": "HOLD by operator direction 2026-09-30 and MWO-0004 G3: not launched merely because ready; revisit only if a collider result makes LM01 the right falsifier",
       "owner": "operator"
     }
   ],
-  "next_actions": [
-    "ARC3 (R2 envelope, no campaign): PKG-F soft gate on W-DRIFT + per-cell test power; then a PKG-F review packet and prereg draft decision; LM02 power-based 'window sufficient' test",
-    "At any future launch order: resolve DEF-ENS-001 as that order directs; Fabric lease; pinned worktree at ee8cbe0c8; freeze verify; launch on M2 (ERRATA E-2)"
+  "next_actions": "Close the instrumentation loop: (1) PKG-F DONE (dev) fe6393297; (2) LM02 as a BOUNDED instrument test of window sufficiency vs full history (downstream competence, substrate ordering, anomaly detection; several drift rates, families, substrates); WINDOW_NOT_SUPPORTED is a valid stop; (3) freeze the line.",
+  "operator_decisions_required": [
+    "Optional policy: may UNKNOWN cells (no recent record) be admitted on population/exchangeability evidence with a powered bound on the stale fraction? Without it, stationary-world STALE knowledge (+.60 AC) is forfeited. Not blocking."
   ],
-  "operator_decisions_required": [],
   "latest_reports": [
     "ensorain/arc3/reviews/PKGF_CRYPT_REVIEW_2026-09-29.md (review packet: PKG-F v2-v5b + learned crypticity)",
     "roles/Ensorain/probes/FP-001_RESULT.json",
@@ -165,12 +164,13 @@
     "cwo_text": "ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md@6a7a84569",
     "cwo_sha256": "ab93f64684d94771350848d2aef5d518f9045e1f8b79ba7834e419c83aba7b7e",
     "queue": "ops/fleet/QUEUE.json@6a7a84569",
-    "delegation": "comms #1030"
+    "delegation": "comms #1030",
+    "operator_direction": "roles/Ensorain/prompts/2026-09-30_operator_direction/ (supersedes the CWO Ensorain section where they differ)"
   },
-  "current": "ARC3 development within budget and PKG-F, favouring discriminatory power of future worlds: (1) PKG-F soft gate on W-DRIFT; (2) per-cell change-test power at low counts (the soft gate's residual failure, worlds 9_800_131/135/138); (3) LM02 power-based window-sufficiency test.",
-  "next": "Baseline hardening: every relevant world/economy must survive constants, running statistics and trivial compressors before expensive search.",
+  "current": "Close the instrumentation loop: (1) PKG-F DONE (dev) fe6393297; (2) LM02 as a BOUNDED instrument test of window sufficiency vs full history (downstream competence, substrate ordering, anomaly detection; several drift rates, families, substrates); WINDOW_NOT_SUPPORTED is a valid stop; (3) freeze the line.",
+  "next": "WTP-04 Habitable Islands: take each independent WTP-03 founding family and perturb its physics outward (memory/environment ratio, change timescale, information cost, observation quality, irreversibility, credit delay, topology, compute, forgetting, active sensing, recurrence); map where learning becomes possible and where it dies. Cheap competitors first.",
   "reserve": [
-    "Substrate-collider improvements: structural diversity among admissible worlds"
+    "Radically new world grammars not naturally TT/CP/matrix (dynamic graph laws, causal hidden state, programs, rewriting, temporal rules, recursive, topology-dependent)"
   ],
   "resource_status": {
     "host": "SPECTREX5 (M2)",
@@ -179,7 +179,8 @@
     "spend": "none"
   },
   "last_receipt": {
-    "commit": "619c557cc",
-    "what": "PKG-F soft gate SG1/SG2 survive on 16 fresh W-MULTI worlds (ensorain/arc3/RESULTS_PKGF_PROBE.md)"
-  }
+    "commit": "fe6393297",
+    "what": "PKG-F observability gate: leak 3e-4, gate ~= recent window; price located (ensorain/arc3/RESULTS_PKGF_PROBE.md)"
+  },
+  "then": "Substrate collision inside habitable regions (TT, CP, low-rank, DCT/spectral, sparse, graph memory, dense, symbolic/programmatic, cheap nulls): where does the preferred carrier of competence change? Lanes: substrate transformation (paid representation conversion); non-tensor-native worlds."
 }

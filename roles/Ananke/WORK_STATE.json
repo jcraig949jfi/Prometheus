@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T11:28:43Z",
-  "state": "ACTIVE",
-  "state_reason": "Queue reordered per CWO s1.4 (park single-cell mechanism chasing); next block applies the promoted swap_rel to the audited verdicts. Nothing running.",
+  "updated_at_utc": "2026-09-30T13:23:10Z",
+  "state": "READY",
+  "state_reason": "CWO-2026-09-30B: in-flight set complete (T-SWAP-AUDIT3). READY; heartbeat + completion sent to Aporia (comms #1100). No self-promotion; awaiting Aporia.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -95,6 +95,13 @@
     }
   ],
   "experiments": [
+    {
+      "id": "E-ANANKE-W-Z",
+      "thread": "thr-5df816e9b844",
+      "alias": "T-SWAP-AUDIT3",
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-Z/REPORT.md"
+    },
     {
       "id": "E-ANANKE-W-Y",
       "thread": "thr-8c7342a7d513",
@@ -193,11 +200,11 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "commit the T-INS-19 plan, then launch its worker",
-    "s8 seat loop continues"
+    "await Aporia assignment; seat loop continues (MWO/comms/Fabric checks only)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/workers/W-Z/REPORT.md",
     "roles/Ananke/research/workers/W-Y/REPORT.md",
     "roles/Ananke/research/workers/W-X/REPORT.md",
     "roles/Ananke/research/workers/W-W/REPORT.md",
@@ -220,16 +227,18 @@
   ],
   "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
-  "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1031)",
+  "work_order": "MWO-0004 + CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md; supersedes CWO-2026-09-30 auto-promotion)",
   "queue": {
-    "CURRENT": "T-SWAP-AUDIT3: re-run a stratified subset of W-O's audited CHANCE verdicts with prometheus/ananke/swap_rel.py, saving pair arrays; resolves W-U's 64 ambiguous rows; group-level (specimen x offset) carrier table (plan to be committed first; <=8 core-h)",
-    "NEXT": "T-INS-17 causal-emission carrier (instrument-level: cue-flip each source emission) if still informative after AUDIT3",
+    "CURRENT": "none (READY)",
+    "NEXT": "awaiting Aporia -- no self-promotion (CWO-2026-09-30B)",
     "RESERVE": [
-      "T-INS-19 / T-INS-21 (4781b0a1 single-cell mechanism chain) -- PARKED per CWO s1.4: diminishing transfer across cells (W-T, W-Y)"
+      "replicate-seed AUDIT4 design (not started)",
+      "no-compute synthesis update (not started)",
+      "T-INS-17; T-INS-19/21 PARKED"
     ],
     "BLOCKED": [],
-    "RESOURCE_STATUS": "rolling 24 h CPU ~29 core-h of 48",
-    "LAST_RECEIPT": "E-ANANKE-W-Y report, workers/W-Y/REPORT.md",
-    "LAST_STATE_UPDATE": "2026-09-30T11:28:43Z"
+    "RESOURCE_STATUS": "no leases, no workers; rolling 24 h CPU ~36 core-h of 48",
+    "LAST_RECEIPT": "E-ANANKE-W-Z report, workers/W-Z/REPORT.md; completion message comms #1100",
+    "LAST_STATE_UPDATE": "2026-09-30T13:23:10Z"
   }
 }

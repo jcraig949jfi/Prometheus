@@ -45,6 +45,17 @@ DENR s2 Z1 0.50 -> 0.20; DENR s1 Z1 -> 0.30; DE s2 Z1 -> 0.33; Z2 at best
     P6 solved Z deficit <= 0.05; N flat .............. held where solved fully
                                                        (V0 s1 Z1 0.00); N held
 
+CORRECTION (2026-09-30, found while designing v2; annotation, original
+text kept): the V0 arm was "v0 selection", which INCLUDES v0's 14-slot
+dark reserve (2/3 behaviour-signature novelty, 1/3 random, age protection
+3). V0 reserve membership was not logged. F1's reading that the Z1 lineage
+"survived on noise-level lexicase wins" is therefore an inference from its
+best cases being noise-level, not an observation: it may equally have been
+carried by the novelty/random reserve. The survival mechanism in v1 is
+UNRESOLVED between noisy lexicase and v0's small reserve. v2 separates
+them (LEX: lexicase with no reserve; RES: explicit reserve; all
+memberships logged).
+
 ## Failure shapes
 
 F1 The premise behind the gate did not hold in this implementation: v0-style

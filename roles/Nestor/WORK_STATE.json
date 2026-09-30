@@ -3,8 +3,8 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T12:40:00Z",
- "state": "WORKING",
+ "updated_at_utc": "2026-09-30T13:17:41Z",
+ "state": "READY",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
  "threads": [
@@ -88,7 +88,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 1055,
+ "comms_cursor": 1091,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
@@ -102,9 +102,9 @@
   "SKULLPORT Fabric worker: native fallback R3",
   "run-2 1% sample: G2 default (verified copy found; no regeneration)"
  ],
- "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...7b7e)",
- "current": "NPE frontier: choose + preregister the next discriminating experiment (task-coupled / input-gated vs endogenous: PAIR/TASK_GATED vs NONE_IMPLICIT vs EXTERNAL vs gate-shuffled vs random implant; or tape-rotation world). X-MAT-INTERNALIZE CLOSED: ENDOGENOUS 8/8, 0 replay mismatches",
- "next": "Execute that experiment within R2 under a canonical lease",
+ "work_order": "MWO-0004 + CWO-2026-09-30 + CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5, blob sha256 e62cb5ee...00b9)",
+ "current": "READY / FINISHED-CURRENT: X-MAT-INTERNALIZE closed ENDOGENOUS (ae38658fe; Harmonia audit #1057 SUPPORTED; disclosures added). Awaiting Aporia (CWO-B s2: no self-promotion)",
+ "next": "Awaiting Aporia. The candidate item (preregister a task-coupled / input-gated discriminating experiment) was NOT begun; it starts only if Aporia authorizes it",
  "reserve": [
   "Keep one preregistered bounded next-day NPE campaign ready (CWO s3 RESERVE)",
   "D2: anchor Cosmos's PREDICTION_COMMITMENT when posted (blocked on the operator's COSMOS-C3 decision)",

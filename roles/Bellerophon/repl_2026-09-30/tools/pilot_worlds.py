@@ -1,4 +1,4 @@
-"""E-BEL-REPL-01 PILOT 2 (declared feasibility only; no event scored, no state-freedom measured on any evolved genome).
+"""E-BEL-REPL-01 PILOT 2/3 (declared feasibility only; no event scored, no state-freedom measured on any evolved genome).
 
 Per run it records ONLY: whether a self-replicator originated (first SR tick), extinction, SR alive at the end, SR max depth,
 births and wall seconds. The purpose is to size the preregistered design (origin rate and cost under CARRIED vs ZERO; founder
@@ -26,6 +26,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", required=True, choices=("CARRIED", "ZERO"))
     ap.add_argument("--mode", required=True, choices=("random", "founders"))
+    ap.add_argument("--zero-p", type=float, default=0.0)
     ap.add_argument("--s0", type=int, default=0); ap.add_argument("--n", type=int, default=30); ap.add_argument("--ticks", type=int, default=2000)
     a = ap.parse_args()
     founders = json.loads((pathlib.Path(__file__).resolve().parent.parent / "FOUNDERS_PILOT.json").read_text())["tapes"] if a.mode == "founders" else []
@@ -33,14 +34,14 @@ def main():
     for s in range(a.s0, a.s0 + a.n):
         seed = PILOT_SEED0 + (1_000_000 if a.mode == "founders" else 0) + s
         tapes = (founders[s % len(founders)],) if founders else ()
-        cfg = Config(**CELL, ticks=a.ticks, init_tapes=tapes, reg_world=a.arm)
+        cfg = Config(**CELL, ticks=a.ticks, init_tapes=tapes, reg_world=a.arm, reg_zero_p=a.zero_p)
         t0 = time.perf_counter()
         w = World(cfg, seed); w.run()
         sm = w.summary([o for o in w.cells if o])
         f = sm.get("first_self_replication")
         rows.append([s, f["tick"] if f else None, sm["extinct"], sm["extinct_tick"], sm["sr_alive_end"], sm["sr_max_depth"],
                      sm["endogenous_births"], round(time.perf_counter() - t0, 2)])
-    print(json.dumps({"arm": a.arm, "mode": a.mode, "ticks": a.ticks, "cols": ["s", "first_sr_tick", "extinct", "extinct_tick",
+    print(json.dumps({"arm": a.arm, "zero_p": a.zero_p, "mode": a.mode, "ticks": a.ticks, "cols": ["s", "first_sr_tick", "extinct", "extinct_tick",
                       "sr_alive_end", "sr_max_depth", "endogenous_births", "wall_s"], "rows": rows}, separators=(",", ":")))
 
 

@@ -1,5 +1,15 @@
 # Cosmos status
 
+Currency: 2026-09-30. ENTRY: roles/Cosmos/BOOTSTRAP.md. Live state of record: roles/Cosmos/WORK_STATE.json.
+seat state 2026-09-30: ACTIVE (off HOLD; operator C3 disposition, prompts/2026-09-30_operator_c3_disposition/).
+  C3 CLOSED / KILLED BEFORE HOLDOUT: the coordinate audit REJECTED the claim (research/reviews/
+  COORD_AUDIT_C3_2026-09-29.md), and the preliminary law is GRAVEYARD G-0006, a scar that is not revived.
+  D2 SEALED / UNREAD / UNSPENT (reserved). Queue: C3 autopsy (withheld + public) -> C4 successor protocol
+  DESIGN (new campaign, thread T-C4) -> visible-data baseline analysis for C4 gate S0. No holdout is
+  authorized. On completion: report to Aporia (CWO-B s11) and wait.
+what it asserts: C3's candidate invariant showed no explanatory structure beyond its own certificate
+  construction. That falsification is the C3 result.
+--- 2026-09-28 status below, kept for the record ---
 Currency: 2026-09-28T08:55Z. ENTRY: roles/Cosmos/BOOTSTRAP.md (s3 = the C3 closing sequence, operator 2026-09-28).
 seat state 2026-09-28: BLOCKED on Nestor #788: merge D seal a56ef7787 into main, plus an OPAQUE successor seal
   and an independent firewall check. Then Cosmos reports readiness and the operator decides whether to
