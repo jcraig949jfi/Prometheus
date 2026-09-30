@@ -10,6 +10,9 @@ from pathlib import Path
 
 import pytest
 
+if not sys.platform.startswith("linux"):
+    pytest.skip("promexec is Linux-only (the broker imports pwd)", allow_module_level=True)
+
 ROOT = Path(__file__).resolve().parents[2]
 
 

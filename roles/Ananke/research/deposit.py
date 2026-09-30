@@ -33,7 +33,19 @@ HERE = pathlib.Path(__file__).resolve().parent
 BEGIN, END = "===BEGIN REPORT===", "===END REPORT==="
 
 
-def deposit(worker: str, message: str, source: str = "", depositor: str = "Ananke") -> pathlib.Path:
+def deposit(worker: str, message: str, source: str = "", depositor: str = "Ananke",
+            allow_undelimited: bool = False) -> pathlib.Path:
+    if BEGIN in message and END in message:
+        block = message.split(BEGIN, 1)[1].split(END, 1)[0].strip("\n")
+        mode = "delimited"
+    else:
+        block, mode = message, "undelimited"
+    # BX-5 (2026-09-30): an empty extraction once produced an empty REPORT.md; refuse before writing anything.
+    if not block.strip():
+        raise ValueError(f"refusing to deposit an empty {mode} report for {worker}")
+    if mode == "undelimited" and not allow_undelimited:
+        raise ValueError(f"no {BEGIN} / {END} block for {worker}; "
+                         "pass allow_undelimited=True (--allow-undelimited) to deposit the whole message")
     d = HERE / "workers" / worker
     d.mkdir(parents=True, exist_ok=True)
     n = 1
@@ -41,11 +53,6 @@ def deposit(worker: str, message: str, source: str = "", depositor: str = "Anank
     while target.exists():
         n += 1
         target = d / f"REPORT.v{n}.md"
-    if BEGIN in message and END in message:
-        block = message.split(BEGIN, 1)[1].split(END, 1)[0].strip("\n")
-        mode = "delimited"
-    else:
-        block, mode = message, "undelimited"
     prov = {"worker": worker, "mode": mode,
             "sha256_report": hashlib.sha256(block.encode("utf-8")).hexdigest(),
             "sha256_message": hashlib.sha256(message.encode("utf-8")).hexdigest(),
@@ -71,7 +78,8 @@ if __name__ == "__main__":
     ap.add_argument("worker")
     ap.add_argument("message_file")
     ap.add_argument("--source", default="")
+    ap.add_argument("--allow-undelimited", action="store_true")
     a = ap.parse_args()
     msg = pathlib.Path(a.message_file).read_text(encoding="utf-8")
-    p = deposit(a.worker, msg, a.source)
+    p = deposit(a.worker, msg, a.source, allow_undelimited=a.allow_undelimited)
     print(p, "verified" if verify(p) else "HASH MISMATCH")
