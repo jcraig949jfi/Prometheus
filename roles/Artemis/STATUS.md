@@ -13,5 +13,5 @@ host: ubu002 (see ABOUT.md). worktree
 monitors owned or fed: none.
 D001: reconciled 2026-09-30 -- 10/10 completed on Fabric (dispatch/D001/RECEIPTS.json).
 blockers: none.
-CURRENT: route D003+D004 (D004/RESULT.md; custody defect in evidence_wiki gap_prospective_v1).
-NEXT: D005 seeded draw (26 eligible left).
+CURRENT: D005 seeded draw (26 eligible left). D001-D004 closed and routed.
+NEXT: re-run D002 timeouts with the line-buffered runner.

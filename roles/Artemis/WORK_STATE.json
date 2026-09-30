@@ -6,7 +6,7 @@
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "updated_at_utc": "2026-09-30T15:31Z",
   "state": "WORKING",
-  "state_reason": "D003 + D004 closed (D004 6/6, RESULT.md incl. a custody defect in evidence_wiki gap_prospective_v1). Routing.",
+  "state_reason": "D001-D004 closed and routed (#1116-#1121, #1128-#1133). Next: D005.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -133,8 +133,8 @@
   "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1026)",
   "queue": {
-    "CURRENT": "Route D003+D004 findings (blind-lane guard); custody defect to Harmonia+Aporia",
-    "NEXT": "D005: seeded raw draw of 10 of the remaining 26 eligible threads (exclude S3, D001, D003 draws); then its script batch",
+    "CURRENT": "D005: seeded raw draw of 10 of the remaining 26 eligible threads (exclude S3, D001, D003 draws); then its script batch",
+    "NEXT": "Re-run D002-02/03/06 with line-buffered runner + max-attempts 1 (partial output now survives a timeout)",
     "RESERVE": [
       "Fabric reliability adversary: F1-F4 handed to BUILDER-FABRIC (D002/RESULT.md s2); attack repaired paths",
       "2026-10-28 day-30 owner-action re-check (selftest/ROUTING.md)"
