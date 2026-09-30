@@ -26,5 +26,7 @@
   QUEUE.md and do other work; do not start a weaker substitute experiment.
 5 GATES AND DEVICES (2026-09-30). If a pre-registered known-answer gate fails,
   do NOT run the champion: stop and report (a principal decides). Run every
-  engine process with CUDA_VISIBLE_DEVICES= unless the brief grants a GPU lease
-  (the engine defaults to cuda).
+  engine process with CUDA_VISIBLE_DEVICES=-1 and pass device="cpu" explicitly,
+  unless the brief grants a GPU lease (World defaults to device="cuda").
+  CORRECTED 2026-09-30 (H-INST): an EMPTY CUDA_VISIBLE_DEVICES= does NOT hide
+  the GPU on SKULLPORT (torch.cuda.is_available() stays True); use -1.
