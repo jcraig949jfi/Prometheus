@@ -3,7 +3,7 @@
  "seat": "Nestor",
  "mwo_id": "MWO-0004",
  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
- "updated_at_utc": "2026-09-30T12:30:00Z",
+ "updated_at_utc": "2026-09-30T12:40:00Z",
  "state": "WORKING",
  "branch": "nestor/d2v13-2026-09-29 (merged to main)",
  "head_sha": "b17320e64c145bb6b10df9f9aa568614da1e85e5",
@@ -12,10 +12,11 @@
   "D2 custody (C3 successor seal)"
  ],
  "campaigns": [
+  "roles/Nestor/campaigns/npe-frontier-2026-09-30",
   "roles/Nestor/campaigns/ancestry-replay-2026-09-28"
  ],
  "experiments": [
-  "ancestry production run 2 (GO_FINAL v2)"
+  "X-MAT-INTERNALIZE (prereg c3e9eae9e)"
  ],
  "fabric_tasks": [
   "s4 v2.2 conformance: 2/2 CONFORMS (review_s4v22/)",
@@ -45,6 +46,9 @@
   "D2 designation host change (privileged; only when designation requires it)"
  ],
  "latest_reports": [
+  "comms #1054 (X-MAT-INTERNALIZE result)",
+  "comms #1055 (blinding notice to Bellerophon)",
+  "comms #1041 (X-MAT-INTERNALIZE prereg)",
   "comms #997 (D2 v13)",
   "comms #992 (D2 v12)",
   "comms #990 (G2 sample)",
@@ -52,6 +56,7 @@
  ],
  "adoption": "MWO-0001 ADOPTED (operator-confirmed 2026-09-29; published by Cyclops 7e4c09f2c). Declined item: self-audit of D2 (Nestor is D2 custodian/protocol author; the auditor of record is Odysseus).",
  "closed": [
+  "X-MAT-INTERNALIZE: ENDOGENOUS (prereg c3e9eae9e)",
   "#788 queue item closed (executed: 7c018d92b D1 merge, 95b31a30d D2 seal)",
   "s4 v2 conformance repair run + results (fc99923ec; unused pending review)",
   "CVT-R reconciliation record (334b6ad55)",
@@ -83,7 +88,7 @@
  ],
  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
  "migration_report": "roles/Nestor/MIGRATION_REPORT_MWO-0002.json",
- "comms_cursor": 1027,
+ "comms_cursor": 1055,
  "adjudication_rules_seen": [
   "Harmonia #960 Addendum E (9f6abdce6)",
   "Harmonia #965 Addendum F (6da0d5b5f): exposure = open receipt; ABORTED after open = FORFEIT unless the record evidences an outside cause",
@@ -98,13 +103,13 @@
   "run-2 1% sample: G2 default (verified copy found; no regeneration)"
  ],
  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md @ 6a7a84569, sha256 ab93f646...7b7e)",
- "current": "NPE frontier (CWO s3 NEXT, promoted 2026-09-30): scoping the highest-value experiment that discriminates endogenous reproductive organization from seeded/transplanted/environmental/input-gated/bookkeeping artifacts; preregister before any exposure; within MWO-0004 R2",
- "next": "Execute the first preregistered discriminating NPE experiment (bounded, canonical Fabric lease, Fabric replicas where portable)",
+ "current": "NPE frontier: choose + preregister the next discriminating experiment (task-coupled / input-gated vs endogenous: PAIR/TASK_GATED vs NONE_IMPLICIT vs EXTERNAL vs gate-shuffled vs random implant; or tape-rotation world). X-MAT-INTERNALIZE CLOSED: ENDOGENOUS 8/8, 0 replay mismatches",
+ "next": "Execute that experiment within R2 under a canonical lease",
  "reserve": [
   "Keep one preregistered bounded next-day NPE campaign ready (CWO s3 RESERVE)",
   "D2: anchor Cosmos's PREDICTION_COMMITMENT when posted (blocked on the operator's COSMOS-C3 decision)",
   "Bookkeeping-artifact lead from Artemis #888 R-08: NPE board_eligible (primordial/core/contract.py) accepts any non-empty cheat string"
  ],
- "resource_status": "SKULLPORT cpu: no lease held; local only; spend $0",
- "last_receipt": "MWO-0004 G2 1% sample stage-2 PASS (roles/Nestor/campaigns/ancestry-replay-2026-09-28/g2_sample_check/rerun_8631128c3 @ 168c8b81d); D2 FIREWALL_AUDIT_1 anchored (#1021)"
+ "resource_status": "SKULLPORT cpu: no lease held (lse-e39dab75e9bd released after X-MAT-INTERNALIZE, ~7.8 core-h used); spend $0",
+ "last_receipt": "X-MAT-INTERNALIZE VERDICT ENDOGENOUS (8/8 events X<=0.107, median 0.020; REPLACEMENT control X median 1.00; 26/26 replays identical) -- roles/Nestor/campaigns/npe-frontier-2026-09-30/x_mat_internalize/"
 }

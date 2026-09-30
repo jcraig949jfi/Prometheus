@@ -81,6 +81,97 @@ def git_receipt():
             "host": platform.node()}
 
 
+def audit_lens(pool, cfg, specs, by, gid, meta, eco_ids, all_ids, lid, index):
+    """Pass D for one admitted lens (index = its position in eco_ids; seeds
+    its matched-null draw). Shared by main() and tyche.passd_resume."""
+    g = gid[lid]
+    ad = meta[lid]["admission"]
+    w, r, o, eb = ad["world"], ad["ruler"], ad["org"], [gid[i] for i in ad["eco_before"]]
+    row = {"id": lid, "home": w, "ruler": r, "org": o, "genome": g, "len": len(g["ins"]),
+           "eff_len": meta[lid]["eff_len"], "root": meta[lid]["root"],
+           "admission": ad}
+    we_x = Wm.generate(by[w], cfg["select_seed"])[0]
+    row["causality"] = A.causality_audit(g, we_x)
+    # home: test split + replication seeds
+    tasks = [(w, s, g, eb, ("test",), ("all",), (o,), (r,), None)
+             for s in [cfg["select_seed"]] + cfg["rep_seeds"]]
+    res = pool.map(E._gains_task, tasks)
+    k = f"{r}|{o}|test|all"
+    row["home_test"] = res[0][k]
+    row["home_reps"] = [x[k] for x in res[1:]]
+    replicated = (row["home_test"][1] >= cfg["sig_z"]
+                  and all(x[1] >= cfg["rep_z"] for x in row["home_reps"]))
+    row["replicated"] = bool(replicated)
+    # transfer / twins / false gradients: every other world, every case
+    tasks = [(w2, cfg["select_seed"], g, eb, ("test",), ("all",), ORGANISMS, tuple(RULERS), None)
+             for w2 in all_ids if w2 != w]
+    tr = {}
+    for w2, gd in zip([x for x in all_ids if x != w], pool.map(E._gains_task, tasks)):
+        bestk = max(gd, key=lambda kk: gd[kk][1])
+        tr[w2] = {"best_case": bestk, "gain": gd[bestk][0], "z": gd[bestk][1]}
+    row["transfer"] = tr
+    # matched random null (same instruction count and output width)
+    nrng = np.random.default_rng([cfg["master_seed"], index])
+    nulls = [Lm.random_genome(nrng, n_ins=len(g["ins"]), k=len(g["out"])) for _ in range(cfg["null_n"])]
+    res = pool.map(E._gains_task, [(w, cfg["select_seed"], ng, eb, ("test",), ("all",), (o,), (r,), None)
+                                   for ng in nulls])
+    ng = np.array([x[k][0] for x in res])
+    row["null"] = {"n": len(ng), "max": float(ng.max()), "p95": float(np.percentile(ng, 95)),
+                   "frac_ge_lens": float((ng >= row["home_test"][0]).mean())}
+    row["beats_null"] = bool(row["home_test"][0] > row["null"]["p95"])
+    # a transfer counts only if it holds on a fresh seed AND beats the
+    # matched random null on that world and case (capacity patches that
+    # any random nonlinear feature supplies are not transfer)
+    cand = [w2 for w2 in tr if tr[w2]["z"] >= cfg["sig_z"]]
+    sig = []
+    for w2 in cand:
+        rr, oo = tr[w2]["best_case"].split("|")[:2]
+        k2 = f"{rr}|{oo}|test|all"
+        x = pool.apply(E._gains_task, ((w2, cfg["rep_seeds"][0], g, eb, ("test",), ("all",),
+                                         (oo,), (rr,), None),))
+        tr[w2]["rep"] = x[k2]
+        nres = pool.map(E._gains_task, [(w2, cfg["select_seed"], ngm, eb, ("test",), ("all",), (oo,), (rr,), None)
+                                        for ngm in nulls[: cfg["null_n_transfer"]]])
+        nv = np.array([y[k2][0] for y in nres])
+        tr[w2]["null_p95"] = float(np.percentile(nv, 95))
+        tr[w2]["null_max"] = float(nv.max())
+        if x[k2][1] >= cfg["rep_z"] and tr[w2]["gain"] > tr[w2]["null_p95"]:
+            sig.append(w2)
+    row["sig_transfer_worlds"] = sorted(sig)
+    row["sensor_class"], row["false_gradient_worlds"] = A.sensor_class(
+        w, sig + ([w] if (replicated and row["beats_null"]) else []), specs)
+    # causal contribution: ablate each input channel the lens reads
+    abl = {}
+    chans = Lm.input_channels(g)
+    res = pool.map(E._gains_task, [(w, cfg["select_seed"], g, eb, ("test",), ("all",), (o,), (r,), c)
+                                   for c in chans])
+    d = by[w]["d"]
+    for c, x in zip(chans, res):
+        abl[str(c)] = {"world_channel": c % d, "gain_ablated": x[k][0]}
+    row["ablation"] = abl
+    base_gain = row["home_test"][0]
+    needed = sorted({v["world_channel"] for v in abl.values()
+                     if base_gain > 0 and (base_gain - v["gain_ablated"]) >= 0.5 * base_gain})
+    row["needed_world_channels"] = needed
+    if by[w]["kind"] == "planted":
+        row["interpretation"] = ("PLANTED_INPUTS_RECOVERED" if needed == A.planted_channels(by[w])
+                                 else "UNKNOWN")
+    else:
+        row["interpretation"] = "UNKNOWN"
+    # lineage: dark ancestry
+    anc, stack = set(), list(meta[lid]["parents"])
+    while stack:
+        p = stack.pop()
+        if p in anc:
+            continue
+        anc.add(p)
+        stack.extend(meta[p]["parents"])
+    row["n_ancestors"] = len(anc)
+    row["dark_ancestors"] = sorted(p for p in anc if meta[p]["dark_gens"] > 0)
+    row["admitted_ancestors"] = sorted(p for p in anc if p in eco_ids)
+    return row
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -316,91 +407,8 @@ def main():
     audit_rows = []
     all_ids = train + held
     for lid in eco_ids:
-        g = gid[lid]
-        ad = meta[lid]["admission"]
-        w, r, o, eb = ad["world"], ad["ruler"], ad["org"], [gid[i] for i in ad["eco_before"]]
-        row = {"id": lid, "home": w, "ruler": r, "org": o, "genome": g, "len": len(g["ins"]),
-               "eff_len": meta[lid]["eff_len"], "root": meta[lid]["root"],
-               "admission": ad}
-        we_x = Wm.generate(by[w], cfg["select_seed"])[0]
-        row["causality"] = A.causality_audit(g, we_x)
-        # home: test split + replication seeds
-        tasks = [(w, s, g, eb, ("test",), ("all",), (o,), (r,), None)
-                 for s in [cfg["select_seed"]] + cfg["rep_seeds"]]
-        res = pool.map(E._gains_task, tasks)
-        k = f"{r}|{o}|test|all"
-        row["home_test"] = res[0][k]
-        row["home_reps"] = [x[k] for x in res[1:]]
-        replicated = (row["home_test"][1] >= cfg["sig_z"]
-                      and all(x[1] >= cfg["rep_z"] for x in row["home_reps"]))
-        row["replicated"] = bool(replicated)
-        # transfer / twins / false gradients: every other world, every case
-        tasks = [(w2, cfg["select_seed"], g, eb, ("test",), ("all",), ORGANISMS, tuple(RULERS), None)
-                 for w2 in all_ids if w2 != w]
-        tr = {}
-        for w2, gd in zip([x for x in all_ids if x != w], pool.map(E._gains_task, tasks)):
-            bestk = max(gd, key=lambda kk: gd[kk][1])
-            tr[w2] = {"best_case": bestk, "gain": gd[bestk][0], "z": gd[bestk][1]}
-        row["transfer"] = tr
-        # matched random null (same instruction count and output width)
-        nrng = np.random.default_rng([cfg["master_seed"], len(audit_rows)])
-        nulls = [Lm.random_genome(nrng, n_ins=len(g["ins"]), k=len(g["out"])) for _ in range(cfg["null_n"])]
-        res = pool.map(E._gains_task, [(w, cfg["select_seed"], ng, eb, ("test",), ("all",), (o,), (r,), None)
-                                       for ng in nulls])
-        ng = np.array([x[k][0] for x in res])
-        row["null"] = {"n": len(ng), "max": float(ng.max()), "p95": float(np.percentile(ng, 95)),
-                       "frac_ge_lens": float((ng >= row["home_test"][0]).mean())}
-        row["beats_null"] = bool(row["home_test"][0] > row["null"]["p95"])
-        # a transfer counts only if it holds on a fresh seed AND beats the
-        # matched random null on that world and case (capacity patches that
-        # any random nonlinear feature supplies are not transfer)
-        cand = [w2 for w2 in tr if tr[w2]["z"] >= cfg["sig_z"]]
-        sig = []
-        for w2 in cand:
-            rr, oo = tr[w2]["best_case"].split("|")[:2]
-            k2 = f"{rr}|{oo}|test|all"
-            x = pool.apply(E._gains_task, ((w2, cfg["rep_seeds"][0], g, eb, ("test",), ("all",),
-                                             (oo,), (rr,), None),))
-            tr[w2]["rep"] = x[k2]
-            nres = pool.map(E._gains_task, [(w2, cfg["select_seed"], ngm, eb, ("test",), ("all",), (oo,), (rr,), None)
-                                            for ngm in nulls[: cfg["null_n_transfer"]]])
-            nv = np.array([y[k2][0] for y in nres])
-            tr[w2]["null_p95"] = float(np.percentile(nv, 95))
-            tr[w2]["null_max"] = float(nv.max())
-            if x[k2][1] >= cfg["rep_z"] and tr[w2]["gain"] > tr[w2]["null_p95"]:
-                sig.append(w2)
-        row["sig_transfer_worlds"] = sorted(sig)
-        row["sensor_class"], row["false_gradient_worlds"] = A.sensor_class(
-            w, sig + ([w] if (replicated and row["beats_null"]) else []), specs)
-        # causal contribution: ablate each input channel the lens reads
-        abl = {}
-        chans = Lm.input_channels(g)
-        res = pool.map(E._gains_task, [(w, cfg["select_seed"], g, eb, ("test",), ("all",), (o,), (r,), c)
-                                       for c in chans])
-        d = by[w]["d"]
-        for c, x in zip(chans, res):
-            abl[str(c)] = {"world_channel": c % d, "gain_ablated": x[k][0]}
-        row["ablation"] = abl
-        base_gain = row["home_test"][0]
-        needed = sorted({v["world_channel"] for v in abl.values()
-                         if base_gain > 0 and (base_gain - v["gain_ablated"]) >= 0.5 * base_gain})
-        row["needed_world_channels"] = needed
-        if by[w]["kind"] == "planted":
-            row["interpretation"] = ("PLANTED_INPUTS_RECOVERED" if needed == A.planted_channels(by[w])
-                                     else "UNKNOWN")
-        else:
-            row["interpretation"] = "UNKNOWN"
-        # lineage: dark ancestry
-        anc, stack = set(), list(meta[lid]["parents"])
-        while stack:
-            p = stack.pop()
-            if p in anc:
-                continue
-            anc.add(p)
-            stack.extend(meta[p]["parents"])
-        row["n_ancestors"] = len(anc)
-        row["dark_ancestors"] = sorted(p for p in anc if meta[p]["dark_gens"] > 0)
-        row["admitted_ancestors"] = sorted(p for p in anc if p in eco_ids)
+        row = audit_lens(pool, cfg, specs, by, gid, meta, eco_ids, all_ids, lid, len(audit_rows))
+        w, r, o = row["home"], row["ruler"], row["org"]
         audit_rows.append(row)
         print(f"  {lid} home={w} {r}/{o} test={row['home_test'][0]:+.3f} z={row['home_test'][1]:.1f} "
               f"rep={[round(x[0], 3) for x in row['home_reps']]} {row['sensor_class']} "

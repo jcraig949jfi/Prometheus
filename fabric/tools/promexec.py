@@ -6,18 +6,23 @@
 
 The Claude worker writes a script (normally under its output directory) and calls this command. It cannot run
 python or a shell itself. This wrapper runs as the worker account and:
-  1. stages the script plus the declared inputs into <attempt>/exec/<n>/in. Inputs must be inside the attempt's
-     output directory or the pinned worktree; symlinks are skipped. Worktree inputs keep their repo-relative
-     paths, output-dir inputs go under out/;
-  2. calls the root-owned broker `sudo -n /usr/local/sbin/promexec-run`. The broker executes the script as the
-     promexec UID (no credentials, no home access) with CPU, memory, task and wall-time bounds;
+  1. stages the script as main.py, the script arguments as .promexec_args.json (never argv: B1), and the
+     declared inputs into <attempt>/exec/<n>/in. Inputs must be inside the attempt's output directory or the
+     pinned worktree; symlinks and anything under .git are refused or skipped. Worktree inputs keep their
+     repo-relative paths, output-dir inputs go under out/;
+  2. checks that the installed broker is byte-identical to the committed fabric/promexec/broker.py of this
+     checkout (M20), then calls it: `sudo -n /usr/local/sbin/promexec-run`. The broker executes main.py under a
+     transient per-run UID (no credentials, no home, no network, no other runs visible) with CPU, memory, task
+     and wall-time bounds;
   3. receives the script's $PROMEXEC_OUT files into <out>/exec/<n>/, writes summary.json there (result, exit
      code, stdout/stderr tails), and prints the summary.
-Inside the script, inputs are under $PROMEXEC_IN, files to deliver go to $PROMEXEC_OUT, and the working
-directory is scratch. There is no network, no git and no access to any home directory.
+Inside the script, inputs are under $PROMEXEC_IN, files to deliver go to $PROMEXEC_OUT, the arguments are the JSON
+list in $PROMEXEC_ARGS, and the working directory is scratch. There is no network, no git and no access to any home
+directory.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
@@ -26,6 +31,9 @@ import sys
 from pathlib import Path
 
 BROKER = "/usr/local/sbin/promexec-run"
+COMMITTED_BROKER = Path(__file__).resolve().parents[1] / "promexec" / "broker.py"
+REVIEWED_PIN = Path(__file__).resolve().parents[1] / "promexec" / "REVIEWED_BROKER_SHA256"
+ENTRY, ARGS_FILE = "main.py", ".promexec_args.json"
 CAPS = {"wall_s": 1800, "mem_mb": 4096, "cpu_pct": 200, "tasks": 64}
 
 
@@ -40,6 +48,29 @@ def inside(p: Path, root: Path) -> bool:
         return True
     except ValueError:
         return False
+
+
+def reviewed_pin(pin: Path = REVIEWED_PIN) -> str:
+    """The first token of REVIEWED_BROKER_SHA256: the broker hash the independent reviewer signed off."""
+    try:
+        tok = pin.read_text().split()[0].lower()
+    except (OSError, IndexError):
+        return ""
+    return tok if len(tok) == 64 and all(c in "0123456789abcdef" for c in tok) else ""
+
+
+def broker_matches(installed: Path = Path(BROKER), committed: Path = COMMITTED_BROKER, pin: Path = REVIEWED_PIN) -> tuple:
+    """M20 (+ Aether round-2 N1): installed == reviewed pin == committed source. A later broker change therefore
+    needs an explicit, reviewable change to the pin as well; drift between the three is refused."""
+    want = reviewed_pin(pin)
+    if not want:
+        return False, "no valid reviewed-broker pin"
+    try:
+        a = hashlib.sha256(installed.read_bytes()).hexdigest()
+        b = hashlib.sha256(committed.read_bytes()).hexdigest()
+    except OSError as e:
+        return False, "cannot hash broker: %s" % e.__class__.__name__
+    return a == b == want, "installed %s, committed %s, reviewed pin %s" % (a[:16], b[:16], want[:16])
 
 
 def copy_tree_regular(src: Path, dst: Path) -> int:
@@ -98,23 +129,29 @@ def main(argv=None) -> int:
         ins = [resolve(p) for p in inputs]
     except ValueError as e:
         return fail(str(e))
+    for p in [sp] + ins:
+        if ".git" in p.resolve().parts:
+            return fail("%s is inside .git" % p)
+    ok, why = broker_matches()
+    if not ok:
+        return fail("installed broker differs from the committed source (M20): %s" % why)
     attempt = out_dir.parent
     base = attempt / "exec"; base.mkdir(exist_ok=True)
     n = 1 + max([int(p.name) for p in base.iterdir() if p.name.isdigit()] or [0])
     stage = base / str(n) / "in"; stage.mkdir(parents=True)
-    shutil.copyfile(sp, stage / sp.name, follow_symlinks=False)
+    shutil.copyfile(sp, stage / ENTRY, follow_symlinks=False)
+    (stage / ARGS_FILE).write_text(json.dumps(script_args))
     staged = 0
     for p in ins:
-        rel = ("out" / p.resolve().relative_to(out_dir.resolve())) if inside(p, out_dir) else p.resolve().relative_to(wt.resolve())
+        rel = (Path("out") / p.resolve().relative_to(out_dir.resolve())) if inside(p, out_dir) else p.resolve().relative_to(wt.resolve())
+        if str(rel) in (ENTRY, ARGS_FILE):
+            return fail("input %s would replace the staged %s" % (p, rel))
         staged += copy_tree_regular(p, stage / rel)
     result_dir = out_dir / "exec" / str(n)
     result_dir.mkdir(parents=True, exist_ok=True)
-    cmd = ["sudo", "-n", BROKER, "--run-id", "%s-%d" % (attempt.name, n), "--in", str(stage), "--out", str(result_dir),
-           "--script", sp.name]
+    cmd = ["sudo", "-n", BROKER, "--run-id", "%s-%d" % (attempt.name, n), "--in", str(stage), "--out", str(result_dir)]
     for k, v in lim.items():
         cmd += ["--" + k.replace("_", "-"), str(v)]
-    if script_args:
-        cmd += ["--"] + script_args
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=CAPS["wall_s"] + 300)
     try:
         summary = json.loads(r.stdout.strip().splitlines()[-1])
