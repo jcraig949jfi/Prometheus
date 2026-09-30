@@ -1,10 +1,30 @@
 # Hecate backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-29. PROVISIONAL: below the schema's 20-item floor
-because the seat has no charter yet. Rewritten in full when it lands.
+Currency: 2026-09-29. Rewritten in full on charter adoption (the
+provisional 5-row pre-charter list is in git history). Priority order;
+the first five are today's.
 
-HECATE-01 | Commit the operator's charter and responsibilities verbatim with a MANIFEST | EVIDENCE | beta | S | operator's charter prompt | roles/Hecate/prompts/<date>_charter/MANIFEST.md verifies
-HECATE-02 | Rewrite RESPONSIBILITIES.md around the charter, pre-charter body to superseded/ | EVIDENCE | beta | S | HECATE-01 | committed file + superseded copy
-HECATE-03 | Map overlaps with sibling seats before claiming any gap (read their commits) | EVIDENCE | beta | S | HECATE-01 | overlap section in RESPONSIBILITIES.md with SHAs
-HECATE-04 | Classify the May 2026 charon/agents/hecate swarm agent against the charter (predecessor or namesake only) | EVIDENCE | beta | S | HECATE-01 | classification row in RESPONSIBILITIES.md s1 with SHAs
-HECATE-05 | File the full backlog in the schema; WORK_STATE leaves HOLD | EVIDENCE | beta | S | HECATE-01 | this file with >= 20 rows; WORK_STATE.json state != HOLD
+HECATE-01 | Build the framework: schema (TriplicateProgram, Pass, Hypothesis, Lens, World, EngineProposal) with a validator that rejects missing provenance/back-pointers, plus tests with a cheat control | TOOLS | alpha | S | none | hecate/schema.py + hecate/tests/ green, cheat control asserted
+HECATE-02 | Build the historical corpus loader joining Nous responses to the Hephaestus ledger with source/sourceArtifact/historicalId and upstream Nous run+line | TOOLS | alpha | S | none | hecate/corpus/historical_triplicates.jsonl rebuildable by one command; counts match collider/FINDINGS.md (5,918 / 5,727 / 6,661 / 95)
+HECATE-03 | Preregister and freeze the first selection (16 historical triplicates, stratified against the Nous sampling skew, with random slots) in its own commit before any pass content exists | EVIDENCE | alpha | S | HECATE-02 | roles/Hecate/prereg/2026-09-29_first_selection/ with seed, rule, frozen IDs, MANIFEST
+HECATE-04 | Run Pass 0-2 (raw interpretation, collision, lens explosion) for the 16, search-free, one independent generator per triplicate, validated against the schema | H3 | alpha | M | HECATE-03 | hecate/programs/<id>/pass0..2.json for 16 programs, validator green
+HECATE-05 | Run Pass 3 (minimal executable world specs with null twins) for the 16 and implement the cheapest worlds | H3 | alpha | M | HECATE-04 | hecate/programs/<id>/pass3.json + runnable world files; implemented count stated
+HECATE-06 | Build the discovery index (nodes/edges from the charter) derived from program records, with a recurrence query across triplicates | TOOLS | alpha | S | HECATE-04 | hecate/index/ nodes.jsonl + edges.jsonl + recurrence report
+HECATE-07 | Build the dossier renderer (charter OUTPUT PER TRIPLICATE, human + machine) from program records | TOOLS | alpha | S | HECATE-04 | hecate/programs/<id>/DOSSIER.md for every program
+HECATE-08 | Preregister the Pass 3->4 selection predicate (which worlds are "experimentally promising") before any world is run | EVIDENCE | alpha | S | HECATE-05 | prereg file committed before the first world run
+HECATE-09 | Run Pass 4 first falsification on the selected worlds: null twins, shuffles, constant baselines, the "stupid explanation" list | H3 | beta | M | HECATE-08 | rows + per-world falsification record; verdicts with rows in the same commit
+HECATE-10 | Preregister the FIRST META-EXPERIMENT: triplicate vs single, pair, generic brainstorm, ordinary prompt, permuted labels; deterministic rubric; blinded scorer | EVIDENCE | beta | S | HECATE-01 | roles/Hecate/prereg/<date>_meta_experiment/ committed before any control output
+HECATE-11 | Generate the meta-experiment control arms with the same generator template and matched budget | H3 | beta | M | HECATE-10 | hecate/meta/arms/*.jsonl, one per arm
+HECATE-12 | Score all arms with the frozen rubric and a blinded different-model scorer; report with eligibility counts and INDETERMINATE branch | EVIDENCE | beta | M | HECATE-11 | hecate/meta/REPORT.md + rows; "triplicates add value" answered YES/NO/INDETERMINATE
+HECATE-13 | Build the gravity (prior-recognition) detector from the Hephaestus 2.0 design with >= 12 disguised-known, composite and nonsense calibration controls | TOOLS | beta | M | none | hecate/gravity/ + calibration table; detector recovers disguised knowns above controls or is declared uninterpretable
+HECATE-14 | Run the prior-art pass (after generation) on every Pass 1 mechanism that reaches Pass 3, labelling INDEPENDENTLY_GENERATED..POSSIBLY_NOVEL with evidence | LIT | beta | M | HECATE-13 | prior_art records per mechanism with citations or detector rows
+HECATE-15 | Run Pass 5 deeper lenses generated from Pass 4 anomalies and lens disagreements, only for survivors | H3 | beta | M | HECATE-09 | pass5 records naming the anomaly each lens targets
+HECATE-16 | Run Pass 6 cross-substrate transfer for any survivor into >= 2 substrates with a structural (not metric-only) transfer test | H3 | 1.0 | L | HECATE-15 | transfer rows + minimal-structure statement
+HECATE-17 | Write Pass 7 engine proposals only where an existing engine cannot express the regime; build the smallest disposable prototype with its kill criterion | ENGINE | 1.0 | L | HECATE-15 | EngineProposal records + prototype + kill/expand result
+HECATE-18 | Run Pass 8 second-order collisions among survivor discoveries with genealogy edges | H3 | 1.0 | M | HECATE-15 | generated triplicates with derived_from edges to both parents
+HECATE-19 | Write Pass 9 Visual Cortex specs for the strangest candidates, each observable mapped to a source variable | H3 | 1.0 | S | HECATE-15 | vc_spec records; every visual feature -> source variable table
+HECATE-20 | Request Pass 10 independent adversarial review from a different-model or different-seat reviewer with narrative stripped | EVIDENCE | 1.0 | S | a candidate reaching Pass 10 | review packet + recorded disagreement
+HECATE-21 | Start the triplicate-ecology meta-lens once >= 40 programs exist: which concepts, fields and geometries yield mechanisms, with an explicit weird-triplicate exploration budget | EVIDENCE | 1.1 | M | 40 programs | hecate/meta/ecology report + budget rule
+HECATE-22 | Include the operator's non-historical example (Epigenetics x Emergence x Hoare Logic) as a provenance "human" program, outside the historical selection | H3 | beta | S | HECATE-04 | program record with source "human"
+HECATE-23 | Add a MONITORS.md row, rule-10 bound and accountable seat before any standing Hecate loop is launched | EVIDENCE | beta | S | a loop existing | MONITORS.md row
+HECATE-24 | Decide with the operator whether Hecate's gravity detector and the Hephaestus 2.0 pilot merge | EVIDENCE | beta | XL | NEW: merge Hecate gravity detector with Hephaestus 2.0 Gravity Pilot or keep separate | operator ruling committed; default until then: separate, design cited
