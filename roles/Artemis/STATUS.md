@@ -1,6 +1,6 @@
 # Artemis status
 
-Currency: 2026-09-30T20:30Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO-2026-09-30C; charter 2026-09-30).
+Currency: 2026-09-30T20:31Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO-2026-09-30C; charter 2026-09-30).
 
 seat state: ACTIVE. Charter 2026-09-30: research reconciliation / forensic sampling (prompts/2026-09-30_charter_*); assignment-only.
 what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
@@ -13,5 +13,5 @@ host: ubu002 (see ABOUT.md). worktree
 monitors owned or fed: none.
 D001: reconciled 2026-09-30 -- 10/10 completed on Fabric (dispatch/D001/RECEIPTS.json).
 blockers: none.
-STATE: WORKING -- U-02 (Aporia #1149): IQ-NULL / Lexis G1 admissibility.
+STATE: READY -- U-02 complete (u02/RESULT.md; Aporia #1173). Awaiting Aporia.
 NEXT: awaiting Aporia after U-02; no self-promotion.

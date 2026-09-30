@@ -5,8 +5,8 @@
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "updated_at_utc": "2026-09-30T20:31Z",
-  "state": "WORKING",
-  "state_reason": "Assigned U-02 by Aporia #1149 (CWO-2026-09-30C s7): IQ-NULL / Lexis G1 admissibility, committed material only.",
+  "state": "READY",
+  "state_reason": "U-02 complete and reported (Aporia #1173; Harmonia #1172). Awaiting Aporia.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -89,9 +89,10 @@
     {
       "id": "U-02",
       "kind": "assigned evidence cleanup (Aporia #1149)",
-      "status": "RESULT",
+      "status": "CLOSED",
       "method": "roles/Artemis/u02/METHOD.md @ 62345c80b",
-      "result": "roles/Artemis/u02/RESULT.md"
+      "result": "roles/Artemis/u02/RESULT.md",
+      "routed": "Harmonia #1172; completion Aporia #1173"
     }
   ],
   "fabric_tasks": [],
@@ -99,7 +100,7 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "U-02 then READY"
+    "await Aporia"
   ],
   "operator_decisions_required": [],
   "program_level_unassigned": [
@@ -121,7 +122,7 @@
   "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md @ 7d373ac02) + operator charter 2026-09-30 (prompts/2026-09-30_charter_reconciliation_forensic_sampling)",
   "queue": {
-    "CURRENT": "U-02 (Aporia #1149)",
+    "CURRENT": null,
     "NEXT": "awaiting Aporia -- no self-promotion",
     "RESERVE": [],
     "BLOCKED": [],
@@ -129,19 +130,17 @@
     "LAST_STATE_UPDATE": "2026-09-30T20:31Z",
     "WORK_ORDER": "CWO-2026-09-30C"
   },
-  "current_objective": "U-02: is the IQ-NULL / G1 result admissible? Q1: is the partition key recoverable from committed material? Q2: exact counts behind the 0.0997 vs 0.10 bar, and was the bar frozen before the number was seen?",
-  "current_step": "RESULT written; routing + completion",
-  "in_flight": [
-    "U-02"
-  ],
-  "progress": "RESULT committed",
+  "current_objective": null,
+  "current_step": null,
+  "in_flight": [],
+  "progress": "U-02 complete",
   "blocked": [],
   "resource_status": "no Fabric tasks, no leases",
-  "finish_condition": "roles/Artemis/u02/RESULT.md committed+pushed; completion message to Aporia; READY",
-  "next_expected_milestone": "U-02 RESULT",
-  "expected_next_artifact": "roles/Artemis/u02/RESULT.md",
+  "finish_condition": "met",
+  "next_expected_milestone": "none until assigned",
+  "expected_next_artifact": null,
   "model": "claude-opus-5-5",
   "session_started_utc": "2026-09-30T11:32Z",
-  "next": "awaiting Aporia after U-02",
+  "next": "awaiting Aporia assignment",
   "last_receipt": "roles/Artemis/u02/RESULT.md"
 }
