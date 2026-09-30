@@ -20,8 +20,13 @@ holds only within the scope stated below:
   design lineages.
 - **(d) The nominal mutation rate is a minor share of effective variation.** Write and interaction physics
   (write-back, splice, world-performed copies) dominate it. This is a reconciled finding, not a seat's claim.
-- **(e) One vocabulary-blind convergence: evolved solutions answer before reading late or costly cues.** This has
-  three instances: NPE C9, the CW01 plateau and SFE C3.
+- **(e) Evolved solutions answer before reading late or costly cues.** SUGGESTIVE, and NOT independent: the
+  verifier showed it is one seat-to-seat chain (Archaeon C3 -> Nestor CW01 on the same VM, reusing C3's parents ->
+  Nestor NPE C9) across two substrates.
+
+**After verification, no cross-engine convergence in the record qualifies as vocabulary-blind and independent.**
+Every candidate traced to a shared ruler, a shared substrate, a citation chain or a comms term with a single
+originator. That is itself a finding about the program (s4).
 
 Almost everything else that looks like a cross-engine law comes from one of four sources: shared rulers, one
 design family, one author family, or program governance. Section 5 says which is which.
@@ -83,7 +88,7 @@ At least 10 distinct rulers across 8 substrates could not return the opposite ou
 - BEE K3 founder snapshot (0/93);
 - PTE C1 ablation window (excluded the readout tick);
 - PTE Kp[7] swap (identity);
-- Hecate novelty detector (0 UNFAMILIAR calibration items);
+- Hecate novelty detector (no UNFAMILIAR calibration items; it called 0/32 known-alien rules UNFAMILIAR: 28 FAMILIAR, 4 COMPOSITE);
 - Aether content signature (failed its own positive control, 3.1% < 5%);
 - Tyche H1 (3 valid worlds < 4 required);
 - CW01 e07/e09 gates;
@@ -128,7 +133,8 @@ OBSERVED:
   - BEE: carried registers kill zero-dependent founders, 0/24 vs ZERO 10/24 (a buried design-justification
     number, A1 in the buried-signals file).
 - Addressing:
-  - 95.7% of competent NPE donors are self-location-free copiers anchored at tape offset 0.
+  - 95.7% of competent NPE donors are SELF-free. They use an offset-64 block copy and mostly work only from tape offset 0
+    (side-0-only in 1,052 of 1,154).
   - 95/96 exact vmcopy copiers are input-gated, 94/96 to exactly one input byte, near the neighbour base 128.
 
 Reconciled reading:
@@ -174,17 +180,19 @@ supply". The critic showed that its lead instance is variation supply: NPE C-ATO
 running at ~25x the nominal rate. Both are right, and the reconciled statement is the finding.
 
 OBSERVED:
-- NPE: with the mutation operator OFF, 187/192 lineages are still genome-sterile (vs 177/192 with it on).
+- NPE (7ae3's cell): with the mutation operator OFF, 187/192 live lineage members are still genome-sterile at
+  epoch 100 (vs 177/192 with it on).
   Byte turnover comes from both tape halves being written back after every interaction (~5%/byte/epoch).
-  Making write-back atomic: runaway 1/80 -> 46/80.
+  Making write-back atomic: runaway 1/80 -> 46/80 (measured with the splice off).
 - NPE: the recombination splice (part of the interaction physics) manufactured ~88% of apparent replicators
   and suppresses runaway (splice off 0/150 -> 7/150).
 - BEE: removing world-made copies takes extinction 0/150 -> 148/150.
-- BEE mutation supply MED/LOW/VLOW: access 8/3/4 of 300 (indistinguishable).
+- BEE mutation supply MED/LOW/VLOW: spontaneous self-replication origins 8/3/4 of 300, "not distinguishable"
+  (in seeded runs, evolutionary activity does fall with supply: 60 -> 48 -> 11).
 - NPE X-DECAY (in-place mutation off): 6 -> 8/64 (p .39).
-- Aether: replace vs add writes 22/128 -> 10/128.
-- Counter-evidence: Aether mut_numer = 0 drops template change 94.5% (there, the mutation parameter is
-  first-order for dynamics).
+- Aether: rcv_add 22/128 vs 10/128 when relay writes replace (null 5/128; verdict PARTIAL).
+- Counter-evidence: Aether mut_numer = 0 drops template change 41.1% immediately and 94.5% at +500 ticks (there,
+  the mutation parameter is first-order for dynamics).
 
 Why it matters across engines:
 - Every engine exposes a "mutation rate" knob, and several campaigns varied it.
@@ -197,24 +205,31 @@ a standard error-threshold model predicts 1/80 vs 46/80.
 - If yes: "write authority" is the dominant source of variation, not a separate axis.
 - If the effect exceeds the rate prediction: write authority carries something beyond rate.
 
-### F5. Evolved solutions answer before reading late or costly cues. (SUGGESTIVE; the corpus's clearest vocabulary-blind convergence)
+### F5. Evolved solutions answer before reading late or costly cues. (SUGGESTIVE; one seat-to-seat chain, NOT independent)
 
 OBSERVED:
 - NPE C9-H1R: gating the answer on reading the cue abolishes competence only when reading costs
   (0.200 -> 0.000; free cue 0.197 vs 0.197). CW01 answer-before-read plateau.
 - SFE/Proteus C3: 11/12 "delay-general" readers read d8/d16 at 1.0. Artemis R-22 (a worker claim, unverified)
-  says they are first-tick latches that fall to 0.00 with one pre-PUT noise tick.
-- The two seats never cite each other. The vocabularies differ, and the dates differ (09-17 vs 09-19).
-- Neither the brief, comms vocabulary spread nor the time window explains the convergence, so it deserves more
-  weight than its n (critic R13).
+  says 10 of 11 are first-tick latches that fall to 0.00 with one pre-PUT noise tick (seed 4 is content-gated).
+- VERIFIER CORRECTION: these are NOT independent sightings.
+  - Nestor's CW01 re-ran Archaeon's campaign on the same Proteus VM, using C3's own delay_general parents.
+  - On 09-19 CW01 named that lineage "start-anchored ... immune everywhere except an idle tick before the first
+    PUT" (BOUNDARY_REPORT_CYCLE5:57-60), which is the latch finding.
+  - NPE C9 H1 was built by the same seat as the follow-up to CW01 cycle 8, and cites it (FINDINGS:66-78, 272-273).
+  - The critic's and Atlas's earlier "vocabulary-blind" rating rested on a digest note that the seats do not cite
+    each other. That note was wrong.
+- The substrate generalization (Proteus VM -> NPE pair tape) is real but was reached by one seat.
 - Cheapest check: verify R-22 on the committed C3 elites (one noise tick; prediction >= 8/11 fall below 0.5), and
   add a free-cue arm.
 
 ### F6. Present or decodable state is often not what drives output. (SUGGESTIVE; one instrument class)
 
 OBSERVED:
-- PTE: 80-95% of mirror pairs carry different sensor traffic that swapping does not affect.
-- Cosmos C4: all 7 T3-DOWN errors register a perturbation "that carries no usable history".
+- PTE (one champion, 4781b0a1, offsets o2-o8; worker report W-V): 80-95% of mirror pairs carry different sensor
+  traffic that swapping does not affect, because the readout reads only the last wake window.
+- Cosmos C4 [CON]: all 7 T3-DOWN errors (false positives of a baseline rule, not organisms) register a perturbation
+  "that carries no usable history" (roles/Cosmos/journal/2026-09-30.md:30-33).
 - Aether: "timing, not content".
 
 VERIFIER CORRECTION: the CW01 cycle-8 instance ("a register predicts the regime at 1.0; overwriting it changes 0%
@@ -240,7 +255,7 @@ Examples:
 - NPE acquisition: "encoding accessibility" -> "availability" -> "carrier exposure" in 3 days.
 - NPE establishment: "register persistence" -> "zero addressing" in 1 day.
 - PTE carrier-swap ruler: repaired 5 times in 3 days.
-- E-003 verdict: flipped 3 times in under 48 h.
+- E-003 verdict: reversed twice in ~43 h (ALTERED -> VALIDATED -> ALTERED/OPEN).
 
 The critic's correction is accepted: "counts are durable" is WEAK. Many "reproduced" counts are deterministic
 replays. Where a different pipeline or ruler re-measured a count, several moved several-fold:
@@ -256,12 +271,14 @@ counts, subject to independent re-measurement.
 
 OBSERVED:
 - CW01 ruler audit: under a qualified Bernoulli(f) ruler, 4 of 7 fixed-count damage claims disappear and 2 shrink.
-  Operand softness and the opcode-vs-operand lethality (2.3x) survive.
+  Operand softness (-.192) survives the ruler change. A separate paired single-edit measurement (P-C05, cycle 8)
+  gives opcode edits 2.3x more lethal than operand edits.
 - Neutral walks grow length by acceptance, not proposal (trap-NOP +1.80 vs +0.30).
 
 The Campaign-4 "cliff", which PROTEUS-46, HEPH-32, FP-003 and the 299,991-echo suppression all build on, was
 measured with a count ruler and a greedy tie-rejecting walk.
-- A 5-edit neutral path exists: 4 neutral steps, then 6/6 (Artemis D002-03q, worker quick mode).
+- A 5-edit neutral path exists: 4 neutral steps, then 6/6 (Artemis D002-03q, worker quick mode; the full D002-03
+  run, 500 walks x 3000 steps, timed out).
 - A population search did NOT reach 6/6 either (critic).
 
 The re-read needs no new simulation (frontier item 2).
@@ -283,7 +300,7 @@ The re-read needs no new simulation (frontier item 2).
 | R10 | count rulers manufacture length/cliff | MODERATE | length SURVIVES; cliff UNTESTED | F8 | one VM; cliff re-read never run |
 | R11 | transfer collapses under shams | MODERATE | SUGGESTIVE (2 for, 1 against) | SUGGESTIVE | TH-015 0.89 vs 0.057 is a clean positive transfer |
 | R12 | resources govern maintenance, not origin | MODERATE | ARTIFACT-LIKELY (power asymmetry) | ARTIFACT-LIKELY | origin null 3 vs 3 at n = 40 cannot detect 2x; BEE ECHO contradicts |
-| R13 | avoid costly/late cues | SUGGESTIVE | SURVIVES | F5 | vocabulary-blind |
+| R13 | avoid costly/late cues | SUGGESTIVE | SURVIVES | F5 SUGGESTIVE | NOT vocabulary-blind after verification: one citation chain (C3 -> CW01 -> C9) |
 
 Atlas's own additions, which neither worker had:
 - **The index's combination table is null by construction** (ontology file s0). Atlas cannot currently say from
@@ -304,9 +321,9 @@ OBSERVED facts behind F1-F8. Verifier status for each is in `workers/VERIFY_DRAF
 | finding | engine | experiment | layer | fact | pointer |
 |---|---|---|---|---|---|
 | F1 | program | Artemis R-11 census | OBS | 37/94 absence gates never fired; 12/94 fired on a same-substrate plant; 0 blind | roles/Artemis/selftest/runs/R-11/REPORT.md s3 @e7b630113 |
-| F1 | Cosmos | C3 coordinate audit | OBS | zero-parameter rule reproduces 104/120 + 12/12; killed before holdout | roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md @45e6c942a |
+| F1 | Cosmos | C3 coordinate audit | OBS | zero-parameter rule reproduces 104/120 + 12/12; killed before holdout | roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md @45e6c942a; AUTOPSY_C3_PUBLIC_2026-09-30.md:25,35; research/RESULTS.md:34 |
 | F1 | Ensorain | WTP-03 | OBS | N6 tuned completion beats all 9 flags (q0 2.578 vs 4.856) | ensorain WTP03 report VERDICT @a65d27ced |
-| F1 | Hecate | first cycle | OBS | 5 SIGNAL, 0 survive Pass 4; detector 32/32 alien rules FAMILIAR/COMPOSITE | roles/Hecate/REVIEW_PACKET_2026-09-30_first_cycle.txt @1b4f584dd; hecate/autopsy/AUTOPSY.md @e4a05ba3b |
+| F1 | Hecate | first cycle | OBS | 5 SIGNAL, 0 survive Pass 4; detector 0/32 known-alien rules UNFAMILIAR (28 FAMILIAR, 4 COMPOSITE) | roles/Hecate/REVIEW_PACKET_2026-09-30_first_cycle.txt @1b4f584dd; hecate/autopsy/AUTOPSY.md @e4a05ba3b |
 | F1 | BEE | REPL-01 K3 | OBS | FM ~0.01 by tick 500 in every arm; K3 0/93 could not return SURVIVES | roles/Bellerophon/repl_2026-09-30/ERRATA_REPL01 R1 @6879b2236 |
 | F2 | BEE | grounding P8 | RAN+OBS | LDIR off / cost x4 / undefined -> HALT: 8/300 -> 0/300 | roles/Bellerophon/forensics_2026-09-23/GROUNDING_REPORT.md s3 @2159c2e06 |
 | F2 | Archaeon | COPIER-CENSUS-01 | OBS | z80 0 in 1.2e7; vmcopy32 96/1e7, gated share 0.9896 | archaeon/z80atlas/census/RESULTS.json @c5067fac6 |
@@ -314,11 +331,11 @@ OBSERVED facts behind F1-F8. Verifier status for each is in `workers/VERIFY_DRAF
 | F2 | BEE | REPL pilot 2 | OBS | CARRIED 0/24 vs ZERO 10/24 | roles/Bellerophon/repl_2026-09-30/PREREG.md s3 D2 @74f72e805 |
 | F3 | Archaeon | Z80xAtlas adjudication | OBS | transplants 39/39 persist, 0/39 competence | archaeon/z80atlas/postcampaign/..._ADJUDICATION s C @18772241e |
 | F3 | Proteus VM | C3-SFE-10 | OBS | incompetent imports take over 11-12/12 | archaeon/campaign3/CAMPAIGN_REPORT l.288-307 @cb9135104 |
-| F4 | NPE | X-STALL / C-ATOMIC | OBS | mutation OFF 187/192 still sterile; ATOMIC 1/80 -> 46/80 | roles/Nestor/FINDINGS.md:316-334 |
-| F4 | BEE | grounding P8, G7P1 | OBS | mutation MED/LOW/VLOW 8/3/4 of 300; world-made copies removed: extinction 0 -> 148/150 | GROUNDING_REPORT s3 |
+| F4 | NPE | X-STALL / C-ATOMIC | OBS | mutation OFF: 187/192 live members still sterile at epoch 100; ATOMIC 1/80 -> 46/80 (splice off) | roles/Nestor/FINDINGS.md:316-334 |
+| F4 | BEE | grounding P8, G7P1 | OBS | mutation MED/LOW/VLOW: SR origins 8/3/4 of 300, not distinguishable; world-made copies removed: extinction 0 -> 148/150 | GROUNDING_REPORT s3 |
 | F5 | NPE | C9-H1R | RAN+OBS | gate+cost 0.200 -> 0.000; free 0.197 vs 0.197 | roles/Nestor/FINDINGS.md:264-284 |
-| F5 | Proteus VM | C3 delay ladder | OBS (+ worker claim) | 11/12 at d8/d16 1.0; R-22 first-tick latches (unverified) | archaeon/campaign3/CAMPAIGN_REPORT l.147-161; comms #874 |
-| F6 | PTE | W-I, W-V | OBS | 80-95% of pairs carry mirror-different sensor traffic; swapping it changes nothing | roles/Ananke/research/workers/W-V, W-I |
+| F5 | Proteus VM | C3 delay ladder; CW01 cycle-5 census | OBS (+ worker claim) | 11/12 at d8/d16 1.0; CW01 09-19: "immune everywhere except an idle tick before the first PUT (.94)"; R-22 10/11 latches (unverified) | archaeon/campaign3/CAMPAIGN_REPORT l.147-161; comms #874 |
+| F6 | PTE | W-I, W-V | OBS (worker) | one champion (4781b0a1), o2-o8: 80-95% of pairs carry mirror-different sensor traffic; swapping changes nothing | roles/Ananke/research/workers/W-V, W-I |
 | F8 | CW01 | P-G01/G02/G08 | RAN+OBS | 4/7 claims disappear under qualified Bernoulli(f) | cw01 loop/CYCLE_REPORT_CYCLE5 l.187-202 @8a01ddede |
 
 ---------------------------------------------------------------------------------------------------------
@@ -331,13 +348,20 @@ analysis shows most are vocabulary migration or citation, not independent discov
 - "Presence is not the barrier" (a genome motif) is not "decodable != used" (a state variable).
 - "Known physics" (WTP) is not "restatement" (Cosmos).
 
-The **genuinely vocabulary-blind** convergences Atlas can certify are:
-1. **answer-before-read (NPE, 09-19) ~ delay-first-rung latches (SFE C3, 09-17).** F5.
+After BOTH verifiers, **no convergence in the record qualifies as independent and vocabulary-blind.**
+1. (Withdrawn after verification: answer-before-read (CW01/NPE) ~ delay-first-rung latches (SFE C3). CW01 re-ran C3's
+   parents on the same VM, named the latch on 09-19, and NPE C9 followed from CW01. It is one seat's chain. F5.)
 2. (Withdrawn after verification: the CW01 identity plateau vs PTE present-but-unswapped traffic. The CW01 half was
    an in-sample lookup, CW01-D089. CW01 instead joins item 1 as an answer-before-read instance.)
 3. **Environment-dependent copying across the three Z80 codebases**, reached with three different rulers
-   (NPE P-11/zero reset; BEE SR/LDIR ablation; Archaeon census input gating). F2. This is one design family,
-   but the codebases and rulers were independent enough that the agreement is informative about that family.
+   (NPE P-11/zero reset; BEE SR/LDIR ablation; Archaeon census input gating). F2. The strongest remaining
+   candidate: one design family and one directive, but separate code and rulers, so the agreement is informative
+   about that FAMILY.
+
+Implication for the operator (ATLAS_DERIVED): the program currently has no mechanism for producing independent
+confirmation. Seats cite, rebuild and audit each other within days, on shared substrates, with one model family.
+The cross-family check (handoff s7) and the independence fields proposed in ONTOLOGY s5 are the only structural
+remedies Atlas can see.
 
 ---------------------------------------------------------------------------------------------------------
 ## 5. Program-level epistemic map (reconciled; ATLAS_DERIVED; pointers in workers/REGULARITIES.md s map)
@@ -369,15 +393,15 @@ Changes from the synthesist's map, all adopted from the critic:
 - Carrier exposure as the acquisition law (one parameter, two arms).
 - Tape-write erosion as a general second barrier (7ae3 only; C2 1/120 vs 0/120).
 - F4: effective variation dominated by write and interaction physics.
-- F5: answer before reading late or costly cues.
+- F5: answer before reading late or costly cues (one seat's chain across two substrates).
 - Operator x aggregation gain for PTE receivers.
 - A heritable parasite lineage in BEE (dry run; post-hoc).
 
 **CONTESTED** (moved from FALSIFIED)
 - C5 "flat elite" as a world property. The Deep Frontier every-N climb is PROVISIONAL, and it reports in-sample
   training reward, not held-out.
-- "No intermediate exists" (PROTEUS-46). The 5-edit neutral path is an unverified worker quick-mode result, and a
-  population search also failed to reach 6/6.
+- "No intermediate exists" (PROTEUS-46). The 5-edit neutral path is a worker quick-mode result (the full D002-03
+  run timed out), and a population search also failed to reach 6/6.
 
 **REPEATEDLY ASSUMED BUT UNTESTED**
 - That seats' replications are independent, when one model family fills every role.
@@ -427,7 +451,7 @@ Changes from the synthesist's map, all adopted from the critic:
 
 **APPEARS CROSS-ENGINE** (none passes a full ruler x lineage x author recount to "cross-substrate")
 - F3: copying/persistence without competence (2 lineages).
-- F5: answer-before-read (2 lineages, vocabulary-blind).
+- F5: answer-before-read (2 substrates, one seat's chain; not independent).
 - F6: present-not-used (1 instrument class; the CW01 overwrite instance was withdrawn, CW01-D089).
 - F4: variation dominated by write/interaction physics (Z80 + Aether).
 

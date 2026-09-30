@@ -149,9 +149,10 @@ current reading), cost, and whose tooling already exists. Naming tooling is not 
   - It stays >= 95% -> the difference is the ISA.
 - **Cost:** ~4-8 core-h.
 
-### FR-9. Answer-before-read across engines (SYN F5, the one vocabulary-blind convergence).
+### FR-9. Answer-before-read across engines (SYN F5; one seat-to-seat chain so far, so an independent test is the point).
 - **Design:**
-  - Verify Artemis R-22 on the committed C3 elites: one pre-PUT noise tick. Prediction: >= 8/11 fall below 0.5.
+  - Verify Artemis R-22 on the committed C3 elites: one pre-PUT noise tick. R-22 claims 10/11 latch; prediction: >= 8/11 fall below 0.5.
+- Test it in an engine outside the C3 -> CW01 -> C9 chain (PTE or BEE), by a seat that did not originate it.
   - Add a free-cue arm.
   - Add one PTE task with a costly late read.
 - **Outcome logic:**

@@ -557,3 +557,17 @@ secondary, with reasons) / SMALLEST SEPARATING TEST.
    regime. Only "a register transplant changed 0% of answers" survives. B11 therefore rests on the twin/swap
    instrument class (PTE, Cosmos, Aether) plus the NPE encoding row, which is a different construct. CW01 is
    instead an instance of answer-before-read (synthesis F5).
+5. **Second verifier corrections (workers/VERIFY_SYNTHESIS_2.md).**
+   - B6: D002-03q (quick mode) returned results: a neutral 5-edit path; drift 1/50 vs 0/50; population search never
+     reached 6/6. It was the FULL D002-03 run (500 walks x 3000 steps, 91 min) that timed out. Read "D002-03q
+     timed out" in B6 and A7 as "the full D002-03 run timed out".
+   - A4 and B1: the R-26 and R-33 figures (89/96 inputs 125-129; 13 RIE founders gated at input 128; "copiers take
+     their destination from the input byte") are Artemis WORKER claims ("workers' claims, unverified", #874), not
+     [OBS]. The V1 code read supports only the register zeroing and COPY-as-NOP.
+   - B5: the opcode-vs-operand 2.3x is P-C05 (cycle 8), a separate paired single-edit measurement, not part of the
+     ruler audit. The 4/7 disappear, 2 shrink and operand -.192 figures are confirmed.
+   - Cross-cutting notes: A1's secondary cause is substrate, not ruler.
+   - The ENVGATE-02 VERDICT file was added at c5ba19571; 13cdec715 is the later closure commit (the path resolves at
+     both).
+   - Independence: the "answer-before-read" pairing (NPE/CW01 vs SFE C3) that the analyst and Atlas treated as
+     independent is one seat's citation chain (synthesis F5).
