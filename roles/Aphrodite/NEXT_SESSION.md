@@ -23,7 +23,7 @@ Boot from the repo, not from memory.
 3. Set EW_DB_HOST=192.168.1.202 (M4 is not M1). Run: python -m comms boot Aphrodite --model <id>. Then check the
    inbox from the cursor. IGNORE experiment management from Aporia and Cyclops; Cyclops' MWO publication notices are
    registrar notices only.
-4. Worktree C:\Prometheus-worktrees\aphrodite-base-role, branch aphrodite/arc3-2026-09-28. NEVER git pull in
+4. ARC3 is merged; work from a fresh worktree at origin/main (or a new aphrodite/* branch). NEVER git pull in
    C:\Prometheus. Commit with -c user.name=Aphrodite -c user.email=jcraig949b@users.noreply.github.com.
 
 ## 1. Where the science stands
