@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T11:40Z",
+  "updated_at_utc": "2026-09-30T11:39Z",
   "state": "WORKING",
-  "state_reason": "D001 reconciled (10/10 completed). D002 frozen: 11 script Tasks running D001 analyses; submission follows the freeze commit.",
+  "state_reason": "D002 submitted 11:38Z (11 script Tasks at c628f3e); completion barrier running.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -52,58 +52,66 @@
     {
       "id": "D002",
       "kind": "standing bounded dispatch (script executor)",
-      "status": "FROZEN",
+      "status": "SUBMITTED",
       "plan": "roles/Artemis/dispatch/D002/PLAN.md",
-      "batch": "roles/Artemis/dispatch/D002/BATCH.json"
+      "batch": "roles/Artemis/dispatch/D002/BATCH.json",
+      "tasks": "roles/Artemis/dispatch/D002/TASKS.json"
     }
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-4ec40adae0cf",
-      "alias": "D001-01"
+      "id": "tsk-8961e7e3657f",
+      "alias": "D002-02"
     },
     {
-      "id": "tsk-274ce3faf027",
-      "alias": "D001-02"
+      "id": "tsk-a15a6f1ee08a",
+      "alias": "D002-03q"
     },
     {
-      "id": "tsk-ebf81ebd021e",
-      "alias": "D001-03"
+      "id": "tsk-4388ffc907cd",
+      "alias": "D002-03"
     },
     {
-      "id": "tsk-e8f3c0851f07",
-      "alias": "D001-04"
+      "id": "tsk-3beb6ec5eb3e",
+      "alias": "D002-04"
     },
     {
-      "id": "tsk-5a1d4388be81",
-      "alias": "D001-05"
+      "id": "tsk-7314901fd738",
+      "alias": "D002-05"
     },
     {
-      "id": "tsk-15ea320a3790",
-      "alias": "D001-06"
+      "id": "tsk-8093fe14bbe9",
+      "alias": "D002-06"
     },
     {
-      "id": "tsk-e8de47f7af22",
-      "alias": "D001-07"
+      "id": "tsk-49c4a02f2d3b",
+      "alias": "D002-07"
     },
     {
-      "id": "tsk-97a1f0cec5d0",
-      "alias": "D001-08"
+      "id": "tsk-22f1004a88e8",
+      "alias": "D002-08A"
     },
     {
-      "id": "tsk-26c09284360f",
-      "alias": "D001-09"
+      "id": "tsk-9e0f1b205c49",
+      "alias": "D002-08B"
     },
     {
-      "id": "tsk-3e266247dc6c",
-      "alias": "D001-10"
+      "id": "tsk-7d1fc51453d4",
+      "alias": "D002-08C"
+    },
+    {
+      "id": "tsk-de948f107116",
+      "alias": "D002-09"
     }
   ],
   "leases": [],
   "running": [
     {
-      "what": "D001 claim spot-check (fresh read-only reader, 3 claims/package) before routing",
-      "by": "Artemis delegate on ubu002"
+      "what": "D002 completion barrier",
+      "tasks": "roles/Artemis/dispatch/D002/TASKS.json"
+    },
+    {
+      "what": "D001 claim spot-check (fresh read-only reader) before routing"
     }
   ],
   "blocked_on": [],
@@ -141,7 +149,7 @@
     "BLOCKED": [],
     "RESOURCE_STATUS": "claude workers on ubu001 (no local compute on ubu002); script Tasks compute.cpu.light only",
     "LAST_RECEIPT": "roles/Artemis/dispatch/D001/RECEIPTS.json (2026-09-30)",
-    "LAST_STATE_UPDATE": "2026-09-30T11:40Z",
+    "LAST_STATE_UPDATE": "2026-09-30T11:39Z",
     "WORK_ORDER": "MWO-0004 + CWO 2026-09-30"
   }
 }
