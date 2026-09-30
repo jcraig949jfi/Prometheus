@@ -54,9 +54,7 @@
     }
   ],
   "fabric_tasks": [],
-  "running": [
-    "gptoss/gemini blind+pair trickle (background, quota-bounded)"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
     "Operator decision (spend): complete Families B/C on a paid tier (est. < $5) or by ~5 days of free-tier trickle",
@@ -83,7 +81,9 @@
     {
       "item": "Families B/C completion",
       "dependency": "free-tier daily quotas (Gemini requests/day, Groq 200k tokens/day)",
-      "owner": "time / operator optional spend (HECATE-SPEND)"
+      "owner": "time / operator optional spend (HECATE-SPEND)",
+      "resume_after_utc": "2026-10-01T07:00:00Z (Gemini daily reset); Groq rolling 24h from its last use",
+      "progress": "gptoss blind 30/100 valid, pair 0/40; gemini blind 0/100 valid (earlier rows truncated), pair 0/40"
     },
     {
       "item": "Alien assay Phase 2 (Visual Cortex)",
