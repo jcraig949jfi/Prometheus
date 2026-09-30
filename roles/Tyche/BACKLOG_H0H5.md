@@ -1,6 +1,6 @@
 # Tyche backlog (schema: roles/Archaeon/prompts/2026-09-10_backlog/00_BACKLOG_SCHEMA.md)
 
-Currency: 2026-09-30 (charter adopted). Priority order; first five today.
+Currency: 2026-09-30 (charter adopted; v0 DONE -- TYCHE-01/02/03/05 closed by this commit; v1 rows 23-27 added from the v0 failure shapes). Priority order; first five today.
 Pass letters are the charter's (A baseline .. J second-order sagacity).
 
 TYCHE-01 | Run the preregistered v0 campaign (Pass A-D) and commit its rows | C1 | alpha | S | none | tyche/runs/v0_2026-09-30/ DONE.json + REPORT.json
@@ -25,3 +25,8 @@ TYCHE-19 | Second-order sagacity (Pass J): successful lenses as substrates of fu
 TYCHE-20 | Pull worlds from Proteus / Ensorain / Cosmos engines as additional families (read-only adapters) | C1 | 1.0 | M | owners' world APIs | adapter + attainability rows
 TYCHE-21 | Move substantial runs onto the Fabric lease / worker pool when a campaign exceeds the local envelope | TOOLS | 1.0 | S | a campaign > 2 core-hours | lease row in the run receipt
 TYCHE-22 | Request an independent (different model or seat) review of the v0 packet | EVIDENCE | alpha | S | TYCHE-03 | comms delegation + reply
+TYCHE-23 | Make every organism's input set independent of ecology order (remove tab's newest-first budget) and re-run the H4 redundancy check with a cheat control for manufactured residuals | ENGINE | beta | S | none | tests + H4 rerun rows
+TYCHE-24 | Replace err/dis residuals with a residual that has its own negative control (flat on TSD/PRF as the ecology grows) | ENGINE | beta | S | none | tyche/ecology.py + control rows
+TYCHE-25 | v1 prereg: zero-marginal positive controls (xor, parity, decoyed xor) with initial access measured over the whole population; add pairwise-interaction / joint-perturbation operators; test reachability | C1 | beta | M | TYCHE-23, TYCHE-24 | roles/Tyche/prereg/<date>_v1/PREREG.md + run
+TYCHE-26 | Diagnose the P5/R2/tree seed-fragility anomaly (3 lenses, gains vanish on fresh seeds) | EVIDENCE | beta | S | none | committed diagnosis with rows
+TYCHE-27 | Base-rate null for revived lineages (share of ALL lenses with a reserve ancestor) | EVIDENCE | beta | S | none | number in the v1 report
