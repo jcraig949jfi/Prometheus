@@ -228,3 +228,18 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   carrier from a redundant one -- REDUNDANT calls from that rule are not
   validated. Successor T-INS-21: readout inbox Acc_sum at o14-o15 (SITE_R .50
   at o14q1), with a rule that has a chance anchor.
+- T-SWAP-AUDIT3 DONE (W-Z, E-ANANKE-W-Z; plan 6f25dc642 frozen first; known-
+  answer gate passed before any specimen; 3 tests, principal re-run 3 passed;
+  principal recount matches). promoted swap_rel on 124/249 groups (365/733
+  rows) with pair arrays saved (workers/W-Z/out/pairs/). Pa HELD: 54/64
+  AMBIGUOUS rows resolve to their REL2 label, all 64 inside W-U's bounds. Pb
+  HELD: 35/124 groups CARRIER-NAMED (28%); 22 PARTIAL, 1 OVERSHOOT, 61
+  NO-CARRIER-FOUND, 5 UNDECIDED. Consistency vs W-U DETERMINED rows 279/301 =
+  92.7% -- BELOW the frozen 95% bar: all 22 differences are certificate <->
+  INDETERMINATE at intermediate transfer (|z| .34-.62), ~10 independent group
+  events. FINDING: relative-verdict labels near the certificate threshold are
+  seed-sensitive; carrier claims at intermediate z need a replicate draw.
+  Group class depends on the arm set counted (all arms vs recorded only).
+  Next (analyze before expanding, CWO): no automatic run of the other 125
+  groups; T-SWAP-AUDIT4 only if a replicate-seed design for intermediate z is
+  frozen first.

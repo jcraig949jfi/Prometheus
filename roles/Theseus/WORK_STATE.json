@@ -3,21 +3,36 @@
   "seat": "Theseus",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T11:50:00Z",
-  "state": "HOLD",
-  "branch": "theseus/base-role-adopt-2026-09-30",
+  "updated_at_utc": "2026-09-30T14:30:00Z",
+  "state": "ACTIVE",
+  "branch": "theseus/charter-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Theseus/WORK_STATE.json)",
-  "threads": [],
+  "threads": [
+    {
+      "id": "T-THESEUS-SYNTHETIC-ANCESTRY",
+      "charter": "roles/Theseus/prompts/2026-09-30_charter/",
+      "status": "RUNNING"
+    }
+  ],
   "campaigns": [],
-  "experiments": [],
+  "experiments": [
+    {
+      "id": "v0",
+      "prereg": "roles/Theseus/prereg/2026-09-30_v0/PREREG.md",
+      "status": "READY",
+      "command": "python -m theseus.synth.run_v0 --tag v0_2026-09-30 --workers 4"
+    }
+  ],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-09-30, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter arrives: commit verbatim with MANIFEST under roles/Theseus/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "THESEUS-01 run v0",
+    "THESEUS-02 score and report",
+    "THESEUS-03 calibration rows",
+    "THESEUS-04 review packet",
+    "THESEUS-05 frontier replenishment + v1 prereg"
   ],
   "operator_decisions_required": [],
-  "latest_reports": [
-    "roles/Theseus/journal/2026-09-30.md (creation pass)"
-  ]
+  "latest_reports": []
 }
