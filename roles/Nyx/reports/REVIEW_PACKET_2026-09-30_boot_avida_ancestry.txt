@@ -1,0 +1,246 @@
+================================================================================
+REVIEW PACKET -- Nyx boot, Avida ancestry cut + blind packet, two returns
+assimilated -- Prometheus / Nyx (Chop Shop), 2026-09-30
+Commits of record: 1438c81aa (boot), e9b0783e5 (FREEZE), cbbe0c373 (THEO reply),
+  + the records commit that carries this file
+Author: Nyx[gandalf-d1f90ae1], model claude-fable-5-1, host M3 (GANDALF)
+Invoked by: operator, "You're @roles/Nyx bootstrap" (no task line)
+================================================================================
+
+0. WHAT THIS PACKET IS
+   One session: a seat boot, then the seat's inherited work loop. It produced
+   one new cut, one frozen prediction packet, one overdue reply, and the
+   assimilation of two rulings that arrived mid-session.
+   CONFLICT OF INTEREST: the author wrote the cut, the packet, the reference
+   model the packet's controls run on, and this packet. Nothing here has been
+   independently adjudicated except where section 4.3 says so. The pre-freeze
+   source review was done by a subagent of the same model; it is a defect
+   hunt, not independent evidence.
+
+1. CONTEXT
+   Prometheus runs a "mechanism archaeology" pipeline over preserved code
+   bodies ("fossils"). Techne preserves bodies. Nyx (this seat) cuts a body
+   into mechanisms and writes FROZEN prediction packets about them. Harmonia
+   adjudicates packets by running the body. The packet author does not
+   adjudicate. Avida is a digital-evolution platform (self-replicating
+   programs); the operator asked on 2026-09-18 that Avida become "the
+   reconstruction benchmark" for one question: how much evolutionary history
+   is lost when it is compressed into the surviving organisms.
+
+2. THE QUESTIONS THE WORK WAS ANSWERING
+   Q1 (boot) What changed while the seat was down, and is anything unblocked?
+   Q2 (operator, 2026-09-18) "Nyx cuts the save/population/ancestry mechanics
+      rather than the whole simulator." What does Avida actually record of
+      descent, what does it keep, and what does it write to a saved file?
+   Q3 (Theophrastus, comms #241, 2026-09-13) Is there a composition operation
+      that makes a same-kind child from two mechanisms and keeps both parents
+      and the operator on record?
+   Q4 (mine, open since 2026-09-19) Is a packet whose rows the author saw
+      before freezing admissible as a test?
+
+3. WHAT WAS DONE, STEP BY STEP
+   3.1 Boot. Merged 1151 upstream commits (none touching this seat's files).
+       Validators: 123 fossil records 0 problems; 6 mechanisms 0 problems;
+       frozen probe battery intact; 45 tests passed. [E3]
+       The fleet had moved to a single work-order model. Adopted it; wrote
+       the seat's machine-readable state file.
+   3.2 Found that both of this seat's blocked lines were addressed to
+       Harmonia instances that had gone offline (one on 09-19, one on 09-25)
+       and appeared in nobody's queue. Asked who owned them (comms #1059).
+       Answered in 25 minutes (#1062). [E3]
+   3.3 Read the Avida genotype-ancestry source in full (GenotypeArbiter.cc
+       588 lines, Genotype.cc 554 lines) plus save, load, driver, event and
+       birth code: 22 files, all matching Techne's recorded hashes. [E3]
+   3.4 Discovered from Techne's tracked hash list that the body already ships
+       177 saved-population files (".spop"), upstream's own expected test
+       outputs, including two runs saved every 10 updates for 500 updates
+       (51 saves each). Opened none of them.
+   3.5 Wrote a ~100-line reference model of the retention rule and a reader
+       for the save format (from the writer's source). Built eight synthetic
+       arms on a 30-cell toy population and checked every observable DEFINED
+       (non-zero eligible count) on the arm it is claimed on, with a cheat,
+       a positive and a negative control. 36 of 36 expectations met. [E3]
+       First run exposed a defect in my own rule (section 7.3).
+   3.6 Had a subagent attack nine claims against the source, forbidden the
+       .spop files. Result: no breaking path; one named escape; one wording
+       error; three citation slips. All corrected before the freeze.
+   3.7 Froze the packet (sha256 0f52e295...fc00), committed and pushed it
+       before any other step, posted it to Harmonia (#1069).
+   3.8 Answered Q3 by counting (no cellular automaton was run).
+   3.9 Two rulings arrived (#1063, #1067). Assimilated both (section 4.3).
+
+4. RESULTS
+   4.1 The mechanism read out of Avida (claims, NOT yet adjudicated)
+       * Descent is recorded between GENOTYPES (classes of identical
+         genomes), not organisms. A parent edge is written only when a
+         newborn's genome matches neither its parent's class nor any LIVING
+         class. Births that breed true, or land on a living class, write
+         nothing.
+       * Each genotype has two reference counts: living units, and child
+         genotypes. When the last unit dies and no child refers to it, it is
+         unlinked at once and its parents are released in turn.
+       * So a save holds the living genotypes plus the ancestors of the
+         living, and nothing else.
+       * The founding time stamp runs on a clock that is -1 through the end
+         of update 0 and never 0.
+       * One field is written unquoted; a value with spaces shifts every
+         later column of that row.
+       * An event that re-injects every organism without a parent erases the
+         whole prior record, although each new organism is a copy of an old
+         one.
+   4.2 The frozen packet: eight rows, each predicting ZERO violations
+         I1 no parent id names a row missing from the same file
+         I2 no dead row is unnamed as a parent            (the central row)
+         I3 depth = first parent's depth + 1
+         I4 no two living rows share a genome
+         I5 a file saved without history has no dead row
+         I6 no row is stamped 0; none exceeds save update + 1
+         I7 a row founded before an earlier save and present at a later one
+            is present, unchanged, at the earlier one
+         I8 after the update-99 re-injection no earlier-stamped row survives
+       Domain fixed before freezing: 177 files listed by path and sha256;
+       candidates by configuration flags: 152 for I1/I3, 129 for
+       I2/I4/I6/I7/I8, 2 for I5 (before three content rules applied at
+       adjudication). [E1]
+       Fixture table, violations / eligible [E3, synthetic model only]:
+         arm             I1      I2       I3      I4     I7     I8
+         BASE            0/74    0/23     0/74    0/57   0/41   --
+         SEVER           0/32    0/8      0/32    0/58   0/21   0/50
+         UNPRUNED        0/182   92/131   0/182   0/57   0/113  --
+         PASSIVE_HOLDER  0/73    4/24     0/73    0/55   0/41   --
+         ACTIVE_HOLDER   6/82    0/30     0/76    0/54   0/43   --
+         HIST0           17/51   0/0      0/34    0/57   0/20   --
+       UNPRUNED is the positive control (history kept: dead leaves appear).
+       The two HOLDER arms reproduce the two exceptions found in the source
+       and justify excluding deme runs from I2 and sexual runs from I1.
+       HIST0 0/0 is "nothing could have fired" and is reported as such.
+       Synthetic calibration, model only: 23 of 74 genotypes ever founded
+       were retained at the end (0.3108); 73 of 246 births wrote a parent
+       edge (0.2967). These say nothing about Avida.
+   4.3 Returns assimilated (independent; Harmonia's, not mine)
+       * POET packet (frozen 09-19): CUT_SUPPORTED on 4 of 4 rows as an
+         "executed structural identity". Harmonia ruled that it is NOT a
+         confirmatory test: I had seen every row before freezing and the
+         payload is deterministic. Recorded as evidence-supported with
+         predictions tested = 0. Q4 is answered: no.
+       * ASAL observer dependence: disposition A, OBSERVER_STABLE. Native
+         observer vs the reconstruction over n = 333: max abs error 4.77e-7,
+         Spearman 1.0. Scope: the 395 executed rollouts only. The hold on a
+         full-domain replication is lifted.
+       Scoreboard before -> after: packets issued 4 -> 5; adjudicated
+       2 -> 3; predictions tested 7 -> 7; falsified 2 -> 2; mechanisms
+       registered 6 -> 7; evidence-supported 2 -> 3; observer-stable 0 -> 1;
+       survived transplant 0 -> 0. [E3]
+   4.4 Q3, counted [E3]
+       The atlas (123 fossils, 485 accepted organs) held no two-parent
+       same-kind composition organ until the recombination organ cut today.
+       On a 128-entry rule table the fossil's operator is a one-region swap.
+       A pair of tables differing in D entries has exactly D(D-1) distinct
+       such children (closed form, checked by enumeration on 15 pairs).
+       par x GKL: D = 51, 2550 children; P(child identical to a parent)
+       = 0.0366 under the fossil's own draw. Range over 15 pairs: D 31..51,
+       P 0.0316..0.0691.
+
+5. WHAT CHANGED IN THE REPOSITORY
+   * avida fossil record: 10 -> 17 organs, 3 -> 4 pressures, 14 -> 28 edges.
+   * New apparatus directory (6 modules, 974 lines; stdlib only) + 7 tests
+     (45 -> 52 passing).
+   * One frozen packet + freeze file; mechanism ledger 6 -> 7 entries; gate
+     ledger: 1 packet row, 1 handoff, 2 returns, 1 escalation.
+   * Seat state file created; status, journal, calibration ledger (4 rows).
+   * Three old ledgers annotated beside stale lines (originals kept).
+   * One small fix: the cut-authoring helper appended a duplicate ancestry
+     edge on every re-run; made idempotent.
+   * No scheduled jobs. Compute: seconds. No lease held.
+
+6. WHAT THIS DID NOT ESTABLISH
+   * NOTHING about the Avida packet's eight rows is established. It is
+     frozen and unadjudicated. The files may predate the code I read.
+   * How much history Avida's record loses relative to a full pedigree
+     cannot be measured on the shipped files: the full pedigree is exactly
+     what they do not contain. Refused at plan time, not attempted.
+   * The cut covers asexual, host-only, non-deme runs. Parasite, sexual
+     ancestry and deme bookkeeping were not read.
+   * Nothing ran in Avida. The body needs docker; this host has none.
+   * The POET result is a verified code fact, not a passed prediction. Its
+     consequence for POET's open-endedness is untested.
+   * OBSERVER_STABLE says the observer reconstruction is not the source of
+     the ASAL effect. It says nothing about whether the effect is
+     open-endedness, and nothing beyond 395 of 1045 draws.
+   * The composition counts are arithmetic on hex strings. Whether any of
+     the 2550 children does anything is unknown.
+   * Headline target, mechanisms that survived transplant: still 0.
+
+7. AUTHOR'S OWN ERRORS AND WHAT THEY COST
+   7.1 The POET packet sat 11 days. It was addressed to an instance that
+       went offline the same day; my own return protocol said disposition
+       in 2 ticks; I never escalated, and on 09-25 I rebooted and wrote
+       "no ruling, every hold stands". Cost: 9 days on two lines that then
+       closed in one morning after one question.
+   7.2 The POET packet's rows were scouted before freezing. Disclosed, but
+       it made the packet a non-test. Cost: one mechanism's first ruling
+       carries zero tested predictions.
+   7.3 First draft of row I7 was wrong at the first save of a run (the
+       stamp -1 is ambiguous). Caught by my own fixture before the hash;
+       3 false violations on a synthetic arm. Cost: none, but only because
+       the fixture happened to include a sexual arm that exercised it.
+   7.4 THEO-REQ-003 went unanswered for 17 days.
+   7.5 A record note I sent Techne (#1071) was stale by 10 minutes: Techne
+       had already fixed both records and I did not re-measure before
+       posting. Corrected in #1074. Second occurrence of this failure.
+   7.6 Two prior-art remarks in the cut were written from recall; removed
+       or marked "recalled, not checked" before commit.
+   7.7 A reviewer's directory listing showed .spop file NAMES. No content.
+       Disclosed in the packet.
+
+8. WHAT IS OWED, AND BY WHOM
+   Harmonia  verdict on the Avida packet; which host runs the replication's
+             native column (#1073).
+   Nyx       the full-domain ASAL replication packet (now unblocked); the
+             poet-enhanced-2020 cut; escalate #1069 on 2026-10-03 if silent.
+   Techne    a grade ruling for three source types (19 cuts read UNKNOWN).
+   Operator  nothing is waiting on an operator decision.
+
+9. QUESTIONS FOR THE EXTERNAL REVIEWER
+   1. FALSIFICATION. Row I2 predicts zero dead unnamed rows across up to 129
+      files. If one appears in a single file, is the right reading "the
+      retention rule is wrong" or "that file predates the code"? What
+      evidence in the file would separate the two, and should the packet
+      have required it up front?
+   2. The strata exclude every configuration where I found (in the source)
+      a way for the claim to fail. Is that honest scoping, or have I
+      defined the claim to be unfalsifiable on the files that matter?
+   3. The positive control runs on a model I wrote from the same reading
+      the packet tests. Is a control that shares the author's reading a
+      control at all? What would an independent one look like here?
+   4. POET was recorded as "evidence-supported" with zero predictions
+      tested, because the ledger's definition is "an independent ruling
+      supported the boundary". Should verified code facts and survived
+      predictions share one disposition?
+   5. A same-model subagent reviewed the claims before the freeze. I called
+      it a defect hunt and gave it no evidential weight. Is even that use
+      a contamination risk for a blind packet?
+   6. STOP QUESTION. One session produced a cut, a packet, a model, a
+      counting study and two assimilations. Which of these should not have
+      been done, or should stop here, given that the headline count
+      (mechanisms that survived transplant) is still 0 after 7 mechanisms?
+   7. Is "how much history is lost" answerable at all from a system that
+      only ever kept the compressed record, or does it need a run with
+      full logging (which this host cannot do)?
+
+10. HOW TO REPRODUCE (from the repository root; Python 3.11, stdlib)
+    python -m pytest -q nyx/tests                  -> 52 passed
+    python -m nyx.atlas.schema                     -> 123 fossil files, 0 ...
+    python -m nyx.atlas.mechanisms                 -> 7 mechanisms, 0 problems
+    python -m nyx.atlas.experiments.avida_ancestry.definedness
+                                                   -> ALL EXPECTATIONS MET
+       (deterministic; model seed 20260930; rewrites DEFINEDNESS.json)
+    python -m nyx.atlas.predictions.schema validate \
+       nyx/atlas/predictions/MECH-AVIDA-ANCESTRY-RETENTION-001.json
+                                                   -> valid ... 0f52e295...
+    python -m nyx.readings.theo_req_003_composition -> 15 rows; par x GKL
+                                                      51  2550  0.0366
+    Adjudication (NOT run by the author; needs the avida body on disk):
+    python -m nyx.atlas.experiments.avida_ancestry.adjudicate \
+       --adjudicator <seat>
+================================================================================

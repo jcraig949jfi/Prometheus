@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T09:38:22Z",
+  "updated_at_utc": "2026-09-30T12:34:33Z",
   "state": "ACTIVE",
-  "state_reason": "CWO 2026-09-30 fleet activation (Aporia #1033; ops/fleet/QUEUE.json @ 6a7a84569) ends HOLD. MWO-0004 remains in force (blob 925660b2 unchanged). CURRENT started: candidate survey for the independent emergence replication lane.",
+  "state_reason": "CWO 2026-09-30: E-BEL-REPL-01 closed (DISAPPEARS K3); NEXT promoted to CURRENT without prompt (CWO 1.1)",
   "branch": "bellerophon/mwo-0001-2026-09-28",
   "base_sha": "befc9dfb55400e7333ede7a45e58b126c4c2fa0b",
   "head_sha": "280f468b0bc8745a8908c49f74a69c87eaf58706",
@@ -88,42 +88,31 @@
         "DEF-BEL-004 (Q4 host arm; post-hoc relational diagnostic in report s6)"
       ],
       "verdict_corrected": "2026-09-30 ERRATA X1: confirmatory verdict under pre-exposure rules = ALTERED (P2); VALIDATED only conditional on post-exposure C4.2+C4.4+NO_MATERIAL; verdict of record OPEN (operator, CWO s4)"
+    },
+    {
+      "id": "E-BEL-REPL-01",
+      "status": "CLOSED",
+      "verdict": "DISAPPEARS (K3) -- frozen; post-hoc shift-tolerant replay confirms kill real",
+      "summary": "C-A3-INTERNALIZE rebuilt in BEE: K1 SURVIVES 93/200 vs 18/100 p=6.6e-7; K4 SURVIVES 86/93; K3 0/93 (founder content). NPE X-MAT ENDOGENOUS 8/8 (read after seal): NPE claim not killed; descent does not transfer",
+      "branch": "bellerophon/repl-internalize-2026-09-30",
+      "freeze": "74f72e805",
+      "seal": "3b2e11a3e",
+      "analysis": "2ae8ec484",
+      "result": "279927367 (+addendum 9c2c42938)",
+      "packet": "roles/Bellerophon/repl_2026-09-30/REVIEW_PACKET_E-BEL-REPL-01_2026-09-30.md (19026e76b, on branch)",
+      "comms": "#1051 #1055 #1077 #1078",
+      "merge": "pending adversarial Fabric reviews tsk-ad966fa39590 / tsk-750695b70564"
     }
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-f4777af93ac7",
-      "title": "E-BEL-REPL-01 pilot2 CARRIED random 0-49",
+      "id": "tsk-ad966fa39590",
+      "title": "adversarial merge review E-BEL-REPL-01 [1/2]",
       "state": "submitted"
     },
     {
-      "id": "tsk-515c7c1db04e",
-      "title": "E-BEL-REPL-01 pilot2 ZERO random 0-49",
-      "state": "submitted"
-    },
-    {
-      "id": "tsk-34a356c97f50",
-      "title": "E-BEL-REPL-01 pilot2 CARRIED random 50-99",
-      "state": "submitted"
-    },
-    {
-      "id": "tsk-1ffec4dec0f8",
-      "title": "E-BEL-REPL-01 pilot2 ZERO random 50-99",
-      "state": "submitted"
-    },
-    {
-      "id": "tsk-db6275d8340a",
-      "title": "E-BEL-REPL-01 pilot2 CARRIED founders 0-23",
-      "state": "submitted"
-    },
-    {
-      "id": "tsk-7d5523cd0b39",
-      "title": "E-BEL-REPL-01 pilot2 ZERO founders 0-23",
-      "state": "submitted"
-    },
-    {
-      "id": "tsk-c26c09590d3b",
-      "title": "post-merge adversarial review of BEE register-world axis 35b2fde55 (landed on main without pre-merge review; ledger row)",
+      "id": "tsk-750695b70564",
+      "title": "adversarial merge review E-BEL-REPL-01 [2/2]",
       "state": "submitted"
     }
   ],
@@ -147,6 +136,11 @@
       "lease_id": "lse-964d4be1a44f",
       "resource": "spectrex5:cpu12",
       "status": "RELEASED"
+    },
+    {
+      "lease_id": "lse-4e19412ded95",
+      "resource": "spectrex5:cpu12",
+      "status": "IDLE_UNRELEASABLE (token not kept; expires ~14:18Z; Aporia #1077)"
     }
   ],
   "running": [],
@@ -229,33 +223,29 @@
     "assignment_msg": "comms #1033 (Aporia -> Bellerophon)"
   },
   "current": {
-    "id": "E-BEL-REPL-01",
-    "title": "Independent emergence replication lane",
-    "text": "Select the strongest unresolved emergence-like or mechanism-change signal in the fleet that can be reconstructed without custody/contamination violation; rebuild it in BEE (prometheus/toolbox) from its published description; attempt to make it disappear.",
-    "step": "S0 done (criteria 9c4a4fabe, selection 19e758e7f: Nestor C-A3-INTERNALIZE); BEE register-world axis built (35b2fde55, branch bellerophon/repl-internalize-2026-09-30, 81 tests, historical hashes unchanged); PILOT 1 founders: BEE origins ZERO_DEPENDENT 159/229; PILOT 2 (origin/extinction/cost only) running on Fabric; next S1 prereg",
-    "started_at_utc": "2026-09-30T09:20:32Z",
-    "branch": "bellerophon/repl-internalize-2026-09-30"
+    "id": "E-BEL-REPL-02",
+    "title": "Mutant/falsifier expansion (CWO NEXT, promoted automatically)",
+    "text": "Apply adversarial transformations to the surviving residue of E-BEL-REPL-01: scaffold-dependent de novo emergence of state-freedom in BEE (payoff-dependent K1, ruler-independent K4, backwards dose P90>P75, 18/100 with no payoff). Prereg before any run.",
+    "step": "S0 design",
+    "started_at_utc": "2026-09-30T12:34:33Z"
   },
   "next": {
-    "id": "E-BEL-REPL-02",
-    "title": "Automatic mutant/falsifier transformations for anything that survives CURRENT"
+    "id": "E-BEL-BUILD-01",
+    "title": "Generalize useful BEE controls into BUILDER-EXPERIMENT (planted state-free/zero-dependent copiers, label-vs-content descent check, replay gate, freeze manifest)"
   },
-  "reserve": [
-    {
-      "id": "E-BEL-BUILD-01",
-      "title": "Generalize useful BEE controls into BUILDER-EXPERIMENT"
-    }
-  ],
+  "reserve": [],
   "resource_status": {
     "envelope": "MWO-0004 R2: <= 16 CPU core-hours per item, <= 48 per day",
     "leases_held": [],
-    "core_hours_today": 0,
+    "core_hours_today": 12.6,
     "gpu": "none",
     "spend_usd": 0,
-    "note": "pilot 2 on ubu001 Fabric script workers (M2 cpu12 held by Nestor X-MAT); est < 2 core-h"
+    "note": "E-BEL-REPL-01 total ~12.6 core-h (pilots 2.9 Fabric, production 7.4 M2, post-hoc 2.3 M2)"
   },
   "last_receipt": {
-    "what": "E-003 post-hoc Q4 summary recompute (reproduces published file exactly)",
-    "path": "roles/Bellerophon/e003_2026-09-29/receipts/POSTHOC_Q4_SUMMARY_RECOMPUTE_2026-09-30.json"
-  }
+    "what": "E-BEL-REPL-01 post-hoc K3 replay (111/111 replay gate)",
+    "path": "roles/Bellerophon/repl_2026-09-30/production/POSTHOC_K3_SHIFT.jsonl (branch)",
+    "commit": "279927367"
+  },
+  "blinding": "released: E-BEL-REPL-01 sealed and reported before X-MAT was read"
 }

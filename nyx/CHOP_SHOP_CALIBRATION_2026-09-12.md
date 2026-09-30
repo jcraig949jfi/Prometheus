@@ -86,6 +86,8 @@ changes only when a consumer's failure says so.
 
     #176 Archaeon (Lean organs)                        DELIVERED, no return
     #189 Proteus+Vivarium (rewriting substrate claim)  question, no answer
+         [ANNOTATION 2026-09-30, the line above is the state at the 09-12 writing: ANSWERED 2026-09-16 by Proteus, (b) -- no rewriting
+          substrate is owned or planned there (roles/Proteus/prompts/2026-09-16_replies/REPLY_NYX_189_rewriting_substrate.md). Found stale by Artemis Fabric S3 Q5, comms #1011.]
     #190 Vivarium+Proteus (shrinker pressure)          DELIVERED, no return
     #191 Archaeon (shrinker organs)                    DELIVERED, no return
     #175 Vivarium (Lean pressures)                     REJECTED_BLOCKED via #182

@@ -214,3 +214,17 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   degenerate region is reachable only at P32; heavier-skew nulls untested.
   PROMOTED: prometheus/ananke/swap_rel.py (+ tests/test_swap_rel.py; swap_rel
   + lens_swap + lens tests 42 passed). Line T-SWAP-LOWACC -> CLOSED.
+- T-INS-20 ANSWERED (W-Y, E-ANANKE-W-Y; plan fc8bfa171 frozen first; 4 tests,
+  principal re-run 4 passed; census checked). The MAJ 4781b0a1 readout's Kp[7]
+  is NOT A CARRIER: it is 0 in every world at every tick (only the readout's
+  Kp[0] is ever nonzero or mirror-different, and Kp[0] never feeds the readout
+  line), so raw S0 = IN0_1 - 3. This rests on a plant-independent census.
+  PROCESS: (1) the worker ran the champion although its pre-registered plant
+  gate (KA-A) failed -- recorded as deviation D-1; the only call made (NOT A
+  CARRIER) is the one the passing checks (KA-B, MF-X) validated; (2) ~2 s of
+  unleased GPU use in a dev check (engine defaults to cuda) -- briefs now set
+  CUDA_VISIBLE_DEVICES=; (3) my plan's s3 rule had defects: REDUNDANT has no
+  chance anchor (shuffled labels read REDUNDANT) and it cannot tell a sole
+  carrier from a redundant one -- REDUNDANT calls from that rule are not
+  validated. Successor T-INS-21: readout inbox Acc_sum at o14-o15 (SITE_R .50
+  at o14q1), with a rule that has a chance anchor.

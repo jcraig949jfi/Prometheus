@@ -1,0 +1,186 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "dcd-facebookresearch-2022",
+  "canonical_name": "DCD -- Dual Curriculum Design: reference implementation of PLR, Robust PLR, ACCEL, PAIRED, REPAIRED and minimax (Jiang, Dennis, Parker-Holder, Foerster, Grefenstette, Rocktaschel et al.; Meta AI / FAIR, 2021-2023)",
+  "aliases": [
+    "dcd",
+    "Dual Curriculum Design",
+    "facebookresearch/dcd",
+    "ACCEL reference implementation",
+    "Robust PLR reference implementation"
+  ],
+  "lineage": "PLR (Jiang et al. 2020, arXiv:2010.03934) and PAIRED (Dennis et al. 2020, arXiv:2012.02096) -> Replay-Guided Adversarial Environment Design (Jiang et al., NeurIPS 2021, arXiv:2110.02439: Robust PLR, REPAIRED, the DCD framing) -> ACCEL (Parker-Holder et al., ICML 2022) -> PAIRED + HiEnt/BC/Evo (Mediratta et al., CoLLAs 2023, arXiv:2308.10797); all in one codebase on branch main",
+  "domain": [
+    "unsupervised-environment-design",
+    "curriculum",
+    "open-ended-learning",
+    "reinforcement-learning",
+    "level-replay",
+    "adversarial-environment-generation"
+  ],
+  "era": "2021-2024",
+  "version": "facebookresearch/dcd main @ cefd88196f2696860e42405d7b32f47d3d12bbde (committed 2024-08-20; 11 commits; upstream ARCHIVED per GitHub API on 2026-09-30)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/facebookresearch/dcd",
+        "commit": "cefd88196f2696860e42405d7b32f47d3d12bbde",
+        "commit_resolved": "cefd88196f2696860e42405d7b32f47d3d12bbde",
+        "commit_date": "2024-08-20T15:05:37-04:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/facebookresearch/dcd",
+    "branch": "main",
+    "other_branches_at_find": "collas-pairedbc @ 41c23101, collas-pairedevo @ 3b39a9ed (the latter merged into main by the pinned commit, PR #14)"
+  },
+  "hashes": {
+    "tree_sha256": "b6eefb613217bf783d91659ee2da347e8f55e2684af196a1a6c16a663f00c29d",
+    "n_files": 142,
+    "bytes": 6006757,
+    "artifacts": [
+      {
+        "filename": "https://github.com/facebookresearch/dcd",
+        "sha256": null,
+        "commit": "cefd88196f2696860e42405d7b32f47d3d12bbde"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\dcd-facebookresearch-2022",
+    "hash_list": "techne/fossils/specimens/dcd-facebookresearch-2022/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CC-BY-NC-4.0",
+    "status": "read 2026-09-30; NON-COMMERCIAL; preservation and research permitted; NOT OSI; code may be read and studied, any adaptation that ships must stay non-commercial and attributed",
+    "evidence": "LICENSE at the pin begins 'Attribution-NonCommercial 4.0 International' (file sha256 ffe3b1e0b58c1f1250ce48f84d8c37328f9a1ff59bb77b63bc97480cf2778b64); Meta file headers point at that LICENSE file. CONFLICT RECORDED: the README badge at the same pin says 'License: CC BY-SA 4.0'; GitHub API reports spdx NOASSERTION. Vendored third-party files keep their own headers (Flowers Team teachDeepRL, Google Research, OpenAI, Kostrikov, Chevalier-Boisvert, Raffin); no separate licence files for them are present in the tree"
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (conda python=3.8 + pip requirements.txt, per README)",
+  "compiler_or_interpreter": "CPython 3.8 (README)",
+  "dependencies": [
+    "torch>=1.7.0",
+    "torchvision==0.11.2",
+    "tensorflow==2.4.1",
+    "gym==0.15.7",
+    "gym-minigrid==1.0.1",
+    "Box2D",
+    "networkx==2.5",
+    "cma==2.7.0",
+    "gin-config==0.1.1",
+    "geopandas==0.9.0",
+    "scikit-learn==1.1.1",
+    "openai/baselines installed from a git clone with NO pin (README)",
+    "pyglet==1.5.11",
+    "pyvirtualdisplay"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "train.py (builds the env, agents and AdversarialRunner; one call to runner.run() per update)",
+    "envs/runners/adversarial_runner.py AdversarialRunner.run (the DCD loop: replay decision -> teacher/generator rollout -> student rollouts -> regret scores -> level-sampler update -> optional edit)",
+    "level_replay/level_sampler.py LevelSampler (sample_replay_decision, sample_replay_level, update_with_rollouts, the score functions _average_positive_value_loss / _average_gae / _one_step_td_error / ..., sample_weights = score transform mixed with a staleness term)",
+    "level_replay/level_store.py LevelStore (insert with parent_seeds, get_level, reconcile_seeds: the level archive that carries ACCEL's edit lineage)",
+    "envs/multigrid/adversarial.py and envs/bipedalwalker/adversarial.py (reset_to_level, reset_random, step_adversary, mutate_level: the adversarial-environment interface)",
+    "eval.py Evaluator (zero-shot benchmarks: maze, f1, bipedal, poetrose)",
+    "train_scripts/make_cmd.py + train_scripts/grid_configs/*.json (the published hyperparameter settings per method and domain)"
+  ],
+  "example": {
+    "command": "python train_scripts/make_cmd.py --json minigrid/60_blocks_uniform/mg_60b_uni_accel_empty --num_trials 1   # prints the train.py command for ACCEL on mazes",
+    "input": "a grid_configs JSON (method x domain)",
+    "output": "<log_dir>/<xpid>/logs.csv, model.tar checkpoints, screenshots/update_<n>.png of generated levels"
+  },
+  "environment": {
+    "runner": "docker",
+    "image": "NOT BUILT: needs a python 3.8 world with torch, tensorflow 2.4.1, gym 0.15.7, Box2D (SWIG + C++) and an unpinned openai/baselines; named, not reconstructed"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "arXiv:2110.02439 (Replay-Guided Adversarial Environment Design, NeurIPS 2021)",
+    "accelagent.github.io (Evolving Curricula with Regret-Based Environment Design, ICML 2022)",
+    "arXiv:2010.03934 (Prioritized Level Replay)",
+    "arXiv:2012.02096 (PAIRED)",
+    "arXiv:2308.10797 (Stabilizing Unsupervised Environment Design with a Learned Adversary, CoLLAs 2023)",
+    "arXiv:1910.07224 (ALP-GMM, vendored under teachDeepRL/)",
+    "README.MD (incl. the 'Integrating a new environment' checklist)",
+    "docs/bibtex/{dcd,accel,collas}.bib"
+  ],
+  "human_capability_summary": {
+    "built_to": "train a student agent on a curriculum of environment instances chosen or generated to maximise its regret, so that it transfers zero-shot to unseen, harder instances",
+    "pressure": "domain randomization wastes experience on uninformative levels; a learned adversary (PAIRED) is unstable; a curriculum needs a selection signal that does not require hand-written difficulty",
+    "success_means": "higher zero-shot return on held-out benchmark environments (human-designed mazes, CarRacing-F1 tracks, BipedalWalker challenges, the POET 'rose' settings) than DR, minimax and PAIRED at matched student gradient updates"
+  },
+  "known_human_problem_solved": "regret-prioritized curation and evolution of training environments without a hand-designed curriculum",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "RL generalisation research where the training-level distribution, not the learner, limits robustness",
+  "human_failure_condition": "the replay buffer collapses onto unsolvable or trivial levels; the regret estimate stops tracking real learnability; the adversary stops producing solvable levels",
+  "behavioral_entry_point": "AdversarialRunner.run() with the four README switches (ued_algo, use_plr, no_exploratory_grad_updates, ued_editor): the SAME loop becomes DR, PLR, Robust PLR, ACCEL, PAIRED, REPAIRED or minimax, so each mechanism is an ablation of the others; LevelSampler.sample_replay_decision and the score function are the admission and priority rules",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "inspired_by",
+      "to": "poet-original-2019",
+      "note": "README at the pin: benchmark `poetrose` = environments based on the most challenging level settings discovered by POET (Wang et al. 2019, Fig. 5); config bipedal/bipedal_accel_poet.json = ACCEL in the POET design space. A benchmark and design-space link stated by upstream; no code ancestry is claimed"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-directive-2026-09-21",
+    "prior_art_raid",
+    "section-II-auto-curricula",
+    "TECHNE-122",
+    "Atlas UED-2/UED-4",
+    "upstream-archived"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/dcd-facebookresearch-2022 (host-local; `python -m techne.fossils.harvest rematerialize dcd-facebookresearch-2022` on a host without it) ; tracked techne/fossils/specimens/dcd-facebookresearch-2022",
+    "where_it_came_from": "https://github.com/facebookresearch/dcd ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit cefd88196f2696860e42405d7b32f47d3d12bbde ; licence CC-BY-NC-4.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python train_scripts/make_cmd.py --json minigrid/60_blocks_uniform/mg_60b_uni_accel_empty --num_trials 1   # prints the train.py command for ACCEL on mazes ; host class: Linux compiler+docker host with AVX (M2 / ubu nodes); NOT M3",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 b6eefb613217bf78, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "train a student agent on a curriculum of environment instances chosen or generated to maximise its regret, so that it transfers zero-shot to unseen, harder instances"
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "torch",
+      "tensorflow 2.4.1 (prebuilt wheels need AVX)",
+      "Box2D (C++ via SWIG)",
+      "a virtual display for pyglet rendering"
+    ],
+    "host_class": "Linux compiler+docker host with AVX (M2 / ubu nodes); NOT M3"
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T10:37:21Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

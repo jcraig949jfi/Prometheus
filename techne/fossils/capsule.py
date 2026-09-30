@@ -16,6 +16,7 @@ Rules the validator enforces (controls in techne/tests/test_fossil_capsule.py):
   - the frame hash in the capsule equals the record's pinned artifact sha256;
   - replay names the instrument (path + sha) that regenerates the frames, never a host path only.
 CLI:  python -m techne.fossils.capsule build --rollouts [--flax FILE] [--internals] [--write]
+      python -m techne.fossils.capsule fill-native --flax FILE [--write]   (existing capsules; two cells only)
       python -m techne.fossils.capsule validate --all
 """
 from __future__ import annotations
@@ -153,6 +154,59 @@ def compute_internals_original(specimen_id: str) -> dict:
     return d
 
 
+# --------------------------------------------------------------------------- native observer column
+def native_block(key: str, flax_json: dict | None) -> dict:
+    """The native_observer block for one rollout key: the Flax score with its scorer identity, or PENDING."""
+    if flax_json and key in flax_json.get("scores", {}):
+        frow = flax_json["rows"].get(key, {})
+        fid = flax_json["identity"]
+        native = {"score": flax_json["scores"][key], "identity": {k: fid.get(k) for k in ("scorer", "jax", "jaxlib", "flax", "transformers", "model", "weights_files_sha256", "body_commit", "body_tree_sha256") if k in fid},
+                  "crossings": frow.get("crossings_flax"), "d_clip": frow.get("d_clip_flax"), "class_rederived": frow.get("class_flax"),
+                  "signed_diff_vs_original": frow.get("signed_diff"), "source_file": flax_json.get("_source_path")}
+        if flax_json.get("_source_sha256_lf"):
+            native["source_file_sha256_lf"] = flax_json["_source_sha256_lf"]
+        return native
+    return {"status": "PENDING", "how_to_obtain": "%s (harm55_flax_score.py --path flax on an AVX host; HARM-55)" % RUNBOOK, "score": None, "identity": None}
+
+
+def fill_native(c: dict, flax_json: dict) -> tuple[dict, str]:
+    """Fill ONLY the native observer column of an EXISTING capsule (2026-09-30, after Harmonia landed
+    HARM55_FLAX_NATIVE_2026-09-30.json). `build --rollouts --flax` rebuilds the whole capsule and,
+    without --internals, would replace the captured original-observer internals with NOT_CAPTURED;
+    this touches two cells and nothing else: native_observer and classification.
+    class_under_native_observer. Returns (capsule, status):
+
+        FILLED          the capsule was PENDING and the Flax file has this key
+        ALREADY         the capsule already carries this exact native score; nothing changed
+        NO_SCORE        the Flax file has no score for this key; the capsule stays PENDING
+        CONFLICT        the capsule carries a DIFFERENT native score; refused, nothing changed
+    """
+    import copy
+    key = c["specimen_id"][len("asal-rollout-"):]
+    native = native_block(key, flax_json)
+    if native.get("score") is None:
+        return c, "NO_SCORE"
+    have = c.get("native_observer") or {}
+    if have.get("score") is not None:
+        return c, ("ALREADY" if have.get("score") == native["score"] else "CONFLICT")
+    out = copy.deepcopy(c)
+    out["native_observer"] = native
+    out["classification"]["class_under_native_observer"] = native.get("class_rederived")
+    return out, "FILLED"
+
+
+def load_flax(path: str) -> dict:
+    """The Flax column with its repository-relative path and LF-normalised sha256 attached."""
+    pth = pathlib.Path(path)
+    flax_json = json.loads(pth.read_text(encoding="utf-8"))
+    try:
+        flax_json["_source_path"] = str(pth.resolve().relative_to(vault.REPO)).replace("\\", "/")
+    except ValueError:
+        flax_json["_source_path"] = str(path).replace("\\", "/")
+    flax_json["_source_sha256_lf"] = lf_sha256(pth)
+    return flax_json
+
+
 # --------------------------------------------------------------------------- builder
 def build_rollout_capsule(specimen_id: str, torch_json: dict, flax_json: dict | None, internals: dict | None, reason: str | None = None) -> dict:
     rec = record.load(specimen_id)
@@ -165,14 +219,7 @@ def build_rollout_capsule(specimen_id: str, torch_json: dict, flax_json: dict | 
                 "identity": {"scorer": tid.get("scorer"), "torch": tid.get("torch"), "weights_sha256": tid.get("weights_sha256"),
                              "port_sha256_lf": tid.get("port_sha256_lf"), "preprocessing": tid["frames"]["contract"]},
                 "crossings": trow.get("crossings_original"), "boundaries": torch_json.get("boundaries"), "d_clip": trow.get("d_clip_original")}
-    if flax_json and key in flax_json.get("scores", {}):
-        frow = flax_json["rows"].get(key, {})
-        fid = flax_json["identity"]
-        native = {"score": flax_json["scores"][key], "identity": {k: fid.get(k) for k in ("scorer", "jax", "jaxlib", "flax", "transformers", "model", "weights_files_sha256", "body_commit", "body_tree_sha256") if k in fid},
-                  "crossings": frow.get("crossings_flax"), "d_clip": frow.get("d_clip_flax"), "class_rederived": frow.get("class_flax"),
-                  "signed_diff_vs_original": frow.get("signed_diff"), "source_file": flax_json.get("_source_path")}
-    else:
-        native = {"status": "PENDING", "how_to_obtain": "%s (harm55_flax_score.py --path flax on an AVX host; HARM-55)" % RUNBOOK, "score": None, "identity": None}
+    native = native_block(key, flax_json)
     reg = RULER / "regen_frames128.py"
     port_path = vault.REPO / "techne" / "scripts" / "techne107_asal_observer.py"
     manifest = json.loads((RUN / "frames128_manifest.json").read_text(encoding="utf-8"))
@@ -228,7 +275,26 @@ def main(argv=None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build"); b.add_argument("--rollouts", action="store_true"); b.add_argument("--flax", default=None); b.add_argument("--internals", action="store_true"); b.add_argument("--write", action="store_true"); b.add_argument("--only", nargs="*", default=None)
     v = sub.add_parser("validate"); v.add_argument("--all", action="store_true"); v.add_argument("specimen_id", nargs="?")
+    fn = sub.add_parser("fill-native"); fn.add_argument("--flax", required=True); fn.add_argument("--write", action="store_true"); fn.add_argument("--only", nargs="*", default=None)
     a = ap.parse_args(argv)
+    if a.cmd == "fill-native":
+        flax_json = load_flax(a.flax)
+        ids = a.only or sorted(p.parent.name for p in vault.SPECIMENS.glob("asal-rollout-*/CAPSULE.json"))
+        tally, bad = {}, 0
+        for sid in ids:
+            c = json.loads(capsule_path(sid).read_text(encoding="utf-8"))
+            c2, status = fill_native(c, flax_json)
+            why = validate_against_record(c2) if status == "FILLED" else []
+            if why:
+                status = "INVALID: " + "; ".join(why)
+            tally[status.split(":")[0]] = tally.get(status.split(":")[0], 0) + 1
+            bad += status.startswith(("CONFLICT", "INVALID"))
+            if status != "ALREADY":
+                print("%-24s %s" % (sid, status if a.write or status != "FILLED" else "WOULD_FILL"))
+            if a.write and status == "FILLED":
+                capsule_path(sid).write_text(json.dumps(c2, indent=1) + "\n", encoding="utf-8", newline="\n")
+        print(json.dumps({"capsules": len(ids), "by_status": tally, "write": a.write, "flax": flax_json["_source_path"], "flax_sha256_lf": flax_json["_source_sha256_lf"]}))
+        return 1 if bad else 0
     if a.cmd == "validate":
         ids = [a.specimen_id] if a.specimen_id else sorted(p.parent.name for p in vault.SPECIMENS.glob("*/CAPSULE.json"))
         bad = 0
