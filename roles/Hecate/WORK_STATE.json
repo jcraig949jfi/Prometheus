@@ -3,7 +3,7 @@
   "seat": "Hecate",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T07:52:00Z",
+  "updated_at_utc": "2026-09-30T08:27:41Z",
   "state": "ACTIVE",
   "branch": "hecate/base-role-adopt-2026-09-29",
   "head_sha": "(this commit; see git log -1 -- roles/Hecate/WORK_STATE.json)",
@@ -54,7 +54,9 @@
     }
   ],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    "gptoss/gemini blind+pair trickle (background, quota-bounded)"
+  ],
   "blocked_on": [],
   "next_actions": [
     "Operator decision (spend): complete Families B/C on a paid tier (est. < $5) or by ~5 days of free-tier trickle",
@@ -66,7 +68,29 @@
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "hecate/alien/REPORT_pilot.md",
-    "roles/Hecate/REVIEW_PACKET_2026-09-30_first_cycle.txt"
-  ]
+    "hecate/autopsy/AUTOPSY.md",
+    "hecate/alien/REPORT_pilot.md"
+  ],
+  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation (ops/fleet/QUEUE.json; comms #1024, #1029)",
+  "current": "Alien-lawful Families B/C free-tier trickle under the frozen PREREG + DEVIATION_01 (8a517eb2d); stops cleanly on daily quota and resumes next session",
+  "next": "RESERVE promoted when B/C blocks on quota: mechanical novelty ruler (template-reducibility, calibrated on the alien assay) -- the smallest experiment that discriminates autopsy causes C1/C2",
+  "reserve": [
+    "Generator-side novelty interventions (generate, implement, attack, then test reducibility)",
+    "Alien assay v2 PREREG (T1 names the predictive standard; analogy tested with the canonical mechanism)",
+    "Second selection of 16 triplicates via Pass 3 v2"
+  ],
+  "blocked": [
+    {
+      "item": "Families B/C completion",
+      "dependency": "free-tier daily quotas (Gemini requests/day, Groq 200k tokens/day)",
+      "owner": "time / operator optional spend (HECATE-SPEND)"
+    },
+    {
+      "item": "Alien assay Phase 2 (Visual Cortex)",
+      "dependency": "a renderer and a human observer session",
+      "owner": "operator"
+    }
+  ],
+  "resource_status": "CPU negligible; model calls: Claude subscription, Gemini/Groq free tier; spend $0",
+  "last_receipt": "hecate/autopsy/AUTOPSY.md (64c9353e0): zero-UNFAMILIAR is an instrument result (R1, 0/32 alien rules UNFAMILIAR)"
 }
