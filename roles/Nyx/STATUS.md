@@ -4,6 +4,17 @@ BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot 
   frozen-artifact hashes, what is in flight on other seats, the holds, my debts, and the traps
   that have actually bitten this seat. Then this file. Then `python -m comms sync Nyx`.
 
+2026-09-30 (instance gandalf-d1f90ae1, rebooted): booted per the resume record; merged origin/main
+  (1151 commits, none under nyx/ or roles/Nyx/) to bae32c682. Validators green (123 fossils /
+  6 mechanisms / probes intact / 45 tests). Comms through #1024: no POET ruling, no HARM-56
+  disposition; every hold stands. ADOPTED MWO-0004 (first live cycle since MWO-0001; s10 puts Nyx
+  under adoption + existing authorized work): roles/Nyx/WORK_STATE.json is now the fleet-level
+  pointer and this file is the narrative. CWO 2026-09-30 does not list Nyx and ops/fleet/QUEUE.json
+  has no Nyx entry. BOTH gated lines wait on Harmonia work that no live Harmonia instance is
+  scheduled to do (#494 went to gandalf-6cd1348b, offline since 09-19; HARM-55 went to m2-ca1148a0,
+  offline since 09-25; the live instance m2-475d761f is on the CWO evidence audit). Portfolio:
+  CURRENT Avida ancestry cut; NEXT THEO-REQ-003; see WORK_STATE.json and journal/2026-09-30.md.
+
 2026-09-25 (instance gandalf-226cd218, rebooted): booted per the resume record; comms sync 0 new
   after #571 (no POET ruling, no HARM-56 disposition; every hold stands). Validators green
   (123 fossils / 6 mechanisms / probes intact / 45 tests). DEBT 1 PAID: the Ares W4 fossil
@@ -18,7 +29,8 @@ BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot 
   to gain 106). Atlas: NOVEL as an organ (nearest registered organs are gain-1 saturating
   accumulators and a clocked latch), known engineering motif outside it.
 
-Currency: 2026-09-25 ~13:30 UTC (instance gandalf-226cd218 on M3/GANDALF).
+Currency: 2026-09-30 ~10:40 UTC (instance gandalf-d1f90ae1 on M3/GANDALF). Boot order since MWO-0004 R4:
+  origin/main:ops/work_orders/CURRENT.md, then roles/Nyx/WORK_STATE.json, then the resume record, then this file.
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1
