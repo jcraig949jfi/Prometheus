@@ -173,6 +173,12 @@ N5 (decaying reliability; the Block G nuisance kind not yet probed):
   - v5 false detection >= 4/8 (it IS variance-sensitive, and that is a limitation);
   - the recency holdout is worse than the all-history holdout on stale recall.
 
+DETECTOR OF RECORD (2026-09-30, RESULTS_PKGF_PROBE.md v9b):
+- v5 proposes a split; the v8 local-noise-referenced statistic vetoes at that tau (p < .01).
+- It passes all four controls on independent worlds: N5 0/8 false, F3 8/8, F2 twins 0/8, partial rho = .5 8/8.
+- It supersedes v5 as the PKG-F learned-regime arm's detector. Remaining gates before prereg: W-DRIFT, W-MULTI,
+  rho < .5.
+
 N5 RESULT (2026-09-29, RESULTS_PKGF_PROBE.md):
 - The v5 detector fires 8/8 on pure noise growth, so it is NOT variance-robust.
 - Every PKG-F regime detector must now pass an N5 negative control as well as the stationary twins.

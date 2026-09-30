@@ -509,3 +509,23 @@ Reading:
 - Z2': F3 final switch (cp_frac in [.60, .75]) in >= 7/8.
 - Z3': F2 twins false detections <= 1/8.
 - Z4': partial rho = .5 final switch in >= 6/8.
+
+### v9b result (precommit commit 6a736eeac; results/pkgf_cp5b.json; 43 s)
+
+| world (8 independent) | detected | final switch in [.60, .75] |
+|---|---|---|
+| N5 (noise growth) | 0/8 | - |
+| F3 (full switch) | 8/8 | 8/8 |
+| F2 twins | 0/8 | - |
+| partial rho = .5 | 8/8 | 8/8 |
+
+- Z1', Z2', Z3', Z4' ALL SURVIVE.
+- v9b (v5 proposes; the v8 local-noise statistic vetoes at that single tau, p < .01) is the first detector in this
+  series to pass all four controls.
+- The veto level was changed AFTER seeing v9's Z1 miss, and the change was precommitted before this run on fresh,
+  de-correlated seeds. It is a legitimate test of the revised rule, not a retrofit.
+- Still untested:
+  - gradual drift (W-DRIFT) and multiple switches (W-MULTI);
+  - partial switches below rho = .5;
+  - v9b inside the readout (holdout choice and dAC). v5's readout results transfer only where v9b and v5 detect the
+    same tau, which is so here for F3 and partial rho = .5.
