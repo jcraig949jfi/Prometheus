@@ -1,5 +1,15 @@
 # Cyclops status
 
+Currency: 2026-09-30T10:30Z (from date -u).
+
+seat state: ACTIVE under MWO-0004 + CWO 2026-09-30 (s3 CYCLOPS). Not a fleet coordinator, not a
+  steward. Structured state: roles/Cyclops/WORK_STATE.json (CWO s5 fields). This file is narrative.
+CURRENT: one bounded observability audit (reported fleet state vs repo/process/comms evidence),
+  mismatches to Aporia / BUILDER-OBSERVABILITY. Then PARK unless Aporia assigns a bounded task.
+closed: state repair (WORK_STATE MWO-0001/HOLD -> MWO-0004 + CWO), boot 2026-09-30 at 7b7dea59e.
+
+--- superseded narrative below (registrar era 2026-09-29, kept per base role s2) ---
+
 Currency: 2026-09-29T01:50Z (from date -u).
 
 seat state: MWO-0001 REGISTRAR, HOLD. Unparked only for the narrow registrar role (MWO-0001
