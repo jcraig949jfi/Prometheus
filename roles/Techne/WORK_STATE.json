@@ -3,7 +3,7 @@
   "seat": "Techne",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T11:01:03Z",
+  "updated_at_utc": "2026-09-30T11:10:46Z",
   "state": "ACTIVE",
   "instance": "gandalf-4c0c7e64 (M3/GANDALF)",
   "branch": "techne/boot-2026-09-30",
@@ -30,14 +30,9 @@
   "next": "TECHNE-122 section III (quality diversity: QDax, AURORA), then TECHNE-128 (a committed by-name test list so a red file is never outside the run).",
   "reserve": [
     "GEA-4 injection harness: a proposal from a parked seat (Atlas 09-21), not an operator directive; contract with Nyx first; not started",
-    "HARM-55 Flax column via a Fabric script task on a Linux worker: CANDIDATE only, not probed (frames are host-local and jax/flax would need an isolated env on the worker)"
+    "TECHNE-131: successor scorer (LF output, self_check/static_control blocks) before the ASAL replication domain reuses it"
   ],
   "blocked": [
-    {
-      "item": "TECHNE-113/115 HARM-55 native Flax column (ASAL row of Harmonia gandalf-6cd1348b)",
-      "dependency": "an AVX host with jax/flax; M3 CPU has no AVX. HARM55_FLAX_NATIVE_*.json absent on origin/main. 2026-09-30: Harmonia[m2-475d761f] has taken the run over as its CURRENT (roles/Harmonia/WORK_STATE.json), to run on M2; pointers to the runbook, scorer and frames sent.",
-      "owner": "Harmonia (running it on M2)"
-    },
     {
       "item": "TECHNE-123 measure open-oasis / MineWorld / Matrix-Game",
       "dependency": "a host that can run a ~500M-parameter diffusion transformer (not M3)",
@@ -50,8 +45,8 @@
     }
   ],
   "blocked_on": [
-    "AVX host with jax/flax (TECHNE-115)",
-    "GPU-class host (TECHNE-123)"
+    "GPU-class host (TECHNE-123)",
+    "an answer on rollout-fossil grade and source_type (TECHNE-129 remainder; Harmonia / Nyx)"
   ],
   "next_actions": [
     "TECHNE-122 section II report",
@@ -66,6 +61,8 @@
   "latest_reports": [
     "roles/Techne/journal/2026-09-30_gandalf-4c0c7e64.md",
     "roles/Techne/REVIEW_PACKET_TECHNE_BOOT_2026-09-30.txt",
+    "roles/Techne/prompts/2026-09-30_dcd_fossil/TO_HARMONIA_NYX_harm55_consumed_capsules_tranche2.md",
+    "techne/acquisition/poet_alife/ROLLOUT_FOSSILS_TRANCHE2_DISPOSITION_2026-09-30.md",
     "roles/Techne/prompts/2026-09-30_dcd_fossil/TO_HARMONIA_NYX_handoff_filled_and_harm55_pointers.md",
     "roles/Techne/prompts/2026-09-30_dcd_fossil/TO_NYX_ATLAS_dcd_fossil_and_record_changes.md",
     "roles/Techne/prompts/2026-09-21_prior_art_raid/FIRST_RETURN_2026-09-21.md"
@@ -75,6 +72,8 @@
     "TECHNE-126: recipe axis NO_RECIPE; 48 stored labels relabeled with a receipt; 10 tests",
     "TECHNE-125: CATALOG.json regenerated host-neutral, 169 rows; staleness + neutrality tests (5)",
     "stale assertion in test_instrument_hygiene.py repaired (red on main since 2026-09-16)",
-    "TECHNE-129: nyx_handoff filled for 10 records (Harmonia #1064); 39 rollout records left on purpose, question posted; 5 tests"
+    "TECHNE-129: nyx_handoff filled for 10 records (Harmonia #1064); 39 rollout records left on purpose, question posted; 5 tests",
+    "TECHNE-115: native Flax column (Harmonia, HARM-55/56 closed at 68036a8ae) consumed -- 39 capsules filled by `capsule fill-native`; 5 tests",
+    "TECHNE-130: tranche 2 selected by the frozen selector; every observer-flip category empty; adds no fossil; 7 rounding-noise D1 keys not preserved (deviation disclosed)"
   ]
 }
