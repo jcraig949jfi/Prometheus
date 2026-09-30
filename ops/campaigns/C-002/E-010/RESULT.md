@@ -23,7 +23,7 @@ S = 4/128 <= 6/128, so STEERING_REQUIRED.
 - The lesion returns sustained propagation exactly to rcv's level.
 - Content differences at generation >= 5 and radius >= 5 disappear.
 - Every trace of super-additivity is gone.
-- The effect is lower in three of four seeds; seed 4 is 2 vs 3.
+- The effect is lower in all four seeds (rcv_str 3/2/5/5 vs rcv_sfx 2/0/0/2). [Erratum 2026-09-30: this line first said "three of four seeds; seed 4 is 2 vs 3", but 2 < 3 is also lower. Caught by Harmonia evidence audit sample 3 (comms #1056, roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE3.md @8eafe8afe). The verdict is unaffected.]
 
 What this establishes:
 - The E-006 cause probe said rcv_str works by "activity re-routing activity via energy-steered aim". That statement is
