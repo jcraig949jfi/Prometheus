@@ -3,52 +3,72 @@
   "seat": "Cosmos",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T13:55:09Z",
-  "state": "READY",
+  "updated_at_utc": "2026-09-30T14:23:20Z",
+  "state": "ACTIVE",
   "branch": "cosmos/c3-public-2026-09-24",
   "head_sha": "(this commit; git log -1 -- roles/Cosmos/WORK_STATE.json)",
   "threads": [
-    "thr-32389b1e7abb (T-C3, KILLED pre-holdout; G-0006 scar; autopsy done)",
-    "thr-cac8c079f216 (T-C4, DESIGNED: v0.1, S0 frozen F-0001; execution not authorized)",
+    "thr-32389b1e7abb (T-C3, KILLED pre-holdout; autopsy accepted by the operator)",
+    "thr-cac8c079f216 (T-C4, DESIGNED v0.2; under review)",
     "thr-ba4ccc18cc6c (T-I1)",
     "thr-14b16c6a4d6b (T-E1)",
     "+7 OPEN: roles/Cosmos/research/THREADS.md"
   ],
   "campaigns": [
-    "C3: CLOSED / KILLED BEFORE HOLDOUT (operator 2026-09-30); autopsy public + withheld",
-    "C4: DESIGNED v0.1 (design only; no holdout)"
+    "C3: CLOSED / KILLED BEFORE HOLDOUT; autopsy accepted",
+    "C4: DESIGNED v0.2 (design revision authorized; F-0002 + build NOT authorized)"
   ],
   "experiments": [
     "C3-D2 adjudication: NEVER STARTED; D2 SEALED / UNREAD / UNSPENT, reserved"
   ],
   "fabric_tasks": [],
   "running": [],
-  "blocked_on": [],
-  "next_actions": [
-    "completion message to Aporia",
-    "await rulings: C4 execution authority (Q1), foreign visible family (Q2), design reviewer (Q3); D2 ciphertext-grep incident ruling (Nestor/Harmonia #1105/#1106)"
+  "blocked_on": [
+    {
+      "item": "C4 reviews",
+      "dependency": "Aporia assigns R-STAT and R-MECH reviewer seats (not Cosmos/Harmonia/Nestor/foreign author)",
+      "owner": "Aporia"
+    },
+    {
+      "item": "C4 foreign visible family",
+      "dependency": "Aporia assigns a non-Cosmos author seat; the author delivers per c4/VISIBLE_FAMILY_CONTRACT.md",
+      "owner": "Aporia / assigned seat"
+    },
+    {
+      "item": "C3 family code publication (Q-A)",
+      "dependency": "operator trigger",
+      "owner": "operator"
+    }
   ],
-  "operator_decisions_required": [],
+  "next_actions": [
+    "wait for reviewer + author assignments (Aporia)",
+    "reconcile the reviews",
+    "report v0.2 + reconciliation to the operator"
+  ],
+  "operator_decisions_required": [
+    "Q-A: trigger publication of the C3 withheld branch after the foreign family is committed (lean yes)",
+    "Q-B: C4 build authorization after the reviews"
+  ],
   "latest_reports": [
     "roles/Cosmos/c4/DESIGN_C4.md",
-    "roles/Cosmos/c4/S0_TRIVIAL_RULES.md",
-    "roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md",
-    "roles/Cosmos/research/reviews/COORD_AUDIT_C3_2026-09-29.md"
+    "roles/Cosmos/c4/REVIEW_BRIEF_v0.2.md",
+    "roles/Cosmos/c4/VISIBLE_FAMILY_CONTRACT.md",
+    "roles/Cosmos/research/reviews/AUTOPSY_C3_PUBLIC_2026-09-30.md"
   ],
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
   "migration_report": "roles/Cosmos/MIGRATION_REPORT_MWO-0002.json",
   "instance": "m2-44f84976 (M2 SPECTREX5), claude-opus-5-5; booted 2026-09-30T10:25Z",
-  "work_order": "Operator C3 disposition 2026-09-30 (roles/Cosmos/prompts/2026-09-30_operator_c3_disposition/) within CWO-2026-09-30, CWO-2026-09-30B and MWO-0004",
-  "current": "none (authorized set complete; completion message comms #1107)",
-  "next": "awaiting Aporia/operator -- no self-promotion. C4 steps 2-5 need authorization (DESIGN_C4.md s12 Q1-Q3)",
+  "work_order": "Operator C4 review 2026-09-30 (roles/Cosmos/prompts/2026-09-30_operator_c4_review/) within CWO-2026-09-30, CWO-2026-09-30B and MWO-0004",
+  "current": "C4 DESIGN v0.2 under independent review (R-STAT + R-MECH, seats assigned by Aporia); foreign visible family commissioned. Cosmos waits for both before RECONCILIATION_v0.2.",
+  "next": "Reconcile the reviews -> v0.2 report to the operator -> (on authorization) F-0002 freeze + instrument build",
   "reserve": [
     "Public Cosmos tooling",
     "Future-world generators that cannot expose D2",
     "OPEN research threads T-A1..T-I1 (not started without assignment, CWO-B)"
   ],
   "resource_status": "CPU only on M2 (COSMOS_HOME C:/Users/James/cosmos_runs); no leases, no Fabric tasks, no GPU; spend $0",
-  "last_receipt": "comms #1107 completion; origin/main c37e2c687 (C4 design), 1b45b89ea (F-0001), 9bdfd85e1 (public autopsy); local c9f8aff17, 197daf5f3 (withheld)",
+  "last_receipt": "C4 DESIGN v0.2 (this commit); Harmonia D2 incident ruling NO_INFORMATION #1110 (Addendum R ca7d354f4)",
   "open_incidents": [
-    "2026-09-30 13:42-13:44Z: a Cosmos leak-scan git grep also scanned the D2 ciphertext (binary match line only; no bytes, no decryption). c3/INFO_LEDGER.md REPORTED_FOR_RULING; comms #1105 Nestor, #1106 Harmonia"
+    "2026-09-30 13:42-13:44Z D2 ciphertext grep: Harmonia ruled NO_INFORMATION (#1110, Addendum R); custodian Nestor reply pending (#1105)"
   ]
 }
