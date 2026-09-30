@@ -5,6 +5,8 @@ set -eu
 HERE=$(cd "$(dirname "$0")" && pwd)
 [ "$(id -u)" = 0 ] || { echo "run with sudo" >&2; exit 1; }
 CALLER=${SUDO_USER:?run via sudo from the fabric worker account}
+SDV=$(systemctl --version | awk 'NR==1{print $2}')
+[ "$SDV" -ge 247 ] || { echo "systemd $SDV < 247: ProtectProc=/ProcSubset= unsupported; round-2 broker refuses to install" >&2; exit 1; }
 echo "== execution user promexec (system, no login, no groups, no password)"
 id promexec >/dev/null 2>&1 || useradd --system --user-group --home-dir /var/lib/promexec --no-create-home --shell /usr/sbin/nologin promexec
 passwd -l promexec >/dev/null 2>&1 || true
@@ -27,6 +29,8 @@ echo "== sudoers: $CALLER may run exactly the broker, nothing else via this rule
 printf '%s ALL=(root) NOPASSWD: /usr/local/sbin/promexec-run\n' "$CALLER" > /etc/sudoers.d/promexec.tmp
 visudo -cf /etc/sudoers.d/promexec.tmp >/dev/null && install -o root -g root -m 0440 /etc/sudoers.d/promexec.tmp /etc/sudoers.d/promexec
 rm -f /etc/sudoers.d/promexec.tmp
+echo "== stale run directories from the round-1 layout (root-owned area; none expected)"
+ls -A /var/lib/promexec/runs | head -5
 echo "== checks"
 sudo -u promexec sudo -n true 2>/dev/null && echo "WARNING: promexec can sudo" || echo "   promexec has no sudo (promexec -> sudo refused)"
 sudo -u promexec test -r /home/$CALLER 2>/dev/null && echo "WARNING: promexec can read /home/$CALLER" || echo "   promexec cannot read /home/$CALLER"
