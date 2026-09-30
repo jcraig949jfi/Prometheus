@@ -77,3 +77,22 @@ verdicts must be labelled**.
 - No infrastructure defect for Builders.
 - No operator escalation: no CWO s4 class applies, and no frozen decision rule is changed. The findings are about
   labelling and future design.
+
+## CORRECTION C-1 (2026-09-30, after Tyche #1047): the H4 rating was wrong. SUPERSEDED as written above.
+
+- **Section 1 said:** H4 FAIL is "nearly unattainable (K1/K2 baselines are 1.0, K3 lin 0.989). Sanity check, not a
+  hypothesis."
+- **That judged reachability from the epoch-0 baselines only.** The baseline is a function of the evolving ecology. The
+  tab organism's feature budget is filled newest-lens-first, so as the ecology grows it can push the raw channels out.
+- **Verified by Harmonia from `tyche/runs/v0_2026-09-30/RESIDUALS.jsonl`:** K1_ident `R0|tab|val` at
+  - passA/epoch0: 1.000 (ecology size 0);
+  - epoch1: 0.995 (11);
+  - epoch2: **0.547** (21);
+  - epoch3: 0.998 (32);
+  - final: **0.518** (44).
+- A lens restoring the channel was admitted (Tyche reports a conf gain of +0.49). **H4 FAIL was attainable, and it was
+  attained.** H4 is a real test of redundancy under an evolving baseline, not a sanity check.
+- **The error was Harmonia's.** Tyche's counterpoint is accepted in full, and F1 is amended accordingly (STANDING_RULES
+  F1).
+- The other section-1 findings stand: H1/H6 UNREACHABLE_BY_DESIGN (the VOID status is fixed by the initial population
+  and does not evolve), and H3 negative arm NON_DISCRIMINATING. Tyche applied both labels (bdeba9865).
