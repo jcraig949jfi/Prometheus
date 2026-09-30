@@ -27,7 +27,7 @@ def main(run):
     by = {s["id"]: s for s in specs}
     A = json.load(open(os.path.join(run, "PASS_A_BASELINE.json")))
     D = json.load(open(os.path.join(run, "PASS_D_AUDITS.json")))
-    gens = jl(os.path.join(run, "GENERATIONS.jsonl"))
+    gens = [g for g in jl(os.path.join(run, "GENERATIONS.jsonl")) if "gen" in g]
     adm = jl(os.path.join(run, "ADMISSIONS.jsonl"))
     res = jl(os.path.join(run, "RESIDUALS.jsonl"))
     gene = [r for r in jl(os.path.join(run, "GENEALOGY.jsonl")) if r.get("event") == "birth"]

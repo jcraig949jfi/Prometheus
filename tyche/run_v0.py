@@ -8,10 +8,17 @@ Every record is written by the program with per-record flush.
 
 from __future__ import annotations
 
+import os
+
+# One BLAS thread per process. Without this, 16 workers x OpenBLAS threads
+# oversubscribed 28 CPUs and generations went from 13 s to 330 s once the
+# ecology reached 32 lenses (aborted attempt, PREREG_AMENDMENT_1.md).
+for _v in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
+    os.environ[_v] = "1"
+
 import argparse
 import gzip
 import json
-import os
 import platform
 import subprocess
 import time
@@ -45,7 +52,8 @@ CFG = {
     "sig_z": 4.0,              # Pass D significance on a test split
     "rep_z": 3.0,              # Pass D replication on each fresh seed
     "null_n": 64,              # matched random lenses per admitted lens (home case)
-    "null_n_transfer": 32,     # matched random lenses per transfer candidate
+    "null_n_transfer": 32,
+    "evolution_core_hour_cap": 2.5,  # upper bound: wall x workers (MWO-0004 R2)     # matched random lenses per transfer candidate
 }
 
 
@@ -180,7 +188,10 @@ def main():
     n_dark = int(round(cfg["dark_frac"] * cfg["N"]))
     n_adm_tests = 0
     gen = 0
+    truncated = None
     for epoch in range(cfg["epochs"]):
+        if truncated:
+            break
         print(f"EPOCH {epoch} eco={eco_ids}", flush=True)
         # PASS B: residuals frozen at epoch start (err/dis masks live in workers)
         baseline(f"epoch{epoch}_start", train, ("val",))
@@ -256,6 +267,12 @@ def main():
             pop = list(dict.fromkeys(elite + off))
             dark = new_dark
             gen += 1
+            used = (time.time() - t_start) * a.workers / 3600
+            if used > cfg["evolution_core_hour_cap"]:
+                truncated = {"gen": gen, "epoch": epoch, "core_hours_upper_bound": round(used, 3)}
+                L_g.w({"TRUNCATED_BY_COMPUTE_CAP": truncated})
+                print(f"  TRUNCATED {truncated}", flush=True)
+                break
 
         # ------------------------------------------------ admission (conf split)
         ids = list(dict.fromkeys(pop + list(dark)))
@@ -396,7 +413,7 @@ def main():
     pool.join()
     json.dump({"finished_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                "wall_secs": round(time.time() - t_start, 1), "generations": gen,
-               "lenses_born": len(meta), "admitted": eco_ids},
+               "lenses_born": len(meta), "admitted": eco_ids, "truncated": truncated},
               open(os.path.join(a.out, "DONE.json"), "w"), indent=1)
     print("DONE", flush=True)
 
