@@ -470,3 +470,55 @@ def test_rcv_adr_without_receipt_is_rcv_add():
                payload=f[3], energy=f[4], received=rec, **LIVE)
     for x, y in zip(a[:5], b[:5]):
         assert np.array_equal(x, y)
+
+
+def test_rcv_sfz_without_snapshot_is_rcv_str():
+    """E-012 lesion: before the snapshot exists (warm-up), rcv_sfz is rcv_str bit for bit."""
+    rng = np.random.default_rng(12)
+    f = soup(24, rng)
+    ra = np.zeros((24, 24), bool); rb = ra.copy()
+    a, b = [x.copy() for x in f], [x.copy() for x in f]
+    for t in range(1, 6):
+        oa = V.step("rcv_sfz", H=24, W=24, seed=5, tick=t, opcode=a[0], arg0=a[1], arg1=a[2],
+                    payload=a[3], energy=a[4], received=ra, **LIVE)
+        ob = V.step("rcv_str", H=24, W=24, seed=5, tick=t, opcode=b[0], arg0=b[1], arg1=b[2],
+                    payload=b[3], energy=b[4], received=rb, **LIVE)
+        for x, y in zip(oa[:5], ob[:5]):
+            assert np.array_equal(x, y)
+        a, b = list(oa[:5]), list(ob[:5])
+        ra, rb = oa[5]["received"], ob[5]["received"]
+
+
+def test_rcv_sfz_aims_by_the_snapshot_not_current_energy():
+    f = blank(energy=0)
+    f[0][2, 2] = 7
+    f[1][2, 2] = K.NORTH
+    f[2][2, 2] = K.PAYLOAD
+    f[3][2, 2] = 21
+    f[4][2, 2] = 130                                      # current energy >> 6 == 2 -> would aim SOUTH
+    rec = np.zeros((5, 5), dtype=bool)
+    rec[2, 2] = True
+    snap = np.zeros((5, 5), dtype=np.uint8)               # snapshot >> 6 == 0 -> aims NORTH
+    out = V.step("rcv_sfz", H=5, W=5, seed=1, tick=1, opcode=f[0], arg0=f[1], arg1=f[2],
+                 payload=f[3], energy=f[4], received=rec, aim_energy=snap, **QUIET)
+    assert out[3][1, 2] == 21 and out[3][3, 2] == 0
+    snap[2, 2] = 130
+    out = V.step("rcv_sfz", H=5, W=5, seed=1, tick=1, opcode=f[0], arg0=f[1], arg1=f[2],
+                 payload=f[3], energy=f[4], received=rec, aim_energy=snap, **QUIET)
+    assert out[3][3, 2] == 21 and out[3][1, 2] == 0
+
+
+def test_world_passes_the_snapshot_to_rcv_sfz():
+    from observatory import aeth03_propagation as P
+    rng = np.random.default_rng(13)
+    f = soup(16, rng)
+    snap = rng.integers(0, 256, size=(16, 16), dtype=np.uint8)
+    w = P.World("rcv_sfz", f)
+    w.extra["aim_energy"] = snap
+    par = dict(LIVE, seed=7)
+    w.step(3, par)
+    ref = V.step("rcv_sfz", H=16, W=16, tick=3, opcode=f[0], arg0=f[1], arg1=f[2], payload=f[3],
+                 energy=f[4], received=np.zeros((16, 16), bool), aim_energy=snap, **par)
+    for x, y in zip(w.f, ref[:5]):
+        assert np.array_equal(x, y)
+    assert np.array_equal(w.extra["aim_energy"], snap)    # static: never updated by a step
