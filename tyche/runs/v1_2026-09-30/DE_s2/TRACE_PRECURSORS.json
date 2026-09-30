@@ -1,0 +1,742 @@
+[
+ {
+  "first_parent_line": [
+   {
+    "gen": 0,
+    "home_gain": 0.001,
+    "id": "L-cc9ebe9e5b",
+    "ops": [
+     "init"
+    ]
+   },
+   {
+    "gen": 1,
+    "home_gain": -0.001,
+    "id": "L-c0300f757c",
+    "ops": [
+     "recur"
+    ]
+   },
+   {
+    "gen": 2,
+    "home_gain": -0.002,
+    "id": "L-608416b001",
+    "ops": [
+     "temporal"
+    ]
+   },
+   {
+    "gen": 3,
+    "home_gain": 0.008,
+    "id": "L-77677ec815",
+    "ops": [
+     "insert"
+    ]
+   },
+   {
+    "gen": 4,
+    "home_gain": 0.003,
+    "id": "L-719c8803c0",
+    "ops": [
+     "recur"
+    ]
+   },
+   {
+    "gen": 5,
+    "home_gain": 0.001,
+    "id": "L-5fba4d2e38",
+    "ops": [
+     "dup",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 6,
+    "home_gain": -0.0,
+    "id": "L-6e8c3652e4",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 7,
+    "home_gain": 0.012,
+    "id": "L-7cfe595b0f",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 8,
+    "home_gain": 0.012,
+    "id": "L-77419a0336",
+    "ops": [
+     "dup"
+    ]
+   },
+   {
+    "gen": 9,
+    "home_gain": 0.098,
+    "id": "L-bcc8545bfe",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 10,
+    "home_gain": 0.093,
+    "id": "L-795f279dfc",
+    "ops": [
+     "delete",
+     "temporal"
+    ]
+   },
+   {
+    "gen": -1,
+    "home_gain": NaN,
+    "id": "L-1cd8b94be0",
+    "ops": [
+     "fuse"
+    ]
+   }
+  ],
+  "first_with_both": {
+   "birth_gen": null,
+   "id": null,
+   "ops": null,
+   "parents": null
+  },
+  "home": "Z1_xor_4_11",
+  "kind": "pair",
+  "lens": "L-1cd8b94be0",
+  "n_ancestors": 42,
+  "precursor_A": {
+   "channel": 3,
+   "first_birth_gen": null,
+   "first_carrier": null,
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": null,
+   "first_carrier_ops": null,
+   "lag": 4,
+   "n_carriers": 0
+  },
+  "precursor_B": {
+   "channel": 0,
+   "first_birth_gen": -1,
+   "first_carrier": "L-1cd8b94be0",
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": NaN,
+   "first_carrier_ops": [
+    "fuse"
+   ],
+   "lag": 11,
+   "n_carriers": 5
+  },
+  "replicated": true,
+  "test": 0.17566666666666667
+ },
+ {
+  "first_parent_line": [
+   {
+    "gen": 0,
+    "home_gain": 0.004,
+    "id": "L-f9e16463bf",
+    "ops": [
+     "init"
+    ]
+   },
+   {
+    "gen": 3,
+    "home_gain": 0.001,
+    "id": "L-e8e0262f74",
+    "ops": [
+     "drift",
+     "replace",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 8,
+    "home_gain": 0.008,
+    "id": "L-f390b9d328",
+    "ops": [
+     "point"
+    ]
+   },
+   {
+    "gen": 12,
+    "home_gain": 0.056,
+    "id": "L-515c678347",
+    "ops": [
+     "drift",
+     "insert"
+    ]
+   },
+   {
+    "gen": 15,
+    "home_gain": 0.007,
+    "id": "L-1f6fededde",
+    "ops": [
+     "drift",
+     "rewire",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 16,
+    "home_gain": 0.056,
+    "id": "L-c9f1764c6e",
+    "ops": [
+     "drift",
+     "recur"
+    ]
+   },
+   {
+    "gen": 17,
+    "home_gain": 0.178,
+    "id": "L-cefa72905e",
+    "ops": [
+     "graft"
+    ]
+   }
+  ],
+  "first_with_both": {
+   "birth_gen": null,
+   "id": null,
+   "ops": null,
+   "parents": null
+  },
+  "home": "Z1_xor_4_11",
+  "kind": "single",
+  "lens": "L-cefa72905e",
+  "n_ancestors": 63,
+  "precursor_A": {
+   "channel": 3,
+   "first_birth_gen": null,
+   "first_carrier": null,
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": null,
+   "first_carrier_ops": null,
+   "lag": 4,
+   "n_carriers": 0
+  },
+  "precursor_B": {
+   "channel": 0,
+   "first_birth_gen": 6,
+   "first_carrier": "L-a16d09985f",
+   "first_carrier_best_worlds": [
+    [
+     "C2_psign_raw_4",
+     0.148
+    ],
+    [
+     "G1_cmod3",
+     0.017
+    ],
+    [
+     "N4_tsd_Z5",
+     0.015
+    ]
+   ],
+   "first_carrier_home_gain": 0.003,
+   "first_carrier_ops": [
+    "drift",
+    "temporal"
+   ],
+   "lag": 11,
+   "n_carriers": 9
+  },
+  "replicated": true,
+  "test": 0.19933333333333333
+ },
+ {
+  "first_parent_line": [
+   {
+    "gen": 0,
+    "home_gain": 0.001,
+    "id": "L-cc9ebe9e5b",
+    "ops": [
+     "init"
+    ]
+   },
+   {
+    "gen": 1,
+    "home_gain": -0.001,
+    "id": "L-c0300f757c",
+    "ops": [
+     "recur"
+    ]
+   },
+   {
+    "gen": 2,
+    "home_gain": -0.002,
+    "id": "L-608416b001",
+    "ops": [
+     "temporal"
+    ]
+   },
+   {
+    "gen": 3,
+    "home_gain": 0.008,
+    "id": "L-77677ec815",
+    "ops": [
+     "insert"
+    ]
+   },
+   {
+    "gen": 4,
+    "home_gain": 0.003,
+    "id": "L-719c8803c0",
+    "ops": [
+     "recur"
+    ]
+   },
+   {
+    "gen": 5,
+    "home_gain": 0.001,
+    "id": "L-5fba4d2e38",
+    "ops": [
+     "dup",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 6,
+    "home_gain": -0.0,
+    "id": "L-6e8c3652e4",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 7,
+    "home_gain": 0.012,
+    "id": "L-7cfe595b0f",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 8,
+    "home_gain": 0.012,
+    "id": "L-77419a0336",
+    "ops": [
+     "dup"
+    ]
+   },
+   {
+    "gen": 9,
+    "home_gain": 0.098,
+    "id": "L-bcc8545bfe",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 10,
+    "home_gain": 0.098,
+    "id": "L-24af3454b5",
+    "ops": [
+     "point"
+    ]
+   },
+   {
+    "gen": 15,
+    "home_gain": 0.102,
+    "id": "L-b62ce06de7",
+    "ops": [
+     "drift",
+     "out"
+    ]
+   },
+   {
+    "gen": 19,
+    "home_gain": 0.098,
+    "id": "L-0ce2d1217e",
+    "ops": [
+     "recur"
+    ]
+   },
+   {
+    "gen": 20,
+    "home_gain": 0.124,
+    "id": "L-cb016f08c1",
+    "ops": [
+     "point"
+    ]
+   },
+   {
+    "gen": 21,
+    "home_gain": 0.135,
+    "id": "L-145c5a8b2f",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": -1,
+    "home_gain": NaN,
+    "id": "L-71267d4ec3",
+    "ops": [
+     "fuse"
+    ]
+   }
+  ],
+  "first_with_both": {
+   "birth_gen": null,
+   "id": null,
+   "ops": null,
+   "parents": null
+  },
+  "home": "Z1_xor_4_11",
+  "kind": "pair",
+  "lens": "L-71267d4ec3",
+  "n_ancestors": 52,
+  "precursor_A": {
+   "channel": 3,
+   "first_birth_gen": null,
+   "first_carrier": null,
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": null,
+   "first_carrier_ops": null,
+   "lag": 4,
+   "n_carriers": 0
+  },
+  "precursor_B": {
+   "channel": 0,
+   "first_birth_gen": -1,
+   "first_carrier": "L-71267d4ec3",
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": NaN,
+   "first_carrier_ops": [
+    "fuse"
+   ],
+   "lag": 11,
+   "n_carriers": 9
+  },
+  "replicated": true,
+  "test": 0.206
+ },
+ {
+  "first_parent_line": [
+   {
+    "gen": 0,
+    "home_gain": 0.0,
+    "id": "L-72be378f0c",
+    "ops": [
+     "init"
+    ]
+   },
+   {
+    "gen": 4,
+    "home_gain": 0.01,
+    "id": "L-f21691a41e",
+    "ops": [
+     "drift",
+     "temporal",
+     "insert"
+    ]
+   },
+   {
+    "gen": 10,
+    "home_gain": 0.01,
+    "id": "L-b682a1de1c",
+    "ops": [
+     "drift",
+     "dup"
+    ]
+   },
+   {
+    "gen": 23,
+    "home_gain": 0.0,
+    "id": "L-671ae26f93",
+    "ops": [
+     "drift",
+     "dup",
+     "point"
+    ]
+   },
+   {
+    "gen": 28,
+    "home_gain": 0.0,
+    "id": "L-0db23a5682",
+    "ops": [
+     "drift",
+     "delete"
+    ]
+   },
+   {
+    "gen": 30,
+    "home_gain": 0.003,
+    "id": "L-d73dca0e64",
+    "ops": [
+     "drift",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 31,
+    "home_gain": 0.0,
+    "id": "L-310f687565",
+    "ops": [
+     "drift",
+     "rewire"
+    ]
+   },
+   {
+    "gen": 34,
+    "home_gain": 0.0,
+    "id": "L-d2833340cc",
+    "ops": [
+     "delete"
+    ]
+   },
+   {
+    "gen": 35,
+    "home_gain": 0.0,
+    "id": "L-74f531fe6d",
+    "ops": [
+     "drift",
+     "replace"
+    ]
+   },
+   {
+    "gen": -1,
+    "home_gain": NaN,
+    "id": "L-4d6e1f248a",
+    "ops": [
+     "fuse"
+    ]
+   }
+  ],
+  "first_with_both": {
+   "birth_gen": null,
+   "id": null,
+   "ops": null,
+   "parents": null
+  },
+  "home": "Z1_xor_4_11",
+  "kind": "pair",
+  "lens": "L-4d6e1f248a",
+  "n_ancestors": 54,
+  "precursor_A": {
+   "channel": 3,
+   "first_birth_gen": null,
+   "first_carrier": null,
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": null,
+   "first_carrier_ops": null,
+   "lag": 4,
+   "n_carriers": 0
+  },
+  "precursor_B": {
+   "channel": 0,
+   "first_birth_gen": -1,
+   "first_carrier": "L-4d6e1f248a",
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": NaN,
+   "first_carrier_ops": [
+    "fuse"
+   ],
+   "lag": 11,
+   "n_carriers": 11
+  },
+  "replicated": true,
+  "test": 0.206
+ },
+ {
+  "first_parent_line": [
+   {
+    "gen": 0,
+    "home_gain": 0.0,
+    "id": "L-67b293ffeb",
+    "ops": [
+     "init"
+    ]
+   },
+   {
+    "gen": 3,
+    "home_gain": 0.0,
+    "id": "L-f03a57a344",
+    "ops": [
+     "drift",
+     "insert"
+    ]
+   },
+   {
+    "gen": 6,
+    "home_gain": 0.008,
+    "id": "L-381fdce485",
+    "ops": [
+     "drift",
+     "insert",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 8,
+    "home_gain": 0.007,
+    "id": "L-1d7d2cfa41",
+    "ops": [
+     "drift",
+     "dup",
+     "recur"
+    ]
+   },
+   {
+    "gen": 9,
+    "home_gain": 0.001,
+    "id": "L-1613010ba8",
+    "ops": [
+     "drift",
+     "temporal",
+     "out"
+    ]
+   },
+   {
+    "gen": 11,
+    "home_gain": 0.004,
+    "id": "L-c9f59451b6",
+    "ops": [
+     "drift",
+     "replace",
+     "out"
+    ]
+   },
+   {
+    "gen": 12,
+    "home_gain": 0.003,
+    "id": "L-ea3810f103",
+    "ops": [
+     "drift",
+     "point",
+     "insert"
+    ]
+   },
+   {
+    "gen": 13,
+    "home_gain": 0.003,
+    "id": "L-b5a55bffda",
+    "ops": [
+     "dup"
+    ]
+   },
+   {
+    "gen": 14,
+    "home_gain": 0.004,
+    "id": "L-04564ed5fd",
+    "ops": [
+     "recur",
+     "insert"
+    ]
+   },
+   {
+    "gen": 15,
+    "home_gain": 0.003,
+    "id": "L-80aeb8aedc",
+    "ops": [
+     "out",
+     "recur"
+    ]
+   },
+   {
+    "gen": 17,
+    "home_gain": 0.006,
+    "id": "L-870f07e8d6",
+    "ops": [
+     "insert",
+     "dup"
+    ]
+   },
+   {
+    "gen": 18,
+    "home_gain": 0.007,
+    "id": "L-c83855d224",
+    "ops": [
+     "rewire",
+     "temporal"
+    ]
+   },
+   {
+    "gen": 20,
+    "home_gain": 0.007,
+    "id": "L-ccd3d9f476",
+    "ops": [
+     "replace"
+    ]
+   },
+   {
+    "gen": 21,
+    "home_gain": 0.007,
+    "id": "L-2c2e37b780",
+    "ops": [
+     "delete"
+    ]
+   },
+   {
+    "gen": 22,
+    "home_gain": 0.029,
+    "id": "L-c1c046e040",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 23,
+    "home_gain": 0.03,
+    "id": "L-37f74ba508",
+    "ops": [
+     "graft"
+    ]
+   },
+   {
+    "gen": 31,
+    "home_gain": 0.03,
+    "id": "L-0de2dd41ed",
+    "ops": [
+     "delete"
+    ]
+   },
+   {
+    "gen": -1,
+    "home_gain": NaN,
+    "id": "L-9f4e98906d",
+    "ops": [
+     "fuse"
+    ]
+   }
+  ],
+  "first_with_both": {
+   "birth_gen": null,
+   "id": null,
+   "ops": null,
+   "parents": null
+  },
+  "home": "Z2_xor_3_7",
+  "kind": "pair",
+  "lens": "L-9f4e98906d",
+  "n_ancestors": 96,
+  "precursor_A": {
+   "channel": 1,
+   "first_birth_gen": null,
+   "first_carrier": null,
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": null,
+   "first_carrier_ops": null,
+   "lag": 3,
+   "n_carriers": 0
+  },
+  "precursor_B": {
+   "channel": 3,
+   "first_birth_gen": null,
+   "first_carrier": null,
+   "first_carrier_best_worlds": [],
+   "first_carrier_home_gain": null,
+   "first_carrier_ops": null,
+   "lag": 7,
+   "n_carriers": 0
+  },
+  "replicated": false,
+  "test": 0.04833333333333333
+ }
+]

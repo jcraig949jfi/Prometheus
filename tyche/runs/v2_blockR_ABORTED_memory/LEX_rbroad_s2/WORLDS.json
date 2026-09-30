@@ -1,0 +1,340 @@
+[
+ {
+  "id": "R1_v0",
+  "cls": "REG_D1->D3_shared_none",
+  "kind": "planted",
+  "law": {
+   "comb": "majority",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 12
+    },
+    {
+     "type": "delay",
+     "ch": 4,
+     "lag": 5
+    },
+    {
+     "type": "delay",
+     "ch": 5,
+     "lag": 10
+    }
+   ]
+  },
+  "law2": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 3,
+     "lag": 6
+    },
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 6
+    }
+   ]
+  },
+  "uid": 5000
+ },
+ {
+  "id": "R2_v0",
+  "cls": "REG_D1->D4a_shared_none",
+  "kind": "planted",
+  "law": {
+   "comb": "majority",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 5,
+     "lag": 9
+    },
+    {
+     "type": "delay",
+     "ch": 0,
+     "lag": 6
+    },
+    {
+     "type": "delay",
+     "ch": 4,
+     "lag": 5
+    }
+   ]
+  },
+  "law2": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 4
+    },
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 4
+    },
+    {
+     "type": "delay",
+     "ch": 3,
+     "lag": 2
+    }
+   ]
+  },
+  "uid": 5001
+ },
+ {
+  "id": "R3_v0",
+  "cls": "REG_D3->D3_shared_one",
+  "kind": "planted",
+  "law": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 8
+    },
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 11
+    }
+   ]
+  },
+  "law2": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 8
+    },
+    {
+     "type": "delay",
+     "ch": 0,
+     "lag": 10
+    }
+   ]
+  },
+  "uid": 5002
+ },
+ {
+  "id": "R4_v0",
+  "cls": "REG_D3->D3_shared_none",
+  "kind": "planted",
+  "law": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 0,
+     "lag": 5
+    },
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 3
+    }
+   ]
+  },
+  "law2": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 8
+    },
+    {
+     "type": "delay",
+     "ch": 5,
+     "lag": 5
+    }
+   ]
+  },
+  "uid": 5003
+ },
+ {
+  "id": "D1_v0",
+  "cls": "D1",
+  "kind": "planted",
+  "law": {
+   "comb": "majority",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 12
+    },
+    {
+     "type": "delay",
+     "ch": 5,
+     "lag": 2
+    },
+    {
+     "type": "delay",
+     "ch": 0,
+     "lag": 9
+    }
+   ]
+  },
+  "uid": 1000
+ },
+ {
+  "id": "D2_v0",
+  "cls": "D2",
+  "kind": "planted",
+  "law": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 4,
+     "lag": 12
+    },
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 2
+    }
+   ],
+   "decoy": {
+    "ch": 1,
+    "agree": 0.65
+   }
+  },
+  "uid": 1001
+ },
+ {
+  "id": "D3_v0",
+  "cls": "D3",
+  "kind": "planted",
+  "law": {
+   "comb": "xor",
+   "prec": [
+    {
+     "type": "delay",
+     "ch": 0,
+     "lag": 11
+    },
+    {
+     "type": "delay",
+     "ch": 1,
+     "lag": 12
+    }
+   ]
+  },
+  "uid": 1002
+ },
+ {
+  "id": "D6_v0",
+  "cls": "D6",
+  "kind": "planted",
+  "law": {
+   "comb": "eq",
+   "prec": [
+    {
+     "type": "fsm",
+     "ch": 5,
+     "table": [
+      2,
+      0,
+      2,
+      0,
+      1,
+      1
+     ],
+     "lag": 0
+    },
+    {
+     "type": "fsm",
+     "ch": 5,
+     "table": [
+      2,
+      0,
+      2,
+      0,
+      1,
+      1
+     ],
+     "lag": 6
+    }
+   ]
+  },
+  "uid": 1006
+ },
+ {
+  "id": "D7a_v0",
+  "cls": "D7",
+  "kind": "planted",
+  "law": {
+   "comb": "table",
+   "table": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "prec": [
+    {
+     "type": "wpar",
+     "ch": 5,
+     "lag": 5,
+     "w": 4
+    },
+    {
+     "type": "acc",
+     "ch": 3,
+     "m": 2,
+     "lag": 0
+    },
+    {
+     "type": "delay",
+     "ch": 2,
+     "lag": 11
+    },
+    {
+     "type": "wmaj",
+     "ch": 4,
+     "lag": 5,
+     "w": 5
+    }
+   ],
+   "lowest_order": 2
+  },
+  "uid": 1007
+ },
+ {
+  "id": "D5d_v0",
+  "cls": "D5d",
+  "kind": "planted",
+  "law": {
+   "comb": "ident",
+   "prec": [
+    {
+     "type": "wmaj",
+     "ch": 1,
+     "lag": 3,
+     "w": 5
+    }
+   ]
+  },
+  "uid": 1010
+ }
+]

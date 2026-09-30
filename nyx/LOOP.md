@@ -125,6 +125,9 @@ rather than argued away.
     #44 #52 #175  Vivarium         REJECTED_BLOCKED (#182: attempted; substrate absent/unowned or corpus vacuous or semantics undeclared) -> CAUSED PROCEDURE CHANGE (K9 K10), not a downstream experiment
     #45 #53 #176  Archaeon         DELIVERED, no return
     #189          Proteus+Vivarium question, no answer
+                  [ANNOTATION 2026-09-30, the line above is kept as written: ANSWERED 2026-09-16 by Proteus, (b) -- Proteus owns no
+                   rewriting substrate and will not build one; the four records stay UNHOSTABLE_TODAY (roles/Proteus/prompts/2026-09-16_replies/REPLY_NYX_189_rewriting_substrate.md).
+                   This ledger was stale for 14 days; found by Artemis Fabric S3 Q5, comms #1011.]
     #190          Vivarium+Proteus DELIVERED (pressure, owner named), no return
     #191          Archaeon         DELIVERED, no return
     #192          Diomedes+Archaeon DELIVERED (failure finding), no return

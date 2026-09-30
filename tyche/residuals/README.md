@@ -31,3 +31,17 @@ imported Artemis entries carry no raw_rows or tags yet; a validated quote
 proves the text exists at that sha, not that the phenomenon is real.
 Tests: tyche/tests/test_residuals.py (real quote admitted; fabricated
 quote, wrong sha, missing rows, bad kind rejected).
+
+v0.1 (ref 282f01c45): enrich.py applied an agent-drafted enrichment
+(enrich_artemis_with_flags.jsonl) to the 83 imported entries -- tags,
+raw rows (re-validated by build.py), engine, seat fixes where the fix is a
+real seat name; 31 entries carry a verbatim `framing_note` (a reader's
+flag that the source does not support the entry's framing -- e.g. already
+answered, numbers misquoted, pattern on too little; not a verdict).
+Result v0_1/: 122 admitted, 10 rejected, 67 with committed raw rows, 122
+tagged. cluster.py -> v0_1/CLUSTERS_v0_1.json: 17 cross-engine niches
+(tag present in >= 3 engines), led by context_dependence (14 engines),
+measure_disagreement (10), control_shows_effect (9). Work tags
+(untested_precondition 39, control_never_run 10) mark missing experiments
+and never form niches. Per the operator's v1 directive the natural
+residuals are NOT perturbed until v1 gate 6 is shown.

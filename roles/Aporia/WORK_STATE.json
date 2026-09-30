@@ -4,10 +4,10 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T08:45:00Z",
+  "updated_at_utc": "2026-09-30T13:30:00Z",
   "state": "ACTIVE",
   "branch": "aporia/cwo-fleet-activation-2026-09-30",
-  "head_sha": "(this commit)",
+  "head_sha": "6a7a845694d81ea94f65bada5725d5cf30a5dc36",
   "threads": [],
   "campaigns": [],
   "experiments": [],
@@ -35,18 +35,15 @@
     "roles/Aporia/probes/FP-001_RESULT.json",
     "roles/base-role/RESPONSIBILITIES.md boot line (MWO-0004 R4) @ 17e25e67be040d04925ec04e63353503a4c03090"
   ],
-  "state_reason": "Operator CWO 2026-09-30: Aporia is fleet scheduler, backlog maintainer and blocker clearer (flow, not scientific opinion). Queue of record: ops/fleet/QUEUE.json.",
+  "state_reason": "Completion coordinator under CWO-2026-09-30B; no NEXT/RESERVE promotion, no new Builder lanes, no scientific authority.",
   "migration_report": "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)",
   "r4_boot_line_commit": "17e25e67be040d04925ec04e63353503a4c03090",
   "base_role_work_conserving_commit": "1e90420174fb73cd0c212a52f8bc44b3e3de5d21",
-  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation",
-  "current": "First activation pass (CWO s6): broadcast + per-seat assignments; clear stale blockers; wake reachable seats",
-  "next": "Coordination cycle: python ops/fleet/fleet_status.py; promote/refill seat queues in ops/fleet/QUEUE.json",
-  "reserve": [
-    "BUILDER-FABRIC after Odysseus closes promexec round 2",
-    "BUILDER-EXPERIMENT primitives"
-  ],
+  "work_order": "MWO-0004 + CWO-2026-09-30B finish-in-place",
+  "current": "CWO-2026-09-30B: fleet census (ops/fleet/CENSUS.json) from live discovery + heartbeats; route blockers; no promotion",
+  "next": "awaiting operator after census closes",
+  "reserve": [],
   "resource_status": "no compute of its own",
-  "last_receipt": "ops/fleet/QUEUE.json + ops/fleet/fleet_status.py (this commit)"
+  "last_receipt": "6a7a84569 (CWO + QUEUE.json + fleet_status.py); comms #1024-1036; journal 2026-09-30"
 }

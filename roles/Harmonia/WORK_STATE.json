@@ -1,85 +1,87 @@
 {
-  "schema": "prometheus.work_state.v1",
-  "seat": "Harmonia",
-  "mwo_id": "MWO-0004",
-  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T12:00:00Z",
-  "state": "WORKING",
-  "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
-  "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
-  "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
-  "threads": [
-    {
-      "id": "D2-CUSTODY",
-      "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
-      "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT (Cosmos C3 rejected pre-holdout, 0f6c3b87f); D2 sealed and unspent",
-      "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
-    },
-    {
-      "id": "C1-HOSTILE-ADJ",
-      "what": "Aphrodite Campaign 1 hostile adjudication contract (#453/#490/#533-E5)",
-      "state": "DELIVERED_ACCEPTED (Aphrodite #929); production-path E5 check is Aphrodite's when a C1 harness exists",
-      "record": "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md"
-    }
-  ],
-  "campaigns": [],
-  "experiments": [],
-  "fabric_tasks": [
-    "tsk-68d1805f8bb9",
-    "tsk-6977ea115cc8"
-  ],
-  "running": [],
-  "blocked_on": [
-    {
-      "item": "D2 adjudication",
-      "dependency": "no claim: Cosmos C3 operator disposition",
-      "owner": "operator/Cosmos"
-    }
-  ],
-  "next_actions": [
-    "watch for operator ruling on E-003 (#1044)",
-    "sample new closures (evidence audit 3)",
-    "AP helpers (multiplicity/power; frozen-vs-amended verdict diff)"
-  ],
-  "overtaken": [
-    {
-      "what": "git-native control-plane initiative capture (ops/, c17d4c477)",
-      "why": "overtaken by MWO-0001; no further work unless an MWO assigns it"
-    },
-    {
-      "comms": [
-        603,
-        608
-      ],
-      "what": "SI s12 freeze requests",
-      "why": "CANCELED by MWO-0002 s2a; marked done in comms citing it"
-    }
-  ],
-  "operator_decisions_required": [
-    "CWO s4: E-003 BEE-leg verdict of record (owner erratum d06059735 accepts pre-exposure ALTERED as confirmatory; VALIDATED conditional-only; operator to rule). Harmonia reading: ALTERED of record."
-  ],
-  "latest_reports": [
-    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md",
-    "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md",
-    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md"
-  ],
-  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
-  "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
-  "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
-  "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
-  "current": "FOLLOW-UP: Tyche v0 audited for labelling (applied); self-correction C-1 done. Next CURRENT: evidence-audit sample 3 when new closures land",
-  "next": "extend AP with a multiplicity/power helper for sealed-holdout designs",
-  "reserve": [
-    "evidence-audit sample 2: Ensorain, Ananke, Bellerophon closures"
-  ],
-  "blocked": [
-    {
-      "item": "D2 adjudication",
-      "dependency": "no claim: Cosmos C3 operator disposition",
-      "owner": "operator/Cosmos"
-    }
-  ],
-  "resource_status": "local CPU only; no leases; no spend",
-  "last_receipt": "EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md addendum: E-003 erratum verified (owner confirmed all item-H findings)"
+ "schema": "prometheus.work_state.v1",
+ "seat": "Harmonia",
+ "mwo_id": "MWO-0004",
+ "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+ "updated_at_utc": "2026-09-30T13:05:00Z",
+ "state": "WORKING",
+ "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
+ "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
+ "instance": "m2-475d761f (M2 SPECTREX5); only live Harmonia instance at boot",
+ "threads": [
+  {
+   "id": "D2-CUSTODY",
+   "what": "Cosmos holdout D2 custody/order guarantees (MWO HARMONIA duty)",
+   "state": "DORMANT: AUDIT PASS anchored; no COMMITMENT (Cosmos C3 rejected pre-holdout, 0f6c3b87f); D2 sealed and unspent",
+   "record": "roles/Harmonia/rulings/RECORD_D2_GOVERNING_AUDIT_AND_SEAL_GATE_2026-09-29.md"
+  },
+  {
+   "id": "C1-HOSTILE-ADJ",
+   "what": "Aphrodite Campaign 1 hostile adjudication contract (#453/#490/#533-E5)",
+   "state": "DELIVERED_ACCEPTED (Aphrodite #929); production-path E5 check is Aphrodite's when a C1 harness exists",
+   "record": "roles/Harmonia/qualification/campaign1/CONTRACT_C1_HOSTILE_ADJUDICATION_v1.md"
+  }
+ ],
+ "campaigns": [],
+ "experiments": [],
+ "fabric_tasks": [
+  "tsk-68d1805f8bb9",
+  "tsk-6977ea115cc8"
+ ],
+ "running": [],
+ "blocked_on": [
+  {
+   "item": "D2 adjudication",
+   "dependency": "no claim: Cosmos C3 operator disposition",
+   "owner": "operator/Cosmos"
+  }
+ ],
+ "next_actions": [
+  "Review Nyx full-domain replication prereg when frozen (ruler)",
+  "Continue CWO evidence-audit sampling on new closures"
+ ],
+ "overtaken": [
+  {
+   "what": "git-native control-plane initiative capture (ops/, c17d4c477)",
+   "why": "overtaken by MWO-0001; no further work unless an MWO assigns it"
+  },
+  {
+   "comms": [
+    603,
+    608
+   ],
+   "what": "SI s12 freeze requests",
+   "why": "CANCELED by MWO-0002 s2a; marked done in comms citing it"
+  }
+ ],
+ "operator_decisions_required": [
+  "CWO s4: E-003 BEE-leg verdict of record (owner erratum d06059735 accepts pre-exposure ALTERED as confirmatory; VALIDATED conditional-only; operator to rule). Harmonia reading: ALTERED of record."
+ ],
+ "latest_reports": [
+  "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE4.md",
+  "roles/Harmonia/rulings/RECORD_HARM55_HARM56_NATIVE_OBSERVER_2026-09-30.md",
+  "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE3.md",
+  "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md",
+  "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md"
+ ],
+ "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+ "migration_report": "roles/Harmonia/MIGRATION_REPORT_MWO-0002.json",
+ "comms_cursor": "#1078 (sync 2026-09-30T12:56Z)",
+ "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
+ "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
+ "current": "HOLD: audit samples on new closures (sample 4: Ananke W-Y, Bellerophon E-BEL-REPL-01 SUPPORTED; F8 adopted). Awaiting Nyx replication prereg.",
+ "next": "evidence-audit sample 4 on new closures",
+ "reserve": [
+  "evidence-audit sample 4 on new closures",
+  "AP helpers (multiplicity/power; frozen-vs-amended verdict diff)"
+ ],
+ "blocked": [
+  {
+   "item": "D2 adjudication",
+   "dependency": "no claim: Cosmos C3 operator disposition",
+   "owner": "operator/Cosmos"
+  }
+ ],
+ "resource_status": "local CPU only; no leases; no spend",
+ "last_receipt": "roles/Harmonia/rulings/RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md (CUT_SUPPORTED 4/4, executed structural identity, NOT confirmatory: rows seen + deterministic)"
 }

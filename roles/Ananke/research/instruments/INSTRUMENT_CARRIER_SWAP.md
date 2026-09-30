@@ -111,3 +111,12 @@ On sync physics with update_period p > 1, report the carrier class per
 swap-tick phase q = (t0 + offset) mod p (workers/W-R/fork.py); the pooled
 class is only a weighted summary. Phase-difference CIs need trial-level as
 well as pair-level resampling when a stratum holds few trials.
+
+## UPDATE 2026-09-30: relative swap verdict promoted (prometheus/ananke/swap_rel.py)
+For specimens whose normal accuracy is not near 1, use the relative verdict
+(FLIP_REL / NO_EFFECT_REL / CHANCE_REL, per-verdict attainability, P >= 32
+pairs) instead of lens.swap_verdict's absolute rule, on SINGLE-trial pair
+statistics from lens_swap. Interval: studentized pair bootstrap with a fixed
+SD floor (REL4 H2), chosen by frozen plans T-SWAP-REL4/REL5; false-certificate
+rate <= 1% on all tested designs. Report z with its paired CI beside every
+FLIP_REL (complete vs partial transfer). Scope limits: see the module header.

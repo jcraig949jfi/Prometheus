@@ -1,7 +1,7 @@
 {
  "schema": "nyx.atlas/0",
- "built": "2026-09-19T10:08Z",
- "n": 171,
+ "built": "2026-09-30T11:20Z",
+ "n": 172,
  "pressures": [
   {
    "pressure_id": "arduino-pid::P.a_feedback_controller_on_a_saturating_actuator_must_track_setpoint_steps_without_overshoot_from_integral_wind_up_or_spikes_from_differentiating_the_step_and_must_hand_over_from_manual_control_without_a_jump",
@@ -86,6 +86,23 @@
    "cheat_control": "an organism given a cell that is excluded from placement must never die and must not spread: the world must show both, or placement is not the death mechanism",
    "cost_class": "CPU-scale",
    "purpose_separated_from_pressure": "PURPOSE: population structure in digital evolution (Avida birth methods)",
+   "cut_mode": "ANCESTRY_AWARE"
+  },
+  {
+   "pressure_id": "avida::P.a_line_of_descent_must_be_readable_at_the_end_from_memory_bounded_by_the_living_not_by_everything_that_ever_lived",
+   "source_fossil": "avida",
+   "source_evidence": "GenotypeArbiter removeGenotype 498-533; Genotype founder constructor 153-177; cPopulation SavePopulation 6557-6560",
+   "condition": "a population turns over thousands of times; nearly every lineage founded goes extinct; whoever reads the run afterwards wants to know how the survivors came to be; memory and the save file are finite",
+   "resource_or_constraint": "one record per retained class of identical organisms; a run founds far more classes than it ever holds alive",
+   "failure_condition": "memory grows with every class ever founded and the run dies, or a survivor's line of descent cannot be read back",
+   "world_punishes": "keeping every record (unbounded growth); keeping none (no history)",
+   "world_rewards": "keeping exactly the living classes and their ancestors, and forgetting an extinct branch as soon as its last member dies",
+   "observable_consequence": "in a saved population, dead records that no record names as a parent: none under this rule, the large majority of dead records without it; retained records / records ever founded falls as the run lengthens",
+   "vacuity_condition": "no extinction (nothing to forget) or no mutation (one class, no tree)",
+   "trivial_shortcuts": "found every class parentless (DISABLE_GENOTYPE_CLASSIFICATION); write only the living (save_historic=0)",
+   "cheat_control": "the same population run with forgetting switched off must show dead unnamed records in its save; if it shows none, the observable cannot see forgetting and a zero in the real save means nothing (run on the reference model, nyx/atlas/experiments/avida_ancestry: 92 unnamed dead records of 131 with forgetting off, 0 of 23 with it on)",
+   "cost_class": "memory-scale; the check on a saved file is milliseconds",
+   "purpose_separated_from_pressure": "PURPOSE: phylogeny and line-of-descent analysis of digital evolution runs",
    "cut_mode": "ANCESTRY_AWARE"
   },
   {

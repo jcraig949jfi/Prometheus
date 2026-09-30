@@ -1,0 +1,157 @@
+{
+ "schema": "artemis.script_batch.v1",
+ "batch": "D002",
+ "runner": "roles/Artemis/dispatch/run_frozen.py",
+ "note": "one Task per row; args after SCRIPT CWD are the script's own documented usage; {repo} = pinned worktree",
+ "tasks": [
+  {
+   "id": "D002-02",
+   "from": "D001-02",
+   "script": "D001-02.py",
+   "cwd": "repo",
+   "args": [
+    "--repo",
+    "{repo}"
+   ],
+   "caps": [
+    "python.numpy"
+   ],
+   "wall_s": 5400,
+   "thread": "thr-3afa52b6ae72"
+  },
+  {
+   "id": "D002-03q",
+   "from": "D001-03",
+   "script": "D001-03.py",
+   "cwd": "repo",
+   "args": [
+    "--quick"
+   ],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 3600,
+   "thread": "thr-8ab98ac96d2c"
+  },
+  {
+   "id": "D002-03",
+   "from": "D001-03",
+   "script": "D001-03.py",
+   "cwd": "repo",
+   "args": [],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 5400,
+   "thread": "thr-8ab98ac96d2c"
+  },
+  {
+   "id": "D002-04",
+   "from": "D001-04",
+   "script": "D001-04.py",
+   "cwd": "repo",
+   "args": [
+    "{repo}"
+   ],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 900,
+   "thread": "thr-e4d794728df7"
+  },
+  {
+   "id": "D002-05",
+   "from": "D001-05",
+   "script": "D001-05.py",
+   "cwd": "repo",
+   "args": [],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 900,
+   "thread": "thr-123bd5f2f2f2"
+  },
+  {
+   "id": "D002-06",
+   "from": "D001-06",
+   "script": "D001-06.py",
+   "cwd": "out",
+   "args": [],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 3600,
+   "thread": "thr-b710b5b0db43"
+  },
+  {
+   "id": "D002-07",
+   "from": "D001-07",
+   "script": "D001-07.py",
+   "cwd": "repo",
+   "args": [
+    "{repo}"
+   ],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 900,
+   "thread": "thr-677d29b50faa"
+  },
+  {
+   "id": "D002-08A",
+   "from": "D001-08",
+   "script": "D001-08.py",
+   "cwd": "out",
+   "args": [
+    "A"
+   ],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 900,
+   "thread": "thr-55116645f3f3"
+  },
+  {
+   "id": "D002-08B",
+   "from": "D001-08",
+   "script": "D001-08.py",
+   "cwd": "out",
+   "args": [
+    "B"
+   ],
+   "caps": [
+    "python.numpy"
+   ],
+   "wall_s": 5400,
+   "thread": "thr-55116645f3f3"
+  },
+  {
+   "id": "D002-08C",
+   "from": "D001-08",
+   "script": "D001-08.py",
+   "cwd": "out",
+   "args": [
+    "C"
+   ],
+   "caps": [
+    "python.numpy"
+   ],
+   "wall_s": 5400,
+   "thread": "thr-55116645f3f3"
+  },
+  {
+   "id": "D002-09",
+   "from": "D001-09",
+   "script": "D001-09.py",
+   "cwd": "repo",
+   "args": [
+    "{repo}"
+   ],
+   "caps": [
+    "python.stdlib"
+   ],
+   "wall_s": 900,
+   "thread": "thr-8c1d4fb60298"
+  }
+ ]
+}

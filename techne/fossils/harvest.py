@@ -1098,6 +1098,20 @@ PRESERVATION_STATES = ("SELF_CONTAINED", "FULLY_PINNED_EXTERNALS", "UNPINNED_EXT
 _RANK = {s: i for i, s in enumerate(PRESERVATION_STATES)}
 
 
+#: The recipe axis. NO_RECIPE was added 2026-09-30 (TECHNE-126): until then a specimen with NO
+#: recipe.json read NO_NETWORK_FETCH_DETECTED -- "nothing fired" written where nothing COULD have
+#: fired (48 of the 52 records carrying a recipe_status on that date, the new dcd record included,
+#: had no recipe to scan; found
+#: on dcd-facebookresearch-2022, whose README clones openai/baselines unpinned while the record
+#: said no network fetch). NO_NETWORK_FETCH_DETECTED now means: a recipe exists, it was scanned,
+#: and the pattern did not match. NO_RECIPE says nothing about how the body is built or run.
+RECIPE_STATES = ("NETWORK_DEPENDENT", "NO_NETWORK_FETCH_DETECTED", "NO_RECIPE")
+
+
+def _has_recipe(specimen_id):
+    return (vault.specimen_dir(specimen_id) / "recipe.json").exists()
+
+
 def _recipe_network_deps(specimen_id):
     """Distinct network-fetch invocations appearing in the recipe (build/run time)."""
     rp = vault.specimen_dir(specimen_id) / "recipe.json"
@@ -1105,6 +1119,17 @@ def _recipe_network_deps(specimen_id):
         return []
     txt = rp.read_text(encoding="utf-8", errors="ignore")
     return sorted({m.group(1).strip() for m in _NETWORK_PAT.finditer(txt)})
+
+
+def recipe_status_of(specimen_id, net=None):
+    """The recipe axis for one specimen: NETWORK_DEPENDENT if the recipe names a network fetch,
+    NO_NETWORK_FETCH_DETECTED if a recipe exists and names none, NO_RECIPE if there is no recipe
+    to scan (the scan could not have fired, so it is not reported as a clean scan)."""
+    if net is None:
+        net = _recipe_network_deps(specimen_id)
+    if net:
+        return "NETWORK_DEPENDENT"
+    return "NO_NETWORK_FETCH_DETECTED" if _has_recipe(specimen_id) else "NO_RECIPE"
 
 
 def preservation_of(specimen_id, rec=None):
@@ -1154,7 +1179,7 @@ def preservation_of(specimen_id, rec=None):
         body = "SELF_CONTAINED"
 
     net = _recipe_network_deps(specimen_id)
-    recipe = "NETWORK_DEPENDENT" if net else "NO_NETWORK_FETCH_DETECTED"
+    recipe = recipe_status_of(specimen_id, net)
     status = body
     if net and _RANK[body] < _RANK["UNPINNED_EXTERNAL_DEPENDENCY"]:
         status = "UNPINNED_EXTERNAL_DEPENDENCY"

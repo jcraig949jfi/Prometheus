@@ -214,7 +214,10 @@ def lens_id(g):
     return "L-" + hashlib.sha256(canonical(g).encode()).hexdigest()[:10]
 
 
-def validate(g):
+KFUSED = 6  # a fused sensor (tyche v1) may carry both parents' outputs
+
+
+def validate(g, kmax=KMAX):
     n = NIN
     for i, (op, args, p) in enumerate(g["ins"]):
         if op not in OPS and op != LEAD_OP:
@@ -223,7 +226,7 @@ def validate(g):
         if len(args) != ar or any(a < 0 or a >= n + i for a in args):
             return False
     nreg = n + len(g["ins"])
-    return 1 <= len(g["out"]) <= KMAX and all(0 <= o < nreg for o in g["out"])
+    return 1 <= len(g["out"]) <= kmax and all(0 <= o < nreg for o in g["out"])
 
 
 def cone(g, regs):
@@ -452,6 +455,41 @@ def graft(g, donor, rng):
     return g
 
 
+def fuse(a, b):
+    """One genome computing both a's and b's outputs (a's instructions, then
+    the cone of b's outputs with b's internal registers remapped). The
+    output is exactly the concatenation of a's and b's outputs, so a fused
+    sensor presents the organism with O(L_a(X), L_b(X)). Deterministic."""
+    g = _copy(a)
+    need = cone(b, b["out"])
+    remap = {}
+    for i in need:
+        op, args, p = b["ins"][i]
+        newreg = NIN + len(g["ins"])
+        g["ins"].append([op, [remap.get(x, x) for x in args], (list(p) if isinstance(p, list) else p)])
+        remap[NIN + i] = newreg
+    g["out"] = list(a["out"]) + [remap.get(o, o) for o in b["out"]]
+    return g
+
+
+def compose(a, b):
+    """Lens-of-lens b(a(X)): b's instructions appended after a's, with every
+    raw-input reference of b (virtual channel c) rewired to a's output
+    register a.out[c % len(a.out)]. The result's outputs are b's. b then
+    perceives the world only through a's representation. Deterministic."""
+    g = _copy(a)
+    base = NIN + len(g["ins"])
+    aout = list(a["out"])
+
+    def rm(x):
+        return aout[x % len(aout)] if x < NIN else base + (x - NIN)
+
+    for op, args, p in b["ins"]:
+        g["ins"].append([op, [rm(x) for x in args], (list(p) if isinstance(p, list) else p)])
+    g["out"] = [rm(o) for o in b["out"]]
+    return g
+
+
 MUTATIONS = {
     "point": m_point, "replace": m_replace, "insert": m_insert, "delete": m_delete,
     "rewire": m_rewire, "out": m_out, "temporal": m_temporal, "recur": m_recur,
@@ -460,13 +498,13 @@ MUTATIONS = {
 MUT_NAMES = sorted(MUTATIONS)
 
 
-def mutate(g, rng, n=None):
+def mutate(g, rng, n=None, kmax=KMAX):
     n = int(rng.integers(1, 3)) if n is None else n
     applied = []
     for _ in range(n):
         name = MUT_NAMES[int(rng.integers(len(MUT_NAMES)))]
         g2 = MUTATIONS[name](g, rng)
-        if validate(g2):
+        if validate(g2, kmax):
             g = g2
             applied.append(name)
     return g, applied

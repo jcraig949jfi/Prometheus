@@ -4,6 +4,54 @@ BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot 
   frozen-artifact hashes, what is in flight on other seats, the holds, my debts, and the traps
   that have actually bitten this seat. Then this file. Then `python -m comms sync Nyx`.
 
+2026-09-30 (instance gandalf-d1f90ae1, rebooted) -- CURRENT STATE; where the older sections below differ, this block wins.
+  BOOT: per the resume record; merged origin/main; validators green. ADOPTED MWO-0004 (first live cycle since MWO-0001):
+  roles/Nyx/WORK_STATE.json is the fleet-level pointer, this file is the narrative. The CWO 2026-09-30 queue does not list Nyx.
+  ESCALATION THAT WORKED: both gated lines had been waiting on Harmonia instances that were offline (11 days for the POET
+  packet). #1059 asked who owned them; #1062 answered in 25 minutes; both returned the same morning.
+  RETURNS ASSIMILATED (Stage D'):
+    #1063 POET RULING: MECH-POET-NOVELTY-ESTIMATOR-001 CUT_SUPPORTED 4/4 as an EXECUTED STRUCTURAL IDENTITY; a CONFIRMATORY
+      reading is NOT admissible (rows seen before the freeze, deterministic payload). Mechanism -> EVIDENCE_SUPPORTED with
+      evidence_kind EXECUTED_STRUCTURAL_IDENTITY; predictions_tested stays 0. Untested: the open-endedness consequence and
+      the delete_optimizer tail. Open question 1 of the resume record is CLOSED: a seen row is a code fact, not a prediction.
+    #1067 HARM-55/56: A_OBSERVER_STABLE (native Flax 395/395; vs torch max abs error 4.77e-7 over n = 333, Spearman 1.0).
+      MECH-ASAL-OE-SCORE.observer_dependence -> OBSERVER_STABLE on the executed 395 domain. HOLD LIFTED on the full-domain
+      replication packet. The claim text does not change. Behavioral cuts stay held until the replication is frozen AND run.
+  NEW WORK:
+    AVIDA ANCESTRY CUT (operator 09-18 s3): seven organs added from a full read of the genotype-ancestry code (founding
+      edge, reference-counted retention, structured save, renumbering load, arbiter clock, coalescent, two-parent
+      recombination). avida is 17 organs, still COARSE. Atlas: 485 accepted organs.
+    PACKET MECH-AVIDA-ANCESTRY-RETENTION-001 FROZEN BLIND, 0f52e295..., commit e9b0783e5, posted #1069. Eight exact rows on
+      the 177 .spop saves the body ships (upstream's expected test outputs). No .spop was opened on this side. Apparatus
+      nyx/atlas/experiments/avida_ancestry/ (reader, reference model, config-only strata, A5 definedness + controls,
+      reference harness that refuses to run for its author). OPEN with Harmonia.
+    THEO-REQ-003 ANSWERED (#1070, 17 days late): one accepted two-parent composition organ in the atlas; a pair of rule
+      tables differing in D entries has exactly D(D-1) one-region children (par x GKL: 2550).
+    Artemis #1011: the three ledgers stale on #189 annotated. Techne asked for a grade ruling on three source types (#1071,
+      corrected in #1074): 19 cuts still read UNKNOWN.
+  SCOREBOARD (python -m nyx.atlas.build): packets_issued 5, packets_adjudicated 3, predictions_tested 7,
+    predictions_falsified 2, cuts_technically_supported 3, mechanisms_registered 7, mechanisms_isolated 7,
+    mechanisms_evidence_supported 3, observer_stable_mechanisms 1, observer_dependence_unresolved 1, unresolved_anomalies 1,
+    MECHANISMS_THAT_SURVIVED_TRANSPLANT 0. Open packets {m3-native-python: 1} of cap 3.
+  MECHANISM LEDGER: MECH-ASAL-OE-SCORE EVIDENCE_SUPPORTED (observer OBSERVER_STABLE, transplant OFFERED) |
+    MECH-ASAL-FRAME-SAMPLING PROPOSED (observer UNKNOWN) | MECH-PARTICLES-ESS-TRIGGER EVIDENCE_SUPPORTED |
+    MECH-POET-NOVELTY-ESTIMATOR EVIDENCE_SUPPORTED (executed structural identity) | MECH-POET-MINIMAL-CRITERION PROPOSED |
+    MECH-POET-FIFO-DISCARD PROPOSED | MECH-AVIDA-ANCESTRY-RETENTION PROPOSED (packet out).
+  PORTFOLIO:
+    CURRENT  FULL-DOMAIN ASAL REPLICATION PACKET -- a NEW preregistration, not a completion of the 1,045: the domain shown
+             100% executable or explicitly excluded before the first score (coverage is a gate); catalogue entries by
+             positional INDEX (63 duplicated codes, #479); seeds, observer paths, classification and threshold semantics
+             frozen; determinism on a sampled AND an adversarial subset; both observers as separable rows. Asked Harmonia
+             which host runs it (#1073).
+    NEXT     poet-enhanced-2020 cut (PATA-EC, basis-population ablation), unblocked by #1063.
+    RESERVE  re-read provenance for poet-original-2019 and verilog-generic-fifo (Techne fc547d2d5 filled their handoff);
+             apply Techne's grade ruling when it comes; NYX-47, NYX-48; MECH-PARTICLES-SCHEME-001 with a power statement.
+    BLOCKED  verdict on MECH-AVIDA-ANCESTRY-RETENTION-001 (owner Harmonia, posted #1069 on 09-30; escalate on 10-03 if
+             unacknowledged). Behavioral cuts (gate: the replication executed).
+  HOLDS STILL IN FORCE: no behavioral cuts until the replication is frozen and executed; no new search objective before
+    it is frozen; no transplant nomination until the low-score region is cut by behavior; do not ask anyone to "complete"
+    the original 1,045; do not re-freeze probes.py without a recorded reason.
+
 2026-09-25 (instance gandalf-226cd218, rebooted): booted per the resume record; comms sync 0 new
   after #571 (no POET ruling, no HARM-56 disposition; every hold stands). Validators green
   (123 fossils / 6 mechanisms / probes intact / 45 tests). DEBT 1 PAID: the Ares W4 fossil
@@ -18,7 +66,8 @@ BOOT NOTE: read roles/Nyx/RESUME_2026-09-25.md FIRST on every bootstrap -- boot 
   to gain 106). Atlas: NOVEL as an organ (nearest registered organs are gain-1 saturating
   accumulators and a clocked latch), known engineering motif outside it.
 
-Currency: 2026-09-25 ~13:30 UTC (instance gandalf-226cd218 on M3/GANDALF).
+Currency: 2026-09-30 ~11:20 UTC (instance gandalf-d1f90ae1 on M3/GANDALF). Boot order since MWO-0004 R4:
+  origin/main:ops/work_orders/CURRENT.md, then roles/Nyx/WORK_STATE.json, then the resume record, then this file.
 
 seat state: ACTIVE (this M3 instance; the M2 instance m2-0c0adfe1 closed down 2026-09-17, c60b78f17, and its
   'parked' STATUS is superseded by this file). Governing directives: Mechanism Archaeology Pipeline (Founding Charter + Amendments 2, 3; Amendment 1

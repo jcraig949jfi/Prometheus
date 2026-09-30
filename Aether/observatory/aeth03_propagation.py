@@ -127,6 +127,8 @@ class World:
             kw["received"] = self.extra["received"]
         if self.variant == "fwd":
             kw["received_value"] = self.extra["received_value"]
+        if "aim_energy" in self.extra:
+            kw["aim_energy"] = self.extra["aim_energy"]
         out = V.step(self.variant, H=h, W=w, tick=tick, opcode=self.f[0],
                      arg0=self.f[1], arg1=self.f[2], payload=self.f[3],
                      energy=self.f[4], **kw, **par)
@@ -337,6 +339,9 @@ def assay(variant, n, warmup, ticks, origins, seed_index, null=False,
     w = World(variant, fields)
     for t in range(1, warmup + 1):
         w.step(t, par_on)
+    if variant == "rcv_sfz":
+        # E-012: freeze the aim's energy term at the end of warm-up; both twins inherit it.
+        w.extra["aim_energy"] = w.f[4].copy()
     em = S.emitters(variant, w.f, par_on["write_cost"])
     if variant in V.RCV_FAMILY:
         em = em | (w.received & (w.f[4].astype(np.int64) >= par_on["write_cost"]))

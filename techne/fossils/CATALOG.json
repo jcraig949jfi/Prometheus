@@ -1,11 +1,12 @@
 {
  "schema": "techne.fossil.catalog/1",
- "written_utc": "2026-09-14T00:05:14Z",
- "records_root": "F:/Prometheus-worktrees/techne-pass-0912/techne/fossils/specimens",
- "vault_root_on_this_host": "F:\\Prometheus\\vault\\fossils",
- "fossils": 121,
- "runnable": 105,
- "bodies_present_on_this_host": 121,
+ "written_utc": "2026-09-30T10:49:28Z",
+ "host_neutral": true,
+ "records_root": "techne/fossils/specimens",
+ "vault_root_on_this_host": null,
+ "fossils": 169,
+ "runnable": 106,
+ "bodies_present_on_this_host": null,
  "fields": [
   "fossil_id",
   "canonical_name",
@@ -75,9 +76,2637 @@
     "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163837Z.json",
     "techne/fossils/specimens/arduino-pid/receipts/run-arduino-pid-20260912T163917Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\arduino-pid",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_1",
+   "canonical_name": "ASAL legitimate-search rollout S0_1 (Harmonia run_2026-09-18, stage S0 index 1)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_1; frames128 manifest e5fc8d776d0d",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "3f0cf21679deba9bc36549fe8d17b154a9a29ae9a32e5d961df9e1d6d7fb6f0b",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_1/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_10",
+   "canonical_name": "ASAL legitimate-search rollout S0_10 (Harmonia run_2026-09-18, stage S0 index 10)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_10; frames128 manifest 1956678f44fa",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "350cedd871bca0220756ffa7bfe850773d7506d40764173e5a208a24ce6302be",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_10/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_138",
+   "canonical_name": "ASAL legitimate-search rollout S0_138 (Harmonia run_2026-09-18, stage S0 index 138)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_138; frames128 manifest d03b2c0b74af",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "b3fee1bf7d85cc2f17a07c986cfd178b970c3296aadae6fd5e819ca7642bde5e",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_138/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_141",
+   "canonical_name": "ASAL legitimate-search rollout S0_141 (Harmonia run_2026-09-18, stage S0 index 141)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_141; frames128 manifest b41837ff1ebd",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "b73383fd4cb43c165e1af265468094ff087c11a312dfecf693f5dd876f7eabaa",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_141/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_157",
+   "canonical_name": "ASAL legitimate-search rollout S0_157 (Harmonia run_2026-09-18, stage S0 index 157)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_157; frames128 manifest 641150bb775f",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "ab0b5c74b28788c08c708753893e49c90b450fdee40aa53510120727f05429a9",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_157/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_170",
+   "canonical_name": "ASAL legitimate-search rollout S0_170 (Harmonia run_2026-09-18, stage S0 index 170)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_170; frames128 manifest 53152e627cf3",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "149329d51af483ac452365600246ae78dc3311f47147eb983fdc672c1e4349fd",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_170/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_176",
+   "canonical_name": "ASAL legitimate-search rollout S0_176 (Harmonia run_2026-09-18, stage S0 index 176)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_176; frames128 manifest 450354bb03b1",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "5353f034730508496afc9703ad3f6d18286f466742272513bf9728df856f7d55",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_176/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_2",
+   "canonical_name": "ASAL legitimate-search rollout S0_2 (Harmonia run_2026-09-18, stage S0 index 2)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_2; frames128 manifest eff8491db48f",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "8cbab1002999b5c1ab893232ce8434ab31b34f828156536f6c3f0fb4d8c46fe5",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_2/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_212",
+   "canonical_name": "ASAL legitimate-search rollout S0_212 (Harmonia run_2026-09-18, stage S0 index 212)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_212; frames128 manifest 7ef42a4074a0",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "6ed6c0bf8c5ad132b444e9467abfa45648c543c12a87f3f1e1d5ea7653366429",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_212/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_215",
+   "canonical_name": "ASAL legitimate-search rollout S0_215 (Harmonia run_2026-09-18, stage S0 index 215)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_215; frames128 manifest 9d527f3c191c",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "0ee4ad0ec02e4310f9c46246f94e176794e7990caf328575594b34e8e9c3b06f",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_215/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_261",
+   "canonical_name": "ASAL legitimate-search rollout S0_261 (Harmonia run_2026-09-18, stage S0 index 261)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_261; frames128 manifest 7362f90ccbbe",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "67ec2836fda79a05ae1cc3f279761b275fe0aaf31c0a0ec3c7bc0b6131e142fc",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_261/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_34",
+   "canonical_name": "ASAL legitimate-search rollout S0_34 (Harmonia run_2026-09-18, stage S0 index 34)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_34; frames128 manifest dfccce389d81",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "d4d3f7cc5f84e8d3c08b55bdad693271be90e3f0ca0cabbb819266b0152a04a3",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_34/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_39",
+   "canonical_name": "ASAL legitimate-search rollout S0_39 (Harmonia run_2026-09-18, stage S0 index 39)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_39; frames128 manifest faff15cc5299",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "e0133ed9d3ffe1d4a10f22b4ff4d5252e8db34381b9d683c77aaccf5aee6ff67",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_39/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_5",
+   "canonical_name": "ASAL legitimate-search rollout S0_5 (Harmonia run_2026-09-18, stage S0 index 5)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_5; frames128 manifest ce63ca62571b",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "66e2bd311a4b099177e9f352757ce3f3c0181089187976349ab3f3f281df78cb",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_5/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_75",
+   "canonical_name": "ASAL legitimate-search rollout S0_75 (Harmonia run_2026-09-18, stage S0 index 75)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_75; frames128 manifest 08ef205ef707",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "35941a4a4f9e4d2408379788845b171516c79f6132424499b1d53673f90b8add",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_75/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_76",
+   "canonical_name": "ASAL legitimate-search rollout S0_76 (Harmonia run_2026-09-18, stage S0 index 76)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_76; frames128 manifest 45e62013730f",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "0a9ded39278496abc4645805c3913c53f49e8acdbbd759779c54dc79d805fffb",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_76/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_8",
+   "canonical_name": "ASAL legitimate-search rollout S0_8 (Harmonia run_2026-09-18, stage S0 index 8)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_8; frames128 manifest 3c488ec5088f",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "566dbcdfe746772b2d8e681fa9a58707c5191d8c6c8b08e87b6689a4156d0b64",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_8/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_9",
+   "canonical_name": "ASAL legitimate-search rollout S0_9 (Harmonia run_2026-09-18, stage S0 index 9)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_9; frames128 manifest 474a2feadc6b",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "b6cf7b2a59a74e91679ef0549f510a617e3422f6e0e480c7192bd4cb9553b957",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_9/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S0_94",
+   "canonical_name": "ASAL legitimate-search rollout S0_94 (Harmonia run_2026-09-18, stage S0 index 94)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S0_94; frames128 manifest 650debf6e6a9",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "0dff66ed21c08dbdf0094c195878e02852490c0fbbcf095b2983071850265e06",
+   "record_path": "techne/fossils/specimens/asal-rollout-S0_94/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S1_23",
+   "canonical_name": "ASAL legitimate-search rollout S1_23 (Harmonia run_2026-09-18, stage S1 index 23)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S1_23; frames128 manifest baa491762929",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "103179255fecc58e59151cb3fd8d865bee6dda9c1f88accd75d96e6b25a3c7f1",
+   "record_path": "techne/fossils/specimens/asal-rollout-S1_23/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_115",
+   "canonical_name": "ASAL legitimate-search rollout S2_115 (Harmonia run_2026-09-18, stage S2 index 115)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_115; frames128 manifest 46c204a6d424",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "1b0de2e1cd670cf737442323b43cde5d15e03ef2621fb23b664ed653b77ca1a9",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_115/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_120",
+   "canonical_name": "ASAL legitimate-search rollout S2_120 (Harmonia run_2026-09-18, stage S2 index 120)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_120; frames128 manifest 4cfa0196c82a",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "3faf96fabe09b54ad3a8a538c7c9d4eab02084818cf5bb782b6bbf5df99bf179",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_120/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_131",
+   "canonical_name": "ASAL legitimate-search rollout S2_131 (Harmonia run_2026-09-18, stage S2 index 131)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_131; frames128 manifest a7463eab9e98",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "2fd787a7843dd52a42e61fefccf0b26265cef7f573ccd88320735f6f4d4a9d75",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_131/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_135",
+   "canonical_name": "ASAL legitimate-search rollout S2_135 (Harmonia run_2026-09-18, stage S2 index 135)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_135; frames128 manifest b3694507a2d7",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "a951cd8fcdaf97e619a46a0c4661c3ba79d9be84e717718c32435f0e8c2e1286",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_135/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_148",
+   "canonical_name": "ASAL legitimate-search rollout S2_148 (Harmonia run_2026-09-18, stage S2 index 148)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_148; frames128 manifest 6212f59b782e",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "7c4370820b392ef6bd0834a0ad58282a8deb6bbc1280b57b924f606ef8c6ec71",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_148/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_162",
+   "canonical_name": "ASAL legitimate-search rollout S2_162 (Harmonia run_2026-09-18, stage S2 index 162)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_162; frames128 manifest c8bc5aba6bf2",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "b40e4628cb99b939c3b8565832950465b2dcdf44151b53e88a867c3aae7dfa30",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_162/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_175",
+   "canonical_name": "ASAL legitimate-search rollout S2_175 (Harmonia run_2026-09-18, stage S2 index 175)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_175; frames128 manifest df5d72a5964b",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "0fd2cbd2caf83a17d8b7e6da94506f6079c306c2f13322b53c788ade84d05146",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_175/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_189",
+   "canonical_name": "ASAL legitimate-search rollout S2_189 (Harmonia run_2026-09-18, stage S2 index 189)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_189; frames128 manifest 3cb70717819e",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "dfdee7dd39bca12cef05ee1257f94bb04d6d4206897e4f4269508e56779633b5",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_189/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_193",
+   "canonical_name": "ASAL legitimate-search rollout S2_193 (Harmonia run_2026-09-18, stage S2 index 193)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_193; frames128 manifest bd6228c0b21f",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "44ab1994164ad0435e188577a5d40c44e02c8d64d043c0f21e10f0d6f4392b12",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_193/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_194",
+   "canonical_name": "ASAL legitimate-search rollout S2_194 (Harmonia run_2026-09-18, stage S2 index 194)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_194; frames128 manifest bf01d3963ced",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "ae2f53d7f97a7702cfad7ee3cd75049fe51e8d03f3b33952f09040628ca9fc89",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_194/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_2",
+   "canonical_name": "ASAL legitimate-search rollout S2_2 (Harmonia run_2026-09-18, stage S2 index 2)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_2; frames128 manifest e0cf4e957969",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "76cbfe549a9f3cbd481d28d8950e291527a31b78b7ea8b954b0e4c953ab2e2c3",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_2/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_46",
+   "canonical_name": "ASAL legitimate-search rollout S2_46 (Harmonia run_2026-09-18, stage S2 index 46)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_46; frames128 manifest aa69a59a3768",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "e485f34cfd86bb0cf1ef51c56b9ff91da9f22603b0d74ecfee534f3048ef72ca",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_46/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_53",
+   "canonical_name": "ASAL legitimate-search rollout S2_53 (Harmonia run_2026-09-18, stage S2 index 53)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_53; frames128 manifest b022332a020c",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "41c56c57728e371ca9b901ccf6216a0afbc701e885bc58b888f178f9cefe5cb1",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_53/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_55",
+   "canonical_name": "ASAL legitimate-search rollout S2_55 (Harmonia run_2026-09-18, stage S2 index 55)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_55; frames128 manifest 10fc1ebb42b7",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "234edc92d23a6c98392440ec6c82717452355396d487519b82b60af972c26d4a",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_55/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_63",
+   "canonical_name": "ASAL legitimate-search rollout S2_63 (Harmonia run_2026-09-18, stage S2 index 63)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_63; frames128 manifest f9a47f3409b4",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "d123bf28c03ddb552773e7b2df0052b3966e4042c09d74b1775b57be05c0ad5e",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_63/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_64",
+   "canonical_name": "ASAL legitimate-search rollout S2_64 (Harmonia run_2026-09-18, stage S2 index 64)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_64; frames128 manifest e54a357921ac",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "5c3dd3881d1668157641b6ca3170c807fd0f7b54f29561625ec81b57db321e81",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_64/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_75",
+   "canonical_name": "ASAL legitimate-search rollout S2_75 (Harmonia run_2026-09-18, stage S2 index 75)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_75; frames128 manifest cedb3e1f3a97",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "6a573309a7a71dab12bcd310411eee22a170a99b13cfb0f1cf34725229b81be0",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_75/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_84",
+   "canonical_name": "ASAL legitimate-search rollout S2_84 (Harmonia run_2026-09-18, stage S2 index 84)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_84; frames128 manifest ed6670206920",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "8e0c6ccb21d5ec8c5b3558823f070adb4b96cc355a052f6c1d7af5f626171e90",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_84/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-rollout-S2_87",
+   "canonical_name": "ASAL legitimate-search rollout S2_87 (Harmonia run_2026-09-18, stage S2 index 87)",
+   "lineage": "a Lenia rollout executed by Harmonia's asal_ruler on Techne's numpy Lenia port (techne107_asal_observer.py) during the preregistered legitimate-search experiment (PREREG_ASAL_LEGIT_SEARCH_2026-09-18 + AMENDMENT_A); frames preserved as delivered for HARM-55",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "lenia-chan-2019",
+     "note": "pattern and parameters from the catalogue (S0) or a mutated descendant of one (S1/S2)"
+    },
+    {
+     "relation": "derived_from",
+     "to": "asal-sakana-2024",
+     "note": "the objective the search optimised (asal_metrics.py:53) through the observer of TECHNE-107"
+    }
+   ],
+   "human_purpose": "n/a (a preserved rollout)",
+   "human_environmental_pressure": "n/a",
+   "version": "run_2026-09-18/search key S2_87; frames128 manifest a9e344d96010",
+   "era": "2026-09-18",
+   "language": [
+    "numpy uint8 array"
+   ],
+   "domain": [
+    "artificial-life",
+    "lenia",
+    "asal",
+    "rollout-fossil",
+    "observer-comparison"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Prometheus-internal (Techne port MIT-compatible; Lenia catalogue MIT)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-19",
+    "poet_alife",
+    "HARM-55",
+    "rollout-fossil"
+   ],
+   "tree_sha256": "22d4e111a351227ace4fb4636f5022d029c09fb6707fefc8302fcdf8086b4b0d",
+   "record_path": "techne/fossils/specimens/asal-rollout-S2_87/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "asal-sakana-2024",
+   "canonical_name": "ASAL -- Automating the Search for Artificial Life with Foundation Models (Kumar et al., Sakana AI / MIT, 2024-2025)",
+   "lineage": "Lenia (Chan 2019), Boids, Particle Life, NCA and Life-like CA substrates searched with CLIP as the observer; Artificial Life 31(3) 2025",
+   "ancestry": [],
+   "human_purpose": "find ALife simulations by target phenomenon, open-ended novelty or illumination, using a vision-language model as the measuring instrument",
+   "human_environmental_pressure": "hand-written metrics cannot capture lifelike behaviour; manual parameter search does not scale",
+   "version": "SakanaAI/asal main @ 677ba0ea4d3b3ca78273c9906c6e84d2b1481ce7 (last push 2025-10-23)",
+   "era": "2024-2025",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "artificial-life",
+    "open-endedness",
+    "foundation-model-observer",
+    "cellular-automata",
+    "quality-diversity"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-107"
+   ],
+   "tree_sha256": "188a6adae350258e004ed280bf0ba1bcbd8850642faf198ba0de0629ca87bf0a",
+   "record_path": "techne/fossils/specimens/asal-sakana-2024/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "avida",
@@ -117,15 +2746,15 @@
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "GPL-3.0 / Apache-2.0 (mixed; see COPYING)",
    "acquisition_tags": [],
-   "tree_sha256": "0a18674a17e76f6111a1eedac9efb3ed18c84b4e23f12477d65e835170425e0d",
+   "tree_sha256": "6ce8ba3850505992a1bd33836098219eabef220a9f656510edfc4182a6ddc97f",
    "record_path": "techne/fossils/specimens/avida/record.json",
    "recipe_path": "techne/fossils/specimens/avida/recipe.json",
    "receipts": [
     "techne/fossils/specimens/avida/receipts/run-avida-20260913T141120Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\avida",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "backoff-2.2.1",
@@ -181,9 +2810,9 @@
     "techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T214437Z.json",
     "techne/fossils/specimens/backoff-2.2.1/receipts/run-backoff-2.2.1-20260912T215611Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\backoff-2.2.1",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "basic-computer-games-1978",
@@ -244,9 +2873,9 @@
     "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214242Z.json",
     "techne/fossils/specimens/basic-computer-games-1978/receipts/run-basic-computer-games-1978-20260912T214327Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\basic-computer-games-1978",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bdwgc-8.2.6",
@@ -291,9 +2920,9 @@
    "receipts": [
     "techne/fossils/specimens/bdwgc-8.2.6/receipts/run-bdwgc-8.2.6-20260912T153532Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bdwgc-8.2.6",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "biriscv-branch-predictor",
@@ -358,9 +2987,9 @@
     "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T211906Z.json",
     "techne/fossils/specimens/biriscv-branch-predictor/receipts/run-biriscv-branch-predictor-20260912T212123Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\biriscv-branch-predictor",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bsd-4.2-distribution-tape-1983",
@@ -418,9 +3047,9 @@
    "record_path": "techne/fossils/specimens/bsd-4.2-distribution-tape-1983/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-4.2-distribution-tape-1983",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bsd-4.3-distribution-tape-1986",
@@ -433,9 +3062,9 @@
      "note": "4.3's TCP = 4.2's design + fixes, still no congestion window"
     },
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "bsd-tcp-4.3-tahoe-1988",
-     "note": "Tahoe added slow start / congestion avoidance"
+     "note": "Tahoe added slow start / congestion avoidance [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "install a complete 4.3BSD system on a VAX from one tape",
@@ -511,9 +3140,9 @@
    "receipts": [
     "techne/fossils/specimens/bsd-4.3-distribution-tape-1986/receipts/run-bsd-4.3-distribution-tape-1986-20260913T065059Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-4.3-distribution-tape-1986",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bsd-4.3-reno-distribution-tape-1990",
@@ -590,9 +3219,9 @@
    "record_path": "techne/fossils/specimens/bsd-4.3-reno-distribution-tape-1990/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-4.3-reno-distribution-tape-1990",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bsd-tcp-4.2-1983",
@@ -600,9 +3229,9 @@
    "lineage": "TCP congestion-control lineage, the KNOWN-BAD ancestor: 4.2BSD's TCP (Bill Joy, Sam Leffler) had retransmission timers and windows but NO congestion window, NO slow start and a crude RTT estimate. In October 1986 the LBL-to-Berkeley path fell from 32 kbit/s to 40 bit/s -- congestion collapse -- which is the pressure that produced 4.3BSD-Tahoe's algorithms (Jacobson 1988). Preserved from the unix-history-repo (Spinellis) at tag BSD-4_2.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "bsd-tcp-4.3-tahoe-1988",
-     "note": "the redesign forced by the 1986 collapse"
+     "note": "the redesign forced by the 1986 collapse [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     },
     {
      "relation": "shares_ancestor_with",
@@ -677,9 +3306,9 @@
    "record_path": "techne/fossils/specimens/bsd-tcp-4.2-1983/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.2-1983",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bsd-tcp-4.3-reno-1990",
@@ -692,9 +3321,9 @@
      "note": ""
     },
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "linux-tcp-congestion",
-     "note": "NewReno -> CUBIC -> BBR"
+     "note": "NewReno -> CUBIC -> BBR [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "recover from a single lost segment without draining the pipe: retransmit on duplicate ACKs and keep sending at half rate",
@@ -765,9 +3394,9 @@
    "record_path": "techne/fossils/specimens/bsd-tcp-4.3-reno-1990/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-reno-1990",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bsd-tcp-4.3-tahoe-1988",
@@ -780,9 +3409,9 @@
      "note": "same files, redesigned under pressure"
     },
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "bsd-tcp-4.3-reno-1990",
-     "note": "fast recovery added"
+     "note": "fast recovery added [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "make every sender probe for its share of a shared link and back off multiplicatively when loss signals congestion",
@@ -848,9 +3477,9 @@
    "record_path": "techne/fossils/specimens/bsd-tcp-4.3-tahoe-1988/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bsd-tcp-4.3-tahoe-1988",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "buddy-alloc-spaskalev",
@@ -896,9 +3525,9 @@
    "receipts": [
     "techne/fossils/specimens/buddy-alloc-spaskalev/receipts/run-buddy-alloc-spaskalev-20260912T162521Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\buddy-alloc-spaskalev",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "buddy-bdd",
@@ -946,9 +3575,9 @@
     "techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153515Z.json",
     "techne/fossils/specimens/buddy-bdd/receipts/run-buddy-bdd-20260912T153805Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\buddy-bdd",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "bzip2-1.0.8",
@@ -994,9 +3623,9 @@
     "techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152735Z.json",
     "techne/fossils/specimens/bzip2-1.0.8/receipts/run-bzip2-1.0.8-20260912T152922Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\bzip2-1.0.8",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "c-cmaes-hansen",
@@ -1040,7 +3669,7 @@
     "black-box-optimization",
     "stochastic-search"
    ],
-   "tree_sha256": "742bea2d0389ebc0e94809dedb98db597d9eb7bc465a7af0efdb0bc3c417ffe4",
+   "tree_sha256": "6e15eb7bb0aaf9248a59bf1412f7a87f57a825756f9310caa70ead7c66131006",
    "record_path": "techne/fossils/specimens/c-cmaes-hansen/record.json",
    "recipe_path": "techne/fossils/specimens/c-cmaes-hansen/recipe.json",
    "receipts": [
@@ -1048,9 +3677,9 @@
     "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125307Z.json",
     "techne/fossils/specimens/c-cmaes-hansen/receipts/run-c-cmaes-hansen-20260912T125333Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\c-cmaes-hansen",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "cjson-1.7.18",
@@ -1109,9 +3738,9 @@
     "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T212626Z.json",
     "techne/fossils/specimens/cjson-1.7.18/receipts/run-cjson-1.7.18-20260912T214353Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\cjson-1.7.18",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "clips-6.4.2-nasa",
@@ -1161,9 +3790,9 @@
    "receipts": [
     "techne/fossils/specimens/clips-6.4.2-nasa/receipts/run-clips-6.4.2-nasa-20260912T124643Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\clips-6.4.2-nasa",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "cobol-programming-course-omp",
@@ -1215,9 +3844,9 @@
     "techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T213713Z.json",
     "techne/fossils/specimens/cobol-programming-course-omp/receipts/run-cobol-programming-course-omp-20260912T214221Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\cobol-programming-course-omp",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "cocagne-plain-paxos",
@@ -1278,9 +3907,9 @@
     "techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T055207Z.json",
     "techne/fossils/specimens/cocagne-plain-paxos/receipts/run-cocagne-plain-paxos-20260913T055447Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\cocagne-plain-paxos",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "compact-4.2bsd-1983",
@@ -1288,9 +3917,9 @@
    "lineage": "Compression lineage, the SUPERSEDED DESIGN: compact (Colin McMaster, 1980; shipped in 4.xBSD ucb/) used Gallager's adaptive Huffman coding -- one-pass, no table transmitted, but slow and ~38% savings. compress (Thomas et al. 1984, LZW) beat it decisively on speed and ratio, then LZW's Unisys patent pressure produced gzip/DEFLATE (1992-93). Preserved from the unix-history-repo at tag BSD-4_2 (ucb/compact: compact.c, uncompact.c, tree.c, compact.h, Makefile, ccat.sh).",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "ncompress-5.0-lzw-1985",
-     "note": "compress (LZW, 1984) displaced compact in BSD"
+     "note": "compress (LZW, 1984) displaced compact in BSD [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     },
     {
      "relation": "algorithm_from",
@@ -1377,9 +4006,9 @@
     "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260912T211434Z.json",
     "techne/fossils/specimens/compact-4.2bsd-1983/receipts/run-compact-4.2bsd-1983-20260913T052524Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\compact-4.2bsd-1983",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "compress-4.2.4-lzw",
@@ -1429,9 +4058,9 @@
    "receipts": [
     "techne/fossils/specimens/compress-4.2.4-lzw/receipts/run-compress-4.2.4-lzw-20260912T152739Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\compress-4.2.4-lzw",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "concurrencykit-0.7.2",
@@ -1489,9 +4118,9 @@
    "receipts": [
     "techne/fossils/specimens/concurrencykit-0.7.2/receipts/run-concurrencykit-0.7.2-20260912T211117Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\concurrencykit-0.7.2",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "corewar-redcode",
@@ -1532,7 +4161,7 @@
    "source_type": "FAITHFUL_PORT",
    "license_spdx": "see repo LICENSE",
    "acquisition_tags": [],
-   "tree_sha256": "c1929dc0440cbac70a726aee6fd10811f9c80ebb7f347c1236f87e6b92d0a089",
+   "tree_sha256": "73122063b0992624db657416b9976090a3c5bb00687d4a628a79646013250f74",
    "record_path": "techne/fossils/specimens/corewar-redcode/record.json",
    "recipe_path": "techne/fossils/specimens/corewar-redcode/recipe.json",
    "receipts": [
@@ -1544,9 +4173,9 @@
     "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T153435Z.json",
     "techne/fossils/specimens/corewar-redcode/receipts/run-corewar-redcode-20260912T202752Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\corewar-redcode",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "cosell-eliza-bbn-lisp-1969",
@@ -1615,9 +4244,73 @@
    "record_path": "techne/fossils/specimens/cosell-eliza-bbn-lisp-1969/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\cosell-eliza-bbn-lisp-1969",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "dcd-facebookresearch-2022",
+   "canonical_name": "DCD -- Dual Curriculum Design: reference implementation of PLR, Robust PLR, ACCEL, PAIRED, REPAIRED and minimax (Jiang, Dennis, Parker-Holder, Foerster, Grefenstette, Rocktaschel et al.; Meta AI / FAIR, 2021-2023)",
+   "lineage": "PLR (Jiang et al. 2020, arXiv:2010.03934) and PAIRED (Dennis et al. 2020, arXiv:2012.02096) -> Replay-Guided Adversarial Environment Design (Jiang et al., NeurIPS 2021, arXiv:2110.02439: Robust PLR, REPAIRED, the DCD framing) -> ACCEL (Parker-Holder et al., ICML 2022) -> PAIRED + HiEnt/BC/Evo (Mediratta et al., CoLLAs 2023, arXiv:2308.10797); all in one codebase on branch main",
+   "ancestry": [
+    {
+     "relation": "inspired_by",
+     "to": "poet-original-2019",
+     "note": "README at the pin: benchmark `poetrose` = environments based on the most challenging level settings discovered by POET (Wang et al. 2019, Fig. 5); config bipedal/bipedal_accel_poet.json = ACCEL in the POET design space. A benchmark and design-space link stated by upstream; no code ancestry is claimed"
+    }
+   ],
+   "human_purpose": "train a student agent on a curriculum of environment instances chosen or generated to maximise its regret, so that it transfers zero-shot to unseen, harder instances",
+   "human_environmental_pressure": "RL generalisation research where the training-level distribution, not the learner, limits robustness",
+   "version": "facebookresearch/dcd main @ cefd88196f2696860e42405d7b32f47d3d12bbde (committed 2024-08-20; 11 commits; upstream ARCHIVED per GitHub API on 2026-09-30)",
+   "era": "2021-2024",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "unsupervised-environment-design",
+    "curriculum",
+    "open-ended-learning",
+    "reinforcement-learning",
+    "level-replay",
+    "adversarial-environment-generation"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "CC-BY-NC-4.0",
+   "acquisition_tags": [
+    "operator-directive-2026-09-21",
+    "prior_art_raid",
+    "section-II-auto-curricula",
+    "TECHNE-122",
+    "Atlas UED-2/UED-4",
+    "upstream-archived"
+   ],
+   "tree_sha256": "b6eefb613217bf783d91659ee2da347e8f55e2684af196a1a6c16a663f00c29d",
+   "record_path": "techne/fossils/specimens/dcd-facebookresearch-2022/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "des-reference",
@@ -1625,9 +4318,9 @@
    "lineage": "DES (IBM/NSA, adopted as FIPS 46 in 1977) was THE block cipher of the era: 64-bit blocks, a 56-bit key, 16 Feistel rounds. Its structure was never broken in practice; its KEY LENGTH was. The EFF built Deep Crack in 1998 and exhausted the keyspace in days, and NIST ran a public competition whose winner, Rijndael, became AES. Preserved as archival/defensive reference material only -- the fossil is the cipher, not an attack.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "tiny-aes-c",
-     "note": "AES (Rijndael) replaced DES by NIST competition"
+     "note": "AES (Rijndael) replaced DES by NIST competition [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "provide a single standard, hardware-friendly block cipher for unclassified US government data",
@@ -1696,9 +4389,9 @@
    "receipts": [
     "techne/fossils/specimens/des-reference/receipts/run-des-reference-20260913T144336Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\des-reference",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "dlmalloc",
@@ -1744,9 +4437,9 @@
     "techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152655Z.json",
     "techne/fossils/specimens/dlmalloc/receipts/run-dlmalloc-20260912T152908Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\dlmalloc",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "dmtcp-3.1.2",
@@ -1799,9 +4492,9 @@
     "techne/fossils/specimens/dmtcp-3.1.2/receipts/run-dmtcp-3.1.2-20260913T055002Z.json",
     "techne/fossils/specimens/dmtcp-3.1.2/receipts/run-dmtcp-3.1.2-20260913T055210Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\dmtcp-3.1.2",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "do-mpc",
@@ -1848,9 +4541,9 @@
     "techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220202Z.json",
     "techne/fossils/specimens/do-mpc/receipts/run-do-mpc-20260912T220324Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\do-mpc",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "eispack-netlib",
@@ -1898,9 +4591,9 @@
     "techne/fossils/specimens/eispack-netlib/receipts/run-eispack-netlib-20260912T152429Z.json",
     "techne/fossils/specimens/eispack-netlib/receipts/run-eispack-netlib-20260912T152558Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\eispack-netlib",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "eispack-netlib-1976",
@@ -1913,9 +4606,9 @@
      "note": "Fortran translation of the Handbook"
     },
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "lapack-reference",
-     "note": ""
+     "note": "[relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "compute eigenvalues and eigenvectors of real and complex matrices reliably, as portable Fortran translations of the certified ALGOL procedures",
@@ -1989,9 +4682,9 @@
     "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144819Z.json",
     "techne/fossils/specimens/eispack-netlib-1976/receipts/run-eispack-netlib-1976-20260913T144851Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\eispack-netlib-1976",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "eliza-anthay-1966",
@@ -2057,9 +4750,9 @@
    "receipts": [
     "techne/fossils/specimens/eliza-anthay-1966/receipts/run-eliza-anthay-1966-20260913T114433Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\eliza-anthay-1966",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "eliza-weizenbaum-mad-slip-1965",
@@ -2139,9 +4832,9 @@
    "record_path": "techne/fossils/specimens/eliza-weizenbaum-mad-slip-1965/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\eliza-weizenbaum-mad-slip-1965",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "emcee-3.1.6",
@@ -2200,9 +4893,9 @@
     "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260912T215619Z.json",
     "techne/fossils/specimens/emcee-3.1.6/receipts/run-emcee-3.1.6-20260913T215405Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\emcee-3.1.6",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "eprover-2.6",
@@ -2267,9 +4960,9 @@
    "receipts": [
     "techne/fossils/specimens/eprover-2.6/receipts/run-eprover-2.6-20260913T110350Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\eprover-2.6",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "erfa-2.0.1",
@@ -2331,9 +5024,9 @@
     "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212324Z.json",
     "techne/fossils/specimens/erfa-2.0.1/receipts/run-erfa-2.0.1-20260912T212500Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\erfa-2.0.1",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "espresso-logic",
@@ -2373,16 +5066,16 @@
    "source_type": "LATER_SAME_LINEAGE_RELEASE",
    "license_spdx": "custom BSD-like (Berkeley Espresso terms)",
    "acquisition_tags": [],
-   "tree_sha256": "aa352802ae1a0b732878fb8e1b5d7511736f77360c7e55fe95ac132582a40a20",
+   "tree_sha256": "9c9a5c19ba973791cf5ded88526b14bd58c776acfdf1462f3a8fc7eebd05b6ab",
    "record_path": "techne/fossils/specimens/espresso-logic/record.json",
    "recipe_path": "techne/fossils/specimens/espresso-logic/recipe.json",
    "receipts": [
     "techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152704Z.json",
     "techne/fossils/specimens/espresso-logic/receipts/run-espresso-logic-20260912T152917Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\espresso-logic",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "femtolisp",
@@ -2424,15 +5117,15 @@
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "BSD-3-Clause",
    "acquisition_tags": [],
-   "tree_sha256": "2ce026b954ff3d073425706072e15e103038f30c475a57e15bd64a7009d6f788",
+   "tree_sha256": "29bbc9f1eb0c0ebdd3648e33a8d1c4f45a7598c3a6d6e898c8eca2aae6d3fad7",
    "record_path": "techne/fossils/specimens/femtolisp/record.json",
    "recipe_path": "techne/fossils/specimens/femtolisp/recipe.json",
    "receipts": [
     "techne/fossils/specimens/femtolisp/receipts/run-femtolisp-20260912T152717Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\femtolisp",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "ff-planner-2.3",
@@ -2499,9 +5192,9 @@
     "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143519Z.json",
     "techne/fossils/specimens/ff-planner-2.3/receipts/run-ff-planner-2.3-20260912T143553Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\ff-planner-2.3",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "fftpack-netlib",
@@ -2548,9 +5241,9 @@
     "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T152209Z.json",
     "techne/fossils/specimens/fftpack-netlib/receipts/run-fftpack-netlib-20260912T153925Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\fftpack-netlib",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "filterpy-labbe",
@@ -2599,9 +5292,9 @@
     "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json",
     "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260913T215428Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\filterpy-labbe",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "genann",
@@ -2648,9 +5341,9 @@
    "receipts": [
     "techne/fossils/specimens/genann/receipts/run-genann-20260912T162533Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\genann",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "glibc-rwlock-writer-starvation-2.36",
@@ -2727,9 +5420,9 @@
    "receipts": [
     "techne/fossils/specimens/glibc-rwlock-writer-starvation-2.36/receipts/run-glibc-rwlock-writer-starvation-2.36-20260913T054149Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\glibc-rwlock-writer-starvation-2.36",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "glpk-5.0",
@@ -2784,9 +5477,9 @@
     "techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143613Z.json",
     "techne/fossils/specimens/glpk-5.0/receipts/run-glpk-5.0-20260912T143908Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\glpk-5.0",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "gnu-apl-2.0",
@@ -2845,9 +5538,9 @@
     "techne/fossils/specimens/gnu-apl-2.0/receipts/run-gnu-apl-2.0-20260913T063919Z.json",
     "techne/fossils/specimens/gnu-apl-2.0/receipts/run-gnu-apl-2.0-20260913T064433Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\gnu-apl-2.0",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "gnu-prolog-1.5.0",
@@ -2909,9 +5602,9 @@
     "techne/fossils/specimens/gnu-prolog-1.5.0/receipts/run-gnu-prolog-1.5.0-20260912T153603Z.json",
     "techne/fossils/specimens/gnu-prolog-1.5.0/receipts/run-gnu-prolog-1.5.0-20260912T202812Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\gnu-prolog-1.5.0",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "go-explore-uber-2022",
@@ -2957,7 +5650,7 @@
     "quality-diversity",
     "archive"
    ],
-   "tree_sha256": "67bfdebe5f01b0bf3b3df32e6b72e98476fbcc578f55b90b9c999ece28fba6c0",
+   "tree_sha256": "c9c7bdf06aa6fbbda5b2901bd28480ff05213bac99841a917d392223c0b3bd02",
    "record_path": "techne/fossils/specimens/go-explore-uber-2022/record.json",
    "recipe_path": "techne/fossils/specimens/go-explore-uber-2022/recipe.json",
    "receipts": [
@@ -2966,9 +5659,9 @@
     "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T125406Z.json",
     "techne/fossils/specimens/go-explore-uber-2022/receipts/run-go-explore-uber-2022-20260912T142512Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\go-explore-uber-2022",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "go-runtime-deadlock-fixtures-1.22",
@@ -3030,9 +5723,9 @@
     "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054319Z.json",
     "techne/fossils/specimens/go-runtime-deadlock-fixtures-1.22/receipts/run-go-runtime-deadlock-fixtures-1.22-20260913T054356Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\go-runtime-deadlock-fixtures-1.22",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "graphplan-blum-furst-1995",
@@ -3084,9 +5777,9 @@
     "techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125108Z.json",
     "techne/fossils/specimens/graphplan-blum-furst-1995/receipts/run-graphplan-blum-furst-1995-20260912T125257Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\graphplan-blum-furst-1995",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "gzip-1.2.4-1993",
@@ -3094,9 +5787,9 @@
    "lineage": "Compression lineage, the HISTORICAL REDESIGN under legal pressure: Unisys's enforcement of the LZW patent (1993-94) made compress unshippable for GNU; Jean-loup Gailly's gzip (1992-93) used Ziv-Lempel 1977 plus Huffman -- DEFLATE, later RFC 1951 and zlib's core -- and replaced compress across Unix. 1.2.4 (Aug 1993) is the version that stayed frozen for a decade. Beside the vault's zlib-1.3.1 (the library form, 2024) and compress/ncompress, this closes the compress -> gzip -> zlib series.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "supersedes",
      "to": "ncompress-5.0-lzw-1985",
-     "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress)"
+     "note": "gzip displaced compress under patent pressure (direction: gzip superseded compress) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]"
     },
     {
      "relation": "historical_version_of",
@@ -3164,11 +5857,13 @@
    "record_path": "techne/fossils/specimens/gzip-1.2.4-1993/record.json",
    "recipe_path": "techne/fossils/specimens/gzip-1.2.4-1993/recipe.json",
    "receipts": [
-    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json"
+    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260912T210109Z.json",
+    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T162024Z.json",
+    "techne/fossils/specimens/gzip-1.2.4-1993/receipts/run-gzip-1.2.4-1993-20260916T171717Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\gzip-1.2.4-1993",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "hashicorp-memberlist-0.5.4",
@@ -3232,9 +5927,9 @@
     "techne/fossils/specimens/hashicorp-memberlist-0.5.4/receipts/run-hashicorp-memberlist-0.5.4-20260913T055000Z.json",
     "techne/fossils/specimens/hashicorp-memberlist-0.5.4/receipts/run-hashicorp-memberlist-0.5.4-20260913T055310Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\hashicorp-memberlist-0.5.4",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "hopfield-takyamamoto",
@@ -3284,9 +5979,9 @@
     "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T164159Z.json",
     "techne/fossils/specimens/hopfield-takyamamoto/receipts/run-hopfield-takyamamoto-20260912T202800Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\hopfield-takyamamoto",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "indirect-self-tuning-regulator-liaosteve",
@@ -3351,9 +6046,9 @@
     "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055756Z.json",
     "techne/fossils/specimens/indirect-self-tuning-regulator-liaosteve/receipts/run-indirect-self-tuning-regulator-liaosteve-20260913T055943Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\indirect-self-tuning-regulator-liaosteve",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "kissfft-131.1.0",
@@ -3409,9 +6104,9 @@
    "receipts": [
     "techne/fossils/specimens/kissfft-131.1.0/receipts/run-kissfft-131.1.0-20260912T143248Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\kissfft-131.1.0",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "l1-adaptive-control-basics-xkhainguyen",
@@ -3471,9 +6166,9 @@
     "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/receipts/run-l1-adaptive-control-basics-xkhainguyen-20260913T055759Z.json",
     "techne/fossils/specimens/l1-adaptive-control-basics-xkhainguyen/receipts/run-l1-adaptive-control-basics-xkhainguyen-20260913T055946Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\l1-adaptive-control-basics-xkhainguyen",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "lapack-reference",
@@ -3540,9 +6235,9 @@
    "record_path": "techne/fossils/specimens/lapack-reference/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\lapack-reference",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "ldpc-codes-neal-2001",
@@ -3586,16 +6281,73 @@
     "belief-propagation",
     "inference"
    ],
-   "tree_sha256": "132aa1f564f37d4bfa10c1e1293b8f5b9f3f3551245545a089e645913dc2b168",
+   "tree_sha256": "a23b16652f9eabf18774d104158e918f10f44aeb973d24b1d17498545094c739",
    "record_path": "techne/fossils/specimens/ldpc-codes-neal-2001/record.json",
    "recipe_path": "techne/fossils/specimens/ldpc-codes-neal-2001/recipe.json",
    "receipts": [
     "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125109Z.json",
     "techne/fossils/specimens/ldpc-codes-neal-2001/receipts/run-ldpc-codes-neal-2001-20260912T125302Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\ldpc-codes-neal-2001",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "lenia-chan-2019",
+   "canonical_name": "Lenia -- Biology of Artificial Life, reference implementation and lifeform catalogue (Bert Wang-Chak Chan, 2018-)",
+   "lineage": "continuous cellular automaton generalising Conway's Life (Chan 2019, Complex Systems 28(3)); the substrate ASAL (asal-sakana-2024) searches and the source of the Orbium pattern used in TECHNE-107",
+   "ancestry": [],
+   "human_purpose": "explore self-organising, self-propelling patterns in a continuous CA and catalogue them",
+   "human_environmental_pressure": "Life-like CAs are discrete and brittle; a continuous generalisation admits smooth, lifelike dynamics",
+   "version": "Chakazul/Lenia master @ adfc542939266de7f4bb7ebb552e8499701ee107 (last push 2024-07-19)",
+   "era": "2018-2024",
+   "language": [
+    "Python",
+    "JavaScript",
+    "Matlab",
+    "R"
+   ],
+   "domain": [
+    "artificial-life",
+    "cellular-automata",
+    "continuous-dynamics",
+    "self-organization"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "operator-directive-2026-09-18",
+    "poet_alife",
+    "TECHNE-107",
+    "Harmonia #429 (fixture pinned from the packet, not Temp)"
+   ],
+   "tree_sha256": "0414e7975c2f8767bdbcae8202991791c2db26941e9356c153a325f16a39fbed",
+   "record_path": "techne/fossils/specimens/lenia-chan-2019/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "leveldb-1.23",
@@ -3608,9 +6360,9 @@
      "note": ""
     },
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "RocksDB (Facebook fork 2012)",
-     "note": "human history: the fork became the mainstream LSM engine; LevelDB continues"
+     "note": "human history: the fork became the mainstream LSM engine; LevelDB continues [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "absorb writes fast by appending to a log and merging later, and recover the unflushed tail of the log after a crash",
@@ -3657,9 +6409,9 @@
    "receipts": [
     "techne/fossils/specimens/leveldb-1.23/receipts/run-leveldb-1.23-20260912T211026Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\leveldb-1.23",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "libcorrect-quiet",
@@ -3740,9 +6492,9 @@
    "receipts": [
     "techne/fossils/specimens/libcorrect-quiet/receipts/run-libcorrect-quiet-20260912T211141Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\libcorrect-quiet",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "libdai-mooij",
@@ -3806,9 +6558,9 @@
     "techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060503Z.json",
     "techne/fossils/specimens/libdai-mooij/receipts/run-libdai-mooij-20260913T060747Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\libdai-mooij",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "libfec-karn",
@@ -3849,7 +6601,7 @@
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "LGPL-2.1-or-later",
    "acquisition_tags": [],
-   "tree_sha256": "e140027b76e27d81b19322968c6d54cfaf0c768d1d4c14807cb742cce737770f",
+   "tree_sha256": "2b3fe8726f9a3ae6294e58a3899d0d52bdaeb1832a9df73e081b8d296a8506c9",
    "record_path": "techne/fossils/specimens/libfec-karn/record.json",
    "recipe_path": "techne/fossils/specimens/libfec-karn/recipe.json",
    "receipts": [
@@ -3857,9 +6609,9 @@
     "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260912T153815Z.json",
     "techne/fossils/specimens/libfec-karn/receipts/run-libfec-karn-20260913T052515Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\libfec-karn",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "linpack-netlib-1979",
@@ -3867,9 +6619,9 @@
    "lineage": "LINPACK (Dongarra, Bunch, Moler, Stewart, 1979) organised dense linear algebra around COLUMN operations expressed in Level-1 BLAS (vector-vector: daxpy, dscal, ddot, idamax). It defined the field and gave the world the LINPACK benchmark still used for the TOP500. It was superseded by LAPACK, which solves the SAME problems restructured around blocked Level-3 BLAS. The loser and the winner compute the same LU factorisation; only the memory-access structure differs.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "lapack-reference",
-     "note": "same problems, restructured for memory hierarchy; the human record states the reason"
+     "note": "same problems, restructured for memory hierarchy; the human record states the reason [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     },
     {
      "relation": "shares_ancestor_with",
@@ -3945,9 +6697,9 @@
    "receipts": [
     "techne/fossils/specimens/linpack-netlib-1979/receipts/run-linpack-netlib-1979-20260913T144321Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\linpack-netlib-1979",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "linpackd-netlib-1979",
@@ -3996,9 +6748,9 @@
     "techne/fossils/specimens/linpackd-netlib-1979/receipts/run-linpackd-netlib-1979-20260912T124501Z.json",
     "techne/fossils/specimens/linpackd-netlib-1979/receipts/run-linpackd-netlib-1979-20260912T202724Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\linpackd-netlib-1979",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "linux-tcp-congestion",
@@ -4006,9 +6758,9 @@
    "lineage": "TCP congestion control (1988-, Van Jacobson onward): Tahoe -> Reno -> NewReno -> CUBIC (2008, loss-based, the Linux default) -> BBR (2016, Google, model-based rate/RTT). Each redesign was forced by a changed network: higher bandwidth-delay products, then bufferbloat. Preserved here as the actual Linux kernel modules tcp_cubic.c and tcp_bbr.c.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "supersedes",
      "to": "TCP Reno/NewReno",
-     "note": "CUBIC replaced Reno-family as Linux default"
+     "note": "CUBIC replaced Reno-family as Linux default [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]"
     },
     {
      "relation": "algorithm_from",
@@ -4053,9 +6805,9 @@
    "record_path": "techne/fossils/specimens/linux-tcp-congestion/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\linux-tcp-congestion",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "lisp-1-5-ibm7090-1962",
@@ -4085,8 +6837,8 @@
     "garbage-collection",
     "pre1970"
    ],
-   "run_status": "SOURCE_ONLY",
-   "test_status": "NO_TESTS",
+   "run_status": "BUILDS_BUT_NOT_RUN",
+   "test_status": "TECHNE_SMOKE_HARNESS_PASS",
    "observability": {
     "EXECUTABLE": "no",
     "OBSERVABLE": "no",
@@ -4129,11 +6881,16 @@
    ],
    "tree_sha256": "36e31960ceddb8666282b20ac7274dd16b722db2d3998fbaa111ee679883a076",
    "record_path": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/record.json",
-   "recipe_path": null,
-   "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\lisp-1-5-ibm7090-1962",
-   "mirror_available": "no_mirror_configured"
+   "recipe_path": "techne/fossils/specimens/lisp-1-5-ibm7090-1962/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T142124Z.json",
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T151959Z.json",
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T152519Z.json",
+    "techne/fossils/specimens/lisp-1-5-ibm7090-1962/receipts/run-lisp-1-5-ibm7090-1962-20260916T153230Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "lmdb-0.9.31",
@@ -4190,9 +6947,9 @@
    "receipts": [
     "techne/fossils/specimens/lmdb-0.9.31/receipts/run-lmdb-0.9.31-20260912T210038Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\lmdb-0.9.31",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "lru-cache-goldsborough",
@@ -4240,9 +6997,9 @@
     "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162711Z.json",
     "techne/fossils/specimens/lru-cache-goldsborough/receipts/run-lru-cache-goldsborough-20260912T162752Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\lru-cache-goldsborough",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "md5-rfc1321",
@@ -4250,9 +7007,9 @@
    "lineage": "MD5 (Rivest, 1992, RFC 1321) was the default cryptographic hash for a decade: 128-bit digest, Merkle-Damgard over a 512-bit block compression function. Wang et al. published practical collisions in 2004-2005, and RFC 6151 records that MD5 is no longer acceptable where collision resistance is required. The fossil is the RFC's own reference C code -- the standard and its implementation in one artifact.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "the SHA-2 family",
-     "note": "deployment moved to SHA-256 after the collision results"
+     "note": "deployment moved to SHA-256 after the collision results [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "produce a short fixed-length fingerprint of a message that is infeasible to forge or collide",
@@ -4324,9 +7081,9 @@
     "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144545Z.json",
     "techne/fossils/specimens/md5-rfc1321/receipts/run-md5-rfc1321-20260913T144827Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\md5-rfc1321",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "microkanren-scheme",
@@ -4391,9 +7148,9 @@
     "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143351Z.json",
     "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143428Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\microkanren-scheme",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "minisat-1.14-2006",
@@ -4406,9 +7163,9 @@
      "note": "1.14 (2006) -> 2.2.0 (2010)"
     },
     {
-     "relation": "superseded",
+     "relation": "supersedes",
      "to": "zchaff-2007",
-     "note": "direction: MiniSat superseded zChaff (recorded on both records)"
+     "note": "direction: MiniSat superseded zChaff (recorded on both records) [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "be the smallest complete CDCL solver competitive with the large ones, so others could extend it",
@@ -4477,9 +7234,9 @@
    "receipts": [
     "techne/fossils/specimens/minisat-1.14-2006/receipts/run-minisat-1.14-2006-20260912T211731Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\minisat-1.14-2006",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "minisat-2.2.0",
@@ -4533,9 +7290,9 @@
     "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T125043Z.json",
     "techne/fossils/specimens/minisat-2.2.0/receipts/run-minisat-2.2.0-20260912T202747Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\minisat-2.2.0",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "minisom",
@@ -4583,9 +7340,9 @@
     "techne/fossils/specimens/minisom/receipts/run-minisom-20260912T163938Z.json",
     "techne/fossils/specimens/minisom/receipts/run-minisom-20260912T164039Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\minisom",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "minpack-netlib-1980",
@@ -4638,9 +7395,9 @@
     "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124612Z.json",
     "techne/fossils/specimens/minpack-netlib-1980/receipts/run-minpack-netlib-1980-20260912T124631Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\minpack-netlib-1980",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "ncompress-5.0-lzw-1985",
@@ -4688,9 +7445,9 @@
    "receipts": [
     "techne/fossils/specimens/ncompress-5.0-lzw-1985/receipts/run-ncompress-5.0-lzw-1985-20260912T124716Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\ncompress-5.0-lzw-1985",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "odepack-netlib",
@@ -4708,9 +7465,9 @@
      "note": "netlib numerical lineage"
     },
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "scipy.integrate.odeint / LSODA",
-     "note": "LSODA (in this same package) auto-switches; wrapped by SciPy"
+     "note": "LSODA (in this same package) auto-switches; wrapped by SciPy [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "integrate ODE systems with automatic step and order selection, including stiff systems whose fast modes would otherwise force absurdly small steps",
@@ -4770,9 +7527,9 @@
    "receipts": [
     "techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\odepack-netlib",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "openssl-1.0.1f-heartbleed",
@@ -4850,9 +7607,9 @@
    "record_path": "techne/fossils/specimens/openssl-1.0.1f-heartbleed/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\openssl-1.0.1f-heartbleed",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "padasip-1.2.2",
@@ -4914,9 +7671,9 @@
    "receipts": [
     "techne/fossils/specimens/padasip-1.2.2/receipts/run-padasip-1.2.2-20260912T214445Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\padasip-1.2.2",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "paip-lisp-norvig-1991",
@@ -4980,9 +7737,9 @@
    "receipts": [
     "techne/fossils/specimens/paip-lisp-norvig-1991/receipts/run-paip-lisp-norvig-1991-20260912T213658Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\paip-lisp-norvig-1991",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "pari-gp-2.17",
@@ -5044,9 +7801,9 @@
     "techne/fossils/specimens/pari-gp-2.17/receipts/run-pari-gp-2.17-20260913T111949Z.json",
     "techne/fossils/specimens/pari-gp-2.17/receipts/run-pari-gp-2.17-20260913T112538Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\pari-gp-2.17",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "particles-chopin-0.4",
@@ -5122,9 +7879,9 @@
     "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T061510Z.json",
     "techne/fossils/specimens/particles-chopin-0.4/receipts/run-particles-chopin-0.4-20260913T061708Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\particles-chopin-0.4",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "pforth",
@@ -5166,15 +7923,15 @@
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "0BSD / public-domain-like (pForth license)",
    "acquisition_tags": [],
-   "tree_sha256": "d376716f69fe50381a98d5880571f8eb34f9a4c1a6e2c3c277e7f6dd18dcc934",
+   "tree_sha256": "6750dcae553a47cee05f6d5bce91fbb767eece3cdd4631c35fc829f2d0f909c7",
    "record_path": "techne/fossils/specimens/pforth/record.json",
    "recipe_path": "techne/fossils/specimens/pforth/recipe.json",
    "receipts": [
     "techne/fossils/specimens/pforth/receipts/run-pforth-20260912T152709Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\pforth",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "picorv32",
@@ -5215,16 +7972,16 @@
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "ISC",
    "acquisition_tags": [],
-   "tree_sha256": "647455da29695832218941a94052b274f9ce2cf7b1b57d59eddfdfb5d661d653",
+   "tree_sha256": "4fc00e02722b9098da35ea77d0e18d866f14e70dcab178ba963e3be1f86420a9",
    "record_path": "techne/fossils/specimens/picorv32/record.json",
    "recipe_path": "techne/fossils/specimens/picorv32/recipe.json",
    "receipts": [
     "techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153506Z.json",
     "techne/fossils/specimens/picorv32/receipts/run-picorv32-20260912T153756Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\picorv32",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "picosat-965",
@@ -5283,9 +8040,9 @@
     "techne/fossils/specimens/picosat-965/receipts/run-picosat-965-20260912T143236Z.json",
     "techne/fossils/specimens/picosat-965/receipts/run-picosat-965-20260912T175221Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\picosat-965",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "pid-autotune-hirschmann",
@@ -5355,9 +8112,123 @@
     "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T060238Z.json",
     "techne/fossils/specimens/pid-autotune-hirschmann/receipts/run-pid-autotune-hirschmann-20260913T215440Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\pid-autotune-hirschmann",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "poet-enhanced-2020",
+   "canonical_name": "Enhanced POET -- Wang, Lehman, Rawal, Zhi, Li, Clune, Stanley (Uber AI, ICML 2020)",
+   "lineage": "POET (2019, GECCO) -> Enhanced POET (2020, ICML): paired environment/agent coevolution with minimal-criterion admission, PATA-EC novelty and cross-environment transfer; the reference implementation for both lives in one repository (this = branch master)",
+   "ancestry": [],
+   "human_purpose": "invent an unbounded stream of learning challenges and solve them, transferring solutions across challenges",
+   "human_environmental_pressure": "RL research where the environment distribution, not the learner, was the bottleneck",
+   "version": "uber-research/poet master @ 8669a17e6958f80cd547b2de61c51d4518c833d9 (last push 2022-03-23)",
+   "era": "2019-2020",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "open-ended-learning",
+    "coevolution",
+    "curriculum",
+    "evolution-strategies",
+    "quality-diversity"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-104"
+   ],
+   "tree_sha256": "79854087cda8029a39cc74b8c3508adee055684e206449c095a4925e0f46d113",
+   "record_path": "techne/fossils/specimens/poet-enhanced-2020/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "poet-original-2019",
+   "canonical_name": "POET (original) -- Wang, Lehman, Clune, Stanley (Uber AI, 2019)",
+   "lineage": "the 2019 algorithm on the repository's legacy branch original_poet; Enhanced POET (branch master) supersedes it with CPPN environments, PATA-EC novelty and ANNECS",
+   "ancestry": [
+    {
+     "relation": "superseded_by",
+     "to": "poet-enhanced-2020",
+     "note": "same repository, branch master"
+    }
+   ],
+   "human_purpose": "co-generate environments and their solutions with periodic transfer",
+   "human_environmental_pressure": "same as Enhanced POET",
+   "version": "uber-research/poet original_poet @ 0b40743d414a11e1b96cb0b7869483462724bb1e",
+   "era": "2019",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "open-ended-learning",
+    "coevolution",
+    "curriculum",
+    "evolution-strategies"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-104",
+    "TECHNE-18"
+   ],
+   "tree_sha256": "889276ac26c34554991a6b8e9488c7f6f64035c7e19810ca37662bfb7ce4aa37",
+   "record_path": "techne/fossils/specimens/poet-original-2019/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "py-vollib-lets-be-rational",
@@ -5416,9 +8287,9 @@
     "techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T214612Z.json",
     "techne/fossils/specimens/py-vollib-lets-be-rational/receipts/run-py-vollib-lets-be-rational-20260912T215734Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\py-vollib-lets-be-rational",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "pybreaker-1.2.0",
@@ -5475,9 +8346,9 @@
    "receipts": [
     "techne/fossils/specimens/pybreaker-1.2.0/receipts/run-pybreaker-1.2.0-20260912T214424Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\pybreaker-1.2.0",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "pyportfolioopt-1.5.5",
@@ -5539,9 +8410,9 @@
     "techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T214745Z.json",
     "techne/fossils/specimens/pyportfolioopt-1.5.5/receipts/run-pyportfolioopt-1.5.5-20260912T215859Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\pyportfolioopt-1.5.5",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "python-control",
@@ -5590,9 +8461,9 @@
     "techne/fossils/specimens/python-control/receipts/run-python-control-20260912T164354Z.json",
     "techne/fossils/specimens/python-control/receipts/run-python-control-20260913T215513Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\python-control",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "python-sgp4-2.23",
@@ -5654,9 +8525,9 @@
     "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T220043Z.json",
     "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260913T215311Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\python-sgp4-2.23",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "quadpack-netlib",
@@ -5705,9 +8576,9 @@
     "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152540Z.json",
     "techne/fossils/specimens/quadpack-netlib/receipts/run-quadpack-netlib-20260912T152641Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\quadpack-netlib",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "radamsa-0.6",
@@ -5766,9 +8637,9 @@
    "receipts": [
     "techne/fossils/specimens/radamsa-0.6/receipts/run-radamsa-0.6-20260912T211504Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\radamsa-0.6",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "redlock-py-redis-2014",
@@ -5851,9 +8722,9 @@
    "receipts": [
     "techne/fossils/specimens/redlock-py-redis-2014/receipts/run-redlock-py-redis-2014-20260913T054942Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\redlock-py-redis-2014",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "reed-solomon-rockliff-1991",
@@ -5910,9 +8781,9 @@
     "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143252Z.json",
     "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143343Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\reed-solomon-rockliff-1991",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "simple-kalman-denyssene",
@@ -5959,9 +8830,9 @@
     "techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162526Z.json",
     "techne/fossils/specimens/simple-kalman-denyssene/receipts/run-simple-kalman-denyssene-20260912T162714Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\simple-kalman-denyssene",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "souffle-2.4.1",
@@ -6020,9 +8891,9 @@
    "record_path": "techne/fossils/specimens/souffle-2.4.1/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\souffle-2.4.1",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "spacewar-pdp1-1962",
@@ -6050,7 +8921,7 @@
     "interactive",
     "pre1970"
    ],
-   "run_status": "SOURCE_ONLY",
+   "run_status": "RUNNABLE_EMULATED",
    "test_status": "NO_TESTS",
    "observability": {
     "EXECUTABLE": "no",
@@ -6094,11 +8965,14 @@
    ],
    "tree_sha256": "66d682d8313e7afe0129b1b1183d87ecbf4861f5f8b5f17c6c6dfbdb6b8d5bc2",
    "record_path": "techne/fossils/specimens/spacewar-pdp1-1962/record.json",
-   "recipe_path": null,
-   "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\spacewar-pdp1-1962",
-   "mirror_available": "no_mirror_configured"
+   "recipe_path": "techne/fossils/specimens/spacewar-pdp1-1962/recipe.json",
+   "receipts": [
+    "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T150305Z.json",
+    "techne/fossils/specimens/spacewar-pdp1-1962/receipts/run-spacewar-pdp1-1962-20260916T151039Z.json"
+   ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "spdylay",
@@ -6106,9 +8980,9 @@
    "lineage": "SPDY (Google, 2009) attacked HTTP/1.1 head-of-line blocking with multiplexed streams, header compression and prioritisation over one TLS connection. It worked, and the IETF took it as the BASIS for HTTP/2 (RFC 7540). Its authors then deprecated it: SPDY is a loser of an unusual kind -- defeated by its own successor, having won the argument. spdylay is Tatsuhiro Tsujikawa's C implementation (the ancestor of nghttp2).",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "HTTP/2 (RFC 7540)",
-     "note": "SPDY was the basis of the standard that replaced it"
+     "note": "SPDY was the basis of the standard that replaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "remove HTTP/1.1's head-of-line blocking by multiplexing many requests over one connection with compressed headers",
@@ -6174,9 +9048,9 @@
    "record_path": "techne/fossils/specimens/spdylay/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\spdylay",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "spin-6.5.2-holzmann",
@@ -6229,9 +9103,9 @@
    "receipts": [
     "techne/fossils/specimens/spin-6.5.2-holzmann/receipts/run-spin-6.5.2-holzmann-20260912T125057Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\spin-6.5.2-holzmann",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "spin-pathfinder-priority-inversion-1997",
@@ -6316,9 +9190,9 @@
    "receipts": [
     "techne/fossils/specimens/spin-pathfinder-priority-inversion-1997/receipts/run-spin-pathfinder-priority-inversion-1997-20260912T211155Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\spin-pathfinder-priority-inversion-1997",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "sqlite-3.49.1-amalgamation",
@@ -6372,9 +9246,9 @@
    "receipts": [
     "techne/fossils/specimens/sqlite-3.49.1-amalgamation/receipts/run-sqlite-3.49.1-amalgamation-20260912T124717Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\sqlite-3.49.1-amalgamation",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "ssw-smith-waterman",
@@ -6433,9 +9307,9 @@
     "techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105921Z.json",
     "techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105940Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\ssw-smith-waterman",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "swipl-9.2.9",
@@ -6488,9 +9362,179 @@
    "record_path": "techne/fossils/specimens/swipl-9.2.9/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\swipl-9.2.9",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "terralingua-2026",
+   "canonical_name": "TerraLingua -- Emergence and Analysis of Open-endedness in LLM Ecologies (Paolo et al., Cognizant AI Lab, 2026)",
+   "lineage": "LLM-agent ecology (2026) with a post-hoc LLM annotation pipeline; sibling of OpenLife (ALIFE 2026) and Conversable Complexity (2026)",
+   "ancestry": [],
+   "human_purpose": "run a persistent multi-agent LLM ecology and reconstruct its cultural history afterwards",
+   "human_environmental_pressure": "understanding coordination, institutions and culture in agent populations",
+   "version": "cognizant-ai-lab/terralingua main @ bf276dbe33e66b2c3b592df27df8ca42c489a4c7 (last push 2026-09-02)",
+   "era": "2026",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "artificial-life",
+    "llm-agents",
+    "cultural-evolution",
+    "open-endedness",
+    "annotation-pipeline"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-108"
+   ],
+   "tree_sha256": "2a6345086de03456a79714c52d6f4e3cd661d0c9a88d810a86573eb9028c06ae",
+   "record_path": "techne/fossils/specimens/terralingua-2026/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "terralingua-data-abundant-exp-1",
+   "canonical_name": "TerraLingua dataset slice: experiment abundant_exp_1 (top-level files + annotations/)",
+   "lineage": "one of the 40 experiments (8 conditions x 5 repetitions) of terralingua-2026; annotations by Claude Sonnet 4.5 / Haiku 4.5 per the dataset README",
+   "ancestry": [
+    {
+     "relation": "derived_from",
+     "to": "terralingua-2026",
+     "note": "produced by the code at or before the pinned commit; exact commit not stated by the dataset"
+    }
+   ],
+   "human_purpose": "record one ecology run for post-hoc analysis",
+   "human_environmental_pressure": "n/a (data)",
+   "version": "hf GPaolo/TerraLingua main (lastModified 2026-03-19); files pinned by sha256 at acquire",
+   "era": "2026",
+   "language": [
+    "JSON",
+    "pickle",
+    "log"
+   ],
+   "domain": [
+    "dataset",
+    "artificial-life",
+    "llm-agents",
+    "annotations"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0 (dataset card tag)",
+   "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-108",
+    "data-slice"
+   ],
+   "tree_sha256": "280760a1f206c57900acf6d99dac8f48f850df7f2d7038170d9e006bb9a5d800",
+   "record_path": "techne/fossils/specimens/terralingua-data-abundant-exp-1/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "tierra-6.02-ray-1998",
+   "canonical_name": "Tierra 6.02 -- Thomas S. Ray (1991-1998), mirror of the life.ou.edu source",
+   "lineage": "Ray 1991 'An approach to the synthesis of life' (Artificial Life II) -> Tierra releases through 6.02 (1998); Avida (1993-) is the instrumentation-rich descendant lineage",
+   "ancestry": [],
+   "human_purpose": "evolve self-replicating machine-code creatures in a shared memory 'soup' under CPU-time and space competition",
+   "human_environmental_pressure": "disk and compute scarcity: only genotypes that earn a name are banked (the admission rule Nyx will cut)",
+   "version": "acisternino/tierra master @ 195c2eb84d91a1938faabad38e24b9b47d0e262c (mirror of Tierra v6.02 from life.ou.edu; two further mirrors pinned in SOURCES_2026-09-17.json)",
+   "era": "1991-1998",
+   "language": [
+    "C"
+   ],
+   "domain": [
+    "artificial-life",
+    "digital-evolution",
+    "self-replication",
+    "virtual-machine",
+    "ecology"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "HISTORICAL_ARCHIVE_MIRROR",
+   "license_spdx": "custom non-commercial (Ray, tierra/license.h 1995): free copying and distribution without fees; no commercial use; modified versions must document changes and notify the principal author; notice must not be removed",
+   "acquisition_tags": [
+    "operator-directive-2026-09-17",
+    "poet_alife",
+    "TECHNE-106"
+   ],
+   "tree_sha256": "c289644b4fe19c5146077ec4744565ed5a3f534317a0581a712725d48a8f0e2d",
+   "record_path": "techne/fossils/specimens/tierra-6.02-ray-1998/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "tiny-aes-c",
@@ -6498,9 +9542,9 @@
    "lineage": "Rijndael (Daemen & Rijmen) won the NIST AES competition and became FIPS 197 in 2001, replacing DES. Not a Feistel network but a substitution-permutation network over GF(2^8), with 128/192/256-bit keys. Kept as the WINNER of the cipher pair so the loser can be compared on shared test vectors.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "supersedes",
      "to": "des-reference",
-     "note": "AES replaced DES as the US standard"
+     "note": "AES replaced DES as the US standard [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'supersedes' by the note/era; migrate_superseded_20260916.py]"
     }
    ],
    "human_purpose": "replace DES with a cipher whose key length and structure resist foreseeable attack, efficient in both hardware and software",
@@ -6555,9 +9599,9 @@
     "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T144339Z.json",
     "techne/fossils/specimens/tiny-aes-c/receipts/run-tiny-aes-c-20260913T210142Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\tiny-aes-c",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "tinycc",
@@ -6607,9 +9651,9 @@
     "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153231Z.json",
     "techne/fossils/specimens/tinycc/receipts/run-tinycc-20260912T153347Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\tinycc",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "tinyekf-levy",
@@ -6676,9 +9720,9 @@
     "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210255Z.json",
     "techne/fossils/specimens/tinyekf-levy/receipts/run-tinyekf-levy-20260912T210525Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\tinyekf-levy",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "tinyscheme-1.42",
@@ -6741,9 +9785,9 @@
     "techne/fossils/specimens/tinyscheme-1.42/receipts/run-tinyscheme-1.42-20260912T124715Z.json",
     "techne/fossils/specimens/tinyscheme-1.42/receipts/run-tinyscheme-1.42-20260912T202727Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\tinyscheme-1.42",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "tinystm-marlier",
@@ -6825,9 +9869,9 @@
     "techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211133Z.json",
     "techne/fossils/specimens/tinystm-marlier/receipts/run-tinystm-marlier-20260912T211303Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\tinystm-marlier",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "tscp-1.81-kerrigan-1997",
@@ -6880,9 +9924,9 @@
     "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T125013Z.json",
     "techne/fossils/specimens/tscp-1.81-kerrigan-1997/receipts/run-tscp-1.81-kerrigan-1997-20260912T175210Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\tscp-1.81-kerrigan-1997",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "umdhmm-kanungo-1.02",
@@ -6950,9 +9994,9 @@
     "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210719Z.json",
     "techne/fossils/specimens/umdhmm-kanungo-1.02/receipts/run-umdhmm-kanungo-1.02-20260912T210812Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\umdhmm-kanungo-1.02",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "valgrind-helgrind-fixtures-3.19",
@@ -7013,9 +10057,9 @@
    "receipts": [
     "techne/fossils/specimens/valgrind-helgrind-fixtures-3.19/receipts/run-valgrind-helgrind-fixtures-3.19-20260913T054408Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\valgrind-helgrind-fixtures-3.19",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "verilog-arbiter-forencich",
@@ -7076,9 +10120,9 @@
     "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T211903Z.json",
     "techne/fossils/specimens/verilog-arbiter-forencich/receipts/run-verilog-arbiter-forencich-20260912T212120Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-arbiter-forencich",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "verilog-generic-fifo",
@@ -7126,9 +10170,9 @@
     "techne/fossils/specimens/verilog-generic-fifo/receipts/run-verilog-generic-fifo-20260912T162146Z.json",
     "techne/fossils/specimens/verilog-generic-fifo/receipts/run-verilog-generic-fifo-20260912T162254Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-generic-fifo",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "verilog-rr-arbiter",
@@ -7176,9 +10220,9 @@
     "techne/fossils/specimens/verilog-rr-arbiter/receipts/run-verilog-rr-arbiter-20260912T162136Z.json",
     "techne/fossils/specimens/verilog-rr-arbiter/receipts/run-verilog-rr-arbiter-20260912T202757Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-rr-arbiter",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "verilog-uart2bus",
@@ -7225,9 +10269,9 @@
    "receipts": [
     "techne/fossils/specimens/verilog-uart2bus/receipts/run-verilog-uart2bus-20260912T162148Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\verilog-uart2bus",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "viterbi-hmm-xukmin",
@@ -7274,9 +10318,66 @@
    "receipts": [
     "techne/fossils/specimens/viterbi-hmm-xukmin/receipts/run-viterbi-hmm-xukmin-20260912T162528Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\viterbi-hmm-xukmin",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "voyager-minedojo-2023",
+   "canonical_name": "Voyager -- An Open-Ended Embodied Agent with Large Language Models (Wang, Xie, Jiang, Mandlekar, Xiao, Zhu, Fan, Anandkumar; NVIDIA/Caltech/UT Austin/Stanford/UCLA, 2023)",
+   "lineage": "MineDojo (2022, the same lab's Minecraft simulation suite) -> Voyager (2023): the first LLM-driven lifelong-learning agent with a persistent, growing, retrievable skill library",
+   "ancestry": [],
+   "human_purpose": "explore Minecraft indefinitely, inventing its own tasks, writing and reusing JavaScript programs as skills, without human task specification",
+   "human_environmental_pressure": "single-task RL agents in Minecraft plateau; hand-designed curricula do not scale to open-ended exploration",
+   "version": "MineDojo/Voyager main @ 55e45a880755d0c8c66ca7fb5fe7962ac8974f89 (last push 2024-04-03)",
+   "era": "2023-",
+   "language": [
+    "Python",
+    "JavaScript"
+   ],
+   "domain": [
+    "embodied-agents",
+    "llm-agents",
+    "open-ended-learning",
+    "skill-libraries",
+    "automatic-curriculum",
+    "lifelong-learning"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "operator-directive-2026-09-21",
+    "prior_art_raid",
+    "voyager",
+    "fifth-engine-candidate"
+   ],
+   "tree_sha256": "23097fcc7705b891fd8b078a46707350e7a3fc09996252a7b77c922eb3e85b63",
+   "record_path": "techne/fossils/specimens/voyager-minedojo-2023/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "walksat-v56",
@@ -7337,9 +10438,9 @@
    "receipts": [
     "techne/fossils/specimens/walksat-v56/receipts/run-walksat-v56-20260912T143448Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\walksat-v56",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "whitakers-words-ada",
@@ -7395,9 +10496,9 @@
     "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T231344Z.json",
     "techne/fossils/specimens/whitakers-words-ada/receipts/run-whitakers-words-ada-20260912T233941Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\whitakers-words-ada",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "willemt-raft",
@@ -7452,9 +10553,9 @@
     "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163503Z.json",
     "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163644Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\willemt-raft",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "xv6-riscv",
@@ -7496,13 +10597,13 @@
    "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
    "license_spdx": "MIT",
    "acquisition_tags": [],
-   "tree_sha256": "45ba46ee61dbd6e2de6baa2193b29655e124814780f547a8d397201a8dc93298",
+   "tree_sha256": "e7e3acd85c65ecfc6cee755e184efae9b5561f9bdb1025a44aa9f08c0dbfc5ee",
    "record_path": "techne/fossils/specimens/xv6-riscv/record.json",
    "recipe_path": null,
    "receipts": [],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\xv6-riscv",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "zchaff-2007",
@@ -7510,9 +10611,9 @@
    "lineage": "SAT lineage, the LOSING COMPETITOR: Chaff (Moskewicz, Madigan, Zhao, Zhang, Malik, DAC 2001) introduced the VSIDS decision heuristic and two-literal watching that every later CDCL solver uses; zChaff won SAT 2002. MiniSat (Een & Sorensson 2003) reimplemented the same ideas in a fraction of the code with better restarts/learnt-clause management and took the field; zChaff's last release is 2007.3.12 and it has not been developed since. Preserved from Princeton's page.",
    "ancestry": [
     {
-     "relation": "superseded",
+     "relation": "superseded_by",
      "to": "minisat-2.2.0",
-     "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it"
+     "note": "MiniSat (2003) reimplemented Chaff's ideas and displaced it [relation directed 2026-09-16 from 'superseded' (ambiguous) to 'superseded_by' by the note/era; migrate_superseded_20260916.py]"
     },
     {
      "relation": "shares_ancestor_with",
@@ -7600,9 +10701,9 @@
     "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210251Z.json",
     "techne/fossils/specimens/zchaff-2007/receipts/run-zchaff-2007-20260912T210513Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\zchaff-2007",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   },
   {
    "fossil_id": "zlib-1.3.1",
@@ -7648,9 +10749,9 @@
     "techne/fossils/specimens/zlib-1.3.1/receipts/run-zlib-1.3.1-20260912T152727Z.json",
     "techne/fossils/specimens/zlib-1.3.1/receipts/run-zlib-1.3.1-20260912T202736Z.json"
    ],
-   "body_present_on_this_host": true,
-   "body_path": "F:\\Prometheus\\vault\\fossils\\zlib-1.3.1",
-   "mirror_available": "no_mirror_configured"
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
   }
  ]
 }
