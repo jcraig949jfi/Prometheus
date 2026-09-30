@@ -68,8 +68,8 @@ workers disagree, the resolution is stated.
 | No retention regime / SI01 closed | SUPPORTED for the 16 champions; UNSUPPORTED for PTE | the tasks penalise retention |
 | Promoted relative swap verdict | SUPPORTED as a statistic on the swap; WEAKENED as a carrier ruler | whole-history mirror swap; FC under modelled nulls; inert H2 floor |
 | "84% of CHANCE stay CHANCE" | SUPPORTED as a count; UNSUPPORTED as mechanism evidence | structural causes (normal < .62, o <= 0, identity-broken) |
-| 4781b0a1 "joint carrier" (W-P) | WEAKENED pending H-CHK C1 | may be a noisy count threshold |
-| 4781b0a1 "not a majority" (W-V) | WEAKENED pending H-CHK C2 | lossless positive control |
+| 4781b0a1 "joint carrier" (W-P) | WEAKENED (H-CHK C1: PARTIAL) | a count-threshold plant with NO joint logic reproduces JOINT-2 AND/OR, the (inbox, Msum) pair and the o14-15 phase split |
+| 4781b0a1 "not a majority" (W-V) | WEAKENED (H-CHK C2: PARTIAL) | the W-V classifier calls a lossy TRUE majority DISTRIBUTED-NONMAJ (D_piv .38-.44 vs 1.00 lossless), so the label is no evidence against a noisy majority |
 | First-broadcast jitter rule (W-S), no reach (W-T) | SUPPORTED, scoped to 3 RELAY cells | -- |
 | SETRULE compresses (W-H) | SUPPORTED within 5 cells | -- |
 
@@ -98,3 +98,25 @@ UNDETERMINED whether search or physics limits them, because no plant has been bu
 The instruments built over arcs 2-3 (swap census, relative certificates, truth tables, phase
 stratification, provenance and difference tracing) are the durable value. Several of their early
 readings were corrected by later workers, which the record shows honestly.
+
+## ADDENDUM: H-CHK decisive checks (plan 7e156c12b frozen first; known-answer gate PASS; principal re-ran tests 4/4 and verified the readings)
+- C1 PARTIAL (by .0004). A noisy count-threshold plant (readout "+" iff >= 3 payload-1 copies in its last
+  wake window; no joint logic) reproduces W-P's signature: JOINT-2 AND/OR share 1.00, the (inbox, Msum)
+  pair at o14-15, and the champion's o14/o15 clock-phase split (o14 q1 E .50 vs champion .49). Under
+  W-V's frozen classifier it reads DISTRIBUTED-NONMAJ in 9/9 strata, median D_piv .3004 against the frozen
+  bar < .3.
+  -> "Joint carrier" as a distinct architecture is not supported by the truth tables: a threshold on a
+     noisy sum produces them.
+- C2 PARTIAL. W-V's majority plant at the champion's loss .1 and fanout-8 sampling reads DISTRIBUTED-NONMAJ,
+  D_piv .38-.44 (lossless 1.00).
+  -> The DISTRIBUTED-NONMAJ label is not evidence against a noisy majority.
+- UNEXPLAINED (do not normalize away): the champion's D_piv (.10-.12) is LOWER than both plants' (.30,
+  .38-.44). Loss plus a count threshold does not fully account for 4781b0a1. Candidates: rectification
+  strength, the longer effective latency (the champion's readout-bound traffic only acts from o10), or
+  sensor-to-sensor relaying.
+- C3 NOT CONFIRMED, and the proposed discriminator is itself refuted. A single-cue-twin S swap gives z = -1
+  for integrators too (-1.00 [-1,-1]), because the twins receive identical input after the swap tick. So an
+  S swap puts world A exactly on B's trajectory, whatever the mechanism. The lag weight shows up in the
+  twin-difference RATE (.23-.54, falling with trial index), not in z.
+  -> The integrator/store question needs a statistic not normalised by the twin effect: a lag profile, or
+     the twin-difference rate.
