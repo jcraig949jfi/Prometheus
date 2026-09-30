@@ -6,4 +6,4 @@ Proposals only; nothing here is built during the adoption experiment.
 - Remote drain/stop of a node worker (the ubu002 v0.1 worker could not be stopped from ubu001)
 - Claude-executor availability probe (token present, CLI version) as a capability
 - Windows node worker
-- Remove legacy ARC3 lease detection once old helper copies are merged away
+- ~~Remove legacy ARC3 lease detection once old helper copies are merged away~~ DONE 2026-09-30 (CWO; FREEZE.md log)

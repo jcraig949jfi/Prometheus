@@ -72,10 +72,38 @@ def subsets(key):
 
 # ---- transport ----------------------------------------------------------------
 
+# DEVIATION_01 (roles/Hecate/prereg/2026-09-30_alien_lawful_assay/): Gemini
+# replies were truncated at 16000 max tokens (thinking counts against it).
+MAX_TOKENS = {"gemini": 65536, "gptoss": 16000}
+REQUIRED = {"blind": ("t1", "t2", "t3", "t4", "t5"), "fam": ("coherence", "familiar"),
+            "reveal": ("coherence", "t2"), "pair": ("choice",), "prose": ("t2",),
+            "active": ("t1", "t2", "t3", "t4", "t5"), "turn": ("query",)}
+QUOTA_MARKERS = ("exceeded your current quota", "tokens per day", "requests per day")
+
+
+class DailyQuota(Exception):
+    pass
+
+
 def _api(model, prompt):
     from prometheus_llm import complete
     return complete(prompt, target=MODELS[model], system=tasks.SYSTEM,
-                    max_tokens=16000, temperature=0.0, retries=1, timeout=300)
+                    max_tokens=MAX_TOKENS[model], temperature=0.0, retries=1, timeout=600)
+
+
+def extract_task_json(text, task):
+    """The first JSON object in text that has the task's required top-level
+    keys; None otherwise (a truncated or partial reply is unparseable)."""
+    need = REQUIRED.get(task, ())
+    i = 0
+    while True:
+        j = text.find("{", i)
+        if j < 0:
+            return None
+        obj = extract_json(text[j:])
+        if isinstance(obj, dict) and all(k in obj for k in need):
+            return obj
+        i = j + 1
 
 
 def ask(model, prompt):
@@ -87,26 +115,28 @@ def ask(model, prompt):
             ok, text, err = r["ok"], r.get("text", ""), (r.get("stderr_head") or "")[:300]
         else:
             c = _api(model, prompt)
-            ok, text, err = bool(c.ok), c.text or "", (c.error or "")[:300] if hasattr(c, "error") else ""
-            if not ok:
-                err = str(getattr(c, "summary", lambda: "")())[:300]
-        attempts.append({"ok": ok, "err": err, "t": round(time.time() - t0, 1)})
+            ok, text = bool(c.ok), c.text or ""
+            err = "" if ok else str(getattr(c, "summary", lambda: "")())[:300]
+            if not ok and any(m in err.lower() for m in QUOTA_MARKERS):
+                raise DailyQuota(err)
+        attempts.append({"ok": ok, "err": err, "t": round(time.time() - t0, 1),
+                         "finish": None if model == "claude" else getattr(c, "finish_reason", None)})
         if ok:
             return text, attempts
         time.sleep(min(300, 15 * 2 ** k) * (0.5 + random.random()))
     return "", attempts
 
 
-def ask_json(model, prompt):
+def ask_json(model, prompt, task=""):
     text, att = ask(model, prompt)
-    obj = extract_json(text) if text else None
+    obj = extract_task_json(text, task) if text else None
     reasked = False
     if text and obj is None:
         reasked = True
         text2, att2 = ask(model, prompt + "\n\nYour previous reply could not be parsed. "
                                           "Reply with exactly one JSON object and nothing else.")
         att += att2
-        obj = extract_json(text2) if text2 else None
+        obj = extract_task_json(text2, task) if text2 else None
         text = text + "\n\n[REASK]\n" + text2
     return text, obj, att, reasked
 
@@ -131,7 +161,7 @@ def do_single(model, task, sid, pub, key):
         prompt = tasks.prose_t2(p)
     else:
         raise ValueError(task)
-    return _row(model, task, sid, prompt, *ask_json(model, prompt))
+    return _row(model, task, sid, prompt, *ask_json(model, prompt, task))
 
 
 def do_pair(model, pair, pub, key):
@@ -139,7 +169,7 @@ def do_pair(model, pair, pub, key):
     rng = random.Random(f"{SUBSET_SEED}-{a_id}")
     first, second = (a_id, n_id) if rng.random() < 0.5 else (n_id, a_id)
     prompt = tasks.pair(pub[first], pub[second])
-    return _row(model, "pair", a_id, prompt, *ask_json(model, prompt),
+    return _row(model, "pair", a_id, prompt, *ask_json(model, prompt, "pair"),
                 order=[first, second], lawful=("A" if first == a_id else "B"))
 
 
@@ -154,7 +184,7 @@ def do_active(model, sid, pub, key, budget=10):
     history, turns = [], []
     for used in range(budget):
         prompt = tasks.active_turn(pb, runs, history, budget - used)
-        text, obj, att, reasked = ask_json(model, prompt)
+        text, obj, att, reasked = ask_json(model, prompt, "turn")
         turns.append({"raw": text, "parsed": obj, "attempts": att})
         if not obj or obj.get("query") == "done":
             break
@@ -176,7 +206,7 @@ def do_active(model, sid, pub, key, budget=10):
         except Exception as e:                          # malformed experiment: spent, recorded
             history.append({"query": obj, "result": f"invalid experiment ({type(e).__name__})"})
     prompt = tasks.active_final(pb, runs, history)
-    row = _row(model, "active", sid, prompt, *ask_json(model, prompt))
+    row = _row(model, "active", sid, prompt, *ask_json(model, prompt, "active"))
     row.update(turns=turns, history=history, n_experiments=len(history))
     return row
 
@@ -188,8 +218,15 @@ def main(model, task, limit=None):
     path = os.path.join(RUNS, model, f"{task}.jsonl")
     done = set()
     if os.path.exists(path):
+        # done only if the parsed reply has the task's required keys
+        # (DEVIATION_01: earlier truncated Gemini rows are redone)
+        need = REQUIRED.get(task, ())
         with open(path, encoding="utf-8") as fh:
-            done = {json.loads(l)["sid"] for l in fh if l.strip() and json.loads(l)["ok"]}
+            for l in fh:
+                if l.strip():
+                    r = json.loads(l)
+                    if r["ok"] and isinstance(r["parsed"], dict) and all(k in r["parsed"] for k in need):
+                        done.add(r["sid"])
     if task == "pair":
         items = [pr for pr in sub["pairs"] if pr[0] not in done]
         fn = lambda it: do_pair(model, it, pub, key)
@@ -202,12 +239,23 @@ def main(model, task, limit=None):
         fn = lambda it: do_single(model, task, it, pub, key)
     if limit:
         items = items[:limit]
+    written = 0
     with open(path, "a", encoding="utf-8", newline="\n") as fh, \
             ThreadPoolExecutor(max_workers=WORKERS[model]) as ex:
-        for row in ex.map(fn, items):
+        # results are consumed in order; a daily quota stops the run cleanly
+        futs = [ex.submit(fn, it) for it in items]
+        for fu in futs:
+            try:
+                row = fu.result()
+            except DailyQuota as e:
+                print(model, task, "DAILY QUOTA reached after", written, "rows:", str(e)[:160])
+                for other in futs:
+                    other.cancel()
+                break
             fh.write(json.dumps(row, ensure_ascii=True, default=str) + "\n")
             fh.flush()
-    print(model, task, "wrote", len(items))
+            written += 1
+    print(model, task, "wrote", written, "of", len(items))
 
 
 if __name__ == "__main__":

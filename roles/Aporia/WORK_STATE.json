@@ -4,10 +4,10 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-29T13:10:12Z",
-  "state": "HOLD",
-  "branch": "aporia/base-role-work-conserving-2026-09-29 -> main",
-  "head_sha": "1e90420174fb73cd0c212a52f8bc44b3e3de5d21",
+  "updated_at_utc": "2026-09-30T08:45:00Z",
+  "state": "ACTIVE",
+  "branch": "aporia/cwo-fleet-activation-2026-09-30",
+  "head_sha": "(this commit)",
   "threads": [],
   "campaigns": [],
   "experiments": [],
@@ -24,18 +24,29 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "HOLD/advisory. Base-role work-conserving update landed; no census, MWO, review or repair campaign started (per directive)."
+    "activation pass",
+    "coordination cycles via fleet_status.py"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md (sha256 ab93f646...b7e) ; ops/fleet/QUEUE.json",
     "roles/base-role (NORTH_STAR addendum, RESPONSIBILITIES 2a, WAKE optional task line) @ 1e90420174fb73cd0c212a52f8bc44b3e3de5d21; directive roles/Aporia/prompts/2026-09-29_base_role_work_conserving/",
     "ops/work_orders/archive/MWO-0004_2026-09-29.md (published, P=25a486d44)",
     "roles/Aporia/probes/FP-001_RESULT.json",
     "roles/base-role/RESPONSIBILITIES.md boot line (MWO-0004 R4) @ 17e25e67be040d04925ec04e63353503a4c03090"
   ],
-  "state_reason": "Operator base-role constitutional update (2026-09-29) committed at 1e9042017. HOLD/advisory; no steward, coordinator, scheduling or adjudication authority.",
+  "state_reason": "Operator CWO 2026-09-30: Aporia is fleet scheduler, backlog maintainer and blocker clearer (flow, not scientific opinion). Queue of record: ops/fleet/QUEUE.json.",
   "migration_report": "roles/Aporia/MIGRATION_REPORT_MWO-0002.json",
   "comms_cursor": "sync 2026-09-29T06:57:55Z (through #914 and later; 2 addressed to Aporia, no action requested: #798, #873)",
   "r4_boot_line_commit": "17e25e67be040d04925ec04e63353503a4c03090",
-  "base_role_work_conserving_commit": "1e90420174fb73cd0c212a52f8bc44b3e3de5d21"
+  "base_role_work_conserving_commit": "1e90420174fb73cd0c212a52f8bc44b3e3de5d21",
+  "work_order": "MWO-0004 + CWO-2026-09-30 fleet activation",
+  "current": "First activation pass (CWO s6): broadcast + per-seat assignments; clear stale blockers; wake reachable seats",
+  "next": "Coordination cycle: python ops/fleet/fleet_status.py; promote/refill seat queues in ops/fleet/QUEUE.json",
+  "reserve": [
+    "BUILDER-FABRIC after Odysseus closes promexec round 2",
+    "BUILDER-EXPERIMENT primitives"
+  ],
+  "resource_status": "no compute of its own",
+  "last_receipt": "ops/fleet/QUEUE.json + ops/fleet/fleet_status.py (this commit)"
 }

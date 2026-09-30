@@ -30,11 +30,6 @@ def env(monkeypatch, tmp_path):
     except Exception as e:  # pragma: no cover
         pytest.skip("canonical store unreachable: {}".format(e))
     S.init_schema(c)
-    cur = c.cursor()
-    cur.execute("CREATE TABLE {}.legacy_msgs (id BIGSERIAL PRIMARY KEY, subject TEXT NOT NULL, body TEXT NOT NULL DEFAULT '')".format(name))
-    c.commit()
-    monkeypatch.setenv("FABRIC_LEGACY_LEASE_TABLE", name + ".legacy_msgs")
-    monkeypatch.setenv("FABRIC_LEGACY_LEASE_DIR", str(tmp_path / "ananke_runs" / "leases"))
     home = tmp_path / "home"; home.mkdir()
     e = dict(os.environ, HOME=str(home), USERPROFILE=str(home))
     yield c, e, tmp_path

@@ -186,3 +186,14 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   promoted: BOOTT's power collapses at normal ~1 (degenerate resamples, p_min
   1.0 for FLIP/NO_EFFECT at P32-64). Successor T-SWAP-REL4: frozen FC run for a
   BOOTT/t hybrid on degenerate resamples, then promote to lens.
+- T-INS-18 ANSWERED (W-V, E-ANANKE-W-V, workers/W-V/REPORT.md; 8 tests, principal
+  re-run 8 passed; class verdicts spot-checked). Per-sensor carrier census of
+  MAJ 4781b0a1 with exact emitter tagging: readout-bound traffic matters only
+  at o10+ (o2-o8 swaps leave raw S0 bit-identical); at o12/o14q0 all five
+  sensors carry ~1/5 each but the readout is NOT a majority (pivotality
+  contrast .10-.12 vs 1.00 in a majority plant): it detects rectified positive
+  payload-1 evidence in its last wake window, count-dependent (post hoc).
+  Known-answer majority and dictator plants read correctly; must-fails pass.
+  The readout's own S1 never differs between mirror partners; the carrier
+  "S1" is the sensors'. Successors: T-INS-19 (per-sensor census on
+  sensor-addressed traffic, o2-o9), T-INS-20 (swap readout Kp[7] alone).
