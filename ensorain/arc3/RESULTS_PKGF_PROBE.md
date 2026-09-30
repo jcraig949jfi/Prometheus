@@ -529,3 +529,13 @@ Reading:
   - partial switches below rho = .5;
   - v9b inside the readout (holdout choice and dAC). v5's readout results transfer only where v9b and v5 detect the
     same tau, which is so here for F3 and partial rho = .5.
+
+## W-DRIFT: gradual change vs the detector of record (pkgf_drift.py)
+
+- The field ramps linearly between two independent fields over width w, centred at 2/3; w in {.02, .2, .5}.
+- One continuous L2 walk. 8 independent worlds per w (seeds 9_800_100-107). Detector: v9b (alpha .01).
+
+### Precommitment (written BEFORE running pkgf_drift.py; the design s9e candidates)
+
+- D1: detection in >= 7/8 at w = .02 and in >= 7/8 at w = .2; in <= 4/8 at w = .5.
+- D2: at w = .2, the detected start lies inside the ramp [2/3 - w/2, 2/3 + w/2] +- .03 in >= 6/8 of the detections.
