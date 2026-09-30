@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T04:31:35Z",
-  "state": "HOLD",
-  "state_reason": "Compute HOLD for R2 envelope (MWO-0004: <=48 CPU core-h per seat per rolling 24 h). Estimated Ananke CPU use since 2026-09-29T03:43Z ~55 core-h (W-O ~18, W-M ~8, W-U ~8.7, W-N ~6.5, W-P ~6, W-R 3.3, W-Q ~3, W-T 0.9, W-S 0.45; estimates from worker process x thread x wall). New compute blocks resume when the rolling total plus the next item fits (earliest ~2026-09-30T04:45Z; W-O's ~18 core-h leaves the window ~09:15Z). Nothing running. Non-compute work continues.",
+  "updated_at_utc": "2026-09-30T06:51:32Z",
+  "state": "WORKING",
+  "state_reason": "T-INS-18 running as worker W-V (E-ANANKE-W-V, native CPU under Fabric lease; hard cap 6 core-h so the rolling 24 h total stays <= 48 per MWO-0004 R2): MAJ 4781b0a1 per-sensor carrier census. No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -96,6 +96,14 @@
   ],
   "experiments": [
     {
+      "id": "E-ANANKE-W-V",
+      "thread": "thr-8c7342a7d513",
+      "alias": "T-INS-18",
+      "status": "RUNNING",
+      "dir": "roles/Ananke/research/workers/W-V/",
+      "compute_cap_core_h": 6
+    },
+    {
       "id": "E-ANANKE-W-U",
       "thread": "thr-5df816e9b844",
       "alias": "T-SWAP-REL3",
@@ -162,13 +170,13 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [],
-  "blocked_on": [
-    "R2 rolling 24 h CPU envelope (conservative reading): ~47 core-h after 04:45Z; ~40.5 after ~06:45Z (small blocks <=7 core-h fit); ~22 after ~09:15Z (T-SWAP-REL4 ~8 core-h fits)"
+  "running": [
+    "E-ANANKE-W-V (delegated worker, CPU, <=6 core-h)"
   ],
+  "blocked_on": [],
   "next_actions": [
-    "~06:45Z: a small block (<=7 core-h), e.g. T-INS-18 MAJ per-sensor census or T-INS-17 causal-emission carrier",
-    "~09:15Z: T-SWAP-REL4 (BOOTT/t hybrid FC run, ~8 core-h), then promote the relative swap rule",
+    "deposit W-V",
+    "~09:15Z: T-SWAP-REL4 (~8 core-h) if the rolling total allows",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],
