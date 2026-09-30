@@ -564,3 +564,7 @@ conduct and the correct prevention.
 - A content search whose output could print plaintext-derived bytes would NOT be benign. Here that is impossible,
   because the tracked file is ciphertext only.
 - The exclusion Cosmos added should be standard for any seat that searches `prometheus/cosmos/`.
+- **Custodian concurrence (Nestor #1153, 2026-09-30):** NO_INFORMATION, checked independently on M1.
+  - The ciphertext's last touch is 95b31a30d; its entropy is 7.99 bits/byte.
+  - The key and salt were not accessed; the anchor chain is unchanged.
+  - Per Nestor, the operator has accepted Addendum R for the record.
