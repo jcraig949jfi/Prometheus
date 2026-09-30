@@ -1,0 +1,190 @@
+{
+ "triplicateId": "HT-8a87057933",
+ "world": "W4",
+ "outcome": "SPEC_UNATTAINABLE",
+ "statistics": {
+  "pilot_attempt1": {
+   "CE_REFERENCE": {
+    "n_episodes": 10000,
+    "mean_forbidden": 1.0131,
+    "median_steps": 4.0,
+    "probes": 0,
+    "bits_per_probe": null,
+    "probes_per_episode": 0.0,
+    "reach_rate": 0.679,
+    "frac_ep_zero_forbidden": 0.6582,
+    "probe_true_safe_frac": null,
+    "trig_none_safe_frac": null
+   },
+   "POSITIVE_CONTROL": {
+    "n_episodes": 10000,
+    "mean_forbidden": 0.3163,
+    "median_steps": 5.0,
+    "probes": 148601,
+    "bits_per_probe": 0.30210598779359205,
+    "probes_per_episode": 14.8601,
+    "reach_rate": 0.5385,
+    "frac_ep_zero_forbidden": 0.9437,
+    "probe_true_safe_frac": 0.9787148134938527,
+    "trig_none_safe_frac": 0.11402345879233652,
+    "criterion": {
+     "forbidden_reduction": 0.6877899516335998,
+     "median_steps_ratio": 1.25,
+     "bits_ratio": 0.9137172607542162,
+     "a": true,
+     "b": true,
+     "c": false,
+     "meets_success": false,
+     "meets_failure": true
+    }
+   },
+   "CHEAT": {
+    "n_episodes": 10000,
+    "mean_forbidden": 0.0,
+    "median_steps": 4.0,
+    "probes": 142650,
+    "bits_per_probe": 0.6612679890587215,
+    "probes_per_episode": 14.265,
+    "reach_rate": 0.5697,
+    "frac_ep_zero_forbidden": 1.0,
+    "probe_true_safe_frac": 0.9519663512092534,
+    "trig_none_safe_frac": 0.13924991237294077,
+    "criterion": {
+     "forbidden_reduction": 1.0,
+     "median_steps_ratio": 1.0,
+     "bits_ratio": 2.0,
+     "a": true,
+     "b": true,
+     "c": true,
+     "meets_success": true,
+     "meets_failure": false
+    }
+   },
+   "NULL_TWIN": {
+    "n_episodes": 10000,
+    "mean_forbidden": 0.6852,
+    "median_steps": 5.0,
+    "probes": 142650,
+    "bits_per_probe": 0.33063399452936076,
+    "probes_per_episode": 14.265,
+    "reach_rate": 0.5697,
+    "frac_ep_zero_forbidden": 0.7495,
+    "probe_true_safe_frac": 0.9519663512092534,
+    "trig_none_safe_frac": 0.13924991237294077,
+    "criterion": {
+     "forbidden_reduction": 0.32366005330174696,
+     "median_steps_ratio": 1.25,
+     "bits_ratio": 1.0,
+     "a": false,
+     "b": true,
+     "c": false,
+     "meets_success": false,
+     "meets_failure": true
+    }
+   },
+   "null_twin_meets_a_and_b": false,
+   "note": "null twin part (c) is its own reference (ratio 1.0): see NOTES ambiguity 2"
+  },
+  "pilot_attempt2": {
+   "CE_REFERENCE": {
+    "n_episodes": 10000,
+    "mean_forbidden": 1.0131,
+    "median_steps": 4.0,
+    "probes": 0,
+    "bits_per_probe": null,
+    "probes_per_episode": 0.0,
+    "reach_rate": 0.679,
+    "frac_ep_zero_forbidden": 0.6582,
+    "probe_true_safe_frac": null,
+    "trig_none_safe_frac": null
+   },
+   "POSITIVE_CONTROL": {
+    "n_episodes": 10000,
+    "mean_forbidden": 0.3163,
+    "median_steps": 5.0,
+    "probes": 91685,
+    "bits_per_probe": 0.48964663676845255,
+    "probes_per_episode": 9.1685,
+    "reach_rate": 0.5385,
+    "frac_ep_zero_forbidden": 0.9437,
+    "probe_true_safe_frac": 0.9927359982548944,
+    "trig_none_safe_frac": 0.15757212193924852,
+    "criterion": {
+     "forbidden_reduction": 0.6877899516335998,
+     "median_steps_ratio": 1.25,
+     "bits_ratio": 0.8429428489165547,
+     "a": true,
+     "b": true,
+     "c": false,
+     "meets_success": false,
+     "meets_failure": true
+    }
+   },
+   "CHEAT": {
+    "n_episodes": 10000,
+    "mean_forbidden": 0.0,
+    "median_steps": 4.0,
+    "probes": 81196,
+    "bits_per_probe": 1.1617552421206294,
+    "probes_per_episode": 8.1196,
+    "reach_rate": 0.5697,
+    "frac_ep_zero_forbidden": 1.0,
+    "probe_true_safe_frac": 0.958421597123011,
+    "trig_none_safe_frac": 0.20183260259126065,
+    "criterion": {
+     "forbidden_reduction": 1.0,
+     "median_steps_ratio": 1.0,
+     "bits_ratio": 2.0,
+     "a": true,
+     "b": true,
+     "c": true,
+     "meets_success": true,
+     "meets_failure": false
+    }
+   },
+   "NULL_TWIN": {
+    "n_episodes": 10000,
+    "mean_forbidden": 0.6852,
+    "median_steps": 5.0,
+    "probes": 81196,
+    "bits_per_probe": 0.5808776210603147,
+    "probes_per_episode": 8.1196,
+    "reach_rate": 0.5697,
+    "frac_ep_zero_forbidden": 0.7495,
+    "probe_true_safe_frac": 0.958421597123011,
+    "trig_none_safe_frac": 0.20183260259126065,
+    "criterion": {
+     "forbidden_reduction": 0.32366005330174696,
+     "median_steps_ratio": 1.25,
+     "bits_ratio": 1.0,
+     "a": false,
+     "b": true,
+     "c": false,
+     "meets_success": false,
+     "meets_failure": true
+    }
+   },
+   "null_twin_meets_a_and_b": false,
+   "note": "null twin part (c) is its own reference (ratio 1.0): see NOTES ambiguity 2"
+  },
+  "TREATMENT": null,
+  "CONTROL": null
+ },
+ "criterion_as_applied": "Pooled over 10 seeds x 1000 episodes x <=30 steps: (a) 1-mean_forbidden(X)/mean_forbidden(CE)>=0.50; (b) median_steps(X)<=1.5*median_steps(CE) (non-reaching episodes censored at 30); (c) bits_per_probe(X)/bits_per_probe(NULL_TWIN)>=1.5. Failure: reduction<0.20 or bits ratio<1.1. Attempt 2: probe = trigger step with |consistent set|>1.",
+ "positive_control_detected": false,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "stupid_explanations_status": {
+  "random automata rarely disagree near the start, so every policy is safe": "not tested (no treatment); contradicted for CE: CE enters forbidden 1.01/episode, only 65.8% of CE episodes forbidden-free",
+  "forbidden-state density decides everything": "not tested; density fixed at 1 of 6 states by spec, never varied",
+  "the intersection is often empty, forcing probes that happen to be safe": "partially observed in controls: 16-20% of probes triggered by an empty safe set; 96-99% of probes were safe in the true model"
+ },
+ "anomalies": [
+  "Positive control (true-model oracle picking the largest realised refutation among allowed actions) cannot beat random probing on bits/probe: ratio 0.914 (attempt 1), 0.843 (attempt 2). With 2 inputs and 64 i.i.d. random automata the version space collapses in ~2-3 observations for any policy (lens L3 failure mode 'count collapses in one probe for any policy on tiny spaces'); bits/probe is set by the number of low-information triggers on near-singleton sets, not by probe choice.",
+  "Null-twin part (c) is self-referential (ratio identically 1.0), so null_twin_meets_success could never be true; null twin also failed (a) (reduction 0.324), so the pilot's null-twin check did not rest on the vacuous part.",
+  "CE baseline computed as a reference in the pilot (criterion is relative to CE); no treatment code or statistic ever existed."
+ ],
+ "core_minutes": 0.391,
+ "attempts": 2,
+ "notes": "Pilot failed twice (see PILOT_attempt1.json, PILOT.json, NOTES.md). Repair applied between attempts: singleton-set trigger steps not counted as probes (symmetric, thresholds unchanged). Phase 2 not run; world.py/evaluate.py not built."
+}

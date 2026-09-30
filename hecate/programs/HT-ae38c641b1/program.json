@@ -456,6 +456,45 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-ae38c641b1",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "W4"
+      ],
+      "unexplained": [
+        "budget range too small to leave the pre-asymptotic regime",
+        "ties in width signal broken by a spatial order that happens to follow the boundary",
+        "oracle exponent itself is off because the ground-truth grid is too coarse"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -990,6 +1029,22 @@
       "statement": "W3 probe round 1: NULL. Default analyzer median beta=0.9944945323865083, null twin median beta=2.1544263673577042e-17, control median beta=0.9995899492996126. success=False, failure reasons=[]. Outcome decided by PREREG class rules in code.",
       "derived_from": [
         "M4"
+      ]
+    },
+    {
+      "id": "O-W4-r2",
+      "triplicateId": "HT-ae38c641b1",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl"
+      ],
+      "statement": "W4 probe round 2: SPEC_UNATTAINABLE. Pilot failed twice -> SPEC_UNATTAINABLE per round-2 PREREG. No treatment code written. Files: NOTES.md, common.py, pilot.py, pilot_eval.py, PILOT.json (attempt 2), PILOT_attempt1.json, pilot_rows.jsonl (attempt 2), pilot_rows_attempt1.jsonl.",
+      "derived_from": [
+        "M3",
+        "M10",
+        "M7"
       ]
     }
   ],
@@ -2156,14 +2211,105 @@
         "budget range too small to leave the pre-asymptotic regime",
         "ties in width signal broken by a spatial order that happens to follow the boundary",
         "oracle exponent itself is off because the ground-truth grid is too coarse"
-      ]
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-ae38c641b1/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "pilot_attempt1": {
+          "positive_meets_success": true,
+          "cheat_detected": false,
+          "null_twin_meets_success": false,
+          "cause": "gamma_oracle undefined at (k=4,T=2,t=0): grid-aligned boundary resolved exactly, undecided area 0 at B=64"
+        },
+        "pilot_attempt2": {
+          "positive_meets_success": false,
+          "cheat_detected": true,
+          "null_twin_meets_success": false,
+          "positive_control_failures": [
+            {
+              "k": 8,
+              "T": 5,
+              "t": 0,
+              "gamma_oracle": 0.40037915610276553,
+              "gamma_uniform_true": 0.30107674490103564,
+              "ratio": 1.3298242487455174,
+              "target_2_over_D": 1.4999999999999998,
+              "rel_err": 0.11345050083632159,
+              "within_10pct": false,
+              "within_20pct": true,
+              "oracle_stopped_early_any": false
+            },
+            {
+              "k": 8,
+              "T": 10,
+              "t": 0,
+              "gamma_oracle": 0.40037915610276553,
+              "gamma_uniform_true": 0.30107674490103564,
+              "ratio": 1.3298242487455174,
+              "target_2_over_D": 1.4999999999999998,
+              "rel_err": 0.11345050083632159,
+              "within_10pct": false,
+              "within_20pct": true,
+              "oracle_stopped_early_any": false
+            },
+            {
+              "k": 8,
+              "T": 20,
+              "t": 0,
+              "gamma_oracle": 0.40037915610276553,
+              "gamma_uniform_true": 0.30107674490103564,
+              "ratio": 1.3298242487455174,
+              "target_2_over_D": 1.4999999999999998,
+              "rel_err": 0.11345050083632159,
+              "within_10pct": false,
+              "within_20pct": true,
+              "oracle_stopped_early_any": false
+            }
+          ],
+          "positive_control_max_rel_err": 0.11345050083632159,
+          "cheat_rho": -0.9982563195104296,
+          "null_twin_criterion": {
+            "S1": false,
+            "S2": true,
+            "S3": false,
+            "rho": 0.024454157797968182,
+            "meets": false,
+            "n_configs": 24
+          }
+        },
+        "treatment": "not built (no treatment statistic exists)"
+      },
+      "procedural_notes": [
+        "spec defers its map family and decided-test to W1, which the v2 prompt forbade reading: implementer's own reading (prompt defect)"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Map family and decided test are the implementer's reading: W4 defers both to W1, which the implementer rules forbid reading"
+        },
+        {
+          "id": "A2",
+          "text": "Attempt 1 PC passed (max err 6.2%) but cheat undetectable: S1 denominator undefined at (4,2,0)"
+        },
+        {
+          "id": "A3",
+          "text": "Attempt 2 (closed-cell truth) fixed the cheat but moved k=8,t=0 PC to 11.3% error (k=4,t=0 to 8.3%): the positive control's verdict hinges on a boundary convention for grid-aligned sets"
+        },
+        {
+          "id": "A4",
+          "text": "Pilot null twin matched to the oracle's depth sequence, not sens (no treatment may exist in phase 1)"
+        }
+      ],
+      "rejected_explanations": []
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W3 NULL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-ae38c641b1/worlds/W3/rows.jsonl"
+    "rows": "hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl",
+    "note": "round 1 W3 NULL; round 2 W4 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible"
   }
 }

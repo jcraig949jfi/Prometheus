@@ -1,0 +1,31 @@
+{
+ "positive_meets_success": true,
+ "cheat_detected": true,
+ "null_twin_meets_success": false,
+ "pilot_pass": true,
+ "stats": {
+  "POSITIVE_CONTROL": {
+   "n": 30,
+   "median_stat_kl": 0.011078111357612094,
+   "median_late_kl": 9.884460229700217,
+   "median_rt": 1000.0,
+   "n_rt_censored": 30
+  },
+  "CHEAT": {
+   "n": 30,
+   "median_stat_kl": 1.228894563349629e-18,
+   "median_late_kl": 6.520700058141416e-19,
+   "median_rt": 0.0,
+   "n_rt_censored": 0
+  },
+  "NULL_TWIN": {
+   "n": 30,
+   "median_stat_kl": 1.6489950460330314,
+   "median_late_kl": 1.860348665915319,
+   "median_rt": 438.0,
+   "n_rt_censored": 0
+  }
+ },
+ "attempt": 1,
+ "note": "null_twin_meets_success is structurally False in the pilot (NOTES A6); the informative confound check is phase 2's rt_null vs rt_control."
+}

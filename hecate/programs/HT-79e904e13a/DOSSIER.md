@@ -27,14 +27,14 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 ## CANDIDATE PHYSICS
 - [spec] M1 (causal constraint): Counterfactual horizon law: the advantage of a unit-level counterfactual (abducted noise shared with the actual world) over an interventional (population-average) prediction decays with query lead time h and vanishes at h* ~ ln(Delta/epsilon)/lambda_max, where Delta is attractor diameter and epsilon the perturbation size.
 - [spec] M2 (representation): Basin-address representation: encode each community state by the vector of attractor labels reached under a fixed small set of interventions (remove species 1, remove species 2, press species 3...). This counterfactual signature is the state's identity for decision purposes; states with equal signatures are interchangeable.
-- [spec] M3 (computational primitive): Fluctuation-response keystone inference: near a stable equilibrium of a stochastic community, the press-perturbation response matrix -J^{-1} can be estimated from passive lagged covariances (J = log(C(tau) C(0)^{-1})/tau); thus interventional effects are computed without intervening. The primitive fails in a signature way as the leading eigenvalue approaches zero (bifurcation).
+- [impl] M3 (computational primitive): Fluctuation-response keystone inference: near a stable equilibrium of a stochastic community, the press-perturbation response matrix -J^{-1} can be estimated from passive lagged covariances (J = log(C(tau) C(0)^{-1})/tau); thus interventional effects are computed without intervening. The primitive fails in a signature way as the leading eigenvalue approaches zero (bifurcation).
 - [spec] M4 (memory structure): Seed bank as counterfactual cache: dormant propagules of currently absent species keep alternative attractors reachable; the number of recoverable attractors after a regime shift scales with the diversity of the dormant pool, making counterfactual worlds materially stored rather than simulated.
 - [spec] M5 (dynamical law): Assembly-order memory: in multistable competitive communities, sequential introduction order selects the final attractor; the mutual information I(order; final community) is a memory capacity that peaks at intermediate interaction strength (weak: one attractor; strong: order effects saturate into near-deterministic exclusion by the first arrivals).
 - [spec] M6 (learning pressure): Foresight inverted-U: a consumer that forecasts counterfactual prey collapse (switching prey before collapse) gains fitness only when community dynamics are at intermediate predictability; at high stability reactive switching suffices, at high chaos forecasts are worthless. Selection for counterfactual foresight peaks at intermediate lambda.
 - [spec] M7 (error-correction mechanism): Counterfactual robustness as error correction: functional redundancy means most single-species removals leave the community on the same attractor; the fraction of removals that do not change the attractor is a code distance, and communities under repeated disturbance are selected for high distance.
 - [spec] M8 (interaction law): Cascade parity: in a linear food chain the counterfactual effect of a press at level k on level k+d has sign (-1)^d; an agent can compute effect sign by parity counting on the trophic graph without simulation. The law breaks in webs with omnivory, where parity becomes ambiguous.
 - [spec] M9 (computational primitive): Intervention as parameter continuation: clamping a species (do(X=x)) turns a state variable into a parameter; a counterfactual query becomes a question of whether the clamp value crosses a bifurcation of the reduced system. Counterfactual answers are therefore discontinuous in clamp value exactly at bifurcations of the clamped system, not of the original.
-- [spec] M10 (information bottleneck): Early-warning bottleneck: an agent restricted to k scalar observables of a community, needing to predict whether a given intervention tips the system, is best served by lag-1 autocorrelation and variance of the slowest mode; these compress counterfactual fragility into one or two numbers.
+- [impl] M10 (information bottleneck): Early-warning bottleneck: an agent restricted to k scalar observables of a community, needing to predict whether a given intervention tips the system, is best served by lag-1 autocorrelation and variance of the slowest mode; these compress counterfactual fragility into one or two numbers.
 - [spec] M11 (developmental process): Succession narrows the counterfactual set: early-successional communities have many attractors reachable by single interventions (high counterfactual branching), late ones few. Counterfactual entropy (entropy of attractor labels over the intervention set) declines along succession, so maturity is measured by loss of counterfactual options.
 - [spec] M12 (world rule): Twin-world coupling: running the actual and counterfactual community with common random numbers (shared noise) makes unit-level effects identifiable; the twin-difference trajectory separates intervention effect from noise. Under chaos the twins decorrelate and common-noise identification degrades to interventional averaging.
 - [spec] M13 (selection mechanism): Keystone entrenchment (strange): species whose removal would trigger cascades that also remove their competitors are counterfactually protected; if disturbances remove species randomly and recolonization is competitive, lineages that make themselves keystone (by acquiring interactions that stabilize others) persist longer. Selection acts on counterfactual indispensability, not direct fitness.
@@ -57,6 +57,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] Backtracking counterfactuals lose identifiability at a rate set by net phase-space contraction, while forward counterfactuals do not. | success: Spearman between backward entropy growth rate and measured net contraction rate >= 0.8 across 8 levels (10 seeds each), AND volume-preserving twin growth rate <= 0.1 nats/step. | null twin: Area/volume-preserving coupled map (shear-type, invertible) tuned to the same lambda_max (+/-10%) with zero net contraction. | cost: 3
 
 ## OBSERVATIONS
+- W1: NULL (hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl)
 - W4: NULL (hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
@@ -64,6 +65,9 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4: matched lambda_max in the twin is not achieved
 
 ## SURVIVING ANOMALIES
+- W1: CONTROL: logm had imaginary part up to 3.17; real part used (A8)
+- W1: gLV community redraws needed for 8 of 30 seeds (A10)
+- W1: pilot attempt 1 failed: cheat was coupled to the real null twin (0.25 > 0.2); repaired once (NOTES.md)
 - W4: level 2: twin lambda_max 0.011 vs treatment -0.227 not within 10%
 - W4: level 3: twin lambda_max 0.011 vs treatment -0.005 not within 10%
 - W4: level 4: twin lambda_max 0.012 vs treatment -0.228 not within 10%
@@ -84,11 +88,13 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- grid resolution sets an entropy ceiling
-- radius r scaling produces the trend
+- response rank simply tracks abundance rank
+- the estimator is dominated by the diagonal (self-regulation) terms
+- near the fold, noise-induced excursions to other states contaminate the covariance
+- the press magnitude is large enough to trigger nonlinear responses at all distances
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 NULL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W4 NULL; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

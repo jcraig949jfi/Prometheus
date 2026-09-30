@@ -25,8 +25,8 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] I7: Precision is temperature and should track arithmetic regularity: an agent that sets its inverse temperature from recent surprise will fluctuate with prime-gap statistics, differently from a Poisson-gap twin. Experiment: surprise-driven thermostat on a prime indicator stream vs Cramer stream.
 
 ## CANDIDATE PHYSICS
-- [spec] M1 (organism architecture): Self-growing sieve hierarchy: level k is a periodic predictor with period p_k predicting 'composite'; an integer that no level predicts is a residual error and is promoted to a new level with that integer as its period. Each level costs c energy units per step.
-- [spec] M2 (learning pressure): Landauer-priced error erasure: every prediction-error bit that must be stored or erased costs kT ln 2; the agent decides which errors to absorb into model structure and which to discard. Primes are the errors that cannot be absorbed by existing structure.
+- [impl] M1 (organism architecture): Self-growing sieve hierarchy: level k is a periodic predictor with period p_k predicting 'composite'; an integer that no level predicts is a residual error and is promoted to a new level with that integer as its period. Each level costs c energy units per step.
+- [impl] M2 (learning pressure): Landauer-priced error erasure: every prediction-error bit that must be stored or erased costs kT ln 2; the agent decides which errors to absorb into model structure and which to discard. Primes are the errors that cannot be absorbed by existing structure.
 - [spec] M3 (world rule): Primon-gas environment: the world emits integers n with probability n^-beta / zeta(beta) (truncated). A learner predicting divisibility events sees independent per-prime channels; as beta -> 1 the partition function diverges and rare large factors dominate.
 - [spec] M4 (representation): CRT precision routing: the agent represents the stream in residues mod pairwise-coprime moduli; precision is allocated per residue channel and channels do not share error.
 - [impl] M5 (causal constraint): Factor-inference arrow: the generative direction (multiply) is cheap and near-reversible, inference (factor) is expensive; a predictive prior over factors reduces the dissipated work of inference, so good prediction is measured as reduced irreversibility.
@@ -34,7 +34,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M7 (error-correction mechanism): Mobius-signed error aggregation: errors from overlapping levels are combined with inclusion-exclusion signs mu(d) so that multiply-predicted events are not double counted.
 - [spec] M8 (mutation operator): Multiplicative mutation: genomes are integers; mutation multiplies or divides by a small prime; fitness is the negative free energy of a periodic predictor with that period. Primes are irreducible genome building blocks.
 - [spec] M9 (computational primitive): Euler-product free-energy decomposition: log Z = sum over primes of -log(1 - p^-beta), so free energy and prediction error decompose into independent per-prime channels; the primitive is a per-prime error unit.
-- [spec] M10 (dynamical law): Heat death of prediction: residual error density falls like prod(1-1/p) while maintenance grows linearly with depth, giving an optimal depth K*; beyond it the agent freezes (adds levels whose savings are below their cost).
+- [impl] M10 (dynamical law): Heat death of prediction: residual error density falls like prod(1-1/p) while maintenance grows linearly with depth, giving an optimal depth K*; beyond it the agent freezes (adds levels whose savings are below their cost).
 - [spec] M11 (information bottleneck): Smooth-number bottleneck: the agent can represent only y-smooth structure (primes <= y); everything else is treated as heat. The fraction explained follows the Dickman function rho(log n / log y).
 - [spec] M12 (selection mechanism): Coprimality niche selection: periodic predictors compete for correctly predicted events; predictors sharing a factor compete for the same events; under an energy budget survivors are pairwise coprime and coexist.
 - [spec] M13 (dynamical law): Zero-resonance detector (strange; three-way dependency weak): a predictor tracking psi(x) - x in log x develops internal oscillation modes at the ordinates of zeta zeros. Thermodynamics contributes only a noise floor, so the TD dependency is weak.
@@ -57,12 +57,16 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] The ratio of inference work (trial-division factoring) to generation work (one multiplication) falls with the temporal predictability of hidden factors when the solver uses a predictive prior ordering of candidate divisors. | success: on the drift world with s = 1, mean prior-ordered cost <= 0.5 x ascending cost; on the null twin prior-ordered cost >= 0.9 x ascending cost | null twin: same marginal distribution of (p, q) as the drift world but temporally shuffled: magnitudes matched, temporal predictability destroyed | cost: about 1 CPU core-minute
 
 ## OBSERVATIONS
+- W1: NULL (hecate/programs/HT-47f4c02be4/worlds/W1/rows.jsonl)
 - W4: CONFOUNDED (hecate/programs/HT-47f4c02be4/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
+- W1: Clause B (twin r(20)/r(0) >= 0.9) is unattainable under readings R3/R4: r(0)=1 by construction and label-free promotion makes periodic levels absorb most twin integers; observed at the pilot (ratio ~0.21) before treatment code existed. The spec's success criterion requires the twin NOT to be absorbed while its mechanism absorbs any integer stream.
+- W1: Positive control and treatment are deterministic; the 5 seeds per arm are identical rows (recorded in NOTES.md).
+- W1: pilot_eval.py crashed once on JSON serialisation (evaluator bug, fixed, rerun on the same rows).
 - W4: shuffled null twin still favors the prior (R_null=0.186 < 1); see TREATMENT rows' range_idx_p/q for the index band the s=1 walk occupied
 
 ## CROSS-SUBSTRATE RESULTS
@@ -78,11 +82,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- operation count ignores the cost of maintaining the prior
-- the asymmetry is a property of trial division, not of factoring in general
+- the promotion rule is literally the sieve so success is guaranteed by construction
+- Mertens agreement is a known theorem, not a property of the agent
+- the Cramer twin fails because random streams are unpredictable by any periodic model, which says nothing about predictive coding
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 CONFOUNDED; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W4 CONFOUNDED; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

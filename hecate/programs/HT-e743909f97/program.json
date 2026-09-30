@@ -474,6 +474,45 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-e743909f97",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "W3"
+      ],
+      "unexplained": [
+        "larger mutation after the switch just raises exploration",
+        "grid coarseness makes KL small anyway",
+        "it is sequential Monte Carlo renamed"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -637,7 +676,7 @@
       "triplicateId": "HT-e743909f97",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "representation",
       "statement": "Precision-as-clone-count: each prediction-error channel is weighted by the number of detectors assigned to it, so precision is integer-valued and learned by birth-death rather than by gradient.",
       "derived_from": [
@@ -671,7 +710,7 @@
       "triplicateId": "HT-e743909f97",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "selection mechanism",
       "statement": "Replicator inference: the recognition density is a finite population of hypothesis clones; each step clones replicate in proportion to exp(-prediction error) and mutate with a rate scaled by their current error.",
       "derived_from": [
@@ -837,7 +876,7 @@
       "triplicateId": "HT-e743909f97",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "mutation operator",
       "statement": "Error-scheduled hypermutation: mutation step size is a feedback-controlled variable set by residual error, like annealing whose temperature is closed-loop.",
       "derived_from": [
@@ -1081,6 +1120,22 @@
       "derived_from": [
         "M3",
         "M16"
+      ]
+    },
+    {
+      "id": "O-W3-r2",
+      "triplicateId": "HT-e743909f97",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-e743909f97/worlds/W3/rows.jsonl"
+      ],
+      "statement": "W3 probe round 2: NULL. pilot passed attempt 1 (PILOT.json); parameters fixed in NOTES.md before any run; single-threaded numpy.",
+      "derived_from": [
+        "M5",
+        "M10",
+        "M4"
       ]
     }
   ],
@@ -2073,7 +2128,67 @@
         "larger mutation after the switch just raises exploration",
         "grid coarseness makes KL small anyway",
         "it is sequential Monte Carlo renamed"
-      ]
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-e743909f97/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-e743909f97/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 30,
+          "median_stat_kl": 1.6645107931519778,
+          "median_late_kl": 1.5547643497866461,
+          "median_rt": 395.5,
+          "n_rt_censored": 0,
+          "median_mean_sd_applied": 0.007175548551105959,
+          "median_sd_applied_post50": 0.009964957968362734
+        },
+        "CONTROL": {
+          "n": 30,
+          "median_stat_kl": 1.5939949868814791,
+          "median_late_kl": 1.7649265576894897,
+          "median_rt": 452.5,
+          "n_rt_censored": 0,
+          "median_mean_sd_applied": 0.007175548551105962,
+          "median_sd_applied_post50": 0.007175548551105961
+        },
+        "NULL_TWIN": {
+          "n": 30,
+          "median_stat_kl": 1.6489950460330314,
+          "median_late_kl": 1.860348665915319,
+          "median_rt": 438.0,
+          "n_rt_censored": 0,
+          "median_mean_sd_applied": 0.007158264870208191,
+          "median_sd_applied_post50": 0.00706566132542806
+        },
+        "POSITIVE_CONTROL": {
+          "n": 30,
+          "median_stat_kl": 0.011078111357612094,
+          "median_late_kl": 9.884460229700217,
+          "median_rt": 1000.0,
+          "n_rt_censored": 30
+        },
+        "CHEAT": {
+          "n": 30,
+          "median_stat_kl": 1.228894563349629e-18,
+          "median_late_kl": 6.520700058141416e-19,
+          "median_rt": 0.0,
+          "n_rt_censored": 0
+        },
+        "ratios": {
+          "T_over_C": 0.8740331491712707,
+          "T_over_N": 0.9029680365296804,
+          "N_over_C": 0.9679558011049724
+        }
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "pilot null-twin check was structurally False (ratio vs itself); phase-2 confound check uses rt_null vs rt_control only (NOTES A6)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W4",
@@ -2108,10 +2223,10 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W1 NULL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-e743909f97/worlds/W1/rows.jsonl"
+    "rows": "hecate/programs/HT-e743909f97/worlds/W3/rows.jsonl",
+    "note": "round 1 W1 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED"
   }
 }

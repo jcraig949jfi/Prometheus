@@ -28,13 +28,13 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M1 (developmental process): Tolerance-by-deletion setpoint: during a developmental window a random detector repertoire is exposed to the system's own inputs and every detector that fires is deleted; after the window, any detector firing drives corrective action. The setpoint is the complement of the surviving repertoire.
 - [spec] M2 (causal constraint): Waterbed repertoire allocation: total detector mass is fixed; expanding coverage (sensitivity) in one region of input space must reduce it elsewhere, so the summed log-sensitivity over input space is approximately conserved under learning.
 - [impl] M3 (dynamical law): Clonal gain loop: controller gain equals the size of the responding clone; the clone grows in proportion to delayed error and decays at a cost rate. The loop has a delay-dependent oscillatory instability (storm) whose onset is predicted by the Nyquist criterion of the linearised loop.
-- [spec] M4 (representation): Precision-as-clone-count: each prediction-error channel is weighted by the number of detectors assigned to it, so precision is integer-valued and learned by birth-death rather than by gradient.
-- [spec] M5 (selection mechanism): Replicator inference: the recognition density is a finite population of hypothesis clones; each step clones replicate in proportion to exp(-prediction error) and mutate with a rate scaled by their current error.
+- [impl] M4 (representation): Precision-as-clone-count: each prediction-error channel is weighted by the number of detectors assigned to it, so precision is integer-valued and learned by birth-death rather than by gradient.
+- [impl] M5 (selection mechanism): Replicator inference: the recognition density is a finite population of hypothesis clones; each step clones replicate in proportion to exp(-prediction error) and mutate with a rate scaled by their current error.
 - [spec] M6 (memory structure): Antigenic-sin windup: stored memory clones respond first and consume the antigen that naive clones need to be selected, so after drift the response stays locked to the old target. An anti-windup rule suppresses memory recall when error is not falling.
 - [spec] M7 (world rule): Blanket-by-patrol: the boundary between inside and outside exists only while a population of mobile detectors removes intruding non-self elements; blanket integrity is itself the controlled variable.
 - [spec] M8 (learning pressure): Danger-gated learning: model updates and actions are licensed by a damage signal (realised harm), not by surprise or error, so novel-but-harmless input is tolerated and familiar-but-harmful input is attacked.
 - [spec] M9 (organism architecture): Idiotypic internal model: detectors that recognise other detectors form a network whose own oscillatory modes can embody the generator of a periodic disturbance, satisfying the internal model principle without an explicit oscillator.
-- [spec] M10 (mutation operator): Error-scheduled hypermutation: mutation step size is a feedback-controlled variable set by residual error, like annealing whose temperature is closed-loop.
+- [impl] M10 (mutation operator): Error-scheduled hypermutation: mutation step size is a feedback-controlled variable set by residual error, like annealing whose temperature is closed-loop.
 - [spec] M11 (computational primitive): Complement coding of expectation: prediction error is computed not as observation minus prediction but as the firing of a stored set of not-expected detectors; the model represents the complement of the expected.
 - [spec] M12 (interaction law): Cross-reactivity bandwidth trade: broadly cross-reactive detectors act like high-bandwidth, low-precision feedback, narrow ones like narrow-band high-precision feedback; broad clones plus positive feedback produce autoimmune instability.
 - [spec] M13 (organism architecture): Innate/adaptive cascade: a fast fixed-gain loop holds the system while a slow learned loop sets the fast loop's setpoint, a timescale hierarchy as in hierarchical FEP. Three-way dependency weak: this is cascade control.
@@ -59,6 +59,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## OBSERVATIONS
 - W1: NULL (hecate/programs/HT-e743909f97/worlds/W1/rows.jsonl)
+- W3: NULL (hecate/programs/HT-e743909f97/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
 - W1: exhaustion only reduces mean gain (checked by the matched fixed-gain control)
@@ -72,6 +73,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W1: exhaustion LOWERED the onset delay (ratio 0.348 < 1): opposite sign to the hypothesis
 - W1: exhaustion on in 0.511 of steps on average (mean a = 0.01861 = 0.744 a0)
 - W1: matched fixed-gain control ratio exactly 1.0: a constant lower a leaves onset unchanged (linear loop gain a*k*p* = c*r does not depend on a)
+- W3: pilot null-twin check was structurally False (ratio vs itself); phase-2 confound check uses rt_null vs rt_control only (NOTES A6)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -86,10 +88,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- the CV threshold 0.2 is tuned to the result
+- larger mutation after the switch just raises exploration
+- grid coarseness makes KL small anyway
+- it is sequential Monte Carlo renamed
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 NULL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W1 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

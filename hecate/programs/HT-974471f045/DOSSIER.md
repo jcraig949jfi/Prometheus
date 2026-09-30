@@ -57,6 +57,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [population] Evolved memory-capacity centroid tracks environmental delay, and a slow context period beyond the horizon is carried by the reservoir, not the readout. | success: Spearman(D, centroid) >= 0.8 pooled over 3 D x 5 seeds, evolved beats random search NRMSE by >= 10%; context-bit gain from reservoir >= 0.1 NRMSE and from readout reset < 0.03. | null twin: Permuted-fitness evolution with identical mutation schedule. | cost: about 6 CPU core-minutes
 
 ## OBSERVATIONS
+- W1: SPEC_UNATTAINABLE (hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl)
 - W3: NULL (hecate/programs/HT-974471f045/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
@@ -64,6 +65,8 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W3: at k=50 ridge already ignores distractors so there is no pressure
 
 ## SURVIVING ANOMALIES
+- W1: Positive control as literally specified gave only 2.5% reduction; channel-lag-aligned repair gave 1.6%. A deposit of a readout with ||w_A*|| ~50-95 at eps=0.05 (rank-one gain ~3, then rescaled to rho 0.9) does not make task A few-shot learnable with n=20.
+- W1: PC_NULL_TWIN row (PC's content-free twin) added to pilot rows as the pilot reading of 'null twin does not meet it' (NOTES ambiguity 3).
 - W3: hand mask also helps at k=50 (rel gain 0.897): masking useful at large budget too
 
 ## CROSS-SUBSTRATE RESULTS
@@ -79,10 +82,13 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- distractor variance saturates tanh, making masking a gain control
+- deposits increase rho before rescaling and rescaling is imperfect
+- task A and task B share delay structure so B-training preserves A
+- 20-sample ridge is so noisy that any change in state scale shifts NRMSE
+- elites selected on B happen to carry A by chance at one seed
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W3 NULL; nothing supported (no Pass 4 yet)
+SPECULATIVE (an allocation state, not a truth claim). round 1 W3 NULL; round 2 W1 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

@@ -477,6 +477,46 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-79e904e13a",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W4",
+        "W1"
+      ],
+      "unexplained": [
+        "response rank simply tracks abundance rank",
+        "the estimator is dominated by the diagonal (self-regulation) terms",
+        "near the fold, noise-induced excursions to other states contaminate the covariance",
+        "the press magnitude is large enough to trigger nonlinear responses at all distances"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -608,7 +648,7 @@
       "triplicateId": "HT-79e904e13a",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "computational primitive",
       "statement": "Fluctuation-response keystone inference: near a stable equilibrium of a stochastic community, the press-perturbation response matrix -J^{-1} can be estimated from passive lagged covariances (J = log(C(tau) C(0)^{-1})/tau); thus interventional effects are computed without intervening. The primitive fails in a signature way as the leading eigenvalue approaches zero (bifurcation).",
       "derived_from": [
@@ -843,7 +883,7 @@
       "triplicateId": "HT-79e904e13a",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "information bottleneck",
       "statement": "Early-warning bottleneck: an agent restricted to k scalar observables of a community, needing to predict whether a given intervention tips the system, is best served by lag-1 autocorrelation and variance of the slowest mode; these compress counterfactual fragility into one or two numbers.",
       "derived_from": [
@@ -1053,6 +1093,21 @@
       "statement": "W4 probe round 1: NULL. Outcome NULL. Backward posterior entropy growth over T=1..30 in the coupled Ricker world ranged 0.026..0.115 nats/step across 8 dissipation levels whose measured net contraction ranged 0.531..2.266; Spearman 0.167. Volume-preserving twin growth ranged -0.002..0.008. Positive control slope 0.1544 vs known 0.1539; cheat Spearman 1.000. Forward-spread Spearman with contraction -0.714. Only one grid and one r were used.",
       "derived_from": [
         "M15"
+      ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-79e904e13a",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: NULL. Pilot passed on attempt 2 (PILOT.json). CONTROL = spec's null twin on gLV series decides CONFOUNDED; pilot arms rerun on OU in world.py. See NOTES.md.",
+      "derived_from": [
+        "M3",
+        "M10"
       ]
     }
   ],
@@ -1289,7 +1344,156 @@
         "the estimator is dominated by the diagonal (self-regulation) terms",
         "near the fold, noise-induced excursions to other states contaminate the covariance",
         "the press magnitude is large enough to trigger nonlinear responses at all distances"
-      ]
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-79e904e13a/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "arms": {
+          "CHEAT": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": -0.0017482517482517463
+            },
+            "decline": 1.0017482517482517,
+            "wilcoxon_p": 9.313225746154785e-10,
+            "n_seeds": 30
+          },
+          "CHEAT_NULL": {
+            "median": {
+              "-0.5": -0.015734265734265736,
+              "-0.2": 0.0034965034965034926,
+              "-0.05": 0.0017482517482517483,
+              "-0.01": 0.02972027972027972
+            },
+            "decline": -0.045454545454545456,
+            "wilcoxon_p": 0.866655488797953,
+            "n_seeds": 30
+          },
+          "CONTROL": {
+            "median": {
+              "-0.5": 0.22027972027972031,
+              "-0.2": 0.20629370629370633,
+              "-0.05": 0.24475524475524477,
+              "-0.01": 0.20104895104895107
+            },
+            "decline": 0.019230769230769246,
+            "wilcoxon_p": 0.29635318366412544,
+            "n_seeds": 30
+          },
+          "DET_VS_STOCH": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": 1.0
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "NULL_TWIN": {
+            "median": {
+              "-0.5": 0.25,
+              "-0.2": 0.21853146853146857,
+              "-0.05": 0.1958041958041958,
+              "-0.01": 0.12412587412587414
+            },
+            "decline": 0.12587412587412586,
+            "wilcoxon_p": 0.0009461309247436456,
+            "n_seeds": 30
+          },
+          "ORACLE": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": 1.0
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "POSITIVE_CONTROL": {
+            "median": {
+              "-0.5": 0.9545454545454546,
+              "-0.2": 0.9510489510489513,
+              "-0.05": 0.9597902097902098,
+              "-0.01": 0.9685314685314685
+            },
+            "decline": -0.013986013986013957,
+            "wilcoxon_p": 0.9933850927546788,
+            "n_seeds": 30
+          },
+          "SE1_ABUNDANCE": {
+            "median": {
+              "-0.5": -0.0034965034965035,
+              "-0.2": -0.026652094402794403,
+              "-0.05": -0.015734265734265736,
+              "-0.01": 0.0004283181790181792
+            },
+            "decline": -0.003924821675521679,
+            "wilcoxon_p": 0.0872810510219873,
+            "n_seeds": 30
+          },
+          "SE2_DIAGONAL": {
+            "median": {
+              "-0.5": 0.4803844614152615,
+              "-0.2": 0.4803844614152615,
+              "-0.05": 0.4803844614152615,
+              "-0.01": 0.4803844614152615
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "SE4_LINEAR_VS_EXACT": {
+            "median": {
+              "-0.5": 1.0,
+              "-0.2": 1.0,
+              "-0.05": 1.0,
+              "-0.01": 1.0
+            },
+            "decline": 0.0,
+            "wilcoxon_p": 1.0,
+            "n_seeds": 30
+          },
+          "TREATMENT": {
+            "median": {
+              "-0.5": 0.9562937062937064,
+              "-0.2": 0.9510489510489512,
+              "-0.05": 0.9440559440559442,
+              "-0.01": 0.931818181818182
+            },
+            "decline": 0.02447552447552437,
+            "wilcoxon_p": 2.2794066471485846e-05,
+            "n_seeds": 30
+          }
+        },
+        "success": false,
+        "failure": true
+      },
+      "procedural_notes": [
+        "~1 s unlogged exploration of reachable eigenvalues (disclosed); noise level 0.02 chosen by implementer, spec silent"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "CONTROL: logm had imaginary part up to 3.17; real part used (A8)"
+        },
+        {
+          "id": "A2",
+          "text": "gLV community redraws needed for 8 of 30 seeds (A10)"
+        },
+        {
+          "id": "A3",
+          "text": "pilot attempt 1 failed: cheat was coupled to the real null twin (0.25 > 0.2); repaired once (NOTES.md)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1776,10 +1980,10 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W4 NULL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-79e904e13a/worlds/W4/rows.jsonl"
+    "rows": "hecate/programs/HT-79e904e13a/worlds/W1/rows.jsonl",
+    "note": "round 1 W4 NULL; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED"
   }
 }

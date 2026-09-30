@@ -55,12 +55,16 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [symbolic rewriting] A learner with chunk budget C extracts most structure from a chaotic source whose entropy is matched to C, and the matched entropy rises with C. | success: median over 10 seeds of the entropy at argmax gain strictly increases across C = 4, 16, 64, AND gain at argmax >= 0.05 for C >= 16 | null twin: Markov-1 surrogate sequences: matched symbol and pair frequencies, higher-order grammar destroyed | cost: about 3 CPU core-minutes
 
 ## OBSERVATIONS
+- W2: SPEC_UNATTAINABLE (hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl)
 - W3: INSTRUMENT_FAIL (hecate/programs/HT-55162c0ac0/worlds/W3/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
+- W2: Null twin never shows the memory law (p_max=0 at every C in both attempts) but a shuffled-fit controller stabilises whole cells (50/50 trials) in single seeds: a random proportional gain lands in the finite stabilising interval of a 1-D UPO. Pooled null fraction exceeded the spec's 0.1 twin bound at p>=2 in both attempts (0.2, then 0.4 after the intercept repair).
+- W2: Spec's control and null_twin are the same construction (time-shuffled fit); both would be affected.
+- W2: Positive control at C=16 already reached 1.0 at p=1..4; with a 1-D map a C=1 deadbeat controller is sufficient in principle (M5's own simpler_alternative: observability needs depth >= system order = 1). Not measured: no treatment run.
 - W3: positive control not retained: mean ARI 0.024 < 0.8 (mean clusters 3.7)
 - W3: TREATMENT orders end in different regimes: easy->hard (unforced at a=3.9) mean 90.6 clusters, hard->easy (unforced at a=3.7) mean 3.8 clusters; fixed-a CONTROL at 3.8 ~100 clusters (turbulent)
 - W3: instrument repair declined: no readout defect found; the positive control fails because the specified dynamics at a=3.7 collapse to ~4 clusters unrelated to the pattern, and any change to amplitude/eps/steps would be tuning the mechanism
@@ -78,10 +82,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- adjusted Rand index biased by cluster count
+- delta too small for longer orbits (repeat at delta=0.05)
+- long-period UPOs located inaccurately
+- trajectory lands near the orbit by luck
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W3 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W3 INSTRUMENT_FAIL; round 2 W2 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

@@ -25,7 +25,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] I7: Rank as an evolvable trait: in a population of controllers represented as sums of rank-1 components, mutation adds, deletes, or splits components and selection acts on entropy-regularized cost, so effective rank is a heritable complexity measure whose equilibrium value is set by the task, not by a penalty.
 
 ## CANDIDATE PHYSICS
-- [spec] M1 (dynamical law): Desirability-rank law: for KL-regularized control on a product state space with product passive dynamics, the desirability tensor z = exp(-V/lambda) has TT rank no larger than, and often much smaller than, V; rank(z) tracks the rank of the non-additive (coupling) part of the state cost rather than the number of state factors.
+- [impl] M1 (dynamical law): Desirability-rank law: for KL-regularized control on a product state space with product passive dynamics, the desirability tensor z = exp(-V/lambda) has TT rank no larger than, and often much smaller than, V; rank(z) tracks the rank of the non-additive (coupling) part of the state cost rather than the number of state factors.
 - [spec] M2 (organism architecture): Rank-budgeted maximum-entropy policy: the organism's joint action distribution is a mixture of R product distributions (nonnegative CP rank R); within that budget it minimizes expected cost minus lambda times entropy. The free-energy gap versus R has a knee at the number of coordination modes the cost actually demands.
 - [spec] M3 (dynamical law): Temperature-driven rank transition: the nonnegative rank needed to approximate the Gibbs policy of a coupled cost to fixed KL tolerance is non-monotone in inverse temperature beta: 1 at high temperature, peaking at an intermediate beta, and settling at the number of ground states at low temperature.
 - [impl] M4 (information bottleneck): Control-relevant constraint selection: a maximum-entropy world model constrains only the moments lying in the span of the leading Tucker factors of the stacked desirability tensor over past goals; it is maximally ignorant elsewhere. It should transfer to new goals sharing those factors and fail on goals built from orthogonal factors, more sharply than a prediction-relevant model.
@@ -56,6 +56,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [tensor] A Tucker subspace chosen from past goals' desirabilities beats a prediction-chosen subspace on in-span goals and loses on orthogonal goals. | success: median regret (b)/(a) >= 2 on in-span goals AND median regret (a)/(b) >= 1.2 on orthogonal goals, in >= 7/10 seeds | null twin: training desirabilities with mode fibers independently permuted per goal (spectra kept, shared factors destroyed) | cost: about 1 CPU core-minute
 
 ## OBSERVATIONS
+- W1: NULL (hecate/programs/HT-2a8a3aedeb/worlds/W1/rows.jsonl)
 - W4: NULL (hecate/programs/HT-2a8a3aedeb/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
@@ -63,6 +64,8 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4: prediction subspace poor due to near-uniform dynamics
 
 ## SURVIVING ANOMALIES
+- W1: pilot attempt 1 failed: uncentred tanh(V/sd V) saturated to constant (bond 1) in every arm; one control repair (centring) applied before any treatment code existed
+- W1: positive control S3 (Spearman over r) undefined since r does not enter q at c=0; carried by CHEAT
 - W4: 5805 z_hat entries floored (non-positive Galerkin desirability) across TREATMENT seeds, all rules
 
 ## CROSS-SUBSTRATE RESULTS
@@ -78,10 +81,13 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- crossover is built into the construction
+- tolerance-dependent rank
+- exp underflow to zero creating spurious low rank
+- lambda large makes z nearly constant
+- passive dynamics mixing to stationarity erasing structure over 20 steps
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 NULL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W4 NULL; round 2 W1 NULL: two worlds read, both NULL/CONFOUNDED
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

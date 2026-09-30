@@ -58,12 +58,16 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [reaction-diffusion] A plastic RD medium stores several patterns and recovers a lesioned pattern using stored couplings beyond what border pinning explains. | success: capacity (largest P with mean overlap >= 0.9 over 5 seeds) >= 2; lesion overlap with intact couplings exceeds scrambled-inside by >= 0.2 (paired, 10 seeds, Wilcoxon p<0.01). | null twin: scrambled-inside couplings for lesion test; permuted couplings for recall test. | cost: about 6 CPU core-minutes
 
 ## OBSERVATIONS
+- W1: SPEC_UNATTAINABLE (hecate/programs/HT-faa9277e02/worlds/W1/pilot_rows.jsonl)
 - W2: NOT_BUILT (hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
+- W1: cheat r = 1.0 on all seeds but classed not-detected only because reading 4 folds the positive-control clause (>= 0.7) into the success criterion
+- W1: attempt 1 carved graph (z>0) was one percolating domain; repaired to z>1 cores; positive r rose -0.05 -> 0.28, still < 0.5 (failure_criterion: world cannot express the effect)
+- W1: learned g in Phase A never reached the 5 clip (0% at max, ~16% at 0.2)
 - W2: CHEAT injected bits exceed log2(8)=3 at some T: injection is not a physically realisable 8-output readout
 - W2: attainability: clauses (a)+(c) need bits(T=8) >= ~0.8*PC(T=1)+0.9 = 2.684 vs cap 3.0
 - W2: TREATMENT uses fewer than 8 outputs at T=1 in some seed (min 7)
@@ -81,10 +85,13 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-_none yet_
+- boundary pinning makes any RD run reproduce similar stripes near edges
+- Pearson r inflated by the shared wavelength
+- clipping bounds create a static prepattern independent of learning
+- insufficient noise reset so Phase B starts near Phase A state
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W2 NOT_BUILT; round 2 W1 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

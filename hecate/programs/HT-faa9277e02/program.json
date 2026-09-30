@@ -447,6 +447,46 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-faa9277e02",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W2",
+        "W1"
+      ],
+      "unexplained": [
+        "boundary pinning makes any RD run reproduce similar stripes near edges",
+        "Pearson r inflated by the shared wavelength",
+        "clipping bounds create a static prepattern independent of learning",
+        "insufficient noise reset so Phase B starts near Phase A state"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -1055,6 +1095,21 @@
         "M3",
         "M15"
       ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-faa9277e02",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-faa9277e02/worlds/W1/pilot_rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: SPEC_UNATTAINABLE. Pilot failed twice; per round-2 PREREG outcome SPEC_UNATTAINABLE. No treatment or CONTROL code was written or run. See NOTES.md.",
+      "derived_from": [
+        "M1",
+        "M5"
+      ]
     }
   ],
   "lenses": [
@@ -1275,7 +1330,167 @@
         "Pearson r inflated by the shared wavelength (periodic maps correlate by chance at some phases)",
         "clipping bounds create a static prepattern independent of learning",
         "insufficient noise reset so Phase B starts near Phase A state"
-      ]
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-faa9277e02/worlds/W1/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-faa9277e02/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "pilot_attempt1": {
+          "n_seeds": 10,
+          "positive": {
+            "mean_r": -0.046639726672203986,
+            "null_mean_r": 0.001968858611443888,
+            "diff": -0.04860858528364787,
+            "wilcoxon_p": 0.8837890625,
+            "clauses": {
+              "mean_ge_0.5": false,
+              "minus_null_ge_0.3": false,
+              "wilcoxon_p_lt_0.01": false,
+              "poscontrol_mean_ge_0.7": false
+            },
+            "per_seed": [
+              -0.02602144596407843,
+              0.377871338394832,
+              -0.11628184689467992,
+              -0.003068058228907449,
+              -0.2223215144891736,
+              0.006674400633148996,
+              0.13603519525294244,
+              -0.3373454868945255,
+              -0.24762295334192247,
+              -0.03431689518967597
+            ]
+          },
+          "cheat": {
+            "mean_r": 1.0,
+            "null_mean_r": 0.001968858611443888,
+            "diff": 0.9980311413885561,
+            "wilcoxon_p": 0.0009765625,
+            "clauses": {
+              "mean_ge_0.5": true,
+              "minus_null_ge_0.3": true,
+              "wilcoxon_p_lt_0.01": true,
+              "poscontrol_mean_ge_0.7": false
+            },
+            "per_seed": [
+              1.0,
+              1.0,
+              0.9999999999999998,
+              1.0,
+              1.0,
+              1.0,
+              0.9999999999999998,
+              1.0,
+              1.0000000000000004,
+              1.0
+            ]
+          },
+          "null_twin": {
+            "mean_r": 0.001968858611443888,
+            "per_seed": [
+              0.042492272566250384,
+              0.03362915655911556,
+              -0.025446007004415905,
+              0.01161539669149321,
+              -0.054618951473746895,
+              0.05610348503685841,
+              0.03908164404371181,
+              0.013991077706730803,
+              -0.05088609962372423,
+              -0.04627338838783426
+            ]
+          },
+          "degenerate_rows": 0,
+          "cpu_s_total": 5.578125
+        },
+        "pilot_attempt2": {
+          "n_seeds": 10,
+          "positive": {
+            "mean_r": 0.2817014877591514,
+            "null_mean_r": 0.001968858611443888,
+            "diff": 0.27973262914770747,
+            "wilcoxon_p": 0.0009765625,
+            "clauses": {
+              "mean_ge_0.5": false,
+              "minus_null_ge_0.3": false,
+              "wilcoxon_p_lt_0.01": true,
+              "poscontrol_mean_ge_0.7": false
+            },
+            "per_seed": [
+              0.3194023954692338,
+              0.34739377651324316,
+              0.35074936081484875,
+              0.20741660049004274,
+              0.2851897212562611,
+              0.33696459430188413,
+              0.29108698525790655,
+              0.18356077732124332,
+              0.29079076927070047,
+              0.20445989689615007
+            ]
+          },
+          "cheat": {
+            "mean_r": 1.0,
+            "null_mean_r": 0.001968858611443888,
+            "diff": 0.9980311413885561,
+            "wilcoxon_p": 0.0009765625,
+            "clauses": {
+              "mean_ge_0.5": true,
+              "minus_null_ge_0.3": true,
+              "wilcoxon_p_lt_0.01": true,
+              "poscontrol_mean_ge_0.7": false
+            },
+            "per_seed": [
+              1.0,
+              1.0,
+              0.9999999999999998,
+              1.0,
+              1.0,
+              1.0,
+              0.9999999999999998,
+              1.0,
+              1.0000000000000004,
+              1.0
+            ]
+          },
+          "null_twin": {
+            "mean_r": 0.001968858611443888,
+            "per_seed": [
+              0.042492272566250384,
+              0.03362915655911556,
+              -0.025446007004415905,
+              0.01161539669149321,
+              -0.054618951473746895,
+              0.05610348503685841,
+              0.03908164404371181,
+              0.013991077706730803,
+              -0.05088609962372423,
+              -0.04627338838783426
+            ]
+          },
+          "degenerate_rows": 0,
+          "cpu_s_total": 6.25
+        },
+        "treatment": null,
+        "control": null
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "cheat r = 1.0 on all seeds but classed not-detected only because reading 4 folds the positive-control clause (>= 0.7) into the success criterion"
+        },
+        {
+          "id": "A2",
+          "text": "attempt 1 carved graph (z>0) was one percolating domain; repaired to z>1 cores; positive r rose -0.05 -> 0.28, still < 0.5 (failure_criterion: world cannot express the effect)"
+        },
+        {
+          "id": "A3",
+          "text": "learned g in Phase A never reached the 5 clip (0% at max, ~16% at 0.2)"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "triplicateId": "HT-faa9277e02",
@@ -1588,10 +1803,10 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-faa9277e02/worlds/W2/rows.jsonl"
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-faa9277e02/worlds/W1/pilot_rows.jsonl",
+    "note": "round 1 W2 NOT_BUILT; round 2 W1 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)"
   }
 }

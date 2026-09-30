@@ -463,6 +463,46 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-a9e2ba7618",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W4",
+        "W3"
+      ],
+      "unexplained": [
+        "cross-scale rule just has larger components because coarse scales merge everything",
+        "PLV threshold tuned to the favoured condition",
+        "objects placed so their widths align with dyadic scales",
+        "alternative_explanation: any low-pass filter would do"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -594,7 +634,7 @@
       "triplicateId": "HT-a9e2ba7618",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "selection mechanism",
       "statement": "Cross-scale persistence binding: two locations of an input are coupled (and therefore synchronize) only if they fall in the same connected component of a superlevel set of the scalogram at k or more of the dyadic scales; synchrony clusters then equal the scale-persistent components.",
       "derived_from": [
@@ -895,7 +935,7 @@
       "triplicateId": "HT-a9e2ba7618",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "dynamical law",
       "statement": "Shrinkage-feedback dynamics: the network's activity is repeatedly wavelet-transformed, soft-thresholded and fed back; small components die and persistent structures survive, so the dynamics performs topological simplification in real time.",
       "derived_from": [
@@ -1036,6 +1076,21 @@
       "statement": "W4 probe round 1: NULL. Carrier-phase decoding with a co-warped carrier: accuracy 1.000 at w=0 and 0.875 at w=0.4. Clock-time decoder with oracle cycle onsets: 1.000 -> 0.713. Same carrier-phase decoder with the carrier left unwarped (null twin): 1.000 -> 0.204. Positive control (w=0, separate seeds) carrier 1.000, clock 1.000. Outcome NULL by the PREREG class rules applied in code. The run does not test other warp families or a non-oscillatory co-warped clock (the spec's alternative explanation).",
       "derived_from": [
         "M5"
+      ]
+    },
+    {
+      "id": "O-W3-r2",
+      "triplicateId": "HT-a9e2ba7618",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl"
+      ],
+      "statement": "W3 probe round 2: NULL. See NOTES.md. Pilot attempt 1 failed (positive 0.904) from spurious PLV of uncoupled units; one readout repair; attempt 2 passed. Parameters frozen before world.py ran.",
+      "derived_from": [
+        "M3",
+        "M12"
       ]
     }
   ],
@@ -1320,7 +1375,70 @@
         "cross-scale rule just has larger components because coarse scales merge everything",
         "PLV threshold tuned to the favoured condition",
         "objects placed so their widths align with dyadic scales"
-      ]
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-a9e2ba7618/worlds/W3/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "n": 50,
+          "median_ari_osc": 0.7893121730323038,
+          "q10": 0.5723141180827741,
+          "q90": 0.9265912141470388,
+          "median_ari_comp": 0.8043534565293551,
+          "median_edges": 81.5
+        },
+        "NULL_TWIN": {
+          "n": 50,
+          "median_ari_osc": 0.16734408362489284,
+          "q10": 0.04787282020641303,
+          "q90": 0.4945069381149249,
+          "median_ari_comp": 0.04408972036641881,
+          "median_edges": 81.5
+        },
+        "CONTROL": {
+          "n": 50,
+          "median_ari_osc": 0.08277344108014191,
+          "q10": -0.03125780569602929,
+          "q90": 0.3640532393925838,
+          "median_ari_comp": 0.08519273364460792,
+          "median_edges": 70.0
+        },
+        "POSITIVE_CONTROL": {
+          "n": 50,
+          "median_ari_osc": 1.0,
+          "q10": 0.9321266193646002,
+          "q90": 1.0,
+          "median_ari_comp": 1.0,
+          "median_edges": 87.5
+        },
+        "CHEAT": {
+          "n": 50,
+          "median_ari_osc": 1.0,
+          "q10": 1.0,
+          "q90": 1.0
+        },
+        "paired": {
+          "median_diff_treatment_minus_twin": 0.5694705375096785,
+          "wilcoxon_p_greater": 5.550477317542801e-10,
+          "median_osc_minus_comp": 0.0
+        }
+      },
+      "procedural_notes": [
+        "pilot repair changed shared world parameters (frequency grid, step, coupling, window) as well as controls; no treatment code existed"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "null twin matches edge count only; degree distribution not matched (NOTES 4)"
+        },
+        {
+          "id": "A2",
+          "text": "pilot needed one readout repair (frequency grid, DT, KC, PLV window); NOTES"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W4",
@@ -1447,10 +1565,10 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W4 NULL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl"
+    "rows": "hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl",
+    "note": "round 1 W4 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED"
   }
 }

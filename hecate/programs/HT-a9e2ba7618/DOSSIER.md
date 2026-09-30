@@ -27,7 +27,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 ## CANDIDATE PHYSICS
 - [spec] M1 (memory structure): Winding-number memory: a closed ring of identical phase oscillators with nearest-neighbour coupling holds twisted states whose integer winding q is a stored value; q changes only via a phase slip on one link, so retention time is set by the slip barrier, not by the per-unit noise.
 - [spec] M2 (error-correction mechanism): Slip-ridge repair: a phase slip appears as a localized discontinuity in the wavelet ridge of the two nodes adjacent to the slipping link; a local controller that detects the discontinuity and injects an opposite slip restores q without any global knowledge.
-- [spec] M3 (selection mechanism): Cross-scale persistence binding: two locations of an input are coupled (and therefore synchronize) only if they fall in the same connected component of a superlevel set of the scalogram at k or more of the dyadic scales; synchrony clusters then equal the scale-persistent components.
+- [impl] M3 (selection mechanism): Cross-scale persistence binding: two locations of an input are coupled (and therefore synchronize) only if they fall in the same connected component of a superlevel set of the scalogram at k or more of the dyadic scales; synchrony clusters then equal the scale-persistent components.
 - [spec] M4 (computational primitive): Dyadic nesting address: a slow rhythm with f_slow and fast rhythm with f_fast = 2^d f_slow form a d-level address tree; the number of reliably addressable slots grows as 2^d until phase noise in the slow cycle exceeds a slot width, giving a capacity cliff at a predictable d.
 - [impl] M5 (representation): Warp-invariant phase code: message symbols are coded by phase relative to a carrier that is carried along with the message; any monotone time warp applied to the transmission leaves carrier-relative phase unchanged, so decoding by wavelet-tracked carrier phase is invariant to tempo changes that break clock-time decoding.
 - [spec] M6 (learning pressure): Coherence-triggered surgery: an edge is added between two oscillators when their wavelet coherence exceeds c* at some scale for T steps and removed when it falls below c_low; the cycle rank of the coupling graph therefore grows with the number of independent rhythmic co-occurrences in the input, creating new loops that can hold windings.
@@ -36,7 +36,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M9 (computational primitive): Defect-charge logic: in a 2D lattice of phase oscillators, vortices of charge +1/-1 are tokens; pair annihilation implements a subtraction and charge conservation guarantees the net count survives any smooth perturbation; wavelet transients at the core mark each event.
 - [spec] M10 (representation): Scalogram Reeb graph as trace: the merge tree of level sets of a network's output scalogram records when rhythms split and merge; distinct computations produce distinct merge trees even when their power spectra match.
 - [spec] M11 (information bottleneck): Homotopy-only relay: oscillator layers at frequencies f, 2f, 4f couple only between adjacent octaves and only through a coarse phase sign; what passes between scales is the winding class, not the phase value, so coarse layers constrain fine ones only up to homotopy.
-- [spec] M12 (dynamical law): Shrinkage-feedback dynamics: the network's activity is repeatedly wavelet-transformed, soft-thresholded and fed back; small components die and persistent structures survive, so the dynamics performs topological simplification in real time.
+- [impl] M12 (dynamical law): Shrinkage-feedback dynamics: the network's activity is repeatedly wavelet-transformed, soft-thresholded and fed back; small components die and persistent structures survive, so the dynamics performs topological simplification in real time.
 - [spec] M13 (mutation operator): Slip mutation: in an evolving population of rings, mutation inserts a single phase slip (q -> q +/- 1) rather than perturbing weights; heredity of q is exact between mutations and the mutation spectrum is discrete.
 - [spec] M14 (dynamical law): Length-protected lifetime: retention time of winding q grows with ring length N at fixed q because the per-link gradient 2*pi*q/N shrinks; protection is local stiffness scaled by the loop's length.
 - [spec] M15 (interaction law): Wavelet-kernel coupling: oscillators coupled through a Mexican-hat kernel in space form phase domains whose number is set by kernel scale; the domain count (Betti-0) is a scale-selected integer.
@@ -57,6 +57,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [causal toy] Carrier-relative phase decoding is invariant to monotone time warps only when the carrier is warped together with the message; the invariance comes from the co-moving reference, not from the code. | success: carrier-phase accuracy at w=0.4 >= 0.9 with drop from w=0 <= 0.05, AND clock decoder drop >= 0.3, AND in the null twin carrier-phase drop >= 0.3 | null twin: carrier generated unwarped while the message is warped: same spectra and symbol counts, co-moving reference destroyed | cost: 2
 
 ## OBSERVATIONS
+- W3: NULL (hecate/programs/HT-a9e2ba7618/worlds/W3/rows.jsonl)
 - W4: NULL (hecate/programs/HT-a9e2ba7618/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
@@ -64,7 +65,8 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4: warps too weak to move symbols across slot boundaries
 
 ## SURVIVING ANOMALIES
-_none yet_
+- W3: null twin matches edge count only; degree distribution not matched (NOTES 4)
+- W3: pilot needed one readout repair (frequency grid, DT, KC, PLV window); NOTES
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -79,10 +81,13 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- adaptive-scale decoder overfits the warp family
+- cross-scale rule just has larger components because coarse scales merge everything
+- PLV threshold tuned to the favoured condition
+- objects placed so their widths align with dyadic scales
+- alternative_explanation: any low-pass filter would do
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W4 NULL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W4 NULL; round 2 W3 NULL: two worlds read, both NULL/CONFOUNDED
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

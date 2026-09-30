@@ -56,6 +56,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## OBSERVATIONS
 - W3: NULL (hecate/programs/HT-ae38c641b1/worlds/W3/rows.jsonl)
+- W4: SPEC_UNATTAINABLE (hecate/programs/HT-ae38c641b1/worlds/W4/pilot_rows.jsonl)
 
 ## FALSIFICATIONS
 - W3: floating-point jitter produces fake breakpoints (recheck a subsample in exact rational arithmetic)
@@ -67,6 +68,10 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W3: TREATMENT distinct finite W values per seed: [8749, 8758, 9115, 8747, 8770]
 - W3: NULL_TWIN distinct finite W values per seed: [2, 2, 2, 2, 2]
 - W3: NULL_TWIN had Kleene-cap unconverged theta: [31, 29, 30, 31, 33]
+- W4: Map family and decided test are the implementer's reading: W4 defers both to W1, which the implementer rules forbid reading
+- W4: Attempt 1 PC passed (max err 6.2%) but cheat undetectable: S1 denominator undefined at (4,2,0)
+- W4: Attempt 2 (closed-cell truth) fixed the cheat but moved k=8,t=0 PC to 11.3% error (k=4,t=0 to 8.3%): the positive control's verdict hinges on a boundary convention for grid-aligned sets
+- W4: Pilot null twin matched to the oracle's depth sequence, not sens (no treatment may exist in phase 1)
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -81,10 +86,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- count grows because the threshold set is the only source of steps and the fit window is too short to see saturation
+- budget range too small to leave the pre-asymptotic regime
+- ties in width signal broken by a spatial order that happens to follow the boundary
+- oracle exponent itself is off because the ground-truth grid is too coarse
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W3 NULL; nothing supported (no Pass 4 yet)
+SPECULATIVE (an allocation state, not a truth claim). round 1 W3 NULL; round 2 W4 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

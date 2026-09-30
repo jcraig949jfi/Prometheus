@@ -33,7 +33,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M6 (error-correction mechanism): Failure-size criticality at threshold: the number of wrong bits left after iterative decoding is bimodal away from threshold (zero or large) and broad, possibly power-law, exactly at threshold, so the size distribution of decoding failures is an order-parameter probe of the code's phase.
 - [spec] M7 (memory structure): Scale-free burst memory: marks written into a sandpile are erased when their site topples. At criticality erasures come in spatially compact bursts of every size, so the benefit of scattering an erasure-code's symbols (interleaving) over placing them contiguously grows with system size, whereas in a subcritical pile the benefit saturates once the spread exceeds the characteristic avalanche size.
 - [spec] M8 (computational primitive): Critical slowing down as noise estimator: the number of iterations an iterative decoder needs grows sharply as noise approaches threshold, so an agent can read its own distance-to-threshold from convergence time and adjust protection without ever observing a failure.
-- [spec] M9 (causal constraint): Parity-conserving lazy decoder: on a planar surface-code-like lattice, edge flips create defect pairs; a lazy local decoder acts only where a neighbourhood holds at least theta defects, and its moves either annihilate adjacent pairs or hop a defect (parity preserving). Defects leave only at the boundary. Parity conservation plus threshold laziness plus boundary-only loss should make decoding avalanches scale-free; allowing bulk single-defect deletion should destroy it.
+- [impl] M9 (causal constraint): Parity-conserving lazy decoder: on a planar surface-code-like lattice, edge flips create defect pairs; a lazy local decoder acts only where a neighbourhood holds at least theta defects, and its moves either annihilate adjacent pairs or hop a defect (parity preserving). Defects leave only at the boundary. Parity conservation plus threshold laziness plus boundary-only loss should make decoding avalanches scale-free; allowing bulk single-defect deletion should destroy it.
 - [spec] M10 (developmental process): Failure-driven code growth: a code grows by adding a new check node over the bits involved in each decoding failure; the grown Tanner graph self-organizes to a structure whose threshold sits just above the ambient noise, and failure sizes become scale-free as the code approaches that edge.
 - [spec] M11 (information bottleneck): Coarse-graining as decoding: majority-rule block coarse-graining is a concatenated repetition decoder; its fixed-point structure (flow to all-correct or to random) is the threshold of the concatenated code, so a system that repeatedly coarse-grains its own state keeps information iff noise is below an RG critical point.
 - [spec] M12 (mutation operator): Avalanche mutation: mutations hit genomes as sandpile avalanches mapped onto the genome layout (correlated bursts with scale-free sizes) rather than iid with the same mean rate. Populations with evolvable symbol layout evolve multi-scale interleaving, which iid-mutated populations never do.
@@ -57,12 +57,17 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - W4 [optimizer] A storage scrubber that lowers effort after each clean epoch and raises it after each failure, with residual errors persisting between epochs, shows failure clustering (Fano factor growing with window) beyond a memoryless twin driven by the same measured failure curve. | success: adaptive: Fano(1000)/Fano(10) >= 2 AND memoryless twin: Fano(1000)/Fano(10) <= 1.3, 3 seeds each, all seeds agreeing in direction | null twin: memoryless Bernoulli failures with the same effort-to-failure curve and the same update rule; destroys the persistent-residue coupling | cost: 9
 
 ## OBSERVATIONS
+- W1: NULL (hecate/programs/HT-e106e1603b/worlds/W1/rows.jsonl)
 - W2: NOT_BUILT (hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
+- W1: twin mean not within 5% of conserving at L=16 (ratio 0.948) on measurement seeds
+- W1: twin mean not within 5% of conserving at L=32 (ratio 0.950) on measurement seeds
+- W1: twin mean not within 5% of conserving at L=64 (ratio 0.950) on measurement seeds
+- W1: conserving s95 identical at L=16 and 64 (2.0): percentile sits on an integer plateau
 - W2: CONTROL seed 1 n 1000 truncated by compute guard
 - W2: CONTROL seed 1 n 2000 truncated by compute guard
 - W2: CONTROL seed 2 n 1000 truncated by compute guard
@@ -95,11 +100,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- the density equals p* because both are set by the same degree-3 majority arithmetic, not by self-organization
-- the twin fails merely because random flips inject errors, a trivially different drive
+- boundary walk ~L makes any size grow with L
+- laziness backlog released as lattice fills, not criticality
+- eps matches mean but not variance
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)
+SPECULATIVE (an allocation state, not a truth claim). round 1 W2 NOT_BUILT; round 2 W1 NULL: one valid NULL reading; next world eligible
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

@@ -458,6 +458,45 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-056d3ac561",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W1",
+        "W4"
+      ],
+      "unexplained": [
+        "projection rank high enough that no recovery is needed",
+        "Lasso lambda tuned on the test trials",
+        "an incoherent fault dictionary makes any method work"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -957,7 +996,7 @@
       "triplicateId": "HT-056d3ac561",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "interaction law",
       "statement": "Mirror filters: filter A sees x, filter B sees T x; each serves as the other's oracle through the MR. Consensus without truth; predicted failure: collusion, both agree on the same wrong answer when the bias lies in the relation kernel.",
       "derived_from": [
@@ -1065,6 +1104,21 @@
       "statement": "W1 probe round 1: INSTRUMENT_FAIL. At delta=0.1 the stride disagreement statistic D gave AUC 0.493 against NIS AUC 0.490 (50 vs 50 runs); Lasso top-1 localization accuracy was 0.000 (chance 0.0625; data-free sensitivity-norm baseline 0.160); null-twin AUC 0.417. Oracle RMSE AUC 0.490; cheat success=True. Matched-model mean D 4.028 (expected 4). Outcome INSTRUMENT_FAIL by the PREREG class rules applied in code.",
       "derived_from": [
         "M8",
+        "M1"
+      ]
+    },
+    {
+      "id": "O-W4-r2",
+      "triplicateId": "HT-056d3ac561",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl"
+      ],
+      "statement": "W4 probe round 2: NULL. Pilot attempt 1 (spec positive control) failed; attempt 2 (oracle-support repair) passed; no parameter or threshold change at any point. Treatment and control share trials. See NOTES.md.",
+      "derived_from": [
+        "M14",
         "M1"
       ]
     }
@@ -1520,14 +1574,647 @@
         "projection rank high enough that no recovery is needed",
         "Lasso lambda tuned on the test trials",
         "an incoherent fault dictionary makes any method work"
-      ]
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-056d3ac561/worlds/W4/OUTCOME.json",
+      "statistics": {
+        "pooled_by_arm_and_k": {
+          "POSITIVE_CONTROL": {
+            "1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.011112530497714879,
+              "mn_err_median_mean": 0.8396699356675924,
+              "lasso_rkf_mean": 0.9999226271268636,
+              "mn_rkf_mean": 4.501785047792826e-19,
+              "visibility_mean": 0.2997031481796509
+            },
+            "2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.01388725042701137,
+              "mn_err_median_mean": 0.8416731586001637,
+              "lasso_rkf_mean": 0.9999164830474664,
+              "mn_rkf_mean": 1.581816462407653e-18,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.015448758397471696,
+              "mn_err_median_mean": 0.8401093534063975,
+              "lasso_rkf_mean": 1.000089219328745,
+              "mn_rkf_mean": -4.812775226090877e-19,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.020386069786684398,
+              "mn_err_median_mean": 0.8377800801866355,
+              "lasso_rkf_mean": 1.0001890293545694,
+              "mn_rkf_mean": -8.351890830934396e-19,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.991,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.03603769313987678,
+              "mn_err_median_mean": 0.8409378135820363,
+              "lasso_rkf_mean": 0.9997922556886636,
+              "mn_rkf_mean": 1.056970395921502e-18,
+              "visibility_mean": 0.3011321496257472
+            }
+          },
+          "CHEAT": {
+            "1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8397730079330463,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 9.581308854785254e-19,
+              "visibility_mean": 0.2997031481796508
+            },
+            "2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8418312527778042,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 3.66750206218257e-19,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8401031940031733,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 4.612774370174326e-19,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8378221459647881,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": -4.816585993763288e-19,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0,
+              "mn_err_median_mean": 0.8409284128765083,
+              "lasso_rkf_mean": 1.0,
+              "mn_rkf_mean": 2.0189360147282828e-19,
+              "visibility_mean": 0.30113214962574714
+            }
+          },
+          "NULL_TWIN": {
+            "1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9638825864113887,
+              "mn_err_median_mean": 0.8397730079330463,
+              "lasso_rkf_mean": 0.002664629927004307,
+              "mn_rkf_mean": 9.581308854785254e-19,
+              "visibility_mean": 0.2997031481796508
+            },
+            "2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.976233324510774,
+              "mn_err_median_mean": 0.8418312527778042,
+              "lasso_rkf_mean": -0.002499342380827281,
+              "mn_rkf_mean": 3.66750206218257e-19,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9699545790587669,
+              "mn_err_median_mean": 0.8401031940031733,
+              "lasso_rkf_mean": 0.000399095859973826,
+              "mn_rkf_mean": 4.612774370174326e-19,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9753601482447045,
+              "mn_err_median_mean": 0.8378221459647881,
+              "lasso_rkf_mean": -0.0019064526852459924,
+              "mn_rkf_mean": -4.816585993763288e-19,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.9878920730364783,
+              "mn_err_median_mean": 0.8409284128765083,
+              "lasso_rkf_mean": -0.003049991383120033,
+              "mn_rkf_mean": 2.0189360147282828e-19,
+              "visibility_mean": 0.30113214962574714
+            }
+          },
+          "TREATMENT": {
+            "1": {
+              "lasso_rate": 0.975,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.0638014020017825,
+              "mn_err_median_mean": 0.8398156572444468,
+              "lasso_rkf_mean": 0.9233645882179786,
+              "mn_rkf_mean": -6.848078447044445e-19,
+              "visibility_mean": 0.2997031481796509
+            },
+            "2": {
+              "lasso_rate": 0.876,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.08039168034763736,
+              "mn_err_median_mean": 0.8416701418783683,
+              "lasso_rkf_mean": 0.8636560137330388,
+              "mn_rkf_mean": -1.0332857839929932e-18,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 0.618,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.13271391319759845,
+              "mn_err_median_mean": 0.8400871611851783,
+              "lasso_rkf_mean": 0.7038643950258805,
+              "mn_rkf_mean": 1.3820353572670539e-18,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 0.05,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8481830671387435,
+              "mn_err_median_mean": 0.8378020369699613,
+              "lasso_rkf_mean": 0.21126404812289593,
+              "mn_rkf_mean": -1.073495984681087e-18,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.950624011800457,
+              "mn_err_median_mean": 0.8409236970677011,
+              "lasso_rkf_mean": 0.051523615492977806,
+              "mn_rkf_mean": -1.19029602810172e-19,
+              "visibility_mean": 0.3011321496257472
+            }
+          },
+          "CONTROL": {
+            "1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8398156572444468,
+              "mn_err_median_mean": 0.8398156572444468,
+              "lasso_rkf_mean": -6.848078447044445e-19,
+              "mn_rkf_mean": -6.848078447044445e-19,
+              "visibility_mean": 0.2997031481796509
+            },
+            "2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8416701418783683,
+              "mn_err_median_mean": 0.8416701418783683,
+              "lasso_rkf_mean": -1.0332857839929932e-18,
+              "mn_rkf_mean": -1.0332857839929932e-18,
+              "visibility_mean": 0.2960901291665555
+            },
+            "3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8400871611851783,
+              "mn_err_median_mean": 0.8400871611851783,
+              "lasso_rkf_mean": 1.3820353572670539e-18,
+              "mn_rkf_mean": 1.3820353572670539e-18,
+              "visibility_mean": 0.2982596069357972
+            },
+            "6": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8378020369699613,
+              "mn_err_median_mean": 0.8378020369699613,
+              "lasso_rkf_mean": -1.073495984681087e-18,
+              "mn_rkf_mean": -1.073495984681087e-18,
+              "visibility_mean": 0.3037295037892582
+            },
+            "10": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "lasso_err_median_mean": 0.8409236970677011,
+              "mn_err_median_mean": 0.8409236970677011,
+              "lasso_rkf_mean": -1.19029602810172e-19,
+              "mn_rkf_mean": -1.19029602810172e-19,
+              "visibility_mean": 0.3011321496257472
+            }
+          }
+        },
+        "per_seed_k": {
+          "TREATMENT_vs_CONTROL": {
+            "s0_k1": {
+              "lasso_rate": 0.96,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k2": {
+              "lasso_rate": 0.885,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k3": {
+              "lasso_rate": 0.58,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s1_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k2": {
+              "lasso_rate": 0.895,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k3": {
+              "lasso_rate": 0.67,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s2_k1": {
+              "lasso_rate": 0.96,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k2": {
+              "lasso_rate": 0.84,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k3": {
+              "lasso_rate": 0.54,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s3_k1": {
+              "lasso_rate": 0.955,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k2": {
+              "lasso_rate": 0.805,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k3": {
+              "lasso_rate": 0.645,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            },
+            "s4_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k2": {
+              "lasso_rate": 0.955,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k3": {
+              "lasso_rate": 0.655,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": false
+            }
+          },
+          "POSITIVE_CONTROL": {
+            "s0_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            }
+          },
+          "CHEAT": {
+            "s0_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s0_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s1_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s2_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s3_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k1": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k2": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            },
+            "s4_k3": {
+              "lasso_rate": 1.0,
+              "mn_rate": 1.0,
+              "nt_lasso_rate": 0.0,
+              "met": true
+            }
+          },
+          "NULL_TWIN": {
+            "s0_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s0_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s0_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s1_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s1_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s1_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s2_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s2_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s2_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s3_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s3_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s3_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s4_k1": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s4_k2": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            },
+            "s4_k3": {
+              "lasso_rate": 0.0,
+              "mn_rate": 1.0,
+              "met": false
+            }
+          }
+        },
+        "treatment_meets_success": false,
+        "failure_criterion_met": false,
+        "failure_reasons": [],
+        "lasso_alpha_by_seed": {
+          "0": 7.60596850559863,
+          "1": 8.02763087012421,
+          "2": 7.4322227769666585,
+          "3": 7.417207522036522,
+          "4": 7.966964446622337
+        },
+        "coherence_P_by_seed": [
+          0.9123486082353077,
+          0.8207995531201062,
+          0.7951998712640221,
+          0.8309300867706624,
+          0.8664321319897557
+        ],
+        "coherence_D_by_seed": [
+          0.6705761627821674,
+          0.6057975545349504,
+          0.6799375474529677,
+          0.6568533847694626,
+          0.5949019497493693
+        ],
+        "P_rank": 12
+      },
+      "procedural_notes": [
+        "'k <= 3' read as every k before the run; pooled reading would have been SIGNAL (0.823)"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Spec positive control (row(P) faults, 'both methods recover') cannot satisfy the min-norm >= 0.50 clause by construction; pilot attempt 1 failed on it and was repaired (pre-declared) to oracle-support LS on the sparse faults."
+        }
+      ],
+      "rejected_explanations": []
     }
   ],
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl"
+    "rows": "hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl",
+    "note": "round 1 W1 INSTRUMENT_FAIL; round 2 W4 NULL: one valid NULL reading; next world eligible"
   }
 }

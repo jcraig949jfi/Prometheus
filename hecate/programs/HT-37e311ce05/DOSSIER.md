@@ -57,6 +57,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## OBSERVATIONS
 - W1: INSTRUMENT_FAIL (hecate/programs/HT-37e311ce05/worlds/W1/rows.jsonl)
+- W4: SPEC_UNATTAINABLE (hecate/programs/HT-37e311ce05/worlds/W4/pilot_rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
@@ -64,6 +65,9 @@ _none yet_
 ## SURVIVING ANOMALIES
 - W1: success part (b) unattainable: CONTROL mean success 0.9900, so max attainable difference is 0.0100 < 0.3 (CHEAT at 1.0 fails)
 - W1: m*=25 <= individual cap 60: a lone agent can reach m*, so pooling is not required; POSITIVE_CONTROL mean T/m* = 2.14 (pairs sum two solo budgets)
+- W4: attempt 1: clonal 6-sparse PC failed OMP recovery in 3/10 seeds (gen-0 rate >0.05) and drifted dense (s_Psi 28-35) under its own sanctions
+- W4: attempt 2 (repaired PC): M13 10/10 by design, M3 0/10; pilot fails on the M3 conjunct only
+- W4: NULL_TWIN rate in the pilot is matched to the PC schedule (no treatment exists), per NOTES reading 4
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,10 +82,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-- the linear null has lower marginal return near m*, so selection intensity differs
+- s_Psi falls because w shrinks toward zero
+- benefit saturation makes many genome directions neutral so any pressure picks one
+- a random orthonormal Psi_h makes canonical sparse vectors dense, so the tension is built in by construction
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W1 INSTRUMENT_FAIL; round 2 W4 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

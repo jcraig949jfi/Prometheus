@@ -455,6 +455,45 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-55162c0ac0",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "W2"
+      ],
+      "unexplained": [
+        "delta too small for longer orbits (repeat at delta=0.05)",
+        "long-period UPOs located inaccurately",
+        "trajectory lands near the orbit by luck"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -995,6 +1034,20 @@
         "M4",
         "M2"
       ]
+    },
+    {
+      "id": "O-W2-r2",
+      "triplicateId": "HT-55162c0ac0",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl"
+      ],
+      "statement": "W2 probe round 2: SPEC_UNATTAINABLE. Pilot attempt 1 failed on the null twin; one repair (fit with intercept, intercept dropped from controller; NOTES.md) and rerun; attempt 2 failed on the null twin again -> SPEC_UNATTAINABLE per PREREG round 2. No treatment code written. core_minutes = summed process time of pilot rows + ~0.2 min for UPO checks/evaluators.",
+      "derived_from": [
+        "M5"
+      ]
     }
   ],
   "lenses": [
@@ -1222,7 +1275,114 @@
         "delta too small for longer orbits regardless of C (repeat at delta = 0.05)",
         "long-period UPOs located inaccurately",
         "trajectory lands near the orbit by luck (compare waiting time to uncontrolled recurrence)"
-      ]
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-55162c0ac0/worlds/W2/OUTCOME.json",
+      "statistics": {
+        "attempt1": {
+          "positive_pooled_frac_C16": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0
+          },
+          "cheat_p_max": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8
+          },
+          "null_twin_p_max": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0
+          },
+          "null_twin_max_frac_p_ge_2": 0.2
+        },
+        "attempt2": {
+          "positive_pooled_frac_C16": {
+            "1": 1.0,
+            "2": 1.0,
+            "3": 1.0,
+            "4": 1.0
+          },
+          "cheat_p_max": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8
+          },
+          "cheat_twin_uncontrolled_max_frac": 0.0,
+          "null_twin_p_max": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0
+          },
+          "null_twin_max_frac_p_ge_2": 0.4,
+          "null_twin_cells_p_ge_2_above_0p1": {
+            "C1p2": 0.2,
+            "C1p3": 0.4,
+            "C1p8": 0.2,
+            "C2p2": 0.196,
+            "C2p3": 0.2,
+            "C2p6": 0.2,
+            "C2p7": 0.176,
+            "C2p8": 0.2,
+            "C3p2": 0.192,
+            "C3p3": 0.2,
+            "C3p8": 0.2,
+            "C4p2": 0.132,
+            "C4p3": 0.4,
+            "C5p2": 0.136,
+            "C5p3": 0.2,
+            "C5p8": 0.2,
+            "C6p3": 0.2,
+            "C6p8": 0.2,
+            "C7p3": 0.2,
+            "C7p8": 0.2,
+            "C8p3": 0.4,
+            "C8p8": 0.2
+          },
+          "null_twin_seed_cells_with_50_of_50": 23
+        },
+        "treatment": "not built (pilot failed twice; no treatment statistic exists)"
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Null twin never shows the memory law (p_max=0 at every C in both attempts) but a shuffled-fit controller stabilises whole cells (50/50 trials) in single seeds: a random proportional gain lands in the finite stabilising interval of a 1-D UPO. Pooled null fraction exceeded the spec's 0.1 twin bound at p>=2 in both attempts (0.2, then 0.4 after the intercept repair)."
+        },
+        {
+          "id": "A2",
+          "text": "Spec's control and null_twin are the same construction (time-shuffled fit); both would be affected."
+        },
+        {
+          "id": "A3",
+          "text": "Positive control at C=16 already reached 1.0 at p=1..4; with a 1-D map a C=1 deadbeat controller is sufficient in principle (M5's own simpler_alternative: observability needs depth >= system order = 1). Not measured: no treatment run."
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W3",
@@ -1411,10 +1571,10 @@
     }
   ],
   "candidateEngines": [],
-  "currentVerdict": "SPECULATIVE",
+  "currentVerdict": "PARK",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W3 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-55162c0ac0/worlds/W3/rows.jsonl"
+    "rows": "hecate/programs/HT-55162c0ac0/worlds/W2/pilot_rows.jsonl",
+    "note": "round 1 W3 INSTRUMENT_FAIL; round 2 W2 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)"
   }
 }

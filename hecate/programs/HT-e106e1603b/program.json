@@ -457,6 +457,45 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-e106e1603b",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W2",
+        "W1"
+      ],
+      "unexplained": [
+        "boundary walk ~L makes any size grow with L",
+        "laziness backlog released as lattice fills, not criticality",
+        "eps matches mean but not variance"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -787,7 +826,7 @@
       "triplicateId": "HT-e106e1603b",
       "passId": "P1",
       "kind": "mechanism",
-      "layer": "speculation",
+      "layer": "implemented_candidate",
       "form": "causal constraint",
       "statement": "Parity-conserving lazy decoder: on a planar surface-code-like lattice, edge flips create defect pairs; a lazy local decoder acts only where a neighbourhood holds at least theta defects, and its moves either annihilate adjacent pairs or hop a defect (parity preserving). Defects leave only at the boundary. Parity conservation plus threshold laziness plus boundary-only loss should make decoding avalanches scale-free; allowing bulk single-defect deletion should destroy it.",
       "derived_from": [
@@ -1033,6 +1072,20 @@
         "M1",
         "M6"
       ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-e106e1603b",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-e106e1603b/worlds/W1/rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: NULL. Pilot passed on attempt 1 (PILOT.json). eps from pilot calibration.json, largest eps within the 5% mean band (NOTES A2). Calibration target (conserving mean) was visible in the pilot; disclosed in NOTES.md. Lens L6 recorded only.",
+      "derived_from": [
+        "M9"
+      ]
     }
   ],
   "lenses": [
@@ -1267,7 +1320,280 @@
         "defects walking to the boundary take ~L steps, so any size measure grows with L regardless of criticality",
         "the laziness threshold creates a backlog that is released in big clearances simply because the lattice fills, not because the state is critical",
         "eps calibration matches the mean but not the variance, so the twin differs in more than conservation"
-      ]
+      ],
+      "outcome": "NULL",
+      "round": 2,
+      "rows": "hecate/programs/HT-e106e1603b/worlds/W1/rows.jsonl",
+      "outcome_file": "hecate/programs/HT-e106e1603b/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "TREATMENT": {
+          "ratio": 1.0,
+          "ci90": [
+            1.0,
+            1.0
+          ],
+          "n_seeds": 5,
+          "n_boot": 4000,
+          "s95_by_L": {
+            "16": 2.0,
+            "32": 2.0,
+            "64": 2.0
+          },
+          "mean_nonempty_by_L": {
+            "16": 1.159686358996609,
+            "32": 1.1647320498577483,
+            "64": 1.1705390764423087
+          },
+          "var_nonempty_by_L": {
+            "16": 0.23796919833332675,
+            "32": 0.2625634296121451,
+            "64": 0.2884207119230364
+          },
+          "frac_nonempty_by_L": {
+            "16": 0.70268,
+            "32": 0.73915,
+            "64": 0.7542099999999999
+          },
+          "max_by_L": {
+            "16": 9.6,
+            "32": 9.0,
+            "64": 10.0
+          },
+          "violations_by_L": {
+            "16": 0.0,
+            "32": 0.0,
+            "64": 0.0
+          },
+          "audit_mismatch_by_L": {
+            "16": 0.0,
+            "32": 0.0,
+            "64": 0.0
+          },
+          "logical_per_1000_by_L": {
+            "16": 9.88,
+            "32": 9.879999999999999,
+            "64": 8.85
+          },
+          "density_by_L": {
+            "16": 0.1020265625,
+            "32": 0.09255423828125,
+            "64": 0.08777902832031251
+          },
+          "largest_cluster_frac_by_L": {
+            "16": 0.878125,
+            "32": 0.859765625,
+            "64": 0.7986328125
+          }
+        },
+        "CONTROL": {
+          "ratio": 2.446483180428171,
+          "ci90": [
+            2.4,
+            2.5450689289502773
+          ],
+          "n_seeds": 5,
+          "n_boot": 4000,
+          "s95_by_L": {
+            "16": 9.809999999999855,
+            "32": 15.409999999999854,
+            "64": 24.0
+          },
+          "mean_nonempty_by_L": {
+            "16": 2.4925699999999997,
+            "32": 3.47423,
+            "64": 4.77331
+          },
+          "var_nonempty_by_L": {
+            "16": 8.6145855485,
+            "32": 26.5449113785,
+            "64": 76.5853439825
+          },
+          "frac_nonempty_by_L": {
+            "16": 1.0,
+            "32": 1.0,
+            "64": 1.0
+          },
+          "max_by_L": {
+            "16": 16.0,
+            "32": 32.0,
+            "64": 64.0
+          },
+          "violations_by_L": {
+            "16": 0.0,
+            "32": 0.0,
+            "64": 0.0
+          },
+          "audit_mismatch_by_L": {
+            "16": 0.0,
+            "32": 0.0,
+            "64": 0.0
+          },
+          "logical_per_1000_by_L": {
+            "16": 9.959999999999999,
+            "32": 10.0,
+            "64": 10.0
+          },
+          "density_by_L": {
+            "16": 0.0,
+            "32": 0.0,
+            "64": 0.0
+          },
+          "largest_cluster_frac_by_L": {
+            "16": 0.83671875,
+            "32": 0.82734375,
+            "64": 0.842724609375
+          }
+        },
+        "NULL_TWIN": {
+          "ratio": 1.0,
+          "ci90": [
+            1.0,
+            1.0
+          ],
+          "n_seeds": 5,
+          "n_boot": 4000,
+          "s95_by_L": {
+            "16": 2.0,
+            "32": 2.0,
+            "64": 2.0
+          },
+          "mean_nonempty_by_L": {
+            "16": 1.0993204398441665,
+            "32": 1.1063973492863357,
+            "64": 1.1114347232411226
+          },
+          "var_nonempty_by_L": {
+            "16": 0.11950878860057104,
+            "32": 0.1322095560122201,
+            "64": 0.13997425182901552
+          },
+          "frac_nonempty_by_L": {
+            "16": 0.63346,
+            "32": 0.66719,
+            "64": 0.68254
+          },
+          "max_by_L": {
+            "16": 5.6,
+            "32": 7.0,
+            "64": 6.8
+          },
+          "violations_by_L": {
+            "16": 4715.8,
+            "32": 4704.4,
+            "64": 4697.4
+          },
+          "audit_mismatch_by_L": {
+            "16": 122.4,
+            "32": 516.6,
+            "64": 1892.8
+          },
+          "logical_per_1000_by_L": {
+            "16": 9.45,
+            "32": 9.39,
+            "64": 7.159999999999999
+          },
+          "density_by_L": {
+            "16": 0.0855745703125,
+            "32": 0.077859931640625,
+            "64": 0.07361561767578126
+          },
+          "largest_cluster_frac_by_L": {
+            "16": 0.73515625,
+            "32": 0.7396484375,
+            "64": 0.572021484375
+          }
+        },
+        "CHEAT": {
+          "ratio": 16.0,
+          "ci90": [
+            16.0,
+            16.0
+          ],
+          "n_seeds": 5,
+          "n_boot": 4000,
+          "s95_by_L": {
+            "16": 2.0,
+            "32": 8.0,
+            "64": 32.0
+          },
+          "mean_nonempty_by_L": {
+            "16": 1.0993204398441665,
+            "32": 4.425589397145343,
+            "64": 17.78295557185796
+          },
+          "var_nonempty_by_L": {
+            "16": 0.11950878860057104,
+            "32": 2.1153528961955215,
+            "64": 35.83340846822797
+          },
+          "frac_nonempty_by_L": {
+            "16": 0.63346,
+            "32": 0.66719,
+            "64": 0.68254
+          },
+          "max_by_L": {
+            "16": 5.6,
+            "32": 28.0,
+            "64": 108.8
+          }
+        },
+        "POSITIVE_CONTROL": {
+          "ratio": 14.200587422252939,
+          "ci90": [
+            14.026982758620678,
+            14.413203983516524
+          ],
+          "n_seeds": 5,
+          "n_boot": 4000,
+          "s95_by_L": {
+            "16": 115.75999999999985,
+            "32": 470.94999999999965,
+            "64": 1643.859999999998
+          },
+          "mean_nonempty_by_L": {
+            "16": 27.632117617238162,
+            "32": 94.74257919192777,
+            "64": 296.28509097569776
+          },
+          "var_nonempty_by_L": {
+            "16": 1748.6140132864741,
+            "32": 35151.040250259684,
+            "64": 682167.3839985946
+          },
+          "frac_nonempty_by_L": {
+            "16": 0.41109,
+            "32": 0.42374999999999996,
+            "64": 0.34341
+          },
+          "max_by_L": {
+            "16": 430.8,
+            "32": 2236.4,
+            "64": 12986.4
+          }
+        }
+      },
+      "procedural_notes": [
+        "null twin matched to the treatment's mean avalanche size, so the pilot needed one treatment statistic (disclosed; PREREG gap)"
+      ],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "twin mean not within 5% of conserving at L=16 (ratio 0.948) on measurement seeds"
+        },
+        {
+          "id": "A2",
+          "text": "twin mean not within 5% of conserving at L=32 (ratio 0.950) on measurement seeds"
+        },
+        {
+          "id": "A3",
+          "text": "twin mean not within 5% of conserving at L=64 (ratio 0.950) on measurement seeds"
+        },
+        {
+          "id": "A4",
+          "text": "conserving s95 identical at L=16 and 64 (2.0): percentile sits on an integer plateau"
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1820,8 +2146,8 @@
   "candidateEngines": [],
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
-    "layer": "speculation",
-    "note": "probe round 1: W2 NOT_BUILT; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-e106e1603b/worlds/W2/rows.jsonl"
+    "layer": "experimental_observation",
+    "rows": "hecate/programs/HT-e106e1603b/worlds/W1/rows.jsonl",
+    "note": "round 1 W2 NOT_BUILT; round 2 W1 NULL: one valid NULL reading; next world eligible"
   }
 }

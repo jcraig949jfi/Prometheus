@@ -38,7 +38,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 - [spec] M11 (dynamical law): Separation-smoothing-consistency trilemma: MR violation rate peaks on a ridge in (lambda, Q/R) space where pattern separation and temporal smoothing conflict.
 - [spec] M12 (information bottleneck): Relational sufficiency: the filter state is constrained to k nonzero components, and the components retained are those needed to satisfy the MRs rather than those minimizing reconstruction.
 - [spec] M13 (developmental process): Atom recruitment by persistent violation: an MR violation that no existing atom combination explains recruits a new atom with large initial covariance, which shrinks as it matures.
-- [spec] M14 (interaction law): Mirror filters: filter A sees x, filter B sees T x; each serves as the other's oracle through the MR. Consensus without truth; predicted failure: collusion, both agree on the same wrong answer when the bias lies in the relation kernel.
+- [impl] M14 (interaction law): Mirror filters: filter A sees x, filter B sees T x; each serves as the other's oracle through the MR. Consensus without truth; predicted failure: collusion, both agree on the same wrong answer when the bias lies in the relation kernel.
 - [spec] M15 (representation): Violation pattern as sparse code of fault location: pass/fail over many MRs is a binary measurement vector, and the fault is decoded as a sparse combination of mutation-operator signatures. Kalman fit is poor (binary, non-Gaussian); a Bernoulli filter is the honest version; three-way dependency WEAK.
 - [spec] M16 (computational primitive): Shrinkage thermometer: soft-threshold shrinkage breaks the scaling MR S(c x) = c S(x) while the linear filter satisfies it exactly, so the scaling-MR residual of the joint pipeline measures the effective threshold and localizes nonlinearity to the sparse stage.
 
@@ -59,6 +59,7 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## OBSERVATIONS
 - W1: INSTRUMENT_FAIL (hecate/programs/HT-056d3ac561/worlds/W1/rows.jsonl)
+- W4: NULL (hecate/programs/HT-056d3ac561/worlds/W4/rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
@@ -69,6 +70,7 @@ _none yet_
 - W1: delta=0.2: oracle true-state-RMSE AUC 0.558 ~ chance; mismatch not visible between seeds even with ground truth
 - W1: Lasso top-1 accuracy 0.000 below data-free sensitivity-norm baseline 0.160
 - W1: matched-run Lasso top-1 concentrated on entry 13 (49/50)
+- W4: Spec positive control (row(P) faults, 'both methods recover') cannot satisfy the min-norm >= 0.50 clause by construction; pilot attempt 1 failed on it and was repaired (pre-declared) to oracle-support LS on the sparse faults.
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -83,10 +85,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-_none yet_
+- projection rank high enough that no recovery is needed
+- Lasso lambda tuned on the test trials
+- an incoherent fault dictionary makes any method work
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 INSTRUMENT_FAIL; nothing supported (no Pass 4 yet)
+SPECULATIVE (an allocation state, not a truth claim). round 1 W1 INSTRUMENT_FAIL; round 2 W4 NULL: one valid NULL reading; next world eligible
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

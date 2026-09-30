@@ -58,12 +58,16 @@ Layers: [spec] speculation, [impl] implemented candidate, [obs] experimental obs
 
 ## OBSERVATIONS
 - W1: NOT_BUILT (hecate/programs/HT-8a87057933/worlds/W1/rows.jsonl)
+- W4: SPEC_UNATTAINABLE (hecate/programs/HT-8a87057933/worlds/W4/pilot_rows.jsonl)
 
 ## FALSIFICATIONS
 _none yet_
 
 ## SURVIVING ANOMALIES
 - W1: oracle reset not faster than drop-oldest (median 3.0 vs 3.0)
+- W4: Positive control (true-model oracle picking the largest realised refutation among allowed actions) cannot beat random probing on bits/probe: ratio 0.914 (attempt 1), 0.843 (attempt 2). With 2 inputs and 64 i.i.d. random automata the version space collapses in ~2-3 observations for any policy (lens L3 failure mode 'count collapses in one probe for any policy on tiny spaces'); bits/probe is set by the number of low-information triggers on near-singleton sets, not by probe choice.
+- W4: Null-twin part (c) is self-referential (ratio identically 1.0), so null_twin_meets_success could never be true; null twin also failed (a) (reduction 0.324), so the pilot's null-twin check did not rest on the vacuous part.
+- W4: CE baseline computed as a reference in the pilot (criterion is relative to CE); no treatment code or statistic ever existed.
 
 ## CROSS-SUBSTRATE RESULTS
 _none yet_
@@ -78,10 +82,12 @@ _none yet_
 _none yet_
 
 ## OPEN QUESTIONS
-_none yet_
+- random automata rarely disagree near the start, so every policy is safe
+- forbidden-state density decides everything
+- the intersection is often empty, forcing probes that happen to be safe
 
 ## CURRENT VERDICT
-SPECULATIVE (an allocation state, not a truth claim). probe round 1: W1 NOT_BUILT; nothing supported (no Pass 4 yet)
+PARK (an allocation state, not a truth claim). round 1 W1 NOT_BUILT; round 2 W4 SPEC_UNATTAINABLE: Pass 3 produced no testable world in two tries (generator finding)
 
 ## NEXT PASS
-decision after P3-probe1: DEEPEN
+decision after P3-probe2: PARK

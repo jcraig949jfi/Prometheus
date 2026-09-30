@@ -487,6 +487,46 @@
         "unexpectedness": "unknown",
         "potential_importance": "unknown"
       }
+    },
+    {
+      "id": "P3-probe2",
+      "triplicateId": "HT-974471f045",
+      "index": 3,
+      "kind": "cheap_probe",
+      "added": [
+        "new observable"
+      ],
+      "generator": {
+        "model": "claude-opus-5-5 (implementer)",
+        "search": false,
+        "prompt": "hecate/programs/_prompts/probe_impl_v2.md",
+        "prompt_sha256": "2021ed66e8fefd807203ae1d814b74091b4eabdacef16668e7a025d82128185e"
+      },
+      "prereg": "roles/Hecate/prereg/2026-09-30_probe_round2/PREREG.md",
+      "inspected_prior": [
+        "W3",
+        "W1"
+      ],
+      "unexplained": [
+        "deposits increase rho before rescaling and rescaling is imperfect",
+        "task A and task B share delay structure so B-training preserves A",
+        "20-sample ridge is so noisy that any change in state scale shifts NRMSE",
+        "elites selected on B happen to carry A by chance at one seed"
+      ],
+      "decision": "PARK",
+      "research_state": {
+        "novelty": "unknown",
+        "mechanistic_clarity": "unknown",
+        "falsifiability": "unknown",
+        "empirical_support": "none",
+        "cross_lens_agreement": "unknown",
+        "cross_substrate_transfer": "unknown",
+        "baseline_resistance": "unknown",
+        "artifact_risk": "unknown",
+        "cost": "unknown",
+        "unexpectedness": "unknown",
+        "potential_importance": "unknown"
+      }
     }
   ],
   "hypotheses": [
@@ -1059,6 +1099,21 @@
       "derived_from": [
         "M7"
       ]
+    },
+    {
+      "id": "O-W1-r2",
+      "triplicateId": "HT-974471f045",
+      "passId": "P3-probe2",
+      "kind": "observation",
+      "layer": "experimental_observation",
+      "evidence_rows": [
+        "hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl"
+      ],
+      "statement": "W1 probe round 2: SPEC_UNATTAINABLE. No treatment or control-arm code was written; no treatment statistic exists. Repair = readout fitted to u_{t-4} so the one-step deposit feedback carries u_{t-5} (NOTES Pilot log). Thresholds unchanged. Files: NOTES.md, pilot.py, pilot_eval.py, pilot_rows.jsonl, pilot_rows_attempt2.jsonl, PILOT.json, cpu_ledger.jsonl.",
+      "derived_from": [
+        "M3",
+        "M2"
+      ]
     }
   ],
   "lenses": [
@@ -1282,7 +1337,83 @@
         "task A and task B share delay structure so B-training preserves A",
         "20-sample ridge is so noisy that any change in state scale shifts NRMSE",
         "elites selected on B happen to carry A by chance at one seed"
-      ]
+      ],
+      "outcome": "SPEC_UNATTAINABLE",
+      "round": 2,
+      "rows": "hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl",
+      "outcome_file": "hecate/programs/HT-974471f045/worlds/W1/OUTCOME.json",
+      "statistics": {
+        "attempt1": {
+          "positive_control": {
+            "mean": 0.9502242745544136,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.9752833668314888,
+            "p_one_sided": 0.13651816987559418,
+            "meets": false,
+            "reduction": 0.02471663316851125
+          },
+          "cheat": {
+            "mean": 0.00694897129366948,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.007132227939012988,
+            "p_one_sided": 9.133589555477501e-05,
+            "meets": true
+          },
+          "pc_content_free_twin": {
+            "mean": 0.9873790657446737,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 1.0134179954831826,
+            "p_one_sided": 0.6884118880589414,
+            "meets": false,
+            "reduction": -0.013417995483182565
+          }
+        },
+        "attempt2_repaired": {
+          "positive_control": {
+            "mean": 0.9589378619600181,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.9842267469257338,
+            "p_one_sided": 0.3668649978481236,
+            "meets": false,
+            "reduction": 0.015773253074266247
+          },
+          "cheat": {
+            "mean": 0.00694897129366948,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 0.007132227939012988,
+            "p_one_sided": 9.133589555477501e-05,
+            "meets": true
+          },
+          "pc_content_free_twin": {
+            "mean": 1.0006512533102807,
+            "ref_mean": 0.9743058344586688,
+            "ratio": 1.02704019407443,
+            "p_one_sided": 0.8634818301244058,
+            "meets": false,
+            "reduction": -0.027040194074430035
+          }
+        },
+        "info_null_twin_gen80_vs_gen0": {
+          "mean": 0.9743058344586688,
+          "ref_mean": 1.054972121456587,
+          "ratio": 0.9235370439111289,
+          "p_one_sided": 0.01056696406458055,
+          "meets": false
+        },
+        "treatment": "not built (phase 2 never started)"
+      },
+      "procedural_notes": [],
+      "anomalies": [
+        {
+          "id": "A1",
+          "text": "Positive control as literally specified gave only 2.5% reduction; channel-lag-aligned repair gave 1.6%. A deposit of a readout with ||w_A*|| ~50-95 at eps=0.05 (rank-one gain ~3, then rescaled to rho 0.9) does not make task A few-shot learnable with n=20."
+        },
+        {
+          "id": "A2",
+          "text": "PC_NULL_TWIN row (PC's content-free twin) added to pilot rows as the pilot reading of 'null twin does not meet it' (NOTES ambiguity 3)."
+        }
+      ],
+      "rejected_explanations": []
     },
     {
       "id": "W2",
@@ -1645,7 +1776,7 @@
   "currentVerdict": "SPECULATIVE",
   "evidenceSummary": {
     "layer": "experimental_observation",
-    "note": "probe round 1: W3 NULL; nothing supported (no Pass 4 yet)",
-    "rows": "hecate/programs/HT-974471f045/worlds/W3/rows.jsonl"
+    "rows": "hecate/programs/HT-974471f045/worlds/W1/pilot_rows.jsonl",
+    "note": "round 1 W3 NULL; round 2 W1 SPEC_UNATTAINABLE: one valid NULL reading; next world eligible"
   }
 }
