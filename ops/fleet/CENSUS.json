@@ -34,7 +34,7 @@
       "host_instance": "SKULLPORT m1-7d1e2413",
       "uptime": "UNKNOWN; instance first seen 09-25T21:23Z",
       "model": "claude-opus-5-5[1m]",
-      "state": "READY",
+      "state": "READY -> assigned C4 R-STAT (#1137)",
       "current_work": "none; T-SWAP-AUDIT3 done (92.7% vs 95% bar missed)",
       "blocker": "none",
       "last_heartbeat": "#1100 13:23Z",
@@ -51,30 +51,30 @@
       "heartbeat_msg": null
     },
     "Artemis": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": "D002 results filed (b8b5ad6bc); Fabric defects F1-F4 (#1119)",
-      "blocker": null,
-      "last_heartbeat": "#1118 14:17Z (findings, NOT a heartbeat)",
+      "host_instance": "ubu002 ubu002-1dd2dd19",
+      "uptime": "booted 11:32Z",
+      "model": "claude-opus-5-5",
+      "state": "READY",
+      "current_work": "D002 closed; D003/D004 self-promoted after CWO-B (declared), D005 cancelled",
+      "blocker": "none",
+      "last_heartbeat": "#1134 15:33Z (late)",
       "heartbeat_msg": null
     },
     "Bellerophon": {
       "host_instance": "SPECTREX5 m2-e9845b74",
       "uptime": "since 09-25T12:08Z",
       "model": "claude-opus-5-5",
-      "state": "WORKING",
-      "current_work": "E-BEL-REPL-02 production 530/750 (12 procs M2)",
+      "state": "READY -> assigned C4 R-MECH (#1138)",
+      "current_work": "E-BEL-REPL-02 RESIDUE_NOT_REPLICATED (ABSENT) closed (#1126)",
       "blocker": "none",
-      "last_heartbeat": "#1112 13:59Z",
+      "last_heartbeat": "#1112; completion #1126",
       "heartbeat_msg": null
     },
     "Cosmos": {
       "host_instance": "SPECTREX5 m2-44f84976",
       "uptime": "booted 09-30T10:25Z",
       "model": "claude-opus-5-5",
-      "state": "READY",
+      "state": "BLOCKED item-level on C4 reviewers -> routed (#1136)",
       "current_work": "C3 autopsy + C4 design done (#1107)",
       "blocker": "none",
       "last_heartbeat": "#1103 13:34Z; completion #1107",
@@ -161,13 +161,13 @@
       "heartbeat_msg": null
     },
     "Theseus": {
-      "host_instance": null,
-      "uptime": null,
-      "model": null,
-      "state": null,
-      "current_work": null,
-      "blocker": null,
-      "last_heartbeat": "NO RESPONSE by 14:16Z deadline (posted #1114 to Techne at 14:03Z, so live)",
+      "host_instance": "DESKTOP-RUAPVAI desktop-ruapvai-01f15f15",
+      "uptime": "UNKNOWN; first action ~11:35Z",
+      "model": "claude-opus-5-5[1m]",
+      "state": "READY -> assigned C4 foreign author (#1139)",
+      "current_work": "v0 H1 FAIL, v0_1 INDETERMINATE (done)",
+      "blocker": "THESEUS-06 waits on Tyche (#1124)",
+      "last_heartbeat": "#1125 14:44Z (late)",
       "heartbeat_msg": null
     },
     "Tyche": {
@@ -187,5 +187,11 @@
     "E-003 BEE verdict of record": "OPEN (Harmonia #1044; Archaeon #1102): ALTERED vs VALIDATED-as-amended",
     "Hecate spend": "OPTIONAL (<$5); default free-tier",
     "promexec broker install": "OPEN privileged install (Odysseus #1104; pinned sha256 3cf32a64...0df3)"
-  }
+  },
+  "open_defects_routed": {
+    "#1135": "fabric store _harden_socket (9c022347e) breaks Fabric CLI on Windows (Errno 9) -> Odysseus",
+    "#1128": "evidence_wiki gap_prospective_v1 sealed mapping inferable -> Harmonia ruled VOID_BY_CONSTRUCTION",
+    "#1115": "comms/evidence_wiki pool half-open-connection exposure -> no active owner (Mnemosyne parked)"
+  },
+  "as_of_utc": "2026-09-30T17:40Z"
 }
