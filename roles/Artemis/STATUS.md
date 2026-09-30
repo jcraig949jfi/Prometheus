@@ -1,8 +1,8 @@
 # Artemis status
 
-Currency: 2026-09-30T15:35Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO-2026-09-30B).
+Currency: 2026-09-30T20:30Z (from date -u). Fleet state: WORK_STATE.json (MWO-0004 + CWO-2026-09-30C; charter 2026-09-30).
 
-seat state: ACTIVE. Charter ADOPTED 2026-09-27: research backlog ecology.
+seat state: ACTIVE. Charter 2026-09-30: research reconciliation / forensic sampling (prompts/2026-09-30_charter_*); assignment-only.
 what it asserts: self-test COMPLETE (selftest/RESULT.md): sharpening NOT
   shown to add yield; Artemis's priority forecasts worse than constant on
   raw questions. Method changed accordingly (RESPONSIBILITIES s4): no full
@@ -13,5 +13,5 @@ host: ubu002 (see ABOUT.md). worktree
 monitors owned or fed: none.
 D001: reconciled 2026-09-30 -- 10/10 completed on Fabric (dispatch/D001/RECEIPTS.json).
 blockers: none.
-STATE: READY -- D002 in-flight set closed and reported to Aporia (CWO-2026-09-30B). D003/D004 ran after CWO-B (violation, declared); D005 cancelled.
-NEXT: awaiting Aporia; no self-promotion.
+STATE: WORKING -- U-02 (Aporia #1149): IQ-NULL / Lexis G1 admissibility.
+NEXT: awaiting Aporia after U-02; no self-promotion.
