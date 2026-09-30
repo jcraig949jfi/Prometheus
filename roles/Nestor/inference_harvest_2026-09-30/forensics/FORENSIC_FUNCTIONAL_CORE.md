@@ -29,14 +29,23 @@ are also not just a "copy instruction".
   bytes is 27% vs 56%, and explicit `LD DE,nn` is 29% vs 9%.
 - **The minimal motif is not what the world found.** The minimal motif (`LD E/L,0x40|0xC0 ; E5/E7`, 6 exact 3-byte
   strings) has prior probability 3.6e-7 at offset 0. Uniform random 64-byte genomes are competent on the dense VM at
-  about **2e-4** (3 of 14,024). Random genomes therefore become donors about 500 times more often through incidental
-  longer chains than through the minimal motif.
-- **That rate explains acquisition.** It predicts dense-VM acquisition quantitatively: about 7% of runs at the first
-  (epoch-100) checkpoint and about 64% by epoch 2000, against 7/96 and ~55% observed. The acquisition is a random-genome
-  base rate. No evolutionary construction is needed to explain it.
+  about **2e-4** (3 of 14,024). Random genomes therefore become donors about 500x more often than the offset-0 motif, or about 50-70x more often than
+  the motif placed at any reachable position ((3-4)e-6), through incidental longer chains.
+- **That rate is consistent with acquisition, to within an order of magnitude** (corrected, see erratum). It gives about
+  5% of runs at the first (epoch-100) checkpoint and about 66% by epoch 2000, against 7/96 and ~55% observed. With the
+  rate's CI (4e-5 to 6e-4, 3 hits) the bands are about 1-14% and 20-95%. This is agreement with a random-genome base
+  rate, not a fit.
 - **Drift over time.** Within runs, genomes do drift toward state-freedom: 16 runs up, 0 down, sign p = 3e-5; pooled
   28% → 62%. This is not driven by explicit `LD DE,nn` (8 up / 6 down, p = 0.79). Dependence of the copy address bytes
   on entry registers falls 55% → 38%, but not significantly (14 down / 6 up, p = 0.12).
+
+
+> **ERRATUM (Nestor, 2026-09-30, after red-team review `adversaries/REDTEAM_SYNTHESIS_REVIEW.md` B2/m2/m10).**
+> Three corrections to the summary above:
+> 1. The acquisition figures were copied from a summary line that disagreed with this report's own calculation (5% and 66%, not
+>    7% and 64%). They are also an order-of-magnitude agreement, not a quantitative prediction.
+> 2. The 500x ratio uses the offset-0 motif prior. Against the prior over reachable positions it is about 50-70x.
+> 3. One stock-VM genome is state-free.
 
 ## Setup: reproduced exactly from C-A3-INTERNALIZE / X-A3-SFLINEAGE
 
@@ -168,7 +177,8 @@ reproductive organization.
 STATE_FREE uses the frozen `fair_assay` R1 and R2 states, ≥ 0.5 over 20 seeds each.
 - 48 of 128 are state-free: 7ae3 20/46, ffa6 28/82.
 - The epoch-700 genomes are 8/8 state-free (R1 1.0, R2 0.95 to 1.0).
-- All three stock-VM genomes are also state-dependent.
+- (Erratum: this line originally said all three stock-VM genomes are state-dependent. `core_map.json` shows 7ae3 15000022
+  row 1 as state_free true, R1 0.9, R2 1.0, so the statement is wrong for at least one of the three.)
 
 | | STATE_FREE (48) | not state-free (80) |
 |---|---|---|

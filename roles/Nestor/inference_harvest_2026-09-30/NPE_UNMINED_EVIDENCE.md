@@ -1,8 +1,17 @@
 # NPE unmined evidence: what the existing record already says that nobody extracted
 
-**Inference harvest, 2026-09-30 (Nestor).** Every number below was computed read-only from files already on disk, or from
-single-genome VM calls taking seconds. No world run or campaign was launched. Each item is tagged with its origin and a
-status:
+**Inference harvest, 2026-09-30 (Nestor). Revision 2**, after the red-team review
+(`adversaries/REDTEAM_SYNTHESIS_REVIEW.md`, cited as RT). Its corrections are applied in place and marked **[RT-corrected]**.
+
+**Where the numbers come from:**
+- read-only computation over files already on disk;
+- single-genome or single-interaction VM calls;
+- one exception: ADV2's toy population process (256 sites, 300 epochs, 3 seeds × 2 genomes, built from single-interaction
+  calls; not `world.Runner`). It is cited only as illustrative (U-I6, U-N2).
+
+No world campaign was launched.
+
+Each item is tagged with its origin and a status:
 - **[D:A]…[D:G]**: the reader dossiers in `dossiers/`;
 - **[ADV1] / [ADV2]**: the adversary reports in `adversaries/`;
 - **[FOR]**: `forensics/FORENSIC_FUNCTIONAL_CORE.md`;
@@ -35,8 +44,13 @@ It is organized by the directive's forensic questions.
 [D:E 6.1] REPORTED.
 - Median lag is 100 epochs in ffa6. The single 7ae3 event lagged 1,200 epochs.
 
-**U-T5. Internalization hazard per unit of exposure matches the mutation-operator asymmetry, with no fitting.**
-[N] VERIFIED-BY-NESTOR.
+**U-T5. Internalization hazard per unit of exposure is consistent with the mutation-operator asymmetry, but the test cannot
+discriminate.** [N] VERIFIED-BY-NESTOR (the arithmetic). [RT-corrected] per RT M1:
+- Conditional on 8 events, the 95% CI on the ffa6/7ae3 hazard ratio is about 1.1x to 370x.
+- The single 7ae3 event's state-free bytes are 91% MKL (execution-computed) and ≤ 6% mutation-made. The OPERAND count
+  therefore is not obviously its supply.
+- Dossier E rated the operator account a cell-confounded hypothesis.
+- The one-sided p for equal hazards is about 0.02.
 - Source: C-A3 checkpoints, cumulative L organism-epochs before the first state-free genome, over the 15 runs where a
   founder lineage that was not state-free reached L ≥ 0.5.
 - ffa6: 7 events over about 975k lineage organism-epochs, roughly 1 per 140k.
@@ -66,7 +80,7 @@ It is organized by the directive's forensic questions.
   - ffa6 27000020: from 0.75 to 0.19.
 - The byte classes that replace them:
   - MKL, values computed by L organisms, rises to 0.3-0.9.
-  - In the ffa6 runs, MUT rises to 0.43-0.49.
+  - MUT rises to 0.43-0.49 in the three ffa6 runs shown, and to 43-67% across all ffa6 event lineages (dossier E §6.2).
 - Foreign-computed bytes (MKN) peak at 0.19 during takeover and decay to 0 over about 500 epochs.
 - A z8taint check shows no laundering bias: register loads keep the source tag, and a copy flip changes the value. So MKL
   bytes really are new values made during the lineage's own execution.
@@ -97,7 +111,7 @@ It is organized by the directive's forensic questions.
 
 ## 3. Parent/offspring asymmetry and write authority
 
-**U-W1. The "victim-magnet" is a hijack: partners execute the founder's copy code.** [ADV2 D3] VERIFIED-BY-NESTOR with
+**U-W1. Partners can execute a SELF-using founder's copy code (7ae3, SELF-enabled cells). This is not the foreign-cell magnet.** [ADV2 D3] VERIFIED-BY-NESTOR with
 independent code.
 - Setup: 7ae3 at side 0, random partner, zero context, 400 partners, copy errors off.
 
@@ -109,12 +123,27 @@ independent code.
 
 - In the intact overwrites, 12,485 changed bytes are authored by the partner's execution context and 64 by 7ae3's.
 - If the partner is restricted to its own half, the overwrite falls to 1/400.
-- **Reading:**
-  - On the pair tape the copy machinery is executed by whichever context reaches it. The record credits the executing
-    context (FF-31), and the lineage label goes to the partner.
-  - This explains B's "victim-magnet" (100/240 founder overwrites in foreign cells; a random implant 0/320) and much of the
-    28% epoch-1 founder loss.
-  - Reproductive machinery here is not privately owned.
+- **Reading** [RT-corrected per RT B1/M2]:
+  - For a **SELF-using** copier in a **SELF-enabled** cell (7ae3, ffa6: ops mask 0x2a), partners can execute its copy
+    routine and copy themselves over it. The record credits the executing context (FF-31), and the lineage label goes to the
+    partner.
+  - Artemis first reported the execution-order hijack (side 1).
+  - **This does NOT explain the foreign-cell "victim magnet".** In 9cba (mask 0x2c) and e160 (0x28), SELF is disabled. The
+    same probe gives 1/400 (zero context) and 6/400 (random context) there [RT R2]. The magnet in those cells, founders
+    overwritten in 100/240 runs vs 0/240 for random implants in the same experiment, is **unexplained** (§7).
+  - How much of X-TICKET's 28% founder loss at epoch 1 it explains (7ae3's own cell, SELF-enabled) has not been computed.
+    ADV2's estimate is 0.18-0.30.
+
+**U-W1b. For typical SELF-free copiers, the loss of their own half is mostly their own wrong-side copying.**
+[RT R3] REPORTED.
+- Setup: 24 FOR corpus copiers, 100 random partners each.
+- Partner-like overwrites of the copier's half occur, and they depend on the copier's own E5/E7 byte:
+  - state-free copiers at side 1: 489/1,200 intact vs 3/1,200 knocked out;
+  - non-free copiers at side 0: 174/1,200 vs 20/1,200.
+- The changed bytes are mostly authored by the copier's own context:
+  - 17,203 own vs 13,391 partner;
+  - 10,277 own vs 648 partner.
+- 7ae3's pattern (12,485 partner vs 64 own) is atypical.
 
 **U-W2. Every NPE copier copies from exactly one side.** [D:B U3; D:D anomaly 9] REPORTED.
 - 7ae3, cb7f and 4931 copy from side 1 only; c2a8 from side 0 only.
@@ -150,8 +179,16 @@ independent code.
 
 ## 4. Latent reproductive subassemblies
 
-**U-L1. The complete copier is 2 instructions; the world supplies the rest.** [D:D U2] REPORTED.
-- `1E 40 E5` (3 bytes, dense VM) and `1E 40 ED B0` (4 bytes, stock VM) pass the COMPETENT screen at 1.0.
+**U-L1. Minimal copiers.** [D:D U2; FOR Q3] REPORTED. [RT-corrected]
+- Rates:
+  - `1E 40 E5` (dense) and `1E 40 ED B0` (stock) pass the COMPETENT screen at 1.0 **with NOP padding**. Part of that pass is
+    zero-painting.
+  - With random padding, FOR finds exactly 6 real 3-byte copiers (`LD E/L,0x40|0xC0 ; E5/E7`).
+  - No 1- or 2-byte program passes (all 65,536 two-byte programs were tested).
+  - Random 64-byte genomes are competent at about 2e-4: 3 hits in 14,024, CI 4e-5 to 6e-4. That is about 50-70x the
+    reachable-motif prior of (3-4)e-6.
+- **Acquisition consistency** [RT B2]: 5% of runs predicted at the first checkpoint vs 7.3% observed, and 66% vs about 55% by
+  the end. This is an order-of-magnitude agreement only (band about 1-14% and 20-95%).
 - `E5` alone reaches fidelity 0.97 without authorship.
 - [ADV2 D8] adds that padding inflates the result. With NOP padding the 3-byte copier "converts" 0.60 of partners from
   random contexts; with random passenger bytes it converts 0.00.
@@ -213,11 +250,39 @@ independent code.
 
 ## 6. Signatures preceding successful establishment
 
-**U-S1. The establishment probability is computable from the single-interaction map.** [ADV2 D1] REPORTED.
-- Fit a Galton-Watson offspring law for 7ae3 against random partners under ATOMIC. The predicted survival is 0.49-0.52.
-- Observed: 109 of 208 pooled single-founder ATOMIC runs ran away (0.52).
-- Under BASE with carried context, the predicted mean offspring is 0.98, which is subcritical. That predicts copying stops
-  and lineages persist, which is what X-TICKET observed.
+**U-S1. Establishment from the single-interaction map: partly predictable, and not yet "computable".**
+[ADV2 D1; S1] REPORTED. [RT-corrected per RT B7.]
+
+**7ae3 (ADV2).**
+- Under ATOMIC, the Galton-Watson survival from 7ae3's offspring law against random partners is 0.49-0.52. S1 gives 0.57
+  (ZERO context) and 0.63 (CARRY).
+- The observed value, 109/208 = 0.52, counts **depth ≥ 20 runaways**. That ruler is under suspicion (E9).
+- Under BASE the map gives:
+  - ZERO context: m 1.11, P_est **0.26**, against about **0.03** observed (4/144). That is about an 8x miss.
+  - RANDOM context: m 0.98 (subcritical), P_est 0.
+- The losers' collapse in write rate (0.0012 vs 0.56) is content sterility from erosion. A near-critical offspring mean does
+  not explain it.
+
+**Panel test (S1, `forensics/FORENSIC_MAP_PREDICTS_OUTCOMES.md`). Verdict PARTIAL.**
+- The specified one-step map predicts the policy ordering and the anti-zero donor. Pooled ρ is 0.53-0.56, significant under
+  within-policy permutation.
+- It fails within ZERO (ρ 0.08, p 0.38).
+- It overpredicts every arm by 0.12-0.42, with Brier worse than a constant.
+- It cannot see the cell axis: CARRY 0.16 in C7 vs 0.36 in CF.
+- **A post-hoc two-step repair** adds whether the donor's copies themselves convert, plus a 500-epoch horizon. It gives ρ
+  0.81 within ZERO and 0.86 pooled, with Brier 0.052 vs 0.076.
+  - It recovers exactly the four donors carrying all CONST/RANDOM successes {0, 4, 14, 15}.
+  - Four donors predicted high made **sterile copies**: their children convert at 0.00-0.03, and in a spot check every child
+    differed at byte 0.
+- The out-of-sample test of the repair on W1's first donors, with its criterion frozen before computing, is
+  `forensics/FORENSIC_MAP_OUT_OF_SAMPLE.md`.
+
+**U-S3. Robust real donors reload their pointers; phase arithmetic is rare.** [S1] REPORTED.
+- Carrying only the E/L pointer bytes reproduces poisoning on 32/44 poisoning sides. Clearing them rescues 26.
+- Copy counts in real donors are 164-295, set by the leftover slice budget, so Δ ≡ 0 mod 128 almost never occurs.
+- The Δ-or-reload rule is right on 28/32 predicted-poison sides and 27/44 predicted-OK sides.
+- Agreement with the W1 SELFSTATE labels: Fisher p = 9e-4.
+- The direct `q3_reset.json` check is not significant (p = 0.16).
 
 **U-S2. Size threshold.** [D:A 21] REPORTED.
 - Win probability given the lineage reached at least 8 members: 7/9. Given at least 16: 5/5.
@@ -244,6 +309,11 @@ independent code.
 
 ---
 
+**U-N5. The foreign-cell victim magnet is unexplained.** [D:B U1; RT R2]
+- In 9cba and e160, the 7ae3 founder is overwritten in 100/240 runs, against 0/240 for a random implant.
+- The SELF hijack cannot operate in these cells: the single-interaction rate is ≤ 1.5%.
+- Candidates: side asymmetry combined with foreign-cell code paths, or label transfer through uncertified overwrites.
+
 ## 8. Apparently irrelevant mutations that change future evolvability
 
 **U-E1. The operator asymmetry.** [D:E 1.1] REPORTED.
@@ -267,12 +337,28 @@ independent code.
 - 5,342 state-free genomes observed in L, against 5,296 expected (ratio 1.009).
 - The test has little power: only 5 of 236 checkpoints with a state-free genome have mixed L occupancy.
 
-**U-C2. Any large, sustained competent population becomes state-free, whatever its label.** [ADV1 6.1] REPORTED.
-- Among compartments with at least 3 checkpoints of 25 or more competent genomes, it happened in 8/8 L-dominated and 17/21
-  non-L-dominated compartments.
-- P(any state-free genome at a checkpoint) rises with the number of competent genomes: 0.08, 0.25, 0.71, 0.78.
+**U-C2. State-free genomes are present in most large, sustained competent compartments. Whether non-founder compartments
+acquired the trait or were founded with it is unknown.** [ADV1 6.1; RT R4] REPORTED. [RT-corrected per RT B3/m4]
+- Compartment counts (compartments with ≥ 3 checkpoints of ≥ 25 competent genomes):
+  - L_share ≥ 0.95: 8/8;
+  - L_share ≤ 0.05: 17/21;
+  - total 25/29.
+- With L_share ≥ 0.5 the L count is **8/11**. The 3 misses are U-N1's near-misses.
+- C-A3's instrument assays only D0 for state-freedom. **In 4 of the 17 non-L compartments, state-freedom is already the
+  majority at the compartment's first competent checkpoint:**
+  - 7ae3 27000037: 147/148;
+  - ffa6 27000002: 177/187;
+  - ffa6 27000003: 157/182;
+  - ffa6 27000035: 89/117.
+- At the first checkpoint with ≥ 25 competent genomes the count is 7 of 17 (adding 27000070, 27000063 and 27000033).
+- "Becomes" is therefore not shown. E4 is designed to resolve it.
+- P(any state-free genome at a checkpoint) by competent-count bin: 0.08, 0.25, 0.71, 0.67 (75-124), 0.78. The series is not
+  monotone.
 
-**U-C3. The founder lineage holds state-freedom less stably than replacement populations.** [ADV1 6.1] REPORTED.
+**U-C3. Persistence: the founder lineage 4/8 vs replacements 16/18. The comparison is unmatched.** [ADV1 6.1] REPORTED.
+[RT-corrected per RT B3]
+- It sets *internalized* state-freedom against state-freedom that may be *ancestral* (U-C2).
+- It is not evidence about T4 unless it is re-run on compartments that start with < 0.2 state-free.
 - Still present at epoch 2000: 4 of 8 events vs 16 of 18 replacements.
 - The per-genome state-free rate is lower in L-dominated checkpoints: 0.24 vs 0.43 (7ae3) and 0.45 vs 0.66 (ffa6). These
   counts are clustered by run.

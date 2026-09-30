@@ -1,6 +1,6 @@
 # BUILDER-EXPERIMENT specifications: heredity primitives that belong below NPE
 
-**Inference harvest, 2026-09-30 (Nestor).** NPE's two weeks of corrections point to eight measurement primitives. Each is
+**Inference harvest, 2026-09-30 (Nestor). Revision 2**, with red-team fixes applied (m5, m11; B5's hijack is scoped to SELF-using copiers). NPE's two weeks of corrections point to eight measurement primitives. Each is
 engine-agnostic and should exist below any specific world. Every correction in NPE's record is a case of one of these being
 missing or malformed.
 
@@ -45,7 +45,8 @@ Every level was later mistaken for the one above it.
 
 **Acceptance fixtures:**
 - 0x36 painter: L1 PASS, L2 FAIL.
-- all-zero genome: L1 must FAIL on random partners.
+- the real near-zero specimen 5e20dc8a... (95% 0x00, which passed P-11 3/3): expected L1 PASS and L2 FAIL. A trivially inert
+  all-zero genome is too easy a fixture (RT m11).
 - `LD E,40 ; E5` with NOP padding vs random padding: the two must differ at L2.
 - Artemis's panel: complement child, host-executed guest, two cooperating tapes, budget-limited bytewise copier.
 - A planted real copier from NPE's corpus must PASS L3.
@@ -150,10 +151,10 @@ C 5.4). Extend it to per-event mechanism labels.
 ## B5. Write-authority and execution-context measurement
 
 **Why.** The world records the executing context as author (FF-31), so four things went unseen:
-- **Partners hijack the founder's code:** 200/400 overwrites vanish when SELF+LDIR are zeroed, and the partner context wrote
-  12,485 of 12,549 bytes (U-W1).
+- **Partners can execute a SELF-using founder's code** (7ae3, SELF-enabled cells). The 200/400 overwrites vanish when
+  SELF+LDIR are zeroed, and the partner's context wrote 12,485 of 12,549 changed bytes (U-W1).
 - **Symmetric erosion:** self 3,507 vs partner 3,241.
-- **Self wrong-side import.**
+- **Self wrong-side import**, the dominant mode for typical SELF-free copiers: 17,203 own vs 13,391 partner bytes (U-W1b).
 - **Composite ATOMIC:** it discards self-writes and keeps predecessor overwrites.
 
 **Contract.** Per interaction, a byte-event graph:
@@ -240,7 +241,7 @@ As a result, cb7f (copying in 8/8 runs) reads as "never established" (U-N2).
 **Why.** Three errors came from mixing these up:
 - "Establishment" was scored at run level and counted later re-acquisitions (U-F1: 8/23 "ESTABLISHED" D0s never copied).
 - The S1–S5 stages were not nested (D U5).
-- Rarity was misattributed: 8/144 is mostly establishment, and given takeover it is 8/11 (U-T4).
+- Rarity was misattributed: 8/144 is mostly establishment. Given takeover it is 8/15, or 8/11 with runaway too (dossier E §6.1).
 
 **Contract.** Per implanted or first-appearing family, report a staged, *nested* record:
 

@@ -1,307 +1,277 @@
-# NPE decisive experiments: designs that separate the competing theories
+# NPE decisive experiments: designs that separate the competing theories (revision 2)
 
-**Inference harvest, 2026-09-30 (Nestor).** These are designs only. **Nothing here is authorized or started.**
-- Execution needs an Aporia dispatch under CWO-C s7, and operator authority for anything beyond the MWO-0004 R2 envelope
-  (≤ 16 CPU core-h per item).
-- Theories T1–T7 are defined in NPE_COMPETING_THEORIES.md. Evidence codes (U-xx) refer to NPE_UNMINED_EVIDENCE.md.
-- Every design below is prereg-ready in content. Before exposure, each still needs:
+This is Nestor's inference harvest of 2026-09-30. Everything here is a design. **No experiment below is authorized or started.**
+- Execution needs an Aporia dispatch (CWO-C s7). Anything beyond the MWO-0004 R2 envelope (≤ 16 CPU core-h per item) also
+  needs operator authority.
+- Theories T1–T7 are defined in NPE_COMPETING_THEORIES.md (revision 2). Evidence codes U-xx refer to NPE_UNMINED_EVIDENCE.md.
+- Revision 1 had three broken designs, which the red-team found: E1's ruler could not fire and E1 tested the wrong condition
+  for T4; E2's null was not a null; E4's predictions were not opposite (RT B4–B6). Those are redesigned here.
+- Revision 1 also claimed prereg-readiness that four designs lacked. Those designs are now marked **SKETCH** (RT M7).
+
+**Status labels:**
+- **PREREG-READY (content)** means every field the directive requires is present. Each design still needs all of the following
+  before exposure:
   - a frozen PREREG.md with a commit hash;
-  - an instrument self-test (a fail-on-old / pass-on-new check);
-  - a planted positive shown to reach PASS on real data (Harmonia F8; Bellerophon #1113);
-  - an eligibility count (memory `preregistered_rules_need_an_eligibility_count`).
-
-## How the designs are ranked (by information, not by a score)
-
-The ordering follows three properties, in this order:
-1. How many theory pairs a design separates **with opposite predictions**, not merely different effect sizes.
-2. Whether it runs on **static computation or replays** instead of new populations.
-3. Whether its result **changes which rulers every later experiment should use**, and so changes the meaning of all later
-   work.
-
-| tier | design | separates (opposite predictions) | cost class |
-|---|---|---|---|
-| **0: static, do first** | S1 map atlas vs recorded per-donor outcomes | T6 against T4 (lineage-level residuals) | minutes; running now (FORENSIC_MAP_PREDICTS_OUTCOMES) |
-| 0 | S2 EXEC-motif audit of recorded births | T5 against T6/T7 | minutes to 1 h, no runs |
-| 0 | S3 phase orbits on real donors | T6 against T2 | minutes, no runs |
-| **1: replays of existing seeds** | **E4 GENEALOGY** | **T4 against T1/T7** | about 6 core-h |
-| 1 | E9 cb7f occupancy replay | ruler validity: depth vs occupancy (T6) | about 1 core-h |
-| **2: small new populations** | **E1 RECONSTITUTION (the aggressive one)** | **T4 against T3/T6/T7; T5 as a side channel** | about 16 core-h (R2) |
-| 2 | E2 NEWBORN-REGISTER factorial (with the ZERO no-payoff null) | T2 against T1 against T4 | about 20 core-h (split into 2 items) |
-| 2 | E6 PHASE dose (slice budget) | T6 against everything else | about 10 core-h |
-| 3: world rules / bigger | E5 EXECUTION CONTAINMENT | T5 against T6/T7 | about 16 core-h |
-| 3 | E3 OPERATOR SWAP | T1 (quantitative) against cell ecology | about 16 core-h |
-| 3 | E8 SELFCOPY register-free control | T7 against T3/T4 | about 20 core-h |
-| 4: expensive / likely floor | E10 TAPE ROTATION (WP-7) | T2 against T1/T3 on placement | about 16+ core-h |
-
-**The most discriminating next experiment is E1 run together with S1.** Each genome's single-interaction map yields a
-preregistered, quantitative prediction for that genome. Evolved genomes are then placed beside synthetic genomes built to
-match those predictions, and beside scrambled versions of themselves.
-
-- **If evolved genomes do no better than their own map predicts, and no better than their synthetic twins:** the "endogenous
-  reproductive organization" reading reduces to "a compact copy setup, evolving under selection, in a world that supplies
-  the rest". A broad sweep can never settle that.
-- **If they beat their predictions:** there is lineage-level organization, and it is located by the residual.
-
-E4 is the cheapest decisive test of the one T4 prediction still standing (monophyletic, inherited organization versus
-recurrent de novo origin). It runs on replays of existing seeds.
+  - an instrument self-test (fail on old code, pass on new);
+  - a **ruler-reachability gate** on real data (Harmonia F8; Bellerophon #1113);
+  - a computed eligibility count.
+- **SKETCH** means the question and treatment are defined, but the design is not ready to freeze.
 
 ---
 
-## E1. RECONSTITUTION: is there reproductive organization beyond a compact copy setup? (aggressive)
+## Ranking (by information, not by score)
 
-- **Exact question.** Do evolved state-free genomes carry reproductive properties (establishment, persistence, competitive
-  occupancy) beyond:
-  - (a) what their own single-interaction map predicts, and
-  - (b) what κ-matched synthetic minimal copiers achieve?
-- **Treatments.** One cell (ffa6), dense VM, ATOMIC runner, VICTIM newborn registers (the current world), random background
-  population, founder implanted at k = 4.
-  - **EVO:** 8 evolved state-free genomes. Draw them from FOR's 48 state-free genomes: the 8 epoch-700 16000006 modal
-    genomes plus corpus late genomes, stratified by origin run.
-  - **SCR:** the same 8 genomes with every byte outside the FOR necessary set replaced by **random** bytes, 2 independent
-    scrambles each. Random, not NOP: NOP padding inflates competence (FOR Q3; ADV2 D8).
-  - **SYN:** 4 synthetic state-free minimal copiers with explicit L/E constants and random padding (e.g. `LD L,0 ; LD E,40 ;
-    E5`, and an LDDR variant), chosen so their computed κ over the full phase grid spans the EVO range.
-  - **HEAD:** EVO vs its own SCR at equal frequency (k = 8 each), 8 pairs.
-- **Frozen per-genome predictions, computed before any run (S1 method):**
-  - κ over the full 128×128 phase grid;
-  - retention ρ;
-  - offspring law m and GW P_est under ATOMIC with VICTIM contexts;
-  - closure index.
-- **Experimental unit.** A run (genome, seed). Analysis is hierarchical, with the genome as a random effect.
-- **Ruler.** Content-family occupancy O_F(t): the share of sites whose content is ≥ 0.9 identical to the implant on
-  **transmitted positions** (FOR/ADV2), with aligned identity. Readouts:
-  - establishment: O_F ≥ 0.5 by epoch 500;
-  - persistence: O_F ≥ 0.5 at epoch 1,000;
-  - for HEAD, the final occupancy share of EVO vs SCR.
-  - Depth is reported, never used for the decision. CVT-R on endpoint genomes is reported too.
-- **Positive control.**
-  - A zero-dependent synthetic (`LD E,40 ; E5`, random padding) in a ZERO-register world must establish within ±0.15 of
-    its computed P_est.
-  - 7ae3 under ATOMIC must reproduce its 0.52 (U-S1).
-- **Negative / null controls.**
-  - A random-genome implant must give 0 establishment.
-  - A 0x36 painter with random padding must not register as occupancy (transmitted-position identity).
-  - A sham arm with the implant's labels but random content.
-- **Confounds and handling.**
-  - Donor heterogeneity (D U4): random effects, and a stratified draw.
-  - Padding inflation: random passengers only.
-  - Side asymmetry (U-W2): randomized sides, reported per side.
-  - Hijack exposure (T5): record EXEC motifs.
-- **Expected outcomes per theory.**
-  - **T3, T6, T7:** observed establishment ≈ P_est for every class; the EVO − P_est residual ≈ the SYN − P_est residual ≈ 0;
-    HEAD shares near 0.5 (or as the map predicts).
-  - **T4:** EVO residual > 0; EVO beats SCR head-to-head (share ≥ 0.65); EVO beats SYN even at matched P_est.
-  - **T5:** differences track hijack exposure (EXEC ≠ owner rates), not organization.
-- **Kill criteria (frozen):**
-  - **T4 (organization) is dead** if all three hold:
-    - the mean EVO residual is ≤ the SYN residual + 0.10 (95% CI);
-    - the HEAD EVO share is < 0.60;
-    - SCR establishes within 0.10 of EVO.
-  - **T3/T6 are dead** if EVO beats its prediction by ≥ 0.15 in ≥ 5 of 8 genomes, *and* beats SCR head-to-head (≥ 0.65) in
-    ≥ 5 of 8.
-- **Smallest useful sample.**
-  - 8 EVO + 16 SCR + 4 SYN genomes × 8 seeds × 500 epochs = 224 runs, plus HEAD 8 × 8 = 64 runs.
-  - Timing: about 1085 CPU-s per 2000 epochs means about 4.5 CPU-min per 500-epoch run, so about 21 core-h. The stock-VM
-    figure is lower.
-  - To fit R2, split into E1a (EVO/SCR/SYN establishment, about 16 core-h) and E1b (HEAD, about 5 core-h).
-- **Why this beats a broad sweep.** A sweep samples outcomes. E1 tests a mechanism against a **preregistered quantitative
-  prediction made for each genome**, so every run yields a residual, not just a count. It is the only design here that
-  separates "has a compact copy setup" from "has reproductive organization" in the world itself, not only in a static
-  knockout.
+| tier | item | what it separates | status | cost |
+|---|---|---|---|---|
+| **0 static** | S1 one-step map vs recorded per-donor outcomes | T6 vs a history-dependent account | **DONE: PARTIAL** (`forensics/FORENSIC_MAP_PREDICTS_OUTCOMES.md`) | done |
+| 0 | S1b two-step map, out of sample (W1 first donors; criterion frozen before computing) | T6 (with closure) vs T4 | **RUNNING** (static analysis, not a campaign) | ≤ 0.5 core-h |
+| 0 | S2 EXEC-motif audit of recorded births | T5 vs T6/T7 | design | ≤ 1 core-h, no world runs |
+| 0 | **S3 pairwise knockout map of evolved state-free genomes** | **T4(c) epistasis vs T3** | design, PREREG-READY (content) | ≤ 2 core-h, VM calls only |
+| **1 replay** | **E4 GENEALOGY (redesigned)** | T4(b) shared mechanism vs T1/T3 convergence; T1's count model | PREREG-READY (content) | ≈ 6 core-h |
+| 1 | E9 cb7f occupancy replay | ruler validity (depth vs occupancy) | PREREG-READY (content) | ≈ 3 core-h |
+| **2 small new populations** | **E1 RECONSTITUTION (redesigned, with a home arm)** | **T4(a) home advantage vs T3/T6** | PREREG-READY (content) | ≈ 2 + 7 + 14 core-h (3 items) |
+| 2 | E2 NEWBORN-REGISTER factorial (redesigned, with a true reset null) | T1 vs T2 on *appearance* | PREREG-READY (content), eligibility gated on E4 | ≈ 20 core-h (2 items) |
+| 3 | E5 EXECUTION CONTAINMENT | T5 vs T6/T7 | SKETCH (Stage 0 = S2) | ≈ 10 core-h |
+| 3 | E3 OPERATOR SWAP | T1 supply vs cell ecology | SKETCH (eligibility problem, see below) | ≈ 16 core-h |
+| 3 | E6 PHASE dose | T3/T6 (LDIR semantics) vs T2 | SKETCH (downgraded after S1, see below) | ≈ 10 core-h |
+| 3 | E8 SELFCOPY | T7 vs T3/T4 | SKETCH (needs a Builder) | ≈ 20 core-h |
+| 4 | E10 TAPE ROTATION | T2 vs T1/T3 on placement | SKETCH | 16+ core-h |
+
+**The most discriminating next step** is a set of three T4 tests. Each targets one of T4's still-untested distinctive
+predictions:
+- **S3**, static: does organization show as multi-site epistasis?
+- **E1's HOME arm**: is there a home-population advantage?
+- **E4**: is the mechanism shared across independent origins?
+
+If all three come back null, with rulers shown able to fire, "endogenous reproductive organization" in NPE reduces to an
+evolving compact copy setup in a world that supplies the rest. If any one is positive, that is the first certificate T4 has
+ever had. Either outcome is worth more than another recurrence sweep. S3 and E4 cost about 8 core-h together, and S3 needs no
+world runs at all.
 
 ---
 
-## E2. NEWBORN-REGISTER FACTORIAL, with the ZERO no-payoff null
+## S3. PAIRWISE KNOCKOUT MAP: is there multi-site organization that single knockouts miss? (static)
 
-- **Exact question.** Is state-free internalization an adaptive response to the world scrambling newborn entry state (T2)?
-  A mutational by-product that appears at a supply-set rate (T1)? Or a lineage-specific process (T4)?
-- **Treatments.** The C-A3 design, frozen as-is: random populations, dense VM, ATOMIC, ffa6, 2000 epochs. Only the rule for
-  the newborn's registers on an accepted overwrite changes:
-  - **VICTIM:** the current rule;
-  - **ZERO:** always-scaffolded, so there is no payoff for state-freedom;
-  - **RANDOM-PER-BIRTH:** maximal noise;
-  - **DONOR:** a copy of the donor's post-execution registers. Optional; fourth arm only if budget allows.
-- **Instrument additions.** Copy-event counts per checkpoint, so exposure can be measured in copy events (T1's supply term).
-  State-free share is measured by the FOR STATE_FREE assay with random passengers, and also by the closure index.
-- **Experimental unit.** A run. 24 seeds per arm.
-- **Ruler.**
-  - (a) Appearance hazard: first state-free genome per 10^5 copy events.
-  - (b) Sweep: state-free share among competent genomes at 1,000 and 2,000.
-  - (c) Persistence: present at 2,000.
-- **Positive control.** The X-A3-WITHDRAW ABRUPT result must reproduce as a sweep in VICTIM runs: a share ≥ 0.5 within 500
-  epochs after establishment in ≥ 50% of established runs. This was shown on real data.
-- **Null.** ZERO is itself the no-payoff null.
+- **Question.** Do evolved state-free genomes contain pairs of individually dispensable positions whose *joint* knockout
+  destroys competence or state-freedom (synthetic lethality), beyond what single knockouts and additivity predict?
+- **Units.** Genomes. The primary panel is FOR's 48 state-free genomes, the 8 epoch-700 16000006 genomes included and
+  stratified by run. The comparator is 48 state-dependent genomes from the same runs.
+- **Treatment.** For each genome, take every pair of positions that is individually non-essential under random-value
+  knockouts (3 draws each). Knock the pair out jointly with random values (3 draws). Score COMPETENT (zero context) and
+  STATE_FREE (R1/R2 assay, as in `run_ci.sf`).
+- **Ruler.** The synthetic-lethal pair rate, meaning the share of dispensable pairs whose joint knockout collapses the
+  function, against a null. The null is the rate expected if each single knockout had an independent small effect,
+  estimated from the single-knockout rate distribution.
+- **Positive control.** A constructed genome with a known redundancy: two independent LD E,0x40 setters feeding one copy.
+  Single knockouts must be dispensable and the pair lethal.
+- **Negative control.** The minimal copier `LD L,0 ; LD E,40 ; E5` with random passengers. Pairs among the passengers must
+  show the null rate.
 - **Confounds.**
-  - Establishment differs by arm, so all readouts are conditioned on establishment. The C-A3 design is unchanged.
-  - "State-free" must be measured with random passengers.
-  - VM equivalence across arms is shown by a self-test: arms are identical until the first accepted overwrite.
+  - Assay noise near the 0.5 threshold. Re-assay flagged pairs with new seeds and count a pair only if lethal in ≥ 2 of 3.
+  - The 16000006 genomes come from one lineage, so they are analysed as one cluster.
 - **Expected outcomes.**
-  - **T1:** appearance hazard per copy event equal across arms (within 2x); sweep only where state-freedom pays
-    (VICTIM, RANDOM ≫ ZERO).
-  - **T2:** appearance and sweep both ordered RANDOM ≥ VICTIM > ZERO.
-  - **T4:** a D0-lineage-specific effect independent of the register rule, which contradicts U-C2.
-- **Kill criteria.**
-  - **T2 is dead** if the ZERO sweep share is ≥ 0.75 × VICTIM's.
-  - **T1 is dead** if the ZERO appearance hazard per copy event is < 1/3 of VICTIM's.
-  - **T4 (lineage-specific) is dead** if, as in U-C2, non-D0 compartments internalize at ≥ 0.75 of D0-compartment rates.
-- **Smallest useful sample.**
-  - 3 arms × 24 seeds × 2000 epochs × about 1000 CPU-s ≈ 20 core-h.
-  - Split into E2a (VICTIM vs ZERO) and E2b (RANDOM). Each fits R2 except E2a, which is about 13 core-h, still within R2.
-- **Why this beats a sweep.** It isolates the one world rule (newborn registers, U-W7) that makes state-freedom valuable.
-  It separates appearance from sweep, which no C-A3-style readout could.
+  - **T4(c):** the state-free genomes have a synthetic-lethal rate above the null *and* above the state-dependent
+    comparators, concentrated in the address-sourcing chain.
+  - **T3:** the rate is near the null for both groups.
+- **Kill.**
+  - **T4(c) is dead** if the state-free synthetic-lethal rate is ≤ 1.5x the null and ≤ 1.2x the state-dependent rate.
+  - **T3's no-organization reading is dead** if the rate is ≥ 3x the null in ≥ 50% of state-free genomes.
+- **Sample and cost.** About 60 non-essential positions per genome gives about 1,770 pairs × 3 draws × about 2 screens. That
+  is too many for 96 genomes. Sample 200 random pairs per genome instead: 96 × 200 × 6 ≈ 115k screens at about 20 ms each,
+  about 0.7 core-h.
+- **Why.** It tests T4's one structural prediction statically and cheaply, with no world run.
 
 ---
 
-## E4. GENEALOGY: monophyletic inheritance vs recurrent origin of state-freedom (replay)
+## E4. GENEALOGY (redesigned): how many origins, and do independent origins share a mechanism?
 
-- **Exact question.** Within a run, does state-freedom originate once and spread by inheritance (T4)? Or does it arise
-  repeatedly from mutation in whichever family holds the field (T1/T7)?
-- **Treatment.** None. These are exact replays, with a replay-identity gate against committed records, of:
-  - the 8 C-A3 EVENT runs;
-  - 4 near-misses (7ae3 27000008 and 27000061; ffa6 27000053 and 27000043);
+- **Exact questions.**
+  - (Q1) How many independent origins of state-freedom occur per run, and does that match T1's count model?
+  - (Q2) Do independent origins, in different runs, converge on one transmitted mechanism (T4(b)), or on diverse
+    constant-loading solutions (T1/T3)?
+- **Correction to revision 1 (RT B6).** A monophyletic sweep does **not** separate T4 from T1. T1 predicts one:
+  - at the ffa6 hazard (about 1 per 140k organism-epochs) and N = 256, expect about 1 origin per ~550 occupied epochs;
+  - a paying variant sweeps in about 100 epochs.
+
+  Q1 therefore tests T1's *count model* only. Q2 carries the T4 test.
+- **Treatment.** None: these are exact replays of existing seeds, behind a replay-identity gate against the committed
+  records.
+  - The 8 C-A3 EVENT runs.
+  - 4 near-misses: 7ae3 27000008 and 27000061; ffa6 27000053 and 27000043.
   - 6 REPLACEMENT runs.
+  - Replacements are included to settle RT B3: were their founders already state-free?
 - **Instrument.**
-  - A per-site content genealogy: each accepted overwrite records the donor's content hash and site.
-  - A content-keyed ancestry graph, not the lineage label.
-  - At every 20-epoch check, each competent genome is tested for state-freedom (random passengers, FOR assay), with its
-    ancestry path.
-  - At first appearance, state-free genomes get a CVT-R and transmission-Jacobian check.
-- **Experimental unit.** An origin event. For each state-free content, the most recent ancestor in its content ancestry that
-  was not state-free; its child is the origin.
-- **Ruler.**
-  - The number of independent origins per run.
-  - The share of state-free occupancy descended from the first origin.
-  - Transmission (CVT-R pass) of the state-free trait.
-- **Positive control (planted).** In a replay of one event run, plant a unique state-free genome at the event epoch, tagged
-  by a sentinel byte. The instrument must report it as a single origin carrying ≥ 90% of its descendants' state-freedom.
-- **Null.** A shuffled-ancestry null, which permutes parent pointers within each epoch, sets the expected number of origins
-  under no inheritance.
+  - A per-site content genealogy: each accepted overwrite records the donor content hash and site.
+  - At every 20-epoch check, every competent genome is screened for state-freedom with random passengers.
+  - **Assay-repeatability null (RT B6):** each state-free call is re-assayed with 3 fresh seed sets. Only stable calls (≥ 3
+    of 4) count.
+  - For each stable state-free lineage segment, the most recent stable-non-free ancestor's child is the **origin**.
+  - At each origin, record:
+    - the address-sourcing mechanism class: which instructions set L and E (`LD DE,nn`, `LD E,n`, register-derived chain),
+      and the copy side;
+    - the CVT-R and transmission Jacobian of the trait.
+- **Units.** Origins (Q2); runs (Q1).
+- **Rulers.**
+  - Q1: origins per run against T1's predicted count, computed from each run's own occupancy trajectory and the U-T5
+    hazard, with its CI.
+  - Q2: the number of distinct mechanism classes across origins in different runs, and whether a class is transmitted as a
+    unit (CVT-R on the class-defining bytes).
+- **Positive control (planted).** In one event replay, plant a unique state-free genome carrying a sentinel byte at the event
+  epoch. It must be reported as one origin carrying ≥ 90% of its descendants' state-freedom.
+- **Nulls.**
+  - A shuffled-parent null (permute parents within epoch) for origin counts.
+  - The assay-repeatability null above.
+- **Also reported.** For every REPLACEMENT compartment, whether its first competent genomes were already stably state-free.
+  This resolves "acquired vs founding" (U-C2).
 - **Expected outcomes.**
-  - **T4:** in ≥ 6 of 8 events, ≥ 80% of state-free occupancy descends from 1–2 origins, and the trait passes CVT-R.
-  - **T1/T7:** many origins (≥ 5 per run), especially in the flicker runs (27000020), with low descent share.
-  - **Replacement runs:** the same pattern as events (U-C2).
-- **Kill criteria.**
-  - **T4's inheritance claim is dead** if the median number of origins per event run is ≥ 5 and the first-origin descent
-    share is < 0.5.
-  - **T1's recurrence claim is dead** if ≥ 6 of 8 are monophyletic sweeps.
-- **Smallest useful sample.** 18 replays × about 1.2× taint-level cost ≈ 6 core-h, within R2.
-- **Why this beats a sweep.** It answers the one open question T4 still owns, on existing seeds, with no new populations,
-  and it answers it for replacement runs as well.
+  - **T4(b):** origins in different runs share one mechanism class, transmitted as a unit.
+  - **T1/T3:** ≥ 3 mechanism classes, with no shared transmitted unit. Origin counts within 3x of T1's model.
+- **Kill.**
+  - **T4(b) is dead** if ≥ 3 distinct classes appear across ≥ 6 origins in different runs and no class is transmitted as a
+    unit.
+  - **T1's count model is dead** if observed origins per run deviate more than 3x from prediction in ≥ 6 of 8 event runs.
+- **Eligibility.** At least 8 event origins are needed for Q2. The 8 C-A3 events plus any repeat origins should give ≥ 8. If
+  fewer than 6 stable origins are found, report INSUFFICIENT.
+- **Cost.** 18 replays × about 1.2x taint-level cost ≈ 6 core-h.
 
 ---
 
-## E6. PHASE DOSE: slice budget as hidden heritable geometry (T6's unique prediction)
+## E1. RECONSTITUTION (redesigned): is there a home-population advantage beyond the map?
 
-- **Exact question.** Are self-poisoning, state-robustness and establishment non-monotone functions of copy count mod 128,
-  as the pair-map field theory predicts?
-- **Stage A (static, no runs).** For the 16 C-ZERO-SPECIFIC donors and the 16 BRIDGE donors, at slice budgets
-  {256+pre, 280, 300, 320, 360}, compute:
-  - the pointer advance Δ = count mod 128;
-  - the carried-context conversion series;
-  - the predicted P_est under CARRIED.
-  Freeze the per-donor, per-budget predictions.
-- **Stage B (world).** 4 donors (2 predicted to flip between robust and poisoned) × 3 budgets × 12 seeds × 500 epochs,
-  CARRIED world, ATOMIC.
-- **Ruler.**
-  - In-world copying of the founder itself: its own P-11 births, since U-F1 showed run-level labels mislead.
-  - O_F establishment.
-- **Positive control.** A synthetic copier whose copy count is ≡ 0 mod 128 at budget X must be robust at X and poisoned at
-  X ± 8. This was shown statically by ADV2 D4 and must replicate in-world.
-- **Null.** A donor whose Δ is predicted invariant across the budgets.
+**Why redesigned (RT B4).**
+- Revision 1 implanted into a naive population, where T4 predicts *no* advantage.
+- Its ruler, identity to the implant, decays to about 0 even under takeover (U-I1, U-I6), so it would have fired "T4 dead"
+  whatever the truth.
+- It scrambled outside a zero-context competence set, not a state-freedom set.
+
+- **Exact question.** Do evolved state-free genomes hold their home field against invaders better than their own two-step map
+  predicts? T4(a) says yes. T3/T6 say the map predicts it.
+- **Panel.** 8 **independent lineages**: one stable state-free genome from each C-A3 EVENT run (ffa6 × 7, 7ae3 × 1), taken at
+  the event checkpoint from E4's replays. Each runs in its own cell. The 8 epoch-700 genomes from 16000006, a single lineage,
+  are an optional ninth cluster.
+- **Derived genomes, per lineage:**
+  - **SCR:** random bytes outside the **state-free knockout set**. That set is the positions whose random-value knockout drops
+    COMPETENT or either STATE_FREE vector below 0.5. There is a static gate: an SCR must remain stably competent and
+    state-free, or it is redrawn up to 5 times, else excluded and reported.
+  - **SYN:** a synthetic state-free copier (explicit L/E constants, random passengers), chosen so its **two-step map
+    predictor** (S1's P_run500_causal, as frozen in S1b) is within ±0.05 of the EVO genome's. If no match exists, report
+    UNMATCHED.
+  - **REF:** extra EVO clones, the neutral reference.
+- **Arms:**
+  - **HOME** (E1a): snapshot the home run's population at the event checkpoint. Replace 16 random sites with invaders of one
+    class (REF, SCR or SYN), run 300 epochs, and record invader-class occupancy.
+  - **NAIVE** (E1b): implant each class at k = 4 into a random background and run 500 epochs.
+- **Ruler.** Content-ancestry occupancy: the share of sites whose content descends, by the E4 genealogy with
+  transmitted-position identity ≥ 0.9 at each edge, from the implanted or invading class. It is not identity to the implant.
+- **Ruler-reachability gate (before freezing).** On existing X-ATOMIC 7ae3 replays, the occupancy ruler must read ≥ 0.5 in
+  ≥ 80% of the depth ≥ 20 runs and ≤ 0.1 in the depth ≤ 2 runs. Otherwise E1 is INSTRUMENT_UNREACHABLE and does not run.
+- **Positive controls.**
+  - HOME: a **known-sterile variant** must be excluded to occupancy ≤ 0.02. Per S1 this is a byte-0 mutant whose children
+    convert at ≤ 0.03. REF must hold ≈ 16/256 (0.0625 ± 0.03).
+  - NAIVE: 7ae3 must reproduce its ATOMIC establishment.
+- **Null.** In NAIVE, a random-genome implant must give 0 occupancy.
+- **Confounds.**
+  - Donor side: every EVO genome is side-0 (FOR). Match SYN on side and report it.
+  - Lineage heterogeneity: random effects by lineage.
+  - Pseudo-replication: the 16000006 cluster is analysed separately.
 - **Expected outcomes.**
-  - **T6:** per-donor flips at the predicted budgets (non-monotone).
-  - **T2, T3, T7:** monotone in budget (more budget, longer copies) or no pattern.
-- **Kill.** **T6's arithmetic claim is dead** if fewer than 3 of the 4 donors flip as predicted (with the positive control
-  passing).
-- **Smallest useful sample.** Stage A is minutes. Stage B is 144 runs × about 4.5 CPU-min ≈ 11 core-h.
-- **Why.** It is the only design where one theory predicts a specific non-monotone signature that the others cannot
-  produce.
+  - **T4(a):** in HOME, SCR and SYN invaders are held below REF by more than their map difference. In NAIVE, EVO ≈ SYN.
+  - **T3/T6:** HOME invader occupancy matches the map (SCR ≈ SYN ≈ REF). NAIVE outcomes track the predictor.
+- **Kill.**
+  - **T4(a) is dead** if SCR and SYN HOME occupancies are within ±0.03 of REF in ≥ 6 of 8 lineages, with the sterile
+    positive control excluded as required.
+  - **T3/T6 are dead** if SCR or SYN HOME occupancy is < 0.5 × REF in ≥ 6 of 8 lineages while their predictors are matched.
+- **Power and eligibility.** With 6 seeds per (lineage, class), an occupancy SD of about 0.02 around 0.0625 detects a 0.03
+  deficit at about 80% per lineage. The HOME kill needs 6 of 8 lineages. Pre-compute each lineage's predictor before
+  freezing. A lineage whose EVO genome sits at ceiling cannot show an advantage and is flagged non-eligible.
+- **Cost.**
+  - Snapshots, from E4's replays: included in E4.
+  - E1a HOME: 8 lineages × 3 classes × 6 seeds × 300 epochs ≈ 144 runs × 163 s ≈ 6.5 core-h, plus the sterile-control arm
+    ≈ 7 core-h.
+  - E1b NAIVE: 8 × 3 × 8 seeds × 500 epochs ≈ 192 runs × 270 s ≈ 14.4 core-h, including 7ae3 and random controls, within
+    R2.
+- **Why.** It is the only design that tests T4's population-level prediction where T4 actually makes it, with a ruler that
+  is gated to be able to fire.
 
 ---
 
-## E5. EXECUTION CONTAINMENT: is reproductive machinery a public good? (T5)
+## E2. NEWBORN-REGISTER FACTORIAL (redesigned): appearance vs sweep, with a true no-payoff arm
 
-- **Stage 0 (static audit, no runs).** Classify every recorded birth for which the world state can be reconstructed, by EXEC
-  motif, using `prov`/`prov_lit` plus an EXEC trace from exact replays: copy (owner executes), hijack (EXEC ≠ owner),
-  paint, or residue. Sources: X-CERT-BREAK births, the 34 Archaeon replay births, and the C-ATOMIC founder-overwrite events.
-  - **T5 needs** hijack in ≥ 20% of founder overwrites and ≥ 5% of all births.
-  - **Kill T5** if hijack is under 5% everywhere.
-- **Stage 1 (world rule).** A world variant in which pc wrap into the partner's half halts execution. Writes are unchanged.
-  Arms: 7ae3 k = 1 ATOMIC, normal vs contained, 64 seeds each.
-- **Frozen predictions.** Recompute Φ under containment and its P_est (T6/T7 prediction).
-- **Readouts.** Founder loss at epoch 1; establishment; the hijack share of births.
+**Why redesigned (RT B5).** A ZERO arm that resets only newborn registers still rewards state-freedom, because every organism
+carries registers between interactions and so self-poisoning still bites. T1 and T2 also predict the same sweep ordering.
+
+- **Exact question.** Is the *appearance* of state-freedom driven by supply (T1) or by demand (T2)?
+- **Arms.** The C-A3 design otherwise frozen (random populations, dense VM, ATOMIC, ffa6, 2000 epochs):
+  - **VICTIM:** current.
+  - **RANDOM-PER-BIRTH:** maximal newborn noise.
+  - **RESET-EVERY-INTERACTION:** both organisms enter every interaction at zero registers. This is the no-payoff arm: carried
+    state never matters.
+- **Instrument.**
+  - E4's genealogy, with stable-call re-assay: appearance = stable origins per 10^5 copy events.
+  - Copy-event counts per checkpoint.
+  - State-freedom screened with random passengers.
+- **Rulers.**
+  - (a) Appearance hazard per copy event. This is the T1/T2 separator.
+  - (b) Sweep: stable state-free share among competent genomes at 1,000 and 2,000. T1 and T2 predict the *same* ordering
+    here; it is reported only.
+- **Positive control.** The VICTIM arm must reproduce an X-A3-WITHDRAW-like sweep in ≥ 50% of established runs.
+- **Null.** RESET-EVERY-INTERACTION.
 - **Expected outcomes.**
-  - **T5:** founder loss at epoch 1 falls from about 0.28 toward the Φ-no-hijack value, and establishment *exceeds* the
-    containment-Φ prediction's change. Winners change identity in random-population arms.
-  - **T6/T7:** the observed change equals the containment-Φ prediction.
-- **Smallest sample.** 128 runs × 2000 epochs ≈ 35 core-h; at 500 epochs ≈ 10 core-h (establishment is decided early,
-  U-T1).
-- **Why.** It tests whether "who reproduces" is a property of organisms or of the execution field. That question decides
-  whether *any* organism-level heredity claim on the pair tape is well-posed.
+  - **T1:** appearance hazard per copy event is equal across arms (within 2x). Sweep occurs only where state-freedom pays.
+  - **T2:** appearance is ordered by demand (RANDOM ≥ VICTIM ≫ RESET).
+- **Kill.**
+  - **T1 is dead** if the RESET appearance hazard is < 1/3 of VICTIM's.
+  - **T2 (demand-driven appearance) is dead** if the RESET appearance hazard is ≥ 0.5 × VICTIM's.
+  - Between those ratios: INCONCLUSIVE.
+- **Eligibility (gated on E4).** At least 10 stable origins per arm are needed. E4's origin counts give the per-run expectation.
+  If 24 seeds per arm would not reach 10, the item stops before launch and requests more seeds.
+- **Cost.** 3 arms × 24 seeds × 2000 epochs ≈ 20 core-h, split E2a (VICTIM + RESET, ≈ 13) and E2b (RANDOM, ≈ 7).
 
 ---
 
-## E3. OPERATOR SWAP: does mutation supply set the internalization hazard? (T1, quantitative)
+## E9. cb7f OCCUPANCY REPLAY: validating the replacement ruler
 
-- **Question.** Does the ffa6/7ae3 internalization hazard ratio (about 8x, U-T5) follow the effective mutation supply
-  (about 7x)?
-- **Treatment.** The 7ae3 cell with `mutation_operator = BOTH` (opcodes mutable), against the frozen OPERAND. Everything else
-  is the C-A3 design.
-- **Prediction (T1).** The 7ae3 hazard per copy event rises by 5–10x, toward ffa6's. Cell-ecology alternatives predict no
-  change.
-- **Kill.** **T1 (supply) is dead** if the hazard rises by less than 2x while the effective mutation count rises by ≥ 5x.
-- **Positive control.** A measured effective-mutation count per lineage under BOTH vs OPERAND (static, ARC3 accessibility
-  method) must show the ≥ 5x supply change.
-- **Sample.** 2 arms × 36 seeds × 2000 epochs ≈ 20 core-h. Split, or reduce to 24 seeds (≈ 13 core-h).
-
----
-
-## E8. SELFCOPY: which regularities are demographic properties of the world? (T7)
-
-- **Treatment.** A one-byte world op that copies the executing site's 64 bytes to the partner half, ignoring registers, with
-  the same per-byte budget and copy-error rate [ADV1 K4]. Implant it vs 7ae3; BASE vs ATOMIC; splice on vs off; k ∈ {1, 2,
-  4, 8}.
-- **Prediction (T7).** The following reappear with the register-free op:
-  - the dose curve's independence;
-  - the depth gap;
-  - BASE ≪ ATOMIC;
-  - splice tail-suppression.
-  Only zero-specialization, poisoning and internalization vanish.
-- **Kill.** **T7 is dead** if one of the demographic signatures changes qualitatively, beyond the op's own computed offspring
-  law.
-- **Sample.** About 20 core-h (500-epoch runs). It needs a world-code change, so a Builder is needed.
-
----
-
-## E9. cb7f OCCUPANCY REPLAY: validating the replacement ruler (prerequisite for E1)
-
-- **Question.** Is cb7f's depth cap near 6 (8/8 ATOMIC runs copy, 163–1,053 events) takeover without turnover, or failure to
+- **Question.** Is cb7f's depth cap near 6 (it copies in 8/8 ATOMIC runs) a case of takeover without turnover, or a failure to
   establish?
-- **Treatment.** Exact replays of the 8 C-ATOMIC cb7f ATOMIC runs, plus 4 7ae3 runs, with occupancy O_F(t) logged every 10
-  epochs.
-- **Prediction.** T6: cb7f O_F ≥ 0.5 in most runs, with depth low. The heredity ontology: O_F low.
-- **Kill.** Depth is retired as an establishment ruler if cb7f O_F ≥ 0.5 in ≥ 5 of 8 runs.
-- **Sample.** 12 replays ≈ 3 core-h.
+- **Treatment.** Exact replays of the 8 C-ATOMIC cb7f ATOMIC runs and 4 7ae3 runs, with content-ancestry occupancy logged every
+  10 epochs.
+- **Controls.**
+  - Positive: 7ae3 runaway replays must read occupancy ≥ 0.5.
+  - Negative: a random-implant replay must read ≤ 0.02.
+- **Kill, in both directions (RT m15).**
+  - Depth is retired as an establishment ruler if cb7f occupancy is ≥ 0.5 in ≥ 5 of 8 runs.
+  - cb7f "failed to establish" is confirmed, and depth stands for it, if occupancy is < 0.5 in ≥ 5 of 8.
+- **Cost.** 12 replays ≈ 3 core-h.
 
 ---
 
-## E10. TAPE ROTATION (WP-7), kept as design only
+## SKETCHES (not prereg-ready)
 
-- **Question.** If placement becomes unreliable, do locators internalize (T2), or does reproduction collapse because locators
-  are unreachable (T1/T3)?
-- **Controls.**
-  - `LD E,40 ; E5` (random padding) must fail under rotation: the self-test positive control.
-  - The 16000026 locator must pass.
-  - A seeded-locator arm is the positive control.
-  - A no-rotation arm.
-- **Expected.** T1/T3: collapse; locator rate set by density (2 of 332). T2: locator emergence where reachable.
-- **Why last.** A floor effect is likely, and the build cost is high. Run it only if E2 supports T2.
+- **E5 EXECUTION CONTAINMENT.**
+  - Stage 0 is S2: an EXEC-motif audit of recorded births (copy, partner-exec, paint, residue, self-import).
+  - Stage 1 is a world rule where pc cannot cross into the partner half.
+  - Before any world run, it needs: a hijack prevalence ≥ 5% from S2, a recomputed-Φ prediction under containment, and a
+    unit and eligibility definition.
+- **E3 OPERATOR SWAP.**
+  - **Eligibility problem (RT M7).** C-A3 had 1 event in 72 7ae3 runs, so raising the 7ae3 hazard is not measurable at 24–36
+    seeds.
+  - **Redirected design.** Make **ffa6** opcode-immune (7 events in 72 at baseline). T1 predicts a drop to about 1 event. That
+    is detectable only at ≥ 72 seeds per arm, about 40 core-h.
+  - Needs operator authority, or a cheaper appearance-hazard ruler from E4.
+- **E6 PHASE dose.**
+  - Downgraded after S1: real robust donors reload their pointers, and copy counts ≡ 0 mod 128 almost never occur (164–295
+    observed). The dose pattern is predicted by T3 and T6 alike, since it is LDIR semantics (RT M8).
+  - Keep it only as a T3/T6-vs-T2 test with a site-level budget, which holds the background fixed and so needs world code.
+- **E8 SELFCOPY.** A register-free one-byte world copy op, used to test T7's demographic signatures. It needs a Builder and a
+  ruler definition.
+- **E10 TAPE ROTATION (WP-7).** Positive control: the 16000026 locator. Negative control: `LD E,40 ; E5` with random padding.
+  Likely a floor. Run only if E2 supports T2.
 
 ---
 
 ## What NOT to do next
 
-- **Another C-A3-style recurrence sweep.** The recurrence is established. Its unit (the D0 label) is the problem (U-C1,
-  U-C2, U-C4).
-- **Any heredity or "runaway" claim read from depth or anc0.** Use occupancy and transmitted-position identity (E9 decides).
-- **Any competence or state-freedom screen with NOP or zero padding.** Use random passengers (FOR Q3; ADV2 D8).
+- **Another C-A3-style recurrence sweep.** The recurrence is established, and its unit (the D0 label) is the problem.
+- **Any establishment, heredity or "runaway" claim read from depth or anc0 until E9 decides.**
+- **Any competence or state-freedom screen with NOP or zero padding.** Use random passengers.
+- **Any "not imported" claim without a planted-transplant positive control** (X-MAT lacked one).
