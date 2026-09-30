@@ -43,7 +43,9 @@ def per_system(model):
              "planted_n": sum(1 for pr in e["planted"] if pr.get("primary", True)),
              "rule_complexity": e["nuisance"]["obs_compression_ratio"]}
         br = blind.get(sid)
-        if br and br["ok"]:
+        # a reply that parsed to something other than a JSON object is treated as
+        # unparseable (crash fix after the first Gemini rows; not a scoring change)
+        if br and br["ok"] and isinstance(br["parsed"], dict):
             o = br["parsed"]
             r["t1_score"], r["t1_verdict"] = S.structure_score(o)
             r["t2_exact"], r["t2_comp"] = S.score_t2(p, o, ans)
@@ -56,7 +58,7 @@ def per_system(model):
                                 (r["t5"].get("eval_exact") or 0) >= CODE_LEARN_EXACT)
             r["behav_score"] = max(r["t2_comp"] - bar_t2, (r["t5"].get("eval_comp") or 0) - bar_ev)
         fr = fam.get(sid)
-        if fr and fr["ok"]:
+        if fr and fr["ok"] and isinstance(fr["parsed"], dict):
             o = fr["parsed"]
             r["coherence"] = str(o.get("coherence", "")).upper()
             r["familiar"] = str(o.get("familiar", "")).upper()
@@ -66,14 +68,14 @@ def per_system(model):
             r["analogy_class"] = S.analogy_class(o, asc if asc and asc.get("status") == "OK" else None, bar_ev)
             r["analogy_name"] = o.get("analogy")
         rv = reveal.get(sid)
-        if rv and rv["ok"]:
+        if rv and rv["ok"] and isinstance(rv["parsed"], dict):
             o = rv["parsed"]
             claims, cap = S.score_claims(p, o, e["planted"], cache)
             r["reveal"] = {"coherence": str(o.get("coherence", "")).upper(),
                            "t2": S.score_t2(p, o, ans), "t3": S.score_t3(p, o, ans),
                            "t4": Counter(c["status"] for c in claims), "captured": cap}
         ac = active.get(sid)
-        if ac and ac["ok"]:
+        if ac and ac["ok"] and isinstance(ac["parsed"], dict):
             o = ac["parsed"]
             ex, comp = S.score_t2(p, o, ans)
             code = S.score_code(p, ((o.get("t5") or {}).get("code")), ans, cache)
@@ -83,7 +85,7 @@ def per_system(model):
                            "learned": bool((comp >= bar_t2 + LEARN_MARGIN and ex >= LEARN_EXACT) or
                                            (code.get("eval_exact") or 0) >= CODE_LEARN_EXACT)}
         pr = prose.get(sid)
-        if pr and pr["ok"]:
+        if pr and pr["ok"] and isinstance(pr["parsed"], dict):
             r["prose_t2"] = S.score_t2(p, pr["parsed"], ans)
         rows[sid] = r
     return rows, key
