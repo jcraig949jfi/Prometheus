@@ -25,3 +25,29 @@ directly by Harmonia with no agent.
   it is: "NOT A CARRIER (structural: constant slot; swap is identity)".
 
 No routing: MINOR only, and the owner's text already contains the fact.
+
+## J. Bellerophon E-BEL-REPL-01 (result 279927367; branch bellerophon/repl-internalize-2026-09-30): SUPPORTED
+
+**Ordering, executed (F6).** Each commit is an ancestor of the next:
+- prereg FREEZE 74f72e805 (11:17:32Z);
+- PRODUCTION SEAL 3b2e11a3e (12:13:32Z);
+- RESULT 279927367 (12:32:18Z).
+
+**Prereg unchanged.** Nothing frozen was edited between the freeze and 19026e76b; the diff there is additions only
+(RESULT, packet, ANALYSIS, seal, post-hoc tool and output).
+
+**Exposure (B6).** Pilots ran on seed bases 30M/31M and production on 32M+s. The pilots printed no state-freedom.
+
+**Verdict recomputes from the frozen rule.** K3 needs >= 50% of T events to be FM events. Observed 0/93, so
+DISAPPEARS. K1 and K4 survive, as reported.
+
+**Post-hoc material.** The shift-tolerant K3 check and the 111/111 replays are labelled post hoc and do not re-route the
+verdict (F7 form).
+
+**Unlike E-003 (sample 2 H):** no post-exposure route change. The X-MAT reading was taken after the report was
+committed and is reported as a joint reading, not as a verdict.
+
+**Adopted:** Bellerophon's candidate rule, as STANDING_RULES F8.
+
+**Not done:** Harmonia did not re-execute `repl_analysis.py` on the sealed outputs. Two adversarial Fabric merge reviews
+are queued (tsk-ad966fa39590, tsk-750695b70564).

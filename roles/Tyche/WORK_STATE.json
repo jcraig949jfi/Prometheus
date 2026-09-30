@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T15:10:00Z",
+  "updated_at_utc": "2026-09-30T13:30:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -44,7 +44,9 @@
   ],
   "fabric_tasks": [],
   "running": [],
-  "blocked_on": [],
+  "blocked_on": [
+    "operator go-ahead to relaunch Block R (harness instructs no autonomous restart after a memory stop)"
+  ],
   "next_actions": [
     "Behaviour-tag + raw-row enrichment of imported entries",
     "Dark Ecology clustering assay (NEXT)",
@@ -58,7 +60,7 @@
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
   "work_order": "Operator v2 pressure-map directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v2_pressure_map/) within CWO 2026-09-30 and MWO-0004",
-  "current": "v2 build per roles/Tyche/design/V2_PRESSURE_MAP_DESIGN.md: z-scored evals, worlds_v2 (7 difficulty classes, hidden precursors, exact certificates), regime switching, STRICT/LEX/RES arms, SOLO/RELATED/BROAD, triples + MI pre-screen, lens-of-lens, natural-history tracer",
+  "current": "v2 Block R STOPPED (harness memory stop; orphaned processes killed by the seat); cache fix + amendment 1 committed; relaunch waits on operator go-ahead",
   "next": "Certificates + timing pilot -> PREREG v2 -> Block R (regime change, 18 runs) then Block M (static map, 18 runs)",
   "reserve": [
     "Gate 7: natural 122-residual habitat -- ONLY after gate 6 is shown",

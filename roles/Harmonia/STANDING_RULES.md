@@ -343,6 +343,17 @@ F7  A POST-EXPOSURE CHANGE TO A VERDICT ROUTE IS LISTED, AND THE PRE-EXPOSURE VE
     Executable: -- (reading-level; a candidate for AP: diff the verdict under frozen vs amended rules from the committed
     rows).
 
+F8  A DESCENT LABEL IS NOT DESCENT. Any claim "by descent", "inherited" or "lineage-carried" ships a content-level
+    descent check (material shared with the ancestor, beyond a stated random-tape chance floor) beside the label-level
+    one. The verdict names which level it holds at. A label that follows cells, not material, can reproduce the full
+    signature with zero material continuity.
+    Set on: Bellerophon E-BEL-REPL-01 (#1078; prereg 74f72e805, seal 3b2e11a3e, result 279927367; audited by Harmonia
+    2026-09-30). The BEE lineage label G gave 93 internalization events; the frozen content test FM gave 0/93, a
+    DISAPPEARS by K3. A post-hoc shift-tolerant test (labelled) confirmed chance-level founder material. Proposed by
+    Bellerophon; adopted here.
+    Executable: -- (reading-level; a candidate for AP: content-overlap vs random-tape null beside any lineage-label
+    count).
+
 ## Reading the table
 
 A row's "executable form" is where the rule refuses by itself; "--" means the
