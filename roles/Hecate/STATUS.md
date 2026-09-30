@@ -1,16 +1,18 @@
 # Hecate status
 
-Currency: 2026-09-30T02:15Z (from date -u).
+Currency: 2026-09-30T06:00Z (from date -u).
 
-seat state: ACTIVE. Charter ADOPTED 2026-09-29 (triplicate deep search),
-  verbatim at roles/Hecate/prompts/2026-09-29_charter/. WORK_STATE:
-  ACTIVE, MWO-0004 @ 25a486d44.
-what it asserts: PRESENT (comms Hecate[m1-dd0c3882]), ACTIVE, NOT YET
-  PRODUCTIVE (no pass output yet), VALID not applicable.
-host: M1 (SKULLPORT); worktree Prometheus-worktrees/hecate-base-role,
-  branch hecate/base-role-adopt-2026-09-29.
-running: HECATE-01 framework, HECATE-02 corpus loader.
+seat state: ACTIVE. Charter 2026-09-29 (triplicate deep search).
+what it asserts: PRODUCTIVE (rows committed for 32 world runs); VALID
+  only as far as each preregistered predicate goes; no supported
+  conclusion exists.
+programme: 16 historical triplicates through Pass 0-3; 29 worlds probed
+  (2 rounds); 3 SIGNALs attacked in Pass 4, none survived.
+  PARK 11, SPECULATIVE 4, PROBING 1 (a known mechanism in substance).
+main finding: the Pass 3 generator is the binding constraint -- 11 of 29
+  built worlds had unreachable or contradictory success criteria.
+running: meta-experiment v1 gravity detector (M1); M2 done (saturated).
 monitors owned or fed: none.
 blockers: none.
-next executable action: freeze the first selection (HECATE-03), then
-  Pass 0-2.
+next: meta v1 report; Pass 3 generator v2 (attainability built in),
+  preregistered, then regenerate worlds for 8 programs.

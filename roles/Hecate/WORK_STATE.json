@@ -3,7 +3,7 @@
   "seat": "Hecate",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T02:15:00Z",
+  "updated_at_utc": "2026-09-30T06:00:00Z",
   "state": "ACTIVE",
   "branch": "hecate/base-role-adopt-2026-09-29",
   "head_sha": "(this commit; see git log -1 -- roles/Hecate/WORK_STATE.json)",
@@ -15,21 +15,43 @@
     }
   ],
   "campaigns": [],
-  "experiments": [],
+  "experiments": [
+    {
+      "id": "probe_round1",
+      "status": "DONE",
+      "report": "hecate/programs/PROBE_ROUND1_REPORT.json"
+    },
+    {
+      "id": "pass4_round1",
+      "status": "DONE",
+      "report": "hecate/programs/PASS4_ROUND1_REPORT.json"
+    },
+    {
+      "id": "probe_round2",
+      "status": "DONE",
+      "report": "hecate/programs/PROBE_ROUND2_REPORT.json"
+    },
+    {
+      "id": "meta_v1",
+      "status": "RUNNING",
+      "prereg": "roles/Hecate/prereg/2026-09-29_meta_experiment_v1/"
+    }
+  ],
   "fabric_tasks": [],
   "running": [
-    "HECATE-01 framework schema+validator",
-    "HECATE-02 historical corpus loader"
+    "HECATE-12 meta v1 gravity detector over 400 arm mechanisms (M1)"
   ],
   "blocked_on": [],
   "next_actions": [
-    "HECATE-03 preregister and freeze first selection (16) before any pass content",
-    "HECATE-04 Pass 0-2 for the 16",
-    "HECATE-05 Pass 3 worlds",
-    "HECATE-10 preregister the meta-experiment"
+    "Report meta v1 (M1 when detector finishes; M2 done, saturated)",
+    "Pass 3 generator v2: every clause's attainable range computed from an analytic or constructed positive control, no cross-world references, full output schema; preregister, then regenerate worlds for the 4 SPECULATIVE programs and the 4 PARKed-by-generator programs (37e3, 5516, 8a87, faa9)",
+    "Prior-art pass for HT-321a8fd8e0 (expected FOSSIL by rule)",
+    "Anomaly candidates for later Pass 5 revival: HT-e743909f97 self-sustaining exhaustion; HT-5b0b3ebb8d OR reversal under transition removal",
+    "HECATE-22 operator examples (Epigenetics x Emergence x Hoare Logic as source human)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Hecate/journal/2026-09-29.md (creation pass; charter adoption)"
+    "roles/Hecate/journal/2026-09-29.md",
+    "hecate/programs/PROBE_ROUND2_REPORT.json"
   ]
 }
