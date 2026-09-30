@@ -12,7 +12,8 @@ is in git history (`git log -- roles/Techne/resume.md`).
   1. this file
   2. the newest roles/Techne/journal/<date>_<instance>.md (2026-09-30_gandalf-4c0c7e64.md)
   3. roles/Techne/BACKLOG_H0H5.md -- rows 122 (prior-art raid, with its 09-30 annotation), 123,
-     128, 113/115 (HARM-55 Flax column), 65/100 (mirror destination) are the live ones
+     128, 129 (rollout grade question), 131 (successor scorer), 65/100 (mirror destination) are
+     the live ones
   4. roles/Techne/CHARTER.md, roles/base-role/RESPONSIBILITIES.md (section 2a is the work loop),
      roles/base-role/WORKING_CONTRACT.md
   5. the newest prompt to Techne under roles/*/prompts/ (as of 09-30 still roles/Atlas/prompts/
@@ -27,6 +28,12 @@ not wait.
 
 ## 2. Work items, in the order I would start them (each with its proof and its blocker)
 
+  0. FIRST: answer Nyx comms #1071 (question, 2026-09-30, not urgent): the R19 grade per source
+     type for PSEUDOCODE_PLUS_REFERENCE_IMPL / FAITHFUL_PORT / LATER_SAME_LINEAGE_RELEASE (19
+     records named in the message; `comms inbox Techne --all`). Precedent: the #387 ASK 2 ruling
+     quoted in nyx/atlas/migrate_v1.py. Proof: a typed ruling with evidence per record. Size S-M.
+     Related, waiting on Harmonia: grade of the 39 rollout fossils (Nyx #1074 proposes
+     DERIVED_RECOVERY_ARTIFACT and a distinct source type).
   A. TECHNE-122 section II report (auto-curricula: MCC, POET, ATEP, PLR, ACCEL, JaxUED, OMNI-EPIC)
      in DONOR.md format with primary sources and pins. The two bodies it needs most are here:
      dcd-facebookresearch-2022 (09-30) and poet-enhanced-2020 / poet-original-2019. Proof: the
@@ -39,16 +46,18 @@ not wait.
   D. GEA-4 injection harness (Atlas 09-21 nomination). RESERVE, not started: it is a proposal from
      a parked seat, not an operator directive, and the harness contract (what is injected into
      what, who scores) would have to be agreed with Nyx first. One message, when A/B leave room.
-  E. HARM-55 (ASAL Flax column, gandalf-6cd1348b) -- TECHNE-115. Everything on the Techne side is
-     built and frozen. Not runnable on M3 (no AVX). 09-30: Harmonia[m2-475d761f] took the run
-     over as its CURRENT, on M2; pointers sent. When HARM55_FLAX_NATIVE_*.json lands on main:
-     run the frozen tranche-2 selector and fill the 39 capsules (native_observer PENDING).
+  E. TECHNE-131: a dated successor to harm55_flax_score.py (LF output, self_check and
+     static_control blocks on both paths) before the ASAL replication domain reuses the scorer.
+     HARM-55 itself is CLOSED (Harmonia ran the Flax column on M2 on 09-30, A_OBSERVER_STABLE);
+     the 39 capsules are filled and tranche 2 added no fossil. Open with Harmonia: whether to
+     preserve the 7 rounding-noise D1 keys anyway (TECHNE-130).
   F. TECHNE-123 (measure open-oasis / MineWorld / Matrix-Game). BLOCKED on a GPU-class host.
   G. TECHNE-65/100 off-host mirror destination: the operator's one line (external side effect).
 
 Done 2026-09-30: TECHNE-127 (dcd fossil), TECHNE-126 (recipe axis: NO_RECIPE), TECHNE-125
 (host-neutral catalog snapshot with a staleness test), TECHNE-129 (nyx_handoff filled for 10
-records; the 39 rollout records wait on a grade answer from Harmonia or Nyx).
+records; the 39 rollout records wait on a grade answer from Harmonia or Nyx), TECHNE-115
+(native Flax column consumed: 39 capsules filled), TECHNE-130 (tranche 2: no new fossil).
 
 ## 3. Standing facts a new instance would otherwise re-derive
 
@@ -71,6 +80,10 @@ records; the 39 rollout records wait on a grade answer from Harmonia or Nyx).
   - Host-local and gitignored on M3: the fossil vault under the canonical checkout (49 of 169
     specimens have bodies here, 217 MB), vault\techne_tools\asal107 (torch CPU env), the operator's
     Drive folder Prometheus\harm55 (395 frames). Re-fetch path for bodies: `harvest rematerialize`.
+  - To add the native column to EXISTING capsules use `capsule fill-native`, never `capsule build
+    --flax` (a rebuild without --internals drops the captured observer internals).
+  - Hash the BLOB, not the checkout: working copies here are CRLF, so `sha256sum <file>` is not
+    the committed hash. Use `git show <ref>:<path> | sha256sum` or capsule.lf_sha256.
   - Two "HARM-55" ids exist (Harmonia Q6). Mine refers to gandalf-6cd1348b's ASAL row at 2ead5e011.
   - The M0.5 promotion-replay audit (2026-06-23) and the cartography campaign (2026-09-01) are
     closed arcs; their docs stand: roles/Techne/M05_PROMOTION_REPLAY_FINDINGS_2026-06-23.md,

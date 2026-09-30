@@ -1,0 +1,124 @@
+{
+ "selector": "techne/scripts/harm55_tranche2_select.py",
+ "flax_input": "techne/acquisition/poet_alife/HARM55_FLAX_NATIVE_2026-09-30.json",
+ "garbage_mean": 0.8167,
+ "n_alive_compared": 333,
+ "counts_by_category": {
+  "D1": 8,
+  "D2": 0,
+  "D3": 0,
+  "D4": 0,
+  "D5": 8,
+  "D6": 0,
+  "D7": 4,
+  "D8": 0,
+  "P1": 9,
+  "P2": 9
+ },
+ "pairs": {
+  "P1_nearest_behaviour_far_metric": [
+   {
+    "a": "S0_34",
+    "b": "S0_76",
+    "behav_dist": 0.02612984026852122,
+    "score_gap": 0.022284507751464844
+   },
+   {
+    "a": "S0_34",
+    "b": "S0_75",
+    "behav_dist": 0.08913239133906048,
+    "score_gap": 0.022411823272705078
+   },
+   {
+    "a": "S2_120",
+    "b": "S2_46",
+    "behav_dist": 0.10774791549252302,
+    "score_gap": 0.021271228790283203
+   },
+   {
+    "a": "S2_175",
+    "b": "S2_193",
+    "behav_dist": 0.16616038178636688,
+    "score_gap": 0.025295138359069824
+   },
+   {
+    "a": "S0_39",
+    "b": "S0_94",
+    "behav_dist": 0.16928854124575285,
+    "score_gap": 0.021192550659179688
+   }
+  ],
+  "P2_nearest_metric_far_behaviour": [
+   {
+    "a": "S0_141",
+    "b": "S0_5",
+    "behav_dist": 6.36858148872535,
+    "score_gap": 0.00014150142669677734
+   },
+   {
+    "a": "S0_1",
+    "b": "S0_176",
+    "behav_dist": 6.316743938770673,
+    "score_gap": 0.0012360811233520508
+   },
+   {
+    "a": "S0_141",
+    "b": "S0_261",
+    "behav_dist": 5.865670932008294,
+    "score_gap": 0.0019440054893493652
+   },
+   {
+    "a": "S0_10",
+    "b": "S0_170",
+    "behav_dist": 5.8615305570862,
+    "score_gap": 0.00047457218170166016
+   },
+   {
+    "a": "S0_157",
+    "b": "S0_2",
+    "behav_dist": 5.419037180522972,
+    "score_gap": 0.0017279386520385742
+   }
+  ]
+ },
+ "selection": {
+  "S2_187": "D1 largest observer disagreement (signed 0.0000)",
+  "S2_186": "D1 largest observer disagreement (signed 0.0000)",
+  "S0_222": "D1 largest observer disagreement (signed 0.0000)",
+  "S1_55": "D1 largest observer disagreement (signed -0.0000)",
+  "S2_71": "D1 largest observer disagreement (signed 0.0000)",
+  "S2_84": "D1 largest observer disagreement (signed 0.0000)",
+  "S0_179": "D1 largest observer disagreement (signed 0.0000)",
+  "S0_55": "D1 largest observer disagreement (signed -0.0000)",
+  "S2_135": "D5 genuine organism low under BOTH observers",
+  "S2_148": "D5 genuine organism low under BOTH observers",
+  "S2_75": "D5 genuine organism low under BOTH observers",
+  "S2_53": "D5 genuine organism low under BOTH observers",
+  "S2_131": "D5 genuine organism low under BOTH observers",
+  "S2_63": "D5 genuine organism low under BOTH observers",
+  "S0_215": "D5 genuine organism low under BOTH observers",
+  "S2_64": "D5 genuine organism low under BOTH observers",
+  "S0_138": "D7 catalogue crossing that survives",
+  "S0_212": "D7 catalogue crossing that survives",
+  "S0_8": "D7 catalogue crossing that survives",
+  "S0_9": "D7 catalogue crossing that survives",
+  "S0_34": "P1 nearest behavioural pair with very different metric (with S0_76; dist 0.026, gap 0.0223)",
+  "S0_76": "P1 pair partner of S0_34",
+  "S0_75": "P1 pair partner of S0_34",
+  "S2_120": "P1 nearest behavioural pair with very different metric (with S2_46; dist 0.108, gap 0.0213)",
+  "S2_46": "P1 pair partner of S2_120",
+  "S2_175": "P1 nearest behavioural pair with very different metric (with S2_193; dist 0.166, gap 0.0253)",
+  "S2_193": "P1 pair partner of S2_175",
+  "S0_39": "P1 nearest behavioural pair with very different metric (with S0_94; dist 0.169, gap 0.0212)",
+  "S0_94": "P1 pair partner of S0_39",
+  "S0_141": "P2 nearest metric pair with very different behaviour (with S0_5; gap 0.0001, dist 6.369)",
+  "S0_5": "P2 pair partner of S0_141",
+  "S0_1": "P2 nearest metric pair with very different behaviour (with S0_176; gap 0.0012, dist 6.317)",
+  "S0_176": "P2 pair partner of S0_1",
+  "S0_261": "P2 pair partner of S0_141",
+  "S0_10": "P2 nearest metric pair with very different behaviour (with S0_170; gap 0.0005, dist 5.862)",
+  "S0_170": "P2 pair partner of S0_10",
+  "S0_157": "P2 nearest metric pair with very different behaviour (with S0_2; gap 0.0017, dist 5.419)",
+  "S0_2": "P2 pair partner of S0_157"
+ }
+}
