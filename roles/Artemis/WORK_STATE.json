@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T14:48Z",
+  "updated_at_utc": "2026-09-30T15:31Z",
   "state": "WORKING",
-  "state_reason": "D003 reconciled: 10/10 completed (14:18-14:47Z); spot-check running.",
+  "state_reason": "D003 + D004 closed (D004 6/6, RESULT.md incl. a custody defect in evidence_wiki gap_prospective_v1). Routing.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -66,61 +66,51 @@
       "status": "COMPLETED_RECONCILED",
       "draw": "roles/Artemis/dispatch/D003/DRAW.json",
       "tasks": "roles/Artemis/dispatch/D003/TASKS.json",
-      "receipts": "roles/Artemis/dispatch/D003/RECEIPTS.json"
+      "receipts": "roles/Artemis/dispatch/D003/RECEIPTS.json",
+      "digest": "roles/Artemis/dispatch/D003/DIGEST.md (30/30 verified)"
+    },
+    {
+      "id": "D004",
+      "kind": "standing bounded dispatch (script executor)",
+      "status": "CLOSED",
+      "plan": "roles/Artemis/dispatch/D004/PLAN.md",
+      "result": "roles/Artemis/dispatch/D004/RESULT.md",
+      "receipts": "roles/Artemis/dispatch/D004/RECEIPTS.json"
     }
   ],
   "fabric_tasks": [
     {
-      "id": "tsk-1c08cd22e885",
-      "alias": "D003-01"
+      "id": "tsk-93fcdf75563b",
+      "alias": "D004-01"
     },
     {
-      "id": "tsk-ae7fb92190a0",
-      "alias": "D003-02"
+      "id": "tsk-d6e97e34e170",
+      "alias": "D004-02"
     },
     {
-      "id": "tsk-9a3f777ab02d",
-      "alias": "D003-03"
+      "id": "tsk-949a71d69bc9",
+      "alias": "D004-04"
     },
     {
-      "id": "tsk-39b84f2a37f0",
-      "alias": "D003-04"
+      "id": "tsk-a26ebb912344",
+      "alias": "D004-05"
     },
     {
-      "id": "tsk-3e6dcf030c39",
-      "alias": "D003-05"
+      "id": "tsk-2e8d9e885c96",
+      "alias": "D004-09"
     },
     {
-      "id": "tsk-e935503d7a66",
-      "alias": "D003-06"
-    },
-    {
-      "id": "tsk-aa23b79890b1",
-      "alias": "D003-07"
-    },
-    {
-      "id": "tsk-a5a252cdb955",
-      "alias": "D003-08"
-    },
-    {
-      "id": "tsk-117ab1ad9022",
-      "alias": "D003-09"
-    },
-    {
-      "id": "tsk-97da4d13fda5",
-      "alias": "D003-10"
+      "id": "tsk-83da4de9b69d",
+      "alias": "D004-10"
     }
   ],
   "leases": [],
-  "running": [
-    {
-      "what": "D003 claim spot-check (fresh read-only reader) before routing"
-    }
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "D003: reconcile, spot-check, run any analysis.py as a D004 script batch, route",
-    "re-run D002-02/03/06 once F1 is fixed",
+    "route D003+D004",
+    "D005 seeded draw",
+    "re-run D002-02/03/06 when BUILDER-FABRIC fixes F1 server-side (client-side line buffering now exists)",
     "2026-10-28 day-30 re-check"
   ],
   "operator_decisions_required": [],
@@ -143,16 +133,16 @@
   "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1026)",
   "queue": {
-    "CURRENT": "D003 (10 raw threads, claude workers): barrier, reconcile, spot-check, route",
-    "NEXT": "D004: run D003 analysis.py via the script executor (the D002 pattern); re-run D002-02/03/06 once BUILDER-FABRIC fixes F1",
+    "CURRENT": "Route D003+D004 findings (blind-lane guard); custody defect to Harmonia+Aporia",
+    "NEXT": "D005: seeded raw draw of 10 of the remaining 26 eligible threads (exclude S3, D001, D003 draws); then its script batch",
     "RESERVE": [
       "Fabric reliability adversary: F1-F4 handed to BUILDER-FABRIC (D002/RESULT.md s2); attack repaired paths",
       "2026-10-28 day-30 owner-action re-check (selftest/ROUTING.md)"
     ],
     "BLOCKED": [],
     "RESOURCE_STATUS": "claude workers on ubu001 (no local compute on ubu002); script Tasks compute.cpu.light only",
-    "LAST_RECEIPT": "roles/Artemis/dispatch/D003/RECEIPTS.json (2026-09-30)",
-    "LAST_STATE_UPDATE": "2026-09-30T14:48Z",
+    "LAST_RECEIPT": "roles/Artemis/dispatch/D004/RECEIPTS.json + RESULT.md (2026-09-30)",
+    "LAST_STATE_UPDATE": "2026-09-30T15:31Z",
     "WORK_ORDER": "MWO-0004 + CWO 2026-09-30"
   }
 }
