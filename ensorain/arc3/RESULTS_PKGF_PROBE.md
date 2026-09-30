@@ -563,3 +563,17 @@ Shape:
   selection signal, e.g. exponential down-weighting with a rate estimated from the same-cell disagreement growth, is
   the candidate. Design only; not built.
 - W-MULTI remains the last planned world before the design can be frozen for a preregistration.
+
+## W-MULTI: several switches of varying size (pkgf_multi.py)
+
+- K = 6 episodes. Each of the 5 switches redraws a fraction rho_k from {1, .5, .1, 0}, drawn per world.
+- The detector of record (v9b) drives the holdout. STALE and GEN splits.
+- 16 independent worlds, seeds 9_800_110-125.
+
+### Precommitment (written BEFORE running pkgf_multi.py)
+
+- MU1: STALE, dAC(SD_cp9) >= dAC(SD_all) - .02 in >= 13/16 worlds, AND min over worlds of
+  dAC(SD_cp9) - dAC(SD_all) >= -0.2. Gating is never much worse than using all history.
+- MU2: the detected start is >= (start of the last episode following a switch with rho >= .5) - .03 in >= 12/16. The
+  detector reaches the latest LARGE switch rather than stopping at an earlier one.
+  - last_big_frac = 0 when no switch has rho >= .5, and then any cp_frac satisfies this.
