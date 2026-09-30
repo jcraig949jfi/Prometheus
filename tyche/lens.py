@@ -472,6 +472,24 @@ def fuse(a, b):
     return g
 
 
+def compose(a, b):
+    """Lens-of-lens b(a(X)): b's instructions appended after a's, with every
+    raw-input reference of b (virtual channel c) rewired to a's output
+    register a.out[c % len(a.out)]. The result's outputs are b's. b then
+    perceives the world only through a's representation. Deterministic."""
+    g = _copy(a)
+    base = NIN + len(g["ins"])
+    aout = list(a["out"])
+
+    def rm(x):
+        return aout[x % len(aout)] if x < NIN else base + (x - NIN)
+
+    for op, args, p in b["ins"]:
+        g["ins"].append([op, [rm(x) for x in args], (list(p) if isinstance(p, list) else p)])
+    g["out"] = [rm(o) for o in b["out"]]
+    return g
+
+
 MUTATIONS = {
     "point": m_point, "replace": m_replace, "insert": m_insert, "delete": m_delete,
     "rewire": m_rewire, "out": m_out, "temporal": m_temporal, "recur": m_recur,

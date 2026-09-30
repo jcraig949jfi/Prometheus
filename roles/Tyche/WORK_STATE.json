@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T15:10:00Z",
+  "updated_at_utc": "2026-09-30T17:20:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -43,7 +43,16 @@
     }
   ],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    {
+      "what": "v2 Block R: 36 runs (STRICT/LEX/RES x rsolo/rrelated/rbroad x 2 seeds), 50 gens, switch 20",
+      "host": "SPECTREX5 (M2)",
+      "command": "scratchpad run_blockR.sh -> python -m tyche.v2.run_v2 ... --out tyche/runs/v2_blockR/*",
+      "max_concurrent_processes": "about 30 (3 runs x 9 workers, then smaller)",
+      "started_utc": "2026-09-30T17:20Z",
+      "compute_upper_bound_core_h": 12
+    }
+  ],
   "blocked_on": [],
   "next_actions": [
     "Behaviour-tag + raw-row enrichment of imported entries",
@@ -58,7 +67,7 @@
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
   "work_order": "Operator v2 pressure-map directive 2026-09-30 (roles/Tyche/prompts/2026-09-30_v2_pressure_map/) within CWO 2026-09-30 and MWO-0004",
-  "current": "v2 build per roles/Tyche/design/V2_PRESSURE_MAP_DESIGN.md: z-scored evals, worlds_v2 (7 difficulty classes, hidden precursors, exact certificates), regime switching, STRICT/LEX/RES arms, SOLO/RELATED/BROAD, triples + MI pre-screen, lens-of-lens, natural-history tracer",
+  "current": "v2 Block R running (36 runs, regime change)",
   "next": "Certificates + timing pilot -> PREREG v2 -> Block R (regime change, 18 runs) then Block M (static map, 18 runs)",
   "reserve": [
     "Gate 7: natural 122-residual habitat -- ONLY after gate 6 is shown",
