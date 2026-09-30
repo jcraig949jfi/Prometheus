@@ -109,6 +109,10 @@ class Cut:
                 o["composition_neighbors"].append(b)
 
     def ancestry(self, relation: str, to: str, note: str = "") -> None:
+        # 2026-09-30: idempotent. __init__ resets organs, rejections, pressures and composition edges for the mode but
+        # not this list, so re-running a cut script used to append a second copy of every ancestry edge.
+        if any(e.get("from") == self.fossil_id and e.get("relation") == relation and e.get("to") == to for e in self.f["ancestry_edges"]):
+            return
         self.f["ancestry_edges"].append({"from": self.fossil_id, "relation": relation, "to": to, "note": note, "basis": "SOURCE_READ"})
 
     def residue(self, state: str, unexplained: Iterable[str], note: str = "") -> None:
