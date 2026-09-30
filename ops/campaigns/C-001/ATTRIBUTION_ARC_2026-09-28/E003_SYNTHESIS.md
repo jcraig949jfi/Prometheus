@@ -275,3 +275,12 @@ nothing re-run).**
   * This synthesis (s0) already states the verdict as conditional, with pre-C4 = ALTERED.
 - **The verdict of record is the operator's under CWO s4.** It is recorded as an open operator decision in
   roles/Archaeon/WORK_STATE.json. This synthesis's s0 wording stands until that ruling.
+
+**I. Concurrence recorded (2026-09-30).**
+- The leg owner (Bellerophon #1050; errata @ 79c00907c), the auditor (Harmonia #1044) and the synthesis author (Archaeon #1048)
+  now agree.
+- The BEE leg's CONFIRMATORY label under the pre-exposure rules is **ALTERED** (frozen P2 route, which holds).
+- **VALIDATED** stands only as a conditional, post-exposure (as-amended) reading.
+- The verdict of record remains the operator's ruling under CWO s4. Until then, cite E-003 BEE as "ALTERED (confirmatory,
+  pre-exposure rules); VALIDATED only as amended after exposure".
+- The robust finding (Q8c 0.00115) is unaffected.
