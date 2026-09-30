@@ -3,29 +3,36 @@
   "maintainer": "Aporia (CWO 2026-09-30 fleet activation; roles/Aporia/prompts/2026-09-30_cwo_fleet_activation/)",
   "work_orders": [
     "MWO-0004 (ops/work_orders/CURRENT.md)",
-    "CWO-2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md)",
-    "CWO-2026-09-30B finish-in-place (supersedes auto-promotion)"
+    "CWO-2026-09-30C (ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md) -- governing; supersedes conflicting CWO-2026-09-30 / -30B text"
   ],
   "baseline": "origin/main 74b5d39c3",
-  "updated_at_utc": "2026-09-30T13:30:00Z",
+  "updated_at_utc": "2026-09-30T18:05Z",
   "rules": [
-    "A seat's own WORK_STATE.json is authoritative for its own state; this file is the scheduler's view and the assignment of record.",
-    "When CURRENT finishes, fails, parks or blocks, promote NEXT without waiting for a prompt; a blocked item goes to BLOCKED, the seat keeps working.",
-    "Scientific gates, sealed holdouts, custody, resource caps and privileged-host limits are unchanged (CWO 1.2)."
+    "STATE MACHINE (CWO-2026-09-30C s21): CURRENT -> FINISH -> REPORT -> READY -> APORIA DISPATCH. Seats never self-promote.",
+    "NEXT and RESERVE fields below are PLANNING INFORMATION ONLY; they are not self-executing (CWO-C s4).",
+    "SUPERSEDED: the CWO-2026-09-30 rule 'when CURRENT finishes, fails, parks or blocks, promote NEXT without waiting for a prompt' -- removed by CWO-2026-09-30B and CWO-2026-09-30C.",
+    "BLOCKED: keep the objective, report to Aporia (comms primary; pushed Git state fallback; A2A only where verified).",
+    "Direct operator instructions outrank this queue (CWO-C s3). Gates, holdouts, custody, caps, privilege limits unchanged."
   ],
   "operator_decisions": [
     {
       "id": "COSMOS-C3",
-      "decision": "A: close C3 killed before holdout use (D2 stays sealed) | B: authorize a successor prereg that must first beat the zero-parameter baseline",
-      "aporia_recommendation": "A now; B remains available later",
-      "blocks": "Cosmos D2 commitment only",
-      "status": "DECIDED A by operator 2026-09-30 (Cosmos #1107)"
+      "status": "DECIDED A (Cosmos #1107)"
+    },
+    {
+      "id": "E-003-BEE-VERDICT",
+      "decision": "verdict-of-record wording: ALTERED vs VALIDATED-as-amended (Harmonia #1044, Archaeon #1102)",
+      "blocks": "citable label only"
+    },
+    {
+      "id": "PROMEXEC-INSTALL",
+      "decision": "privileged broker install, pinned sha256 3cf32a642febd032608878480bdf29c2b433f6859445072b44f1efcac14b0df3 (Odysseus #1104)",
+      "blocks": "promexec round 2 (Odysseus, Aether)"
     },
     {
       "id": "HECATE-SPEND",
-      "decision": "optional: < $5 paid tier to finish alien-lawful Families B/C now",
-      "default_meanwhile": "free-tier trickle (~5 days), $0",
-      "blocks": "nothing (accelerant only)"
+      "decision": "optional <$5 paid tier",
+      "blocks": "nothing (not re-escalated)"
     }
   ],
   "seats": {
@@ -36,7 +43,8 @@
       "reserve": [
         "BUILDER-FABRIC customer/guide: eliminate deployment-friction classes (disk-full checkout cache #994/#998; no SKULLPORT/Windows worker for host-affine Tasks #916/#953)"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Artemis": {
       "host": "ubu002",
@@ -45,7 +53,8 @@
       "reserve": [
         "Fabric reliability adversary: feed D001/D002 failure modes to BUILDER-FABRIC; attack repaired paths"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Nestor": {
       "host": "SKULLPORT (M1)",
@@ -57,7 +66,8 @@
       ],
       "blocked": [
         "D2 designation host change (custodian + child accounts): privileged, only when designation actually requires it"
-      ]
+      ],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Aether": {
       "host": "SPECTREX5 (M2)",
@@ -68,7 +78,8 @@
       ],
       "blocked": [
         "promexec round 2: Odysseus final broker hash + ACCEPTANCE_RUNS (#917)"
-      ]
+      ],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Hecate": {
       "host": "SKULLPORT (M1)",
@@ -77,7 +88,8 @@
       "reserve": [
         "Generator-side novelty interventions informed by the autopsy (generate, then attack)"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Ensorain": {
       "host": "SPECTREX5 (M2)",
@@ -88,7 +100,8 @@
       ],
       "blocked": [
         "E-ENS-LM01 launch (MWO-0004 G3)"
-      ]
+      ],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Ananke": {
       "host": "SKULLPORT (M1)",
@@ -97,7 +110,8 @@
       "reserve": [
         "Analyze REL4 before expanding; its result picks the next branch"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Tyche": {
       "host": "SPECTREX5 (M2)",
@@ -106,7 +120,8 @@
       "reserve": [
         "Residual perturbation: turn the best residuals into bounded experiments"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Bellerophon": {
       "host": "SPECTREX5 (M2)",
@@ -115,7 +130,8 @@
       "reserve": [
         "Generalize useful BEE controls into BUILDER-EXPERIMENT"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Harmonia": {
       "host": "SKULLPORT (M1) / SPECTREX5 (M2)",
@@ -126,7 +142,8 @@
       ],
       "blocked": [
         "D2 adjudication: nothing to adjudicate until COSMOS-C3"
-      ]
+      ],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Cosmos": {
       "host": "SPECTREX5 (M2)",
@@ -137,14 +154,16 @@
       ],
       "blocked": [
         "COSMOS-C3 operator decision"
-      ]
+      ],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Cyclops": {
       "host": "SPECTREX5 (M2)",
       "current": "On next boot: adopt MWO-0004 + this CWO; repair WORK_STATE (currently MWO-0001).",
       "next": "One bounded observability audit: reported fleet state vs repository/process/comms evidence; mismatches to Aporia. Then PARK.",
       "reserve": [],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     },
     "Aporia": {
       "host": "SKULLPORT (M1)",
@@ -153,7 +172,8 @@
       "reserve": [
         "Start BUILDER-FABRIC / BUILDER-EXPERIMENT lanes from exposed defects (see builders)"
       ],
-      "blocked": []
+      "blocked": [],
+      "_note": "next/reserve are planning only (CWO-C s4)"
     }
   },
   "builders": {
@@ -187,5 +207,5 @@
       ]
     }
   },
-  "promotion": "FROZEN by CWO-2026-09-30B (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md): DECLARE -> FINISH -> REPORT -> READY. NEXT/RESERVE below are NOT authorized for self-promotion; Aporia assigns after READY. No new Builder lanes."
+  "promotion": "NONE. Aporia dispatches READY seats (CWO-C s7-s9)."
 }
