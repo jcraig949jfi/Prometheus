@@ -3,7 +3,7 @@
   "seat": "Tyche",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T09:40:00Z",
+  "updated_at_utc": "2026-09-30T10:30:00Z",
   "state": "ACTIVE",
   "branch": "tyche/dark-ecology-v0-2026-09-30",
   "head_sha": "(this commit; see git log -1 -- roles/Tyche/WORK_STATE.json)",
@@ -29,15 +29,22 @@
         "H5": "PASS",
         "H6": "INDETERMINATE"
       }
+    },
+    {
+      "id": "residual_catalogue_v0",
+      "status": "DONE",
+      "report": "tyche/residuals/v0/SUMMARY_v0.json"
     }
   ],
   "fabric_tasks": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "Residual catalogue v0 (CURRENT)",
-    "Dark Ecology assay (NEXT)",
-    "Request independent review of v0 packet (TYCHE-22)"
+    "Behaviour-tag + raw-row enrichment of imported entries",
+    "Dark Ecology clustering assay (NEXT)",
+    "Residual perturbation experiments (RESERVE)",
+    "Lens-engine v1 repairs TYCHE-23/24",
+    "Independent review of v0 packet TYCHE-22"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
@@ -45,8 +52,8 @@
     "tyche/runs/v0_2026-09-30/REPORT.md"
   ],
   "work_order": "CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, TYCHE section) under MWO-0004",
-  "current": "Residual catalogue v0: harvest discarded/unexplained/contradictory/weakly-anomalous phenomena from recent Prometheus experiments (committed rows only), each with provenance to the generating experiment and commit (CWO TYCHE CURRENT)",
-  "next": "Dark Ecology assay: cluster catalogue residuals by behaviour (not by engine); rank cross-engine, reproducible, cheap-to-probe, baseline-resistant, structurally strange (CWO TYCHE NEXT)",
+  "current": "Dark Ecology assay prep: behaviour-tag the 83 imported entries (provisional, not evidence) and attach raw_rows where committed; then cluster residuals by behaviour, not engine (CWO TYCHE NEXT promoted: catalogue v0 DONE)",
+  "next": "Residual perturbation: pick the best cross-engine, reproducible, cheap-to-probe residuals and turn them into bounded experiments (CWO TYCHE RESERVE promoted)",
   "reserve": [
     "Residual perturbation: best catalogue residuals -> bounded experiments (CWO TYCHE RESERVE)",
     "Lens-engine v1 instrument repairs: organism inputs independent of ecology order; residual with its own negative control (TYCHE-23/24)",
@@ -55,5 +62,5 @@
   ],
   "blocked": [],
   "resource_status": "Item v0 used <= 15.4 CPU core-hours on M2 (envelope 16/item, 48/24h per seat); no lease claimed; nothing running",
-  "last_receipt": "v0 complete 8d6e4c805 (verdicts + REPORT.md + review packet); Harmonia labels applied (this commit)"
+  "last_receipt": "Residual catalogue v0: 122 admitted / 10 rejected at ref 7510264263 (tyche/residuals/v0/); validator tests 7/7"
 }
