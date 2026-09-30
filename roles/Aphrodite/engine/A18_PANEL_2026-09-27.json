@@ -1,0 +1,2079 @@
+{
+ "draws": [
+  [
+   "qaaa",
+   "(v // (acc + (last - 1)))",
+   "0",
+   "pow(0, acc)",
+   "CON:G1"
+  ],
+  [
+   "qbaa",
+   "pow(0, (acc + (last - v)))",
+   "0",
+   "(0 - acc)",
+   "CON:G1"
+  ],
+  [
+   "qcaa",
+   "math.gcd(abs(v), abs((acc + (v // first))))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "CON:G1"
+  ],
+  [
+   "qdaa",
+   "(first + (acc + pow(acc, v)))",
+   "1",
+   "(last - acc)",
+   "CON:G1"
+  ],
+  [
+   "qeaa",
+   "pow(v, (acc + (0 // last)))",
+   "0",
+   "(0 // acc)",
+   "CON:G1"
+  ],
+  [
+   "qfaa",
+   "(v // (acc + math.gcd(abs(acc), abs(0))))",
+   "0",
+   "(0 - acc)",
+   "CON:G1"
+  ],
+  [
+   "qgaa",
+   "math.gcd(abs(v), abs((acc + (1 // acc))))",
+   "0",
+   "(acc * 1)",
+   "CON:G1"
+  ],
+  [
+   "qhaa",
+   "math.gcd(abs(v), abs((acc + (acc - last))))",
+   "1",
+   "(acc // acc)",
+   "CON:G1"
+  ],
+  [
+   "qiaa",
+   "(v + (acc + (1 // v)))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "CON:G1"
+  ],
+  [
+   "qjaa",
+   "(first + (acc + (acc % v)))",
+   "1",
+   "math.gcd(abs(1), abs(acc))",
+   "CON:G1"
+  ],
+  [
+   "qkaa",
+   "(v // (acc + (0 % last)))",
+   "0",
+   "(acc // 1)",
+   "CON:G1"
+  ],
+  [
+   "qlaa",
+   "pow(v, (acc + (last % v)))",
+   "0",
+   "math.gcd(abs(last), abs(acc))",
+   "CON:G1"
+  ],
+  [
+   "qmaa",
+   "pow(v, (acc + pow(v, acc)))",
+   "1",
+   "pow(acc, first)",
+   "CON:G1"
+  ],
+  [
+   "qnaa",
+   "(acc + (acc + (last % v)))",
+   "0",
+   "(acc // 1)",
+   "CON:G1"
+  ],
+  [
+   "qoaa",
+   "(last - (acc + (v * last)))",
+   "0",
+   "(last - acc)",
+   "CON:G1"
+  ],
+  [
+   "qpaa",
+   "(v // (acc + (first // acc)))",
+   "0",
+   "(last // acc)",
+   "CON:G1"
+  ],
+  [
+   "qqaa",
+   "(first // (acc + (v + last)))",
+   "1",
+   "math.gcd(abs(last), abs(acc))",
+   "CON:G1"
+  ],
+  [
+   "qraa",
+   "math.gcd(abs(0), abs((acc + (acc // v))))",
+   "1",
+   "math.gcd(abs(acc), abs(last))",
+   "CON:G1"
+  ],
+  [
+   "qsaa",
+   "pow(v, (acc + (acc // v)))",
+   "1",
+   "(acc % last)",
+   "CON:G1"
+  ],
+  [
+   "qtaa",
+   "(v * (acc + acc))",
+   "0",
+   "(last - acc)",
+   "CON:G1"
+  ],
+  [
+   "quaa",
+   "math.gcd(abs(acc), abs((acc + (v - last))))",
+   "1",
+   "(0 * acc)",
+   "CON:G1"
+  ],
+  [
+   "qvaa",
+   "(v * (acc + math.gcd(abs(v), abs(v))))",
+   "1",
+   "(first // acc)",
+   "CON:G1"
+  ],
+  [
+   "qwaa",
+   "(v - (acc + (1 - last)))",
+   "0",
+   "math.gcd(abs(last), abs(acc))",
+   "CON:G1"
+  ],
+  [
+   "qxaa",
+   "math.gcd(abs(v), abs((acc + (v * last))))",
+   "0",
+   "(last - acc)",
+   "CON:G1"
+  ],
+  [
+   "qyaa",
+   "(v % (acc + pow(0, first)))",
+   "0",
+   "(1 * acc)",
+   "CON:G1"
+  ],
+  [
+   "qzaa",
+   "(v % (acc + (last - first)))",
+   "1",
+   "pow(acc, 0)",
+   "CON:G1"
+  ],
+  [
+   "qaba",
+   "(first - (acc + (v % last)))",
+   "0",
+   "pow(acc, last)",
+   "CON:G1"
+  ],
+  [
+   "qbba",
+   "(v * (acc + (v - last)))",
+   "0",
+   "pow(first, acc)",
+   "CON:G1"
+  ],
+  [
+   "qcba",
+   "pow(v, (acc + (v + first)))",
+   "0",
+   "(0 % acc)",
+   "CON:G1"
+  ],
+  [
+   "qdba",
+   "math.gcd(abs(v), abs((acc + math.gcd(abs(v), abs(v)))))",
+   "0",
+   "pow(acc, acc)",
+   "CON:G1"
+  ],
+  [
+   "qeba",
+   "math.gcd(abs(first), abs((acc + (v - first))))",
+   "0",
+   "(acc + 0)",
+   "CON:G1"
+  ],
+  [
+   "qfba",
+   "(v % (acc + (acc * last)))",
+   "0",
+   "(acc + 0)",
+   "CON:G1"
+  ],
+  [
+   "qgba",
+   "(v + (acc + (first % last)))",
+   "1",
+   "(acc % last)",
+   "CON:G1"
+  ],
+  [
+   "qhba",
+   "(1 + (acc + (last % v)))",
+   "0",
+   "pow(0, acc)",
+   "CON:G1"
+  ],
+  [
+   "qiba",
+   "math.gcd(abs(v), abs((acc + (acc + acc))))",
+   "0",
+   "(acc * first)",
+   "CON:G1"
+  ],
+  [
+   "qjba",
+   "math.gcd(abs(acc), abs((acc + pow(v, first))))",
+   "0",
+   "(acc * 1)",
+   "CON:G1"
+  ],
+  [
+   "qkba",
+   "(v % (acc + (v * last)))",
+   "1",
+   "(acc + 1)",
+   "CON:G1"
+  ],
+  [
+   "qlba",
+   "(v // (acc + (acc + first)))",
+   "1",
+   "(last - acc)",
+   "CON:G1"
+  ],
+  [
+   "qmba",
+   "(last - (acc + (v - last)))",
+   "1",
+   "(last // acc)",
+   "CON:G1"
+  ],
+  [
+   "qnba",
+   "(last % (acc + (last - v)))",
+   "1",
+   "(0 + acc)",
+   "CON:G1"
+  ],
+  [
+   "qoba",
+   "(last + (acc + math.gcd(abs(v), abs(0))))",
+   "1",
+   "(last % acc)",
+   "CON:G1"
+  ],
+  [
+   "qpba",
+   "(v + (acc + math.gcd(abs(v), abs(0))))",
+   "1",
+   "pow(acc, acc)",
+   "CON:G1"
+  ],
+  [
+   "qqba",
+   "(1 + (acc + (v * last)))",
+   "0",
+   "(1 % acc)",
+   "CON:G1"
+  ],
+  [
+   "qrba",
+   "pow(acc, (acc + pow(v, first)))",
+   "0",
+   "(acc + 1)",
+   "CON:G1"
+  ],
+  [
+   "qsba",
+   "pow(v, (acc + (first * last)))",
+   "1",
+   "(acc % first)",
+   "CON:G1"
+  ],
+  [
+   "qtba",
+   "(acc * (acc + (0 - v)))",
+   "0",
+   "(acc + 0)",
+   "CON:G1"
+  ],
+  [
+   "quba",
+   "(v - (acc + (last % acc)))",
+   "1",
+   "(last % acc)",
+   "CON:G1"
+  ],
+  [
+   "qvba",
+   "(first * (acc + (v % first)))",
+   "0",
+   "pow(last, acc)",
+   "CON:G1"
+  ],
+  [
+   "qwba",
+   "(acc - pow(v, pow(last, last)))",
+   "1",
+   "(acc - first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qxba",
+   "pow(acc, pow(v, math.gcd(abs(v), abs(1))))",
+   "0",
+   "(first % acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qyba",
+   "pow(v, (acc * acc))",
+   "0",
+   "pow(first, acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qzba",
+   "(acc // pow(v, pow(first, last)))",
+   "1",
+   "(last // acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qaca",
+   "(first // pow(v, (acc + last)))",
+   "0",
+   "(0 % acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qbca",
+   "(acc % pow(v, pow(1, last)))",
+   "1",
+   "(acc % 0)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qcca",
+   "(last // pow(v, (acc - v)))",
+   "0",
+   "pow(acc, first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qdca",
+   "(last % pow(v, (acc % v)))",
+   "0",
+   "math.gcd(abs(first), abs(acc))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qeca",
+   "(1 % pow(v, (v % acc)))",
+   "0",
+   "(0 - acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qfca",
+   "(acc * pow(v, (v % first)))",
+   "0",
+   "(1 * acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qgca",
+   "pow(last, pow(v, acc))",
+   "0",
+   "(1 + acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qhca",
+   "(acc // pow(v, (v // v)))",
+   "0",
+   "math.gcd(abs(0), abs(acc))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qica",
+   "(first // pow(v, (1 // acc)))",
+   "0",
+   "pow(acc, 1)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qjca",
+   "(last - pow(v, pow(1, acc)))",
+   "0",
+   "(first * acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qkca",
+   "(acc % pow(v, (acc % last)))",
+   "1",
+   "(acc % last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qlca",
+   "math.gcd(abs(acc), abs(pow(v, (last - acc))))",
+   "1",
+   "(acc // last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qmca",
+   "(acc % pow(v, (1 % v)))",
+   "0",
+   "(acc // last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qnca",
+   "(1 - pow(v, math.gcd(abs(acc), abs(v))))",
+   "0",
+   "(0 - acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qoca",
+   "(first + pow(v, (acc + 1)))",
+   "1",
+   "(acc + last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qpca",
+   "(acc - pow(v, (acc + acc)))",
+   "0",
+   "(acc // last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qqca",
+   "(v * pow(v, pow(last, acc)))",
+   "0",
+   "pow(acc, first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qrca",
+   "(acc - pow(v, (v % acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qsca",
+   "pow(0, pow(v, (acc * v)))",
+   "0",
+   "(acc - first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qtca",
+   "(acc + pow(v, (acc - 1)))",
+   "0",
+   "(0 % acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "quca",
+   "(v + pow(v, (acc + first)))",
+   "1",
+   "(acc * last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qvca",
+   "(acc * pow(v, (last // acc)))",
+   "0",
+   "(acc % first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qwca",
+   "math.gcd(abs(first), abs(pow(v, (acc // first))))",
+   "1",
+   "(acc + last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qxca",
+   "math.gcd(abs(last), abs(pow(v, (acc - first))))",
+   "1",
+   "pow(first, acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qyca",
+   "(acc * pow(v, (v - 1)))",
+   "0",
+   "math.gcd(abs(last), abs(acc))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qzca",
+   "(1 + pow(v, (acc % v)))",
+   "0",
+   "(last // acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qada",
+   "(acc * pow(v, pow(first, acc)))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qbda",
+   "math.gcd(abs(acc), abs(pow(v, (acc * first))))",
+   "1",
+   "(acc * 0)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qcda",
+   "(acc % pow(v, (v + last)))",
+   "1",
+   "(last + acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qdda",
+   "(v // pow(v, pow(v, acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qeda",
+   "(acc + pow(v, (acc + 1)))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qfda",
+   "pow(1, pow(v, (acc - v)))",
+   "0",
+   "(acc + last)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qgda",
+   "(first - pow(v, math.gcd(abs(acc), abs(first))))",
+   "1",
+   "math.gcd(abs(acc), abs(first))",
+   "CON:SHAM_0"
+  ],
+  [
+   "qhda",
+   "math.gcd(abs(last), abs(pow(v, (first - acc))))",
+   "1",
+   "(acc + 0)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qida",
+   "(last // pow(v, math.gcd(abs(acc), abs(v))))",
+   "1",
+   "pow(acc, first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qjda",
+   "(acc * pow(v, (acc - first)))",
+   "1",
+   "(acc % first)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qkda",
+   "(acc * pow(v, (acc % last)))",
+   "0",
+   "(last % acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qlda",
+   "(acc - pow(v, math.gcd(abs(1), abs(1))))",
+   "0",
+   "(acc // acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qmda",
+   "(v // pow(v, (acc % acc)))",
+   "0",
+   "(0 // acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qnda",
+   "(1 - pow(v, (v - acc)))",
+   "1",
+   "(last + acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qoda",
+   "(acc - pow(v, pow(v, first)))",
+   "0",
+   "(acc // 0)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qpda",
+   "(acc + pow(v, (acc * acc)))",
+   "0",
+   "(last * acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qqda",
+   "math.gcd(abs(acc), abs(pow(v, math.gcd(abs(last), abs(1)))))",
+   "0",
+   "(acc * 0)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qrda",
+   "(first - pow(v, math.gcd(abs(acc), abs(last))))",
+   "1",
+   "(acc + acc)",
+   "CON:SHAM_0"
+  ],
+  [
+   "qsda",
+   "(first - (v % pow(acc, v)))",
+   "0",
+   "(first % acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qtda",
+   "(v + (v % (acc % v)))",
+   "0",
+   "(1 % acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "quda",
+   "(v - (v % (acc + acc)))",
+   "0",
+   "(1 + acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qvda",
+   "math.gcd(abs(0), abs((v % math.gcd(abs(acc), abs(first)))))",
+   "0",
+   "(first // acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qwda",
+   "(0 * (v % (acc // v)))",
+   "1",
+   "pow(acc, acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qxda",
+   "(acc * (v % math.gcd(abs(first), abs(first))))",
+   "1",
+   "(acc - acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qyda",
+   "(acc * (v % pow(acc, first)))",
+   "1",
+   "(acc // 0)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qzda",
+   "math.gcd(abs(last), abs((v % (first - acc))))",
+   "0",
+   "pow(acc, last)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qaea",
+   "(0 // (v % (acc - first)))",
+   "1",
+   "(acc - first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qbea",
+   "math.gcd(abs(acc), abs((v % (acc + acc))))",
+   "0",
+   "(acc // 1)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qcea",
+   "(acc - (v % pow(first, acc)))",
+   "1",
+   "(acc // first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qdea",
+   "(1 - (v % (v % acc)))",
+   "1",
+   "pow(acc, 1)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qeea",
+   "(0 // (v % (acc % first)))",
+   "1",
+   "(acc * 1)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qfea",
+   "(acc + (v % (acc % first)))",
+   "0",
+   "(0 * acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qgea",
+   "math.gcd(abs(acc), abs((v % pow(v, acc))))",
+   "1",
+   "(0 // acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qhea",
+   "(first - (v % (acc * v)))",
+   "0",
+   "math.gcd(abs(last), abs(acc))",
+   "CON:SHAM_1"
+  ],
+  [
+   "qiea",
+   "(v + (v % math.gcd(abs(acc), abs(first))))",
+   "1",
+   "acc",
+   "CON:SHAM_1"
+  ],
+  [
+   "qjea",
+   "(0 * (v % (acc // v)))",
+   "1",
+   "(acc - 1)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qkea",
+   "(first - (v % pow(last, acc)))",
+   "1",
+   "pow(1, acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qlea",
+   "pow(acc, (v % (v // last)))",
+   "0",
+   "pow(acc, last)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qmea",
+   "math.gcd(abs(last), abs((v % (acc + v))))",
+   "0",
+   "(acc + last)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qnea",
+   "(1 + (v % (acc * v)))",
+   "0",
+   "(acc // 0)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qoea",
+   "pow(v, (v % math.gcd(abs(acc), abs(acc))))",
+   "1",
+   "(acc + first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qpea",
+   "(last % (v % (acc % v)))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "CON:SHAM_1"
+  ],
+  [
+   "qqea",
+   "(v % (v % (v // acc)))",
+   "0",
+   "(acc + 0)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qrea",
+   "pow(first, (v % pow(acc, acc)))",
+   "1",
+   "(last + acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qsea",
+   "(1 + (v % (acc - last)))",
+   "1",
+   "(acc % last)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qtea",
+   "pow(acc, (v % math.gcd(abs(first), abs(0))))",
+   "0",
+   "pow(acc, first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "quea",
+   "math.gcd(abs(first), abs((v % (0 - acc))))",
+   "0",
+   "(0 + acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qvea",
+   "(first % (v % pow(first, acc)))",
+   "0",
+   "(acc % 1)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qwea",
+   "math.gcd(abs(0), abs((v % (acc * v))))",
+   "0",
+   "(acc - first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qxea",
+   "(1 % (v % (last % acc)))",
+   "1",
+   "(acc % 0)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qyea",
+   "(1 // (v % (v // acc)))",
+   "0",
+   "(acc - 0)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qzea",
+   "(last // (v % pow(last, acc)))",
+   "1",
+   "(acc // first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qafa",
+   "(acc // (v % (acc + acc)))",
+   "0",
+   "math.gcd(abs(0), abs(acc))",
+   "CON:SHAM_1"
+  ],
+  [
+   "qbfa",
+   "(v % (last % acc))",
+   "1",
+   "(acc % acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qcfa",
+   "(1 % (v % (acc + last)))",
+   "1",
+   "(first + acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qdfa",
+   "(first % (v % pow(acc, acc)))",
+   "0",
+   "(acc * acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qefa",
+   "(1 // (v % pow(acc, acc)))",
+   "1",
+   "(acc - first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qffa",
+   "(acc - (v % pow(v, acc)))",
+   "1",
+   "(acc % acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qgfa",
+   "(first // (v % (acc // first)))",
+   "0",
+   "(1 + acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qhfa",
+   "math.gcd(abs(v), abs((v % (acc - first))))",
+   "0",
+   "pow(acc, first)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qifa",
+   "(1 + (v % (last - acc)))",
+   "1",
+   "math.gcd(abs(acc), abs(1))",
+   "CON:SHAM_1"
+  ],
+  [
+   "qjfa",
+   "(1 + (v % (acc + first)))",
+   "1",
+   "math.gcd(abs(acc), abs(first))",
+   "CON:SHAM_1"
+  ],
+  [
+   "qkfa",
+   "math.gcd(abs(0), abs((v % (acc * first))))",
+   "1",
+   "pow(acc, 0)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qlfa",
+   "pow(first, (v % (acc // last)))",
+   "0",
+   "pow(1, acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qmfa",
+   "(v % (v - acc))",
+   "0",
+   "(acc % 1)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qnfa",
+   "(first % (v % math.gcd(abs(acc), abs(last))))",
+   "1",
+   "(first % acc)",
+   "CON:SHAM_1"
+  ],
+  [
+   "qofa",
+   "(acc - (v * math.gcd(abs(last), abs(last))))",
+   "0",
+   "acc",
+   "NAT"
+  ],
+  [
+   "qpfa",
+   "(v - (v * (0 + acc)))",
+   "0",
+   "pow(acc, 1)",
+   "NAT"
+  ],
+  [
+   "qqfa",
+   "(acc % math.gcd(abs(last), abs((first + v))))",
+   "1",
+   "(last // acc)",
+   "NAT"
+  ],
+  [
+   "qrfa",
+   "(last - (acc * (1 + v)))",
+   "1",
+   "(0 % acc)",
+   "NAT"
+  ],
+  [
+   "qsfa",
+   "pow(first, (v * pow(0, acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "NAT"
+  ],
+  [
+   "qtfa",
+   "(v // math.gcd(abs(acc), abs((first + v))))",
+   "1",
+   "(acc + acc)",
+   "NAT"
+  ],
+  [
+   "qufa",
+   "(v // (1 // math.gcd(abs(first), abs(acc))))",
+   "1",
+   "(first // acc)",
+   "NAT"
+  ],
+  [
+   "qvfa",
+   "(1 * (v - (acc - last)))",
+   "0",
+   "(last // acc)",
+   "NAT"
+  ],
+  [
+   "qwfa",
+   "(v - (acc * math.gcd(abs(acc), abs(0))))",
+   "0",
+   "(1 - acc)",
+   "NAT"
+  ],
+  [
+   "qxfa",
+   "math.gcd(abs(acc), abs(math.gcd(abs(0), abs((v // first)))))",
+   "1",
+   "(acc * acc)",
+   "NAT"
+  ],
+  [
+   "qyfa",
+   "(first % (first % pow(acc, v)))",
+   "1",
+   "math.gcd(abs(1), abs(acc))",
+   "NAT"
+  ],
+  [
+   "qzfa",
+   "(last // pow(acc, (v // 1)))",
+   "1",
+   "(acc + 0)",
+   "NAT"
+  ],
+  [
+   "qaga",
+   "(acc // (last * (v // acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(first))",
+   "NAT"
+  ],
+  [
+   "qbga",
+   "(v % math.gcd(abs(first), abs((v % acc))))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "NAT"
+  ],
+  [
+   "qcga",
+   "(first * (last * (acc % v)))",
+   "1",
+   "(0 // acc)",
+   "NAT"
+  ],
+  [
+   "qdga",
+   "(v * math.gcd(abs(v), abs((acc * 1))))",
+   "0",
+   "(acc * last)",
+   "NAT"
+  ],
+  [
+   "qega",
+   "(0 % (1 - math.gcd(abs(acc), abs(v))))",
+   "0",
+   "math.gcd(abs(0), abs(acc))",
+   "NAT"
+  ],
+  [
+   "qfga",
+   "(v // (last - (v * acc)))",
+   "1",
+   "(acc - acc)",
+   "NAT"
+  ],
+  [
+   "qgga",
+   "pow(acc, math.gcd(abs(v), abs((first + 0))))",
+   "0",
+   "(acc - first)",
+   "NAT"
+  ],
+  [
+   "qhga",
+   "math.gcd(abs(acc), abs((1 % (v - 1))))",
+   "0",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "qiga",
+   "(last * (0 % (v - acc)))",
+   "0",
+   "(last % acc)",
+   "NAT"
+  ],
+  [
+   "qjga",
+   "(v // (v % pow(first, acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(1))",
+   "NAT"
+  ],
+  [
+   "qkga",
+   "(v - pow(0, (first // acc)))",
+   "0",
+   "(first - acc)",
+   "NAT"
+  ],
+  [
+   "qlga",
+   "math.gcd(abs(acc), abs((v + (1 * last))))",
+   "1",
+   "(acc // 0)",
+   "NAT"
+  ],
+  [
+   "qmga",
+   "(last % (acc - (v - first)))",
+   "1",
+   "(acc + first)",
+   "NAT"
+  ],
+  [
+   "qnga",
+   "(acc * math.gcd(abs(acc), abs((v % acc))))",
+   "1",
+   "(acc + 0)",
+   "NAT"
+  ],
+  [
+   "qoga",
+   "(acc - (v + math.gcd(abs(first), abs(acc))))",
+   "0",
+   "pow(acc, acc)",
+   "NAT"
+  ],
+  [
+   "qpga",
+   "(last * (v // math.gcd(abs(first), abs(acc))))",
+   "1",
+   "math.gcd(abs(acc), abs(last))",
+   "NAT"
+  ],
+  [
+   "qqga",
+   "math.gcd(abs(v), abs((acc // math.gcd(abs(1), abs(last)))))",
+   "1",
+   "(acc // 1)",
+   "NAT"
+  ],
+  [
+   "qrga",
+   "(acc % math.gcd(abs(v), abs((0 // v))))",
+   "0",
+   "pow(acc, first)",
+   "NAT"
+  ],
+  [
+   "qsga",
+   "(acc % (last % pow(acc, v)))",
+   "1",
+   "(last + acc)",
+   "NAT"
+  ],
+  [
+   "qtga",
+   "(v + (last * math.gcd(abs(v), abs(acc))))",
+   "1",
+   "pow(0, acc)",
+   "NAT"
+  ],
+  [
+   "quga",
+   "(v // (1 - (acc * acc)))",
+   "1",
+   "math.gcd(abs(acc), abs(last))",
+   "NAT"
+  ],
+  [
+   "qvga",
+   "(v - (acc % v))",
+   "1",
+   "(1 // acc)",
+   "NAT"
+  ],
+  [
+   "qwga",
+   "math.gcd(abs(acc), abs(pow(v, (first // v))))",
+   "1",
+   "(acc % 0)",
+   "NAT"
+  ],
+  [
+   "qxga",
+   "(acc % math.gcd(abs(v), abs((v - v))))",
+   "0",
+   "(first // acc)",
+   "NAT"
+  ],
+  [
+   "qyga",
+   "(1 // (0 + (acc % v)))",
+   "0",
+   "(acc * first)",
+   "NAT"
+  ],
+  [
+   "qzga",
+   "(v // (last * (acc * acc)))",
+   "0",
+   "(first // acc)",
+   "NAT"
+  ],
+  [
+   "qaha",
+   "(acc + (acc // (first // v)))",
+   "0",
+   "(acc % 1)",
+   "NAT"
+  ],
+  [
+   "qbha",
+   "(v % (1 - (first * acc)))",
+   "1",
+   "(acc // 1)",
+   "NAT"
+  ],
+  [
+   "qcha",
+   "(v - (0 - math.gcd(abs(first), abs(acc))))",
+   "1",
+   "(1 % acc)",
+   "NAT"
+  ],
+  [
+   "qdha",
+   "math.gcd(abs(v), abs(math.gcd(abs(first), abs((0 // acc)))))",
+   "0",
+   "(0 * acc)",
+   "NAT"
+  ],
+  [
+   "qeha",
+   "pow(v, (first // math.gcd(abs(acc), abs(acc))))",
+   "1",
+   "(1 + acc)",
+   "NAT"
+  ],
+  [
+   "qfha",
+   "(0 - (acc * math.gcd(abs(last), abs(v))))",
+   "0",
+   "(acc - last)",
+   "NAT"
+  ],
+  [
+   "qgha",
+   "(0 + (acc // (v * v)))",
+   "0",
+   "(1 // acc)",
+   "NAT"
+  ],
+  [
+   "qhha",
+   "(v * pow(acc, pow(first, first)))",
+   "0",
+   "pow(first, acc)",
+   "NAT"
+  ],
+  [
+   "qiha",
+   "pow(acc, (v + (v + v)))",
+   "1",
+   "(1 * acc)",
+   "NAT"
+  ],
+  [
+   "qjha",
+   "(v % (acc % (acc * acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "NAT"
+  ],
+  [
+   "qkha",
+   "pow(v, pow(acc, (last // v)))",
+   "1",
+   "pow(first, acc)",
+   "NAT"
+  ],
+  [
+   "qlha",
+   "(v - pow(last, (acc + first)))",
+   "1",
+   "(acc // acc)",
+   "NAT"
+  ],
+  [
+   "qmha",
+   "(v % (acc + (last * 0)))",
+   "0",
+   "(last - acc)",
+   "NAT"
+  ],
+  [
+   "qnha",
+   "(1 + (v % (last + acc)))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "NAT"
+  ],
+  [
+   "qoha",
+   "(0 % (v - (acc // v)))",
+   "0",
+   "(1 // acc)",
+   "NAT"
+  ],
+  [
+   "qpha",
+   "(1 * pow(acc, math.gcd(abs(v), abs(first))))",
+   "1",
+   "(last * acc)",
+   "NAT"
+  ],
+  [
+   "qqha",
+   "(acc + (v % (first + 0)))",
+   "1",
+   "math.gcd(abs(acc), abs(last))",
+   "NAT"
+  ],
+  [
+   "qrha",
+   "pow(v, math.gcd(abs(acc), abs((last + v))))",
+   "1",
+   "(0 + acc)",
+   "NAT"
+  ],
+  [
+   "qsha",
+   "(0 // (v - (acc // first)))",
+   "1",
+   "(acc // last)",
+   "NAT"
+  ],
+  [
+   "qtha",
+   "(1 + (v // pow(acc, first)))",
+   "1",
+   "(acc % 1)",
+   "NAT"
+  ],
+  [
+   "quha",
+   "pow(acc, (last % (v * 1)))",
+   "0",
+   "(1 * acc)",
+   "NAT"
+  ],
+  [
+   "qvha",
+   "math.gcd(abs(0), abs(pow(acc, pow(v, first))))",
+   "0",
+   "math.gcd(abs(acc), abs(last))",
+   "NAT"
+  ],
+  [
+   "qwha",
+   "pow(v, (first + (last - acc)))",
+   "0",
+   "(acc % 0)",
+   "NAT"
+  ],
+  [
+   "qxha",
+   "(v - math.gcd(abs(1), abs((1 % acc))))",
+   "1",
+   "(acc // acc)",
+   "NAT"
+  ],
+  [
+   "qyha",
+   "pow(1, (acc * math.gcd(abs(v), abs(0))))",
+   "1",
+   "(first % acc)",
+   "NAT"
+  ],
+  [
+   "qzha",
+   "(v // (last - pow(last, acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "NAT"
+  ],
+  [
+   "qaia",
+   "(v * (acc % (1 + first)))",
+   "0",
+   "pow(acc, 1)",
+   "NAT"
+  ],
+  [
+   "qbia",
+   "(first - math.gcd(abs(v), abs((0 - acc))))",
+   "1",
+   "(acc // 0)",
+   "NAT"
+  ],
+  [
+   "qcia",
+   "pow(v, pow(acc, (first // v)))",
+   "1",
+   "(acc // acc)",
+   "NAT"
+  ],
+  [
+   "qdia",
+   "(1 // (v - (first * acc)))",
+   "0",
+   "pow(acc, 0)",
+   "NAT"
+  ],
+  [
+   "qeia",
+   "(acc % pow(last, (v * 1)))",
+   "0",
+   "(acc - last)",
+   "NAT"
+  ],
+  [
+   "qfia",
+   "(0 % (0 - (acc % v)))",
+   "1",
+   "(acc - acc)",
+   "NAT"
+  ],
+  [
+   "qgia",
+   "(v % (last + (acc + 0)))",
+   "0",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "qhia",
+   "pow(last, math.gcd(abs(first), abs(pow(v, acc))))",
+   "0",
+   "pow(acc, acc)",
+   "NAT"
+  ],
+  [
+   "qiia",
+   "(acc * (1 - (last * v)))",
+   "0",
+   "(acc * 0)",
+   "NAT"
+  ],
+  [
+   "qjia",
+   "pow(v, (first - (v * acc)))",
+   "0",
+   "pow(acc, 0)",
+   "NAT"
+  ],
+  [
+   "qkia",
+   "(v - pow(1, (acc // last)))",
+   "1",
+   "(first - acc)",
+   "NAT"
+  ],
+  [
+   "qlia",
+   "pow(0, math.gcd(abs(acc), abs((v - last))))",
+   "1",
+   "(acc + last)",
+   "NAT"
+  ],
+  [
+   "qmia",
+   "(acc // (v - math.gcd(abs(acc), abs(1))))",
+   "0",
+   "(last % acc)",
+   "NAT"
+  ],
+  [
+   "qnia",
+   "(first * math.gcd(abs(last), abs(math.gcd(abs(acc), abs(v)))))",
+   "0",
+   "(0 % acc)",
+   "NAT"
+  ],
+  [
+   "qoia",
+   "(v + (1 * (acc + last)))",
+   "1",
+   "(1 // acc)",
+   "NAT"
+  ],
+  [
+   "qpia",
+   "pow(v, (first - (acc // 1)))",
+   "1",
+   "acc",
+   "NAT"
+  ],
+  [
+   "qqia",
+   "(acc * (v + (0 // v)))",
+   "1",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "qria",
+   "(1 * (last - math.gcd(abs(v), abs(acc))))",
+   "1",
+   "(1 + acc)",
+   "NAT"
+  ],
+  [
+   "qsia",
+   "(acc + (v - (1 - last)))",
+   "0",
+   "pow(0, acc)",
+   "NAT"
+  ],
+  [
+   "qtia",
+   "(v // (first - math.gcd(abs(v), abs(acc))))",
+   "0",
+   "(last * acc)",
+   "NAT"
+  ],
+  [
+   "quia",
+   "(0 + (0 // (acc - v)))",
+   "0",
+   "(first + acc)",
+   "NAT"
+  ],
+  [
+   "qvia",
+   "pow(v, math.gcd(abs(first), abs(pow(acc, last))))",
+   "1",
+   "(0 - acc)",
+   "NAT"
+  ],
+  [
+   "qwia",
+   "(acc + pow(v, acc))",
+   "0",
+   "(last - acc)",
+   "NAT"
+  ],
+  [
+   "qxia",
+   "pow(acc, math.gcd(abs(0), abs(math.gcd(abs(0), abs(v)))))",
+   "0",
+   "(acc + 1)",
+   "NAT"
+  ],
+  [
+   "qyia",
+   "(v // (acc * math.gcd(abs(last), abs(last))))",
+   "0",
+   "pow(1, acc)",
+   "NAT"
+  ],
+  [
+   "qzia",
+   "(v % pow(acc, (acc * last)))",
+   "1",
+   "(first % acc)",
+   "NAT"
+  ],
+  [
+   "qaja",
+   "pow(v, (acc * (last // 1)))",
+   "1",
+   "pow(acc, 0)",
+   "NAT"
+  ],
+  [
+   "qbja",
+   "(acc - (last // pow(v, 1)))",
+   "1",
+   "(first * acc)",
+   "NAT"
+  ],
+  [
+   "qcja",
+   "pow(v, (first - (v - acc)))",
+   "1",
+   "pow(first, acc)",
+   "NAT"
+  ],
+  [
+   "qdja",
+   "math.gcd(abs(0), abs((first // (v % acc))))",
+   "1",
+   "(1 - acc)",
+   "NAT"
+  ],
+  [
+   "qeja",
+   "pow(first, (acc % math.gcd(abs(last), abs(v))))",
+   "1",
+   "(1 * acc)",
+   "NAT"
+  ],
+  [
+   "qfja",
+   "(acc - (v % (1 - last)))",
+   "0",
+   "(acc + last)",
+   "NAT"
+  ],
+  [
+   "qgja",
+   "(first % math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc)))))",
+   "1",
+   "(acc - first)",
+   "NAT"
+  ],
+  [
+   "qhja",
+   "(v + (last + (first - acc)))",
+   "0",
+   "(last - acc)",
+   "NAT"
+  ],
+  [
+   "qija",
+   "pow(acc, (first - (1 + v)))",
+   "0",
+   "(acc * acc)",
+   "NAT"
+  ],
+  [
+   "qjja",
+   "(acc * pow(acc, (v + v)))",
+   "0",
+   "(first % acc)",
+   "NAT"
+  ],
+  [
+   "qkja",
+   "(acc // math.gcd(abs(v), abs((1 * first))))",
+   "1",
+   "(acc // first)",
+   "NAT"
+  ],
+  [
+   "qlja",
+   "(v // (first // (0 - acc)))",
+   "0",
+   "(first - acc)",
+   "NAT"
+  ],
+  [
+   "qmja",
+   "(first // math.gcd(abs(acc), abs((first % v))))",
+   "1",
+   "(acc + acc)",
+   "NAT"
+  ],
+  [
+   "qnja",
+   "(acc + (v - (1 * first)))",
+   "1",
+   "(acc // last)",
+   "NAT"
+  ],
+  [
+   "qoja",
+   "(acc * (acc % math.gcd(abs(v), abs(v))))",
+   "0",
+   "pow(last, acc)",
+   "NAT"
+  ],
+  [
+   "qpja",
+   "(acc // (v * math.gcd(abs(1), abs(v))))",
+   "1",
+   "(acc // acc)",
+   "NAT"
+  ],
+  [
+   "qqja",
+   "(acc + (0 - (first + v)))",
+   "0",
+   "(acc - last)",
+   "NAT"
+  ],
+  [
+   "qrja",
+   "(v * (acc * (1 % v)))",
+   "0",
+   "(acc + 0)",
+   "NAT"
+  ],
+  [
+   "qsja",
+   "(v - math.gcd(abs(last), abs((v + acc))))",
+   "1",
+   "math.gcd(abs(first), abs(acc))",
+   "NAT"
+  ],
+  [
+   "qtja",
+   "(v * (1 % (acc - first)))",
+   "1",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "quja",
+   "pow(v, math.gcd(abs(last), abs((acc + first))))",
+   "1",
+   "(acc * acc)",
+   "NAT"
+  ],
+  [
+   "qvja",
+   "pow(last, (acc % math.gcd(abs(last), abs(v))))",
+   "1",
+   "pow(last, acc)",
+   "NAT"
+  ],
+  [
+   "qwja",
+   "(v % (v * (acc * 1)))",
+   "1",
+   "(last + acc)",
+   "NAT"
+  ],
+  [
+   "qxja",
+   "(1 + (0 - (v * acc)))",
+   "1",
+   "(last // acc)",
+   "NAT"
+  ],
+  [
+   "qyja",
+   "(v - (acc - (1 % acc)))",
+   "1",
+   "(acc + last)",
+   "NAT"
+  ],
+  [
+   "qzja",
+   "(v * (acc * (last + 1)))",
+   "0",
+   "(last + acc)",
+   "NAT"
+  ],
+  [
+   "qaka",
+   "(last // (v - pow(acc, 1)))",
+   "0",
+   "(acc + 1)",
+   "NAT"
+  ],
+  [
+   "qbka",
+   "(v + pow(1, (acc - v)))",
+   "1",
+   "(acc // first)",
+   "NAT"
+  ],
+  [
+   "qcka",
+   "(acc + (v + pow(0, acc)))",
+   "1",
+   "(acc * acc)",
+   "NAT"
+  ],
+  [
+   "qdka",
+   "(1 + (acc - math.gcd(abs(v), abs(last))))",
+   "1",
+   "(0 - acc)",
+   "NAT"
+  ],
+  [
+   "qeka",
+   "(acc - (first // (v % first)))",
+   "1",
+   "(last // acc)",
+   "NAT"
+  ],
+  [
+   "qfka",
+   "pow(acc, (v + (1 + acc)))",
+   "1",
+   "(acc % 1)",
+   "NAT"
+  ],
+  [
+   "qgka",
+   "(acc + (v % (1 + v)))",
+   "1",
+   "(0 % acc)",
+   "NAT"
+  ],
+  [
+   "qhka",
+   "pow(v, pow(v, (first % acc)))",
+   "1",
+   "(acc + 1)",
+   "NAT"
+  ],
+  [
+   "qika",
+   "(1 - (acc - (acc % v)))",
+   "1",
+   "(acc * 0)",
+   "NAT"
+  ],
+  [
+   "qjka",
+   "(v * (1 + pow(acc, 1)))",
+   "1",
+   "pow(acc, 1)",
+   "NAT"
+  ],
+  [
+   "qkka",
+   "(acc // (v - (1 // 1)))",
+   "1",
+   "pow(acc, first)",
+   "NAT"
+  ],
+  [
+   "qlka",
+   "(acc % (1 + (1 - v)))",
+   "1",
+   "(last + acc)",
+   "NAT"
+  ],
+  [
+   "qmka",
+   "(v * (acc + (last - 1)))",
+   "0",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "qnka",
+   "(v * (acc * math.gcd(abs(acc), abs(1))))",
+   "0",
+   "(acc % 0)",
+   "NAT"
+  ],
+  [
+   "qoka",
+   "math.gcd(abs(last), abs((last + pow(v, acc))))",
+   "0",
+   "pow(first, acc)",
+   "NAT"
+  ],
+  [
+   "qpka",
+   "(v + (first * (acc * last)))",
+   "0",
+   "pow(0, acc)",
+   "NAT"
+  ],
+  [
+   "qqka",
+   "(acc - (0 - (last - v)))",
+   "0",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "qrka",
+   "math.gcd(abs(v), abs((acc + (acc % acc))))",
+   "0",
+   "(1 - acc)",
+   "NAT"
+  ],
+  [
+   "qska",
+   "pow(v, (last * (acc * v)))",
+   "0",
+   "(acc % 1)",
+   "NAT"
+  ],
+  [
+   "qtka",
+   "pow(v, (acc - pow(0, 1)))",
+   "1",
+   "(0 * acc)",
+   "NAT"
+  ],
+  [
+   "quka",
+   "(last // (acc // (acc // v)))",
+   "0",
+   "(acc % first)",
+   "NAT"
+  ],
+  [
+   "qvka",
+   "math.gcd(abs(last), abs(math.gcd(abs(v), abs((last // acc)))))",
+   "1",
+   "(1 // acc)",
+   "NAT"
+  ],
+  [
+   "qwka",
+   "pow(last, (acc % (acc % v)))",
+   "0",
+   "(1 + acc)",
+   "NAT"
+  ],
+  [
+   "qxka",
+   "(last + (first * (v * acc)))",
+   "0",
+   "pow(acc, 0)",
+   "NAT"
+  ],
+  [
+   "qyka",
+   "math.gcd(abs(0), abs((acc * v)))",
+   "0",
+   "(last // acc)",
+   "NAT"
+  ],
+  [
+   "qzka",
+   "(acc % (v % (last + acc)))",
+   "0",
+   "(acc % acc)",
+   "NAT"
+  ],
+  [
+   "qala",
+   "math.gcd(abs(v), abs((0 // math.gcd(abs(acc), abs(acc)))))",
+   "1",
+   "(0 * acc)",
+   "NAT"
+  ],
+  [
+   "qbla",
+   "(first % (v + math.gcd(abs(acc), abs(first))))",
+   "0",
+   "(0 // acc)",
+   "NAT"
+  ]
+ ],
+ "draws_sha256": "9d6147b4fdc56b7d96ceb2029b26d907b7c22f3532e5fba1f6715fc65dc343c1",
+ "overlap": {
+  "G1": {
+   "OFF_0": 0.00092,
+   "SHAM_0": 0.00108,
+   "SHAM_1": 0.00091,
+   "SHAM_2": 0.00092,
+   "SHAM_3": 0.00249
+  },
+  "OFF_0": {
+   "G1": 0.00108,
+   "SHAM_0": 0.00154,
+   "SHAM_1": 0.00106,
+   "SHAM_2": 0.00108,
+   "SHAM_3": 0.00499
+  },
+  "SHAM_0": {
+   "G1": 0.00092,
+   "OFF_0": 0.00154,
+   "SHAM_1": 0.00106,
+   "SHAM_2": 0.00092,
+   "SHAM_3": 0.00249
+  },
+  "SHAM_1": {
+   "G1": 0.00108,
+   "OFF_0": 0.00154,
+   "SHAM_0": 0.00154,
+   "SHAM_2": 0.00108,
+   "SHAM_3": 0.00499
+  },
+  "SHAM_2": {
+   "G1": 0.00092,
+   "OFF_0": 0.00154,
+   "SHAM_0": 0.00154,
+   "SHAM_1": 0.00091,
+   "SHAM_3": 0.01746
+  },
+  "SHAM_3": {
+   "G1": 0.0,
+   "OFF_0": 0.00015,
+   "SHAM_0": 0.00015,
+   "SHAM_1": 0.0,
+   "SHAM_2": 0.00092
+  }
+ },
+ "panel": {
+  "G1": "(acc + {H})",
+  "OFF_0": "(v - {H})",
+  "SHAM_0": "pow(v, {H})",
+  "SHAM_1": "(v % {H})",
+  "SHAM_2": "math.gcd(abs({H}), abs(v))",
+  "SHAM_3": "math.gcd(abs((last // {H})), abs(v))"
+ },
+ "panel_sha256": "fe05e71fbda604ff17af46bd6d029752ba8dd615beedefa6963876cd1c766ad2",
+ "supply_sizes": {
+  "G1": 2086,
+  "SHAM_0": 2107,
+  "SHAM_1": 1995
+ }
+}

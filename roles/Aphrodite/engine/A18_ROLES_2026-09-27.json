@@ -1,0 +1,782 @@
+{
+ "CON/0": {
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/1": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last // pow(v, 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qbja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/2": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last // pow(v, 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qbja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/3": {
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/4": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (acc + (last - 1)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qmka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/5": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/6": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "CON/7": {
+  "families": [
+   {
+    "Q2_size": 8,
+    "body": "(last - (acc + (v * last)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qoaa",
+    "role": "VALIDATE",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (acc + (last - 1)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qmka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (acc + (last % v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "qnaa",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc + (first % last)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "qgba",
+    "role": "TRANSFER",
+    "source": "CON:G1"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/0": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc - (0 - (last - v)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qqka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last // pow(v, 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qbja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (acc + (last - 1)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qmka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/1": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last // pow(v, 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qbja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc - (0 - (last - v)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qqka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (acc + (last - 1)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qmka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/2": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last // pow(v, 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qbja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc - (0 - (last - v)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qqka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (acc + (last - 1)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qmka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ },
+ "NAT/3": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - math.gcd(abs(v), abs(last))))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "qdka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (0 - (first + v)))",
+    "final": "(acc - last)",
+    "init": "0",
+    "name": "qqja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (last + (first - acc)))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "qhja",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (acc + (last - 1)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qmka",
+    "role": "VALIDATE",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + (v - (1 * first)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "qnja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (last // pow(v, 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "qbja",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs((first + v))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "qtfa",
+    "role": "TRANSFER",
+    "source": "NAT"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc - (0 - (last - v)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "qqka",
+    "role": "TRANSFER",
+    "source": "NAT"
+   }
+  ],
+  "ok": false
+ }
+}

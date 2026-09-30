@@ -1,0 +1,208 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "leniabreeder-faldor-2024",
+  "canonical_name": "Leniabreeder -- Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity (Faldor, Maxence and Cully, Antoine; institution NOT_FOUND_AT_PIN in README (apptainer/hpc.yaml names host login.hpc.imperial.ac.uk); 2024)",
+  "aliases": [
+    "Leniabreeder",
+    "leniabreeder (BibTeX key)"
+  ],
+  "lineage": "README names Lenia and Quality-Diversity in the title and describes MAP-Elites and AURORA experiments; the tree vendors a modified qdax package (__version__ 0.3.0; qdax/tasks/README.md references the 'QD Benchmarks Workshop at GECCO 2022'); lenia/patterns.py entries are named 'Aquarium (self-replicating)', 'Aquarium (swarm)' etc.; isoline_variation docstring cites 'Iso+Line-DD Variation Operator [1]'. No explicit 'descends from / supersedes' statement in README. || main loop (reader, from the code): Each generation the MixingEmitter samples parent pairs from the repertoire and applies isoline_variation (iso_sigma Gaussian noise + line_sigma interpolation), each child genotype is expressed into a 128x128 Lenia world and stepped 200 times under jax.lax.scan while recording mass/center/velocity/angle stats and a cropped phenotype, fitness and descriptor are computed from the last n_keep steps (fitness set to -inf if the world went empty, hit the border, or spread), and children are added to a CVT MAP-Elites grid (main_me.py) or to an UnstructuredRepertoire that keeps the individuals most distant from fitter neighbours in the VAE latent space, which is retrained on stored phenotypes every generation and used to re-encode the whole archive (main_aurora.py).",
+  "domain": [
+    "artificial-life",
+    "quality-diversity",
+    "lenia",
+    "open-endedness",
+    "jax"
+  ],
+  "era": "2024-2025",
+  "version": "github.com/maxencefaldor/Leniabreeder main @ 2d7bd133548359782741598b3a4f026d69d792a9 (committed 2025-04-02; 14 commits since 2024-06-13; 120 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/maxencefaldor/Leniabreeder",
+        "commit": "2d7bd133548359782741598b3a4f026d69d792a9",
+        "commit_resolved": "2d7bd133548359782741598b3a4f026d69d792a9",
+        "commit_date": "2025-04-02T13:48:39+09:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/maxencefaldor/Leniabreeder",
+    "branch": "main",
+    "other_branches_or_versions": "Only origin/main; no tags."
+  },
+  "hashes": {
+    "tree_sha256": "d739997ae54315eb9715436cce28bb00b031baeffa1c1aa8999795f68e13f6a9",
+    "n_files": 120,
+    "bytes": 6831860,
+    "artifacts": [
+      {
+        "filename": "https://github.com/maxencefaldor/Leniabreeder",
+        "sha256": null,
+        "commit": "2d7bd133548359782741598b3a4f026d69d792a9"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\leniabreeder-faldor-2024",
+    "hash_list": "techne/fossils/specimens/leniabreeder-faldor-2024/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'MIT License'; metadata field: NOT_FOUND_AT_PIN; LICENSE: 'Copyright (c) 2024 Maxence Faldor'. No pyproject/setup/package.json. Vendored qdax/ package (qdax/__init__.py __version__ = \"0.3.0\") carries no licence file of its own inside this tree; two vendored files (qdax/core/neuroevolution/networks/seq2seq_networks.py, qdax/utils/train_seq2seq.py) carry 'Copyright 2022 The Flax Authors.' / 'Licensed under the Apache License, Version 2.0'. README badge 'paper-arxiv.2502.02190' links to https://arxiv.org/abs/2406.04235 (badge text and link disagree)."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python"
+  ],
+  "build_system": "none (pip install -r requirements.txt into a venv, or Apptainer container from apptainer/container.def)",
+  "compiler_or_interpreter": "Python; apptainer/container.def installs python3.11 (deadsnakes PPA) on ubuntu:22.04; no version declared for the venv path",
+  "dependencies": [
+    "--find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html",
+    "jax[cuda12_pip]",
+    "flax",
+    "brax",
+    "scikit-learn",
+    "statsmodels",
+    "seaborn",
+    "ipython",
+    "ipykernel",
+    "hydra-core",
+    "wandb",
+    "mediapy",
+    "FLAG: all unpinned (no version specifiers); optax, pandas, omegaconf, matplotlib imported by code but not listed (transitive via flax/hydra/seaborn); container.def does an unpinned 'git clone https://github.com/maxencefaldor/Leniabreeder.git /src/'",
+    "SETUP FETCH: pip --find-links https://storage.googleapis.com/jax-releases/jax_cuda_releases.html (requirements.txt)",
+    "SETUP FETCH: apptainer build ... Bootstrap: docker From: ubuntu:22.04 (apptainer/container.def)",
+    "SETUP FETCH: apt update; apt install -y wget git software-properties-common ffmpeg; add-apt-repository ppa:deadsnakes/ppa; apt install -y python3.11 python3.11-venv (container.def %post)",
+    "SETUP FETCH: git clone https://github.com/maxencefaldor/Leniabreeder.git /src/ (container.def %post, unpinned)",
+    "SETUP FETCH: WANDB_API_KEY exported into container environment (container.def %post); wandb listed in requirements"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "main_me.py main (hydra entry; builds Lenia, CVT centroids, MixingEmitter with isoline_variation, runs MAPElites.update in jax.lax.scan chunks of log_interval, saves metrics.pickle and repertoire/)",
+    "main_aurora.py main (hydra entry; builds Lenia + flax VAE, runs AURORA.update then AURORA.train each generation, saves metrics.pickle, repertoire/, params.pickle)",
+    "lenia/lenia.py Lenia.step (one Lenia timestep: FFT convolution of world with kernels, growth function, clip; computes mass/center/velocity/angle stats and is_empty/is_full/is_spread flags)",
+    "lenia/lenia.py Lenia.express_genotype / Lenia.load_pattern (genotype = kernel params m,s,h flattened + n_cells_size^2 x n_channel embryo cells; pattern from lenia/patterns.py)",
+    "common.py get_metric (parses fitness/descriptor names like pos_linear_velocity_avg into sign/metric/operator over the last n_keep steps)",
+    "qdax/core/map_elites.py MAPElites.update (emit -> score -> repertoire.add -> emitter.state_update -> metrics)",
+    "qdax/core/aurora.py AURORA.update / AURORA.train (same loop on an UnstructuredRepertoire; train re-encodes all stored observations and rewrites fitnesses/descriptors)",
+    "qdax/core/containers/unstructured_repertoire.py UnstructuredRepertoire.add (keeps the size individuals with largest mean distance to their 3 fitter nearest neighbours in descriptor space)"
+  ],
+  "example": {
+    "command": "python main.py seed=$RANDOM qd=<algo>   (README; NOTE no main.py exists at pin -- the tree has main_me.py and main_aurora.py, each with its own hydra config_name)",
+    "input": "Hydra configs: configs/me.yaml or configs/aurora.yaml (pattern_id 5N7KKM 'Aquarium (swarm)' from lenia/patterns.py, world_size 128, n_step 200, n_params_size 3, n_cells_size 32) + configs/qd/{me,aurora}.yaml (n_generations 20, batch_size 256, repertoire_size 1024, iso_sigma 0.005, line_sigma 0.05); CLI overrides such as qd.fitness=pos_linear_velocity_avg qd.descriptor=[color]",
+    "output": "Per README: a run directory under output/ (hydra: ./output/${qd.algo}/${qd.fitness}/<timestamp>); per code: log.csv (generation, qd_score, coverage, max_fitness, n_elites, variance, time [+ loss, recon_loss, kld_loss, learning_rate for AURORA]), metrics.pickle, repertoire/ (saved MapElitesRepertoire or UnstructuredRepertoire arrays), params.pickle (AURORA VAE params)"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux + NVIDIA GPU with CUDA 12 (requirements pin jax[cuda12_pip]; hpc.yaml requests ngpus=1 gpu_type=RTX6000, 4 cpus, 16gb); CPU-only JAX not declared but not excluded by the code"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2406.04235",
+    "doi = {10.1162/isal_a_00827}",
+    "url = {https://doi.org/10.1162/isal\\_a\\_00827}",
+    "eprint = {https://direct.mit.edu/isal/proceedings-pdf/isal2024/36/85/2461065/isal\\_a\\_00827.pdf}",
+    "https://leniabreeder.github.io/",
+    "https://x.com/maxencefaldor/status/1803803486179434642",
+    "README badge text: paper-arxiv.2502.02190 (link target differs, see license.notes)"
+  ],
+  "human_capability_summary": {
+    "built_to": "Repository for 'Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity' (ALIFE 2024): run MAP-Elites or AURORA quality-diversity search over Lenia genotypes (kernel parameters + embryo cells) and analyze the resulting repertoires.",
+    "pressure": "NOT_FOUND_AT_PIN (README gives title only; no abstract in the tree)",
+    "success_means": "NOT_FOUND_AT_PIN in README; code logs qd_score, coverage, max_fitness, n_elites (offspring added per generation) and repertoire genotype variance (common.repertoire_variance) to log.csv"
+  },
+  "known_human_problem_solved": "Repository for 'Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity' (ALIFE 2024): run MAP-Elites or AURORA quality-diversity search over Lenia genotypes (kernel parameters + embryo cells) and analyze the resulting repertoires.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "lenia/lenia.py:Lenia.step (dynamics) and common.py:get_metric (fitness/descriptor definitions); variation in qdax/core/emitters/mutation_operators.py:isoline_variation; archive rule in qdax/core/containers/unstructured_repertoire.py:UnstructuredRepertoire.add",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "inspired_by",
+      "to": "lenia-chan-2019",
+      "note": "Lenia is the substrate searched (reader draft: JAX Lenia genotypes); the reference Lenia implementation is a separate specimen"
+    },
+    {
+      "relation": "derived_from",
+      "to": "qdax-airl-2022",
+      "note": "reader draft: a vendored qdax 0.3.0 provides MAP-Elites and AURORA machinery"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/leniabreeder.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/leniabreeder-faldor-2024 (host-local; `python -m techne.fossils.harvest rematerialize leniabreeder-faldor-2024` on a host without it) ; tracked techne/fossils/specimens/leniabreeder-faldor-2024",
+    "where_it_came_from": "https://github.com/maxencefaldor/Leniabreeder ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 2d7bd133548359782741598b3a4f026d69d792a9 ; licence MIT",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python main.py seed=$RANDOM qd=<algo>   (README; NOTE no main.py exists at pin -- the tree has main_me.py and main_aurora.py, each with its own hydra config_name) ; host class: Linux + NVIDIA GPU with CUDA 12 (requirements pin jax[cuda12_pip]; hpc.yaml requests ngpus=1 gpu_type=RTX6000, 4 cpus, 16gb); CPU-only JAX not declared but not excluded by the code",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 d739997ae54315eb, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "Repository for 'Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity' (ALIFE 2024): run MAP-Elites or AURORA quality-diversity search over Lenia genotypes (kernel parameters + embryo cells) and analyze the resulting repertoires."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "JAX with CUDA 12 (jax[cuda12_pip]) -- NVIDIA GPU implied; container run uses --nv",
+      "flax/optax (VAE for AURORA)",
+      "brax (listed, only used by vendored qdax tasks)",
+      "ffmpeg (container apt install; mediapy videos)"
+    ],
+    "host_class": "Linux + NVIDIA GPU with CUDA 12 (requirements pin jax[cuda12_pip]; hpc.yaml requests ngpus=1 gpu_type=RTX6000, 4 cpus, 16gb); CPU-only JAX not declared but not excluded by the code"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/leniabreeder.json",
+    "copyright_holders_by_header_count": {
+      "The Flax Authors": 2,
+      "Maxence Faldor (LICENSE file only, no source headers)": 1
+    },
+    "things_the_reader_could_not_verify": [
+      "README example command 'python main.py' does not match any file at pin (main_me.py / main_aurora.py exist); whether 'qd=<algo>' override works with those scripts",
+      "Institution of authors (README does not state; only hpc.yaml host name hints Imperial College)",
+      "Exact library versions used for the paper (all requirements unpinned)",
+      "Which arXiv id is correct: badge text 2502.02190 vs link 2406.04235",
+      "Whether any pattern in lenia/patterns.py derives from external Lenia pattern files (no attribution in file)",
+      "Contents/execution of notebooks (not run)"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 6831860
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:04:15Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

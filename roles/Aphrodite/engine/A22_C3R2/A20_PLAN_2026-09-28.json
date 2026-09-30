@@ -1,0 +1,3188 @@
+{
+ "draws": [
+  [
+   "daaa",
+   "(0 - (acc + (0 - v)))",
+   "1",
+   "(acc * first)",
+   "0|G1|MOTIF"
+  ],
+  [
+   "dbaa",
+   "(0 - (acc + (v * first)))",
+   "1",
+   "(acc * 1)",
+   "0|G1|MOTIF"
+  ],
+  [
+   "dcaa",
+   "(0 - (acc + (v + 1)))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "0|G1|MOTIF"
+  ],
+  [
+   "ddaa",
+   "(0 - (acc + (v + first)))",
+   "0",
+   "(acc - 1)",
+   "0|G1|MOTIF"
+  ],
+  [
+   "deaa",
+   "(0 - (acc + (v * last)))",
+   "0",
+   "acc",
+   "0|G1|MOTIF"
+  ],
+  [
+   "dfaa",
+   "(0 - (acc + (v // acc)))",
+   "1",
+   "(last + acc)",
+   "0|G1|MOTIF"
+  ],
+  [
+   "dgaa",
+   "(0 - (acc + (v % last)))",
+   "0",
+   "(1 - acc)",
+   "0|G1|MOTIF"
+  ],
+  [
+   "dhaa",
+   "(0 - (acc + (v % first)))",
+   "1",
+   "(acc + last)",
+   "0|G1|MOTIF"
+  ],
+  [
+   "diaa",
+   "math.gcd(abs(last), abs((acc + (v + last))))",
+   "1",
+   "(acc - last)",
+   "0|G1|OTHER"
+  ],
+  [
+   "djaa",
+   "math.gcd(abs(last), abs((acc + (v - first))))",
+   "1",
+   "(first // acc)",
+   "0|G1|OTHER"
+  ],
+  [
+   "dkaa",
+   "math.gcd(abs(last), abs((acc + (v - last))))",
+   "0",
+   "(first + acc)",
+   "0|G1|OTHER"
+  ],
+  [
+   "dlaa",
+   "math.gcd(abs(last), abs((acc + (v // first))))",
+   "0",
+   "(first - acc)",
+   "0|G1|OTHER"
+  ],
+  [
+   "dmaa",
+   "math.gcd(abs(0), abs((v + (acc % first))))",
+   "1",
+   "(acc - 0)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "dnaa",
+   "math.gcd(abs(0), abs((v + (acc + v))))",
+   "0",
+   "(acc - 1)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "doaa",
+   "math.gcd(abs(0), abs((v + (v - acc))))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "dpaa",
+   "math.gcd(abs(0), abs((v + (acc + first))))",
+   "0",
+   "(acc * acc)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "dqaa",
+   "math.gcd(abs(0), abs((v + (acc * last))))",
+   "0",
+   "(first - acc)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "draa",
+   "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(last)))))",
+   "1",
+   "(acc - first)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "dsaa",
+   "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(first)))))",
+   "1",
+   "(acc - last)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "dtaa",
+   "math.gcd(abs(0), abs((v + (acc % v))))",
+   "1",
+   "(acc * last)",
+   "0|SHAM_0|MOTIF"
+  ],
+  [
+   "duaa",
+   "math.gcd(abs(last), abs((v + (v - acc))))",
+   "0",
+   "math.gcd(abs(last), abs(acc))",
+   "0|SHAM_0|OTHER"
+  ],
+  [
+   "dvaa",
+   "math.gcd(abs(last), abs((v + (1 - acc))))",
+   "0",
+   "(first * acc)",
+   "0|SHAM_0|OTHER"
+  ],
+  [
+   "dwaa",
+   "math.gcd(abs(last), abs((v + (last - acc))))",
+   "1",
+   "(last * acc)",
+   "0|SHAM_0|OTHER"
+  ],
+  [
+   "dxaa",
+   "math.gcd(abs(last), abs((v + math.gcd(abs(acc), abs(first)))))",
+   "0",
+   "(acc * last)",
+   "0|SHAM_0|OTHER"
+  ],
+  [
+   "dyaa",
+   "(last - (v * (acc // first)))",
+   "0",
+   "(acc * last)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "dzaa",
+   "(last - (v * (v - acc)))",
+   "0",
+   "(acc - last)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "daba",
+   "(last - (v * (acc % v)))",
+   "0",
+   "(1 * acc)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "dbba",
+   "(last - (v * (0 - acc)))",
+   "0",
+   "(acc * last)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "dcba",
+   "(last - (v * math.gcd(abs(acc), abs(0))))",
+   "1",
+   "(0 - acc)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "ddba",
+   "(last - (v * (acc + acc)))",
+   "1",
+   "(acc + last)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "deba",
+   "(last - (v * (acc - v)))",
+   "0",
+   "(acc // first)",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "dfba",
+   "(last - (v * (acc - first)))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "0|SHAM_1|MOTIF"
+  ],
+  [
+   "dgba",
+   "(1 + (v * (acc - v)))",
+   "1",
+   "(0 + acc)",
+   "0|SHAM_1|OTHER"
+  ],
+  [
+   "dhba",
+   "(1 + (v * (v - acc)))",
+   "1",
+   "(acc + 1)",
+   "0|SHAM_1|OTHER"
+  ],
+  [
+   "diba",
+   "(1 + (v * (acc + first)))",
+   "1",
+   "(first - acc)",
+   "0|SHAM_1|OTHER"
+  ],
+  [
+   "djba",
+   "(1 + (v * (acc - last)))",
+   "1",
+   "(last * acc)",
+   "0|SHAM_1|OTHER"
+  ],
+  [
+   "dkba",
+   "(v * math.gcd(abs(acc), abs((v // acc))))",
+   "1",
+   "(0 - acc)",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "dlba",
+   "(v * math.gcd(abs(acc), abs((first + 1))))",
+   "1",
+   "(acc * last)",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "dmba",
+   "(v * math.gcd(abs(acc), abs(acc)))",
+   "1",
+   "(acc + 1)",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "dnba",
+   "(v * math.gcd(abs(acc), abs((0 % v))))",
+   "1",
+   "(1 * acc)",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "doba",
+   "(v * math.gcd(abs(acc), abs((1 // v))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "dpba",
+   "(v * math.gcd(abs(acc), abs((1 // first))))",
+   "1",
+   "(0 + acc)",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "dqba",
+   "(v * math.gcd(abs(acc), abs(pow(first, first))))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "drba",
+   "(v * math.gcd(abs(acc), abs((last % last))))",
+   "1",
+   "(acc - first)",
+   "0|SHAM_2|MOTIF"
+  ],
+  [
+   "dsba",
+   "(acc + math.gcd(abs(acc), abs((v % last))))",
+   "1",
+   "(1 * acc)",
+   "0|SHAM_2|OTHER"
+  ],
+  [
+   "dtba",
+   "(acc + math.gcd(abs(acc), abs((1 - v))))",
+   "1",
+   "(acc - 1)",
+   "0|SHAM_2|OTHER"
+  ],
+  [
+   "duba",
+   "(acc + math.gcd(abs(acc), abs((v * first))))",
+   "0",
+   "(acc * acc)",
+   "0|SHAM_2|OTHER"
+  ],
+  [
+   "dvba",
+   "(acc + math.gcd(abs(acc), abs((v // first))))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "0|SHAM_2|OTHER"
+  ],
+  [
+   "dwba",
+   "(last + (last - (acc % v)))",
+   "1",
+   "(acc * acc)",
+   "0|NAT|NAT"
+  ],
+  [
+   "dxba",
+   "(v + (1 + (acc - 1)))",
+   "0",
+   "(acc - first)",
+   "0|NAT|NAT"
+  ],
+  [
+   "dyba",
+   "(acc * (1 + (v % last)))",
+   "1",
+   "(acc // 1)",
+   "0|NAT|NAT"
+  ],
+  [
+   "dzba",
+   "(v - (v * (v - acc)))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "0|NAT|NAT"
+  ],
+  [
+   "daca",
+   "(acc + (v - (0 - 0)))",
+   "1",
+   "(acc * last)",
+   "0|NAT|NAT"
+  ],
+  [
+   "dbca",
+   "(v + (acc * math.gcd(abs(last), abs(acc))))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "0|NAT|NAT"
+  ],
+  [
+   "dcca",
+   "(v // (acc + math.gcd(abs(v), abs(first))))",
+   "1",
+   "(acc - 0)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "ddca",
+   "(v // (acc + (1 % first)))",
+   "0",
+   "(0 + acc)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "deca",
+   "(v // (acc + pow(0, acc)))",
+   "0",
+   "(first - acc)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "dfca",
+   "(v // (acc + (last // last)))",
+   "0",
+   "(1 - acc)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "dgca",
+   "(v // (acc + math.gcd(abs(last), abs(1))))",
+   "1",
+   "(acc * first)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "dhca",
+   "(v // (acc + (acc + 1)))",
+   "1",
+   "(last + acc)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "dica",
+   "(v // (acc + math.gcd(abs(v), abs(1))))",
+   "0",
+   "(acc + last)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "djca",
+   "(v // (acc + math.gcd(abs(first), abs(last))))",
+   "1",
+   "(first - acc)",
+   "1|G1|MOTIF"
+  ],
+  [
+   "dkca",
+   "(0 - (acc + (v * v)))",
+   "1",
+   "(0 + acc)",
+   "1|G1|OTHER"
+  ],
+  [
+   "dlca",
+   "(0 - (acc + (v + 1)))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "1|G1|OTHER"
+  ],
+  [
+   "dmca",
+   "(0 - (acc + (v + first)))",
+   "0",
+   "(acc - 1)",
+   "1|G1|OTHER"
+  ],
+  [
+   "dnca",
+   "(0 - (acc + (v * first)))",
+   "1",
+   "(acc * 1)",
+   "1|G1|OTHER"
+  ],
+  [
+   "doca",
+   "(1 - (v + (acc + last)))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "dpca",
+   "(1 - (v + (acc % first)))",
+   "0",
+   "(1 - acc)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "dqca",
+   "(1 - (v + (last - acc)))",
+   "0",
+   "(first - acc)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "drca",
+   "(1 - (v + (acc * last)))",
+   "0",
+   "(1 * acc)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "dsca",
+   "(1 - (v + (0 - acc)))",
+   "0",
+   "(acc // first)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "dtca",
+   "(1 - (v + math.gcd(abs(acc), abs(first))))",
+   "0",
+   "(acc - 0)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "duca",
+   "(1 - (v + (acc - last)))",
+   "1",
+   "(acc * first)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "dvca",
+   "(1 - (v + (acc - first)))",
+   "1",
+   "(acc % last)",
+   "1|SHAM_0|MOTIF"
+  ],
+  [
+   "dwca",
+   "(0 - (v + (acc * last)))",
+   "0",
+   "(acc // 1)",
+   "1|SHAM_0|OTHER"
+  ],
+  [
+   "dxca",
+   "(0 - (v + (acc % first)))",
+   "0",
+   "(acc + 1)",
+   "1|SHAM_0|OTHER"
+  ],
+  [
+   "dyca",
+   "(0 - (v + math.gcd(abs(acc), abs(first))))",
+   "0",
+   "(1 + acc)",
+   "1|SHAM_0|OTHER"
+  ],
+  [
+   "dzca",
+   "(0 - (v + (acc % last)))",
+   "1",
+   "(0 - acc)",
+   "1|SHAM_0|OTHER"
+  ],
+  [
+   "dada",
+   "(first - (v * (0 - acc)))",
+   "0",
+   "(acc * first)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "dbda",
+   "(first - (v * (acc - 1)))",
+   "0",
+   "(acc * first)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "dcda",
+   "(first - (v * (acc - first)))",
+   "1",
+   "(first % acc)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "ddda",
+   "(first - (v * math.gcd(abs(acc), abs(acc))))",
+   "0",
+   "(last * acc)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "deda",
+   "(first - (v * (acc + first)))",
+   "0",
+   "(last + acc)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "dfda",
+   "(first - (v * (acc + 1)))",
+   "1",
+   "(last % acc)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "dgda",
+   "(first - (v * (acc - last)))",
+   "0",
+   "(first - acc)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "dhda",
+   "(first - (v * (acc + acc)))",
+   "0",
+   "(first + acc)",
+   "1|SHAM_1|MOTIF"
+  ],
+  [
+   "dida",
+   "(v + (v * (acc + v)))",
+   "1",
+   "(0 + acc)",
+   "1|SHAM_1|OTHER"
+  ],
+  [
+   "djda",
+   "(v + (v * (acc - last)))",
+   "1",
+   "(acc + 1)",
+   "1|SHAM_1|OTHER"
+  ],
+  [
+   "dkda",
+   "(v + (v * (acc + acc)))",
+   "1",
+   "(0 - acc)",
+   "1|SHAM_1|OTHER"
+  ],
+  [
+   "dlda",
+   "(v + (acc * v))",
+   "1",
+   "(acc // first)",
+   "1|SHAM_1|OTHER"
+  ],
+  [
+   "dmda",
+   "(v + math.gcd(abs(acc), abs(0)))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "dnda",
+   "(v + math.gcd(abs(acc), abs((last % acc))))",
+   "1",
+   "(acc // 1)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "doda",
+   "(v + math.gcd(abs(acc), abs((first * first))))",
+   "1",
+   "pow(acc, 1)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "dpda",
+   "(v + math.gcd(abs(acc), abs((acc + acc))))",
+   "1",
+   "(0 + acc)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "dqda",
+   "(v + math.gcd(abs(acc), abs(math.gcd(abs(last), abs(0)))))",
+   "0",
+   "(0 + acc)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "drda",
+   "(v + math.gcd(abs(acc), abs(pow(acc, v))))",
+   "0",
+   "(last + acc)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "dsda",
+   "(v + math.gcd(abs(acc), abs((1 // first))))",
+   "0",
+   "(last + acc)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "dtda",
+   "(v + math.gcd(abs(acc), abs((1 - last))))",
+   "0",
+   "(acc // 1)",
+   "1|SHAM_2|MOTIF"
+  ],
+  [
+   "duda",
+   "(acc - math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0)))))",
+   "1",
+   "(acc - 0)",
+   "1|SHAM_2|OTHER"
+  ],
+  [
+   "dvda",
+   "(acc - math.gcd(abs(acc), abs((v + v))))",
+   "1",
+   "(last * acc)",
+   "1|SHAM_2|OTHER"
+  ],
+  [
+   "dwda",
+   "(acc - math.gcd(abs(acc), abs((v + 1))))",
+   "1",
+   "(acc * acc)",
+   "1|SHAM_2|OTHER"
+  ],
+  [
+   "dxda",
+   "(acc - math.gcd(abs(acc), abs((v + first))))",
+   "0",
+   "(acc - 0)",
+   "1|SHAM_2|OTHER"
+  ],
+  [
+   "dyda",
+   "(0 - math.gcd(abs(0), abs((v - acc))))",
+   "0",
+   "(acc - 1)",
+   "1|NAT|NAT"
+  ],
+  [
+   "dzda",
+   "(v + (acc - (first * first)))",
+   "0",
+   "(1 * acc)",
+   "1|NAT|NAT"
+  ],
+  [
+   "daea",
+   "(acc * (v - pow(1, 1)))",
+   "1",
+   "(first * acc)",
+   "1|NAT|NAT"
+  ],
+  [
+   "dbea",
+   "(last - (acc + (last + v)))",
+   "0",
+   "(0 - acc)",
+   "1|NAT|NAT"
+  ],
+  [
+   "dcea",
+   "(acc - (v * (last - 1)))",
+   "0",
+   "(first + acc)",
+   "1|NAT|NAT"
+  ],
+  [
+   "ddea",
+   "math.gcd(abs(0), abs((first + (v * acc))))",
+   "0",
+   "(first * acc)",
+   "1|NAT|NAT"
+  ],
+  [
+   "deea",
+   "math.gcd(abs(0), abs((acc + (v - 1))))",
+   "1",
+   "(last + acc)",
+   "2|G1|MOTIF"
+  ],
+  [
+   "dfea",
+   "math.gcd(abs(0), abs((acc + (first % v))))",
+   "1",
+   "(0 + acc)",
+   "2|G1|MOTIF"
+  ],
+  [
+   "dgea",
+   "math.gcd(abs(0), abs((acc + (acc % v))))",
+   "1",
+   "(acc * 1)",
+   "2|G1|MOTIF"
+  ],
+  [
+   "dhea",
+   "math.gcd(abs(0), abs((acc + v)))",
+   "1",
+   "(1 + acc)",
+   "2|G1|MOTIF"
+  ],
+  [
+   "diea",
+   "math.gcd(abs(0), abs((acc + (v + 1))))",
+   "0",
+   "(1 * acc)",
+   "2|G1|MOTIF"
+  ],
+  [
+   "djea",
+   "math.gcd(abs(0), abs((acc + (v // first))))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "2|G1|MOTIF"
+  ],
+  [
+   "dkea",
+   "math.gcd(abs(0), abs((acc + (acc - v))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "2|G1|MOTIF"
+  ],
+  [
+   "dlea",
+   "math.gcd(abs(0), abs((acc + math.gcd(abs(v), abs(last)))))",
+   "0",
+   "(acc * 1)",
+   "2|G1|MOTIF"
+  ],
+  [
+   "dmea",
+   "(v // (acc + math.gcd(abs(acc), abs(v))))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "2|G1|OTHER"
+  ],
+  [
+   "dnea",
+   "(v // (acc + (last // last)))",
+   "0",
+   "(1 - acc)",
+   "2|G1|OTHER"
+  ],
+  [
+   "doea",
+   "(v // (acc + pow(0, acc)))",
+   "0",
+   "(first - acc)",
+   "2|G1|OTHER"
+  ],
+  [
+   "dpea",
+   "(v // (acc + math.gcd(abs(v), abs(1))))",
+   "0",
+   "(acc + last)",
+   "2|G1|OTHER"
+  ],
+  [
+   "dqea",
+   "(v * (v + (acc + last)))",
+   "0",
+   "(acc % first)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "drea",
+   "(v * (v + math.gcd(abs(acc), abs(0))))",
+   "1",
+   "(last * acc)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "dsea",
+   "(v * (v + (v - acc)))",
+   "1",
+   "(acc + 1)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "dtea",
+   "(v * (acc + v))",
+   "0",
+   "(last * acc)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "duea",
+   "(v * (v + (acc // v)))",
+   "0",
+   "(acc * 1)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "dvea",
+   "(v * (v + (acc + v)))",
+   "1",
+   "(0 - acc)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "dwea",
+   "(v * (v + (acc % v)))",
+   "0",
+   "(acc - 0)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "dxea",
+   "(v * (v + (acc // first)))",
+   "0",
+   "(acc * last)",
+   "2|SHAM_0|MOTIF"
+  ],
+  [
+   "dyea",
+   "(first * (v + (acc + last)))",
+   "1",
+   "(last - acc)",
+   "2|SHAM_0|OTHER"
+  ],
+  [
+   "dzea",
+   "(first * (v + (first - acc)))",
+   "0",
+   "(acc - first)",
+   "2|SHAM_0|OTHER"
+  ],
+  [
+   "dafa",
+   "(first * (v + (0 - acc)))",
+   "0",
+   "(acc + 0)",
+   "2|SHAM_0|OTHER"
+  ],
+  [
+   "dbfa",
+   "(first * (v + (acc % last)))",
+   "1",
+   "(acc // first)",
+   "2|SHAM_0|OTHER"
+  ],
+  [
+   "dcfa",
+   "(1 - (v * (acc + v)))",
+   "0",
+   "(acc // last)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "ddfa",
+   "(1 - (v * (acc + 1)))",
+   "0",
+   "(acc * first)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "defa",
+   "(1 - (v * math.gcd(abs(acc), abs(acc))))",
+   "0",
+   "(first - acc)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "dffa",
+   "(1 - (v * (first // acc)))",
+   "1",
+   "(acc % last)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "dgfa",
+   "(1 - (v * (last - acc)))",
+   "0",
+   "(acc - 1)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "dhfa",
+   "(1 - (v * (acc - v)))",
+   "0",
+   "(acc + last)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "difa",
+   "(1 - (v * (v - acc)))",
+   "0",
+   "(acc - 0)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "djfa",
+   "(1 - (v * (acc % first)))",
+   "1",
+   "(first * acc)",
+   "2|SHAM_1|MOTIF"
+  ],
+  [
+   "dkfa",
+   "(v + (v * (acc - v)))",
+   "1",
+   "(acc - 1)",
+   "2|SHAM_1|OTHER"
+  ],
+  [
+   "dlfa",
+   "(v + (v * (0 - acc)))",
+   "0",
+   "(acc % last)",
+   "2|SHAM_1|OTHER"
+  ],
+  [
+   "dmfa",
+   "(v + (v * (acc % last)))",
+   "0",
+   "(1 * acc)",
+   "2|SHAM_1|OTHER"
+  ],
+  [
+   "dnfa",
+   "(v + (v * (acc // v)))",
+   "0",
+   "math.gcd(abs(0), abs(acc))",
+   "2|SHAM_1|OTHER"
+  ],
+  [
+   "dofa",
+   "(v // math.gcd(abs(acc), abs((acc + last))))",
+   "1",
+   "(acc * 1)",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dpfa",
+   "(v // math.gcd(abs(acc), abs((first * last))))",
+   "1",
+   "(acc - last)",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dqfa",
+   "(v // math.gcd(abs(acc), abs((1 + 1))))",
+   "0",
+   "(first * acc)",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "drfa",
+   "(v // math.gcd(abs(acc), abs(pow(first, acc))))",
+   "0",
+   "(acc // 1)",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dsfa",
+   "(v // math.gcd(abs(acc), abs((acc + first))))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dtfa",
+   "(v // math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(last)))))",
+   "1",
+   "(acc - 1)",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dufa",
+   "(v // math.gcd(abs(acc), abs((v + first))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dvfa",
+   "(v // math.gcd(abs(acc), abs((last + last))))",
+   "1",
+   "(acc % last)",
+   "2|SHAM_2|MOTIF"
+  ],
+  [
+   "dwfa",
+   "(acc + math.gcd(abs(acc), abs((v + v))))",
+   "1",
+   "(0 - acc)",
+   "2|SHAM_2|OTHER"
+  ],
+  [
+   "dxfa",
+   "(acc + math.gcd(abs(acc), abs((v % acc))))",
+   "1",
+   "(acc * acc)",
+   "2|SHAM_2|OTHER"
+  ],
+  [
+   "dyfa",
+   "(acc + math.gcd(abs(acc), abs((last % v))))",
+   "0",
+   "(acc * first)",
+   "2|SHAM_2|OTHER"
+  ],
+  [
+   "dzfa",
+   "(acc + math.gcd(abs(acc), abs((v - first))))",
+   "1",
+   "math.gcd(abs(first), abs(acc))",
+   "2|SHAM_2|OTHER"
+  ],
+  [
+   "daga",
+   "(v + (last - (last - acc)))",
+   "1",
+   "(last - acc)",
+   "2|NAT|NAT"
+  ],
+  [
+   "dbga",
+   "(v + math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(0)))))",
+   "0",
+   "acc",
+   "2|NAT|NAT"
+  ],
+  [
+   "dcga",
+   "(v + (last + (1 * acc)))",
+   "0",
+   "(acc % first)",
+   "2|NAT|NAT"
+  ],
+  [
+   "ddga",
+   "(v // math.gcd(abs(acc), abs(pow(acc, acc))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "2|NAT|NAT"
+  ],
+  [
+   "dega",
+   "(0 - math.gcd(abs(v), abs((acc + 1))))",
+   "1",
+   "(0 + acc)",
+   "2|NAT|NAT"
+  ],
+  [
+   "dfga",
+   "(acc - math.gcd(abs(0), abs((v + v))))",
+   "0",
+   "(acc % last)",
+   "2|NAT|NAT"
+  ],
+  [
+   "dgga",
+   "(1 - (acc + (v - last)))",
+   "0",
+   "(acc // first)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "dhga",
+   "(1 - (acc + (1 - v)))",
+   "1",
+   "(1 * acc)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "diga",
+   "(1 - (acc + (v % last)))",
+   "0",
+   "(acc % first)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "djga",
+   "(1 - (acc + v))",
+   "1",
+   "(acc + acc)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "dkga",
+   "(1 - (acc + (v // acc)))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "3|G1|MOTIF"
+  ],
+  [
+   "dlga",
+   "(1 - (acc + (first % v)))",
+   "1",
+   "(first * acc)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "dmga",
+   "(1 - (acc + (v + 1)))",
+   "1",
+   "(acc - 1)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "dnga",
+   "(1 - (acc + (acc % v)))",
+   "0",
+   "(last - acc)",
+   "3|G1|MOTIF"
+  ],
+  [
+   "doga",
+   "(0 - (acc + (acc % v)))",
+   "1",
+   "(0 + acc)",
+   "3|G1|OTHER"
+  ],
+  [
+   "dpga",
+   "(0 - (acc + v))",
+   "0",
+   "(acc + 0)",
+   "3|G1|OTHER"
+  ],
+  [
+   "dqga",
+   "(0 - (acc + (first - v)))",
+   "0",
+   "math.gcd(abs(0), abs(acc))",
+   "3|G1|OTHER"
+  ],
+  [
+   "drga",
+   "(0 - (acc + (first // v)))",
+   "1",
+   "(acc + acc)",
+   "3|G1|OTHER"
+  ],
+  [
+   "dsga",
+   "(1 - (v + (acc - first)))",
+   "1",
+   "(acc % last)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "dtga",
+   "(1 - (v + (0 - acc)))",
+   "0",
+   "(acc // first)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "duga",
+   "(1 - (v + (acc + last)))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "dvga",
+   "(1 - (v + (1 - acc)))",
+   "1",
+   "(acc % last)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "dwga",
+   "(1 - (v + math.gcd(abs(acc), abs(acc))))",
+   "0",
+   "(acc * first)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "dxga",
+   "(1 - (v + (last - acc)))",
+   "0",
+   "(first - acc)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "dyga",
+   "(1 - (v + (acc * last)))",
+   "0",
+   "(1 * acc)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "dzga",
+   "(1 - (v + (acc % first)))",
+   "0",
+   "(1 - acc)",
+   "3|SHAM_0|MOTIF"
+  ],
+  [
+   "daha",
+   "(last - (v + (acc * last)))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "3|SHAM_0|OTHER"
+  ],
+  [
+   "dbha",
+   "(last - (v + math.gcd(abs(acc), abs(last))))",
+   "1",
+   "(acc - last)",
+   "3|SHAM_0|OTHER"
+  ],
+  [
+   "dcha",
+   "(last - (v + (acc + acc)))",
+   "0",
+   "(acc - 0)",
+   "3|SHAM_0|OTHER"
+  ],
+  [
+   "ddha",
+   "(last - (v + (acc - last)))",
+   "0",
+   "(acc + first)",
+   "3|SHAM_0|OTHER"
+  ],
+  [
+   "deha",
+   "(1 + (v * (v - acc)))",
+   "1",
+   "(acc + 1)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "dfha",
+   "(1 + (v * (last - acc)))",
+   "1",
+   "(1 * acc)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "dgha",
+   "(1 + (v * math.gcd(abs(acc), abs(acc))))",
+   "0",
+   "(acc * 1)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "dhha",
+   "(1 + (acc * v))",
+   "0",
+   "(first * acc)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "diha",
+   "(1 + (v * (acc % v)))",
+   "0",
+   "(first + acc)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "djha",
+   "(1 + (v * (acc - v)))",
+   "1",
+   "(0 + acc)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "dkha",
+   "(1 + (v * (acc + acc)))",
+   "1",
+   "(acc - last)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "dlha",
+   "(1 + (v * (acc + first)))",
+   "1",
+   "(first - acc)",
+   "3|SHAM_1|MOTIF"
+  ],
+  [
+   "dmha",
+   "(last + (v * (acc + 1)))",
+   "0",
+   "(acc % first)",
+   "3|SHAM_1|OTHER"
+  ],
+  [
+   "dnha",
+   "(last + (v * (acc + acc)))",
+   "0",
+   "(0 - acc)",
+   "3|SHAM_1|OTHER"
+  ],
+  [
+   "doha",
+   "(last + (v * (acc - last)))",
+   "1",
+   "(acc * 1)",
+   "3|SHAM_1|OTHER"
+  ],
+  [
+   "dpha",
+   "(last + (v * (acc + first)))",
+   "1",
+   "(first * acc)",
+   "3|SHAM_1|OTHER"
+  ],
+  [
+   "dqha",
+   "(v * math.gcd(abs(acc), abs((acc % first))))",
+   "1",
+   "(last * acc)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "drha",
+   "(v * math.gcd(abs(acc), abs((1 // v))))",
+   "1",
+   "(acc * first)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "dsha",
+   "(v * math.gcd(abs(acc), abs((acc % v))))",
+   "1",
+   "(acc // 1)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "dtha",
+   "(v * math.gcd(abs(acc), abs((acc % last))))",
+   "1",
+   "(1 + acc)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "duha",
+   "(v * math.gcd(abs(acc), abs((0 // last))))",
+   "1",
+   "(acc + first)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "dvha",
+   "(v * math.gcd(abs(acc), abs((acc // last))))",
+   "1",
+   "(first * acc)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "dwha",
+   "(v * math.gcd(abs(acc), abs(pow(last, v))))",
+   "1",
+   "(first * acc)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "dxha",
+   "(v * math.gcd(abs(acc), abs((acc * v))))",
+   "1",
+   "(acc + acc)",
+   "3|SHAM_2|MOTIF"
+  ],
+  [
+   "dyha",
+   "(v + math.gcd(abs(acc), abs((1 - first))))",
+   "1",
+   "(acc - last)",
+   "3|SHAM_2|OTHER"
+  ],
+  [
+   "dzha",
+   "(v + math.gcd(abs(acc), abs((0 - last))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "3|SHAM_2|OTHER"
+  ],
+  [
+   "daia",
+   "(v + math.gcd(abs(acc), abs((last // first))))",
+   "0",
+   "(acc - 0)",
+   "3|SHAM_2|OTHER"
+  ],
+  [
+   "dbia",
+   "(v + math.gcd(abs(acc), abs((first // v))))",
+   "1",
+   "(acc * last)",
+   "3|SHAM_2|OTHER"
+  ],
+  [
+   "dcia",
+   "(first * (0 - (acc - v)))",
+   "1",
+   "(acc * first)",
+   "3|NAT|NAT"
+  ],
+  [
+   "ddia",
+   "(first - (v - (first + acc)))",
+   "0",
+   "(1 * acc)",
+   "3|NAT|NAT"
+  ],
+  [
+   "deia",
+   "(first - (last - (acc + v)))",
+   "1",
+   "(acc - 0)",
+   "3|NAT|NAT"
+  ],
+  [
+   "dfia",
+   "(v - (last - (first + acc)))",
+   "0",
+   "(acc % first)",
+   "3|NAT|NAT"
+  ],
+  [
+   "dgia",
+   "(first + (last + (v + acc)))",
+   "0",
+   "(1 - acc)",
+   "3|NAT|NAT"
+  ],
+  [
+   "dhia",
+   "(acc * (v - (0 - v)))",
+   "1",
+   "(acc + last)",
+   "3|NAT|NAT"
+  ],
+  [
+   "diia",
+   "math.gcd(abs(0), abs((acc + math.gcd(abs(v), abs(0)))))",
+   "1",
+   "(1 + acc)",
+   "4|G1|MOTIF"
+  ],
+  [
+   "djia",
+   "math.gcd(abs(0), abs((acc + (v * last))))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "4|G1|MOTIF"
+  ],
+  [
+   "dkia",
+   "math.gcd(abs(0), abs((acc + math.gcd(abs(acc), abs(v)))))",
+   "0",
+   "(0 + acc)",
+   "4|G1|MOTIF"
+  ],
+  [
+   "dlia",
+   "math.gcd(abs(0), abs((acc + (v + last))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "4|G1|MOTIF"
+  ],
+  [
+   "dmia",
+   "math.gcd(abs(0), abs((acc + (v - 1))))",
+   "1",
+   "(last + acc)",
+   "4|G1|MOTIF"
+  ],
+  [
+   "dnia",
+   "math.gcd(abs(0), abs((acc + (v * v))))",
+   "0",
+   "(acc - last)",
+   "4|G1|MOTIF"
+  ],
+  [
+   "doia",
+   "math.gcd(abs(0), abs((acc + (acc * v))))",
+   "1",
+   "(last - acc)",
+   "4|G1|MOTIF"
+  ],
+  [
+   "dpia",
+   "math.gcd(abs(0), abs((acc + (v + v))))",
+   "1",
+   "(acc // last)",
+   "4|G1|MOTIF"
+  ],
+  [
+   "dqia",
+   "(0 - (acc + v))",
+   "0",
+   "(acc + 0)",
+   "4|G1|OTHER"
+  ],
+  [
+   "dria",
+   "(0 - (acc + (0 - v)))",
+   "1",
+   "(acc * first)",
+   "4|G1|OTHER"
+  ],
+  [
+   "dsia",
+   "(0 - (acc + math.gcd(abs(v), abs(first))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "4|G1|OTHER"
+  ],
+  [
+   "dtia",
+   "(0 - (acc + (1 - v)))",
+   "1",
+   "(acc + last)",
+   "4|G1|OTHER"
+  ],
+  [
+   "duia",
+   "(last - (acc + v))",
+   "1",
+   "(0 + acc)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dvia",
+   "(last - (v + (v - acc)))",
+   "1",
+   "(acc - 0)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dwia",
+   "(last - (v + (acc + acc)))",
+   "0",
+   "(acc - 0)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dxia",
+   "(last - (v + (acc - last)))",
+   "0",
+   "(acc + first)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dyia",
+   "(last - (v + (1 - acc)))",
+   "0",
+   "(acc + 1)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dzia",
+   "(last - (v + (0 - acc)))",
+   "1",
+   "(acc - last)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "daja",
+   "(last - (v + (acc % first)))",
+   "1",
+   "(acc * 1)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dbja",
+   "(last - (v + (acc + v)))",
+   "1",
+   "(acc + 0)",
+   "4|SHAM_0|MOTIF"
+  ],
+  [
+   "dcja",
+   "(1 - (v + (acc % first)))",
+   "0",
+   "(1 - acc)",
+   "4|SHAM_0|OTHER"
+  ],
+  [
+   "ddja",
+   "(1 - (v + (acc * last)))",
+   "0",
+   "(1 * acc)",
+   "4|SHAM_0|OTHER"
+  ],
+  [
+   "deja",
+   "(1 - (v + (last - acc)))",
+   "0",
+   "(first - acc)",
+   "4|SHAM_0|OTHER"
+  ],
+  [
+   "dfja",
+   "(1 - (v + (acc + last)))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "4|SHAM_0|OTHER"
+  ],
+  [
+   "dgja",
+   "(v + (v * (first // acc)))",
+   "1",
+   "(acc // 1)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "dhja",
+   "(v + (acc * v))",
+   "1",
+   "(acc // first)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "dija",
+   "(v + (v * (v - acc)))",
+   "0",
+   "(1 + acc)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "djja",
+   "(v + (v * (acc + v)))",
+   "1",
+   "(0 + acc)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "dkja",
+   "(v + (v * (acc - last)))",
+   "1",
+   "(acc + 1)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "dlja",
+   "(v + (v * (1 - acc)))",
+   "0",
+   "(1 - acc)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "dmja",
+   "(v + (v * (acc // first)))",
+   "1",
+   "(acc - 0)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "dnja",
+   "(v + (v * (last - acc)))",
+   "0",
+   "(acc // 1)",
+   "4|SHAM_1|MOTIF"
+  ],
+  [
+   "doja",
+   "(0 - (v * (v - acc)))",
+   "1",
+   "(acc - 1)",
+   "4|SHAM_1|OTHER"
+  ],
+  [
+   "dpja",
+   "(0 - (v * (acc + 1)))",
+   "1",
+   "(acc * first)",
+   "4|SHAM_1|OTHER"
+  ],
+  [
+   "dqja",
+   "(0 - (v * (acc - last)))",
+   "0",
+   "(acc + acc)",
+   "4|SHAM_1|OTHER"
+  ],
+  [
+   "drja",
+   "(0 - (v * (acc - v)))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "4|SHAM_1|OTHER"
+  ],
+  [
+   "dsja",
+   "(1 - math.gcd(abs(acc), abs((v + first))))",
+   "0",
+   "(acc + 0)",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "dtja",
+   "(1 - math.gcd(abs(acc), abs((0 - v))))",
+   "0",
+   "(1 + acc)",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "duja",
+   "(1 - math.gcd(abs(acc), abs((v * first))))",
+   "1",
+   "(1 + acc)",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "dvja",
+   "(1 - math.gcd(abs(acc), abs((v + 1))))",
+   "0",
+   "(acc - 1)",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "dwja",
+   "(1 - math.gcd(abs(acc), abs((v + last))))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "dxja",
+   "(1 - math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0)))))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "dyja",
+   "(1 - math.gcd(abs(acc), abs((v - first))))",
+   "0",
+   "(last * acc)",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "dzja",
+   "(1 - math.gcd(abs(acc), abs((first - v))))",
+   "0",
+   "(acc + 0)",
+   "4|SHAM_2|MOTIF"
+  ],
+  [
+   "daka",
+   "(acc + math.gcd(abs(acc), abs((0 - v))))",
+   "0",
+   "(last + acc)",
+   "4|SHAM_2|OTHER"
+  ],
+  [
+   "dbka",
+   "(acc + math.gcd(abs(acc), abs((first // v))))",
+   "0",
+   "(last * acc)",
+   "4|SHAM_2|OTHER"
+  ],
+  [
+   "dcka",
+   "(acc + math.gcd(abs(acc), abs((v % last))))",
+   "1",
+   "(1 * acc)",
+   "4|SHAM_2|OTHER"
+  ],
+  [
+   "ddka",
+   "(acc + math.gcd(abs(acc), abs((first % v))))",
+   "1",
+   "(first % acc)",
+   "4|SHAM_2|OTHER"
+  ],
+  [
+   "deka",
+   "(acc + (v + (0 - first)))",
+   "1",
+   "acc",
+   "4|NAT|NAT"
+  ],
+  [
+   "dfka",
+   "(acc - (first + math.gcd(abs(acc), abs(v))))",
+   "1",
+   "(acc + acc)",
+   "4|NAT|NAT"
+  ],
+  [
+   "dgka",
+   "(acc + math.gcd(abs(acc), abs((last + v))))",
+   "0",
+   "(acc * 1)",
+   "4|NAT|NAT"
+  ],
+  [
+   "dhka",
+   "(1 + (acc - (first // v)))",
+   "1",
+   "(acc * last)",
+   "4|NAT|NAT"
+  ],
+  [
+   "dika",
+   "(last - (acc - (v + 1)))",
+   "0",
+   "(acc * acc)",
+   "4|NAT|NAT"
+  ],
+  [
+   "djka",
+   "(acc + (last // (1 + v)))",
+   "1",
+   "(acc // 1)",
+   "4|NAT|NAT"
+  ],
+  [
+   "dkka",
+   "(v // (acc + (1 % first)))",
+   "0",
+   "(0 + acc)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "dlka",
+   "(v // (acc + pow(0, acc)))",
+   "0",
+   "(first - acc)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "dmka",
+   "(v // (acc + math.gcd(abs(v), abs(1))))",
+   "0",
+   "(acc + last)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "dnka",
+   "(v // (acc + math.gcd(abs(acc), abs(v))))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "5|G1|MOTIF"
+  ],
+  [
+   "doka",
+   "(v // (acc + math.gcd(abs(first), abs(last))))",
+   "1",
+   "(first - acc)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "dpka",
+   "(v // (acc + pow(1, first)))",
+   "0",
+   "(acc - 0)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "dqka",
+   "(v // (acc + math.gcd(abs(v), abs(first))))",
+   "1",
+   "(acc - 0)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "drka",
+   "(v // (acc + (acc + 1)))",
+   "1",
+   "(last + acc)",
+   "5|G1|MOTIF"
+  ],
+  [
+   "dska",
+   "math.gcd(abs(0), abs((acc + (v * last))))",
+   "1",
+   "math.gcd(abs(0), abs(acc))",
+   "5|G1|OTHER"
+  ],
+  [
+   "dtka",
+   "math.gcd(abs(0), abs((acc + math.gcd(abs(v), abs(first)))))",
+   "1",
+   "(acc * 1)",
+   "5|G1|OTHER"
+  ],
+  [
+   "duka",
+   "math.gcd(abs(0), abs((acc + (v + v))))",
+   "1",
+   "(acc // last)",
+   "5|G1|OTHER"
+  ],
+  [
+   "dvka",
+   "math.gcd(abs(0), abs((acc + (acc * v))))",
+   "1",
+   "(last - acc)",
+   "5|G1|OTHER"
+  ],
+  [
+   "dwka",
+   "math.gcd(abs(0), abs((v + (v - acc))))",
+   "0",
+   "(0 + acc)",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dxka",
+   "math.gcd(abs(0), abs((v + (acc * last))))",
+   "1",
+   "acc",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dyka",
+   "math.gcd(abs(0), abs((v + (last - acc))))",
+   "0",
+   "(0 + acc)",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dzka",
+   "math.gcd(abs(0), abs((v + (acc % last))))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dala",
+   "math.gcd(abs(0), abs((v + (acc % v))))",
+   "0",
+   "(acc - first)",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dbla",
+   "math.gcd(abs(0), abs((v + (acc + 1))))",
+   "0",
+   "(acc + first)",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dcla",
+   "math.gcd(abs(0), abs((v + (acc - last))))",
+   "0",
+   "(acc % first)",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "ddla",
+   "math.gcd(abs(0), abs((v + (acc * first))))",
+   "1",
+   "(1 + acc)",
+   "5|SHAM_0|MOTIF"
+  ],
+  [
+   "dela",
+   "(1 - (v + (acc * last)))",
+   "0",
+   "(1 * acc)",
+   "5|SHAM_0|OTHER"
+  ],
+  [
+   "dfla",
+   "(1 - (v + (acc - last)))",
+   "1",
+   "(acc * first)",
+   "5|SHAM_0|OTHER"
+  ],
+  [
+   "dgla",
+   "(1 - (v + (acc - first)))",
+   "1",
+   "(acc % last)",
+   "5|SHAM_0|OTHER"
+  ],
+  [
+   "dhla",
+   "(1 - (v + (last - acc)))",
+   "0",
+   "(first - acc)",
+   "5|SHAM_0|OTHER"
+  ],
+  [
+   "dila",
+   "(last + (v * (first - acc)))",
+   "0",
+   "(acc * first)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "djla",
+   "(last + (v * (acc + first)))",
+   "1",
+   "(first * acc)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dkla",
+   "(last + (v * (v - acc)))",
+   "0",
+   "(acc + 0)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dlla",
+   "(last + (v * (acc - last)))",
+   "1",
+   "(acc * 1)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dmla",
+   "(last + (v * math.gcd(abs(acc), abs(0))))",
+   "0",
+   "(first - acc)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dnla",
+   "(last + (v * (acc + acc)))",
+   "0",
+   "(0 - acc)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dola",
+   "(last + (v * (acc % v)))",
+   "0",
+   "(1 - acc)",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dpla",
+   "(last + (v * (1 - acc)))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "5|SHAM_1|MOTIF"
+  ],
+  [
+   "dqla",
+   "(first + (v * (last - acc)))",
+   "0",
+   "(acc * last)",
+   "5|SHAM_1|OTHER"
+  ],
+  [
+   "drla",
+   "(first + (v * (acc - first)))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "5|SHAM_1|OTHER"
+  ],
+  [
+   "dsla",
+   "(first + (v * (acc + acc)))",
+   "0",
+   "(acc - 1)",
+   "5|SHAM_1|OTHER"
+  ],
+  [
+   "dtla",
+   "(first + (acc * v))",
+   "0",
+   "(acc + acc)",
+   "5|SHAM_1|OTHER"
+  ],
+  [
+   "dula",
+   "(1 - math.gcd(abs(acc), abs((v + 1))))",
+   "0",
+   "(acc - 1)",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dvla",
+   "(1 - math.gcd(abs(acc), abs((0 - v))))",
+   "0",
+   "(1 + acc)",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dwla",
+   "(1 - math.gcd(abs(acc), abs((first - v))))",
+   "0",
+   "(acc + 0)",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dxla",
+   "(1 - math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0)))))",
+   "0",
+   "math.gcd(abs(acc), abs(0))",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dyla",
+   "(1 - math.gcd(abs(acc), abs((v * first))))",
+   "1",
+   "(1 + acc)",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dzla",
+   "(1 - math.gcd(abs(acc), abs((v + first))))",
+   "0",
+   "(acc + 0)",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dama",
+   "(1 - math.gcd(abs(acc), abs((v - first))))",
+   "0",
+   "(last * acc)",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dbma",
+   "(1 - math.gcd(abs(acc), abs((v + last))))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "5|SHAM_2|MOTIF"
+  ],
+  [
+   "dcma",
+   "(v * math.gcd(abs(acc), abs((acc * first))))",
+   "1",
+   "(acc // last)",
+   "5|SHAM_2|OTHER"
+  ],
+  [
+   "ddma",
+   "(v * math.gcd(abs(acc), abs((v // acc))))",
+   "1",
+   "pow(acc, 1)",
+   "5|SHAM_2|OTHER"
+  ],
+  [
+   "dema",
+   "(v * math.gcd(abs(acc), abs((0 // v))))",
+   "1",
+   "(acc - last)",
+   "5|SHAM_2|OTHER"
+  ],
+  [
+   "dfma",
+   "(v * math.gcd(abs(acc), abs((acc % v))))",
+   "1",
+   "(acc // 1)",
+   "5|SHAM_2|OTHER"
+  ],
+  [
+   "dgma",
+   "(acc - math.gcd(abs(0), abs((0 - v))))",
+   "0",
+   "(acc * last)",
+   "5|NAT|NAT"
+  ],
+  [
+   "dhma",
+   "(acc - (v * math.gcd(abs(1), abs(last))))",
+   "1",
+   "(acc // last)",
+   "5|NAT|NAT"
+  ],
+  [
+   "dima",
+   "math.gcd(abs(first), abs((v - pow(acc, 1))))",
+   "1",
+   "(last * acc)",
+   "5|NAT|NAT"
+  ],
+  [
+   "djma",
+   "(acc + (1 - (v + 0)))",
+   "0",
+   "(acc - 0)",
+   "5|NAT|NAT"
+  ],
+  [
+   "dkma",
+   "(v * (acc + (0 - 1)))",
+   "0",
+   "(last + acc)",
+   "5|NAT|NAT"
+  ],
+  [
+   "dlma",
+   "(acc + (last + (v + 0)))",
+   "0",
+   "(0 - acc)",
+   "5|NAT|NAT"
+  ],
+  [
+   "dmma",
+   "(v - (acc + math.gcd(abs(last), abs(0))))",
+   "0",
+   "(last - acc)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "dnma",
+   "(v - (acc + (last - first)))",
+   "0",
+   "(last + acc)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "doma",
+   "(v - (acc + (1 - last)))",
+   "1",
+   "(acc // 1)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "dpma",
+   "(v - (acc + (first * first)))",
+   "1",
+   "(last + acc)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "dqma",
+   "(v - (acc + (last % first)))",
+   "1",
+   "(first - acc)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "drma",
+   "(v - (acc + (first + first)))",
+   "1",
+   "(1 + acc)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "dsma",
+   "(v - (acc + (0 // last)))",
+   "1",
+   "(acc * acc)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "dtma",
+   "(v - (acc + pow(1, v)))",
+   "1",
+   "(acc + first)",
+   "6|G1|MOTIF"
+  ],
+  [
+   "duma",
+   "(last - (acc + (last % v)))",
+   "1",
+   "(first * acc)",
+   "6|G1|OTHER"
+  ],
+  [
+   "dvma",
+   "(last - (acc + (acc + v)))",
+   "1",
+   "(acc * acc)",
+   "6|G1|OTHER"
+  ],
+  [
+   "dwma",
+   "(last - (acc + (v % last)))",
+   "1",
+   "(1 * acc)",
+   "6|G1|OTHER"
+  ],
+  [
+   "dxma",
+   "(last - (acc + (v * v)))",
+   "1",
+   "(acc - 0)",
+   "6|G1|OTHER"
+  ],
+  [
+   "dyma",
+   "math.gcd(abs(0), abs((v + (acc + last))))",
+   "0",
+   "(acc // 1)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dzma",
+   "math.gcd(abs(0), abs((v + (acc % last))))",
+   "0",
+   "(acc // first)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dana",
+   "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(0)))))",
+   "1",
+   "(acc * 1)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dbna",
+   "math.gcd(abs(0), abs((v + (acc + first))))",
+   "0",
+   "(acc * acc)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dcna",
+   "math.gcd(abs(0), abs((v + (acc - 1))))",
+   "1",
+   "(0 + acc)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "ddna",
+   "math.gcd(abs(0), abs((v + math.gcd(abs(acc), abs(last)))))",
+   "1",
+   "(acc - first)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dena",
+   "math.gcd(abs(0), abs((v + (acc % first))))",
+   "1",
+   "(acc - 0)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dfna",
+   "math.gcd(abs(0), abs((v + (acc + acc))))",
+   "1",
+   "(acc // last)",
+   "6|SHAM_0|MOTIF"
+  ],
+  [
+   "dgna",
+   "math.gcd(abs(0), abs((v + (last - acc))))",
+   "0",
+   "(0 + acc)",
+   "6|SHAM_0|OTHER"
+  ],
+  [
+   "dhna",
+   "math.gcd(abs(0), abs((v + (acc - last))))",
+   "0",
+   "(acc % first)",
+   "6|SHAM_0|OTHER"
+  ],
+  [
+   "dina",
+   "math.gcd(abs(0), abs((v + (v - acc))))",
+   "0",
+   "(0 + acc)",
+   "6|SHAM_0|OTHER"
+  ],
+  [
+   "djna",
+   "math.gcd(abs(0), abs((v + (acc * first))))",
+   "1",
+   "(1 + acc)",
+   "6|SHAM_0|OTHER"
+  ],
+  [
+   "dkna",
+   "(acc - (v * (first * first)))",
+   "1",
+   "(first + acc)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dlna",
+   "(acc - (v * (first + last)))",
+   "0",
+   "(acc - first)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dmna",
+   "(acc - (v * (acc + first)))",
+   "0",
+   "(1 - acc)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dnna",
+   "(acc - (v * (1 - v)))",
+   "0",
+   "(acc // last)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dona",
+   "(acc - (v * (1 - first)))",
+   "0",
+   "(last + acc)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dpna",
+   "(acc - (v * math.gcd(abs(last), abs(1))))",
+   "0",
+   "(acc - first)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dqna",
+   "(acc - (v * (first // v)))",
+   "1",
+   "(first + acc)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "drna",
+   "(acc - (v * (v * first)))",
+   "1",
+   "(acc * 1)",
+   "6|SHAM_1|MOTIF"
+  ],
+  [
+   "dsna",
+   "(last + (v * (acc // first)))",
+   "1",
+   "math.gcd(abs(acc), abs(last))",
+   "6|SHAM_1|OTHER"
+  ],
+  [
+   "dtna",
+   "(last + (v * (acc + v)))",
+   "0",
+   "(acc * first)",
+   "6|SHAM_1|OTHER"
+  ],
+  [
+   "duna",
+   "(last + (v * (acc + first)))",
+   "1",
+   "(acc + 0)",
+   "6|SHAM_1|OTHER"
+  ],
+  [
+   "dvna",
+   "(last + (v * (last - acc)))",
+   "0",
+   "(acc // first)",
+   "6|SHAM_1|OTHER"
+  ],
+  [
+   "dwna",
+   "(acc + math.gcd(abs(acc), abs((v % acc))))",
+   "1",
+   "(acc * first)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "dxna",
+   "(acc + math.gcd(abs(acc), abs((first % v))))",
+   "1",
+   "(first % acc)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "dyna",
+   "(acc + math.gcd(abs(acc), abs((v // first))))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "dzna",
+   "(acc + math.gcd(abs(acc), abs((first - v))))",
+   "1",
+   "(acc + first)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "daoa",
+   "(acc + math.gcd(abs(acc), abs((acc + v))))",
+   "0",
+   "(last + acc)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "dboa",
+   "(acc + math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0)))))",
+   "1",
+   "pow(acc, 1)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "dcoa",
+   "(acc + math.gcd(abs(acc), abs(math.gcd(abs(v), abs(v)))))",
+   "0",
+   "(acc % last)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "ddoa",
+   "(acc + math.gcd(abs(acc), abs((v % first))))",
+   "1",
+   "(acc - first)",
+   "6|SHAM_2|MOTIF"
+  ],
+  [
+   "deoa",
+   "(v - math.gcd(abs(acc), abs(pow(0, first))))",
+   "0",
+   "(acc % first)",
+   "6|SHAM_2|OTHER"
+  ],
+  [
+   "dfoa",
+   "(v - math.gcd(abs(acc), abs(0)))",
+   "0",
+   "(0 + acc)",
+   "6|SHAM_2|OTHER"
+  ],
+  [
+   "dgoa",
+   "(v - math.gcd(abs(acc), abs((1 // v))))",
+   "0",
+   "(acc * last)",
+   "6|SHAM_2|OTHER"
+  ],
+  [
+   "dhoa",
+   "(v - math.gcd(abs(acc), abs((last // first))))",
+   "1",
+   "pow(acc, 1)",
+   "6|SHAM_2|OTHER"
+  ],
+  [
+   "dioa",
+   "(first + (v - (last * acc)))",
+   "1",
+   "(last - acc)",
+   "6|NAT|NAT"
+  ],
+  [
+   "djoa",
+   "(v + (first - (acc + first)))",
+   "1",
+   "(acc % first)",
+   "6|NAT|NAT"
+  ],
+  [
+   "dkoa",
+   "(acc + (v + pow(acc, 0)))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "6|NAT|NAT"
+  ],
+  [
+   "dloa",
+   "(acc + (first % math.gcd(abs(v), abs(last))))",
+   "0",
+   "(acc * first)",
+   "6|NAT|NAT"
+  ],
+  [
+   "dmoa",
+   "(acc + pow(v, pow(v, 0)))",
+   "1",
+   "(acc * last)",
+   "6|NAT|NAT"
+  ],
+  [
+   "dnoa",
+   "(last % (acc - v))",
+   "0",
+   "(first * acc)",
+   "6|NAT|NAT"
+  ],
+  [
+   "dooa",
+   "(0 - (acc + math.gcd(abs(v), abs(first))))",
+   "1",
+   "math.gcd(abs(acc), abs(acc))",
+   "7|G1|MOTIF"
+  ],
+  [
+   "dpoa",
+   "(0 - (acc + (first - v)))",
+   "0",
+   "math.gcd(abs(0), abs(acc))",
+   "7|G1|MOTIF"
+  ],
+  [
+   "dqoa",
+   "(0 - (acc + (v % last)))",
+   "0",
+   "(1 - acc)",
+   "7|G1|MOTIF"
+  ],
+  [
+   "droa",
+   "(0 - (acc + (0 - v)))",
+   "1",
+   "(acc * first)",
+   "7|G1|MOTIF"
+  ],
+  [
+   "dsoa",
+   "(0 - (acc + (first // v)))",
+   "1",
+   "(acc + acc)",
+   "7|G1|MOTIF"
+  ],
+  [
+   "dtoa",
+   "(0 - (acc + (v // acc)))",
+   "1",
+   "(last + acc)",
+   "7|G1|MOTIF"
+  ],
+  [
+   "duoa",
+   "(0 - (acc + (v * last)))",
+   "0",
+   "acc",
+   "7|G1|MOTIF"
+  ],
+  [
+   "dvoa",
+   "(0 - (acc + (v * v)))",
+   "1",
+   "(0 + acc)",
+   "7|G1|MOTIF"
+  ],
+  [
+   "dwoa",
+   "math.gcd(abs(0), abs((acc + (acc - v))))",
+   "1",
+   "(acc % last)",
+   "7|G1|OTHER"
+  ],
+  [
+   "dxoa",
+   "math.gcd(abs(0), abs((acc + (acc * v))))",
+   "1",
+   "(last - acc)",
+   "7|G1|OTHER"
+  ],
+  [
+   "dyoa",
+   "math.gcd(abs(0), abs((acc + (v - first))))",
+   "1",
+   "(acc % last)",
+   "7|G1|OTHER"
+  ],
+  [
+   "dzoa",
+   "math.gcd(abs(0), abs((acc + (0 - v))))",
+   "1",
+   "(1 + acc)",
+   "7|G1|OTHER"
+  ],
+  [
+   "dapa",
+   "(v * (v + (v - acc)))",
+   "1",
+   "(acc + 1)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "dbpa",
+   "(v * (v + (acc - first)))",
+   "1",
+   "(acc + 0)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "dcpa",
+   "(v * (v + math.gcd(abs(acc), abs(0))))",
+   "1",
+   "(last * acc)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "ddpa",
+   "(v * (v + (acc // last)))",
+   "0",
+   "math.gcd(abs(first), abs(acc))",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "depa",
+   "(v * (v + (acc + last)))",
+   "0",
+   "(acc % first)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "dfpa",
+   "(v * (v + (acc // v)))",
+   "0",
+   "(acc * 1)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "dgpa",
+   "(v * (v + (acc % v)))",
+   "0",
+   "(acc - 0)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "dhpa",
+   "(v * (v + (acc // first)))",
+   "0",
+   "(acc * last)",
+   "7|SHAM_0|MOTIF"
+  ],
+  [
+   "dipa",
+   "math.gcd(abs(0), abs((v + (acc - 1))))",
+   "1",
+   "(acc // first)",
+   "7|SHAM_0|OTHER"
+  ],
+  [
+   "djpa",
+   "math.gcd(abs(0), abs((v + (acc % last))))",
+   "0",
+   "math.gcd(abs(acc), abs(acc))",
+   "7|SHAM_0|OTHER"
+  ],
+  [
+   "dkpa",
+   "math.gcd(abs(0), abs((v + (acc * last))))",
+   "1",
+   "acc",
+   "7|SHAM_0|OTHER"
+  ],
+  [
+   "dlpa",
+   "math.gcd(abs(0), abs((v + (last - acc))))",
+   "0",
+   "(0 + acc)",
+   "7|SHAM_0|OTHER"
+  ],
+  [
+   "dmpa",
+   "(first + (v * (last - acc)))",
+   "1",
+   "(acc % last)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dnpa",
+   "(first + (v * (0 - acc)))",
+   "1",
+   "(1 - acc)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dopa",
+   "(first + (v * (first - acc)))",
+   "0",
+   "(acc * last)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dppa",
+   "(first + (v * (acc - v)))",
+   "0",
+   "(last * acc)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dqpa",
+   "(first + (v * (acc - 1)))",
+   "1",
+   "(acc % first)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "drpa",
+   "(first + (v * (acc % last)))",
+   "0",
+   "math.gcd(abs(acc), abs(last))",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dspa",
+   "(first + (v * (acc + last)))",
+   "0",
+   "(acc + first)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dtpa",
+   "(first + (v * math.gcd(abs(acc), abs(0))))",
+   "0",
+   "(first * acc)",
+   "7|SHAM_1|MOTIF"
+  ],
+  [
+   "dupa",
+   "(1 + (v * (acc - last)))",
+   "1",
+   "(last * acc)",
+   "7|SHAM_1|OTHER"
+  ],
+  [
+   "dvpa",
+   "(1 + (v * (last - acc)))",
+   "1",
+   "(1 * acc)",
+   "7|SHAM_1|OTHER"
+  ],
+  [
+   "dwpa",
+   "(1 + (v * (v - acc)))",
+   "1",
+   "(acc + 1)",
+   "7|SHAM_1|OTHER"
+  ],
+  [
+   "dxpa",
+   "(1 + (acc * v))",
+   "0",
+   "(first * acc)",
+   "7|SHAM_1|OTHER"
+  ],
+  [
+   "dypa",
+   "(v - math.gcd(abs(acc), abs(math.gcd(abs(last), abs(0)))))",
+   "1",
+   "(acc % last)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "dzpa",
+   "(v - math.gcd(abs(acc), abs((first * first))))",
+   "0",
+   "(acc - 1)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "daqa",
+   "(v - math.gcd(abs(acc), abs(math.gcd(abs(last), abs(last)))))",
+   "1",
+   "math.gcd(abs(acc), abs(0))",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "dbqa",
+   "(v - math.gcd(abs(acc), abs((first % first))))",
+   "1",
+   "(last - acc)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "dcqa",
+   "(v - math.gcd(abs(acc), abs((first - acc))))",
+   "1",
+   "(first - acc)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "ddqa",
+   "(v - math.gcd(abs(acc), abs(pow(0, v))))",
+   "1",
+   "(acc * acc)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "deqa",
+   "(v - math.gcd(abs(acc), abs((1 // v))))",
+   "0",
+   "(acc * last)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "dfqa",
+   "(v - math.gcd(abs(acc), abs((0 % v))))",
+   "0",
+   "(last + acc)",
+   "7|SHAM_2|MOTIF"
+  ],
+  [
+   "dgqa",
+   "(v + math.gcd(abs(acc), abs((first * first))))",
+   "1",
+   "pow(acc, 1)",
+   "7|SHAM_2|OTHER"
+  ],
+  [
+   "dhqa",
+   "(v + math.gcd(abs(acc), abs(math.gcd(abs(first), abs(0)))))",
+   "1",
+   "(acc - 0)",
+   "7|SHAM_2|OTHER"
+  ],
+  [
+   "diqa",
+   "(v + math.gcd(abs(acc), abs((1 // first))))",
+   "0",
+   "(last + acc)",
+   "7|SHAM_2|OTHER"
+  ],
+  [
+   "djqa",
+   "(v + math.gcd(abs(acc), abs((acc % v))))",
+   "1",
+   "(0 + acc)",
+   "7|SHAM_2|OTHER"
+  ],
+  [
+   "dkqa",
+   "(acc - (v + (0 + last)))",
+   "1",
+   "(acc + acc)",
+   "7|NAT|NAT"
+  ],
+  [
+   "dlqa",
+   "(1 + (acc * v))",
+   "1",
+   "(last * acc)",
+   "7|NAT|NAT"
+  ],
+  [
+   "dmqa",
+   "(1 + (v + (acc // 1)))",
+   "0",
+   "(0 + acc)",
+   "7|NAT|NAT"
+  ],
+  [
+   "dnqa",
+   "(acc - (v // math.gcd(abs(acc), abs(first))))",
+   "1",
+   "(acc % first)",
+   "7|NAT|NAT"
+  ],
+  [
+   "doqa",
+   "(last + (acc - (last % v)))",
+   "1",
+   "(acc + 0)",
+   "7|NAT|NAT"
+  ],
+  [
+   "dpqa",
+   "(v + pow(acc, math.gcd(abs(1), abs(0))))",
+   "1",
+   "(acc // 1)",
+   "7|NAT|NAT"
+  ]
+ ],
+ "draws_sha256": "c87395076315a871d46e4bdd979abd1bfe4ff41f19c2b04ef745cd34674e20fd",
+ "motif_pool_sizes": {
+  "G1": 9,
+  "SHAM_0": 12,
+  "SHAM_1": 14,
+  "SHAM_2": 10
+ },
+ "panel": {
+  "G1": "(acc + {H})",
+  "OFF_0": "math.gcd(abs((acc // {H})), abs(first))",
+  "SHAM_0": "({H} + v)",
+  "SHAM_1": "({H} * v)",
+  "SHAM_2": "math.gcd(abs(acc), abs({H}))"
+ },
+ "plan": {
+  "0": {
+   "G1": {
+    "motif": "(0 - (acc + {H}))",
+    "other": "math.gcd(abs((acc + {H})), abs(last))"
+   },
+   "SHAM_0": {
+    "motif": "math.gcd(abs(0), abs(({H} + v)))",
+    "other": "math.gcd(abs(({H} + v)), abs(last))"
+   },
+   "SHAM_1": {
+    "motif": "(last - ({H} * v))",
+    "other": "(({H} * v) + 1)"
+   },
+   "SHAM_2": {
+    "motif": "(math.gcd(abs(acc), abs({H})) * v)",
+    "other": "(acc + math.gcd(abs(acc), abs({H})))"
+   }
+  },
+  "1": {
+   "G1": {
+    "motif": "(v // (acc + {H}))",
+    "other": "(0 - (acc + {H}))"
+   },
+   "SHAM_0": {
+    "motif": "(1 - ({H} + v))",
+    "other": "(0 - ({H} + v))"
+   },
+   "SHAM_1": {
+    "motif": "(first - ({H} * v))",
+    "other": "(v + ({H} * v))"
+   },
+   "SHAM_2": {
+    "motif": "(v + math.gcd(abs(acc), abs({H})))",
+    "other": "(acc - math.gcd(abs(acc), abs({H})))"
+   }
+  },
+  "2": {
+   "G1": {
+    "motif": "math.gcd(abs(0), abs((acc + {H})))",
+    "other": "(v // (acc + {H}))"
+   },
+   "SHAM_0": {
+    "motif": "(v * ({H} + v))",
+    "other": "(({H} + v) * first)"
+   },
+   "SHAM_1": {
+    "motif": "(1 - ({H} * v))",
+    "other": "(({H} * v) + v)"
+   },
+   "SHAM_2": {
+    "motif": "(v // math.gcd(abs(acc), abs({H})))",
+    "other": "(math.gcd(abs(acc), abs({H})) + acc)"
+   }
+  },
+  "3": {
+   "G1": {
+    "motif": "(1 - (acc + {H}))",
+    "other": "(0 - (acc + {H}))"
+   },
+   "SHAM_0": {
+    "motif": "(1 - ({H} + v))",
+    "other": "(last - ({H} + v))"
+   },
+   "SHAM_1": {
+    "motif": "(({H} * v) + 1)",
+    "other": "(last + ({H} * v))"
+   },
+   "SHAM_2": {
+    "motif": "(v * math.gcd(abs(acc), abs({H})))",
+    "other": "(v + math.gcd(abs(acc), abs({H})))"
+   }
+  },
+  "4": {
+   "G1": {
+    "motif": "math.gcd(abs((acc + {H})), abs(0))",
+    "other": "(0 - (acc + {H}))"
+   },
+   "SHAM_0": {
+    "motif": "(last - ({H} + v))",
+    "other": "(1 - ({H} + v))"
+   },
+   "SHAM_1": {
+    "motif": "(v + ({H} * v))",
+    "other": "(0 - ({H} * v))"
+   },
+   "SHAM_2": {
+    "motif": "(1 - math.gcd(abs(acc), abs({H})))",
+    "other": "(acc + math.gcd(abs(acc), abs({H})))"
+   }
+  },
+  "5": {
+   "G1": {
+    "motif": "(v // (acc + {H}))",
+    "other": "math.gcd(abs((acc + {H})), abs(0))"
+   },
+   "SHAM_0": {
+    "motif": "math.gcd(abs(({H} + v)), abs(0))",
+    "other": "(1 - ({H} + v))"
+   },
+   "SHAM_1": {
+    "motif": "(last + ({H} * v))",
+    "other": "(first + ({H} * v))"
+   },
+   "SHAM_2": {
+    "motif": "(1 - math.gcd(abs(acc), abs({H})))",
+    "other": "(v * math.gcd(abs(acc), abs({H})))"
+   }
+  },
+  "6": {
+   "G1": {
+    "motif": "(v - (acc + {H}))",
+    "other": "(last - (acc + {H}))"
+   },
+   "SHAM_0": {
+    "motif": "math.gcd(abs(0), abs(({H} + v)))",
+    "other": "math.gcd(abs(({H} + v)), abs(0))"
+   },
+   "SHAM_1": {
+    "motif": "(acc - ({H} * v))",
+    "other": "(({H} * v) + last)"
+   },
+   "SHAM_2": {
+    "motif": "(acc + math.gcd(abs(acc), abs({H})))",
+    "other": "(v - math.gcd(abs(acc), abs({H})))"
+   }
+  },
+  "7": {
+   "G1": {
+    "motif": "(0 - (acc + {H}))",
+    "other": "math.gcd(abs((acc + {H})), abs(0))"
+   },
+   "SHAM_0": {
+    "motif": "(v * ({H} + v))",
+    "other": "math.gcd(abs(({H} + v)), abs(0))"
+   },
+   "SHAM_1": {
+    "motif": "(({H} * v) + first)",
+    "other": "(({H} * v) + 1)"
+   },
+   "SHAM_2": {
+    "motif": "(v - math.gcd(abs(acc), abs({H})))",
+    "other": "(v + math.gcd(abs(acc), abs({H})))"
+   }
+  }
+ }
+}

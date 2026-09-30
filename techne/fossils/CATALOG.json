@@ -1,10 +1,10 @@
 {
  "schema": "techne.fossil.catalog/1",
- "written_utc": "2026-09-30T10:49:28Z",
+ "written_utc": "2026-09-30T23:09:38Z",
  "host_neutral": true,
  "records_root": "techne/fossils/specimens",
  "vault_root_on_this_host": null,
- "fossils": 169,
+ "fossils": 189,
  "runnable": 106,
  "bodies_present_on_this_host": null,
  "fields": [
@@ -29,6 +29,124 @@
   "body_path"
  ],
  "rows": [
+  {
+   "fossil_id": "aevol-inria-2010",
+   "canonical_name": "Aevol -- An in silico experimental evolution platform (Original authors: Guillaume Beslon, Carole Knibbe, David P. Parsons, per AUTHORS; institution not named in README -- source strings say 'Copyright (C) 2009  LIRIS.' and hosting is gitlab.inria.fr; git history 2010-2026, CMake project version 9.4.0)",
+   "lineage": "README names no predecessor. AUTHORS lists 'Original authors: Guillaume Beslon, Carole Knibbe, David P. Parsons' and major/other contributors. ChangeLog has entries 'New in 8.0' (MPI support, RAevol, discrete fuzzy) and 'New in 4.4'; CMake project version is 9.4.0. AUTHORS notes SFMT is distributed with Aevol but is a separate package. Legacy autotools remnants remain (doc/Makefile.am, SFMT Makefile.am; user guide still describes ./configure). || main loop (reader, from the code): EvolutionRunner::run_evolution loops generation by generation inside one OpenMP parallel region: run_a_step advances AeTime, chooses a reproducer for every grid cell by fitness-proportionate selection (global or local 3x3 neighbourhood), draws mutations per offspring with the cell's PRNG, applies them to the DNA (clones of unmutated parents are reused), re-decodes and re-evaluates mutants (promoters -> RNAs -> proteins -> fuzzy phenotype -> metabolic error -> fitness), records the phylogenetic tree, replaces the population with the new generation and updates the best individual; every checkpoint_frequency generations a checkpoint (and optionally the tree) is written.",
+   "ancestry": [],
+   "human_purpose": "Aevol is an in silico experimental evolution platform: a digital genetics model in which populations of digital organisms undergo selection and variation, creating a Darwinian dynamics, so that one can study experimentally the impact of selection and variation parameters on the structure of evolved organisms (README).",
+   "human_environmental_pressure": "The README motivates it by the need to study experimentally how selection (population size, environment, environmental variation) and variation (mutation and rearrangement rates, types of rearrangements, horizontal transfer) shape genome structure (number of genes, synteny, proportion of coding sequences), which requires a precise and realistic model of the genome.",
+   "version": "gitlab.inria.fr/aevol/aevol.git aevol-9 @ bea4a252d592e525677f1306aaa9fe604e14c5d3 (committed 2026-06-09; 5099 commits since 2010-12-13; 393 tracked files)",
+   "era": "2010-2026",
+   "language": [
+    "C++ (C++20 per CMakeLists.txt; CMAKE_CXX_STANDARD 20)",
+    "C (SFMT)",
+    "Python (src/misc helper scripts)",
+    "LaTeX (doc/user_guide)",
+    "CMake"
+   ],
+   "domain": [
+    "digital-evolution",
+    "artificial-life",
+    "genome-evolution",
+    "cpp"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-3.0-only (COPYING text; see notes)",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/aevol.json"
+   ],
+   "tree_sha256": "d3b063091170903007de02122540af585b4928a328913b36beba28023a0c4130",
+   "record_path": "techne/fossils/specimens/aevol-inria-2010/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "ai-scientist-v2-sakana-2025",
+   "canonical_name": "The AI Scientist-v2 -- The AI Scientist-v2: Workshop-Level Automated Scientific Discovery via Agentic Tree Search (Yamada, Yutaro and Lange, Robert Tjarko and Lu, Cong and Hu, Shengran and Lu, Chris and Foerster, Jakob and Clune, Jeff and Ha, David; Sakana AI (Licensor per LICENSE; README names no institution); 2025)",
+   "lineage": "README: 'Version 2' of 'its predecessor (AI Scientist-v1)' at https://github.com/SakanaAI/AI-Scientist; 'The tree search component implemented within the ai_scientist directory is built on top of the AIDE project' (https://github.com/WecoAI/aideml); code still prints 'AIDE is working on experiment' and serialize.py docstring says 'Deserialize JSON to AIDE dataclasses'. Companion repo SakanaAI/AI-Scientist-ICLR2025-Workshop-Experiment linked from README. || main loop (reader, from the code): AgentManager.run iterates four fixed main stages (initial_implementation -> baseline_tuning -> creative_research -> ablation_studies), and within each sub-stage repeatedly calls ParallelAgent.step, which selects num_workers tree nodes (new drafts until num_drafts roots exist, random buggy leaves to debug with probability debug_prob, otherwise the LLM-judged best good node to improve, or the fixed best stage-1/3 node for hyperparameter/ablation stages), has worker processes ask an LLM for plan+code, execute it via Interpreter with a timeout, parse metrics and VLM plot feedback into a Node, appends the Nodes to the stage Journal, and ends the stage when max_iterations is reached or an LLM judges the stage goals met, then runs multi-seed evaluation and plot aggregation on the best node before seeding the next stage with it.",
+   "ancestry": [],
+   "human_purpose": "A generalized end-to-end agentic system that autonomously generates hypotheses, runs experiments, analyzes data and writes scientific manuscripts, and that 'has generated the first workshop paper written entirely by AI and accepted through peer review' (README).",
+   "human_environmental_pressure": "The predecessor AI Scientist-v1 relied on human-authored templates; v2 'removes reliance on human-authored templates, generalizes across Machine Learning (ML) domains, and employs a progressive agentic tree search, guided by an experiment manager agent' (README), while noting v2 has lower success rates than v1 when a strong template exists.",
+   "version": "github.com/SakanaAI/AI-Scientist-v2 main @ 96bd51617cfdbb494a9fc283af00fe090edfae48 (committed 2025-12-19; 58 commits since 2025-04-08; 68 tracked files)",
+   "era": "2025",
+   "language": [
+    "Python",
+    "YAML (bfts_config.yaml)",
+    "LaTeX/BibTeX style files",
+    "HTML/JS (treesearch/utils/viz_templates)"
+   ],
+   "domain": [
+    "automated-science",
+    "llm-agents",
+    "tree-search",
+    "experiment-management"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "custom (LICENSE line 2: \"Version 1.0, December 2025\"; line 4: \"This license is based on the Responsible AI Source Code License v1.1 (http://licenses.ai/).\")",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/ai-scientist-v2.json",
+    "use-restricted-licence"
+   ],
+   "tree_sha256": "f0f6265c92f930a177714a2773992dd84f6d2e7e353747f22cef7a70ecddfc1c",
+   "record_path": "techne/fossils/specimens/ai-scientist-v2-sakana-2025/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
   {
    "fossil_id": "arduino-pid",
    "canonical_name": "Arduino PID Library -- Brett Beauregard",
@@ -4249,6 +4367,63 @@
    "mirror_available": null
   },
   {
+   "fossil_id": "cycleqd-sakana-2024",
+   "canonical_name": "CycleQD -- Agent Skill Acquisition for Large Language Models via CycleQD (ICLR 2025) (So Kuroki and Taishi Nakamura and Takuya Akiba and Yujin Tang; Sakana AI; 2024-2025)",
+   "lineage": "README names no predecessors. Code provenance comments: evaluator 'fishfarm' is a Sakana AI package (author Takuya Akiba, takiba@sakana.ai; references https://github.com/SakanaAI/fishfarm/issues/58) vendored here; DBBench and OS-Interaction tasks ported from THUDM/AgentTuning AgentBench.old; evalplus data loading 'Based on' ise-uiuc/magicoder; imports/logging utilities from optuna. ModelwiseLinearMerge docstring: 'Also called chat vector merge.' Seed models are SakanaAI Llama-3-8B-Instruct OS/Coding/DB experts on the meta-llama/Meta-Llama-3-8B-Instruct base. || main loop (reader, from the code): run_qd seeds one MAP-Elites-style archive per task by evaluating the expert seed models, then for each generation picks the next task in a fixed cycle (flip_interval), has a worker sample two parents from that task's archive, merge them as weighted task vectors on the shared base model (ModelwiseLinearMerge), add Gaussian (or SVD-structured) noise, evaluate the child on all tasks via vLLM, and insert the child into every task archive cell (indexed by the other tasks' scores binned as behaviour characteristics) where its quality beats the incumbent, optionally letting a per-task CMA-ES adapt the merge/mutation hyperparameters from the child's fitness.",
+   "ancestry": [],
+   "human_purpose": "Train ('Training' section of README) LLM agents by cyclically applying quality-diversity search over merged Llama-3-8B-Instruct expert models across three agent skills (OS interaction, coding/MBPP, database/DBBench) -- the README itself only gives install and run steps under the title 'Agent Skill Acquisition for Large Language Models via CycleQD (ICLR 2025)'.",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN (README contains no motivation or abstract text; only title, links, install and run instructions, and bibtex)",
+   "version": "github.com/SakanaAI/CycleQD main @ 3d14971e0b50c8111c4cb13abd1b261d4c6685ec (committed 2025-02-01; 8 commits since 2024-10-16; 67 tracked files)",
+   "era": "2024-2025",
+   "language": [
+    "Python",
+    "YAML (hydra configs)",
+    "Dockerfile (evaluation/fishfarm/data/os_interaction/res/dockerfiles)"
+   ],
+   "domain": [
+    "quality-diversity",
+    "model-merging",
+    "foundation-models",
+    "map-elites"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VIII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/cycleqd.json"
+   ],
+   "tree_sha256": "f2fc059d5b0166aa6065e63b6a20fc9efcd4673c00a4e29378de321d82c996d5",
+   "record_path": "techne/fossils/specimens/cycleqd-sakana-2024/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
    "fossil_id": "dcd-facebookresearch-2022",
    "canonical_name": "DCD -- Dual Curriculum Design: reference implementation of PLR, Robust PLR, ACCEL, PAIRED, REPAIRED and minimax (Jiang, Dennis, Parker-Holder, Foerster, Grefenstette, Rocktaschel et al.; Meta AI / FAIR, 2021-2023)",
    "lineage": "PLR (Jiang et al. 2020, arXiv:2010.03934) and PAIRED (Dennis et al. 2020, arXiv:2012.02096) -> Replay-Guided Adversarial Environment Design (Jiang et al., NeurIPS 2021, arXiv:2110.02439: Robust PLR, REPAIRED, the DCD framing) -> ACCEL (Parker-Holder et al., ICML 2022) -> PAIRED + HiEnt/BC/Evo (Mediratta et al., CoLLAs 2023, arXiv:2308.10797); all in one codebase on branch main",
@@ -4389,6 +4564,66 @@
    "receipts": [
     "techne/fossils/specimens/des-reference/receipts/run-des-reference-20260913T144336Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "dgm-zhang-hu-2025",
+   "canonical_name": "Darwin Godel Machine (DGM) -- Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents (Zhang, Jenny and Hu, Shengran and Lu, Cong and Lange, Robert and Clune, Jeff; institution NOT_FOUND_AT_PIN in README text, README badges link sakana.ai/dgm and x.com/SakanaAILabs; 2025)",
+   "lineage": "README: evaluation framework implementations 'are based on the SWE-bench and polyglot-benchmark repositories' (swe-bench/SWE-bench, Aider-AI/polyglot-benchmark). Title invokes the Godel Machine; no other predecessor system is named in the tree. The bundled initial/ and initial_polyglot/ directories are the paper's initial agent's benchmark logs and are the root node of every run. || main loop (reader, from the code): For each generation, DGM_outer.main calls choose_selfimproves to sample selfimprove_size parents from the archive (default score_child_prop: sigmoid of accuracy_score times 1/(1+children_count)) each paired with a task entry, runs self_improve for each in a ThreadPoolExecutor (Docker container from the repo, replay parent patch chain, LLM-written problem statement, the coding agent edits its own code, resulting model_patch.diff is evaluated on SWE-bench/Polyglot subsets in Docker), then filter_compiled and update_archive (keep_all by default) add the children to the archive and the state is appended to dgm_metadata.jsonl.",
+   "ancestry": [],
+   "human_purpose": "README: 'a novel self-improving system that iteratively modifies its own code (thereby also improving its ability to modify its own codebase) and empirically validates each change using coding benchmarks'.",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN as an explicit motivation statement; the README only states the goal (open-ended evolution of self-improving coding agents validated empirically on SWE-bench/Polyglot) and includes a safety warning that the system executes untrusted model-generated code; the paper abstract is not in the tree.",
+   "version": "github.com/jennyzzt/dgm main @ a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2 (committed 2025-08-13; 5 commits since 2025-05-29; 1650 tracked files)",
+   "era": "2025",
+   "language": [
+    "Python (39 .py files: outer loop, self-improve step, coding agent, harnesses, tools)",
+    "Shell (327 .sh: mostly eval scripts under initial/ and initial_polyglot/)",
+    "Markdown (507, mostly chat/eval logs under initial*/)",
+    "JSON (340, metadata/predictions)",
+    "log (333)",
+    "diff (48 patches)"
+   ],
+   "domain": [
+    "self-improving-agents",
+    "open-ended-learning",
+    "llm-agents",
+    "archive-search"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/dgm.json"
+   ],
+   "tree_sha256": "cfbb24e2568b866b9ca44f1b84d6698ca73f6792ffa9ff9182121967341c0add",
+   "record_path": "techne/fossils/specimens/dgm-zhang-hu-2025/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -5078,6 +5313,62 @@
    "mirror_available": null
   },
   {
+   "fossil_id": "evolutionary-model-merge-sakana-2024",
+   "canonical_name": "evomerge -- Evolutionary Optimization of Model Merging Recipes (authors: 'Sakana AI' per pyproject.toml; no author names in README/CITATION; Sakana AI; 2024)",
+   "lineage": "README: source models for the merges are shisa-gamma-7b-v1, WizardMath-7B-V1.1, GAIR/Abel-7B-002, Arithmo2-Mistral-7B, LLaVA-1.6-Mistral-7B; EvoLLM-JP-v1-10B is built from EvoLLM-JP-v1-7B + shisa-gamma-7b-v1. 'Our math evaluation code builds on the WizardMath repository.' evomerge/utils.py functions 'copied from https://github.com/Stability-AI/generative-models'. Vendored heron/video_blip modules carry HuggingFace/Salesforce headers. Compared against lm-eval-harness jp-stable branch (Stability-AI). || main loop (reader, from the code): evaluate.py loads a config, instantiates one model wrapper, then for each evaluator config instantiates the evaluator, calls evaluator(model) to generate answers over a HuggingFace dataset and score them, and dumps all metrics to a JSON file; there is NO evolutionary search, merging (no CMA-ES, DARE, TIES, SLERP, layer-stacking) or optimisation code anywhere in the tree -- the repo is evaluation-only, and the evolved weights are consumed as pre-built HuggingFace checkpoints.",
+   "ancestry": [],
+   "human_purpose": "Serve as 'a central hub for SakanaAI's Evolutionary Model Merge series' with 'models and code for reproducing the evaluation presented in our paper' (README).",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN (README gives no motivation text or abstract; it only links the arXiv paper and lists benchmark tables)",
+   "version": "github.com/SakanaAI/evolutionary-model-merge main @ 09aff543dd2ae966b3dfe457b750563ab063eb03 (committed 2024-03-31; 2 commits since 2024-03-21; 41 tracked files)",
+   "era": "2024",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "model-merging",
+    "evolutionary-computation",
+    "foundation-models",
+    "evaluation-harness"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VIII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/evolutionary-model-merge.json",
+    "evaluation-only-no-search-code"
+   ],
+   "tree_sha256": "69d1b447d3c5b931f41b24eaadf7b4fc22363b8be22b79af4d5c1b10e25f0435",
+   "record_path": "techne/fossils/specimens/evolutionary-model-merge-sakana-2024/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
    "fossil_id": "femtolisp",
    "canonical_name": "femtolisp -- a small, fast Scheme-ish Lisp (Jeff Bezanson)",
    "lineage": "femtolisp (2008-, Jeff Bezanson): a compact Lisp with a bytecode compiler, mark-and-sweep GC, tail calls and a numeric tower; the language that bootstraps parts of Julia's front end",
@@ -5292,6 +5583,64 @@
     "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260912T164310Z.json",
     "techne/fossils/specimens/filterpy-labbe/receipts/run-filterpy-labbe-20260913T215428Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "funsearch-deepmind-2023",
+   "canonical_name": "FunSearch -- Mathematical discoveries from program search with large language models (Romera-Paredes, Bernardino; Barekatain, Mohammadamin; Novikov, Alexander; Balog, Matej; Kumar, M. Pawan; Dupont, Emilien; Ruiz, Francisco J. R.; Ellenberg, Jordan; Wang, Pengming; Fawzi, Omar; Kohli, Pushmeet; Fawzi, Alhussein; DeepMind Technologies Limited; Nature 2023; copyright 2023)",
+   "lineage": "README names only the Nature 2023 paper it accompanies; no predecessor system is named in the tree. cap_set.ipynb says the 1082-cap in n = 9 'matches the previously known best construction'. Notebooks use commented-out '# @funsearch.run' / '# @funsearch.evolve' decorators to mark the skeletons used in the paper's experiments. || main loop (reader, from the code): Sampler.sample loops forever: ProgramsDatabase.get_prompt picks a random island, softmax-samples up to functions_per_prompt clusters by score, renders them as <fn>_v0..<fn>_vk plus an empty <fn>_v(k+1) header; LLM.draw_samples produces samples_per_prompt continuations; each is sent to a random Evaluator.analyse, which splices the body into the template, runs Sandbox.run on every input, and registers the (function, island, scores_per_test) in the database, which clusters by score signature and every reset_period seconds resets the weaker half of islands from survivors' best programs.",
+   "ancestry": [],
+   "human_purpose": "README: 'This repository accompanies the publication' Romera-Paredes et al., Nature 2023; it publishes the functions and sets FunSearch discovered (cap sets, admissible sets, bin-packing heuristics, cyclic-graph independent sets, corner-free sets) plus 'an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline' intended 'for understanding the details of our method, and for adapting it for use with any available language models, sandboxes, and distributed systems'.",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN as an explicit statement; the README gives no motivation beyond accompanying the paper, and the paper abstract is not in the tree. The notebook text motivates the problems (e.g. cap_set.ipynb: trivial priority gives cap sets 'far from optimal').",
+   "version": "github.com/google-deepmind/funsearch main @ cc53f274237d7ab05c19df939edbc1f9616a7c19 (committed 2024-02-05; 14 commits since 2022-03-31; 31 tracked files)",
+   "era": "2022-2024",
+   "language": [
+    "Python",
+    "Jupyter Notebook (4 .ipynb)",
+    "plain-text numerical data (.txt)"
+   ],
+   "domain": [
+    "llm-guided-search",
+    "program-synthesis",
+    "evolutionary-computation",
+    "mathematics"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0 (software); README says all other materials are CC-BY-4.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/funsearch.json",
+    "partial-release"
+   ],
+   "tree_sha256": "fa6f965da80ef93904806fbc7ebe0b6c637534740f5f1a96de0788ade35dd68a",
+   "record_path": "techne/fossils/specimens/funsearch-deepmind-2023/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -6051,6 +6400,67 @@
    "mirror_available": null
   },
   {
+   "fossil_id": "jaxued-dramacow-2024",
+   "canonical_name": "JaxUED -- JaxUED: A simple and useable UED library in Jax (Samuel Coward and Michael Beukman and Jakob Foerster; no institution named in README, pyproject author email domain robots.ox.ac.uk; 2024-2025)",
+   "lineage": "README: 'similar goals to CleanRL'; inspirations listed under See Also: Minimax (facebookresearch/minimax: 'UED baselines, with support for multi-gpu training, and more parallel versions of PLR/ACCEL'), PureJaxRL, JaxIRL, Mava, JaxMARL, Gymnax, Jumanji, Pgx, Brax, XLand-MiniGrid, Craftax. docs/maze_dr.md: 'It follows the PureJaxRL-style training loop.' docs/maze.md: maze 'based on Minigrid'. Source comments credit minimax for utils.py (ued_scores) and make_level_mutator_minimax. Downstream per README 'Projects using JaxUED': Craftax, ReMiDi. || main loop (reader, from the code): In examples/maze_plr.py, train_step (jax.lax.scan-ned eval_freq times inside train_and_eval_step, itself looped num_updates//eval_freq times in main) draws a replay decision from the LevelSampler (or, with --use_accel, uses the previous update_state to force a mutate step after each replay step) and jax.lax.switch-es into one of on_new_levels (sample random mazes, roll out the PPO-LSTM agent, score trajectories with MaxMC or positive value loss, insert_batch into the buffer, update the policy only if exploratory_grad_updates), on_replay_levels (sample_replay_levels weighted by rank-score and staleness, roll out, update_batch scores, always update the policy) or on_mutate_levels (mutate the last replayed batch with make_level_mutator_minimax, roll out, score and insert the children).",
+   "ancestry": [
+    {
+     "relation": "reimplementation_of",
+     "to": "dcd-facebookresearch-2022",
+     "note": "reader draft: two files credit facebookresearch/minimax as source, which itself reimplements dcd; JaxUED implements the same UED methods (DR, PLR, Robust PLR, ACCEL, PAIRED) as single-file JAX programs"
+    }
+   ],
+   "human_purpose": "Provide CleanRL-style single-file, understandable JAX reference implementations of common Unsupervised Environment Design methods (DR, PLR, ACCEL, PAIRED) plus a LevelSampler, an UnderspecifiedEnv interface and a Maze environment, for researchers to modify and prototype on.",
+   "human_environmental_pressure": "README: existing UED code hides implementation details behind abstraction; JaxUED is 'primarily intended for researchers looking to get in the weeds of UED algorithm development' with 'minimal dependency implementations' that 'expose all implementation details' and facilitate 'easy, rapid prototyping of new ideas'.",
+   "version": "github.com/DramaCow/jaxued main @ 0f8f1284677375b889e4f13a32c9617cd009f8c4 (committed 2025-09-09; 27 commits since 2024-02-25; 52 tracked files)",
+   "era": "2024-2025",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "unsupervised-environment-design",
+    "curriculum",
+    "reinforcement-learning",
+    "jax"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0 (from pyproject metadata only; no licence text in tree at pin)",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/jaxued.json"
+   ],
+   "tree_sha256": "569d3ab9ebd323ad7e1ea1316d525f0d9c672acba7f3928ac27e91fc646e6319",
+   "record_path": "techne/fossils/specimens/jaxued-dramacow-2024/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
    "fossil_id": "kissfft-131.1.0",
    "canonical_name": "KISS FFT 131.1.0 -- Mark Borgerding",
    "lineage": "KISS FFT (2003-, Borgerding): a mixed-radix Cooley-Tukey FFT small enough to read in one sitting; the 'keep it simple' counterpoint to FFTW's code generation",
@@ -6343,6 +6753,73 @@
    ],
    "tree_sha256": "0414e7975c2f8767bdbcae8202991791c2db26941e9356c153a325f16a39fbed",
    "record_path": "techne/fossils/specimens/lenia-chan-2019/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "leniabreeder-faldor-2024",
+   "canonical_name": "Leniabreeder -- Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity (Faldor, Maxence and Cully, Antoine; institution NOT_FOUND_AT_PIN in README (apptainer/hpc.yaml names host login.hpc.imperial.ac.uk); 2024)",
+   "lineage": "README names Lenia and Quality-Diversity in the title and describes MAP-Elites and AURORA experiments; the tree vendors a modified qdax package (__version__ 0.3.0; qdax/tasks/README.md references the 'QD Benchmarks Workshop at GECCO 2022'); lenia/patterns.py entries are named 'Aquarium (self-replicating)', 'Aquarium (swarm)' etc.; isoline_variation docstring cites 'Iso+Line-DD Variation Operator [1]'. No explicit 'descends from / supersedes' statement in README. || main loop (reader, from the code): Each generation the MixingEmitter samples parent pairs from the repertoire and applies isoline_variation (iso_sigma Gaussian noise + line_sigma interpolation), each child genotype is expressed into a 128x128 Lenia world and stepped 200 times under jax.lax.scan while recording mass/center/velocity/angle stats and a cropped phenotype, fitness and descriptor are computed from the last n_keep steps (fitness set to -inf if the world went empty, hit the border, or spread), and children are added to a CVT MAP-Elites grid (main_me.py) or to an UnstructuredRepertoire that keeps the individuals most distant from fitter neighbours in the VAE latent space, which is retrained on stored phenotypes every generation and used to re-encode the whole archive (main_aurora.py).",
+   "ancestry": [
+    {
+     "relation": "inspired_by",
+     "to": "lenia-chan-2019",
+     "note": "Lenia is the substrate searched (reader draft: JAX Lenia genotypes); the reference Lenia implementation is a separate specimen"
+    },
+    {
+     "relation": "derived_from",
+     "to": "qdax-airl-2022",
+     "note": "reader draft: a vendored qdax 0.3.0 provides MAP-Elites and AURORA machinery"
+    }
+   ],
+   "human_purpose": "Repository for 'Toward Artificial Open-Ended Evolution within Lenia using Quality-Diversity' (ALIFE 2024): run MAP-Elites or AURORA quality-diversity search over Lenia genotypes (kernel parameters + embryo cells) and analyze the resulting repertoires.",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN (README gives title only; no abstract in the tree)",
+   "version": "github.com/maxencefaldor/Leniabreeder main @ 2d7bd133548359782741598b3a4f026d69d792a9 (committed 2025-04-02; 14 commits since 2024-06-13; 120 tracked files)",
+   "era": "2024-2025",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "artificial-life",
+    "quality-diversity",
+    "lenia",
+    "open-endedness",
+    "jax"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/leniabreeder.json"
+   ],
+   "tree_sha256": "d739997ae54315eb9715436cce28bb00b031baeffa1c1aa8999795f68e13f6a9",
+   "record_path": "techne/fossils/specimens/leniabreeder-faldor-2024/record.json",
    "recipe_path": null,
    "receipts": [],
    "body_present_on_this_host": null,
@@ -7002,6 +7479,131 @@
    "mirror_available": null
   },
   {
+   "fossil_id": "mabe2-ofria-2019",
+   "canonical_name": "MABE (Modular Agent-Based Evolver) version 2 -- NOT_FOUND_AT_PIN (README gives no paper title or CITATION file) (Charles Ofria, Cliff Bohm, and Austin Ferguson per LICENSE; Michigan State University per source headers; 2019-2026)",
+   "lineage": "README: 'Version 2 of the Modular Agent-Based Evolver framework' (https://github.com/Hintzelab/MABE), 're-built from scratch, using the Empirical library' (https://github.com/devosoft/Empirical). source/orgs includes AvidaGPOrg.hpp and VirtualCPUOrg.hpp with an Avida-style instruction set (orgs/instructions/VirtualCPU_Inst_*.hpp); CI.yml lists branches 'avida' and 'avida_merge'. Legacy code kept under source/OLD, source/core/OLD and build/OLD. || main loop (reader, from the code): MABE::Update triggers the script's START event on the first call and then, for each update until the target count or an EXIT(), rescans module signals if needed, fires before_update, increments the update counter, fires on_update, and triggers the script's @UPDATE(ud) block, which in the shipped .mabe settings evaluates the population with an Eval module, writes data files, calls Select modules that Replicate chosen parents (with Organism::Mutate applied on reproduction) into next_pop, and replaces main_pop with next_pop.",
+   "ancestry": [],
+   "human_purpose": "A software framework 'deigned to easily build and customize software for evolutionary computation or artificial life', with resulting systems 'useful for studying evolutionary dynamics, solving complex problems, comparing evolving systems, or exploring the open-ended power of evolution' (README).",
+   "human_environmental_pressure": "README: MABE 2.0 'is being re-built from scratch, using the Empirical library' with the goal 'to allow for more modular control, flexible agents, faster run times and portability to the web' relative to version 1; TODO lists genomes/brains interface, web interface and evaluation-system fixes as open projects.",
+   "version": "github.com/mercere99/MABE2 master @ 1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0 (committed 2026-02-15; 2409 commits since 2019-06-02; 441 tracked files)",
+   "era": "2019-2026",
+   "language": [
+    "C++ (C++20 per Makefile-base.mk FLAGS_version := -std=c++20; .hpp header-only framework, .cpp/.cc executables and tests)",
+    "Emplode configuration scripting language (.mabe/.gen/.mbatch files, interpreter in source/Emplode)",
+    "shell (.sh run scripts)",
+    "Python (build/plot.py, runs/GPTP2022/plot.py plotting helpers)"
+   ],
+   "domain": [
+    "evolutionary-computation",
+    "artificial-life",
+    "agent-based",
+    "cpp-framework"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/mabe2.json"
+   ],
+   "tree_sha256": "d9d6c7eaa3397ba366d5d7cff9eb321766caeff8abd58a84daa11be45435b8ef",
+   "record_path": "techne/fossils/specimens/mabe2-ofria-2019/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "map-elites-sferes2-2015",
+   "canonical_name": "map_elites (MAP-Elites module for Sferes2) -- Illuminating search spaces by mapping elites (Mouret, J. B., & Clune, J. (2015) per README reference; module authors Jean-Baptiste Mouret and Danesh Tarapore; Inria per author e-mail, copyright headers ISIR / UPMC; 2015-2017)",
+   "lineage": "README: 'MAP-Elites module for Sferes2', reference 'Mouret, J. B., & Clune, J. (2015). Illuminating search spaces by mapping elites'; every licensed header says 'This file is a part of the sferes2 framework.' and the module builds via use='sferes2' with includes '../../' (i.e. lives at sferes2/modules/map_elites). sferes2's README at its own pin says 'we will soon integrate a more flexible version in the master branch of sferes_v2', i.e. this module is the standalone precursor of the later in-tree QD code. || main loop (reader, from the code): Per generation MapElites::epoch() flattens every occupied cell of the boost::multi_array archive into the working population, then Params::pop::size times picks two uniformly random elites, crosses and mutates them into two children, evaluates the whole child batch (in parallel via sferes::eval), and for each child computes its cell from round(desc_i * shape_i) and overwrites the occupant if the cell is empty, the child is fitter by more than epsilon, or it ties and lies closer to the cell centre; sferes2's Ea::run() drives this for nb_gen generations and dumps stats every dump_period.",
+   "ancestry": [
+    {
+     "relation": "algorithm_from",
+     "to": "Mouret & Clune 2015 (arXiv:1504.04909)",
+     "note": "the MAP-Elites paper; this module is the authors' own sferes2 implementation"
+    },
+    {
+     "relation": "derived_from",
+     "to": "sferes2-mouret-2014",
+     "note": "a sferes2 module: builds only inside sferes2/modules/map_elites via waf use=sferes2 (reader draft)"
+    }
+   ],
+   "human_purpose": "README: 'MAP-Elites module for Sferes2.' implementing an algorithm that 'creates a map of high-performing solutions at each point in a space defined by dimensions of variation that a user gets to choose'.",
+   "human_environmental_pressure": "README (abstract): 'The goal of search algorithms has traditionally been to return the single highest-performing solution in a search space' whereas a 'holistic view of how high-performing solutions are distributed throughout a search space' is 'more useful'.",
+   "version": "github.com/sferes2/map_elites master @ 854eb3a4c4b8da592675f54fbb8667942b6eaf20 (committed 2017-07-25; 33 commits since 2015-05-07; 14 tracked files)",
+   "era": "2015-2017",
+   "language": [
+    "C++ (C++11: std::array, auto; header-only module + 2 program sources)",
+    "Python 2 (plot_map.py uses print statements; numpy, matplotlib)",
+    "Python (wscript)"
+   ],
+   "domain": [
+    "quality-diversity",
+    "map-elites",
+    "evolutionary-computation"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "CECILL-2.1",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/map-elites-sferes2.json"
+   ],
+   "tree_sha256": "94e1679ab32c92838f77b4e2420c3117c883a791546e387d57384478212a4580",
+   "record_path": "techne/fossils/specimens/map-elites-sferes2-2015/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
    "fossil_id": "md5-rfc1321",
    "canonical_name": "MD5 (RFC 1321 reference implementation) -- a hash function whose collision resistance was broken",
    "lineage": "MD5 (Rivest, 1992, RFC 1321) was the default cryptographic hash for a decade: 128-bit digest, Merkle-Damgard over a 512-bit block compression function. Wang et al. published practical collisions in 2004-2005, and RFC 6151 records that MD5 is no longer acceptable where collision resistance is required. The fossil is the RFC's own reference C code -- the standard and its implementation in one artifact.",
@@ -7148,6 +7750,68 @@
     "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143351Z.json",
     "techne/fossils/specimens/microkanren-scheme/receipts/run-microkanren-scheme-20260912T143428Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "minimax-facebookresearch-2023",
+   "canonical_name": "minimax -- minimax: Efficient Baselines for Autocurricula in JAX (Jiang, Minqi and Dennis, Michael and Grefenstette, Edward and Rockt\u00e4schel, Tim; Meta Platforms, Inc. and affiliates per copyright headers, pyproject email msj@meta.com; 2023-2024)",
+   "lineage": "README: JAX-based reimplementation of the baselines in facebookresearch/dcd ('previous reference implementations, like those in facebookresearch/dcd'); AMaze 'provides feature-parity with respect to the previous reference implementation of the maze environment in facebookresearch/dcd' and 'exactly reproduces the MiniGrid-based mazes used in previous UED studies'. Introduces Parallel PLR and Parallel ACCEL as new variants. rnn.py is based on OptimizedLSTMCell from google/jax. Roadmap names JaxMARL and Jumanji as planned integrations. (Downstream, per the jaxued tree, JaxUED credits minimax commit 2ae9e04 for ued_scores and maze mutators.) || main loop (reader, from the code): ExperimentRunner.train loops while train_state.n_updates < n_total_updates, each tick calling the selected runner's run() (jitted, optionally shmap-sharded over devices) which for PLRRunner resets a batch of fresh random levels, asks PLRManager.sample whether to replay (uniform draw < replay_prob and buffer fill >= min_fill_ratio) and if so draws levels from the buffer with a distribution mixing rank-based score weights and staleness (ages), optionally merges new+replay+mutated levels for parallel evaluation, dedupes against the buffer, rolls out the students and computes UED scores (e.g. max_mc) to insert/update buffer entries, performs the PPO gradient update (gated by is_replay under Robust PLR), then under ACCEL mutates the replayed levels with the registered mutator and evaluates the children into the buffer, before the outer loop logs stats to csv/wandb and checkpoints.",
+   "ancestry": [
+    {
+     "relation": "reimplementation_of",
+     "to": "dcd-facebookresearch-2022",
+     "note": "reader draft: Meta's JAX reimplementation of the facebookresearch/dcd UED baselines, adding Parallel PLR/ACCEL"
+    }
+   ],
+   "human_purpose": "Provide fast, fully-jittable JAX implementations of the key minimax-regret UED baselines (DR, Minimax adversary, PAIRED, Population PAIRED, PLR, Robust PLR, ACCEL) plus two new parallel variants (Parallel PLR, Parallel ACCEL), with multi-device training and a tensorized maze environment (AMaze) reproducing the MiniGrid mazes of prior UED work.",
+   "human_environmental_pressure": "README: 'existing implementations of common baselines require excessive amounts of compute. In some cases, experiments can require more than a week to complete using V100 GPUs. This long turn-around slows the rate of research progress in autocuriculum methods'.",
+   "version": "github.com/facebookresearch/minimax main @ d053054c5290a04c1c4cd8b55704d999cad73e30 (committed 2024-08-24; 6 commits since 2023-11-22; 102 tracked files)",
+   "era": "2023-2024",
+   "language": [
+    "Python",
+    "Jupyter notebooks (examples/*.ipynb)"
+   ],
+   "domain": [
+    "unsupervised-environment-design",
+    "curriculum",
+    "reinforcement-learning",
+    "jax"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/minimax.json"
+   ],
+   "tree_sha256": "3d1cfe120483bffd3739f7729f5f12fe475308e29fb066a1a3c18f1f91995d83",
+   "record_path": "techne/fossils/specimens/minimax-facebookresearch-2023/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -7400,6 +8064,62 @@
    "mirror_available": null
   },
   {
+   "fossil_id": "natural-niches-m2n2-sakana-2025",
+   "canonical_name": "natural_niches / M2N2 -- Competition and Attraction Improve Model Fusion (Abrantes, Joao and Lange, Robert and Tang, Yujin; Sakana AI (inferred from bibtex key sakana2025m2n2 and GitHub org, not stated in README prose); 2024-2025)",
+   "lineage": "README names no predecessors beyond comparing against CMA-ES and MAP-Elites baselines implemented in-tree (cma_es_fn.py uses the pycma library; map_elites_fn.py is a from-scratch grid archive); 'ga' is the same code with alpha=0.0 and no matchmaker. Commit 'Update code after camera ready' (2025-08-22) followed the 2024-09 initial code. || main loop (reader, from the code): run_natural_niches keeps a fixed-size archive of flat MLP parameter vectors with a boolean per-training-example score matrix, and for each of total_forward_passes iterations samples parent 1 proportional to competition-normalised fitness (each example's reward divided by the number of archive members that get it right, to the power alpha), samples parent 2 by a 'matchmaker' score favouring individuals that are correct where parent 1 is wrong, produces a child by split-point SLERP crossover plus Gaussian mutation (mutation skipped when starting from pre-trained models), evaluates the child on the training set, and replaces the lowest-fitness archive member if the child is not itself the worst.",
+   "ancestry": [],
+   "human_purpose": "Reproduce the GECCO 2025 paper's results showing that M2N2 (Model Merging with Natural Niches) 'can achieve comparable results to CMA-ES when evolving MNIST classifiers from scratch, and it is the best method to evolve pre-trained models' (README).",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN (README states the claim but not the motivating limitation; the paper abstract is not in the tree)",
+   "version": "github.com/SakanaAI/natural_niches main @ 3b90342b30253440070511c0d367da5f99ecabc0 (committed 2025-08-25; 10 commits since 2024-09-05; 14 tracked files)",
+   "era": "2024-2025",
+   "language": [
+    "Python",
+    "Jupyter notebook (plotting.ipynb)"
+   ],
+   "domain": [
+    "model-merging",
+    "evolutionary-computation",
+    "niching",
+    "foundation-models"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VIII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/natural-niches-m2n2.json"
+   ],
+   "tree_sha256": "ac5cc48447c8add1604982bd9fb81a6fc1d56ea1d392fb8103d8ce389abb68ee",
+   "record_path": "techne/fossils/specimens/natural-niches-m2n2-sakana-2025/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
    "fossil_id": "ncompress-5.0-lzw-1985",
    "canonical_name": "ncompress 5.0 -- the Unix compress(1) LZW lineage (Spencer Thomas et al., 1984-85)",
    "lineage": "compress(1) (1984-85, Spencer Thomas, Jim McKie, Steve Davies, Ken Turkowski, James Woods, Joe Orost): adaptive LZW dictionary coding, the 4.3BSD/Unix standard before gzip; ncompress is the maintained continuation of the same code",
@@ -7445,6 +8165,66 @@
    "receipts": [
     "techne/fossils/specimens/ncompress-5.0-lzw-1985/receipts/run-ncompress-5.0-lzw-1985-20260912T124716Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "neat-python-codereclaimers-2008",
+   "canonical_name": "neat-python -- A NEAT (NeuroEvolution of Augmenting Topologies) implementation, version 2.1.0 (McIntyre, Alan; Kallada, Matt; Miguel, Cesar G.; Feher de Silva, Carolina; Netto, Marcio Lobo; CodeReclaimers, LLC; LICENSE years 2007-2011 cesar.gomes and mirrorballu2, 2015-2025 CodeReclaimers; first commit 2008, pinned commit 2026)",
+   "lineage": "README: It was forked from the excellent project by @MattKallada. LICENSE credits cesar.gomes and mirrorballu2 for 2007-2011; pyproject authors also list Cesar Gomes Miguel, Carolina Feher da Silva, Marcio Lobo Netto. Implements NEAT by Kenneth O. Stanley (Stanley & Miikkulainen 2002). v2.0 was a breaking CTRNN API change (per-node evolvable time constants); v2.1 adds paper-compliance options and optional CuPy GPU evaluation. examples/xor/README.md references Izhikevich 2003 'Simple model of spiking neurons' for the spiking example. || main loop (reader, from the code): Population.run repeats, for up to n generations: call the user fitness_function on all (id, genome) pairs, find the best and stop if fitness_criterion over the population meets fitness_threshold, otherwise build the next population with DefaultReproduction.reproduce (drop stagnant species, allocate spawn by adjusted fitness, keep elites, pick parents from the top survival_threshold fraction, crossover then mutate), reset on extinction if configured, then re-speciate by compatibility distance and increment generation.",
+   "ancestry": [
+    {
+     "relation": "algorithm_from",
+     "to": "Stanley & Miikkulainen 2002 NEAT",
+     "note": "a Python implementation of NEAT; the record's own README/CITATION is the source for the attribution"
+    }
+   ],
+   "human_purpose": "README: This project is a pure-Python implementation of NEAT with no dependencies beyond the standard library -- NEAT being a method developed by Kenneth O. Stanley for evolving arbitrary neural networks.",
+   "human_environmental_pressure": "README gives no explicit motivating problem beyond providing a dependency-free Python NEAT; the 2.1 changes are driven by 'NEAT paper compliance' (configurable options to more closely match Stanley & Miikkulainen (2002)) and by bug fixes such as fitness_criterion = min and checkpoints repeating work on restore.",
+   "version": "github.com/CodeReclaimers/neat-python master @ 7d9acae0a1e5d7ed6199ffbd525dd15c5c87a86f (committed 2026-05-23; 862 commits since 2008-04-01; 249 tracked files)",
+   "era": "2008-2026",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "neuroevolution",
+    "neat",
+    "evolutionary-computation"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "BSD-3-Clause",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/neat-python.json"
+   ],
+   "tree_sha256": "bce7a202c48c6e0027bd7476c771b6a6246343df3beb605baf377d167a42f504",
+   "record_path": "techne/fossils/specimens/neat-python-codereclaimers-2008/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -7527,6 +8307,136 @@
    "receipts": [
     "techne/fossils/specimens/odepack-netlib/receipts/run-odepack-netlib-20260912T210100Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "omni-epic-faldor-zhang-2024",
+   "canonical_name": "OMNI-EPIC -- OMNI-EPIC: Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code (Faldor, Maxence and Zhang, Jenny and Cully, Antoine and Clune, Jeff; NOT_FOUND_AT_PIN (institution not stated in tree); 2024)",
+   "lineage": "README names no predecessors explicitly. Tree shows: vendored DreamerV3 (dreamerv3/, embodied/ with atari, crafter, dmc, minecraft, procgen env adapters and a Dockerfile referencing 'python dreamerv3/main.py --configs atari') as the RL learner; PyBullet robots ant/humanoid (MJCF) and r2d2 (URDF); OMNI acronym in the title ('Open-endedness via Models of human Notions of Interestingness'). Branch origin/kinetix ('Env Generation with Jax2D', 'Add few-shot examples envs for kinetix', 'Fix prompt for Kinetix') indicates a later port to the Kinetix/Jax2D environment. || main loop (reader, from the code): main_omni_epic.main iterates config.iterations times: it picks a seeded task description or asks a foundation model for the next task given embedding-similar archived and failed environment codes, asks the FM to write a PyBullet gym Env subclass and repairs it via reflect_error until test_env passes (or gives up after error_max_iterations), asks the FM whether the new environment is interesting relative to its nearest archived neighbours, trains a DreamerV3 agent (warm-started from the most similar archived task's checkpoint), checks success from eval files or a VLM, and appends the env path to the success archive or to one of three failure archives (with one retry via reflect_task when training fails).",
+   "ancestry": [],
+   "human_purpose": "README: a system 'that endlessly create[s] learnable and interesting environments, further propelling the development of self-improving AI systems and AI-Generating Algorithms' -- Open-endedness via Models of human Notions of Interestingness with Environments Programmed in Code.",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN as an explicit statement (README has no motivation paragraph beyond the one-sentence description); the code and config names imply the pressure: generating tasks that are simultaneously learnable (compilable, trainable by DreamerV3, success-detectable) and interesting (judged by a foundation model against the archive) rather than random or repetitive.",
+   "version": "github.com/maxencefaldor/omni-epic main @ af2a3c64f40bc48178c08e1beb76a0aafdd2a167 (committed 2024-12-26; 5 commits since 2024-08-30; 234 tracked files)",
+   "era": "2024",
+   "language": [
+    "Python (156 tracked .py files)",
+    "TypeScript/TSX (game/frontend, Next.js 14.2.2)",
+    "YAML (configs/)",
+    "shell (embodied/scripts)",
+    "Apptainer definition (apptainer/container.def)",
+    "URDF (omni_epic/robots/assets/r2d2.urdf)"
+   ],
+   "domain": [
+    "open-ended-learning",
+    "llm-task-generation",
+    "environment-generation",
+    "curriculum"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/omni-epic.json",
+    "fifth-engine-candidate"
+   ],
+   "tree_sha256": "003ff400ac7bd1d4b4ad4bdad6415ee0b296833714a4c9c3298270915a235848",
+   "record_path": "techne/fossils/specimens/omni-epic-faldor-zhang-2024/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "openevolve-codelion-2025",
+   "canonical_name": "OpenEvolve -- OpenEvolve: an open-source evolutionary coding agent (Asankhaya Sharma [GitHub handle codelion]; institution NOT_FOUND_AT_PIN, README badges point at github.com/algorithmicsuperintelligence/openevolve; 2025-2026)",
+   "lineage": "pyproject.toml description: 'Open-source implementation of AlphaEvolve'. CLAUDE.md: 'open-source implementation of Google DeepMind's AlphaEvolve system'. The README at this pin does not mention AlphaEvolve, FunSearch or DeepMind by name; it cites an HF blog 'Towards Open Evolutionary Agents'. Evolution operators named in README: MAP-Elites, island model with ring-topology migration, double selection (performance vs inspiration), artifact side-channel; OptiLLM (same author) as optional proxy. || main loop (reader, from the code): ProcessParallelController.run_evolution samples a parent and inspirations from an island (exploration from island / exploitation from archive / random, by exploration_ratio+exploitation_ratio), ships a DB snapshot to a worker that builds a prompt, calls the LLM ensemble, applies SEARCH/REPLACE diffs (or full rewrite) to the parent, evaluates the child, and returns it; the parent process adds the child to the MAP-Elites island database, migrates between islands when due, checkpoints, and repeats until max_iterations, target_score or early stopping.",
+   "ancestry": [
+    {
+     "relation": "inspired_by",
+     "to": "AlphaEvolve (DeepMind 2025, no public source)",
+     "note": "pyproject: an open-source implementation of AlphaEvolve (reader draft)"
+    }
+   ],
+   "human_purpose": "An evolutionary coding agent that uses LLMs (any OpenAI-compatible API, Claude Code CLI or Copilot CLI) to iteratively mutate a program and keep the best variants according to a user-supplied evaluator, using MAP-Elites quality-diversity, islands with migration, LLM ensembles and an artifact feedback side-channel.",
+   "human_environmental_pressure": "README frames it against manual optimization: days-to-weeks of human-limited exploration, poor reproducibility, hard multi-objective tradeoffs and no scaling; pyproject describes it as an open-source implementation of AlphaEvolve (CLAUDE.md: Google DeepMind's AlphaEvolve), i.e. no open implementation existed.",
+   "version": "github.com/codelion/openevolve main @ 4f4b0c4f40906f434d64fe5089aff24e927f7e24 (committed 2026-09-29; 835 commits since 2025-05-15; 502 tracked files)",
+   "era": "2025-2026",
+   "language": [
+    "Python (245 .py files; core package openevolve/)",
+    "YAML configs (70)",
+    "Markdown (30)",
+    "C++ headers (14 .hpp, vendored json in an example)",
+    "JavaScript (8, visualizer static)",
+    "MLIR (8, example)",
+    "Rust (3, example)",
+    "R (example)",
+    "Metal shader (example)"
+   ],
+   "domain": [
+    "llm-guided-search",
+    "program-synthesis",
+    "map-elites",
+    "evolutionary-coding"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/openevolve.json"
+   ],
+   "tree_sha256": "2a7cbaa366bf2a970f17a3765bbbf84ec44cd576a9d3a410a8f7ae63e096212e",
+   "record_path": "techne/fossils/specimens/openevolve-codelion-2025/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -8415,6 +9325,61 @@
    "mirror_available": null
   },
   {
+   "fossil_id": "pyribs-icaros-2020",
+   "canonical_name": "pyribs -- 'Pyribs: A Bare-Bones Python Library for Quality Diversity Optimization' (Tjanaka, Bryon and Fontaine, Matthew C and Lee, David H and Zhang, Yulun and Balam, Nivedit Reddy and Dennler, Nathaniel and Garlanka, Sujay S and Klapsis, Nikitas Dimitri and Nikolaidis, Stefanos; ICAROS Lab, University of Southern California; 2020-2026, GECCO 2023 paper)",
+   "lineage": "README: implements the 'Rapid Illumination of Behavior Space (RIBS)' framework; adopts the ask-tell interface from pycma ('Users of pycma will be familiar with the ask-tell interface (which pyribs adopted)'); 'We thank Amy K. Hoover and Julian Togelius for their contributions deriving the CMA-ME algorithm'; package skeleton from Cookiecutter audreyr/cookiecutter-pypackage. README 'Additional QD Libraries' names peers QDax, qdpy, sferes (not predecessors). Algorithms implemented and their sources are tabulated in docs/supported-algorithms.md (MAP-Elites Mouret 2015; CVT-MAP-Elites Vassiliades 2018; CMA-ME Fontaine 2020; CMA-MEGA/OMG-MEGA Fontaine 2021; CMA-MAE Fontaine 2023; DDS Lee 2024; DMS Tjanaka 2026; BOP-Elites Kent 2024; Novelty Search/NSLC Lehman 2011; QDAIF, QDHF). HISTORY.md tracks releases back through 0.x. || main loop (reader, from the code): The user loop calls Scheduler.ask(), which concatenates each emitter's ask() (GaussianEmitter: random archive elites plus Gaussian noise; EvolutionStrategyEmitter: samples from an internal CMA-ES), the user evaluates objectives and measures, then Scheduler.tell() inserts the batch into the archive (GridArchive.add: measure -> cell index, keep the per-cell argmax objective only if it exceeds the cell's threshold, returning a status/value add_info) and hands each emitter its slice of solutions and add_info so the emitter can rank, adapt its distribution and possibly restart from a sampled elite.",
+   "ancestry": [],
+   "human_purpose": "README: 'A bare-bones Python library for quality diversity (QD) optimization. Pyribs implements the highly modular Rapid Illumination of Behavior Space (RIBS) framework for QD optimization', and is 'the official implementation of' CMA-ME, CMA-MEGA, CMA-MAE, scalable CMA-MAE and Discount Model Search (DMS).",
+   "human_environmental_pressure": "README BibTeX abstract: 'we believe the QD community faces two challenges: developing a framework to represent the field's growing array of algorithms, and implementing that framework in software that supports a range of researchers and practitioners'; README: 'like pycma, pyribs focuses on optimizing fixed-dimensional continuous domains. Focusing on this one commonly-occurring problem allows us to optimize the library for performance as well as ease of use.'",
+   "version": "github.com/icaros-usc/pyribs master @ 7bd723cf9863d480c8f2fec5ba9aa36f3b68c083 (committed 2026-07-22; 674 commits since 2020-09-11; 362 tracked files)",
+   "era": "2020-2026",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "quality-diversity",
+    "map-elites",
+    "cma-me",
+    "evolutionary-computation"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/pyribs.json"
+   ],
+   "tree_sha256": "9336714f544cd94a38ade7bf678b3cc56a769f057afde20d34a2ac5a2973e63a",
+   "record_path": "techne/fossils/specimens/pyribs-icaros-2020/record.json",
+   "recipe_path": null,
+   "receipts": [],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
    "fossil_id": "python-control",
    "canonical_name": "python-control -- the Python Control Systems Library",
    "lineage": "python-control (2010-, Murray et al., Caltech): LTI systems, state-space and transfer functions, LQR/LQE optimal control, pole placement, frequency response; the open reference implementing the classical/modern control toolbox in Python",
@@ -8525,6 +9490,61 @@
     "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260912T220043Z.json",
     "techne/fossils/specimens/python-sgp4-2.23/receipts/run-python-sgp4-2.23-20260913T215311Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "qdax-airl-2022",
+   "canonical_name": "QDax -- QDax: Accelerated Quality-Diversity / 'Qdax: A library for quality-diversity and population-based algorithms with hardware acceleration' (Chalumeau, Felix and Lim, Bryan and Boige, Raphael and Allard, Maxime and Grillotti, Luca and Flageat, Manon and Mace, Valentin and Richard, Guillaume and Flajolet, Arthur and Pierrot, Thomas and others; Adaptive & Intelligent Robotics Lab (AIRL), Imperial College London, and InstaDeep; 2022-2025, JMLR 2024)",
+   "lineage": "README lists the algorithms it implements with their source papers (MAP-Elites, CVT MAP-Elites, PGA-ME, CMA-ME, OMG-MEGA, CMA-MEGA, MOME, MEES, ME-PBT, ME-LS, DCRL-ME, QDPG, AURORA, Dominated Novelty Search; baselines DIAYN, DADS, SMERL, NSGA2, SPEA2, PBT). docs/overview.md: 'QDax has similarities to the simple and commonly found ask/tell interface'. Code comments cite 'Covariance Matrix Adaptation for the Rapid Illumination of Descriptor Space by Fontaine et al.' for CMAImprovementEmitter. Two files derived from Flax ('Copyright 2022 The Flax Authors'). 'QDax was developed and is maintained by the Adaptive & Intelligent Robotics Lab (AIRL) and InstaDeep.' The README does not name a predecessor project it supersedes. || main loop (reader, from the code): MAPElites.update asks the emitter to emit a batch of genotypes (MixingEmitter samples parents uniformly from the repertoire and applies crossover/mutation; CMA emitters sample from an internal CMA-ES), scores them with the scoring_function to get fitnesses and descriptors, then tell() adds them to the repertoire (each descriptor mapped to its nearest centroid, only the batch-max per cell kept and only if it beats the current occupant's fitness) and updates the emitter state, returning the new repertoire, emitter state and metrics as pure JAX values suitable for jax.jit / jax.lax.scan.",
+   "ancestry": [],
+   "human_purpose": "README: 'QDax is a tool to accelerate Quality-Diversity (QD) and neuroevolution algorithms through hardware accelerators and massive parallelization', developed 'as a research framework: it is flexible and easy to extend and build on and can be used for any problem setting'.",
+   "human_environmental_pressure": "README: 'QD algorithms usually take days/weeks to run on large CPU clusters. With QDax, QD algorithms can now be run in minutes!'",
+   "version": "github.com/adaptive-intelligent-robotics/QDax main @ 46b8feecae26d79414ce7a1ce731e5cfbeb9837d (committed 2025-10-30; 279 commits since 2022-02-11; 223 tracked files)",
+   "era": "2022-2025",
+   "language": [
+    "Python"
+   ],
+   "domain": [
+    "quality-diversity",
+    "map-elites",
+    "evolutionary-computation",
+    "jax"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "MIT",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/qdax.json"
+   ],
+   "tree_sha256": "320a51b69fd5c48c59a3691f004b201d4631ba4d5dda2bc68b0586c856013438",
+   "record_path": "techne/fossils/specimens/qdax-airl-2022/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -8781,6 +9801,63 @@
     "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143252Z.json",
     "techne/fossils/specimens/reed-solomon-rockliff-1991/receipts/run-reed-solomon-rockliff-1991-20260912T143343Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "sferes2-mouret-2014",
+   "canonical_name": "Sferes2 -- SFERESv2: Evolvin' in the Multi-Core World (Mouret, J.-B. and Doncieux, S.; ISIR / Universite Pierre et Marie Curie (UPMC), later Inria per author e-mail; copyright 2009, paper 2010, pinned commit 2021)",
+   "lineage": "README names it 'SFERESv2' (Mouret and Doncieux, CEC 2010), implying a v1 predecessor not present in the tree; old docs at 'https://github.com/jbmouret/sferes2/wiki' (earlier repo location); README says 'Map-Elites (we will soon integrate a more flexible version in the master branch of sferes_v2): https://github.com/sferes2/map_elites'; optional modules nn2 (evolvable neural networks) and fastsim (khepera-like simulator). Bundles Nikolaus Hansen's C CMA-ES, Pete Goodliffe's dbg library, Melissa O'Neill's randutils, and Thomas Nagy's waf. || main loop (reader, from the code): Ea::run() creates a random population, then for _gen from 0 to Params::pop::nb_gen (unless stop()) calls the concrete algorithm's epoch() (e.g. RankSimple: keep the top keep_rate*size, refill the rest by rank-biased parent selection, cross(), mutate(), evaluate the new ones via _eval_pop, apply fitness modifiers, partial_sort by fitness), refreshes every stat in the boost::fusion stat vector, and every dump_period generations serializes the stats to res_dir/gen_<N>.",
+   "ancestry": [],
+   "human_purpose": "README: 'Sferes2 is a high-performance, multi-core, lightweight, generic C++98 framework for evolutionary computation. It is intently kept small to stay reliable and understandable.'",
+   "human_environmental_pressure": "README design section: get 'both abstraction and execution speed' via template meta-programming 'without the cost of virtual functions', use Intel TBB 'to take full advantages of multicore and SMP systems' and MPI 'to distribute the computational cost on clusters', with 'no configuration file: a fully optimized executable is built for each particular experiment'.",
+   "version": "github.com/sferes2/sferes2 master @ 21c5384d978521c19c06f707fa1356c4c115d527 (committed 2021-03-26; 265 commits since 2014-04-14; 102 tracked files)",
+   "era": "2014-2021",
+   "language": [
+    "C++ (C++11 required per README and wscript -std=c++11; header-only templates plus 2 .cpp in the static lib)",
+    "Python (waf build scripts, waf_tools, scripts/sferes_job_manager.py)",
+    "C (bundled CMA-ES cmaes.cpp/cmaes.h/cmaes_interface.h)",
+    "Ruby (scripts/error_parser.rb)"
+   ],
+   "domain": [
+    "evolutionary-computation",
+    "multiobjective",
+    "cpp-framework"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "CECILL-2.1",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/sferes2.json"
+   ],
+   "tree_sha256": "c485b23dee7b617392b32231a16c05ede38a54359eb28fd10b8a279c32e78b1b",
+   "record_path": "techne/fossils/specimens/sferes2-mouret-2014/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -9307,6 +10384,64 @@
     "techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105921Z.json",
     "techne/fossils/specimens/ssw-smith-waterman/receipts/run-ssw-smith-waterman-20260913T105940Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "stringmol-york-2014",
+   "canonical_name": "stringmol -- Automata Chemistry (README gives no paper title; technical report file smtr0.2.pdf is in the tree) (Simon Hickinbotham per source headers, with Adam Nellis, Ed Clark, Verena Fischer on some files; README contact sjh436@gmail.com; institution NOT_FOUND_AT_PIN in README (GitHub org uoy-research; src/DEVNOTES.md names the Plazzmid and EvoEvo projects and Susan Stepney); 2009-2015 per headers, repo 2014-2025)",
+   "lineage": "README: 'brief instructions to install, compile and run stringmol version 0.2.2' and 'url https://github.com/franticspider/stringmol.git' (a different GitHub owner than the pinned uoy-research repo). src/DEVNOTES.md: 'It begain in the Plazzmid project ... 2 years further work during EvoEvo'; flavours 'Vanilla' (papers before 2016), 'RUTSAC' (with Adam Nellis for the stringmol web app), 'Spatial' (with Paulien Hogeweg for R-P evolution, actively under development), 'FPGA' (Matthew Rowlings/Martin Trezfer, external), 'RStringmol' (external). Trial type 1 'ALife XII' is called 'the grand-daddy stringmol program'. CGI.md describes a web API (bind/step/bucket) from Adam Nellis. Headers on microbial_ga.* credit Verena Fischer. || main loop (reader, from the code): Each timestep (stringPM::TimestepIncrement) drains the 'now' agent list by picking molecules at random, applying decay at decayrate, and -- while energy remains -- either trying to bind an unbound molecule to a random unbound partner with probability from a Smith-Waterman alignment against the substitution matrix (setting one as active executor and one as passive), or executing the active molecule's current opcode on the pair (search, move, copy-with-mutation, increment, toggle, if-label, cleave which releases a product into the population, or terminate), each executed step costing one unit of energy, then moving the molecules to the 'next' list which becomes 'now' for the following step.",
+   "ancestry": [],
+   "human_purpose": "An 'Automata Chemistry': simulate containers (well-mixed, or spatial grids) of string molecules that bind by sequence alignment and execute each other as micro-programs (copy, cleave, search, move, toggle, if) so that replicase strings reproduce with mutation, and study the resulting species/population dynamics.",
+   "human_environmental_pressure": "NOT_FOUND_AT_PIN (README gives no motivation statement; src/DEVNOTES.md lists past themes: 'Particle metabolome', 'molecular microprograms', 'Diversity from a monoculture', 'reaction logic', 'Degeneracy enriches', 'conservation of matter', 'maximize adjacent possible', 'extinction in replicase models')",
+   "version": "github.com/uoy-research/stringmol dev @ 15dad84da126a4f887ba945c23a13e89e827f067 (committed 2025-01-17; 137 commits since 2014-09-23; 129 tracked files)",
+   "era": "2010-2025",
+   "language": [
+    "C++",
+    "C",
+    "Bash",
+    "R (util/sp_ancestry.R, util/sp_community.R, src/file.R)"
+   ],
+   "domain": [
+    "artificial-chemistry",
+    "artificial-life",
+    "self-replication",
+    "string-rewriting"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "GPL-2.0-only per LICENSE file text ('Version 2, June 1991'); source headers say 'GNU General Public License ... either version 3 of the License, or (at your option) any later version' (GPL-3.0-or-later) -- CONFLICT",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/stringmol.json"
+   ],
+   "tree_sha256": "783cd1df03734133c38d69de276f7eb2ea3f656ac07fef85d37c680250907d8b",
+   "record_path": "techne/fossils/specimens/stringmol-york-2014/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null
@@ -10553,6 +11688,64 @@
     "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163503Z.json",
     "techne/fossils/specimens/willemt-raft/receipts/run-willemt-raft-20260912T163644Z.json"
    ],
+   "body_present_on_this_host": null,
+   "body_path": null,
+   "mirror_available": null
+  },
+  {
+   "fossil_id": "xland-minigrid-corl-2023",
+   "canonical_name": "XLand-MiniGrid -- XLand-MiniGrid: Scalable Meta-Reinforcement Learning Environments in JAX (Alexander Nikulin, Vladislav Kurenkov, Ilya Zisman, Viacheslav Sinii, Artem Agarkov, Sergey Kolesnikov; NOT_FOUND_AT_PIN (GitHub org 'corl-team'; institution not stated in tree); 2023-2025)",
+   "lineage": "README: 'inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid'; 'comes with example environments ported from the original MiniGrid'; benchmarks 'following the procedure used to train DeepMind AdA agent from the original XLand'; baselines 'in the PureJaxRL style'; API 'combines dm_env and gymnax interfaces' after trying Jumanji; See Also lists Brax, Gymnax, Jumanji, Pgx, JaxMARL, Craftax, Purejaxql. Commented-out README note references XLand-100B dataset (github.com/dunno-lab/xland-minigrid-datasets) 'based on XLand-MiniGrid'. || main loop (reader, from the code): Environment.step applies the agent's action to the grid (take_action), then lax.scan's over the task's encoded production rules (check_rule, lax.switch dispatch per rule) to transform grid/agent, then evaluates the encoded goal (check_goal) to decide termination and a time-discounted reward of 1 - 0.9*step/max_steps, truncating at max_steps; the meta-training loop (train_meta_task.make_train) samples a fresh batch of rulesets from a Benchmark each meta-update and runs recurrent PPO over multi-trial rollouts.",
+   "ancestry": [],
+   "human_purpose": "README: 'a suite of tools, grid-world environments and benchmarks for meta-reinforcement learning research inspired by the diversity and depth of XLand and the simplicity and minimalism of MiniGrid', 'written in JAX from scratch and designed to be highly scalable, democratizing large-scale experimentation with limited resources' -- 'Ever wanted to reproduce a DeepMind AdA agent? Now you can'.",
+   "human_environmental_pressure": "README: 'In the original MiniGrid some environments have dynamic goals, but the dynamics are never changed. To train and evaluate highly adaptive agents, we need to be able to change the dynamics in non-trivial ways'; plus existing JAX env APIs (Jumanji, Gymnax) were 'not suitable for meta learning' or 'not actively supported'.",
+   "version": "github.com/corl-team/xland-minigrid main @ 0d306d1414dcb6e451358d94e7d9a91879462ee1 (committed 2025-12-16; 70 commits since 2023-12-01; 70 tracked files)",
+   "era": "2023-2025",
+   "language": [
+    "Python",
+    "Jupyter Notebook (examples/)",
+    "YAML (configs/)",
+    "shell (scripts/generate_benchmarks.sh)"
+   ],
+   "domain": [
+    "meta-reinforcement-learning",
+    "procedural-environments",
+    "gridworld",
+    "jax"
+   ],
+   "run_status": "NOT_ATTEMPTED",
+   "test_status": "NOT_ATTEMPTED",
+   "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+   },
+   "oracle_backed": "unknown",
+   "intervention_ready": "unknown",
+   "known_historical_disposition": [],
+   "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+   },
+   "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+   "license_spdx": "Apache-2.0",
+   "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/xland-minigrid.json"
+   ],
+   "tree_sha256": "6226e0ec157b64a5f8f436ccd361d2376318a0a2c4706257d1d20aaae480d4c6",
+   "record_path": "techne/fossils/specimens/xland-minigrid-corl-2023/record.json",
+   "recipe_path": null,
+   "receipts": [],
    "body_present_on_this_host": null,
    "body_path": null,
    "mirror_available": null

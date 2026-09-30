@@ -112,4 +112,60 @@ experiments with no primitive rows.
 
 ## 7. Cross-model-family blind re-derivation (the author-prior check)
 
-PENDING at first commit of this file; see the update below.
+**What was done (RAN).**
+- A Claude worker, blinded to the synthesis files, built a 231-line packet of OBSERVED/RAN facts only
+  (workers/xfamily/PACKET.md, sha256 3a145bb7...0fe06).
+  - Engines were masked as E1-E12; the key is in KEY.md.
+  - CONCLUDED text was dropped.
+  - Seat mechanism vocabulary was neutralized: "painter", "scaffold", "internalization", "zero-parameter rung",
+    "cliff", "carrier" and so on became literal descriptions.
+- The packet went through NVIDIA NIM (temperature 0.3) with one fixed prompt: "8-12 strongest cross-engine
+  regularities, supports by line, independence, one falsifier; 3 things the corpus cannot tell us".
+- Results:
+  - gpt-oss-120b, qwen3.5-397b and glm5 are retired (HTTP 410).
+  - kimi-k2.5 returned 404.
+  - glm-5.3 ran out its token budget in reasoning, twice.
+  - **Answered: moonshotai/kimi-k3 (10 regularities) and deepseek-ai/deepseek-v4.1-flash (12).**
+  - Raw responses are in workers/xfamily/RESP_*.md; the call log is query_log.jsonl. No credential was written
+    anywhere.
+
+**Scoring against the Atlas findings (ATLAS_DERIVED; scored by Atlas, which is not blind).**
+
+| Atlas finding | Kimi K3 | DeepSeek v4.1 | reading |
+|---|---|---|---|
+| F1 measurement/baselines bound the claims | YES (#5 baselines, #6 procedure as effect modifier, #9 funnel attrition) | YES (#8, #9, #10) | recovered by both, from OBSERVED rows with the vocabulary stripped |
+| F2 world-supplied copy primitive + zero/fresh register state | YES (#2 affordances, #3 state scaffold) | YES (#1, #2, #12 encoding) | recovered by both; both also flag the shared byte-tape/copy design space as limiting independence, as the critic did |
+| F3 copying/persistence dissociate from competence | partly (#3 transplant 0/39) | YES (#7) | recovered |
+| R6 labels are not causal ancestry | YES (#1, #10) | YES (#6) | recovered by both; both rate it MODERATE, as the critic did |
+| R3/F8 "reachability" | as LANDSCAPE: neighbourhoods flat, neutral or lethal; greedy fails (#4) | same (#5) | recovered as a LANDSCAPE fact. Neither model produced "search, not physics". That framing appears to come from the program and its brief, as the critic argued (FR-4 needle size) |
+| F4 nominal mutation minor vs write/interaction physics | no (write-back appears only as one affordance in #2) | no | NOT recovered |
+| F5 answer-before-read | no | no | NOT recovered |
+| F6 present != used | no | no | NOT recovered |
+| F7 label turnover | n/a (CONCLUDED text excluded by design) | n/a | not testable with this packet |
+
+**New from the non-Claude models (not in Atlas's findings):**
+- (i) **Tick phase, latency and readout timing are causal variables** (Kimi #7; E1-dominated, low independence).
+- (ii) **Within-run success overstates held-out, fresh-world or transformed performance** (Kimi #8, six engines,
+  with stated exceptions).
+- (iii) **Topology and locality change extinction, exploration and relay** (DeepSeek #4).
+- (iv) **A unified reading of recombination**: it makes long-range byte matches and deeper copy chains but lowers
+  viability without adding function (DeepSeek #11). Atlas had recorded "three incompatible readings".
+
+Atlas notes (ii) and (iii) as candidates it under-weighted. They are cheap to re-examine in the existing digests.
+
+**What this does and does not show.**
+- The strongest Atlas findings (F1, F2, F3, R6) survive a change of model family when seat vocabulary is removed.
+  Both non-Claude models found them in the OBSERVED rows. That makes them less likely to be pure author-family or
+  vocabulary artifacts.
+- The three findings they did not recover (F4, F5, F6) are exactly the ones Atlas already rates SUGGESTIVE.
+- Not controlled:
+  - the packet's ROW SELECTION was made by a Claude worker from Claude-written digests of Claude-written seat
+    records, so selection bias from the author family remains;
+  - there are two models, one prompt, one packet, and no replicates;
+  - Atlas scored the overlap itself, not blind.
+- A stronger version is FR-11: a non-Claude model selects rows from raw seat files, and a third party scores the
+  overlap.
+
+**Net effect on confidence.** F1, F2, F3 and R6 keep their ratings, with the author-prior objection now partly
+answered. F4, F5 and F6 stay SUGGESTIVE. "Search, not physics" is further weakened as a framing. Timing, held-out
+fragility and topology are added as under-weighted candidates.

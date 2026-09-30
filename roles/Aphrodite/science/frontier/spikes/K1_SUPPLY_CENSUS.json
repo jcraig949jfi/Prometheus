@@ -1,0 +1,313 @@
+{
+ "body_level": {
+  "add": {
+   "n": 212,
+   "rc": 109,
+   "g1": 117,
+   "rc_and_not_g1": 9
+  },
+  "fdiv": {
+   "n": 212,
+   "rc": 90,
+   "g1": 31,
+   "rc_and_not_g1": 62
+  },
+  "gcd": {
+   "n": 212,
+   "rc": 136,
+   "g1": 31,
+   "rc_and_not_g1": 111
+  },
+  "mod": {
+   "n": 212,
+   "rc": 57,
+   "g1": 37,
+   "rc_and_not_g1": 20
+  },
+  "mul": {
+   "n": 212,
+   "rc": 120,
+   "g1": 43,
+   "rc_and_not_g1": 80
+  },
+  "powr": {
+   "n": 212,
+   "rc": 95,
+   "g1": 33,
+   "rc_and_not_g1": 65
+  },
+  "sub": {
+   "n": 212,
+   "rc": 84,
+   "g1": 85,
+   "rc_and_not_g1": 9
+  }
+ },
+ "witness_level": {
+  "add": {
+   "n": 1500,
+   "invariant": 835,
+   "struct_ok": 774,
+   "nondegenerate": 636,
+   "admissible": 334,
+   "g1_body": 816,
+   "stress_none_any": 450,
+   "admissible_and_g1": 319,
+   "admissible_not_g1": 15
+  },
+  "sub": {
+   "n": 1500,
+   "invariant": 667,
+   "struct_ok": 615,
+   "nondegenerate": 659,
+   "admissible": 256,
+   "g1_body": 612,
+   "stress_none_any": 497,
+   "admissible_and_g1": 252,
+   "admissible_not_g1": 4
+  },
+  "mul": {
+   "n": 1500,
+   "invariant": 763,
+   "struct_ok": 604,
+   "nondegenerate": 318,
+   "admissible": 17,
+   "g1_body": 303,
+   "stress_none_any": 796,
+   "admissible_and_g1": 12,
+   "admissible_not_g1": 5
+  },
+  "fdiv": {
+   "n": 1500,
+   "invariant": 462,
+   "struct_ok": 456,
+   "nondegenerate": 156,
+   "admissible": 1,
+   "g1_body": 225,
+   "stress_none_any": 868,
+   "admissible_and_g1": 0,
+   "admissible_not_g1": 1
+  },
+  "mod": {
+   "n": 1500,
+   "invariant": 488,
+   "struct_ok": 485,
+   "nondegenerate": 103,
+   "admissible": 11,
+   "g1_body": 275,
+   "stress_none_any": 903,
+   "admissible_and_g1": 0,
+   "admissible_not_g1": 11
+  },
+  "gcd": {
+   "n": 1500,
+   "invariant": 1035,
+   "struct_ok": 1019,
+   "nondegenerate": 370,
+   "admissible": 110,
+   "g1_body": 202,
+   "stress_none_any": 187,
+   "admissible_and_g1": 0,
+   "admissible_not_g1": 110
+  },
+  "powr": {
+   "n": 1500,
+   "invariant": 797,
+   "struct_ok": 782,
+   "nondegenerate": 94,
+   "admissible": 8,
+   "g1_body": 234,
+   "stress_none_any": 572,
+   "admissible_and_g1": 0,
+   "admissible_not_g1": 8
+  }
+ },
+ "admissible_non_g1_examples": {
+  "add": [
+   [
+    "1",
+    "(v + math.gcd(abs(0), abs(acc)))",
+    "(acc * acc)"
+   ],
+   [
+    "0",
+    "(0 + math.gcd(abs(v), abs(acc)))",
+    "pow(first, acc)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(0), abs(acc)))",
+    "(acc + last)"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(acc), abs(acc)))",
+    "math.gcd(abs(last), abs(acc))"
+   ],
+   [
+    "0",
+    "(v + math.gcd(abs(0), abs(acc)))",
+    "(acc * 1)"
+   ],
+   [
+    "0",
+    "(v + (acc % last))",
+    "(acc % last)"
+   ]
+  ],
+  "sub": [
+   [
+    "0",
+    "(0 - math.gcd(abs(acc), abs(v)))",
+    "(1 % acc)"
+   ],
+   [
+    "0",
+    "(0 - math.gcd(abs(acc), abs(v)))",
+    "(acc + first)"
+   ],
+   [
+    "0",
+    "(0 - math.gcd(abs(acc), abs(v)))",
+    "(last * acc)"
+   ],
+   [
+    "1",
+    "(v - math.gcd(abs(acc), abs(v)))",
+    "math.gcd(abs(last), abs(acc))"
+   ]
+  ],
+  "mul": [
+   [
+    "0",
+    "(1 * math.gcd(abs(v), abs(acc)))",
+    "(last + acc)"
+   ],
+   [
+    "0",
+    "(1 * math.gcd(abs(acc), abs(v)))",
+    "(first // acc)"
+   ],
+   [
+    "0",
+    "(1 * math.gcd(abs(v), abs(acc)))",
+    "(acc + 1)"
+   ],
+   [
+    "0",
+    "(1 * math.gcd(abs(v), abs(acc)))",
+    "pow(first, acc)"
+   ],
+   [
+    "1",
+    "(v * math.gcd(abs(acc), abs(last)))",
+    "math.gcd(abs(last), abs(acc))"
+   ]
+  ],
+  "fdiv": [
+   [
+    "1",
+    "(acc // math.gcd(abs(v), abs(last)))",
+    "(first * acc)"
+   ]
+  ],
+  "mod": [
+   [
+    "0",
+    "(1 % (acc - v))",
+    "(last * acc)"
+   ],
+   [
+    "1",
+    "(acc % math.gcd(abs(last), abs(v)))",
+    "(acc - first)"
+   ],
+   [
+    "1",
+    "(acc % math.gcd(abs(v), abs(last)))",
+    "math.gcd(abs(acc), abs(last))"
+   ],
+   [
+    "1",
+    "(acc % math.gcd(abs(first), abs(v)))",
+    "(last + acc)"
+   ],
+   [
+    "1",
+    "(1 % (acc - v))",
+    "(acc + acc)"
+   ],
+   [
+    "1",
+    "(acc % math.gcd(abs(last), abs(v)))",
+    "(last - acc)"
+   ]
+  ],
+  "gcd": [
+   [
+    "0",
+    "math.gcd(abs(v), abs(math.gcd(abs(last), abs(acc))))",
+    "(acc + first)"
+   ],
+   [
+    "0",
+    "math.gcd(abs(v), abs(pow(acc, v)))",
+    "(acc % last)"
+   ],
+   [
+    "0",
+    "math.gcd(abs(acc), abs((v % first)))",
+    "(1 - acc)"
+   ],
+   [
+    "0",
+    "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+    "(acc // 1)"
+   ],
+   [
+    "0",
+    "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+    "(acc - first)"
+   ],
+   [
+    "0",
+    "math.gcd(abs(acc), abs((v - last)))",
+    "pow(last, acc)"
+   ]
+  ],
+  "powr": [
+   [
+    "0",
+    "pow(acc, (v % last))",
+    "math.gcd(abs(acc), abs(last))"
+   ],
+   [
+    "0",
+    "pow(acc, (last - v))",
+    "(first + acc)"
+   ],
+   [
+    "0",
+    "pow(acc, (first // v))",
+    "(last * acc)"
+   ],
+   [
+    "0",
+    "pow(acc, (last // v))",
+    "(first * acc)"
+   ],
+   [
+    "0",
+    "pow(acc, (last % v))",
+    "(acc * first)"
+   ],
+   [
+    "0",
+    "pow(acc, (last % v))",
+    "(acc * last)"
+   ]
+  ]
+ },
+ "admissible_non_g1_distinct_body_mechanisms": 39,
+ "N_per_stratum": 1500
+}

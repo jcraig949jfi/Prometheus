@@ -1,0 +1,2219 @@
+{
+ "summary": {
+  "GCD_RICH/G1": {
+   "n": 6,
+   "any_new_candidate": 4,
+   "NEW_selected": 0,
+   "classes": 18
+  },
+  "GCD_RICH/P": {
+   "n": 6,
+   "any_new_candidate": 4,
+   "NEW_selected": 0,
+   "classes": 15
+  },
+  "NONG1_MIX/G1": {
+   "n": 6,
+   "any_new_candidate": 5,
+   "NEW_selected": 0,
+   "classes": 27
+  },
+  "NONG1_MIX/P": {
+   "n": 6,
+   "any_new_candidate": 5,
+   "NEW_selected": 0,
+   "classes": 20
+  },
+  "G1_PLUS/G1": {
+   "n": 6,
+   "any_new_candidate": 5,
+   "NEW_selected": 0,
+   "classes": 28
+  },
+  "G1_PLUS/P": {
+   "n": 6,
+   "any_new_candidate": 5,
+   "NEW_selected": 2,
+   "classes": 15
+  }
+ },
+ "rows": [
+  {
+   "regime": "K5-GCD_RICH_0",
+   "donor": "G1",
+   "classes": 2,
+   "observed_families": [
+    "kf_abs",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 2355458,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     15780,
+     10987,
+     true
+    ],
+    "SCHEMA_0": [
+     0,
+     0,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_0",
+   "donor": "P",
+   "classes": 1,
+   "observed_families": [
+    "kf_abs",
+    "kf_afd"
+   ],
+   "candidates": [],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 2919851,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     54652,
+     41157,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_0",
+   "donor": "G1",
+   "classes": 4,
+   "observed_families": [
+    "kf_aaf",
+    "kf_aah",
+    "kf_aam",
+    "kf_ack"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} * v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 1092600,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     5553,
+     2732,
+     true
+    ],
+    "SCHEMA_0": [
+     5422,
+     2527,
+     true
+    ],
+    "SCHEMA_1": [
+     5497,
+     2562,
+     true
+    ],
+    "SCHEMA_2": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_3": [
+     -436,
+     -2412,
+     false
+    ],
+    "SCHEMA_4": [
+     -2716,
+     -4385,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -6512,
+     -15181,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_0",
+   "donor": "P",
+   "classes": 4,
+   "observed_families": [
+    "kf_aaf",
+    "kf_aah",
+    "kf_aam",
+    "kf_ack"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 1518485,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     15818,
+     6858,
+     true
+    ],
+    "SCHEMA_0": [
+     10120,
+     3692,
+     true
+    ],
+    "SCHEMA_1": [
+     9684,
+     3198,
+     true
+    ],
+    "SCHEMA_2": [
+     7404,
+     893,
+     true
+    ],
+    "SCHEMA_ALL": [
+     3608,
+     -422,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_0",
+   "donor": "G1",
+   "classes": 4,
+   "observed_families": [
+    "kf_aae",
+    "kf_aft",
+    "kf_ahl",
+    "kf_aib"
+   ],
+   "candidates": [
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 3343145,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     13396,
+     9674,
+     true
+    ],
+    "SCHEMA_0": [
+     8693,
+     4211,
+     true
+    ],
+    "SCHEMA_1": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_2": [
+     -2463,
+     -6190,
+     false
+    ],
+    "SCHEMA_3": [
+     -8593,
+     -12620,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -19398,
+     -31916,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_0",
+   "donor": "P",
+   "classes": 2,
+   "observed_families": [
+    "kf_aae",
+    "kf_aib"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schemas": [
+    "(acc + {H})"
+   ],
+   "NEW": false,
+   "meta": 8327766,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     26228,
+     14433,
+     true
+    ],
+    "SCHEMA_0": [
+     95122,
+     60364,
+     true
+    ],
+    "SCHEMA_1": [
+     92660,
+     56086,
+     true
+    ],
+    "SCHEMA_2": [
+     86529,
+     52564,
+     true
+    ],
+    "SCHEMA_ALL": [
+     75725,
+     39140,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_1",
+   "donor": "G1",
+   "classes": 2,
+   "observed_families": [
+    "kf_aer",
+    "kf_afd"
+   ],
+   "candidates": [],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 2607941,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     14002,
+     9581,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_1",
+   "donor": "P",
+   "classes": 2,
+   "observed_families": [
+    "kf_aer",
+    "kf_afd"
+   ],
+   "candidates": [],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 3294456,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     45195,
+     31955,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_1",
+   "donor": "G1",
+   "classes": 4,
+   "observed_families": [
+    "kf_aai",
+    "kf_abd",
+    "kf_abg"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} - v))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ]
+   ],
+   "selected": "INHERITED",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 17576951,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     2258,
+     -931,
+     false
+    ],
+    "SCHEMA_0": [
+     -1440,
+     -1789,
+     false
+    ],
+    "SCHEMA_1": [
+     -19320,
+     -28692,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -30657,
+     -45019,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_1",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_aai",
+    "kf_abd",
+    "kf_abg"
+   ],
+   "candidates": [],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 7683594,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     9180,
+     1417,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_1",
+   "donor": "G1",
+   "classes": 5,
+   "observed_families": [
+    "kf_adb",
+    "kf_aey",
+    "kf_agc",
+    "kf_ahm"
+   ],
+   "candidates": [
+    [
+     "(acc + (v % {H}))",
+     false
+    ],
+    [
+     "(acc + ({H} + v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_2",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 3232946,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     17948,
+     13724,
+     true
+    ],
+    "SCHEMA_0": [
+     5756,
+     1681,
+     true
+    ],
+    "SCHEMA_1": [
+     18046,
+     13768,
+     true
+    ],
+    "SCHEMA_2": [
+     18218,
+     13920,
+     true
+    ],
+    "SCHEMA_3": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_4": [
+     -6854,
+     -11259,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -22410,
+     -29619,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_1",
+   "donor": "P",
+   "classes": 4,
+   "observed_families": [
+    "kf_adb",
+    "kf_aey",
+    "kf_agc",
+    "kf_ahm"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 4330006,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     40598,
+     28535,
+     true
+    ],
+    "SCHEMA_0": [
+     21990,
+     13284,
+     true
+    ],
+    "SCHEMA_1": [
+     15136,
+     4863,
+     true
+    ],
+    "SCHEMA_ALL": [
+     -420,
+     -7505,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_2",
+   "donor": "G1",
+   "classes": 4,
+   "observed_families": [
+    "kf_ack",
+    "kf_aey",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} * v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 2152048,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     10783,
+     6891,
+     true
+    ],
+    "SCHEMA_0": [
+     10825,
+     6802,
+     true
+    ],
+    "SCHEMA_1": [
+     10895,
+     6848,
+     true
+    ],
+    "SCHEMA_2": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_3": [
+     853,
+     -1219,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -7801,
+     -15257,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_2",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_ack",
+    "kf_aey",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 2697788,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     24645,
+     14222,
+     true
+    ],
+    "SCHEMA_0": [
+     13510,
+     6354,
+     true
+    ],
+    "SCHEMA_1": [
+     14363,
+     7713,
+     true
+    ],
+    "SCHEMA_ALL": [
+     5709,
+     2483,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_2",
+   "donor": "G1",
+   "classes": 5,
+   "observed_families": [
+    "kf_aah",
+    "kf_aai",
+    "kf_aal",
+    "kf_adb"
+   ],
+   "candidates": [
+    [
+     "(acc + (v % {H}))",
+     false
+    ],
+    [
+     "(acc + (v - {H}))",
+     false
+    ],
+    [
+     "(acc + ({H} * v))",
+     false
+    ],
+    [
+     "(acc + ({H} + v))",
+     false
+    ],
+    [
+     "(acc + ({H} - v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_5",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 25728686,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     5915,
+     2711,
+     true
+    ],
+    "SCHEMA_0": [
+     4079,
+     406,
+     true
+    ],
+    "SCHEMA_1": [
+     5956,
+     2497,
+     true
+    ],
+    "SCHEMA_2": [
+     6076,
+     2627,
+     true
+    ],
+    "SCHEMA_3": [
+     5926,
+     2470,
+     true
+    ],
+    "SCHEMA_4": [
+     140,
+     -664,
+     false
+    ],
+    "SCHEMA_5": [
+     6144,
+     2691,
+     true
+    ],
+    "SCHEMA_6": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_7": [
+     -3696,
+     -6297,
+     false
+    ],
+    "SCHEMA_8": [
+     -2571,
+     -4658,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -13192,
+     -25218,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_2",
+   "donor": "P",
+   "classes": 4,
+   "observed_families": [
+    "kf_aah",
+    "kf_aai",
+    "kf_aal",
+    "kf_adb"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 14030228,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     17932,
+     7256,
+     true
+    ],
+    "SCHEMA_0": [
+     11654,
+     4168,
+     true
+    ],
+    "SCHEMA_1": [
+     7957,
+     865,
+     true
+    ],
+    "SCHEMA_2": [
+     9082,
+     2434,
+     true
+    ],
+    "SCHEMA_ALL": [
+     -1538,
+     -7545,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_2",
+   "donor": "G1",
+   "classes": 5,
+   "observed_families": [
+    "kf_aae",
+    "kf_aas",
+    "kf_agz",
+    "kf_aid"
+   ],
+   "candidates": [
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 4891303,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     10628,
+     4917,
+     true
+    ],
+    "SCHEMA_0": [
+     12630,
+     7011,
+     true
+    ],
+    "SCHEMA_1": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_2": [
+     743,
+     -665,
+     false
+    ],
+    "SCHEMA_3": [
+     -18075,
+     -27809,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -49470,
+     -64380,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_2",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_aae",
+    "kf_aas",
+    "kf_aid"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schemas": [
+    "(acc - {H})"
+   ],
+   "NEW": true,
+   "meta": 10323436,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     33599,
+     19592,
+     true
+    ],
+    "SCHEMA_0": [
+     89848,
+     60034,
+     true
+    ],
+    "SCHEMA_1": [
+     90590,
+     60808,
+     true
+    ],
+    "SCHEMA_2": [
+     15626,
+     3045,
+     true
+    ],
+    "SCHEMA_ALL": [
+     40378,
+     8350,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_3",
+   "donor": "G1",
+   "classes": 3,
+   "observed_families": [
+    "kf_adb",
+    "kf_add",
+    "kf_aey"
+   ],
+   "candidates": [
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 13433208,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     3683,
+     2153,
+     true
+    ],
+    "SCHEMA_0": [
+     3638,
+     2115,
+     true
+    ],
+    "SCHEMA_1": [
+     -980,
+     -2592,
+     false
+    ],
+    "SCHEMA_2": [
+     -4775,
+     -7694,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -1340,
+     -3753,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_3",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_adb",
+    "kf_add",
+    "kf_aey"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 11873872,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     16615,
+     9099,
+     true
+    ],
+    "SCHEMA_0": [
+     7999,
+     -1332,
+     false
+    ],
+    "SCHEMA_1": [
+     4204,
+     -3683,
+     false
+    ],
+    "SCHEMA_ALL": [
+     6659,
+     -3401,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_3",
+   "donor": "G1",
+   "classes": 4,
+   "observed_families": [
+    "kf_aan",
+    "kf_aao",
+    "kf_abg"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} - v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schemas": [
+    "(acc + ({H} - v))"
+   ],
+   "NEW": false,
+   "meta": 15691993,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     10796,
+     5768,
+     true
+    ],
+    "SCHEMA_0": [
+     10860,
+     5725,
+     true
+    ],
+    "SCHEMA_1": [
+     1017,
+     -484,
+     false
+    ],
+    "SCHEMA_2": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_3": [
+     -22308,
+     -31868,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -17955,
+     -26921,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_3",
+   "donor": "P",
+   "classes": 2,
+   "observed_families": [
+    "kf_aan",
+    "kf_aao"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schemas": [
+    "(acc + {H})"
+   ],
+   "NEW": false,
+   "meta": 18286438,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     4672,
+     2207,
+     true
+    ],
+    "SCHEMA_0": [
+     85663,
+     49506,
+     true
+    ],
+    "SCHEMA_1": [
+     2176,
+     774,
+     true
+    ],
+    "SCHEMA_ALL": [
+     67708,
+     38079,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_3",
+   "donor": "G1",
+   "classes": 3,
+   "observed_families": [
+    "kf_aak",
+    "kf_agf",
+    "kf_agh"
+   ],
+   "candidates": [
+    [
+     "(acc + (v % {H}))",
+     false
+    ],
+    [
+     "(acc + ({H} + v))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 1778081,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     9025,
+     5923,
+     true
+    ],
+    "SCHEMA_0": [
+     6168,
+     2476,
+     true
+    ],
+    "SCHEMA_1": [
+     8813,
+     5555,
+     true
+    ],
+    "SCHEMA_2": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -2386,
+     -4861,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_3",
+   "donor": "P",
+   "classes": 1,
+   "observed_families": [
+    "kf_aak"
+   ],
+   "candidates": [],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 3043876,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     28162,
+     19613,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_4",
+   "donor": "G1",
+   "classes": 4,
+   "observed_families": [
+    "kf_ack",
+    "kf_aey",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} * v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 16808205,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     13605,
+     8601,
+     true
+    ],
+    "SCHEMA_0": [
+     13942,
+     8752,
+     true
+    ],
+    "SCHEMA_1": [
+     14152,
+     8925,
+     true
+    ],
+    "SCHEMA_2": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_3": [
+     -802,
+     -1983,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -18885,
+     -27093,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_4",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_ack",
+    "kf_aey",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 13559300,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     39855,
+     25223,
+     true
+    ],
+    "SCHEMA_0": [
+     25665,
+     16097,
+     true
+    ],
+    "SCHEMA_1": [
+     24862,
+     15554,
+     true
+    ],
+    "SCHEMA_ALL": [
+     6780,
+     3572,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_4",
+   "donor": "G1",
+   "classes": 5,
+   "observed_families": [
+    "kf_aaa",
+    "kf_aaf",
+    "kf_aey"
+   ],
+   "candidates": [
+    [
+     "(acc + (v % {H}))",
+     false
+    ],
+    [
+     "(acc + (v - {H}))",
+     false
+    ],
+    [
+     "(acc + ({H} + v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_2",
+   "selected_schemas": [
+    "(acc + ({H} + v))"
+   ],
+   "NEW": false,
+   "meta": 5998946,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     13605,
+     8012,
+     true
+    ],
+    "SCHEMA_0": [
+     14302,
+     8823,
+     true
+    ],
+    "SCHEMA_1": [
+     14475,
+     8987,
+     true
+    ],
+    "SCHEMA_2": [
+     14535,
+     9034,
+     true
+    ],
+    "SCHEMA_3": [
+     14430,
+     8939,
+     true
+    ],
+    "SCHEMA_4": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_5": [
+     -19432,
+     -28825,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -35505,
+     -43781,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_4",
+   "donor": "P",
+   "classes": 4,
+   "observed_families": [
+    "kf_aaa",
+    "kf_aaf",
+    "kf_aey"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_0",
+   "selected_schemas": [
+    "(acc + {H})"
+   ],
+   "NEW": false,
+   "meta": 10903262,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     45510,
+     29548,
+     true
+    ],
+    "SCHEMA_0": [
+     104290,
+     74249,
+     true
+    ],
+    "SCHEMA_1": [
+     29880,
+     19191,
+     true
+    ],
+    "SCHEMA_ALL": [
+     68785,
+     40702,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_4",
+   "donor": "G1",
+   "classes": 6,
+   "observed_families": [
+    "kf_abg",
+    "kf_ack",
+    "kf_aht",
+    "kf_ahz"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} * v))",
+     false
+    ],
+    [
+     "(acc + ({H} - v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_2",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 2812890,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     17550,
+     13306,
+     true
+    ],
+    "SCHEMA_0": [
+     17715,
+     13257,
+     true
+    ],
+    "SCHEMA_1": [
+     9457,
+     4932,
+     true
+    ],
+    "SCHEMA_2": [
+     17895,
+     13437,
+     true
+    ],
+    "SCHEMA_3": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_4": [
+     -2918,
+     -6898,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -21052,
+     -29742,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_4",
+   "donor": "P",
+   "classes": 2,
+   "observed_families": [
+    "kf_ack",
+    "kf_ahz"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 4813462,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     49080,
+     36406,
+     true
+    ],
+    "SCHEMA_0": [
+     30878,
+     21821,
+     true
+    ],
+    "SCHEMA_1": [
+     27960,
+     17897,
+     true
+    ],
+    "SCHEMA_ALL": [
+     9825,
+     3396,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_5",
+   "donor": "G1",
+   "classes": 3,
+   "observed_families": [
+    "kf_ack",
+    "kf_adb",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} * v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 14567717,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     7658,
+     3450,
+     true
+    ],
+    "SCHEMA_0": [
+     7741,
+     3498,
+     true
+    ],
+    "SCHEMA_1": [
+     7780,
+     3477,
+     true
+    ],
+    "SCHEMA_2": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_3": [
+     -4347,
+     -8430,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -12754,
+     -19898,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-GCD_RICH_5",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_ack",
+    "kf_adb",
+    "kf_afd"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 11987157,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     24698,
+     12406,
+     true
+    ],
+    "SCHEMA_0": [
+     22206,
+     11073,
+     true
+    ],
+    "SCHEMA_1": [
+     12414,
+     2791,
+     true
+    ],
+    "SCHEMA_ALL": [
+     9452,
+     3553,
+     true
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_5",
+   "donor": "G1",
+   "classes": 5,
+   "observed_families": [
+    "kf_aai",
+    "kf_aam",
+    "kf_aao",
+    "kf_aaz"
+   ],
+   "candidates": [
+    [
+     "(acc + ({H} - v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schemas": [
+    "(acc + math.gcd(abs({H}), abs(v)))"
+   ],
+   "NEW": false,
+   "meta": 10757265,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     637,
+     -854,
+     false
+    ],
+    "SCHEMA_0": [
+     1168,
+     36,
+     true
+    ],
+    "SCHEMA_1": [
+     1366,
+     220,
+     true
+    ],
+    "SCHEMA_2": [
+     -19320,
+     -28692,
+     false
+    ],
+    "SCHEMA_3": [
+     -19982,
+     -29309,
+     false
+    ],
+    "SCHEMA_4": [
+     -20579,
+     -29796,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -42507,
+     -65554,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-NONG1_MIX_5",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_aai",
+    "kf_aam",
+    "kf_aao"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "MEMORISE",
+   "selected_schemas": [],
+   "NEW": false,
+   "meta": 7441551,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     4080,
+     1941,
+     true
+    ],
+    "SCHEMA_0": [
+     -16762,
+     -26893,
+     false
+    ],
+    "SCHEMA_1": [
+     -17424,
+     -27379,
+     false
+    ],
+    "SCHEMA_2": [
+     -18021,
+     -27746,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -59117,
+     -91461,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_5",
+   "donor": "G1",
+   "classes": 5,
+   "observed_families": [
+    "kf_aaf",
+    "kf_aag",
+    "kf_ahp",
+    "kf_ahu"
+   ],
+   "candidates": [
+    [
+     "(acc + (v % {H}))",
+     false
+    ],
+    [
+     "(acc + (v - {H}))",
+     false
+    ],
+    [
+     "(acc + ({H} + v))",
+     false
+    ],
+    [
+     "(acc + ({H} - v))",
+     false
+    ],
+    [
+     "(acc + math.gcd(abs({H}), abs(v)))",
+     false
+    ],
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_3",
+   "selected_schemas": [
+    "(acc + ({H} - v))"
+   ],
+   "NEW": false,
+   "meta": 25541182,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     -1190,
+     -2549,
+     false
+    ],
+    "SCHEMA_0": [
+     -1256,
+     -1683,
+     false
+    ],
+    "SCHEMA_1": [
+     201,
+     -509,
+     false
+    ],
+    "SCHEMA_2": [
+     178,
+     -520,
+     false
+    ],
+    "SCHEMA_3": [
+     9508,
+     4411,
+     true
+    ],
+    "SCHEMA_4": [
+     193,
+     -516,
+     false
+    ],
+    "SCHEMA_5": [
+     0,
+     0,
+     false
+    ],
+    "SCHEMA_6": [
+     293,
+     -2856,
+     false
+    ],
+    "SCHEMA_7": [
+     -21452,
+     -30453,
+     false
+    ],
+    "SCHEMA_ALL": [
+     -16888,
+     -27822,
+     false
+    ]
+   }
+  },
+  {
+   "regime": "K5-G1_PLUS_5",
+   "donor": "P",
+   "classes": 3,
+   "observed_families": [
+    "kf_aaf",
+    "kf_aag",
+    "kf_ahu"
+   ],
+   "candidates": [
+    [
+     "(acc + {H})",
+     false
+    ],
+    [
+     "(acc - {H})",
+     true
+    ],
+    [
+     "({H} + v)",
+     true
+    ]
+   ],
+   "selected": "SCHEMA_1",
+   "selected_schemas": [
+    "(acc - {H})"
+   ],
+   "NEW": true,
+   "meta": 20439470,
+   "table": {
+    "INHERITED": [
+     0,
+     0,
+     false
+    ],
+    "MEMORISE": [
+     3105,
+     1215,
+     true
+    ],
+    "SCHEMA_0": [
+     76493,
+     40655,
+     true
+    ],
+    "SCHEMA_1": [
+     76787,
+     39857,
+     true
+    ],
+    "SCHEMA_2": [
+     -127,
+     -2207,
+     false
+    ],
+    "SCHEMA_ALL": [
+     59605,
+     29849,
+     true
+    ]
+   }
+  }
+ ]
+}

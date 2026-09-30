@@ -1,0 +1,132 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Aphrodite",
+  "mwo_id": "MWO-0004",
+  "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
+  "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
+  "updated_at_utc": "2026-09-30T23:21:47Z",
+  "state": "READY",
+  "state_reason": "In-flight set closed: MWO-0004 G5 accepted the ARC3 close as reported, which cleared the merge review; aphrodite/arc3-2026-09-28 was merged to main at 067fce3af. Nothing running. Per CWO-C s4 the seat does not self-promote.",
+  "branch": "main",
+  "head_sha": "067fce3af",
+  "head_sha_note": "main after the ARC3 merge, immediately before the commit that adds this file version",
+  "base_sha": "98ed64ca3383ee310f8850e374f936f27f0378af",
+  "threads": [
+    {
+      "id": "thr-4b608194554f",
+      "alias": "TH-018",
+      "title": "abstraction compounding",
+      "status": "OPEN"
+    },
+    {
+      "id": "thr-5fb60bba1e73",
+      "alias": "TH-019",
+      "title": "recurrence x visibility",
+      "status": "OPEN"
+    },
+    {
+      "id": "thr-71318d165e06",
+      "alias": "TH-020",
+      "title": "second-order compounding / representation",
+      "status": "OPEN_GATED"
+    },
+    {
+      "id": "thr-1b0c5ac499ae",
+      "alias": "TH-021",
+      "title": "instrument validity (method)",
+      "status": "OPEN"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "C-003",
+      "alias": "ARC3",
+      "status": "CLOSED (accepted MWO-0004 G5; merged to main)",
+      "record": "ops/campaigns/C-003/CAMPAIGN.md"
+    },
+    {
+      "id": null,
+      "alias": "Campaign 1",
+      "status": "FROZEN_UNRUN",
+      "note": "operator-gated; no C-* id allocated"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E-008",
+      "alias": "AMENDMENT 20 (C3)",
+      "status": "CLOSED",
+      "verdict": "UNTESTABLE"
+    },
+    {
+      "id": "E-009",
+      "alias": "AMENDMENT 21 (C3R)",
+      "status": "CLOSED",
+      "verdict": "INVALID_DESIGN_DEFECT"
+    },
+    {
+      "id": "E-010",
+      "alias": "AMENDMENT 22 (C3R2)",
+      "status": "CLOSED",
+      "verdict": "UNTESTABLE"
+    },
+    {
+      "id": "E-011",
+      "alias": "AMENDMENT 23 (C3R2-CONFIRM)",
+      "status": "CLOSED",
+      "verdict": "G1_RECURRENT_STEPPING_STONE=YES; GENERIC 3/3 (constructed recurrence; mechanism only)"
+    }
+  ],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [],
+  "next_actions": [
+    "seat loop: control-plane sync at least every 60 min (CWO-C s12); heartbeat on state change (s13)",
+    "news monitor continues in its narrow weekly scope (monitors/news/)"
+  ],
+  "operator_decisions_required": [],
+  "comms_cursor": 1193,
+  "latest_reports": [
+    "roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md",
+    "roles/Aphrodite/science/arc3/ARC3_SYNTHESIS_2026-09-28.md",
+    "roles/Aphrodite/science/arc3/w8_lin_generator/REPORT.md"
+  ],
+  "migration_report": "roles/Aphrodite/MIGRATION_REPORT_MWO-0002.json",
+  "governing_cwo": {
+    "id": "CWO-2026-09-30C",
+    "path": "ops/fleet/CWO_2026-09-30C_FINISH_SURFACE_DISPATCH.md",
+    "sha256": "edc4792d30a7829709f1eb392ead55c092f47139c760879556ef17408c867e6c",
+    "adopted_with": [
+      "MWO-0003 (history; FP-001 round past, seat not live then)",
+      "MWO-0004",
+      "CWO-2026-09-30 (auto-promotion superseded)",
+      "CWO-2026-09-30B"
+    ],
+    "hash_check": "all six order blobs match PUBLICATIONS.md; 624a686ea and 25a486d44 are ancestors of origin/main"
+  },
+  "current_objective": null,
+  "current_step": null,
+  "in_flight": [],
+  "progress": "ARC3 (C-003) merged to main",
+  "blocked": [],
+  "resource_status": "no python processes on harry1 for this seat; no leases; no Fabric tasks; no child workers",
+  "finish_condition": null,
+  "next": "awaiting Aporia assignment",
+  "next_planning_only": [
+    "T51 (TH-019 donor stage, ~16 core-h, inside R2): AUTHORISED by MWO-0004 G5 but not started; it needs a pre-freeze supply screen (T49) and a frozen AMENDMENT before any run. It starts on Aporia dispatch or a direct operator instruction, not by self-promotion (CWO-C s4)."
+  ],
+  "next_expected_milestone": "Aporia dispatch",
+  "expected_next_artifact": null,
+  "last_receipt": "merge commit on main (ARC3 close)",
+  "model": "claude-opus-5-5",
+  "session_id": "0f14ab93-b7f3-49de-b318-37ede7c700a4",
+  "session_started_utc": "UNKNOWN (not runtime-reported); comms boot 2026-09-30",
+  "decisions_recorded": [
+    "TH-020 DSL fork: PARKED (default B), confirmed by MWO-0004 G5",
+    "T51: authorised within R2 by MWO-0004 G5; not a gate"
+  ],
+  "open_defects": [
+    "constant-True gate conditions in historical run_s3s4.py / a16.py / a17.py (packet s5, TH-021). Recorded. Not re-labelled: re-labelling would change the meaning of frozen experiments after exposure, which is a hard gate under MWO-0004 Part 4."
+  ],
+  "last_heartbeat": "comms #1193 (reply to #1140)"
+}

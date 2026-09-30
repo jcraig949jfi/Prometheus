@@ -1,0 +1,5350 @@
+{
+ "G2": "(v - (acc + {H}))",
+ "panel": {
+  "G1": "(acc + {H})",
+  "OFF_0": "(1 + (v - {H}))",
+  "SHAM_0": "(v - (acc - {H}))",
+  "SHAM_1": "({H} + v)"
+ },
+ "original": [
+  "qoda",
+  "qyba"
+ ],
+ "fresh_families": [
+  [
+   "fraaa",
+   [
+    "(v - (acc + (last % first)))",
+    "(acc * first)",
+    "0"
+   ],
+   8
+  ],
+  [
+   "frbaa",
+   [
+    "(v - (acc + math.gcd(abs(acc), abs(first))))",
+    "(last + acc)",
+    "0"
+   ],
+   4
+  ],
+  [
+   "frcaa",
+   [
+    "(v - (acc + math.gcd(abs(acc), abs(1))))",
+    "(1 + acc)",
+    "0"
+   ],
+   12
+  ],
+  [
+   "frdaa",
+   [
+    "(v - (acc + (acc % v)))",
+    "(acc * acc)",
+    "0"
+   ],
+   4
+  ],
+  [
+   "freaa",
+   [
+    "(v - (acc + (0 % first)))",
+    "(last + acc)",
+    "0"
+   ],
+   4
+  ],
+  [
+   "frfaa",
+   [
+    "(v - (acc + (0 // last)))",
+    "(acc + 1)",
+    "1"
+   ],
+   6
+  ],
+  [
+   "frgaa",
+   [
+    "(v - (acc + (first + first)))",
+    "(acc * last)",
+    "1"
+   ],
+   6
+  ],
+  [
+   "frhaa",
+   [
+    "(v - (acc + (acc + first)))",
+    "(acc // first)",
+    "0"
+   ],
+   4
+  ],
+  [
+   "friaa",
+   [
+    "(v - (acc + (last % v)))",
+    "math.gcd(abs(0), abs(acc))",
+    "1"
+   ],
+   4
+  ],
+  [
+   "frjaa",
+   [
+    "(v - (acc + (first * last)))",
+    "(first + acc)",
+    "1"
+   ],
+   6
+  ],
+  [
+   "frkaa",
+   [
+    "(v - (acc + (acc // v)))",
+    "(last + acc)",
+    "1"
+   ],
+   4
+  ],
+  [
+   "frlaa",
+   [
+    "(v - (acc + (acc // last)))",
+    "math.gcd(abs(first), abs(acc))",
+    "1"
+   ],
+   24
+  ]
+ ],
+ "rows": [
+  {
+   "tag": "T1_REPLAY",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 4519,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc * 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 4519,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc * 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 4699,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc * 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 41228,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc // 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 41228,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc // 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 51488,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc // 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 5596,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 5596,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 25936,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 27184,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 27184,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 19624,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(0 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 100,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 46453,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 46453,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 38533,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc - 0)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 101,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 16207,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(1 * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 16207,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(1 * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 26467,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(1 * acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 102,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 9017,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc + 0)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 9017,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc + 0)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 6497,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc + 0)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 2539280,
+    "ladder_qualified": true
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 2481320,
+    "ladder_qualified": true
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 103,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 9363,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc + 0)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 9363,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc + 0)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 28623,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc + 0)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 104,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 25741,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 25741,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 11341,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(0 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 105,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 51687,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc * 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 51687,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc * 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 33147,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc * 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 1195068,
+    "ladder_qualified": true
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 1137108,
+    "ladder_qualified": true
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 106,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 6482,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(1 * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 6482,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(1 * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 5762,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(1 * acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 107,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 2406,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 2406,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 27786,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 108,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 596,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 596,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 6716,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(0 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 109,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 54558,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 54558,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 46998,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc - 0)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 110,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 10988,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 10988,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 21428,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 111,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 10477,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 10477,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(0 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 23977,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(0 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 112,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 16935,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 16935,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 26835,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "pow(acc, 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 113,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 27543,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc // 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 27543,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc // 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 13143,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc // 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 114,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 14961,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "acc"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 14961,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "acc"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 21081,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "acc"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qoda",
+   "spec": [
+    "(v - (acc - (last - acc)))",
+    "(acc + 0)",
+    "0"
+   ],
+   "cell": 115,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 7215,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7215,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 14595,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last - acc)))",
+     "(acc - 0)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 0,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 7760,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7760,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 20000,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 1,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 52083,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 52083,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 44883,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 2,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 7315,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7315,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 12895,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T1_REPLAY",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 3,
+   "label": "A19-CON1-rx",
+   "SELECTED": {
+    "charge": 30963,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 30963,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 54543,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 100,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 2742,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 2742,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 25602,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 947407,
+    "ladder_qualified": true
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 889447,
+    "ladder_qualified": true
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 101,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 10310,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 10310,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 26690,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 102,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 7211,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (first - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7211,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (first - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 11891,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "SHAM0": {
+    "charge": 7211,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - math.gcd(abs(v), abs(0))))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 91091,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 33131,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 103,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 25,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (0 - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 25,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (0 - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 17485,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "SHAM0": {
+    "charge": 1465,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - first)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "L1": {
+    "charge": 73645,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 15685,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 104,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 47069,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 47069,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 47609,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 105,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 561,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 561,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 11181,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 106,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 17314,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 17314,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 24514,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 107,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 22780,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 22780,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 28000,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 108,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 57795,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "(acc - 0)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 57795,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "(acc - 0)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 56895,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "(acc - 0)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 109,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 39449,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 39449,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 52769,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 110,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 37635,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 37635,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 55815,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 111,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 21261,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 21261,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 6861,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 112,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 41523,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 41523,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 30543,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 113,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 5374,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (0 - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 5374,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (0 - v)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 17434,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - v))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "SHAM0": {
+    "charge": 6094,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v % last)))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 69994,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 12034,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v + (v - acc))",
+     "math.gcd(abs(0), abs(acc))"
+    ]
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 114,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 40548,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 40548,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 53688,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T2_FRESH_CELL",
+   "family": "qyba",
+   "spec": [
+    "(v - (acc - (v - last)))",
+    "math.gcd(abs(acc), abs(0))",
+    "0"
+   ],
+   "cell": 115,
+   "label": "ARC3-CON1-fresh",
+   "SELECTED": {
+    "charge": 50402,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 50402,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 30962,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (v - last)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "fraaa",
+   "spec": [
+    "(v - (acc + (last % first)))",
+    "(acc * first)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 25682,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last % first)))",
+     "(first * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 25682,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last % first)))",
+     "(first * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "fraaa",
+   "spec": [
+    "(v - (acc + (last % first)))",
+    "(acc * first)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 56187,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last % first)))",
+     "(acc * first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 56187,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last % first)))",
+     "(acc * first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "fraaa",
+   "spec": [
+    "(v - (acc + (last % first)))",
+    "(acc * first)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 7285,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(first), abs(last))))",
+     "(acc * first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7285,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(first), abs(last))))",
+     "(acc * first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "fraaa",
+   "spec": [
+    "(v - (acc + (last % first)))",
+    "(acc * first)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 45108,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (1 + 1)))",
+     "(acc * first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 45108,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (1 + 1)))",
+     "(acc * first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frbaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(first))))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 56533,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(last + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 56533,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(last + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frbaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(first))))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 55867,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 55867,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frbaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(first))))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 22967,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(last + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 22967,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(last + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frbaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(first))))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 12241,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 12241,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + math.gcd(abs(acc), abs(first))))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frcaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(1))))",
+    "(1 + acc)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 786,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last // last)))",
+     "(1 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 786,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last // last)))",
+     "(1 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 24726,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + 1))",
+     "(1 + acc)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 22206,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (0 - 1)))",
+     "(1 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 343801,
+    "ladder_qualified": true
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 285841,
+    "ladder_qualified": true
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frcaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(1))))",
+    "(1 + acc)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 6713,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - 1)))",
+     "(acc // 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 6713,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - 1)))",
+     "(acc // 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 20933,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - 1))",
+     "(acc // 1)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 233,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (1 % v)))",
+     "(acc // 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 629648,
+    "ladder_qualified": true
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 571688,
+    "ladder_qualified": true
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frcaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(1))))",
+    "(1 + acc)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 3648,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (v // v)))",
+     "(acc + 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 3648,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (v // v)))",
+     "(acc + 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 23448,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + 1))",
+     "(acc + 1)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 9048,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (0 - 1)))",
+     "(acc + 1)"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 336630,
+    "ladder_qualified": true
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 278670,
+    "ladder_qualified": true
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frcaa",
+   "spec": [
+    "(v - (acc + math.gcd(abs(acc), abs(1))))",
+    "(1 + acc)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 27543,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - 1)))",
+     "acc"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 27543,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 - 1)))",
+     "acc"
+    ]
+   },
+   "VMINUS": {
+    "charge": 4503,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - 1))",
+     "acc"
+    ]
+   },
+   "SHAM0": {
+    "charge": 363,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - pow(1, first)))",
+     "acc"
+    ]
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frdaa",
+   "spec": [
+    "(v - (acc + (acc % v)))",
+    "(acc * acc)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 55264,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 55264,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frdaa",
+   "spec": [
+    "(v - (acc + (acc % v)))",
+    "(acc * acc)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 3238,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 3238,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frdaa",
+   "spec": [
+    "(v - (acc + (acc % v)))",
+    "(acc * acc)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 55481,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 55481,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frdaa",
+   "spec": [
+    "(v - (acc + (acc % v)))",
+    "(acc * acc)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 45480,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 45480,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc % v)))",
+     "(acc * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "freaa",
+   "spec": [
+    "(v - (acc + (0 % first)))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 13,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - 1)))",
+     "(last + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 13,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (last - 1)))",
+     "(last + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 4693,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - last))",
+     "(last + acc)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 193,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (last * last)))",
+     "(last + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 82813,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(last + acc)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 24853,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(last + acc)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "freaa",
+   "spec": [
+    "(v - (acc + (0 % first)))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 938,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + pow(v, last)))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 938,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + pow(v, last)))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 10298,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(acc + last)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 38,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - math.gcd(abs(0), abs(0))))",
+     "(acc + last)"
+    ]
+   },
+   "L1": {
+    "charge": 85178,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(acc + last)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 27218,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(acc + last)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "freaa",
+   "spec": [
+    "(v - (acc + (0 % first)))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 2098,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + pow(acc, last)))",
+     "(last + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 2098,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + pow(acc, last)))",
+     "(last + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 22438,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(last + acc)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 658,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (first // last)))",
+     "(last + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 118018,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(last + acc)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 60058,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(last + acc)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "freaa",
+   "spec": [
+    "(v - (acc + (0 % first)))",
+    "(last + acc)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 506,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (first // last)))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 506,
+    "qualified": false,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (first // last)))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 4466,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(acc + last)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 146,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc - (0 // v)))",
+     "(acc + last)"
+    ]
+   },
+   "L1": {
+    "charge": 74846,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(acc + last)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 16886,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - acc)",
+     "(acc + last)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frfaa",
+   "spec": [
+    "(v - (acc + (0 // last)))",
+    "(acc + 1)",
+    "1"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 612,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + pow(0, v)))",
+     "(1 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 612,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + pow(0, v)))",
+     "(1 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 25092,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 2232,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (0 % v)))",
+     "(1 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 120132,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 62172,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frfaa",
+   "spec": [
+    "(v - (acc + (0 // last)))",
+    "(acc + 1)",
+    "1"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 1634,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + pow(0, first)))",
+     "(1 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 1634,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + pow(0, first)))",
+     "(1 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 7934,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 14,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (1 // last)))",
+     "(1 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 76514,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 18554,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frfaa",
+   "spec": [
+    "(v - (acc + (0 // last)))",
+    "(acc + 1)",
+    "1"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 33159,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 // first)))",
+     "(1 + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 33159,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (0 // first)))",
+     "(1 + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 43959,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 30099,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (1 // v)))",
+     "(1 + acc)"
+    ]
+   },
+   "L1": {
+    "charge": 171579,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 113619,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(1 + acc)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frfaa",
+   "spec": [
+    "(v - (acc + (0 // last)))",
+    "(acc + 1)",
+    "1"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 4,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + pow(0, last)))",
+     "(acc + 1)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 4,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + pow(0, last)))",
+     "(acc + 1)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 6124,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc + 1)"
+    ]
+   },
+   "SHAM0": {
+    "charge": 4,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc - (0 // v)))",
+     "(acc + 1)"
+    ]
+   },
+   "L1": {
+    "charge": 76684,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc + 1)"
+    ]
+   },
+   "PRISTINE": {
+    "charge": 18724,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - acc)",
+     "(acc + 1)"
+    ]
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frgaa",
+   "spec": [
+    "(v - (acc + (first + first)))",
+    "(acc * last)",
+    "1"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 32392,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(acc * last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 32392,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(acc * last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frgaa",
+   "spec": [
+    "(v - (acc + (first + first)))",
+    "(acc * last)",
+    "1"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 57438,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(last * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 57438,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(last * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frgaa",
+   "spec": [
+    "(v - (acc + (first + first)))",
+    "(acc * last)",
+    "1"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 2928,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(last * acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 2928,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(last * acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frgaa",
+   "spec": [
+    "(v - (acc + (first + first)))",
+    "(acc * last)",
+    "1"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 23962,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(acc * last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 23962,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first + first)))",
+     "(acc * last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frhaa",
+   "spec": [
+    "(v - (acc + (acc + first)))",
+    "(acc // first)",
+    "0"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 7928,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7928,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frhaa",
+   "spec": [
+    "(v - (acc + (acc + first)))",
+    "(acc // first)",
+    "0"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 41998,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 41998,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frhaa",
+   "spec": [
+    "(v - (acc + (acc + first)))",
+    "(acc // first)",
+    "0"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 55017,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 55017,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frhaa",
+   "spec": [
+    "(v - (acc + (acc + first)))",
+    "(acc // first)",
+    "0"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 28792,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 28792,
+    "qualified": true,
+    "program": [
+     "fold",
+     "0",
+     "(v - (acc + (acc + first)))",
+     "(acc // first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "friaa",
+   "spec": [
+    "(v - (acc + (last % v)))",
+    "math.gcd(abs(0), abs(acc))",
+    "1"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 30485,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 30485,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "friaa",
+   "spec": [
+    "(v - (acc + (last % v)))",
+    "math.gcd(abs(0), abs(acc))",
+    "1"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 25256,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 25256,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "friaa",
+   "spec": [
+    "(v - (acc + (last % v)))",
+    "math.gcd(abs(0), abs(acc))",
+    "1"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 57838,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 57838,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "friaa",
+   "spec": [
+    "(v - (acc + (last % v)))",
+    "math.gcd(abs(0), abs(acc))",
+    "1"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 45570,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 45570,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (last % v)))",
+     "math.gcd(abs(acc), abs(0))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frjaa",
+   "spec": [
+    "(v - (acc + (first * last)))",
+    "(first + acc)",
+    "1"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 33922,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(first + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 33922,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(first + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frjaa",
+   "spec": [
+    "(v - (acc + (first * last)))",
+    "(first + acc)",
+    "1"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 902,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(first + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 902,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(first + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frjaa",
+   "spec": [
+    "(v - (acc + (first * last)))",
+    "(first + acc)",
+    "1"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 29835,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(acc + first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 29835,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(acc + first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frjaa",
+   "spec": [
+    "(v - (acc + (first * last)))",
+    "(first + acc)",
+    "1"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 19523,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(acc + first)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 19523,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (first * last)))",
+     "(acc + first)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frkaa",
+   "spec": [
+    "(v - (acc + (acc // v)))",
+    "(last + acc)",
+    "1"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 10826,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 10826,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frkaa",
+   "spec": [
+    "(v - (acc + (acc // v)))",
+    "(last + acc)",
+    "1"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 42891,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 42891,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frkaa",
+   "spec": [
+    "(v - (acc + (acc // v)))",
+    "(last + acc)",
+    "1"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 31411,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(acc + last)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 31411,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(acc + last)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frkaa",
+   "spec": [
+    "(v - (acc + (acc // v)))",
+    "(last + acc)",
+    "1"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 54393,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(last + acc)"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 54393,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // v)))",
+     "(last + acc)"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frlaa",
+   "spec": [
+    "(v - (acc + (acc // last)))",
+    "math.gcd(abs(first), abs(acc))",
+    "1"
+   ],
+   "cell": 0,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 7962,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(acc), abs(first))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 7962,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(acc), abs(first))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frlaa",
+   "spec": [
+    "(v - (acc + (acc // last)))",
+    "math.gcd(abs(first), abs(acc))",
+    "1"
+   ],
+   "cell": 1,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 3105,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(first), abs(acc))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 3105,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(first), abs(acc))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frlaa",
+   "spec": [
+    "(v - (acc + (acc // last)))",
+    "math.gcd(abs(first), abs(acc))",
+    "1"
+   ],
+   "cell": 2,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 36855,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(acc), abs(first))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 36855,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(acc), abs(first))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  },
+  {
+   "tag": "T3_FRESH_FAMILY",
+   "family": "frlaa",
+   "spec": [
+    "(v - (acc + (acc // last)))",
+    "math.gcd(abs(first), abs(acc))",
+    "1"
+   ],
+   "cell": 3,
+   "label": "ARC3-CON1-ff",
+   "SELECTED": {
+    "charge": 4975,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(acc), abs(first))"
+    ]
+   },
+   "G2_ONLY": {
+    "charge": 4975,
+    "qualified": true,
+    "program": [
+     "fold",
+     "1",
+     "(v - (acc + (acc // last)))",
+     "math.gcd(abs(acc), abs(first))"
+    ]
+   },
+   "VMINUS": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "SHAM0": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null
+   },
+   "L1": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   },
+   "PRISTINE": {
+    "charge": 250000,
+    "qualified": false,
+    "program": null,
+    "ladder_charge": 10000000,
+    "ladder_qualified": false
+   }
+  }
+ ]
+}

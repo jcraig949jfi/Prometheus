@@ -1,0 +1,68 @@
+{
+  "specimen_id": "ai-scientist-v2",
+  "url": "https://github.com/SakanaAI/AI-Scientist-v2",
+  "commit": "96bd51617cfdbb494a9fc283af00fe090edfae48",
+  "commit_date": "2025-12-19T08:46:31+01:00",
+  "default_branch": "main",
+  "n_tracked_files": 68,
+  "n_commits": 58,
+  "first_commit_date": "2025-04-08T06:38:53+00:00",
+  "has_gitmodules": false,
+  "has_lfs": false,
+  "approx_tree_bytes": 5704749,
+  "canonical_name": "The AI Scientist-v2 -- The AI Scientist-v2: Workshop-Level Automated Scientific Discovery via Agentic Tree Search (Yamada, Yutaro and Lange, Robert Tjarko and Lu, Cong and Hu, Shengran and Lu, Chris and Foerster, Jakob and Clune, Jeff and Ha, David; Sakana AI (Licensor per LICENSE; README names no institution); 2025)",
+  "aliases": ["AI-Scientist-v2", "AI Scientist v2", "aiscientist_v2 (bibtex key)", "BFTS (best-first tree search, per README/bfts_config.yaml)"],
+  "license": {
+    "file": "LICENSE",
+    "first_line": "The AI Scientist Source Code License",
+    "spdx_guess": "custom (LICENSE line 2: \"Version 1.0, December 2025\"; line 4: \"This license is based on the Responsible AI Source Code License v1.1 (http://licenses.ai/).\")",
+    "metadata_license_field": "NOT_FOUND_AT_PIN",
+    "notes": "No pyproject/setup.py/setup.cfg/package.json in tree. README section 'License & Responsible Use' says 'This project is licensed under **The AI Scientist Source Code License** (a derivative of the Responsible AI License)' and states a 'Mandatory Disclosure' of AI use in resulting manuscripts. Section 3 'Restrictions' summary: 3.1 any distribution of the Contribution must include a complete copy of the License. 3.2 the Contribution or derivatives may not be used for: (a) Surveillance -- detecting or inferring legally protected classes or identity features of any person; (b) Computer Generated Media -- synthesizing audio/video-realistic representations of people or events without a caption, watermark or metadata file disclosing generation; (c) Health Care -- predicting insurance-claim likelihood or diagnosing a medical condition without human oversight; (d) Criminal -- predicting that a person will commit a crime or is a criminal from facial attributes or personal data; (e) Scientific Manuscripts and Academic Integrity (The 'AI Scientist' Clause) -- generating or disseminating scientific manuscripts, research papers or technical reports without prominently disclaiming that the content was machine-generated or produced using The AI Scientist. 3.3 those restrictions must be passed on as an enforceable provision in any agreement governing use/distribution of the Work or Derivative Works. Section 4 gives Licensor a right to terminate and require return/destruction of copies on any restricted use. Zero copyright headers in source files. Third-party material in tree: ai_scientist/blank_icml_latex (icml2025.sty/.bst, algorithm.sty) and ai_scientist/blank_icbinb_latex (iclr2025 files), and ai_scientist/fewshot_examples contains three third-party paper PDFs (attention.pdf, 2_carpe_diem.pdf, 132_automated_relational.pdf) with .txt/.json derivatives; none carries a licence statement in the tree. README Acknowledgement: tree search 'is built on top of the [AIDE](https://github.com/WecoAI/aideml) project' but no AIDE licence text or notice is present in the tree. LICENSE was last changed in commit c204ee8 (2025-12-19) 'Update LICENSE', i.e. the licence at the pin is newer than the code."
+  },
+  "copyright_holders_by_header_count": {},
+  "language": ["Python", "YAML (bfts_config.yaml)", "LaTeX/BibTeX style files", "HTML/JS (treesearch/utils/viz_templates)"],
+  "build_system": "none; flat requirements.txt plus README conda instructions; no pyproject/setup.py",
+  "interpreter_or_compiler": "CPython 3.11 per README ('conda create -n ai_scientist python=3.11'); no python_requires declared",
+  "dependencies": [
+    "requirements.txt (all unpinned): anthropic, backoff, openai, matplotlib, pypdf, pymupdf4llm, seaborn, numpy, transformers, datasets, tiktoken, wandb, tqdm, rich, humanize, dataclasses-json, funcy, black, genson, shutup, python-igraph, coolname, jsonschema, omegaconf, botocore, boto3",
+    "README conda (unpinned except pytorch-cuda=12.4): pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia; anaconda::poppler; conda-forge::chktex",
+    "README optional: pip install anthropic[bedrock]",
+    "imported but not in requirements.txt: psutil (launch_scientist_bfts.py), pandas (treesearch/utils/data_preview.py), requests (llm.py, tools/semantic_scholar.py), PIL (ideas/*.py)"
+  ],
+  "network_fetches_in_setup": [
+    "conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia (README)",
+    "conda install anaconda::poppler; conda install conda-forge::chktex (README)",
+    "Runtime, not setup: LLM API calls to OpenAI / Gemini-via-OpenAI-API / AWS Bedrock (backend_openai.py, backend_anthropic.py, llm.py incl. base_url https://api.deepseek.com); Semantic Scholar https://api.semanticscholar.org/graph/v1/paper/search (tools/semantic_scholar.py); HuggingFace load_dataset(...) and requests.get of image URLs in ai_scientist/ideas/*.py seed code; LLM-generated experiment code executed by treesearch/interpreter.py may fetch arbitrarily (README 'Caution' warns of uncontrolled web access)"
+  ],
+  "entry_points": [
+    "launch_scientist_bfts.py __main__ (parses args, loads idea JSON, writes experiments/<date>_<name>_attempt_<id>/idea.md+idea.json, rewrites bfts_config.yaml via edit_bfts_config_file, calls perform_experiments_bfts, then aggregate_plots, gather_citations, perform_writeup/perform_icbinb_writeup, perform_review + perform_imgs_cap_ref_review, then kills child processes)",
+    "ai_scientist/perform_ideation_temp_free.py generate_temp_free_idea (LLM brainstorms/refines ideas from a topic .md with Semantic Scholar novelty tool; writes <topic>.json)",
+    "ai_scientist/treesearch/perform_experiments_bfts_with_agentmanager.py perform_experiments_bfts (loads cfg, preps workspace, builds AgentManager, runs it with exec/step callbacks and rich live tree display)",
+    "ai_scientist/treesearch/agent_manager.py AgentManager.run (experiment-manager: four hard-coded main stages 1 initial_implementation, 2 baseline_tuning, 3 creative_research, 4 ablation_studies, each with LLM-generated sub-stages; per sub-stage calls agent.step until _check_stage_completion / _check_substage_completion, then multi-seed eval + plot aggregation on best node)",
+    "ai_scientist/treesearch/parallel_agent.py ParallelAgent.step / _select_parallel_nodes (best-first tree search: picks num_workers nodes -- None=new draft while draft_nodes < num_drafts, buggy leaf to debug with prob debug_prob up to max_debug_depth, else journal.get_best_node to improve; stage 2/4 always expand best_stage1/best_stage3 node with LLM-generated hyperparam/ablation ideas; submits _process_node_wrapper to a process pool and appends result Nodes to the Journal)",
+    "ai_scientist/treesearch/parallel_agent.py MinimalAgent._draft/_debug/_improve (worker-side LLM prompts that produce plan+code; parse_exec_result and _analyze_plots_with_vlm judge the run)",
+    "ai_scientist/treesearch/interpreter.py Interpreter.run (executes LLM-written runfile.py in a child process with timeout, captures stdout/traceback)",
+    "ai_scientist/treesearch/journal.py Journal / Node (tree store; get_best_node asks an LLM to pick the best candidate unless use_val_metric_only)"
+  ],
+  "example_command": "python ai_scientist/perform_ideation_temp_free.py --workshop-file \"ai_scientist/ideas/my_research_topic.md\" --model gpt-4o-2024-05-13 --max-num-generations 20 --num-reflections 5",
+  "example_input": "A Markdown topic file with sections Title, Keywords, TL;DR, Abstract (example: ai_scientist/ideas/i_cant_believe_its_not_better.md), then the generated idea JSON (ai_scientist/ideas/i_cant_believe_its_not_better.json) plus optional seed code .py of the same stem for --load_code; tree-search settings in bfts_config.yaml",
+  "example_output": "Ideation: ai_scientist/ideas/<topic>.json list of structured ideas. Main pipeline: experiments/<timestamp>_<ideaname>_attempt_<id>/ with logs/0-run/unified_tree_viz.html, experiment_results, idea.md/idea.json, token_tracker output, <timestamp_ideaname>.pdf paper, review_text.txt and review_img_cap_ref.json (from README and launch_scientist_bfts.py)",
+  "runtime_native_deps": ["Linux + NVIDIA GPU with CUDA and PyTorch (README 'This code is designed to run on Linux with NVIDIA GPUs'); GPUManager/CUDA_VISIBLE_DEVICES per worker", "LaTeX toolchain + chktex + poppler for writeup/PDF", "External LLM API access (OpenAI, Gemini via OpenAI-compatible API, AWS Bedrock for Claude, DeepSeek endpoint in llm.py) with API keys", "Semantic Scholar API (optional S2_API_KEY)"],
+  "host_class": "Linux + NVIDIA CUDA GPU(s), CPython 3.11, internet access to paid LLM APIs; README recommends a Docker sandbox because it executes LLM-written code",
+  "upstream_docs": ["arXiv preprint arXiv:2504.08066", "https://pub.sakana.ai/ai-scientist-v2/paper", "https://sakana.ai/ai-scientist-first-publication/", "https://github.com/SakanaAI/AI-Scientist-ICLR2025-Workshop-Experiment", "https://github.com/SakanaAI/AI-Scientist (predecessor v1)", "https://github.com/WecoAI/aideml (AIDE, acknowledged base of tree search)", "http://licenses.ai/ (Responsible AI Source Code License v1.1, LICENSE line 4)"],
+  "built_to": "A generalized end-to-end agentic system that autonomously generates hypotheses, runs experiments, analyzes data and writes scientific manuscripts, and that 'has generated the first workshop paper written entirely by AI and accepted through peer review' (README).",
+  "pressure": "The predecessor AI Scientist-v1 relied on human-authored templates; v2 'removes reliance on human-authored templates, generalizes across Machine Learning (ML) domains, and employs a progressive agentic tree search, guided by an experiment manager agent' (README), while noting v2 has lower success rates than v1 when a strong template exists.",
+  "success_means": "Producing a completed paper PDF plus LLM/VLM review; README FAQ frames success as a per-run 'success rate' of completing experiments and generating a PDF, dependent on the foundation model and idea complexity, with a peer-review-accepted workshop paper as the headline result.",
+  "main_loop_one_sentence": "AgentManager.run iterates four fixed main stages (initial_implementation -> baseline_tuning -> creative_research -> ablation_studies), and within each sub-stage repeatedly calls ParallelAgent.step, which selects num_workers tree nodes (new drafts until num_drafts roots exist, random buggy leaves to debug with probability debug_prob, otherwise the LLM-judged best good node to improve, or the fixed best stage-1/3 node for hyperparameter/ablation stages), has worker processes ask an LLM for plan+code, execute it via Interpreter with a timeout, parse metrics and VLM plot feedback into a Node, appends the Nodes to the stage Journal, and ends the stage when max_iterations is reached or an LLM judges the stage goals met, then runs multi-seed evaluation and plot aggregation on the best node before seeding the next stage with it.",
+  "behavioral_entry_point": "ai_scientist/treesearch/parallel_agent.py:ParallelAgent._select_parallel_nodes (search policy) and ai_scientist/treesearch/agent_manager.py:AgentManager.__init__ main_stage_goals / _check_stage_completion (stage schedule and stopping); tunables in bfts_config.yaml agent.search (num_drafts, debug_prob, max_debug_depth) and agent.stages",
+  "lineage_notes": "README: 'Version 2' of 'its predecessor (AI Scientist-v1)' at https://github.com/SakanaAI/AI-Scientist; 'The tree search component implemented within the ai_scientist directory is built on top of the AIDE project' (https://github.com/WecoAI/aideml); code still prints 'AIDE is working on experiment' and serialize.py docstring says 'Deserialize JSON to AIDE dataclasses'. Companion repo SakanaAI/AI-Scientist-ICLR2025-Workshop-Experiment linked from README.",
+  "other_branches_or_versions": "Remote branches: origin/main (default), origin/revert-68-main. No tags. 58 commits total from 2025-04-08 'Initial commit' to 2025-12-19 'Merge pull request #78 from conglu1997/main' (the last two commits add the LICENSE and README licence section).",
+  "things_i_could_not_verify": [
+    "Institution: README gives no affiliation; 'Sakana AI' is taken from LICENSE definition of Licensor and the GitHub org name",
+    "Whether the licence text at HEAD matches the licence the code was originally released under in April 2025 (LICENSE changed in the final commit; earlier LICENSE content not inspected)",
+    "Licence terms of bundled ICML/ICLR LaTeX style files and the three few-shot example PDFs",
+    "AIDE (WecoAI/aideml) licence and how much code is derived from it -- no notice in tree",
+    "Exact runtime dependency versions -- requirements.txt is fully unpinned; psutil/pandas/requests/PIL are imported but undeclared",
+    "Actual GPU/VRAM needs and per-run cost figures (README FAQ claims only)"
+  ]
+}

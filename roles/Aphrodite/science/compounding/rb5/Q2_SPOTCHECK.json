@@ -1,0 +1,95 @@
+{
+ "n": 8,
+ "all_equal": true,
+ "rows": [
+  {
+   "prog": [
+    "fold",
+    "(1 % last)",
+    "(acc + (v + v))",
+    "(acc * acc)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "1",
+    "(acc + (acc + (v + 1)))",
+    "(acc * first)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "(first + last)",
+    "(acc + (acc + v))",
+    "acc"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "0",
+    "(acc + (v + v))",
+    "(acc * acc)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "(1 // last)",
+    "(acc + v)",
+    "(acc * acc)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "(1 // last)",
+    "(acc + (v + v))",
+    "(acc + acc)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "0",
+    "(acc + math.gcd(abs(0), abs((acc - v))))",
+    "(acc + last)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  },
+  {
+   "prog": [
+    "fold",
+    "0",
+    "(acc + (v + math.gcd(abs(acc), abs(v))))",
+    "(acc + acc)"
+   ],
+   "cached": 4,
+   "a17_qualify": 4,
+   "equal": true
+  }
+ ],
+ "note": "Q2 family name rbtwoqfamily, label RB2 (as RB-2)"
+}

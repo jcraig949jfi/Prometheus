@@ -1,6 +1,6 @@
 # Techne -- resume (the seat's entry file; base-role boot step 2)
 
-Currency: 2026-09-30, instance gandalf-4c0c7e64 (M3/GANDALF). Replaces the 2026-09-25 text, which
+Currency: 2026-09-30 (evening), instance gandalf-4c0c7e64 (M3/GANDALF). Replaces the 2026-09-25 text, which
 is in git history (`git log -- roles/Techne/resume.md`).
 
 ## 1. Read in this order, nothing else first
@@ -28,12 +28,11 @@ not wait.
 
 ## 2. Work items, in the order I would start them (each with its proof and its blocker)
 
-  0. FIRST: answer Nyx comms #1071 (question, 2026-09-30, not urgent): the R19 grade per source
-     type for PSEUDOCODE_PLUS_REFERENCE_IMPL / FAITHFUL_PORT / LATER_SAME_LINEAGE_RELEASE (19
-     records named in the message; `comms inbox Techne --all`). Precedent: the #387 ASK 2 ruling
-     quoted in nyx/atlas/migrate_v1.py. Proof: a typed ruling with evidence per record. Size S-M.
-     Related, waiting on Harmonia: grade of the 39 rollout fossils (Nyx #1074 proposes
-     DERIVED_RECOVERY_ARTIFACT and a distinct source type).
+  0. REGIME since 2026-09-30 evening: CWO-2026-09-30C governs. A seat does NOT self-promote NEXT; when
+     CURRENT finishes it writes receipts, pushes, heartbeats Aporia and goes READY (awaiting Aporia
+     dispatch). Direct operator instructions outrank that and are executed. Heartbeat Aporia on
+     adoption, launch, completion and every 90 min (format: CWO-C s14; example under
+     roles/Techne/prompts/2026-09-30_heartbeats/). Nyx #1071 was answered by ruling #1188.
   A. TECHNE-122 section II report (auto-curricula: MCC, POET, ATEP, PLR, ACCEL, JaxUED, OMNI-EPIC)
      in DONOR.md format with primary sources and pins. The two bodies it needs most are here:
      dcd-facebookresearch-2022 (09-30) and poet-enhanced-2020 / poet-original-2019. Proof: the
@@ -58,6 +57,8 @@ Done 2026-09-30: TECHNE-127 (dcd fossil), TECHNE-126 (recipe axis: NO_RECIPE), T
 (host-neutral catalog snapshot with a staleness test), TECHNE-129 (nyx_handoff filled for 10
 records; the 39 rollout records wait on a grade answer from Harmonia or Nyx), TECHNE-115
 (native Flax column consumed: 39 capsules filled), TECHNE-130 (tranche 2: no new fossil).
+Evening 2026-09-30: ruling #1071 (TECHNE-134); batch 17 -- 20 donors for Nyx (TECHNE-132; deferred
+list in the batch docstring); TECHNE-133 filed (bytecode written into a body by a consumer import).
 
 ## 3. Standing facts a new instance would otherwise re-derive
 
@@ -69,6 +70,9 @@ records; the 39 rollout records wait on a grade answer from Harmonia or Nyx), TE
     A file outside that list went red for 14 days unseen (TECHNE-128).
   - A NEW FOSSIL RECORD NOW REQUIRES A CATALOG REGEN, or test_fossil_catalog_snapshot.py is red:
     `python -m techne.fossils.catalog --no-body-check --out techne/fossils/CATALOG.json`.
+  - New batch recipe (batch 17): reader agents draft facts from clones at the pin into a committed
+    READER_DRAFTS dir; the batch script builds records from drafts + overrides; then acquire, verify
+    --all, Defender scan, `finalize_handoff --all-empty --write`, catalog regen, fossil test set.
   - A NEW FOSSIL RECORD ALSO NEEDS ITS nyx_handoff FILLED (or a CAPSULE.json), or
     test_fossil_handoff.py is red: record.skeleton writes it empty; see
     techne/fossils/batches/finalize_handoff_20260930.py handoff_of().

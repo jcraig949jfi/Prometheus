@@ -1,0 +1,320 @@
+{
+ "reexpressions_of_G1": [
+  "(acc + {H})",
+  "(acc - {H})",
+  "({H} + acc)"
+ ],
+ "panel": {
+  "G1": {
+   "schema": "(acc + {H})",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": true
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": true
+   }
+  },
+  "OFF_0": {
+   "schema": "(1 + (v - {H}))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "SHAM_0": {
+   "schema": "(v - (acc - {H}))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "SHAM_1": {
+   "schema": "({H} + v)",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  }
+ },
+ "selections": {
+  "CON0/G1_NC": {
+   "schema": "(acc + ({H} + v))",
+   "literal": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "CON0/G1": {
+   "schema": "math.gcd(abs(first), abs((acc + {H})))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON1/G1": {
+   "schema": "(v - (acc + {H}))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON1/SHAM_0": {
+   "schema": "(v - (acc - ({H} // first)))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON0/SHAM_1": {
+   "schema": "math.gcd(abs(first), abs(({H} + v)))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "CON2/SHAM_0": {
+   "schema": "(first * (v - (acc - {H})))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON2/SHAM_1": {
+   "schema": "(({H} + v) * first)",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "CON2/G1": {
+   "schema": "(first + (acc + {H}))",
+   "literal": {
+    "REFINES": true,
+    "COMPOSES": true,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON5/SHAM_0": {
+   "schema": "(0 - (v - (acc - {H})))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON4/SHAM_1": {
+   "schema": "(({H} + v) + acc)",
+   "literal": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "CON5/SHAM_1": {
+   "schema": "(({H} + v) + acc)",
+   "literal": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "CON7/G1_NC": {
+   "schema": "(acc + ({H} + v))",
+   "literal": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "CON6/SHAM_0": {
+   "schema": "(first - (v - (acc - {H})))",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON7/G1": {
+   "schema": "((acc + {H}) * v)",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "CON7/SHAM_1": {
+   "schema": "(({H} + v) * v)",
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  }
+ },
+ "adversarial": {
+  "(acc - (0 - {H}))": {
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "(v - (acc - {H}))": {
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  },
+  "(acc - ({H} - v))": {
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "(acc - ({H} * first))": {
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": true,
+    "COMPOSES": false,
+    "EQUAL": false
+   }
+  },
+  "((acc - {H}) + v)": {
+   "literal": {
+    "REFINES": false,
+    "COMPOSES": false,
+    "EQUAL": false
+   },
+   "closed": {
+    "REFINES": false,
+    "COMPOSES": true,
+    "EQUAL": false
+   }
+  }
+ }
+}
