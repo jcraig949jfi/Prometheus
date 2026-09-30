@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T11:09:50Z",
-  "state": "WORKING",
-  "state_reason": "CWO ANANKE CURRENT: T-INS-20 running as worker W-Y under plan frozen at fc8bfa171 (readout Kp[7] swap, 4781b0a1; cap 3 core-h).",
+  "updated_at_utc": "2026-09-30T11:28:18Z",
+  "state": "ACTIVE",
+  "state_reason": "E-ANANKE-W-Y (T-INS-20) complete and deposited: readout Kp[7] not a carrier (census). Worker deviations and plan-rule defects recorded. Nothing running.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -99,9 +99,8 @@
       "id": "E-ANANKE-W-Y",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-20",
-      "status": "RUNNING",
-      "plan": "roles/Ananke/research/plans/T-INS-20_PLAN.md @ fc8bfa171",
-      "compute_cap_core_h": 3
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-Y/REPORT.md"
     },
     {
       "id": "E-ANANKE-W-X",
@@ -191,16 +190,15 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [
-    "E-ANANKE-W-Y (delegated worker, CPU)"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "commit the T-INS-20 plan, then launch its worker",
+    "commit the T-INS-19 plan, then launch its worker",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/workers/W-Y/REPORT.md",
     "roles/Ananke/research/workers/W-X/REPORT.md",
     "roles/Ananke/research/workers/W-W/REPORT.md",
     "roles/Ananke/research/workers/W-V/REPORT.md",
@@ -224,16 +222,15 @@
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1031)",
   "queue": {
-    "CURRENT": "T-INS-20 (E-ANANKE-W-Y) per research/plans/T-INS-20_PLAN.md @ fc8bfa171 -- RUNNING",
-    "NEXT": "T-INS-19: per-sensor census on sensor-addressed traffic, 4781b0a1 o2-o9",
+    "CURRENT": "T-INS-19: per-sensor census on sensor-addressed traffic, 4781b0a1 o2-o9 (plan to be committed first)",
+    "NEXT": "T-INS-21: readout inbox Acc_sum at o14-o15 (4781b0a1), rule with a chance anchor",
     "RESERVE": [
       "T-INS-17 causal-emission carrier",
-      "re-audit W-O CHANCE verdicts with swap_rel (group-level counts)",
-      "heavier-skew null FC check for swap_rel (only if a real specimen hits that regime)"
+      "re-audit W-O CHANCE verdicts with swap_rel (group-level counts)"
     ],
     "BLOCKED": [],
-    "RESOURCE_STATUS": "rolling 24 h CPU ~28.5 core-h of 48",
-    "LAST_RECEIPT": "E-ANANKE-W-X report + promotion of prometheus/ananke/swap_rel.py",
-    "LAST_STATE_UPDATE": "2026-09-30T11:09:50Z"
+    "RESOURCE_STATUS": "rolling 24 h CPU ~29 core-h of 48",
+    "LAST_RECEIPT": "E-ANANKE-W-Y report, workers/W-Y/REPORT.md",
+    "LAST_STATE_UPDATE": "2026-09-30T11:28:18Z"
   }
 }
