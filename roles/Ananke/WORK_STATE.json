@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T12:51:28Z",
-  "state": "ACTIVE",
-  "state_reason": "E-ANANKE-W-Z (T-SWAP-AUDIT3) complete: Pa and Pb held, consistency 92.7% below the frozen 95% bar (seed sensitivity at intermediate z). Lease lse-d4c8d5dcc30b released (~7 core-h). Nothing running.",
+  "updated_at_utc": "2026-09-30T13:23:10Z",
+  "state": "READY",
+  "state_reason": "CWO-2026-09-30B: in-flight set complete (T-SWAP-AUDIT3). READY; heartbeat + completion sent to Aporia (comms #1100). No self-promotion; awaiting Aporia.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -200,8 +200,7 @@
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "no-compute synthesis update",
-    "s8 seat loop continues"
+    "await Aporia assignment; seat loop continues (MWO/comms/Fabric checks only)"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
@@ -228,17 +227,18 @@
   ],
   "migration_report": "roles/Ananke/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Ananke/probes/FP-001_RESULT.json",
-  "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1031)",
+  "work_order": "MWO-0004 + CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md; supersedes CWO-2026-09-30 auto-promotion)",
   "queue": {
-    "CURRENT": "No-compute: update SYNTHESIS (2026-09-30) with REL4/REL5 promotion, W-Y, AUDIT3 and the seed-sensitivity finding; design (not run) a replicate-seed AUDIT4 for intermediate-z groups",
-    "NEXT": "T-SWAP-AUDIT4 (replicate seeds on the ~10 seed-sensitive groups + intermediate-z groups), plan frozen first, only if the synthesis judges it informative",
+    "CURRENT": "none (READY)",
+    "NEXT": "awaiting Aporia -- no self-promotion (CWO-2026-09-30B)",
     "RESERVE": [
-      "T-INS-17 causal-emission carrier",
-      "T-INS-19/T-INS-21 PARKED (single-cell chain)"
+      "replicate-seed AUDIT4 design (not started)",
+      "no-compute synthesis update (not started)",
+      "T-INS-17; T-INS-19/21 PARKED"
     ],
     "BLOCKED": [],
-    "RESOURCE_STATUS": "rolling 24 h CPU ~36 core-h of 48",
-    "LAST_RECEIPT": "E-ANANKE-W-Z report, workers/W-Z/REPORT.md",
-    "LAST_STATE_UPDATE": "2026-09-30T12:51:28Z"
+    "RESOURCE_STATUS": "no leases, no workers; rolling 24 h CPU ~36 core-h of 48",
+    "LAST_RECEIPT": "E-ANANKE-W-Z report, workers/W-Z/REPORT.md; completion message comms #1100",
+    "LAST_STATE_UPDATE": "2026-09-30T13:23:10Z"
   }
 }
