@@ -5,5 +5,5 @@ superseded: the SI stewardship was not revived (MWO-0001 s10) and CWO 2026-09-30
 recreating that coordination layer.
 
 - [x] CWO CURRENT: adopt MWO-0004 + CWO, repair WORK_STATE (2026-09-30, this commit)
-- [ ] CWO NEXT: bounded observability audit -> roles/Cyclops/audits/2026-09-30_observability.md, mismatches to Aporia
-- [ ] Then PARK (comms status parked), unless Aporia assigns a bounded task
+- [x] CWO NEXT: bounded observability audit -> roles/Cyclops/audits/2026-09-30_observability.md, mismatches to Aporia
+- [x] Then PARK (comms status parked), unless Aporia assigns a bounded task
