@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T10:20:00Z",
+  "updated_at_utc": "2026-09-30T11:05:00Z",
   "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -37,8 +37,8 @@
     }
   ],
   "next_actions": [
-    "CURRENT: audit Tyche v0 report on arrival (Monitor armed)",
-    "meanwhile NEXT"
+    "CURRENT: audit Tyche v0 report on arrival",
+    "add STANDING_RULES F6 (freeze is a separate earlier commit) and F7 (post-exposure verdict-route changes listed; pre-exposure verdict shown first)"
   ],
   "overtaken": [
     {
@@ -54,9 +54,11 @@
       "why": "CANCELED by MWO-0002 s2a; marked done in comms citing it"
     }
   ],
-  "operator_decisions_required": [],
+  "operator_decisions_required": [
+    "CWO s4 escalation: Bellerophon/Archaeon E-003 BEE leg -- VALIDATED rests on post-exposure amendment C4.2 (undisclosed in s1a) that removed frozen route 'P2 holds -> ALTERED'; under pre-exposure rules the committed rows give ALTERED. Operator to rule on the verdict of record (EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md s H)"
+  ],
   "latest_reports": [
-    "roles/Harmonia/qualification/primitives/audit_primitives.py",
+    "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md",
     "roles/Harmonia/audits/RULER_QUALITY_2026-09-30.md",
     "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30.md"
   ],
@@ -78,5 +80,5 @@
     }
   ],
   "resource_status": "local CPU only; no leases; no spend",
-  "last_receipt": "roles/Harmonia/STANDING_RULES.md section F (F1-F5 ruler rules, executable via AP-1.0.0)"
+  "last_receipt": "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE2.md (Bellerophon E-003 VALIDATED not supported: BLOCKING, pre-exposure verdict ALTERED; Ananke W-O/W-Q MAJOR; Ensorain T25 SUPPORTED)"
 }
