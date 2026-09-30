@@ -1,0 +1,4055 @@
+{
+ "summary": {
+  "world": "G4",
+  "n": 400,
+  "v2": {
+   "NEW": 41,
+   "rate": 0.1025,
+   "wilson95": [
+    0.0765,
+    0.1361
+   ]
+  },
+  "v21": {
+   "NEW": 42,
+   "rate": 0.105,
+   "wilson95": [
+    0.0786,
+    0.1389
+   ]
+  },
+  "abl_rel_only": {
+   "NEW": 41,
+   "rate": 0.1025,
+   "wilson95": [
+    0.0765,
+    0.1361
+   ]
+  },
+  "abl_traj_only": {
+   "NEW": 42,
+   "rate": 0.105,
+   "wilson95": [
+    0.0786,
+    0.1389
+   ]
+  },
+  "abl_same_witness_only": {
+   "NEW": 42,
+   "rate": 0.105,
+   "wilson95": [
+    0.0786,
+    0.1389
+   ]
+  },
+  "flips_v2_to_v21": [
+   {
+    "schema": "(acc * ({H} - v))",
+    "v2": false,
+    "v21": true
+   }
+  ]
+ },
+ "rows": [
+  {
+   "schema": "((0 % {H}) * v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((0 // {H}) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((1 % first) * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((1 + last) * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((acc + last) * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((acc + v) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first + first) * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first + last) * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first + {H}) + first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first - {H}) + v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first // {H}) * v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((first // {H}) + v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((last % {H}) * v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((last * v) * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((last + {H}) + v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((last // v) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((v // v) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((v // {H}) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "((v // {H}) + first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} + acc) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "(({H} + first) + first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} + last) + first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} + v) + first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} // 0) + first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} // acc) * v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} // first) * first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(({H} // first) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 % ({H} % acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 % pow(1, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 % {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 * (last // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 * ({H} // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 * {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 - ({H} * first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 - ({H} // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 - math.gcd(abs({H}), abs(1)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // (acc + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "(0 // (last % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // ({H} + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // math.gcd(abs(first), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // math.gcd(abs({H}), abs(last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // pow(v, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // pow({H}, acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(0 // {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % (1 % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % (1 + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % (acc * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % ({H} % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % ({H} + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % ({H} - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % pow({H}, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 % {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + (v // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + ({H} // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + math.gcd(abs({H}), abs(1)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 - ({H} % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 - ({H} + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // (0 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // (1 + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // (acc % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // (v % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // (v + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // ({H} // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // ({H} // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(1 // {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % (first * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % (first - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % (last + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % ({H} + last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % math.gcd(abs(1), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % math.gcd(abs({H}), abs(last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % pow(1, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc % {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 38,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * (first * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * ({H} - v))",
+   "v2": false,
+   "v21": true,
+   "abl_rel_only": false,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * ({H} // v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 3,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * math.gcd(abs(acc), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * pow({H}, v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 4,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc * {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 43,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + (1 % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + ({H} % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + ({H} * last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + ({H} // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 3,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + math.gcd(abs(acc), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - (v % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 3,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - (v // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 4,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - ({H} * first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - ({H} + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - ({H} - acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc - {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // (0 % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // (1 + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // ({H} % acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // ({H} // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // pow(first, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // pow({H}, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(acc // {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 39,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % (1 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % (first // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % (v % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % ({H} // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % pow({H}, first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first % {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * ({H} % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * ({H} * last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * ({H} * v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * ({H} - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * math.gcd(abs(first), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first * {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + (0 - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + (first - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + math.gcd(abs(0), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + pow(last, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - (1 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - (acc * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - (acc - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "(first - (last % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - math.gcd(abs({H}), abs(acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // ({H} % acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // ({H} - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // ({H} // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // pow({H}, first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(first // {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % (acc % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % (first + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % (last // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last % {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last * ({H} % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last * ({H} * v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last * {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last + (1 - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last + {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - (first - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - ({H} % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - ({H} - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - math.gcd(abs(0), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - math.gcd(abs({H}), abs(first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - pow(last, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // (1 - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // (1 // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // (acc // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // (first * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // (v - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // ({H} % v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // ({H} + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // ({H} - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // math.gcd(abs({H}), abs(v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // pow(acc, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // pow({H}, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(last // {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(0), abs(last)) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(0), abs({H})) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(1), abs(1)) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(acc), abs({H})) * last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(acc), abs({H})) + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs(last), abs({H})) * v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs({H}), abs(last)) + last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(math.gcd(abs({H}), abs(v)) + last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(pow(first, v) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(pow(v, v) + {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(pow({H}, v) + v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % (acc // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 4,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % (last % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % (last * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % ({H} % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % ({H} - last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % ({H} // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % math.gcd(abs(0), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % math.gcd(abs({H}), abs(first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v % {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - ({H} + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - ({H} // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - ({H} // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - pow({H}, first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v - {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 49,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // (acc % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 3,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} % v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} + 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // ({H} // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // math.gcd(abs({H}), abs(last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "(v // {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 46,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (1 + 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (1 + acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (1 - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (acc - v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (first % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (first - last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (first - v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (first // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (last - acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % (v // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % 0)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % acc)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % math.gcd(abs(0), abs(acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % math.gcd(abs(0), abs(last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} % math.gcd(abs(first), abs(v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * (last % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * (v // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * last)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * pow(1, v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} * v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 48,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (0 // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (0 // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (1 - last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (1 // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (acc * acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (acc + acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (acc + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + (v - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + 1)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + acc)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 42,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + first)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + last)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + pow(last, acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} + v)",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 50,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (0 - 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (0 - last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (0 // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 % v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (1 // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (acc // v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (last % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (last - 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - (v // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - 1)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - pow(first, acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} - pow(first, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (0 % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (0 % v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (0 // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (0 // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (0 // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (1 % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (1 // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (acc % acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (acc % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (acc + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (acc - v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (first * first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (first * v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (last % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (last - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // (last // first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // 0)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // acc)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // math.gcd(abs(0), abs(first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // math.gcd(abs(1), abs(1)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // pow(1, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // pow(v, v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "({H} // v)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((1 + v)), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((1 - {H})), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((acc % first)), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((acc // {H})), abs(first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((first % 0)), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((first // {H})), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((last - v)), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((last // {H})), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs((v // {H})), abs(first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} * last)), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} + last)), abs(first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(({H} // 0)), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs((last + {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs(math.gcd(abs(0), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs(math.gcd(abs({H}), abs(acc))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs(pow({H}, last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(0), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs((1 + {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs(({H} % v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs(math.gcd(abs(0), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs(math.gcd(abs(acc), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(1), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs((first + {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs((first - {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(({H} % acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(({H} // 0)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(math.gcd(abs(0), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(math.gcd(abs(1), abs({H}))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(math.gcd(abs({H}), abs(v))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs(pow(last, {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(({H} % acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(({H} * last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(({H} - first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(({H} - v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(math.gcd(abs({H}), abs(last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(pow(0, {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs(pow({H}, first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(first), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(last), abs((last % {H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(last), abs(({H} % first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(last), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs(0), abs(last))), abs({H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs(0), abs({H}))), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs(1), abs({H}))), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs(acc), abs({H}))), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs({H}), abs(last))), abs(last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(math.gcd(abs({H}), abs(v))), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(pow(v, {H})), abs(v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs(v), abs({H}))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 49,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((0 - first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((1 % last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((acc * first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((acc - 1)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((first // acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((last * last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs((last * v)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(acc))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(first))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(last))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 10,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(math.gcd(abs(0), abs(last))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(math.gcd(abs(acc), abs(first))))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(pow(0, acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(pow(v, acc)))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "math.gcd(abs({H}), abs(v))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 49,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, (acc * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, (v + {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, math.gcd(abs({H}), abs(first)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, math.gcd(abs({H}), abs(last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(0, {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, (0 - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, (acc - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "pow(1, ({H} - 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, ({H} - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, ({H} // last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, math.gcd(abs(0), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, pow({H}, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(1, {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 7,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, (first // {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, ({H} % 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, ({H} % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, ({H} - acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "pow(acc, math.gcd(abs({H}), abs(last)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(acc, {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 41,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, (acc * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, ({H} % first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, ({H} + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, ({H} - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, ({H} // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, pow(1, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, pow(acc, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(first, {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, (1 - {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, (first * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, ({H} - acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": true
+  },
+  {
+   "schema": "pow(last, ({H} // 0))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(last, {H})",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 11,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, (1 % {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, (first * {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, math.gcd(abs(1), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, math.gcd(abs(first), abs({H})))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, math.gcd(abs({H}), abs(1)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, math.gcd(abs({H}), abs(acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 5,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, pow(last, {H}))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, pow({H}, acc))",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, pow({H}, last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow(v, {H})",
+   "v2": true,
+   "v21": true,
+   "abl_rel_only": true,
+   "abl_traj_only": true,
+   "abl_same_witness_only": true,
+   "accumulating": 47,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (0 % acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (0 - last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (0 // acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (1 % v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (1 + 1))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (1 + acc))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (1 + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (acc + first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (acc // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 6,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first % v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first * v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first + last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (first // v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (last + v))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (v % last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (v - first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, (v - last))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, acc)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, first)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, last)",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 0,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, math.gcd(abs(0), abs(acc)))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  },
+  {
+   "schema": "pow({H}, pow(acc, first))",
+   "v2": false,
+   "v21": false,
+   "abl_rel_only": false,
+   "abl_traj_only": false,
+   "abl_same_witness_only": false,
+   "accumulating": 1,
+   "COMPOSES_v21": false
+  }
+ ]
+}

@@ -1,0 +1,711 @@
+{
+ "panel": {
+  "G1": "(acc + {H})",
+  "OFF_0": "(1 + (v - {H}))",
+  "SHAM_0": "(v - (acc - {H}))",
+  "SHAM_1": "({H} + v)"
+ },
+ "per_supply": {
+  "CON": {
+   "G1_STEPPING_STONE": "NO",
+   "GENERIC_STEPPING_STONE": 0,
+   "H1": {
+    "YES": false,
+    "n": 8,
+    "selected": 4,
+    "sign_p_vs": {
+     "G1_NC": 0.0625,
+     "OFF_0": 0.0625,
+     "P": 0.0625
+    }
+   },
+   "ladder_counts": {
+    "G1": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 4,
+     "NOVELTY": 2,
+     "REACHABLE": 8,
+     "REUSABLE": 0,
+     "SELECTED": 4,
+     "SOLVED": 0
+    },
+    "G1_NC": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 2,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 2
+    },
+    "OFF_0": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 3,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "P": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "SHAM_0": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 4,
+     "NOVELTY": 1,
+     "REACHABLE": 8,
+     "REUSABLE": 0,
+     "SELECTED": 3,
+     "SOLVED": 0
+    },
+    "SHAM_1": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 5,
+     "NOVELTY": 3,
+     "REACHABLE": 8,
+     "REUSABLE": 0,
+     "SELECTED": 5,
+     "SOLVED": 1
+    }
+   },
+   "ladders": {
+    "G1": {
+     "CON0": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": true,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON1": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": true,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON2": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON3": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON4": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON5": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON6": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON7": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     }
+    },
+    "G1_NC": {
+     "CON0": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": true,
+      "capability_families": [
+       "qiaa"
+      ],
+      "reuse_families": [
+       "qiaa"
+      ]
+     },
+     "CON1": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON2": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON3": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON4": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON5": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON6": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON7": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": true,
+      "capability_families": [
+       "qbaa"
+      ],
+      "reuse_families": [
+       "qbaa"
+      ]
+     }
+    },
+    "OFF_0": {
+     "CON0": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON1": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON2": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON3": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON4": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON5": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON6": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON7": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     }
+    },
+    "P": {
+     "CON0": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON1": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON2": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON3": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON4": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON5": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON6": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON7": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": false,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     }
+    },
+    "SHAM_0": {
+     "CON0": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON1": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": true,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON2": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON3": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON4": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON5": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON6": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON7": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     }
+    },
+    "SHAM_1": {
+     "CON0": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": true,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": true,
+      "capability_families": [
+       "qaea"
+      ],
+      "reuse_families": [
+       "qaea"
+      ]
+     },
+     "CON1": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON2": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": true,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON3": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON4": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON5": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": [
+       "qgfa"
+      ]
+     },
+     "CON6": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": false,
+      "NOVELTY": false,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": false,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     },
+     "CON7": {
+      "CAPABILITY_EXPANDING": false,
+      "COMPOUNDING": true,
+      "NOVELTY": true,
+      "REACHABLE": true,
+      "REUSABLE": false,
+      "SELECTED": true,
+      "SOLVED": false,
+      "capability_families": [],
+      "reuse_families": []
+     }
+    }
+   },
+   "n": {
+    "G1": 8,
+    "G1_NC": 8,
+    "OFF_0": 8,
+    "P": 8,
+    "SHAM_0": 8,
+    "SHAM_1": 8
+   }
+  },
+  "NAT": {
+   "ladder_counts": {
+    "G1": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "G1_NC": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "OFF_0": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "P": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "SHAM_0": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    },
+    "SHAM_1": {
+     "CAPABILITY_EXPANDING": 0,
+     "COMPOUNDING": 0,
+     "NOVELTY": 0,
+     "REACHABLE": 0,
+     "REUSABLE": 0,
+     "SELECTED": 0,
+     "SOLVED": 0
+    }
+   },
+   "ladders": {},
+   "n": {
+    "G1": 0,
+    "G1_NC": 0,
+    "OFF_0": 0,
+    "P": 0,
+    "SHAM_0": 0,
+    "SHAM_1": 0
+   }
+  }
+ }
+}

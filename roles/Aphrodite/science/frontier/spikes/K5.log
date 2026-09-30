@@ -1,0 +1,43 @@
+pool 86 nonG1 31 G1 55 gcd 9 nonG1 by op Counter({'add': 14, 'gcd': 9, 'mod': 4, 'powr': 2, 'sub': 1, 'fdiv': 1})
+K5-GCD_RICH_0 G1 classes 2 cands [('(acc + {H})', False)] sel MEMORISE [] NEW False
+K5-GCD_RICH_0 P classes 1 cands [] sel MEMORISE [] NEW False
+K5-NONG1_MIX_0 G1 classes 4 cands [('(acc + ({H} * v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-NONG1_MIX_0 P classes 4 cands [('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-G1_PLUS_0 G1 classes 4 cands [('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-G1_PLUS_0 P classes 2 cands [('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel SCHEMA_0 ['(acc + {H})'] NEW False
+K5-GCD_RICH_1 G1 classes 2 cands [] sel MEMORISE [] NEW False
+K5-GCD_RICH_1 P classes 2 cands [] sel MEMORISE [] NEW False
+K5-NONG1_MIX_1 G1 classes 4 cands [('(acc + ({H} - v))', False), ('(acc + {H})', False)] sel INHERITED [] NEW False
+K5-NONG1_MIX_1 P classes 3 cands [] sel MEMORISE [] NEW False
+K5-G1_PLUS_1 G1 classes 5 cands [('(acc + (v % {H}))', False), ('(acc + ({H} + v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_2 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-G1_PLUS_1 P classes 4 cands [('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-GCD_RICH_2 G1 classes 4 cands [('(acc + ({H} * v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_1 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-GCD_RICH_2 P classes 3 cands [('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-NONG1_MIX_2 G1 classes 5 cands [('(acc + (v % {H}))', False), ('(acc + (v - {H}))', False), ('(acc + ({H} * v))', False), ('(acc + ({H} + v))', False), ('(acc + ({H} - v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False)] sel SCHEMA_5 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-NONG1_MIX_2 P classes 4 cands [('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-G1_PLUS_2 G1 classes 5 cands [('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel SCHEMA_0 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-G1_PLUS_2 P classes 3 cands [('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel SCHEMA_1 ['(acc - {H})'] NEW True
+K5-GCD_RICH_3 G1 classes 3 cands [('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-GCD_RICH_3 P classes 3 cands [('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-NONG1_MIX_3 G1 classes 4 cands [('(acc + ({H} - v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_0 ['(acc + ({H} - v))'] NEW False
+K5-NONG1_MIX_3 P classes 2 cands [('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_0 ['(acc + {H})'] NEW False
+K5-G1_PLUS_3 G1 classes 3 cands [('(acc + (v % {H}))', False), ('(acc + ({H} + v))', False), ('(acc + {H})', False)] sel MEMORISE [] NEW False
+K5-G1_PLUS_3 P classes 1 cands [] sel MEMORISE [] NEW False
+K5-GCD_RICH_4 G1 classes 4 cands [('(acc + ({H} * v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_1 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-GCD_RICH_4 P classes 3 cands [('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-NONG1_MIX_4 G1 classes 5 cands [('(acc + (v % {H}))', False), ('(acc + (v - {H}))', False), ('(acc + ({H} + v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_2 ['(acc + ({H} + v))'] NEW False
+K5-NONG1_MIX_4 P classes 4 cands [('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_0 ['(acc + {H})'] NEW False
+K5-G1_PLUS_4 G1 classes 6 cands [('(acc + ({H} * v))', False), ('(acc + ({H} - v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_2 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-G1_PLUS_4 P classes 2 cands [('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-GCD_RICH_5 G1 classes 3 cands [('(acc + ({H} * v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('({H} + v)', True)] sel SCHEMA_1 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-GCD_RICH_5 P classes 3 cands [('(acc + {H})', False), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-NONG1_MIX_5 G1 classes 5 cands [('(acc + ({H} - v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel SCHEMA_1 ['(acc + math.gcd(abs({H}), abs(v)))'] NEW False
+K5-NONG1_MIX_5 P classes 3 cands [('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel MEMORISE [] NEW False
+K5-G1_PLUS_5 G1 classes 5 cands [('(acc + (v % {H}))', False), ('(acc + (v - {H}))', False), ('(acc + ({H} + v))', False), ('(acc + ({H} - v))', False), ('(acc + math.gcd(abs({H}), abs(v)))', False), ('(acc + {H})', False)] sel SCHEMA_3 ['(acc + ({H} - v))'] NEW False
+K5-G1_PLUS_5 P classes 3 cands [('(acc + {H})', False), ('(acc - {H})', True), ('({H} + v)', True)] sel SCHEMA_1 ['(acc - {H})'] NEW True
+G1_PLUS/G1 {'n': 6, 'any_new_candidate': 5, 'NEW_selected': 0, 'classes': 28}
+G1_PLUS/P {'n': 6, 'any_new_candidate': 5, 'NEW_selected': 2, 'classes': 15}
+GCD_RICH/G1 {'n': 6, 'any_new_candidate': 4, 'NEW_selected': 0, 'classes': 18}
+GCD_RICH/P {'n': 6, 'any_new_candidate': 4, 'NEW_selected': 0, 'classes': 15}
+NONG1_MIX/G1 {'n': 6, 'any_new_candidate': 5, 'NEW_selected': 0, 'classes': 27}
+NONG1_MIX/P {'n': 6, 'any_new_candidate': 5, 'NEW_selected': 0, 'classes': 20}

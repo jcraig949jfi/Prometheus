@@ -1,0 +1,932 @@
+{
+ "G1_RECURRENT_STEPPING_STONE": "UNTESTABLE",
+ "GENERIC_RECURRENT_STEPPING_STONE": 0,
+ "H1_G1": {
+  "YES": false,
+  "sign_p_REUSED_SAME": {
+   "G1_NC": 0.125,
+   "OFF_0": 0.125,
+   "P": 0.125
+  }
+ },
+ "H2_SHAMS": {
+  "SHAM_0": {
+   "YES": false,
+   "sign_p_REUSED_SAME": {
+    "OFF_0": 0.125,
+    "P": 0.125
+   }
+  },
+  "SHAM_1": {
+   "YES": false,
+   "sign_p_REUSED_SAME": {
+    "OFF_0": 0.125,
+    "P": 0.125
+   }
+  },
+  "SHAM_2": {
+   "YES": false,
+   "sign_p_REUSED_SAME": {
+    "OFF_0": 0.0625,
+    "P": 0.0625
+   }
+  }
+ },
+ "counts": {
+  "G1": {
+   "CAPABILITY_SAME": 3,
+   "LOSS_CELLS": 1,
+   "OFFPATH_GAIN_CELLS": 0,
+   "REUSED_OTHER": 1,
+   "REUSED_SAME": 3,
+   "SELECTED": 4,
+   "SELECTED_ANY": 4,
+   "SOLVED_SAME": 4,
+   "n": 5
+  },
+  "G1_NC": {
+   "CAPABILITY_SAME": 0,
+   "LOSS_CELLS": 0,
+   "OFFPATH_GAIN_CELLS": 0,
+   "REUSED_OTHER": 0,
+   "REUSED_SAME": 0,
+   "SELECTED": 0,
+   "SELECTED_ANY": 0,
+   "SOLVED_SAME": 0,
+   "n": 5
+  },
+  "OFF_0": {
+   "CAPABILITY_SAME": 0,
+   "LOSS_CELLS": 0,
+   "OFFPATH_GAIN_CELLS": 8,
+   "REUSED_OTHER": 0,
+   "REUSED_SAME": 0,
+   "SELECTED": 1,
+   "SELECTED_ANY": 2,
+   "SOLVED_SAME": 0,
+   "n": 5
+  },
+  "P": {
+   "CAPABILITY_SAME": 0,
+   "LOSS_CELLS": 0,
+   "OFFPATH_GAIN_CELLS": 8,
+   "REUSED_OTHER": 0,
+   "REUSED_SAME": 0,
+   "SELECTED": 0,
+   "SELECTED_ANY": 1,
+   "SOLVED_SAME": 0,
+   "n": 5
+  },
+  "SHAM_0": {
+   "CAPABILITY_SAME": 3,
+   "LOSS_CELLS": 1,
+   "OFFPATH_GAIN_CELLS": 0,
+   "REUSED_OTHER": 0,
+   "REUSED_SAME": 3,
+   "SELECTED": 5,
+   "SELECTED_ANY": 5,
+   "SOLVED_SAME": 4,
+   "n": 5
+  },
+  "SHAM_1": {
+   "CAPABILITY_SAME": 2,
+   "LOSS_CELLS": 1,
+   "OFFPATH_GAIN_CELLS": 8,
+   "REUSED_OTHER": 0,
+   "REUSED_SAME": 3,
+   "SELECTED": 4,
+   "SELECTED_ANY": 5,
+   "SOLVED_SAME": 4,
+   "n": 5
+  },
+  "SHAM_2": {
+   "CAPABILITY_SAME": 4,
+   "LOSS_CELLS": 1,
+   "OFFPATH_GAIN_CELLS": 8,
+   "REUSED_OTHER": 0,
+   "REUSED_SAME": 4,
+   "SELECTED": 4,
+   "SELECTED_ANY": 5,
+   "SOLVED_SAME": 4,
+   "n": 5
+  }
+ },
+ "ladders": {
+  "G1": {
+   "CON1": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "deca",
+       "dfca"
+      ],
+      "solved_families": [
+       "deca",
+       "dfca"
+      ]
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dmka",
+       "dnka"
+      ],
+      "solved_families": [
+       "dmka",
+       "dnka"
+      ]
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 1,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": true,
+    "REUSED_SAME": false,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [
+       "duma",
+       "dvma"
+      ],
+      "solved_families": [
+       "duma",
+       "dvma"
+      ]
+     },
+     "SAME": {
+      "capability_families": [
+       "doma"
+      ],
+      "solved_families": [
+       "doma"
+      ]
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dqoa",
+       "dsoa"
+      ],
+      "solved_families": [
+       "dqoa",
+       "dsoa"
+      ]
+     }
+    }
+   }
+  },
+  "G1_NC": {
+   "CON1": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   }
+  },
+  "OFF_0": {
+   "CON1": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 8,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   }
+  },
+  "P": {
+   "CON1": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 8,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": false,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   }
+  },
+  "SHAM_0": {
+   "CON1": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dqca",
+       "drca"
+      ],
+      "solved_families": [
+       "dqca",
+       "drca"
+      ]
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "duea",
+       "dvea"
+      ],
+      "solved_families": [
+       "duea",
+       "dvea"
+      ]
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dwka"
+      ],
+      "solved_families": [
+       "dwka"
+      ]
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 1,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "ddpa",
+       "depa"
+      ],
+      "solved_families": [
+       "ddpa",
+       "depa"
+      ]
+     }
+    }
+   }
+  },
+  "SHAM_1": {
+   "CON1": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dcda"
+      ],
+      "solved_families": [
+       "dcda"
+      ]
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 8,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dkla",
+       "dlla"
+      ],
+      "solved_families": [
+       "dkla",
+       "dlla"
+      ]
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 1,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dmna"
+      ],
+      "solved_families": [
+       "dmna",
+       "dnna"
+      ]
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dopa",
+       "dppa"
+      ],
+      "solved_families": [
+       "dopa",
+       "dppa"
+      ]
+     }
+    }
+   }
+  },
+  "SHAM_2": {
+   "CON1": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dqda",
+       "dtda"
+      ],
+      "solved_families": [
+       "dqda",
+       "dtda"
+      ]
+     }
+    }
+   },
+   "CON2": {
+    "CAPABILITY_SAME": false,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 8,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": false,
+    "SELECTED": false,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": false,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [],
+      "solved_families": []
+     }
+    }
+   },
+   "CON5": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dula",
+       "dvla"
+      ],
+      "solved_families": [
+       "dula",
+       "dvla"
+      ]
+     }
+    }
+   },
+   "CON6": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 1,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dyna",
+       "dzna"
+      ],
+      "solved_families": [
+       "dyna",
+       "dzna"
+      ]
+     }
+    }
+   },
+   "CON7": {
+    "CAPABILITY_SAME": true,
+    "LOSS_CELLS": 0,
+    "OFFPATH_GAIN_CELLS": 0,
+    "REUSED_OTHER": false,
+    "REUSED_SAME": true,
+    "SELECTED": true,
+    "SELECTED_ANY": true,
+    "SOLVED_SAME": true,
+    "detail": {
+     "OTHER": {
+      "capability_families": [],
+      "solved_families": []
+     },
+     "SAME": {
+      "capability_families": [
+       "dypa",
+       "dzpa"
+      ],
+      "solved_families": [
+       "dypa",
+       "dzpa"
+      ]
+     }
+    }
+   }
+  }
+ },
+ "panel": {
+  "G1": "(acc + {H})",
+  "OFF_0": "math.gcd(abs((acc // {H})), abs(first))",
+  "SHAM_0": "({H} + v)",
+  "SHAM_1": "({H} * v)",
+  "SHAM_2": "math.gcd(abs(acc), abs({H}))"
+ }
+}

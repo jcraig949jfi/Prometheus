@@ -1,0 +1,2169 @@
+{
+ "per_supply": {
+  "AG2:0": {
+   "G1": {
+    "share": 0.167,
+    "max_one": 11,
+    "top": [
+     [
+      "math.gcd(abs(first), abs((acc + {H})))",
+      11
+     ],
+     [
+      "math.gcd(abs((acc + {H})), abs(first))",
+      11
+     ]
+    ],
+    "P_class": 0.406,
+    "P_specific": 0.284
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.167,
+    "max_one": 11,
+    "top": [
+     [
+      "math.gcd(abs(({H} + v)), abs(first))",
+      11
+     ],
+     [
+      "math.gcd(abs(first), abs(({H} + v)))",
+      11
+     ]
+    ],
+    "P_class": 0.406,
+    "P_specific": 0.284
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG2:1": {
+   "G1": {
+    "share": 0.5,
+    "max_one": 6,
+    "top": [
+     [
+      "((acc + {H}) + 1)",
+      6
+     ],
+     [
+      "(1 + (acc + {H}))",
+      6
+     ]
+    ],
+    "P_class": 0.969,
+    "P_specific": 0.363
+   },
+   "SHAM_0": {
+    "share": 0.167,
+    "max_one": 15,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      15
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      15
+     ]
+    ],
+    "P_class": 0.39,
+    "P_specific": 0.357
+   },
+   "SHAM_1": {
+    "share": 0.458,
+    "max_one": 6,
+    "top": [
+     [
+      "(({H} + v) + 1)",
+      6
+     ],
+     [
+      "(1 + ({H} + v))",
+      6
+     ]
+    ],
+    "P_class": 0.95,
+    "P_specific": 0.323
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG2:2": {
+   "G1": {
+    "share": 0.177,
+    "max_one": 17,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      17
+     ],
+     [
+      "((acc + {H}) * v)",
+      17
+     ]
+    ],
+    "P_class": 0.44,
+    "P_specific": 0.44
+   },
+   "SHAM_0": {
+    "share": 0.188,
+    "max_one": 17,
+    "top": [
+     [
+      "((v - (acc - {H})) * acc)",
+      17
+     ],
+     [
+      "(acc * (v - (acc - {H})))",
+      17
+     ]
+    ],
+    "P_class": 0.469,
+    "P_specific": 0.44
+   },
+   "SHAM_1": {
+    "share": 0.177,
+    "max_one": 17,
+    "top": [
+     [
+      "(({H} + v) * acc)",
+      17
+     ],
+     [
+      "(acc * ({H} + v))",
+      17
+     ]
+    ],
+    "P_class": 0.44,
+    "P_specific": 0.44
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG2W:0": {
+   "G1": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      1
+     ],
+     [
+      "((acc + {H}) * v)",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_0": {
+    "share": 0.021,
+    "max_one": 1,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      1
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      1
+     ]
+    ],
+    "P_class": 0.007,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(({H} + v) * acc)",
+      1
+     ],
+     [
+      "(acc * ({H} + v))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG2W:1": {
+   "G1": {
+    "share": 0.177,
+    "max_one": 17,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      17
+     ]
+    ],
+    "P_class": 0.448,
+    "P_specific": 0.448
+   },
+   "SHAM_0": {
+    "share": 0.677,
+    "max_one": 8,
+    "top": [
+     [
+      "math.gcd(abs((v - (acc - {H}))), abs(0))",
+      8
+     ],
+     [
+      "math.gcd(abs(0), abs((v - (acc - {H}))))",
+      8
+     ]
+    ],
+    "P_class": 0.999,
+    "P_specific": 0.625
+   },
+   "SHAM_1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG2W:2": {
+   "G1": {
+    "share": 0.604,
+    "max_one": 10,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      10
+     ],
+     [
+      "((acc + {H}) * v)",
+      10
+     ]
+    ],
+    "P_class": 0.996,
+    "P_specific": 0.588
+   },
+   "SHAM_0": {
+    "share": 0.375,
+    "max_one": 23,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      23
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      23
+     ]
+    ],
+    "P_class": 0.885,
+    "P_specific": 0.728
+   },
+   "SHAM_1": {
+    "share": 0.583,
+    "max_one": 7,
+    "top": [
+     [
+      "(acc - ({H} + v))",
+      7
+     ],
+     [
+      "(({H} + v) * acc)",
+      6
+     ]
+    ],
+    "P_class": 0.995,
+    "P_specific": 0.466
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG:0": {
+   "G1": {
+    "share": 0.052,
+    "max_one": 5,
+    "top": [
+     [
+      "(first + (acc + {H}))",
+      5
+     ],
+     [
+      "((acc + {H}) + first)",
+      5
+     ]
+    ],
+    "P_class": 0.056,
+    "P_specific": 0.056
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.052,
+    "max_one": 5,
+    "top": [
+     [
+      "(({H} + v) + first)",
+      5
+     ],
+     [
+      "(first + ({H} + v))",
+      5
+     ]
+    ],
+    "P_class": 0.056,
+    "P_specific": 0.056
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "AG:1": {
+   "G1": {
+    "share": 0.948,
+    "max_one": 91,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      91
+     ],
+     [
+      "((acc + {H}) * v)",
+      91
+     ]
+    ],
+    "P_class": 1.0,
+    "P_specific": 1.0
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.948,
+    "max_one": 91,
+    "top": [
+     [
+      "(({H} + v) * v)",
+      91
+     ],
+     [
+      "(v * ({H} + v))",
+      91
+     ]
+    ],
+    "P_class": 1.0,
+    "P_specific": 1.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "FG:0": {
+   "G1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "FG:1": {
+   "G1": {
+    "share": 0.104,
+    "max_one": 10,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      10
+     ]
+    ],
+    "P_class": 0.184,
+    "P_specific": 0.184
+   },
+   "SHAM_0": {
+    "share": 0.427,
+    "max_one": 9,
+    "top": [
+     [
+      "(last + (v - (acc - {H})))",
+      9
+     ],
+     [
+      "((v - (acc - {H})) + last)",
+      9
+     ]
+    ],
+    "P_class": 0.927,
+    "P_specific": 0.581
+   },
+   "SHAM_1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "FG:2": {
+   "G1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "FGW:0": {
+   "G1": {
+    "share": 0.073,
+    "max_one": 4,
+    "top": [
+     [
+      "(v // (acc + {H}))",
+      4
+     ],
+     [
+      "(v * (acc + {H}))",
+      2
+     ]
+    ],
+    "P_class": 0.11,
+    "P_specific": 0.037
+   },
+   "SHAM_0": {
+    "share": 0.021,
+    "max_one": 2,
+    "top": [
+     [
+      "((v - (acc - {H})) * acc)",
+      2
+     ],
+     [
+      "(acc * (v - (acc - {H})))",
+      2
+     ]
+    ],
+    "P_class": 0.009,
+    "P_specific": 0.009
+   },
+   "SHAM_1": {
+    "share": 0.021,
+    "max_one": 2,
+    "top": [
+     [
+      "(({H} + v) * acc)",
+      2
+     ],
+     [
+      "(acc * ({H} + v))",
+      2
+     ]
+    ],
+    "P_class": 0.009,
+    "P_specific": 0.009
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "FGW:1": {
+   "G1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      1
+     ],
+     [
+      "(acc + ({H} + v))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "FGW:2": {
+   "G1": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.99,
+    "max_one": 95,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      95
+     ],
+     [
+      "(acc + ({H} + v))",
+      95
+     ]
+    ],
+    "P_class": 1.0,
+    "P_specific": 1.0
+   },
+   "OFF_0": {
+    "share": 0.99,
+    "max_one": 95,
+    "top": [
+     [
+      "((1 + (v - {H})) + acc)",
+      95
+     ],
+     [
+      "(acc + (1 + (v - {H})))",
+      95
+     ]
+    ],
+    "P_class": 1.0,
+    "P_specific": 1.0
+   }
+  },
+  "LIN:0": {
+   "G1": {
+    "share": 0.208,
+    "max_one": 11,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      11
+     ],
+     [
+      "(v * (acc + {H}))",
+      5
+     ]
+    ],
+    "P_class": 0.519,
+    "P_specific": 0.287
+   },
+   "SHAM_0": {
+    "share": 0.052,
+    "max_one": 2,
+    "top": [
+     [
+      "(acc - (v - (acc - {H})))",
+      2
+     ],
+     [
+      "((v - (acc - {H})) * acc)",
+      2
+     ]
+    ],
+    "P_class": 0.053,
+    "P_specific": 0.015
+   },
+   "SHAM_1": {
+    "share": 0.062,
+    "max_one": 2,
+    "top": [
+     [
+      "(acc - ({H} + v))",
+      2
+     ],
+     [
+      "(last + ({H} + v))",
+      2
+     ]
+    ],
+    "P_class": 0.07,
+    "P_specific": 0.018
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "LIN:1": {
+   "G1": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_0": {
+    "share": 0.083,
+    "max_one": 6,
+    "top": [
+     [
+      "(acc - (v - (acc - {H})))",
+      6
+     ],
+     [
+      "((v - (acc - {H})) + acc)",
+      1
+     ]
+    ],
+    "P_class": 0.134,
+    "P_specific": 0.082
+   },
+   "SHAM_1": {
+    "share": 0.062,
+    "max_one": 6,
+    "top": [
+     [
+      "(acc - ({H} + v))",
+      6
+     ]
+    ],
+    "P_class": 0.08,
+    "P_specific": 0.08
+   },
+   "OFF_0": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(acc - (1 + (v - {H})))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "LIN:2": {
+   "G1": {
+    "share": 0.167,
+    "max_one": 8,
+    "top": [
+     [
+      "((acc + {H}) + acc)",
+      8
+     ],
+     [
+      "(acc + (acc + {H}))",
+      8
+     ]
+    ],
+    "P_class": 0.404,
+    "P_specific": 0.147
+   },
+   "SHAM_0": {
+    "share": 0.115,
+    "max_one": 5,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      5
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      5
+     ]
+    ],
+    "P_class": 0.22,
+    "P_specific": 0.077
+   },
+   "SHAM_1": {
+    "share": 0.115,
+    "max_one": 5,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      5
+     ],
+     [
+      "(acc + ({H} + v))",
+      5
+     ]
+    ],
+    "P_class": 0.231,
+    "P_specific": 0.052
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "PCFG:0": {
+   "G1": {
+    "share": 0.219,
+    "max_one": 6,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      6
+     ],
+     [
+      "((acc + {H}) * v)",
+      6
+     ]
+    ],
+    "P_class": 0.584,
+    "P_specific": 0.166
+   },
+   "SHAM_0": {
+    "share": 0.073,
+    "max_one": 2,
+    "top": [
+     [
+      "(acc - (v - (acc - {H})))",
+      2
+     ],
+     [
+      "((v - (acc - {H})) + acc)",
+      2
+     ]
+    ],
+    "P_class": 0.105,
+    "P_specific": 0.02
+   },
+   "SHAM_1": {
+    "share": 0.24,
+    "max_one": 6,
+    "top": [
+     [
+      "(acc - ({H} + v))",
+      6
+     ],
+     [
+      "(({H} + v) + first)",
+      3
+     ]
+    ],
+    "P_class": 0.623,
+    "P_specific": 0.123
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "PCFG:1": {
+   "G1": {
+    "share": 0.219,
+    "max_one": 6,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      6
+     ],
+     [
+      "((acc + {H}) + v)",
+      4
+     ]
+    ],
+    "P_class": 0.545,
+    "P_specific": 0.135
+   },
+   "SHAM_0": {
+    "share": 0.094,
+    "max_one": 4,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      4
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      4
+     ]
+    ],
+    "P_class": 0.168,
+    "P_specific": 0.046
+   },
+   "SHAM_1": {
+    "share": 0.146,
+    "max_one": 2,
+    "top": [
+     [
+      "(({H} + v) * v)",
+      2
+     ],
+     [
+      "(v * ({H} + v))",
+      2
+     ]
+    ],
+    "P_class": 0.337,
+    "P_specific": 0.022
+   },
+   "OFF_0": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "((1 + (v - {H})) + acc)",
+      1
+     ],
+     [
+      "(acc + (1 + (v - {H})))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "PCFG:2": {
+   "G1": {
+    "share": 0.115,
+    "max_one": 5,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      5
+     ],
+     [
+      "((acc + {H}) * v)",
+      5
+     ]
+    ],
+    "P_class": 0.226,
+    "P_specific": 0.061
+   },
+   "SHAM_0": {
+    "share": 0.083,
+    "max_one": 3,
+    "top": [
+     [
+      "((v - (acc - {H})) * acc)",
+      3
+     ],
+     [
+      "(acc * (v - (acc - {H})))",
+      3
+     ]
+    ],
+    "P_class": 0.142,
+    "P_specific": 0.035
+   },
+   "SHAM_1": {
+    "share": 0.177,
+    "max_one": 7,
+    "top": [
+     [
+      "(acc - ({H} + v))",
+      7
+     ],
+     [
+      "(({H} + v) * acc)",
+      4
+     ]
+    ],
+    "P_class": 0.411,
+    "P_specific": 0.147
+   },
+   "OFF_0": {
+    "share": 0.021,
+    "max_one": 2,
+    "top": [
+     [
+      "(acc - (1 + (v - {H})))",
+      2
+     ]
+    ],
+    "P_class": 0.006,
+    "P_specific": 0.006
+   }
+  },
+  "STAR:0": {
+   "G1": {
+    "share": 0.198,
+    "max_one": 5,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      5
+     ],
+     [
+      "(v * (acc + {H}))",
+      4
+     ]
+    ],
+    "P_class": 0.515,
+    "P_specific": 0.11
+   },
+   "SHAM_0": {
+    "share": 0.156,
+    "max_one": 5,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      5
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      5
+     ]
+    ],
+    "P_class": 0.353,
+    "P_specific": 0.083
+   },
+   "SHAM_1": {
+    "share": 0.219,
+    "max_one": 7,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      7
+     ],
+     [
+      "(acc + ({H} + v))",
+      7
+     ]
+    ],
+    "P_class": 0.559,
+    "P_specific": 0.206
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "STAR:1": {
+   "G1": {
+    "share": 0.167,
+    "max_one": 5,
+    "top": [
+     [
+      "(v * (acc + {H}))",
+      5
+     ],
+     [
+      "((acc + {H}) * v)",
+      5
+     ]
+    ],
+    "P_class": 0.396,
+    "P_specific": 0.09
+   },
+   "SHAM_0": {
+    "share": 0.146,
+    "max_one": 5,
+    "top": [
+     [
+      "((v - (acc - {H})) * acc)",
+      5
+     ],
+     [
+      "(acc * (v - (acc - {H})))",
+      5
+     ]
+    ],
+    "P_class": 0.342,
+    "P_specific": 0.083
+   },
+   "SHAM_1": {
+    "share": 0.177,
+    "max_one": 7,
+    "top": [
+     [
+      "(acc - ({H} + v))",
+      7
+     ],
+     [
+      "(({H} + v) * acc)",
+      5
+     ]
+    ],
+    "P_class": 0.436,
+    "P_specific": 0.158
+   },
+   "OFF_0": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(acc - (1 + (v - {H})))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "STAR:2": {
+   "G1": {
+    "share": 0.177,
+    "max_one": 7,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      7
+     ],
+     [
+      "(v * (acc + {H}))",
+      7
+     ]
+    ],
+    "P_class": 0.429,
+    "P_specific": 0.21
+   },
+   "SHAM_0": {
+    "share": 0.156,
+    "max_one": 5,
+    "top": [
+     [
+      "((v - (acc - {H})) * acc)",
+      5
+     ],
+     [
+      "(acc * (v - (acc - {H})))",
+      5
+     ]
+    ],
+    "P_class": 0.382,
+    "P_specific": 0.13
+   },
+   "SHAM_1": {
+    "share": 0.156,
+    "max_one": 5,
+    "top": [
+     [
+      "(({H} + v) * acc)",
+      5
+     ],
+     [
+      "(acc * ({H} + v))",
+      5
+     ]
+    ],
+    "P_class": 0.356,
+    "P_specific": 0.105
+   },
+   "OFF_0": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "((1 + (v - {H})) + acc)",
+      1
+     ],
+     [
+      "(acc + (1 + (v - {H})))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "U:0": {
+   "G1": {
+    "share": 0.167,
+    "max_one": 4,
+    "top": [
+     [
+      "((acc + {H}) + v)",
+      4
+     ],
+     [
+      "(v + (acc + {H}))",
+      4
+     ]
+    ],
+    "P_class": 0.41,
+    "P_specific": 0.056
+   },
+   "SHAM_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   },
+   "SHAM_1": {
+    "share": 0.083,
+    "max_one": 2,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      2
+     ],
+     [
+      "(acc + ({H} + v))",
+      2
+     ]
+    ],
+    "P_class": 0.127,
+    "P_specific": 0.004
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "U:1": {
+   "G1": {
+    "share": 0.135,
+    "max_one": 4,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      4
+     ],
+     [
+      "(v * (acc + {H}))",
+      3
+     ]
+    ],
+    "P_class": 0.277,
+    "P_specific": 0.043
+   },
+   "SHAM_0": {
+    "share": 0.062,
+    "max_one": 2,
+    "top": [
+     [
+      "(acc - (v - (acc - {H})))",
+      2
+     ],
+     [
+      "(last - (v - (acc - {H})))",
+      2
+     ]
+    ],
+    "P_class": 0.073,
+    "P_specific": 0.016
+   },
+   "SHAM_1": {
+    "share": 0.177,
+    "max_one": 5,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      5
+     ],
+     [
+      "(acc + ({H} + v))",
+      5
+     ]
+    ],
+    "P_class": 0.417,
+    "P_specific": 0.107
+   },
+   "OFF_0": {
+    "share": 0.01,
+    "max_one": 1,
+    "top": [
+     [
+      "(acc - (1 + (v - {H})))",
+      1
+     ]
+    ],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  },
+  "U:2": {
+   "G1": {
+    "share": 0.083,
+    "max_one": 2,
+    "top": [
+     [
+      "(v - (acc + {H}))",
+      2
+     ],
+     [
+      "(v * (acc + {H}))",
+      2
+     ]
+    ],
+    "P_class": 0.138,
+    "P_specific": 0.013
+   },
+   "SHAM_0": {
+    "share": 0.031,
+    "max_one": 2,
+    "top": [
+     [
+      "((v - (acc - {H})) + acc)",
+      2
+     ],
+     [
+      "(acc + (v - (acc - {H})))",
+      2
+     ]
+    ],
+    "P_class": 0.018,
+    "P_specific": 0.007
+   },
+   "SHAM_1": {
+    "share": 0.094,
+    "max_one": 2,
+    "top": [
+     [
+      "(({H} + v) + acc)",
+      2
+     ],
+     [
+      "(acc + ({H} + v))",
+      2
+     ]
+    ],
+    "P_class": 0.158,
+    "P_specific": 0.018
+   },
+   "OFF_0": {
+    "share": 0.0,
+    "max_one": 0,
+    "top": [],
+    "P_class": 0.0,
+    "P_specific": 0.0
+   }
+  }
+ },
+ "per_generator": {
+  "AG": {
+   "G1": {
+    "share": [
+     0.052,
+     0.948
+    ],
+    "max_one": [
+     5,
+     91
+    ],
+    "P_class": [
+     0.056,
+     1.0
+    ],
+    "P_specific": [
+     0.056,
+     1.0
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     0,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.052,
+     0.948
+    ],
+    "max_one": [
+     5,
+     91
+    ],
+    "P_class": [
+     0.056,
+     1.0
+    ],
+    "P_specific": [
+     0.056,
+     1.0
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     0,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "AG2": {
+   "G1": {
+    "share": [
+     0.167,
+     0.5,
+     0.177
+    ],
+    "max_one": [
+     11,
+     6,
+     17
+    ],
+    "P_class": [
+     0.406,
+     0.969,
+     0.44
+    ],
+    "P_specific": [
+     0.284,
+     0.363,
+     0.44
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.0,
+     0.167,
+     0.188
+    ],
+    "max_one": [
+     0,
+     15,
+     17
+    ],
+    "P_class": [
+     0.0,
+     0.39,
+     0.469
+    ],
+    "P_specific": [
+     0.0,
+     0.357,
+     0.44
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.167,
+     0.458,
+     0.177
+    ],
+    "max_one": [
+     11,
+     6,
+     17
+    ],
+    "P_class": [
+     0.406,
+     0.95,
+     0.44
+    ],
+    "P_specific": [
+     0.284,
+     0.323,
+     0.44
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     0,
+     0,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "AG2W": {
+   "G1": {
+    "share": [
+     0.01,
+     0.177,
+     0.604
+    ],
+    "max_one": [
+     1,
+     17,
+     10
+    ],
+    "P_class": [
+     0.0,
+     0.448,
+     0.996
+    ],
+    "P_specific": [
+     0.0,
+     0.448,
+     0.588
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.021,
+     0.677,
+     0.375
+    ],
+    "max_one": [
+     1,
+     8,
+     23
+    ],
+    "P_class": [
+     0.007,
+     0.999,
+     0.885
+    ],
+    "P_specific": [
+     0.0,
+     0.625,
+     0.728
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.01,
+     0.0,
+     0.583
+    ],
+    "max_one": [
+     1,
+     0,
+     7
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.995
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.466
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     0,
+     0,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "FG": {
+   "G1": {
+    "share": [
+     0.0,
+     0.104,
+     0.0
+    ],
+    "max_one": [
+     0,
+     10,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.184,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.184,
+     0.0
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.0,
+     0.427,
+     0.0
+    ],
+    "max_one": [
+     0,
+     9,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.927,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.581,
+     0.0
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     0,
+     0,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     0,
+     0,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "FGW": {
+   "G1": {
+    "share": [
+     0.073,
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     4,
+     0,
+     0
+    ],
+    "P_class": [
+     0.11,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.037,
+     0.0,
+     0.0
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.021,
+     0.0,
+     0.0
+    ],
+    "max_one": [
+     2,
+     0,
+     0
+    ],
+    "P_class": [
+     0.009,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.009,
+     0.0,
+     0.0
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.021,
+     0.01,
+     0.99
+    ],
+    "max_one": [
+     2,
+     1,
+     95
+    ],
+    "P_class": [
+     0.009,
+     0.0,
+     1.0
+    ],
+    "P_specific": [
+     0.009,
+     0.0,
+     1.0
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.0,
+     0.99
+    ],
+    "max_one": [
+     0,
+     0,
+     95
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  },
+  "LIN": {
+   "G1": {
+    "share": [
+     0.208,
+     0.01,
+     0.167
+    ],
+    "max_one": [
+     11,
+     1,
+     8
+    ],
+    "P_class": [
+     0.519,
+     0.0,
+     0.404
+    ],
+    "P_specific": [
+     0.287,
+     0.0,
+     0.147
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.052,
+     0.083,
+     0.115
+    ],
+    "max_one": [
+     2,
+     6,
+     5
+    ],
+    "P_class": [
+     0.053,
+     0.134,
+     0.22
+    ],
+    "P_specific": [
+     0.015,
+     0.082,
+     0.077
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.062,
+     0.062,
+     0.115
+    ],
+    "max_one": [
+     2,
+     6,
+     5
+    ],
+    "P_class": [
+     0.07,
+     0.08,
+     0.231
+    ],
+    "P_specific": [
+     0.018,
+     0.08,
+     0.052
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.01,
+     0.0
+    ],
+    "max_one": [
+     0,
+     1,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "PCFG": {
+   "G1": {
+    "share": [
+     0.219,
+     0.219,
+     0.115
+    ],
+    "max_one": [
+     6,
+     6,
+     5
+    ],
+    "P_class": [
+     0.584,
+     0.545,
+     0.226
+    ],
+    "P_specific": [
+     0.166,
+     0.135,
+     0.061
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.073,
+     0.094,
+     0.083
+    ],
+    "max_one": [
+     2,
+     4,
+     3
+    ],
+    "P_class": [
+     0.105,
+     0.168,
+     0.142
+    ],
+    "P_specific": [
+     0.02,
+     0.046,
+     0.035
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.24,
+     0.146,
+     0.177
+    ],
+    "max_one": [
+     6,
+     2,
+     7
+    ],
+    "P_class": [
+     0.623,
+     0.337,
+     0.411
+    ],
+    "P_specific": [
+     0.123,
+     0.022,
+     0.147
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.01,
+     0.021
+    ],
+    "max_one": [
+     0,
+     1,
+     2
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.006
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.006
+    ]
+   }
+  },
+  "STAR": {
+   "G1": {
+    "share": [
+     0.198,
+     0.167,
+     0.177
+    ],
+    "max_one": [
+     5,
+     5,
+     7
+    ],
+    "P_class": [
+     0.515,
+     0.396,
+     0.429
+    ],
+    "P_specific": [
+     0.11,
+     0.09,
+     0.21
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.156,
+     0.146,
+     0.156
+    ],
+    "max_one": [
+     5,
+     5,
+     5
+    ],
+    "P_class": [
+     0.353,
+     0.342,
+     0.382
+    ],
+    "P_specific": [
+     0.083,
+     0.083,
+     0.13
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.219,
+     0.177,
+     0.156
+    ],
+    "max_one": [
+     7,
+     7,
+     5
+    ],
+    "P_class": [
+     0.559,
+     0.436,
+     0.356
+    ],
+    "P_specific": [
+     0.206,
+     0.158,
+     0.105
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.01,
+     0.01
+    ],
+    "max_one": [
+     0,
+     1,
+     1
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "U": {
+   "G1": {
+    "share": [
+     0.167,
+     0.135,
+     0.083
+    ],
+    "max_one": [
+     4,
+     4,
+     2
+    ],
+    "P_class": [
+     0.41,
+     0.277,
+     0.138
+    ],
+    "P_specific": [
+     0.056,
+     0.043,
+     0.013
+    ]
+   },
+   "SHAM_0": {
+    "share": [
+     0.0,
+     0.062,
+     0.031
+    ],
+    "max_one": [
+     0,
+     2,
+     2
+    ],
+    "P_class": [
+     0.0,
+     0.073,
+     0.018
+    ],
+    "P_specific": [
+     0.0,
+     0.016,
+     0.007
+    ]
+   },
+   "SHAM_1": {
+    "share": [
+     0.083,
+     0.177,
+     0.094
+    ],
+    "max_one": [
+     2,
+     5,
+     2
+    ],
+    "P_class": [
+     0.127,
+     0.417,
+     0.158
+    ],
+    "P_specific": [
+     0.004,
+     0.107,
+     0.018
+    ]
+   },
+   "OFF_0": {
+    "share": [
+     0.0,
+     0.01,
+     0.0
+    ],
+    "max_one": [
+     0,
+     1,
+     0
+    ],
+    "P_class": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "P_specific": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  }
+ }
+}

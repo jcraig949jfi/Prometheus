@@ -1,0 +1,1592 @@
+[
+ {
+  "name": "qaia",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 276002,
+  "orig_prog": [
+   "fold",
+   "(last * 0)",
+   "(v * (last + (0 + 1)))",
+   "(acc // last)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.8,
+  "extra_examples_to_reject": 3,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 19.7
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 15.6
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qcga",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1183749,
+  "orig_prog": [
+   "fold",
+   "(last * 1)",
+   "(first + math.gcd(abs(last), abs((v // 1))))",
+   "(acc + acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 7.8,
+  "extra_examples_to_reject": 1,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 11.0
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 8.4
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qcia",
+  "cell": 0,
+  "kind": "spurious_cov",
+  "Q2_size": 6,
+  "orig_charge": 12901,
+  "orig_prog": [
+   "fold",
+   "0",
+   "(v + math.gcd(abs(acc), abs(acc)))",
+   "(acc % first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 0.0,
+  "extra_examples_to_reject": 1,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 18.7
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 9.7
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qfga",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "Q2_size": 16,
+  "orig_charge": 3401832,
+  "orig_prog": [
+   "fold",
+   "pow(first, 1)",
+   "(v * (acc + (first * first)))",
+   "math.gcd(abs(acc), abs(last))"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 14.6,
+  "extra_examples_to_reject": 9,
+  "HOLD8": {
+   "charge": 3401832,
+   "prog": [
+    "fold",
+    "pow(first, 1)",
+    "(v * (acc + (first * first)))",
+    "math.gcd(abs(acc), abs(last))"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 9.4
+  },
+  "DEV+4": {
+   "charge": 3401832,
+   "prog": [
+    "fold",
+    "pow(first, 1)",
+    "(v * (acc + (first * first)))",
+    "math.gcd(abs(acc), abs(last))"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 9.5
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qhga",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 2294447,
+  "orig_prog": [
+   "fold",
+   "(0 + first)",
+   "(v % math.gcd(abs(acc), abs((last * v))))",
+   "(acc - 1)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 10.1,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 2294447,
+   "prog": [
+    "fold",
+    "(0 + first)",
+    "(v % math.gcd(abs(acc), abs((last * v))))",
+    "(acc - 1)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 5.9
+  },
+  "DEV+4": {
+   "charge": 2294447,
+   "prog": [
+    "fold",
+    "(0 + first)",
+    "(v % math.gcd(abs(acc), abs((last * v))))",
+    "(acc - 1)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 5.2
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qija",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 6,
+  "orig_charge": 787945,
+  "orig_prog": [
+   "fold",
+   "(first // last)",
+   "(0 + (v - (1 + acc)))",
+   "(last - acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 5.7,
+  "extra_examples_to_reject": 5,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 11.3
+  },
+  "DEV+4": {
+   "charge": 787945,
+   "prog": [
+    "fold",
+    "(first // last)",
+    "(0 + (v - (1 + acc)))",
+    "(last - acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 2.1
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qjia",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1004317,
+  "orig_prog": [
+   "fold",
+   "(0 + 1)",
+   "(acc - math.gcd(abs(v), abs((v + last))))",
+   "(acc + first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 6.2,
+  "extra_examples_to_reject": 1,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 10.7
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 8.4
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qkia",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "Q2_size": 6,
+  "orig_charge": 262484,
+  "orig_prog": [
+   "fold",
+   "(1 // last)",
+   "(1 * (v - (acc + 1)))",
+   "math.gcd(abs(acc), abs(acc))"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.0,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 262484,
+   "prog": [
+    "fold",
+    "(1 // last)",
+    "(1 * (v - (acc + 1)))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.9
+  },
+  "DEV+4": {
+   "charge": 262484,
+   "prog": [
+    "fold",
+    "(1 // last)",
+    "(1 * (v - (acc + 1)))",
+    "math.gcd(abs(acc), abs(acc))"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.7
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qlga",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 2813053,
+  "orig_prog": [
+   "fold",
+   "pow(0, last)",
+   "(v + (0 + (acc % first)))",
+   "(1 + acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 10.2,
+  "extra_examples_to_reject": 3,
+  "HOLD8": {
+   "charge": 2813053,
+   "prog": [
+    "fold",
+    "pow(0, last)",
+    "(v + (0 + (acc % first)))",
+    "(1 + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 6.1
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 8.8
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qlja",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "Q2_size": 6,
+  "orig_charge": 347212,
+  "orig_prog": [
+   "fold",
+   "(0 // first)",
+   "(last + (acc + (v + 0)))",
+   "(acc // last)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.0,
+  "extra_examples_to_reject": 15,
+  "HOLD8": {
+   "charge": 347212,
+   "prog": [
+    "fold",
+    "(0 // first)",
+    "(last + (acc + (v + 0)))",
+    "(acc // last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 1.0
+  },
+  "DEV+4": {
+   "charge": 347212,
+   "prog": [
+    "fold",
+    "(0 // first)",
+    "(last + (acc + (v + 0)))",
+    "(acc // last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 0.8
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qlja",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "Q2_size": 6,
+  "orig_charge": 166517,
+  "orig_prog": [
+   "fold",
+   "(first // first)",
+   "(last - (1 - (v + acc)))",
+   "(acc // last)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 3.6,
+  "extra_examples_to_reject": 6,
+  "HOLD8": {
+   "charge": 1256957,
+   "prog": [
+    "fold",
+    "(first // first)",
+    "(last + (v + math.gcd(abs(acc), abs(0))))",
+    "(acc // last)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 3.6
+  },
+  "DEV+4": {
+   "charge": 166517,
+   "prog": [
+    "fold",
+    "(first // first)",
+    "(last - (1 - (v + acc)))",
+    "(acc // last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 0.5
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qlja",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "Q2_size": 6,
+  "orig_charge": 832539,
+  "orig_prog": [
+   "fold",
+   "(0 // 1)",
+   "(last + (acc + pow(v, 1)))",
+   "(acc // last)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 5.4,
+  "extra_examples_to_reject": 15,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 11.5
+  },
+  "DEV+4": {
+   "charge": 832539,
+   "prog": [
+    "fold",
+    "(0 // 1)",
+    "(last + (acc + pow(v, 1)))",
+    "(acc // last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 1.9
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qmja",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 295870,
+  "orig_prog": [
+   "fold",
+   "(first % 1)",
+   "(v + (acc + (1 % last)))",
+   "(1 - acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.2,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 295870,
+   "prog": [
+    "fold",
+    "(first % 1)",
+    "(v + (acc + (1 % last)))",
+    "(1 - acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.9
+  },
+  "DEV+4": {
+   "charge": 295870,
+   "prog": [
+    "fold",
+    "(first % 1)",
+    "(v + (acc + (1 % last)))",
+    "(1 - acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.8
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qofa",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 1424771,
+  "orig_prog": [
+   "fold",
+   "(last * 0)",
+   "(v + (acc % (last * 1)))",
+   "(1 + acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 7.3,
+  "extra_examples_to_reject": 9,
+  "HOLD8": {
+   "charge": 1424771,
+   "prog": [
+    "fold",
+    "(last * 0)",
+    "(v + (acc % (last * 1)))",
+    "(1 + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 3.7
+  },
+  "DEV+4": {
+   "charge": 1424771,
+   "prog": [
+    "fold",
+    "(last * 0)",
+    "(v + (acc % (last * 1)))",
+    "(1 + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 3.4
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qofa",
+  "cell": 2,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 2749763,
+  "orig_prog": [
+   "fold",
+   "(0 // first)",
+   "(v + (acc % (last - 0)))",
+   "(acc + 1)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 11.6,
+  "extra_examples_to_reject": 9,
+  "HOLD8": {
+   "charge": 2749763,
+   "prog": [
+    "fold",
+    "(0 // first)",
+    "(v + (acc % (last - 0)))",
+    "(acc + 1)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 7.3
+  },
+  "DEV+4": {
+   "charge": 2749763,
+   "prog": [
+    "fold",
+    "(0 // first)",
+    "(v + (acc % (last - 0)))",
+    "(acc + 1)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 6.9
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qoja",
+  "cell": 0,
+  "kind": "spurious_cov",
+  "Q2_size": 4,
+  "orig_charge": 34608,
+  "orig_prog": [
+   "fold",
+   "1",
+   "(v + acc)",
+   "(acc + first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 0.1,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 34608,
+   "prog": [
+    "fold",
+    "1",
+    "(v + acc)",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.4
+  },
+  "DEV+4": {
+   "charge": 34608,
+   "prog": [
+    "fold",
+    "1",
+    "(v + acc)",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.2
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qoja",
+  "cell": 1,
+  "kind": "spurious_cov",
+  "Q2_size": 4,
+  "orig_charge": 36765,
+  "orig_prog": [
+   "fold",
+   "1",
+   "(acc + math.gcd(abs(v), abs(v)))",
+   "(first + acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 0.1,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 36765,
+   "prog": [
+    "fold",
+    "1",
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(first + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.2
+  },
+  "DEV+4": {
+   "charge": 36765,
+   "prog": [
+    "fold",
+    "1",
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(first + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.2
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qoja",
+  "cell": 2,
+  "kind": "spurious_cov",
+  "Q2_size": 4,
+  "orig_charge": 6849,
+  "orig_prog": [
+   "fold",
+   "1",
+   "(acc + math.gcd(abs(v), abs(v)))",
+   "(acc + first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 0.0,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 6849,
+   "prog": [
+    "fold",
+    "1",
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.1
+  },
+  "DEV+4": {
+   "charge": 6849,
+   "prog": [
+    "fold",
+    "1",
+    "(acc + math.gcd(abs(v), abs(v)))",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.1
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qoja",
+  "cell": 3,
+  "kind": "spurious_cov",
+  "Q2_size": 4,
+  "orig_charge": 121049,
+  "orig_prog": [
+   "fold",
+   "1",
+   "(acc + v)",
+   "(acc + first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 0.3,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 121049,
+   "prog": [
+    "fold",
+    "1",
+    "(acc + v)",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.5
+  },
+  "DEV+4": {
+   "charge": 121049,
+   "prog": [
+    "fold",
+    "1",
+    "(acc + v)",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 0.5
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qqja",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 166878,
+  "orig_prog": [
+   "fold",
+   "(first + 1)",
+   "(v * (v - (v - acc)))",
+   "(0 + acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.0,
+  "extra_examples_to_reject": 40,
+  "HOLD8": {
+   "charge": 166878,
+   "prog": [
+    "fold",
+    "(first + 1)",
+    "(v * (v - (v - acc)))",
+    "(0 + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 0.5
+  },
+  "DEV+4": {
+   "charge": 166878,
+   "prog": [
+    "fold",
+    "(first + 1)",
+    "(v * (v - (v - acc)))",
+    "(0 + acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 0.4
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qsia",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 2134468,
+  "orig_prog": [
+   "fold",
+   "(first // 1)",
+   "(v // math.gcd(abs(first), abs((1 + v))))",
+   "(acc + 0)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 10.9,
+  "extra_examples_to_reject": 5,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 10.1
+  },
+  "DEV+4": {
+   "charge": 2134468,
+   "prog": [
+    "fold",
+    "(first // 1)",
+    "(v // math.gcd(abs(first), abs((1 + v))))",
+    "(acc + 0)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 4.9
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "quja",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 2375470,
+  "orig_prog": [
+   "fold",
+   "(0 * last)",
+   "(v - (acc % (0 - last)))",
+   "(1 * acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 9.6,
+  "extra_examples_to_reject": 35,
+  "HOLD8": {
+   "charge": 3729035,
+   "prog": [
+    "fold",
+    "(0 * last)",
+    "(v - (acc % (last // 1)))",
+    "(last + acc)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 9.3
+  },
+  "DEV+4": {
+   "charge": 2375470,
+   "prog": [
+    "fold",
+    "(0 * last)",
+    "(v - (acc % (0 - last)))",
+    "(1 * acc)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 5.2
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qvha",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 962207,
+  "orig_prog": [
+   "fold",
+   "math.gcd(abs(0), abs(0))",
+   "(0 - (1 - (acc * v)))",
+   "(acc // first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 6.1,
+  "extra_examples_to_reject": 8,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 10.8
+  },
+  "DEV+4": {
+   "charge": 962207,
+   "prog": [
+    "fold",
+    "math.gcd(abs(0), abs(0))",
+    "(0 - (1 - (acc * v)))",
+    "(acc // first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 2.2
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qvha",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1169091,
+  "orig_prog": [
+   "fold",
+   "math.gcd(abs(1), abs(first))",
+   "(v * (acc - (1 % last)))",
+   "(acc // first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 6.7,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 1169091,
+   "prog": [
+    "fold",
+    "math.gcd(abs(1), abs(first))",
+    "(v * (acc - (1 % last)))",
+    "(acc // first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 2.7
+  },
+  "DEV+4": {
+   "charge": 1169091,
+   "prog": [
+    "fold",
+    "math.gcd(abs(1), abs(first))",
+    "(v * (acc - (1 % last)))",
+    "(acc // first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 2.6
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qwga",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 2576606,
+  "orig_prog": [
+   "fold",
+   "(first * first)",
+   "(v - (last // (1 - acc)))",
+   "(acc - 1)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 10.2,
+  "extra_examples_to_reject": 25,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 9.6
+  },
+  "DEV+4": {
+   "charge": 2576606,
+   "prog": [
+    "fold",
+    "(first * first)",
+    "(v - (last // (1 - acc)))",
+    "(acc - 1)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 6.1
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qwka",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1263379,
+  "orig_prog": [
+   "fold",
+   "pow(1, last)",
+   "(acc - (v + pow(1, first)))",
+   "(acc - 1)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 6.6,
+  "extra_examples_to_reject": 1,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 10.4
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 8.8
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qxfa",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 8,
+  "orig_charge": 476121,
+  "orig_prog": [
+   "fold",
+   "(last * 0)",
+   "(v - (acc + (1 % last)))",
+   "(acc + first)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.7,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 476121,
+   "prog": [
+    "fold",
+    "(last * 0)",
+    "(v - (acc + (1 % last)))",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 1.4
+  },
+  "DEV+4": {
+   "charge": 476121,
+   "prog": [
+    "fold",
+    "(last * 0)",
+    "(v - (acc + (1 % last)))",
+    "(acc + first)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": true,
+   "sec": 1.2
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qxja",
+  "cell": 1,
+  "kind": "spurious_fallback",
+  "Q2_size": 12,
+  "orig_charge": 2646332,
+  "orig_prog": [
+   "fold",
+   "(0 - 1)",
+   "math.gcd(abs(0), abs((acc * (last - v))))",
+   "(acc % last)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 11.2,
+  "extra_examples_to_reject": 9,
+  "HOLD8": {
+   "charge": 2646332,
+   "prog": [
+    "fold",
+    "(0 - 1)",
+    "math.gcd(abs(0), abs((acc * (last - v))))",
+    "(acc % last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 6.7
+  },
+  "DEV+4": {
+   "charge": 2646332,
+   "prog": [
+    "fold",
+    "(0 - 1)",
+    "math.gcd(abs(0), abs((acc * (last - v))))",
+    "(acc % last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 6.6
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qxka",
+  "cell": 0,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 2217355,
+  "orig_prog": [
+   "fold",
+   "(first * 0)",
+   "(acc - (last + (first // v)))",
+   "(acc % last)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 9.0,
+  "extra_examples_to_reject": 11,
+  "HOLD8": {
+   "charge": 3311543,
+   "prog": [
+    "fold",
+    "(first * 0)",
+    "(acc - (first // math.gcd(abs(0), abs(v))))",
+    "(last + acc)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 9.0
+  },
+  "DEV+4": {
+   "charge": 2217355,
+   "prog": [
+    "fold",
+    "(first * 0)",
+    "(acc - (last + (first // v)))",
+    "(acc % last)"
+   ],
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 4.7
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qxka",
+  "cell": 3,
+  "kind": "spurious_fallback",
+  "Q2_size": 4,
+  "orig_charge": 384491,
+  "orig_prog": [
+   "fold",
+   "(1 + 1)",
+   "math.gcd(abs(first), abs(math.gcd(abs(v), abs((1 + 1)))))",
+   "(last - acc)"
+  ],
+  "orig_T4": false,
+  "repro_ok": true,
+  "sec_base": 4.3,
+  "extra_examples_to_reject": 1,
+  "HOLD8": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 10.4
+  },
+  "DEV+4": {
+   "charge": 4000000,
+   "prog": null,
+   "T4_v1": false,
+   "T4_v1a": false,
+   "sec": 8.6
+  },
+  "orig_T4_direct": false
+ },
+ {
+  "name": "qaga",
+  "cell": 0,
+  "kind": "true_fallback",
+  "Q2_size": 16,
+  "orig_charge": 3128813,
+  "orig_prog": [
+   "fold",
+   "(1 % first)",
+   "(last - (acc % v))",
+   "math.gcd(abs(last), abs(acc))"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 13.9,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 3128813,
+   "prog": [
+    "fold",
+    "(1 % first)",
+    "(last - (acc % v))",
+    "math.gcd(abs(last), abs(acc))"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 10.5
+  },
+  "DEV+4": {
+   "charge": 3128813,
+   "prog": [
+    "fold",
+    "(1 % first)",
+    "(last - (acc % v))",
+    "math.gcd(abs(last), abs(acc))"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 9.9
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qaga",
+  "cell": 2,
+  "kind": "true_fallback",
+  "Q2_size": 16,
+  "orig_charge": 3757160,
+  "orig_prog": [
+   "fold",
+   "(1 % last)",
+   "(last - (1 * (acc % v)))",
+   "math.gcd(abs(acc), abs(last))"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 13.3,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 3757160,
+   "prog": [
+    "fold",
+    "(1 % last)",
+    "(last - (1 * (acc % v)))",
+    "math.gcd(abs(acc), abs(last))"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 9.4
+  },
+  "DEV+4": {
+   "charge": 3757160,
+   "prog": [
+    "fold",
+    "(1 % last)",
+    "(last - (1 * (acc % v)))",
+    "math.gcd(abs(acc), abs(last))"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 8.8
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qaka",
+  "cell": 0,
+  "kind": "true_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1286085,
+  "orig_prog": [
+   "fold",
+   "(0 * first)",
+   "(acc + (v + math.gcd(abs(last), abs(1))))",
+   "(first - acc)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 6.0,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 1286085,
+   "prog": [
+    "fold",
+    "(0 * first)",
+    "(acc + (v + math.gcd(abs(last), abs(1))))",
+    "(first - acc)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 3.0
+  },
+  "DEV+4": {
+   "charge": 1286085,
+   "prog": [
+    "fold",
+    "(0 * first)",
+    "(acc + (v + math.gcd(abs(last), abs(1))))",
+    "(first - acc)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 2.6
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qaka",
+  "cell": 2,
+  "kind": "true_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1222665,
+  "orig_prog": [
+   "fold",
+   "(0 * 1)",
+   "(acc - (1 + math.gcd(abs(0), abs(v))))",
+   "(acc + first)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 6.0,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 1222665,
+   "prog": [
+    "fold",
+    "(0 * 1)",
+    "(acc - (1 + math.gcd(abs(0), abs(v))))",
+    "(acc + first)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 2.8
+  },
+  "DEV+4": {
+   "charge": 1222665,
+   "prog": [
+    "fold",
+    "(0 * 1)",
+    "(acc - (1 + math.gcd(abs(0), abs(v))))",
+    "(acc + first)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 2.6
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qbga",
+  "cell": 3,
+  "kind": "true_fallback",
+  "Q2_size": 8,
+  "orig_charge": 2391802,
+  "orig_prog": [
+   "fold",
+   "math.gcd(abs(first), abs(first))",
+   "(v - (0 + math.gcd(abs(first), abs(acc))))",
+   "(acc * last)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 9.1,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 2391802,
+   "prog": [
+    "fold",
+    "math.gcd(abs(first), abs(first))",
+    "(v - (0 + math.gcd(abs(first), abs(acc))))",
+    "(acc * last)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 5.7
+  },
+  "DEV+4": {
+   "charge": 2391802,
+   "prog": [
+    "fold",
+    "math.gcd(abs(first), abs(first))",
+    "(v - (0 + math.gcd(abs(first), abs(acc))))",
+    "(acc * last)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 5.2
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qbka",
+  "cell": 0,
+  "kind": "true_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1652980,
+  "orig_prog": [
+   "fold",
+   "pow(first, 0)",
+   "(last + (acc + math.gcd(abs(v), abs(first))))",
+   "(acc * last)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 7.3,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 1652980,
+   "prog": [
+    "fold",
+    "pow(first, 0)",
+    "(last + (acc + math.gcd(abs(v), abs(first))))",
+    "(acc * last)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 4.0
+  },
+  "DEV+4": {
+   "charge": 1652980,
+   "prog": [
+    "fold",
+    "pow(first, 0)",
+    "(last + (acc + math.gcd(abs(v), abs(first))))",
+    "(acc * last)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 3.5
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qbla",
+  "cell": 2,
+  "kind": "true_fallback",
+  "Q2_size": 4,
+  "orig_charge": 3797140,
+  "orig_prog": [
+   "fold",
+   "(1 * 0)",
+   "(acc + (v + (acc - last)))",
+   "(acc - 0)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 11.8,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 3797140,
+   "prog": [
+    "fold",
+    "(1 * 0)",
+    "(acc + (v + (acc - last)))",
+    "(acc - 0)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 7.9
+  },
+  "DEV+4": {
+   "charge": 3797140,
+   "prog": [
+    "fold",
+    "(1 * 0)",
+    "(acc + (v + (acc - last)))",
+    "(acc - 0)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 7.7
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qcka",
+  "cell": 2,
+  "kind": "true_fallback",
+  "Q2_size": 6,
+  "orig_charge": 2386267,
+  "orig_prog": [
+   "fold",
+   "(0 // last)",
+   "(1 - math.gcd(abs(acc), abs((v + 1))))",
+   "(acc - 0)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 10.1,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 2386267,
+   "prog": [
+    "fold",
+    "(0 // last)",
+    "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "(acc - 0)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 6.1
+  },
+  "DEV+4": {
+   "charge": 2386267,
+   "prog": [
+    "fold",
+    "(0 // last)",
+    "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "(acc - 0)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 5.1
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qdga",
+  "cell": 0,
+  "kind": "true_fallback",
+  "Q2_size": 6,
+  "orig_charge": 2008049,
+  "orig_prog": [
+   "fold",
+   "(1 + 0)",
+   "(v % (first - (acc % first)))",
+   "(first - acc)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 8.5,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 2008049,
+   "prog": [
+    "fold",
+    "(1 + 0)",
+    "(v % (first - (acc % first)))",
+    "(first - acc)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 5.0
+  },
+  "DEV+4": {
+   "charge": 2008049,
+   "prog": [
+    "fold",
+    "(1 + 0)",
+    "(v % (first - (acc % first)))",
+    "(first - acc)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 4.6
+  },
+  "orig_T4_direct": true
+ },
+ {
+  "name": "qdia",
+  "cell": 1,
+  "kind": "true_fallback",
+  "Q2_size": 4,
+  "orig_charge": 1334281,
+  "orig_prog": [
+   "fold",
+   "math.gcd(abs(1), abs(first))",
+   "(acc + (first * (first * v)))",
+   "(acc - 1)"
+  ],
+  "orig_T4": true,
+  "repro_ok": true,
+  "sec_base": 6.3,
+  "extra_examples_to_reject": null,
+  "HOLD8": {
+   "charge": 1334281,
+   "prog": [
+    "fold",
+    "math.gcd(abs(1), abs(first))",
+    "(acc + (first * (first * v)))",
+    "(acc - 1)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 3.1
+  },
+  "DEV+4": {
+   "charge": 1334281,
+   "prog": [
+    "fold",
+    "math.gcd(abs(1), abs(first))",
+    "(acc + (first * (first * v)))",
+    "(acc - 1)"
+   ],
+   "T4_v1": true,
+   "T4_v1a": true,
+   "sec": 2.8
+  },
+  "orig_T4_direct": true
+ }
+]

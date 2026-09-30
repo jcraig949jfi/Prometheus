@@ -1,0 +1,3362 @@
+{
+ "CON/0": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + (v + first)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "daaa",
+    "role": "VALIDATE",
+    "source": "0|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + math.gcd(abs(v), abs(last))))",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "dbaa",
+    "role": "VALIDATE",
+    "source": "0|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + (last % v)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "dcaa",
+    "role": "TRANSFER",
+    "source": "0|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + (acc % v)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "ddaa",
+    "role": "TRANSFER",
+    "source": "0|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (acc - v))))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "diaa",
+    "role": "TRANSFER",
+    "source": "0|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "djaa",
+    "role": "TRANSFER",
+    "source": "0|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc // first)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "dqaa",
+    "role": "VALIDATE",
+    "source": "0|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc + 1)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "draa",
+    "role": "VALIDATE",
+    "source": "0|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc % v)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "dsaa",
+    "role": "TRANSFER",
+    "source": "0|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (first - acc)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "dtaa",
+    "role": "TRANSFER",
+    "source": "0|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (v + (last - acc)))",
+    "final": "pow(acc, 1)",
+    "init": "0",
+    "name": "dbba",
+    "role": "TRANSFER",
+    "source": "0|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (v + (acc % first)))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "dcba",
+    "role": "TRANSFER",
+    "source": "0|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (last - 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "dgba",
+    "role": "VALIDATE",
+    "source": "0|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (acc - first)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dhba",
+    "role": "VALIDATE",
+    "source": "0|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (v + 1)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "diba",
+    "role": "TRANSFER",
+    "source": "0|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (acc - last)))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "djba",
+    "role": "TRANSFER",
+    "source": "0|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc % first)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "doba",
+    "role": "TRANSFER",
+    "source": "0|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc + first)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "dpba",
+    "role": "TRANSFER",
+    "source": "0|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(acc), abs((v * first))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "ddca",
+    "role": "VALIDATE",
+    "source": "0|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 24,
+    "body": "(v * math.gcd(abs(acc), abs((first // last))))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "deca",
+    "role": "TRANSFER",
+    "source": "0|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v % (0 - (first - acc)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "0",
+    "name": "dmca",
+    "role": "OBSERVE",
+    "source": "0|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (acc + (v + first)))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dnca",
+    "role": "OBSERVE",
+    "source": "0|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (acc + (v + 0)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "doca",
+    "role": "OBSERVE",
+    "source": "0|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(acc), abs((first // v))))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "dpca",
+    "role": "OBSERVE",
+    "source": "0|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": false
+ },
+ "CON/1": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(v // (acc + math.gcd(abs(first), abs(last))))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "dsca",
+    "role": "VALIDATE",
+    "source": "1|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc + (first // first)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "dtca",
+    "role": "VALIDATE",
+    "source": "1|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // (acc + pow(1, first)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "duca",
+    "role": "TRANSFER",
+    "source": "1|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // (acc + math.gcd(abs(last), abs(1))))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "dvca",
+    "role": "TRANSFER",
+    "source": "1|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v + last))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "dada",
+    "role": "TRANSFER",
+    "source": "1|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "math.gcd(abs(0), abs((acc + (last % v))))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "dbda",
+    "role": "TRANSFER",
+    "source": "1|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - 1))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dida",
+    "role": "VALIDATE",
+    "source": "1|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - first))))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "dkda",
+    "role": "VALIDATE",
+    "source": "1|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (first - acc))))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "dlda",
+    "role": "TRANSFER",
+    "source": "1|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc * first))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "dnda",
+    "role": "TRANSFER",
+    "source": "1|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (1 - acc))))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "drda",
+    "role": "TRANSFER",
+    "source": "1|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - 1))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dtda",
+    "role": "TRANSFER",
+    "source": "1|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc + 1)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "daea",
+    "role": "VALIDATE",
+    "source": "1|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc + acc)))",
+    "final": "acc",
+    "init": "1",
+    "name": "dbea",
+    "role": "VALIDATE",
+    "source": "1|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc + first)))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "1",
+    "name": "dcea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc + last)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "ddea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc - 1)))",
+    "final": "(acc // last)",
+    "init": "1",
+    "name": "dgea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc + last)))",
+    "final": "acc",
+    "init": "1",
+    "name": "dhea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0)))))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "doea",
+    "role": "VALIDATE",
+    "source": "1|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "dpea",
+    "role": "VALIDATE",
+    "source": "1|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(1 - math.gcd(abs(acc), abs((acc + v))))",
+    "final": "math.gcd(abs(first), abs(acc))",
+    "init": "1",
+    "name": "dqea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(1 - math.gcd(abs(acc), abs((v - 1))))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "drea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * math.gcd(abs(acc), abs((first // v))))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "dxea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * math.gcd(abs(acc), abs((v // first))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "dzea",
+    "role": "TRANSFER",
+    "source": "1|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc + (0 - v)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "defa",
+    "role": "OBSERVE",
+    "source": "1|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (acc % math.gcd(abs(0), abs(v))))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "dffa",
+    "role": "OBSERVE",
+    "source": "1|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (acc - (last - 0)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "dgfa",
+    "role": "OBSERVE",
+    "source": "1|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs((acc + last))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "dhfa",
+    "role": "OBSERVE",
+    "source": "1|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/10": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(1 - (acc + (acc + v)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "dabb",
+    "role": "VALIDATE",
+    "source": "10|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (acc + (v * v)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "dbbb",
+    "role": "VALIDATE",
+    "source": "10|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (acc + (acc % v)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "dcbb",
+    "role": "TRANSFER",
+    "source": "10|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (acc + (v % first)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "ddbb",
+    "role": "TRANSFER",
+    "source": "10|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (acc + math.gcd(abs(v), abs(v))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "dgbb",
+    "role": "TRANSFER",
+    "source": "10|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(first - (acc + (v - first)))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "dhbb",
+    "role": "TRANSFER",
+    "source": "10|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v + (v + last)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "dpbb",
+    "role": "VALIDATE",
+    "source": "10|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v + math.gcd(abs(last), abs(1))))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "dqbb",
+    "role": "VALIDATE",
+    "source": "10|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v + (v // acc)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "drbb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v + (last - first)))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dsbb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(0 - (v + (acc + last)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "dbcb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (v + (1 - acc)))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dccb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(first + (v * (first - acc)))",
+    "final": "(last % acc)",
+    "init": "1",
+    "name": "decb",
+    "role": "VALIDATE",
+    "source": "10|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v * (acc + 1)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "dfcb",
+    "role": "VALIDATE",
+    "source": "10|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v * (acc + first)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dgcb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v * (acc - first)))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "dhcb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc - last)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "dmcb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc + acc)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "docb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs(pow(last, v))))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "dadb",
+    "role": "VALIDATE",
+    "source": "10|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs(first)))",
+    "final": "(0 - acc)",
+    "init": "1",
+    "name": "dbdb",
+    "role": "VALIDATE",
+    "source": "10|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs((v + v))))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "1",
+    "name": "ducb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(first)))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dxcb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(first)))))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "dcdb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((last - first))))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "dedb",
+    "role": "TRANSFER",
+    "source": "10|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(acc + (acc - (v // first)))",
+    "final": "math.gcd(abs(acc), abs(last))",
+    "init": "1",
+    "name": "dkdb",
+    "role": "OBSERVE",
+    "source": "10|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * math.gcd(abs(acc), abs((last % 1))))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "dldb",
+    "role": "OBSERVE",
+    "source": "10|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (last + (v + acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "dmdb",
+    "role": "OBSERVE",
+    "source": "10|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v + (1 * last)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "dndb",
+    "role": "OBSERVE",
+    "source": "10|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/11": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + math.gcd(abs(v), abs(last)))))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "dqdb",
+    "role": "VALIDATE",
+    "source": "11|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v + 1))))",
+    "final": "acc",
+    "init": "0",
+    "name": "drdb",
+    "role": "VALIDATE",
+    "source": "11|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v - 1))))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "dsdb",
+    "role": "TRANSFER",
+    "source": "11|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v + last))))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "dudb",
+    "role": "TRANSFER",
+    "source": "11|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(first - (acc + math.gcd(abs(v), abs(last))))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "daeb",
+    "role": "TRANSFER",
+    "source": "11|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(first - (acc + v))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "dbeb",
+    "role": "TRANSFER",
+    "source": "11|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v + math.gcd(abs(acc), abs(0))))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "dgeb",
+    "role": "VALIDATE",
+    "source": "11|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v + math.gcd(abs(acc), abs(last))))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "dheb",
+    "role": "VALIDATE",
+    "source": "11|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v + (acc + 1)))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dieb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last - (v + (acc - last)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "dkeb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (0 - acc)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "doeb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - (acc + v))",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "dpeb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (acc + v)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "dbfb",
+    "role": "VALIDATE",
+    "source": "11|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (acc - last)))",
+    "final": "pow(acc, 1)",
+    "init": "0",
+    "name": "dcfb",
+    "role": "VALIDATE",
+    "source": "11|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (first + 1)))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "ddfb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * math.gcd(abs(v), abs(last))))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "dweb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (last + last)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "defb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v * (last - v)))",
+    "final": "(acc + 0)",
+    "init": "0",
+    "name": "dffb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((1 - v))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dmfb",
+    "role": "VALIDATE",
+    "source": "11|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((v // acc))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dnfb",
+    "role": "VALIDATE",
+    "source": "11|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((first // v))))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "dofb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((v + first))))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "dpfb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs(pow(first, v))))",
+    "final": "(acc * last)",
+    "init": "1",
+    "name": "dbgb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((last - 1))))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "dvfb",
+    "role": "TRANSFER",
+    "source": "11|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + (0 + math.gcd(abs(acc), abs(last))))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "dcgb",
+    "role": "OBSERVE",
+    "source": "11|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (v * 1)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "ddgb",
+    "role": "OBSERVE",
+    "source": "11|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(1 - math.gcd(abs(acc), abs((last - v))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "degb",
+    "role": "OBSERVE",
+    "source": "11|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (last * (acc + 0)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "dfgb",
+    "role": "OBSERVE",
+    "source": "11|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/2": {
+  "families": [
+   {
+    "Q2_size": 24,
+    "body": "(last % (acc + (acc + v)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "dkfa",
+    "role": "VALIDATE",
+    "source": "2|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last % (acc + (acc - v)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "dlfa",
+    "role": "VALIDATE",
+    "source": "2|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % (acc + (v + first)))",
+    "final": "math.gcd(abs(acc), abs(last))",
+    "init": "1",
+    "name": "dmfa",
+    "role": "TRANSFER",
+    "source": "2|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last % (acc + (v - 1)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "dnfa",
+    "role": "TRANSFER",
+    "source": "2|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + (v + first)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "dsfa",
+    "role": "TRANSFER",
+    "source": "2|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + (acc % v)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "dtfa",
+    "role": "TRANSFER",
+    "source": "2|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc + 1)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "dbga",
+    "role": "VALIDATE",
+    "source": "2|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (first - acc)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "dcga",
+    "role": "VALIDATE",
+    "source": "2|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc - last)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dega",
+    "role": "TRANSFER",
+    "source": "2|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc // first)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "dfga",
+    "role": "TRANSFER",
+    "source": "2|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (acc - first)))",
+    "final": "(acc % first)",
+    "init": "0",
+    "name": "diga",
+    "role": "TRANSFER",
+    "source": "2|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v + (last - acc)))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "djga",
+    "role": "TRANSFER",
+    "source": "2|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc + last)))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "dqga",
+    "role": "VALIDATE",
+    "source": "2|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc + acc)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "drga",
+    "role": "VALIDATE",
+    "source": "2|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc + first)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "dsga",
+    "role": "TRANSFER",
+    "source": "2|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc - first)))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "dtga",
+    "role": "TRANSFER",
+    "source": "2|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (acc * v))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "daha",
+    "role": "TRANSFER",
+    "source": "2|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(first - (v * (acc + first)))",
+    "final": "(first % acc)",
+    "init": "1",
+    "name": "dbha",
+    "role": "TRANSFER",
+    "source": "2|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs(acc), abs((v // first))))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "dgha",
+    "role": "VALIDATE",
+    "source": "2|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((last - acc))))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "dhha",
+    "role": "VALIDATE",
+    "source": "2|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + math.gcd(abs(acc), abs((v // acc))))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "djha",
+    "role": "TRANSFER",
+    "source": "2|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + math.gcd(abs(acc), abs((v * first))))",
+    "final": "acc",
+    "init": "0",
+    "name": "dlha",
+    "role": "TRANSFER",
+    "source": "2|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * math.gcd(abs(acc), abs((v // first))))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dqha",
+    "role": "TRANSFER",
+    "source": "2|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * math.gcd(abs(acc), abs((last + last))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "dtha",
+    "role": "TRANSFER",
+    "source": "2|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (first - (acc + acc)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "daia",
+    "role": "OBSERVE",
+    "source": "2|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v + (1 // 1)))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "dbia",
+    "role": "OBSERVE",
+    "source": "2|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(v), abs((v // first))))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "dwha",
+    "role": "OBSERVE",
+    "source": "2|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (v * (acc - last)))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "dxha",
+    "role": "OBSERVE",
+    "source": "2|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/3": {
+  "families": [
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((acc + math.gcd(abs(v), abs(0)))))",
+    "final": "(first // acc)",
+    "init": "0",
+    "name": "dcia",
+    "role": "VALIDATE",
+    "source": "3|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((acc + math.gcd(abs(v), abs(first)))))",
+    "final": "(first // acc)",
+    "init": "0",
+    "name": "ddia",
+    "role": "VALIDATE",
+    "source": "3|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((acc + pow(v, first))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "deia",
+    "role": "TRANSFER",
+    "source": "3|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(first), abs((acc + (v % last))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dfia",
+    "role": "TRANSFER",
+    "source": "3|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // (acc + (v // v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "dkia",
+    "role": "TRANSFER",
+    "source": "3|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // (acc + math.gcd(abs(acc), abs(v))))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "dlia",
+    "role": "TRANSFER",
+    "source": "3|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - first))))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "dsia",
+    "role": "VALIDATE",
+    "source": "3|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - 1))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dvia",
+    "role": "VALIDATE",
+    "source": "3|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc * first))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "dxia",
+    "role": "TRANSFER",
+    "source": "3|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc + last))))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "dzia",
+    "role": "TRANSFER",
+    "source": "3|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (1 - acc))))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "daja",
+    "role": "TRANSFER",
+    "source": "3|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (first - acc))))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "dcja",
+    "role": "TRANSFER",
+    "source": "3|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (v * last)))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "dija",
+    "role": "VALIDATE",
+    "source": "3|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (v + 1)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "djja",
+    "role": "VALIDATE",
+    "source": "3|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (1 - v)))",
+    "final": "(1 + acc)",
+    "init": "1",
+    "name": "dkja",
+    "role": "TRANSFER",
+    "source": "3|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * (first % last)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "dmja",
+    "role": "TRANSFER",
+    "source": "3|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * (acc + v)))",
+    "final": "acc",
+    "init": "1",
+    "name": "dqja",
+    "role": "TRANSFER",
+    "source": "3|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * math.gcd(abs(acc), abs(acc))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "drja",
+    "role": "TRANSFER",
+    "source": "3|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs(pow(last, v))))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "daka",
+    "role": "VALIDATE",
+    "source": "3|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v // math.gcd(abs(acc), abs((v + v))))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "1",
+    "name": "dbka",
+    "role": "VALIDATE",
+    "source": "3|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v // math.gcd(abs(acc), abs(pow(last, acc))))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "dcka",
+    "role": "TRANSFER",
+    "source": "3|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs((1 - first))))",
+    "final": "acc",
+    "init": "1",
+    "name": "ddka",
+    "role": "TRANSFER",
+    "source": "3|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * math.gcd(abs(acc), abs((last + last))))",
+    "final": "(last * acc)",
+    "init": "1",
+    "name": "dika",
+    "role": "TRANSFER",
+    "source": "3|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v * math.gcd(abs(acc), abs((v // first))))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dmka",
+    "role": "TRANSFER",
+    "source": "3|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (last * (v - last)))",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "doka",
+    "role": "OBSERVE",
+    "source": "3|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v // (1 + acc)))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "dpka",
+    "role": "OBSERVE",
+    "source": "3|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + (1 - (last + acc)))",
+    "final": "pow(acc, 1)",
+    "init": "0",
+    "name": "dqka",
+    "role": "OBSERVE",
+    "source": "3|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - (acc + (v - 1)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "drka",
+    "role": "OBSERVE",
+    "source": "3|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/4": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(0 - (acc + math.gcd(abs(v), abs(last))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dala",
+    "role": "VALIDATE",
+    "source": "4|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(0 - (acc + math.gcd(abs(v), abs(0))))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "dbla",
+    "role": "VALIDATE",
+    "source": "4|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(0 - (acc + (first // v)))",
+    "final": "(acc * acc)",
+    "init": "1",
+    "name": "duka",
+    "role": "TRANSFER",
+    "source": "4|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (acc + (last // v)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "dvka",
+    "role": "TRANSFER",
+    "source": "4|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % (acc + (acc + v)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "dcla",
+    "role": "TRANSFER",
+    "source": "4|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(last % (acc + math.gcd(abs(v), abs(v))))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "ddla",
+    "role": "TRANSFER",
+    "source": "4|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc % last)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "dkla",
+    "role": "VALIDATE",
+    "source": "4|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc % first)))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "dlla",
+    "role": "VALIDATE",
+    "source": "4|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc + acc)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "dmla",
+    "role": "TRANSFER",
+    "source": "4|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (v - acc)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "dnla",
+    "role": "TRANSFER",
+    "source": "4|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "math.gcd(abs(last), abs((v + (acc + first))))",
+    "final": "(first + acc)",
+    "init": "1",
+    "name": "dsla",
+    "role": "TRANSFER",
+    "source": "4|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(last), abs((v + (1 - acc))))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dtla",
+    "role": "TRANSFER",
+    "source": "4|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(first - (v * (acc + first)))",
+    "final": "(first % acc)",
+    "init": "1",
+    "name": "dama",
+    "role": "VALIDATE",
+    "source": "4|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * (v - acc)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "dbma",
+    "role": "VALIDATE",
+    "source": "4|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * (acc - v)))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "dcma",
+    "role": "TRANSFER",
+    "source": "4|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * (acc + 1)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "ddma",
+    "role": "TRANSFER",
+    "source": "4|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc - first)))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "dima",
+    "role": "TRANSFER",
+    "source": "4|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc // v)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "djma",
+    "role": "TRANSFER",
+    "source": "4|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - math.gcd(abs(acc), abs((last * last))))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dqma",
+    "role": "VALIDATE",
+    "source": "4|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - math.gcd(abs(acc), abs((acc // first))))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "drma",
+    "role": "VALIDATE",
+    "source": "4|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - math.gcd(abs(acc), abs((last // v))))",
+    "final": "(last * acc)",
+    "init": "0",
+    "name": "dsma",
+    "role": "TRANSFER",
+    "source": "4|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - math.gcd(abs(acc), abs((last % first))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "dtma",
+    "role": "TRANSFER",
+    "source": "4|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(first)))))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dana",
+    "role": "TRANSFER",
+    "source": "4|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs((first - acc))))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "dcna",
+    "role": "TRANSFER",
+    "source": "4|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + (acc - (acc % last)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "dgna",
+    "role": "OBSERVE",
+    "source": "4|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (acc + (1 + v)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "dhna",
+    "role": "OBSERVE",
+    "source": "4|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (1 * (1 * acc)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dina",
+    "role": "OBSERVE",
+    "source": "4|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (v * math.gcd(abs(0), abs(acc))))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "djna",
+    "role": "OBSERVE",
+    "source": "4|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/5": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(first - (acc + math.gcd(abs(v), abs(first))))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "dmna",
+    "role": "VALIDATE",
+    "source": "5|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(first - (acc + math.gcd(abs(acc), abs(v))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "dnna",
+    "role": "VALIDATE",
+    "source": "5|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (acc + (v + first)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "dona",
+    "role": "TRANSFER",
+    "source": "5|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (acc + math.gcd(abs(v), abs(v))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "dpna",
+    "role": "TRANSFER",
+    "source": "5|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc + (first // first)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "daoa",
+    "role": "TRANSFER",
+    "source": "5|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v // (acc + math.gcd(abs(last), abs(1))))",
+    "final": "pow(acc, 1)",
+    "init": "1",
+    "name": "dboa",
+    "role": "TRANSFER",
+    "source": "5|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc + acc)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "dcoa",
+    "role": "VALIDATE",
+    "source": "5|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (v - acc)))",
+    "final": "(acc + 0)",
+    "init": "1",
+    "name": "ddoa",
+    "role": "VALIDATE",
+    "source": "5|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc * v)))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "deoa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v + (acc * first)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "0",
+    "name": "dgoa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(last), abs((v + (0 - acc))))",
+    "final": "(first // acc)",
+    "init": "0",
+    "name": "dkoa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(last), abs((v + (1 - acc))))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dloa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (v * (first - acc)))",
+    "final": "(first - acc)",
+    "init": "1",
+    "name": "dsoa",
+    "role": "VALIDATE",
+    "source": "5|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (v * (last - acc)))",
+    "final": "(0 + acc)",
+    "init": "0",
+    "name": "dtoa",
+    "role": "VALIDATE",
+    "source": "5|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (v * (acc % first)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "duoa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (v * (acc % last)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "0",
+    "name": "dvoa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc % first)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "dapa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(last + (v * (first - acc)))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dbpa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * math.gcd(abs(acc), abs((v // acc))))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "dipa",
+    "role": "VALIDATE",
+    "source": "5|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * math.gcd(abs(acc), abs((acc % v))))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "djpa",
+    "role": "VALIDATE",
+    "source": "5|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * math.gcd(abs(acc), abs((v * last))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "dmpa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * math.gcd(abs(acc), abs(pow(first, first))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "dppa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // math.gcd(abs(acc), abs(pow(last, v))))",
+    "final": "(acc - 0)",
+    "init": "1",
+    "name": "dqpa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v // math.gcd(abs(acc), abs((first + 1))))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dspa",
+    "role": "TRANSFER",
+    "source": "5|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (0 - (first - acc)))",
+    "final": "(first % acc)",
+    "init": "1",
+    "name": "daqa",
+    "role": "OBSERVE",
+    "source": "5|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (last - (v + 1)))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "dbqa",
+    "role": "OBSERVE",
+    "source": "5|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc // pow(1, 1)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dcqa",
+    "role": "OBSERVE",
+    "source": "5|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc * 1)))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "ddqa",
+    "role": "OBSERVE",
+    "source": "5|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/6": {
+  "families": [
+   {
+    "Q2_size": 12,
+    "body": "(last % (acc + (v + 1)))",
+    "final": "math.gcd(abs(last), abs(acc))",
+    "init": "0",
+    "name": "deqa",
+    "role": "VALIDATE",
+    "source": "6|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last % (acc + math.gcd(abs(v), abs(0))))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "dfqa",
+    "role": "VALIDATE",
+    "source": "6|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last % (acc + (v - 1)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "dgqa",
+    "role": "TRANSFER",
+    "source": "6|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(last % (acc + v))",
+    "final": "(first - acc)",
+    "init": "0",
+    "name": "dhqa",
+    "role": "TRANSFER",
+    "source": "6|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v // (acc + math.gcd(abs(1), abs(1))))",
+    "final": "(acc - 1)",
+    "init": "1",
+    "name": "dmqa",
+    "role": "TRANSFER",
+    "source": "6|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v // (acc + pow(1, first)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "dnqa",
+    "role": "TRANSFER",
+    "source": "6|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc // last)))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "dbra",
+    "role": "VALIDATE",
+    "source": "6|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (v - acc)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "0",
+    "name": "duqa",
+    "role": "VALIDATE",
+    "source": "6|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + math.gcd(abs(acc), abs(0))))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "1",
+    "name": "dvqa",
+    "role": "TRANSFER",
+    "source": "6|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc % last)))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "dwqa",
+    "role": "TRANSFER",
+    "source": "6|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - 1))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dcra",
+    "role": "TRANSFER",
+    "source": "6|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((v + (acc - first))))",
+    "final": "(acc * first)",
+    "init": "0",
+    "name": "dera",
+    "role": "TRANSFER",
+    "source": "6|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v * (acc - 1)))",
+    "final": "(acc - first)",
+    "init": "0",
+    "name": "dkra",
+    "role": "VALIDATE",
+    "source": "6|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v * (acc % last)))",
+    "final": "(last * acc)",
+    "init": "0",
+    "name": "dlra",
+    "role": "VALIDATE",
+    "source": "6|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first + (v * (acc - last)))",
+    "final": "(acc - 0)",
+    "init": "0",
+    "name": "dmra",
+    "role": "TRANSFER",
+    "source": "6|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(first + (v * (acc % v)))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dnra",
+    "role": "TRANSFER",
+    "source": "6|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first - (v * (acc // first)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "dsra",
+    "role": "TRANSFER",
+    "source": "6|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(first - (v * (acc + first)))",
+    "final": "(first % acc)",
+    "init": "1",
+    "name": "dtra",
+    "role": "TRANSFER",
+    "source": "6|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * math.gcd(abs(acc), abs((v // acc))))",
+    "final": "(last - acc)",
+    "init": "1",
+    "name": "dbsa",
+    "role": "VALIDATE",
+    "source": "6|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * math.gcd(abs(acc), abs(pow(first, first))))",
+    "final": "(first * acc)",
+    "init": "1",
+    "name": "dgsa",
+    "role": "VALIDATE",
+    "source": "6|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(acc), abs((first % v))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "disa",
+    "role": "TRANSFER",
+    "source": "6|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - math.gcd(abs(acc), abs((last - v))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "dmsa",
+    "role": "TRANSFER",
+    "source": "6|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc - (first % (1 + v)))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "dqsa",
+    "role": "OBSERVE",
+    "source": "6|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (first + (first - acc)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "drsa",
+    "role": "OBSERVE",
+    "source": "6|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + (last - (acc + first)))",
+    "final": "(acc // last)",
+    "init": "0",
+    "name": "dssa",
+    "role": "OBSERVE",
+    "source": "6|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (acc + (acc + v)))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "1",
+    "name": "dtsa",
+    "role": "OBSERVE",
+    "source": "6|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": false
+ },
+ "CON/7": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + math.gcd(abs(v), abs(last)))))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "data",
+    "role": "VALIDATE",
+    "source": "7|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v + first))))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "dbta",
+    "role": "VALIDATE",
+    "source": "7|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (first % v))))",
+    "final": "(last + acc)",
+    "init": "0",
+    "name": "ddta",
+    "role": "TRANSFER",
+    "source": "7|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v - 1))))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "dwsa",
+    "role": "TRANSFER",
+    "source": "7|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (acc + (v * last)))",
+    "final": "(last * acc)",
+    "init": "0",
+    "name": "deta",
+    "role": "TRANSFER",
+    "source": "7|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(0 - (acc + (v - last)))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "dfta",
+    "role": "TRANSFER",
+    "source": "7|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc % v)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "dmta",
+    "role": "VALIDATE",
+    "source": "7|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc - last)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dota",
+    "role": "VALIDATE",
+    "source": "7|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc + 1)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "dpta",
+    "role": "TRANSFER",
+    "source": "7|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (v + (acc + acc)))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dqta",
+    "role": "TRANSFER",
+    "source": "7|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (first - acc)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "daua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc % v)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "0",
+    "name": "dbua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc + 1)))",
+    "final": "(first + acc)",
+    "init": "0",
+    "name": "dcua",
+    "role": "VALIDATE",
+    "source": "7|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc + v)))",
+    "final": "(acc // last)",
+    "init": "0",
+    "name": "ddua",
+    "role": "VALIDATE",
+    "source": "7|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (first - acc)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "deua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc - 1)))",
+    "final": "(acc * 1)",
+    "init": "0",
+    "name": "dfua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (v * (acc // first)))",
+    "final": "(1 - acc)",
+    "init": "0",
+    "name": "dkua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (v * math.gcd(abs(acc), abs(0))))",
+    "final": "(last % acc)",
+    "init": "1",
+    "name": "dlua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(acc + math.gcd(abs(acc), abs(pow(v, first))))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "1",
+    "name": "dsua",
+    "role": "VALIDATE",
+    "source": "7|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 24,
+    "body": "(acc + math.gcd(abs(acc), abs((v % last))))",
+    "final": "(last % acc)",
+    "init": "1",
+    "name": "dtua",
+    "role": "VALIDATE",
+    "source": "7|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(acc), abs((v + first))))",
+    "final": "(last - acc)",
+    "init": "0",
+    "name": "duua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 16,
+    "body": "(acc + math.gcd(abs(acc), abs((v // first))))",
+    "final": "math.gcd(abs(last), abs(acc))",
+    "init": "1",
+    "name": "dzua",
+    "role": "TRANSFER",
+    "source": "7|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + math.gcd(abs(acc), abs((1 // last))))",
+    "final": "(0 + acc)",
+    "init": "1",
+    "name": "dava",
+    "role": "TRANSFER",
+    "source": "7|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs(pow(first, first))))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dbva",
+    "role": "TRANSFER",
+    "source": "7|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + (acc % (first + first)))",
+    "final": "math.gcd(abs(acc), abs(first))",
+    "init": "0",
+    "name": "diva",
+    "role": "OBSERVE",
+    "source": "7|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc * (v // (1 // 1)))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "djva",
+    "role": "OBSERVE",
+    "source": "7|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + pow(v, (1 + 1)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "dkva",
+    "role": "OBSERVE",
+    "source": "7|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 + (acc - (v - last)))",
+    "final": "(acc + first)",
+    "init": "0",
+    "name": "dlva",
+    "role": "OBSERVE",
+    "source": "7|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/8": {
+  "families": [
+   {
+    "Q2_size": 4,
+    "body": "(last % (acc + (acc - v)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "dova",
+    "role": "VALIDATE",
+    "source": "8|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(last % (acc + (v + 1)))",
+    "final": "math.gcd(abs(last), abs(acc))",
+    "init": "0",
+    "name": "dpva",
+    "role": "VALIDATE",
+    "source": "8|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(last % (acc + math.gcd(abs(v), abs(0))))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "dqva",
+    "role": "TRANSFER",
+    "source": "8|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(last % (acc + math.gcd(abs(v), abs(v))))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "drva",
+    "role": "TRANSFER",
+    "source": "8|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(first), abs((acc + math.gcd(abs(v), abs(0)))))",
+    "final": "(first // acc)",
+    "init": "0",
+    "name": "dawa",
+    "role": "TRANSFER",
+    "source": "8|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 24,
+    "body": "math.gcd(abs(first), abs((acc + math.gcd(abs(v), abs(first)))))",
+    "final": "(first // acc)",
+    "init": "0",
+    "name": "dbwa",
+    "role": "TRANSFER",
+    "source": "8|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc // first)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "dewa",
+    "role": "VALIDATE",
+    "source": "8|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (acc % first)))",
+    "final": "(1 + acc)",
+    "init": "0",
+    "name": "dfwa",
+    "role": "VALIDATE",
+    "source": "8|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v * (v + (acc % last)))",
+    "final": "(acc % first)",
+    "init": "1",
+    "name": "dgwa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v * (v + (first - acc)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "diwa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc % last)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "dmwa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (acc + acc)))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "dnwa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc - last)))",
+    "final": "(acc - last)",
+    "init": "1",
+    "name": "daxa",
+    "role": "VALIDATE",
+    "source": "8|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc + 1)))",
+    "final": "acc",
+    "init": "0",
+    "name": "dbxa",
+    "role": "VALIDATE",
+    "source": "8|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (acc + v)))",
+    "final": "(1 - acc)",
+    "init": "1",
+    "name": "duwa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last - (v * (1 - acc)))",
+    "final": "math.gcd(abs(0), abs(acc))",
+    "init": "0",
+    "name": "dvwa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (0 - acc)))",
+    "final": "(first * acc)",
+    "init": "0",
+    "name": "dcxa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(last + (v * (acc // v)))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "ddxa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((last + 1))))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "dkxa",
+    "role": "VALIDATE",
+    "source": "8|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((acc // v))))",
+    "final": "acc",
+    "init": "0",
+    "name": "dlxa",
+    "role": "VALIDATE",
+    "source": "8|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + math.gcd(abs(acc), abs((acc + first))))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "dnxa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(v + math.gcd(abs(acc), abs(last)))",
+    "final": "(1 * acc)",
+    "init": "1",
+    "name": "doxa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((v + first))))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "dsxa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((first - v))))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "dtxa",
+    "role": "TRANSFER",
+    "source": "8|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(acc + math.gcd(abs(v), abs((v // acc))))",
+    "final": "(acc + acc)",
+    "init": "1",
+    "name": "daya",
+    "role": "OBSERVE",
+    "source": "8|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + (v // math.gcd(abs(1), abs(v))))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "dbya",
+    "role": "OBSERVE",
+    "source": "8|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v + (first + (last - acc)))",
+    "final": "(acc % last)",
+    "init": "1",
+    "name": "dcya",
+    "role": "OBSERVE",
+    "source": "8|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 12,
+    "body": "(1 - math.gcd(abs(acc), abs((v % first))))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "deya",
+    "role": "OBSERVE",
+    "source": "8|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ },
+ "CON/9": {
+  "families": [
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc + (1 - last)))",
+    "final": "(acc * acc)",
+    "init": "0",
+    "name": "dgya",
+    "role": "VALIDATE",
+    "source": "9|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(v - (acc + (first * first)))",
+    "final": "(acc + last)",
+    "init": "1",
+    "name": "dhya",
+    "role": "VALIDATE",
+    "source": "9|G1|MOTIF",
+    "tclass": "G1:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v - (acc + math.gcd(abs(last), abs(0))))",
+    "final": "(last + acc)",
+    "init": "1",
+    "name": "diya",
+    "role": "TRANSFER",
+    "source": "9|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v - (acc + (last % v)))",
+    "final": "(acc + first)",
+    "init": "1",
+    "name": "djya",
+    "role": "TRANSFER",
+    "source": "9|G1|MOTIF",
+    "tclass": "G1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((acc + (v % first))))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "dqya",
+    "role": "TRANSFER",
+    "source": "9|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(0), abs((acc + (v % last))))",
+    "final": "(acc + 1)",
+    "init": "0",
+    "name": "drya",
+    "role": "TRANSFER",
+    "source": "9|G1|OTHER",
+    "tclass": "G1:OTHER"
+   },
+   {
+    "Q2_size": 24,
+    "body": "math.gcd(abs(last), abs((v + (acc * acc))))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "daza",
+    "role": "VALIDATE",
+    "source": "9|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(last), abs((v + (acc % v))))",
+    "final": "math.gcd(abs(last), abs(acc))",
+    "init": "1",
+    "name": "dbza",
+    "role": "VALIDATE",
+    "source": "9|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:MOTIF"
+   },
+   {
+    "Q2_size": 12,
+    "body": "math.gcd(abs(last), abs((v + (acc - last))))",
+    "final": "(first // acc)",
+    "init": "1",
+    "name": "dcza",
+    "role": "TRANSFER",
+    "source": "9|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 16,
+    "body": "math.gcd(abs(last), abs((v + (0 - acc))))",
+    "final": "(first // acc)",
+    "init": "0",
+    "name": "ddza",
+    "role": "TRANSFER",
+    "source": "9|SHAM_0|MOTIF",
+    "tclass": "SHAM_0:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (1 - acc)))",
+    "final": "(acc % last)",
+    "init": "0",
+    "name": "deza",
+    "role": "TRANSFER",
+    "source": "9|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(first * (v + (v - acc)))",
+    "final": "math.gcd(abs(acc), abs(acc))",
+    "init": "0",
+    "name": "dfza",
+    "role": "TRANSFER",
+    "source": "9|SHAM_0|OTHER",
+    "tclass": "SHAM_0:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (v - acc)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dmza",
+    "role": "VALIDATE",
+    "source": "9|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc % first)))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "dnza",
+    "role": "VALIDATE",
+    "source": "9|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:MOTIF"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (first - acc)))",
+    "final": "(1 * acc)",
+    "init": "0",
+    "name": "dpza",
+    "role": "TRANSFER",
+    "source": "9|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (v * (acc // v)))",
+    "final": "(acc - first)",
+    "init": "1",
+    "name": "dqza",
+    "role": "TRANSFER",
+    "source": "9|SHAM_1|MOTIF",
+    "tclass": "SHAM_1:SAME"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (acc - last)))",
+    "final": "(acc // 1)",
+    "init": "1",
+    "name": "daab",
+    "role": "TRANSFER",
+    "source": "9|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(1 - (v * (acc + last)))",
+    "final": "(0 - acc)",
+    "init": "0",
+    "name": "dbab",
+    "role": "TRANSFER",
+    "source": "9|SHAM_1|OTHER",
+    "tclass": "SHAM_1:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((first - v))))",
+    "final": "(acc + last)",
+    "init": "0",
+    "name": "dcab",
+    "role": "VALIDATE",
+    "source": "9|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((acc - v))))",
+    "final": "(acc - 1)",
+    "init": "0",
+    "name": "ddab",
+    "role": "VALIDATE",
+    "source": "9|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:MOTIF"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((v + 1))))",
+    "final": "(acc * first)",
+    "init": "1",
+    "name": "deab",
+    "role": "TRANSFER",
+    "source": "9|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(1 - math.gcd(abs(acc), abs((v - last))))",
+    "final": "(acc // 1)",
+    "init": "0",
+    "name": "dfab",
+    "role": "TRANSFER",
+    "source": "9|SHAM_2|MOTIF",
+    "tclass": "SHAM_2:SAME"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs(first)))",
+    "final": "(acc * last)",
+    "init": "0",
+    "name": "dlab",
+    "role": "TRANSFER",
+    "source": "9|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 8,
+    "body": "(v + math.gcd(abs(acc), abs((acc // first))))",
+    "final": "acc",
+    "init": "1",
+    "name": "dmab",
+    "role": "TRANSFER",
+    "source": "9|SHAM_2|OTHER",
+    "tclass": "SHAM_2:OTHER"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(acc + math.gcd(abs(v), abs(v)))",
+    "final": "math.gcd(abs(acc), abs(0))",
+    "init": "0",
+    "name": "dsab",
+    "role": "OBSERVE",
+    "source": "9|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "math.gcd(abs(0), abs((first - (acc * v))))",
+    "final": "(acc + 1)",
+    "init": "1",
+    "name": "dtab",
+    "role": "OBSERVE",
+    "source": "9|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 4,
+    "body": "(v + (acc * (first // 1)))",
+    "final": "(acc // first)",
+    "init": "1",
+    "name": "duab",
+    "role": "OBSERVE",
+    "source": "9|NAT|NAT",
+    "tclass": "OBS"
+   },
+   {
+    "Q2_size": 6,
+    "body": "(last + (0 - (acc + v)))",
+    "final": "(acc * 1)",
+    "init": "1",
+    "name": "dvab",
+    "role": "OBSERVE",
+    "source": "9|NAT|NAT",
+    "tclass": "OBS"
+   }
+  ],
+  "ok": true
+ }
+}

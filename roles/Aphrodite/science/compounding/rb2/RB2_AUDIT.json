@@ -1,0 +1,3448 @@
+{
+ "forensic": "not a disposition; nothing here is Campaign 1 evidence",
+ "seed_label": "APHRODITE/COMPOUNDING/RB2/v1",
+ "N_per_stratum": 1500,
+ "k1_reproduction": {
+  "exact": true,
+  "mismatches": {},
+  "reproduced": {
+   "add": {
+    "n": 1500,
+    "invariant": 835,
+    "struct_ok": 774,
+    "nondegenerate": 636,
+    "admissible": 334,
+    "g1_body": 816,
+    "stress_none_any": 450,
+    "admissible_and_g1": 319,
+    "admissible_not_g1": 15
+   },
+   "sub": {
+    "n": 1500,
+    "invariant": 667,
+    "struct_ok": 615,
+    "nondegenerate": 659,
+    "admissible": 256,
+    "g1_body": 612,
+    "stress_none_any": 497,
+    "admissible_and_g1": 252,
+    "admissible_not_g1": 4
+   },
+   "mul": {
+    "n": 1500,
+    "invariant": 763,
+    "struct_ok": 604,
+    "nondegenerate": 318,
+    "admissible": 17,
+    "g1_body": 303,
+    "stress_none_any": 796,
+    "admissible_and_g1": 12,
+    "admissible_not_g1": 5
+   },
+   "fdiv": {
+    "n": 1500,
+    "invariant": 462,
+    "struct_ok": 456,
+    "nondegenerate": 156,
+    "admissible": 1,
+    "g1_body": 225,
+    "stress_none_any": 868,
+    "admissible_and_g1": 0,
+    "admissible_not_g1": 1
+   },
+   "mod": {
+    "n": 1500,
+    "invariant": 488,
+    "struct_ok": 485,
+    "nondegenerate": 103,
+    "admissible": 11,
+    "g1_body": 275,
+    "stress_none_any": 903,
+    "admissible_and_g1": 0,
+    "admissible_not_g1": 11
+   },
+   "gcd": {
+    "n": 1500,
+    "invariant": 1035,
+    "struct_ok": 1019,
+    "nondegenerate": 370,
+    "admissible": 110,
+    "g1_body": 202,
+    "stress_none_any": 187,
+    "admissible_and_g1": 0,
+    "admissible_not_g1": 110
+   },
+   "powr": {
+    "n": 1500,
+    "invariant": 797,
+    "struct_ok": 782,
+    "nondegenerate": 94,
+    "admissible": 8,
+    "g1_body": 234,
+    "stress_none_any": 572,
+    "admissible_and_g1": 0,
+    "admissible_not_g1": 8
+   }
+  }
+ },
+ "variants": {
+  "V0": {
+   "inv": true,
+   "prefix": false,
+   "stress": 200,
+   "ce_ks": [
+    2,
+    3,
+    80,
+    150
+   ],
+   "sem": "exact",
+   "inits": "H1"
+  },
+  "V1": {
+   "inv": false,
+   "prefix": false,
+   "stress": 200,
+   "ce_ks": [
+    2,
+    3,
+    80,
+    150
+   ],
+   "sem": "exact",
+   "inits": "H1"
+  },
+  "V2": {
+   "inv": false,
+   "prefix": true,
+   "stress": 200,
+   "ce_ks": [
+    2,
+    3,
+    80,
+    150
+   ],
+   "sem": "exact",
+   "inits": "H1"
+  },
+  "V3": {
+   "inv": true,
+   "prefix": false,
+   "stress": 60,
+   "ce_ks": [
+    2,
+    3,
+    40,
+    60
+   ],
+   "sem": "exact",
+   "inits": "H1"
+  },
+  "V4": {
+   "inv": true,
+   "prefix": false,
+   "stress": 200,
+   "ce_ks": [
+    2,
+    3,
+    80,
+    150
+   ],
+   "sem": "modP",
+   "inits": "H1"
+  },
+  "V5": {
+   "inv": true,
+   "prefix": false,
+   "stress": 200,
+   "ce_ks": [
+    2,
+    3,
+    80,
+    150
+   ],
+   "sem": "exact",
+   "inits": "WIDE"
+  },
+  "V6": {
+   "inv": false,
+   "prefix": false,
+   "stress": 60,
+   "ce_ks": [
+    2,
+    3,
+    40,
+    60
+   ],
+   "sem": "exact",
+   "inits": "WIDE"
+  },
+  "V7_T4_WIDE": {
+   "tribunal": "T4 family_profile",
+   "inits": "WIDE"
+  },
+  "V8_T4_H1": {
+   "tribunal": "T4 family_profile",
+   "inits": "H1"
+  }
+ },
+ "q2_cached_validation": {
+  "n": 40,
+  "agree": 40,
+  "disagreements": []
+ },
+ "table": {
+  "V0": {
+   "add": {
+    "draws": 1500,
+    "admissible": 325,
+    "genuinely_non_additive": 0,
+    "Q2_pass_admissible": 304,
+    "Q2_pass_rate": 0.935,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 70,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 19,
+    "window_fraction": 0.271,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 3,
+     "LAST_INSENSITIVE": 9,
+     "MIDDLE_INSENSITIVE": 9,
+     "CONSTANT_OR_NEAR_CONSTANT": 26,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 3,
+     "POW_GUARD_HIT": 1,
+     "ANY_T4_REASON": 32
+    },
+    "non_additive_OLD_qualified_either": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 230,
+    "genuinely_non_additive": 2,
+    "Q2_pass_admissible": 219,
+    "Q2_pass_rate": 0.952,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 64,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 9,
+    "window_fraction": 0.141,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 35,
+     "LAST_INSENSITIVE": 9,
+     "MIDDLE_INSENSITIVE": 9,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 5,
+     "POW_GUARD_HIT": 3,
+     "FIXED_POINT_DYNAMICS": 1,
+     "ANY_T4_REASON": 39
+    },
+    "non_additive_OLD_qualified_either": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 20,
+    "genuinely_non_additive": 5,
+    "Q2_pass_admissible": 13,
+    "Q2_pass_rate": 0.65,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 13,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": 0.0,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 4,
+     "LAST_INSENSITIVE": 6,
+     "MIDDLE_INSENSITIVE": 6,
+     "FIXED_POINT_DYNAMICS": 2,
+     "COPIES_INPUT": 2,
+     "ANY_T4_REASON": 6
+    },
+    "non_additive_OLD_qualified_either": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 3,
+    "genuinely_non_additive": 3,
+    "Q2_pass_admissible": 0,
+    "Q2_pass_rate": 0.0,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 0,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": null,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 3,
+     "LAST_INSENSITIVE": 3,
+     "MIDDLE_INSENSITIVE": 3,
+     "CONSTANT_OR_NEAR_CONSTANT": 1,
+     "ANY_T4_REASON": 3
+    },
+    "non_additive_OLD_qualified_either": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 13,
+    "genuinely_non_additive": 13,
+    "Q2_pass_admissible": 4,
+    "Q2_pass_rate": 0.308,
+    "non_additive_Q2_pass": 4,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 1,
+    "solvability_tested": 4,
+    "solvability_tested_non_additive": 4,
+    "non_additive_PRISTINE_any": 2,
+    "non_additive_L1_any": 4,
+    "non_additive_either": 4,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 2,
+    "window_fraction": 0.5,
+    "window_fraction_non_additive": 0.5,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 4,
+     "LAST_INSENSITIVE": 9,
+     "MIDDLE_INSENSITIVE": 9,
+     "COPIES_INPUT": 2,
+     "CONSTANT_OR_NEAR_CONSTANT": 1,
+     "ANY_T4_REASON": 9
+    },
+    "non_additive_OLD_qualified_either": 4,
+    "yield_per_1000_nonadd_Q2_solvable": 2.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 107,
+    "genuinely_non_additive": 98,
+    "Q2_pass_admissible": 17,
+    "Q2_pass_rate": 0.159,
+    "non_additive_Q2_pass": 9,
+    "non_additive_Q2_pass_non_G1_extensional": 9,
+    "distinct_non_additive_Q2_bodies": 4,
+    "solvability_tested": 17,
+    "solvability_tested_non_additive": 9,
+    "non_additive_PRISTINE_any": 2,
+    "non_additive_L1_any": 2,
+    "non_additive_either": 4,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 2,
+    "window_fraction": 0.118,
+    "window_fraction_non_additive": 0.222,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 26,
+     "FIXED_POINT_DYNAMICS": 86,
+     "LAST_INSENSITIVE": 98,
+     "MIDDLE_INSENSITIVE": 98,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 7,
+     "POW_GUARD_HIT": 1,
+     "COPIES_INPUT": 32,
+     "ANY_T4_REASON": 100
+    },
+    "non_additive_OLD_qualified_either": 2,
+    "yield_per_1000_nonadd_Q2_solvable": 2.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 2.67
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 6,
+    "genuinely_non_additive": 6,
+    "Q2_pass_admissible": 0,
+    "Q2_pass_rate": 0.0,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 0,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": null,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 4,
+     "LAST_INSENSITIVE": 6,
+     "MIDDLE_INSENSITIVE": 6,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 4,
+     "POW_GUARD_HIT": 4,
+     "COPIES_INPUT": 1,
+     "FIXED_POINT_DYNAMICS": 2,
+     "ANY_T4_REASON": 6
+    },
+    "non_additive_OLD_qualified_either": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 704,
+    "genuinely_non_additive": 127,
+    "Q2_pass_admissible": 557,
+    "Q2_pass_rate": 0.791,
+    "non_additive_Q2_pass": 13,
+    "non_additive_Q2_pass_non_G1_extensional": 9,
+    "distinct_non_additive_Q2_bodies": 5,
+    "solvability_tested": 168,
+    "solvability_tested_non_additive": 13,
+    "non_additive_PRISTINE_any": 4,
+    "non_additive_L1_any": 6,
+    "non_additive_either": 8,
+    "non_additive_L1_only": 4,
+    "window_PRISTINE_1to3_of_4": 32,
+    "window_fraction": 0.19,
+    "window_fraction_non_additive": 0.308,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 40,
+     "LAST_INSENSITIVE": 140,
+     "MIDDLE_INSENSITIVE": 140,
+     "CONSTANT_OR_NEAR_CONSTANT": 97,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 19,
+     "POW_GUARD_HIT": 9,
+     "FIXED_POINT_DYNAMICS": 98,
+     "ANY_T4_REASON": 195
+    },
+    "non_additive_OLD_qualified_either": 6,
+    "yield_per_1000_nonadd_Q2_solvable": 0.76,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.38
+   }
+  },
+  "V1": {
+   "add": {
+    "draws": 1500,
+    "admissible": 576,
+    "genuinely_non_additive": 215,
+    "Q2_pass_admissible": 527,
+    "Q2_pass_rate": 0.915,
+    "non_additive_Q2_pass": 189,
+    "non_additive_Q2_pass_non_G1_extensional": 153,
+    "distinct_non_additive_Q2_bodies": 49,
+    "solvability_tested": 262,
+    "solvability_tested_non_additive": 189,
+    "non_additive_PRISTINE_any": 97,
+    "non_additive_L1_any": 90,
+    "non_additive_either": 112,
+    "non_additive_L1_only": 15,
+    "window_PRISTINE_1to3_of_4": 46,
+    "window_fraction": 0.176,
+    "window_fraction_non_additive": 0.143,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 14,
+     "LAST_INSENSITIVE": 21,
+     "MIDDLE_INSENSITIVE": 158,
+     "CONSTANT_OR_NEAR_CONSTANT": 52,
+     "BODY_IGNORES_ACC": 36,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 6,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "POW_GUARD_HIT": 3,
+     "ANY_T4_REASON": 187
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 74.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 50.67
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 565,
+    "genuinely_non_additive": 277,
+    "Q2_pass_admissible": 529,
+    "Q2_pass_rate": 0.936,
+    "non_additive_Q2_pass": 261,
+    "non_additive_Q2_pass_non_G1_extensional": 233,
+    "distinct_non_additive_Q2_bodies": 67,
+    "solvability_tested": 329,
+    "solvability_tested_non_additive": 261,
+    "non_additive_PRISTINE_any": 145,
+    "non_additive_L1_any": 128,
+    "non_additive_either": 152,
+    "non_additive_L1_only": 7,
+    "window_PRISTINE_1to3_of_4": 44,
+    "window_fraction": 0.134,
+    "window_fraction_non_additive": 0.134,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 150,
+     "CONSTANT_OR_NEAR_CONSTANT": 79,
+     "LAST_INSENSITIVE": 14,
+     "COPIES_INPUT": 18,
+     "BODY_IGNORES_ACC": 58,
+     "NONE_ON_DEV_DISTRIBUTION": 7,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 20,
+     "POW_GUARD_HIT": 8,
+     "FIXED_POINT_DYNAMICS": 1,
+     "ANY_T4_REASON": 214
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 101.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 82.67
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 102,
+    "genuinely_non_additive": 69,
+    "Q2_pass_admissible": 87,
+    "Q2_pass_rate": 0.853,
+    "non_additive_Q2_pass": 61,
+    "non_additive_Q2_pass_non_G1_extensional": 52,
+    "distinct_non_additive_Q2_bodies": 17,
+    "solvability_tested": 83,
+    "solvability_tested_non_additive": 61,
+    "non_additive_PRISTINE_any": 51,
+    "non_additive_L1_any": 39,
+    "non_additive_either": 52,
+    "non_additive_L1_only": 1,
+    "window_PRISTINE_1to3_of_4": 21,
+    "window_fraction": 0.253,
+    "window_fraction_non_additive": 0.344,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 73,
+     "BODY_IGNORES_ACC": 18,
+     "CONSTANT_OR_NEAR_CONSTANT": 14,
+     "LAST_INSENSITIVE": 9,
+     "FIXED_POINT_DYNAMICS": 2,
+     "COPIES_INPUT": 8,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 3,
+     "POW_GUARD_HIT": 2,
+     "ANY_T4_REASON": 80
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 34.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 28.67
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 136,
+    "genuinely_non_additive": 123,
+    "Q2_pass_admissible": 88,
+    "Q2_pass_rate": 0.647,
+    "non_additive_Q2_pass": 79,
+    "non_additive_Q2_pass_non_G1_extensional": 75,
+    "distinct_non_additive_Q2_bodies": 24,
+    "solvability_tested": 88,
+    "solvability_tested_non_additive": 79,
+    "non_additive_PRISTINE_any": 26,
+    "non_additive_L1_any": 15,
+    "non_additive_either": 31,
+    "non_additive_L1_only": 5,
+    "window_PRISTINE_1to3_of_4": 22,
+    "window_fraction": 0.25,
+    "window_fraction_non_additive": 0.278,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 114,
+     "BODY_IGNORES_ACC": 13,
+     "CONSTANT_OR_NEAR_CONSTANT": 37,
+     "LAST_INSENSITIVE": 18,
+     "FIXED_POINT_DYNAMICS": 3,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 1,
+     "COPIES_INPUT": 3,
+     "ANY_T4_REASON": 118
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 20.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 18.0
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 102,
+    "genuinely_non_additive": 102,
+    "Q2_pass_admissible": 79,
+    "Q2_pass_rate": 0.775,
+    "non_additive_Q2_pass": 79,
+    "non_additive_Q2_pass_non_G1_extensional": 71,
+    "distinct_non_additive_Q2_bodies": 21,
+    "solvability_tested": 79,
+    "solvability_tested_non_additive": 79,
+    "non_additive_PRISTINE_any": 26,
+    "non_additive_L1_any": 16,
+    "non_additive_either": 35,
+    "non_additive_L1_only": 9,
+    "window_PRISTINE_1to3_of_4": 22,
+    "window_fraction": 0.278,
+    "window_fraction_non_additive": 0.278,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 26,
+     "MIDDLE_INSENSITIVE": 67,
+     "FIXED_POINT_DYNAMICS": 5,
+     "LAST_INSENSITIVE": 12,
+     "COPIES_INPUT": 5,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 2,
+     "POW_GUARD_HIT": 1,
+     "ANY_T4_REASON": 74
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 23.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 18.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 350,
+    "genuinely_non_additive": 314,
+    "Q2_pass_admissible": 213,
+    "Q2_pass_rate": 0.609,
+    "non_additive_Q2_pass": 182,
+    "non_additive_Q2_pass_non_G1_extensional": 171,
+    "distinct_non_additive_Q2_bodies": 56,
+    "solvability_tested": 207,
+    "solvability_tested_non_additive": 182,
+    "non_additive_PRISTINE_any": 75,
+    "non_additive_L1_any": 60,
+    "non_additive_either": 89,
+    "non_additive_L1_only": 14,
+    "window_PRISTINE_1to3_of_4": 49,
+    "window_fraction": 0.237,
+    "window_fraction_non_additive": 0.269,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 126,
+     "FIXED_POINT_DYNAMICS": 91,
+     "LAST_INSENSITIVE": 121,
+     "MIDDLE_INSENSITIVE": 301,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 20,
+     "POW_GUARD_HIT": 11,
+     "COPIES_INPUT": 41,
+     "BODY_IGNORES_ACC": 27,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "ANY_T4_REASON": 321
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 59.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 52.0
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 71,
+    "genuinely_non_additive": 57,
+    "Q2_pass_admissible": 37,
+    "Q2_pass_rate": 0.521,
+    "non_additive_Q2_pass": 28,
+    "non_additive_Q2_pass_non_G1_extensional": 22,
+    "distinct_non_additive_Q2_bodies": 11,
+    "solvability_tested": 37,
+    "solvability_tested_non_additive": 28,
+    "non_additive_PRISTINE_any": 13,
+    "non_additive_L1_any": 15,
+    "non_additive_either": 16,
+    "non_additive_L1_only": 3,
+    "window_PRISTINE_1to3_of_4": 1,
+    "window_fraction": 0.027,
+    "window_fraction_non_additive": 0.036,
+    "junk_among_admissible": {
+     "LAST_INSENSITIVE": 29,
+     "MIDDLE_INSENSITIVE": 69,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 44,
+     "POW_GUARD_HIT": 40,
+     "CONSTANT_OR_NEAR_CONSTANT": 17,
+     "FIXED_POINT_DYNAMICS": 4,
+     "COPIES_INPUT": 7,
+     "NONE_ON_DEV_DISTRIBUTION": 5,
+     "BODY_IGNORES_ACC": 14,
+     "ANY_T4_REASON": 71
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 10.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 6.67
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 1902,
+    "genuinely_non_additive": 1157,
+    "Q2_pass_admissible": 1560,
+    "Q2_pass_rate": 0.82,
+    "non_additive_Q2_pass": 879,
+    "non_additive_Q2_pass_non_G1_extensional": 777,
+    "distinct_non_additive_Q2_bodies": 245,
+    "solvability_tested": 1085,
+    "solvability_tested_non_additive": 879,
+    "non_additive_PRISTINE_any": 433,
+    "non_additive_L1_any": 363,
+    "non_additive_either": 487,
+    "non_additive_L1_only": 54,
+    "window_PRISTINE_1to3_of_4": 205,
+    "window_fraction": 0.189,
+    "window_fraction_non_additive": 0.201,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 96,
+     "LAST_INSENSITIVE": 224,
+     "MIDDLE_INSENSITIVE": 932,
+     "CONSTANT_OR_NEAR_CONSTANT": 351,
+     "BODY_IGNORES_ACC": 166,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 96,
+     "NONE_ON_DEV_DISTRIBUTION": 16,
+     "POW_GUARD_HIT": 65,
+     "FIXED_POINT_DYNAMICS": 106,
+     "ANY_T4_REASON": 1065
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 46.38,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 36.67
+   }
+  },
+  "V2": {
+   "add": {
+    "draws": 1500,
+    "admissible": 576,
+    "genuinely_non_additive": 215,
+    "Q2_pass_admissible": 525,
+    "Q2_pass_rate": 0.911,
+    "non_additive_Q2_pass": 188,
+    "non_additive_Q2_pass_non_G1_extensional": 152,
+    "distinct_non_additive_Q2_bodies": 49,
+    "solvability_tested": 261,
+    "solvability_tested_non_additive": 188,
+    "non_additive_PRISTINE_any": 97,
+    "non_additive_L1_any": 90,
+    "non_additive_either": 112,
+    "non_additive_L1_only": 15,
+    "window_PRISTINE_1to3_of_4": 46,
+    "window_fraction": 0.176,
+    "window_fraction_non_additive": 0.144,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 14,
+     "LAST_INSENSITIVE": 19,
+     "MIDDLE_INSENSITIVE": 157,
+     "CONSTANT_OR_NEAR_CONSTANT": 52,
+     "BODY_IGNORES_ACC": 36,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 8,
+     "NONE_ON_DEV_DISTRIBUTION": 2,
+     "POW_GUARD_HIT": 5,
+     "ANY_T4_REASON": 187
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 74.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 50.67
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 560,
+    "genuinely_non_additive": 271,
+    "Q2_pass_admissible": 525,
+    "Q2_pass_rate": 0.938,
+    "non_additive_Q2_pass": 256,
+    "non_additive_Q2_pass_non_G1_extensional": 228,
+    "distinct_non_additive_Q2_bodies": 67,
+    "solvability_tested": 324,
+    "solvability_tested_non_additive": 256,
+    "non_additive_PRISTINE_any": 143,
+    "non_additive_L1_any": 124,
+    "non_additive_either": 150,
+    "non_additive_L1_only": 7,
+    "window_PRISTINE_1to3_of_4": 45,
+    "window_fraction": 0.139,
+    "window_fraction_non_additive": 0.141,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 152,
+     "CONSTANT_OR_NEAR_CONSTANT": 80,
+     "LAST_INSENSITIVE": 17,
+     "COPIES_INPUT": 18,
+     "BODY_IGNORES_ACC": 58,
+     "NONE_ON_DEV_DISTRIBUTION": 4,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 15,
+     "POW_GUARD_HIT": 7,
+     "FIXED_POINT_DYNAMICS": 2,
+     "ANY_T4_REASON": 210
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 100.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 81.33
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 102,
+    "genuinely_non_additive": 69,
+    "Q2_pass_admissible": 87,
+    "Q2_pass_rate": 0.853,
+    "non_additive_Q2_pass": 61,
+    "non_additive_Q2_pass_non_G1_extensional": 52,
+    "distinct_non_additive_Q2_bodies": 17,
+    "solvability_tested": 83,
+    "solvability_tested_non_additive": 61,
+    "non_additive_PRISTINE_any": 51,
+    "non_additive_L1_any": 39,
+    "non_additive_either": 52,
+    "non_additive_L1_only": 1,
+    "window_PRISTINE_1to3_of_4": 21,
+    "window_fraction": 0.253,
+    "window_fraction_non_additive": 0.344,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 74,
+     "CONSTANT_OR_NEAR_CONSTANT": 13,
+     "FIXED_POINT_DYNAMICS": 3,
+     "LAST_INSENSITIVE": 10,
+     "BODY_IGNORES_ACC": 18,
+     "COPIES_INPUT": 8,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 2,
+     "POW_GUARD_HIT": 1,
+     "ANY_T4_REASON": 80
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 34.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 28.67
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 136,
+    "genuinely_non_additive": 123,
+    "Q2_pass_admissible": 89,
+    "Q2_pass_rate": 0.654,
+    "non_additive_Q2_pass": 80,
+    "non_additive_Q2_pass_non_G1_extensional": 76,
+    "distinct_non_additive_Q2_bodies": 25,
+    "solvability_tested": 89,
+    "solvability_tested_non_additive": 80,
+    "non_additive_PRISTINE_any": 26,
+    "non_additive_L1_any": 15,
+    "non_additive_either": 31,
+    "non_additive_L1_only": 5,
+    "window_PRISTINE_1to3_of_4": 22,
+    "window_fraction": 0.247,
+    "window_fraction_non_additive": 0.275,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 115,
+     "BODY_IGNORES_ACC": 13,
+     "CONSTANT_OR_NEAR_CONSTANT": 39,
+     "LAST_INSENSITIVE": 18,
+     "FIXED_POINT_DYNAMICS": 2,
+     "COPIES_INPUT": 2,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 1,
+     "ANY_T4_REASON": 118
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 20.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 18.0
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 105,
+    "genuinely_non_additive": 105,
+    "Q2_pass_admissible": 80,
+    "Q2_pass_rate": 0.762,
+    "non_additive_Q2_pass": 80,
+    "non_additive_Q2_pass_non_G1_extensional": 72,
+    "distinct_non_additive_Q2_bodies": 21,
+    "solvability_tested": 80,
+    "solvability_tested_non_additive": 80,
+    "non_additive_PRISTINE_any": 26,
+    "non_additive_L1_any": 16,
+    "non_additive_either": 35,
+    "non_additive_L1_only": 9,
+    "window_PRISTINE_1to3_of_4": 22,
+    "window_fraction": 0.275,
+    "window_fraction_non_additive": 0.275,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 28,
+     "MIDDLE_INSENSITIVE": 70,
+     "NONE_ON_DEV_DISTRIBUTION": 2,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 2,
+     "FIXED_POINT_DYNAMICS": 6,
+     "LAST_INSENSITIVE": 14,
+     "COPIES_INPUT": 5,
+     "POW_GUARD_HIT": 1,
+     "ANY_T4_REASON": 77
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 23.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 18.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 348,
+    "genuinely_non_additive": 314,
+    "Q2_pass_admissible": 218,
+    "Q2_pass_rate": 0.626,
+    "non_additive_Q2_pass": 187,
+    "non_additive_Q2_pass_non_G1_extensional": 176,
+    "distinct_non_additive_Q2_bodies": 55,
+    "solvability_tested": 212,
+    "solvability_tested_non_additive": 187,
+    "non_additive_PRISTINE_any": 80,
+    "non_additive_L1_any": 64,
+    "non_additive_either": 94,
+    "non_additive_L1_only": 14,
+    "window_PRISTINE_1to3_of_4": 54,
+    "window_fraction": 0.255,
+    "window_fraction_non_additive": 0.289,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 39,
+     "FIXED_POINT_DYNAMICS": 86,
+     "LAST_INSENSITIVE": 116,
+     "MIDDLE_INSENSITIVE": 299,
+     "CONSTANT_OR_NEAR_CONSTANT": 123,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 21,
+     "POW_GUARD_HIT": 8,
+     "BODY_IGNORES_ACC": 25,
+     "NONE_ON_DEV_DISTRIBUTION": 3,
+     "ANY_T4_REASON": 319
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 62.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 55.33
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 67,
+    "genuinely_non_additive": 54,
+    "Q2_pass_admissible": 36,
+    "Q2_pass_rate": 0.537,
+    "non_additive_Q2_pass": 27,
+    "non_additive_Q2_pass_non_G1_extensional": 21,
+    "distinct_non_additive_Q2_bodies": 10,
+    "solvability_tested": 36,
+    "solvability_tested_non_additive": 27,
+    "non_additive_PRISTINE_any": 14,
+    "non_additive_L1_any": 15,
+    "non_additive_either": 17,
+    "non_additive_L1_only": 3,
+    "window_PRISTINE_1to3_of_4": 2,
+    "window_fraction": 0.056,
+    "window_fraction_non_additive": 0.074,
+    "junk_among_admissible": {
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 41,
+     "LAST_INSENSITIVE": 27,
+     "MIDDLE_INSENSITIVE": 64,
+     "POW_GUARD_HIT": 36,
+     "CONSTANT_OR_NEAR_CONSTANT": 15,
+     "FIXED_POINT_DYNAMICS": 5,
+     "COPIES_INPUT": 8,
+     "NONE_ON_DEV_DISTRIBUTION": 3,
+     "BODY_IGNORES_ACC": 13,
+     "ANY_T4_REASON": 67
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 11.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 7.33
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 1894,
+    "genuinely_non_additive": 1151,
+    "Q2_pass_admissible": 1560,
+    "Q2_pass_rate": 0.824,
+    "non_additive_Q2_pass": 879,
+    "non_additive_Q2_pass_non_G1_extensional": 777,
+    "distinct_non_additive_Q2_bodies": 244,
+    "solvability_tested": 1085,
+    "solvability_tested_non_additive": 879,
+    "non_additive_PRISTINE_any": 437,
+    "non_additive_L1_any": 363,
+    "non_additive_either": 491,
+    "non_additive_L1_only": 54,
+    "window_PRISTINE_1to3_of_4": 212,
+    "window_fraction": 0.195,
+    "window_fraction_non_additive": 0.209,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 94,
+     "LAST_INSENSITIVE": 221,
+     "MIDDLE_INSENSITIVE": 931,
+     "CONSTANT_OR_NEAR_CONSTANT": 350,
+     "BODY_IGNORES_ACC": 163,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 90,
+     "NONE_ON_DEV_DISTRIBUTION": 14,
+     "POW_GUARD_HIT": 58,
+     "FIXED_POINT_DYNAMICS": 104,
+     "ANY_T4_REASON": 1058
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 46.76,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 37.05
+   }
+  },
+  "V3": {
+   "add": {
+    "draws": 1500,
+    "admissible": 330,
+    "genuinely_non_additive": 2,
+    "Q2_pass_admissible": 307,
+    "Q2_pass_rate": 0.93,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 71,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 19,
+    "window_fraction": 0.268,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 3,
+     "LAST_INSENSITIVE": 11,
+     "MIDDLE_INSENSITIVE": 12,
+     "CONSTANT_OR_NEAR_CONSTANT": 27,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 5,
+     "POW_GUARD_HIT": 2,
+     "ANY_T4_REASON": 36
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 232,
+    "genuinely_non_additive": 2,
+    "Q2_pass_admissible": 221,
+    "Q2_pass_rate": 0.953,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 64,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 9,
+    "window_fraction": 0.141,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 36,
+     "LAST_INSENSITIVE": 9,
+     "MIDDLE_INSENSITIVE": 10,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 7,
+     "POW_GUARD_HIT": 4,
+     "FIXED_POINT_DYNAMICS": 1,
+     "ANY_T4_REASON": 40
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 27,
+    "genuinely_non_additive": 12,
+    "Q2_pass_admissible": 16,
+    "Q2_pass_rate": 0.593,
+    "non_additive_Q2_pass": 3,
+    "non_additive_Q2_pass_non_G1_extensional": 3,
+    "distinct_non_additive_Q2_bodies": 2,
+    "solvability_tested": 16,
+    "solvability_tested_non_additive": 3,
+    "non_additive_PRISTINE_any": 1,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 1,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 1,
+    "window_fraction": 0.062,
+    "window_fraction_non_additive": 0.333,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 7,
+     "LAST_INSENSITIVE": 10,
+     "MIDDLE_INSENSITIVE": 10,
+     "FIXED_POINT_DYNAMICS": 4,
+     "COPIES_INPUT": 2,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 2,
+     "POW_GUARD_HIT": 2,
+     "ANY_T4_REASON": 10
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.67
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 2,
+    "genuinely_non_additive": 2,
+    "Q2_pass_admissible": 0,
+    "Q2_pass_rate": 0.0,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 0,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": null,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 2,
+     "LAST_INSENSITIVE": 2,
+     "MIDDLE_INSENSITIVE": 2,
+     "CONSTANT_OR_NEAR_CONSTANT": 1,
+     "ANY_T4_REASON": 2
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 14,
+    "genuinely_non_additive": 14,
+    "Q2_pass_admissible": 4,
+    "Q2_pass_rate": 0.286,
+    "non_additive_Q2_pass": 4,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 1,
+    "solvability_tested": 4,
+    "solvability_tested_non_additive": 4,
+    "non_additive_PRISTINE_any": 2,
+    "non_additive_L1_any": 4,
+    "non_additive_either": 4,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 2,
+    "window_fraction": 0.5,
+    "window_fraction_non_additive": 0.5,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 5,
+     "LAST_INSENSITIVE": 10,
+     "MIDDLE_INSENSITIVE": 10,
+     "COPIES_INPUT": 2,
+     "CONSTANT_OR_NEAR_CONSTANT": 2,
+     "ANY_T4_REASON": 10
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 2.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 115,
+    "genuinely_non_additive": 106,
+    "Q2_pass_admissible": 18,
+    "Q2_pass_rate": 0.157,
+    "non_additive_Q2_pass": 10,
+    "non_additive_Q2_pass_non_G1_extensional": 10,
+    "distinct_non_additive_Q2_bodies": 5,
+    "solvability_tested": 18,
+    "solvability_tested_non_additive": 10,
+    "non_additive_PRISTINE_any": 3,
+    "non_additive_L1_any": 3,
+    "non_additive_either": 5,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 3,
+    "window_fraction": 0.167,
+    "window_fraction_non_additive": 0.3,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 32,
+     "FIXED_POINT_DYNAMICS": 92,
+     "LAST_INSENSITIVE": 106,
+     "MIDDLE_INSENSITIVE": 106,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 9,
+     "POW_GUARD_HIT": 4,
+     "COPIES_INPUT": 30,
+     "ANY_T4_REASON": 108
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 3.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 3.33
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 6,
+    "genuinely_non_additive": 6,
+    "Q2_pass_admissible": 0,
+    "Q2_pass_rate": 0.0,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 0,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": null,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 2,
+     "FIXED_POINT_DYNAMICS": 2,
+     "LAST_INSENSITIVE": 6,
+     "MIDDLE_INSENSITIVE": 6,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 5,
+     "POW_GUARD_HIT": 5,
+     "CONSTANT_OR_NEAR_CONSTANT": 1,
+     "ANY_T4_REASON": 6
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 726,
+    "genuinely_non_additive": 144,
+    "Q2_pass_admissible": 566,
+    "Q2_pass_rate": 0.78,
+    "non_additive_Q2_pass": 17,
+    "non_additive_Q2_pass_non_G1_extensional": 13,
+    "distinct_non_additive_Q2_bodies": 8,
+    "solvability_tested": 173,
+    "solvability_tested_non_additive": 17,
+    "non_additive_PRISTINE_any": 6,
+    "non_additive_L1_any": 7,
+    "non_additive_either": 10,
+    "non_additive_L1_only": 4,
+    "window_PRISTINE_1to3_of_4": 34,
+    "window_fraction": 0.197,
+    "window_fraction_non_additive": 0.353,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 39,
+     "LAST_INSENSITIVE": 154,
+     "MIDDLE_INSENSITIVE": 156,
+     "CONSTANT_OR_NEAR_CONSTANT": 106,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 28,
+     "POW_GUARD_HIT": 17,
+     "FIXED_POINT_DYNAMICS": 106,
+     "ANY_T4_REASON": 212
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.95,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.57
+   }
+  },
+  "V4": {
+   "add": {
+    "draws": 1500,
+    "admissible": 382,
+    "genuinely_non_additive": 8,
+    "Q2_pass_admissible": 358,
+    "Q2_pass_rate": 0.937,
+    "non_additive_Q2_pass": 6,
+    "non_additive_Q2_pass_non_G1_extensional": 1,
+    "distinct_non_additive_Q2_bodies": 3,
+    "solvability_tested": 77,
+    "solvability_tested_non_additive": 6,
+    "non_additive_PRISTINE_any": 5,
+    "non_additive_L1_any": 5,
+    "non_additive_either": 5,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 19,
+    "window_fraction": 0.247,
+    "window_fraction_non_additive": 0.0,
+    "junk_among_admissible": {
+     "NONE_ON_DEV_DISTRIBUTION": 46,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 53,
+     "WRAP_DEPENDENT(overflow artifact)": 56,
+     "COPIES_INPUT": 3,
+     "LAST_INSENSITIVE": 27,
+     "MIDDLE_INSENSITIVE": 26,
+     "CONSTANT_OR_NEAR_CONSTANT": 56,
+     "POW_GUARD_HIT": 22,
+     "ANY_T4_REASON": 83
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 3.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.67
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 285,
+    "genuinely_non_additive": 12,
+    "Q2_pass_admissible": 272,
+    "Q2_pass_rate": 0.954,
+    "non_additive_Q2_pass": 8,
+    "non_additive_Q2_pass_non_G1_extensional": 8,
+    "distinct_non_additive_Q2_bodies": 4,
+    "solvability_tested": 72,
+    "solvability_tested_non_additive": 8,
+    "non_additive_PRISTINE_any": 5,
+    "non_additive_L1_any": 6,
+    "non_additive_either": 6,
+    "non_additive_L1_only": 1,
+    "window_PRISTINE_1to3_of_4": 9,
+    "window_fraction": 0.125,
+    "window_fraction_non_additive": 0.0,
+    "junk_among_admissible": {
+     "WRAP_DEPENDENT(overflow artifact)": 54,
+     "CONSTANT_OR_NEAR_CONSTANT": 62,
+     "LAST_INSENSITIVE": 21,
+     "MIDDLE_INSENSITIVE": 21,
+     "NONE_ON_DEV_DISTRIBUTION": 43,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 49,
+     "POW_GUARD_HIT": 17,
+     "FIXED_POINT_DYNAMICS": 1,
+     "ANY_T4_REASON": 85
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 4.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 4.0
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 155,
+    "genuinely_non_additive": 138,
+    "Q2_pass_admissible": 137,
+    "Q2_pass_rate": 0.884,
+    "non_additive_Q2_pass": 122,
+    "non_additive_Q2_pass_non_G1_extensional": 115,
+    "distinct_non_additive_Q2_bodies": 56,
+    "solvability_tested": 137,
+    "solvability_tested_non_additive": 122,
+    "non_additive_PRISTINE_any": 67,
+    "non_additive_L1_any": 58,
+    "non_additive_either": 71,
+    "non_additive_L1_only": 4,
+    "window_PRISTINE_1to3_of_4": 15,
+    "window_fraction": 0.109,
+    "window_fraction_non_additive": 0.123,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 10,
+     "LAST_INSENSITIVE": 40,
+     "MIDDLE_INSENSITIVE": 39,
+     "NONE_ON_DEV_DISTRIBUTION": 26,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 27,
+     "POW_GUARD_HIT": 12,
+     "WRAP_DEPENDENT(overflow artifact)": 135,
+     "DOMAIN_TOO_SHORT": 37,
+     "CONSTANT_OR_NEAR_CONSTANT": 30,
+     "COPIES_INPUT": 3,
+     "ANY_T4_REASON": 82
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 47.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 45.33
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 3,
+    "genuinely_non_additive": 3,
+    "Q2_pass_admissible": 0,
+    "Q2_pass_rate": 0.0,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 0,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": null,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 3,
+     "LAST_INSENSITIVE": 3,
+     "MIDDLE_INSENSITIVE": 3,
+     "CONSTANT_OR_NEAR_CONSTANT": 1,
+     "ANY_T4_REASON": 3
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 14,
+    "genuinely_non_additive": 14,
+    "Q2_pass_admissible": 4,
+    "Q2_pass_rate": 0.286,
+    "non_additive_Q2_pass": 4,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 1,
+    "solvability_tested": 4,
+    "solvability_tested_non_additive": 4,
+    "non_additive_PRISTINE_any": 2,
+    "non_additive_L1_any": 4,
+    "non_additive_either": 4,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 2,
+    "window_fraction": 0.5,
+    "window_fraction_non_additive": 0.5,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 5,
+     "LAST_INSENSITIVE": 10,
+     "MIDDLE_INSENSITIVE": 10,
+     "COPIES_INPUT": 2,
+     "CONSTANT_OR_NEAR_CONSTANT": 1,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 1,
+     "WRAP_DEPENDENT(overflow artifact)": 1,
+     "ANY_T4_REASON": 10
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 2.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 122,
+    "genuinely_non_additive": 113,
+    "Q2_pass_admissible": 25,
+    "Q2_pass_rate": 0.205,
+    "non_additive_Q2_pass": 17,
+    "non_additive_Q2_pass_non_G1_extensional": 17,
+    "distinct_non_additive_Q2_bodies": 9,
+    "solvability_tested": 25,
+    "solvability_tested_non_additive": 17,
+    "non_additive_PRISTINE_any": 7,
+    "non_additive_L1_any": 6,
+    "non_additive_either": 9,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 4,
+    "window_fraction": 0.16,
+    "window_fraction_non_additive": 0.235,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 30,
+     "FIXED_POINT_DYNAMICS": 92,
+     "LAST_INSENSITIVE": 109,
+     "MIDDLE_INSENSITIVE": 109,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 18,
+     "POW_GUARD_HIT": 4,
+     "COPIES_INPUT": 33,
+     "NONE_ON_DEV_DISTRIBUTION": 7,
+     "WRAP_DEPENDENT(overflow artifact)": 14,
+     "DOMAIN_TOO_SHORT": 1,
+     "ANY_T4_REASON": 113
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 6.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 6.0
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 13,
+    "genuinely_non_additive": 13,
+    "Q2_pass_admissible": 5,
+    "Q2_pass_rate": 0.385,
+    "non_additive_Q2_pass": 5,
+    "non_additive_Q2_pass_non_G1_extensional": 5,
+    "distinct_non_additive_Q2_bodies": 3,
+    "solvability_tested": 5,
+    "solvability_tested_non_additive": 5,
+    "non_additive_PRISTINE_any": 1,
+    "non_additive_L1_any": 1,
+    "non_additive_either": 2,
+    "non_additive_L1_only": 1,
+    "window_PRISTINE_1to3_of_4": 1,
+    "window_fraction": 0.2,
+    "window_fraction_non_additive": 0.2,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 9,
+     "LAST_INSENSITIVE": 13,
+     "MIDDLE_INSENSITIVE": 13,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 10,
+     "POW_GUARD_HIT": 10,
+     "NONE_ON_DEV_DISTRIBUTION": 6,
+     "WRAP_DEPENDENT(overflow artifact)": 7,
+     "DOMAIN_TOO_SHORT": 1,
+     "COPIES_INPUT": 1,
+     "FIXED_POINT_DYNAMICS": 2,
+     "ANY_T4_REASON": 13
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 1.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 1.33
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 974,
+    "genuinely_non_additive": 301,
+    "Q2_pass_admissible": 801,
+    "Q2_pass_rate": 0.822,
+    "non_additive_Q2_pass": 162,
+    "non_additive_Q2_pass_non_G1_extensional": 146,
+    "distinct_non_additive_Q2_bodies": 76,
+    "solvability_tested": 320,
+    "solvability_tested_non_additive": 162,
+    "non_additive_PRISTINE_any": 87,
+    "non_additive_L1_any": 80,
+    "non_additive_either": 97,
+    "non_additive_L1_only": 10,
+    "window_PRISTINE_1to3_of_4": 50,
+    "window_fraction": 0.156,
+    "window_fraction_non_additive": 0.136,
+    "junk_among_admissible": {
+     "NONE_ON_DEV_DISTRIBUTION": 129,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 158,
+     "WRAP_DEPENDENT(overflow artifact)": 267,
+     "COPIES_INPUT": 42,
+     "LAST_INSENSITIVE": 223,
+     "MIDDLE_INSENSITIVE": 221,
+     "CONSTANT_OR_NEAR_CONSTANT": 189,
+     "POW_GUARD_HIT": 65,
+     "FIXED_POINT_DYNAMICS": 113,
+     "DOMAIN_TOO_SHORT": 39,
+     "ANY_T4_REASON": 389
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 9.24,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 8.19
+   }
+  },
+  "V5": {
+   "add": {
+    "draws": 1500,
+    "admissible": 332,
+    "genuinely_non_additive": 5,
+    "Q2_pass_admissible": 307,
+    "Q2_pass_rate": 0.925,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 51,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 14,
+    "window_fraction": 0.275,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 29,
+     "LAST_INSENSITIVE": 15,
+     "MIDDLE_INSENSITIVE": 15,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 4,
+     "COPIES_INPUT": 2,
+     "FIXED_POINT_DYNAMICS": 3,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "POW_GUARD_HIT": 2,
+     "ANY_T4_REASON": 38
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 231,
+    "genuinely_non_additive": 3,
+    "Q2_pass_admissible": 219,
+    "Q2_pass_rate": 0.948,
+    "non_additive_Q2_pass": 1,
+    "non_additive_Q2_pass_non_G1_extensional": 1,
+    "distinct_non_additive_Q2_bodies": 1,
+    "solvability_tested": 43,
+    "solvability_tested_non_additive": 1,
+    "non_additive_PRISTINE_any": 1,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 1,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 11,
+    "window_fraction": 0.256,
+    "window_fraction_non_additive": 1.0,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 38,
+     "LAST_INSENSITIVE": 11,
+     "MIDDLE_INSENSITIVE": 11,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 8,
+     "POW_GUARD_HIT": 4,
+     "FIXED_POINT_DYNAMICS": 2,
+     "NONE_ON_DEV_DISTRIBUTION": 1,
+     "ANY_T4_REASON": 44
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.67
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 22,
+    "genuinely_non_additive": 7,
+    "Q2_pass_admissible": 12,
+    "Q2_pass_rate": 0.545,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 12,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 1,
+    "window_fraction": 0.083,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 4,
+     "FIXED_POINT_DYNAMICS": 4,
+     "LAST_INSENSITIVE": 6,
+     "MIDDLE_INSENSITIVE": 7,
+     "CONSTANT_OR_NEAR_CONSTANT": 3,
+     "ANY_T4_REASON": 8
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 11,
+    "genuinely_non_additive": 11,
+    "Q2_pass_admissible": 9,
+    "Q2_pass_rate": 0.818,
+    "non_additive_Q2_pass": 9,
+    "non_additive_Q2_pass_non_G1_extensional": 9,
+    "distinct_non_additive_Q2_bodies": 5,
+    "solvability_tested": 9,
+    "solvability_tested_non_additive": 9,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 1,
+    "non_additive_either": 1,
+    "non_additive_L1_only": 1,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": 0.0,
+    "window_fraction_non_additive": 0.0,
+    "junk_among_admissible": {
+     "LAST_INSENSITIVE": 10,
+     "MIDDLE_INSENSITIVE": 11,
+     "CONSTANT_OR_NEAR_CONSTANT": 6,
+     "COPIES_INPUT": 2,
+     "FIXED_POINT_DYNAMICS": 4,
+     "ANY_T4_REASON": 11
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.67
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 14,
+    "genuinely_non_additive": 14,
+    "Q2_pass_admissible": 6,
+    "Q2_pass_rate": 0.429,
+    "non_additive_Q2_pass": 6,
+    "non_additive_Q2_pass_non_G1_extensional": 3,
+    "distinct_non_additive_Q2_bodies": 3,
+    "solvability_tested": 6,
+    "solvability_tested_non_additive": 6,
+    "non_additive_PRISTINE_any": 1,
+    "non_additive_L1_any": 3,
+    "non_additive_either": 3,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 1,
+    "window_fraction": 0.167,
+    "window_fraction_non_additive": 0.167,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 5,
+     "FIXED_POINT_DYNAMICS": 5,
+     "LAST_INSENSITIVE": 9,
+     "MIDDLE_INSENSITIVE": 8,
+     "COPIES_INPUT": 3,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 2,
+     "POW_GUARD_HIT": 1,
+     "ANY_T4_REASON": 11
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 2.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 144,
+    "genuinely_non_additive": 135,
+    "Q2_pass_admissible": 18,
+    "Q2_pass_rate": 0.125,
+    "non_additive_Q2_pass": 10,
+    "non_additive_Q2_pass_non_G1_extensional": 10,
+    "distinct_non_additive_Q2_bodies": 7,
+    "solvability_tested": 18,
+    "solvability_tested_non_additive": 10,
+    "non_additive_PRISTINE_any": 3,
+    "non_additive_L1_any": 3,
+    "non_additive_either": 3,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 3,
+    "window_fraction": 0.167,
+    "window_fraction_non_additive": 0.2,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 122,
+     "LAST_INSENSITIVE": 134,
+     "MIDDLE_INSENSITIVE": 134,
+     "COPIES_INPUT": 49,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 10,
+     "CONSTANT_OR_NEAR_CONSTANT": 28,
+     "POW_GUARD_HIT": 2,
+     "ANY_T4_REASON": 137
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 2.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 2.0
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 6,
+    "genuinely_non_additive": 6,
+    "Q2_pass_admissible": 1,
+    "Q2_pass_rate": 0.167,
+    "non_additive_Q2_pass": 1,
+    "non_additive_Q2_pass_non_G1_extensional": 1,
+    "distinct_non_additive_Q2_bodies": 1,
+    "solvability_tested": 1,
+    "solvability_tested_non_additive": 1,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": 0.0,
+    "window_fraction_non_additive": 0.0,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 2,
+     "FIXED_POINT_DYNAMICS": 3,
+     "LAST_INSENSITIVE": 6,
+     "MIDDLE_INSENSITIVE": 6,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 5,
+     "POW_GUARD_HIT": 5,
+     "CONSTANT_OR_NEAR_CONSTANT": 2,
+     "ANY_T4_REASON": 6
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 760,
+    "genuinely_non_additive": 181,
+    "Q2_pass_admissible": 572,
+    "Q2_pass_rate": 0.753,
+    "non_additive_Q2_pass": 27,
+    "non_additive_Q2_pass_non_G1_extensional": 24,
+    "distinct_non_additive_Q2_bodies": 17,
+    "solvability_tested": 140,
+    "solvability_tested_non_additive": 27,
+    "non_additive_PRISTINE_any": 5,
+    "non_additive_L1_any": 7,
+    "non_additive_either": 8,
+    "non_additive_L1_only": 3,
+    "window_PRISTINE_1to3_of_4": 30,
+    "window_fraction": 0.214,
+    "window_fraction_non_additive": 0.148,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 111,
+     "LAST_INSENSITIVE": 191,
+     "MIDDLE_INSENSITIVE": 192,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 29,
+     "COPIES_INPUT": 62,
+     "FIXED_POINT_DYNAMICS": 143,
+     "NONE_ON_DEV_DISTRIBUTION": 2,
+     "POW_GUARD_HIT": 14,
+     "ANY_T4_REASON": 255
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 0.76,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.48
+   }
+  },
+  "V6": {
+   "add": {
+    "draws": 1500,
+    "admissible": 630,
+    "genuinely_non_additive": 268,
+    "Q2_pass_admissible": 571,
+    "Q2_pass_rate": 0.906,
+    "non_additive_Q2_pass": 231,
+    "non_additive_Q2_pass_non_G1_extensional": 172,
+    "distinct_non_additive_Q2_bodies": 57,
+    "solvability_tested": 284,
+    "solvability_tested_non_additive": 231,
+    "non_additive_PRISTINE_any": 111,
+    "non_additive_L1_any": 92,
+    "non_additive_either": 123,
+    "non_additive_L1_only": 12,
+    "window_PRISTINE_1to3_of_4": 53,
+    "window_fraction": 0.187,
+    "window_fraction_non_additive": 0.169,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 16,
+     "LAST_INSENSITIVE": 24,
+     "MIDDLE_INSENSITIVE": 187,
+     "CONSTANT_OR_NEAR_CONSTANT": 60,
+     "BODY_IGNORES_ACC": 37,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 11,
+     "POW_GUARD_HIT": 7,
+     "NONE_ON_DEV_DISTRIBUTION": 3,
+     "FIXED_POINT_DYNAMICS": 1,
+     "ANY_T4_REASON": 218
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 82.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 54.67
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 592,
+    "genuinely_non_additive": 302,
+    "Q2_pass_admissible": 552,
+    "Q2_pass_rate": 0.932,
+    "non_additive_Q2_pass": 282,
+    "non_additive_Q2_pass_non_G1_extensional": 236,
+    "distinct_non_additive_Q2_bodies": 70,
+    "solvability_tested": 325,
+    "solvability_tested_non_additive": 282,
+    "non_additive_PRISTINE_any": 125,
+    "non_additive_L1_any": 114,
+    "non_additive_either": 146,
+    "non_additive_L1_only": 21,
+    "window_PRISTINE_1to3_of_4": 50,
+    "window_fraction": 0.154,
+    "window_fraction_non_additive": 0.142,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 161,
+     "CONSTANT_OR_NEAR_CONSTANT": 86,
+     "COPIES_INPUT": 22,
+     "BODY_IGNORES_ACC": 59,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 22,
+     "POW_GUARD_HIT": 10,
+     "LAST_INSENSITIVE": 19,
+     "NONE_ON_DEV_DISTRIBUTION": 6,
+     "FIXED_POINT_DYNAMICS": 2,
+     "ANY_T4_REASON": 230
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 97.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 71.33
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 125,
+    "genuinely_non_additive": 92,
+    "Q2_pass_admissible": 104,
+    "Q2_pass_rate": 0.832,
+    "non_additive_Q2_pass": 79,
+    "non_additive_Q2_pass_non_G1_extensional": 66,
+    "distinct_non_additive_Q2_bodies": 28,
+    "solvability_tested": 101,
+    "solvability_tested_non_additive": 79,
+    "non_additive_PRISTINE_any": 49,
+    "non_additive_L1_any": 42,
+    "non_additive_either": 51,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 22,
+    "window_fraction": 0.218,
+    "window_fraction_non_additive": 0.266,
+    "junk_among_admissible": {
+     "CONSTANT_OR_NEAR_CONSTANT": 14,
+     "MIDDLE_INSENSITIVE": 83,
+     "COPIES_INPUT": 12,
+     "FIXED_POINT_DYNAMICS": 7,
+     "LAST_INSENSITIVE": 16,
+     "BODY_IGNORES_ACC": 18,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 1,
+     "POW_GUARD_HIT": 1,
+     "ANY_T4_REASON": 92
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 34.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 25.33
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 134,
+    "genuinely_non_additive": 121,
+    "Q2_pass_admissible": 92,
+    "Q2_pass_rate": 0.687,
+    "non_additive_Q2_pass": 83,
+    "non_additive_Q2_pass_non_G1_extensional": 77,
+    "distinct_non_additive_Q2_bodies": 31,
+    "solvability_tested": 92,
+    "solvability_tested_non_additive": 83,
+    "non_additive_PRISTINE_any": 31,
+    "non_additive_L1_any": 21,
+    "non_additive_either": 40,
+    "non_additive_L1_only": 9,
+    "window_PRISTINE_1to3_of_4": 25,
+    "window_fraction": 0.272,
+    "window_fraction_non_additive": 0.301,
+    "junk_among_admissible": {
+     "MIDDLE_INSENSITIVE": 119,
+     "BODY_IGNORES_ACC": 13,
+     "CONSTANT_OR_NEAR_CONSTANT": 44,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 3,
+     "LAST_INSENSITIVE": 27,
+     "COPIES_INPUT": 4,
+     "FIXED_POINT_DYNAMICS": 3,
+     "ANY_T4_REASON": 123
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 26.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 22.67
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 138,
+    "genuinely_non_additive": 138,
+    "Q2_pass_admissible": 107,
+    "Q2_pass_rate": 0.775,
+    "non_additive_Q2_pass": 107,
+    "non_additive_Q2_pass_non_G1_extensional": 93,
+    "distinct_non_additive_Q2_bodies": 39,
+    "solvability_tested": 107,
+    "solvability_tested_non_additive": 107,
+    "non_additive_PRISTINE_any": 35,
+    "non_additive_L1_any": 20,
+    "non_additive_either": 42,
+    "non_additive_L1_only": 7,
+    "window_PRISTINE_1to3_of_4": 24,
+    "window_fraction": 0.224,
+    "window_fraction_non_additive": 0.224,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 9,
+     "LAST_INSENSITIVE": 43,
+     "MIDDLE_INSENSITIVE": 105,
+     "NONE_ON_DEV_DISTRIBUTION": 2,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 5,
+     "POW_GUARD_HIT": 3,
+     "CONSTANT_OR_NEAR_CONSTANT": 37,
+     "COPIES_INPUT": 9,
+     "ANY_T4_REASON": 118
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 28.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 18.67
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 410,
+    "genuinely_non_additive": 376,
+    "Q2_pass_admissible": 234,
+    "Q2_pass_rate": 0.571,
+    "non_additive_Q2_pass": 203,
+    "non_additive_Q2_pass_non_G1_extensional": 186,
+    "distinct_non_additive_Q2_bodies": 61,
+    "solvability_tested": 222,
+    "solvability_tested_non_additive": 203,
+    "non_additive_PRISTINE_any": 73,
+    "non_additive_L1_any": 67,
+    "non_additive_either": 89,
+    "non_additive_L1_only": 16,
+    "window_PRISTINE_1to3_of_4": 45,
+    "window_fraction": 0.203,
+    "window_fraction_non_additive": 0.217,
+    "junk_among_admissible": {
+     "FIXED_POINT_DYNAMICS": 122,
+     "LAST_INSENSITIVE": 162,
+     "MIDDLE_INSENSITIVE": 354,
+     "COPIES_INPUT": 63,
+     "CONSTANT_OR_NEAR_CONSTANT": 132,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 30,
+     "POW_GUARD_HIT": 18,
+     "BODY_IGNORES_ACC": 25,
+     "ANY_T4_REASON": 378
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 59.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 48.0
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 79,
+    "genuinely_non_additive": 64,
+    "Q2_pass_admissible": 51,
+    "Q2_pass_rate": 0.646,
+    "non_additive_Q2_pass": 42,
+    "non_additive_Q2_pass_non_G1_extensional": 35,
+    "distinct_non_additive_Q2_bodies": 18,
+    "solvability_tested": 51,
+    "solvability_tested_non_additive": 42,
+    "non_additive_PRISTINE_any": 13,
+    "non_additive_L1_any": 13,
+    "non_additive_either": 16,
+    "non_additive_L1_only": 3,
+    "window_PRISTINE_1to3_of_4": 4,
+    "window_fraction": 0.078,
+    "window_fraction_non_additive": 0.095,
+    "junk_among_admissible": {
+     "LAST_INSENSITIVE": 24,
+     "MIDDLE_INSENSITIVE": 75,
+     "NONE_ON_DEV_DISTRIBUTION": 7,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 52,
+     "POW_GUARD_HIT": 47,
+     "CONSTANT_OR_NEAR_CONSTANT": 25,
+     "FIXED_POINT_DYNAMICS": 2,
+     "BODY_IGNORES_ACC": 15,
+     "COPIES_INPUT": 6,
+     "ANY_T4_REASON": 79
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 10.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 6.0
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 2108,
+    "genuinely_non_additive": 1361,
+    "Q2_pass_admissible": 1711,
+    "Q2_pass_rate": 0.812,
+    "non_additive_Q2_pass": 1027,
+    "non_additive_Q2_pass_non_G1_extensional": 865,
+    "distinct_non_additive_Q2_bodies": 304,
+    "solvability_tested": 1182,
+    "solvability_tested_non_additive": 1027,
+    "non_additive_PRISTINE_any": 437,
+    "non_additive_L1_any": 369,
+    "non_additive_either": 507,
+    "non_additive_L1_only": 70,
+    "window_PRISTINE_1to3_of_4": 223,
+    "window_fraction": 0.189,
+    "window_fraction_non_additive": 0.192,
+    "junk_among_admissible": {
+     "COPIES_INPUT": 132,
+     "LAST_INSENSITIVE": 315,
+     "MIDDLE_INSENSITIVE": 1084,
+     "CONSTANT_OR_NEAR_CONSTANT": 398,
+     "BODY_IGNORES_ACC": 167,
+     "NONE_OR_GUARD_ON_DEV_LENGTHS": 124,
+     "POW_GUARD_HIT": 86,
+     "NONE_ON_DEV_DISTRIBUTION": 18,
+     "FIXED_POINT_DYNAMICS": 146,
+     "ANY_T4_REASON": 1238
+    },
+    "yield_per_1000_nonadd_Q2_solvable": 48.29,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 35.24
+   }
+  },
+  "V7_T4_WIDE": {
+   "add": {
+    "draws": 1500,
+    "admissible": 463,
+    "genuinely_non_additive": 169,
+    "Q2_pass_admissible": 452,
+    "Q2_pass_rate": 0.976,
+    "non_additive_Q2_pass": 169,
+    "non_additive_Q2_pass_non_G1_extensional": 136,
+    "distinct_non_additive_Q2_bodies": 50,
+    "solvability_tested": 216,
+    "solvability_tested_non_additive": 169,
+    "non_additive_PRISTINE_any": 61,
+    "non_additive_L1_any": 47,
+    "non_additive_either": 66,
+    "non_additive_L1_only": 5,
+    "window_PRISTINE_1to3_of_4": 35,
+    "window_fraction": 0.162,
+    "window_fraction_non_additive": 0.124,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 53,
+    "non_additive_T4_qualified_L1_any": 44,
+    "non_additive_T4_qualified_either": 56,
+    "window_T4_qualified_non_additive": 13,
+    "yield_per_1000_nonadd_Q2_solvable": 44.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 33.33
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 417,
+    "genuinely_non_additive": 230,
+    "Q2_pass_admissible": 409,
+    "Q2_pass_rate": 0.981,
+    "non_additive_Q2_pass": 228,
+    "non_additive_Q2_pass_non_G1_extensional": 215,
+    "distinct_non_additive_Q2_bodies": 67,
+    "solvability_tested": 265,
+    "solvability_tested_non_additive": 228,
+    "non_additive_PRISTINE_any": 62,
+    "non_additive_L1_any": 51,
+    "non_additive_either": 72,
+    "non_additive_L1_only": 10,
+    "window_PRISTINE_1to3_of_4": 31,
+    "window_fraction": 0.117,
+    "window_fraction_non_additive": 0.101,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 51,
+    "non_additive_T4_qualified_L1_any": 44,
+    "non_additive_T4_qualified_either": 55,
+    "window_T4_qualified_non_additive": 12,
+    "yield_per_1000_nonadd_Q2_solvable": 48.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 44.0
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 207,
+    "genuinely_non_additive": 193,
+    "Q2_pass_admissible": 205,
+    "Q2_pass_rate": 0.99,
+    "non_additive_Q2_pass": 193,
+    "non_additive_Q2_pass_non_G1_extensional": 186,
+    "distinct_non_additive_Q2_bodies": 66,
+    "solvability_tested": 205,
+    "solvability_tested_non_additive": 193,
+    "non_additive_PRISTINE_any": 77,
+    "non_additive_L1_any": 66,
+    "non_additive_either": 79,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 16,
+    "window_fraction": 0.078,
+    "window_fraction_non_additive": 0.078,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 76,
+    "non_additive_T4_qualified_L1_any": 66,
+    "non_additive_T4_qualified_either": 78,
+    "window_T4_qualified_non_additive": 14,
+    "yield_per_1000_nonadd_Q2_solvable": 52.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 50.0
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 11,
+    "genuinely_non_additive": 11,
+    "Q2_pass_admissible": 11,
+    "Q2_pass_rate": 1.0,
+    "non_additive_Q2_pass": 11,
+    "non_additive_Q2_pass_non_G1_extensional": 11,
+    "distinct_non_additive_Q2_bodies": 6,
+    "solvability_tested": 11,
+    "solvability_tested_non_additive": 11,
+    "non_additive_PRISTINE_any": 4,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 4,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 4,
+    "window_fraction": 0.364,
+    "window_fraction_non_additive": 0.364,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 3,
+    "non_additive_T4_qualified_L1_any": 0,
+    "non_additive_T4_qualified_either": 3,
+    "window_T4_qualified_non_additive": 3,
+    "yield_per_1000_nonadd_Q2_solvable": 2.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 2.67
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 20,
+    "genuinely_non_additive": 20,
+    "Q2_pass_admissible": 20,
+    "Q2_pass_rate": 1.0,
+    "non_additive_Q2_pass": 20,
+    "non_additive_Q2_pass_non_G1_extensional": 17,
+    "distinct_non_additive_Q2_bodies": 11,
+    "solvability_tested": 20,
+    "solvability_tested_non_additive": 20,
+    "non_additive_PRISTINE_any": 6,
+    "non_additive_L1_any": 5,
+    "non_additive_either": 9,
+    "non_additive_L1_only": 3,
+    "window_PRISTINE_1to3_of_4": 6,
+    "window_fraction": 0.3,
+    "window_fraction_non_additive": 0.3,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 6,
+    "non_additive_T4_qualified_L1_any": 4,
+    "non_additive_T4_qualified_either": 9,
+    "window_T4_qualified_non_additive": 6,
+    "yield_per_1000_nonadd_Q2_solvable": 6.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 4.0
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 35,
+    "genuinely_non_additive": 28,
+    "Q2_pass_admissible": 34,
+    "Q2_pass_rate": 0.971,
+    "non_additive_Q2_pass": 28,
+    "non_additive_Q2_pass_non_G1_extensional": 28,
+    "distinct_non_additive_Q2_bodies": 14,
+    "solvability_tested": 34,
+    "solvability_tested_non_additive": 28,
+    "non_additive_PRISTINE_any": 5,
+    "non_additive_L1_any": 6,
+    "non_additive_either": 8,
+    "non_additive_L1_only": 3,
+    "window_PRISTINE_1to3_of_4": 4,
+    "window_fraction": 0.118,
+    "window_fraction_non_additive": 0.143,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 3,
+    "non_additive_T4_qualified_L1_any": 2,
+    "non_additive_T4_qualified_either": 4,
+    "window_T4_qualified_non_additive": 2,
+    "yield_per_1000_nonadd_Q2_solvable": 5.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 5.33
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 0,
+    "genuinely_non_additive": 0,
+    "Q2_pass_admissible": 0,
+    "Q2_pass_rate": null,
+    "non_additive_Q2_pass": 0,
+    "non_additive_Q2_pass_non_G1_extensional": 0,
+    "distinct_non_additive_Q2_bodies": 0,
+    "solvability_tested": 0,
+    "solvability_tested_non_additive": 0,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": null,
+    "window_fraction_non_additive": null,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 0,
+    "non_additive_T4_qualified_L1_any": 0,
+    "non_additive_T4_qualified_either": 0,
+    "window_T4_qualified_non_additive": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 1153,
+    "genuinely_non_additive": 651,
+    "Q2_pass_admissible": 1131,
+    "Q2_pass_rate": 0.981,
+    "non_additive_Q2_pass": 649,
+    "non_additive_Q2_pass_non_G1_extensional": 593,
+    "distinct_non_additive_Q2_bodies": 214,
+    "solvability_tested": 751,
+    "solvability_tested_non_additive": 649,
+    "non_additive_PRISTINE_any": 215,
+    "non_additive_L1_any": 175,
+    "non_additive_either": 238,
+    "non_additive_L1_only": 23,
+    "window_PRISTINE_1to3_of_4": 96,
+    "window_fraction": 0.128,
+    "window_fraction_non_additive": 0.112,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 192,
+    "non_additive_T4_qualified_L1_any": 160,
+    "non_additive_T4_qualified_either": 205,
+    "window_T4_qualified_non_additive": 50,
+    "yield_per_1000_nonadd_Q2_solvable": 22.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 19.9
+   }
+  },
+  "V8_T4_H1": {
+   "add": {
+    "draws": 1500,
+    "admissible": 449,
+    "genuinely_non_additive": 155,
+    "Q2_pass_admissible": 431,
+    "Q2_pass_rate": 0.96,
+    "non_additive_Q2_pass": 152,
+    "non_additive_Q2_pass_non_G1_extensional": 126,
+    "distinct_non_additive_Q2_bodies": 45,
+    "solvability_tested": 216,
+    "solvability_tested_non_additive": 152,
+    "non_additive_PRISTINE_any": 72,
+    "non_additive_L1_any": 61,
+    "non_additive_either": 78,
+    "non_additive_L1_only": 6,
+    "window_PRISTINE_1to3_of_4": 37,
+    "window_fraction": 0.171,
+    "window_fraction_non_additive": 0.118,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 66,
+    "non_additive_T4_qualified_L1_any": 57,
+    "non_additive_T4_qualified_either": 69,
+    "window_T4_qualified_non_additive": 12,
+    "yield_per_1000_nonadd_Q2_solvable": 52.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 34.67
+   },
+   "sub": {
+    "draws": 1500,
+    "admissible": 414,
+    "genuinely_non_additive": 222,
+    "Q2_pass_admissible": 407,
+    "Q2_pass_rate": 0.983,
+    "non_additive_Q2_pass": 221,
+    "non_additive_Q2_pass_non_G1_extensional": 206,
+    "distinct_non_additive_Q2_bodies": 65,
+    "solvability_tested": 277,
+    "solvability_tested_non_additive": 221,
+    "non_additive_PRISTINE_any": 106,
+    "non_additive_L1_any": 101,
+    "non_additive_either": 114,
+    "non_additive_L1_only": 8,
+    "window_PRISTINE_1to3_of_4": 24,
+    "window_fraction": 0.087,
+    "window_fraction_non_additive": 0.072,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 103,
+    "non_additive_T4_qualified_L1_any": 95,
+    "non_additive_T4_qualified_either": 106,
+    "window_T4_qualified_non_additive": 13,
+    "yield_per_1000_nonadd_Q2_solvable": 76.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 66.0
+   },
+   "mul": {
+    "draws": 1500,
+    "admissible": 151,
+    "genuinely_non_additive": 137,
+    "Q2_pass_admissible": 150,
+    "Q2_pass_rate": 0.993,
+    "non_additive_Q2_pass": 137,
+    "non_additive_Q2_pass_non_G1_extensional": 134,
+    "distinct_non_additive_Q2_bodies": 57,
+    "solvability_tested": 150,
+    "solvability_tested_non_additive": 137,
+    "non_additive_PRISTINE_any": 86,
+    "non_additive_L1_any": 79,
+    "non_additive_either": 88,
+    "non_additive_L1_only": 2,
+    "window_PRISTINE_1to3_of_4": 9,
+    "window_fraction": 0.06,
+    "window_fraction_non_additive": 0.066,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 86,
+    "non_additive_T4_qualified_L1_any": 78,
+    "non_additive_T4_qualified_either": 87,
+    "window_T4_qualified_non_additive": 9,
+    "yield_per_1000_nonadd_Q2_solvable": 58.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 56.67
+   },
+   "fdiv": {
+    "draws": 1500,
+    "admissible": 18,
+    "genuinely_non_additive": 18,
+    "Q2_pass_admissible": 18,
+    "Q2_pass_rate": 1.0,
+    "non_additive_Q2_pass": 18,
+    "non_additive_Q2_pass_non_G1_extensional": 18,
+    "distinct_non_additive_Q2_bodies": 7,
+    "solvability_tested": 18,
+    "solvability_tested_non_additive": 18,
+    "non_additive_PRISTINE_any": 4,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 4,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 4,
+    "window_fraction": 0.222,
+    "window_fraction_non_additive": 0.222,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 4,
+    "non_additive_T4_qualified_L1_any": 0,
+    "non_additive_T4_qualified_either": 4,
+    "window_T4_qualified_non_additive": 4,
+    "yield_per_1000_nonadd_Q2_solvable": 2.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 2.67
+   },
+   "mod": {
+    "draws": 1500,
+    "admissible": 28,
+    "genuinely_non_additive": 28,
+    "Q2_pass_admissible": 28,
+    "Q2_pass_rate": 1.0,
+    "non_additive_Q2_pass": 28,
+    "non_additive_Q2_pass_non_G1_extensional": 24,
+    "distinct_non_additive_Q2_bodies": 12,
+    "solvability_tested": 28,
+    "solvability_tested_non_additive": 28,
+    "non_additive_PRISTINE_any": 7,
+    "non_additive_L1_any": 6,
+    "non_additive_either": 11,
+    "non_additive_L1_only": 4,
+    "window_PRISTINE_1to3_of_4": 7,
+    "window_fraction": 0.25,
+    "window_fraction_non_additive": 0.25,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 7,
+    "non_additive_T4_qualified_L1_any": 5,
+    "non_additive_T4_qualified_either": 10,
+    "window_T4_qualified_non_additive": 7,
+    "yield_per_1000_nonadd_Q2_solvable": 7.33,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 4.67
+   },
+   "gcd": {
+    "draws": 1500,
+    "admissible": 31,
+    "genuinely_non_additive": 24,
+    "Q2_pass_admissible": 30,
+    "Q2_pass_rate": 0.968,
+    "non_additive_Q2_pass": 24,
+    "non_additive_Q2_pass_non_G1_extensional": 24,
+    "distinct_non_additive_Q2_bodies": 14,
+    "solvability_tested": 30,
+    "solvability_tested_non_additive": 24,
+    "non_additive_PRISTINE_any": 9,
+    "non_additive_L1_any": 8,
+    "non_additive_either": 10,
+    "non_additive_L1_only": 1,
+    "window_PRISTINE_1to3_of_4": 7,
+    "window_fraction": 0.233,
+    "window_fraction_non_additive": 0.292,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 7,
+    "non_additive_T4_qualified_L1_any": 5,
+    "non_additive_T4_qualified_either": 9,
+    "window_T4_qualified_non_additive": 5,
+    "yield_per_1000_nonadd_Q2_solvable": 6.67,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 6.67
+   },
+   "powr": {
+    "draws": 1500,
+    "admissible": 1,
+    "genuinely_non_additive": 1,
+    "Q2_pass_admissible": 1,
+    "Q2_pass_rate": 1.0,
+    "non_additive_Q2_pass": 1,
+    "non_additive_Q2_pass_non_G1_extensional": 1,
+    "distinct_non_additive_Q2_bodies": 1,
+    "solvability_tested": 1,
+    "solvability_tested_non_additive": 1,
+    "non_additive_PRISTINE_any": 0,
+    "non_additive_L1_any": 0,
+    "non_additive_either": 0,
+    "non_additive_L1_only": 0,
+    "window_PRISTINE_1to3_of_4": 0,
+    "window_fraction": 0.0,
+    "window_fraction_non_additive": 0.0,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 0,
+    "non_additive_T4_qualified_L1_any": 0,
+    "non_additive_T4_qualified_either": 0,
+    "window_T4_qualified_non_additive": 0,
+    "yield_per_1000_nonadd_Q2_solvable": 0.0,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 0.0
+   },
+   "ALL": {
+    "draws": 10500,
+    "admissible": 1092,
+    "genuinely_non_additive": 585,
+    "Q2_pass_admissible": 1065,
+    "Q2_pass_rate": 0.975,
+    "non_additive_Q2_pass": 581,
+    "non_additive_Q2_pass_non_G1_extensional": 533,
+    "distinct_non_additive_Q2_bodies": 201,
+    "solvability_tested": 720,
+    "solvability_tested_non_additive": 581,
+    "non_additive_PRISTINE_any": 284,
+    "non_additive_L1_any": 255,
+    "non_additive_either": 305,
+    "non_additive_L1_only": 21,
+    "window_PRISTINE_1to3_of_4": 88,
+    "window_fraction": 0.122,
+    "window_fraction_non_additive": 0.105,
+    "junk_among_admissible": {
+     "ANY_T4_REASON": 0
+    },
+    "non_additive_T4_qualified_PRISTINE_any": 273,
+    "non_additive_T4_qualified_L1_any": 240,
+    "non_additive_T4_qualified_either": 285,
+    "window_T4_qualified_non_additive": 50,
+    "yield_per_1000_nonadd_Q2_solvable": 29.05,
+    "yield_per_1000_nonadd_Q2_solvable_nonG1ext": 24.48
+   }
+  }
+ },
+ "schema_families": {
+  "V0": {
+   "solvable_by_family_distinct_behaviors": {
+    "NA_GCD": 4,
+    "NA_MOD": 3
+   },
+   "families_with_ge2": [
+    "NA_GCD",
+    "NA_MOD"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "NA_GCD": 4
+   },
+   "nonG1ext_families_with_ge2": [
+    "NA_GCD"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "NA_MOD": 3
+   },
+   "T4_qualified_families_with_ge2": [
+    "NA_MOD"
+   ]
+  },
+  "V1": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_CONST_SLOPE": 71,
+    "NA_FDIV": 60,
+    "NA_GCD": 130,
+    "NA_MOD": 56,
+    "NA_MUL": 33,
+    "NA_POWR": 30
+   },
+   "families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL",
+    "NA_POWR"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 71,
+    "NA_FDIV": 49,
+    "NA_GCD": 114,
+    "NA_MOD": 42,
+    "NA_MUL": 29,
+    "NA_POWR": 17
+   },
+   "nonG1ext_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL",
+    "NA_POWR"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 55,
+    "NA_FDIV": 5,
+    "NA_GCD": 32,
+    "NA_MOD": 18,
+    "NA_MUL": 2
+   },
+   "T4_qualified_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL"
+   ]
+  },
+  "V2": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_CONST_SLOPE": 72,
+    "NA_FDIV": 60,
+    "NA_GCD": 133,
+    "NA_MOD": 56,
+    "NA_MUL": 33,
+    "NA_POWR": 31
+   },
+   "families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL",
+    "NA_POWR"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 72,
+    "NA_FDIV": 49,
+    "NA_GCD": 117,
+    "NA_MOD": 42,
+    "NA_MUL": 29,
+    "NA_POWR": 18
+   },
+   "nonG1ext_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL",
+    "NA_POWR"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 55,
+    "NA_FDIV": 5,
+    "NA_GCD": 32,
+    "NA_MOD": 18,
+    "NA_MUL": 2
+   },
+   "T4_qualified_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL"
+   ]
+  },
+  "V3": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_SCALE_V": 1,
+    "NA_GCD": 5,
+    "NA_MOD": 3
+   },
+   "families_with_ge2": [
+    "NA_GCD",
+    "NA_MOD"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_SCALE_V": 1,
+    "NA_GCD": 5
+   },
+   "nonG1ext_families_with_ge2": [
+    "NA_GCD"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_SCALE_V": 1,
+    "NA_MOD": 3
+   },
+   "T4_qualified_families_with_ge2": [
+    "NA_MOD"
+   ]
+  },
+  "V4": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_SCALE_V": 45,
+    "NA_GCD": 6,
+    "NA_MOD": 3,
+    "NA_POWR": 2
+   },
+   "families_with_ge2": [
+    "AFFINE_SCALE_V",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_POWR"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_SCALE_V": 41,
+    "NA_GCD": 6,
+    "NA_POWR": 2
+   },
+   "nonG1ext_families_with_ge2": [
+    "AFFINE_SCALE_V",
+    "NA_GCD",
+    "NA_POWR"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_SCALE_V": 29,
+    "NA_MOD": 3
+   },
+   "T4_qualified_families_with_ge2": [
+    "AFFINE_SCALE_V",
+    "NA_MOD"
+   ]
+  },
+  "V5": {
+   "solvable_by_family_distinct_behaviors": {
+    "NA_FDIV": 2,
+    "NA_GCD": 3,
+    "NA_MOD": 2
+   },
+   "families_with_ge2": [
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "NA_FDIV": 2,
+    "NA_GCD": 3
+   },
+   "nonG1ext_families_with_ge2": [
+    "NA_FDIV",
+    "NA_GCD"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "NA_MOD": 2
+   },
+   "T4_qualified_families_with_ge2": [
+    "NA_MOD"
+   ]
+  },
+  "V6": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_CONST_SLOPE": 66,
+    "NA_FDIV": 78,
+    "NA_GCD": 128,
+    "NA_MOD": 60,
+    "NA_MUL": 35,
+    "NA_POWR": 29
+   },
+   "families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL",
+    "NA_POWR"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 60,
+    "NA_FDIV": 64,
+    "NA_GCD": 115,
+    "NA_MOD": 46,
+    "NA_MUL": 31,
+    "NA_POWR": 16
+   },
+   "nonG1ext_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL",
+    "NA_POWR"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 46,
+    "NA_FDIV": 4,
+    "NA_GCD": 19,
+    "NA_MOD": 14,
+    "NA_MUL": 1
+   },
+   "T4_qualified_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD"
+   ]
+  },
+  "V7_T4_WIDE": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_CONST_SLOPE": 54,
+    "AFFINE_SCALE_V": 61,
+    "AFFINE_SLOPE_FL": 4,
+    "NA_FDIV": 6,
+    "NA_GCD": 30,
+    "NA_MOD": 19,
+    "NA_MUL": 1
+   },
+   "families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "AFFINE_SCALE_V",
+    "AFFINE_SLOPE_FL",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 48,
+    "AFFINE_SCALE_V": 55,
+    "AFFINE_SLOPE_FL": 4,
+    "NA_FDIV": 5,
+    "NA_GCD": 24,
+    "NA_MOD": 15,
+    "NA_MUL": 1
+   },
+   "nonG1ext_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "AFFINE_SCALE_V",
+    "AFFINE_SLOPE_FL",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 46,
+    "AFFINE_SCALE_V": 59,
+    "AFFINE_SLOPE_FL": 3,
+    "NA_FDIV": 4,
+    "NA_GCD": 19,
+    "NA_MOD": 14,
+    "NA_MUL": 1
+   },
+   "T4_qualified_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "AFFINE_SCALE_V",
+    "AFFINE_SLOPE_FL",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD"
+   ]
+  },
+  "V8_T4_H1": {
+   "solvable_by_family_distinct_behaviors": {
+    "AFFINE_CONST_SLOPE": 79,
+    "AFFINE_SCALE_V": 72,
+    "AFFINE_SLOPE_FL": 7,
+    "NA_FDIV": 5,
+    "NA_GCD": 38,
+    "NA_MOD": 20,
+    "NA_MUL": 2
+   },
+   "families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "AFFINE_SCALE_V",
+    "AFFINE_SLOPE_FL",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL"
+   ],
+   "nonG1ext_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 64,
+    "AFFINE_SCALE_V": 68,
+    "AFFINE_SLOPE_FL": 7,
+    "NA_FDIV": 4,
+    "NA_GCD": 29,
+    "NA_MOD": 15,
+    "NA_MUL": 2
+   },
+   "nonG1ext_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "AFFINE_SCALE_V",
+    "AFFINE_SLOPE_FL",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL"
+   ],
+   "T4_qualified_solvable_by_family": {
+    "AFFINE_CONST_SLOPE": 73,
+    "AFFINE_SCALE_V": 69,
+    "AFFINE_SLOPE_FL": 5,
+    "NA_FDIV": 5,
+    "NA_GCD": 32,
+    "NA_MOD": 18,
+    "NA_MUL": 2
+   },
+   "T4_qualified_families_with_ge2": [
+    "AFFINE_CONST_SLOPE",
+    "AFFINE_SCALE_V",
+    "AFFINE_SLOPE_FL",
+    "NA_FDIV",
+    "NA_GCD",
+    "NA_MOD",
+    "NA_MUL"
+   ]
+  }
+ },
+ "body_classes_admitted": {
+  "V0": {
+   "ADDITIVE": 577,
+   "NA_POWR": 7,
+   "NA_GCD": 99,
+   "AFFINE_SCALE_V": 4,
+   "NA_MUL": 1,
+   "NA_FDIV": 3,
+   "NA_MOD": 13
+  },
+  "V1": {
+   "ADDITIVE": 579,
+   "NA_MOD": 192,
+   "ACC_FREE": 166,
+   "NA_GCD": 445,
+   "NA_FDIV": 187,
+   "AFFINE_CONST_SLOPE": 176,
+   "NA_POWR": 93,
+   "NA_MUL": 60,
+   "AFFINE_SCALE_V": 4
+  },
+  "V2": {
+   "ADDITIVE": 580,
+   "NA_MOD": 194,
+   "ACC_FREE": 163,
+   "NA_GCD": 445,
+   "NA_FDIV": 185,
+   "AFFINE_CONST_SLOPE": 173,
+   "NA_POWR": 90,
+   "NA_MUL": 60,
+   "AFFINE_SCALE_V": 4
+  },
+  "V3": {
+   "ADDITIVE": 582,
+   "NA_GCD": 108,
+   "NA_FDIV": 3,
+   "NA_POWR": 7,
+   "AFFINE_SCALE_V": 10,
+   "NA_MUL": 2,
+   "NA_MOD": 14
+  },
+  "V4": {
+   "ADDITIVE": 673,
+   "AFFINE_SCALE_V": 158,
+   "NA_POWR": 15,
+   "NA_GCD": 110,
+   "NA_MUL": 1,
+   "NA_FDIV": 3,
+   "NA_MOD": 14
+  },
+  "V5": {
+   "ADDITIVE": 579,
+   "NA_MOD": 16,
+   "NA_GCD": 140,
+   "NA_FDIV": 12,
+   "NA_MUL": 3,
+   "AFFINE_SCALE_V": 4,
+   "NA_POWR": 6
+  },
+  "V6": {
+   "ADDITIVE": 580,
+   "NA_MOD": 264,
+   "ACC_FREE": 167,
+   "NA_GCD": 505,
+   "NA_FDIV": 209,
+   "AFFINE_CONST_SLOPE": 198,
+   "NA_POWR": 97,
+   "NA_MUL": 79,
+   "AFFINE_SCALE_V": 9
+  },
+  "V7_T4_WIDE": {
+   "ADDITIVE": 502,
+   "AFFINE_SCALE_V": 244,
+   "NA_MOD": 78,
+   "AFFINE_SLOPE_FL": 40,
+   "NA_GCD": 82,
+   "AFFINE_CONST_SLOPE": 172,
+   "NA_FDIV": 21,
+   "NA_MUL": 14
+  },
+  "V8_T4_H1": {
+   "ADDITIVE": 507,
+   "AFFINE_SCALE_V": 181,
+   "NA_MOD": 75,
+   "AFFINE_SLOPE_FL": 47,
+   "NA_GCD": 82,
+   "AFFINE_CONST_SLOPE": 173,
+   "NA_FDIV": 22,
+   "NA_MUL": 4,
+   "NA_POWR": 1
+  }
+ },
+ "successor_nonG1_examples": {
+  "AFFINE_SCALE_V": [
+   {
+    "prog": [
+     "0",
+     "(last + (v * acc))",
+     "(last * acc)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "(1 + 1)",
+     "(0 + (acc * v))",
+     "(acc + last)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(first + (acc * v))",
+     "(acc - 1)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(first + (acc * v))",
+     "(acc + 1)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "last",
+     "(last + (acc * v))",
+     "math.gcd(abs(acc), abs(acc))"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(last + (v * acc))",
+     "(0 + acc)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 1,
+    "L1": 0,
+    "T4q_P": 1,
+    "T4q_L1": 0
+   }
+  ],
+  "NA_MOD": [
+   {
+    "prog": [
+     "0",
+     "(v + (acc % first))",
+     "math.gcd(abs(acc), abs(0))"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(v + (acc % first))",
+     "(acc // 1)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(v + (acc % v))",
+     "(first - acc)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 4,
+    "L1": 4,
+    "T4q_P": 4,
+    "T4q_L1": 4
+   },
+   {
+    "prog": [
+     "first",
+     "(v + (last % acc))",
+     "(acc - first)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(last + (acc % v))",
+     "(acc * acc)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(first + (acc % v))",
+     "(last - acc)"
+    ],
+    "Q2": 6,
+    "L_max": 200,
+    "PRISTINE": 1,
+    "L1": 0,
+    "T4q_P": 1,
+    "T4q_L1": 0
+   }
+  ],
+  "AFFINE_SLOPE_FL": [
+   {
+    "prog": [
+     "1",
+     "(v + (first * acc))",
+     "(acc % last)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(v + (acc * last))",
+     "(acc + last)"
+    ],
+    "Q2": 4,
+    "L_max": 20,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(v + (first * acc))",
+     "(acc - 0)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 1,
+    "T4q_P": 0,
+    "T4q_L1": 1
+   },
+   {
+    "prog": [
+     "last",
+     "(v + (first * acc))",
+     "(last * acc)"
+    ],
+    "Q2": 4,
+    "L_max": 20,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "(1 + 1)",
+     "(v + (acc * first))",
+     "(acc + acc)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(v + (last * acc))",
+     "pow(acc, 1)"
+    ],
+    "Q2": 4,
+    "L_max": 20,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   }
+  ],
+  "AFFINE_CONST_SLOPE": [
+   {
+    "prog": [
+     "first",
+     "(1 + (v - acc))",
+     "(acc + acc)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(1 + (v - acc))",
+     "(last - acc)"
+    ],
+    "Q2": 6,
+    "L_max": 200,
+    "PRISTINE": 1,
+    "L1": 0,
+    "T4q_P": 1,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(v + (v - acc))",
+     "(acc + 0)"
+    ],
+    "Q2": 8,
+    "L_max": 200,
+    "PRISTINE": 4,
+    "L1": 4,
+    "T4q_P": 4,
+    "T4q_L1": 4
+   },
+   {
+    "prog": [
+     "1",
+     "(v + (v - acc))",
+     "(first - acc)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 4,
+    "L1": 4,
+    "T4q_P": 4,
+    "T4q_L1": 4
+   },
+   {
+    "prog": [
+     "last",
+     "(v + (last - acc))",
+     "acc"
+    ],
+    "Q2": 8,
+    "L_max": 200,
+    "PRISTINE": 1,
+    "L1": 1,
+    "T4q_P": 1,
+    "T4q_L1": 1
+   },
+   {
+    "prog": [
+     "1",
+     "(v + (0 - acc))",
+     "math.gcd(abs(first), abs(acc))"
+    ],
+    "Q2": 16,
+    "L_max": 200,
+    "PRISTINE": 4,
+    "L1": 4,
+    "T4q_P": 4,
+    "T4q_L1": 4
+   }
+  ],
+  "NA_GCD": [
+   {
+    "prog": [
+     "(1 + 1)",
+     "(v + math.gcd(abs(acc), abs(last)))",
+     "(1 - acc)"
+    ],
+    "Q2": 8,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(v + math.gcd(abs(acc), abs(first)))",
+     "(acc * acc)"
+    ],
+    "Q2": 8,
+    "L_max": 200,
+    "PRISTINE": 1,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "0",
+     "(v + math.gcd(abs(acc), abs(last)))",
+     "(first - acc)"
+    ],
+    "Q2": 12,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "(1 + 1)",
+     "(v + math.gcd(abs(first), abs(acc)))",
+     "(last % acc)"
+    ],
+    "Q2": 12,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(v + math.gcd(abs(first), abs(acc)))",
+     "(first * acc)"
+    ],
+    "Q2": 8,
+    "L_max": 200,
+    "PRISTINE": 1,
+    "L1": 0,
+    "T4q_P": 1,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(v + math.gcd(abs(acc), abs(last)))",
+     "(last + acc)"
+    ],
+    "Q2": 8,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   }
+  ],
+  "NA_FDIV": [
+   {
+    "prog": [
+     "(1 + 1)",
+     "(v + (last // acc))",
+     "(acc - 0)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 1,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(1 + (v // acc))",
+     "math.gcd(abs(acc), abs(0))"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "last",
+     "(v + (last // acc))",
+     "(1 * acc)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(1 + (v // acc))",
+     "(first * acc)"
+    ],
+    "Q2": 6,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "last",
+     "(1 + (v // acc))",
+     "(acc * last)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "last",
+     "(acc - (acc // v))",
+     "(acc % last)"
+    ],
+    "Q2": 4,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   }
+  ],
+  "NA_MUL": [
+   {
+    "prog": [
+     "first",
+     "(acc * math.gcd(abs(v), abs(acc)))",
+     "(1 - acc)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(acc * math.gcd(abs(acc), abs(v)))",
+     "(acc // first)"
+    ],
+    "Q2": 4,
+    "L_max": 25,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(first * (acc % v))",
+     "math.gcd(abs(last), abs(acc))"
+    ],
+    "Q2": 12,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "(1 + 1)",
+     "(first * (acc % v))",
+     "math.gcd(abs(acc), abs(last))"
+    ],
+    "Q2": 16,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "first",
+     "(v * (acc % last))",
+     "(last + acc)"
+    ],
+    "Q2": 6,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   },
+   {
+    "prog": [
+     "1",
+     "(v * (acc % last))",
+     "(acc + 1)"
+    ],
+    "Q2": 6,
+    "L_max": 200,
+    "PRISTINE": 0,
+    "L1": 0,
+    "T4q_P": 0,
+    "T4q_L1": 0
+   }
+  ]
+ },
+ "seconds": 8314
+}

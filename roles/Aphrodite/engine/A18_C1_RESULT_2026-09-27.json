@@ -1,0 +1,65 @@
+{
+ "assay": "AMENDMENT 18 C1",
+ "G1_STEPPING_STONE": "UNTESTABLE",
+ "GENERIC_STEPPING_STONE": "UNTESTABLE",
+ "S_NAT": "UNTESTABLE",
+ "reason": "SUPPLY: 0/12 replicates fillable under the frozen role rules",
+ "foundry_summary": {
+  "CON:G1": {
+   "Q2": 24,
+   "T4": 4,
+   "n": 48,
+   "p_L1>0": 2,
+   "p_P>0": 1
+  },
+  "CON:SHAM_0": {
+   "Q2": 28,
+   "T4": 0,
+   "n": 48,
+   "p_L1>0": 0,
+   "p_P>0": 0
+  },
+  "CON:SHAM_1": {
+   "Q2": 38,
+   "T4": 0,
+   "n": 48,
+   "p_L1>0": 0,
+   "p_P>0": 0
+  },
+  "NAT": {
+   "Q2": 86,
+   "T4": 12,
+   "n": 144,
+   "p_L1>0": 6,
+   "p_P>0": 4
+  }
+ },
+ "replicates_fillable": {
+  "CON/0": false,
+  "CON/1": false,
+  "CON/2": false,
+  "CON/3": false,
+  "CON/4": false,
+  "CON/5": false,
+  "CON/6": false,
+  "CON/7": false,
+  "NAT/0": false,
+  "NAT/1": false,
+  "NAT/2": false,
+  "NAT/3": false
+ },
+ "diagnosis": "T4 rejects composed depth-3 witnesses mainly for PARTIALITY (None on dev lengths/domain: division/mod by zero intermediates, overflow, pow guard) and near-constant/insensitive outputs. The frozen supply sampled ALL accumulating instances of every composition without a task-domain totality screen (seat's design flaw); the pow- and mod-headed shams are junk-prone. Q2 passed 50-80% of composed draws; T4 passed 4/48 (G1), 0/48, 0/48 (shams), 12/144 (natural).",
+ "conformance_W5": {
+  "part1_GREEN": true,
+  "part1_checked": 21600,
+  "part2_W5_programs": 40,
+  "part2_checked": 803480,
+  "part2_mismatches": 0,
+  "GREEN": true
+ },
+ "disclosures": [
+  "The frozen AMENDMENT 18 text omitted the draft's conformance-gate sentence; the gate was run before the foundry anyway: GREEN (21,600 + 803,480 comparisons on 40 W5 programs, 0 mismatches).",
+  "Panel max overlap 1.75% (> 1%): SHAM_2 own instances vs SHAM_3 compositions; neither is supplied nor inherited by any arm. Reported, not repaired."
+ ],
+ "no_BOUNDED_RSI_label_written": true
+}

@@ -1,0 +1,586 @@
+{
+ "AG2:0": {
+  "members": 16,
+  "fclass": {
+   "AFFINE": 5,
+   "OTHER": 11
+  },
+  "top_compositions": [
+   [
+    "math.gcd(abs((acc + {H})), abs(first))",
+    11
+   ],
+   [
+    "math.gcd(abs(first), abs((acc + {H})))",
+    11
+   ],
+   [
+    "((acc + {H}) * v)",
+    5
+   ],
+   [
+    "(v * (acc + {H}))",
+    5
+   ]
+  ]
+ },
+ "AG2:1": {
+  "members": 65,
+  "fclass": {
+   "AFFINE": 29,
+   "ADDITIVE": 28,
+   "OTHER": 8
+  },
+  "top_compositions": [
+   [
+    "(v + (acc + {H}))",
+    19
+   ],
+   [
+    "((acc + {H}) + v)",
+    19
+   ],
+   [
+    "(1 * (acc + {H}))",
+    17
+   ],
+   [
+    "((acc + {H}) // 1)",
+    17
+   ]
+  ]
+ },
+ "AG2:2": {
+  "members": 27,
+  "fclass": {
+   "ADDITIVE": 2,
+   "AFFINE": 25
+  },
+  "top_compositions": [
+   [
+    "((acc + {H}) * v)",
+    17
+   ],
+   [
+    "(v * (acc + {H}))",
+    17
+   ],
+   [
+    "(1 * (acc + {H}))",
+    10
+   ],
+   [
+    "((acc + {H}) // 1)",
+    10
+   ]
+  ]
+ },
+ "AG2W:0": {
+  "members": 2,
+  "fclass": {
+   "ADDITIVE": 1,
+   "AFFINE": 1
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    1
+   ],
+   [
+    "((acc + {H}) // 1)",
+    1
+   ],
+   [
+    "((acc + {H}) - 0)",
+    1
+   ],
+   [
+    "((acc + {H}) + 0)",
+    1
+   ]
+  ]
+ },
+ "AG2W:1": {
+  "members": 19,
+  "fclass": {
+   "AFFINE": 18,
+   "ADDITIVE": 1
+  },
+  "top_compositions": [
+   [
+    "(v - (acc + {H}))",
+    17
+   ],
+   [
+    "(1 * (acc + {H}))",
+    2
+   ],
+   [
+    "((acc + {H}) // 1)",
+    2
+   ],
+   [
+    "((acc + {H}) - 0)",
+    2
+   ]
+  ]
+ },
+ "AG2W:2": {
+  "members": 85,
+  "fclass": {
+   "ADDITIVE": 41,
+   "AFFINE": 28,
+   "OTHER": 16
+  },
+  "top_compositions": [
+   [
+    "(v + (acc + {H}))",
+    29
+   ],
+   [
+    "((acc + {H}) + v)",
+    29
+   ],
+   [
+    "(1 * (acc + {H}))",
+    27
+   ],
+   [
+    "((acc + {H}) // 1)",
+    27
+   ]
+  ]
+ },
+ "AG:0": {
+  "members": 5,
+  "fclass": {
+   "ADDITIVE": 5
+  },
+  "top_compositions": [
+   [
+    "((acc + {H}) + first)",
+    5
+   ],
+   [
+    "(first + (acc + {H}))",
+    5
+   ]
+  ]
+ },
+ "AG:1": {
+  "members": 91,
+  "fclass": {
+   "AFFINE": 91
+  },
+  "top_compositions": [
+   [
+    "((acc + {H}) * v)",
+    91
+   ],
+   [
+    "(v * (acc + {H}))",
+    91
+   ]
+  ]
+ },
+ "FG:0": {
+  "members": 0,
+  "fclass": {},
+  "top_compositions": []
+ },
+ "FG:1": {
+  "members": 39,
+  "fclass": {
+   "AFFINE": 10,
+   "ADDITIVE": 29
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    29
+   ],
+   [
+    "((acc + {H}) // 1)",
+    29
+   ],
+   [
+    "((acc + {H}) - 0)",
+    29
+   ],
+   [
+    "((acc + {H}) + 0)",
+    29
+   ]
+  ]
+ },
+ "FG:2": {
+  "members": 0,
+  "fclass": {},
+  "top_compositions": []
+ },
+ "FGW:0": {
+  "members": 10,
+  "fclass": {
+   "OTHER": 5,
+   "AFFINE": 5
+  },
+  "top_compositions": [
+   [
+    "(v // (acc + {H}))",
+    4
+   ],
+   [
+    "(1 * (acc + {H}))",
+    3
+   ],
+   [
+    "((acc + {H}) // 1)",
+    3
+   ],
+   [
+    "((acc + {H}) - 0)",
+    3
+   ]
+  ]
+ },
+ "FGW:1": {
+  "members": 0,
+  "fclass": {},
+  "top_compositions": []
+ },
+ "FGW:2": {
+  "members": 95,
+  "fclass": {
+   "ADDITIVE": 95
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    95
+   ],
+   [
+    "((acc + {H}) // 1)",
+    95
+   ],
+   [
+    "((acc + {H}) - 0)",
+    95
+   ],
+   [
+    "((acc + {H}) + 0)",
+    95
+   ]
+  ]
+ },
+ "LIN:0": {
+  "members": 24,
+  "fclass": {
+   "ADDITIVE": 6,
+   "AFFINE": 16,
+   "OTHER": 2
+  },
+  "top_compositions": [
+   [
+    "(v - (acc + {H}))",
+    11
+   ],
+   [
+    "((acc + {H}) * v)",
+    5
+   ],
+   [
+    "(v * (acc + {H}))",
+    5
+   ],
+   [
+    "(1 * (acc + {H}))",
+    4
+   ]
+  ]
+ },
+ "LIN:1": {
+  "members": 5,
+  "fclass": {
+   "ADDITIVE": 4,
+   "AFFINE": 1
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    4
+   ],
+   [
+    "((acc + {H}) // 1)",
+    4
+   ],
+   [
+    "((acc + {H}) - 0)",
+    4
+   ],
+   [
+    "((acc + {H}) + 0)",
+    4
+   ]
+  ]
+ },
+ "LIN:2": {
+  "members": 32,
+  "fclass": {
+   "OTHER": 1,
+   "ADDITIVE": 16,
+   "AFFINE": 15
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    16
+   ],
+   [
+    "((acc + {H}) // 1)",
+    16
+   ],
+   [
+    "((acc + {H}) - 0)",
+    16
+   ],
+   [
+    "((acc + {H}) + 0)",
+    16
+   ]
+  ]
+ },
+ "PCFG:0": {
+  "members": 32,
+  "fclass": {
+   "AFFINE": 13,
+   "ADDITIVE": 17,
+   "OTHER": 2
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    11
+   ],
+   [
+    "((acc + {H}) // 1)",
+    11
+   ],
+   [
+    "((acc + {H}) - 0)",
+    11
+   ],
+   [
+    "((acc + {H}) + 0)",
+    11
+   ]
+  ]
+ },
+ "PCFG:1": {
+  "members": 34,
+  "fclass": {
+   "AFFINE": 13,
+   "ADDITIVE": 19,
+   "OTHER": 2
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    13
+   ],
+   [
+    "((acc + {H}) // 1)",
+    13
+   ],
+   [
+    "((acc + {H}) - 0)",
+    13
+   ],
+   [
+    "((acc + {H}) + 0)",
+    13
+   ]
+  ]
+ },
+ "PCFG:2": {
+  "members": 24,
+  "fclass": {
+   "AFFINE": 9,
+   "ADDITIVE": 14,
+   "OTHER": 1
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    13
+   ],
+   [
+    "((acc + {H}) // 1)",
+    13
+   ],
+   [
+    "((acc + {H}) - 0)",
+    13
+   ],
+   [
+    "((acc + {H}) + 0)",
+    13
+   ]
+  ]
+ },
+ "STAR:0": {
+  "members": 34,
+  "fclass": {
+   "AFFINE": 17,
+   "ADDITIVE": 16,
+   "OTHER": 1
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    15
+   ],
+   [
+    "((acc + {H}) // 1)",
+    15
+   ],
+   [
+    "((acc + {H}) - 0)",
+    15
+   ],
+   [
+    "((acc + {H}) + 0)",
+    15
+   ]
+  ]
+ },
+ "STAR:1": {
+  "members": 25,
+  "fclass": {
+   "ADDITIVE": 12,
+   "AFFINE": 10,
+   "OTHER": 3
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    9
+   ],
+   [
+    "((acc + {H}) // 1)",
+    9
+   ],
+   [
+    "((acc + {H}) - 0)",
+    9
+   ],
+   [
+    "((acc + {H}) + 0)",
+    9
+   ]
+  ]
+ },
+ "STAR:2": {
+  "members": 36,
+  "fclass": {
+   "AFFINE": 17,
+   "ADDITIVE": 17,
+   "OTHER": 2
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    19
+   ],
+   [
+    "((acc + {H}) // 1)",
+    19
+   ],
+   [
+    "((acc + {H}) - 0)",
+    19
+   ],
+   [
+    "((acc + {H}) + 0)",
+    19
+   ]
+  ]
+ },
+ "U:0": {
+  "members": 21,
+  "fclass": {
+   "AFFINE": 7,
+   "ADDITIVE": 10,
+   "OTHER": 4
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    5
+   ],
+   [
+    "((acc + {H}) // 1)",
+    5
+   ],
+   [
+    "((acc + {H}) - 0)",
+    5
+   ],
+   [
+    "((acc + {H}) + 0)",
+    5
+   ]
+  ]
+ },
+ "U:1": {
+  "members": 17,
+  "fclass": {
+   "ADDITIVE": 6,
+   "AFFINE": 9,
+   "OTHER": 2
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    4
+   ],
+   [
+    "((acc + {H}) // 1)",
+    4
+   ],
+   [
+    "((acc + {H}) - 0)",
+    4
+   ],
+   [
+    "((acc + {H}) + 0)",
+    4
+   ]
+  ]
+ },
+ "U:2": {
+  "members": 15,
+  "fclass": {
+   "ADDITIVE": 7,
+   "AFFINE": 6,
+   "OTHER": 2
+  },
+  "top_compositions": [
+   [
+    "(1 * (acc + {H}))",
+    7
+   ],
+   [
+    "((acc + {H}) // 1)",
+    7
+   ],
+   [
+    "((acc + {H}) - 0)",
+    7
+   ],
+   [
+    "((acc + {H}) + 0)",
+    7
+   ]
+  ]
+ }
+}

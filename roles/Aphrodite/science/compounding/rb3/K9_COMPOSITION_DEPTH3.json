@@ -1,0 +1,1573 @@
+{
+ "stages": {
+  "representable_G5": 63,
+  "G1_dependent (not PRISTINE-derivable)": 57,
+  "G1_dependent & NEW_V2 (G5)": 26,
+  "... & accumulating>=10 (G5)": 26,
+  "same, in G4": 0
+ },
+ "rows": [
+  {
+   "schema": "((acc + {H}) + acc)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 43,
+    "novel": 38,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(acc + (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 43,
+    "novel": 38,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) + v)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 139,
+    "novel": 46,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(v + (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 139,
+    "novel": 46,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) + first)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 13,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(first + (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 13,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) + last)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 13,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(last + (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 13,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) + 0)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(0 + (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "((acc + {H}) + 1)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 13,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(1 + (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 13,
+    "NEW_V2": false,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) // acc)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(acc // (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 20,
+    "novel": 20,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) // v)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(v // (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 5,
+    "novel": 5,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 129,
+    "novel": 129,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) // first)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(first // (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 38,
+    "novel": 38,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) // last)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(last // (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 38,
+    "novel": 38,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) // 0)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(0 // (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 15,
+    "novel": 15,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) // 1)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(1 // (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 18,
+    "novel": 18,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(acc))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 41,
+    "novel": 41,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs(acc), abs((acc + {H})))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 41,
+    "novel": 41,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(v))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 6,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 144,
+    "novel": 144,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs(v), abs((acc + {H})))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 6,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 144,
+    "novel": 144,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(first))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 40,
+    "novel": 40,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs(first), abs((acc + {H})))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 40,
+    "novel": 40,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(last))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 40,
+    "novel": 40,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs(last), abs((acc + {H})))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 40,
+    "novel": 40,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(0))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 7,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs(0), abs((acc + {H})))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 7,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "math.gcd(abs((acc + {H})), abs(1))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "math.gcd(abs(1), abs((acc + {H})))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "((acc + {H}) % acc)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(acc % (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 20,
+    "novel": 20,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) % v)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(v % (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 6,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 135,
+    "novel": 135,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) % first)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(first % (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 38,
+    "novel": 38,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) % last)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(last % (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 38,
+    "novel": 38,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) % 0)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(0 % (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 15,
+    "novel": 15,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) % 1)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(1 % (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 18,
+    "novel": 18,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) * acc)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 43,
+    "novel": 43,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(acc * (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 43,
+    "novel": 43,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) * v)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 6,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 144,
+    "novel": 144,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(v * (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 6,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 144,
+    "novel": 144,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) * first)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(first * (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) * last)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "(last * (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) * 0)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 61,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(0 * (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 61,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "((acc + {H}) * 1)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(1 * (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "pow((acc + {H}), acc)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "pow(acc, (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 43,
+    "novel": 43,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "pow((acc + {H}), v)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "pow(v, (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 6,
+    "novel": 6,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 144,
+    "novel": 144,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "pow((acc + {H}), first)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "pow(first, (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "pow((acc + {H}), last)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "pow(last, (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "pow((acc + {H}), 0)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "pow(0, (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 15,
+    "novel": 15,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "pow((acc + {H}), 1)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "pow(1, (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 39,
+    "novel": 39,
+    "NEW_V2": true,
+    "classes": [
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) - acc)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(acc - (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 11,
+    "novel": 10,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) - v)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 1,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(v - (acc + {H}))",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 6,
+    "accumulating": 5,
+    "novel": 5,
+    "NEW_V2": true
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 134,
+    "novel": 134,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) - first)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(first - (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) - last)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(last - (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) - 0)",
+   "in_PRISTINE_universe": true,
+   "G4": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(0 - (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  },
+  {
+   "schema": "((acc + {H}) - 1)",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 1,
+    "accumulating": 0,
+    "novel": 0,
+    "NEW_V2": false,
+    "classes": []
+   }
+  },
+  {
+   "schema": "(1 - (acc + {H}))",
+   "in_PRISTINE_universe": false,
+   "G4": {
+    "inst": 6,
+    "accumulating": 1,
+    "novel": 1,
+    "NEW_V2": false
+   },
+   "G5": {
+    "inst": 161,
+    "accumulating": 42,
+    "novel": 42,
+    "NEW_V2": true,
+    "classes": [
+     "AFFINE",
+     "OTHER"
+    ]
+   }
+  }
+ ]
+}

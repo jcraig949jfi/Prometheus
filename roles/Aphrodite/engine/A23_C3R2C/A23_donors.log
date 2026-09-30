@@ -1,0 +1,74 @@
+[a18 11:54:27] A23 stage donors workers 5
+[a18 11:54:27] replicates ok {'CON/0': False, 'CON/1': True, 'CON/2': True, 'CON/3': True, 'CON/4': True, 'CON/5': True, 'CON/6': False, 'CON/7': True, 'CON/8': True, 'CON/9': True, 'CON/10': True, 'CON/11': True}; donor jobs 70
+[a18 11:57:22] donor CON1 G1_NC  sel=None origin=None COMP=False
+[a18 11:58:54] donor CON1 OFF_0  sel=None origin=None COMP=False
+[a18 11:59:38] donor CON1 P      sel=None origin=None COMP=False
+[a18 12:02:20] donor CON1 SHAM_1 sel=(last + ({H} * v)) origin=COMPOSITION COMP=True
+[a18 12:02:28] donor CON1 SHAM_2 sel=(1 - math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 12:03:44] donor CON1 G1     sel=(v // (acc + {H})) origin=COMPOSITION COMP=True
+[a18 12:04:03] donor CON1 SHAM_0 sel=math.gcd(abs(0), abs(({H} + v))) origin=COMPOSITION COMP=True
+[a18 12:04:36] donor CON2 G1_NC  sel=None origin=None COMP=False
+[a18 12:05:58] donor CON2 OFF_0  sel=None origin=None COMP=False
+[a18 12:06:45] donor CON2 P      sel=None origin=None COMP=False
+[a18 12:06:48] donor CON2 G1     sel=((acc + {H}) * v) origin=COMPOSITION COMP=True
+[a18 12:08:57] donor CON3 G1_NC  sel=None origin=None COMP=False
+[a18 12:10:57] donor CON2 SHAM_1 sel=(({H} * v) + v) origin=COMPOSITION COMP=True
+[a18 12:11:44] donor CON2 SHAM_2 sel=(v + math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 12:12:00] donor CON2 SHAM_0 sel=(({H} + v) * v) origin=COMPOSITION COMP=True
+[a18 12:16:26] donor CON3 OFF_0  sel=None origin=None COMP=False
+[a18 12:17:14] donor CON3 P      sel=None origin=None COMP=False
+[a18 12:19:49] donor CON3 G1     sel=math.gcd(abs(first), abs((acc + {H}))) origin=COMPOSITION COMP=True
+[a18 12:20:41] donor CON3 SHAM_2 sel=(v // math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 12:21:11] donor CON3 SHAM_0 sel=(({H} + v) + acc) origin=COMPOSITION COMP=True
+[a18 12:22:14] donor CON4 G1_NC  sel=None origin=None COMP=False
+[a18 12:25:07] donor CON4 G1     sel=(0 - (acc + {H})) origin=COMPOSITION COMP=True
+[a18 12:25:45] donor CON3 SHAM_1 sel=(acc - ({H} * v)) origin=COMPOSITION COMP=True
+[a18 12:26:27] donor CON4 OFF_0  sel=None origin=None COMP=False
+[a18 12:27:57] donor CON4 SHAM_2 sel=(v - math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 12:28:09] donor CON4 P      sel=None origin=None COMP=False
+[a18 12:29:01] donor CON4 SHAM_1 sel=(first - ({H} * v)) origin=COMPOSITION COMP=True
+[a18 12:30:16] donor CON4 SHAM_0 sel=(first - ({H} + v)) origin=COMPOSITION COMP=True
+[a18 12:30:17] donor CON5 G1_NC  sel=None origin=None COMP=False
+[a18 12:31:32] donor CON5 OFF_0  sel=None origin=None COMP=False
+[a18 12:32:13] donor CON5 P      sel=None origin=None COMP=False
+[a18 12:33:46] donor CON5 G1     sel=(first - (acc + {H})) origin=COMPOSITION COMP=True
+[a18 12:36:02] donor CON5 SHAM_0 sel=(first - ({H} + v)) origin=COMPOSITION COMP=True
+[a18 12:36:40] donor CON5 SHAM_1 sel=(({H} * v) + 1) origin=COMPOSITION COMP=True
+[a18 12:37:07] donor CON7 G1_NC  sel=None origin=None COMP=False
+[a18 12:37:43] donor CON5 SHAM_2 sel=(math.gcd(abs(acc), abs({H})) * v) origin=COMPOSITION COMP=True
+[a18 12:41:59] donor CON7 OFF_0  sel=(acc + {H}) origin=LGG COMP=False
+[a18 12:42:22] donor CON7 G1     sel=None origin=None COMP=False
+[a18 12:43:49] donor CON7 P      sel=(acc + {H}) origin=LGG COMP=False
+[a18 12:44:42] donor CON7 SHAM_1 sel=(acc + {H}) origin=LGG COMP=False
+[a18 12:45:23] donor CON7 SHAM_2 sel=(acc + math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 12:46:18] donor CON8 G1_NC  sel=None origin=None COMP=False
+[a18 12:46:32] donor CON7 SHAM_0 sel=(({H} + v) * v) origin=COMPOSITION COMP=True
+[a18 12:49:29] donor CON8 G1     sel=(last % (acc + {H})) origin=COMPOSITION COMP=True
+[a18 12:49:35] donor CON8 OFF_0  sel=None origin=None COMP=False
+[a18 12:50:17] donor CON8 P      sel=None origin=None COMP=False
+[a18 12:52:12] donor CON8 SHAM_2 sel=(v + math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 12:52:28] donor CON8 SHAM_0 sel=(({H} + v) * v) origin=COMPOSITION COMP=True
+[a18 12:52:58] donor CON8 SHAM_1 sel=(last - ({H} * v)) origin=COMPOSITION COMP=True
+[a18 12:54:25] donor CON9 G1_NC  sel=None origin=None COMP=False
+[a18 12:57:02] donor CON9 OFF_0  sel=None origin=None COMP=False
+[a18 12:59:09] donor CON9 P      sel=None origin=None COMP=False
+[a18 12:59:10] donor CON9 G1     sel=(v - (acc + {H})) origin=COMPOSITION COMP=True
+[a18 13:01:20] donor CON9 SHAM_1 sel=(({H} * v) + v) origin=COMPOSITION COMP=True
+[a18 13:01:30] donor CON10 G1_NC  sel=None origin=None COMP=False
+[a18 13:02:11] donor CON9 SHAM_0 sel=math.gcd(abs(last), abs(({H} + v))) origin=COMPOSITION COMP=True
+[a18 13:02:16] donor CON9 SHAM_2 sel=(1 - math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 13:05:56] donor CON10 OFF_0  sel=(v // math.gcd(abs((acc // {H})), abs(first))) origin=COMPOSITION COMP=True
+[a18 13:07:04] donor CON10 P      sel=None origin=None COMP=False
+[a18 13:07:57] donor CON10 SHAM_1 sel=(first + ({H} * v)) origin=COMPOSITION COMP=True
+[a18 13:08:20] donor CON10 G1     sel=(1 - (acc + {H})) origin=COMPOSITION COMP=True
+[a18 13:09:54] donor CON10 SHAM_2 sel=(v // math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 13:09:58] donor CON11 G1_NC  sel=None origin=None COMP=False
+[a18 13:11:45] donor CON10 SHAM_0 sel=(acc - ({H} + v)) origin=COMPOSITION COMP=True
+[a18 13:14:40] donor CON11 OFF_0  sel=None origin=None COMP=False
+[a18 13:15:00] donor CON11 G1     sel=None origin=None COMP=False
+[a18 13:15:21] donor CON11 P      sel=None origin=None COMP=False
+[a18 13:15:58] donor CON11 SHAM_2 sel=(acc + math.gcd(abs(acc), abs({H}))) origin=COMPOSITION COMP=True
+[a18 13:16:29] donor CON11 SHAM_0 sel=(last - ({H} + v)) origin=COMPOSITION COMP=True
+[a18 13:16:40] donor CON11 SHAM_1 sel=(acc - ({H} * v)) origin=COMPOSITION COMP=True
+[a18 13:16:49] A23 stage donors done
+EXIT=0

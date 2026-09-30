@@ -1,0 +1,107 @@
+{
+  "schema": "prometheus.work_state.v1",
+  "seat": "Aphrodite",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "mwo_sha256": "6f5a6a8bd3cfc977cda4fbfbc7131dc13ed73b6ecd5c71814a4bb7c9f9f43685",
+  "updated_at_utc": "2026-09-30T10:14:13Z",
+  "state": "HOLD",
+  "state_reason": "SESSION RESET requested by the operator at 2026-09-30T10:14:13Z. The seat last adopted MWO-0002. NOT YET READ OR ADOPTED: MWO-0003 (@624a686ea, comms #987), MWO-0004 (@25a486d44, current on origin/main, blob sha256 925660b2...), and the operator CWO 2026-09-30 fleet activation (origin/main:ops/fleet/QUEUE.json, comms #1024). The next session must adopt these first. Science state is unchanged: ARC3 (C-003) CLOSED; arc3 branch NOT merged; nothing running.",
+  "branch": "aphrodite/arc3-2026-09-28",
+  "head_sha": "b57f49ba84e4d3b672f13368fd21c5a5ad7ba630",
+  "head_sha_note": "the pushed head immediately before the commit that adds this file version",
+  "base_sha": "98ed64ca3383ee310f8850e374f936f27f0378af",
+  "threads": [
+    {
+      "id": "thr-4b608194554f",
+      "alias": "TH-018",
+      "title": "abstraction compounding",
+      "status": "OPEN"
+    },
+    {
+      "id": "thr-5fb60bba1e73",
+      "alias": "TH-019",
+      "title": "recurrence x visibility",
+      "status": "OPEN"
+    },
+    {
+      "id": "thr-71318d165e06",
+      "alias": "TH-020",
+      "title": "second-order compounding / representation",
+      "status": "OPEN_GATED"
+    },
+    {
+      "id": "thr-1b0c5ac499ae",
+      "alias": "TH-021",
+      "title": "instrument validity (method)",
+      "status": "OPEN"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "C-003",
+      "alias": "ARC3",
+      "status": "CLOSED",
+      "record": "ops/campaigns/C-003/CAMPAIGN.md"
+    },
+    {
+      "id": null,
+      "alias": "Campaign 1",
+      "status": "FROZEN_UNRUN",
+      "note": "operator-gated; no C-* id allocated"
+    }
+  ],
+  "experiments": [
+    {
+      "id": "E-008",
+      "alias": "AMENDMENT 20 (C3)",
+      "status": "CLOSED",
+      "verdict": "UNTESTABLE"
+    },
+    {
+      "id": "E-009",
+      "alias": "AMENDMENT 21 (C3R)",
+      "status": "CLOSED",
+      "verdict": "INVALID_DESIGN_DEFECT"
+    },
+    {
+      "id": "E-010",
+      "alias": "AMENDMENT 22 (C3R2)",
+      "status": "CLOSED",
+      "verdict": "UNTESTABLE"
+    },
+    {
+      "id": "E-011",
+      "alias": "AMENDMENT 23 (C3R2-CONFIRM)",
+      "status": "CLOSED",
+      "verdict": "G1_RECURRENT_STEPPING_STONE=YES; GENERIC 3/3 (constructed recurrence; mechanism only)"
+    }
+  ],
+  "fabric_tasks": [],
+  "running": [],
+  "blocked_on": [
+    "future MWO review of the ARC3 close (MWO-0001 APHRODITE: no new wave)"
+  ],
+  "next_actions": [
+    "NEXT SESSION FIRST: fetch origin; read and adopt MWO-0004 (and MWO-0003 as history) and ops/fleet/QUEUE.json (CWO #1024); verify hashes vs ops/work_orders/PUBLICATIONS.md",
+    "merge proposed through normal review: https://github.com/jcraig949jfi/Prometheus/compare/main...aphrodite/arc3-2026-09-28 (gh CLI absent on M4, so no PR opened by the seat; ready PR text in roles/Aphrodite/review/ARC3_PR_BODY.md; packet ARC3_MERGE_REVIEW_PACKET.md)",
+    "seat loop per MWO-0001 s8; the news monitor continues in its narrow weekly scope"
+  ],
+  "operator_decisions_required": [
+    "non-blocking: TH-020 DSL fork, (A) a versioned promotion world W5P or (B) parked (default B)",
+    "non-blocking: whether a future MWO authorises the TH-019 donor stage T51 (~16 core-h)",
+    "for review: constant-True gate conditions in historical S4/A16/A17 code (packet s5); no re-label by the seat"
+  ],
+  "comms_cursor": 961,
+  "latest_reports": [
+    "roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md",
+    "roles/Aphrodite/science/arc3/ARC3_SYNTHESIS_2026-09-28.md",
+    "roles/Aphrodite/science/arc3/w8_lin_generator/REPORT.md"
+  ],
+  "migration_report": "roles/Aphrodite/MIGRATION_REPORT_MWO-0002.json",
+  "comms_unread_at_reset": [
+    987,
+    988,
+    1024
+  ]
+}
