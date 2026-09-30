@@ -1,0 +1,207 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "minimax-facebookresearch-2023",
+  "canonical_name": "minimax -- minimax: Efficient Baselines for Autocurricula in JAX (Jiang, Minqi and Dennis, Michael and Grefenstette, Edward and Rockt\u00e4schel, Tim; Meta Platforms, Inc. and affiliates per copyright headers, pyproject email msj@meta.com; 2023-2024)",
+  "aliases": [
+    "minimax",
+    "minimax-lib (PyPI name in pyproject and README badge)",
+    "ued (README: 'pip install minimax-lib or pip install ued')",
+    "AMaze (the bundled maze environment)"
+  ],
+  "lineage": "README: JAX-based reimplementation of the baselines in facebookresearch/dcd ('previous reference implementations, like those in facebookresearch/dcd'); AMaze 'provides feature-parity with respect to the previous reference implementation of the maze environment in facebookresearch/dcd' and 'exactly reproduces the MiniGrid-based mazes used in previous UED studies'. Introduces Parallel PLR and Parallel ACCEL as new variants. rnn.py is based on OptimizedLSTMCell from google/jax. Roadmap names JaxMARL and Jumanji as planned integrations. (Downstream, per the jaxued tree, JaxUED credits minimax commit 2ae9e04 for ued_scores and maze mutators.) || main loop (reader, from the code): ExperimentRunner.train loops while train_state.n_updates < n_total_updates, each tick calling the selected runner's run() (jitted, optionally shmap-sharded over devices) which for PLRRunner resets a batch of fresh random levels, asks PLRManager.sample whether to replay (uniform draw < replay_prob and buffer fill >= min_fill_ratio) and if so draws levels from the buffer with a distribution mixing rank-based score weights and staleness (ages), optionally merges new+replay+mutated levels for parallel evaluation, dedupes against the buffer, rolls out the students and computes UED scores (e.g. max_mc) to insert/update buffer entries, performs the PPO gradient update (gated by is_replay under Robust PLR), then under ACCEL mutates the replayed levels with the registered mutator and evaluates the children into the buffer, before the outer loop logs stats to csv/wandb and checkpoints.",
+  "domain": [
+    "unsupervised-environment-design",
+    "curriculum",
+    "reinforcement-learning",
+    "jax"
+  ],
+  "era": "2023-2024",
+  "version": "github.com/facebookresearch/minimax main @ d053054c5290a04c1c4cd8b55704d999cad73e30 (committed 2024-08-24; 6 commits since 2023-11-22; 102 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/facebookresearch/minimax",
+        "commit": "d053054c5290a04c1c4cd8b55704d999cad73e30",
+        "commit_resolved": "d053054c5290a04c1c4cd8b55704d999cad73e30",
+        "commit_date": "2024-08-24T21:24:36+04:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/facebookresearch/minimax",
+    "branch": "main",
+    "other_branches_or_versions": "Single remote branch origin/main. One tag v0.1.0 pointing at the initial commit f3c3ec0 (2023-11-22). The pin d053054 is the merge of PR #9 'plr_fix' (commit 3fb8b46: fixes a bug in the PLR replay distribution and state reset after first episode, updates PLR hyperparameter configs, bumps version to 0.2.0, and says the arXiv technical report was updated to reflect improved results). pyproject version 0.2.0."
+  },
+  "hashes": {
+    "tree_sha256": "3d1cfe120483bffd3739f7729f5f12fe475308e29fb066a1a3c18f1f91995d83",
+    "n_files": 102,
+    "bytes": 1164061,
+    "artifacts": [
+      {
+        "filename": "https://github.com/facebookresearch/minimax",
+        "sha256": null,
+        "commit": "d053054c5290a04c1c4cd8b55704d999cad73e30"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\minimax-facebookresearch-2023",
+    "hash_list": "techne/fossils/specimens/minimax-facebookresearch-2023/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: license = {text = \"Apache 2.0\"} (pyproject.toml); LICENSE is the full Apache License Version 2.0, January 2004 text (11358 bytes; first two lines are blank, the first non-empty line is indented 'Apache License' followed by 'Version 2.0, January 2004'). README badge links https://opensource.org/licenses/Apache-2.0 and the README License section says 'minimax is licensed under Apache 2.0'. 63 .py files carry 'Copyright (c) Meta Platforms, Inc. and affiliates. All rights reserved. This source code is licensed under the license found in the LICENSE file in the root directory of this source tree.' One file, src/minimax/models/rnn.py, carries 'Copyright 2018 The JAX Authors.' with an Apache-2.0 header and says it 'is based on the OptimizedLSTMCell class from https://github.com/google/jax'. CONTRIBUTING.md requires Meta's CLA (https://code.facebook.com/cla)."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python",
+    "Jupyter notebooks (examples/*.ipynb)"
+  ],
+  "build_system": "pyproject.toml [project] table with no [build-system] section; a [tool.hatchling.scripts] table (train, evaluate, make_cmd) and a [tool.setuptools.package-data] table both appear; setup.cfg holds only [metadata] url/author. src/ layout.",
+  "compiler_or_interpreter": "CPython >=3.10 per pyproject requires-python",
+  "dependencies": [
+    "numpy>=1.25,<1.26",
+    "pandas==1.5.3",
+    "jax>=0.4.31",
+    "jaxlib>=0.4.31",
+    "flax>=0.7.4",
+    "optax>=0.1.7",
+    "tensorflow_probability==0.23.0",
+    "chex>=0.1.83",
+    "wandb>=0.13",
+    "ipython>=7.34.0",
+    "GitPython>=3.1.29",
+    "tqdm>=4.66.1",
+    "README install note asks for jax>=0.4.19 / jaxlib>=0.4.19 matching the CUDA driver (CUDA >= 11.8) via the JAX install guide; not pinned; note the README floor (0.4.19) is lower than the pyproject floor (0.4.31)",
+    "SETUP FETCH: pip install minimax-lib (or pip install ued) from PyPI (README Install step 2)",
+    "SETUP FETCH: GPU: install jax/jaxlib per https://jax.readthedocs.io/en/latest/installation.html (README; no exact command given)",
+    "SETUP FETCH: Optional wandb logging: minimax.train sets WANDB_BASE_URL / WANDB_API_KEY from config/wandb.json when wandb_project is configured (docs/make_cmd.md, src/minimax/train.py); off by default",
+    "SETUP FETCH: README Quick start links Colab notebooks hosted on colab.research.google.com / drive.google.com (not fetched by the code)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "src/minimax/train.py __main__ (parses Parsnip args, builds ExperimentRunner, Logger, optional wandb, calls xp_runner.train)",
+    "src/minimax/runners/xp_runner.py ExperimentRunner.train / step (outer while loop over n_total_updates: calls runner.run each tick, times steps, logs csv every log_interval, evaluates every test_interval, checkpoints every checkpoint_interval / archive_interval; _make_shmap_run shards over devices)",
+    "src/minimax/runners/dr_runner.py DRRunner.run (one update: reset batch env to fresh random levels, roll out students, PPO update)",
+    "src/minimax/runners/plr_runner.py PLRRunner.run (PLR / Robust PLR / ACCEL / Parallel PLR / Parallel ACCEL: sample replay-or-new via PLRManager, dedupe, evaluate and update buffer, gradient update, optional mutation step)",
+    "src/minimax/runners/paired_runner.py PAIREDRunner (teacher policy designs levels via UEDEnvironment.step_teacher; student/antagonist trained; regret-based ued_score)",
+    "src/minimax/util/rl/plr.py PLRManager (PLRBuffer pytree; sample, dedupe_levels, update, _get_replay_dist = (1-staleness_coef)*score_dist + staleness_coef*staleness_dist with rank scores and temperature; PopPLRManager for populations)",
+    "src/minimax/evaluate.py __main__ (loads checkpoint.pkl per xpid, evaluates on --env_names for --n_episodes, writes results csv)",
+    "src/minimax/config/make_cmd.py __main__ (expands JSON grid configs in config/ into python -m minimax.train command lines; copies bundled configs on first run)"
+  ],
+  "example": {
+    "command": "python -m minimax.config.make_cmd --config maze/[dr,paired,plr,accel] | pbcopy",
+    "input": "JSON config src/minimax/config/configs/maze/plr.json (seed 1, train_runner plr, env_name Maze, n_total_updates 30000, n_parallel 32, n_rollout_steps 256, ued_score max_mc, plr_replay_prob 0.5, plr_buffer_size 4000, plr_staleness_coef 0.3, plr_temp 0.3, plr_use_robust_plr true, maze 13x13 with 60 walls, test_env_names Maze-SixteenRooms,Maze-Labyrinth,Maze-StandardMaze); the generated command is then pasted and run. Evaluation: python -m minimax.evaluate --seed 1 --log_dir <abs path> --xpid_prefix <prefix> --env_names <csv> --n_episodes <n> --results_path <dir> --results_fname <csv>",
+    "output": "<log_dir>/<xpid>/logs.csv (one row per log_interval rollout cycles), checkpoint.pkl (latest), checkpoint_<N>.tar archives when --archive_interval > 0, meta.json; minimax.evaluate writes a results csv (README Logging/Checkpointing/Evaluating sections)"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: CPython >=3.10 host with JAX; README timing studies and speedup claims assume NVIDIA GPUs (V100) with CUDA >= 11.8, but CPU execution is not excluded by the declared deps; multi-GPU supported via --n_devices."
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2311.12716 (README arXiv badge)",
+    "@article{jiang2023minimax, title={minimax: Efficient Baselines for Autocurricula in JAX}, author={Jiang, Minqi and Dennis, Michael and Grefenstette, Edward and Rockt\u00e4schel, Tim}, booktitle={Agent Learning in Open-Endedness Workshop at NeurIPS}, year={2023}}",
+    "https://openreview.net/forum?id=vxZgTbmC4L (README table: Jiang et al, 2023, Parallel PLR / Parallel ACCEL)",
+    "Method references in README: https://arxiv.org/abs/1703.06907 (DR, Tobin et al), https://arxiv.org/abs/2012.02096 (Minimax adversary / PAIRED / Population PAIRED, Dennis et al 2020), https://arxiv.org/abs/2010.03934 (PLR, Jiang et al 2021), https://arxiv.org/abs/2110.02439 (Robust PLR, Jiang et al 2021a), https://arxiv.org/abs/2203.01302 (ACCEL, Parker-Holder et al 2022)",
+    "https://github.com/facebookresearch/dcd (README and docs/envs/maze.md: previous reference implementation)",
+    "https://pypi.python.org/pypi/minimax-lib (README badge)",
+    "Colab notebooks: https://colab.research.google.com/drive/1HhgQgcbt77uEtKnV1uSzDsWEMlqknEAM (DR), https://colab.research.google.com/drive/1NjMNbQ4dgn8f5rt154JKDnXmQ1yV0GbT?usp=drive_link (PAIRED), https://colab.research.google.com/drive/1XqVRgcIXiMDrznMIQH7wEXjGZUdCYoG9?usp=drive_link (PLR/ACCEL)"
+  ],
+  "human_capability_summary": {
+    "built_to": "Provide fast, fully-jittable JAX implementations of the key minimax-regret UED baselines (DR, Minimax adversary, PAIRED, Population PAIRED, PLR, Robust PLR, ACCEL) plus two new parallel variants (Parallel PLR, Parallel ACCEL), with multi-device training and a tensorized maze environment (AMaze) reproducing the MiniGrid mazes of prior UED work.",
+    "pressure": "README: 'existing implementations of common baselines require excessive amounts of compute. In some cases, experiments can require more than a week to complete using V100 GPUs. This long turn-around slows the rate of research progress in autocuriculum methods'.",
+    "success_means": "README: wall-time speedups ('over 100x faster than previous reference implementations, like those in facebookresearch/dcd' in timing studies on V100 GPUs and Xeon E5-2698 v4 CPUs), exact reproduction of MiniGrid maze dynamics/reward/observation/action spaces, and student performance on held-out test mazes (test_env_names such as Maze-SixteenRooms, Maze-Labyrinth, Maze-StandardMaze, evaluated every test_interval and by minimax.evaluate)."
+  },
+  "known_human_problem_solved": "Provide fast, fully-jittable JAX implementations of the key minimax-regret UED baselines (DR, Minimax adversary, PAIRED, Population PAIRED, PLR, Robust PLR, ACCEL) plus two new parallel variants (Parallel PLR, Parallel ACCEL), with multi-device training and a tensorized maze environment (AMaze) reproducing the MiniGrid mazes of prior UED work.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "src/minimax/runners/plr_runner.py:PLRRunner.run and PLRRunner._eval_and_update_plr / _mutate_levels; src/minimax/util/rl/plr.py:PLRManager.sample / _get_replay_dist / update; src/minimax/util/rl/ued_scores.py:compute_ued_scores (UEDScore enum: RELATIVE_REGRET, MEAN_RELATIVE_REGRET, POPULATION_REGRET, RETURN, NEG_RETURN, L1_VALUE_LOSS, POSITIVE_VALUE_LOSS, MAX_MC, VALUE_DISAGREEMENT); src/minimax/envs/maze/maze_mutators.py:move_goal_flip_walls; src/minimax/envs/registration.py (register / register_ued / register_mutator / register_comparator)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "reimplementation_of",
+      "to": "dcd-facebookresearch-2022",
+      "note": "reader draft: Meta's JAX reimplementation of the facebookresearch/dcd UED baselines, adding Parallel PLR/ACCEL"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-II",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/minimax.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/minimax-facebookresearch-2023 (host-local; `python -m techne.fossils.harvest rematerialize minimax-facebookresearch-2023` on a host without it) ; tracked techne/fossils/specimens/minimax-facebookresearch-2023",
+    "where_it_came_from": "https://github.com/facebookresearch/minimax ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit d053054c5290a04c1c4cd8b55704d999cad73e30 ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python -m minimax.config.make_cmd --config maze/[dr,paired,plr,accel] | pbcopy ; host class: CPython >=3.10 host with JAX; README timing studies and speedup claims assume NVIDIA GPUs (V100) with CUDA >= 11.8, but CPU execution is not excluded by the declared deps; multi-GPU supported via --n_devices.",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 3d1cfe120483bffd, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "Provide fast, fully-jittable JAX implementations of the key minimax-regret UED baselines (DR, Minimax adversary, PAIRED, Population PAIRED, PLR, Robust PLR, ACCEL) plus two new parallel variants (Parallel PLR, Parallel ACCEL), with multi-device training and a tensorized maze environment (AMaze) reproducing the MiniGrid mazes of prior UED work."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "JAX/XLA (jax>=0.4.31, jaxlib>=0.4.31); README: GPU acceleration needs CUDA >= 11.8; multi-device via shmap with --n_devices",
+      "flax, optax, chex, tensorflow_probability==0.23.0",
+      "pandas==1.5.3, numpy<1.26",
+      "wandb (optional)",
+      "GitPython (imported by the logger/config code)",
+      "train.py sets XLA_PYTHON_CLIENT_MEM_FRACTION=.70 at import"
+    ],
+    "host_class": "CPython >=3.10 host with JAX; README timing studies and speedup claims assume NVIDIA GPUs (V100) with CUDA >= 11.8, but CPU execution is not excluded by the declared deps; multi-GPU supported via --n_devices."
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/minimax.json",
+    "copyright_holders_by_header_count": {
+      "Meta Platforms, Inc. and affiliates": 63,
+      "The JAX Authors": 1
+    },
+    "things_the_reader_could_not_verify": [
+      "The build backend: pyproject.toml has no [build-system] table; it mixes [tool.hatchling.scripts] and [tool.setuptools.package-data], so which backend produced the PyPI wheel is not stated in the tree.",
+      "That 'pip install ued' resolves to this package (README claim only).",
+      "The speedup figures (docs/images/minimax_speedups.png) and arXiv 2311.12716 content; not in tree as data.",
+      "README link text 'See the [paper]()' in Adding environments has an empty URL.",
+      "README refers to a 'configs folder' at config/configs; in the tree the configs live at src/minimax/config/configs/maze/*.json and make_cmd copies them into ./config on first run (docs/make_cmd.md).",
+      "Nothing was executed; notebooks in examples/ were not opened beyond confirming they contain no pip install lines.",
+      "Author affiliations beyond Meta (copyright headers) are not given in the tree."
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 1164061
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:03:37Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

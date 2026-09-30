@@ -1,0 +1,187 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "funsearch-deepmind-2023",
+  "canonical_name": "FunSearch -- Mathematical discoveries from program search with large language models (Romera-Paredes, Bernardino; Barekatain, Mohammadamin; Novikov, Alexander; Balog, Matej; Kumar, M. Pawan; Dupont, Emilien; Ruiz, Francisco J. R.; Ellenberg, Jordan; Wang, Pengming; Fawzi, Omar; Kohli, Pushmeet; Fawzi, Alhussein; DeepMind Technologies Limited; Nature 2023; copyright 2023)",
+  "aliases": [
+    "FunSearch",
+    "funsearch",
+    "FunSearch2023 (bibtex key)"
+  ],
+  "lineage": "README names only the Nature 2023 paper it accompanies; no predecessor system is named in the tree. cap_set.ipynb says the 1082-cap in n = 9 'matches the previously known best construction'. Notebooks use commented-out '# @funsearch.run' / '# @funsearch.evolve' decorators to mark the skeletons used in the paper's experiments. || main loop (reader, from the code): Sampler.sample loops forever: ProgramsDatabase.get_prompt picks a random island, softmax-samples up to functions_per_prompt clusters by score, renders them as <fn>_v0..<fn>_vk plus an empty <fn>_v(k+1) header; LLM.draw_samples produces samples_per_prompt continuations; each is sent to a random Evaluator.analyse, which splices the body into the template, runs Sandbox.run on every input, and registers the (function, island, scores_per_test) in the database, which clusters by score signature and every reset_period seconds resets the weaker half of islands from survivors' best programs.",
+  "domain": [
+    "llm-guided-search",
+    "program-synthesis",
+    "evolutionary-computation",
+    "mathematics"
+  ],
+  "era": "2022-2024",
+  "version": "github.com/google-deepmind/funsearch main @ cc53f274237d7ab05c19df939edbc1f9616a7c19 (committed 2024-02-05; 14 commits since 2022-03-31; 31 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/google-deepmind/funsearch",
+        "commit": "cc53f274237d7ab05c19df939edbc1f9616a7c19",
+        "commit_resolved": "cc53f274237d7ab05c19df939edbc1f9616a7c19",
+        "commit_date": "2024-02-05T10:32:17+00:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/google-deepmind/funsearch",
+    "branch": "main",
+    "other_branches_or_versions": "remote branches: main (default) only; no tags. README Colab links reference 'blob/master' and README mentions a directory 'corner_free_sets' while the tree has 'corner_free_set'."
+  },
+  "hashes": {
+    "tree_sha256": "fa6f965da80ef93904806fbc7ebe0b6c637534740f5f1a96de0788ade35dd68a",
+    "n_files": 31,
+    "bytes": 20673235,
+    "artifacts": [
+      {
+        "filename": "https://github.com/google-deepmind/funsearch",
+        "sha256": null,
+        "commit": "cc53f274237d7ab05c19df939edbc1f9616a7c19"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\funsearch-deepmind-2023",
+    "hash_list": "techne/fossils/specimens/funsearch-deepmind-2023/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0 (software); README says all other materials are CC-BY-4.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: NOT_FOUND_AT_PIN (no pyproject.toml, setup.py, setup.cfg or package.json in the tree); LICENSE is the 202-line Apache License Version 2.0, January 2004 text with no copyright line filled in. README 'License and disclaimer': 'Copyright 2023 DeepMind Technologies Limited' / 'All software is licensed under the Apache License, Version 2.0 (Apache 2.0)' / 'All other materials are licensed under the Creative Commons Attribution 4.0 International License (CC-BY)' / 'This is not an official Google product.' Each of the 10 .py files and the first markdown cell of each of the 4 notebooks carries the same Apache-2.0 header. The data .txt files (cap sets, admissible sets, etc.) therefore fall under CC-BY per README. No third-party headers. CONTRIBUTING.md requires a Google CLA."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python",
+    "Jupyter Notebook (4 .ipynb)",
+    "plain-text numerical data (.txt)"
+  ],
+  "build_system": "none: no pyproject.toml, setup.py, requirements.txt, Makefile or CI config in the tree; README 'Installation': 'No installation is required. All notebooks can be opened and run in Google Colab.' The implementation/ modules import each other as `from funsearch.implementation import ...`, i.e. the repo root must be importable as package `funsearch` (no __init__.py files present). Tests use absl.testing (absltest, parameterized).",
+  "compiler_or_interpreter": "Python 3.10+ inferred from syntax (PEP 604 unions `int | None`, `list[...]` generics) in implementation/*.py; no version declared in the tree",
+  "dependencies": [
+    "NOT declared anywhere in the tree (no manifest). Imported by implementation/*.py: numpy (programs_database.py, sampler.py, tests), scipy (programs_database.py: scipy.special.softmax), absl (absl.logging in programs_database.py; absl.testing in *_test.py), stdlib ast, tokenize, io, dataclasses, copy, time, itertools, textwrap",
+    "jax: imported only inside a string prompt fixture in implementation/funsearch_test.py (`@jax.jit` decorator example), not a runtime import",
+    "utils_capset: imported inside string prompt fixtures in implementation/programs_database_test.py; the module does not exist in the tree",
+    "notebooks import numpy, itertools, math only",
+    "specification_nonsymmetric_admissible_set.txt imports itertools and numpy",
+    "SETUP FETCH: README Colab badges open notebooks via https://colab.research.google.com/github/google-deepmind/funsearch/blob/master/<dir>/<nb>.ipynb (note: URLs say blob/master but the default branch is main)",
+    "SETUP FETCH: bin_packing.ipynb markdown references the OR3 dataset page http://people.brunel.ac.uk/~mastjjb/jeb/orlib/binpackinfo.html, but the data is embedded inline in the notebook (no download cell)",
+    "SETUP FETCH: no pip install, wget, curl or git clone cells found in any notebook"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "implementation/funsearch.py main(specification, inputs, config) (parses the spec for the @funsearch.run and @funsearch.evolve functions, builds a ProgramsDatabase, num_evaluators Evaluators and num_samplers Samplers, analyses the initial implementation, then calls s.sample() on each sampler; the first sampler loops forever)",
+    "implementation/sampler.py Sampler.sample() (infinite loop: database.get_prompt() -> LLM.draw_samples(prompt.code) -> random Evaluator.analyse(sample, island_id, version_generated))",
+    "implementation/sampler.py LLM._draw_sample(prompt) (raises NotImplementedError('Must provide a language model.'); the user must supply an LLM)",
+    "implementation/evaluator.py Sandbox.run(program, function_to_run, test_input, timeout_seconds) (raises NotImplementedError('Must provide a sandbox for executing untrusted code.'))",
+    "implementation/evaluator.py Evaluator.analyse(sample, island_id, version_generated) (trims the LLM continuation to a function body, splices it into the template as function_to_evolve, runs it in the Sandbox on every input, rejects programs that call ancestor versions or return non-numeric scores, registers scores_per_test in the database)",
+    "implementation/programs_database.py ProgramsDatabase.get_prompt / register_program / reset_islands (islands of Clusters keyed by score signature; prompt built from functions_per_prompt programs sampled by softmax over cluster scores with a decaying temperature; every reset_period seconds the weaker half of islands is reset and re-seeded with the best program of a surviving island)",
+    "implementation/programs_database.py Island.get_prompt / _generate_prompt (renames sampled implementations to <fn>_v0.._vk sorted by ascending score and appends an empty-bodied header <fn>_v(k+1) with docstring 'Improved version of ...' for the LLM to complete)",
+    "implementation/code_manipulation.py text_to_program / rename_function_calls / yield_decorated (ast- and tokenize-based Python source manipulation used throughout)"
+  ],
+  "example": {
+    "command": "README gives none for the implementation; the only usage instruction is to open the notebooks in Colab (e.g. cap_set/cap_set.ipynb). The pipeline entry would be funsearch.main(specification, inputs, config) with specification = implementation/specification_nonsymmetric_admissible_set.txt, but it cannot run without a user-supplied LLM and Sandbox.",
+    "input": "A specification: a Python program text with one function decorated @funsearch.run (e.g. evaluate(set_description) returning an int score) and one decorated @funsearch.evolve (e.g. priority(el, n, w) -> float, initial body 'return 0.0'), plus a sequence of inputs (e.g. (n, w) tuples). In-tree instance: implementation/specification_nonsymmetric_admissible_set.txt.",
+    "output": "cap_set.ipynb cell 4 output for the trivial priority: '3 8 | 4 16 | 5 32 | 6 64 | 7 128 | 8 256 | 9 512' (n, cap-set size); notebook then presents the discovered priority function giving a 512-cap in n = 8 (data file cap_set/n8_size512.txt, 512 lines of length-8 vectors over {1,2}... e.g. '[1, 1, 1, 1, 1, 1, 1, 1]') and a 1082-cap in n = 9. The pipeline itself logs 'Best score of island %d increased to %s'."
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: any CPython 3.10+ host with numpy/scipy/absl for the implementation modules and notebooks (notebooks target Google Colab); a real FunSearch run additionally requires an LLM endpoint and a code sandbox that the user must implement"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "doi: 10.1038/s41586-023-06924-6",
+    "https://www.nature.com/articles/s41586-023-06924-6",
+    "Romera-Paredes, B. et al. Mathematical discoveries from program search with large language models. Nature (2023)",
+    "http://people.brunel.ac.uk/~mastjjb/jeb/orlib/binpackinfo.html (OR3 bin packing dataset, bin_packing.ipynb)",
+    "https://colab.research.google.com/github/google-deepmind/funsearch/blob/master/cap_set/cap_set.ipynb (and admissible_set, bin_packing, cyclic_graphs equivalents)"
+  ],
+  "human_capability_summary": {
+    "built_to": "README: 'This repository accompanies the publication' Romera-Paredes et al., Nature 2023; it publishes the functions and sets FunSearch discovered (cap sets, admissible sets, bin-packing heuristics, cyclic-graph independent sets, corner-free sets) plus 'an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline' intended 'for understanding the details of our method, and for adapting it for use with any available language models, sandboxes, and distributed systems'.",
+    "pressure": "NOT_FOUND_AT_PIN as an explicit statement; the README gives no motivation beyond accompanying the paper, and the paper abstract is not in the tree. The notebook text motivates the problems (e.g. cap_set.ipynb: trivial priority gives cap sets 'far from optimal').",
+    "success_means": "The @funsearch.run function returns a numeric score per input (e.g. size of the constructed cap set / admissible set / independent set; bin-packing evaluation suite in bin_packing.ipynb 'to reproduce the results reported in the paper'); the database keeps the best score per island and reduces scores_per_test by _reduce_score. README frames success as the discovered objects (e.g. 512-cap in n = 8, 1082-cap in n = 9 per cap_set.ipynb)."
+  },
+  "known_human_problem_solved": "README: 'This repository accompanies the publication' Romera-Paredes et al., Nature 2023; it publishes the functions and sets FunSearch discovered (cap sets, admissible sets, bin-packing heuristics, cyclic-graph independent sets, corner-free sets) plus 'an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline' intended 'for understanding the details of our method, and for adapting it for use with any available language models, sandboxes, and distributed systems'.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "implementation/sampler.py:LLM._draw_sample and implementation/evaluator.py:Sandbox.run (both NotImplementedError stubs that must be supplied); algorithmic variation points are implementation/programs_database.py:Island.get_prompt (cluster sampling / temperature) and ProgramsDatabase.reset_islands (island reset policy), with knobs in implementation/config.py",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/funsearch.json",
+    "partial-release"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/funsearch-deepmind-2023 (host-local; `python -m techne.fossils.harvest rematerialize funsearch-deepmind-2023` on a host without it) ; tracked techne/fossils/specimens/funsearch-deepmind-2023",
+    "where_it_came_from": "https://github.com/google-deepmind/funsearch ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit cc53f274237d7ab05c19df939edbc1f9616a7c19 ; licence Apache-2.0 (software); README says all other materials are CC-BY-4.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: README gives none for the implementation; the only usage instruction is to open the notebooks in Colab (e.g. cap_set/cap_set.ipynb). The pipeline entry would be funsearch.main(specification, inputs, config) with specification = implementation/specification_nonsymmetric_admissible_set.txt, but it cannot run without a user-supplied LLM and Sandbox. ; host class: any CPython 3.10+ host with numpy/scipy/absl for the implementation modules and notebooks (notebooks target Google Colab); a real FunSearch run additionally requires an LLM endpoint and a code sandbox that the user must implement",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 fa6f965da80ef939, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "README: 'This repository accompanies the publication' Romera-Paredes et al., Nature 2023; it publishes the functions and sets FunSearch discovered (cap sets, admissible sets, bin-packing heuristics, cyclic-graph independent sets, corner-free sets) plus 'an implementation of the evolutionary algorithm, code manipulation routines, and a single-threaded implementation of the FunSearch pipeline' intended 'for understanding the details of our method, and for adapting it for use with any available language models, sandboxes, and distributed systems'."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "none in the tree; pure Python + numpy + scipy + absl",
+      "external, not included: a large language model that predicts code continuations (README: 'It does not contain language models for generating new programs')",
+      "external, not included: a sandbox for executing untrusted code (README: 'the sandbox for executing untrusted code')",
+      "external, not included: the distributed system (README: 'nor the infrastructure for running FunSearch on our distributed system'; config defaults num_samplers = 15, num_evaluators = 140 are only meaningful in parallel)"
+    ],
+    "host_class": "any CPython 3.10+ host with numpy/scipy/absl for the implementation modules and notebooks (notebooks target Google Colab); a real FunSearch run additionally requires an LLM endpoint and a code sandbox that the user must implement"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/funsearch.json",
+    "copyright_holders_by_header_count": {
+      "DeepMind Technologies Limited": 10
+    },
+    "things_the_reader_could_not_verify": [
+      "Runtime behaviour of the pipeline (not executed; cannot run at all without a user-supplied LLM and Sandbox)",
+      "Exact Python version and dependency versions (no manifest in tree; 3.10+ inferred from syntax only)",
+      "Whether the notebook outputs (e.g. cap-set sizes) reproduce; taken from stored notebook output cells only",
+      "That the bin_packing.ipynb 'evaluation suite' reproduces paper results (not run)",
+      "Validity of the numerical set files (cap sets, admissible sets, corner-free sets) beyond line counts",
+      "Paper abstract / motivation (not in the tree)"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 20673235
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:05:37Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

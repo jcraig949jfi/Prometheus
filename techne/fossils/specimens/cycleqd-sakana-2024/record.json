@@ -1,0 +1,207 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "cycleqd-sakana-2024",
+  "canonical_name": "CycleQD -- Agent Skill Acquisition for Large Language Models via CycleQD (ICLR 2025) (So Kuroki and Taishi Nakamura and Takuya Akiba and Yujin Tang; Sakana AI; 2024-2025)",
+  "aliases": [
+    "CycleQD",
+    "sakana2024cycleQD (bibtex key)",
+    "fishfarm (vendored evaluator package under evaluation/fishfarm)"
+  ],
+  "lineage": "README names no predecessors. Code provenance comments: evaluator 'fishfarm' is a Sakana AI package (author Takuya Akiba, takiba@sakana.ai; references https://github.com/SakanaAI/fishfarm/issues/58) vendored here; DBBench and OS-Interaction tasks ported from THUDM/AgentTuning AgentBench.old; evalplus data loading 'Based on' ise-uiuc/magicoder; imports/logging utilities from optuna. ModelwiseLinearMerge docstring: 'Also called chat vector merge.' Seed models are SakanaAI Llama-3-8B-Instruct OS/Coding/DB experts on the meta-llama/Meta-Llama-3-8B-Instruct base. || main loop (reader, from the code): run_qd seeds one MAP-Elites-style archive per task by evaluating the expert seed models, then for each generation picks the next task in a fixed cycle (flip_interval), has a worker sample two parents from that task's archive, merge them as weighted task vectors on the shared base model (ModelwiseLinearMerge), add Gaussian (or SVD-structured) noise, evaluate the child on all tasks via vLLM, and insert the child into every task archive cell (indexed by the other tasks' scores binned as behaviour characteristics) where its quality beats the incumbent, optionally letting a per-task CMA-ES adapt the merge/mutation hyperparameters from the child's fitness.",
+  "domain": [
+    "quality-diversity",
+    "model-merging",
+    "foundation-models",
+    "map-elites"
+  ],
+  "era": "2024-2025",
+  "version": "github.com/SakanaAI/CycleQD main @ 3d14971e0b50c8111c4cb13abd1b261d4c6685ec (committed 2025-02-01; 8 commits since 2024-10-16; 67 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/SakanaAI/CycleQD",
+        "commit": "3d14971e0b50c8111c4cb13abd1b261d4c6685ec",
+        "commit_resolved": "3d14971e0b50c8111c4cb13abd1b261d4c6685ec",
+        "commit_date": "2025-02-01T12:44:26+09:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/SakanaAI/CycleQD",
+    "branch": "main",
+    "other_branches_or_versions": "Single remote branch origin/main; no tags; 8 commits, of which 7 are 'Update README.md' after the 'first commit' (2024-10-16)."
+  },
+  "hashes": {
+    "tree_sha256": "f2fc059d5b0166aa6065e63b6a20fc9efcd4673c00a4e29378de321d82c996d5",
+    "n_files": 67,
+    "bytes": 1721702,
+    "artifacts": [
+      {
+        "filename": "https://github.com/SakanaAI/CycleQD",
+        "sha256": null,
+        "commit": "3d14971e0b50c8111c4cb13abd1b261d4c6685ec"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\cycleqd-sakana-2024",
+    "hash_list": "techne/fossils/specimens/cycleqd-sakana-2024/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: NOT_FOUND_AT_PIN (no top-level pyproject/setup.py; vendored evaluation/fishfarm/pyproject.toml has license = {file = \"LICENSE\"} pointing at its own Apache-2.0 LICENSE, but its classifiers say 'License :: OSI Approved :: MIT License'); Two Apache-2.0 LICENSE files (top level and evaluation/fishfarm/LICENSE). fishfarm pyproject classifier 'MIT License' conflicts with its Apache LICENSE file. fishfarm/tasks/dbbench.py and data/os_interaction/images.py cite THUDM/AgentTuning AgentBench.old sources; fishfarm/imports.py and logging.py cite optuna sources; tasks/evalplus/data.py 'Based on: https://github.com/ise-uiuc/magicoder'. No copyright headers found in any .py file."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python",
+    "YAML (hydra configs)",
+    "Dockerfile (evaluation/fishfarm/data/os_interaction/res/dockerfiles)"
+  ],
+  "build_system": "None at top level (plain requirements.txt + 'python3 main.py' with hydra); vendored evaluation/fishfarm uses setuptools via pyproject.toml ([project] table, dynamic version, tox.ini)",
+  "compiler_or_interpreter": "CPython >=3.10 per evaluation/fishfarm/pyproject.toml requires-python; top level does not declare a Python version",
+  "dependencies": [
+    "requirements.txt: evalplus (unpinned)",
+    "fasttext==0.9.2",
+    "matplotlib (unpinned)",
+    "optuna==3.6.1",
+    "jsonlines==4.0.0",
+    "datasets==2.18.0",
+    "openai==1.25.0",
+    "torch, torchvision, torchaudio (unpinned)",
+    "vllm==0.3.0",
+    "cmaes==0.10.0",
+    "numpy==1.26.4",
+    "cma (unpinned)",
+    "hydra-core (unpinned)",
+    "wandb (unpinned)",
+    "README extras: pip install vllm (unpinned, contradicts vllm==0.3.0); pip install git+https://github.com/evalplus/evalplus@1895d2f6aa8895044a7cf69defc24bd57695e885; mysql-connector-python==8.0.32; docker==6.1.2; requests==2.31.0; celery, redis (unpinned)",
+    "imported but undeclared at top level: transformers, omegaconf (via hydra), celery",
+    "evaluation/fishfarm pyproject: huggingface_hub, transformers, pydantic, colorlog; optional 'full': vllm, langchain, langchain-openai, fasttext-wheel, datasets, mysql-connector-python==8.0.32, docker==6.1.2, evalplus @ git+https://github.com/evalplus/evalplus@1895d2f6aa8895044a7cf69defc24bd57695e885, rouge-score",
+    "SETUP FETCH: pip install git+https://github.com/evalplus/evalplus@1895d2f6aa8895044a7cf69defc24bd57695e885 (pinned git install)",
+    "SETUP FETCH: docker pull mysql (unpinned image tag) for the DBBench task",
+    "SETUP FETCH: docker run rabbitmq and docker run redis (unpinned images) for multi-worker mode",
+    "SETUP FETCH: python data/os_interaction/images.py build ... builds local Docker images from evaluation/fishfarm/data/os_interaction/res/dockerfiles (ubuntu base pulled from Docker Hub)",
+    "SETUP FETCH: At runtime: HuggingFace weights via vllm.LLM(...) and AutoModelForCausalLM.from_pretrained for base_model_path 'meta-llama/Meta-Llama-3-8B-Instruct' (gated) and seed_model_path 'SakanaAI/Llama-3-8B-Instruct-OS-Expert', 'SakanaAI/Llama-3-8B-Instruct-Coding-Expert', 'SakanaAI/Llama-3-8B-Instruct-DB-Expert' (configs/config.yaml); crossover/base.py re-downloads/loads parent checkpoints by path each merge",
+    "SETUP FETCH: At runtime: evalplus.data.get_mbpp_plus() / get_human_eval_plus() download the MBPP+/HumanEval+ datasets (fishfarm/tasks/evalplus/data.py)",
+    "SETUP FETCH: At runtime: wandb.init logs to Weights & Biases (entity/project placeholders in config)",
+    "SETUP FETCH: Bundled data (no fetch): evaluation/fishfarm/data/db/data_dbbench_standard_dev.jsonl, data/os_interaction/configs/samples.pkl and os_data_config.pkl",
+    "SETUP FETCH: Optional: configs/qd/mutation/svd_uniform_noise.yaml expects a local 'llama3_svd.pt' torch file that is NOT in the tree and has no documented download"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "main.py main (hydra entry: sets up Celery in solo/worker/main mode, wandb.init, then run_qd)",
+    "main.py run_qd (the QD loop: evaluates seed models to seed per-task archives, then for num_generation generations dispatches merge_models jobs, cycling the target task every flip_interval, inserts improved children into each task's MAP-Elites-style archive_map, saves archive JSON + elite-map PNG per generation, deletes stale model dirs)",
+    "main.py Worker.merge_models (one QD step on a GPU worker: sample two parents from the target-task archive, crossover.merge -> mutator.mutate -> _eval_model on all tasks, compute quality + behaviour-characteristic bin ids, save child with save_pretrained only if it improves some archive cell; optional per-task CMA-ES ask/tell over merge+mutation hyperparameters)",
+    "crossover/model_linear.py ModelwiseLinearMerge._merge (task-vector arithmetic: child = base + sum(w_i * (parent_i - base)) / sum(w), w ~ Normal(1+mean, std))",
+    "mutation/gaussian_mutator.py GaussianMutator._mutate and mutation/svd_uniform_mutator.py SVDUniformMutator._mutate (add Gaussian noise to every tensor, or add U diag(rand*s) V^T from a precomputed task-vector SVD)",
+    "sampler/elite_sampler.py EliteSampler.sample and sampler/random_sampler.py RandomSampler.sample (parent selection from the archive, quality- and bin-weighted or uniform)",
+    "tasks/base.py BaseTask.get_q_and_bc / tasks/mbpp.py MBPPTask / tasks/agentbench_os.py AgentBenchOSTask / tasks/agentbench_db.py AgentBenchDBTask (evaluation-only: run fishfarm task on the vLLM model, return quality and BC bin ids)",
+    "utils/helpers.py load_hf_params_to_vllm (copies HF state_dict tensors into the live vLLM engine so merged weights can be evaluated without reloading), save_archive_map, plot_elite_map"
+  ],
+  "example": {
+    "command": "python3 main.py",
+    "input": "configs/config.yaml (hydra): base_model_path meta-llama/Meta-Llama-3-8B-Instruct; three SakanaAI Llama-3-8B-Instruct expert seed models; tasks agentbench_os, mbpp, agentbench_db; qd.num_generation 1200, flip_interval 1, use_cma False; crossover ModelwiseLinearMerge std 0.01; mutation GaussianMutator rate 0.0003; sampling RandomSampler seed 42",
+    "output": "Hydra output dir with models/gen_<N>/ (safetensors checkpoints of archive-improving children), archives/gen<N>_archive_map.json (per-task dict of BC-bin tuple -> {model_path, quality, sampling_freq}), images/gen<N>_elite_map_train.png, plus wandb logs; README gives no sample output"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux + one or more NVIDIA GPUs able to hold Llama-3-8B in bf16 (vLLM), CPython 3.10, Docker, network access to huggingface.co (gated Meta Llama 3 licence acceptance), evalplus dataset hosts and wandb"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2410.14735",
+    "eprint={2410.14735}, archivePrefix={arXiv}, primaryClass={cs.CL}",
+    "https://sakana.ai/cycleqd/",
+    "https://huggingface.co/SakanaAI",
+    "https://github.com/THUDM/AgentTuning/blob/e33a45d7eab2b63cac4d1956da1e6377fca9fcc7/AgentBench.old/src/tasks/os_interaction/images.py (cited in code)",
+    "https://github.com/ise-uiuc/magicoder/blob/main/experiments/text2code.py (cited in code)",
+    "https://github.com/evalplus/evalplus@1895d2f6aa8895044a7cf69defc24bd57695e885"
+  ],
+  "human_capability_summary": {
+    "built_to": "Train ('Training' section of README) LLM agents by cyclically applying quality-diversity search over merged Llama-3-8B-Instruct expert models across three agent skills (OS interaction, coding/MBPP, database/DBBench) -- the README itself only gives install and run steps under the title 'Agent Skill Acquisition for Large Language Models via CycleQD (ICLR 2025)'.",
+    "pressure": "NOT_FOUND_AT_PIN (README contains no motivation or abstract text; only title, links, install and run instructions, and bibtex)",
+    "success_means": "NOT_FOUND_AT_PIN in README; from the code, success is the quality metric per task (mbpp_base_pass@1 from evalplus; AgentBench OS-Interaction and DBBench success rates) of elites stored in each task's archive, plotted as elite maps and logged to wandb"
+  },
+  "known_human_problem_solved": "Train ('Training' section of README) LLM agents by cyclically applying quality-diversity search over merged Llama-3-8B-Instruct expert models across three agent skills (OS interaction, coding/MBPP, database/DBBench) -- the README itself only gives install and run steps under the title 'Agent Skill Acquisition for Large Language Models via CycleQD (ICLR 2025)'.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "main.py:Worker.merge_models (order of sample/merge/mutate/eval, archive insertion rule, CMA-ES fitness); crossover/model_linear.py:ModelwiseLinearMerge._merge; mutation/gaussian_mutator.py:GaussianMutator._mutate; sampler/elite_sampler.py:EliteSampler.sample; main.py:run_qd (task cycling via cfg.qd.flip_interval); all swappable via hydra configs/qd/*",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VIII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/cycleqd.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/cycleqd-sakana-2024 (host-local; `python -m techne.fossils.harvest rematerialize cycleqd-sakana-2024` on a host without it) ; tracked techne/fossils/specimens/cycleqd-sakana-2024",
+    "where_it_came_from": "https://github.com/SakanaAI/CycleQD ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 3d14971e0b50c8111c4cb13abd1b261d4c6685ec ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python3 main.py ; host class: Linux + one or more NVIDIA GPUs able to hold Llama-3-8B in bf16 (vLLM), CPython 3.10, Docker, network access to huggingface.co (gated Meta Llama 3 licence acceptance), evalplus dataset hosts and wandb",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 f2fc059d5b0166aa, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "Train ('Training' section of README) LLM agents by cyclically applying quality-diversity search over merged Llama-3-8B-Instruct expert models across three agent skills (OS interaction, coding/MBPP, database/DBBench) -- the README itself only gives install and run steps under the title 'Agent Skill Acquisition for Large Language Models via CycleQD (ICLR 2025)'."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "NVIDIA GPU with CUDA (vLLM bfloat16 engine, torch .cuda() calls in SVDUniformMutator; one GPU per Celery worker)",
+      "vLLM 0.3.0 (per requirements) and its private engine internals (llm.llm_engine.driver_worker.model_runner.model)",
+      "PyTorch + transformers",
+      "Docker daemon (MySQL containers for DBBench, Ubuntu containers for OS-Interaction)",
+      "RabbitMQ + Redis brokers for multi-worker Celery mode",
+      "Weights & Biases account"
+    ],
+    "host_class": "Linux + one or more NVIDIA GPUs able to hold Llama-3-8B in bf16 (vLLM), CPython 3.10, Docker, network access to huggingface.co (gated Meta Llama 3 licence acceptance), evalplus dataset hosts and wandb"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/cycleqd.json",
+    "copyright_holders_by_header_count": {},
+    "things_the_reader_could_not_verify": [
+      "main.py references cfg.num_of_evaluation_workers (lines 336 and 420) but configs/config.yaml does not define it; whether the default run works as documented is unverified (code not executed).",
+      "configs/qd/mutation/svd_uniform_noise.yaml requires 'llama3_svd.pt' which is not in the tree and has no generation script or download link.",
+      "requirements.txt pins vllm==0.3.0 while README says 'pip install vllm' unpinned; which version the authors actually used.",
+      "Contents/licences of the HuggingFace seed and base model weights, MBPP+/HumanEval+ data, and Docker images fetched at runtime.",
+      "fishfarm pyproject 'MIT License' classifier vs its Apache-2.0 LICENSE file -- which the authors intend.",
+      "Institution is inferred from the sakana.ai blog link, HuggingFace org and fishfarm author email, not stated in README prose.",
+      "Wandb and Celery/RabbitMQ/Redis multi-worker flow untested; single-worker 'solo' path read only."
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 1721702
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:06:15Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

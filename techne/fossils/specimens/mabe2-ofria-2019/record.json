@@ -1,0 +1,202 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "mabe2-ofria-2019",
+  "canonical_name": "MABE (Modular Agent-Based Evolver) version 2 -- NOT_FOUND_AT_PIN (README gives no paper title or CITATION file) (Charles Ofria, Cliff Bohm, and Austin Ferguson per LICENSE; Michigan State University per source headers; 2019-2026)",
+  "aliases": [
+    "MABE2",
+    "MABE 2.0",
+    "Modular Agent-Based Evolver framework version 2",
+    "mercere99/MABE2"
+  ],
+  "lineage": "README: 'Version 2 of the Modular Agent-Based Evolver framework' (https://github.com/Hintzelab/MABE), 're-built from scratch, using the Empirical library' (https://github.com/devosoft/Empirical). source/orgs includes AvidaGPOrg.hpp and VirtualCPUOrg.hpp with an Avida-style instruction set (orgs/instructions/VirtualCPU_Inst_*.hpp); CI.yml lists branches 'avida' and 'avida_merge'. Legacy code kept under source/OLD, source/core/OLD and build/OLD. || main loop (reader, from the code): MABE::Update triggers the script's START event on the first call and then, for each update until the target count or an EXIT(), rescans module signals if needed, fires before_update, increments the update counter, fires on_update, and triggers the script's @UPDATE(ud) block, which in the shipped .mabe settings evaluates the population with an Eval module, writes data files, calls Select modules that Replicate chosen parents (with Organism::Mutate applied on reproduction) into next_pop, and replaces main_pop with next_pop.",
+  "domain": [
+    "evolutionary-computation",
+    "artificial-life",
+    "agent-based",
+    "cpp-framework"
+  ],
+  "era": "2019-2026",
+  "version": "github.com/mercere99/MABE2 master @ 1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0 (committed 2026-02-15; 2409 commits since 2019-06-02; 441 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/mercere99/MABE2",
+        "commit": "1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0",
+        "submodules": "required",
+        "commit_resolved": "1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0",
+        "commit_date": "2026-02-15T23:06:47-05:00",
+        "submodules_pinned": [
+          {
+            "path": "source/third-party/empirical",
+            "url": "https://github.com/devosoft/Empirical",
+            "commit": "79609e2ae4b658493698f5875bb0dcf03d60e8d6"
+          }
+        ]
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/mercere99/MABE2",
+    "branch": "master",
+    "other_branches_or_versions": "Remote branches: origin/master (default), origin/MABE_devel, origin/docs, origin/emp_update. No tags. 2409 commits from 2019-06-02 to 2026-02-15; top authors by commit count: Charles Ofria 1831, Austin Ferguson 375, AriaKillebrewBruehl 99, lanearohan 73, Emily Dolson 10, Acacia Ackles 10."
+  },
+  "hashes": {
+    "tree_sha256": "d9d6c7eaa3397ba366d5d7cff9eb321766caeff8abd58a84daa11be45435b8ef",
+    "n_files": 2172,
+    "bytes": 18294304,
+    "artifacts": [
+      {
+        "filename": "https://github.com/mercere99/MABE2",
+        "sha256": null,
+        "commit": "1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\mabe2-ofria-2019",
+    "hash_list": "techne/fossils/specimens/mabe2-ofria-2019/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "MIT",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'MIT License'; metadata field: NOT_FOUND_AT_PIN; LICENSE line 3: 'Copyright (c) 2019-2020 Charles Ofria, Cliff Bohm, and Austin Ferguson'. All 198 source headers instead read 'Copyright (C) Michigan State University, MIT Software license; see doc/LICENSE.md' -- the holder named differs from LICENSE and the referenced path doc/LICENSE.md does not exist in the tree (the file is LICENSE at repo root; docs/ has only BuildMain.md, BuildModule.md, CoreOverview.md). docs/BuildModule.md requires official modules to carry a doxygen header 'with a release under the MIT Software license'. The Empirical submodule (source/third-party/empirical, https://github.com/devosoft/Empirical, branch MABE_devel, pinned to 79609e2ae4b658493698f5875bb0dcf03d60e8d6) was not fetched, so its licence and its bundled Catch2 and cereal (referenced by Makefile-base.mk include paths) were not read."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "C++ (C++20 per Makefile-base.mk FLAGS_version := -std=c++20; .hpp header-only framework, .cpp/.cc executables and tests)",
+    "Emplode configuration scripting language (.mabe/.gen/.mbatch files, interpreter in source/Emplode)",
+    "shell (.sh run scripts)",
+    "Python (build/plot.py, runs/GPTP2022/plot.py plotting helpers)"
+  ],
+  "build_system": "GNU Make: build/Makefile (targets native/debug/quick/grumpy/clean; single translation unit build/MABE.cpp -> executable MABE) including Makefile-base.mk; tests/Makefile (unit, regression, coverage); .github/workflows/CI.yml runs make unit / make regression on ubuntu-22.04 with submodules recursive",
+  "compiler_or_interpreter": "g++ with -std=c++20 -pthread (CXX = g++ in Makefile-base.mk); CI also prints clang++ version; FLAGS_EMSCRIPTEN present for web builds",
+  "dependencies": [
+    "Empirical library as git submodule source/third-party/empirical (url https://github.com/devosoft/Empirical, branch MABE_devel, gitlink 79609e2ae4b658493698f5875bb0dcf03d60e8d6) -- header-only include -I$(EMP_DIR)/include/",
+    "Catch2 via $(EMP_DIR)/third-party/Catch/single_include/catch2 (inside the Empirical submodule; tests only)",
+    "cereal via $(EMP_DIR)/third-party/cereal/include/ (inside the Empirical submodule)",
+    "pthread (-pthread)",
+    "No package manager manifest (no CMakeLists.txt, conanfile, vcpkg.json, requirements.txt); Python plotting scripts import whatever they import but no manifest declares it",
+    "SETUP FETCH: git submodule fetch of https://github.com/devosoft/Empirical (branch MABE_devel) implied by .gitmodules and CI 'submodules: recursive'; README gives no clone/submodule instructions",
+    "SETUP FETCH: CI only: apt-get installs and 'wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key' for coverage job"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "build/MABE.cpp main (constructs mabe::MABE control(argc, argv); control.SetupEmpty<EmptyOrganismManager>(); if (control.Setup()) control.Update(1000000); -- a config-driven executable that reads .mabe scripts)",
+    "source/core/MABE.hpp mabe::MABE::Setup (Setup_CommandLine -> Setup_Modules -> Setup_Traits -> UpdateSignals -> SetupBase; command-line flags --filename/-f, --batch/-b, --generate/-g, --set/-s, --help/-h, --version/-v)",
+    "source/core/MABE.hpp mabe::MABE::Update (fires config_script START on update 0, then per update: before_update signal, ++update, on_update signal, config_script UPDATE event, until target reached or exit_now)",
+    "source/core/MABEBase.hpp mabe::MABEBase (owns the 16 module signals before_update/on_update/before_repro/on_offspring_ready/on_inject_ready/before_placement/on_placement/before_mutate/on_mutate/before_death/before_swap/on_swap/before_pop_resize/on_pop_resize/before_exit/on_help and AddOrgAt/ClearOrgAt/SwapOrgs/ResizePop primitives)",
+    "source/select/SelectTournament.hpp mabe::SelectTournament::Select (for num_births rounds pick tourny_size random occupied orgs, keep max of fit_equation, control.Replicate best into birth_pop)",
+    "source/orgs/BitsOrg.hpp mabe::BitsOrg::Mutate (draw num_muts from shared mut_dist, toggle that many distinct random bit positions)",
+    "source/evaluate/static/EvalNK.hpp mabe::EvalNK::EvaluateCollection (scores bits_trait on an N,K landscape into fitness_trait)",
+    "source/Emplode/Emplode.hpp emplode::Emplode (lexer/parser/AST/symbol-table interpreter for the .mabe scripting language that wires modules and @START/@UPDATE events)"
+  ],
+  "example": {
+    "command": "NOT_FOUND_AT_PIN (README gives no run command; build/Makefile 'make' in build/ produces ./MABE, and runs/GPTP2022/run.sh invokes ../../build/MABE with -f <file>.mabe style config; source/core/MABE.hpp registers '--filename -f [filename...]')",
+    "input": "An Emplode script such as settings/NK.mabe: declares Population main_pop/next_pop, BitsOrg bits_org {N=num_bits; mut_prob=0.01}, EvalNK eval_nk {N; K=3; bits_trait='bits'; fitness_trait='fitness'}, SelectElite and SelectTournament modules, DataFile columns, then @START() { main_pop.INJECT('bits_org', pop_size) } and @UPDATE(Var ud) { IF (ud == max_ud) EXIT(); eval_nk.EVAL(main_pop); ... elite.SELECT(main_pop, next_pop, 25); tournament.SELECT(main_pop, next_pop, num_tournaments); main_pop.REPLACE_WITH(next_pop); }",
+    "output": "Per-update PRINT line with UD, MainPopSize, AveFitness, MaxFitness, ModeFitness and mode-relative counts to stdout, plus DataFile CSVs fitness.csv (Average/Maximum/Dominant Fitness) and max_org.csv (best Fitness and Genome) per settings/NK.mabe; tests/regression holds expected .csv/.txt outputs"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any host with a C++20 toolchain and GNU Make (CI: ubuntu-22.04); CPU only"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://github.com/Hintzelab/MABE (README: 'Version 2 of the Modular Agent-Based Evolver framework')",
+    "https://github.com/devosoft/Empirical (README: 're-built from scratch, using the Empirical library')",
+    "https://github.com/mercere99/MABE2 (source headers @note)"
+  ],
+  "human_capability_summary": {
+    "built_to": "A software framework 'deigned to easily build and customize software for evolutionary computation or artificial life', with resulting systems 'useful for studying evolutionary dynamics, solving complex problems, comparing evolving systems, or exploring the open-ended power of evolution' (README).",
+    "pressure": "README: MABE 2.0 'is being re-built from scratch, using the Empirical library' with the goal 'to allow for more modular control, flexible agents, faster run times and portability to the web' relative to version 1; TODO lists genomes/brains interface, web interface and evaluation-system fixes as open projects.",
+    "success_means": "NOT_FOUND_AT_PIN (README states goals -- modularity, flexibility, speed, web portability -- but no metric; CI success is passing unit and regression tests under tests/, and runs/ hold GPTP2022/GPTP2024 experiment scripts that record fitness CSVs)"
+  },
+  "known_human_problem_solved": "A software framework 'deigned to easily build and customize software for evolutionary computation or artificial life', with resulting systems 'useful for studying evolutionary dynamics, solving complex problems, comparing evolving systems, or exploring the open-ended power of evolution' (README).",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "settings/*.mabe @UPDATE block (Emplode script chooses Eval/Select/placement modules and their parameters without recompiling); in C++: source/select/*.hpp Select(...) methods, source/orgs/*.hpp Mutate(...), and source/core/MABE.hpp MABE::Update / MABEBase signal set for lifecycle hooks",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-IV",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/mabe2.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/mabe2-ofria-2019 (host-local; `python -m techne.fossils.harvest rematerialize mabe2-ofria-2019` on a host without it) ; tracked techne/fossils/specimens/mabe2-ofria-2019",
+    "where_it_came_from": "https://github.com/mercere99/MABE2 ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 1fc9eb6d261b2cb4372cfb739f0a498cd7bd22e0 ; licence MIT",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: NOT_FOUND_AT_PIN (README gives no run command; build/Makefile 'make' in build/ produces ./MABE, and runs/GPTP2022/run.sh invokes ../../build/MABE with -f <file>.mabe style config; source/core/MABE.hpp registers '--filename -f [filename...]') ; host class: Any host with a C++20 toolchain and GNU Make (CI: ubuntu-22.04); CPU only",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 d9d6c7eaa3397ba3, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "A software framework 'deigned to easily build and customize software for evolutionary computation or artificial life', with resulting systems 'useful for studying evolutionary dynamics, solving complex problems, comparing evolving systems, or exploring the open-ended power of evolution' (README)."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "C++20 compiler (g++ or clang++) with pthreads",
+      "Empirical header library (submodule) with bundled Catch2 and cereal",
+      "Optional Emscripten toolchain for web builds (FLAGS_EMSCRIPTEN in Makefile-base.mk)",
+      "No GPU, no Python runtime needed for the core executable"
+    ],
+    "host_class": "Any host with a C++20 toolchain and GNU Make (CI: ubuntu-22.04); CPU only"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/mabe2.json",
+    "copyright_holders_by_header_count": {
+      "Michigan State University": 198
+    },
+    "things_the_reader_could_not_verify": [
+      "Content and licence of the Empirical submodule (gitlink 79609e2ae4b658493698f5875bb0dcf03d60e8d6 on branch MABE_devel) -- not fetched; the build cannot proceed without it",
+      "Whether the tree compiles at this pin (no code executed or compiled)",
+      "A paper title, DOI or CITATION file -- none in the tree; canonical_name paper field left NOT_FOUND_AT_PIN",
+      "The exact run command -- README has none; inferred from run.sh and the -f flag in MABE.hpp",
+      "Copyright holder conflict between LICENSE (three named individuals, 2019-2020) and source headers (Michigan State University, dates up to 2024/2026) -- both recorded as written",
+      "Institution attribution 'Michigan State University' comes only from source headers, not README"
+    ],
+    "has_gitmodules_at_pin": true,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 1961884
+  },
+  "preservation": {
+    "status": "FULLY_PINNED_EXTERNALS",
+    "body_status": "FULLY_PINNED_EXTERNALS",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [
+      {
+        "path": "source/third-party/empirical",
+        "url": "https://github.com/devosoft/Empirical",
+        "pinned_commit": "79609e2ae4b658493698f5875bb0dcf03d60e8d6",
+        "present": true,
+        "checked_out_commit": "79609e2ae4b658493698f5875bb0dcf03d60e8d6",
+        "n_files": 1732
+      }
+    ],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:05:18Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

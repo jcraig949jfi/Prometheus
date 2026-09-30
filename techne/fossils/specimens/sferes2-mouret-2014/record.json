@@ -1,0 +1,198 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "sferes2-mouret-2014",
+  "canonical_name": "Sferes2 -- SFERESv2: Evolvin' in the Multi-Core World (Mouret, J.-B. and Doncieux, S.; ISIR / Universite Pierre et Marie Curie (UPMC), later Inria per author e-mail; copyright 2009, paper 2010, pinned commit 2021)",
+  "aliases": [
+    "sferes2",
+    "Sferes2",
+    "SFERESv2",
+    "sferes_v2",
+    "sferes"
+  ],
+  "lineage": "README names it 'SFERESv2' (Mouret and Doncieux, CEC 2010), implying a v1 predecessor not present in the tree; old docs at 'https://github.com/jbmouret/sferes2/wiki' (earlier repo location); README says 'Map-Elites (we will soon integrate a more flexible version in the master branch of sferes_v2): https://github.com/sferes2/map_elites'; optional modules nn2 (evolvable neural networks) and fastsim (khepera-like simulator). Bundles Nikolaus Hansen's C CMA-ES, Pete Goodliffe's dbg library, Melissa O'Neill's randutils, and Thomas Nagy's waf. || main loop (reader, from the code): Ea::run() creates a random population, then for _gen from 0 to Params::pop::nb_gen (unless stop()) calls the concrete algorithm's epoch() (e.g. RankSimple: keep the top keep_rate*size, refill the rest by rank-biased parent selection, cross(), mutate(), evaluate the new ones via _eval_pop, apply fitness modifiers, partial_sort by fitness), refreshes every stat in the boost::fusion stat vector, and every dump_period generations serializes the stats to res_dir/gen_<N>.",
+  "domain": [
+    "evolutionary-computation",
+    "multiobjective",
+    "cpp-framework"
+  ],
+  "era": "2014-2021",
+  "version": "github.com/sferes2/sferes2 master @ 21c5384d978521c19c06f707fa1356c4c115d527 (committed 2021-03-26; 265 commits since 2014-04-14; 102 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/sferes2/sferes2",
+        "commit": "21c5384d978521c19c06f707fa1356c4c115d527",
+        "commit_resolved": "21c5384d978521c19c06f707fa1356c4c115d527",
+        "commit_date": "2021-03-26T17:14:39+01:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/sferes2/sferes2",
+    "branch": "master",
+    "other_branches_or_versions": "No tags. Remote branches: 2022_cleanup, crc, fix_pthread, gh-pages, master (default), new_doc, new_waf, oar_mpi, qd, qd_fix, restart, update_readme, waf_2. wscript sets VERSION to the git HEAD hash (fallback '0.x')."
+  },
+  "hashes": {
+    "tree_sha256": "c485b23dee7b617392b32231a16c05ede38a54359eb28fd10b8a279c32e78b1b",
+    "n_files": 102,
+    "bytes": 809805,
+    "artifacts": [
+      {
+        "filename": "https://github.com/sferes2/sferes2",
+        "sha256": null,
+        "commit": "21c5384d978521c19c06f707fa1356c4c115d527"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\sferes2-mouret-2014",
+    "hash_list": "techne/fossils/specimens/sferes2-mouret-2014/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "CECILL-2.1",
+    "status": "copyleft; preservation and research permitted; derivative distribution inherits the licence",
+    "evidence": "licence file COPYING, first line 'CeCILL FREE SOFTWARE LICENSE AGREEMENT'; metadata field: NOT_FOUND_AT_PIN; COPYING line 4 reads 'Version 2.1 dated 2013-06-21'; COPYING.fr is the French text. wscript configure prints 'Sferes2 is distributed under the CECILL license (GPL-compatible)'. README has no licence statement or badge. Source headers (57 .hpp/.cpp + 5 wscript/py) carry the CeCILL boilerplate 'Copyright 2009, ISIR / Universite Pierre et Marie Curie (UPMC)'. Third-party code under other terms: sferes/ea/cmaes.cpp, cmaes.h, cmaes_interface.h carry 'Copyright (C) 1996, 2003-2010  Nikolaus Hansen.' / 'Copyright 1996, 2003, 2007, 2013 Nikolaus Hansen' (CMA-ES C code); sferes/misc/rand_utils.hpp carries 'Copyright (c) 2015 Melissa E. O'Neill' with MIT-style permission text; sferes/dbg/dbg.cpp and dbg.hpp carry 'Copyright (c) Pete Goodliffe 2001-2002 (pete@cthree.org)'; the bundled 'waf' script is by 'Thomas Nagy, 2005-2018' with a BSD-style redistribution notice; waf_tools/boost.py carries '## Copyright (C) 2008 mandor'."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "C++ (C++11 required per README and wscript -std=c++11; header-only templates plus 2 .cpp in the static lib)",
+    "Python (waf build scripts, waf_tools, scripts/sferes_job_manager.py)",
+    "C (bundled CMA-ES cmaes.cpp/cmaes.h/cmaes_interface.h)",
+    "Ruby (scripts/error_parser.rb)"
+  ],
+  "build_system": "waf (bundled ./waf script, top-level wscript, per-directory wscripts, waf_tools/{boost,eigen,mpi,ode,pthread,tbb,sferes}.py); builds a static lib 'sferes2' from sferes/dbg/dbg.cpp and sferes/ea/cmaes.cpp plus example programs; ./waf configure / ./waf build / ./waf --tests; modules listed in modules.conf under modules/, experiments under exp/<name> via --exp",
+  "compiler_or_interpreter": "g++, clang++ or icc with -std=c++11 (README: 'Sferes2 now requires a C++11 compiler'; wscript adds -std=c++11 and optional --cpp14); waf runs under Python (Dockerfile installs 'python' and 'python-simplejson' on ubuntu:16.04)",
+  "dependencies": [
+    "Boost >= 1.35 (wscript check_boost min_version='1.35'; libs: serialization filesystem system unit_test_framework program_options graph thread regex, plus mpi unless --no-mpi)",
+    "Intel TBB (optional; wscript check_tbb; -DNO_PARALLEL when absent)",
+    "MPI + Boost.MPI (optional; wscript check_mpi; -DMPI_ENABLED)",
+    "Eigen 3 (optional; wscript check_eigen; -DEIGEN3_ENABLED)",
+    "pthread (wscript check_pthread)",
+    "Dockerfile apt packages, unpinned: libboost-dev libboost-test-dev libboost-filesystem-dev libboost-program-options-dev libboost-graph-parallel-dev libboost-thread-dev libboost-regex-dev python g++ libeigen3-dev python-simplejson libboost-mpi-dev openmpi-common openmpi-bin libgoogle-perftools-dev git wget libtbb-dev",
+    ".travis.yml apt: libboost1.55-all-dev; ci/install_eigen.sh: libeigen3-dev; ci/install_tbb.sh: libtbb-dev (all unpinned)",
+    "No version pin anywhere for Boost/TBB/Eigen beyond min 1.35 for Boost",
+    "SETUP FETCH: Dockerfile: 'git clone https://github.com/sferes2/sferes2.git' (unpinned, master at build time) plus apt-get installs",
+    "SETUP FETCH: README points to external modules to clone separately (unpinned): https://github.com/sferes2/nn2, https://github.com/sferes2/fastsim, https://github.com/sferes2/map_elites",
+    "SETUP FETCH: README points to docs at http://sferes2.github.io/sferes2/ and https://github.com/jbmouret/sferes2/wiki (not in tree)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "sferes/run.hpp run_ea<Ea>(argc, argv, ea, fit_proto, add_opts, init_rand) (parses --load/--resume/--dir/--verbose with boost::program_options, seeds srand(time+pid), calls parallel::init() then ea.run(argv[0]) or ea.resume(); writes final state)",
+    "sferes/ea/ea.hpp class Ea<Phen, Eval, Stat, FitModifier, Params, Exact> (generic EA base: run() = random_pop() then for gen < Params::pop::nb_gen: epoch(); update_stats(); dump every dump_period via boost::serialization to res_dir/gen_N)",
+    "sferes/ea/rank_simple.hpp SFERES_EA(RankSimple, Ea) (rank-based elitist GA: keeps nb_keep=keep_rate*size, refills by cross+mutate of rank-biased parents, partial_sort by fitness)",
+    "sferes/ea/nsga2.hpp class GenericNsga2 / Nsga2 (NSGA-II: selection, parallel mutate, eval children, merge, non-dominated sort + crowding into parent pop)",
+    "sferes/ea/eps_moea.hpp SFERES_EA(EpsMOEA, Ea); sferes/ea/cmaes.hpp SFERES_EA(Cmaes, Ea) (wraps Hansen's C CMA-ES)",
+    "sferes/gen/evo_float.hpp class EvoFloat<Size, Params> (real-valued genotype in [0,1]; mutate() per-gene with mutation_rate using polynomial/gaussian/uniform Mutation_f; cross() with sbx/recombination/no_cross_over CrossOver_f)",
+    "sferes/eval/eval.hpp Eval, sferes/eval/parallel.hpp Parallel (TBB p_for over population: fit=proto, develop(), fit().eval()), sferes/eval/mpi.hpp Mpi (cluster evaluation)",
+    "examples/ex_ea.cpp main() (minimal experiment: EvoFloat<10> + phen::Parameters + RankSimple, fitness -sum(p^4); Params struct with pop size 200, nb_gen 200000)"
+  ],
+  "example": {
+    "command": "./waf configure && ./waf build (Dockerfile); tests: ./waf --tests -v --tests-verbose (.travis.yml). The README itself gives no run command; the build produces build/examples/ex_ea which per run.hpp takes -h/--load/--resume/--dir/--verbose.",
+    "input": "No data input; examples/ex_ea.cpp compiles the problem in: Params struct (mutation_rate 0.1, cross_rate 0.5, eta_m 15, eta_c 10, pop size 200, nb_gen 200000, dump_period 5000, keep_rate 0.6, coeff 1.1, parameters min -10 max 10) and FitTest fitness. examples/ex_ea.json and examples/qsub.json are cluster-submission configs for waf --qsub.",
+    "output": "Per ea.hpp: a result directory '<exp_name>_<date>_<pid>' containing a 'status' file ('running'/'finished'/'interrupted') and boost binary archives 'gen_<N>' written every dump_period, each holding the serialized stat list (e.g. BestFit, MeanFit, State) preceded by a 'version' string; stdout prints 'sferes2 version:', 'seed:', '<fname> written', 'final state written -- <gen>'."
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Unix-like host (README: 'most Unix systems (in particular, GNU/Linux and OSX)') with a C++11 compiler, Boost and optionally TBB/MPI/Eigen3; CPU only, no GPU; Dockerfile targets ubuntu:16.04"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "Mouret, J.-B. and Doncieux, S. (2010). SFERESv2: Evolvin' in the Multi-Core World. _Proc. of Congress on Evolutionary Computation (CEC)_ Pages 4079--4086.",
+    "http://www.isir.upmc.fr/files/2010ACTI1524.pdf",
+    "http://sferes2.github.io/sferes2/",
+    "https://github.com/jbmouret/sferes2/wiki",
+    "http://www.cecill.info",
+    "Mouret, Jean-Baptiste, and Jeff Clune. \"Illuminating search spaces by mapping elites.\" arXiv preprint arXiv:1504.04909 (2015). (listed among papers that used Sferes2)"
+  ],
+  "human_capability_summary": {
+    "built_to": "README: 'Sferes2 is a high-performance, multi-core, lightweight, generic C++98 framework for evolutionary computation. It is intently kept small to stay reliable and understandable.'",
+    "pressure": "README design section: get 'both abstraction and execution speed' via template meta-programming 'without the cost of virtual functions', use Intel TBB 'to take full advantages of multicore and SMP systems' and MPI 'to distribute the computational cost on clusters', with 'no configuration file: a fully optimized executable is built for each particular experiment'.",
+    "success_means": "NOT_FOUND_AT_PIN as an explicit metric; README's evidence of success is the long list of 'Peer-reviewed academic papers that used Sferes2' (2009-2019) and 'a full set of unit tests' (waf --tests, Travis matrix over TBB/EIGEN3/MPI on gcc and clang)."
+  },
+  "known_human_problem_solved": "README: 'Sferes2 is a high-performance, multi-core, lightweight, generic C++98 framework for evolutionary computation. It is intently kept small to stay reliable and understandable.'",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "sferes/ea/ea.hpp:Ea::epoch() dispatched via stc::exact to the concrete EA (sferes/ea/rank_simple.hpp:RankSimple::epoch, sferes/ea/nsga2.hpp:GenericNsga2::epoch); variation operators in sferes/gen/evo_float.hpp:EvoFloat::mutate/cross; selection pressure in RankSimple::_random_rank; fitness modifiers via sferes/modif/*.hpp apply(); fitness in the user's SFERES_FITNESS class eval()",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-III",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/sferes2.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/sferes2-mouret-2014 (host-local; `python -m techne.fossils.harvest rematerialize sferes2-mouret-2014` on a host without it) ; tracked techne/fossils/specimens/sferes2-mouret-2014",
+    "where_it_came_from": "https://github.com/sferes2/sferes2 ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 21c5384d978521c19c06f707fa1356c4c115d527 ; licence CECILL-2.1",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: ./waf configure && ./waf build (Dockerfile); tests: ./waf --tests -v --tests-verbose (.travis.yml). The README itself gives no run command; the build produces build/examples/ex_ea which per run.hpp takes -h/--load/--resume/--dir/--verbose. ; host class: Unix-like host (README: 'most Unix systems (in particular, GNU/Linux and OSX)') with a C++11 compiler, Boost and optionally TBB/MPI/Eigen3; CPU only, no GPU; Dockerfile targets ubuntu:16.04",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 c485b23dee7b6173, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "README: 'Sferes2 is a high-performance, multi-core, lightweight, generic C++98 framework for evolutionary computation. It is intently kept small to stay reliable and understandable.'"
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "C++11 toolchain (gcc/clang/icc)",
+      "Boost >= 1.35 compiled libs (serialization, filesystem, system, program_options, unit_test_framework, graph, thread, regex, optionally mpi)",
+      "Intel TBB (optional, multicore)",
+      "MPI implementation e.g. OpenMPI (optional, clusters)",
+      "Eigen3 headers (optional)",
+      "pthread",
+      "Python for waf"
+    ],
+    "host_class": "Unix-like host (README: 'most Unix systems (in particular, GNU/Linux and OSX)') with a C++11 compiler, Boost and optionally TBB/MPI/Eigen3; CPU only, no GPU; Dockerfile targets ubuntu:16.04"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/sferes2.json",
+    "copyright_holders_by_header_count": {
+      "ISIR / Universite Pierre et Marie Curie (UPMC) (2009)": 57,
+      "Nikolaus Hansen (1996, 2003-2013)": 3,
+      "Pete Goodliffe 2001-2002": 2,
+      "Melissa E. O'Neill (2015)": 1
+    },
+    "things_the_reader_could_not_verify": [
+      "Whether the build compiles at this pin (no code executed)",
+      "Exact versions of Boost/TBB/Eigen used by the authors (only min Boost 1.35 and distro packages named)",
+      "Content of external docs (sferes2.github.io, wiki) and of the CEC 2010 paper PDF",
+      "Whether sferes v1 exists or what it looked like",
+      "The 'qd' branches (likely the promised more flexible MAP-Elites) were not inspected",
+      "Institution/years given in canonical_name are inferred from headers (2009, ISIR/UPMC), the citation (2010), author e-mail (inria.fr) and the pinned commit date (2021)"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 809805
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:04:09Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

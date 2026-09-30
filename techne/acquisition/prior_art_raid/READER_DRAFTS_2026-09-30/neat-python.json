@@ -1,0 +1,88 @@
+{
+  "specimen_id": "neat-python",
+  "url": "https://github.com/CodeReclaimers/neat-python",
+  "commit": "7d9acae0a1e5d7ed6199ffbd525dd15c5c87a86f",
+  "commit_date": "2026-05-23T06:30:55-04:00",
+  "default_branch": "master",
+  "n_tracked_files": 249,
+  "n_commits": 862,
+  "first_commit_date": "2008-04-01T23:23:13+00:00",
+  "has_gitmodules": false,
+  "has_lfs": false,
+  "approx_tree_bytes": 1950876,
+  "canonical_name": "neat-python -- A NEAT (NeuroEvolution of Augmenting Topologies) implementation, version 2.1.0 (McIntyre, Alan; Kallada, Matt; Miguel, Cesar G.; Feher de Silva, Carolina; Netto, Marcio Lobo; CodeReclaimers, LLC; LICENSE years 2007-2011 cesar.gomes and mirrorballu2, 2015-2025 CodeReclaimers; first commit 2008, pinned commit 2026)",
+  "aliases": ["neat-python", "neat (Python import name)", "NEAT-Python"],
+  "license": {
+    "file": "LICENSE",
+    "first_line": "Copyright (c) 2007-2011, cesar.gomes and mirrorballu2",
+    "spdx_guess": "BSD-3-Clause",
+    "metadata_license_field": "pyproject.toml: license = {file = \"LICENSE\"}; CITATION.cff: license: BSD-3-Clause",
+    "notes": "LICENSE file has no SPDX header; text is the 3-clause BSD form (redistribution conditions 1-3 including the no-endorsement clause). README states: `neat-python` is licensed under the [3-clause BSD license](https://opensource.org/licenses/BSD-3-Clause). Two copyright lines: 'Copyright (c) 2007-2011, cesar.gomes and mirrorballu2' and 'Copyright (c) 2015-2025, CodeReclaimers, LLC'. No per-file copyright headers in .py sources; the only code grep hit is docs/conf.py Sphinx string copyright = u'2015-2025, CodeReclaimers, LLC'. No third-party vendored code headers found."
+  },
+  "copyright_holders_by_header_count": {
+    "CodeReclaimers, LLC (docs/conf.py Sphinx copyright string only; no source headers)": 1
+  },
+  "language": ["Python"],
+  "build_system": "setuptools>=61.0 + wheel via pyproject.toml ([build-system] build-backend = setuptools.build_meta); packages = neat, neat.nn, neat.iznn, neat.ctrnn, neat.export, neat.gpu; pytest config in pyproject; Sphinx docs via docs/Makefile and .readthedocs.yaml; GitHub Actions .github/workflows/tests.yml (pip install -e . then pytest tests/ --cov=neat)",
+  "interpreter_or_compiler": "CPython >=3.8 per pyproject requires-python; classifiers list 3.8-3.14 and PyPy; CI matrix runs 3.8-3.14 and pypy-3.8..3.11 on ubuntu plus 3.8/3.13 on macos and windows",
+  "dependencies": [
+    "core runtime: none beyond the Python standard library (pyproject has no [project] dependencies key; grep of neat/ imports shows only stdlib: random, math, itertools, warnings, inspect, copy, typing, types, time, sys, pickle, os, operator, multiprocessing, json, gzip, functools, datetime, dataclasses, csv, configparser, collections)",
+    "optional-dependencies dev: pytest>=7.0, pytest-cov>=4.0, coveralls>=3.0",
+    "optional-dependencies docs: sphinx>=7.0, sphinx_rtd_theme>=3.0, sphinx-copybutton>=0.5, sphinx-design>=0.6 (same list in docs/requirements.txt)",
+    "optional-dependencies gpu: cupy-cuda12x>=12.0",
+    "optional-dependencies examples: numpy, matplotlib, graphviz, gymnasium[box2d,mujoco], pygame, gizeh, moviepy (all unpinned; same list in examples/requirements.txt)",
+    "examples/environment.yml (conda-forge): python=3.9, pip, numpy, cairo, graphviz, python-graphviz, matplotlib, pip: gymnasium[box2d,mujoco], gizeh, moviepy, pygame (unpinned except python)",
+    "optional-dependencies all: neat-python[dev,docs,examples,gpu]",
+    "flag: all optional deps are unpinned lower bounds or bare names; no lockfile in tree"
+  ],
+  "network_fetches_in_setup": [
+    "docs/installation.rst: git clone https://github.com/CodeReclaimers/neat-python.git (to obtain the examples, which are not in the PyPI package)",
+    "docs/installation.rst: download the source archive from https://github.com/CodeReclaimers/neat-python/releases",
+    "pip install neat-python / pip install 'neat-python[gpu]' etc. from PyPI; no other downloads in README or setup"
+  ],
+  "entry_points": [
+    "neat/population.py Population.run(fitness_function, n=None) (the generational loop: evaluate all genomes via the user callback, check fitness threshold, reproduce, handle extinction, speciate, repeat; returns best genome)",
+    "neat/reproduction.py DefaultReproduction.reproduce(config, species, pop_size, generation) (stagnation filtering, adjusted-fitness spawn allocation, elitism, survival-threshold parent pool, random parent choice with optional interspecies crossover, crossover then mutate per child, records ancestors)",
+    "neat/genome.py DefaultGenome.mutate / configure_crossover / distance (structural add/delete node and connection mutations, gene-level crossover with innovation matching, compatibility distance)",
+    "neat/species.py DefaultSpeciesSet.speciate(config, population, generation) (assigns genomes to species by compatibility distance to representatives; optional dynamic threshold toward target_num_species)",
+    "neat/stagnation.py DefaultStagnation.update(species_set, generation, config) (marks species stagnant after max_stagnation generations without improvement, protecting species_elitism)",
+    "neat/config.py Config(genome_type, reproduction_type, species_set_type, stagnation_type, filename) (parses the INI-style config file; is_better_fitness/meets_threshold honour fitness_criterion)",
+    "neat/nn/feed_forward.py FeedForwardNetwork.create(genome, config) (phenotype construction used by the examples)",
+    "examples/xor/evolve-feedforward.py run(config_file) (README-recommended starting example)"
+  ],
+  "example_command": "README gives no shell command; it says: start playing with the examples (`examples/xor` is a good place to start). docs/quickstart.rst gives 'python your_script.py'. Smallest script in the tree: examples/xor/evolve-minimal.py (reads 'config-feedforward' from the cwd).",
+  "example_input": "examples/xor/config-feedforward (INI file: [NEAT] fitness_criterion = max, fitness_threshold = 3.9, pop_size = 150, reset_on_extinction = False; [DefaultGenome] sigmoid activation, sum aggregation, conn_add_prob = 0.5 ...) plus the hard-coded XOR truth table xor_inputs = [(0,0),(0,1),(1,0),(1,1)], xor_outputs = [(0,),(1,),(1,),(0,)] in the script",
+  "example_output": "docs/xor_example.rst shows: '****** Running generation 73 ******' / 'Best individual in generation 73 meets fitness threshold - complexity: (0, 2)' / 'Best genome:' / 'Key: 2891' / 'Fitness: 3.9623' / node and connection gene listing, then 'Output:' lines of the form 'input (..), expected output (..), got (..)' for the four XOR cases; fitness is 4.0 minus summed squared error, threshold 3.9",
+  "runtime_native_deps": [
+    "none for the core library (pure Python, stdlib only)",
+    "optional: NVIDIA GPU + CUDA 12 via cupy-cuda12x for neat.gpu (GPUCTRNNEvaluator / GPUIZNNEvaluator; imports are lazy, README: import neat never triggers a GPU dependency)",
+    "examples only: Box2D and MuJoCo via gymnasium[box2d,mujoco], cairo (gizeh), graphviz binaries, pygame, moviepy"
+  ],
+  "host_class": "any CPython 3.8-3.14 or PyPy3 host, OS independent (CI runs ubuntu, macos, windows); Linux + NVIDIA CUDA 12 GPU only for the optional [gpu] extra",
+  "upstream_docs": [
+    "doi: 10.5281/zenodo.19024753 (CITATION.cff and README, software DOI)",
+    "https://doi.org/10.5281/zenodo.19024753",
+    "https://www.kenstanley.net/papers (README: Stanley's publications page)",
+    "http://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf (docs/neat_overview.rst, the NEAT paper)",
+    "http://www.cs.ucf.edu/~kstanley/#publications (docs/neat_overview.rst)",
+    "README 'NEAT paper compliance' section names Stanley & Miikkulainen (2002) without a DOI",
+    "examples/lorenz-ctrnn/docs/CTRNN-CHANGES.pdf (in-tree PDF on the v2.0 CTRNN change)",
+    "https://neat-python.readthedocs.io (documentation)",
+    "ORCIDs: 0000-0002-8071-4219 (McIntyre), 0000-0002-4137-0847 (Feher de Silva), 0000-0002-6694-0228 (Netto)"
+  ],
+  "built_to": "README: This project is a pure-Python implementation of NEAT with no dependencies beyond the standard library -- NEAT being a method developed by Kenneth O. Stanley for evolving arbitrary neural networks.",
+  "pressure": "README gives no explicit motivating problem beyond providing a dependency-free Python NEAT; the 2.1 changes are driven by 'NEAT paper compliance' (configurable options to more closely match Stanley & Miikkulainen (2002)) and by bug fixes such as fitness_criterion = min and checkpoints repeating work on restore.",
+  "success_means": "README states no benchmark; in the code and docs success is a genome whose fitness meets the config fitness_threshold under fitness_criterion (XOR example: fitness = 4 - sum of squared errors, threshold 3.9), plus the test suite (README: 618 total) and coverage badge.",
+  "main_loop_one_sentence": "Population.run repeats, for up to n generations: call the user fitness_function on all (id, genome) pairs, find the best and stop if fitness_criterion over the population meets fitness_threshold, otherwise build the next population with DefaultReproduction.reproduce (drop stagnant species, allocate spawn by adjusted fitness, keep elites, pick parents from the top survival_threshold fraction, crossover then mutate), reset on extinction if configured, then re-speciate by compatibility distance and increment generation.",
+  "behavioral_entry_point": "neat/reproduction.py:DefaultReproduction.reproduce (selection and spawn policy) and neat/genome.py:DefaultGenome.mutate (variation operators); both pluggable via the Config(genome_type, reproduction_type, species_set_type, stagnation_type) constructor",
+  "lineage_notes": "README: It was forked from the excellent project by @MattKallada. LICENSE credits cesar.gomes and mirrorballu2 for 2007-2011; pyproject authors also list Cesar Gomes Miguel, Carolina Feher da Silva, Marcio Lobo Netto. Implements NEAT by Kenneth O. Stanley (Stanley & Miikkulainen 2002). v2.0 was a breaking CTRNN API change (per-node evolvable time constants); v2.1 adds paper-compliance options and optional CuPy GPU evaluation. examples/xor/README.md references Izhikevich 2003 'Simple model of spiking neurons' for the spiking example.",
+  "other_branches_or_versions": "remote branches: master (default), add-code-of-conduct-1, mstechly-master, refactor-and-simplify; tags: v0.5 v0.6 v0.7 v0.9 v0.91 v0.92 v1.0.0 v1.1.0 v2.0.0 v2.0.1 (pinned tree declares version 2.1.0, no v2.1.0 tag seen)",
+  "things_i_could_not_verify": [
+    "Whether the pinned commit corresponds to a released PyPI 2.1.0 (no v2.1.0 tag in the clone)",
+    "The README claims of 618 total tests and 55 new unit tests (not run)",
+    "The identity behind cesar.gomes and mirrorballu2 beyond the LICENSE line",
+    "Exact example output for the pinned code (docs output is illustrative; code not executed)",
+    "Functionality of the neat.gpu CuPy backend (no GPU; code not run)",
+    "Whether the git history back to 2008 belongs to this fork or to the parent project"
+  ]
+}
