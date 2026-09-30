@@ -1,0 +1,92 @@
+{
+ "world": "W5",
+ "triplicateId": "HT-056d3ac561",
+ "clauses": [
+  {
+   "id": "S1",
+   "positive_value": 2.0,
+   "twin_value": 76.0,
+   "cheat_value": 0.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": {
+    "value": 12,
+    "text": "pooled median latency <= 12 steps"
+   }
+  },
+  {
+   "id": "S2",
+   "positive_value": 0.0,
+   "twin_value": 0.473,
+   "cheat_value": 0.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": {
+    "value": 0.1,
+    "text": "pooled pre-change false-alarm fraction <= 0.1"
+   }
+  },
+  {
+   "id": "S3",
+   "positive_value": 0.1111111111111111,
+   "twin_value": 4.222222222222222,
+   "cheat_value": 0.0,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": {
+    "value": 10.8,
+    "text": "pooled median latency <= 10.80 steps (= 0.6 x REFERENCE_NIS median 18.0 on these control rows; the rerun REFERENCE_NIS must reproduce 18.0)"
+   }
+  }
+ ],
+ "cheat_detected": true,
+ "frozen": true,
+ "reference_values": {
+  "REFERENCE_NIS_median_latency": 18.0,
+  "REFERENCE_NIS_fa_fraction": 0.043,
+  "NO_REOPEN_median_latency": 78.0,
+  "per_seed_median_latency": {
+   "POSITIVE_CONTROL": [
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "NULL_TWIN": [
+    77.0,
+    76.0,
+    76.0,
+    76.0,
+    75.0
+   ],
+   "REFERENCE_NIS": [
+    18.5,
+    18.0,
+    18.0,
+    18.0,
+    16.0
+   ],
+   "NO_REOPEN": [
+    79.0,
+    77.5,
+    78.0,
+    78.0,
+    77.0
+   ]
+  },
+  "nis_threshold": 223.97086372226062
+ },
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "Initial world: J = 1.5, RHO = 1.0, band 0.5*J for 10 steps, NIS window 20, 5% calibrated FA; S1 <= 12 steps, S2 FA <= 0.10, S3 ratio to REFERENCE_NIS <= 0.60. First control run (before spec.json text was final): POSITIVE median 2, NULL_TWIN 76, REFERENCE_NIS 18, NO_REOPEN 78.",
+   "why": "J chosen so that NIS detection is neither instant nor impossible (reference median 18 steps leaves room for a faster alarm to show and for a slower one to fail S3)."
+  },
+  {
+   "rev": 1,
+   "what": "controls.py: added the secondary observable (MSE on unchanged components over [300, 350)) to every row; CHEAT arm now reuses NO_REOPEN's secondary value. Spec stupid-explanation 3 reworded: NO_REOPEN median is ~78 steps, far above the oracle, not near the 290 cap. No clause, threshold or world parameter changed.",
+   "why": "The spec names this secondary observable; the rows must carry it. Wording corrected to match the measured value."
+  }
+ ]
+}

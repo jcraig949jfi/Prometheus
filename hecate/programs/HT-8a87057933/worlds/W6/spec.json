@@ -1,0 +1,87 @@
+{
+ "id": "W6",
+ "triplicateId": "HT-8a87057933",
+ "passId": "P3v2",
+ "mechanism_ids": [
+  "M4"
+ ],
+ "lens_ids": [
+  "L3"
+ ],
+ "hypothesis": "Choosing excitation probes as a minimum separating family of the candidates still consistent with the data (a hitting-set problem solved exactly) identifies an unknown plant as efficiently as greedy information-gain probing, far faster than random probing, and with a bounded worst case.",
+ "mechanism": "N=64 candidate plants; candidate c = 'component c is faulty'. A library of P=48 probes; probe p exercises a fixed subset E_p of components, |E_p| uniform in {2,4,8,16,32}, members uniform; the library is regenerated until it separates every pair of candidates. Response of the plant to probe p is 1 iff its faulty component is in E_p (noise-free). The agent keeps the version space V of candidates consistent with all responses and stops when |V| = 1; a probe is never repeated. TREATMENT (Yoneda / hitting-set probing): at each step, over the current V, solve exactly (SAT or ILP with a cardinality objective) for a minimum-size set of unapplied probes that separates every pair of candidates in V (every pair is 'hit' by a probe containing exactly one of the two); apply the lowest-index probe of that set that splits V; re-solve after each response.",
+ "intervention": "Hitting-set separating-family probe choice versus the reference and null policies on the same 10 libraries, every candidate taken as the true plant once per library (640 episodes per arm).",
+ "control": "GREEDY_REF: greedy information gain -- the unapplied probe maximising the binary entropy of the split of V (ties: lowest index). This is the simpler alternative named for M4.",
+ "positive_control": "Truth oracle: the unapplied probe whose realised response removes the most candidates (ties: lowest index). It uses the hidden truth, so it is an upper bound, not a legitimate policy; attainability of S1 by a legitimate policy is checked separately against the entropy bound (mean probes >= log2 64 = 6).",
+ "observable": "Probes applied until |V| = 1, per episode, recomputable by replaying the logged (probe, response) trace against the library and the truth.",
+ "success_clauses": [
+  {
+   "id": "S1",
+   "text": "Mean probes to identification (640 episodes) is at most 1.05 x the GREEDY_REF mean on the same episodes (parity with greedy information gain).",
+   "statistic": "mean probes(X) / mean probes(GREEDY_REF)",
+   "comparison": "<=",
+   "threshold": 1.05
+  },
+  {
+   "id": "S2",
+   "text": "Mean probes to identification <= 9.0 (information bound 6.0).",
+   "statistic": "mean probes(X)",
+   "comparison": "<=",
+   "threshold": 9.0
+  },
+  {
+   "id": "S3",
+   "text": "95th percentile of probes to identification over the 640 episodes <= 8 (bounded worst case, the property a separating family is meant to buy).",
+   "statistic": "p95 probes(X), nearest-rank",
+   "comparison": "<=",
+   "threshold": 8
+  }
+ ],
+ "failure_clauses": [
+  {
+   "id": "F1",
+   "text": "Hitting-set probing is materially worse than greedy information gain: mean probes ratio to GREEDY_REF >= 1.15.",
+   "statistic": "mean probes(X) / mean probes(GREEDY_REF)",
+   "comparison": ">=",
+   "threshold": 1.15
+  },
+  {
+   "id": "F2",
+   "text": "Hitting-set probing is not clearly better than random: mean probes(X) >= 0.75 x mean probes(NULL_TWIN) (disjoint from S2: 0.75 x 13.18 = 9.89 > 9.0).",
+   "statistic": "mean probes(X) / mean probes(NULL_TWIN)",
+   "comparison": ">=",
+   "threshold": 0.75
+  },
+  {
+   "id": "F3",
+   "text": "Worst case not bounded: p95 probes >= 10.",
+   "statistic": "p95 probes(X), nearest-rank",
+   "comparison": ">=",
+   "threshold": 10
+  }
+ ],
+ "alternative_explanation": "Any policy that prefers balanced splits identifies the plant near the entropy bound on a random library; a separating-family solver may do so only because its chosen family happens to contain balanced probes, i.e. it is greedy information gain by another route, and the Yoneda framing adds a name, not a mechanism. Conversely a minimum separating family is a worst-case (non-adaptive) object and may spend probes that an adaptive greedy policy would skip, making it strictly worse in the mean.",
+ "null_twin": "Random probing: a uniformly random unapplied probe at each step, same libraries, same truths, same stop rule (probe choice destroyed).",
+ "substrate": "causal toy",
+ "why_this_implementation": "Fault localisation by excitation probes is the smallest identification-by-excitation plant in which the candidate is determined by its response profile (the representable-functor reading of M4) and version spaces are exact. Probe subsets of mixed size make random probes low-information (twin mean 13.2 probes vs bound 6), fixing the flaw where every policy collapses the version space in 2-3 observations. No learned model is involved.",
+ "size": "64 candidates, 48 probes per library, 10 libraries (seeds), 64 episodes per library per arm",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "cost_estimate": "controls: 0.16 CPU core-seconds for 4 arms; treatment: 640 episodes x <= ~10 exact minimum-hitting-set solves on <= 2016 pairs x 48 probes; expected < 3 CPU core-minutes in pure Python with a small branch-and-bound or a SAT cardinality encoding",
+ "stupid_explanations": [
+  "greedy information gain already sits at the entropy bound (6.02 vs 6.0), so any balanced-split rule 'matches greedy' and S1 tests nothing specific to separating families",
+  "the minimum separating family is re-solved after every response, so the treatment is adaptive greedy in disguise; its first probe is whatever the solver's tie-break picks",
+  "S3 passes for any sensible policy because the libraries contain size-32 probes that halve V; the worst-case bound comes from the library, not the solver",
+  "random probing is a strawman: excluding never-splitting probes from the twin alone would halve its count"
+ ]
+}

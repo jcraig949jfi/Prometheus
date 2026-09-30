@@ -1,0 +1,82 @@
+{
+ "world": "W5",
+ "triplicateId": "HT-e106e1603b",
+ "passId": "P3v2",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "per_seed": {
+  "POSITIVE_CONTROL": [
+   0.29677655609809406,
+   0.2688086207925233,
+   0.2960846903023061,
+   0.26249937754405206,
+   0.27791471492414244
+  ],
+  "NULL_TWIN": [
+   0.0003483321387304228,
+   0.00569021912969081,
+   0.010169632464989808,
+   0.006839903751726495,
+   0.0032410757150336256
+  ],
+  "CHEAT": [
+   0.9995714016927563,
+   0.9996412047963258,
+   0.9995724140887928,
+   0.9996362018535567,
+   0.9996610316721212
+  ]
+ },
+ "clauses": [
+  {
+   "id": "S1",
+   "statistic": "mean over 5 seeds of G",
+   "comparison": ">=",
+   "threshold": 0.2,
+   "positive_value": 0.2804167919322236,
+   "twin_value": 0.005257832640034233,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.2
+  },
+  {
+   "id": "S2",
+   "statistic": "min over 5 seeds of G",
+   "comparison": ">=",
+   "threshold": 0.1,
+   "positive_value": 0.26249937754405206,
+   "twin_value": 0.0003483321387304228,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.1
+  }
+ ],
+ "cheat_value": {
+  "S1": 0.9996164508207105,
+  "S2": 0.9995714016927563
+ },
+ "cheat_detected": true,
+ "frozen": true,
+ "control_cpu": {
+  "cpu_seconds": 0.125,
+  "wall_seconds": 0.1282510757446289
+ },
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "initial controls: positive-control jitter SIGMA_T=0.10; rows kept in control_rows_rev0.jsonl",
+   "result": "PC G mean 0.602 (min 0.575), twin 0.007 (max 0.0105), cheat 0.9996"
+  },
+  {
+   "rev": 1,
+   "what": "SIGMA_T 0.10 -> 0.40 (weaker positive control)",
+   "why": "rev0 PC exceeded the S1 threshold threefold, so it only showed the pipeline can see a huge effect; a moderate built-in effect (G ~0.28) shows the thresholds are reachable by an effect of plausible size and are not lenient. Thresholds (0.20, 0.10) were NOT changed.",
+   "result": "see clauses"
+  }
+ ]
+}

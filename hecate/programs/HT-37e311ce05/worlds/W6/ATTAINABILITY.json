@@ -1,0 +1,92 @@
+{
+ "world": "W6",
+ "triplicateId": "HT-37e311ce05",
+ "clauses": [
+  {
+   "id": "S1",
+   "statistic": "S1_specificity",
+   "comparison": ">=",
+   "threshold": 0.1,
+   "positive_value": 0.2106,
+   "twin_value": -0.0014,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.1,
+   "treatment_must_reach_note": "treatment seed-mean D = R_other - R_own >= 0.10 (absolute)"
+  },
+  {
+   "id": "S2",
+   "statistic": "S2_redundancy_ratio",
+   "comparison": "<=",
+   "threshold": 0.5,
+   "positive_value": 0.0,
+   "twin_value": 0.9217,
+   "attainable": true,
+   "discriminating": true,
+   "treatment_must_reach": 0.0518,
+   "treatment_must_reach_note": "treatment seed-mean R_own <= 0.5 x twin seed-mean R_own; on these control rows twin R_own = 0.1036, so treatment R_own <= 0.0518. The probe reruns the twin in the same code path; the ratio uses the rerun twin. PC value = PC R_own / twin R_own; twin value = twin R_own / twin-replicate-B R_own",
+   "twin_value_reference": "NULL_TWIN_B (independent replicate)"
+  }
+ ],
+ "cheat_detected": true,
+ "cheat_detail": {
+  "definition": "(a) the ruler reads success on CHEAT rows (sensitivity) AND (b) the audit, which recomputes R_own, R_other, D from each row's stored genomes and the seed's palette, flags every CHEAT row, with zero flags on POSITIVE_CONTROL, NULL_TWIN and NULL_TWIN_B rows",
+  "ruler_fires_on_cheat": true,
+  "audit_flagged": {
+   "POSITIVE_CONTROL": 0,
+   "NULL_TWIN": 0,
+   "NULL_TWIN_B": 0,
+   "CHEAT": 10
+  },
+  "audit_total": {
+   "POSITIVE_CONTROL": 10,
+   "NULL_TWIN": 10,
+   "NULL_TWIN_B": 10,
+   "CHEAT": 10
+  }
+ },
+ "failure_clause_readings": {
+  "POSITIVE_CONTROL": {
+   "F1": false,
+   "F2": false
+  },
+  "NULL_TWIN": {
+   "F1": true,
+   "F2": true
+  },
+  "NULL_TWIN_B": {
+   "F1": true,
+   "F2": true
+  }
+ },
+ "secondary": {
+  "POSITIVE_CONTROL": {
+   "R_own": 0.0,
+   "R_other": 0.2106,
+   "joint_success": 0.729
+  },
+  "NULL_TWIN": {
+   "R_own": 0.1036,
+   "R_other": 0.1022,
+   "joint_success": 0.6761
+  },
+  "NULL_TWIN_B": {
+   "R_own": 0.1124,
+   "R_other": 0.107,
+   "joint_success": 0.6725
+  }
+ },
+ "twin_reference_ok": true,
+ "control_cpu_seconds_total": 12.2,
+ "control_rows": "control_rows.jsonl",
+ "control_rows_sha256": "d4480ace837723e7c58a8ff6ae1e6bb6fdd9ffcb563546d7c76eccec89e8fa52",
+ "revisions": [
+  {
+   "rev": 0,
+   "what": "initial spec and controls, run once",
+   "result": "all clauses attainable and discriminating, cheat detected; no revision needed",
+   "why_changed": "n/a"
+  }
+ ],
+ "frozen": true
+}

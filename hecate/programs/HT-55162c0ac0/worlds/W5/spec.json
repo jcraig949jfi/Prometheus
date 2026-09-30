@@ -1,0 +1,36 @@
+{
+ "id": "W5",
+ "triplicateId": "HT-55162c0ac0",
+ "passId": "P3v2",
+ "mechanism_ids": ["M10"],
+ "lens_ids": ["L5"],
+ "hypothesis": "At a fixed number of held items (n = 4) and matched interaction strength, competitive dynamics that are chaotic lose more items than competitive dynamics that are not chaotic: item loss under load is caused by chaotic competition, not only by competitive exclusion.",
+ "mechanism": "Competitive generalised Lotka-Volterra dx_i/dt = r_i x_i (1 - sum_j A_ij x_j), n = 4, r = (1, 0.72, 1.53, 1.27). A is drawn from a neighbourhood of the Vano et al. (2006) chaotic matrix A0 = [[1,1.09,1.52,0],[0,1,0.44,1.36],[2.33,0,1,0.47],[1.21,0.51,0.35,1]]: every nonzero off-diagonal entry is multiplied by an independent U(0.9, 1.1) factor; zeros and the unit diagonal are kept. The neighbourhood contains both chaotic and non-chaotic draws at nearly identical interaction strength. Initial state x0 ~ U(0.2, 0.4)^4 per draw.",
+ "intervention": "None is imposed on the dynamics; the contrast is the naturally occurring chaos label of each draw: chaotic if lambda_max > 0.005, measured by a renormalised twin trajectory (delta0 = 1e-8, renormalised every 1.0 time unit) over t in [300, 1500], RK4 dt = 0.05. The same draw is then integrated, unmodified, to t = 3000.",
+ "control": "Symmetrised draws (A + A^T)/2, integrated identically: these admit a Lyapunov function, cannot be chaotic, and give the loss rate from exclusion alone; reported descriptively, no clause.",
+ "positive_control": "Effect present by construction: same family and same phase-A integration and chaos label, but on t in [1500, 3000] an absorbing boundary removes permanently any species whose abundance falls below 0.02, so the large excursions of chaotic draws cost items by construction. Recall and clauses computed exactly as for the treatment.",
+ "observable": "Per draw: chaos label (above) and recall = fraction of the 4 species whose mean abundance over t in [2800, 3000] exceeds 1e-3; mean off-diagonal strength = mean of the 12 off-diagonal entries of A. Pooled over 5 seeds x 100 draws.",
+ "success_clauses": [
+  {"id": "S1", "text": "Pooled mean recall of non-chaotic draws minus pooled mean recall of chaotic draws is at least 0.08 (0.32 species of 4).", "statistic": "mean(recall | non-chaotic) - mean(recall | chaotic), pooled 500 draws", "comparison": ">=", "threshold": 0.08},
+  {"id": "S2", "text": "One-sided Mann-Whitney U test (non-chaotic recall greater than chaotic recall) has p below 0.01.", "statistic": "Mann-Whitney U one-sided p-value, pooled", "comparison": "<", "threshold": 0.01},
+  {"id": "S3", "text": "In the OLS regression recall ~ 1 + mean_offdiag_strength + chaotic, the negated coefficient of the chaotic indicator is at least 0.06 (the chaos effect survives adjustment for interaction strength).", "statistic": "-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled", "comparison": ">=", "threshold": 0.06}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "The recall gap is below 0.03 (about 1.4 standard errors of the label-permutation null): overload loss is exclusion, not chaos.", "statistic": "mean(recall | non-chaotic) - mean(recall | chaotic), pooled", "comparison": "<", "threshold": 0.03},
+  {"id": "F2", "text": "Adjusted chaos coefficient below 0.02: any raw gap is carried by interaction strength.", "statistic": "-beta_chaotic from OLS recall ~ 1 + strength + chaotic, pooled", "comparison": "<", "threshold": 0.02},
+  {"id": "F3", "text": "Fewer than 20 chaotic or fewer than 20 non-chaotic draws: the world cannot test the claim (UNTESTABLE, not NULL).", "statistic": "min(n_chaotic, n_nonchaotic), pooled", "comparison": "<", "threshold": 20}
+ ],
+ "alternative_explanation": "Chaotic draws differ systematically from non-chaotic neighbours in interaction strength or in which entries were perturbed, and that difference, not chaos, causes (or prevents) exclusion; or the 1e-3 floor counts low chaotic excursions as losses.",
+ "null_twin": "Label-permutation twin: the treatment's own rows with the chaos labels permuted within each seed (fixed permutation seed 1000 + seed). Every nuisance statistic is identical (same draws, same recall values, same number of chaotic labels); only the association between chaos and recall is destroyed. A second, physical twin (symmetrised matrices) is the control arm.",
+ "substrate": "ecology",
+ "why_this_implementation": "Competition among held items is the literal cognitive-load picture of interacting elements; a 4-species competitive ODE keeps it non-ML. Drawing from a small neighbourhood of a known chaotic matrix guarantees both classes occur at matched strength (98 chaotic of 500 in the control run), which a broad random ensemble does not.",
+ "size": "n = 4 species, 5 seeds (100..104) x 100 draws = 500 draws, T = 3000 time units, RK4 dt = 0.05, vectorised numpy",
+ "seeds": [100, 101, 102, 103, 104],
+ "cost_estimate": "about 0.2 CPU core-minutes for the treatment (controls took 0.12 core-minutes)",
+ "stupid_explanations": [
+  "chaotic draws have different mean interaction strength (S3 adjusts for it; also report strength by class)",
+  "the 1e-3 floor on a 200-unit mean abundance misreads a slow chaotic excursion as a loss (report per-class minimum of mean abundance of surviving species)",
+  "lambda_max > 0.005 mislabels long transients or slow limit cycles as chaos (report lambda histogram; the unperturbed Vano matrix gives 0.019 and its symmetrisation -0.13 in the estimator check)",
+  "integration error at dt = 0.05 manufactures or hides chaos (repeat 50 draws at dt = 0.025 and compare labels)"
+ ]
+}

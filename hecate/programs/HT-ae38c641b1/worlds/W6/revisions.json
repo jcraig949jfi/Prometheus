@@ -1,0 +1,4 @@
+[
+ {"rev": 0, "what": "Pre-run debugging of the NULL_TWIN labeller (no clause values produced): (a) Newton polish of the log-likelihood had the wrong curvature sign (fixed; labeller now agrees 3000/3000 with a 200001-point brute-force argmax); (b) data (-1.8,-1.2,1.0,1.6) with rigid group shifts were mirror-symmetric, so the two local maxima tied exactly for every g (degenerate twin); (c) asymmetric clusters with rigid group shifts gave a 4% minority label (boundary nearly absent from the square).",
+  "why_changed": "a twin without a boundary in the square cannot discriminate anything; chose data (-1.9,-1.4,-1.0,0.8,1.2,1.9) with groups (0,0,1,1,0,1) so g1 != g2 changes cluster tightness, not only location: minority label 46%, boundary length ~2.5 in the square. NBASE 40000 -> 30000 and likelihood grid 320 -> 200 points to fit the CPU budget."}
+]

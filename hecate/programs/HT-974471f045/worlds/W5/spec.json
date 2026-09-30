@@ -1,0 +1,37 @@
+{
+  "id": "W5",
+  "triplicateId": "HT-974471f045",
+  "passId": "P3v2",
+  "mechanism_ids": ["M2"],
+  "lens_ids": ["L2", "L7"],
+  "hypothesis": "Bracketed inheritance: when the reservoir is heritable and never changed in life and the readout is relearned from scratch each life, a small lifetime sample budget (n=8) drives task information into the heritable reservoir, while a large budget (n=200) leaves the reservoir near-random. Measured by the reservoir-attributed gain of the L2 bracketing ledger.",
+  "mechanism": "Genome = (W, W_in): a 40-unit tanh reservoir x_t = tanh(W x_{t-1} + W_in u_t), no leak, 2 input channels u1, u2 ~ U[-0.5,0.5] iid. Nothing in the genome changes during life. Each life the readout is fitted from scratch by ridge regression (lambda=1e-2, with intercept, dual/min-norm form) on n_life randomly chosen post-washout steps (washout 50, 350 steps) of a fresh input stream, target y_t = u1_{t-3}; lifetime fitness = NRMSE on the remaining post-washout steps, mean over 2 lives with fresh inputs. Selection: population 20, 60 generations; each generation rank by fitness (lower NRMSE better), keep the top 4 unchanged, 16 offspring each copying a parent drawn uniformly from the top 8, then mutation: every entry of W and of W_in gets N(0, (0.05 * rms of that matrix)^2) noise; if spectral radius of W exceeds 0.95 it is rescaled to 0.95. Gen-0 law: W dense N(0,1) rescaled to spectral radius 0.9; W_in ~ U[-0.5,0.5].",
+  "intervention": "Two treatment arms that differ only in lifetime budget: LOW (n_life = 8) and HIGH (n_life = 200). Everything else, including seeds and input streams, identical.",
+  "control": "Unevolved gen-0 population (reservoirs drawn from the gen-0 law), measured with the same instrument; its reservoir-attributed gain is 0 in expectation because the replacement reservoir is drawn from the same law.",
+  "positive_control": "Constructed task-carrying reservoirs in the LOW arm: a 3-step delay chain on u1 (W_in[0,0]=1, W[1,0]=1, W[2,1]=1) broadcast into units 3..39 (W[i,2]=1), plus background W ~ 0.05 N(0,1)/sqrt(40) and W_in background 0.05 U[-1,1]; so units 3..39 carry u1_{t-3} by construction. HIGH arm = reservoirs drawn from the gen-0 law (the hypothesis says high budget leaves the reservoir near-random). 5 individuals per arm per seed.",
+  "observable": "Reservoir-attributed gain (L2 ablation b minus a) at instrument budget n=8: G = NRMSE(readout fitted with n=8 on a freshly drawn gen-0-law reservoir) - NRMSE(readout fitted with n=8 on the individual's own reservoir), same input stream and same training indices, mean over R=5 repeats (fresh input and fresh replacement reservoir each), computed for the task target u1_{t-3} (G_task) and the off-task target u2_{t-3} (G_off). Per seed: mean over the 5 final-generation elites (top 5 by the arm's own fitness at generation 60). Measurement input streams are seeded 10000+seed+k (k = elite index) for every arm (common random numbers).",
+  "success_clauses": [
+    {"id": "S1", "text": "LOW arm carries task information in the reservoir.", "statistic": "mean over 6 seeds of G_task in the LOW arm", "comparison": ">=", "threshold": 0.30},
+    {"id": "S2", "text": "Budget interaction: the LOW arm carries more reservoir task information than the HIGH arm.", "statistic": "mean over 6 seeds of (G_task LOW - G_task HIGH), paired by seed", "comparison": ">=", "threshold": 0.25},
+    {"id": "S3", "text": "Content, not generic few-shot conditioning: LOW-arm gain is specific to the task channel.", "statistic": "mean over 6 seeds of (G_task LOW - G_off LOW)", "comparison": ">=", "threshold": 0.30},
+    {"id": "S4", "text": "Selection content, not selection intensity or mutation bias (L7).", "statistic": "mean over 6 seeds of G_task LOW minus mean over 6 seeds of G_task LOW in the permuted-fitness twin", "comparison": ">=", "threshold": 0.25}
+  ],
+  "failure_clauses": [
+    {"id": "F1", "text": "No reservoir task information under low budget.", "statistic": "mean over 6 seeds of G_task in the LOW arm", "comparison": "<", "threshold": 0.10},
+    {"id": "F2", "text": "No budget interaction.", "statistic": "mean over 6 seeds of (G_task LOW - G_task HIGH)", "comparison": "<", "threshold": 0.10},
+    {"id": "F3", "text": "LOW arm indistinguishable from the permuted-fitness twin.", "statistic": "mean G_task LOW minus mean G_task LOW of the twin", "comparison": "<", "threshold": 0.10}
+  ],
+  "alternative_explanation": "Selection at low budget improves few-shot learnability generically (e.g. lowering the effective dimension or raising the variance of whatever the state already carries) rather than depositing task content; or the HIGH arm evolves the same reservoir content because a better reservoir also lowers error at n=200 (the budget contrast then carries no pressure difference). S3 targets the first; the pressure diagnostic in the controls (constructed reservoir vs gen-0 at n=200: gain 0.008) and S2 target the second.",
+  "null_twin": "Permuted-fitness twin: same population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, rho cap, generations and seeds, with the ranking random each generation instead of by fitness; no fitness is used. In distribution this equals the permuted-fitness twin of L7. Measured with the identical instrument, 5 random final-generation individuals per seed; LOW and HIGH twins are two independent drift runs (budget has no effect without selection).",
+  "substrate": "population of fixed tanh reservoirs (echo state networks) with lifetime-fitted linear readouts",
+  "why_this_implementation": "The fixed/trainable split of reservoir computing is the literal bracketed/active partition of M2: the reservoir is suspended from lifetime change, the readout is the lifetime attitude. Evolution acting only on the bracketed layer with lifetime budget as the manipulated variable is the smallest world where the division of labour either appears or does not. Displaced alternative: an evolved initialisation plus gradient fine-tuning of a trained RNN, which erases the fixed/active split.",
+  "size": "N=40, 2 input channels, population 20, 60 generations, 2 arms (LOW n_life=8, HIGH n_life=200) plus twin, 6 seeds (0..5), 350-step lives (50 washout), 2 lives per fitness evaluation, instrument R=5 repeats x 5 elites.",
+  "seeds": [0, 1, 2, 3, 4, 5],
+  "cost_estimate": "treatment about 20*60*2 lives*2 arms*6 seeds = 28,800 reservoir runs of 350 steps (about 1-2 CPU core-minutes) plus instrument; controls measured at 6.3 CPU seconds.",
+  "stupid_explanations": [
+    "the low-budget arm raises input scaling or shrinks recurrence so that u1 and u2 both dominate the state, improving any few-shot recall (S3 checks task specificity)",
+    "the replacement reservoir is noisy, so a single lucky seed drives the mean gain (6-seed mean, twin per-seed sd 0.15 recorded)",
+    "the HIGH arm has no selection pressure at all because random reservoirs already solve the task at n=200, so S2 reflects pressure absence rather than a division of labour (this IS the M2 prediction, but it also means S2 alone cannot separate M2 from 'selection only acts where error is high')",
+    "spectral radius drifts to the 0.95 cap under mutation and a longer memory alone changes few-shot error"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+ "id": "W5",
+ "triplicateId": "HT-ae38c641b1",
+ "passId": "P3v2",
+ "mechanism_ids": ["M2", "M14"],
+ "lens_ids": ["L3", "L2"],
+ "hypothesis": "When survival requires a proof by a budgeted box-domain (interval) verifier, evolved linear dynamics align their principal directions with the verifier's domain axes (4-fold, mod 90 deg), and rotating the verifier's domain rotates the alignment with it; a structure-blind gate of matched selection intensity produces no alignment.",
+ "mechanism": "World: genome = two linear maps A_1, A_2 in R^{2x2} (a switched linear system; which map acts is set by an input bit each step). Per seed: R=16 runs, x_0 on the circle of radius 0.5 at angles off + 2*pi*r/16 (off uniform in [0, 2*pi/16)), S=60 steps, map index from a fixed random bit per run and step. Task fitness = lam_hat - pen, lam_hat = mean over runs of max(-5, (ln|x_S| - ln 0.5)/S), pen = 2 * sum_j max(0, s2_j/s1_j - 0.5) with s1>=s2 the singular values of A_j. Both terms are exactly rotation invariant. GA per seed: P=60 parents; each generation every parent makes one offspring by adding N(0, 0.03^2) to each of the 8 entries (conjugation-invariant, i.e. isotropic); offspring pass the arm's gate or are discarded; the P fittest of parents + accepted offspring survive (stable sort, ties keep order: parents first). G=120 generations. Initial population: entries N(0, 0.3^2), failing genomes resampled (up to 200 rounds, then any still failing scaled by 0.3) until every genome passes the CONCRETE gate (unit-disc safety on the seed's runs); exactly as world() in controls.py; this initial population is shared by all arms of a seed. Random streams: world (runs, bits, init) np.random.default_rng([seed,7]); mutation default_rng([seed,11]); null-twin coins default_rng([seed,13]).",
+ "intervention": "Treatment gate = budgeted box verifier with domain angle dom. Arm V: dom = 0. Arm V_rot: dom = 22.5 deg. Verifier(dom): Q = rotation by dom; B_j = Q^T A_j Q; h_0 = (0.5, 0.5) (half-widths of the box hull of the start circle, valid in any rotated frame); h_{n+1} = max(h_0, |B_1| h_n, |B_2| h_n) componentwise, |B| = entrywise absolute value, for n = 0..29 (30 Kleene steps; boxes stay centred at 0 because the maps are linear); widening h* = 1.05 * h_30; PROVEN iff |B_j| h* <= h* componentwise for j = 1, 2 (h* is inductive, hence contains every reachable state from the start box) AND h*_1^2 + h*_2^2 <= 1 (box inside the unit disc). Offspring are accepted iff PROVEN. The treatment arms use no concrete gate and no alignment bonus.",
+ "control": "POSITIVE_CONTROL and NULL_TWIN below; no separate concrete-gate arm is scored.",
+ "positive_control": "Concrete gate (every state of every run within the closed unit disc; NaN/inf = unsafe) plus fitness bonus 0.1 * mean_j w_j cos(4(phi_j - dom)), dom = 0 (POSITIVE_CONTROL) or 22.5 deg (POSITIVE_CONTROL_ROT). Imprint present by construction. Implemented in controls.py.",
+ "observable": "Per seed and arm, on the final population (2P maps): phi = angle of the top right-singular vector of A_j, w = (s1 - s2)/(s1 + s2); A4(dom) = sum w cos(4(phi - dom)) / sum w. Clause statistics are means over the 20 seeds. Preregistered diagnostics (not clauses): A8(dom) (same with 8 in place of 4), median rho(|A|)/rho(A), median lam_hat, mean accepted fraction.",
+ "success_clauses": [
+  {"id": "S1", "text": "Box-domain verification imprints world-axis alignment: arm V has mean A4(0) >= 0.40.", "statistic": "mean over seeds 0..19 of A4(dom=0) in arm V", "comparison": ">=", "threshold": 0.40},
+  {"id": "S2", "text": "The imprint follows the domain: arm V_rot has mean A4(22.5 deg) >= 0.40.", "statistic": "mean over seeds 0..19 of A4(dom=22.5 deg) in arm V_rot", "comparison": ">=", "threshold": 0.40}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "No 4-fold axis imprint under the box verifier (M2's stated observable is falsified in this world).", "statistic": "mean over seeds 0..19 of A4(dom=0) in arm V", "comparison": "<", "threshold": 0.15},
+  {"id": "F2", "text": "Alignment is anchored to the world, not to the verifier's domain (the rotated verifier still aligns to world axes).", "statistic": "mean over seeds 0..19 of A4(dom=0) in arm V_rot", "comparison": ">=", "threshold": 0.40},
+  {"id": "F3", "text": "Reading invalid (INCONCLUSIVE, not a falsification): the verifier froze evolution.", "statistic": "mean over seeds and generations of the fraction of offspring accepted in arm V", "comparison": "<", "threshold": 0.02}
+ ],
+ "alternative_explanation": "The box verifier is effectively an entrywise (infinity-norm-like) penalty whose invariance group is the signed permutations, which contain 45-deg reflections; it may imprint an 8-fold (axes AND diagonals) or sign-pattern structure, or none on singular directions at all, rather than M2's 4-fold axis alignment. A mean A4 between 0.15 and 0.40 is INCONCLUSIVE.",
+ "null_twin": "NULL_TWIN: concrete gate plus genome-independent random rejection: in generation g offspring are accepted iff concrete-safe AND u < min(1, a_ref[g] / c_g), u ~ U(0,1) from the null coin stream, c_g = fraction of this generation's offspring that are concrete-safe, a_ref[g] = accepted fraction of the compared arm in generation g of the same seed (V for S1, V_rot for S2; in controls.py: POSITIVE_CONTROL). Matches task, mutation, safety and selection intensity; has no geometric selectivity. Scored with A4(0) for S1 and A4(22.5 deg) for S2.",
+ "substrate": "population",
+ "why_this_implementation": "An evolving population of explicit 2x2 linear maps keeps the verifier exact and its geometry readable against the domain axes. Everything except the verifier is rotation invariant (disc safety, circular start set, isotropic mutation, rotation-invariant task), so any alignment in V must come from the domain. Linear maps only: an affine offset lets the task be solved with A ~ 0, leaving the observable unselected.",
+ "size": "P=60, G=120, R=16 runs x S=60 steps, 2 maps per genome, 20 seeds; arms V, V_rot, NULL_TWIN(matched to V), NULL_TWIN(matched to V_rot).",
+ "seeds": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+ "cost_estimate": "controls.py 24 CPU core-s; treatment + twins about 1 CPU core-min",
+ "stupid_explanations": [
+  "clonal drift: a population descends from few ancestors, so one seed's angles cluster anywhere; handled by a signed statistic averaged over 20 seeds (null SD of the mean 0.13) and the 0.40 threshold",
+  "near-isotropic maps have undefined principal directions and inflate the statistic; handled by weighting by w = (s1-s2)/(s1+s2) and the shape penalty that keeps s2/s1 <= 0.5",
+  "the verifier simply throttles evolution so the population stays at its isotropic initial state (F3 and the accepted-fraction diagnostic expose this)",
+  "hidden world anisotropy (bit order, start angles, float effects) aligns to world axes in every arm; exposed by V_rot (S2, F2) and by the twin",
+  "the 30-step budget, not the domain geometry, does the selecting (maps near rho = 1 fail to converge in any orientation); the diagnostic median rho(|A|)/rho(A) separates orientation-dependent failure from slow convergence"
+ ]
+}

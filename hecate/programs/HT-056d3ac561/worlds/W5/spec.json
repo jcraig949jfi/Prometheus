@@ -1,0 +1,36 @@
+{
+ "id": "W5",
+ "triplicateId": "HT-056d3ac561",
+ "passId": "P3v2",
+ "mechanism_ids": ["M3", "M8"],
+ "lens_ids": ["L7", "L1"],
+ "hypothesis": "An overconfident (collapsed-gain) Kalman filter that reopens its covariance only on the components flagged by a metamorphic stride-consistency relation recovers from an abrupt sparse regime change faster than a filter that reopens isotropically on a windowed-NIS alarm, at a matched pre-change false-alarm rate.",
+ "mechanism": "World: 8 independent scalar random walks x_{t+1} = x_t + w, w ~ N(0, Q=1e-4), observed z_t = x_t + v, v ~ N(0, R=1), T = 600 steps; the filter model is exactly correct (Q, R known) and starts at its steady-state variance P_ss (gain ~0.01, so it barely listens: collapsed covariance). At t_c = 300, 2 of the 8 components (uniform) jump by sign*J, J = 1.5, sign uniform +/-1. Every arm that reopens uses the same action: P_jj <- P_jj + RHO (RHO = 1.0) on the chosen components before the update at the chosen step. TREATMENT (M3 with the M8 relation as alarm): alongside the stride-1 filter runs an auxiliary stride-2 filter on the even-step measurements only (2-step model: process variance 2Q, same R, same initial P_ss). At every even t, d_j = xhat1_j - xhat2_j and z_j = d_j / sqrt(max(P2_jj - P1_jj, 1e-8)) (model-predicted disagreement variance: xhat2 conditions on a subset of xhat1's data). Per component, S_j = sum of z_j^2 over the last 10 even steps. An alarm on component j fires when S_j > h_MR and t >= 50; the stride-1 AND stride-2 filters are then both reopened on the alarmed components only, and those components' windows are cleared. h_MR is a single scalar calibrated on calibration seed 999 (1000 runs, no jump, alarms disabled): the 0.95 quantile over runs of max over components and over t in [50, 300) of S_j. No other tuning.",
+ "intervention": "Which components are reopened and when is decided by the per-component stride-MR statistic (oracle-free: uses only z_t) instead of by windowed NIS.",
+ "control": "REFERENCE_NIS: the same stride-1 filter; per step NIS_t = sum_j e_j^2 / S_j; windowed sum over the last 20 steps; alarm when the sum exceeds h_NIS and t >= 50; on alarm reopen ALL 8 components by RHO and clear the window. h_NIS calibrated on calibration seed 999 (1000 runs, no jump, alarms disabled) as the 0.95 quantile over runs of the max windowed sum over window ends in [50, 300). Runs on exactly the same trajectories and noise as the treatment.",
+ "positive_control": "Oracle reopening: exactly at t_c, exactly the two changed components, same RHO. Effect present by construction.",
+ "observable": "Per run: recovery latency = smallest s >= 0 such that for every changed component |xhat_j - x_j| <= 0.5*J for 10 consecutive steps starting at t_c + s (cap 290 if never); false-alarm flag = 1 if any reopening occurs at a step in [50, 300). Secondary (reported, not a clause): mean squared error on the 6 unchanged components over [300, 350).",
+ "success_clauses": [
+  {"id": "S1", "text": "Pooled over all 5 seeds x 200 runs, the median recovery latency is at most 12 steps.", "statistic": "median over the 1000 pooled runs of recovery latency (steps)", "comparison": "<=", "threshold": 12},
+  {"id": "S2", "text": "Pooled over all 1000 runs, the fraction of runs with any reopening in [50, 300) (before the change) is at most 0.10.", "statistic": "mean over the 1000 pooled runs of the false-alarm flag", "comparison": "<=", "threshold": 0.10},
+  {"id": "S3", "text": "The pooled median recovery latency divided by the pooled median recovery latency of REFERENCE_NIS on the same 1000 runs is at most 0.60.", "statistic": "median latency(arm) / median latency(REFERENCE_NIS), both pooled over the same 1000 runs", "comparison": "<=", "threshold": 0.60}
+ ],
+ "failure_clauses": [
+  {"id": "F1", "text": "Median latency ratio to REFERENCE_NIS is at least 0.95 (no faster than isotropic NIS reopening).", "statistic": "median latency(TREATMENT) / median latency(REFERENCE_NIS), pooled", "comparison": ">=", "threshold": 0.95},
+  {"id": "F2", "text": "Pre-change false-alarm fraction exceeds 0.15 (calibration did not hold; speed bought with false alarms).", "statistic": "mean false-alarm flag of TREATMENT, pooled", "comparison": ">", "threshold": 0.15},
+  {"id": "F3", "text": "Median latency is at least 0.90 of the never-reopening filter's median latency on the same runs (the MR alarm does not act in time).", "statistic": "median latency(TREATMENT) / median latency(NO_REOPEN), pooled", "comparison": ">=", "threshold": 0.90}
+ ],
+ "alternative_explanation": "Any gain comes from per-component (sparse) alarms rather than from the metamorphic relation: a per-component innovation (NIS_j) alarm with the same sparse reopening would do as well. Also: stride disagreement is a re-weighted innovation statistic and so can at best match NIS (then S3 fails).",
+ "null_twin": "One reopening of two uniformly random components at a uniformly random step in [50, 600), same RHO: the number, size and sparsity of reopenings match the oracle; the relation between the reopening and the change is destroyed.",
+ "substrate": "causal toy",
+ "why_this_implementation": "Decoupled scalar random walks make the collapsed gain, the jump and the stride relation exactly computable; every arm shares one reopening action, so arms differ only in when and where they reopen. No learned component, so no ML ontology is imposed.",
+ "size": {"state_dim": 8, "steps": 600, "change_step": 300, "changed_components": 2, "runs_per_seed": 200, "calibration_runs": 1000},
+ "seeds": {"evaluation": [0, 1, 2, 3, 4], "calibration": 999, "null_twin_draws": "10000 + seed"},
+ "cost_estimate": 1,
+ "stupid_explanations": [
+  "the MR threshold is so low that it fires continuously, so latency is short because the filter is always open (checked by S2 and by the unchanged-component MSE)",
+  "the jump is so large that any alarm fires on the first step after the change, so no statistic can beat another (checked: REFERENCE_NIS median latency is well above the oracle's)",
+  "the latency band is so loose that the collapsed filter already counts as recovered (checked: NO_REOPEN median latency ~78 steps against the oracle's 2)",
+  "calibration on the evaluation seeds rather than the separate calibration seed"
+ ]
+}

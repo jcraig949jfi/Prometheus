@@ -1,0 +1,28 @@
+{
+ "world": "W5",
+ "triplicateId": "HT-55162c0ac0",
+ "source_rows": "hecate/programs/HT-55162c0ac0/worlds/W5/control_rows.jsonl (arm SUMMARY is the last row)",
+ "clauses": [
+  {"id": "S1", "positive_value": 0.10309422276373237, "twin_value": 0.0015610721900700675, "cheat_value": 1.0,
+   "attainable": true, "discriminating": true,
+   "treatment_must_reach": ">= 0.08 (pooled non-chaotic minus chaotic mean recall over 500 draws)"},
+  {"id": "S2", "positive_value": 8.068744313380144e-06, "twin_value": 0.3615263907909091, "cheat_value": 7.94387394091243e-111,
+   "attainable": true, "discriminating": true,
+   "treatment_must_reach": "< 0.01 (one-sided Mann-Whitney p)"},
+  {"id": "S3", "positive_value": 0.10316477504093816, "twin_value": 0.0015632906620212065, "cheat_value": 0.9999999999999998,
+   "attainable": true, "discriminating": true,
+   "treatment_must_reach": ">= 0.06 (negated OLS chaos coefficient adjusted for strength)"}
+ ],
+ "eligibility": {"n_chaotic": 98, "n_nonchaotic": 402, "min_required_per_class": 20,
+                 "note": "measured on control seeds 0..4 of the same family; treatment uses seeds 100..104"},
+ "failure_clauses_on_twin": {"F1": "fires (0.0016 < 0.03)", "F2": "fires (0.0016 < 0.02)", "F3": "does not fire (98, 402)"},
+ "estimator_check": {"vano_original_lambda": 0.018950248908122296, "vano_symmetrised_lambda": -0.1301229496758691},
+ "cheat_detected": true,
+ "cheat_definition": "CHEAT rows = positive-control rows with recall overwritten (chaotic -> 0, non-chaotic -> 1); detected = the unchanged evaluator reads every success clause as met on them, i.e. the instrument is not blind to success.",
+ "frozen": true,
+ "control_cpu_core_minutes": 0.5,
+ "revisions": [
+  {"n": 1, "what": "Run 1 with S1 threshold 0.15 and S3 threshold 0.15 (inherited from the magnitude used for this mechanism earlier): positive control reached only 0.103. Tried absorbing threshold THETA_PC in {0.02, 0.03, 0.05, 0.08}: gap 0.103, 0.082, 0.093, 0.079 (no setting reaches 0.15). Cause: by construction chaos costs about one species of four (77 of 98 chaotic draws end at recall 0.75), and non-chaotic neighbours already lose 0.24 species-fraction to exclusion, so the attainable gap in a world where chaos certainly causes loss is about 0.1. Changed S1 to >= 0.08 and S3 to >= 0.06; kept THETA_PC = 0.02. The label-permutation null has standard error about 0.022 at n = 98/402, so 0.08 is about 3.6 SE above the null.", "why": "A threshold the positive control cannot reach makes the world unattainable (the defect this preregistration repairs)."},
+  {"n": 2, "what": "Added CLAUSES, MIN_PER_CLASS = 20 eligibility and per-arm clause evaluation to controls.py so the rerun in the probe reproduces the clause verdicts in the same code path; no parameter changed; values identical to run 1.", "why": "reproducibility of ATTAINABILITY.json"}
+ ]
+}

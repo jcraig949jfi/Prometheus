@@ -1,0 +1,35 @@
+{
+  "id": "W6",
+  "triplicateId": "HT-974471f045",
+  "passId": "P3v2",
+  "mechanism_ids": ["M14"],
+  "lens_ids": ["L5", "L7"],
+  "hypothesis": "Eidetic variation over reservoirs: when the readout is heritable but every individual's reservoir is resampled at birth from a heritable distribution, selection retains only readouts that address properties invariant across reservoir realisations, and these invariants are non-trivial (not the all-ones mean-field direction) when the task cannot be solved by the mean field.",
+  "mechanism": "Genome = (M_in in R^{40x8}, w in R^40). At birth the individual's reservoir is sampled: W_in = M_in + 0.3 * xi (xi iid N(0,1)), W dense N(0,1) rescaled to spectral radius 0.9, fresh every birth and never inherited. Reservoir x_t = tanh(W x_{t-1} + W_in u_t), no leak, u = 8 channels iid U[-1,1]. Nothing is learned in life: the output is w . x_t. Lifetime fitness = corr^2(w . x_t, y_t) over one life (300 steps, 50 washout, fresh input) with target y_t = u1_t - u2_t (higher better). Selection: population 20, 60 generations; rank by fitness, keep the top 4 unchanged (they are NOT re-born; their reservoir is kept), 16 offspring copying a parent drawn uniformly from the top 8, each offspring re-sampled at birth after mutation: M_in += N(0, 0.05^2) per entry, w += N(0, (0.05 * rms(w))^2) per entry. Gen-0 law: M_in ~ N(0, 0.5^2), w ~ N(0, 1).",
+  "intervention": "Resampling of the reservoir at every birth while readout and template are heritable (the eidetic variation), under selection on the lifetime fitness above.",
+  "control": "Unevolved gen-0 genomes measured with the same instrument.",
+  "positive_control": "Constructed genomes carrying a non-trivial invariant: M_in = 0.05 N(0,1) background with +1 on channel u1 for units 0..19 and +1 on channel u2 for units 20..39; w = +1 on units 0..19, -1 on units 20..39, plus 0.05 N(0,1). The readout addresses 'u1-driven units minus u2-driven units', which survives any resample of W and any SIGMA=0.3 noise on W_in. 5 genomes per seed.",
+  "observable": "L5 noematic invariance: each measured genome's readout w is evaluated, fixed, on 20 reservoirs freshly resampled from its own distribution (fresh input per resample; measurement streams seeded 10000+100*seed+k for genome k, common across arms). w_perp = w - mean(w) (w minus its all-ones component). Per genome: I_perp = mean over resamples of corr^2(w_perp . x_t, y_t); I_ones = mean over resamples of corr^2(sum_i x_i,t, y_t); I_full likewise for w. Per seed: mean over the 5 final-generation elites (top 5 by the arm's lifetime fitness at generation 60).",
+  "success_clauses": [
+    {"id": "S1", "text": "The non-all-ones component of evolved readouts decodes the contrast across resampled reservoirs, above the 0.5 ceiling of single-channel decoding.", "statistic": "mean over 6 seeds of I_perp", "comparison": ">=", "threshold": 0.60},
+    {"id": "S2", "text": "The invariant is non-trivial: it beats the mean-field (all-ones) readout.", "statistic": "mean over 6 seeds of (I_perp - I_ones)", "comparison": ">=", "threshold": 0.30},
+    {"id": "S3", "text": "Selection content, not intensity or mutation bias (L7).", "statistic": "mean over 6 seeds of I_perp minus mean over 6 seeds of I_perp of the permuted-fitness twin", "comparison": ">=", "threshold": 0.25}
+  ],
+  "failure_clauses": [
+    {"id": "F1", "text": "No invariant decodable component.", "statistic": "mean over 6 seeds of I_perp", "comparison": "<", "threshold": 0.15},
+    {"id": "F2", "text": "Indistinguishable from the permuted-fitness twin.", "statistic": "mean I_perp minus twin mean I_perp", "comparison": "<", "threshold": 0.10}
+  ],
+  "alternative_explanation": "The heritable template M_in simply grows until the resampling noise (0.3) is negligible, so the 'distribution' collapses to one fixed input map and the readout is an ordinary fixed linear decoder of the input, with the random recurrence as noise: invariance by collapse rather than by selecting an invariant functional. The treatment implementer should record the template-to-noise ratio (rms(M_in)/0.3) of elites; the clauses do not distinguish collapse from selection of an invariant, and a pass is to be read with that ratio beside it.",
+  "null_twin": "Permuted-fitness twin: identical population size, genealogy law (keep 4, parents from top 8 of a ranking), mutation, birth resampling and generations, with a random ranking each generation instead of by fitness; no fitness is used. In distribution this equals the L7 permuted-fitness twin. 5 random final-generation genomes per seed, same instrument and measurement streams.",
+  "substrate": "population of heritable readouts over resampled random tanh reservoirs (reservoir ensemble)",
+  "why_this_implementation": "Resampling the reservoir at every birth while the readout is inherited is the literal eidetic variation of M14: the act (reservoir) varies, the object (input history) is fixed, and only what stays identical across acts can be carried by descent. The target is a contrast u1 - u2 so that the trivial ensemble invariant (mean activity, the all-ones direction) is useless by construction and a pass requires a non-trivial invariant. Displaced alternative: a trained network regularised for robustness to weight noise, which would learn rather than select and has no ensemble.",
+  "size": "N=40, 8 input channels, population 20, 60 generations, 1 treatment arm plus twin, 6 seeds (0..5), 300-step lives (50 washout), instrument 20 resamples x 5 elites.",
+  "seeds": [0, 1, 2, 3, 4, 5],
+  "cost_estimate": "treatment about 20*60*6 = 7,200 lives of 300 steps (under 1 CPU core-minute) plus instrument; controls measured at 2.0 CPU seconds.",
+  "stupid_explanations": [
+    "template collapse: rms(M_in) grows so large that resampling noise is irrelevant and the world is a fixed linear decoder (see alternative_explanation; record the template-to-noise ratio)",
+    "the recurrent reservoir contributes nothing; the result is a property of the input template alone",
+    "a readout aligned with a single unit that happens to carry u1 - u2 at one seed drives the mean",
+    "single-channel decoding: a readout that decodes u1 alone reaches corr^2 = 0.5 with u1 - u2 (upper bound); S1 threshold 0.60 is set above that bound so a pass requires both channels"
+  ]
+}
