@@ -63,10 +63,12 @@ def eligible(prog, w):
     return reasons, c
 
 
-def choose(prog):
+def choose(prog, exclude=()):
     ok = []
     rejected = {}
     for w in prog.get("experiments") or []:
+        if w.get("id") in exclude:
+            continue
         reasons, c = eligible(prog, w)
         if reasons:
             rejected[w.get("id")] = reasons
@@ -93,6 +95,31 @@ def main():
     return out
 
 
+def round2():
+    """Round 2 (roles/Hecate/prereg/2026-09-30_probe_round2/): every frozen
+    program whose round-1 world was not SIGNAL gets its next eligible world,
+    same rule, round-1 world excluded."""
+    with open(os.path.join(ROOT, "hecate", "programs", "PROBE_ROUND1_REPORT.json"),
+              encoding="utf-8") as fh:
+        r1 = {w["triplicateId"]: w for w in json.load(fh)["worlds"]}
+    out = []
+    for tid, w1 in sorted(r1.items()):
+        if w1["outcome"] == "SIGNAL":
+            continue
+        with open(os.path.join(ROOT, "hecate", "programs", tid, "program.json"),
+                  encoding="utf-8") as fh:
+            prog = json.load(fh)
+        w, rej = choose(prog, exclude={w1["world"]})
+        out.append({"triplicateId": tid, "round1": [w1["world"], w1["outcome"]],
+                    "probe_world": w.get("id") if w else None,
+                    "status": "SELECTED" if w else "NO_ELIGIBLE_WORLD",
+                    "cost": parse_cost(w.get("cost_estimate")) if w else None,
+                    "rejected": rej})
+    return out
+
+
 if __name__ == "__main__":
-    for r in main():
+    import sys
+    rows = round2() if sys.argv[1:] == ["round2"] else main()
+    for r in rows:
         print(json.dumps(r, sort_keys=True))
