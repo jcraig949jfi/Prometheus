@@ -126,3 +126,17 @@ def test_origin_record_carries_entry_registers_only_off_default():
         f = w.first_self_replication
         if f is not None:
             assert ("entry_regs" in f) == (wname != "ZERO")
+
+
+def test_zero_p_schedule_resets_at_rate_from_register_rng_only():
+    import pytest
+    assert "reg_zero_p" not in Config(reg_world="CARRIED").to_dict()
+    with pytest.raises(ValueError):
+        World(Config(reg_world="ZERO", reg_zero_p=0.5), 1)
+    w = World(Config(world="SOUP", reproduction="ENDOGENOUS_COPY", physics="v2", cells=64, ticks=5, reg_world="CARRIED", reg_zero_p=0.3), 9)
+    o = next(x for x in w.cells if x is not None)
+    before = w.rng.getstate(); resets = 0
+    for _ in range(2000):
+        o.regs = (5, 5, 5, 5, 5, 5, False, False)
+        resets += w._entry_regs(o) is None
+    assert w.rng.getstate() == before and 480 <= resets <= 720          # p = 0.3 of 2000 (binomial sd ~20)
