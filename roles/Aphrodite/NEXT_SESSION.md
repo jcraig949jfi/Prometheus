@@ -4,20 +4,17 @@ Rewritten 2026-09-29 at MWO-0001 adoption from the branch's actual state. It rep
 appended updates (now superseded/NEXT_SESSION_2026-09-25_plus_updates.md).
 Boot from the repo, not from memory.
 
-## RESET NOTE (2026-09-30, operator-requested session reset)
-The last session adopted MWO-0002 and filed its census report, then held.
-Unread and unadopted at the reset:
-- MWO-0003 (@624a686ea, #987);
-- MWO-0004 (@25a486d44, current on main);
-- the operator CWO fleet activation: ops/fleet/QUEUE.json, #1024.
-
-Do these FIRST, from Git, verifying each blob hash against ops/work_orders/PUBLICATIONS.md.
-
-State at the reset:
-- aphrodite/arc3-2026-09-28 @ d3e391a3f, pushed, NOT merged.
-- Nothing running; 0 python processes; no leases; no Fabric tasks.
-- The comms cursor is 961.
-- The previous session's /loop dies with the session. Restart the s8 loop with /loop.
+## CURRENT NOTE (2026-09-30, bootstrap session 0f14ab93)
+- Adopted MWO-0003 (history), MWO-0004 and CWO-2026-09-30 / -30B / -30C. CWO-C is the governing fleet order. All
+  six blob hashes were verified against ops/work_orders/PUBLICATIONS.md.
+- MWO-0004 G5 accepted the ARC3 close as reported. aphrodite/arc3-2026-09-28 is MERGED TO MAIN (067fce3af).
+  Seat state now lives on main.
+- STATE: READY (CWO-C s1.3). Do NOT self-promote. T51 is authorised within R2 (G5), but it starts only on Aporia
+  dispatch or a direct operator instruction. When it starts: T49 supply screen, then a frozen AMENDMENT, then a
+  Fabric lease.
+- CWO-C makes Aporia the READY-seat dispatcher, by operator authority. This supersedes the 2026-09-26 "ignore
+  Aporia" ruling for dispatch and CWO traffic.
+- Every 60 min: fetch + comms sync (s12). Heartbeat Aporia on every state change (s13/s14).
 
 ## 0. Boot order
 1. git fetch origin. Read origin/main:ops/work_orders/CURRENT.md: the APHRODITE section plus s4, s7, s8, s9, s11,
@@ -26,7 +23,7 @@ State at the reset:
 3. Set EW_DB_HOST=192.168.1.202 (M4 is not M1). Run: python -m comms boot Aphrodite --model <id>. Then check the
    inbox from the cursor. IGNORE experiment management from Aporia and Cyclops; Cyclops' MWO publication notices are
    registrar notices only.
-4. Worktree C:\Prometheus-worktrees\aphrodite-base-role, branch aphrodite/arc3-2026-09-28. NEVER git pull in
+4. ARC3 is merged; work from a fresh worktree at origin/main (or a new aphrodite/* branch). NEVER git pull in
    C:\Prometheus. Commit with -c user.name=Aphrodite -c user.email=jcraig949b@users.noreply.github.com.
 
 ## 1. Where the science stands
