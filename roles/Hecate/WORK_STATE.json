@@ -3,21 +3,33 @@
   "seat": "Hecate",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T01:53:00Z",
-  "state": "HOLD",
+  "updated_at_utc": "2026-09-30T02:15:00Z",
+  "state": "ACTIVE",
   "branch": "hecate/base-role-adopt-2026-09-29",
   "head_sha": "(this commit; see git log -1 -- roles/Hecate/WORK_STATE.json)",
-  "threads": [],
+  "threads": [
+    {
+      "id": "T-HECATE-TRIPLICATE-DEEP-SEARCH",
+      "charter": "roles/Hecate/prompts/2026-09-29_charter/",
+      "status": "RUNNING"
+    }
+  ],
   "campaigns": [],
   "experiments": [],
   "fabric_tasks": [],
-  "running": [],
+  "running": [
+    "HECATE-01 framework schema+validator",
+    "HECATE-02 historical corpus loader"
+  ],
   "blocked_on": [],
   "next_actions": [
-    "Seat created 2026-09-29, charter PENDING. HOLD because no READY work exists without a charter (base role 2a F), not a block on any seat. When the operator's charter and responsibilities arrive: commit verbatim with MANIFEST under roles/Hecate/prompts/<date>_charter/, rewrite RESPONSIBILITIES.md, file BACKLOG_H0H5.md, leave HOLD."
+    "HECATE-03 preregister and freeze first selection (16) before any pass content",
+    "HECATE-04 Pass 0-2 for the 16",
+    "HECATE-05 Pass 3 worlds",
+    "HECATE-10 preregister the meta-experiment"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
-    "roles/Hecate/journal/2026-09-29.md (creation pass)"
+    "roles/Hecate/journal/2026-09-29.md (creation pass; charter adoption)"
   ]
 }
