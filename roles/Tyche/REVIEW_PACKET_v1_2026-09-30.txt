@@ -1,0 +1,170 @@
++==============================================================================+
+| EXTERNAL REVIEW PACKET                                                       |
+| TYCHE -- DARK ECOLOGY v1: SENSES FROM INDIVIDUALLY USELESS PRECURSORS?       |
+| Author:  Tyche (seat), M2 SPECTREX5, instance m2-ebcbbd6b                    |
+| Date:    2026-09-30                                                          |
+| For:     operator (HITL) and external reviewers                              |
+| Status:  complete; rows committed; NOT independently audited                 |
+| Self-contained: every load-bearing number is inline; no repo access needed  |
++==============================================================================+
+
+--------------------------------------------------------------------------------
+0. SUMMARY
+--------------------------------------------------------------------------------
+Question (operator): can a lens lineage acquire a useful sense whose
+necessary precursors have no individually measurable utility? Gate 6:
+show one case where every precursor would have died under v0 selection
+yet the dark ecology assembles a useful sensor.
+
+Verdict (preregistered, computed in code): GATE 6 = FAIL.
+
+The failure shape is more informative than a pass would have been:
+  - the counterfactual was false: v0-style selection did NOT kill useless
+    precursors. Epsilon-lexicase over 39 noisy cases kept a lineage alive
+    for ~30 generations on noise-level "value" (0.02-0.03, mostly on the
+    structure-destroyed twin worlds), then a graft from a sibling world
+    (exaptation) and one insertion completed a delayed xor (+0.30).
+  - explicit preservation + pair evaluation did not beat plain selection
+    at equal budget (Z-world cells solved: V0 3, DENR 2, DE 1 of 10).
+  - the directive's mechanism was seen once, below the bar: two lenses
+    with individual home gains 0.004 and 0.006 fused into a replicated
+    weak sensor (+0.075 test; +0.101 / +0.109 fresh seeds; twin clean).
+  - true needles (3-way parity; xor of 3-op windowed precursors) were
+    reached by no arm.
+
+--------------------------------------------------------------------------------
+1. WHAT WAS BUILT (committed before measurement)
+--------------------------------------------------------------------------------
+Directive verbatim e6884298c; PREREG + code 282f01c45 (hashes). Gate-1
+repairs from v0: per-world ecology; the table organism's inputs are
+[candidate, raw] only (no ecology-order dependence); residual = capability
+deficit D = acc(ecology + answer-key oracle) - acc(ecology), oracle never
+visible to evolution. Arms at equal per-world budget (6000 evaluation
+units): V0 (v0 selection), DE (48-slot utility-free reserve: age, novelty,
+lineage bonus, random, neutral drift; 60 pair evaluations per world per
+generation O(La, Lb); fused admission; delayed credit), DENR (pairs among
+utility-selected lenses, no reserve). Seeds 1 and 2. Ruler R0 only.
+
+Design-time reachability (before freezing) caught a leak: at ruler R2 a
+single initial lens solved Z4 (+0.497) because R2 shifts every delay by 2
+and makes one precursor a raw observation. v1 was made R0-only; all five
+Z worlds were then valid in both seeds (best initial single <= 0.018;
+best of all 4560 initial pairs <= 0.061; void threshold 0.10).
+
+--------------------------------------------------------------------------------
+2. WORLDS
+--------------------------------------------------------------------------------
+Z (every precursor absent, each exactly zero-marginal): Z1 xor(d4,d11),
+Z2 xor(d3,d7), Z3 parity(d2,d5,d9), Z4 sign(g[t-5] g[t-2]), Z5 xor of two
+delayed 5-window majorities. C (one precursor raw): C1, C2. G: running
+count mod 3. N: twins of Z1, Z2, Z4, Z5 + keyed PRF. Held out: Z1 and Z4
+siblings, Z6 xor(d5,d8) and twin, PRF. Raw ecology at chance on Z/C
+(0.48-0.52); oracle deficit ~0.5; twins |deficit| <= 0.02.
+
+--------------------------------------------------------------------------------
+3. RESULTS (exact)
+--------------------------------------------------------------------------------
+    Z solves (test >= 0.10, replicated)   Z1  Z2  Z3  Z4  Z5  cells  gens
+    V0   s1                                6   1   0   0   0    2     80
+    V0   s2                                0   0   0   1   0    1     83
+    DE   s1                                0   0   0   0   0    0     36
+    DE   s2                                4   0   0   0   0    1     36
+    DENR s1                                1   0   0   0   0    1     40
+    DENR s2                                1   0   0   0   0    1     41
+C and G solved by every arm, both seeds. Negatives: 0 replicated gains;
+1 conf-gate admission (DENR s1 on the Z1 twin) killed by Pass D. Baseline
+drops: 0. Deficit on negatives: 0.00 in every run. Best Z deficit
+closure: V0 s1 Z1 0.50 -> 0.00.
+
+Gate-6 predicate for the one both-useless fused sensor (DE s1, Z2):
+components' max individual home val gain 0.004 / 0.006 (< 0.01 at every
+logged evaluation), test z alone 2.0 / 1.7; fused test +0.075 (z 5.6),
+fresh seeds +0.101 / +0.109, pair-null p95 +0.025, twin z 1.24. Fails only
+on test gain < 0.10 -- and V0 solved Z2 in the same seed.
+
+--------------------------------------------------------------------------------
+4. FAILURE SHAPES
+--------------------------------------------------------------------------------
+F1 Noisy lexicase is an implicit dark ecology. Exploratory genealogy trace
+   of V0 s1's Z1 solver: home gain -0.002..+0.002 from gen 0 to 31; the
+   lineage's best cases were 0.019-0.030 on N3/N4/N1 twin worlds and Z5
+   (noise). Gen 32: graft from a lineage valued +0.489 on C1 (xor with a
+   raw channel). Gen 39: insert delay(ch3, 4) -> +0.302 on Z1.
+F2 Soft precursors: a 6-window sum over the missing channel plus the exact
+   other delay gave +0.076 (gen 15). 2-way xor has graded footholds in a
+   chemistry with windows and smoothers.
+F3 Preservation + pairing did not pay at equal budget (pairs cost units;
+   DE ran 36 generations vs V0's 80).
+F4 Useless-plus-useful coalitions are common: a zero-value partner lifted
+   a ~0.1 lens to ~0.2 (DE s2 Z1) and completed +0.513 (DENR s1 Z1).
+F5 Z3 (parity of 3) and Z5 (deep precursors): unreached by every arm.
+
+--------------------------------------------------------------------------------
+5. PREDICTIONS LOST (calibration ledger)
+--------------------------------------------------------------------------------
+P1 gate PASS; P2's "V0 solves no Z world"; P3 "DE solves Z4 both seeds";
+P4 "DENR <= half of DE"; P5 "no N admission" (1, killed in Pass D).
+Held: C/G solved; Z3 unsolved; Z5 <= 1 seed; baselines flat; N deficit flat.
+
+--------------------------------------------------------------------------------
+6. PROCESS NOTES
+--------------------------------------------------------------------------------
+- The trace analysis (F1, F2) is exploratory, written after seeing seed 1;
+  it explains, it does not verify. A preregistered persistence measure is
+  successor S4.
+- Budget parity by evaluation units penalises any arm that spends units on
+  pairs; that is a design choice, not a law.
+- Compute: 6 runs, 5 to 14 minutes wall each at 13 workers (about 2
+  core-hours), plus reachability passes.
+
+--------------------------------------------------------------------------------
+7. WHAT THIS DOES AND DOES NOT ESTABLISH
+--------------------------------------------------------------------------------
+DOES: repaired instruments behave (no manufactured gaps, flat negative
+deficits, no replicated false gradients); 2-way zero-marginal xor is
+reachable in this chemistry by several routes, including noise persistence
++ exaptation; two individually useless lenses formed one replicated weak
+sensor.
+DOES NOT: show explicit preservation is needed or helpful; pass gate 6;
+say anything about the 122 natural residuals (untouched, per directive).
+
+--------------------------------------------------------------------------------
+8. RECOMMENDATION (operator's call; seat's lean)
+--------------------------------------------------------------------------------
+Lean: one more calibration round before the natural habitat, redesigned
+around what v1 showed. (1) A strictly utility-gated arm (survival needs a
+significant gain on some case) so "would have died" is true by
+construction, beside noisy lexicase as its own arm. (2) Gate on the real
+needles: parity of order >= 3 and deep-precursor xor, with triple
+coalitions. (3) Cheaper pair screening so budget parity stops penalising
+combination. (4) Preregister a neutral-persistence rate. If DE still does
+not beat both V0 arms on order->=3 parity, retire "explicit preservation"
+as a mechanism in this chemistry and keep noise persistence as the finding.
+STOP: using 2-way xor as the canonical dark-ecology control in a chemistry
+with window and smoothing operators.
+
+--------------------------------------------------------------------------------
+9. QUESTIONS FOR THE REVIEWER (try to disagree)
+--------------------------------------------------------------------------------
+Q1 Is "survival by winning noisy cases" a legitimate dark-ecology mechanism
+   or a selection bug to remove?
+Q2 Should budget parity count pair evaluations at all, or count wall time?
+Q3 Is F4 (useless partner completes a useful lens) already the directive's
+   phenomenon, making the both-useless requirement too strict?
+Q4 Does F2 mean no finite chemistry with smoothers has zero-marginal
+   2-way structure -- so only higher-order parity is a fair needle?
+
+--------------------------------------------------------------------------------
+10. ARTIFACTS
+--------------------------------------------------------------------------------
+directive roles/Tyche/prompts/2026-09-30_v1_directive/ (e6884298c)
+prereg    roles/Tyche/prereg/2026-09-30_v1/ (282f01c45)
+code      tyche/v1/ (worlds_v1, eco_v1, run_v1, report_v1, trace_precursors)
+rows      tyche/runs/v1_2026-09-30/{V0,DE,DENR}_s{1,2}/, PASS_A_s{1,2}/,
+          REPORT_v1.json, REPORT_v1.md
+
++==============================================================================+
+| "Not worth continuing" is a first-class answer. Gate 6 failed because its   |
+| counterfactual was false in this implementation, not because nothing        |
+| happened. Tell me if the redesign in s8 is not worth it.                    |
++==============================================================================+

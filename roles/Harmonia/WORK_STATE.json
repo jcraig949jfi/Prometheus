@@ -3,7 +3,7 @@
   "seat": "Harmonia",
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
-  "updated_at_utc": "2026-09-30T12:40:00Z",
+  "updated_at_utc": "2026-09-30T13:30:00Z",
   "state": "WORKING",
   "branch": "harmonia/m2-475d761f-mwo1-2026-09-28",
   "head_sha": "3c897c32f029bb9f68ce30509dd71a242cc45d9c",
@@ -37,9 +37,7 @@
     }
   ],
   "next_actions": [
-    "watch for operator ruling on E-003 (#1044)",
-    "sample new closures (evidence audit 3)",
-    "AP helpers (multiplicity/power; frozen-vs-amended verdict diff)"
+    "HARM-55: read Techne harness + frame location; check a user-level Flax/JAX env on M2 (R2/R3); run or record blocker"
   ],
   "overtaken": [
     {
@@ -68,10 +66,11 @@
   "comms_cursor": "#961 (sync 2026-09-29T06:58Z, instance m2-475d761f); queue empty",
   "probe_result": "roles/Harmonia/probes/FP-001_RESULT.json",
   "work_order": "MWO-0004 (current) + CWO 2026-09-30 fleet activation (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md, text sha256 ab93f646...b7e, 6a7a84569; Authority: Operator, executor Aporia; comms #1024/#1034)",
-  "current": "FOLLOW-UP: Tyche v0 audited for labelling (applied); self-correction C-1 done. Next CURRENT: evidence-audit sample 3 when new closures land",
-  "next": "extend AP with a multiplicity/power helper for sealed-holdout designs",
+  "current": "HARM-55 native Flax column -> HARM-56 disposition (contract roles/Harmonia/science/asal_ruler/PREREG_HARM56_*; harm55_compare.py pre-committed) -- taken over from offline m2-ca1148a0; run on M2 (AVX) under MWO-0004 R2/R3, user-level env only",
+  "next": "evidence-audit sample 4 on new closures",
   "reserve": [
-    "evidence-audit sample 2: Ensorain, Ananke, Bellerophon closures"
+    "evidence-audit sample 4 on new closures",
+    "AP helpers (multiplicity/power; frozen-vs-amended verdict diff)"
   ],
   "blocked": [
     {
@@ -81,5 +80,5 @@
     }
   ],
   "resource_status": "local CPU only; no leases; no spend",
-  "last_receipt": "roles/Harmonia/audits/EVIDENCE_AUDIT_2026-09-30_SAMPLE3.md (Aether E-010, Nestor X-MAT-INTERNALIZE: SUPPORTED, minor only)"
+  "last_receipt": "roles/Harmonia/rulings/RULING_MECH_POET_NOVELTY_ESTIMATOR_001_2026-09-30.md (CUT_SUPPORTED 4/4, executed structural identity, NOT confirmatory: rows seen + deterministic)"
 }

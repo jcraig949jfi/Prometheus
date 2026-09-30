@@ -197,3 +197,20 @@ T-CT-1, T-INS-1, T-TA-1, T-D3, T-TM-2 (-> T-WA-2), T-DEP-1 (deposit.py).
   The readout's own S1 never differs between mirror partners; the carrier
   "S1" is the sensors'. Successors: T-INS-19 (per-sensor census on
   sensor-addressed traffic, o2-o9), T-INS-20 (swap readout Kp[7] alone).
+- T-SWAP-REL4 DONE (W-W, E-ANANKE-W-W, workers/W-W/REPORT.md; plan frozen by
+  commit 017259a48 09:19:12Z before the first run 09:22Z; 11 tests, principal
+  re-run 11 passed). Frozen decision: H2 (BOOTT + fixed SD floor) chosen and
+  PROMOTABLE (FLIP/NO_EFFECT power 1.00 at p=.99 P64 K11 vs REL3 .70/.72; FC
+  identical to REL3 on the grid; KA 0 false certificates). H3 (pseudo-pair)
+  fails FC at P32 and KA. NOT promoted yet: H2 differs from REL3 only on
+  near-degenerate resamples, which the FC grid never produced, so its FC where
+  it matters is untested. Next: T-SWAP-REL5 (plan frozen first,
+  research/plans/T-SWAP-REL5_PLAN.md): targeted FC check at near-degenerate
+  boundary truths; promote H2 only if it passes.
+- T-SWAP-REL5 DONE (W-X, E-ANANKE-W-X; plan 22b9bbd51 frozen first; 9 tests,
+  principal re-run 9 passed): H2 FC <= .22% (FLIP/NO_EFFECT) and <= .40%
+  (CHANCE) on near-degenerate boundary truths; zero-width must-fail control
+  failed (9 point-verdicts > 1%) -> frozen decision PROMOTE H2. Scope: the
+  degenerate region is reachable only at P32; heavier-skew nulls untested.
+  PROMOTED: prometheus/ananke/swap_rel.py (+ tests/test_swap_rel.py; swap_rel
+  + lens_swap + lens tests 42 passed). Line T-SWAP-LOWACC -> CLOSED.
