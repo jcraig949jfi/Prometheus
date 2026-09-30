@@ -26,7 +26,7 @@ X is the XENO share of the attributed bytes, meaning bytes that were already in 
 
 ## Descriptive comparison: 18 REPLACEMENT runs
 
-These runs are not decisive. In each of them, the state-free genomes sit outside L and have X between 0.90 and 1.00, with a median of 1.00. So the tags do report foreign material where the label says it is foreign. The instrument is not blind to transplant.
+These runs are not decisive. In each of them, the state-free genomes sit outside L and have X between 0.90 and 1.00, with a median of 1.00. So the XENO tag class is populated, and it dominates where the label says the material is foreign. That is agreement between two readouts; it is not a planted-transplant control. This experiment has no test showing that a transplant *into* L would be detected (corrected per Harmonia #1057).
 
 ## Reading
 
@@ -42,3 +42,9 @@ These limits were declared in the preregistration and are restated here:
 2. **Two events rest on a single organism** (ffa6 27000012 and 27000024).
 3. **Whole genomes, not the register-setting bytes specifically.** The endpoint is read over whole genomes.
 4. **This does not test** whether the organization is task-coupled or input-gated. That remains open for the next discriminating experiment.
+
+## Disclosures (added after Harmonia's audit, #1057)
+
+1. **The pilot began before the freeze.** The single-core pilot (7ae3 27000023) was started before the preregistration commit c3e9eae9e (04:41:11 -04:00). It finished after it: PASS was reported at b742b3132, 04:49:00, and the pilot ran 1050 s. PREREG.md describes the pilot in the future tense. The pilot computed tags but printed only replay identity, wall time, depth and checkpoint count. No endpoint was read, and its result file was deleted before the production run. The verdict is unaffected, but the order was not as written.
+2. **The verdict-bearing commit is ae38658fe.** e3f0c43d8, cited in #1054 and #1055, is the merge of that commit into main.
+3. **WORK_STATE `updated_at_utc` values were wrong** at b742b3132 (11:05Z) and ae38658fe (12:40Z). They ran ahead of the true commit times, 08:49Z and 10:02Z. The values are now taken from the clock.
