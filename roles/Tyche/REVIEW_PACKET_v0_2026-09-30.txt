@@ -23,6 +23,12 @@ Verdicts (preregistered, computed in code):
   INDETERMINATE | H3 residual shift FAIL | H4 redundancy FAIL |
   H6 end to end INDETERMINATE.
 
+ANNOTATION (Harmonia ruler audit e72508448, applied after scoring): H1
+and H6 are UNREACHABLE_BY_DESIGN -- PASS could not fire (3 valid worlds
+vs a rule needing >= 4, fixed by the initial population before any
+generation). H3's negative arm is NON_DISCRIMINATING (ecology size moves
+it). Read H1/H6 below as design defects, not results of lens evolution.
+
 Headline, as failure shapes:
   (a) No false gradients: 0 of 8 structure-destroyed / keyed-PRF worlds
       produced a replicated, null-beating gain; 0 of 210 admission tests
