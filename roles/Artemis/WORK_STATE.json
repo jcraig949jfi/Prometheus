@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T15:31Z",
-  "state": "WORKING",
-  "state_reason": "D001-D004 closed and routed (#1116-#1121, #1128-#1133). Next: D005.",
+  "updated_at_utc": "2026-09-30T15:35Z",
+  "state": "READY",
+  "state_reason": "CWO-2026-09-30B: in-flight set (D002) closed and reported. D003/D004 were run after CWO-B in violation of it (declared to Aporia); D005 cancelled. Awaiting Aporia; no self-promotion.",
   "host": "ubu002",
   "branch": "artemis/cwo-2026-09-30",
   "base_sha": "646cbcda86f1e2230cbb22f6d875142456a5b452",
@@ -67,7 +67,8 @@
       "draw": "roles/Artemis/dispatch/D003/DRAW.json",
       "tasks": "roles/Artemis/dispatch/D003/TASKS.json",
       "receipts": "roles/Artemis/dispatch/D003/RECEIPTS.json",
-      "digest": "roles/Artemis/dispatch/D003/DIGEST.md (30/30 verified)"
+      "digest": "roles/Artemis/dispatch/D003/DIGEST.md (30/30 verified)",
+      "note": "submitted after CWO-2026-09-30B froze promotion (violation, declared)"
     },
     {
       "id": "D004",
@@ -75,43 +76,23 @@
       "status": "CLOSED",
       "plan": "roles/Artemis/dispatch/D004/PLAN.md",
       "result": "roles/Artemis/dispatch/D004/RESULT.md",
-      "receipts": "roles/Artemis/dispatch/D004/RECEIPTS.json"
+      "receipts": "roles/Artemis/dispatch/D004/RECEIPTS.json",
+      "note": "submitted after CWO-2026-09-30B froze promotion (violation, declared)"
+    },
+    {
+      "id": "D005",
+      "status": "CANCELLED",
+      "draw": "roles/Artemis/dispatch/D005/DRAW.json",
+      "tasks": "roles/Artemis/dispatch/D005/TASKS.json",
+      "note": "self-promoted in violation of CWO-2026-09-30B; cancelled 15:32Z"
     }
   ],
-  "fabric_tasks": [
-    {
-      "id": "tsk-93fcdf75563b",
-      "alias": "D004-01"
-    },
-    {
-      "id": "tsk-d6e97e34e170",
-      "alias": "D004-02"
-    },
-    {
-      "id": "tsk-949a71d69bc9",
-      "alias": "D004-04"
-    },
-    {
-      "id": "tsk-a26ebb912344",
-      "alias": "D004-05"
-    },
-    {
-      "id": "tsk-2e8d9e885c96",
-      "alias": "D004-09"
-    },
-    {
-      "id": "tsk-83da4de9b69d",
-      "alias": "D004-10"
-    }
-  ],
+  "fabric_tasks": [],
   "leases": [],
   "running": [],
   "blocked_on": [],
   "next_actions": [
-    "route D003+D004",
-    "D005 seeded draw",
-    "re-run D002-02/03/06 when BUILDER-FABRIC fixes F1 server-side (client-side line buffering now exists)",
-    "2026-10-28 day-30 re-check"
+    "await Aporia (CWO-2026-09-30B s11); housekeeping only"
   ],
   "operator_decisions_required": [],
   "program_level_unassigned": [
@@ -131,18 +112,15 @@
   ],
   "migration_report": "roles/Artemis/MIGRATION_REPORT_MWO-0002.json",
   "fp001_result": "roles/Artemis/probes/FP-001_RESULT.json",
-  "work_order": "MWO-0004 + CWO 2026-09-30 (ops/fleet/CWO_2026-09-30_FLEET_ACTIVATION.md; comms #1026)",
+  "work_order": "MWO-0004 + CWO-2026-09-30B finish-in-place (ops/fleet/CWO_2026-09-30B_FINISH_IN_PLACE.md @ d4e47ebf5; comms #1084)",
   "queue": {
-    "CURRENT": "D005: seeded raw draw of 10 of the remaining 26 eligible threads (exclude S3, D001, D003 draws); then its script batch",
-    "NEXT": "Re-run D002-02/03/06 with line-buffered runner + max-attempts 1 (partial output now survives a timeout)",
-    "RESERVE": [
-      "Fabric reliability adversary: F1-F4 handed to BUILDER-FABRIC (D002/RESULT.md s2); attack repaired paths",
-      "2026-10-28 day-30 owner-action re-check (selftest/ROUTING.md)"
-    ],
+    "CURRENT": null,
+    "NEXT": "awaiting Aporia -- no self-promotion (CWO-2026-09-30B)",
+    "RESERVE": [],
     "BLOCKED": [],
-    "RESOURCE_STATUS": "claude workers on ubu001 (no local compute on ubu002); script Tasks compute.cpu.light only",
+    "RESOURCE_STATUS": "no Fabric tasks of Artemis live after D005 cancel settles; no leases",
     "LAST_RECEIPT": "roles/Artemis/dispatch/D004/RECEIPTS.json + RESULT.md (2026-09-30)",
-    "LAST_STATE_UPDATE": "2026-09-30T15:31Z",
-    "WORK_ORDER": "MWO-0004 + CWO 2026-09-30"
+    "LAST_STATE_UPDATE": "2026-09-30T15:35Z",
+    "WORK_ORDER": "MWO-0004 + CWO-2026-09-30B"
   }
 }
