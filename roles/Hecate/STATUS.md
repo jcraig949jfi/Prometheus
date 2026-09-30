@@ -1,18 +1,19 @@
 # Hecate status
 
-Currency: 2026-09-30T06:00Z (from date -u).
+Currency: 2026-09-30T03:28Z (from date -u).
 
 seat state: ACTIVE. Charter 2026-09-29 (triplicate deep search).
-what it asserts: PRODUCTIVE (rows committed for 32 world runs); VALID
-  only as far as each preregistered predicate goes; no supported
-  conclusion exists.
-programme: 16 historical triplicates through Pass 0-3; 29 worlds probed
-  (2 rounds); 3 SIGNALs attacked in Pass 4, none survived.
-  PARK 11, SPECULATIVE 4, PROBING 1 (a known mechanism in substance).
-main finding: the Pass 3 generator is the binding constraint -- 12 of 29
-  built worlds had unreachable or contradictory success criteria.
-running: meta-experiment v1 gravity detector (M1); M2 done (saturated).
+what it asserts: PRODUCTIVE (37 worlds probed, 5 Pass 4 attacks, meta v1,
+  all rows committed); no supported conclusion exists.
+first cycle result: 16 historical triplicates; 5 signals, 0 survived
+  first falsification. PARK 15, PROBING 1 (HT-321a8fd8e0, a known
+  mechanism). Meta v1 INDETERMINATE: no evidence triplicates beat pairs;
+  multi-concept prompts give composites of known mechanisms.
+instrument finding: Pass 3 v1 produced untestable worlds (12 of 29);
+  control-first v2 fixed it (0 of 8).
+review packet: roles/Hecate/REVIEW_PACKET_2026-09-30_first_cycle.txt
+running: nothing.
 monitors owned or fed: none.
 blockers: none.
-next: meta v1 report; Pass 3 generator v2 (attainability built in),
-  preregistered, then regenerate worlds for 8 programs.
+next: meta v2 prereg; second selection through Pass 3 v2; prior-art
+  rule for 321a; independent Pass 10 review of this cycle.
