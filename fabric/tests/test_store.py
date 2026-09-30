@@ -214,3 +214,16 @@ def test_store_connections_have_keepalive_and_user_timeout(conn):
             assert s.getsockopt(socket.IPPROTO_TCP, socket.TCP_KEEPIDLE) == 30
     finally:
         s.close()
+
+
+def test_harden_socket_never_breaks_connect(monkeypatch):
+    """DEF-ODY-023 regression: on Windows, os.dup() of the libpq socket raised EBADF and broke every CLI call."""
+    class Conn:
+        def fileno(self):
+            return 123456789                                 # not a valid fd here, like a WinSock handle
+    S._harden_socket(Conn())                                 # bad descriptor: must not raise
+    monkeypatch.setattr(S.sys, "platform", "win32")
+    def boom(*a):
+        raise AssertionError("must not touch the socket off Linux")
+    monkeypatch.setattr(S.os, "dup", boom)
+    S._harden_socket(Conn())                                 # non-Linux: skipped entirely
