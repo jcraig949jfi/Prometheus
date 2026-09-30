@@ -1,0 +1,162 @@
+{
+  "schema": "prometheus.migration_report.v1",
+  "seat": "Aphrodite",
+  "mwo_id": "MWO-0002",
+  "mwo_commit": "89512068ff07f0bab6953a36313d550167340722",
+  "reported_at_utc": "2026-09-29T07:40:41Z",
+  "branch": "aphrodite/arc3-2026-09-28",
+  "head_sha": "b57f49ba84e4d3b672f13368fd21c5a5ad7ba630",
+  "bootstrap_independence": {
+    "answer": "CONDITIONAL",
+    "conditions": [
+      "the seat loop is a /loop inside one live Claude Code session on M4 (self-paced wakeups of at most 60 min). If that session ends, nothing re-launches the seat, and a new session needs some prompt to start. Once started, the boot is repo-only (NEXT_SESSION.md s0 + WORK_STATE.json) and needs no bespoke content"
+    ],
+    "how_mwo_0001_was_found": "operator_prompt",
+    "how_mwo_0002_was_found": "own_loop_fetch",
+    "evidence": [
+      "roles/Aphrodite/NEXT_SESSION.md s0 @ b57f49ba84 (repo-only boot order)",
+      "loop tick ~2026-09-29T07:40Z: git fetch showed the CURRENT.md sha256 change 007054ad.. -> 6f5a6a8b..; comms #961 was seen in the same tick"
+    ],
+    "note": "MWO-0001 reached this seat through the operator's bespoke Aphrodite prompt, and the seat did not act on broadcast #914 before that prompt. MWO-0002 was found by the seat's own s8 loop."
+  },
+  "criteria": {
+    "C1_adopted_mwo_0001": {
+      "status": "YES",
+      "evidence": [
+        "roles/Aphrodite/WORK_STATE.json @ 3fabffa92 (mwo_commit 7e4c09f2c, mwo_sha256 007054ad..)"
+      ],
+      "note": "Hash computed from git show origin/main:ops/work_orders/CURRENT.md | sha256sum (blob bytes, not the working tree)."
+    },
+    "C2_discovers_next_mwo_unprompted": {
+      "status": "YES",
+      "evidence": [
+        "this report's commit; the loop prompt in NEXT_SESSION.md s0/s2"
+      ],
+      "note": "Found by the loop's fetch and sha comparison. No per-seat prompt for MWO-0002."
+    },
+    "C3_work_state_useful": {
+      "status": "YES",
+      "evidence": [
+        "roles/Aphrodite/WORK_STATE.json on aphrodite/arc3-2026-09-28 (updated in this commit)"
+      ],
+      "note": "All v1 core fields are filled; threads, campaigns and experiments are objects with id + alias."
+    },
+    "C4_identifies_authorized_work": {
+      "status": "YES",
+      "evidence": [
+        "WORK_STATE.state = HOLD with state_reason",
+        "MWO-0001 s10 APHRODITE; MWO-0002 s6",
+        "ops/campaigns/C-003/CAMPAIGN.md @ b57f49ba84"
+      ],
+      "note": "HOLD: ARC3 (C-003) closed; no new wave until an MWO reviews the close; merge proposed for review. The news monitor continues in its narrow scope."
+    },
+    "C5_checks_comms_correctly": {
+      "status": "YES",
+      "evidence": [
+        "WORK_STATE.comms_cursor",
+        "comms #929 (the single MWO-0001-directed message, to Harmonia)"
+      ],
+      "note": "Reads from the cursor at each loop tick. No idle broadcasts or ACKs. Git is the durable record."
+    },
+    "C6_uses_fabric_where_appropriate": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [
+        "python -m fabric tasks: 0 Aphrodite rows at each tick"
+      ],
+      "note": "No portable execution this cycle. ARC3 worker studies W1-W8 predate MWO-0001 and ran as local subagents."
+    },
+    "C7_uses_common_hierarchy": {
+      "status": "YES",
+      "evidence": [
+        "ops/threads/TH-018..021.md @ b57f49ba84 (thread_check: threads=21 failures=0)",
+        "ops/campaigns/C-003/CAMPAIGN.md @ b57f49ba84"
+      ],
+      "note": "Thread TH-018..021 > Campaign C-003 > Experiment E-008..E-011 (AMENDMENTS 20-23) > Task W1-W8 (pre-Fabric; no tsk-/att- ids)."
+    },
+    "C8_uses_canonical_leases": {
+      "status": "NOT_APPLICABLE",
+      "evidence": [
+        "roles/Aphrodite/leases/ledger.jsonl ends with all released (2026-09-28T14:29Z)"
+      ],
+      "note": "No new resource claims since the Odysseus #896 ruling. NEXT_SESSION s2 commits to Fabric leases for new heavy work."
+    },
+    "C9_distinguishes_gates_from_routine": {
+      "status": "YES",
+      "evidence": [
+        "roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md s6 @ b57f49ba84"
+      ],
+      "note": "The current HOLD is an MWO scope limit, not a sign-off wait. The merge review is routine and is listed as next_action, not as a gate."
+    }
+  },
+  "hard_gates_current": [
+    {
+      "gate": "MWO-0001 s10 APHRODITE ('do not extend ARC3 into another major wave until a future MWO reviews the close') + MWO-0002 s6/s9",
+      "item": "TH-019 donor stage T51 and any further ARC3 wave",
+      "evidence": [
+        "roles/Aphrodite/WORK_STATE.json blocked_on"
+      ]
+    },
+    {
+      "gate": "MWO-0001 s7 clause 1/6 (program direction; changes the representation that fixes experiment meaning)",
+      "item": "TH-020 DSL fork (promotion world W5P vs parked)",
+      "evidence": [
+        "ops/threads/TH-020.md @ b57f49ba84"
+      ]
+    },
+    {
+      "gate": "MWO-0001 s7 clause 3 (explicit operator launch gate)",
+      "item": "Campaign 1 (FROZEN, UNRUN)",
+      "evidence": [
+        "roles/Aphrodite/STATUS.md 'Campaign 1'"
+      ]
+    },
+    {
+      "gate": "MWO-0001 s7 clause 1 (experiment meaning after exposure)",
+      "item": "any re-adjudication of historical S4/A16/A17 given the constant-True gate conditions",
+      "evidence": [
+        "roles/Aphrodite/review/ARC3_MERGE_REVIEW_PACKET.md s5 @ b57f49ba84"
+      ]
+    }
+  ],
+  "migration_blockers": [
+    {
+      "what": "The seat loop lives only in one interactive Claude Code session; there is no durable launcher.",
+      "kind": "tooling",
+      "evidence": [
+        "bootstrap_independence.conditions"
+      ]
+    },
+    {
+      "what": "The gh CLI is absent on M4, so the seat cannot open a PR for normal review. It pushed the branch, a compare URL and PR text instead.",
+      "kind": "tooling",
+      "evidence": [
+        "roles/Aphrodite/review/ARC3_PR_BODY.md @ b57f49ba84",
+        "WORK_STATE.next_actions[0]"
+      ]
+    },
+    {
+      "what": "Fabric has no Windows workers (fabric/README s11). M4 is Windows. A future portable Aphrodite engine Task would need a Linux worker, and the engine's portability is unverified.",
+      "kind": "fabric",
+      "evidence": [
+        "fabric/README.md s11 (per MWO-0002 s7)"
+      ]
+    }
+  ],
+  "legacy_conventions_still_used": [
+    {
+      "convention": "host-file lease ledger roles/Aphrodite/leases/lease.py",
+      "why": "used through ARC3 (before #896); nothing is active now",
+      "retire_plan": "seat"
+    },
+    {
+      "convention": "STATUS.md prose update blocks alongside WORK_STATE",
+      "why": "narrative record, as MWO-0001 s9 permits",
+      "retire_plan": "none"
+    }
+  ],
+  "identifier_check": {
+    "thread_ids_unresolved": [],
+    "campaign_ids_unresolved": [],
+    "note": "TH-018..021 (thr-4b608194554f, thr-5fb60bba1e73, thr-71318d165e06, thr-1b0c5ac499ae) and C-003 resolve on the seat's pushed branch only, not on origin/main, because the merge is pending review. E-008..E-011 are rows in C-003/CAMPAIGN.md, not separate files. The ops/README.md 2026-09-27 pilot banner was read at MWO-0001 adoption and was not followed, because MWO-0001 governs; it caused no confusion."
+  }
+}

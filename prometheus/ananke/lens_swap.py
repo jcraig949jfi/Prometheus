@@ -470,16 +470,20 @@ def handoff(offsets: dict, ro_off: int) -> dict:
     (b) every offset in [ro_off-4, ro_off-1] is SITE; (c) last channel-
     dominant offset < first offset of the final SITE run; (d) that first
     offset lies at lag -8..-4 (o in [ro_off-8, ro_off-4])."""
-    os_ = sorted(int(o) for o in offsets)
     get = lambda o: offsets[o] if o in offsets else offsets[str(o)]
+    # only offsets before the readout exist for the rule ("ending at ro_off-1")
+    os_ = sorted(o for o in (int(x) for x in offsets) if o < ro_off)
     chan = [o for o in os_ if get(o)["class"] == "CHANNEL" or (get(o)["fC"] or 0) >= 0.60]
     run_start = None
-    for o in reversed(os_):
-        if get(o)["class"] != "SITE":
-            break
-        run_start = o
+    if os_ and os_[-1] == ro_off - 1:              # the final SITE run must END at ro_off-1
+        for o in reversed(os_):
+            if get(o)["class"] != "SITE":
+                break
+            run_start = o
     a = any(2 <= o <= 7 for o in chan)
-    b = all(get(o)["class"] == "SITE" for o in range(ro_off - 4, ro_off) if o in os_)
+    # (b) needs every offset in [ro_off-4, ro_off-1] MEASURED and SITE; an
+    # unmeasured offset is not a pass (was vacuously True)
+    b = all(o in os_ and get(o)["class"] == "SITE" for o in range(ro_off - 4, ro_off))
     c = bool(chan) and run_start is not None and max(chan) < run_start
     d = run_start is not None and ro_off - 8 <= run_start <= ro_off - 4
     return {"channel_offsets": chan, "site_run_start": run_start, "a": a, "b": b, "c": c, "d": d,

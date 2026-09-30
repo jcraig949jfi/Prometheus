@@ -1,0 +1,19215 @@
+{
+"criteria": "RB-5 part (b): OEIS selection (forensic, not a disposition). Criteria fixed\nBEFORE any witness search; none of them refers to the fold DSL.\n\nSources (cached under rb5/cache/, fetched 2026-09-27):\n  oeis_keyword_core_*.json  OEIS search 'keyword:core' (anonymous access returns\n                            the first ~110 results in OEIS's own ranking)\n  stripped.gz, names.gz     the OEIS bulk files (all sequences' leading terms)\nSMALL-TERMS filter (all strata): >= 14 known terms; |a(i)| <= 10^30 for the first\n  14 (below the DSL ceiling 10^40); >= 3 distinct values among them.\nStrata (lowest A-numbers first = OEIS's historical order, deterministic):\n  CORE     keyword:core sequences passing SMALL-TERMS.\n  CLASSIC  the first 250 sequences from A000001 passing SMALL-TERMS (no\n           recurrence filter: a representative slice of the 'classic' OEIS).\n  LINREC   the first 150 sequences (not in CORE/CLASSIC) whose first\n           min(20, len) terms satisfy a(n) = c1 a(n-1) + ... + cd a(n-d) + c0,\n           d <= 3, integer |ci| <= 9 (Gauthier-Urban-style 'simple recurrence').\n  NONLIN   the first 100 sequences (not above) satisfying, on the same terms, one of\n           a(n) = (p n + q) a(n-1) + r            (P-recursive order 1, p != 0)\n           a(n) = a(n-1)^2 + p a(n-1) + q\n           a(n) = a(n-1) a(n-2) + q\n           with integer |p|, |q|, |r| <= 9 and n the 0-based position in the data.\n",
+"counts": {
+"stripped_scanned": 246657,
+"small_terms": 210829,
+"core_listed": 110,
+"core_small": 103,
+"stratum_CORE": 103,
+"stratum_CLASSIC": 250,
+"stratum_LINREC": 150,
+"stratum_NONLIN": 100,
+"selected_unique": 574,
+"last_A_scanned": "A246657"
+},
+"sequences": [
+{
+"A": "A000001",
+"name": "Number of groups of order n.",
+"terms": [
+0,
+1,
+1,
+1,
+2,
+1,
+2,
+1,
+5,
+2,
+2,
+1,
+5,
+1,
+2,
+1,
+14,
+1,
+5,
+1
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000003",
+"name": "Number of classes of primitive positive definite binary quadratic forms of discriminant D = -4n; or equivalently the class number of the quadratic order of discriminant D = -4n.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+2,
+1,
+2,
+2,
+2,
+3,
+2,
+2,
+4,
+2,
+2,
+4,
+2,
+3,
+4
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000005",
+"name": "d(n) (also called tau(n) or sigma_0(n)), the number of divisors of n.",
+"terms": [
+1,
+2,
+2,
+3,
+2,
+4,
+2,
+4,
+3,
+4,
+2,
+6,
+2,
+4,
+4,
+5,
+2,
+6,
+2,
+6
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000006",
+"name": "Integer part of square root of n-th prime.",
+"terms": [
+1,
+1,
+2,
+2,
+3,
+3,
+4,
+4,
+4,
+5,
+5,
+6,
+6,
+6,
+6,
+7,
+7,
+7,
+8,
+8
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000008",
+"name": "Number of ways of making change for n cents using coins of 1, 2, 5, 10 cents.",
+"terms": [
+1,
+1,
+2,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+11,
+12,
+15,
+16,
+19,
+22,
+25,
+28,
+31,
+34
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000009",
+"name": "Expansion of Product_{m >= 1} (1 + x^m); number of partitions of n into distinct parts; number of partitions of n into odd parts.",
+"terms": [
+1,
+1,
+1,
+2,
+2,
+3,
+4,
+5,
+6,
+8,
+10,
+12,
+15,
+18,
+22,
+27,
+32,
+38,
+46,
+54
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000010",
+"name": "Euler totient function phi(n): count numbers <= n and prime to n.",
+"terms": [
+1,
+1,
+2,
+2,
+4,
+2,
+6,
+4,
+6,
+4,
+10,
+4,
+12,
+6,
+8,
+8,
+16,
+6,
+18,
+8
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000011",
+"name": "Number of n-bead necklaces (turning over is allowed) where complements are equivalent.",
+"terms": [
+1,
+1,
+2,
+2,
+4,
+4,
+8,
+9,
+18,
+23,
+44,
+63,
+122,
+190,
+362,
+612,
+1162,
+2056,
+3914,
+7155
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000013",
+"name": "Definition (1): Number of n-bead binary necklaces with beads of 2 colors where the colors may be swapped but turning over is not allowed.",
+"terms": [
+1,
+1,
+2,
+2,
+4,
+4,
+8,
+10,
+20,
+30,
+56,
+94,
+180,
+316,
+596,
+1096,
+2068,
+3856,
+7316,
+13798
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000014",
+"name": "Number of series-reduced trees with n nodes.",
+"terms": [
+0,
+1,
+1,
+0,
+1,
+1,
+2,
+2,
+4,
+5,
+10,
+14,
+26,
+42,
+78,
+132,
+249,
+445,
+842,
+1561
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000015",
+"name": "Smallest prime power >= n.",
+"terms": [
+1,
+2,
+3,
+4,
+5,
+7,
+7,
+8,
+9,
+11,
+11,
+13,
+13,
+16,
+16,
+16,
+17,
+19,
+19,
+23
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000016",
+"name": "a(n) is the number of distinct (infinite) output sequences from binary n-stage shift register which feeds back the complement of the last stage.",
+"terms": [
+1,
+1,
+1,
+2,
+2,
+4,
+6,
+10,
+16,
+30,
+52,
+94,
+172,
+316,
+586,
+1096,
+2048,
+3856,
+7286,
+13798
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000017",
+"name": "Erroneous version of A032522.",
+"terms": [
+1,
+0,
+0,
+2,
+2,
+4,
+8,
+4,
+16,
+12,
+48,
+80,
+136,
+420,
+1240,
+2872,
+7652,
+18104,
+50184
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000018",
+"name": "Number of positive integers <= 2^n of form x^2 + 16*y^2.",
+"terms": [
+1,
+1,
+2,
+2,
+4,
+8,
+13,
+25,
+44,
+83,
+152,
+286,
+538,
+1020,
+1942,
+3725,
+7145,
+13781,
+26627,
+51572
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000019",
+"name": "Number of primitive permutation groups of degree n.",
+"terms": [
+1,
+1,
+2,
+2,
+5,
+4,
+7,
+7,
+11,
+9,
+8,
+6,
+9,
+4,
+6,
+22,
+10,
+4,
+8,
+4
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000020",
+"name": "Number of primitive polynomials of degree n over GF(2) (version 2).",
+"terms": [
+2,
+1,
+2,
+2,
+6,
+6,
+18,
+16,
+48,
+60,
+176,
+144,
+630,
+756,
+1800,
+2048,
+7710,
+7776,
+27594,
+24000
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000021",
+"name": "Number of positive integers <= 2^n of form x^2 + 12 y^2.",
+"terms": [
+1,
+1,
+2,
+2,
+6,
+9,
+17,
+30,
+54,
+98,
+183,
+341,
+645,
+1220,
+2327,
+4451,
+8555,
+16489,
+31859,
+61717
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000022",
+"name": "Number of centered hydrocarbons with n atoms.",
+"terms": [
+0,
+1,
+0,
+1,
+1,
+2,
+2,
+6,
+9,
+20,
+37,
+86,
+181,
+422,
+943,
+2223,
+5225,
+12613,
+30513,
+74883
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000023",
+"name": "a(n) is the number of permutations on {1,2,...,n} with an even number of fixed points minus the number of permutations with an odd number of fixed points.",
+"terms": [
+1,
+-1,
+2,
+-2,
+8,
+8,
+112,
+656,
+5504,
+49024,
+491264,
+5401856,
+64826368,
+842734592,
+11798300672,
+176974477312,
+2831591702528,
+48137058811904,
+866467058876416,
+16462874118127616
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000024",
+"name": "Number of positive integers <= 2^n of form x^2 + 10 y^2.",
+"terms": [
+1,
+1,
+2,
+2,
+7,
+10,
+20,
+36,
+65,
+118,
+221,
+409,
+776,
+1463,
+2788,
+5328,
+10222,
+19714,
+38054,
+73685
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000025",
+"name": "Coefficients of the 3rd-order mock theta function f(q).",
+"terms": [
+1,
+1,
+-2,
+3,
+-3,
+3,
+-5,
+7,
+-6,
+6,
+-10,
+12,
+-11,
+13,
+-17,
+20,
+-21,
+21,
+-27,
+34
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000026",
+"name": "Mosaic numbers or multiplicative projection of n: if n = Product (p_j^k_j) then a(n) = Product (p_j * k_j).",
+"terms": [
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+6,
+6,
+10,
+11,
+12,
+13,
+14,
+15,
+8,
+17,
+12,
+19,
+20
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000027",
+"name": "The positive integers. Also called the natural numbers, the whole numbers or the counting numbers, but these terms are ambiguous.",
+"terms": [
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+19,
+20
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+1
+]
+}
+},
+{
+"A": "A000028",
+"name": "Let k = p_1^e_1 p_2^e_2 p_3^e_3 ... be the prime factorization of n. Sequence gives k such that the sum of the numbers of 1's in the binary expansions of e_1, e_2, e_3, ... is odd.",
+"terms": [
+2,
+3,
+4,
+5,
+7,
+9,
+11,
+13,
+16,
+17,
+19,
+23,
+24,
+25,
+29,
+30,
+31,
+37,
+40,
+41
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000029",
+"name": "Number of necklaces with n beads of 2 colors, allowing turning over (these are also called bracelets).",
+"terms": [
+1,
+2,
+3,
+4,
+6,
+8,
+13,
+18,
+30,
+46,
+78,
+126,
+224,
+380,
+687,
+1224,
+2250,
+4112,
+7685,
+14310
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000030",
+"name": "Initial digit of n.",
+"terms": [
+0,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+1
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000031",
+"name": "Number of n-bead necklaces with 2 colors when turning over is not allowed; also number of output sequences from a simple n-stage cycling shift register; also number of binary irreducible polynomials whose degree divides n.",
+"terms": [
+1,
+2,
+3,
+4,
+6,
+8,
+14,
+20,
+36,
+60,
+108,
+188,
+352,
+632,
+1182,
+2192,
+4116,
+7712,
+14602,
+27596
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000032",
+"name": "Lucas numbers beginning at 2: L(n) = L(n-1) + L(n-2), L(0) = 2, L(1) = 1.",
+"terms": [
+2,
+1,
+3,
+4,
+7,
+11,
+18,
+29,
+47,
+76,
+123,
+199,
+322,
+521,
+843,
+1364,
+2207,
+3571,
+5778,
+9349
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000033",
+"name": "a(n) = A058087(n,n-2).",
+"terms": [
+0,
+2,
+3,
+4,
+40,
+210,
+1477,
+11672,
+104256,
+1036050,
+11338855,
+135494844,
+1755206648,
+24498813794,
+366526605705,
+5851140525680,
+99271367764480,
+1783734385752162,
+33837677493828171,
+675799125332580020
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000036",
+"name": "Let A(n) = #{(i,j): i^2 + j^2 <= n}, V(n) = Pi*n, P(n) = A(n) - V(n); A000099 gives values of n where |P(n)| sets a new record; sequence gives closest integer to P(A000099(n)).",
+"terms": [
+2,
+3,
+5,
+6,
+6,
+-6,
+7,
+8,
+10,
+13,
+13,
+13,
+14,
+-17,
+17,
+17,
+18,
+-19,
+20,
+-22
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000037",
+"name": "Numbers that are not squares (or, the nonsquares).",
+"terms": [
+2,
+3,
+5,
+6,
+7,
+8,
+10,
+11,
+12,
+13,
+14,
+15,
+17,
+18,
+19,
+20,
+21,
+22,
+23,
+24
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000039",
+"name": "Coefficient of q^(2n) in the series expansion of Ramanujan's mock theta function f(q).",
+"terms": [
+1,
+-2,
+-3,
+-5,
+-6,
+-10,
+-11,
+-17,
+-21,
+-27,
+-33,
+-46,
+-53,
+-68,
+-82,
+-104,
+-123,
+-154,
+-179,
+-221
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000040",
+"name": "The prime numbers.",
+"terms": [
+2,
+3,
+5,
+7,
+11,
+13,
+17,
+19,
+23,
+29,
+31,
+37,
+41,
+43,
+47,
+53,
+59,
+61,
+67,
+71
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000041",
+"name": "a(n) is the number of partitions of n (the partition numbers).",
+"terms": [
+1,
+1,
+2,
+3,
+5,
+7,
+11,
+15,
+22,
+30,
+42,
+56,
+77,
+101,
+135,
+176,
+231,
+297,
+385,
+490
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000042",
+"name": "Unary representation of natural numbers.",
+"terms": [
+1,
+11,
+111,
+1111,
+11111,
+111111,
+1111111,
+11111111,
+111111111,
+1111111111,
+11111111111,
+111111111111,
+1111111111111,
+11111111111111,
+111111111111111,
+1111111111111111,
+11111111111111111,
+111111111111111111,
+1111111111111111111,
+11111111111111111111
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000043",
+"name": "Mersenne exponents: primes p such that 2^p - 1 is prime. Then 2^p - 1 is called a Mersenne prime.",
+"terms": [
+2,
+3,
+5,
+7,
+13,
+17,
+19,
+31,
+61,
+89,
+107,
+127,
+521,
+607,
+1279,
+2203,
+2281,
+3217,
+4253,
+4423
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000044",
+"name": "Dying rabbits: a(0) = 1; for 1 <= n <= 12, a(n) = Fibonacci(n); for n >= 13, a(n) = a(n-1) + a(n-2) - a(n-13).",
+"terms": [
+1,
+1,
+1,
+2,
+3,
+5,
+8,
+13,
+21,
+34,
+55,
+89,
+144,
+232,
+375,
+606,
+979,
+1582,
+2556,
+4130
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000045",
+"name": "Fibonacci numbers: F(n) = F(n-1) + F(n-2) with F(0) = 0 and F(1) = 1.",
+"terms": [
+0,
+1,
+1,
+2,
+3,
+5,
+8,
+13,
+21,
+34,
+55,
+89,
+144,
+233,
+377,
+610,
+987,
+1597,
+2584,
+4181
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000046",
+"name": "Number of primitive n-bead necklaces (turning over is allowed) where complements are equivalent.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+3,
+5,
+8,
+14,
+21,
+39,
+62,
+112,
+189,
+352,
+607,
+1144,
+2055,
+3885,
+7154
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000047",
+"name": "Number of integers <= 2^n of form x^2 - 2y^2.",
+"terms": [
+1,
+2,
+3,
+5,
+8,
+15,
+26,
+48,
+87,
+161,
+299,
+563,
+1066,
+2030,
+3885,
+7464,
+14384,
+27779,
+53782,
+104359
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000048",
+"name": "Number of n-bead necklaces with beads of 2 colors and primitive period n, when turning over is not allowed but the two colors can be interchanged.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+3,
+5,
+9,
+16,
+28,
+51,
+93,
+170,
+315,
+585,
+1091,
+2048,
+3855,
+7280,
+13797
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000049",
+"name": "Number of positive integers <= 2^n of the form 3*x^2 + 4*y^2.",
+"terms": [
+0,
+0,
+2,
+3,
+5,
+9,
+16,
+29,
+53,
+98,
+181,
+341,
+640,
+1218,
+2321,
+4449,
+8546,
+16482,
+31845,
+61707
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000050",
+"name": "Number of positive integers <= 2^n of form x^2 + y^2.",
+"terms": [
+1,
+2,
+3,
+5,
+9,
+16,
+29,
+54,
+97,
+180,
+337,
+633,
+1197,
+2280,
+4357,
+8363,
+16096,
+31064,
+60108,
+116555
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000051",
+"name": "a(n) = 2^n + 1.",
+"terms": [
+2,
+3,
+5,
+9,
+17,
+33,
+65,
+129,
+257,
+513,
+1025,
+2049,
+4097,
+8193,
+16385,
+32769,
+65537,
+131073,
+262145,
+524289
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+2,
+-1
+]
+}
+},
+{
+"A": "A000052",
+"name": "1-digit numbers arranged in alphabetical order, then the 2-digit numbers arranged in alphabetical order, then the 3-digit numbers, etc.",
+"terms": [
+8,
+5,
+4,
+9,
+1,
+7,
+6,
+3,
+2,
+0,
+18,
+80,
+88,
+85,
+84,
+89,
+81,
+87,
+86,
+83
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000053",
+"name": "Local stops on New York City 1 Train (Broadway-7 Avenue Local) subway.",
+"terms": [
+14,
+18,
+23,
+28,
+34,
+42,
+50,
+59,
+66,
+72,
+79,
+86,
+96,
+103,
+110,
+116,
+125,
+137,
+145,
+157
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000054",
+"name": "Local stops on New York City A line subway.",
+"terms": [
+4,
+14,
+23,
+34,
+42,
+50,
+59,
+72,
+81,
+86,
+96,
+103,
+110,
+116,
+125,
+135,
+145,
+155,
+163,
+168
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000055",
+"name": "Number of trees with n unlabeled nodes.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+3,
+6,
+11,
+23,
+47,
+106,
+235,
+551,
+1301,
+3159,
+7741,
+19320,
+48629,
+123867,
+317955
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000056",
+"name": "Order of the group SL(2,Z_n).",
+"terms": [
+1,
+6,
+24,
+48,
+120,
+144,
+336,
+384,
+648,
+720,
+1320,
+1152,
+2184,
+2016,
+2880,
+3072,
+4896,
+3888,
+6840,
+5760
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000057",
+"name": "Primes that divide at least one term in every Fibonacci sequence.",
+"terms": [
+2,
+3,
+7,
+23,
+43,
+67,
+83,
+103,
+127,
+163,
+167,
+223,
+227,
+283,
+367,
+383,
+443,
+463,
+467,
+487
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000059",
+"name": "Numbers k such that (2k)^4 + 1 is prime.",
+"terms": [
+1,
+2,
+3,
+8,
+10,
+12,
+14,
+17,
+23,
+24,
+27,
+28,
+37,
+40,
+41,
+44,
+45,
+53,
+59,
+66
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000060",
+"name": "Number of signed trees with n nodes.",
+"terms": [
+1,
+2,
+3,
+10,
+27,
+98,
+350,
+1402,
+5743,
+24742,
+108968,
+492638,
+2266502,
+10600510,
+50235931,
+240882152,
+1166732814,
+5702046382,
+28088787314,
+139355139206
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000061",
+"name": "Generalized tangent numbers d(n,1).",
+"terms": [
+1,
+1,
+2,
+4,
+4,
+6,
+8,
+8,
+12,
+14,
+14,
+16,
+20,
+20,
+24,
+32,
+24,
+30,
+38,
+32
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000062",
+"name": "A Beatty sequence: a(n) = floor(n/(e-2)).",
+"terms": [
+1,
+2,
+4,
+5,
+6,
+8,
+9,
+11,
+12,
+13,
+15,
+16,
+18,
+19,
+20,
+22,
+23,
+25,
+26,
+27
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000063",
+"name": "Symmetrical dissections of an n-gon.",
+"terms": [
+1,
+1,
+2,
+4,
+5,
+14,
+14,
+39,
+42,
+132,
+132,
+424,
+429,
+1428,
+1430,
+4848,
+4862,
+16796,
+16796,
+58739
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000064",
+"name": "Partial sums of (unordered) ways of making change for n cents using coins of 1, 2, 5, 10 cents.",
+"terms": [
+1,
+2,
+4,
+6,
+9,
+13,
+18,
+24,
+31,
+39,
+50,
+62,
+77,
+93,
+112,
+134,
+159,
+187,
+218,
+252
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000065",
+"name": "-1 + number of partitions of n.",
+"terms": [
+0,
+0,
+1,
+2,
+4,
+6,
+10,
+14,
+21,
+29,
+41,
+55,
+76,
+100,
+134,
+175,
+230,
+296,
+384,
+489
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000067",
+"name": "Number of positive integers <= 2^n of form x^2 + 2 y^2.",
+"terms": [
+1,
+2,
+4,
+6,
+10,
+18,
+33,
+60,
+111,
+205,
+385,
+725,
+1374,
+2610,
+4993,
+9578,
+18426,
+35568,
+68806,
+133411
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000068",
+"name": "Numbers k such that k^4 + 1 is prime.",
+"terms": [
+1,
+2,
+4,
+6,
+16,
+20,
+24,
+28,
+34,
+46,
+48,
+54,
+56,
+74,
+80,
+82,
+88,
+90,
+106,
+118
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000069",
+"name": "Odious numbers: numbers with an odd number of 1's in their binary expansion.",
+"terms": [
+1,
+2,
+4,
+7,
+8,
+11,
+13,
+14,
+16,
+19,
+21,
+22,
+25,
+26,
+28,
+31,
+32,
+35,
+37,
+38
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000070",
+"name": "a(n) = Sum_{k=0..n} p(k) where p(k) = number of partitions of k (A000041).",
+"terms": [
+1,
+2,
+4,
+7,
+12,
+19,
+30,
+45,
+67,
+97,
+139,
+195,
+272,
+373,
+508,
+684,
+915,
+1212,
+1597,
+2087
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000071",
+"name": "a(n) = Fibonacci(n) - 1.",
+"terms": [
+0,
+0,
+1,
+2,
+4,
+7,
+12,
+20,
+33,
+54,
+88,
+143,
+232,
+376,
+609,
+986,
+1596,
+2583,
+4180,
+6764
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+1
+]
+}
+},
+{
+"A": "A000072",
+"name": "Number of positive integers <= 2^n of form x^2 + 4 y^2.",
+"terms": [
+1,
+1,
+2,
+4,
+7,
+12,
+22,
+41,
+72,
+137,
+254,
+476,
+901,
+1716,
+3274,
+6286,
+12090,
+23331,
+45140,
+87511
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000073",
+"name": "Tribonacci numbers: a(n) = a(n-1) + a(n-2) + a(n-3) for n >= 3 with a(0) = a(1) = 0 and a(2) = 1.",
+"terms": [
+0,
+0,
+1,
+1,
+2,
+4,
+7,
+13,
+24,
+44,
+81,
+149,
+274,
+504,
+927,
+1705,
+3136,
+5768,
+10609,
+19513
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000074",
+"name": "Number of odd integers <= 2^n of form x^2 + y^2.",
+"terms": [
+1,
+1,
+2,
+4,
+7,
+13,
+25,
+43,
+83,
+157,
+296,
+564,
+1083,
+2077,
+4006,
+7733,
+14968,
+29044,
+56447,
+109864
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000075",
+"name": "Number of positive integers <= 2^n of form 2*x^2 + 3*y^2.",
+"terms": [
+0,
+1,
+2,
+4,
+7,
+14,
+23,
+42,
+76,
+139,
+258,
+482,
+907,
+1717,
+3269,
+6257,
+12020,
+23171,
+44762,
+86683
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000076",
+"name": "Number of integers <= 2^n of form 4 x^2 + 4 x y + 5 y^2.",
+"terms": [
+0,
+0,
+1,
+2,
+4,
+7,
+14,
+24,
+43,
+82,
+149,
+284,
+534,
+1015,
+1937,
+3713,
+7136,
+13759,
+26597,
+51537
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000077",
+"name": "Number of positive integers <= 2^n of form x^2 + 6 y^2.",
+"terms": [
+1,
+1,
+2,
+4,
+8,
+13,
+24,
+42,
+76,
+140,
+257,
+483,
+907,
+1717,
+3272,
+6261,
+12027,
+23172,
+44769,
+86708
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000078",
+"name": "Tetranacci numbers: a(n) = a(n-1) + a(n-2) + a(n-3) + a(n-4) for n >= 4 with a(0) = a(1) = a(2) = 0 and a(3) = 1.",
+"terms": [
+0,
+0,
+0,
+1,
+1,
+2,
+4,
+8,
+15,
+29,
+56,
+108,
+208,
+401,
+773,
+1490,
+2872,
+5536,
+10671,
+20569
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000079",
+"name": "Powers of 2: a(n) = 2^n.",
+"terms": [
+1,
+2,
+4,
+8,
+16,
+32,
+64,
+128,
+256,
+512,
+1024,
+2048,
+4096,
+8192,
+16384,
+32768,
+65536,
+131072,
+262144,
+524288
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+2,
+0
+]
+}
+},
+{
+"A": "A000080",
+"name": "Number of nonisomorphic minimal triangle graphs.",
+"terms": [
+1,
+1,
+2,
+4,
+9,
+19,
+48,
+117,
+307,
+821,
+2277,
+6437,
+18634,
+54775,
+163703,
+495529,
+1518706,
+4703848,
+14714754,
+46444979
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000081",
+"name": "Number of unlabeled rooted trees with n nodes (or connected functions with a fixed point).",
+"terms": [
+0,
+1,
+1,
+2,
+4,
+9,
+20,
+48,
+115,
+286,
+719,
+1842,
+4766,
+12486,
+32973,
+87811,
+235381,
+634847,
+1721159,
+4688676
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000082",
+"name": "a(n) = n^2*Product_{p|n} (1 + 1/p).",
+"terms": [
+1,
+6,
+12,
+24,
+30,
+72,
+56,
+96,
+108,
+180,
+132,
+288,
+182,
+336,
+360,
+384,
+306,
+648,
+380,
+720
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000083",
+"name": "Number of mixed Husimi trees with n nodes; or polygonal cacti with bridges.",
+"terms": [
+1,
+1,
+1,
+2,
+4,
+9,
+23,
+63,
+188,
+596,
+1979,
+6804,
+24118,
+87379,
+322652,
+1209808,
+4596158,
+17657037,
+68497898,
+268006183
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000084",
+"name": "Number of series-parallel networks with n unlabeled edges. Also called yoke-chains by Cayley and MacMahon.",
+"terms": [
+1,
+2,
+4,
+10,
+24,
+66,
+180,
+522,
+1532,
+4624,
+14136,
+43930,
+137908,
+437502,
+1399068,
+4507352,
+14611576,
+47633486,
+156047204,
+513477502
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000085",
+"name": "Number of self-inverse permutations on n letters, also known as involutions; number of standard Young tableaux with n cells.",
+"terms": [
+1,
+1,
+2,
+4,
+10,
+26,
+76,
+232,
+764,
+2620,
+9496,
+35696,
+140152,
+568504,
+2390480,
+10349536,
+46206736,
+211799312,
+997313824,
+4809701440
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000086",
+"name": "Number of solutions to x^2 - x + 1 == 0 (mod n).",
+"terms": [
+1,
+0,
+1,
+0,
+0,
+0,
+2,
+0,
+0,
+0,
+0,
+0,
+2,
+0,
+0,
+0,
+0,
+0,
+2,
+0
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000087",
+"name": "Number of unrooted nonseparable planar maps with n edges and a distinguished face.",
+"terms": [
+2,
+1,
+2,
+4,
+10,
+37,
+138,
+628,
+2972,
+14903,
+76994,
+409594,
+2222628,
+12281570,
+68864086,
+391120036,
+2246122574,
+13025721601,
+76194378042,
+449155863868
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000088",
+"name": "Number of simple graphs on n unlabeled nodes.",
+"terms": [
+1,
+1,
+2,
+4,
+11,
+34,
+156,
+1044,
+12346,
+274668,
+12005168,
+1018997864,
+165091172592,
+50502031367952,
+29054155657235488,
+31426485969804308768,
+64001015704527557894928,
+245935864153532932683719776,
+1787577725145611700547878190848,
+24637809253125004524383007491432768
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000089",
+"name": "Number of solutions to x^2 + 1 == 0 (mod n).",
+"terms": [
+1,
+1,
+0,
+0,
+2,
+0,
+0,
+0,
+0,
+2,
+0,
+0,
+2,
+0,
+0,
+0,
+2,
+0,
+0,
+0
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000090",
+"name": "Expansion of e.g.f. exp((-x^3)/3)/(1-x).",
+"terms": [
+1,
+1,
+2,
+4,
+16,
+80,
+520,
+3640,
+29120,
+259840,
+2598400,
+28582400,
+343235200,
+4462057600,
+62468806400,
+936987251200,
+14991796019200,
+254860532326400,
+4587501779660800,
+87162533813555200
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000091",
+"name": "Multiplicative with a(2^e) = 2 for k >= 1; a(3) = 2, a(3^e) = 0 for k >= 2; a(p^e) = 0 if p > 3 and p == -1 (mod 3); a(p^e) = 2 if p > 3 and p == 1 (mod 3).",
+"terms": [
+1,
+2,
+2,
+2,
+0,
+4,
+2,
+2,
+0,
+0,
+0,
+4,
+2,
+4,
+0,
+2,
+0,
+0,
+2,
+0
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000092",
+"name": "Let A(n) = #{(i,j,k): i^2 + j^2 + k^2 <= n}, V(n) = (4/3)Pi*n^(3/2), P(n) = A(n) - V(n); sequence gives values of n where |P(n)| sets a new record.",
+"terms": [
+1,
+2,
+5,
+6,
+14,
+21,
+29,
+30,
+54,
+90,
+134,
+155,
+174,
+230,
+234,
+251,
+270,
+342,
+374,
+461
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000093",
+"name": "a(n) = floor(n^(3/2)).",
+"terms": [
+0,
+1,
+2,
+5,
+8,
+11,
+14,
+18,
+22,
+27,
+31,
+36,
+41,
+46,
+52,
+58,
+64,
+70,
+76,
+82
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000094",
+"name": "Number of trees of diameter 4.",
+"terms": [
+0,
+0,
+0,
+0,
+1,
+2,
+5,
+8,
+14,
+21,
+32,
+45,
+65,
+88,
+121,
+161,
+215,
+280,
+367,
+471
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000095",
+"name": "Number of fixed points of Gamma_0 (n) of type i.",
+"terms": [
+1,
+2,
+0,
+0,
+2,
+0,
+0,
+0,
+0,
+4,
+0,
+0,
+2,
+0,
+0,
+0,
+2,
+0,
+0,
+0
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000096",
+"name": "a(n) = n*(n+3)/2.",
+"terms": [
+0,
+2,
+5,
+9,
+14,
+20,
+27,
+35,
+44,
+54,
+65,
+77,
+90,
+104,
+119,
+135,
+152,
+170,
+189,
+209
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+1
+]
+}
+},
+{
+"A": "A000097",
+"name": "Number of partitions of n if there are two kinds of 1's and two kinds of 2's.",
+"terms": [
+1,
+2,
+5,
+9,
+17,
+28,
+47,
+73,
+114,
+170,
+253,
+365,
+525,
+738,
+1033,
+1422,
+1948,
+2634,
+3545,
+4721
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000098",
+"name": "Number of partitions of n if there are two kinds of 1, two kinds of 2 and two kinds of 3.",
+"terms": [
+1,
+2,
+5,
+10,
+19,
+33,
+57,
+92,
+147,
+227,
+345,
+512,
+752,
+1083,
+1545,
+2174,
+3031,
+4179,
+5719,
+7752
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000099",
+"name": "Let A(n) = #{(i,j): i^2 + j^2 <= n}, V(n) = Pi*n, P(n) = A(n) - V(n); sequence gives values of n where |P(n)| sets a new record.",
+"terms": [
+1,
+2,
+5,
+10,
+20,
+24,
+26,
+41,
+53,
+130,
+149,
+205,
+234,
+287,
+340,
+410,
+425,
+480,
+586,
+840
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000100",
+"name": "a(n) is the number of compositions of n in which the maximal part is 3.",
+"terms": [
+0,
+0,
+0,
+1,
+2,
+5,
+11,
+23,
+47,
+94,
+185,
+360,
+694,
+1328,
+2526,
+4781,
+9012,
+16929,
+31709,
+59247
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000101",
+"name": "Record gaps between primes (upper end) (compare A002386, which gives lower ends of these gaps).",
+"terms": [
+3,
+5,
+11,
+29,
+97,
+127,
+541,
+907,
+1151,
+1361,
+9587,
+15727,
+19661,
+31469,
+156007,
+360749,
+370373,
+492227,
+1349651,
+1357333
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000102",
+"name": "a(n) = number of compositions of n in which the maximum part size is 4.",
+"terms": [
+0,
+0,
+0,
+0,
+1,
+2,
+5,
+12,
+27,
+59,
+127,
+269,
+563,
+1167,
+2400,
+4903,
+9960,
+20135,
+40534,
+81300
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000103",
+"name": "Number of n-node triangulations of sphere in which every node has degree >= 4.",
+"terms": [
+0,
+0,
+1,
+1,
+2,
+5,
+12,
+34,
+130,
+525,
+2472,
+12400,
+65619,
+357504,
+1992985,
+11284042,
+64719885,
+375126827,
+2194439398,
+12941995397
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000104",
+"name": "Number of n-celled free polyominoes without holes.",
+"terms": [
+1,
+1,
+1,
+2,
+5,
+12,
+35,
+107,
+363,
+1248,
+4460,
+16094,
+58937,
+217117,
+805475,
+3001127,
+11230003,
+42161529,
+158781106,
+599563893
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000105",
+"name": "Number of free polyominoes (or square animals) with n cells.",
+"terms": [
+1,
+1,
+1,
+2,
+5,
+12,
+35,
+108,
+369,
+1285,
+4655,
+17073,
+63600,
+238591,
+901971,
+3426576,
+13079255,
+50107909,
+192622052,
+742624232
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000106",
+"name": "2nd power of rooted tree enumerator; number of linear forests of 2 rooted trees.",
+"terms": [
+1,
+2,
+5,
+12,
+30,
+74,
+188,
+478,
+1235,
+3214,
+8450,
+22370,
+59676,
+160140,
+432237,
+1172436,
+3194870,
+8741442,
+24007045,
+66154654
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000107",
+"name": "Number of rooted trees with n nodes and a single labeled node; pointed rooted trees; vertebrates.",
+"terms": [
+0,
+1,
+2,
+5,
+13,
+35,
+95,
+262,
+727,
+2033,
+5714,
+16136,
+45733,
+130046,
+370803,
+1059838,
+3035591,
+8710736,
+25036934,
+72069134
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000108",
+"name": "Catalan numbers: C(n) = binomial(2n,n)/(n+1) = (2n)!/(n!(n+1)!).",
+"terms": [
+1,
+1,
+2,
+5,
+14,
+42,
+132,
+429,
+1430,
+4862,
+16796,
+58786,
+208012,
+742900,
+2674440,
+9694845,
+35357670,
+129644790,
+477638700,
+1767263190
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000109",
+"name": "Number of simplicial polyhedra with n vertices; simple planar graphs with n vertices and 3n-6 edges; maximal simple planar graphs with n vertices; planar triangulations with n vertices; triangulations of the sphere with n vertices; 3-connected cubic planar graphs on 2n-4 vertices.",
+"terms": [
+1,
+1,
+1,
+2,
+5,
+14,
+50,
+233,
+1249,
+7595,
+49566,
+339722,
+2406841,
+17490241,
+129664753,
+977526957,
+7475907149,
+57896349553,
+453382272049,
+3585853662949
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000110",
+"name": "Bell or exponential numbers: number of ways to partition a set of n labeled elements.",
+"terms": [
+1,
+1,
+2,
+5,
+15,
+52,
+203,
+877,
+4140,
+21147,
+115975,
+678570,
+4213597,
+27644437,
+190899322,
+1382958545,
+10480142147,
+82864869804,
+682076806159,
+5832742205057
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000111",
+"name": "Euler or up/down numbers: e.g.f. sec(x) + tan(x). Also for n >= 2, half the number of alternating permutations on n letters (A001250).",
+"terms": [
+1,
+1,
+1,
+2,
+5,
+16,
+61,
+272,
+1385,
+7936,
+50521,
+353792,
+2702765,
+22368256,
+199360981,
+1903757312,
+19391512145,
+209865342976,
+2404879675441,
+29088885112832
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000112",
+"name": "Number of partially ordered sets (\"posets\") with n unlabeled elements.",
+"terms": [
+1,
+1,
+2,
+5,
+16,
+63,
+318,
+2045,
+16999,
+183231,
+2567284,
+46749427,
+1104891746,
+33823827452,
+1338193159771,
+68275077901156,
+4483130665195087
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000113",
+"name": "Number of transformation groups of order n.",
+"terms": [
+1,
+3,
+4,
+3,
+6,
+12,
+8,
+6,
+4,
+18,
+12,
+12,
+14,
+24,
+24,
+6,
+18,
+12,
+20,
+18
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000114",
+"name": "Number of cusps of principal congruence subgroup Gamma^{hat}(n).",
+"terms": [
+3,
+4,
+6,
+12,
+12,
+24,
+24,
+36,
+36,
+60,
+48,
+84,
+72,
+96,
+96,
+144,
+108,
+180,
+144,
+192
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000115",
+"name": "Denumerants: Expansion of 1/((1-x)*(1-x^2)*(1-x^5)).",
+"terms": [
+1,
+1,
+2,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+10,
+11,
+13,
+14,
+16,
+18,
+20,
+22,
+24,
+26
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000116",
+"name": "Number of even sequences with period 2n (bisection of A000013).",
+"terms": [
+1,
+2,
+4,
+8,
+20,
+56,
+180,
+596,
+2068,
+7316,
+26272,
+95420,
+349716,
+1290872,
+4794088,
+17896832,
+67110932,
+252648992,
+954444608,
+3616828364
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000117",
+"name": "Number of even sequences with period 2n (bisection of A000011).",
+"terms": [
+1,
+2,
+4,
+8,
+18,
+44,
+122,
+362,
+1162,
+3914,
+13648,
+48734,
+176906,
+649532,
+2405236,
+8964800,
+33588234,
+126390032,
+477353376,
+1808676326
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000118",
+"name": "Number of ways of writing n as a sum of 4 squares; also theta series of four-dimensional cubic lattice Z^4.",
+"terms": [
+1,
+8,
+24,
+32,
+24,
+48,
+96,
+64,
+24,
+104,
+144,
+96,
+96,
+112,
+192,
+192,
+24,
+144,
+312,
+160
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000119",
+"name": "Number of representations of n as a sum of distinct Fibonacci numbers.",
+"terms": [
+1,
+1,
+1,
+2,
+1,
+2,
+2,
+1,
+3,
+2,
+2,
+3,
+1,
+3,
+3,
+2,
+4,
+2,
+3,
+3
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000120",
+"name": "Ones-counting sequence: number of 1's in binary expansion of n (or the binary weight of n).",
+"terms": [
+0,
+1,
+1,
+2,
+1,
+2,
+2,
+3,
+1,
+2,
+2,
+3,
+2,
+3,
+3,
+4,
+1,
+2,
+2,
+3
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000121",
+"name": "Number of representations of n as a sum of Fibonacci numbers (1 is allowed twice as a part).",
+"terms": [
+1,
+2,
+2,
+3,
+3,
+3,
+4,
+3,
+4,
+5,
+4,
+5,
+4,
+4,
+6,
+5,
+6,
+6,
+5,
+6
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000122",
+"name": "Expansion of Jacobi theta function theta_3(x) = Sum_{m =-oo..oo} x^(m^2) (number of integer solutions to k^2 = n).",
+"terms": [
+1,
+2,
+0,
+0,
+2,
+0,
+0,
+0,
+0,
+2,
+0,
+0,
+0,
+0,
+0,
+0,
+2,
+0,
+0,
+0
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000123",
+"name": "Number of binary partitions: number of partitions of 2n into powers of 2.",
+"terms": [
+1,
+2,
+4,
+6,
+10,
+14,
+20,
+26,
+36,
+46,
+60,
+74,
+94,
+114,
+140,
+166,
+202,
+238,
+284,
+330
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000124",
+"name": "Central polygonal numbers (the Lazy Caterer's sequence): n(n+1)/2 + 1; or, maximal number of pieces formed when slicing a pancake with n cuts.",
+"terms": [
+1,
+2,
+4,
+7,
+11,
+16,
+22,
+29,
+37,
+46,
+56,
+67,
+79,
+92,
+106,
+121,
+137,
+154,
+172,
+191
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+1
+]
+}
+},
+{
+"A": "A000125",
+"name": "Cake numbers: maximal number of pieces resulting from n planar cuts through a cube (or cake): C(n+1,3) + n + 1.",
+"terms": [
+1,
+2,
+4,
+8,
+15,
+26,
+42,
+64,
+93,
+130,
+176,
+232,
+299,
+378,
+470,
+576,
+697,
+834,
+988,
+1160
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+1
+]
+}
+},
+{
+"A": "A000126",
+"name": "A nonlinear binomial sum.",
+"terms": [
+1,
+2,
+4,
+8,
+15,
+27,
+47,
+80,
+134,
+222,
+365,
+597,
+973,
+1582,
+2568,
+4164,
+6747,
+10927,
+17691,
+28636
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+0,
+-1,
+1
+]
+}
+},
+{
+"A": "A000127",
+"name": "Maximal number of regions obtained by joining n points around a circle by straight lines. Also number of regions in 4-space formed by n-1 hyperplanes.",
+"terms": [
+1,
+2,
+4,
+8,
+16,
+31,
+57,
+99,
+163,
+256,
+386,
+562,
+794,
+1093,
+1471,
+1941,
+2517,
+3214,
+4048,
+5036
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000128",
+"name": "A nonlinear binomial sum.",
+"terms": [
+1,
+2,
+4,
+8,
+16,
+31,
+58,
+105,
+185,
+319,
+541,
+906,
+1503,
+2476,
+4058,
+6626,
+10790,
+17537,
+28464,
+46155
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000129",
+"name": "Pell numbers: a(0) = 0, a(1) = 1; for n > 1, a(n) = 2*a(n-1) + a(n-2).",
+"terms": [
+0,
+1,
+2,
+5,
+12,
+29,
+70,
+169,
+408,
+985,
+2378,
+5741,
+13860,
+33461,
+80782,
+195025,
+470832,
+1136689,
+2744210,
+6625109
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+1,
+0
+]
+}
+},
+{
+"A": "A000130",
+"name": "One-half the number of permutations of length n with exactly 1 rising or falling succession.",
+"terms": [
+0,
+0,
+1,
+2,
+5,
+20,
+115,
+790,
+6217,
+55160,
+545135,
+5938490,
+70686805,
+912660508,
+12702694075,
+189579135710,
+3019908731105,
+51139445487680,
+917345570926087,
+17376071107513090
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000131",
+"name": "Number of asymmetrical dissections of n-gon.",
+"terms": [
+2,
+5,
+21,
+61,
+214,
+669,
+2240,
+7330,
+24695,
+83257,
+284928,
+981079,
+3410990,
+11937328,
+42075242,
+149171958,
+531866972,
+1905842605,
+6861162880,
+24805692978
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000132",
+"name": "Number of ways of writing n as a sum of 5 squares.",
+"terms": [
+1,
+10,
+40,
+80,
+90,
+112,
+240,
+320,
+200,
+250,
+560,
+560,
+400,
+560,
+800,
+960,
+730,
+480,
+1240,
+1520
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000134",
+"name": "Positive zeros of Bessel function of order 0 rounded to nearest integer.",
+"terms": [
+2,
+6,
+9,
+12,
+15,
+18,
+21,
+24,
+27,
+31,
+34,
+37,
+40,
+43,
+46,
+49,
+53,
+56,
+59,
+62
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000135",
+"name": "Number of partitions into non-integral powers.",
+"terms": [
+1,
+2,
+6,
+13,
+24,
+42,
+73,
+125,
+204,
+324,
+511,
+801,
+1228,
+1856,
+2780,
+4135,
+6084,
+8873,
+12847,
+18481
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000136",
+"name": "Number of ways of folding a strip of n labeled stamps.",
+"terms": [
+1,
+2,
+6,
+16,
+50,
+144,
+462,
+1392,
+4536,
+14060,
+46310,
+146376,
+485914,
+1557892,
+5202690,
+16861984,
+56579196,
+184940388,
+622945970,
+2050228360
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000137",
+"name": "Series-parallel numbers.",
+"terms": [
+1,
+2,
+6,
+18,
+58,
+186,
+614,
+2034,
+6818,
+22970,
+77858,
+264970,
+905294,
+3102434,
+10661370,
+36722642,
+126752218,
+438294018,
+1518032598,
+5265341314
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000138",
+"name": "Expansion of e.g.f. exp(-x^4/4)/(1-x).",
+"terms": [
+1,
+1,
+2,
+6,
+18,
+90,
+540,
+3780,
+31500,
+283500,
+2835000,
+31185000,
+372972600,
+4848643800,
+67881013200,
+1018215198000,
+16294848570000,
+277012425690000,
+4986223662420000,
+94738249585980000
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000139",
+"name": "a(n) = 2*(3*n)! / ((2*n+1)!*(n+1)!).",
+"terms": [
+2,
+1,
+2,
+6,
+22,
+91,
+408,
+1938,
+9614,
+49335,
+260130,
+1402440,
+7702632,
+42975796,
+243035536,
+1390594458,
+8038677054,
+46892282815,
+275750636070,
+1633292229030
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000140",
+"name": "Kendall-Mann numbers: the most common number of inversions in a permutation on n letters is floor(n*(n-1)/4); a(n) is the number of permutations with this many inversions.",
+"terms": [
+1,
+1,
+2,
+6,
+22,
+101,
+573,
+3836,
+29228,
+250749,
+2409581,
+25598186,
+296643390,
+3727542188,
+50626553988,
+738680521142,
+11501573822788,
+190418421447330,
+3344822488498265,
+62119523114983224
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000141",
+"name": "Number of ways of writing n as a sum of 6 squares.",
+"terms": [
+1,
+12,
+60,
+160,
+252,
+312,
+544,
+960,
+1020,
+876,
+1560,
+2400,
+2080,
+2040,
+3264,
+4160,
+4092,
+3480,
+4380,
+7200
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000142",
+"name": "Factorial numbers: n! = 1*2*3*4*...*n (order of symmetric group S_n, number of permutations of n letters).",
+"terms": [
+1,
+1,
+2,
+6,
+24,
+120,
+720,
+5040,
+40320,
+362880,
+3628800,
+39916800,
+479001600,
+6227020800,
+87178291200,
+1307674368000,
+20922789888000,
+355687428096000,
+6402373705728000,
+121645100408832000
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+0,
+0
+]
+}
+},
+{
+"A": "A000143",
+"name": "Number of ways of writing n as a sum of 8 squares.",
+"terms": [
+1,
+16,
+112,
+448,
+1136,
+2016,
+3136,
+5504,
+9328,
+12112,
+14112,
+21312,
+31808,
+35168,
+38528,
+56448,
+74864,
+78624,
+84784,
+109760
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000144",
+"name": "Number of ways of writing n as a sum of 10 squares.",
+"terms": [
+1,
+20,
+180,
+960,
+3380,
+8424,
+16320,
+28800,
+52020,
+88660,
+129064,
+175680,
+262080,
+386920,
+489600,
+600960,
+840500,
+1137960,
+1330420,
+1563840
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000145",
+"name": "Number of ways of writing n as a sum of 12 squares.",
+"terms": [
+1,
+24,
+264,
+1760,
+7944,
+25872,
+64416,
+133056,
+253704,
+472760,
+825264,
+1297056,
+1938336,
+2963664,
+4437312,
+6091584,
+8118024,
+11368368,
+15653352,
+19822176
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000146",
+"name": "From von Staudt-Clausen representation of Bernoulli numbers: a(n) = Bernoulli(2n) + Sum_{(p-1)|2n} 1/p.",
+"terms": [
+1,
+1,
+1,
+1,
+1,
+1,
+2,
+-6,
+56,
+-528,
+6193,
+-86579,
+1425518,
+-27298230,
+601580875,
+-15116315766,
+429614643062,
+-13711655205087,
+488332318973594,
+-19296579341940067
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000147",
+"name": "Number of trees of diameter 5.",
+"terms": [
+0,
+0,
+0,
+0,
+0,
+1,
+2,
+7,
+14,
+32,
+58,
+110,
+187,
+322,
+519,
+839,
+1302,
+2015,
+3032,
+4542
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000148",
+"name": "Number of partitions into non-integral powers.",
+"terms": [
+1,
+2,
+7,
+15,
+28,
+45,
+70,
+100,
+138,
+183,
+242,
+310,
+388,
+481,
+583,
+701,
+838,
+984,
+1152,
+1337
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000149",
+"name": "a(n) = floor(e^n).",
+"terms": [
+1,
+2,
+7,
+20,
+54,
+148,
+403,
+1096,
+2980,
+8103,
+22026,
+59874,
+162754,
+442413,
+1202604,
+3269017,
+8886110,
+24154952,
+65659969,
+178482300
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000150",
+"name": "Number of dissections of an n-gon, rooted at an exterior edge, asymmetric with respect to that edge.",
+"terms": [
+0,
+0,
+1,
+2,
+7,
+20,
+66,
+212,
+715,
+2424,
+8398,
+29372,
+104006,
+371384,
+1337220,
+4847208,
+17678835,
+64821680,
+238819350,
+883629164
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000151",
+"name": "Number of oriented rooted trees with n nodes. Also rooted trees with n nodes and 2-colored non-root nodes.",
+"terms": [
+1,
+2,
+7,
+26,
+107,
+458,
+2058,
+9498,
+44947,
+216598,
+1059952,
+5251806,
+26297238,
+132856766,
+676398395,
+3466799104,
+17873508798,
+92630098886,
+482292684506,
+2521610175006
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000152",
+"name": "Number of ways of writing n as a sum of 16 squares.",
+"terms": [
+1,
+32,
+480,
+4480,
+29152,
+140736,
+525952,
+1580800,
+3994080,
+8945824,
+18626112,
+36714624,
+67978880,
+118156480,
+197120256,
+321692928,
+509145568,
+772845120,
+1143441760,
+1681379200
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000153",
+"name": "a(n) = n*a(n-1) + (n-2)*a(n-2), with a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+2,
+7,
+32,
+181,
+1214,
+9403,
+82508,
+808393,
+8743994,
+103459471,
+1328953592,
+18414450877,
+273749755382,
+4345634192131,
+73362643649444,
+1312349454922513,
+24796092486996338,
+493435697986613143
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000154",
+"name": "Erroneous version of A003713.",
+"terms": [
+1,
+1,
+2,
+7,
+35,
+228,
+1834,
+17382,
+195866,
+2487832,
+35499576,
+562356672,
+9794156448,
+186025364016,
+3826961710272,
+84775065603888,
+2011929826983504
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000155",
+"name": "Nearest integer to modified Bessel function K_n(1).",
+"terms": [
+0,
+1,
+2,
+7,
+44,
+361,
+3654,
+44207,
+622552,
+10005041,
+180713290,
+3624270839,
+79914671748,
+1921576392793,
+50040900884366,
+1403066801155039,
+42142044935535536,
+1349948504738292193,
+45940391206037470098,
+1655204031922087215719
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000156",
+"name": "Number of ways of writing n as a sum of 24 squares.",
+"terms": [
+1,
+48,
+1104,
+16192,
+170064,
+1362336,
+8662720,
+44981376,
+195082320,
+721175536,
+2319457632,
+6631997376,
+17231109824,
+41469483552,
+93703589760,
+200343312768,
+407488018512,
+793229226336,
+1487286966928,
+2697825744960
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000158",
+"name": "Number of partitions into non-integral powers.",
+"terms": [
+1,
+2,
+8,
+19,
+41,
+78,
+134,
+218,
+339,
+506,
+730,
+1023,
+1397,
+1884,
+2477,
+3218,
+4118,
+5192,
+6486,
+8010
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000159",
+"name": "a(n) = A058087(n,n-3).",
+"terms": [
+2,
+8,
+20,
+152,
+994,
+7888,
+70152,
+695760,
+7603266,
+90758872,
+1174753372,
+16386899368,
+245046377410,
+3910358788256,
+66323124297872,
+1191406991067168,
+22596344660865282,
+451208920617687720,
+9461897733571886372,
+207894669895136763704
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000160",
+"name": "Number of partitions into non-integral powers.",
+"terms": [
+1,
+2,
+8,
+21,
+48,
+99,
+186,
+330,
+556,
+895,
+1397,
+2107,
+3097,
+4459,
+6264,
+8644,
+11760,
+15742,
+20790,
+27128
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000162",
+"name": "Number of 3-dimensional polyominoes (or polycubes) with n cells.",
+"terms": [
+1,
+1,
+2,
+8,
+29,
+166,
+1023,
+6922,
+48311,
+346543,
+2522522,
+18598427,
+138462649,
+1039496297,
+7859514470,
+59795121480,
+457409613979,
+3516009200564,
+27144143923583,
+210375361379518
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000163",
+"name": "Series-parallel numbers.",
+"terms": [
+2,
+8,
+34,
+136,
+538,
+2080,
+7970,
+30224,
+113874,
+426520,
+1590338,
+5906640,
+21866794,
+80725280,
+297292610,
+1092539736,
+4007553922,
+14675748416,
+53663197698,
+195962433328
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000164",
+"name": "Number of partitions of n into 3 squares (allowing part zero).",
+"terms": [
+1,
+1,
+1,
+1,
+1,
+1,
+1,
+0,
+1,
+2,
+1,
+1,
+1,
+1,
+1,
+0,
+1,
+2,
+2,
+1
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000165",
+"name": "Double factorial of even numbers: (2n)!! = 2^n*n!.",
+"terms": [
+1,
+2,
+8,
+48,
+384,
+3840,
+46080,
+645120,
+10321920,
+185794560,
+3715891200,
+81749606400,
+1961990553600,
+51011754393600,
+1428329123020800,
+42849873690624000,
+1371195958099968000,
+46620662575398912000,
+1678343852714360832000,
+63777066403145711616000
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+0,
+0
+]
+}
+},
+{
+"A": "A000166",
+"name": "Subfactorial or rencontres numbers, or derangements: number of permutations of n elements with no fixed points.",
+"terms": [
+1,
+0,
+1,
+2,
+9,
+44,
+265,
+1854,
+14833,
+133496,
+1334961,
+14684570,
+176214841,
+2290792932,
+32071101049,
+481066515734,
+7697064251745,
+130850092279664,
+2355301661033953,
+44750731559645106
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000167",
+"name": "Nearest integer to modified Bessel function K_n(2).",
+"terms": [
+0,
+0,
+0,
+1,
+2,
+9,
+49,
+306,
+2188,
+17810,
+162482,
+1642635,
+18231462,
+220420179,
+2883693795,
+40592133316,
+611765693528,
+9828843229764,
+167702100599524,
+3028466654021205
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000168",
+"name": "a(n) = 2*3^n*(2*n)!/(n!*(n+2)!).",
+"terms": [
+1,
+2,
+9,
+54,
+378,
+2916,
+24057,
+208494,
+1876446,
+17399772,
+165297834,
+1602117468,
+15792300756,
+157923007560,
+1598970451545,
+16365932856990,
+169114639522230,
+1762352559231660,
+18504701871932430,
+195621134074714260
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000169",
+"name": "Number of labeled rooted trees with n nodes: n^(n-1).",
+"terms": [
+1,
+2,
+9,
+64,
+625,
+7776,
+117649,
+2097152,
+43046721,
+1000000000,
+25937424601,
+743008370688,
+23298085122481,
+793714773254144,
+29192926025390625,
+1152921504606846976,
+48661191875666868481,
+2185911559738696531968,
+104127350297911241532841,
+5242880000000000000000000
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000170",
+"name": "Number of ways of placing n nonattacking queens on an n X n board.",
+"terms": [
+1,
+1,
+0,
+0,
+2,
+10,
+4,
+40,
+92,
+352,
+724,
+2680,
+14200,
+73712,
+365596,
+2279184,
+14772512,
+95815104,
+666090624,
+4968057848
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000171",
+"name": "Number of self-complementary graphs with n nodes.",
+"terms": [
+1,
+0,
+0,
+1,
+2,
+0,
+0,
+10,
+36,
+0,
+0,
+720,
+5600,
+0,
+0,
+703760,
+11220000,
+0,
+0,
+9168331776
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000172",
+"name": "The Franel number a(n) = Sum_{k = 0..n} binomial(n,k)^3.",
+"terms": [
+1,
+2,
+10,
+56,
+346,
+2252,
+15184,
+104960,
+739162,
+5280932,
+38165260,
+278415920,
+2046924400,
+15148345760,
+112738423360,
+843126957056,
+6332299624282,
+47737325577620,
+361077477684436,
+2739270870994736
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000173",
+"name": "Unitary-sociable numbers (smallest member of each cycle).",
+"terms": [
+30,
+1482,
+2418,
+24180,
+35238,
+263820,
+395730,
+473298,
+698130,
+763620,
+2212026,
+2233554,
+172459210,
+209524210,
+341354790,
+384121920,
+525150234,
+530946330,
+582129630,
+1799281330
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000174",
+"name": "Number of partitions of n into 5 squares.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+2,
+1,
+1,
+2,
+2,
+2,
+2,
+2,
+3,
+2,
+1,
+3,
+3,
+3,
+3
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000175",
+"name": "Related to zeros of Bessel function.",
+"terms": [
+1,
+1,
+2,
+11,
+38,
+946,
+4580,
+202738,
+3786092,
+261868876,
+1992367192,
+2381255244240,
+21411255538848,
+2902625722978656,
+451716954504285504,
+319933105641374465472,
+3761845343198709705600
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000176",
+"name": "Generalized tangent numbers d_(n,2).",
+"terms": [
+2,
+11,
+46,
+128,
+272,
+522,
+904,
+1408,
+2160,
+3154,
+4306,
+5888,
+7888,
+10012,
+12888,
+16384,
+19680,
+24354,
+29866,
+34816
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000177",
+"name": "Number of partitions of n into 6 squares.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+2,
+2,
+1,
+2,
+3,
+2,
+2,
+3,
+3,
+3,
+2,
+3,
+4,
+4,
+3
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000179",
+"name": "M\u00e9nage numbers: a(0) = 1, a(1) = -1, and for n >= 2, a(n) = number of permutations s of [0, ..., n-1] such that s(i) != i and s(i) != i+1 (mod n) for all i.",
+"terms": [
+1,
+-1,
+0,
+1,
+2,
+13,
+80,
+579,
+4738,
+43387,
+439792,
+4890741,
+59216642,
+775596313,
+10927434464,
+164806435783,
+2649391469058,
+45226435601207,
+817056406224416,
+15574618910994665
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000180",
+"name": "Expansion of E.g.f. exp(-x)/(1-3x).",
+"terms": [
+1,
+2,
+13,
+116,
+1393,
+20894,
+376093,
+7897952,
+189550849,
+5117872922,
+153536187661,
+5066694192812,
+182400990941233,
+7113638646708086,
+298772823161739613,
+13444777042278282584,
+645349298029357564033,
+32912814199497235765682
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000181",
+"name": "a(n) = A058087(n,n-4).",
+"terms": [
+2,
+15,
+60,
+469,
+3660,
+32958,
+328920,
+3614490,
+43341822,
+563144725,
+7880897892,
+118177520295,
+1890389939000,
+32130521850972,
+578260307815920,
+10985555094348948,
+219687969344126490,
+4613039009310624795,
+101479234383619208204,
+2333872309936442446905
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000182",
+"name": "Tangent (or \"Zag\") numbers: e.g.f. tan(x), also (up to signs) e.g.f. tanh(x).",
+"terms": [
+1,
+2,
+16,
+272,
+7936,
+353792,
+22368256,
+1903757312,
+209865342976,
+29088885112832,
+4951498053124096,
+1015423886506852352,
+246921480190207983616,
+70251601603943959887872,
+23119184187809597841473536,
+8713962757125169296170811392,
+3729407703720529571097509625856
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000183",
+"name": "Number of discordant permutations of length n.",
+"terms": [
+0,
+0,
+0,
+1,
+2,
+20,
+144,
+1265,
+12072,
+126565,
+1445100,
+17875140,
+238282730,
+3407118041,
+52034548064,
+845569542593,
+14570246018686,
+265397214435860,
+5095853023109484,
+102877234050493609
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000184",
+"name": "Number of genus 0 rooted maps with 3 faces with n vertices.",
+"terms": [
+2,
+22,
+164,
+1030,
+5868,
+31388,
+160648,
+795846,
+3845020,
+18211380,
+84876152,
+390331292,
+1775032504,
+7995075960,
+35715205136,
+158401506118,
+698102372988,
+3059470021316,
+13341467466520,
+57918065919924
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000185",
+"name": "a(n) = A058087(n,n-5).",
+"terms": [
+2,
+24,
+140,
+1232,
+11268,
+115056,
+1284360,
+15596208,
+204710454,
+2888897032,
+43625578836,
+702025263328,
+11993721979336,
+216822550325472,
+4135337882588880,
+82986434235959712,
+1747976804189353962,
+38559791049947726328,
+889047923669760546140
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000186",
+"name": "Number of 3 X n Latin rectangles in which the first row is in order.",
+"terms": [
+1,
+0,
+0,
+2,
+24,
+552,
+21280,
+1073760,
+70299264,
+5792853248,
+587159944704,
+71822743499520,
+10435273503677440,
+1776780700509416448,
+350461958856515690496,
+79284041282622163140608,
+20392765404792755583221760,
+5917934230798104348783083520,
+1924427226324694427836833857536
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000188",
+"name": "(1) Number of solutions to x^2 == 0 (mod n). (2) Also square root of largest square dividing n. (3) Also max_{ d divides n } gcd(d, n/d).",
+"terms": [
+1,
+1,
+1,
+2,
+1,
+1,
+1,
+2,
+3,
+1,
+1,
+2,
+1,
+1,
+1,
+4,
+1,
+3,
+1,
+2
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000189",
+"name": "Number of solutions to x^3 == 0 (mod n).",
+"terms": [
+1,
+1,
+1,
+2,
+1,
+1,
+1,
+4,
+3,
+1,
+1,
+2,
+1,
+1,
+1,
+4,
+1,
+3,
+1,
+2
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000190",
+"name": "Number of solutions to x^4 == 0 (mod n).",
+"terms": [
+1,
+1,
+1,
+2,
+1,
+1,
+1,
+4,
+3,
+1,
+1,
+2,
+1,
+1,
+1,
+8,
+1,
+3,
+1,
+2
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000193",
+"name": "Nearest integer to log n.",
+"terms": [
+0,
+1,
+1,
+1,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+3,
+3,
+3,
+3,
+3,
+3,
+3,
+3
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000194",
+"name": "n appears 2n times, for n >= 1; also nearest integer to square root of n.",
+"terms": [
+0,
+1,
+1,
+2,
+2,
+2,
+2,
+3,
+3,
+3,
+3,
+3,
+3,
+4,
+4,
+4,
+4,
+4,
+4,
+4
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000195",
+"name": "a(n) = floor(log(n)).",
+"terms": [
+0,
+0,
+1,
+1,
+1,
+1,
+1,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000196",
+"name": "Integer part of square root of n. Or, number of positive squares <= n. Or, n appears 2n+1 times.",
+"terms": [
+0,
+1,
+1,
+1,
+2,
+2,
+2,
+2,
+2,
+3,
+3,
+3,
+3,
+3,
+3,
+3,
+4,
+4,
+4,
+4
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000198",
+"name": "Largest order of automorphism group of a tournament with n nodes.",
+"terms": [
+1,
+1,
+3,
+3,
+5,
+9,
+21,
+21,
+81,
+81,
+81,
+243,
+243,
+441,
+1215,
+1701,
+1701,
+6561,
+6561,
+6561
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000199",
+"name": "Coefficient of q^(2n-1) in the series expansion of Ramanujan's mock theta function f(q).",
+"terms": [
+1,
+3,
+3,
+7,
+6,
+12,
+13,
+20,
+21,
+34,
+36,
+51,
+58,
+78,
+89,
+118,
+131,
+171,
+197,
+245
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000200",
+"name": "Number of bicentered hydrocarbons with n atoms.",
+"terms": [
+0,
+0,
+1,
+0,
+1,
+1,
+3,
+3,
+9,
+15,
+38,
+73,
+174,
+380,
+915,
+2124,
+5134,
+12281,
+30010,
+73401
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000201",
+"name": "Lower Wythoff sequence (a Beatty sequence): a(n) = floor(n*phi), where phi = (1+sqrt(5))/2 = A001622.",
+"terms": [
+1,
+3,
+4,
+6,
+8,
+9,
+11,
+12,
+14,
+16,
+17,
+19,
+21,
+22,
+24,
+25,
+27,
+29,
+30,
+32
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000202",
+"name": "a(8i+j) = 13i + a(j), where 1<=j<=8.",
+"terms": [
+1,
+3,
+4,
+6,
+8,
+9,
+11,
+12,
+14,
+16,
+17,
+19,
+21,
+22,
+24,
+25,
+27,
+29,
+30,
+32
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000203",
+"name": "a(n) = sigma(n), the sum of the divisors of n. Also called sigma_1(n).",
+"terms": [
+1,
+3,
+4,
+7,
+6,
+12,
+8,
+15,
+13,
+18,
+12,
+28,
+14,
+24,
+24,
+31,
+18,
+39,
+20,
+42
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000204",
+"name": "Lucas numbers (beginning with 1): L(n) = L(n-1) + L(n-2) with L(1) = 1, L(2) = 3.",
+"terms": [
+1,
+3,
+4,
+7,
+11,
+18,
+29,
+47,
+76,
+123,
+199,
+322,
+521,
+843,
+1364,
+2207,
+3571,
+5778,
+9349,
+15127
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000205",
+"name": "Number of positive integers <= 2^n of form x^2 + 3 y^2.",
+"terms": [
+1,
+1,
+3,
+4,
+8,
+14,
+25,
+45,
+82,
+151,
+282,
+531,
+1003,
+1907,
+3645,
+6993,
+13456,
+25978,
+50248,
+97446
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000206",
+"name": "Even sequences with period 2n.",
+"terms": [
+1,
+1,
+3,
+4,
+12,
+22,
+71,
+181,
+618,
+1957,
+6966,
+24367,
+89010,
+324766,
+1204815,
+4482400,
+16802826,
+63195016,
+238711285,
+904338163
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000207",
+"name": "Number of inequivalent ways of dissecting a regular (n+2)-gon into n triangles by n-1 non-intersecting diagonals under rotations and reflections; also the number of (unlabeled) maximal outerplanar graphs on n+2 vertices.",
+"terms": [
+1,
+1,
+1,
+3,
+4,
+12,
+27,
+82,
+228,
+733,
+2282,
+7528,
+24834,
+83898,
+285357,
+983244,
+3412420,
+11944614,
+42080170,
+149197152
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000208",
+"name": "Number of even sequences with period 2n.",
+"terms": [
+1,
+1,
+3,
+4,
+12,
+28,
+94,
+298,
+1044,
+3658,
+13164,
+47710,
+174948,
+645436,
+2397342,
+8948416,
+33556500,
+126324496,
+477225962,
+1808414182
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000209",
+"name": "Nearest integer to tan n.",
+"terms": [
+0,
+2,
+-2,
+0,
+1,
+-3,
+0,
+1,
+-7,
+0,
+1,
+-226,
+-1,
+0,
+7,
+-1,
+0,
+3,
+-1,
+0
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000210",
+"name": "A Beatty sequence: floor(n*(e-1)).",
+"terms": [
+1,
+3,
+5,
+6,
+8,
+10,
+12,
+13,
+15,
+17,
+18,
+20,
+22,
+24,
+25,
+27,
+29,
+30,
+32,
+34
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000211",
+"name": "a(n) = a(n-1) + a(n-2) - 2, a(0) = 4, a(1) = 3.",
+"terms": [
+4,
+3,
+5,
+6,
+9,
+13,
+20,
+31,
+49,
+78,
+125,
+201,
+324,
+523,
+845,
+1366,
+2209,
+3573,
+5780,
+9351
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+-2
+]
+}
+},
+{
+"A": "A000212",
+"name": "a(n) = floor(n^2/3).",
+"terms": [
+0,
+0,
+1,
+3,
+5,
+8,
+12,
+16,
+21,
+27,
+33,
+40,
+48,
+56,
+65,
+75,
+85,
+96,
+108,
+120
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000213",
+"name": "Tribonacci numbers: a(n) = a(n-1) + a(n-2) + a(n-3) with a(0)=a(1)=a(2)=1.",
+"terms": [
+1,
+1,
+1,
+3,
+5,
+9,
+17,
+31,
+57,
+105,
+193,
+355,
+653,
+1201,
+2209,
+4063,
+7473,
+13745,
+25281,
+46499
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000216",
+"name": "Take sum of squares of digits of previous term, starting with 2.",
+"terms": [
+2,
+4,
+16,
+37,
+58,
+89,
+145,
+42,
+20,
+4,
+16,
+37,
+58,
+89,
+145,
+42,
+20,
+4,
+16,
+37
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000217",
+"name": "Triangular numbers: a(n) = binomial(n+1,2) = n*(n+1)/2 = 0 + 1 + 2 + ... + n.",
+"terms": [
+0,
+1,
+3,
+6,
+10,
+15,
+21,
+28,
+36,
+45,
+55,
+66,
+78,
+91,
+105,
+120,
+136,
+153,
+171,
+190
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+1
+]
+}
+},
+{
+"A": "A000218",
+"name": "Take sum of squares of digits of previous term; start with 3.",
+"terms": [
+3,
+9,
+81,
+65,
+61,
+37,
+58,
+89,
+145,
+42,
+20,
+4,
+16,
+37,
+58,
+89,
+145,
+42,
+20,
+4
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000219",
+"name": "Number of plane partitions (or planar partitions) of n.",
+"terms": [
+1,
+1,
+3,
+6,
+13,
+24,
+48,
+86,
+160,
+282,
+500,
+859,
+1479,
+2485,
+4167,
+6879,
+11297,
+18334,
+29601,
+47330
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000220",
+"name": "Number of asymmetric trees with n nodes (also called identity trees).",
+"terms": [
+1,
+0,
+0,
+0,
+0,
+0,
+1,
+1,
+3,
+6,
+15,
+29,
+67,
+139,
+310,
+667,
+1480,
+3244,
+7241,
+16104
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000221",
+"name": "Take sum of squares of digits of previous term; start with 5.",
+"terms": [
+5,
+25,
+29,
+85,
+89,
+145,
+42,
+20,
+4,
+16,
+37,
+58,
+89,
+145,
+42,
+20,
+4,
+16,
+37,
+58
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000222",
+"name": "a(n) = A058057(n,n-2).",
+"terms": [
+0,
+0,
+1,
+3,
+6,
+38,
+213,
+1479,
+11692,
+104364,
+1036809,
+11344859,
+135548466,
+1755739218,
+24504637741,
+366596136399,
+5852040379224,
+99283915922264,
+1783921946910417,
+33840669046326579
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000223",
+"name": "Let A(n) = #{(i,j,k): i^2 + j^2 + k^2 <= n}, V(n) = (4/3)Pi*n^(3/2), P(n) = A(n) - V(n); A000092 gives values of n where |P(n)| sets a new record; sequence gives nearest integer to P(A000092(n)).",
+"terms": [
+3,
+7,
+10,
+19,
+32,
+34,
+37,
+51,
+81,
+119,
+122,
+134,
+157,
+160,
+161,
+174,
+221,
+252,
+254,
+294
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000224",
+"name": "Number of squares mod n.",
+"terms": [
+1,
+2,
+2,
+2,
+3,
+4,
+4,
+3,
+4,
+6,
+6,
+4,
+7,
+8,
+6,
+4,
+9,
+8,
+10,
+6
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000225",
+"name": "a(n) = 2^n - 1. (Sometimes called Mersenne numbers, although that name is usually reserved for A001348.)",
+"terms": [
+0,
+1,
+3,
+7,
+15,
+31,
+63,
+127,
+255,
+511,
+1023,
+2047,
+4095,
+8191,
+16383,
+32767,
+65535,
+131071,
+262143,
+524287
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+2,
+1
+]
+}
+},
+{
+"A": "A000226",
+"name": "Number of n-node unlabeled connected graphs with one cycle of length 3.",
+"terms": [
+1,
+1,
+3,
+7,
+18,
+44,
+117,
+299,
+793,
+2095,
+5607,
+15047,
+40708,
+110499,
+301541,
+825784,
+2270211,
+6260800,
+17319689,
+48042494
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000227",
+"name": "Nearest integer to e^n.",
+"terms": [
+1,
+3,
+7,
+20,
+55,
+148,
+403,
+1097,
+2981,
+8103,
+22026,
+59874,
+162755,
+442413,
+1202604,
+3269017,
+8886111,
+24154953,
+65659969,
+178482301
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000228",
+"name": "Number of hexagonal polyominoes (or hexagonal polyforms, or planar polyhexes) with n cells.",
+"terms": [
+1,
+1,
+3,
+7,
+22,
+82,
+333,
+1448,
+6572,
+30490,
+143552,
+683101,
+3274826,
+15796897,
+76581875,
+372868101,
+1822236628,
+8934910362,
+43939164263,
+216651036012
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000229",
+"name": "a(n) is the least number m such that the n-th prime is the least quadratic nonresidue modulo m.",
+"terms": [
+3,
+7,
+23,
+71,
+311,
+479,
+1559,
+5711,
+10559,
+18191,
+31391,
+422231,
+701399,
+366791,
+3818929,
+9257329,
+22000801,
+36415991,
+48473881,
+175244281
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000230",
+"name": "a(0)=2; for n>=1, a(n) = smallest prime p such that there is a gap of exactly 2n between p and next prime, or -1 if no such prime exists.",
+"terms": [
+2,
+3,
+7,
+23,
+89,
+139,
+199,
+113,
+1831,
+523,
+887,
+1129,
+1669,
+2477,
+2971,
+4297,
+5591,
+1327,
+9551,
+30593
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000232",
+"name": "Construct a triangle as in A036262. Sequence is one less than the position of the first number larger than 2 in the n-th row (n-th difference).",
+"terms": [
+3,
+8,
+14,
+14,
+25,
+24,
+23,
+22,
+25,
+59,
+98,
+97,
+98,
+97,
+174,
+176,
+176,
+176,
+176,
+291
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000233",
+"name": "Generalized class numbers c_(n,1).",
+"terms": [
+1,
+3,
+8,
+16,
+30,
+46,
+64,
+96,
+126,
+158,
+216,
+256,
+302,
+396,
+448,
+512,
+636,
+702,
+792,
+960
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000234",
+"name": "Partitions into non-integral powers (see Comments for precise definition).",
+"terms": [
+1,
+3,
+8,
+18,
+37,
+72,
+136,
+251,
+445,
+770,
+1312,
+2202,
+3632,
+5908,
+9501,
+15111,
+23781,
+37083,
+57293,
+87813
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000235",
+"name": "Number of n-node rooted trees of height 3.",
+"terms": [
+0,
+0,
+0,
+1,
+3,
+8,
+18,
+38,
+76,
+147,
+277,
+509,
+924,
+1648,
+2912,
+5088,
+8823,
+15170,
+25935,
+44042
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000236",
+"name": "Maximum m such that there are no two adjacent elements belonging to the same n-th power residue class modulo some prime p in the sequence 1,2,...,m (equivalently, there is no n-th power residue modulo p in the sequence 1/2,2/3,...,(m-1)/m).",
+"terms": [
+3,
+8,
+20,
+44,
+80,
+343,
+288,
+608,
+1023,
+2848,
+4095,
+40959,
+16383,
+32768,
+11375,
+655360,
+262143,
+3670016,
+1048575,
+2097151
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000237",
+"name": "Number of mixed Husimi trees with n nodes; or rooted polygonal cacti with bridges.",
+"terms": [
+0,
+1,
+1,
+3,
+8,
+26,
+84,
+297,
+1066,
+3976,
+15093,
+58426,
+229189,
+910127,
+3649165,
+14756491,
+60103220,
+246357081,
+1015406251,
+4205873378
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000238",
+"name": "Number of oriented trees with n nodes.",
+"terms": [
+1,
+1,
+3,
+8,
+27,
+91,
+350,
+1376,
+5743,
+24635,
+108968,
+492180,
+2266502,
+10598452,
+50235931,
+240872654,
+1166732814,
+5702001435,
+28088787314,
+139354922608
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000239",
+"name": "One-half of number of permutations of [n] with exactly one run of adjacent symbols differing by 1.",
+"terms": [
+1,
+1,
+3,
+8,
+28,
+143,
+933,
+7150,
+62310,
+607445,
+6545935,
+77232740,
+989893248,
+13692587323,
+203271723033,
+3223180454138,
+54362625941818,
+971708196867905,
+18347779304380995,
+364911199401630640
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000240",
+"name": "Rencontres numbers: number of permutations of [n] with exactly one fixed point.",
+"terms": [
+1,
+0,
+3,
+8,
+45,
+264,
+1855,
+14832,
+133497,
+1334960,
+14684571,
+176214840,
+2290792933,
+32071101048,
+481066515735,
+7697064251744,
+130850092279665,
+2355301661033952,
+44750731559645107,
+895014631192902120
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000241",
+"name": "Crossing number of complete graph with n nodes.",
+"terms": [
+0,
+0,
+0,
+0,
+0,
+1,
+3,
+9,
+18,
+36,
+60,
+100,
+150,
+225,
+315
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000242",
+"name": "3rd power of rooted tree enumerator; number of linear forests of 3 rooted trees.",
+"terms": [
+1,
+3,
+9,
+25,
+69,
+186,
+503,
+1353,
+3651,
+9865,
+26748,
+72729,
+198447,
+543159,
+1491402,
+4107152,
+11342826,
+31408719,
+87189987,
+242603970
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000243",
+"name": "Number of trees with n nodes, 2 of which are labeled.",
+"terms": [
+1,
+3,
+9,
+26,
+75,
+214,
+612,
+1747,
+4995,
+14294,
+40967,
+117560,
+337830,
+972027,
+2800210,
+8075889,
+23315775,
+67380458,
+194901273,
+564239262
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000244",
+"name": "Powers of 3: a(n) = 3^n.",
+"terms": [
+1,
+3,
+9,
+27,
+81,
+243,
+729,
+2187,
+6561,
+19683,
+59049,
+177147,
+531441,
+1594323,
+4782969,
+14348907,
+43046721,
+129140163,
+387420489,
+1162261467
+],
+"strata": [
+"CORE",
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+3,
+0
+]
+}
+},
+{
+"A": "A000245",
+"name": "a(n) = 3*(2*n)!/((n+2)!*(n-1)!).",
+"terms": [
+0,
+1,
+3,
+9,
+28,
+90,
+297,
+1001,
+3432,
+11934,
+41990,
+149226,
+534888,
+1931540,
+7020405,
+25662825,
+94287120,
+347993910,
+1289624490,
+4796857230
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000246",
+"name": "Number of permutations in the symmetric group S_n that have odd order.",
+"terms": [
+1,
+1,
+1,
+3,
+9,
+45,
+225,
+1575,
+11025,
+99225,
+893025,
+9823275,
+108056025,
+1404728325,
+18261468225,
+273922023375,
+4108830350625,
+69850115960625,
+1187451971330625,
+22561587455281875
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000247",
+"name": "a(n) = 2^n - n - 2.",
+"terms": [
+0,
+3,
+10,
+25,
+56,
+119,
+246,
+501,
+1012,
+2035,
+4082,
+8177,
+16368,
+32751,
+65518,
+131053,
+262124,
+524267,
+1048554,
+2097129
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-2,
+1
+]
+}
+},
+{
+"A": "A000248",
+"name": "Expansion of e.g.f. exp(x*exp(x)).",
+"terms": [
+1,
+1,
+3,
+10,
+41,
+196,
+1057,
+6322,
+41393,
+293608,
+2237921,
+18210094,
+157329097,
+1436630092,
+13810863809,
+139305550066,
+1469959371233,
+16184586405328,
+185504221191745,
+2208841954063318
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000249",
+"name": "Nearest integer to modified Bessel function K_n(5).",
+"terms": [
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+1,
+3,
+10,
+42,
+193,
+966,
+5215,
+30170,
+186234,
+1222065,
+8496274,
+62395234
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000250",
+"name": "Number of symmetric reflexive relations on n nodes: (1/2)*A000666.",
+"terms": [
+1,
+3,
+10,
+45,
+272,
+2548,
+39632,
+1104306,
+56871880,
+5463113568,
+978181717680,
+326167542296048,
+202701136710498400,
+235284321080559981952,
+511531711735594715527360,
+2089424601541011618029114896,
+16084004145036771186002041099712,
+234026948449058790311618594954430848,
+6454432593140577452393525511509194184320
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000251",
+"name": "Number of trees of diameter 6.",
+"terms": [
+1,
+3,
+11,
+29,
+74,
+167,
+367,
+755,
+1515,
+2931,
+5551,
+10263,
+18677,
+33409,
+59024,
+102984,
+177915,
+304458,
+516939,
+871180
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000252",
+"name": "Number of invertible 2 X 2 matrices mod n.",
+"terms": [
+1,
+6,
+48,
+96,
+480,
+288,
+2016,
+1536,
+3888,
+2880,
+13200,
+4608,
+26208,
+12096,
+23040,
+24576,
+78336,
+23328,
+123120,
+46080
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000253",
+"name": "a(n) = 2*a(n-1) - a(n-2) + a(n-3) + 2^(n-1).",
+"terms": [
+0,
+1,
+4,
+11,
+27,
+63,
+142,
+312,
+673,
+1432,
+3015,
+6295,
+13055,
+26926,
+55284,
+113081,
+230572,
+468883,
+951347,
+1926527
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000254",
+"name": "Unsigned Stirling numbers of first kind, s(n+1,2): a(n+1) = (n+1)*a(n) + n!.",
+"terms": [
+0,
+1,
+3,
+11,
+50,
+274,
+1764,
+13068,
+109584,
+1026576,
+10628640,
+120543840,
+1486442880,
+19802759040,
+283465647360,
+4339163001600,
+70734282393600,
+1223405590579200,
+22376988058521600,
+431565146817638400
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000255",
+"name": "a(n) = n*a(n-1) + (n-1)*a(n-2), a(0) = 1, a(1) = 1.",
+"terms": [
+1,
+1,
+3,
+11,
+53,
+309,
+2119,
+16687,
+148329,
+1468457,
+16019531,
+190899411,
+2467007773,
+34361893981,
+513137616783,
+8178130767479,
+138547156531409,
+2486151753313617,
+47106033220679059,
+939765362752547227
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000256",
+"name": "Number of simple triangulations of the plane with n nodes.",
+"terms": [
+1,
+1,
+0,
+1,
+3,
+12,
+52,
+241,
+1173,
+5929,
+30880,
+164796,
+897380,
+4970296,
+27930828,
+158935761,
+914325657,
+5310702819,
+31110146416,
+183634501753
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000257",
+"name": "Number of rooted bicubic maps: a(n) = (8*n-4)*a(n-1)/(n+2) for n >= 2, a(0) = a(1) = 1.",
+"terms": [
+1,
+1,
+3,
+12,
+56,
+288,
+1584,
+9152,
+54912,
+339456,
+2149888,
+13891584,
+91287552,
+608583680,
+4107939840,
+28030648320,
+193100021760,
+1341536993280,
+9390758952960,
+66182491668480
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000258",
+"name": "Expansion of e.g.f. exp(exp(exp(x)-1)-1).",
+"terms": [
+1,
+1,
+3,
+12,
+60,
+358,
+2471,
+19302,
+167894,
+1606137,
+16733779,
+188378402,
+2276423485,
+29367807524,
+402577243425,
+5840190914957,
+89345001017415,
+1436904211547895,
+24227076487779802,
+427187837301557598
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000259",
+"name": "Number of certain rooted planar maps.",
+"terms": [
+1,
+3,
+13,
+63,
+326,
+1761,
+9808,
+55895,
+324301,
+1908878,
+11369744,
+68395917,
+414927215,
+2535523154,
+15592255913,
+96419104103,
+599176447614,
+3739845108057,
+23435007764606,
+147374772979438
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000260",
+"name": "Number of rooted simplicial 3-polytopes with n+3 nodes; or rooted 3-connected triangulations with 2n+2 faces; or rooted 3-connected trivalent maps with 2n+2 vertices.",
+"terms": [
+1,
+1,
+3,
+13,
+68,
+399,
+2530,
+16965,
+118668,
+857956,
+6369883,
+48336171,
+373537388,
+2931682810,
+23317105140,
+187606350645,
+1524813969276,
+12504654858828,
+103367824774012,
+860593023907540
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000261",
+"name": "a(n) = n*a(n-1) + (n-3)*a(n-2), with a(1) = 0, a(2) = 1.",
+"terms": [
+0,
+1,
+3,
+13,
+71,
+465,
+3539,
+30637,
+296967,
+3184129,
+37401155,
+477471021,
+6581134823,
+97388068753,
+1539794649171,
+25902759280525,
+461904032857319,
+8702813980639617,
+172743930157869827,
+3602826440828270029
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000262",
+"name": "Number of \"sets of lists\": number of partitions of {1,...,n} into any number of lists, where a list means an ordered subset.",
+"terms": [
+1,
+1,
+3,
+13,
+73,
+501,
+4051,
+37633,
+394353,
+4596553,
+58941091,
+824073141,
+12470162233,
+202976401213,
+3535017524403,
+65573803186921,
+1290434218669921,
+26846616451246353,
+588633468315403843,
+13564373693588558173
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000263",
+"name": "Number of partitions into non-integral powers.",
+"terms": [
+3,
+14,
+39,
+91,
+173,
+307,
+502,
+779,
+1150,
+1651,
+2280,
+3090,
+4090,
+5313,
+6787,
+8564,
+10643,
+13103,
+15948,
+19235
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000264",
+"name": "Number of 3-edge-connected rooted cubic maps with 2n nodes and a distinguished Hamiltonian cycle.",
+"terms": [
+1,
+1,
+3,
+14,
+80,
+518,
+3647,
+27274,
+213480,
+1731652,
+14455408,
+123552488,
+1077096124,
+9548805240,
+85884971043,
+782242251522,
+7203683481720,
+66989439309452,
+628399635777936,
+5940930064989720
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000265",
+"name": "Remove all factors of 2 from n; or largest odd divisor of n; or odd part of n.",
+"terms": [
+1,
+1,
+3,
+1,
+5,
+3,
+7,
+1,
+9,
+5,
+11,
+3,
+13,
+7,
+15,
+1,
+17,
+9,
+19,
+5
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000266",
+"name": "Expansion of e.g.f. exp(-x^2/2) / (1-x).",
+"terms": [
+1,
+1,
+1,
+3,
+15,
+75,
+435,
+3045,
+24465,
+220185,
+2200905,
+24209955,
+290529855,
+3776888115,
+52876298475,
+793144477125,
+12690313661025,
+215735332237425,
+3883235945814225,
+73781482970470275
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000267",
+"name": "Integer part of square root of 4n+1.",
+"terms": [
+1,
+2,
+3,
+3,
+4,
+4,
+5,
+5,
+5,
+6,
+6,
+6,
+7,
+7,
+7,
+7,
+8,
+8,
+8,
+8
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000268",
+"name": "E.g.f.: -log(1+log(1+log(1-x))).",
+"terms": [
+1,
+3,
+15,
+105,
+947,
+10472,
+137337,
+2085605,
+36017472,
+697407850,
+14969626900,
+352877606716,
+9064191508018,
+252024567201300,
+7542036496650006,
+241721880399970938,
+8261159383595659128,
+299916384730043070880,
+11526945327529620432872,
+467583770376898192016104
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000269",
+"name": "Number of trees with n nodes, 3 of which are labeled.",
+"terms": [
+3,
+16,
+67,
+251,
+888,
+3023,
+10038,
+32722,
+105228,
+334836,
+1056611,
+3311784,
+10322791,
+32026810,
+98974177,
+304835956,
+936147219,
+2867586542,
+8764280567,
+26733395986
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000270",
+"name": "For n >= 2, a(n) = b(n+1)+b(n)+b(n-1), where the b(i) are the m\u00e9nage numbers A000179; a(0)=a(1)=1.",
+"terms": [
+1,
+1,
+0,
+3,
+16,
+95,
+672,
+5397,
+48704,
+487917,
+5373920,
+64547175,
+839703696,
+11762247419,
+176509466560,
+2825125339305,
+48040633506048,
+864932233294681,
+16436901752820288,
+328791893988472843
+],
+"strata": [
+"CLASSIC"
+],
+"recurrence": null
+},
+{
+"A": "A000272",
+"name": "Number of trees on n labeled nodes: n^(n-2) with a(0)=1.",
+"terms": [
+1,
+1,
+1,
+3,
+16,
+125,
+1296,
+16807,
+262144,
+4782969,
+100000000,
+2357947691,
+61917364224,
+1792160394037,
+56693912375296,
+1946195068359375,
+72057594037927936,
+2862423051509815793,
+121439531096594251776,
+5480386857784802185939
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000285",
+"name": "a(0) = 1, a(1) = 4, and a(n) = a(n-1) + a(n-2) for n >= 2.",
+"terms": [
+1,
+4,
+5,
+9,
+14,
+23,
+37,
+60,
+97,
+157,
+254,
+411,
+665,
+1076,
+1741,
+2817,
+4558,
+7375,
+11933,
+19308
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000290",
+"name": "The squares: a(n) = n^2.",
+"terms": [
+0,
+1,
+4,
+9,
+16,
+25,
+36,
+49,
+64,
+81,
+100,
+121,
+144,
+169,
+196,
+225,
+256,
+289,
+324,
+361
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+2
+]
+}
+},
+{
+"A": "A000292",
+"name": "Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,3) = n*(n+1)*(n+2)/6.",
+"terms": [
+0,
+1,
+4,
+10,
+20,
+35,
+56,
+84,
+120,
+165,
+220,
+286,
+364,
+455,
+560,
+680,
+816,
+969,
+1140,
+1330
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+1
+]
+}
+},
+{
+"A": "A000295",
+"name": "Eulerian numbers (Euler's triangle: column k=2 of A008292, column k=1 of A173018).",
+"terms": [
+0,
+0,
+1,
+4,
+11,
+26,
+57,
+120,
+247,
+502,
+1013,
+2036,
+4083,
+8178,
+16369,
+32752,
+65519,
+131054,
+262125,
+524268
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-2,
+1
+]
+}
+},
+{
+"A": "A000297",
+"name": "a(n) = (n+1)*(n+3)*(n+8)/6.",
+"terms": [
+0,
+4,
+12,
+25,
+44,
+70,
+104,
+147,
+200,
+264,
+340,
+429,
+532,
+650,
+784,
+935,
+1104,
+1292,
+1500,
+1729
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+1
+]
+}
+},
+{
+"A": "A000302",
+"name": "Powers of 4: a(n) = 4^n.",
+"terms": [
+1,
+4,
+16,
+64,
+256,
+1024,
+4096,
+16384,
+65536,
+262144,
+1048576,
+4194304,
+16777216,
+67108864,
+268435456,
+1073741824,
+4294967296,
+17179869184,
+68719476736,
+274877906944
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+0
+]
+}
+},
+{
+"A": "A000312",
+"name": "a(n) = n^n; number of labeled mappings from n points to themselves (endofunctions).",
+"terms": [
+1,
+1,
+4,
+27,
+256,
+3125,
+46656,
+823543,
+16777216,
+387420489,
+10000000000,
+285311670611,
+8916100448256,
+302875106592253,
+11112006825558016,
+437893890380859375,
+18446744073709551616,
+827240261886336764177,
+39346408075296537575424,
+1978419655660313589123979
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000325",
+"name": "a(n) = 2^n - n.",
+"terms": [
+1,
+1,
+2,
+5,
+12,
+27,
+58,
+121,
+248,
+503,
+1014,
+2037,
+4084,
+8179,
+16370,
+32753,
+65520,
+131055,
+262126,
+524269
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-2,
+1
+]
+}
+},
+{
+"A": "A000326",
+"name": "Pentagonal numbers: a(n) = n*(3*n-1)/2.",
+"terms": [
+0,
+1,
+5,
+12,
+22,
+35,
+51,
+70,
+92,
+117,
+145,
+176,
+210,
+247,
+287,
+330,
+376,
+425,
+477,
+532
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+3
+]
+}
+},
+{
+"A": "A000330",
+"name": "Square pyramidal numbers: a(n) = 0^2 + 1^2 + 2^2 + ... + n^2 = n*(n+1)*(2*n+1)/6.",
+"terms": [
+0,
+1,
+5,
+14,
+30,
+55,
+91,
+140,
+204,
+285,
+385,
+506,
+650,
+819,
+1015,
+1240,
+1496,
+1785,
+2109,
+2470
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+2
+]
+}
+},
+{
+"A": "A000337",
+"name": "a(n) = (n-1)*2^n + 1.",
+"terms": [
+0,
+1,
+5,
+17,
+49,
+129,
+321,
+769,
+1793,
+4097,
+9217,
+20481,
+45057,
+98305,
+212993,
+458753,
+983041,
+2097153,
+4456449,
+9437185
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-4,
+1
+]
+}
+},
+{
+"A": "A000338",
+"name": "Expansion of x^3*(5-2*x)*(1-x^3)/(1-x)^4.",
+"terms": [
+5,
+18,
+42,
+75,
+117,
+168,
+228,
+297,
+375,
+462,
+558,
+663,
+777,
+900,
+1032,
+1173,
+1323,
+1482,
+1650,
+1827
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+-1,
+0,
+9
+]
+}
+},
+{
+"A": "A000340",
+"name": "a(0)=1, a(n) = 3*a(n-1) + n + 1.",
+"terms": [
+1,
+5,
+18,
+58,
+179,
+543,
+1636,
+4916,
+14757,
+44281,
+132854,
+398574,
+1195735,
+3587219,
+10761672,
+32285032,
+96855113,
+290565357,
+871696090,
+2615088290
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-3,
+1
+]
+}
+},
+{
+"A": "A000351",
+"name": "Powers of 5: a(n) = 5^n.",
+"terms": [
+1,
+5,
+25,
+125,
+625,
+3125,
+15625,
+78125,
+390625,
+1953125,
+9765625,
+48828125,
+244140625,
+1220703125,
+6103515625,
+30517578125,
+152587890625,
+762939453125,
+3814697265625,
+19073486328125
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+5,
+0
+]
+}
+},
+{
+"A": "A000364",
+"name": "Euler (or secant or \"Zig\") numbers: e.g.f. (even powers only) sec(x) = 1/cos(x).",
+"terms": [
+1,
+1,
+5,
+61,
+1385,
+50521,
+2702765,
+199360981,
+19391512145,
+2404879675441,
+370371188237525,
+69348874393137901,
+15514534163557086905,
+4087072509293123892361,
+1252259641403629865468285,
+441543893249023104553682821,
+177519391579539289436664789665,
+80723299235887898062168247453281
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000381",
+"name": "Essentially the same as A001611.",
+"terms": [
+2,
+3,
+4,
+6,
+9,
+14,
+22,
+35,
+56,
+90,
+145,
+234,
+378,
+611,
+988,
+1598,
+2585,
+4182,
+6766
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+-1
+]
+}
+},
+{
+"A": "A000384",
+"name": "Hexagonal numbers: a(n) = n*(2*n-1).",
+"terms": [
+0,
+1,
+6,
+15,
+28,
+45,
+66,
+91,
+120,
+153,
+190,
+231,
+276,
+325,
+378,
+435,
+496,
+561,
+630,
+703
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+4
+]
+}
+},
+{
+"A": "A000392",
+"name": "Stirling numbers of second kind S(n,3).",
+"terms": [
+0,
+0,
+0,
+1,
+6,
+25,
+90,
+301,
+966,
+3025,
+9330,
+28501,
+86526,
+261625,
+788970,
+2375101,
+7141686,
+21457825,
+64439010,
+193448101
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+5,
+-6,
+0,
+1
+]
+}
+},
+{
+"A": "A000400",
+"name": "Powers of 6: a(n) = 6^n.",
+"terms": [
+1,
+6,
+36,
+216,
+1296,
+7776,
+46656,
+279936,
+1679616,
+10077696,
+60466176,
+362797056,
+2176782336,
+13060694016,
+78364164096,
+470184984576,
+2821109907456,
+16926659444736,
+101559956668416,
+609359740010496
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+6,
+0
+]
+}
+},
+{
+"A": "A000407",
+"name": "a(n) = (2*n+1)! / n!.",
+"terms": [
+1,
+6,
+60,
+840,
+15120,
+332640,
+8648640,
+259459200,
+8821612800,
+335221286400,
+14079294028800,
+647647525324800,
+32382376266240000,
+1748648318376960000,
+101421602465863680000,
+6288139352883548160000,
+415017197290314178560000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+2,
+0
+]
+}
+},
+{
+"A": "A000420",
+"name": "Powers of 7: a(n) = 7^n.",
+"terms": [
+1,
+7,
+49,
+343,
+2401,
+16807,
+117649,
+823543,
+5764801,
+40353607,
+282475249,
+1977326743,
+13841287201,
+96889010407,
+678223072849,
+4747561509943,
+33232930569601,
+232630513987207,
+1628413597910449,
+11398895185373143
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+7,
+0
+]
+}
+},
+{
+"A": "A000447",
+"name": "a(n) = 1^2 + 3^2 + 5^2 + 7^2 + ... + (2*n-1)^2 = n*(4*n^2 - 1)/3.",
+"terms": [
+0,
+1,
+10,
+35,
+84,
+165,
+286,
+455,
+680,
+969,
+1330,
+1771,
+2300,
+2925,
+3654,
+4495,
+5456,
+6545,
+7770,
+9139
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+8
+]
+}
+},
+{
+"A": "A000466",
+"name": "a(n) = 4*n^2 - 1.",
+"terms": [
+-1,
+3,
+15,
+35,
+63,
+99,
+143,
+195,
+255,
+323,
+399,
+483,
+575,
+675,
+783,
+899,
+1023,
+1155,
+1295,
+1443
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+8
+]
+}
+},
+{
+"A": "A000484",
+"name": "a(n) = round(cos(n)).",
+"terms": [
+1,
+1,
+0,
+-1,
+-1,
+0,
+1,
+1,
+0,
+-1,
+-1,
+0,
+1,
+1,
+0,
+-1,
+-1,
+0,
+1,
+1
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+-1,
+0
+]
+}
+},
+{
+"A": "A000521",
+"name": "Coefficients of modular function j as power series in q = e^(2 Pi i t). Another name is the elliptic modular invariant J(tau).",
+"terms": [
+1,
+744,
+196884,
+21493760,
+864299970,
+20245856256,
+333202640600,
+4252023300096,
+44656994071935,
+401490886656000,
+3176440229784420,
+22567393309593600,
+146211911499519294,
+874313719685775360,
+4872010111798142520,
+25497827389410525184,
+126142916465781843075
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000522",
+"name": "Total number of ordered k-tuples (k=0..n) of distinct elements from an n-element set: a(n) = Sum_{k=0..n} n!/k!.",
+"terms": [
+1,
+2,
+5,
+16,
+65,
+326,
+1957,
+13700,
+109601,
+986410,
+9864101,
+108505112,
+1302061345,
+16926797486,
+236975164805,
+3554627472076,
+56874039553217,
+966858672404690,
+17403456103284421,
+330665665962404000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+0,
+1
+]
+}
+},
+{
+"A": "A000566",
+"name": "Heptagonal numbers (or 7-gonal numbers): n*(5*n-3)/2.",
+"terms": [
+0,
+1,
+7,
+18,
+34,
+55,
+81,
+112,
+148,
+189,
+235,
+286,
+342,
+403,
+469,
+540,
+616,
+697,
+783,
+874
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+5
+]
+}
+},
+{
+"A": "A000567",
+"name": "Octagonal numbers: n*(3*n-2). Also called star numbers.",
+"terms": [
+0,
+1,
+8,
+21,
+40,
+65,
+96,
+133,
+176,
+225,
+280,
+341,
+408,
+481,
+560,
+645,
+736,
+833,
+936,
+1045
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+6
+]
+}
+},
+{
+"A": "A000578",
+"name": "The cubes: a(n) = n^3.",
+"terms": [
+0,
+1,
+8,
+27,
+64,
+125,
+216,
+343,
+512,
+729,
+1000,
+1331,
+1728,
+2197,
+2744,
+3375,
+4096,
+4913,
+5832,
+6859
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+6
+]
+}
+},
+{
+"A": "A000583",
+"name": "Fourth powers: a(n) = n^4.",
+"terms": [
+0,
+1,
+16,
+81,
+256,
+625,
+1296,
+2401,
+4096,
+6561,
+10000,
+14641,
+20736,
+28561,
+38416,
+50625,
+65536,
+83521,
+104976,
+130321
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000593",
+"name": "Sum of odd divisors of n.",
+"terms": [
+1,
+1,
+4,
+1,
+6,
+4,
+8,
+1,
+13,
+6,
+12,
+4,
+14,
+8,
+24,
+1,
+18,
+13,
+20,
+6
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000655",
+"name": "a(n) = number of letters in a(n-1), a(1) = 1 (in English).",
+"terms": [
+1,
+3,
+5,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+0,
+0,
+0,
+4
+]
+}
+},
+{
+"A": "A000670",
+"name": "Fubini numbers: number of preferential arrangements of n labeled elements; or number of weak orders on n labeled elements; or number of ordered partitions of [n].",
+"terms": [
+1,
+1,
+3,
+13,
+75,
+541,
+4683,
+47293,
+545835,
+7087261,
+102247563,
+1622632573,
+28091567595,
+526858348381,
+10641342970443,
+230283190977853,
+5315654681981355,
+130370767029135901,
+3385534663256845323,
+92801587319328411133
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000720",
+"name": "pi(n), the number of primes <= n. Sometimes called PrimePi(n) to distinguish it from the number 3.14159...",
+"terms": [
+0,
+1,
+2,
+2,
+3,
+3,
+4,
+4,
+4,
+4,
+5,
+5,
+6,
+6,
+6,
+6,
+7,
+7,
+8,
+8
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000748",
+"name": "Expansion of bracket function.",
+"terms": [
+1,
+-3,
+6,
+-9,
+9,
+0,
+-27,
+81,
+-162,
+243,
+-243,
+0,
+729,
+-2187,
+4374,
+-6561,
+6561,
+0,
+-19683,
+59049
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+-3,
+-3,
+0
+]
+}
+},
+{
+"A": "A000796",
+"name": "Decimal expansion of Pi (or digits of Pi).",
+"terms": [
+3,
+1,
+4,
+1,
+5,
+9,
+2,
+6,
+5,
+3,
+5,
+8,
+9,
+7,
+9,
+3,
+2,
+3,
+8,
+4
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000803",
+"name": "a(n+3) = a(n+2) + a(n+1) + a(n) - 4.",
+"terms": [
+0,
+0,
+8,
+4,
+8,
+16,
+24,
+44,
+80,
+144,
+264,
+484,
+888,
+1632,
+3000,
+5516,
+10144,
+18656,
+34312,
+63108
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+1,
+-4
+]
+}
+},
+{
+"A": "A000865",
+"name": "Numbers beginning with letter 'o' in English.",
+"terms": [
+1,
+100,
+101,
+102,
+103,
+104,
+105,
+106,
+107,
+108,
+109,
+110,
+111,
+112,
+113,
+114,
+115,
+116,
+117,
+118
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+0,
+1
+]
+}
+},
+{
+"A": "A000918",
+"name": "a(n) = 2^n - 2.",
+"terms": [
+-1,
+0,
+2,
+6,
+14,
+30,
+62,
+126,
+254,
+510,
+1022,
+2046,
+4094,
+8190,
+16382,
+32766,
+65534,
+131070,
+262142,
+524286
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+2,
+2
+]
+}
+},
+{
+"A": "A000930",
+"name": "Narayana's cows sequence: a(0) = a(1) = a(2) = 1; thereafter a(n) = a(n-1) + a(n-3).",
+"terms": [
+1,
+1,
+1,
+2,
+3,
+4,
+6,
+9,
+13,
+19,
+28,
+41,
+60,
+88,
+129,
+189,
+277,
+406,
+595,
+872
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+0,
+1,
+0
+]
+}
+},
+{
+"A": "A000931",
+"name": "Padovan sequence (or Padovan numbers): a(n) = a(n-2) + a(n-3) with a(0) = 1, a(1) = a(2) = 0.",
+"terms": [
+1,
+0,
+0,
+1,
+0,
+1,
+1,
+1,
+2,
+2,
+3,
+4,
+5,
+7,
+9,
+12,
+16,
+21,
+28,
+37
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+0,
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A000959",
+"name": "Lucky numbers.",
+"terms": [
+1,
+3,
+7,
+9,
+13,
+15,
+21,
+25,
+31,
+33,
+37,
+43,
+49,
+51,
+63,
+67,
+69,
+73,
+75,
+79
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000961",
+"name": "Powers of primes. Alternatively, 1 and the prime powers (p^k, p prime, k >= 1).",
+"terms": [
+1,
+2,
+3,
+4,
+5,
+7,
+8,
+9,
+11,
+13,
+16,
+17,
+19,
+23,
+25,
+27,
+29,
+31,
+32,
+37
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A000975",
+"name": "a(2n) = 2*a(2n-1), a(2n+1) = 2*a(2n)+1 (also a(n) is the n-th number without consecutive equal binary digits).",
+"terms": [
+0,
+1,
+2,
+5,
+10,
+21,
+42,
+85,
+170,
+341,
+682,
+1365,
+2730,
+5461,
+10922,
+21845,
+43690,
+87381,
+174762,
+349525
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+2,
+1
+]
+}
+},
+{
+"A": "A000982",
+"name": "a(n) = ceiling(n^2/2).",
+"terms": [
+0,
+1,
+2,
+5,
+8,
+13,
+18,
+25,
+32,
+41,
+50,
+61,
+72,
+85,
+98,
+113,
+128,
+145,
+162,
+181
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+-1,
+2
+]
+}
+},
+{
+"A": "A000984",
+"name": "Central binomial coefficients: binomial(2*n,n) = (2*n)!/(n!)^2.",
+"terms": [
+1,
+2,
+6,
+20,
+70,
+252,
+924,
+3432,
+12870,
+48620,
+184756,
+705432,
+2704156,
+10400600,
+40116600,
+155117520,
+601080390,
+2333606220,
+9075135300,
+35345263800
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001006",
+"name": "Motzkin numbers: number of ways of drawing any number of nonintersecting chords joining n (labeled) points on a circle.",
+"terms": [
+1,
+1,
+2,
+4,
+9,
+21,
+51,
+127,
+323,
+835,
+2188,
+5798,
+15511,
+41835,
+113634,
+310572,
+853467,
+2356779,
+6536382,
+18199284
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001018",
+"name": "Powers of 8: a(n) = 8^n.",
+"terms": [
+1,
+8,
+64,
+512,
+4096,
+32768,
+262144,
+2097152,
+16777216,
+134217728,
+1073741824,
+8589934592,
+68719476736,
+549755813888,
+4398046511104,
+35184372088832,
+281474976710656,
+2251799813685248,
+18014398509481984,
+144115188075855872
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+8,
+0
+]
+}
+},
+{
+"A": "A001019",
+"name": "Powers of 9: a(n) = 9^n.",
+"terms": [
+1,
+9,
+81,
+729,
+6561,
+59049,
+531441,
+4782969,
+43046721,
+387420489,
+3486784401,
+31381059609,
+282429536481,
+2541865828329,
+22876792454961,
+205891132094649,
+1853020188851841,
+16677181699666569,
+150094635296999121,
+1350851717672992089
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+9,
+0
+]
+}
+},
+{
+"A": "A001045",
+"name": "Jacobsthal sequence (or Jacobsthal numbers): a(n) = a(n-1) + 2*a(n-2), with a(0) = 0, a(1) = 1; also a(n) = nearest integer to 2^n/3.",
+"terms": [
+0,
+1,
+1,
+3,
+5,
+11,
+21,
+43,
+85,
+171,
+341,
+683,
+1365,
+2731,
+5461,
+10923,
+21845,
+43691,
+87381,
+174763
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+2,
+0
+]
+}
+},
+{
+"A": "A001047",
+"name": "a(n) = 3^n - 2^n.",
+"terms": [
+0,
+1,
+5,
+19,
+65,
+211,
+665,
+2059,
+6305,
+19171,
+58025,
+175099,
+527345,
+1586131,
+4766585,
+14316139,
+42981185,
+129009091,
+387158345,
+1161737179
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-6,
+0
+]
+}
+},
+{
+"A": "A001054",
+"name": "a(n) = a(n-1)*a(n-2) - 1.",
+"terms": [
+0,
+1,
+-1,
+-2,
+1,
+-3,
+-4,
+11,
+-45,
+-496,
+22319,
+-11070225,
+-247076351776,
+2735190806339469599,
+-675800965841611881515781657825,
+-1848444588685310753420392017318175868503407962176
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "product2",
+"coef": [
+1,
+-1
+]
+}
+},
+{
+"A": "A001055",
+"name": "The multiplicative partition function: number of ways of factoring n with all factors greater than 1 (a(1) = 1 by convention).",
+"terms": [
+1,
+1,
+1,
+2,
+1,
+2,
+1,
+3,
+2,
+2,
+1,
+4,
+1,
+2,
+2,
+5,
+1,
+4,
+1,
+4
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001057",
+"name": "Canonical enumeration of integers: interleaved positive and negative integers with zero prepended.",
+"terms": [
+0,
+1,
+-1,
+2,
+-2,
+3,
+-3,
+4,
+-4,
+5,
+-5,
+6,
+-6,
+7,
+-7,
+8,
+-8,
+9,
+-9,
+10
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+-2,
+-1,
+1
+]
+}
+},
+{
+"A": "A001060",
+"name": "a(n) = a(n-1) + a(n-2) with a(0)=2, a(1)=5. Sometimes called the Evangelist Sequence.",
+"terms": [
+2,
+5,
+7,
+12,
+19,
+31,
+50,
+81,
+131,
+212,
+343,
+555,
+898,
+1453,
+2351,
+3804,
+6155,
+9959,
+16114,
+26073
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A001065",
+"name": "Sum of proper divisors (or aliquot parts) of n: sum of divisors of n that are less than n.",
+"terms": [
+0,
+1,
+1,
+3,
+1,
+6,
+1,
+7,
+4,
+8,
+1,
+16,
+1,
+10,
+9,
+15,
+1,
+21,
+1,
+22
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001075",
+"name": "a(0) = 1, a(1) = 2, a(n) = 4*a(n-1) - a(n-2).",
+"terms": [
+1,
+2,
+7,
+26,
+97,
+362,
+1351,
+5042,
+18817,
+70226,
+262087,
+978122,
+3650401,
+13623482,
+50843527,
+189750626,
+708158977,
+2642885282,
+9863382151,
+36810643322
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-1,
+0
+]
+}
+},
+{
+"A": "A001076",
+"name": "Denominators of continued fraction convergents to sqrt(5).",
+"terms": [
+0,
+1,
+4,
+17,
+72,
+305,
+1292,
+5473,
+23184,
+98209,
+416020,
+1762289,
+7465176,
+31622993,
+133957148,
+567451585,
+2403763488,
+10182505537,
+43133785636,
+182717648081
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+1,
+0
+]
+}
+},
+{
+"A": "A001077",
+"name": "Numerators of continued fraction convergents to sqrt(5).",
+"terms": [
+1,
+2,
+9,
+38,
+161,
+682,
+2889,
+12238,
+51841,
+219602,
+930249,
+3940598,
+16692641,
+70711162,
+299537289,
+1268860318,
+5374978561,
+22768774562,
+96450076809,
+408569081798
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+1,
+0
+]
+}
+},
+{
+"A": "A001090",
+"name": "a(n) = 8*a(n-1) - a(n-2); a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+8,
+63,
+496,
+3905,
+30744,
+242047,
+1905632,
+15003009,
+118118440,
+929944511,
+7321437648,
+57641556673,
+453811015736,
+3572846569215,
+28128961537984,
+221458845734657,
+1743541804339272,
+13726875588979519
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+8,
+-1,
+0
+]
+}
+},
+{
+"A": "A001091",
+"name": "a(n) = 8*a(n-1) - a(n-2); a(0) = 1, a(1) = 4.",
+"terms": [
+1,
+4,
+31,
+244,
+1921,
+15124,
+119071,
+937444,
+7380481,
+58106404,
+457470751,
+3601659604,
+28355806081,
+223244789044,
+1757602506271,
+13837575261124,
+108942999582721,
+857706421400644,
+6752708371622431,
+53163960551578804
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+8,
+-1,
+0
+]
+}
+},
+{
+"A": "A001093",
+"name": "a(n) = n^3 + 1.",
+"terms": [
+0,
+1,
+2,
+9,
+28,
+65,
+126,
+217,
+344,
+513,
+730,
+1001,
+1332,
+1729,
+2198,
+2745,
+3376,
+4097,
+4914,
+5833
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+6
+]
+}
+},
+{
+"A": "A001097",
+"name": "Twin primes.",
+"terms": [
+3,
+5,
+7,
+11,
+13,
+17,
+19,
+29,
+31,
+41,
+43,
+59,
+61,
+71,
+73,
+101,
+103,
+107,
+109,
+137
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001105",
+"name": "a(n) = 2*n^2.",
+"terms": [
+0,
+2,
+8,
+18,
+32,
+50,
+72,
+98,
+128,
+162,
+200,
+242,
+288,
+338,
+392,
+450,
+512,
+578,
+648,
+722
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+4
+]
+}
+},
+{
+"A": "A001106",
+"name": "9-gonal (or enneagonal or nonagonal) numbers: a(n) = n*(7*n-5)/2.",
+"terms": [
+0,
+1,
+9,
+24,
+46,
+75,
+111,
+154,
+204,
+261,
+325,
+396,
+474,
+559,
+651,
+750,
+856,
+969,
+1089,
+1216
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+7
+]
+}
+},
+{
+"A": "A001107",
+"name": "10-gonal (or decagonal) numbers: a(n) = n*(4*n-3).",
+"terms": [
+0,
+1,
+10,
+27,
+52,
+85,
+126,
+175,
+232,
+297,
+370,
+451,
+540,
+637,
+742,
+855,
+976,
+1105,
+1242,
+1387
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+8
+]
+}
+},
+{
+"A": "A001108",
+"name": "a(n)-th triangular number is a square: a(n+1) = 6*a(n) - a(n-1) + 2, with a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+8,
+49,
+288,
+1681,
+9800,
+57121,
+332928,
+1940449,
+11309768,
+65918161,
+384199200,
+2239277041,
+13051463048,
+76069501249,
+443365544448,
+2584123765441,
+15061377048200,
+87784138523761
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+2
+]
+}
+},
+{
+"A": "A001109",
+"name": "a(n)^2 is a triangular number: a(n) = 6*a(n-1) - a(n-2) with a(0)=0, a(1)=1.",
+"terms": [
+0,
+1,
+6,
+35,
+204,
+1189,
+6930,
+40391,
+235416,
+1372105,
+7997214,
+46611179,
+271669860,
+1583407981,
+9228778026,
+53789260175,
+313506783024,
+1827251437969,
+10650001844790,
+62072759630771
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A001113",
+"name": "Decimal expansion of e.",
+"terms": [
+2,
+7,
+1,
+8,
+2,
+8,
+1,
+8,
+2,
+8,
+4,
+5,
+9,
+0,
+4,
+5,
+2,
+3,
+5,
+3
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001117",
+"name": "a(n) = 3^n - 3*2^n + 3.",
+"terms": [
+1,
+0,
+0,
+6,
+36,
+150,
+540,
+1806,
+5796,
+18150,
+55980,
+171006,
+519156,
+1569750,
+4733820,
+14250606,
+42850116,
+128746950,
+386634060,
+1160688606
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-6,
+6
+]
+}
+},
+{
+"A": "A001147",
+"name": "Double factorial of odd numbers: a(n) = (2*n-1)!! = 1*3*5*...*(2*n-1).",
+"terms": [
+1,
+1,
+3,
+15,
+105,
+945,
+10395,
+135135,
+2027025,
+34459425,
+654729075,
+13749310575,
+316234143225,
+7905853580625,
+213458046676875,
+6190283353629375,
+191898783962510625,
+6332659870762850625,
+221643095476699771875,
+8200794532637891559375
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+-1,
+0
+]
+}
+},
+{
+"A": "A001157",
+"name": "a(n) = sigma_2(n): sum of squares of divisors of n.",
+"terms": [
+1,
+5,
+10,
+21,
+26,
+50,
+50,
+85,
+91,
+130,
+122,
+210,
+170,
+250,
+260,
+341,
+290,
+455,
+362,
+546
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001221",
+"name": "Number of distinct primes dividing n (also called omega(n)).",
+"terms": [
+0,
+1,
+1,
+1,
+1,
+2,
+1,
+1,
+1,
+2,
+1,
+2,
+1,
+2,
+2,
+1,
+1,
+2,
+1,
+2
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001222",
+"name": "Number of prime divisors of n counted with multiplicity (also called big omega of n, bigomega(n) or Omega(n)).",
+"terms": [
+0,
+1,
+1,
+2,
+1,
+2,
+1,
+3,
+2,
+2,
+1,
+3,
+1,
+2,
+2,
+4,
+1,
+3,
+1,
+3
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001227",
+"name": "Number of odd divisors of n.",
+"terms": [
+1,
+1,
+2,
+1,
+2,
+2,
+2,
+1,
+3,
+2,
+2,
+2,
+2,
+2,
+4,
+1,
+2,
+3,
+2,
+2
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001254",
+"name": "Squares of Lucas numbers.",
+"terms": [
+4,
+1,
+9,
+16,
+49,
+121,
+324,
+841,
+2209,
+5776,
+15129,
+39601,
+103684,
+271441,
+710649,
+1860496,
+4870849,
+12752041,
+33385284,
+87403801
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+2,
+-1,
+0
+]
+}
+},
+{
+"A": "A001281",
+"name": "Image of n under the map n->n/2 if n even, n->3n-1 if n odd.",
+"terms": [
+0,
+2,
+1,
+8,
+2,
+14,
+3,
+20,
+4,
+26,
+5,
+32,
+6,
+38,
+7,
+44,
+8,
+50,
+9,
+56
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+-1,
+1,
+1,
+7
+]
+}
+},
+{
+"A": "A001333",
+"name": "Pell-Lucas numbers: numerators of continued fraction convergents to sqrt(2).",
+"terms": [
+1,
+1,
+3,
+7,
+17,
+41,
+99,
+239,
+577,
+1393,
+3363,
+8119,
+19601,
+47321,
+114243,
+275807,
+665857,
+1607521,
+3880899,
+9369319
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+1,
+0
+]
+}
+},
+{
+"A": "A001350",
+"name": "Associated Mersenne numbers.",
+"terms": [
+0,
+1,
+1,
+4,
+5,
+11,
+16,
+29,
+45,
+76,
+121,
+199,
+320,
+521,
+841,
+1364,
+2205,
+3571,
+5776,
+9349
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+0,
+2,
+1,
+2
+]
+}
+},
+{
+"A": "A001352",
+"name": "a(0) = 1, a(1) = 6, a(2) = 24; for n>=3, a(n) = 4a(n-1) - a(n-2).",
+"terms": [
+1,
+6,
+24,
+90,
+336,
+1254,
+4680,
+17466,
+65184,
+243270,
+907896,
+3388314,
+12645360,
+47193126,
+176127144,
+657315450,
+2453134656,
+9155223174,
+34167758040,
+127515808986
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+4,
+-1,
+0,
+0
+]
+}
+},
+{
+"A": "A001353",
+"name": "a(n) = 4*a(n-1) - a(n-2) with a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+4,
+15,
+56,
+209,
+780,
+2911,
+10864,
+40545,
+151316,
+564719,
+2107560,
+7865521,
+29354524,
+109552575,
+408855776,
+1525870529,
+5694626340,
+21252634831
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-1,
+0
+]
+}
+},
+{
+"A": "A001354",
+"name": "Coordination sequence for hyperbolic tessellation 3^7 (from triangle group (2,3,7)).",
+"terms": [
+1,
+7,
+21,
+56,
+147,
+385,
+1008,
+2639,
+6909,
+18088,
+47355,
+123977,
+324576,
+849751,
+2224677,
+5824280,
+15248163,
+39920209,
+104512464,
+273617183
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-1,
+0,
+0
+]
+}
+},
+{
+"A": "A001358",
+"name": "Semiprimes (or biprimes): products of two primes.",
+"terms": [
+4,
+6,
+9,
+10,
+14,
+15,
+21,
+22,
+25,
+26,
+33,
+34,
+35,
+38,
+39,
+46,
+49,
+51,
+55,
+57
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001360",
+"name": "Crystal ball sequence for hyperbolic tessellation 3^7 (from triangle group (2,3,7)).",
+"terms": [
+1,
+8,
+29,
+85,
+232,
+617,
+1625,
+4264,
+11173,
+29261,
+76616,
+200593,
+525169,
+1374920,
+3599597,
+9423877,
+24672040,
+64592249,
+169104713,
+442721896
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-1,
+6
+]
+}
+},
+{
+"A": "A001405",
+"name": "a(n) = binomial(n, floor(n/2)).",
+"terms": [
+1,
+1,
+2,
+3,
+6,
+10,
+20,
+35,
+70,
+126,
+252,
+462,
+924,
+1716,
+3432,
+6435,
+12870,
+24310,
+48620,
+92378
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001444",
+"name": "Bending a piece of wire of length n+1 (configurations that can only be brought into coincidence by turning the figure over are counted as different).",
+"terms": [
+1,
+2,
+6,
+15,
+45,
+126,
+378,
+1107,
+3321,
+9882,
+29646,
+88695,
+266085,
+797526,
+2392578,
+7175547,
+21526641,
+64573362,
+193720086,
+581140575
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+3,
+-9,
+0
+]
+}
+},
+{
+"A": "A001445",
+"name": "a(n) = (2^n + 2^[ n/2 ] )/2.",
+"terms": [
+3,
+5,
+10,
+18,
+36,
+68,
+136,
+264,
+528,
+1040,
+2080,
+4128,
+8256,
+16448,
+32896,
+65664,
+131328,
+262400,
+524800,
+1049088
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+2,
+-4,
+0
+]
+}
+},
+{
+"A": "A001477",
+"name": "The nonnegative integers.",
+"terms": [
+0,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+19
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+1
+]
+}
+},
+{
+"A": "A001478",
+"name": "The negative integers.",
+"terms": [
+-1,
+-2,
+-3,
+-4,
+-5,
+-6,
+-7,
+-8,
+-9,
+-10,
+-11,
+-12,
+-13,
+-14,
+-15,
+-16,
+-17,
+-18,
+-19,
+-20
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+-1
+]
+}
+},
+{
+"A": "A001489",
+"name": "a(n) = -n.",
+"terms": [
+0,
+-1,
+-2,
+-3,
+-4,
+-5,
+-6,
+-7,
+-8,
+-9,
+-10,
+-11,
+-12,
+-13,
+-14,
+-15,
+-16,
+-17,
+-18,
+-19
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+-1
+]
+}
+},
+{
+"A": "A001511",
+"name": "The ruler function: exponent of the highest power of 2 dividing 2n. Equivalently, the 2-adic valuation of 2n.",
+"terms": [
+1,
+2,
+1,
+3,
+1,
+2,
+1,
+4,
+1,
+2,
+1,
+3,
+1,
+2,
+1,
+5,
+1,
+2,
+1,
+3
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001519",
+"name": "a(n) = 3*a(n-1) - a(n-2) for n >= 2, with a(0) = a(1) = 1.",
+"terms": [
+1,
+1,
+2,
+5,
+13,
+34,
+89,
+233,
+610,
+1597,
+4181,
+10946,
+28657,
+75025,
+196418,
+514229,
+1346269,
+3524578,
+9227465,
+24157817
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-1,
+0
+]
+}
+},
+{
+"A": "A001541",
+"name": "a(0) = 1, a(1) = 3; for n > 1, a(n) = 6*a(n-1) - a(n-2).",
+"terms": [
+1,
+3,
+17,
+99,
+577,
+3363,
+19601,
+114243,
+665857,
+3880899,
+22619537,
+131836323,
+768398401,
+4478554083,
+26102926097,
+152139002499,
+886731088897,
+5168247530883,
+30122754096401,
+175568277047523
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A001542",
+"name": "a(n) = 6*a(n-1) - a(n-2) for n > 1, a(0)=0 and a(1)=2.",
+"terms": [
+0,
+2,
+12,
+70,
+408,
+2378,
+13860,
+80782,
+470832,
+2744210,
+15994428,
+93222358,
+543339720,
+3166815962,
+18457556052,
+107578520350,
+627013566048,
+3654502875938,
+21300003689580,
+124145519261542
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A001550",
+"name": "a(n) = 1^n + 2^n + 3^n.",
+"terms": [
+3,
+6,
+14,
+36,
+98,
+276,
+794,
+2316,
+6818,
+20196,
+60074,
+179196,
+535538,
+1602516,
+4799354,
+14381676,
+43112258,
+129271236,
+387682634,
+1162785756
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-6,
+2
+]
+}
+},
+{
+"A": "A001571",
+"name": "a(n) = 4*a(n-1) - a(n-2) + 1, with a(0) = 0, a(1) = 2.",
+"terms": [
+0,
+2,
+9,
+35,
+132,
+494,
+1845,
+6887,
+25704,
+95930,
+358017,
+1336139,
+4986540,
+18610022,
+69453549,
+259204175,
+967363152,
+3610248434,
+13473630585,
+50284273907
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-1,
+1
+]
+}
+},
+{
+"A": "A001576",
+"name": "a(n) = 1^n + 2^n + 4^n.",
+"terms": [
+3,
+7,
+21,
+73,
+273,
+1057,
+4161,
+16513,
+65793,
+262657,
+1049601,
+4196353,
+16781313,
+67117057,
+268451841,
+1073774593,
+4295032833,
+17180000257,
+68719738881,
+274878431233
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-8,
+3
+]
+}
+},
+{
+"A": "A001580",
+"name": "a(n) = 2^n + n^2.",
+"terms": [
+1,
+3,
+8,
+17,
+32,
+57,
+100,
+177,
+320,
+593,
+1124,
+2169,
+4240,
+8361,
+16580,
+32993,
+65792,
+131361,
+262468,
+524649
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+4,
+-5,
+2,
+-2
+]
+}
+},
+{
+"A": "A001588",
+"name": "a(n) = a(n-1) + a(n-2) - 1.",
+"terms": [
+1,
+3,
+3,
+5,
+7,
+11,
+17,
+27,
+43,
+69,
+111,
+179,
+289,
+467,
+755,
+1221,
+1975,
+3195,
+5169,
+8363
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+-1
+]
+}
+},
+{
+"A": "A001590",
+"name": "Tribonacci numbers: a(n) = a(n-1) + a(n-2) + a(n-3) with a(0)=0, a(1)=1, a(2)=0.",
+"terms": [
+0,
+1,
+0,
+1,
+2,
+3,
+6,
+11,
+20,
+37,
+68,
+125,
+230,
+423,
+778,
+1431,
+2632,
+4841,
+8904,
+16377
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A001595",
+"name": "a(n) = a(n-1) + a(n-2) + 1, with a(0) = a(1) = 1.",
+"terms": [
+1,
+1,
+3,
+5,
+9,
+15,
+25,
+41,
+67,
+109,
+177,
+287,
+465,
+753,
+1219,
+1973,
+3193,
+5167,
+8361,
+13529
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+1
+]
+}
+},
+{
+"A": "A001607",
+"name": "a(n) = -a(n-1) - 2*a(n-2).",
+"terms": [
+0,
+1,
+-1,
+-1,
+3,
+-1,
+-5,
+7,
+3,
+-17,
+11,
+23,
+-45,
+-1,
+91,
+-89,
+-93,
+271,
+-85,
+-457
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+-1,
+-2,
+0
+]
+}
+},
+{
+"A": "A001608",
+"name": "Perrin sequence (or Perrin numbers, or Ondrej Such sequence): a(n) = a(n-2) + a(n-3) with a(0) = 3, a(1) = 0, a(2) = 2.",
+"terms": [
+3,
+0,
+2,
+3,
+2,
+5,
+5,
+7,
+10,
+12,
+17,
+22,
+29,
+39,
+51,
+68,
+90,
+119,
+158,
+209
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+0,
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A001609",
+"name": "a(1) = a(2) = 1, a(3) = 4; thereafter a(n) = a(n-1) + a(n-3).",
+"terms": [
+1,
+1,
+4,
+5,
+6,
+10,
+15,
+21,
+31,
+46,
+67,
+98,
+144,
+211,
+309,
+453,
+664,
+973,
+1426,
+2090
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+0,
+1,
+0
+]
+}
+},
+{
+"A": "A001610",
+"name": "a(n) = a(n-1) + a(n-2) + 1, with a(0) = 0 and a(1) = 2.",
+"terms": [
+0,
+2,
+3,
+6,
+10,
+17,
+28,
+46,
+75,
+122,
+198,
+321,
+520,
+842,
+1363,
+2206,
+3570,
+5777,
+9348,
+15126
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+1
+]
+}
+},
+{
+"A": "A001611",
+"name": "a(n) = Fibonacci(n) + 1.",
+"terms": [
+1,
+2,
+2,
+3,
+4,
+6,
+9,
+14,
+22,
+35,
+56,
+90,
+145,
+234,
+378,
+611,
+988,
+1598,
+2585,
+4182
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+-1
+]
+}
+},
+{
+"A": "A001612",
+"name": "a(n) = a(n-1) + a(n-2) - 1 for n > 1, a(0)=3, a(1)=2.",
+"terms": [
+3,
+2,
+4,
+5,
+8,
+12,
+19,
+30,
+48,
+77,
+124,
+200,
+323,
+522,
+844,
+1365,
+2208,
+3572,
+5779,
+9350
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+-1
+]
+}
+},
+{
+"A": "A001615",
+"name": "Dedekind psi function: n * Product_{p|n, p prime} (1 + 1/p).",
+"terms": [
+1,
+3,
+4,
+6,
+6,
+12,
+8,
+12,
+12,
+18,
+12,
+24,
+14,
+24,
+24,
+24,
+18,
+36,
+20,
+36
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001622",
+"name": "Decimal expansion of golden ratio phi (or tau) = (1 + sqrt(5))/2.",
+"terms": [
+1,
+6,
+1,
+8,
+0,
+3,
+3,
+9,
+8,
+8,
+7,
+4,
+9,
+8,
+9,
+4,
+8,
+4,
+8,
+2
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001637",
+"name": "Numbers with an even number of digits.",
+"terms": [
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+19,
+20,
+21,
+22,
+23,
+24,
+25,
+26,
+27,
+28,
+29
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+1
+]
+}
+},
+{
+"A": "A001644",
+"name": "a(n) = a(n-1) + a(n-2) + a(n-3), a(0)=3, a(1)=1, a(2)=3.",
+"terms": [
+3,
+1,
+3,
+7,
+11,
+21,
+39,
+71,
+131,
+241,
+443,
+815,
+1499,
+2757,
+5071,
+9327,
+17155,
+31553,
+58035,
+106743
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+1,
+0
+]
+}
+},
+{
+"A": "A001651",
+"name": "Numbers not divisible by 3.",
+"terms": [
+1,
+2,
+4,
+5,
+7,
+8,
+10,
+11,
+13,
+14,
+16,
+17,
+19,
+20,
+22,
+23,
+25,
+26,
+28,
+29
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+0,
+1,
+3
+]
+}
+},
+{
+"A": "A001652",
+"name": "a(n) = 6*a(n-1) - a(n-2) + 2 with a(0) = 0, a(1) = 3.",
+"terms": [
+0,
+3,
+20,
+119,
+696,
+4059,
+23660,
+137903,
+803760,
+4684659,
+27304196,
+159140519,
+927538920,
+5406093003,
+31509019100,
+183648021599,
+1070379110496,
+6238626641379,
+36361380737780,
+211929657785303
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+2
+]
+}
+},
+{
+"A": "A001653",
+"name": "Numbers k such that 2*k^2 - 1 is a square.",
+"terms": [
+1,
+5,
+29,
+169,
+985,
+5741,
+33461,
+195025,
+1136689,
+6625109,
+38613965,
+225058681,
+1311738121,
+7645370045,
+44560482149,
+259717522849,
+1513744654945,
+8822750406821,
+51422757785981,
+299713796309065
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A001654",
+"name": "Golden rectangle numbers: F(n) * F(n+1), where F(n) = A000045(n) (Fibonacci numbers).",
+"terms": [
+0,
+1,
+2,
+6,
+15,
+40,
+104,
+273,
+714,
+1870,
+4895,
+12816,
+33552,
+87841,
+229970,
+602070,
+1576239,
+4126648,
+10803704,
+28284465
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+2,
+-1,
+0
+]
+}
+},
+{
+"A": "A001700",
+"name": "a(n) = binomial(2*n+1, n+1): number of ways to put n+1 indistinguishable balls into n+1 distinguishable boxes = number of (n+1)-st degree monomials in n+1 variables = number of monotone maps from 1..n+1 to 1..n+1.",
+"terms": [
+1,
+3,
+10,
+35,
+126,
+462,
+1716,
+6435,
+24310,
+92378,
+352716,
+1352078,
+5200300,
+20058300,
+77558760,
+300540195,
+1166803110,
+4537567650,
+17672631900,
+68923264410
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001715",
+"name": "a(n) = n!/6.",
+"terms": [
+1,
+4,
+20,
+120,
+840,
+6720,
+60480,
+604800,
+6652800,
+79833600,
+1037836800,
+14529715200,
+217945728000,
+3487131648000,
+59281238016000,
+1067062284288000,
+20274183401472000,
+405483668029440000,
+8515157028618240000,
+187333454629601280000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+3,
+0
+]
+}
+},
+{
+"A": "A001720",
+"name": "a(n) = n!/24.",
+"terms": [
+1,
+5,
+30,
+210,
+1680,
+15120,
+151200,
+1663200,
+19958400,
+259459200,
+3632428800,
+54486432000,
+871782912000,
+14820309504000,
+266765571072000,
+5068545850368000,
+101370917007360000,
+2128789257154560000,
+46833363657400320000,
+1077167364120207360000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+4,
+0
+]
+}
+},
+{
+"A": "A001725",
+"name": "a(n) = n!/5!.",
+"terms": [
+1,
+6,
+42,
+336,
+3024,
+30240,
+332640,
+3991680,
+51891840,
+726485760,
+10897286400,
+174356582400,
+2964061900800,
+53353114214400,
+1013709170073600,
+20274183401472000,
+425757851430912000,
+9366672731480064000,
+215433472824041472000,
+5170403347776995328000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+5,
+0
+]
+}
+},
+{
+"A": "A001730",
+"name": "a(n) = n!/6!.",
+"terms": [
+1,
+7,
+56,
+504,
+5040,
+55440,
+665280,
+8648640,
+121080960,
+1816214400,
+29059430400,
+494010316800,
+8892185702400,
+168951528345600,
+3379030566912000,
+70959641905152000,
+1561112121913344000,
+35905578804006912000,
+861733891296165888000,
+21543347282404147200000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+6,
+0
+]
+}
+},
+{
+"A": "A001764",
+"name": "a(n) = binomial(3*n,n)/(2*n+1) (enumerates ternary trees and also noncrossing trees).",
+"terms": [
+1,
+1,
+3,
+12,
+55,
+273,
+1428,
+7752,
+43263,
+246675,
+1430715,
+8414640,
+50067108,
+300830572,
+1822766520,
+11124755664,
+68328754959,
+422030545335,
+2619631042665,
+16332922290300
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001787",
+"name": "a(n) = n*2^(n-1).",
+"terms": [
+0,
+1,
+4,
+12,
+32,
+80,
+192,
+448,
+1024,
+2304,
+5120,
+11264,
+24576,
+53248,
+114688,
+245760,
+524288,
+1114112,
+2359296,
+4980736
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-4,
+0
+]
+}
+},
+{
+"A": "A001792",
+"name": "a(n) = (n+2)*2^(n-1).",
+"terms": [
+1,
+3,
+8,
+20,
+48,
+112,
+256,
+576,
+1280,
+2816,
+6144,
+13312,
+28672,
+61440,
+131072,
+278528,
+589824,
+1245184,
+2621440,
+5505024
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-4,
+0
+]
+}
+},
+{
+"A": "A001813",
+"name": "Quadruple factorial numbers: a(n) = (2n)!/n!.",
+"terms": [
+1,
+2,
+12,
+120,
+1680,
+30240,
+665280,
+17297280,
+518918400,
+17643225600,
+670442572800,
+28158588057600,
+1295295050649600,
+64764752532480000,
+3497296636753920000,
+202843204931727360000,
+12576278705767096320000,
+830034394580628357120000,
+58102407620643984998400000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+-2,
+0
+]
+}
+},
+{
+"A": "A001834",
+"name": "a(0) = 1, a(1) = 5, a(n) = 4*a(n-1) - a(n-2).",
+"terms": [
+1,
+5,
+19,
+71,
+265,
+989,
+3691,
+13775,
+51409,
+191861,
+716035,
+2672279,
+9973081,
+37220045,
+138907099,
+518408351,
+1934726305,
+7220496869,
+26947261171,
+100568547815
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-1,
+0
+]
+}
+},
+{
+"A": "A001835",
+"name": "a(n) = 4*a(n-1) - a(n-2), with a(0) = 1, a(1) = 1.",
+"terms": [
+1,
+1,
+3,
+11,
+41,
+153,
+571,
+2131,
+7953,
+29681,
+110771,
+413403,
+1542841,
+5757961,
+21489003,
+80198051,
+299303201,
+1117014753,
+4168755811,
+15558008491
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-1,
+0
+]
+}
+},
+{
+"A": "A001844",
+"name": "Centered square numbers: a(n) = 2*n*(n+1)+1. Sums of two consecutive squares. Also, consider all Pythagorean triples (X, Y, Z=Y+1) ordered by increasing Z; then sequence gives Z values.",
+"terms": [
+1,
+5,
+13,
+25,
+41,
+61,
+85,
+113,
+145,
+181,
+221,
+265,
+313,
+365,
+421,
+481,
+545,
+613,
+685,
+761
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+4
+]
+}
+},
+{
+"A": "A001845",
+"name": "Centered octahedral numbers (crystal ball sequence for cubic lattice).",
+"terms": [
+1,
+7,
+25,
+63,
+129,
+231,
+377,
+575,
+833,
+1159,
+1561,
+2047,
+2625,
+3303,
+4089,
+4991,
+6017,
+7175,
+8473,
+9919
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+8
+]
+}
+},
+{
+"A": "A001859",
+"name": "Triangular numbers plus quarter-squares: n*(n+1)/2 + floor((n+1)^2/4) (i.e., A000217(n) + A002620(n+1)).",
+"terms": [
+0,
+2,
+5,
+10,
+16,
+24,
+33,
+44,
+56,
+70,
+85,
+102,
+120,
+140,
+161,
+184,
+208,
+234,
+261,
+290
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+-1,
+3
+]
+}
+},
+{
+"A": "A001891",
+"name": "Hit polynomials; convolution of natural numbers with Fibonacci numbers F(2), F(3), F(4), ....",
+"terms": [
+0,
+1,
+4,
+10,
+21,
+40,
+72,
+125,
+212,
+354,
+585,
+960,
+1568,
+2553,
+4148,
+6730,
+10909,
+17672,
+28616,
+46325
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+0,
+-1,
+2
+]
+}
+},
+{
+"A": "A001906",
+"name": "F(2n) = bisection of Fibonacci sequence: a(n) = 3*a(n-1) - a(n-2).",
+"terms": [
+0,
+1,
+3,
+8,
+21,
+55,
+144,
+377,
+987,
+2584,
+6765,
+17711,
+46368,
+121393,
+317811,
+832040,
+2178309,
+5702887,
+14930352,
+39088169
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-1,
+0
+]
+}
+},
+{
+"A": "A001911",
+"name": "a(n) = Fibonacci(n+3) - 2.",
+"terms": [
+0,
+1,
+3,
+6,
+11,
+19,
+32,
+53,
+87,
+142,
+231,
+375,
+608,
+985,
+1595,
+2582,
+4179,
+6763,
+10944,
+17709
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+1,
+2
+]
+}
+},
+{
+"A": "A001924",
+"name": "Apply partial sum operator twice to Fibonacci numbers.",
+"terms": [
+0,
+1,
+3,
+7,
+14,
+26,
+46,
+79,
+133,
+221,
+364,
+596,
+972,
+1581,
+2567,
+4163,
+6746,
+10926,
+17690,
+28635
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+0,
+-1,
+1
+]
+}
+},
+{
+"A": "A001969",
+"name": "Evil numbers: nonnegative integers with an even number of 1's in their binary expansion.",
+"terms": [
+0,
+3,
+5,
+6,
+9,
+10,
+12,
+15,
+17,
+18,
+20,
+23,
+24,
+27,
+29,
+30,
+33,
+34,
+36,
+39
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A001998",
+"name": "Bending a piece of wire of length n+1; walks of length n+1 on a tetrahedron; also non-branched catafusenes with n+2 condensed hexagons.",
+"terms": [
+1,
+2,
+4,
+10,
+25,
+70,
+196,
+574,
+1681,
+5002,
+14884,
+44530,
+133225,
+399310,
+1196836,
+3589414,
+10764961,
+32291602,
+96864964,
+290585050
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+3,
+-9,
+1
+]
+}
+},
+{
+"A": "A002001",
+"name": "a(n) = 3*4^(n-1), n>0; a(0)=1.",
+"terms": [
+1,
+3,
+12,
+48,
+192,
+768,
+3072,
+12288,
+49152,
+196608,
+786432,
+3145728,
+12582912,
+50331648,
+201326592,
+805306368,
+3221225472,
+12884901888,
+51539607552,
+206158430208
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+0,
+0
+]
+}
+},
+{
+"A": "A002023",
+"name": "a(n) = 6*4^n.",
+"terms": [
+6,
+24,
+96,
+384,
+1536,
+6144,
+24576,
+98304,
+393216,
+1572864,
+6291456,
+25165824,
+100663296,
+402653184,
+1610612736,
+6442450944,
+25769803776,
+103079215104,
+412316860416,
+1649267441664
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+0
+]
+}
+},
+{
+"A": "A002042",
+"name": "a(n) = 7*4^n.",
+"terms": [
+7,
+28,
+112,
+448,
+1792,
+7168,
+28672,
+114688,
+458752,
+1835008,
+7340032,
+29360128,
+117440512,
+469762048,
+1879048192,
+7516192768,
+30064771072,
+120259084288,
+481036337152,
+1924145348608
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+0
+]
+}
+},
+{
+"A": "A002061",
+"name": "Central polygonal numbers: a(n) = n^2 - n + 1.",
+"terms": [
+1,
+1,
+3,
+7,
+13,
+21,
+31,
+43,
+57,
+73,
+91,
+111,
+133,
+157,
+183,
+211,
+241,
+273,
+307,
+343
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+2
+]
+}
+},
+{
+"A": "A002062",
+"name": "a(n) = Fibonacci(n) + n.",
+"terms": [
+0,
+2,
+3,
+5,
+7,
+10,
+14,
+20,
+29,
+43,
+65,
+100,
+156,
+246,
+391,
+625,
+1003,
+1614,
+2602,
+4200
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+0,
+-1,
+-1
+]
+}
+},
+{
+"A": "A002063",
+"name": "a(n) = 9*4^n.",
+"terms": [
+9,
+36,
+144,
+576,
+2304,
+9216,
+36864,
+147456,
+589824,
+2359296,
+9437184,
+37748736,
+150994944,
+603979776,
+2415919104,
+9663676416,
+38654705664,
+154618822656,
+618475290624,
+2473901162496
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+0
+]
+}
+},
+{
+"A": "A002064",
+"name": "Cullen numbers: a(n) = n*2^n + 1.",
+"terms": [
+1,
+3,
+9,
+25,
+65,
+161,
+385,
+897,
+2049,
+4609,
+10241,
+22529,
+49153,
+106497,
+229377,
+491521,
+1048577,
+2228225,
+4718593,
+9961473
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-4,
+1
+]
+}
+},
+{
+"A": "A002066",
+"name": "a(n) = 10*4^n.",
+"terms": [
+10,
+40,
+160,
+640,
+2560,
+10240,
+40960,
+163840,
+655360,
+2621440,
+10485760,
+41943040,
+167772160,
+671088640,
+2684354560,
+10737418240,
+42949672960,
+171798691840,
+687194767360,
+2748779069440
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+0
+]
+}
+},
+{
+"A": "A002089",
+"name": "a(n) = 11*4^n.",
+"terms": [
+11,
+44,
+176,
+704,
+2816,
+11264,
+45056,
+180224,
+720896,
+2883584,
+11534336,
+46137344,
+184549376,
+738197504,
+2952790016,
+11811160064,
+47244640256,
+188978561024,
+755914244096,
+3023656976384
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+0
+]
+}
+},
+{
+"A": "A002110",
+"name": "Primorial numbers (first definition): product of first n primes. Sometimes written prime(n)#.",
+"terms": [
+1,
+2,
+6,
+30,
+210,
+2310,
+30030,
+510510,
+9699690,
+223092870,
+6469693230,
+200560490130,
+7420738134810,
+304250263527210,
+13082761331670030,
+614889782588491410,
+32589158477190044730,
+1922760350154212639070,
+117288381359406970983270,
+7858321551080267055879090
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002113",
+"name": "Palindromes in base 10.",
+"terms": [
+0,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+11,
+22,
+33,
+44,
+55,
+66,
+77,
+88,
+99,
+101
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002203",
+"name": "Companion Pell numbers: a(n) = 2*a(n-1) + a(n-2), a(0) = a(1) = 2.",
+"terms": [
+2,
+2,
+6,
+14,
+34,
+82,
+198,
+478,
+1154,
+2786,
+6726,
+16238,
+39202,
+94642,
+228486,
+551614,
+1331714,
+3215042,
+7761798,
+18738638
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+1,
+0
+]
+}
+},
+{
+"A": "A002248",
+"name": "Number of points on y^2 + xy = x^3 + x^2 + x over GF(2^n).",
+"terms": [
+2,
+8,
+14,
+16,
+22,
+56,
+142,
+288,
+518,
+968,
+1982,
+4144,
+8374,
+16472,
+32494,
+65088,
+131174,
+263144,
+525086,
+1047376
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-4,
+4,
+-2
+]
+}
+},
+{
+"A": "A002249",
+"name": "a(n) = a(n-1) - 2*a(n-2) with a(0) = 2, a(1) = 1.",
+"terms": [
+2,
+1,
+-3,
+-5,
+1,
+11,
+9,
+-13,
+-31,
+-5,
+57,
+67,
+-47,
+-181,
+-87,
+275,
+449,
+-101,
+-999,
+-797
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+1,
+-2,
+0
+]
+}
+},
+{
+"A": "A002264",
+"name": "Nonnegative integers repeated 3 times.",
+"terms": [
+0,
+0,
+0,
+1,
+1,
+1,
+2,
+2,
+2,
+3,
+3,
+3,
+4,
+4,
+4,
+5,
+5,
+5,
+6,
+6
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+0,
+0,
+1,
+1
+]
+}
+},
+{
+"A": "A002275",
+"name": "Repunits: (10^n - 1)/9. Often denoted by R_n.",
+"terms": [
+0,
+1,
+11,
+111,
+1111,
+11111,
+111111,
+1111111,
+11111111,
+111111111,
+1111111111,
+11111111111,
+111111111111,
+1111111111111,
+11111111111111,
+111111111111111,
+1111111111111111,
+11111111111111111,
+111111111111111111,
+1111111111111111111
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002301",
+"name": "a(n) = n! / 3.",
+"terms": [
+2,
+8,
+40,
+240,
+1680,
+13440,
+120960,
+1209600,
+13305600,
+159667200,
+2075673600,
+29059430400,
+435891456000,
+6974263296000,
+118562476032000,
+2134124568576000,
+40548366802944000,
+810967336058880000,
+17030314057236480000,
+374666909259202560000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+3,
+0
+]
+}
+},
+{
+"A": "A002310",
+"name": "a(n) = 5*a(n-1) - a(n-2), with a(0) = 1 and a(1) = 2.",
+"terms": [
+1,
+2,
+9,
+43,
+206,
+987,
+4729,
+22658,
+108561,
+520147,
+2492174,
+11940723,
+57211441,
+274116482,
+1313370969,
+6292738363,
+30150320846,
+144458865867,
+692144008489,
+3316261176578
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-1,
+0
+]
+}
+},
+{
+"A": "A002315",
+"name": "NSW numbers: a(n) = 6*a(n-1) - a(n-2); also a(n)^2 - 2*b(n)^2 = -1 with b(n) = A001653(n+1).",
+"terms": [
+1,
+7,
+41,
+239,
+1393,
+8119,
+47321,
+275807,
+1607521,
+9369319,
+54608393,
+318281039,
+1855077841,
+10812186007,
+63018038201,
+367296043199,
+2140758220993,
+12477253282759,
+72722761475561,
+423859315570607
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A002320",
+"name": "a(n) = 5*a(n-1) - a(n-2).",
+"terms": [
+1,
+3,
+14,
+67,
+321,
+1538,
+7369,
+35307,
+169166,
+810523,
+3883449,
+18606722,
+89150161,
+427144083,
+2046570254,
+9805707187,
+46981965681,
+225104121218,
+1078538640409,
+5167589080827
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-1,
+0
+]
+}
+},
+{
+"A": "A002322",
+"name": "Reduced totient function psi(n): least k such that x^k == 1 (mod n) for all x prime to n; also known as the Carmichael lambda function (exponent of unit group mod n); also called the universal exponent of n.",
+"terms": [
+1,
+1,
+2,
+2,
+4,
+2,
+6,
+2,
+6,
+4,
+10,
+2,
+12,
+6,
+4,
+4,
+16,
+6,
+18,
+4
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002378",
+"name": "Oblong (or promic, pronic, or heteromecic) numbers: a(n) = n*(n+1).",
+"terms": [
+0,
+2,
+6,
+12,
+20,
+30,
+42,
+56,
+72,
+90,
+110,
+132,
+156,
+182,
+210,
+240,
+272,
+306,
+342,
+380
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+2
+]
+}
+},
+{
+"A": "A002411",
+"name": "Pentagonal pyramidal numbers: a(n) = n^2*(n+1)/2.",
+"terms": [
+0,
+1,
+6,
+18,
+40,
+75,
+126,
+196,
+288,
+405,
+550,
+726,
+936,
+1183,
+1470,
+1800,
+2176,
+2601,
+3078,
+3610
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+3
+]
+}
+},
+{
+"A": "A002412",
+"name": "Hexagonal pyramidal numbers, or greengrocer's numbers.",
+"terms": [
+0,
+1,
+7,
+22,
+50,
+95,
+161,
+252,
+372,
+525,
+715,
+946,
+1222,
+1547,
+1925,
+2360,
+2856,
+3417,
+4047,
+4750
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+4
+]
+}
+},
+{
+"A": "A002413",
+"name": "Heptagonal (or 7-gonal) pyramidal numbers: a(n) = n*(n+1)*(5*n-2)/6.",
+"terms": [
+0,
+1,
+8,
+26,
+60,
+115,
+196,
+308,
+456,
+645,
+880,
+1166,
+1508,
+1911,
+2380,
+2920,
+3536,
+4233,
+5016,
+5890
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+5
+]
+}
+},
+{
+"A": "A002414",
+"name": "Octagonal pyramidal numbers: a(n) = n*(n+1)*(2*n-1)/2.",
+"terms": [
+1,
+9,
+30,
+70,
+135,
+231,
+364,
+540,
+765,
+1045,
+1386,
+1794,
+2275,
+2835,
+3480,
+4216,
+5049,
+5985,
+7030,
+8190
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+6
+]
+}
+},
+{
+"A": "A002426",
+"name": "Central trinomial coefficients: largest coefficient of (1 + x + x^2)^n.",
+"terms": [
+1,
+1,
+3,
+7,
+19,
+51,
+141,
+393,
+1107,
+3139,
+8953,
+25653,
+73789,
+212941,
+616227,
+1787607,
+5196627,
+15134931,
+44152809,
+128996853
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002446",
+"name": "a(n) = 2^(2*n+1) - 2.",
+"terms": [
+0,
+6,
+30,
+126,
+510,
+2046,
+8190,
+32766,
+131070,
+524286,
+2097150,
+8388606,
+33554430,
+134217726,
+536870910,
+2147483646,
+8589934590,
+34359738366,
+137438953470,
+549755813886
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+6
+]
+}
+},
+{
+"A": "A002447",
+"name": "Expansion of 1/(1-2*x^2-3*x^3).",
+"terms": [
+1,
+0,
+2,
+3,
+4,
+12,
+17,
+36,
+70,
+123,
+248,
+456,
+865,
+1656,
+3098,
+5907,
+11164,
+21108,
+40049,
+75708
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+0,
+2,
+3,
+0
+]
+}
+},
+{
+"A": "A002450",
+"name": "a(n) = (4^n - 1)/3.",
+"terms": [
+0,
+1,
+5,
+21,
+85,
+341,
+1365,
+5461,
+21845,
+87381,
+349525,
+1398101,
+5592405,
+22369621,
+89478485,
+357913941,
+1431655765,
+5726623061,
+22906492245,
+91625968981
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+4,
+1
+]
+}
+},
+{
+"A": "A002452",
+"name": "a(n) = (9^n - 1)/8.",
+"terms": [
+0,
+1,
+10,
+91,
+820,
+7381,
+66430,
+597871,
+5380840,
+48427561,
+435848050,
+3922632451,
+35303692060,
+317733228541,
+2859599056870,
+25736391511831,
+231627523606480,
+2084647712458321,
+18761829412124890,
+168856464709124011
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+9,
+1
+]
+}
+},
+{
+"A": "A002478",
+"name": "Bisection of A000930.",
+"terms": [
+1,
+1,
+3,
+6,
+13,
+28,
+60,
+129,
+277,
+595,
+1278,
+2745,
+5896,
+12664,
+27201,
+58425,
+125491,
+269542,
+578949,
+1243524
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+2,
+1,
+0
+]
+}
+},
+{
+"A": "A002487",
+"name": "Stern's diatomic series (or Stern-Brocot sequence): a(0) = 0, a(1) = 1; for n > 0: a(2*n) = a(n), a(2*n+1) = a(n) + a(n+1).",
+"terms": [
+0,
+1,
+1,
+2,
+1,
+3,
+2,
+3,
+1,
+4,
+3,
+5,
+2,
+5,
+3,
+4,
+1,
+5,
+4,
+7
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002492",
+"name": "Sum of the first n even squares: a(n) = 2*n*(n+1)*(2*n+1)/3.",
+"terms": [
+0,
+4,
+20,
+56,
+120,
+220,
+364,
+560,
+816,
+1140,
+1540,
+2024,
+2600,
+3276,
+4060,
+4960,
+5984,
+7140,
+8436,
+9880
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+-3,
+1,
+8
+]
+}
+},
+{
+"A": "A002522",
+"name": "a(n) = n^2 + 1.",
+"terms": [
+1,
+2,
+5,
+10,
+17,
+26,
+37,
+50,
+65,
+82,
+101,
+122,
+145,
+170,
+197,
+226,
+257,
+290,
+325,
+362
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+2
+]
+}
+},
+{
+"A": "A002532",
+"name": "a(n) = 2*a(n-1) + 5*a(n-2), a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+2,
+9,
+28,
+101,
+342,
+1189,
+4088,
+14121,
+48682,
+167969,
+579348,
+1998541,
+6893822,
+23780349,
+82029808,
+282961361,
+976071762,
+3366950329
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+5,
+0
+]
+}
+},
+{
+"A": "A002533",
+"name": "a(n) = 2*a(n-1) + 5*a(n-2), with a(0) = a(1) = 1.",
+"terms": [
+1,
+1,
+7,
+19,
+73,
+241,
+847,
+2899,
+10033,
+34561,
+119287,
+411379,
+1419193,
+4895281,
+16886527,
+58249459,
+200931553,
+693110401,
+2390878567,
+8247309139
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+5,
+0
+]
+}
+},
+{
+"A": "A002534",
+"name": "a(n) = 2*a(n-1) + 9*a(n-2), with a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+2,
+13,
+44,
+205,
+806,
+3457,
+14168,
+59449,
+246410,
+1027861,
+4273412,
+17797573,
+74055854,
+308289865,
+1283082416,
+5340773617,
+22229288978,
+92525540509
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+9,
+0
+]
+}
+},
+{
+"A": "A002535",
+"name": "a(n) = 2*a(n-1) + 9*a(n-2), with a(0)=a(1)=1.",
+"terms": [
+1,
+1,
+11,
+31,
+161,
+601,
+2651,
+10711,
+45281,
+186961,
+781451,
+3245551,
+13524161,
+56258281,
+234234011,
+974792551,
+4057691201,
+16888515361,
+70296251531,
+292589141311
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+9,
+0
+]
+}
+},
+{
+"A": "A002605",
+"name": "a(n) = 2*(a(n-1) + a(n-2)), a(0) = 0, a(1) = 1.",
+"terms": [
+0,
+1,
+2,
+6,
+16,
+44,
+120,
+328,
+896,
+2448,
+6688,
+18272,
+49920,
+136384,
+372608,
+1017984,
+2781184,
+7598336,
+20759040,
+56714752
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+2,
+0
+]
+}
+},
+{
+"A": "A002620",
+"name": "Quarter-squares: a(n) = floor(n/2)*ceiling(n/2). Equivalently, a(n) = floor(n^2/4).",
+"terms": [
+0,
+0,
+1,
+2,
+4,
+6,
+9,
+12,
+16,
+20,
+25,
+30,
+36,
+42,
+49,
+56,
+64,
+72,
+81,
+90
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+1,
+-1,
+1
+]
+}
+},
+{
+"A": "A002627",
+"name": "a(n) = n*a(n-1) + 1, a(0) = 0.",
+"terms": [
+0,
+1,
+3,
+10,
+41,
+206,
+1237,
+8660,
+69281,
+623530,
+6235301,
+68588312,
+823059745,
+10699776686,
+149796873605,
+2246953104076,
+35951249665217,
+611171244308690,
+11001082397556421,
+209020565553572000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+0,
+1
+]
+}
+},
+{
+"A": "A002662",
+"name": "a(n) = 2^n - 1 - n*(n+1)/2.",
+"terms": [
+0,
+0,
+0,
+1,
+5,
+16,
+42,
+99,
+219,
+466,
+968,
+1981,
+4017,
+8100,
+16278,
+32647,
+65399,
+130918,
+261972,
+524097
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+4,
+-5,
+2,
+1
+]
+}
+},
+{
+"A": "A002783",
+"name": "a(n) = 2*(3^n - 2^n) + 1.",
+"terms": [
+1,
+3,
+11,
+39,
+131,
+423,
+1331,
+4119,
+12611,
+38343,
+116051,
+350199,
+1054691,
+3172263,
+9533171,
+28632279,
+85962371,
+258018183,
+774316691,
+2323474359
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-6,
+2
+]
+}
+},
+{
+"A": "A002808",
+"name": "The composite numbers: numbers n of the form x*y for x > 1 and y > 1.",
+"terms": [
+4,
+6,
+8,
+9,
+10,
+12,
+14,
+15,
+16,
+18,
+20,
+21,
+22,
+24,
+25,
+26,
+27,
+28,
+30,
+32
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A002837",
+"name": "Numbers k such that k^2 - k + 41 is prime.",
+"terms": [
+0,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+19
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+1
+]
+}
+},
+{
+"A": "A002878",
+"name": "Bisection of Lucas sequence: a(n) = L(2*n+1).",
+"terms": [
+1,
+4,
+11,
+29,
+76,
+199,
+521,
+1364,
+3571,
+9349,
+24476,
+64079,
+167761,
+439204,
+1149851,
+3010349,
+7881196,
+20633239,
+54018521,
+141422324
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+-1,
+0
+]
+}
+},
+{
+"A": "A002939",
+"name": "a(n) = 2*n*(2*n-1).",
+"terms": [
+0,
+2,
+12,
+30,
+56,
+90,
+132,
+182,
+240,
+306,
+380,
+462,
+552,
+650,
+756,
+870,
+992,
+1122,
+1260,
+1406
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+8
+]
+}
+},
+{
+"A": "A002943",
+"name": "a(n) = 2*n*(2*n+1).",
+"terms": [
+0,
+6,
+20,
+42,
+72,
+110,
+156,
+210,
+272,
+342,
+420,
+506,
+600,
+702,
+812,
+930,
+1056,
+1190,
+1332,
+1482
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+8
+]
+}
+},
+{
+"A": "A003063",
+"name": "a(n) = 3^(n-1) - 2^n.",
+"terms": [
+-1,
+-1,
+1,
+11,
+49,
+179,
+601,
+1931,
+6049,
+18659,
+57001,
+173051,
+523249,
+1577939,
+4750201,
+14283371,
+42915649,
+128878019,
+386896201,
+1161212891
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-6,
+0
+]
+}
+},
+{
+"A": "A003215",
+"name": "Hex (or centered hexagonal) numbers: 3*n*(n+1)+1 (crystal ball sequence for hexagonal lattice).",
+"terms": [
+1,
+7,
+19,
+37,
+61,
+91,
+127,
+169,
+217,
+271,
+331,
+397,
+469,
+547,
+631,
+721,
+817,
+919,
+1027,
+1141
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+-1,
+6
+]
+}
+},
+{
+"A": "A003229",
+"name": "a(n) = a(n-1) + 2*a(n-3) with a(0)=a(1)=1, a(2)=3.",
+"terms": [
+1,
+1,
+3,
+5,
+7,
+13,
+23,
+37,
+63,
+109,
+183,
+309,
+527,
+893,
+1511,
+2565,
+4351,
+7373,
+12503,
+21205
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+0,
+2,
+0
+]
+}
+},
+{
+"A": "A003261",
+"name": "Woodall (or Riesel) numbers: n*2^n - 1.",
+"terms": [
+1,
+7,
+23,
+63,
+159,
+383,
+895,
+2047,
+4607,
+10239,
+22527,
+49151,
+106495,
+229375,
+491519,
+1048575,
+2228223,
+4718591,
+9961471,
+20971519
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-4,
+-1
+]
+}
+},
+{
+"A": "A003415",
+"name": "a(n) = n' = arithmetic derivative of n: a(0) = a(1) = 0, a(prime) = 1, a(m*n) = m*a(n) + n*a(m).",
+"terms": [
+0,
+0,
+1,
+1,
+4,
+1,
+5,
+1,
+12,
+6,
+7,
+1,
+16,
+1,
+9,
+8,
+32,
+1,
+21,
+1
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A003418",
+"name": "Least common multiple (or LCM) of {1, 2, ..., n} for n >= 1, a(0) = 1.",
+"terms": [
+1,
+1,
+2,
+6,
+12,
+60,
+60,
+420,
+840,
+2520,
+2520,
+27720,
+27720,
+360360,
+360360,
+360360,
+720720,
+12252240,
+12252240,
+232792560
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A003461",
+"name": "Bode numbers multiplied by 10: 4 + 3*floor(2^(n-1)).",
+"terms": [
+4,
+7,
+10,
+16,
+28,
+52,
+100,
+196,
+388,
+772,
+1540,
+3076,
+6148,
+12292,
+24580,
+49156,
+98308,
+196612,
+393220,
+786436
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+0,
+-4
+]
+}
+},
+{
+"A": "A003462",
+"name": "a(n) = (3^n - 1)/2.",
+"terms": [
+0,
+1,
+4,
+13,
+40,
+121,
+364,
+1093,
+3280,
+9841,
+29524,
+88573,
+265720,
+797161,
+2391484,
+7174453,
+21523360,
+64570081,
+193710244,
+581130733
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+3,
+1
+]
+}
+},
+{
+"A": "A003463",
+"name": "a(n) = (5^n - 1)/4.",
+"terms": [
+0,
+1,
+6,
+31,
+156,
+781,
+3906,
+19531,
+97656,
+488281,
+2441406,
+12207031,
+61035156,
+305175781,
+1525878906,
+7629394531,
+38146972656,
+190734863281,
+953674316406,
+4768371582031
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+5,
+1
+]
+}
+},
+{
+"A": "A003464",
+"name": "a(n) = (6^n - 1)/5.",
+"terms": [
+0,
+1,
+7,
+43,
+259,
+1555,
+9331,
+55987,
+335923,
+2015539,
+12093235,
+72559411,
+435356467,
+2612138803,
+15672832819,
+94036996915,
+564221981491,
+3385331888947,
+20311991333683,
+121871948002099
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+6,
+1
+]
+}
+},
+{
+"A": "A003476",
+"name": "a(n) = a(n-1) + 2*a(n-3).",
+"terms": [
+1,
+2,
+3,
+5,
+9,
+15,
+25,
+43,
+73,
+123,
+209,
+355,
+601,
+1019,
+1729,
+2931,
+4969,
+8427,
+14289,
+24227
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+0,
+2,
+0
+]
+}
+},
+{
+"A": "A003479",
+"name": "Expansion of 1/((1-x)*(1-x-2*x^3)).",
+"terms": [
+1,
+2,
+3,
+6,
+11,
+18,
+31,
+54,
+91,
+154,
+263,
+446,
+755,
+1282,
+2175,
+3686,
+6251,
+10602,
+17975,
+30478
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+1,
+0,
+2,
+1
+]
+}
+},
+{
+"A": "A003480",
+"name": "a(0) = 1, a(1) = 2, a(2) = 7, for n > 2, a(n) = 4*a(n-1) - 2*a(n-2).",
+"terms": [
+1,
+2,
+7,
+24,
+82,
+280,
+956,
+3264,
+11144,
+38048,
+129904,
+443520,
+1514272,
+5170048,
+17651648,
+60266496,
+205762688,
+702517760,
+2398545664,
+8189147136
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+4,
+-2,
+0,
+0
+]
+}
+},
+{
+"A": "A003481",
+"name": "a(n) = 7*a(n-1) - a(n-2) + 5.",
+"terms": [
+2,
+20,
+143,
+986,
+6764,
+46367,
+317810,
+2178308,
+14930351,
+102334154,
+701408732,
+4807526975,
+32951280098,
+225851433716,
+1548008755919,
+10610209857722,
+72723460248140,
+498454011879263,
+3416454622906706,
+23416728348467684
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+7,
+-1,
+5
+]
+}
+},
+{
+"A": "A003482",
+"name": "a(n) = 7*a(n-1) - a(n-2) + 4, with a(0) = 0, a(1) = 5.",
+"terms": [
+0,
+5,
+39,
+272,
+1869,
+12815,
+87840,
+602069,
+4126647,
+28284464,
+193864605,
+1328767775,
+9107509824,
+62423800997,
+427859097159,
+2932589879120,
+20100270056685,
+137769300517679,
+944284833567072,
+6472224534451829
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+7,
+-1,
+4
+]
+}
+},
+{
+"A": "A003499",
+"name": "a(n) = 6*a(n-1) - a(n-2), with a(0) = 2, a(1) = 6.",
+"terms": [
+2,
+6,
+34,
+198,
+1154,
+6726,
+39202,
+228486,
+1331714,
+7761798,
+45239074,
+263672646,
+1536796802,
+8957108166,
+52205852194,
+304278004998,
+1773462177794,
+10336495061766,
+60245508192802,
+351136554095046
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A003500",
+"name": "a(n) = 4*a(n-1) - a(n-2) with a(0) = 2, a(1) = 4.",
+"terms": [
+2,
+4,
+14,
+52,
+194,
+724,
+2702,
+10084,
+37634,
+140452,
+524174,
+1956244,
+7300802,
+27246964,
+101687054,
+379501252,
+1416317954,
+5285770564,
+19726764302,
+73621286644
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+4,
+-1,
+0
+]
+}
+},
+{
+"A": "A003501",
+"name": "a(n) = 5*a(n-1) - a(n-2), with a(0) = 2, a(1) = 5.",
+"terms": [
+2,
+5,
+23,
+110,
+527,
+2525,
+12098,
+57965,
+277727,
+1330670,
+6375623,
+30547445,
+146361602,
+701260565,
+3359941223,
+16098445550,
+77132286527,
+369562987085,
+1770682648898,
+8483850257405
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+5,
+-1,
+0
+]
+}
+},
+{
+"A": "A003665",
+"name": "a(n) = 2^(n-1)*( 2^n + (-1)^n ).",
+"terms": [
+1,
+1,
+10,
+28,
+136,
+496,
+2080,
+8128,
+32896,
+130816,
+524800,
+2096128,
+8390656,
+33550336,
+134225920,
+536854528,
+2147516416,
+8589869056,
+34359869440,
+137438691328
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+8,
+0
+]
+}
+},
+{
+"A": "A003674",
+"name": "a(n) = 2^(n-1)*(2^n - (-1)^n).",
+"terms": [
+0,
+3,
+6,
+36,
+120,
+528,
+2016,
+8256,
+32640,
+131328,
+523776,
+2098176,
+8386560,
+33558528,
+134209536,
+536887296,
+2147450880,
+8590000128,
+34359607296,
+137439215616
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+8,
+0
+]
+}
+},
+{
+"A": "A003682",
+"name": "Number of (undirected) Hamiltonian paths in the n-ladder graph K_2 X P_n.",
+"terms": [
+1,
+4,
+8,
+14,
+22,
+32,
+44,
+58,
+74,
+92,
+112,
+134,
+158,
+184,
+212,
+242,
+274,
+308,
+344,
+382
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+2,
+-1,
+0,
+2
+]
+}
+},
+{
+"A": "A003683",
+"name": "a(n) = 2^(n-1)*(2^n - (-1)^n)/3.",
+"terms": [
+0,
+1,
+2,
+12,
+40,
+176,
+672,
+2752,
+10880,
+43776,
+174592,
+699392,
+2795520,
+11186176,
+44736512,
+178962432,
+715816960,
+2863333376,
+11453202432,
+45813071872
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+2,
+8,
+0
+]
+}
+},
+{
+"A": "A003688",
+"name": "a(n) = 3*a(n-1) + a(n-2), with a(1)=1 and a(2)=4.",
+"terms": [
+1,
+4,
+13,
+43,
+142,
+469,
+1549,
+5116,
+16897,
+55807,
+184318,
+608761,
+2010601,
+6640564,
+21932293,
+72437443,
+239244622,
+790171309,
+2609758549,
+8619446956
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+3,
+1,
+0
+]
+}
+},
+{
+"A": "A003691",
+"name": "Number of spanning trees with degrees 1 and 3 in K_3 X P_2n.",
+"terms": [
+3,
+36,
+324,
+2880,
+25632,
+228096,
+2029824,
+18063360,
+160745472,
+1430470656,
+12729729024,
+113281597440,
+1008090611712,
+8970977673216,
+79832546279424,
+710428191621120
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+8,
+8,
+0,
+0
+]
+}
+},
+{
+"A": "A003697",
+"name": "Duplicate of A006253.",
+"terms": [
+1,
+2,
+9,
+32,
+121,
+450,
+1681,
+6272,
+23409,
+87362,
+326041,
+1216800,
+4541161,
+16947842
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+3,
+3,
+-1,
+0
+]
+}
+},
+{
+"A": "A003698",
+"name": "Number of 2-factors in C_4 X P_n.",
+"terms": [
+1,
+9,
+53,
+341,
+2169,
+13825,
+88093,
+561357,
+3577121,
+22794425,
+145252485,
+925589701,
+5898117961,
+37584466929,
+239498796653,
+1526153708861,
+9725080775409,
+61970950592425,
+394896331045333,
+2516390514947637
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+6,
+3,
+-4,
+0
+]
+}
+},
+{
+"A": "A003699",
+"name": "Number of Hamiltonian cycles in C_4 X P_n.",
+"terms": [
+1,
+6,
+22,
+82,
+306,
+1142,
+4262,
+15906,
+59362,
+221542,
+826806,
+3085682,
+11515922,
+42978006,
+160396102,
+598606402,
+2234029506,
+8337511622,
+31116016982,
+116126556306
+],
+"strata": [
+"LINREC"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 3,
+"coef": [
+4,
+-1,
+0,
+0
+]
+}
+},
+{
+"A": "A004526",
+"name": "Nonnegative integers repeated, floor(n/2).",
+"terms": [
+0,
+0,
+1,
+1,
+2,
+2,
+3,
+3,
+4,
+4,
+5,
+5,
+6,
+6,
+7,
+7,
+8,
+8,
+9,
+9
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 2,
+"coef": [
+0,
+1,
+1
+]
+}
+},
+{
+"A": "A005101",
+"name": "Abundant numbers (sum of divisors of m exceeds 2m).",
+"terms": [
+12,
+18,
+20,
+24,
+30,
+36,
+40,
+42,
+48,
+54,
+56,
+60,
+66,
+70,
+72,
+78,
+80,
+84,
+88,
+90
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A005117",
+"name": "Squarefree numbers: numbers that are not divisible by a square greater than 1.",
+"terms": [
+1,
+2,
+3,
+5,
+6,
+7,
+10,
+11,
+13,
+14,
+15,
+17,
+19,
+21,
+22,
+23,
+26,
+29,
+30,
+31
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A005408",
+"name": "The odd numbers: a(n) = 2*n + 1.",
+"terms": [
+1,
+3,
+5,
+7,
+9,
+11,
+13,
+15,
+17,
+19,
+21,
+23,
+25,
+27,
+29,
+31,
+33,
+35,
+37,
+39
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+2
+]
+}
+},
+{
+"A": "A005843",
+"name": "The nonnegative even numbers: a(n) = 2n.",
+"terms": [
+0,
+2,
+4,
+6,
+8,
+10,
+12,
+14,
+16,
+18,
+20,
+22,
+24,
+26,
+28,
+30,
+32,
+34,
+36,
+38
+],
+"strata": [
+"CORE"
+],
+"recurrence": {
+"kind": "linrec",
+"d": 1,
+"coef": [
+1,
+2
+]
+}
+},
+{
+"A": "A006318",
+"name": "Large Schr\u00f6der numbers (or large Schroeder numbers, or big Schroeder numbers).",
+"terms": [
+1,
+2,
+6,
+22,
+90,
+394,
+1806,
+8558,
+41586,
+206098,
+1037718,
+5293446,
+27297738,
+142078746,
+745387038,
+3937603038,
+20927156706,
+111818026018,
+600318853926,
+3236724317174
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A006530",
+"name": "Gpf(n): greatest prime dividing n, for n >= 2; a(1)=1.",
+"terms": [
+1,
+2,
+3,
+2,
+5,
+3,
+7,
+2,
+3,
+5,
+11,
+3,
+13,
+7,
+5,
+2,
+17,
+3,
+19,
+5
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A006882",
+"name": "Double factorials n!!: a(n) = n*a(n-2) for n > 1, a(0) = a(1) = 1.",
+"terms": [
+1,
+1,
+2,
+3,
+8,
+15,
+48,
+105,
+384,
+945,
+3840,
+10395,
+46080,
+135135,
+645120,
+2027025,
+10321920,
+34459425,
+185794560,
+654729075
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A007318",
+"name": "Pascal's triangle read by rows: C(n,k) = binomial(n,k) = n!/(k!*(n-k)!), 0 <= k <= n.",
+"terms": [
+1,
+1,
+1,
+1,
+2,
+1,
+1,
+3,
+3,
+1,
+1,
+4,
+6,
+4,
+1,
+1,
+5,
+10,
+10,
+5
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A007559",
+"name": "Triple factorial numbers (3*n-2)!!! with leading 1 added.",
+"terms": [
+1,
+1,
+4,
+28,
+280,
+3640,
+58240,
+1106560,
+24344320,
+608608000,
+17041024000,
+528271744000,
+17961239296000,
+664565853952000,
+26582634158080000,
+1143053268797440000,
+52580450364682240000,
+2576442067869429760000,
+133974987529210347520000,
+7368624314106569113600000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+-2,
+0
+]
+}
+},
+{
+"A": "A007660",
+"name": "a(n) = a(n-1)*a(n-2) + 1 with a(0) = a(1) = 0.",
+"terms": [
+0,
+0,
+1,
+1,
+2,
+3,
+7,
+22,
+155,
+3411,
+528706,
+1803416167,
+953476947989903,
+1719515742866809222961802,
+1639518622529236077952144318816050685207,
+2819178082162327154499022366029959843954512194276761760087463015
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "product2",
+"coef": [
+1,
+1
+]
+}
+},
+{
+"A": "A007696",
+"name": "Quartic (or 4-fold) factorial numbers: a(n) = Product_{k = 0..n-1} (4*k + 1).",
+"terms": [
+1,
+1,
+5,
+45,
+585,
+9945,
+208845,
+5221125,
+151412625,
+4996616625,
+184874815125,
+7579867420125,
+341094033905625,
+16713607661375625,
+885821206052908125,
+50491808745015763125,
+3080000333445961550625,
+200200021673987500790625,
+13813801495505137554553125
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+-3,
+0
+]
+}
+},
+{
+"A": "A008275",
+"name": "Triangle read by rows of Stirling numbers of first kind, s(n,k), n >= 1, 1 <= k <= n.",
+"terms": [
+1,
+-1,
+1,
+2,
+-3,
+1,
+-6,
+11,
+-6,
+1,
+24,
+-50,
+35,
+-10,
+1,
+-120,
+274,
+-225,
+85,
+-15
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A008277",
+"name": "Triangle of Stirling numbers of the second kind, S2(n,k), n >= 1, 1 <= k <= n.",
+"terms": [
+1,
+1,
+1,
+1,
+3,
+1,
+1,
+7,
+6,
+1,
+1,
+15,
+25,
+10,
+1,
+1,
+31,
+90,
+65,
+15
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A008292",
+"name": "Triangle of Eulerian numbers T(n,k) (n >= 1, 1 <= k <= n) read by rows.",
+"terms": [
+1,
+1,
+1,
+1,
+4,
+1,
+1,
+11,
+11,
+1,
+1,
+26,
+66,
+26,
+1,
+1,
+57,
+302,
+302,
+57
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A008542",
+"name": "Sextuple factorial numbers: Product_{k=0..n-1} (6*k+1).",
+"terms": [
+1,
+1,
+7,
+91,
+1729,
+43225,
+1339975,
+49579075,
+2131900225,
+104463111025,
+5745471106375,
+350473737488875,
+23481740411754625,
+1714167050058087625,
+135419196954588922375,
+11510631741140058401875,
+1047467488443745314570625,
+101604346379043295513350625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+-5,
+0
+]
+}
+},
+{
+"A": "A008543",
+"name": "Sextuple factorial numbers: Product_{k=0..n-1} (6*k + 5).",
+"terms": [
+1,
+5,
+55,
+935,
+21505,
+623645,
+21827575,
+894930575,
+42061737025,
+2229272062325,
+131527051677175,
+8549258359016375,
+606997343490162625,
+46738795448742522125,
+3879320022245629336375,
+345259481979861010937375,
+32799650788086796039050625,
+3312764729596766399944113125
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+-1,
+0
+]
+}
+},
+{
+"A": "A008544",
+"name": "Triple factorial numbers: Product_{k=0..n-1} (3*k+2).",
+"terms": [
+1,
+2,
+10,
+80,
+880,
+12320,
+209440,
+4188800,
+96342400,
+2504902400,
+72642169600,
+2324549427200,
+81359229952000,
+3091650738176000,
+126757680265216000,
+5577337931669504000,
+262134882788466688000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+-1,
+0
+]
+}
+},
+{
+"A": "A008545",
+"name": "Quadruple factorial numbers: Product_{k=0..n-1} (4*k + 3).",
+"terms": [
+1,
+3,
+21,
+231,
+3465,
+65835,
+1514205,
+40883535,
+1267389585,
+44358635475,
+1729986783525,
+74389431691575,
+3496303289504025,
+178311467764705275,
+9807130727058790125,
+578620712896468617375,
+36453104912477522894625,
+2442358029135994033939875
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+-1,
+0
+]
+}
+},
+{
+"A": "A008546",
+"name": "Quintuple factorial numbers: Product_{k = 0..n-1} (5*k + 4).",
+"terms": [
+1,
+4,
+36,
+504,
+9576,
+229824,
+6664896,
+226606464,
+8837652096,
+388856692224,
+19053977918976,
+1028914807624704,
+60705973649857536,
+3885182313590882304,
+268077579637770878976,
+19837740893195045044224,
+1567181530562408558493696,
+131643248567242318913470464
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+-1,
+0
+]
+}
+},
+{
+"A": "A008548",
+"name": "Quintuple factorial numbers: Product_{k=0..n-1} (5*k+1).",
+"terms": [
+1,
+1,
+6,
+66,
+1056,
+22176,
+576576,
+17873856,
+643458816,
+26381811456,
+1213563326976,
+61891729675776,
+3465936861843456,
+211422148572450816,
+13953861805781753856,
+990724188210504523776,
+75295038303998343806976,
+6098898102623865848365056,
+524505236825652462959394816
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+-4,
+0
+]
+}
+},
+{
+"A": "A008683",
+"name": "M\u00f6bius (or Moebius) function mu(n). mu(1) = 1; mu(n) = (-1)^k if n is the product of k different primes; otherwise mu(n) = 0.",
+"terms": [
+1,
+-1,
+-1,
+0,
+-1,
+1,
+-1,
+0,
+0,
+1,
+-1,
+0,
+-1,
+1,
+1,
+0,
+-1,
+0,
+-1,
+0
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A010844",
+"name": "a(n) = 2*n*a(n-1) + 1 with a(0) = 1.",
+"terms": [
+1,
+3,
+13,
+79,
+633,
+6331,
+75973,
+1063623,
+17017969,
+306323443,
+6126468861,
+134782314943,
+3234775558633,
+84104164524459,
+2354916606684853,
+70647498200545591,
+2260719942417458913,
+76864478042193603043,
+2767121209518969709549,
+105150605961720848962863
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+0,
+1
+]
+}
+},
+{
+"A": "A010845",
+"name": "a(n) = 3*n*a(n-1) + 1, a(0) = 1.",
+"terms": [
+1,
+4,
+25,
+226,
+2713,
+40696,
+732529,
+15383110,
+369194641,
+9968255308,
+299047659241,
+9868572754954,
+355268619178345,
+13855476147955456,
+581929998214129153,
+26186849919635811886,
+1256968796142518970529
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+0,
+1
+]
+}
+},
+{
+"A": "A011781",
+"name": "Sextuple factorial numbers: a(n) = Product_{k=0..n-1} (6*k+3).",
+"terms": [
+1,
+3,
+27,
+405,
+8505,
+229635,
+7577955,
+295540245,
+13299311025,
+678264862275,
+38661097149675,
+2435649120429525,
+168059789309637225,
+12604484198222791875,
+1020963220056046141875,
+88823800144876014343125,
+8260613413473469333910625,
+817800727933873464057151875
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+-3,
+0
+]
+}
+},
+{
+"A": "A014297",
+"name": "a(n) = n! * C(n+2, 2) * 2^(n+1).",
+"terms": [
+2,
+12,
+96,
+960,
+11520,
+161280,
+2580480,
+46448640,
+928972800,
+20437401600,
+490497638400,
+12752938598400,
+357082280755200,
+10712468422656000,
+342798989524992000,
+11655165643849728000,
+419585963178590208000,
+15944266600786427904000,
+637770664031457116160000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+4,
+0
+]
+}
+},
+{
+"A": "A018252",
+"name": "The nonprime numbers: 1 together with the composite numbers, A002808.",
+"terms": [
+1,
+4,
+6,
+8,
+9,
+10,
+12,
+14,
+15,
+16,
+18,
+20,
+21,
+22,
+24,
+25,
+26,
+27,
+28,
+30
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A020639",
+"name": "Lpf(n): least prime dividing n (when n > 1); a(1) = 1. Or, smallest prime factor of n, or smallest prime divisor of n.",
+"terms": [
+1,
+2,
+3,
+2,
+5,
+2,
+7,
+2,
+3,
+2,
+11,
+2,
+13,
+2,
+3,
+2,
+17,
+2,
+19,
+2
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A025487",
+"name": "Least integer of each prime signature A124832; also products of primorial numbers A002110.",
+"terms": [
+1,
+2,
+4,
+6,
+8,
+12,
+16,
+24,
+30,
+32,
+36,
+48,
+60,
+64,
+72,
+96,
+120,
+128,
+144,
+180
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A027642",
+"name": "Denominator of Bernoulli number B_n.",
+"terms": [
+1,
+2,
+6,
+1,
+30,
+1,
+42,
+1,
+30,
+1,
+66,
+1,
+2730,
+1,
+6,
+1,
+510,
+1,
+798,
+1
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A032031",
+"name": "Triple factorial numbers: (3n)!!! = 3^n*n!.",
+"terms": [
+1,
+3,
+18,
+162,
+1944,
+29160,
+524880,
+11022480,
+264539520,
+7142567040,
+214277011200,
+7071141369600,
+254561089305600,
+9927882482918400,
+416971064282572800,
+18763697892715776000,
+900657498850357248000,
+45933532441368219648000,
+2480410751833883860992000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+0,
+0
+]
+}
+},
+{
+"A": "A032179",
+"name": "Number of necklaces with n labeled beads of 3 colors.",
+"terms": [
+3,
+9,
+54,
+486,
+5832,
+87480,
+1574640,
+33067440,
+793618560,
+21427701120,
+642831033600,
+21213424108800,
+763683267916800,
+29783647448755200,
+1250913192847718400,
+56291093678147328000,
+2701972496551071744000,
+137800597324104658944000,
+7441232255501651582976000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+0,
+0
+]
+}
+},
+{
+"A": "A034000",
+"name": "One half of triple factorial numbers.",
+"terms": [
+1,
+5,
+40,
+440,
+6160,
+104720,
+2094400,
+48171200,
+1252451200,
+36321084800,
+1162274713600,
+40679614976000,
+1545825369088000,
+63378840132608000,
+2788668965834752000,
+131067441394233344000,
+6553372069711667200000,
+347328719694718361600000,
+19450408302904228249600000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+2,
+0
+]
+}
+},
+{
+"A": "A034001",
+"name": "One third of triple factorial numbers.",
+"terms": [
+1,
+6,
+54,
+648,
+9720,
+174960,
+3674160,
+88179840,
+2380855680,
+71425670400,
+2357047123200,
+84853696435200,
+3309294160972800,
+138990354760857600,
+6254565964238592000,
+300219166283452416000,
+15311177480456073216000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+3,
+0
+]
+}
+},
+{
+"A": "A034176",
+"name": "One third of quartic factorial numbers.",
+"terms": [
+1,
+7,
+77,
+1155,
+21945,
+504735,
+13627845,
+422463195,
+14786211825,
+576662261175,
+24796477230525,
+1165434429834675,
+59437155921568425,
+3269043575686263375,
+192873570965489539125,
+12151034970825840964875,
+814119343045331344646625,
+57802473356218525469910375
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+3,
+0
+]
+}
+},
+{
+"A": "A034177",
+"name": "a(n) is the n-th quartic factorial number divided by 4.",
+"terms": [
+1,
+8,
+96,
+1536,
+30720,
+737280,
+20643840,
+660602880,
+23781703680,
+951268147200,
+41855798476800,
+2009078326886400,
+104472072998092800,
+5850436087893196800,
+351026165273591808000,
+22465674577509875712000,
+1527665871270671548416000,
+109991942731488351485952000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+4,
+0
+]
+}
+},
+{
+"A": "A034300",
+"name": "a(n) = n-th quintic factorial number divided by 3.",
+"terms": [
+1,
+8,
+104,
+1872,
+43056,
+1205568,
+39783744,
+1511782272,
+65006637696,
+3120318609408,
+165376886298624,
+9591859405320192,
+604287142535172096,
+41091525692391702528,
+2999681375544594284544,
+233975147292478354194432,
+19419937225275703398137856,
+1708954475824261899036131328
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+3,
+0
+]
+}
+},
+{
+"A": "A034301",
+"name": "a(n) = n-th quintic factorial number divided by 4.",
+"terms": [
+1,
+9,
+126,
+2394,
+57456,
+1666224,
+56651616,
+2209413024,
+97214173056,
+4763494479744,
+257228701906176,
+15176493412464384,
+971295578397720576,
+67019394909442719744,
+4959435223298761261056,
+391795382640602139623424,
+32910812141810579728367616,
+2929062280621141595824717824
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+4,
+0
+]
+}
+},
+{
+"A": "A034323",
+"name": "a(n) = n-th quintic factorial number divided by 2.",
+"terms": [
+1,
+7,
+84,
+1428,
+31416,
+848232,
+27143424,
+1004306688,
+42180880896,
+1982501402112,
+103090072909824,
+5876134155859968,
+364320317663318016,
+24409461283442307072,
+1757481212407846109184,
+135326053355404150407168,
+11096736375143140333387776,
+965416064637453209004736512
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+2,
+0
+]
+}
+},
+{
+"A": "A034325",
+"name": "a(n) is the n-th quintic factorial number divided by 5.",
+"terms": [
+1,
+10,
+150,
+3000,
+75000,
+2250000,
+78750000,
+3150000000,
+141750000000,
+7087500000000,
+389812500000000,
+23388750000000000,
+1520268750000000000,
+106418812500000000000,
+7981410937500000000000,
+638512875000000000000000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+5,
+0
+]
+}
+},
+{
+"A": "A034689",
+"name": "a(n) = n-th sextic factorial number divided by 2.",
+"terms": [
+1,
+8,
+112,
+2240,
+58240,
+1863680,
+70819840,
+3116072960,
+155803648000,
+8725004288000,
+540950265856000,
+36784618078208000,
+2722061737787392000,
+217764939022991360000,
+18727784755977256960000,
+1722956197549907640320000,
+168849707359890948751360000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+2,
+0
+]
+}
+},
+{
+"A": "A034723",
+"name": "a(n) is the n-th sextic factorial number divided by 3.",
+"terms": [
+1,
+9,
+135,
+2835,
+76545,
+2525985,
+98513415,
+4433103675,
+226088287425,
+12887032383225,
+811883040143175,
+56019929769879075,
+4201494732740930625,
+340321073352015380625,
+29607933381625338114375,
+2753537804491156444636875,
+272600242644624488019050625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+3,
+0
+]
+}
+},
+{
+"A": "A034724",
+"name": "a(n) = n-th sextic factorial number divided by 4.",
+"terms": [
+1,
+10,
+160,
+3520,
+98560,
+3351040,
+134041600,
+6165913600,
+320627507200,
+18596395417600,
+1190169306726400,
+83311851470848000,
+6331700711784448000,
+519199458366324736000,
+45689552336236576768000,
+4294817919606238216192000,
+429481791960623821619200000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+4,
+0
+]
+}
+},
+{
+"A": "A034787",
+"name": "a(n) = n-th sextic factorial number divided by 5.",
+"terms": [
+1,
+11,
+187,
+4301,
+124729,
+4365515,
+178986115,
+8412347405,
+445854412465,
+26305410335435,
+1709851671803275,
+121399468698032525,
+9347759089748504425,
+775864004449125867275,
+69051896395972202187475,
+6559930157617359207810125,
+662552945919353279988822625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+5,
+0
+]
+}
+},
+{
+"A": "A034788",
+"name": "a(n) is the n-th sextic factorial number divided by 6.",
+"terms": [
+1,
+12,
+216,
+5184,
+155520,
+5598720,
+235146240,
+11287019520,
+609499054080,
+36569943244800,
+2413616254156800,
+173780370299289600,
+13554868883344588800,
+1138608986200945459200,
+102474808758085091328000,
+9837581640776168767488000,
+1003433327359169214283776000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+6,
+0
+]
+}
+},
+{
+"A": "A034829",
+"name": "a(n) = n-th sept-factorial number divided by 2.",
+"terms": [
+1,
+9,
+144,
+3312,
+99360,
+3676320,
+161758080,
+8249662080,
+478480400640,
+31101226041600,
+2239288274995200,
+176903773724620800,
+15213724540317388800,
+1414876382249517158400,
+141487638224951715840000,
+15139177290069833594880000,
+1725866211067961029816320000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+2,
+0
+]
+}
+},
+{
+"A": "A034830",
+"name": "a(n) = n-th sept-factorial number divided by 3.",
+"terms": [
+1,
+10,
+170,
+4080,
+126480,
+4806240,
+216280800,
+11246601600,
+663549494400,
+43794266630400,
+3196981464019200,
+255758517121536000,
+22250990989573632000,
+2091593153019921408000,
+211250908455012062208000,
+22815098113141302718464000,
+2623736283011249812623360000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+3,
+0
+]
+}
+},
+{
+"A": "A034831",
+"name": "a(n) = n-th sept-factorial number divided by 4.",
+"terms": [
+1,
+11,
+198,
+4950,
+158400,
+6177600,
+284169600,
+15060988800,
+903659328000,
+60545174976000,
+4480342948224000,
+362907778806144000,
+31935884534940672000,
+3033909030819363840000,
+309458721143575111680000,
+33731000604649687173120000,
+3912796070139363712081920000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+4,
+0
+]
+}
+},
+{
+"A": "A034832",
+"name": "a(n) = n-th sept-factorial number divided by 5.",
+"terms": [
+1,
+12,
+228,
+5928,
+195624,
+7824960,
+367773120,
+19859748480,
+1211444657280,
+82378236695040,
+6178367752128000,
+506626155674496000,
+45089727855030144000,
+4328613874082893824000,
+445847229030538063872000,
+49043195193359187025920000,
+5738053837623024882032640000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+5,
+0
+]
+}
+},
+{
+"A": "A034833",
+"name": "a(n) = n-th sept-factorial number divided by 6.",
+"terms": [
+1,
+13,
+260,
+7020,
+238680,
+9785880,
+469722240,
+25834723200,
+1601752838400,
+110520945849600,
+8399591884569600,
+697166126419276800,
+62744951377734912000,
+6086260283640286464000,
+632971069498589792256000,
+70259788714343466940416000,
+8290655068292529098969088000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+6,
+0
+]
+}
+},
+{
+"A": "A034834",
+"name": "One seventh of sept-factorial numbers.",
+"terms": [
+1,
+14,
+294,
+8232,
+288120,
+12101040,
+592950960,
+33205253760,
+2091930986880,
+146435169081600,
+11275508019283200,
+947142673619788800,
+86189983299400780800,
+8446618363341276518400,
+886894928150834034432000,
+99332231952893411856384000,
+11820535602394316010909696000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+7,
+0
+]
+}
+},
+{
+"A": "A034908",
+"name": "One half of octo-factorial numbers.",
+"terms": [
+1,
+10,
+180,
+4680,
+159120,
+6683040,
+334152000,
+19380816000,
+1279133856000,
+94655905344000,
+7761784238208000,
+698560581438720000,
+68458936980994560000,
+7256647319985423360000,
+827257794478338263040000,
+100925450926357268090880000,
+13120308620426444851814400000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+2,
+0
+]
+}
+},
+{
+"A": "A034909",
+"name": "One third of octo-factorial numbers.",
+"terms": [
+1,
+11,
+209,
+5643,
+197505,
+8492715,
+433128465,
+25554579435,
+1712156822145,
+128411761660875,
+10658176217852625,
+969894035824588875,
+96019509546634298625,
+10274087521489869952875,
+1181520064971335044580625,
+145326967991474210483416875,
+19037832806883121573327610625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+3,
+0
+]
+}
+},
+{
+"A": "A034910",
+"name": "One quarter of octo-factorial numbers.",
+"terms": [
+1,
+12,
+240,
+6720,
+241920,
+10644480,
+553512960,
+33210777600,
+2258332876800,
+171633298636800,
+14417197085491200,
+1326382131865190400,
+132638213186519040000,
+14324927024144056320000,
+1661691534800710533120000,
+206049750315288106106880000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+4,
+0
+]
+}
+},
+{
+"A": "A034911",
+"name": "One fifth of octo-factorial numbers.",
+"terms": [
+1,
+13,
+273,
+7917,
+292929,
+13181805,
+698635665,
+42616775565,
+2940557513985,
+226422928576845,
+19245948929031825,
+1789873250399959725,
+180777198290395932225,
+19704714613653156612525,
+2305451609797419323665425,
+288181451224677415458178125,
+38328133012882096255937690625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+5,
+0
+]
+}
+},
+{
+"A": "A034912",
+"name": "One sixth of octo-factorial numbers.",
+"terms": [
+1,
+14,
+308,
+9240,
+351120,
+16151520,
+872182080,
+54075288960,
+3785270227200,
+295251077721600,
+25391592684057600,
+2386809712301414400,
+243454590654744268800,
+26780004972021869568000,
+3160040586698580609024000,
+398165113924021156737024000,
+53354125265818835002761216000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+6,
+0
+]
+}
+},
+{
+"A": "A034975",
+"name": "One seventh of octo-factorial numbers.",
+"terms": [
+1,
+15,
+345,
+10695,
+417105,
+19603935,
+1078216425,
+67927634775,
+4822862069025,
+381006103452975,
+33147531000408825,
+3149015445038838375,
+324348590839000352625,
+36002693583129039141375,
+4284320536392355657823625,
+544108708121829168543600375,
+73454675596446937753386050625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+7,
+0
+]
+}
+},
+{
+"A": "A034976",
+"name": "One eighth of octo-factorial numbers.",
+"terms": [
+1,
+16,
+384,
+12288,
+491520,
+23592960,
+1321205760,
+84557168640,
+6088116142080,
+487049291366400,
+42860337640243200,
+4114592413463347200,
+427917611000188108800,
+47926772432021068185600,
+5751212691842528182272000,
+736155224555843607330816000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+8,
+0
+]
+}
+},
+{
+"A": "A035012",
+"name": "One half of 9-factorial numbers.",
+"terms": [
+1,
+11,
+220,
+6380,
+242440,
+11394680,
+638102080,
+41476635200,
+3069271004800,
+254749493398400,
+23436953392652800,
+2367132292657932800,
+260384552192372608000,
+30985761710892340352000,
+3966177498994219565056000,
+543366317362208080412672000,
+79331482334882379740250112000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+2,
+0
+]
+}
+},
+{
+"A": "A035013",
+"name": "One third of 9-factorial numbers.",
+"terms": [
+1,
+12,
+252,
+7560,
+294840,
+14152320,
+806682240,
+53241027840,
+3993077088000,
+335418475392000,
+31193918211456000,
+3181779657568512000,
+353177541990104832000,
+42381305038812579840000,
+5467188350006822799360000,
+754471992300941546311680000,
+110907382868238407307816960000,
+17301551727445191540019445760000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+3,
+0
+]
+}
+},
+{
+"A": "A035017",
+"name": "One quarter of 9-factorial numbers.",
+"terms": [
+1,
+13,
+286,
+8866,
+354640,
+17377360,
+1007886880,
+67528420960,
+5132159992960,
+436233599401600,
+41005958343750400,
+4223613709406291200,
+473044735453504614400,
+57238412989874058342400,
+7440993688683627584512000,
+1034298122727024234247168000,
+153076122163599586668580864000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+4,
+0
+]
+}
+},
+{
+"A": "A035018",
+"name": "One fifth of 9-factorial numbers.",
+"terms": [
+1,
+14,
+322,
+10304,
+422464,
+21123200,
+1246268800,
+84746278400,
+6525463436800,
+561189855564800,
+53313036278656000,
+5544555772980224000,
+626534802346765312000,
+76437245886305368064000,
+10013279211106003216384000,
+1401859089554840450293760000,
+208877004343671227093770240000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+5,
+0
+]
+}
+},
+{
+"A": "A035020",
+"name": "One sixth of 9-factorial numbers.",
+"terms": [
+1,
+15,
+360,
+11880,
+498960,
+25446960,
+1526817600,
+105350414400,
+8217332323200,
+714907912118400,
+68631159563366400,
+7206271754153472000,
+821514979973495808000,
+101046342536739984384000,
+13338117214849677938688000,
+1880674527293804589355008000,
+282101179094070688403251200000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+6,
+0
+]
+}
+},
+{
+"A": "A035021",
+"name": "One seventh of 9-factorial numbers.",
+"terms": [
+1,
+16,
+400,
+13600,
+584800,
+30409600,
+1854985600,
+129848992000,
+10258070368000,
+902710192384000,
+87562888661248000,
+9281666198092288000,
+1067391612780613120000,
+132356559984796026880000,
+17603422477977871575040000,
+2499685991872857763655680000,
+377452584772801522312007680000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+7,
+0
+]
+}
+},
+{
+"A": "A035022",
+"name": "One eighth of 9-factorial numbers.",
+"terms": [
+1,
+17,
+442,
+15470,
+680680,
+36076040,
+2236714480,
+158806728080,
+12704538246400,
+1130703903929600,
+110808982585100800,
+11856561136605785600,
+1375361091846271129600,
+171920136480783891200000,
+23037298288425041420800000,
+3294333655244780923174400000,
+500738715597206700322508800000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+8,
+0
+]
+}
+},
+{
+"A": "A035023",
+"name": "One ninth of 9-factorial numbers.",
+"terms": [
+1,
+18,
+486,
+17496,
+787320,
+42515280,
+2678462640,
+192849310080,
+15620794116480,
+1405871470483200,
+139181275577836800,
+15031577762406374400,
+1758694598201545804800,
+221595519373394771404800,
+29915395115408294139648000,
+4307816896618794356109312000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+9,
+0
+]
+}
+},
+{
+"A": "A038159",
+"name": "a(n) = n*a(n-1) + 1, a(0) = 2.",
+"terms": [
+2,
+3,
+7,
+22,
+89,
+446,
+2677,
+18740,
+149921,
+1349290,
+13492901,
+148421912,
+1781062945,
+23153818286,
+324153456005,
+4862301840076,
+77796829441217,
+1322546100500690,
+23805829809012421,
+452310766371236000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+0,
+1
+]
+}
+},
+{
+"A": "A045754",
+"name": "7-fold factorials: a(n) = Product_{k=0..n-1} (7*k+1).",
+"terms": [
+1,
+1,
+8,
+120,
+2640,
+76560,
+2756160,
+118514880,
+5925744000,
+337767408000,
+21617114112000,
+1534815101952000,
+119715577952256000,
+10175824125941760000,
+936175819586641920000,
+92681406139077550080000,
+9824229050742220308480000,
+1110137882733870894858240000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+-6,
+0
+]
+}
+},
+{
+"A": "A045755",
+"name": "8-fold factorials: a(n) = Product_{k=0..n-1} (8*k+1).",
+"terms": [
+1,
+1,
+9,
+153,
+3825,
+126225,
+5175225,
+253586025,
+14454403425,
+939536222625,
+68586144251625,
+5555477684381625,
+494437513909964625,
+47960438849266568625,
+5035846079172989705625,
+569050606946547836735625,
+68855123440532288245010625,
+8882310923828665183606370625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+-7,
+0
+]
+}
+},
+{
+"A": "A045756",
+"name": "Expansion of e.g.f. (1-9*x)^(-1/9), 9-factorial numbers.",
+"terms": [
+1,
+1,
+10,
+190,
+5320,
+196840,
+9054640,
+498005200,
+31872332800,
+2326680294400,
+190787784140800,
+17361688356812800,
+1736168835681280000,
+189242403089259520000,
+22330603564532623360000,
+2835986652695643166720000,
+385694184766607470673920000,
+55925656791158083247718400000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+-8,
+0
+]
+}
+},
+{
+"A": "A047053",
+"name": "a(n) = 4^n * n!.",
+"terms": [
+1,
+4,
+32,
+384,
+6144,
+122880,
+2949120,
+82575360,
+2642411520,
+95126814720,
+3805072588800,
+167423193907200,
+8036313307545600,
+417888291992371200,
+23401744351572787200,
+1404104661094367232000,
+89862698310039502848000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+0,
+0
+]
+}
+},
+{
+"A": "A047055",
+"name": "Quintuple factorial numbers: a(n) = Product_{k=0..n-1} (5*k + 2).",
+"terms": [
+1,
+2,
+14,
+168,
+2856,
+62832,
+1696464,
+54286848,
+2008613376,
+84361761792,
+3965002804224,
+206180145819648,
+11752268311719936,
+728640635326636032,
+48818922566884614144,
+3514962424815692218368,
+270652106710808300814336,
+22193472750286280666775552
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+-3,
+0
+]
+}
+},
+{
+"A": "A047056",
+"name": "Quintuple factorial numbers: Product_{k=0..n-1} (5*k+3).",
+"terms": [
+1,
+3,
+24,
+312,
+5616,
+129168,
+3616704,
+119351232,
+4535346816,
+195019913088,
+9360955828224,
+496130658895872,
+28775578215960576,
+1812861427605516288,
+123274577077175107584,
+8999044126633782853632,
+701925441877435062583296,
+58259811675827110194413568
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+-2,
+0
+]
+}
+},
+{
+"A": "A047058",
+"name": "a(n) = 6^n * n!.",
+"terms": [
+1,
+6,
+72,
+1296,
+31104,
+933120,
+33592320,
+1410877440,
+67722117120,
+3656994324480,
+219419659468800,
+14481697524940800,
+1042682221795737600,
+81329213300067532800,
+6831653917205672755200,
+614848852548510547968000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+0,
+0
+]
+}
+},
+{
+"A": "A047657",
+"name": "Sextuple factorial numbers: a(n) = Product_{k=0..n-1} (6*k+2).",
+"terms": [
+1,
+2,
+16,
+224,
+4480,
+116480,
+3727360,
+141639680,
+6232145920,
+311607296000,
+17450008576000,
+1081900531712000,
+73569236156416000,
+5444123475574784000,
+435529878045982720000,
+37455569511954513920000,
+3445912395099815280640000,
+337699414719781897502720000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+-4,
+0
+]
+}
+},
+{
+"A": "A049209",
+"name": "a(n) = -Product_{k=0..n} (7*k-1); sept-factorial numbers.",
+"terms": [
+1,
+6,
+78,
+1560,
+42120,
+1432080,
+58715280,
+2818333440,
+155008339200,
+9610517030400,
+663125675097600,
+50397551307417600,
+4182996758515660800,
+376469708266409472000,
+36517561701841718784000,
+3797826416991538753536000,
+421558732286060801642496000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+-1,
+0
+]
+}
+},
+{
+"A": "A049210",
+"name": "a(n) = -Product_{k=0..n} (8*k-1); octo-factorial numbers.",
+"terms": [
+1,
+7,
+105,
+2415,
+74865,
+2919735,
+137227545,
+7547514975,
+475493443425,
+33760034483175,
+2667042724170825,
+232032717002861775,
+22043108115271868625,
+2270440135873002468375,
+252018855081903273989625,
+29990243754746489604765375,
+3808760956852804179805202625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+-1,
+0
+]
+}
+},
+{
+"A": "A049211",
+"name": "a(n) = Product_{k=1..n} (9*k - 1); 9-factorial numbers.",
+"terms": [
+1,
+8,
+136,
+3536,
+123760,
+5445440,
+288608320,
+17893715840,
+1270453824640,
+101636305971200,
+9045631231436800,
+886471860680806400,
+94852489092846284800,
+11002888734770169036800,
+1375361091846271129600000,
+184298386307400331366400000,
+26354669241958247385395200000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+-1,
+0
+]
+}
+},
+{
+"A": "A049308",
+"name": "Sextuple factorial numbers: Product_{k=0..n-1} (6*k+4).",
+"terms": [
+1,
+4,
+40,
+640,
+14080,
+394240,
+13404160,
+536166400,
+24663654400,
+1282510028800,
+74385581670400,
+4760677226905600,
+333247405883392000,
+25326802847137792000,
+2076797833465298944000,
+182758209344946307072000,
+17179271678424952864768000,
+1717927167842495286476800000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+6,
+-2,
+0
+]
+}
+},
+{
+"A": "A049310",
+"name": "Triangle of coefficients of Chebyshev's S(n,x) := U(n,x/2) polynomials (exponents in increasing order).",
+"terms": [
+1,
+0,
+1,
+-1,
+0,
+1,
+0,
+-2,
+0,
+1,
+1,
+0,
+-3,
+0,
+1,
+0,
+3,
+0,
+-4,
+0
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A049388",
+"name": "a(n) = (n+7)!/7!.",
+"terms": [
+1,
+8,
+72,
+720,
+7920,
+95040,
+1235520,
+17297280,
+259459200,
+4151347200,
+70572902400,
+1270312243200,
+24135932620800,
+482718652416000,
+10137091700736000,
+223016017416192000,
+5129368400572416000,
+123104841613737984000,
+3077621040343449600000,
+80018147048929689600000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+7,
+0
+]
+}
+},
+{
+"A": "A049389",
+"name": "a(n) = (n+8)!/8!.",
+"terms": [
+1,
+9,
+90,
+990,
+11880,
+154440,
+2162160,
+32432400,
+518918400,
+8821612800,
+158789030400,
+3016991577600,
+60339831552000,
+1267136462592000,
+27877002177024000,
+641171050071552000,
+15388105201717248000,
+384702630042931200000,
+10002268381116211200000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+8,
+0
+]
+}
+},
+{
+"A": "A049398",
+"name": "a(n) = (n+9)!/9!.",
+"terms": [
+1,
+10,
+110,
+1320,
+17160,
+240240,
+3603600,
+57657600,
+980179200,
+17643225600,
+335221286400,
+6704425728000,
+140792940288000,
+3097444686336000,
+71241227785728000,
+1709789466857472000,
+42744736671436800000,
+1111363153457356800000,
+30006805143348633600000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+1,
+9,
+0
+]
+}
+},
+{
+"A": "A051188",
+"name": "Sept-factorial numbers.",
+"terms": [
+1,
+7,
+98,
+2058,
+57624,
+2016840,
+84707280,
+4150656720,
+232436776320,
+14643516908160,
+1025046183571200,
+78928556134982400,
+6629998715338521600,
+603329883095805465600,
+59126328543388935628800
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+7,
+0,
+0
+]
+}
+},
+{
+"A": "A051189",
+"name": "Octo-factorial numbers.",
+"terms": [
+1,
+8,
+128,
+3072,
+98304,
+3932160,
+188743680,
+10569646080,
+676457349120,
+48704929136640,
+3896394330931200,
+342882701121945600,
+32916739307706777600,
+3423340888001504870400,
+383414179456168545484800
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+8,
+0,
+0
+]
+}
+},
+{
+"A": "A051232",
+"name": "9-factorial numbers.",
+"terms": [
+1,
+9,
+162,
+4374,
+157464,
+7085880,
+382637520,
+24106163760,
+1735643790720,
+140587147048320,
+12652843234348800,
+1252631480200531200,
+135284199861657369600,
+15828251383813912243200,
+1994359674360552942643200,
+269238556038674647256832000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+9,
+0,
+0
+]
+}
+},
+{
+"A": "A051577",
+"name": "a(n) = (2*n + 3)!!/3 = A001147(n+2)/3.",
+"terms": [
+1,
+5,
+35,
+315,
+3465,
+45045,
+675675,
+11486475,
+218243025,
+4583103525,
+105411381075,
+2635284526875,
+71152682225625,
+2063427784543125,
+63966261320836875,
+2110886623587616875,
+73881031825566590625,
+2733598177545963853125,
+106610328924292590271875
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+3,
+0
+]
+}
+},
+{
+"A": "A051578",
+"name": "a(n) = (2*n+4)!!/4!!, related to A000165 (even double factorials).",
+"terms": [
+1,
+6,
+48,
+480,
+5760,
+80640,
+1290240,
+23224320,
+464486400,
+10218700800,
+245248819200,
+6376469299200,
+178541140377600,
+5356234211328000,
+171399494762496000,
+5827582821924864000,
+209792981589295104000,
+7972133300393213952000,
+318885332015728558080000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+4,
+0
+]
+}
+},
+{
+"A": "A051579",
+"name": "a(n) = (2*n+5)!!/5!!, related to A001147 (odd double factorials).",
+"terms": [
+1,
+7,
+63,
+693,
+9009,
+135135,
+2297295,
+43648605,
+916620705,
+21082276215,
+527056905375,
+14230536445125,
+412685556908625,
+12793252264167375,
+422177324717523375,
+14776206365113318125,
+546719635509192770625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+5,
+0
+]
+}
+},
+{
+"A": "A051580",
+"name": "a(n) = (2*n+6)!!/6!!, related to A000165 (even double factorials).",
+"terms": [
+1,
+8,
+80,
+960,
+13440,
+215040,
+3870720,
+77414400,
+1703116800,
+40874803200,
+1062744883200,
+29756856729600,
+892705701888000,
+28566582460416000,
+971263803654144000,
+34965496931549184000,
+1328688883398868992000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+6,
+0
+]
+}
+},
+{
+"A": "A051581",
+"name": "a(n) = (2*n+7)!!/7!!, related to A001147 (odd double factorials).",
+"terms": [
+1,
+9,
+99,
+1287,
+19305,
+328185,
+6235515,
+130945815,
+3011753745,
+75293843625,
+2032933777875,
+58955079558375,
+1827607466309625,
+60311046388217625,
+2110886623587616875,
+78102805072741824375,
+3046009397836931150625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+7,
+0
+]
+}
+},
+{
+"A": "A051582",
+"name": "a(n) = (2*n+8)!!/8!!, related to A000165 (even double factorials).",
+"terms": [
+1,
+10,
+120,
+1680,
+26880,
+483840,
+9676800,
+212889600,
+5109350400,
+132843110400,
+3719607091200,
+111588212736000,
+3570822807552000,
+121407975456768000,
+4370687116443648000,
+166086110424858624000,
+6643444416994344960000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+8,
+0
+]
+}
+},
+{
+"A": "A051583",
+"name": "a(n) = (2*n+9)!!/9!!, related to A001147 (odd double factorials).",
+"terms": [
+1,
+11,
+143,
+2145,
+36465,
+692835,
+14549535,
+334639305,
+8365982625,
+225881530875,
+6550564395375,
+203067496256625,
+6701227376468625,
+234542958176401875,
+8678089452526869375,
+338445488648547905625,
+13876265034590464130625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+2,
+9,
+0
+]
+}
+},
+{
+"A": "A051604",
+"name": "a(n) = (3*n+4)!!!/4!!!.",
+"terms": [
+1,
+7,
+70,
+910,
+14560,
+276640,
+6086080,
+152152000,
+4260256000,
+132067936000,
+4490309824000,
+166141463488000,
+6645658539520000,
+285763317199360000,
+13145112591170560000,
+644110516967357440000,
+33493746882302586880000,
+1842156078526642278400000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+4,
+0
+]
+}
+},
+{
+"A": "A051605",
+"name": "a(n) = (3*n+5)!!!/5!!!.",
+"terms": [
+1,
+8,
+88,
+1232,
+20944,
+418880,
+9634240,
+250490240,
+7264216960,
+232454942720,
+8135922995200,
+309165073817600,
+12675768026521600,
+557733793166950400,
+26213488278846668800,
+1310674413942333440000,
+69465743938943672320000,
+3890081660580845649920000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+5,
+0
+]
+}
+},
+{
+"A": "A051606",
+"name": "a(n) = (3*n+6)!!!/6!!!, related to A032031 ((3*n)!!! triple factorials).",
+"terms": [
+1,
+9,
+108,
+1620,
+29160,
+612360,
+14696640,
+396809280,
+11904278400,
+392841187200,
+14142282739200,
+551549026828800,
+23165059126809600,
+1042427660706432000,
+50036527713908736000,
+2551862913409345536000,
+137800597324104658944000,
+7854634047473965559808000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+6,
+0
+]
+}
+},
+{
+"A": "A051607",
+"name": "a(n) = (3*n+7)!!!/7!!!.",
+"terms": [
+1,
+10,
+130,
+2080,
+39520,
+869440,
+21736000,
+608608000,
+18866848000,
+641472832000,
+23734494784000,
+949379791360000,
+40823331028480000,
+1877873227310080000,
+92015788138193920000,
+4784820983186083840000,
+263165154075234611200000,
+15263578936363607449600000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+7,
+0
+]
+}
+},
+{
+"A": "A051608",
+"name": "a(n) = (3*n+8)!!!/8!!!.",
+"terms": [
+1,
+11,
+154,
+2618,
+52360,
+1204280,
+31311280,
+908027120,
+29056867840,
+1016990374400,
+38645634227200,
+1584471003315200,
+69716724145868800,
+3276686034855833600,
+163834301742791680000,
+8683217992367959040000,
+486260207572605706240000,
+28689352246783736668160000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+8,
+0
+]
+}
+},
+{
+"A": "A051609",
+"name": "a(n) = (3*n+9)!!!/9!!!, related to A032031 ((3*n)!!! triple factorials).",
+"terms": [
+1,
+12,
+180,
+3240,
+68040,
+1632960,
+44089920,
+1322697600,
+43649020800,
+1571364748800,
+61283225203200,
+2573895458534400,
+115825295634048000,
+5559614190434304000,
+283540323712149504000,
+15311177480456073216000,
+872737116385996173312000,
+52364226983159770398720000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+3,
+9,
+0
+]
+}
+},
+{
+"A": "A051617",
+"name": "a(n) = (4*n+5)(!^4)/5(!^4), related to A007696(n+1) ((4*n+1)(!^4) quartic, or 4-factorials).",
+"terms": [
+1,
+9,
+117,
+1989,
+41769,
+1044225,
+30282525,
+999323325,
+36974963025,
+1515973484025,
+68218806781125,
+3342721532275125,
+177164241210581625,
+10098361749003152625,
+616000066689192310125,
+40040004334797500158125,
+2762760299101027510910625,
+201681501834375008296475625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+5,
+0
+]
+}
+},
+{
+"A": "A051618",
+"name": "a(n) = (4*n+6)(!^4)/6(!^4).",
+"terms": [
+1,
+10,
+140,
+2520,
+55440,
+1441440,
+43243200,
+1470268800,
+55870214400,
+2346549004800,
+107941254220800,
+5397062711040000,
+291441386396160000,
+16903600410977280000,
+1048023225480591360000,
+69169532881719029760000,
+4841867301720332083200000,
+358298180327304574156800000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+6,
+0
+]
+}
+},
+{
+"A": "A051619",
+"name": "a(n) = (4*n+7)(!^4)/7(!^4), related to A034176(n+1) ((4*n+3)(!^4) quartic, or 4-factorials).",
+"terms": [
+1,
+11,
+165,
+3135,
+72105,
+1946835,
+60351885,
+2112315975,
+82380323025,
+3542353890075,
+166490632833525,
+8491022274509775,
+467006225098037625,
+27553367280784219875,
+1735862138689405852125,
+116302763292190192092375
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+7,
+0
+]
+}
+},
+{
+"A": "A051620",
+"name": "a(n) = (4*n+8)(!^4)/8(!^4), related to A034177(n+1) ((4*n+4)(!^4) quartic, or 4-factorials).",
+"terms": [
+1,
+12,
+192,
+3840,
+92160,
+2580480,
+82575360,
+2972712960,
+118908518400,
+5231974809600,
+251134790860800,
+13059009124761600,
+731304510986649600,
+43878270659198976000,
+2808209322188734464000,
+190958233908833943552000
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+8,
+0
+]
+}
+},
+{
+"A": "A051621",
+"name": "a(n) = (4*n+9)(!^4)/9(!^4), related to A007696(n+1) ((4*n+1)(!^4) quartic, or 4-factorials).",
+"terms": [
+1,
+13,
+221,
+4641,
+116025,
+3364725,
+111035925,
+4108329225,
+168441498225,
+7579867420125,
+371413503586125,
+19684915690064625,
+1122040194333683625,
+68444451854354701125,
+4448889370533055573125,
+306973366566780834545625
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+4,
+9,
+0
+]
+}
+},
+{
+"A": "A051687",
+"name": "a(n) = (5*n+6)(!^5)/6, related to A008548 ((5*n+1)(!^5) quintic, or 5-factorials).",
+"terms": [
+1,
+11,
+176,
+3696,
+96096,
+2978976,
+107243136,
+4396968576,
+202260554496,
+10315288279296,
+577656143640576,
+35237024762075136,
+2325643634296958976,
+165120698035084087296,
+12549173050666390634496,
+1016483017103977641394176,
+87417539470942077159899136,
+7954996091855729021550821376
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+6,
+0
+]
+}
+},
+{
+"A": "A051688",
+"name": "a(n) = (5*n+7)(!^5)/7(!^5), related to A034323 ((5*n+2)(!^5) quintic, or 5-factorials).",
+"terms": [
+1,
+12,
+204,
+4488,
+121176,
+3877632,
+143472384,
+6025840128,
+283214486016,
+14727153272832,
+839447736551424,
+52045759666188288,
+3487065897634615296,
+251068744629692301312,
+19332293336486307201024
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+7,
+0
+]
+}
+},
+{
+"A": "A051689",
+"name": "a(n) = (5*n+8)(!^5)/8(!^5), related to A034300 ((5*n+3)(!^5) quintic, or 5-factorials).",
+"terms": [
+1,
+13,
+234,
+5382,
+150696,
+4972968,
+188972784,
+8125829712,
+390039826176,
+20672110787328,
+1198982425665024,
+75535892816896512,
+5136440711548962816,
+374960171943074285568,
+29246893411559794274304
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+8,
+0
+]
+}
+},
+{
+"A": "A051690",
+"name": "a(n) = (5*n+9)(!^5)/9(!^5), related to A034301 ((5*n+2)(!^5) quintic, or 5-factorials).",
+"terms": [
+1,
+14,
+266,
+6384,
+185136,
+6294624,
+245490336,
+10801574784,
+529277164416,
+28580966878464,
+1686277045829376,
+107921730933080064,
+7446599434382524416,
+551048358144306806784,
+43532820293400237735936,
+3656756904645619969818624,
+325451364513460177313857536
+],
+"strata": [
+"NONLIN"
+],
+"recurrence": {
+"kind": "prec1",
+"coef": [
+5,
+9,
+0
+]
+}
+},
+{
+"A": "A056239",
+"name": "If n = Product_{k >= 1} (p_k)^(c_k) where p_k is k-th prime and c_k >= 0 then a(n) = Sum_{k >= 1} k*c_k.",
+"terms": [
+0,
+1,
+2,
+2,
+3,
+3,
+4,
+3,
+4,
+4,
+5,
+4,
+6,
+5,
+5,
+4,
+7,
+5,
+8,
+5
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A070939",
+"name": "Length of binary representation of n.",
+"terms": [
+1,
+1,
+2,
+2,
+3,
+3,
+3,
+3,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+5,
+5,
+5,
+5
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A112798",
+"name": "Table where n-th row is factorization of n, with each prime p_i replaced by i.",
+"terms": [
+1,
+2,
+1,
+1,
+3,
+1,
+2,
+4,
+1,
+1,
+1,
+2,
+2,
+1,
+3,
+5,
+1,
+1,
+2,
+6
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+},
+{
+"A": "A246655",
+"name": "Prime powers: numbers of the form p^k where p is a prime and k >= 1.",
+"terms": [
+2,
+3,
+4,
+5,
+7,
+8,
+9,
+11,
+13,
+16,
+17,
+19,
+23,
+25,
+27,
+29,
+31,
+32,
+37,
+41
+],
+"strata": [
+"CORE"
+],
+"recurrence": null
+}
+]
+}

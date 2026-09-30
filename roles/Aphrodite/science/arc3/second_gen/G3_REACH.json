@@ -1,0 +1,172 @@
+{
+ "(v - (acc + {H}))": {
+  "wraps": 84,
+  "with_ge2_instances": 61,
+  "max_instances": 161,
+  "atom_filler_only": 54,
+  "NEW_vs_G2": 39,
+  "examples": [
+   [
+    "(acc // (v - (acc + {H})))",
+    6,
+    5
+   ],
+   [
+    "(v // (v - (acc + {H})))",
+    6,
+    6
+   ],
+   [
+    "(first // (v - (acc + {H})))",
+    6,
+    5
+   ],
+   [
+    "(last // (v - (acc + {H})))",
+    6,
+    5
+   ],
+   [
+    "(0 // (v - (acc + {H})))",
+    6,
+    5
+   ]
+  ]
+ },
+ "math.gcd(abs((acc + {H})), abs(first))": {
+  "wraps": 84,
+  "with_ge2_instances": 61,
+  "max_instances": 161,
+  "atom_filler_only": 54,
+  "NEW_vs_G2": 10,
+  "examples": [
+   [
+    "(math.gcd(abs((acc + {H})), abs(first)) + v)",
+    6,
+    6
+   ],
+   [
+    "(v + math.gcd(abs((acc + {H})), abs(first)))",
+    6,
+    6
+   ],
+   [
+    "(v // math.gcd(abs((acc + {H})), abs(first)))",
+    6,
+    6
+   ],
+   [
+    "math.gcd(abs(math.gcd(abs((acc + {H})), abs(first))), abs(v))",
+    6,
+    6
+   ],
+   [
+    "math.gcd(abs(v), abs(math.gcd(abs((acc + {H})), abs(first))))",
+    6,
+    6
+   ]
+  ]
+ },
+ "(last % (acc + {H}))": {
+  "wraps": 84,
+  "with_ge2_instances": 63,
+  "max_instances": 161,
+  "atom_filler_only": 56,
+  "NEW_vs_G2": 10,
+  "examples": [
+   [
+    "((last % (acc + {H})) + v)",
+    6,
+    6
+   ],
+   [
+    "(v + (last % (acc + {H})))",
+    6,
+    6
+   ],
+   [
+    "(v // (last % (acc + {H})))",
+    6,
+    6
+   ],
+   [
+    "math.gcd(abs((last % (acc + {H}))), abs(v))",
+    6,
+    6
+   ],
+   [
+    "math.gcd(abs(v), abs((last % (acc + {H}))))",
+    6,
+    6
+   ]
+  ]
+ },
+ "(first - (acc + {H}))": {
+  "wraps": 84,
+  "with_ge2_instances": 61,
+  "max_instances": 161,
+  "atom_filler_only": 54,
+  "NEW_vs_G2": 8,
+  "examples": [
+   [
+    "(v // (first - (acc + {H})))",
+    6,
+    6
+   ],
+   [
+    "math.gcd(abs((first - (acc + {H}))), abs(v))",
+    6,
+    6
+   ],
+   [
+    "math.gcd(abs(v), abs((first - (acc + {H}))))",
+    6,
+    6
+   ],
+   [
+    "(v % (first - (acc + {H})))",
+    6,
+    6
+   ],
+   [
+    "((first - (acc + {H})) * v)",
+    6,
+    6
+   ]
+  ]
+ },
+ "((acc + {H}) * v)": {
+  "wraps": 84,
+  "with_ge2_instances": 61,
+  "max_instances": 161,
+  "atom_filler_only": 54,
+  "NEW_vs_G2": 38,
+  "examples": [
+   [
+    "(((acc + {H}) * v) + acc)",
+    6,
+    6
+   ],
+   [
+    "(acc + ((acc + {H}) * v))",
+    6,
+    6
+   ],
+   [
+    "(((acc + {H}) * v) + first)",
+    6,
+    6
+   ],
+   [
+    "(first + ((acc + {H}) * v))",
+    6,
+    6
+   ],
+   [
+    "(((acc + {H}) * v) + last)",
+    6,
+    6
+   ]
+  ]
+ }
+}

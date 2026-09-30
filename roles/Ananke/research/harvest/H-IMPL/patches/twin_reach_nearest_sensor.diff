@@ -1,0 +1,41 @@
+--- a/prometheus/ananke/assays.py
++++ b/prometheus/ananke/assays.py
+@@ -257,16 +257,29 @@
+     Dm = torch.as_tensor(envs.dist_matrix(ph), device=w.dev)
+     src = sidx[:, 0].to(w.dev).repeat(P)                      # perturbed sensor per world
+     dsrc = Dm[src]                                            # [B, N]
++    # The twin negates EVERY sensor column in [t0, t1) (XOR: 2, MAJ: 5), but
++    # dsrc measures distance from column 0 only, so a site that diverges
++    # because it IS (or neighbours) another perturbed sensor counts as distal
++    # reach. dnear = distance to the NEAREST sensor actually perturbed (a
++    # column with a non-zero cue in the window). Legacy keys are unchanged.
++    pert = (sv[t0:t1] != 0).any(0)                            # [M, K]
++    dcol = Dm[sidx]                                           # [M, K, N]
++    big = torch.full_like(dcol, 10 ** 9)
++    dnear = torch.where(pert[..., None].to(dcol.device), dcol, big).min(1).values
++    dnear = torch.where(dnear >= 10 ** 9, Dm[sidx[:, 0]], dnear).to(w.dev).repeat(P, 1)   # [B, N]
+     T = env.T()
+     frac = torch.zeros(T, B, device=w.dev)
+     reach = torch.zeros(T, B, device=w.dev)
++    reach_near = torch.zeros(T, B, device=w.dev)
+     for t in range(T):
+         w.run(1)
+         div = (w.S[:B] != w.S[B:]).any(-1) | (w.Msum[:, :B] != w.Msum[:, B:]).any(-1).any(-1).any(0)
+         frac[t] = div.float().mean(-1)
+         reach[t] = torch.where(div, dsrc, torch.zeros_like(dsrc)).max(-1).values.float()
++        reach_near[t] = torch.where(div, dnear, torch.zeros_like(dnear)).max(-1).values.float()
+     frac = frac.cpu().numpy()
+     reach = reach.cpu().numpy()
++    reach_near = reach_near.cpu().numpy()
+     tr = w.trace.cpu().numpy()
+     ro = ep.ro_tick[:, trial]
+     a = tr[np.tile(ro, P), np.arange(B), 0]
+@@ -283,6 +296,8 @@
+         "div_frac_readout": frac[np.tile(ro, P), np.arange(B)],
+         "div_frac_next": frac[nxt], "readout_flipped": flipped,
+         "beyond_hop": (reach.max(0) > hop).astype(float),
++        "reach_nearest": reach_near.max(0),
++        "beyond_hop_nearest": (reach_near.max(0) > hop).astype(float),
+     }
+     return {k: v.reshape(P, M).mean(1) for k, v in res.items()}
+ 

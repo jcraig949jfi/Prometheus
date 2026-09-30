@@ -1,0 +1,202 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "dgm-zhang-hu-2025",
+  "canonical_name": "Darwin Godel Machine (DGM) -- Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents (Zhang, Jenny and Hu, Shengran and Lu, Cong and Lange, Robert and Clune, Jeff; institution NOT_FOUND_AT_PIN in README text, README badges link sakana.ai/dgm and x.com/SakanaAILabs; 2025)",
+  "aliases": [
+    "DGM",
+    "Darwin Godel Machine",
+    "Darwin Goedel Machine (README title uses o-umlaut)",
+    "jennyzzt/dgm",
+    "zhang2025darwin (bibtex key)"
+  ],
+  "lineage": "README: evaluation framework implementations 'are based on the SWE-bench and polyglot-benchmark repositories' (swe-bench/SWE-bench, Aider-AI/polyglot-benchmark). Title invokes the Godel Machine; no other predecessor system is named in the tree. The bundled initial/ and initial_polyglot/ directories are the paper's initial agent's benchmark logs and are the root node of every run. || main loop (reader, from the code): For each generation, DGM_outer.main calls choose_selfimproves to sample selfimprove_size parents from the archive (default score_child_prop: sigmoid of accuracy_score times 1/(1+children_count)) each paired with a task entry, runs self_improve for each in a ThreadPoolExecutor (Docker container from the repo, replay parent patch chain, LLM-written problem statement, the coding agent edits its own code, resulting model_patch.diff is evaluated on SWE-bench/Polyglot subsets in Docker), then filter_compiled and update_archive (keep_all by default) add the children to the archive and the state is appended to dgm_metadata.jsonl.",
+  "domain": [
+    "self-improving-agents",
+    "open-ended-learning",
+    "llm-agents",
+    "archive-search"
+  ],
+  "era": "2025",
+  "version": "github.com/jennyzzt/dgm main @ a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2 (committed 2025-08-13; 5 commits since 2025-05-29; 1650 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/jennyzzt/dgm",
+        "commit": "a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2",
+        "commit_resolved": "a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2",
+        "commit_date": "2025-08-13T11:40:14+01:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/jennyzzt/dgm",
+    "branch": "main",
+    "other_branches_or_versions": "No tags. Remote branches: main and best_swe_agent. Only 5 commits on main: init (2025-05-29), Update README.md, add gif, fix (2025-06-12), Update coding_agent_polyglot.py (2025-08-13, the pin). .gitattributes declares misc/swe_results.zip as LFS but that file is not tracked at this pin."
+  },
+  "hashes": {
+    "tree_sha256": "cfbb24e2568b866b9ca44f1b84d6698ca73f6792ffa9ff9182121967341c0add",
+    "n_files": 1650,
+    "bytes": 53195497,
+    "artifacts": [
+      {
+        "filename": "https://github.com/jennyzzt/dgm",
+        "sha256": null,
+        "commit": "a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\dgm-zhang-hu-2025",
+    "hash_list": "techne/fossils/specimens/dgm-zhang-hu-2025/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: NOT_FOUND_AT_PIN (no pyproject.toml / setup.py / package.json; requirements.txt only); LICENSE appendix line 189 reads 'Copyright [2025] [Jenny Zhang and Shengran Hu]' (year and names filled in, brackets kept). README badge: 'License-Apache 2.0'. No copyright headers in any source file. README Acknowledgement: 'The evaluation framework implementations are based on the SWE-bench and polyglot-benchmark repositories' -- swe_bench/ and polyglot/ contain derived harness code; their upstream licences are not reproduced in the tree."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python (39 .py files: outer loop, self-improve step, coding agent, harnesses, tools)",
+    "Shell (327 .sh: mostly eval scripts under initial/ and initial_polyglot/)",
+    "Markdown (507, mostly chat/eval logs under initial*/)",
+    "JSON (340, metadata/predictions)",
+    "log (333)",
+    "diff (48 patches)"
+  ],
+  "build_system": "None (no packaging); plain requirements.txt installed with pip into a venv; Dockerfile FROM python:3.10-slim installs build-essential+git and pip install -r requirements.txt, CMD tail -f /dev/null (container kept alive for exec_run); utils/docker_utils.build_dgm_container builds image 'dgm' from the repo root at run time; pytest.ini for tests/",
+  "compiler_or_interpreter": "CPython 3.10 per Dockerfile (python:3.10-slim); host Python version not stated (README: python3 -m venv)",
+  "dependencies": [
+    "requirements.txt (ALL UNPINNED): datasets, anthropic, anthropic[bedrock], backoff, botocore, boto3, openai, beautifulsoup4, chardet, docker, ghapi, GitPython, pre-commit, python-dotenv, rich, unidiff, pytest, pytest-asyncio, async_timeout, networkx, pygraphviz, matplotlib, plotly",
+    "requirements_dev.txt: networkx, pygraphviz, matplotlib, plotly (unpinned; duplicates the '# analysis' block of requirements.txt; README pairs it with apt-get install graphviz graphviz-dev)",
+    "SWE-bench: git clone https://github.com/princeton-nlp/SWE-bench.git at commit dc4c087c2b9e4cefebf2e3d201d27e36 (pinned to a 32-hex prefix in README), pip install -e . -- imported as swebench.harness.docker_build in swe_bench/harness.py",
+    "polyglot-benchmark: git clone https://github.com/Aider-AI/polyglot-benchmark.git (UNPINNED) by polyglot/prepare_polyglot_dataset.py",
+    "HF dataset princeton-nlp/SWE-bench_Verified via datasets.load_dataset (self_improve_step.py:246, swe_bench/harness.py:206)",
+    "Docker Engine on the host (docker.from_env() in self_improve_step.py, swe_bench/harness.py, polyglot/*)",
+    "SETUP FETCH: git clone https://github.com/princeton-nlp/SWE-bench.git ; git checkout dc4c087c2b9e4cefebf2e3d201d27e36 ; pip install -e . (README)",
+    "SETUP FETCH: python -m polyglot.prepare_polyglot_dataset -> git clone https://github.com/Aider-AI/polyglot-benchmark.git (unpinned)",
+    "SETUP FETCH: docker run hello-world (README sanity check)",
+    "SETUP FETCH: Runtime: datasets.load_dataset('princeton-nlp/SWE-bench_Verified') from HuggingFace Hub",
+    "SETUP FETCH: Runtime: swebench build_env_images pulls/builds SWE-bench per-instance Docker images; polyglot/dockerfiles.py curls golang.org go1.21.5 tarball, deb.nodesource.com setup_20.x, repo.anaconda.com Miniconda3-py311_23.11.0-2",
+    "SETUP FETCH: Runtime LLM calls: Anthropic API / Amazon Bedrock / Vertex AI (anthropic SDK), OpenAI API, optionally DeepSeek and OpenRouter (llm.py create_client). Env vars read: ANTHROPIC_API_KEY, OPENAI_API_KEY, AWS_REGION, AWS_REGION_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY (passed into the container in self_improve_step.py), DEEPSEEK_API_KEY, OPENROUTER_API_KEY",
+    "SETUP FETCH: Default models hard-coded: CLAUDE_MODEL = 'bedrock/us.anthropic.claude-3-5-sonnet-20241022-v2:0' (llm_withtools.py:13, i.e. Bedrock credentials required by default), OPENAI_MODEL = 'o3-mini-2025-01-31', diagnose_model = 'o1-2024-12-17' (self_improve_step.py:28)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "DGM_outer.py main (argparse: --max_generation 80, --selfimprove_size 2, --selfimprove_workers 2, --choose_selfimproves_method, --update_archive keep_all|keep_better, --polyglot, --shallow_eval, --no_full_eval, --run_baseline no_selfimprove|no_darwin, --continue_from; runs the generation loop and appends output_dgm/<run_id>/dgm_metadata.jsonl)",
+    "DGM_outer.py choose_selfimproves (parent selection over the archive: reads each node's metadata.json accuracy_score and children_count; methods random / score_prop (sigmoid 1/(1+exp(-10*(score-0.5))) weights) / score_child_prop (sigmoid score times 1/(1+children)) / best; then picks a task entry: solve_empty_patches, solve_stochasticity, solve_contextlength or a random unresolved SWE instance)",
+    "DGM_outer.py update_archive (keep_all appends every compiled child; keep_better appends only children whose accuracy_score >= initial score minus noise_leeway) and filter_compiled / utils/evo_utils.is_compiled_self_improve (child must have a non-empty patch and enough evaluated instances)",
+    "self_improve_step.py self_improve (one self-modification attempt: build+start Docker container 'dgm' from the repo, apply the parent's chain of model_patch.diff files, git commit inside the container, diagnose_problem via an LLM to write a problem statement, run 'timeout 1800 python /dgm/coding_agent.py --self_improve ...' inside the container so the agent edits its own source, copy out model_patch.diff, then evaluate the patched agent on SWE-bench or Polyglot subsets via run_harness_swe / run_harness_polyglot and write metadata.json)",
+    "coding_agent.py AgenticSystem.forward (the evolving agent itself: one chat_with_agent call with bash and edit tools against the repo in git_tempdir, then main() writes diff_versus_commit to model_patch.diff)",
+    "coding_agent_polyglot.py (variant of the agent swapped in when --polyglot)",
+    "llm_withtools.py chat_with_agent / chat_with_agent_claude / chat_with_agent_openai (tool-use loop over tools/bash.py and tools/edit.py); llm.py create_client / get_response_from_llm (provider routing, backoff)",
+    "swe_bench/harness.py harness and polyglot/harness.py harness (evaluate a patched agent on benchmark instances in Docker; swe_bench/report.py make_report scores)"
+  ],
+  "example": {
+    "command": "python DGM_outer.py",
+    "input": "No CLI input files; state starts from the bundled initial/ directory (metadata.json with accuracy_score 0.2, 12/60 SWE-bench Verified instances resolved, logs/ and predictions/) copied into output_dgm/<run_id>/initial, plus task subsets swe_bench/subsets/{small,medium,big}.json and polyglot/subsets/{small,medium}.json; requires API keys and a running Docker daemon",
+    "output": "output_dgm/<run_id>/ containing dgm_outer.log, dgm_metadata.jsonl (one JSON object per generation: generation, selfimprove_entries, children, children_compiled, archive) and one directory per child run_id with self_improve.log, self_evo.md (agent chat), model_patch.diff, metadata.json (overall_performance.accuracy_score, resolved/unresolved/emptypatch ids, parent_commit, entry, problem_statement, improvement_diagnosis)"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux host (README uses sudo/usermod/newgrp, os.system cp -r, /dgm paths) with Docker daemon, CPython 3.x + venv, outbound network to HuggingFace, GitHub, Anthropic/Bedrock and OpenAI, and substantial disk for SWE-bench environment images; long-running (80 generations, 1.5 h timeout per self-improve future, 30 min per agent run)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://arxiv.org/abs/2505.22954",
+    "arXiv preprint arXiv:2505.22954",
+    "https://sakana.ai/dgm/",
+    "https://x.com/SakanaAILabs/status/1928272612431646943",
+    "https://drive.google.com/drive/folders/1Kcu9TbIa9Z50pJ7S6hH9omzzD1pxIYZC?usp=sharing (experiment logs)",
+    "https://github.com/swe-bench/SWE-bench",
+    "https://github.com/Aider-AI/polyglot-benchmark",
+    "@article{zhang2025darwin, title={Darwin Godel Machine: Open-Ended Evolution of Self-Improving Agents}, author={Zhang, Jenny and Hu, Shengran and Lu, Cong and Lange, Robert and Clune, Jeff}, journal={arXiv preprint arXiv:2505.22954}, year={2025}}"
+  ],
+  "human_capability_summary": {
+    "built_to": "README: 'a novel self-improving system that iteratively modifies its own code (thereby also improving its ability to modify its own codebase) and empirically validates each change using coding benchmarks'.",
+    "pressure": "NOT_FOUND_AT_PIN as an explicit motivation statement; the README only states the goal (open-ended evolution of self-improving coding agents validated empirically on SWE-bench/Polyglot) and includes a safety warning that the system executes untrusted model-generated code; the paper abstract is not in the tree.",
+    "success_means": "From the code: each node's overall_performance.accuracy_score (fraction of SWE-bench Verified or Polyglot instances resolved) recorded in metadata.json; the archive grows when children compile (non-empty patch, enough evaluated instances) and, under keep_better, when score >= initial score minus eval_noise; nodes scoring above a threshold (second-highest archive score, min 0.4) get a fuller evaluation. README itself names no metric beyond 'coding benchmarks'."
+  },
+  "known_human_problem_solved": "README: 'a novel self-improving system that iteratively modifies its own code (thereby also improving its ability to modify its own codebase) and empirically validates each change using coding benchmarks'.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "DGM_outer.py:choose_selfimproves (parent selection + task choice), DGM_outer.py:update_archive (survival), self_improve_step.py:self_improve (mutation procedure), coding_agent.py:AgenticSystem.forward and llm_withtools.py:chat_with_agent (the agent that is itself evolved; tools in tools/bash.py, tools/edit.py), prompts/self_improvement_prompt.py and prompts/diagnose_improvement_prompt.py",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/dgm.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/dgm-zhang-hu-2025 (host-local; `python -m techne.fossils.harvest rematerialize dgm-zhang-hu-2025` on a host without it) ; tracked techne/fossils/specimens/dgm-zhang-hu-2025",
+    "where_it_came_from": "https://github.com/jennyzzt/dgm ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit a565fd2d1dca504ef5104a7cc0f3bdc4ab9b4fd2 ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python DGM_outer.py ; host class: Linux host (README uses sudo/usermod/newgrp, os.system cp -r, /dgm paths) with Docker daemon, CPython 3.x + venv, outbound network to HuggingFace, GitHub, Anthropic/Bedrock and OpenAI, and substantial disk for SWE-bench environment images; long-running (80 generations, 1.5 h timeout per self-improve future, 30 min per agent run)",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 cfbb24e2568b866b, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "README: 'a novel self-improving system that iteratively modifies its own code (thereby also improving its ability to modify its own codebase) and empirically validates each change using coding benchmarks'."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "Docker Engine with permission for the invoking user (README: usermod -aG docker)",
+      "git (in container and on host)",
+      "patch (used inside the container)",
+      "graphviz + graphviz-dev system libs for pygraphviz (analysis only)",
+      "Frontier LLM API access (Anthropic via Bedrock by default, OpenAI o1/o3-mini)",
+      "No GPU"
+    ],
+    "host_class": "Linux host (README uses sudo/usermod/newgrp, os.system cp -r, /dgm paths) with Docker daemon, CPython 3.x + venv, outbound network to HuggingFace, GitHub, Anthropic/Bedrock and OpenAI, and substantial disk for SWE-bench environment images; long-running (80 generations, 1.5 h timeout per self-improve future, 30 min per agent run)"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/dgm.json",
+    "copyright_holders_by_header_count": {
+      "(no copyright lines found in *.py/*.js/*.cpp/*.h files)": 0
+    },
+    "things_the_reader_could_not_verify": [
+      "Authors' institution (README badges point at sakana.ai and SakanaAILabs; not stated in text)",
+      "Upstream licences of the SWE-bench / polyglot-benchmark derived code in swe_bench/ and polyglot/ (not reproduced in tree)",
+      "Whether the SWE-bench commit prefix dc4c087c2b9e4cefebf2e3d201d27e36 still resolves upstream",
+      "The best_swe_agent branch contents (not checked out)",
+      "Any benchmark numbers from the paper (initial/metadata.json shows accuracy_score 0.2 for the initial agent, 12 of 60 instances)",
+      "Note: DGM_outer.py argparse has choices=['random', 'score_prop', 'score_child_prop' 'best'] (missing comma, so 'best' is not a selectable method as written); observed in source, not executed",
+      "Docker image builds, HF dataset download and LLM calls were not exercised"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": true,
+    "approx_tree_bytes_at_pin": 53195497
+  },
+  "preservation": {
+    "status": "FULLY_PINNED_EXTERNALS",
+    "body_status": "FULLY_PINNED_EXTERNALS",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": true,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:06:10Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

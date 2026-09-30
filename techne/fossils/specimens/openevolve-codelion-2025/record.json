@@ -1,0 +1,218 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "openevolve-codelion-2025",
+  "canonical_name": "OpenEvolve -- OpenEvolve: an open-source evolutionary coding agent (Asankhaya Sharma [GitHub handle codelion]; institution NOT_FOUND_AT_PIN, README badges point at github.com/algorithmicsuperintelligence/openevolve; 2025-2026)",
+  "aliases": [
+    "openevolve (PyPI package)",
+    "openevolve-run (console script)",
+    "Open-source implementation of AlphaEvolve (pyproject description)",
+    "algorithmicsuperintelligence/openevolve (README badge/clone URL)"
+  ],
+  "lineage": "pyproject.toml description: 'Open-source implementation of AlphaEvolve'. CLAUDE.md: 'open-source implementation of Google DeepMind's AlphaEvolve system'. The README at this pin does not mention AlphaEvolve, FunSearch or DeepMind by name; it cites an HF blog 'Towards Open Evolutionary Agents'. Evolution operators named in README: MAP-Elites, island model with ring-topology migration, double selection (performance vs inspiration), artifact side-channel; OptiLLM (same author) as optional proxy. || main loop (reader, from the code): ProcessParallelController.run_evolution samples a parent and inspirations from an island (exploration from island / exploitation from archive / random, by exploration_ratio+exploitation_ratio), ships a DB snapshot to a worker that builds a prompt, calls the LLM ensemble, applies SEARCH/REPLACE diffs (or full rewrite) to the parent, evaluates the child, and returns it; the parent process adds the child to the MAP-Elites island database, migrates between islands when due, checkpoints, and repeats until max_iterations, target_score or early stopping.",
+  "domain": [
+    "llm-guided-search",
+    "program-synthesis",
+    "map-elites",
+    "evolutionary-coding"
+  ],
+  "era": "2025-2026",
+  "version": "github.com/codelion/openevolve main @ 4f4b0c4f40906f434d64fe5089aff24e927f7e24 (committed 2026-09-29; 835 commits since 2025-05-15; 502 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/codelion/openevolve",
+        "commit": "4f4b0c4f40906f434d64fe5089aff24e927f7e24",
+        "commit_resolved": "4f4b0c4f40906f434d64fe5089aff24e927f7e24",
+        "commit_date": "2026-09-29T11:59:52+08:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/codelion/openevolve",
+    "branch": "main",
+    "other_branches_or_versions": "Tags v0.0.1 .. v0.0.20 (plus a mistyped 'v.0.0.6'), v0.1.0-v0.1.3, v0.2.0-v0.2.27, v0.3.0-v0.3.2, v0.4.0; _version.py at pin says 0.4.0. Remote branches: main, claude/issue-150-20250716-1049, revert-466-fix-OpenEvolve-arquitecture-wrong-arrow-naming."
+  },
+  "hashes": {
+    "tree_sha256": "2a7cbaa366bf2a970f17a3765bbbf84ec44cd576a9d3a410a8f7ae63e096212e",
+    "n_files": 502,
+    "bytes": 7806340,
+    "artifacts": [
+      {
+        "filename": "https://github.com/codelion/openevolve",
+        "sha256": null,
+        "commit": "4f4b0c4f40906f434d64fe5089aff24e927f7e24"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\openevolve-codelion-2025",
+    "hash_list": "techne/fossils/specimens/openevolve-codelion-2025/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: license = { text = \"Apache-2.0\" } (pyproject.toml); LICENSE is the unmodified Apache-2.0 template; the appendix line reads 'Copyright [yyyy] [name of copyright owner]' (placeholders never filled in). README badge is the generic GitHub license shield for algorithmicsuperintelligence/openevolve. Third-party headers: examples/tsp_tour_minimization/{initial_program,evolved_program}/include/json.hpp is nlohmann/json (MIT, 'SPDX-FileCopyrightText: 2013-2023 Niels Lohmann') and bundles MIT code from Florian Loitsch, Bjoern Hoehrmann, Evan Nemerson and the Abseil Authors. No OpenEvolve-own copyright headers found in .py files."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python (245 .py files; core package openevolve/)",
+    "YAML configs (70)",
+    "Markdown (30)",
+    "C++ headers (14 .hpp, vendored json in an example)",
+    "JavaScript (8, visualizer static)",
+    "MLIR (8, example)",
+    "Rust (3, example)",
+    "R (example)",
+    "Metal shader (example)"
+  ],
+  "build_system": "setuptools via pyproject.toml ([build-system] requires setuptools>=42, wheel; setup.py is a stub calling setup()); Makefile wraps venv/pip install -e ., unittest, black, docker build; Dockerfile FROM python:3.12-slim with pip install -e .",
+  "compiler_or_interpreter": "CPython >=3.10 per pyproject requires-python; Dockerfile uses python:3.12-slim; black/mypy target py310",
+  "dependencies": [
+    "openai>=1.0.0",
+    "pyyaml>=6.0",
+    "numpy>=1.22.0",
+    "tqdm>=4.64.0",
+    "flask (unpinned)",
+    "dacite>=1.9.2",
+    "[dev] pytest>=7.0.0, pytest-asyncio>=0.21.0, black>=22.0.0, isort>=5.10.0, mypy>=0.950, requests>=2.28.0, pre-commit>=4.5.1",
+    "scripts/requirements.txt: flask (unpinned, visualizer)",
+    "Makefile install-dev / README OptiLLM setup: pip install optillm (unpinned, optional proxy)",
+    "README Claude Code CLI provider: npm install -g @anthropic-ai/claude-code (unpinned, optional)",
+    "README Copilot CLI provider: npm install -g @github/copilot (unpinned, optional)",
+    "No lockfile; all version bounds are lower bounds only",
+    "SETUP FETCH: pip install openevolve (PyPI)",
+    "SETUP FETCH: git clone https://github.com/algorithmicsuperintelligence/openevolve.git (dev install; unpinned)",
+    "SETUP FETCH: docker pull ghcr.io/algorithmicsuperintelligence/openevolve:latest (unpinned tag)",
+    "SETUP FETCH: npm install -g @anthropic-ai/claude-code ; claude login (optional provider)",
+    "SETUP FETCH: npm install -g @github/copilot ; copilot login (optional provider)",
+    "SETUP FETCH: pip install optillm (optional proxy); Makefile test-integration also downloads model google/gemma-3-270m-it via optillm",
+    "SETUP FETCH: Runtime: every iteration calls an OpenAI-compatible HTTP API (default api_base https://api.openai.com/v1 via OPENAI_API_BASE; example config points at https://generativelanguage.googleapis.com/v1beta/openai/); requires OPENAI_API_KEY env var (config.py:535)",
+    "SETUP FETCH: Optional embedding endpoint for novelty filtering (GEMINI_API_KEY / GOOGLE_API_KEY / OPENAI_EMBEDDING_BASE_URL per README)"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "openevolve-run.py / openevolve/cli.py main (argparse CLI: initial_program, evaluation_file, --config, --output, --iterations, --checkpoint, --api-base, --primary-model, --secondary-model; builds Config and calls OpenEvolve.run)",
+    "openevolve/controller.py OpenEvolve (loads config, initial program, ProgramDatabase, Evaluator, PromptSampler, LLMEnsemble; run() adds the initial program, then delegates to ProcessParallelController and saves best/ output and checkpoints)",
+    "openevolve/process_parallel.py ProcessParallelController.run_evolution (async main loop: submits iterations to a ProcessPoolExecutor per island, collects SerializableResult children, adds them to the database, migrates, checkpoints, early-stops)",
+    "openevolve/process_parallel.py _run_iteration_worker (worker: rebuilds programs from a DB snapshot, builds the prompt from parent+top+inspirations+artifacts, calls LLM ensemble, applies SEARCH/REPLACE diffs or full rewrite, evaluates child, returns child Program dict)",
+    "openevolve/database.py ProgramDatabase (MAP-Elites grid keyed by feature coords, islands, archive, add/_add, sample_from_island with exploration/exploitation/random parent choice, _sample_inspirations, migrate_programs, save/load checkpoints, artifacts store)",
+    "openevolve/evaluator.py Evaluator.evaluate_program (loads user evaluator module, direct or cascade evaluation with timeouts, optional LLM feedback, captures artifacts)",
+    "openevolve/prompt/sampler.py PromptSampler.build_prompt (renders system/user prompt from templates in openevolve/prompts/defaults with evolution history, inspirations, artifacts, template stochasticity)",
+    "openevolve/api.py run_evolution / evolve_function / evolve_algorithm / evolve_code (library entry points; accept inline code and callables; optional island_selector and PopulationStrategy hooks defined in selection.py / population.py)"
+  ],
+  "example": {
+    "command": "python openevolve-run.py examples/function_minimization/initial_program.py examples/function_minimization/evaluator.py --config examples/function_minimization/config.yaml --iterations 50",
+    "input": "examples/function_minimization/initial_program.py: a random-search search_algorithm(iterations=1000, bounds=(-5,5)) for f(x,y)=sin(x)*cos(y)+sin(x*y)+(x^2+y^2)/20 inside # EVOLVE-BLOCK-START/END markers; examples/function_minimization/evaluator.py returning EvaluationResult metrics incl. combined_score; config.yaml with max_iterations 10, gemini-2.5-flash-lite/gemini-2.5-flash ensemble, 3 islands, population_size 50, archive_size 20",
+    "output": "Per controller._save_best_program: <output_dir>/best/best_program.py plus best/best_program_info.json, and checkpoints/checkpoint_N/ directories holding the program database; README example says evolution discovers simulated annealing (global minimum approx (-1.704, 0.678), value -1.519 per examples/function_minimization/README.md)"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Any CPython >=3.10 host with outbound HTTPS to an OpenAI-compatible LLM endpoint (or a local Ollama/vLLM/optillm server); no GPU needed for the framework; uses multiprocessing ProcessPoolExecutor"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://huggingface.co/blog/driaforall/towards-open-evolutionary-agents",
+    "https://huggingface.co/blog/codelion/openevolve-gpu-kernel-discovery",
+    "https://huggingface.co/blog/codelion/openevolve",
+    "https://github.com/algorithmicsuperintelligence/openevolve (citation url)",
+    "@software{openevolve, title = {OpenEvolve: an open-source evolutionary coding agent}, author = {Asankhaya Sharma}, year = {2025}, publisher = {GitHub}}",
+    "No arXiv id or DOI in README/CITATION at pin"
+  ],
+  "human_capability_summary": {
+    "built_to": "An evolutionary coding agent that uses LLMs (any OpenAI-compatible API, Claude Code CLI or Copilot CLI) to iteratively mutate a program and keep the best variants according to a user-supplied evaluator, using MAP-Elites quality-diversity, islands with migration, LLM ensembles and an artifact feedback side-channel.",
+    "pressure": "README frames it against manual optimization: days-to-weeks of human-limited exploration, poor reproducibility, hard multi-objective tradeoffs and no scaling; pyproject describes it as an open-source implementation of AlphaEvolve (CLAUDE.md: Google DeepMind's AlphaEvolve), i.e. no open implementation existed.",
+    "success_means": "README FAQ: primary metric is the evaluator's combined_score (or metric average), plus convergence of best score over time, MAP-Elites grid coverage, iterations to target, robustness across test cases; showcase claims are 2-3x kernel speedups and matching state-of-the-art n=26 circle packing."
+  },
+  "known_human_problem_solved": "An evolutionary coding agent that uses LLMs (any OpenAI-compatible API, Claude Code CLI or Copilot CLI) to iteratively mutate a program and keep the best variants according to a user-supplied evaluator, using MAP-Elites quality-diversity, islands with migration, LLM ensembles and an artifact feedback side-channel.",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "openevolve/database.py:ProgramDatabase.sample_from_island (parent/inspiration selection) and _add/_update_archive (survival); openevolve/process_parallel.py:_run_iteration_worker (mutation via LLM + diff application); hooks exposed as openevolve/population.py:PopulationStrategy and openevolve/selection.py:IslandSelectionContext via api.run_evolution(island_selector=..., population_strategy=...)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [
+    {
+      "relation": "inspired_by",
+      "to": "AlphaEvolve (DeepMind 2025, no public source)",
+      "note": "pyproject: an open-source implementation of AlphaEvolve (reader draft)"
+    }
+  ],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-V",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/openevolve.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/openevolve-codelion-2025 (host-local; `python -m techne.fossils.harvest rematerialize openevolve-codelion-2025` on a host without it) ; tracked techne/fossils/specimens/openevolve-codelion-2025",
+    "where_it_came_from": "https://github.com/codelion/openevolve ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 4f4b0c4f40906f434d64fe5089aff24e927f7e24 ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python openevolve-run.py examples/function_minimization/initial_program.py examples/function_minimization/evaluator.py --config examples/function_minimization/config.yaml --iterations 50 ; host class: Any CPython >=3.10 host with outbound HTTPS to an OpenAI-compatible LLM endpoint (or a local Ollama/vLLM/optillm server); no GPU needed for the framework; uses multiprocessing ProcessPoolExecutor",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 2a7cbaa366bf2a97, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "An evolutionary coding agent that uses LLMs (any OpenAI-compatible API, Claude Code CLI or Copilot CLI) to iteratively mutate a program and keep the best variants according to a user-supplied evaluator, using MAP-Elites quality-diversity, islands with migration, LLM ensembles and an artifact feedback side-channel."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "None required by the core (pure Python + numpy)",
+      "Network access to an LLM API is required at run time",
+      "Optional: Docker (Dockerfile / ghcr image)",
+      "Optional: build-essential in Dockerfile",
+      "Example-specific: Rust toolchain (rust_adaptive_sort), R (r_robust_regression), Apple Silicon + MLX (mlx_metal_kernel_opt), C++ compiler (tsp_tour_minimization), MLIR (attention_optimization)"
+    ],
+    "host_class": "Any CPython >=3.10 host with outbound HTTPS to an OpenAI-compatible LLM endpoint (or a local Ollama/vLLM/optillm server); no GPU needed for the framework; uses multiprocessing ProcessPoolExecutor"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/openevolve.json",
+    "copyright_holders_by_header_count": {
+      "Niels Lohmann (SPDX-FileCopyrightText 2013-2023, nlohmann/json vendored in examples/tsp_tour_minimization)": 90,
+      "Florian Loitsch (2009, MIT, inside json.hpp)": 4,
+      "Bjoern Hoehrmann (2008-2009, inside json.hpp)": 4,
+      "The Abseil Authors (2018, inside json.hpp)": 2,
+      "Evan Nemerson (2016-2021, inside json.hpp)": 2,
+      "OpenEvolve / codelion / Asankhaya Sharma": 0
+    },
+    "things_the_reader_could_not_verify": [
+      "Author's real name / institution beyond the citation block (Asankhaya Sharma) and GitHub handle codelion; 'algorithmicsuperintelligence' org appears only in README URLs",
+      "Whether the GitHub repo has since moved from codelion/openevolve to algorithmicsuperintelligence/openevolve (README links say the latter; clone URL given to me was the former and resolved)",
+      "Any of the README performance claims (2.8x Metal speedup, n=26 circle packing SOTA, +23% HotpotQA) -- no code was run",
+      "PyPI 0.4.0 wheel contents vs this tree",
+      "Behaviour of the default LLM endpoint without an API key (config.py reads OPENAI_API_KEY; not exercised)",
+      "The examples' own requirements.txt files were not individually catalogued (20 example directories)"
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 7806340
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:05:46Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

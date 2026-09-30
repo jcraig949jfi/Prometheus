@@ -1,0 +1,21 @@
+{
+ "final": [
+  "(first // (acc + {H}))",
+  "(last // (acc + {H}))",
+  "math.gcd(abs((acc + {H})), abs(first))",
+  "math.gcd(abs(first), abs((acc + {H})))",
+  "math.gcd(abs((acc + {H})), abs(last))",
+  "math.gcd(abs(last), abs((acc + {H})))",
+  "math.gcd(abs((acc + {H})), abs(0))",
+  "math.gcd(abs(0), abs((acc + {H})))",
+  "(first % (acc + {H}))",
+  "(last % (acc + {H}))",
+  "(1 % (acc + {H}))",
+  "pow(first, (acc + {H}))",
+  "pow(last, (acc + {H}))",
+  "(first - (acc + {H}))",
+  "(last - (acc + {H}))",
+  "(0 - (acc + {H}))",
+  "(1 - (acc + {H}))"
+ ]
+}

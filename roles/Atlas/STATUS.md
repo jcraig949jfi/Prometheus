@@ -2,17 +2,16 @@
 
 ## WORK_STATE (CWO-2026-09-30C s15; informational, not authority)
 
-state: WORKING (operator-authorized bounded INFERENCE HARVEST; unparked until
-  2026-10-01 05:00 America/New_York, then READY)
-current_objective: cross-engine inference harvest -- directive verbatim at
-  roles/Atlas/prompts/2026-09-30_inference_harvest/01_OPERATOR_DIRECTIVE_verbatim.md
-current_step: S1 corpus repair (frontier/4 now unblocked by Archaeon #735;
-  full harvest; coverage-gap census) + launching fresh-context readers
-in_flight: none yet
-finish_condition: the six deliverables in roles/Atlas/inference_harvest_2026-09-30/
-  committed + pushed, completion reported to Aporia, state -> READY at cutoff
-next_expected_milestone: coverage-gap census + frontier/4 committed
-expected_next_artifact: roles/Atlas/inference_harvest_2026-09-30/INFERENCE_HARVEST_HANDOFF.md (draft)
+state: READY (inference harvest COMPLETE 2026-09-30 ~23:00Z, ahead of the
+  2026-10-01 05:00 America/New_York cutoff). Awaiting Aporia dispatch or
+  operator direction. The index loop and Atlas-M2 stay parked; no watcher runs.
+current_objective: none (READY)
+completed: operator inference harvest -- roles/Atlas/inference_harvest_2026-09-30/
+  (6 deliverables + workers/ provenance; 60 claims verified; cross-model-family
+  check with Kimi K3 + DeepSeek v4.1). Completion reported to Aporia.
+in_flight: none
+next: awaiting Aporia assignment
+open for the operator: ATLAS_OPERATOR_FRONTIER.md (12 + 5; not a queue)
 model: claude-opus-5-5[1m]
 session_started_utc: 2026-09-25T12:10Z (approx; first comms sync 12:15Z)
 boundary: read-only toward other seats' science; no commands, adjudication,

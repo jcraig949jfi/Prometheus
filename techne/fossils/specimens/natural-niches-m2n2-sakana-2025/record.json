@@ -1,0 +1,185 @@
+{
+  "schema": "techne.fossil.record/1",
+  "specimen_id": "natural-niches-m2n2-sakana-2025",
+  "canonical_name": "natural_niches / M2N2 -- Competition and Attraction Improve Model Fusion (Abrantes, Joao and Lange, Robert and Tang, Yujin; Sakana AI (inferred from bibtex key sakana2025m2n2 and GitHub org, not stated in README prose); 2024-2025)",
+  "aliases": [
+    "natural_niches (repo and conda env name)",
+    "M2N2 (Model Merging with Natural Niches)",
+    "sakana2025m2n2 (bibtex key)"
+  ],
+  "lineage": "README names no predecessors beyond comparing against CMA-ES and MAP-Elites baselines implemented in-tree (cma_es_fn.py uses the pycma library; map_elites_fn.py is a from-scratch grid archive); 'ga' is the same code with alpha=0.0 and no matchmaker. Commit 'Update code after camera ready' (2025-08-22) followed the 2024-09 initial code. || main loop (reader, from the code): run_natural_niches keeps a fixed-size archive of flat MLP parameter vectors with a boolean per-training-example score matrix, and for each of total_forward_passes iterations samples parent 1 proportional to competition-normalised fitness (each example's reward divided by the number of archive members that get it right, to the power alpha), samples parent 2 by a 'matchmaker' score favouring individuals that are correct where parent 1 is wrong, produces a child by split-point SLERP crossover plus Gaussian mutation (mutation skipped when starting from pre-trained models), evaluates the child on the training set, and replaces the lowest-fitness archive member if the child is not itself the worst.",
+  "domain": [
+    "model-merging",
+    "evolutionary-computation",
+    "niching",
+    "foundation-models"
+  ],
+  "era": "2024-2025",
+  "version": "github.com/SakanaAI/natural_niches main @ 3b90342b30253440070511c0d367da5f99ecabc0 (committed 2025-08-25; 10 commits since 2024-09-05; 14 tracked files)",
+  "source_origin": {
+    "artifacts": [
+      {
+        "kind": "git",
+        "url": "https://github.com/SakanaAI/natural_niches",
+        "commit": "3b90342b30253440070511c0d367da5f99ecabc0",
+        "commit_resolved": "3b90342b30253440070511c0d367da5f99ecabc0",
+        "commit_date": "2025-08-25T10:13:52+09:00"
+      }
+    ]
+  },
+  "source_type": "ORIGINAL_AUTHORITATIVE_RELEASE",
+  "source_identity": {
+    "repo": "github.com/SakanaAI/natural_niches",
+    "branch": "main",
+    "other_branches_or_versions": "Single remote branch origin/main; no tags; 10 commits from 2024-09-05 'Initial commit' to 2025-08-25 'Add arxiv link'."
+  },
+  "hashes": {
+    "tree_sha256": "ac5cc48447c8add1604982bd9fb81a6fc1d56ea1d392fb8103d8ce389abb68ee",
+    "n_files": 14,
+    "bytes": 436413,
+    "artifacts": [
+      {
+        "filename": "https://github.com/SakanaAI/natural_niches",
+        "sha256": null,
+        "commit": "3b90342b30253440070511c0d367da5f99ecabc0"
+      }
+    ],
+    "body_location": "C:\\Prometheus\\vault\\fossils\\natural-niches-m2n2-sakana-2025",
+    "hash_list": "techne/fossils/specimens/natural-niches-m2n2-sakana-2025/UPSTREAM_HASHES.txt"
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "status": "permissive",
+    "evidence": "licence file LICENSE, first line 'Apache License'; metadata field: NOT_FOUND_AT_PIN (no pyproject.toml / setup.py / package.json; environment.yml has no license field); No copyright headers in any source file. cma_es_fn.py cites a stackoverflow answer for an env-var workaround. No README licence badge."
+  },
+  "acquisition_date": "2026-09-30",
+  "language": [
+    "Python",
+    "Jupyter notebook (plotting.ipynb)"
+  ],
+  "build_system": "None (flat scripts run with 'python main.py'); conda environment.yml for dependencies",
+  "compiler_or_interpreter": "CPython 3.11.9 per environment.yml (python=3.11.9=h955ad1f_0)",
+  "dependencies": [
+    "conda: python=3.11.9, openblas=0.3.28, libopenblas=0.3.28, plus linux-64 system libs (_libgcc_mutex, libgcc 14.1.0, libgfortran 14.1.0, libstdcxx-ng 11.2.0, openssl 3.3.2, sqlite 3.45.3, tk 8.6.14, zlib 1.2.13 etc.)",
+    "pip: cma==4.0.0",
+    "pip: jax==0.4.31, jaxlib==0.4.31, jax-cuda12-pjrt==0.4.31, jax-cuda12-plugin==0.4.31",
+    "pip: joblib==1.4.2, ml-dtypes==0.4.0, numpy==2.1.1, opt-einsum==3.3.0, scikit-learn==1.5.1, scipy==1.14.1, threadpoolctl==3.5.0, tqdm==4.66.5",
+    "pip: nvidia-cublas-cu12==12.6.1.4, nvidia-cuda-cupti-cu12==12.6.68, nvidia-cuda-nvcc-cu12==12.6.68, nvidia-cuda-runtime-cu12==12.6.68, nvidia-cudnn-cu12==9.3.0.75, nvidia-cufft-cu12==11.2.6.59, nvidia-cusolver-cu12==11.6.4.69, nvidia-cusparse-cu12==12.5.3.3, nvidia-nccl-cu12==2.22.3, nvidia-nvjitlink-cu12==12.6.68",
+    "UNDECLARED: optax (imported in model.py for the pre-trained-model Adam training) is absent from environment.yml",
+    "UNDECLARED: jupyter/matplotlib for plotting.ipynb are absent from environment.yml",
+    "SETUP FETCH: conda env create -f environment.yml (conda-forge/defaults channels + PyPI; no other fetches)",
+    "SETUP FETCH: None at runtime: data.py uses sklearn.datasets.load_digits(return_X_y=True), which is bundled with scikit-learn (1797 8x8 digit images), not downloaded; no model weights are downloaded -- 'pre-trained' models are trained in-process by helper_fn.get_pre_trained_models"
+  ],
+  "run_classification": "NOT_ATTEMPTED",
+  "test_classification": "NOT_ATTEMPTED",
+  "entry_points": [
+    "main.py main (argparse: --method {natural_niches, ga, map_elites, cma_es, brute_force}, --pop_size 20, --runs 10, --total_forward_passes 50000, --no_crossover, --no_splitpoint, --no_matchmaker, --use_pre_trained; forces JAX_PLATFORM_NAME=cpu; pickles results to results/<method>[_flags].pkl)",
+    "natural_niches_fn.py run_natural_niches (the M2N2 loop; alpha=1.0 gives natural niches, alpha=0.0 is the 'ga' baseline)",
+    "natural_niches_fn.py sample_parents (fitness-proportional parent 1 with per-datapoint competition normalisation z**alpha; 'matchmaker' picks parent 2 by how much it out-scores parent 1 on individual datapoints)",
+    "natural_niches_fn.py update_archive (jit: append child scores, recompute niche-normalised fitness, evict the worst individual if the child is not the worst)",
+    "helper_fn.py crossover / slerp_w_splitpoint / crossover_without_splitpoint / mutate (SLERP merge of two flat parameter vectors with a random split point flipping the interpolation weight; Gaussian mutation std 0.01)",
+    "helper_fn.py get_pre_trained_models (trains two MLPs with optax Adam on digits 0-4 and 5-9 respectively, 10 epochs, seed 42)",
+    "map_elites_fn.py run_map_elites / update_archive / sample_parents (baseline: 10x10 grid over odd-digit and even-digit accuracy, quality = overall train accuracy)",
+    "cma_es_fn.py run_cma_es and brute_force_fn.py run_brute_force (baselines: pycma over the flat param vector; grid search over 10000 SLERP weights between the two pre-trained models)",
+    "model.py mlp / get_acc / train (64-256-10 ReLU MLP on a flat parameter vector, num_params = 19210)"
+  ],
+  "example": {
+    "command": "python main.py --method <method>",
+    "input": "No input files; sklearn digits dataset (first 80% train, last 20% test) and CLI flags, e.g. 'python main.py --method ga --no_crossover' or 'python main.py --method map_elites --use_pre_trained'",
+    "output": "results/<method>[_no_crossover|_no_splitpoint|_no_matchmaker][_pre_trained].pkl containing, per run, dict of 'evals', 'test_values' (test accuracy of the best-train individual after every forward pass) and optionally 'train_values'; printed 'Run {run}, Forward pass {i}, Test acc: {acc}' every 1000 passes; figure.png in README shows test-accuracy curves for the methods"
+  },
+  "environment": {
+    "runner": "native",
+    "note": "NOT RUN in this pass (nothing executed from the tree); host class from the reader draft: Linux x86_64 (environment.yml pins linux-64 conda builds) with CPython 3.11; CPU-only at runtime despite CUDA wheels in the env; small memory footprint (19210-parameter MLP on 1797 samples)"
+  },
+  "patches": [],
+  "recovered_status": "NOT_RECOVERED_SOURCE_IS_ORIGINAL",
+  "upstream_docs": [
+    "https://dl.acm.org/doi/abs/10.1145/3712256.3726329",
+    "https://arxiv.org/abs/2508.16204",
+    "booktitle={Proceedings of the 2025 genetic and evolutionary computation conference}, pages={1217--1225}, year={2025}",
+    "https://stackoverflow.com/questions/77908236/jaxlib-xla-extension-xlaruntimeerror-internal-failed-to-execute-xla-runtime-ex (cited in cma_es_fn.py)"
+  ],
+  "human_capability_summary": {
+    "built_to": "Reproduce the GECCO 2025 paper's results showing that M2N2 (Model Merging with Natural Niches) 'can achieve comparable results to CMA-ES when evolving MNIST classifiers from scratch, and it is the best method to evolve pre-trained models' (README).",
+    "pressure": "NOT_FOUND_AT_PIN (README states the claim but not the motivating limitation; the paper abstract is not in the tree)",
+    "success_means": "Test accuracy of the best-on-train individual as a function of forward passes (evaluations), compared across natural_niches, ga, map_elites, cma_es and brute_force, from scratch and from pre-trained models, plotted in plotting.ipynb / figure.png (README)."
+  },
+  "known_human_problem_solved": "Reproduce the GECCO 2025 paper's results showing that M2N2 (Model Merging with Natural Niches) 'can achieve comparable results to CMA-ES when evolving MNIST classifiers from scratch, and it is the best method to evolve pre-trained models' (README).",
+  "hardware_assumptions": "",
+  "human_environmental_pressure": "",
+  "human_failure_condition": "",
+  "behavioral_entry_point": "natural_niches_fn.py:sample_parents (competition alpha and matchmaker attraction), natural_niches_fn.py:update_archive (eviction rule), helper_fn.py:crossover / mutate (merge operator and noise std), main.py:parse_arguments (ablation flags)",
+  "observability": {
+    "EXECUTABLE": "unknown",
+    "OBSERVABLE": "unknown",
+    "ORACLE_BACKED": "unknown",
+    "INTERVENTION_READY": "unknown",
+    "PATCH_INTERVENTION": "unknown",
+    "OPAQUE": "unknown"
+  },
+  "lineage_relations": [],
+  "acquisition_tags": [
+    "operator-chat-2026-09-30-download-for-nyx",
+    "prior_art_raid",
+    "section-VIII",
+    "TECHNE-132",
+    "reader-draft:READER_DRAFTS_2026-09-30/natural-niches-m2n2.json"
+  ],
+  "historical_disposition": {
+    "state": "UNKNOWN",
+    "failure_reasons": [],
+    "superseded_by": "",
+    "rival_of": "",
+    "evidence": []
+  },
+  "versions_preserved": [],
+  "receipts": [],
+  "nyx_handoff": {
+    "here_is_the_machine": "vault body <vault>/natural-niches-m2n2-sakana-2025 (host-local; `python -m techne.fossils.harvest rematerialize natural-niches-m2n2-sakana-2025` on a host without it) ; tracked techne/fossils/specimens/natural-niches-m2n2-sakana-2025",
+    "where_it_came_from": "https://github.com/SakanaAI/natural_niches ; ORIGINAL_AUTHORITATIVE_RELEASE ; commit 3b90342b30253440070511c0d367da5f99ecabc0 ; licence Apache-2.0",
+    "how_to_run_it": "not executed from this record (NOT_ATTEMPTED); upstream entry: python main.py --method <method> ; host class: Linux x86_64 (environment.yml pins linux-64 conda builds) with CPython 3.11; CPU-only at runtime despite CUDA wheels in the env; small memory footprint (19210-parameter MLP on 1797 samples)",
+    "how_we_know_it_runs": "we do not: no run receipt. The body is pinned (tree_sha256 ac5cc48447c8add1, UPSTREAM_HASHES.txt) and verifies by hash; that is preservation, not execution",
+    "what_humans_used_it_for": "Reproduce the GECCO 2025 paper's results showing that M2N2 (Model Merging with Natural Niches) 'can achieve comparable results to CMA-ES when evolving MNIST classifiers from scratch, and it is the best method to evolve pre-trained models' (README)."
+  },
+  "seat": "Techne",
+  "runtime": {
+    "python_major": 3,
+    "native_deps": [
+      "JAX 0.4.31 with jaxlib (CPU forced by main.py via JAX_PLATFORM_NAME=cpu; environment.yml nonetheless pins CUDA 12 jax plugin and nvidia-*-cu12 wheels)",
+      "OpenBLAS via conda",
+      "pycma 4.0.0",
+      "scikit-learn (bundled digits dataset)",
+      "optax (undeclared)"
+    ],
+    "host_class": "Linux x86_64 (environment.yml pins linux-64 conda builds) with CPython 3.11; CPU-only at runtime despite CUDA wheels in the env; small memory footprint (19210-parameter MLP on 1797 samples)"
+  },
+  "reader_notes": {
+    "draft": "techne/acquisition/prior_art_raid/READER_DRAFTS_2026-09-30/natural-niches-m2n2.json",
+    "copyright_holders_by_header_count": {},
+    "things_the_reader_could_not_verify": [
+      "README says 'MNIST classifiers' but data.py loads sklearn's 8x8 'digits' dataset (1797 samples), not MNIST; which the paper used is not verifiable from the tree.",
+      "optax is imported by model.py but not listed in environment.yml, so 'conda env create' as documented may not yield a runnable env (not executed).",
+      "plotting.ipynb dependencies (jupyter, matplotlib) are not in environment.yml; notebook content not inspected beyond structure.",
+      "Institution: inferred from bibtex key 'sakana2025m2n2' and the SakanaAI GitHub org; README prose never names the institution.",
+      "Whether the CUDA jax plugin wheels are needed at all, since main.py forces the CPU platform.",
+      "figure.png provenance (whether produced by this exact code at this commit)."
+    ],
+    "has_gitmodules_at_pin": false,
+    "has_lfs_at_pin": false,
+    "approx_tree_bytes_at_pin": 436413
+  },
+  "preservation": {
+    "status": "SELF_CONTAINED",
+    "body_status": "SELF_CONTAINED",
+    "recipe_status": "NO_RECIPE",
+    "submodules": [],
+    "submodules_missing": [],
+    "submodules_drifted": [],
+    "unpinned_artifacts": [],
+    "git_lfs": false,
+    "network_fetch_in_recipe": [],
+    "checked_utc": "2026-09-30T23:06:17Z",
+    "note": "status is the worse of body_status and the recipe axis; a matching tree hash alone never implies completeness."
+  }
+}

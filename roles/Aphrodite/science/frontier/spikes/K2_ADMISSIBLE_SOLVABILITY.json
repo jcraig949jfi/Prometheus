@@ -1,0 +1,3658 @@
+{
+ "summary": {
+  "nonG1/add": {
+   "n": 15,
+   "Q2_pass": 14,
+   "PRISTINE_any": 14,
+   "PRISTINE_cells": 56,
+   "L1_any": 14,
+   "L1_cells": 56,
+   "L1_only": 0,
+   "neither": 0
+  },
+  "nonG1/sub": {
+   "n": 4,
+   "Q2_pass": 1,
+   "PRISTINE_any": 1,
+   "PRISTINE_cells": 4,
+   "L1_any": 1,
+   "L1_cells": 4,
+   "L1_only": 0,
+   "neither": 0
+  },
+  "nonG1/mul": {
+   "n": 5,
+   "Q2_pass": 0
+  },
+  "nonG1/fdiv": {
+   "n": 1,
+   "Q2_pass": 1,
+   "PRISTINE_any": 0,
+   "PRISTINE_cells": 0,
+   "L1_any": 1,
+   "L1_cells": 1,
+   "L1_only": 1,
+   "neither": 0
+  },
+  "nonG1/mod": {
+   "n": 11,
+   "Q2_pass": 4,
+   "PRISTINE_any": 3,
+   "PRISTINE_cells": 3,
+   "L1_any": 4,
+   "L1_cells": 16,
+   "L1_only": 1,
+   "neither": 0
+  },
+  "nonG1/gcd": {
+   "n": 110,
+   "Q2_pass": 11,
+   "PRISTINE_any": 9,
+   "PRISTINE_cells": 29,
+   "L1_any": 7,
+   "L1_cells": 25,
+   "L1_only": 0,
+   "neither": 2
+  },
+  "nonG1/powr": {
+   "n": 8,
+   "Q2_pass": 3,
+   "PRISTINE_any": 2,
+   "PRISTINE_cells": 5,
+   "L1_any": 1,
+   "L1_cells": 1,
+   "L1_only": 0,
+   "neither": 1
+  },
+  "G1body/sub": {
+   "n": 30,
+   "Q2_pass": 29,
+   "PRISTINE_any": 14,
+   "PRISTINE_cells": 45,
+   "L1_any": 26,
+   "L1_cells": 104,
+   "L1_only": 12,
+   "neither": 3
+  },
+  "G1body/add": {
+   "n": 27,
+   "Q2_pass": 26,
+   "PRISTINE_any": 10,
+   "PRISTINE_cells": 31,
+   "L1_any": 26,
+   "L1_cells": 104,
+   "L1_only": 16,
+   "neither": 0
+  },
+  "G1body/mul": {
+   "n": 3,
+   "Q2_pass": 3,
+   "PRISTINE_any": 3,
+   "PRISTINE_cells": 12,
+   "L1_any": 3,
+   "L1_cells": 12,
+   "L1_only": 0,
+   "neither": 0
+  }
+ },
+ "rows": [
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(v + math.gcd(abs(0), abs(acc)))",
+   "final": "(acc * acc)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     11748,
+     86889,
+     1865,
+     1034
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     32154,
+     35444,
+     36486,
+     12378
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(0 + math.gcd(abs(v), abs(acc)))",
+   "final": "pow(first, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(0), abs(acc)))",
+   "final": "(acc + last)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     14946,
+     95687,
+     13890,
+     83035
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     1489,
+     38886,
+     11777,
+     6339
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(acc), abs(acc)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     565,
+     92328,
+     104232,
+     11753
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     29606,
+     7144,
+     2596,
+     12859
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(0), abs(acc)))",
+   "final": "(acc * 1)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     3652,
+     15149,
+     15680,
+     206
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     3989,
+     6543,
+     4381,
+     5333
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + (acc % last))",
+   "final": "(acc % last)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     107951,
+     87596,
+     80261,
+     99727
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     8894,
+     6924,
+     752,
+     31597
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(acc), abs(acc)))",
+   "final": "math.gcd(abs(0), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     2586,
+     12471,
+     11499,
+     7948
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     6475,
+     1683,
+     386,
+     3427
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(0), abs(acc)))",
+   "final": "math.gcd(abs(acc), abs(0))",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     19514,
+     10361,
+     24667,
+     32603
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     469,
+     808,
+     9003,
+     1687
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + (acc % last))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     91756,
+     36798,
+     509,
+     98822
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     29535,
+     34866,
+     571,
+     3510
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(acc), abs(acc)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 12,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     14955,
+     78445,
+     83067,
+     3315
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     6340,
+     33067,
+     4168,
+     29208
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + (acc % last))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 12,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     108059,
+     12141,
+     81485,
+     4892
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     403,
+     31545,
+     31513,
+     3613
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(v + math.gcd(abs(0), abs(acc)))",
+   "final": "math.gcd(abs(first), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     88999,
+     5271,
+     77500,
+     78127
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     33245,
+     29213,
+     2703,
+     2026
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(v + math.gcd(abs(acc), abs(acc)))",
+   "final": "(0 - acc)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     12803,
+     7611,
+     29471,
+     2898
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     16469,
+     4803,
+     8765,
+     1431
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(v + math.gcd(abs(acc), abs(0)))",
+   "final": "(acc * acc)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     1644,
+     103482,
+     21487,
+     14342
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     34032,
+     46742,
+     51774,
+     18630
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + math.gcd(abs(acc), abs(0)))",
+   "final": "(acc - 1)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     12857,
+     13731,
+     607,
+     22117
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     2639,
+     9414,
+     4566,
+     14300
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(0 - math.gcd(abs(acc), abs(v)))",
+   "final": "(1 % acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(0 - math.gcd(abs(acc), abs(v)))",
+   "final": "(acc + first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(0 - math.gcd(abs(acc), abs(v)))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(v - math.gcd(abs(acc), abs(v)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 12,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     2601,
+     1529,
+     38534,
+     106211
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     161474,
+     187423,
+     71837,
+     78008
+    ]
+   }
+  },
+  {
+   "op": "mul",
+   "init": "0",
+   "body": "(1 * math.gcd(abs(v), abs(acc)))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mul",
+   "init": "0",
+   "body": "(1 * math.gcd(abs(acc), abs(v)))",
+   "final": "(first // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mul",
+   "init": "0",
+   "body": "(1 * math.gcd(abs(v), abs(acc)))",
+   "final": "(acc + 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mul",
+   "init": "0",
+   "body": "(1 * math.gcd(abs(v), abs(acc)))",
+   "final": "pow(first, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mul",
+   "init": "1",
+   "body": "(v * math.gcd(abs(acc), abs(last)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "fdiv",
+   "init": "1",
+   "body": "(acc // math.gcd(abs(v), abs(last)))",
+   "final": "(first * acc)",
+   "g1_body": false,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     212819
+    ]
+   }
+  },
+  {
+   "op": "mod",
+   "init": "0",
+   "body": "(1 % (acc - v))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     242414
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     30984,
+     16858,
+     47315,
+     48642
+    ]
+   }
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(acc % math.gcd(abs(last), abs(v)))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(acc % math.gcd(abs(v), abs(last)))",
+   "final": "math.gcd(abs(acc), abs(last))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(acc % math.gcd(abs(first), abs(v)))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(1 % (acc - v))",
+   "final": "(acc + acc)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     35658,
+     33776,
+     16100,
+     17474
+    ]
+   }
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(acc % math.gcd(abs(last), abs(v)))",
+   "final": "(last - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mod",
+   "init": "0",
+   "body": "(first % (v + acc))",
+   "final": "math.gcd(abs(acc), abs(acc))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(1 % (acc - v))",
+   "final": "(acc // last)",
+   "g1_body": false,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     185110
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     1091,
+     27010,
+     16079,
+     11281
+    ]
+   }
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(1 % (acc - v))",
+   "final": "pow(acc, 1)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     189996
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     4542,
+     14045,
+     9286,
+     6675
+    ]
+   }
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(acc % math.gcd(abs(last), abs(v)))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "mod",
+   "init": "1",
+   "body": "(acc % (v - 1))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(last), abs(acc))))",
+   "final": "(acc + first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(pow(acc, v)))",
+   "final": "(acc % last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v % first)))",
+   "final": "(1 - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+   "final": "(acc // 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v - last)))",
+   "final": "pow(last, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((v + acc)))",
+   "final": "(last - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last - v)))",
+   "final": "pow(last, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs((acc + v)))",
+   "final": "pow(acc, 1)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     1999,
+     6314,
+     4050,
+     13507
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     7306,
+     6084,
+     5761,
+     1461
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v % last)))",
+   "final": "(acc - last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(first))))",
+   "final": "(first + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v + acc)))",
+   "final": "(acc * last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * last)))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last * v)))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % first)))",
+   "final": "(first + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc // 1)))",
+   "final": "(first + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc - v)))",
+   "final": "(acc * last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc * 1)))",
+   "final": "(acc + first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+   "final": "(acc + first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((0 + acc)))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v - 1)))",
+   "final": "(first // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * first)))",
+   "final": "(last // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(pow(v, 1)))",
+   "final": "pow(first, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first % v)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v % first)))",
+   "final": "(acc + 0)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+   "final": "(acc * last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(0), abs((acc + v)))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     95479,
+     22206,
+     79117,
+     14984
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     13058,
+     3805,
+     8857,
+     6000
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(v))))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v // 1)))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * last)))",
+   "final": "(acc + 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v + last)))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % v)))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last % v)))",
+   "final": "math.gcd(abs(first), abs(acc))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(0))))",
+   "final": "pow(acc, last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+   "final": "acc",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v + 0)))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc // 1)))",
+   "final": "(first * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % last)))",
+   "final": "(acc + 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v - 0)))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((v + acc)))",
+   "final": "(acc - 0)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last % v)))",
+   "final": "pow(acc, last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc // 1)))",
+   "final": "(first - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first - v)))",
+   "final": "(acc - 0)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(0), abs((acc + v)))",
+   "final": "(acc + first)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     916,
+     95802,
+     97229,
+     90564
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     29343,
+     30413,
+     41978,
+     46803
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * v)))",
+   "final": "(acc - last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(0), abs((v + acc)))",
+   "final": "math.gcd(abs(acc), abs(first))",
+   "g1_body": false,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     83551,
+     76195,
+     85225,
+     18510
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     9201,
+     1146,
+     30819,
+     5242
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last // v)))",
+   "final": "pow(last, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(first * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v + last)))",
+   "final": "(first // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(acc))))",
+   "final": "(acc * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(last), abs((acc * v)))",
+   "final": "math.gcd(abs(acc), abs(acc))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * first)))",
+   "final": "(acc - last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last * v)))",
+   "final": "(acc * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(v), abs(acc))))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((acc - v)))",
+   "final": "(0 - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((1 + v)))",
+   "final": "(first - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first % v)))",
+   "final": "(acc - last)",
+   "g1_body": false,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % v)))",
+   "final": "(acc + last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first - v)))",
+   "final": "(acc + 0)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first % v)))",
+   "final": "(acc % first)",
+   "g1_body": false,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first % v)))",
+   "final": "math.gcd(abs(acc), abs(acc))",
+   "g1_body": false,
+   "Q2_size": 12,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     160951
+    ]
+   },
+   "L1": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     217901
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs((v + acc)))",
+   "final": "(last - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc * 1)))",
+   "final": "(acc + last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * v)))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(acc))",
+   "final": "pow(last, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(pow(acc, v)))",
+   "final": "acc",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(pow(v, 1)))",
+   "final": "(first // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((0 + acc)))",
+   "final": "(acc + last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * last)))",
+   "final": "(acc + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((v - acc)))",
+   "final": "(0 + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * last)))",
+   "final": "(0 + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc + v)))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first - v)))",
+   "final": "(acc + 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(acc * 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((v + acc)))",
+   "final": "(acc + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(pow(acc, 1)))",
+   "final": "(last + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((0 - v)))",
+   "final": "(first + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(first), abs(math.gcd(abs(v), abs(acc))))",
+   "final": "(first - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(last), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(last))))",
+   "final": "pow(first, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((last * v)))",
+   "final": "(acc + 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first - v)))",
+   "final": "(acc + 0)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((first - acc)))",
+   "final": "math.gcd(abs(acc), abs(first))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(last // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(last), abs((v * acc)))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": 6,
+   "PRISTINE": {
+    "solved": 2,
+    "coords": {
+     "organ_fold": 1,
+     "g4_fallback": 1
+    },
+    "charges": [
+     103,
+     155547
+    ]
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(acc - first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(math.gcd(abs(acc), abs(last))))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(first), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((v - acc)))",
+   "final": "(last - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "pow(last, acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % last)))",
+   "final": "(acc - last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(0), abs((acc + v)))",
+   "final": "(acc % first)",
+   "g1_body": false,
+   "Q2_size": 6,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     9000,
+     79306,
+     99565,
+     11251
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     3660,
+     37091,
+     30575,
+     30362
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs(math.gcd(abs(acc), abs(v))))",
+   "final": "(first + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v * first)))",
+   "final": "(acc + last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v + first)))",
+   "final": "(last // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % last)))",
+   "final": "(acc - last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(0), abs((acc + v)))",
+   "final": "(acc * 1)",
+   "g1_body": false,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     28279,
+     3857,
+     7036,
+     27829
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     122,
+     750,
+     183,
+     1978
+    ]
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(pow(acc, v)))",
+   "final": "pow(acc, 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs(acc))",
+   "final": "(acc * last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first * v)))",
+   "final": "(acc + last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc * acc)))",
+   "final": "acc",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs(math.gcd(abs(v), abs(first))))",
+   "final": "(first - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(last), abs((v * acc)))",
+   "final": "(acc % last)",
+   "g1_body": false,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 2,
+    "coords": {
+     "g4_fallback": 2
+    },
+    "charges": [
+     179911,
+     228451
+    ]
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v - last)))",
+   "final": "(last // acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v - 1)))",
+   "final": "(acc * last)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((v % last)))",
+   "final": "(acc // 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(acc), abs((first - v)))",
+   "final": "(0 - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "1",
+   "body": "math.gcd(abs(last), abs((v * acc)))",
+   "final": "(acc // 1)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "gcd",
+   "init": "0",
+   "body": "math.gcd(abs(v), abs((acc % first)))",
+   "final": "(acc * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "powr",
+   "init": "0",
+   "body": "pow(acc, (v % last))",
+   "final": "math.gcd(abs(acc), abs(last))",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "powr",
+   "init": "0",
+   "body": "pow(acc, (last - v))",
+   "final": "(first + acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "powr",
+   "init": "0",
+   "body": "pow(acc, (first // v))",
+   "final": "(last * acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "powr",
+   "init": "0",
+   "body": "pow(acc, (last // v))",
+   "final": "(first * acc)",
+   "g1_body": false,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "g4_fallback": 4
+    },
+    "charges": [
+     168708,
+     168004,
+     155577,
+     209583
+    ]
+   },
+   "L1": {
+    "solved": 1,
+    "coords": {
+     "derived_0": 1
+    },
+    "charges": [
+     36895
+    ]
+   }
+  },
+  {
+   "op": "powr",
+   "init": "0",
+   "body": "pow(acc, (last % v))",
+   "final": "(acc * first)",
+   "g1_body": false,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "powr",
+   "init": "0",
+   "body": "pow(acc, (last % v))",
+   "final": "(acc * last)",
+   "g1_body": false,
+   "Q2_size": 12,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     233847
+    ]
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "powr",
+   "init": "1",
+   "body": "pow(acc, (v + first))",
+   "final": "(first - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "powr",
+   "init": "1",
+   "body": "pow(acc, (first - v))",
+   "final": "(first - acc)",
+   "g1_body": false,
+   "Q2_size": null
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - math.gcd(abs(v), abs(last)))",
+   "final": "(acc * acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     16273,
+     51912,
+     2710,
+     40902
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (first % v))",
+   "final": "(acc + last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     49151,
+     42958,
+     48464,
+     9578
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - math.gcd(abs(0), abs(v)))",
+   "final": "(acc * 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     997,
+     34574,
+     12262,
+     12601
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     16223,
+     979,
+     3603,
+     1082
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + math.gcd(abs(v), abs(0)))",
+   "final": "(1 - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     33868,
+     16201,
+     3495,
+     5068
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     5413,
+     5476,
+     7971,
+     17111
+    ]
+   }
+  },
+  {
+   "op": "mul",
+   "init": "1",
+   "body": "(1 * (acc + v))",
+   "final": "(last - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     86626,
+     33758,
+     6103,
+     20102
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     53676,
+     39698,
+     10426,
+     41338
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (v - 0))",
+   "final": "math.gcd(abs(acc), abs(0))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     2393,
+     20152,
+     15008,
+     42491
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     11183,
+     28290,
+     7249,
+     1696
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (v - last))",
+   "final": "math.gcd(abs(acc), abs(0))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     191055
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     11919,
+     40406,
+     15428,
+     6878
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - (v % first))",
+   "final": "(acc * 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     25829,
+     794,
+     13415,
+     26219
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - math.gcd(abs(v), abs(first)))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (v + first))",
+   "final": "(acc * 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 2,
+    "coords": {
+     "g4_fallback": 2
+    },
+    "charges": [
+     241654,
+     218029
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     46237,
+     37394,
+     47412,
+     34490
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (v + 1))",
+   "final": "math.gcd(abs(0), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     162891
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     37584,
+     2144,
+     3905,
+     52868
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (first // v))",
+   "final": "(1 - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     7999,
+     2280,
+     14208,
+     9343
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + pow(v, 1))",
+   "final": "math.gcd(abs(0), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     9978,
+     27607,
+     10984,
+     3244
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     2556,
+     628,
+     3944,
+     15155
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (v + 0))",
+   "final": "(acc + last)",
+   "g1_body": true,
+   "Q2_size": 24,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     20929,
+     39207,
+     45143,
+     97305
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     56467,
+     44876,
+     8078,
+     29771
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (last - v))",
+   "final": "(acc - first)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     11015,
+     4092,
+     57787,
+     44527
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(first - (v - acc))",
+   "final": "(acc * first)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     49026,
+     45248,
+     27057,
+     12891
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(1 + (v + acc))",
+   "final": "acc",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     9038,
+     26294,
+     8822,
+     6509
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(v + (acc + 0))",
+   "final": "pow(acc, 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     28557,
+     8321,
+     1682,
+     5880
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     1619,
+     5082,
+     3448,
+     2541
+    ]
+   }
+  },
+  {
+   "op": "mul",
+   "init": "0",
+   "body": "(1 * (v + acc))",
+   "final": "(first + acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     13216,
+     94343,
+     23598,
+     13863
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     8362,
+     30243,
+     43385,
+     586
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(last + (acc - v))",
+   "final": "pow(acc, acc)",
+   "g1_body": true,
+   "Q2_size": null
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + (last - v))",
+   "final": "(last - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     160610
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     16634,
+     29720,
+     33166,
+     2249
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(last - (v - acc))",
+   "final": "(0 + acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     2526,
+     7785,
+     19480,
+     3858
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(v + (acc + last))",
+   "final": "(acc - last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     26707,
+     52592,
+     21212,
+     17878
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + math.gcd(abs(v), abs(v)))",
+   "final": "math.gcd(abs(acc), abs(0))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     5583,
+     10808,
+     6884,
+     2734
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     1178,
+     5980,
+     3058,
+     56
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - (v - 0))",
+   "final": "math.gcd(abs(last), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     92704,
+     79748,
+     92132,
+     11884
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     8355,
+     407,
+     7839,
+     2250
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + math.gcd(abs(v), abs(first)))",
+   "final": "(acc * first)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     34964,
+     19528,
+     9561,
+     34029
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - (v - first))",
+   "final": "(first * acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     54182,
+     26670,
+     18303,
+     16246
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (v % last))",
+   "final": "(acc // first)",
+   "g1_body": true,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     12090,
+     32715,
+     29036,
+     49167
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (v * last))",
+   "final": "(acc * last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     47532,
+     1849,
+     23845,
+     13326
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(first + (acc + v))",
+   "final": "(acc % last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     25556,
+     34797,
+     12811,
+     53443
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (first % v))",
+   "final": "(first + acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - (v + v))",
+   "final": "(acc // last)",
+   "g1_body": true,
+   "Q2_size": null
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(last - (v - acc))",
+   "final": "(acc - last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     160242
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     17744,
+     51308,
+     57647,
+     4068
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - math.gcd(abs(0), abs(v)))",
+   "final": "(acc - first)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     30036,
+     17393,
+     6174,
+     27566
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     37260,
+     22285,
+     30109,
+     29253
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(0 - (v - acc))",
+   "final": "(acc + acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     2672,
+     4060,
+     30629,
+     695
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     4817,
+     19456,
+     1273,
+     22943
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(v + (acc + 1))",
+   "final": "(acc + last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     24928,
+     49459,
+     23242,
+     32360
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(v - (first - acc))",
+   "final": "(acc - last)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     7034,
+     43202,
+     47634,
+     52825
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (v * last))",
+   "final": "(acc // 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     10442,
+     10680,
+     18003,
+     731
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + (v // first))",
+   "final": "math.gcd(abs(acc), abs(0))",
+   "g1_body": true,
+   "Q2_size": 6,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     19819,
+     12982,
+     14352,
+     19641
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(v - (1 - acc))",
+   "final": "(first * acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     206544
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     16459,
+     30692,
+     54191,
+     25403
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (last + v))",
+   "final": "(last - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 1,
+    "coords": {
+     "g4_fallback": 1
+    },
+    "charges": [
+     178243
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     12494,
+     7491,
+     48591,
+     27910
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - (1 - v))",
+   "final": "math.gcd(abs(acc), abs(0))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     6054,
+     15136,
+     4487,
+     11384
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (last - v))",
+   "final": "(last + acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     32283,
+     50087,
+     5596,
+     34125
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (last // v))",
+   "final": "(0 - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     526,
+     36967,
+     52008,
+     9834
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (last // v))",
+   "final": "(acc + 0)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     5225,
+     5628,
+     27914,
+     12659
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (v * 1))",
+   "final": "(1 - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     7024,
+     2720,
+     13098,
+     2253
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     6659,
+     361,
+     1808,
+     1023
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(v - (1 - acc))",
+   "final": "(acc + 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     20343,
+     10631,
+     8873,
+     18059
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(last + (acc + v))",
+   "final": "(acc * 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     7835,
+     21993,
+     5845,
+     17119
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - (v + first))",
+   "final": "math.gcd(abs(first), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 16,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     16458,
+     6870,
+     11647,
+     9183
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     2950,
+     31461,
+     5984,
+     29163
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(acc + (v * 1))",
+   "final": "(1 * acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     186,
+     23678,
+     16082,
+     210
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     4045,
+     3110,
+     3784,
+     9590
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (last * v))",
+   "final": "(first - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(acc - math.gcd(abs(0), abs(v)))",
+   "final": "math.gcd(abs(acc), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     25131,
+     4903,
+     7265,
+     52516
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     6000,
+     7058,
+     7085,
+     1439
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + (1 * v))",
+   "final": "(1 - acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     4293,
+     50961,
+     41238,
+     4463
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     550,
+     7743,
+     5479,
+     18186
+    ]
+   }
+  },
+  {
+   "op": "mul",
+   "init": "0",
+   "body": "(1 * (v + acc))",
+   "final": "pow(acc, 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     1191,
+     5780,
+     26313,
+     2343
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     1282,
+     6868,
+     4342,
+     3389
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "1",
+   "body": "(1 + (v + acc))",
+   "final": "(acc + first)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     41417,
+     57814,
+     34432,
+     30835
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "0",
+   "body": "(0 - (v - acc))",
+   "final": "(acc - 0)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     11735,
+     10262,
+     1214,
+     3992
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     3864,
+     679,
+     9648,
+     17553
+    ]
+   }
+  },
+  {
+   "op": "sub",
+   "init": "1",
+   "body": "(acc - (last - v))",
+   "final": "(acc - 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     13141,
+     12772,
+     17130,
+     1226
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + (v + v))",
+   "final": "(acc // 1)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 4,
+    "coords": {
+     "organ_fold": 4
+    },
+    "charges": [
+     13701,
+     27570,
+     6224,
+     10654
+    ]
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     11015,
+     3208,
+     3193,
+     520
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + (v - first))",
+   "final": "(first * acc)",
+   "g1_body": true,
+   "Q2_size": 4,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     8192,
+     11919,
+     23287,
+     52031
+    ]
+   }
+  },
+  {
+   "op": "add",
+   "init": "0",
+   "body": "(acc + (v // first))",
+   "final": "math.gcd(abs(0), abs(acc))",
+   "g1_body": true,
+   "Q2_size": 6,
+   "PRISTINE": {
+    "solved": 0,
+    "coords": {},
+    "charges": []
+   },
+   "L1": {
+    "solved": 4,
+    "coords": {
+     "derived_0": 4
+    },
+    "charges": [
+     15672,
+     22061,
+     24728,
+     19983
+    ]
+   }
+  }
+ ]
+}

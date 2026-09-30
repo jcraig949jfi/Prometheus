@@ -1,0 +1,792 @@
+{
+ "PRISTINE": {
+  "coverage_bodies": 422,
+  "single_hole_schemas": 554,
+  "with_2plus_instantiations": 554,
+  "semantically_new": 467,
+  "new_examples": [
+   {
+    "schema": "math.gcd(abs({H}), abs(v))",
+    "pairs": 426,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 103
+   },
+   {
+    "schema": "(acc // {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 43
+   },
+   {
+    "schema": "(v // {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 102
+   },
+   {
+    "schema": "(acc % {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 41
+   },
+   {
+    "schema": "(v % {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 99
+   },
+   {
+    "schema": "({H} + v)",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 119
+   },
+   {
+    "schema": "math.gcd(abs(acc), abs({H}))",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 48
+   },
+   {
+    "schema": "(acc * {H})",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 42
+   },
+   {
+    "schema": "({H} * v)",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 118
+   },
+   {
+    "schema": "pow(acc, {H})",
+    "pairs": 341,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 41
+   },
+   {
+    "schema": "pow(v, {H})",
+    "pairs": 341,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 113
+   },
+   {
+    "schema": "(acc - {H})",
+    "pairs": 314,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 7
+   },
+   {
+    "schema": "(v - {H})",
+    "pairs": 314,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 118
+   },
+   {
+    "schema": "({H} // (acc + v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} // math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} // (acc * v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "math.gcd(abs(0), abs({H}))",
+    "pairs": 4,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 39
+   },
+   {
+    "schema": "({H} % (acc + v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} % math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 3
+   },
+   {
+    "schema": "({H} % (acc * v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "pow({H}, (acc + v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "pow({H}, math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 4
+   },
+   {
+    "schema": "pow({H}, (acc * v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} - (acc + v))",
+    "pairs": 4,
+    "instantiations": 7,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} - math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 7,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} - (acc * v))",
+    "pairs": 4,
+    "instantiations": 7,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "math.gcd(abs({H}), abs(acc))",
+    "pairs": 2,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 48
+   },
+   {
+    "schema": "(({H} + v) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "(math.gcd(abs(acc), abs({H})) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "(math.gcd(abs({H}), abs(v)) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "((acc * {H}) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 4
+   },
+   {
+    "schema": "(({H} * v) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "(acc // (acc + {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "({H} // (acc + {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "(acc // ({H} + v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} // ({H} + v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "(acc // math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "({H} // math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "(acc // math.gcd(abs({H}), abs(v)))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} // math.gcd(abs({H}), abs(v)))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 3
+   }
+  ],
+  "old_examples": [
+   {
+    "schema": "(acc + {H})",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "({H} // 0)",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "({H} % 0)",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + (acc + {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} + v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + math.gcd(abs({H}), abs(v)))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + (acc * {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} * v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "((acc + {H}) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "math.gcd(abs(({H} * v)), abs(v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc % math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "({H} % math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "({H} % math.gcd(abs({H}), abs(v)))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc % (acc * {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   }
+  ]
+ },
+ "L1": {
+  "coverage_bodies": 557,
+  "single_hole_schemas": 604,
+  "with_2plus_instantiations": 604,
+  "semantically_new": 467,
+  "new_examples": [
+   {
+    "schema": "math.gcd(abs({H}), abs(v))",
+    "pairs": 426,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 103
+   },
+   {
+    "schema": "(acc // {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 43
+   },
+   {
+    "schema": "(v // {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 102
+   },
+   {
+    "schema": "(acc % {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 41
+   },
+   {
+    "schema": "(v % {H})",
+    "pairs": 397,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 99
+   },
+   {
+    "schema": "({H} + v)",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 119
+   },
+   {
+    "schema": "math.gcd(abs(acc), abs({H}))",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 48
+   },
+   {
+    "schema": "(acc * {H})",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 42
+   },
+   {
+    "schema": "({H} * v)",
+    "pairs": 368,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 118
+   },
+   {
+    "schema": "pow(acc, {H})",
+    "pairs": 341,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 41
+   },
+   {
+    "schema": "pow(v, {H})",
+    "pairs": 341,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 113
+   },
+   {
+    "schema": "(acc - {H})",
+    "pairs": 314,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 7
+   },
+   {
+    "schema": "(v - {H})",
+    "pairs": 314,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 118
+   },
+   {
+    "schema": "({H} // (acc + v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} // math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} // (acc * v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "math.gcd(abs(0), abs({H}))",
+    "pairs": 4,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 39
+   },
+   {
+    "schema": "({H} % (acc + v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} % math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 3
+   },
+   {
+    "schema": "({H} % (acc * v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "pow({H}, (acc + v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "pow({H}, math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 4
+   },
+   {
+    "schema": "pow({H}, (acc * v))",
+    "pairs": 4,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} - (acc + v))",
+    "pairs": 4,
+    "instantiations": 7,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} - math.gcd(abs(acc), abs(v)))",
+    "pairs": 4,
+    "instantiations": 7,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} - (acc * v))",
+    "pairs": 4,
+    "instantiations": 7,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "math.gcd(abs({H}), abs(acc))",
+    "pairs": 2,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 48
+   },
+   {
+    "schema": "(({H} + v) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "(math.gcd(abs(acc), abs({H})) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "(math.gcd(abs({H}), abs(v)) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "((acc * {H}) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 4
+   },
+   {
+    "schema": "(({H} * v) + v)",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "(acc // (acc + {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "({H} // (acc + {H}))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "(acc // ({H} + v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 6
+   },
+   {
+    "schema": "({H} // ({H} + v))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "(acc // math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "({H} // math.gcd(abs(acc), abs({H})))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 1
+   },
+   {
+    "schema": "(acc // math.gcd(abs({H}), abs(v)))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 5
+   },
+   {
+    "schema": "({H} // math.gcd(abs({H}), abs(v)))",
+    "pairs": 2,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": true,
+    "n_new_bodies": 3
+   }
+  ],
+  "old_examples": [
+   {
+    "schema": "(acc + {H})",
+    "pairs": 11350,
+    "instantiations": 161,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + math.gcd(abs({H}), abs(v)))",
+    "pairs": 20,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} // acc))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} // v))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} // first))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} // last))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} // 0))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + math.gcd(abs({H}), abs({H})))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + math.gcd(abs(0), abs({H})))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} % acc))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} % v))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} % first))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} % last))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + ({H} % 0))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   },
+   {
+    "schema": "(acc + pow({H}, acc))",
+    "pairs": 15,
+    "instantiations": 6,
+    "SEMANTICALLY_NEW": false,
+    "n_new_bodies": 0
+   }
+  ]
+ }
+}
