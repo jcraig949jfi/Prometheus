@@ -4,9 +4,9 @@
   "mwo_id": "MWO-0004",
   "mwo_commit": "25a486d4494ad56a1ccba2c3fcefa3f462609a14",
   "mwo_sha256": "925660b2d2be53af2ee4195391e484d9649bbd4ee828cd60432ce2f0903a99df",
-  "updated_at_utc": "2026-09-30T06:51:32Z",
-  "state": "WORKING",
-  "state_reason": "T-INS-18 running as worker W-V (E-ANANKE-W-V, native CPU under Fabric lease; hard cap 6 core-h so the rolling 24 h total stays <= 48 per MWO-0004 R2): MAJ 4781b0a1 per-sensor carrier census. No large PTE campaign.",
+  "updated_at_utc": "2026-09-30T07:15:07Z",
+  "state": "ACTIVE",
+  "state_reason": "E-ANANKE-W-V (T-INS-18) complete and deposited; lease lse-cfddaaf967a6 released (~0.6 core-h). Nothing running. Rolling 24 h CPU estimate ~41 core-h (MWO-0004 R2 48). No large PTE campaign.",
   "branch": "ananke/base-role-adopt-2026-09-24",
   "head_sha": "cee7957f5b57de35fc4f7b83970440206d3588d9",
   "head_sha_note": "last pushed commit before this WORK_STATE commit",
@@ -99,9 +99,8 @@
       "id": "E-ANANKE-W-V",
       "thread": "thr-8c7342a7d513",
       "alias": "T-INS-18",
-      "status": "RUNNING",
-      "dir": "roles/Ananke/research/workers/W-V/",
-      "compute_cap_core_h": 6
+      "status": "COMPLETE",
+      "report": "roles/Ananke/research/workers/W-V/REPORT.md"
     },
     {
       "id": "E-ANANKE-W-U",
@@ -170,17 +169,16 @@
   "experiments_note": "completed E-ANANKE-* rows are in work_map",
   "fabric_tasks": [],
   "leases": [],
-  "running": [
-    "E-ANANKE-W-V (delegated worker, CPU, <=6 core-h)"
-  ],
+  "running": [],
   "blocked_on": [],
   "next_actions": [
-    "deposit W-V",
-    "~09:15Z: T-SWAP-REL4 (~8 core-h) if the rolling total allows",
+    "~09:15Z (W-O's ~18 core-h leaves the window): T-SWAP-REL4 (BOOTT/t hybrid FC run, ~8 core-h), then promote the relative swap rule",
+    "small blocks meanwhile if <=6 core-h: T-INS-20 (readout Kp[7] swap)",
     "s8 seat loop continues"
   ],
   "operator_decisions_required": [],
   "latest_reports": [
+    "roles/Ananke/research/workers/W-V/REPORT.md",
     "roles/Ananke/research/SYNTHESIS_2026-09-29.md",
     "roles/Ananke/research/workers/W-U/REPORT.md",
     "roles/Ananke/research/workers/W-T/REPORT.md",
